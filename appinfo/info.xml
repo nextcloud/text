@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>text</id>
+	<name>Text</name>
+	<summary>Type together</summary>
+	<description>Collaborative text editor</description>
+	<version>0.1.0-dev1</version>
+	<licence>agpl</licence>
+	<author mail="jus@bitgrid.net">Julius Härtl</author>
+	<namespace>Text</namespace>
+	<category>type</category>
+	<website>https://github.com/nextcloud/text</website>
+	<bugs>https://github.com/nextcloud/text/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/text.git</repository>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshot.png</screenshot>
+	<dependencies>
+		<nextcloud min-version="15" max-version="16"/>
+	</dependencies>
+	<navigations>
+		<navigation>
+			<name>Text</name>
+			<route>text.Navigation.navigate</route>
+			<order>6</order>
+		</navigation>
+	</navigations>
+</info>
