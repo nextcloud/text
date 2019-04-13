@@ -1,4 +1,5 @@
-/*
+<?php
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
@@ -20,34 +21,23 @@
  *
  */
 
-class Authority {
-	constructor(doc) {
-		this.doc = doc
-		this.steps = []
-		this.stepClientIDs = []
-		this.onNewSteps = []
+namespace OCA\Text\Db;
+
+
+use OCP\AppFramework\Db\Entity;
+
+class Document extends Entity {
+
+	public $id;
+	protected $currentVersion = 0;
+	protected $lastSavedVersion = 0;
+	protected $initialVersion = 0;
+
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('currentVersion', 'integer');
+		$this->addType('lastSavedVersion', 'integer');
+		$this->addType('initialVersion', 'integer');
 	}
 
-	receiveSteps(version, steps, clientID) {
-		if (version !== this.steps.length) return
-
-		// Apply and accumulate new steps
-		steps.forEach(step => {
-			this.doc = step.apply(this.doc).doc
-			const stepSerialized = JSON.parse(JSON.stringify(steps))
-			this.steps.push(stepSerialized)
-			this.stepClientIDs.push(clientID)
-		})
-		// Signal listeners
-		this.onNewSteps.forEach(function(f) { f() })
-	}
-
-	stepsSince(version) {
-		return {
-			steps: this.steps.slice(version),
-			clientIDs: this.stepClientIDs.slice(version)
-		}
-	}
 }
-
-export default Authority;

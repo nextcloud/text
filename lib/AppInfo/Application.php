@@ -19,6 +19,12 @@ class Application extends App {
 	 */
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);
+
+		// register hook for files
+		\OC::$server->getRootFolder()->listen('\OC\Files', 'preWrite', function() {});
+		\OC::$server->getRootFolder()->listen('\OC\Files', 'postWrite', function() {});
+		\OC::$server->getRootFolder()->listen('\OC\Files', 'preDelete', function() {});
+		\OC::$server->getRootFolder()->listen('\OC\Files', 'postDelete', function() {});
 	}
 
 }

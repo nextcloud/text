@@ -1,0 +1,143 @@
+clone:
+  git:
+    image: plugins/git
+    depth: 1
+
+pipeline:
+  check-app-compatbility:
+    image: nextcloudci/php7.0:php7.0-17
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+      - DB=sqlite
+    commands:
+      # Pre-setup steps
+      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
+      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server
+      # Code checker
+      - ./occ app:check-code $APP_NAME -c strong-comparison
+      - ./occ app:check-code $APP_NAME -c deprecation
+    when:
+      matrix:
+        TESTS: check-app-compatbility
+  syntax-php7.0:
+    image: nextcloudci/php7.0:php7.0-17
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+      - DB=sqlite
+    commands:
+      - composer install
+      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
+    when:
+      matrix:
+        TESTS: syntax-php7.0
+  syntax-php7.1:
+    image: nextcloudci/php7.1:php7.1-15
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+      - DB=sqlite
+    commands:
+      - composer install
+      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
+    when:
+      matrix:
+        TESTS: syntax-php7.1
+  syntax-php7.2:
+    image: nextcloudci/php7.2:php7.2-9
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+      - DB=sqlite
+    commands:
+      - composer install
+      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
+    when:
+      matrix:
+        TESTS: syntax-php7.2
+  syntax-php7.3:
+    image: nextcloudci/php7.3:php7.3-2
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+      - DB=sqlite
+    commands:
+      - composer install
+      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
+    when:
+      matrix:
+        TESTS: syntax-php7.3
+  php7.1:
+    image: nextcloudci/php7.1:php7.1-16
+    environment:
+      - APP_NAME=text
+      - CORE_BRANCH=stable15
+    commands:
+      - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH ${DB}
+      - cd ../server/apps/$APP_NAME
+      - composer install
+      - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
+    when:
+      matrix:
+        TESTS: php7.1
+
+  eslint:
+    image: node:lts-alpine
+    commands:
+      - npm install
+      - npm run lint
+    when:
+      matrix:
+        TESTS: eslint
+  vue-build:
+    image: node:lts-alpine
+    commands:
+      - npm install
+      - npm run build
+    when:
+      matrix:
+        TESTS: vue-build
+services:
+  mysql:
+    image: mysql:5.7.22
+    environment:
+      - MYSQL_ROOT_PASSWORD=owncloud
+      - MYSQL_USER=oc_autotest
+      - MYSQL_PASSWORD=owncloud
+      - MYSQL_DATABASE=oc_autotest
+    command: [ "--innodb_large_prefix=true", "--innodb_file_format=barracuda", "--innodb_file_per_table=true" ]
+    when:
+      matrix:
+        DB: mysql
+  postgres:
+    image: postgres:10
+    environment:
+      - POSTGRES_USER=oc_autotest
+      # This is required as nextcloud will create a separte user since the oc_autotest user can create roles
+      - POSTGRES_DB=oc_autotest_dummy
+      - POSTGRES_PASSWORD=owncloud
+    when:
+      matrix:
+        DB: postgres
+
+matrix:
+  include:
+    - TESTS: check-app-compatbility
+    - TESTS: syntax-php7.0
+    - TESTS: syntax-php7.1
+    - TESTS: syntax-php7.2
+    - TESTS: syntax-php7.3
+    - TESTS: php7.1
+      DB: sqlite
+    - TESTS: php7.1
+      DB: mysql
+    # Removed temporary until we migrated notes to a new table 
+    # - TESTS: php7.1
+    #   DB: postgres
+    - TESTS: eslint
+    - TESTS: vue-build
+
+
+branches: [ master, stable*, alpha1 ]

@@ -21,15 +21,93 @@
   -->
 
 <template>
-
+	<div id="editor-container" v-if="session">
+		<div id="editor-session-list">
+			<avatar :user="session.userId" style="border: 2px solid #000;" :style="{'border-color': session.color}"></avatar>
+			<avatar :user="name"></avatar>
+			<input v-model="name" />
+		</div>
+		<div id="editor2"></div>
+	</div>
 </template>
 
 <script>
+	import axios from 'nextcloud-axios'
+	import { initEditor } from './../collab';
+	import { Avatar } from 'nextcloud-vue';
+
 	export default {
-		name: 'Editor'
+		name: 'Editor',
+		components: {
+			Avatar
+		},
+		beforeMount () {
+			this.initSession()
+		},
+		props: {
+			path: {
+				default: '/example.md'
+			},
+		},
+		data() {
+			return {
+				document: null,
+				content: null,
+				session: null,
+				name: 'Guest'
+			}
+		},
+		methods: {
+			initSession() {
+				axios.get(OC.generateUrl('/apps/text/session/create'), {
+					// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
+					params: {file: this.path}
+				}).then((response) => {
+					this.document = response.data.document;
+					this.session = response.data.session;
+					axios.get(OC.generateUrl('/apps/text/session/fetch',),
+						{
+							params: {
+								documentId: this.document.id,
+								sessionId: this.session.id,
+								token: this.session.token
+							}
+						}
+					).then((fileContent) => {
+						initEditor(null, 2, response.data, fileContent.data);
+						this.$emit('loaded')
+						// TODO: resize viewer
+					});
+				});
+
+			},
+		}
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
+	#editor-container {
+		display: block;
+		max-width: 900px;
+		width: 100vw;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	#editor-session-list {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 100;
+		padding: 3px;
+
+		input, div {
+			vertical-align: middle;
+		}
+	}
+
+</style>
+<style lang="scss">
+	@import './../../css/style';
 </style>
