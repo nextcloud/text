@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container" v-if="session && show">
+	<div id="editor-container" v-if="session && active">
 		<div id="editor-session-list">
 			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
 			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
@@ -50,20 +50,22 @@
 			Tooltip
 		},
 		beforeMount () {
-			if (this.show) {
+			if (this.active || this.shareToken) {
 				this.initSession()
 			}
-			// TODO: handle viewer next? show: false -> true
 		},
 		props: {
 			relativePath: {
-				default: '/example.md'
+				default: null
 			},
 			fileId: {
 				default: null
 			},
-			show: {
-				default: true
+			active: {
+				default: false
+			},
+			shareToken: {
+				default: null
 			}
 		},
 		data() {
@@ -93,10 +95,12 @@
 				}
 			},
 			lastSavedStatus() {
-				if (this.dirty) {
-					return '*' + this.lastSavedString
+				let flags = ''
+				// unpushed changes or unsaved transactions
+				if (this.dirty || (this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state))) {
+					flags = '* '
 				}
-				return this.lastSavedString
+				return flags + this.lastSavedString
 			},
 			lastSavedStatusClass() {
 				if (!this.syncError) {
@@ -126,9 +130,17 @@
 				this.lastSavedString = moment(this.document.lastSavedVersionTime*1000).fromNow();
 			},
 			initSession() {
+				if (!this.relativePath && !this.shareToken) {
+					console.error('No relative path given')
+					this.$emit('error', 'No relative path given')
+					return;
+				}
 				axios.get(OC.generateUrl('/apps/text/session/create'), {
 					// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
-					params: {file: this.relativePath}
+					params: {
+						file: this.relativePath,
+						shareToken: this.shareToken
+					}
 				}).then((response) => {
 					this.document = response.data.document;
 					this.session = response.data.session;
@@ -163,7 +175,10 @@
 						setInterval(() => { this.updateLastSavedStatus() }, 2000)
 						this.$emit('update:loaded', true)
 					});
-				});
+				}).catch((error) => {
+					console.error(error.response)
+					this.$emit('error', error.response.status)
+				})
 
 			},
 		}
