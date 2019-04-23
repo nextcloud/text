@@ -177,7 +177,7 @@
 		// Size that is used for modal as well
 		max-width: 900px;
 		width: 100vw;
-		height: calc(100vh - 88px);
+		height: 100%;
 		margin: 0 auto;
 		border-radius: 3px;
 		position: relative;
