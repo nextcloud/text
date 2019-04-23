@@ -95,6 +95,7 @@ class SessionService {
 		} catch (DoesNotExistException $e) {
 			return false;
 		}
+		// TODO: move to cache
 		$session->setLastContact($this->timeFactory->getTime());
 		$this->sessionMapper->update($session);
 		return true;

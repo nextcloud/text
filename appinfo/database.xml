@@ -31,6 +31,12 @@
 				<length>4</length>
 				<default>0</default>
 			</field>
+			<field>
+				<name>last_saved_version_time</name>
+				<type>integer</type>
+				<unsigned>true</unsigned>
+				<length>4</length>
+			</field>
 		</declaration>
 	</table>
 

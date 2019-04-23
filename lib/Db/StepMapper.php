@@ -45,4 +45,12 @@ class StepMapper extends QBMapper {
 
 		return $this->findEntities($qb);
 	}
+
+	public function deleteAll($documentId) {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->execute();
+	}
 }

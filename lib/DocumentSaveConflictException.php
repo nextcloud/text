@@ -21,34 +21,9 @@
  *
  */
 
-namespace OCA\Text\Db;
+namespace OCA\Text;
 
 
-use OCP\AppFramework\Db\Entity;
-
-class Document extends Entity implements \JsonSerializable {
-
-	public $id;
-	protected $currentVersion = 0;
-	protected $lastSavedVersion = 0;
-	protected $initialVersion = 0;
-	protected $lastSavedVersionTime = 0;
-
-	public function __construct() {
-		$this->addType('id', 'integer');
-		$this->addType('currentVersion', 'integer');
-		$this->addType('lastSavedVersion', 'integer');
-		$this->addType('lastSavedVersionTime', 'integer');
-		$this->addType('initialVersion', 'integer');
-	}
-
-	public function jsonSerialize() {
-		return [
-			'id' => $this->id,
-			'currentVersion' => $this->currentVersion,
-			'lastSavedVersion' => $this->lastSavedVersion,
-			'lastSavedVersionTime' => $this->lastSavedVersionTime,
-		];
-	}
+class DocumentSaveConflictException extends \Exception {
 
 }

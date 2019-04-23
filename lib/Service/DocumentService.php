@@ -29,15 +29,21 @@ use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
+use OCA\Text\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\ICacheFactory;
 
 class DocumentService {
 
+	/**
+	 * Delay to wait for between autosave versions
+	 */
+	const AUTOSAVE_MINIMUM_DELAY = 10;
 
 	private $sessionMapper;
 	private $userId;
@@ -80,9 +86,12 @@ class DocumentService {
 	 * @throws \OCP\Files\NotPermittedException
 	 */
 	public function getDocumentById($fileId) {
+		return $this->createDocument($this->getFile($fileId));
+	}
+
+	public function getFile($fileId) {
 		/** @var File $file */
-		$file = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
-		return $this->createDocument($file);
+		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
 	}
 
 	/**
@@ -93,24 +102,23 @@ class DocumentService {
 	 * @throws \OCP\Files\NotPermittedException
 	 */
 	protected function createDocument(File $file) {
-		/* remove this after debugging */
-		try {
-			$documentBaseFile = $this->appData->getFolder('documents')->getFile($file->getFileInfo()->getId());
-		} catch (NotFoundException $e) {
-			$documentBaseFile = $this->appData->getFolder('documents')->newFile($file->getFileInfo()->getId());
-		}
-		$documentBaseFile->putContent($file->fopen('r'));
-		/** endremove */
-
 		try {
 			$document = $this->documentMapper->find($file->getFileInfo()->getId());
+
+			// TODO: do not hard reset if changed from outside since this will throw away possible steps
+			// TODO: Only do this when no sessions active, otherise we need to resolve the conflict differently
+			$lastMTime = $document->getLastSavedVersionTime();
+			if ($file->getMTime() > $lastMTime && $lastMTime > 0) {
+				$this->resetDocument($document->getId());
+				throw  new NotFoundException();
+			}
+
 			return $document;
 		} catch (DoesNotExistException $e) {
 		} catch (InvalidPathException $e) {
 		} catch (NotFoundException $e) {
 		}
-		// TODO: lock file
-		// TODO: unlock after saving
+
 		try {
 			$documentBaseFile = $this->appData->getFolder('documents')->getFile($file->getFileInfo()->getId());
 		} catch (NotFoundException $e) {
@@ -122,6 +130,7 @@ class DocumentService {
 		$document->setId($file->getFileInfo()->getId());
 		$document->setCurrentVersion(0);
 		$document->setLastSavedVersion(0);
+		$document->setLastSavedVersionTime($file->getFileInfo()->getMtime());
 		$document = $this->documentMapper->insert($document);
 		$this->cache->set('document-version-'.$document->getId(), 0);
 		return $document;
@@ -155,13 +164,52 @@ class DocumentService {
 		$document->setCurrentVersion($newVersion);
 		$this->documentMapper->update($document);
 		$this->cache->set('document-version-'.$document->getId(), $newVersion);
-		// TODO write version to cache for quicker checking
 		// TODO write steps to cache for quicker reading
 		return $steps;
 	}
 
 	public function getSteps($documentId, $lastVersion) {
 		return $this->stepMapper->find($documentId, $lastVersion);
+	}
+
+	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false) {
+		/** @var Document $document */
+		$document = $this->documentMapper->find($documentId);
+		$lastMTime = $document->getLastSavedVersionTime();
+		/** @var File $file */
+		$file = $this->rootFolder->getUserFolder($this->userId)->getById($documentId)[0];
+		if ($file->getMTime() > $lastMTime && $lastMTime > 0 && $force === false) {
+			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+		}
+		// TODO: check for etag rather than mtime
+		// Do not save if version already saved
+		if ($version === (string)$document->getLastSavedVersion()) {
+			return null;
+		}
+		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
+		if ($file->getMTime() === $lastMTime && $lastMTime > time()- self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
+			return null;
+		}
+		$file->putContent($autoaveDocument);
+		$document->setLastSavedVersion($version);
+		$document->setLastSavedVersionTime(time());
+		$this->documentMapper->update($document);
+		return $document;
+	}
+
+	public function resetDocument($documentId) {
+		$this->stepMapper->deleteAll($documentId);
+		try {
+			$document = $this->documentMapper->find($documentId);
+			$this->documentMapper->delete($document);
+		} catch (DoesNotExistException $e) {
+		}
+
+		try {
+			$this->appData->getFolder('documents')->getFile($documentId)->delete();
+		} catch (NotFoundException $e) {
+		} catch (NotPermittedException $e) {
+		}
 	}
 
 }

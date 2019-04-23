@@ -4,8 +4,7 @@
 }
 
 .ProseMirror.ProseMirror-example-setup-style {
-  position: fixed;
-  height: 100%;
+  overflow: scroll;
 }
 
 .ProseMirror.ProseMirror-example-setup-style,
@@ -13,6 +12,9 @@
   width: 100%;
   max-width: 900px;
   margin: auto;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 }
 
 .ProseMirror {
@@ -73,7 +75,7 @@ li.ProseMirror-selectednode:after {
 }
 
 .ProseMirror-menuseparator {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--color-text-maxcontrast);
   margin-right: 3px;
 }
 
@@ -85,7 +87,8 @@ li.ProseMirror-selectednode:after {
   vertical-align: 1px;
   cursor: pointer;
   position: relative;
-  padding-right: 15px;
+  padding: 8px;
+  padding-right: 30px;
 }
 
 .ProseMirror-menu-dropdown-wrap {
@@ -107,8 +110,8 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror-menu-dropdown-menu, .ProseMirror-menu-submenu {
   position: absolute;
-  background: white;
-  color: #666;
+  background: var(--color-main-background);
+  color: var(--color-main-text);
   box-shadow: 0 0 3px var(--color-box-shadow);
   padding: 2px;
 }
@@ -124,7 +127,7 @@ li.ProseMirror-selectednode:after {
 }
 
 .ProseMirror-menu-dropdown-item:hover {
-  background: #f2f2f2;
+  background: var(--color-background-dark);
 }
 
 .ProseMirror-menu-submenu-wrap {
@@ -151,12 +154,7 @@ li.ProseMirror-selectednode:after {
 }
 
 .ProseMirror-menu-active {
-  background: #eee;
-  border-radius: 4px;
-}
-
-.ProseMirror-menu-active {
-  background: #eee;
+  background: var(--color-background-darker);
   border-radius: 4px;
 }
 
@@ -175,10 +173,10 @@ li.ProseMirror-selectednode:after {
   border-top-right-radius: inherit;
   position: relative;
   min-height: 1em;
-  color: #666;
+  color: var(--color-text-light);
   padding: 1px 6px;
   top: 0; left: 0; right: 0;
-  background: white;
+  background: transparent;
   z-index: 10;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -195,12 +193,15 @@ li.ProseMirror-selectednode:after {
   display: inline-block;
   line-height: .8;
   vertical-align: -2px; /* Compensate for padding */
-  padding: 8px;
   border-radius: 2px;
   cursor: pointer;
   &:hover, &:focus {
     background-color: var(--color-background-dark);
   }
+}
+
+.ProseMirror-icon, .Prosemirror-menu-dropdown {
+  padding: 8px;
 }
 
 .ProseMirror-menu-dropdown-menu {
@@ -236,7 +237,7 @@ li.ProseMirror-selectednode:after {
   position: absolute;
   top: -2px;
   width: 20px;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--color-main-text);
   animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
 }
 
@@ -274,46 +275,35 @@ li.ProseMirror-selectednode:after {
 }
 .ProseMirror blockquote {
   padding-left: 1em;
-  border-left: 3px solid #eee;
+  border-left: 3px solid var(--color-text-lighter);
   margin-left: 0; margin-right: 0;
 }
 
 .ProseMirror-example-setup-style img {
   cursor: default;
+  max-height: 50vh;
 }
 
 .ProseMirror-prompt {
-  background: white;
-  padding: 5px 10px 5px 15px;
-  border: 1px solid silver;
+  background: var(--color-main-background);
+  padding: 20px;
   position: fixed;
   border-radius: 3px;
-  z-index: 11;
-  box-shadow: -.5px 2px 5px rgba(0, 0, 0, .2);
+  z-index: 20000;
+  box-shadow: -.5px 2px 5px var(--color-box-shadow);
 }
 
 .ProseMirror-prompt h5 {
   margin: 0;
   font-weight: normal;
   font-size: 100%;
-  color: #444;
-}
-
-.ProseMirror-prompt input[type="text"],
-.ProseMirror-prompt textarea {
-  background: #eee;
-  border: none;
-  outline: none;
-}
-
-.ProseMirror-prompt input[type="text"] {
-  padding: 0 4px;
+  color: var(--color-main-text);
 }
 
 .ProseMirror-prompt-close {
   position: absolute;
   left: 2px; top: 1px;
-  color: #666;
+  color: var(--color-main-text);
   border: none; background: transparent; padding: 0;
 }
 
@@ -333,19 +323,28 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror-prompt-buttons {
   margin-top: 5px;
-  display: none;
+  float: right;
 }
+
+.ProseMirror-prompt-submit {
+  color: var(--color-primary-text);
+  background-color: var(--color-primary);
+  border: 0;
+}
+
 #editor, .editor {
-  background: white;
-  color: black;
+  background: var(--color-main-background);
+  color: var(--color-main-text);
   background-clip: padding-box;
   border-radius: 4px;
   padding: 5px 0;
 }
 
-div[contenteditable=true] {
+div[contenteditable=true],
+div[contenteditable=false] {
   border: none !important;
   width: 100%;
+  background-color: transparent;
 }
 
 .ProseMirror p:first-child,
@@ -360,16 +359,49 @@ div[contenteditable=true] {
 
 .ProseMirror {
   padding: 4px 8px 4px 14px;
-  line-height: 1.2;
+  line-height: 150%;
+  font-size: 14px;
   outline: none;
 }
 
-.ProseMirror p { margin-bottom: 1em }
-.ProseMirror em { font-style: italic; }
+.ProseMirror a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.ProseMirror p {
+  margin-bottom: 1em;
+  line-height: 150%;
+}
+.ProseMirror em {
+  font-style: italic;
+}
 
 
 .ProseMirror h1 {
   font-size: 24px;
+}
+.ProseMirror h2 {
+  font-size: 22px;
+}
+.ProseMirror h3 {
+  font-size: 20px;
+}
+.ProseMirror h4 {
+  font-size: 18px;
+}
+.ProseMirror h5 {
+  font-size: 16px;
+}
+.ProseMirror h6 {
+  font-size: 14px;
+}
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
   font-weight: 600;
   margin-top: 10px;
   margin-bottom: 20px;

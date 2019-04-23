@@ -33,8 +33,8 @@ const newFileMenuPlugin = {
 		// register the new menu entry
 		menu.addMenuEntry({
 			id: 'file',
-			displayName: t('files_texteditor', 'New text document'),
-			templateName: t('files_texteditor', 'New text document.md'),
+			displayName: t('text', 'New text document'),
+			templateName: t('text', 'New text document.md'),
 			iconClass: 'icon-filetype-text',
 			fileType: 'file',
 			actionHandler: function (name) {
@@ -51,10 +51,10 @@ OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin);
 
 import Editor from './components/Editor'
 $(document).ready(function() {
-OCA.Viewer.registerHandler({
-	id: 'text',
-	mimes: ['text/markdown'],
-	component: Editor,
-	group: null
-});
+	OCA.Viewer.registerHandler({
+		id: 'text',
+		mimes: ['text/markdown'],
+		component: Editor,
+		group: null
+	});
 });

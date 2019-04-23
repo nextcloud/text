@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OC\Files\Node\File;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
@@ -16,6 +17,7 @@ use OCP\ICacheFactory;
 use OCP\IRequest;
 use OCP\ITempManager;
 use OCP\Security\ISecureRandom;
+use OCA\Text\DocumentSaveConflictException;
 
 class SessionController extends Controller {
 
@@ -97,13 +99,26 @@ class SessionController extends Controller {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function sync($documentId, $version = 0): DataResponse {
+	public function sync($documentId, $sessionId, $token, $version = 0, $autosaveContent = null): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $token)) {
+			return new DataResponse([], 500);
+		}
 		if ($version === $this->cache->get('document-version-'.$documentId)) {
 			return new DataResponse(['steps' => []]);
 		}
+		try {
+			$document = $this->documentService->autosave($documentId, $version, $autosaveContent);
+		} catch (DocumentSaveConflictException $e) {
+			/** @var File $file */
+			$file = $this->documentService->getFile($documentId);
+			return new DataResponse([
+				'outsideChange' => $file->getContent()
+			], 409);
+		}
 		return new DataResponse([
 			'steps' => $this->documentService->getSteps($documentId, $version),
-			'sessions' => $this->sessionService->getActiveSessions($documentId)
+			'sessions' => $this->sessionService->getActiveSessions($documentId),
+			'document' => $document
 		]);
 	}
 

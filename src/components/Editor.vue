@@ -21,47 +21,114 @@
   -->
 
 <template>
-	<div id="editor-container" v-if="session">
+	<div id="editor-container" v-if="session && show">
 		<div id="editor-session-list">
-			<avatar :user="session.userId" style="border: 2px solid #000;" :style="{'border-color': session.color}"></avatar>
-			<avatar :user="name"></avatar>
-			<input v-model="name" />
+			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
+			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
 		</div>
 		<div id="editor2"></div>
 	</div>
 </template>
 
 <script>
+	const COLLABORATOR_IDLE_TIME = 5;
+	const COLLABORATOR_DISCONNECT_TIME = 20;
+
 	import axios from 'nextcloud-axios'
-	import { initEditor } from './../collab';
+	import { initEditor, ERROR_TYPE } from './../collab';
 	import { Avatar } from 'nextcloud-vue';
+	import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+	import {sendableSteps, getVersion} from 'prosemirror-collab';
+
 
 	export default {
 		name: 'Editor',
 		components: {
 			Avatar
 		},
+		directives: {
+			Tooltip
+		},
 		beforeMount () {
-			this.initSession()
+			if (this.show) {
+				this.initSession()
+			}
+			// TODO: handle viewer next? show: false -> true
 		},
 		props: {
-			path: {
+			relativePath: {
 				default: '/example.md'
 			},
+			fileId: {
+				default: null
+			},
+			show: {
+				default: true
+			}
 		},
 		data() {
 			return {
+				editor: null,
 				document: null,
 				content: null,
 				session: null,
-				name: 'Guest'
+				sessions: [],
+				name: 'Guest',
+				dirty: false,
+				lastSavedString: '',
+				syncError: null
+			}
+		},
+		computed: {
+			activeSessions() {
+				// TODO: filter out duplicate user ids
+				return this.sessions.filter((session) => session.lastContact > Date.now()/1000-COLLABORATOR_DISCONNECT_TIME)
+			},
+			sessionStyle() {
+				return (session) => {
+					return {
+						'opacity': session.lastContact > Date.now()/1000-COLLABORATOR_IDLE_TIME ? 1 : 0.5,
+						'border-color': session.color
+					}
+				}
+			},
+			lastSavedStatus() {
+				if (this.dirty) {
+					return '*' + this.lastSavedString
+				}
+				return this.lastSavedString
+			},
+			lastSavedStatusClass() {
+				if (!this.syncError) {
+					return '';
+				}
+				return 'error';
+			},
+			lastSavedStatusTooltip() {
+				if (!this.syncError) {
+					return {}
+				}
+				// TODO: move to v-popover, trigger reloadEditor for now
+				// TODO: implement conflict resolving
+				return {
+					content: 'The document has been changed outside of the editor. The changes cannot be applied.',
+					show: true,
+					trigger: 'manual',
+					placement: 'bottom'
+				}
 			}
 		},
 		methods: {
+			reloadEditor() {
+
+			},
+			updateLastSavedStatus() {
+				this.lastSavedString = moment(this.document.lastSavedVersionTime*1000).fromNow();
+			},
 			initSession() {
 				axios.get(OC.generateUrl('/apps/text/session/create'), {
 					// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
-					params: {file: this.path}
+					params: {file: this.relativePath}
 				}).then((response) => {
 					this.document = response.data.document;
 					this.session = response.data.session;
@@ -74,9 +141,27 @@
 							}
 						}
 					).then((fileContent) => {
-						initEditor(null, 2, response.data, fileContent.data);
-						this.$emit('loaded')
-						// TODO: resize viewer
+						const {editor, authority} = initEditor(null, 2, response.data, fileContent.data, this);
+						this.authority = authority
+						this.authority.onSync((data) => {
+							if (data.document) {
+								this.document = data.document
+							}
+						})
+						this.authority.onError((error, data) => {
+							if (error === ERROR_TYPE.SAVE_COLLISSION) {
+								this.syncError = {
+									type: ERROR_TYPE.SAVE_COLLISSION,
+									data: data
+								}
+							}
+						})
+						this.authority.onStateChange(() => {
+							this.dirty = this.authority.dirty
+						})
+
+						setInterval(() => { this.updateLastSavedStatus() }, 2000)
+						this.$emit('update:loaded', true)
 					});
 				});
 
@@ -89,10 +174,19 @@
 
 	#editor-container {
 		display: block;
+		// Size that is used for modal as well
 		max-width: 900px;
 		width: 100vw;
+		height: calc(100vh - 88px);
 		margin: 0 auto;
+		border-radius: 3px;
 		position: relative;
+		background-color: var(--color-main-background);
+	}
+
+	#editor2 {
+		height: 100%;
+		overflow-y: scroll;
 	}
 
 	#editor-session-list {
@@ -101,9 +195,22 @@
 		right: 0;
 		z-index: 100;
 		padding: 3px;
+		display: flex;
 
 		input, div {
 			vertical-align: middle;
+			margin-left: 3px;
+		}
+	}
+
+	.save-status {
+		padding: 6px;
+		color: var(--color-text-lighter);
+
+		&.error {
+			background-color: var(--color-error);
+			color: var(--color-main-background);
+			border-radius: 3px;
 		}
 	}
 

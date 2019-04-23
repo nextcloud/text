@@ -17,8 +17,5 @@ return [
 		['name' => 'Session#push', 'url' => '/session/push', 'verb' => 'POST'],
 		// Close session
 		['name' => 'Session#close', 'url' => '/session/close', 'verb' => 'GET'],
-		//['name' => 'Session#get', 'url' => '/session/get', 'verb' => 'GET'],
-
-
 	]
 ];

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\AppInfo;
 
-
 $eventDispatcher = \OC::$server->getEventDispatcher();
 
 // only load text editor if the user is logged in
