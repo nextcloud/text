@@ -38,10 +38,9 @@ const newFileMenuPlugin = {
 			iconClass: 'icon-filetype-text',
 			fileType: 'file',
 			actionHandler: function (name) {
-				var dir = fileList.getCurrentDirectory();
-				// first create the file
-				fileList.createFile(name).then(function () {
-					// TODO: open editor
+				fileList.createFile(name).then(function (status, data) {
+					let fileInfoModel = new OCA.Files.FileInfoModel(data);
+					OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList);
 				});
 			}
 		});
