@@ -26,20 +26,25 @@
 			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
 			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
 		</div>
-		<div id="editor2"></div>
+		<div id="editor"></div>
 	</div>
 </template>
 
 <script>
 	const COLLABORATOR_IDLE_TIME = 5;
 	const COLLABORATOR_DISCONNECT_TIME = 20;
+	const EDITOR_PUSH_DEBOUNCE = 500;
 
 	import axios from 'nextcloud-axios'
-	import { initEditor, ERROR_TYPE } from './../collab';
-	import { Avatar } from 'nextcloud-vue';
+	import { EditorSync, ERROR_TYPE } from './../collab'
+	import { Avatar } from 'nextcloud-vue'
 	import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-	import {sendableSteps, getVersion} from 'prosemirror-collab';
-
+	import {collab, receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab'
+	import {EditorState} from 'prosemirror-state'
+	import {EditorView} from 'prosemirror-view'
+	import {exampleSetup} from 'prosemirror-example-setup'
+	import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from 'prosemirror-markdown'
+	import { debounce } from 'lodash'
 
 	export default {
 		name: 'Editor',
@@ -53,6 +58,9 @@
 			if (this.active || this.shareToken) {
 				this.initSession()
 			}
+		},
+		beforeDestroy() {
+			delete this.authority;
 		},
 		props: {
 			relativePath: {
@@ -153,12 +161,13 @@
 							}
 						}
 					).then((fileContent) => {
-						const {editor, authority} = initEditor(null, 2, response.data, fileContent.data, this);
+						const {editor, authority} = this.initEditor(response.data, fileContent.data);
 						this.authority = authority
 						this.authority.onSync((data) => {
 							if (data.document) {
 								this.document = data.document
 							}
+							this.sessions = data.sessions
 						})
 						this.authority.onError((error, data) => {
 							if (error === ERROR_TYPE.SAVE_COLLISSION) {
@@ -181,6 +190,40 @@
 				})
 
 			},
+
+			initEditor: (data, fileContent) => {
+				const authority = new EditorSync(defaultMarkdownParser.parse(fileContent), data)
+
+				const view = new EditorView(document.querySelector("#editor"), {
+					state: EditorState.create({
+						doc: authority.doc,
+						plugins: [
+							...exampleSetup({schema}),
+							collab({
+								version: authority.steps.length,
+								clientID: data.session.id
+							})
+						]
+					}),
+					focus() { this.view.focus() },
+					destroy() { this.view.destroy() },
+					dispatchTransaction: (transaction) => {
+						const state = view.state.apply(transaction);
+						view.updateState(state);
+						debounce(authority.sendSteps.bind(authority), EDITOR_PUSH_DEBOUNCE)()
+					}
+				})
+				authority.view = view;
+				authority.fetchSteps()
+				return {
+					view: view,
+					authority: authority
+				}
+			},
+			onSync(syncState) {
+				this.sessions = syncState.sessions
+				this.document = syncState.document
+			}
 		}
 	}
 </script>
@@ -199,7 +242,7 @@
 		background-color: var(--color-main-background);
 	}
 
-	#editor2 {
+	#editor {
 		height: 100%;
 		overflow-y: scroll;
 	}

@@ -21,17 +21,32 @@
  */
 
 import axios from 'nextcloud-axios'
-import {EditorState} from "prosemirror-state"
-import {EditorView} from "prosemirror-view"
-import {exampleSetup} from "prosemirror-example-setup"
 import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from "prosemirror-markdown"
-import {collab, receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab';
+import {receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab';
 import {Step} from 'prosemirror-transform';
 
+/**
+ * Minimum inverval to refetch the document changes
+ * @type {number}
+ */
 const FETCH_INTERVAL = 200;
+
+/**
+ * Maximum interval between refetches of document state if multiple users have joined
+ * @type {number}
+ */
+const FETCH_INTERVAL_MAX = 2000;
+
+/**
+ * Interval to check for changes when there is only one user joined
+ * @type {number}
+ */
+const FETCH_INTERVAL_SINGLE_EDITOR = 5000;
+
 const MIN_PUSH_RETRY = 500;
 const MAX_PUSH_RETRY = 10000;
 const WARNING_PUSH_RETRY = 2000;
+const COLLABORATOR_DISCONNECT_TIME = 20;
 
 /**
  * Define how often the editor should retry to apply local changes, before warning the user
@@ -104,26 +119,36 @@ class EditorSync {
 		this.triggerStateChange()
 		const authority = this;
 		let autosaveContent = undefined
-		if (!sendableSteps(this.view.state)) {
+		// TODO only send if not saved already
+		if (!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion)) {
 			autosaveContent = this.content()
 		}
-		axios.get(OC.generateUrl('/apps/text/session/sync'), {params: {
+		axios.get(OC.generateUrl('/apps/text/session/sync'), {
+			params: {
 				documentId: this.document.id,
 				sessionId: this.session.id,
 				token: this.session.token,
 				version: authority.steps.length,
 				autosaveContent
-			}}).then((response) => {
+			}
+		}).then((response) => {
+			if (this.document.lastSavedVersion < response.data.document.lastSavedVersion) {
+				console.debug('Saved document', response.data.document)
+				this.document = response.data.document
+			}
+
 			this.onSyncHandlers.forEach((handler) => handler(response.data))
 
-			if (response.data.document) {
-				console.log('Saved document', response.data.document)
-			}
 			if (response.data.steps.length === 0) {
 				this.lock = false;
-				this.increaseRefetchTimer();
+				if (response.data.sessions.filter((session) => session.lastContact > Date.now()/1000-COLLABORATOR_DISCONNECT_TIME).length < 2) {
+					this.maximumRefetchTimer();
+				} else {
+					this.increaseRefetchTimer();
+				}
 				return;
 			}
+
 			for (let i = 0; i < response.data.steps.length; i++) {
 				let steps = response.data.steps[i].data.map(j => Step.fromJSON(schema, j));
 				steps.forEach(step => {
@@ -161,7 +186,13 @@ class EditorSync {
 	}
 
 	increaseRefetchTimer() {
-		this.fetchInverval = Math.min(this.fetchInverval + 100, FETCH_INTERVAL*5)
+		this.fetchInverval = Math.min(this.fetchInverval + 100, FETCH_INTERVAL_MAX)
+		clearInterval(this.fetcher)
+		this.fetcher = setInterval(() => this.fetchSteps(), this.fetchInverval)
+	}
+
+	maximumRefetchTimer() {
+		this.fetchInverval = FETCH_INTERVAL_SINGLE_EDITOR
 		clearInterval(this.fetcher)
 		this.fetcher = setInterval(() => this.fetchSteps(), this.fetchInverval)
 	}
@@ -224,7 +255,10 @@ class EditorSync {
 			)
 			this.carefulRetryReset()
 			this.lock = false
-		}).catch((e) => {
+		}).catch((e) =>
+
+
+		{
 			console.log('failed to apply steps due to collission, retrying');
 			// TODO: increase retry counter to check against MAX_REBASE_RETRY
 			this.lock = false
@@ -239,42 +273,4 @@ class EditorSync {
 
 }
 
-const initEditor = (unusedauthority, tmpEditorId, data, fileContent, editorView) => {
-	const authority = new EditorSync(defaultMarkdownParser.parse(fileContent), data)
-	authority.onSync((syncState) => {
-		editorView.sessions = syncState.sessions
-	})
-
-	const view = new EditorView(document.querySelector("#editor" + tmpEditorId), {
-		state: EditorState.create({
-			doc: authority.doc,
-			plugins: [
-				...exampleSetup({schema}),
-				collab({
-					version: authority.steps.length,
-					clientID: data.session.id
-				})
-			]
-		}),
-		focus() { this.view.focus() },
-		destroy() { this.view.destroy() },
-		dispatchTransaction: transaction => {
-			const state = view.state.apply(transaction);
-			view.updateState(state);
-			// TODO: might be good to debounce this a bit
-			authority.sendSteps()
-		}
-	})
-	authority.view = view;
-	authority.fetchSteps()
-	window.OCA.Text = {
-		view,
-		authority
-	}
-	return {
-		view: view,
-		authority: authority
-	}
-}
-
-export { initEditor, ERROR_TYPE }
+export { EditorSync, ERROR_TYPE }

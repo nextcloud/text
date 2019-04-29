@@ -183,12 +183,12 @@ class DocumentService {
 		}
 		// TODO: check for etag rather than mtime
 		// Do not save if version already saved
-		if ($version === (string)$document->getLastSavedVersion()) {
-			return null;
+		if ($version <= (string)$document->getLastSavedVersion()) {
+			return $document;
 		}
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		if ($file->getMTime() === $lastMTime && $lastMTime > time()- self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
-			return null;
+			return $document;
 		}
 		$file->putContent($autoaveDocument);
 		$document->setLastSavedVersion($version);
