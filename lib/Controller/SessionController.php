@@ -98,8 +98,9 @@ class SessionController extends Controller {
 	 *
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
+	 * @PublicPage
 	 */
-	public function sync($documentId, $sessionId, $token, $version = 0, $autosaveContent = null): DataResponse {
+	public function sync($documentId, $sessionId, $token, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $token)) {
 			return new DataResponse([], 500);
 		}
@@ -107,7 +108,7 @@ class SessionController extends Controller {
 			return new DataResponse(['steps' => []]);
 		}
 		try {
-			$document = $this->documentService->autosave($documentId, $version, $autosaveContent);
+			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave);
 		} catch (DocumentSaveConflictException $e) {
 			/** @var File $file */
 			$file = $this->documentService->getFile($documentId);

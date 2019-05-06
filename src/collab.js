@@ -111,6 +111,10 @@ class EditorSync {
 		return defaultMarkdownSerializer.serialize(this.view.state.doc)
 	}
 
+	forceSave() {
+		this._forcedSave = true
+	}
+
 	fetchSteps() {
 		if (this.lock) {
 			return;
@@ -120,7 +124,10 @@ class EditorSync {
 		const authority = this;
 		let autosaveContent = undefined
 		// TODO only send if not saved already
-		if (!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion)) {
+		if (
+			this._forcedSave ||
+			(!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion))
+		) {
 			autosaveContent = this.content()
 		}
 		axios.get(OC.generateUrl('/apps/text/session/sync'), {
@@ -172,7 +179,7 @@ class EditorSync {
 				this.view.setProps({editable: () => false})
 				// TODO recover
 				this.onErrorHandlers.forEach((handler) => handler(ERROR_TYPE.SAVE_COLLISSION, {
-					outsideChange: e.response.outsideChange
+					outsideChange: e.response.data.outsideChange
 				}))
 			}
 		})

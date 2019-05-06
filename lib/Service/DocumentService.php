@@ -175,6 +175,9 @@ class DocumentService {
 	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false) {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
+		if ($autoaveDocument === null) {
+			return $document;
+		}
 		$lastMTime = $document->getLastSavedVersionTime();
 		/** @var File $file */
 		$file = $this->rootFolder->getUserFolder($this->userId)->getById($documentId)[0];
@@ -183,7 +186,7 @@ class DocumentService {
 		}
 		// TODO: check for etag rather than mtime
 		// Do not save if version already saved
-		if ($version <= (string)$document->getLastSavedVersion()) {
+		if (!$force && $version <= (string)$document->getLastSavedVersion()) {
 			return $document;
 		}
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds

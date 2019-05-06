@@ -33,7 +33,7 @@
 <script>
 	const COLLABORATOR_IDLE_TIME = 5;
 	const COLLABORATOR_DISCONNECT_TIME = 20;
-	const EDITOR_PUSH_DEBOUNCE = 500;
+	const EDITOR_PUSH_DEBOUNCE = 200;
 
 	import axios from 'nextcloud-axios'
 	import { EditorSync, ERROR_TYPE } from './../collab'
@@ -44,7 +44,9 @@
 	import {EditorView} from 'prosemirror-view'
 	import {exampleSetup} from 'prosemirror-example-setup'
 	import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from 'prosemirror-markdown'
-	import { debounce } from 'lodash'
+	import { debounce, bind } from 'lodash'
+	import {keymap} from "prosemirror-keymap"
+
 
 	export default {
 		name: 'Editor',
@@ -79,6 +81,9 @@
 		data() {
 			return {
 				editor: null,
+				remoteView: null,
+				/** @type EditorSync */
+				authority: null,
 				document: null,
 				content: null,
 				session: null,
@@ -86,7 +91,8 @@
 				name: 'Guest',
 				dirty: false,
 				lastSavedString: '',
-				syncError: null
+				syncError: null,
+				ERROR_TYPE: ERROR_TYPE
 			}
 		},
 		computed: {
@@ -138,6 +144,7 @@
 				this.lastSavedString = moment(this.document.lastSavedVersionTime*1000).fromNow();
 			},
 			initSession() {
+				var self = this;
 				if (!this.relativePath && !this.shareToken) {
 					console.error('No relative path given')
 					this.$emit('error', 'No relative path given')
@@ -194,6 +201,12 @@
 			initEditor: (data, fileContent) => {
 				const authority = new EditorSync(defaultMarkdownParser.parse(fileContent), data)
 
+				const sendStepsDebounce = () => {
+					console.log('debounced SENDSTEPS')
+					authority.sendSteps()
+				}
+				const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
+
 				const view = new EditorView(document.querySelector("#editor"), {
 					state: EditorState.create({
 						doc: authority.doc,
@@ -210,8 +223,9 @@
 					dispatchTransaction: (transaction) => {
 						const state = view.state.apply(transaction);
 						view.updateState(state);
-						debounce(authority.sendSteps.bind(authority), EDITOR_PUSH_DEBOUNCE)()
-					}
+						sendStepsDebounced()
+					},
+
 				})
 				authority.view = view;
 				authority.fetchSteps()
