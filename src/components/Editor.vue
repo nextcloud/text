@@ -258,6 +258,13 @@
 					state: EditorState.create({
 						doc: authority.doc,
 						plugins: [
+							keymap({
+								"Ctrl-s": (state, dispatch, event) => {
+									authority.forceSave()
+									authority.fetchSteps()
+									return true;
+								}
+							}),
 							...exampleSetup({schema}),
 							collab({
 								version: authority.steps.length,
