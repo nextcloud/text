@@ -115,6 +115,10 @@ class EditorSync {
 		this._forcedSave = true
 	}
 
+	manualSave() {
+		this._manualSave = true
+	}
+
 	fetchSteps() {
 		if (this.lock) {
 			return;
@@ -136,13 +140,18 @@ class EditorSync {
 				sessionId: this.session.id,
 				token: this.session.token,
 				version: authority.steps.length,
-				autosaveContent
+				autosaveContent,
+				force: !!this._forcedSave,
+				manualSave: !!this._manualSave
 			}
 		}).then((response) => {
 			if (this.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
 				this.document = response.data.document
 			}
+			this.view.setProps({editable: () => true})
+
+
 
 			this.onSyncHandlers.forEach((handler) => handler(response.data))
 

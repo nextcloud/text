@@ -26,7 +26,14 @@
 			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
 			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
 		</div>
-		<div id="editor"></div>
+		<div id="editor-wrapper" :class="{'has-conflicts': syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION, 'icon-loading': !initialLoading}">
+			<div id="editor"></div>
+			<div id="remote" v-if="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION"></div>
+		</div>
+		<div v-if="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION" id="resolve-conflicts">
+			<button @click="resolveUseThisVersion">Use your version</button>
+			<button @click="resolveUseServerVersion">Use the server version</button>
+		</div>
 	</div>
 </template>
 
@@ -44,7 +51,9 @@
 	import {EditorView} from 'prosemirror-view'
 	import {exampleSetup} from 'prosemirror-example-setup'
 	import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from 'prosemirror-markdown'
-	import { debounce, bind } from 'lodash'
+	import debounce from 'lodash/debounce'
+	import bind from 'lodash/bind'
+	import {baseKeymap} from "prosemirror-commands"
 	import {keymap} from "prosemirror-keymap"
 
 
@@ -90,6 +99,7 @@
 				sessions: [],
 				name: 'Guest',
 				dirty: false,
+				initialLoading: false,
 				lastSavedString: '',
 				syncError: null,
 				ERROR_TYPE: ERROR_TYPE
@@ -171,6 +181,7 @@
 						const {editor, authority} = this.initEditor(response.data, fileContent.data);
 						this.authority = authority
 						this.authority.onSync((data) => {
+							this.syncError = null
 							if (data.document) {
 								this.document = data.document
 							}
@@ -182,10 +193,16 @@
 									type: ERROR_TYPE.SAVE_COLLISSION,
 									data: data
 								}
+								this.$nextTick(() => {
+									this.initRemoteView()
+								})
 							}
 						})
 						this.authority.onStateChange(() => {
 							this.dirty = this.authority.dirty
+							if (!this.initialLoading) {
+								this.initialLoading = !this.authority.dirty
+							}
 						})
 
 						setInterval(() => { this.updateLastSavedStatus() }, 2000)
@@ -196,6 +213,36 @@
 					this.$emit('error', error.response.status)
 				})
 
+			},
+
+			initRemoteView() {
+				if (this.remoteView) {
+					return;
+				}
+				this.remoteView = new EditorView(document.querySelector("#remote"), {
+					state: EditorState.create({
+						doc: defaultMarkdownParser.parse(this.syncError.data.outsideChange),
+						plugins: [
+							...exampleSetup({schema})
+						]
+					}),
+					focus() { this.view.focus() },
+					destroy() { this.view.destroy() }
+				})
+				view.setProps({editable: () => false})
+			},
+
+			resolveUseThisVersion() {
+				this.authority.forceSave()
+				this.removeRemoteView()
+			},
+
+			resolveUseServerVersion() {
+				this.removeRemoteView()
+			},
+
+			removeRemoteView() {
+				this.remoteView.destroy()
 			},
 
 			initEditor: (data, fileContent) => {
@@ -256,9 +303,36 @@
 		background-color: var(--color-main-background);
 	}
 
+	#editor-wrapper {
+		display: flex;
+		height: 100%;
+		&.icon-loading {
+			#editor {
+				opacity: 0.3;
+			}
+		}
+	}
+
+	#resolve-conflicts {
+		display: flex;
+		button {
+			margin: auto;
+		}
+	}
+
 	#editor {
 		height: 100%;
 		overflow-y: scroll;
+	}
+
+	#editor-container.has-conflicts {
+		#remove, #editor {
+			width: 50%;
+		}
+
+		#remote .ProseMirror-menubar {
+			visibility: hidden;
+		}
 	}
 
 	#editor-session-list {
