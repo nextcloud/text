@@ -21,7 +21,7 @@
  */
 
 import axios from 'nextcloud-axios'
-import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from "prosemirror-markdown"
+import {schema, defaultMarkdownSerializer} from "prosemirror-markdown"
 import {receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab';
 import {Step} from 'prosemirror-transform';
 
@@ -65,9 +65,8 @@ const ERROR_TYPE = {
 	PUSH_FAILURE: 1,
 }
 
-// TODO to fetch changes more frequently while typing
-// we either need to have a state machine similar to the prosemirror example to fetch
-// changes inbetween push tries or return updates with the push error
+const URL_SYNC = OC.generateUrl('/apps/text/session/sync')
+const URL_PUSH = OC.generateUrl('/apps/text/session/push');
 
 class EditorSync {
 	constructor(doc, data) {
@@ -89,6 +88,10 @@ class EditorSync {
 		// example for polling
 		// the interval will be adjusted dynamically depending on the time without any change
 		this.fetcher = setInterval(() => this.fetchSteps(), this.fetchInverval)
+	}
+
+	destroy() {
+		clearInterval(this.fetcher)
 	}
 
 	onSync(handler) {
@@ -127,31 +130,26 @@ class EditorSync {
 		this.triggerStateChange()
 		const authority = this;
 		let autosaveContent = undefined
-		// TODO only send if not saved already
 		if (
-			this._forcedSave ||
+			this._forcedSave || this._manualSave ||
 			(!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion))
 		) {
 			autosaveContent = this.content()
 		}
-		axios.get(OC.generateUrl('/apps/text/session/sync'), {
-			params: {
-				documentId: this.document.id,
-				sessionId: this.session.id,
-				token: this.session.token,
-				version: authority.steps.length,
-				autosaveContent,
-				force: !!this._forcedSave,
-				manualSave: !!this._manualSave
-			}
+		axios.post(URL_SYNC, {
+			documentId: this.document.id,
+			sessionId: this.session.id,
+			token: this.session.token,
+			version: authority.steps.length,
+			autosaveContent,
+			force: !!this._forcedSave,
+			manualSave: !!this._manualSave
 		}).then((response) => {
 			if (this.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
 				this.document = response.data.document
 			}
 			this.view.setProps({editable: () => true})
-
-
 
 			this.onSyncHandlers.forEach((handler) => handler(response.data))
 
@@ -178,11 +176,13 @@ class EditorSync {
 			)
 			console.log(getVersion(authority.view.state))
 			this.lock = false;
-			this.sendSteps()
+			this._forcedSave = false;
+			//this.sendSteps()
 			this.resetRefetchTimer();
 		}).catch((e) => {
 			this.lock = false;
-			this.sendSteps()
+			console.log('fetch error sendSteps')
+			//this.sendSteps()
 			if (e.response.status === 409) {
 				console.log('Conflict during file save, please resolve')
 				this.view.setProps({editable: () => false})
@@ -192,6 +192,8 @@ class EditorSync {
 				}))
 			}
 		})
+		this._manualSave = false;
+		this._forcedSave = false;
 	}
 
 	resetRefetchTimer() {
@@ -253,7 +255,7 @@ class EditorSync {
 		this.lock = true
 		const authority = this
 		let steps = sendable.steps
-		axios.post(OC.generateUrl('/apps/text/session/push'), {
+		axios.post(URL_PUSH, {
 			documentId: this.document.id,
 			sessionId: this.session.id,
 			token: this.session.token,
@@ -271,6 +273,7 @@ class EditorSync {
 			)
 			this.carefulRetryReset()
 			this.lock = false
+			this.fetchSteps()
 		}).catch((e) =>
 
 
@@ -282,6 +285,7 @@ class EditorSync {
 			this.fetchSteps()
 
 			this.carefulRetry(() => {
+				console.log('carefulRetry sendSteps')
 				this.sendSteps()
 			})
 		})

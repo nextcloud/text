@@ -26,9 +26,12 @@
 			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
 			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
 		</div>
+		<div><!-- needs a div wrapping to not force rerendering of the editor -->
+			<p class="msg error" v-if="lastSavedStatusTooltip.content">{{ lastSavedStatusTooltip.content }}</p>
+		</div>
 		<div id="editor-wrapper" :class="{'has-conflicts': syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION, 'icon-loading': !initialLoading}">
-			<div id="editor"></div>
-			<div id="remote" v-if="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION"></div>
+			<div id="editor" ref="editor" v-once></div>
+			<div id="remote" ref="remote" v-show="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION"></div>
 		</div>
 		<div v-if="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION" id="resolve-conflicts">
 			<button @click="resolveUseThisVersion">Use your version</button>
@@ -140,9 +143,7 @@
 				// TODO: implement conflict resolving
 				return {
 					content: 'The document has been changed outside of the editor. The changes cannot be applied.',
-					show: true,
-					trigger: 'manual',
-					placement: 'bottom'
+					placement: 'left'
 				}
 			}
 		},
@@ -178,7 +179,7 @@
 							}
 						}
 					).then((fileContent) => {
-						const {editor, authority} = this.initEditor(response.data, fileContent.data);
+						const {editor, authority} = this.initEditor(this.$refs.editor, response.data, fileContent.data);
 						this.authority = authority
 						this.authority.onSync((data) => {
 							this.syncError = null
@@ -188,7 +189,7 @@
 							this.sessions = data.sessions
 						})
 						this.authority.onError((error, data) => {
-							if (error === ERROR_TYPE.SAVE_COLLISSION) {
+							if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 								this.syncError = {
 									type: ERROR_TYPE.SAVE_COLLISSION,
 									data: data
@@ -201,6 +202,7 @@
 						this.authority.onStateChange(() => {
 							this.dirty = this.authority.dirty
 							if (!this.initialLoading) {
+								// TODO: this doesn't work with a limit on the steps fetched
 								this.initialLoading = !this.authority.dirty
 							}
 						})
@@ -219,48 +221,44 @@
 				if (this.remoteView) {
 					return;
 				}
-				this.remoteView = new EditorView(document.querySelector("#remote"), {
+				this.remoteView = new EditorView(this.$refs.remote, {
 					state: EditorState.create({
 						doc: defaultMarkdownParser.parse(this.syncError.data.outsideChange),
 						plugins: [
 							...exampleSetup({schema})
 						]
 					}),
-					focus() { this.view.focus() },
-					destroy() { this.view.destroy() }
 				})
-				view.setProps({editable: () => false})
+				this.remoteView.setProps({editable: () => false})
 			},
 
 			resolveUseThisVersion() {
 				this.authority.forceSave()
-				this.removeRemoteView()
+				this.remoteView.destroy()
+				this.remoteView = null;
+				this.authority.view.setProps({editable: () => true})
 			},
 
 			resolveUseServerVersion() {
-				this.removeRemoteView()
-			},
-
-			removeRemoteView() {
 				this.remoteView.destroy()
+				this.remoteView = null;
+				this.authority.view.destroy()
+				this.initSession()
 			},
 
-			initEditor: (data, fileContent) => {
+			initEditor: (ref, data, fileContent) => {
 				const authority = new EditorSync(defaultMarkdownParser.parse(fileContent), data)
 
-				const sendStepsDebounce = () => {
-					console.log('debounced SENDSTEPS')
-					authority.sendSteps()
-				}
+				const sendStepsDebounce = () => authority.sendSteps()
 				const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
 
-				const view = new EditorView(document.querySelector("#editor"), {
+				const view = new EditorView(ref, {
 					state: EditorState.create({
 						doc: authority.doc,
 						plugins: [
 							keymap({
 								"Ctrl-s": (state, dispatch, event) => {
-									authority.forceSave()
+									authority.manualSave()
 									authority.fetchSteps()
 									return true;
 								}
@@ -273,7 +271,11 @@
 						]
 					}),
 					focus() { this.view.focus() },
-					destroy() { this.view.destroy() },
+					destroy() {
+						console.log('destroy view')
+						this.view.destroy()
+						authority.destroy()
+					},
 					dispatchTransaction: (transaction) => {
 						const state = view.state.apply(transaction);
 						view.updateState(state);
@@ -312,7 +314,10 @@
 
 	#editor-wrapper {
 		display: flex;
+		width: 100%;
 		height: 100%;
+		overflow: hidden;
+		position: absolute;
 		&.icon-loading {
 			#editor {
 				opacity: 0.3;
@@ -322,6 +327,15 @@
 
 	#resolve-conflicts {
 		display: flex;
+		position: fixed;
+		z-index: 10000;
+		bottom: 0;
+		max-width: 900px;
+		width: 100vw;
+		margin: auto;
+		padding: 10px;
+		filter: drop-shadow(0px 0px 5px #000);
+
 		button {
 			margin: auto;
 		}
@@ -332,12 +346,18 @@
 		overflow-y: scroll;
 	}
 
-	#editor-container.has-conflicts {
-		#remove, #editor {
+	.msg.error {
+		padding: 11px;
+	}
+
+	#editor-container #editor-wrapper.has-conflicts {
+		height: calc(100% - 50px);
+
+		#remote, #editor {
 			width: 50%;
 		}
 
-		#remote .ProseMirror-menubar {
+		.ProseMirror-menubar {
 			visibility: hidden;
 		}
 	}

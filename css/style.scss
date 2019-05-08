@@ -75,7 +75,7 @@ li.ProseMirror-selectednode:after {
 }
 
 .ProseMirror-menuseparator {
-  border-right: 1px solid var(--color-text-maxcontrast);
+  border: 0;
   margin-right: 3px;
 }
 
@@ -176,14 +176,22 @@ li.ProseMirror-selectednode:after {
   color: var(--color-text-light);
   padding: 1px 6px;
   top: 0; left: 0; right: 0;
-  background: transparent;
+  background: var(--color-main-background-translucent);
   z-index: 10;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   overflow: visible;
 }
 
+.has-conflicts,
+#editor-wrapper.icon-loading {
+  .ProseMirror-menubar {
+    display: none;
+  }
+}
+
 .ProseMirror {
+  margin-top: 44px;
   overflow: scroll;
   height: 100%;
   position: relative;
@@ -282,6 +290,7 @@ li.ProseMirror-selectednode:after {
 .ProseMirror-example-setup-style img {
   cursor: default;
   max-height: 50vh;
+  max-width: 100%;
 }
 
 .ProseMirror-prompt {
@@ -345,6 +354,8 @@ div[contenteditable=false] {
   border: none !important;
   width: 100%;
   background-color: transparent;
+  color: var(--color-main-text);
+  opacity: 1;
 }
 
 .ProseMirror p:first-child,
