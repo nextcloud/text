@@ -5,7 +5,7 @@
 	<name>Text</name>
 	<summary>Type together</summary>
 	<description>Collaborative text editor</description>
-	<version>0.1.0-dev13</version>
+	<version>0.1.0-dev14</version>
 	<licence>agpl</licence>
 	<author mail="jus@bitgrid.net">Julius Härtl</author>
 	<namespace>Text</namespace>

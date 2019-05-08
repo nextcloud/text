@@ -12,7 +12,7 @@ return [
 		// Load initial document
 		['name' => 'Session#fetch', 'url' => '/session/fetch', 'verb' => 'GET'],
 		// Load steps
-		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'GET'],
+		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'POST'],
 		// Push own steps
 		['name' => 'Session#push', 'url' => '/session/push', 'verb' => 'POST'],
 		// Close session

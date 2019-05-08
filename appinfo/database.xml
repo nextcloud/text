@@ -37,6 +37,16 @@
 				<unsigned>true</unsigned>
 				<length>4</length>
 			</field>
+			<field>
+				<name>last_saved_version_etag</name>
+				<type>text</type>
+				<length>64</length>
+			</field>
+			<field>
+				<name>base_version_etag</name>
+				<type>text</type>
+				<length>64</length>
+			</field>
 		</declaration>
 	</table>
 
