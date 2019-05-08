@@ -34,13 +34,20 @@ class StepMapper extends QBMapper {
 		parent::__construct($db, 'text_steps', Step::class);
 	}
 
-	public function find($documentId, $fromVersion) {
+	public function find($documentId, $fromVersion, $lastAckedVersion = null) {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($fromVersion)))
+			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($fromVersion)));
+		// WIP: only return steps that were persisted completely
+		if ($lastAckedVersion) {
+			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
+		}
+		$qb
+		// TODO: limiting results currently causes the loading detection to fail
+		//	->setMaxResults(500)
 			->execute();
 
 		return $this->findEntities($qb);

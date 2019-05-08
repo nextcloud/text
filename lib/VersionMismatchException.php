@@ -21,36 +21,14 @@
  *
  */
 
-namespace OCA\Text\Db;
+namespace OCA\Text;
 
 
-use OCP\AppFramework\Db\Entity;
+use OCP\AppFramework\Http;
 
-class Document extends Entity implements \JsonSerializable {
+class VersionMismatchException extends \Exception {
 
-	public $id;
-	protected $currentVersion = 0;
-	protected $lastSavedVersion = 0;
-	protected $initialVersion = 0;
-	protected $lastSavedVersionTime = 0;
-	protected $lastSavedVersionEtag = '';
-	protected $baseVersionEtag = '';
-
-	public function __construct() {
-		$this->addType('id', 'integer');
-		$this->addType('currentVersion', 'integer');
-		$this->addType('lastSavedVersion', 'integer');
-		$this->addType('lastSavedVersionTime', 'integer');
-		$this->addType('initialVersion', 'integer');
+	public function getStatus() {
+		return Http::STATUS_PRECONDITION_FAILED;
 	}
-
-	public function jsonSerialize() {
-		return [
-			'id' => $this->id,
-			'currentVersion' => $this->currentVersion,
-			'lastSavedVersion' => $this->lastSavedVersion,
-			'lastSavedVersionTime' => $this->lastSavedVersionTime,
-		];
-	}
-
 }

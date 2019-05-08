@@ -7,6 +7,7 @@ namespace OCA\Text\Controller;
 use OC\Files\Node\File;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
+use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
@@ -85,8 +86,8 @@ class SessionController extends Controller {
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
-			} catch (\Exception $e) {
-				return new DataResponse($e->getMessage(), 500);
+			} catch (VersionMismatchException $e) {
+				return new DataResponse($e->getMessage(), $e->getStatus());
 			}
 			return new DataResponse($steps);
 		}
