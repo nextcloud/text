@@ -187,22 +187,26 @@ class DocumentService {
 	 * @throws VersionMismatchException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version) {
-		// TODO lock for other step adding
 		// TODO check cache
 		$document = $this->documentMapper->find($documentId);
 		if ($version !== $document->getCurrentVersion()) {
 			throw new VersionMismatchException('Version does not match');
 		}
-		$step = new Step();
-		$step->setData(\json_encode($steps));
+		$stepsJson = json_encode($steps);
+		if ($stepsJson === null) {
+			throw new InvalidArgumentException('Failed to encode steps');
+		}
+		$newVersion = $document->getCurrentVersion() + count($steps);
+		$document->setCurrentVersion($newVersion);
+		$this->documentMapper->update($document);
+		$step = new Step($stepsJson);
+		$step->setData($stepsJson);
 		$step->setSessionId($sessionId);
 		$step->setDocumentId($documentId);
 		$step->setVersion($version+1);
 		$this->stepMapper->insert($step);
-		$newVersion = $document->getCurrentVersion() + count($steps);
-		$document->setCurrentVersion($newVersion);
-		$this->documentMapper->update($document);
 		$this->cache->set('document-version-'.$document->getId(), $newVersion);
+		// TODO restore old version for document if adding steps has failed
 		// TODO write steps to cache for quicker reading
 		return $steps;
 	}
