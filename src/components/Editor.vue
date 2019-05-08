@@ -343,7 +343,6 @@
 
 	#editor {
 		height: 100%;
-		overflow-y: scroll;
 	}
 
 	.msg.error {
@@ -367,7 +366,7 @@
 		top: 0;
 		right: 0;
 		z-index: 100;
-		padding: 3px;
+		padding: 6px;
 		display: flex;
 
 		input, div {

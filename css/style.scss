@@ -72,6 +72,7 @@ li.ProseMirror-selectednode:after {
   margin-right: 3px;
   padding: 4px;
   display: inline-block;
+  vertical-align: top;
 }
 
 .ProseMirror-menuseparator {
@@ -104,7 +105,7 @@ li.ProseMirror-selectednode:after {
   border-top: 4px solid currentColor;
   opacity: .6;
   position: absolute;
-  right: 4px;
+  right: 9px;
   top: calc(50% - 2px);
 }
 
@@ -133,6 +134,10 @@ li.ProseMirror-selectednode:after {
 .ProseMirror-menu-submenu-wrap {
   position: relative;
   margin-right: -4px;
+}
+
+.ProseMirror-menu-submenu-label {
+  padding-right: 20px;
 }
 
 .ProseMirror-menu-submenu-label:after {
@@ -200,7 +205,6 @@ li.ProseMirror-selectednode:after {
 .ProseMirror-icon, .ProseMirror-menu-dropdown-wrap {
   display: inline-block;
   line-height: .8;
-  vertical-align: -2px; /* Compensate for padding */
   border-radius: 2px;
   cursor: pointer;
   &:hover, &:focus {
@@ -210,6 +214,8 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror-icon, .Prosemirror-menu-dropdown {
   padding: 8px;
+  width: 34px;
+  text-align: center;
 }
 
 .ProseMirror-menu-dropdown-menu {
