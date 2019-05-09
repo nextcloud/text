@@ -21,254 +21,265 @@
   -->
 
 <template>
-	<div id="editor-container" v-if="session && active">
+	<div v-if="currentSession && active" id="editor-container">
 		<div id="editor-session-list">
-			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
-			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
+			<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
+				{{ lastSavedStatus }}
+			</div>
+			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId"
+				:display-name="session.displayName" :style="sessionStyle(session)" />
 		</div>
 		<div>
-			<p class="msg icon-error" v-if="hasSyncCollission">
+			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
 		</div>
 		<div id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
-			<div id="editor" ref="editor" v-once></div>
+			<div v-once id="editor" ref="editor" />
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
-		<div id="resolve-conflicts" v-if="hasSyncCollission">
-			<button @click="resolveUseThisVersion">Use your version</button>
-			<button @click="resolveUseServerVersion">Use the server version</button>
+		<div v-if="hasSyncCollission" id="resolve-conflicts">
+			<button @click="resolveUseThisVersion">
+				Use your version
+			</button>
+			<button @click="resolveUseServerVersion">
+				Use the server version
+			</button>
 		</div>
 	</div>
 </template>c
 
 <script>
-	const COLLABORATOR_IDLE_TIME = 5;
-	const COLLABORATOR_DISCONNECT_TIME = 20;
-	const EDITOR_PUSH_DEBOUNCE = 200;
+import axios from 'nextcloud-axios'
+import debounce from 'lodash/debounce'
 
-	import axios from 'nextcloud-axios'
-	import debounce from 'lodash/debounce'
+import { EditorSync, ERROR_TYPE } from './../EditorSync'
+import { collab, getVersion } from 'prosemirror-collab'
+import { EditorState } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
+import { exampleSetup } from 'prosemirror-example-setup'
+import { schema, defaultMarkdownParser } from 'prosemirror-markdown'
+import { keymap } from 'prosemirror-keymap'
 
-	import { EditorSync, ERROR_TYPE } from './../EditorSync'
-	import {collab, receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab'
-	import {EditorState} from 'prosemirror-state'
-	import {EditorView} from 'prosemirror-view'
-	import {exampleSetup} from 'prosemirror-example-setup'
-	import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from 'prosemirror-markdown'
-	import {keymap} from 'prosemirror-keymap'
+import Avatar from 'nextcloud-vue/dist/Components/Avatar'
+import ReadOnlyEditor from './ReadOnlyEditor'
+import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
-	import Avatar from 'nextcloud-vue/dist/Components/Avatar'
-	import ReadOnlyEditor from './ReadOnlyEditor'
-	import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+const COLLABORATOR_IDLE_TIME = 5
+const COLLABORATOR_DISCONNECT_TIME = 20
+const EDITOR_PUSH_DEBOUNCE = 200
 
-	export default {
-		name: 'Editor',
-		components: {
-			Avatar,
-			ReadOnlyEditor
+export default {
+	name: 'Editor',
+	components: {
+		Avatar,
+		ReadOnlyEditor
+	},
+	directives: {
+		Tooltip
+	},
+	props: {
+		relativePath: {
+			type: String,
+			default: null
 		},
-		directives: {
-			Tooltip
+		fileId: {
+			type: String,
+			default: null
 		},
-		beforeMount() {
-			if (this.active || this.shareToken) {
-				this.initSession()
+		active: {
+			type: Boolean,
+			default: false
+		},
+		shareToken: {
+			type: String,
+			default: null
+		}
+	},
+	data() {
+		return {
+			editor: null,
+			/** @type EditorSync */
+			authority: null,
+			document: null,
+			currentSession: null,
+			sessions: [],
+			name: 'Guest',
+			dirty: false,
+			initialLoading: false,
+			lastSavedString: '',
+			syncError: null
+		}
+	},
+	computed: {
+		activeSessions() {
+			// TODO: filter out duplicate user ids
+			return this.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME)
+		},
+		sessionStyle() {
+			return (session) => {
+				return {
+					'opacity': session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
+					'border-color': session.color
+				}
 			}
-			setInterval(() => { this.updateLastSavedStatus() }, 2000)
 		},
-		props: {
-			relativePath: {
-				default: null
-			},
-			fileId: {
-				default: null
-			},
-			active: {
-				default: false
-			},
-			shareToken: {
-				default: null
+		lastSavedStatus() {
+			return (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '') + this.lastSavedString
+		},
+		lastSavedStatusClass() {
+			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
+		},
+		lastSavedStatusTooltip() {
+			let message = t('text', 'Last save {lastSave}', { lastSave: this.lastSavedString })
+			if (this.hasSyncCollission) {
+				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
+			}
+			if (this.hasUnpushedChanges) {
+				message += ' - ' + t('text', 'Unpushed changes')
+			}
+			if (this.hasUnsavedChanges) {
+				message += ' - ' + t('text', 'Unsaved changes')
+			}
+			return { content: message, placement: 'bottom' }
+		},
+		hasSyncCollission() {
+			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+		},
+		hasUnpushedChanges() {
+			return this.dirty
+		},
+		hasUnsavedChanges() {
+			return this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state)
+		}
+	},
+	beforeMount() {
+		if (this.active || this.shareToken) {
+			this.initSession()
+		}
+		setInterval(() => { this.updateLastSavedStatus() }, 2000)
+	},
+	methods: {
+		updateLastSavedStatus() {
+			if (this.document) {
+				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
 			}
 		},
-		data() {
-			return {
-				editor: null,
-				/** @type EditorSync */
-				authority: null,
-				document: null,
-				session: null,
-				sessions: [],
-				name: 'Guest',
-				dirty: false,
-				initialLoading: false,
-				lastSavedString: '',
-				syncError: null
+		initSession() {
+			if (!this.relativePath && !this.shareToken) {
+				console.error('No relative path given')
+				this.$emit('error', 'No relative path given')
+				return
 			}
-		},
-		computed: {
-			activeSessions() {
-				// TODO: filter out duplicate user ids
-				return this.sessions.filter((session) => session.lastContact > Date.now()/1000-COLLABORATOR_DISCONNECT_TIME)
-			},
-			sessionStyle() {
-				return (session) => {
-					return {
-						'opacity': session.lastContact > Date.now()/1000-COLLABORATOR_IDLE_TIME ? 1 : 0.5,
-						'border-color': session.color
+			axios.get(OC.generateUrl('/apps/text/session/create'), {
+				// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
+				params: {
+					file: this.relativePath,
+					shareToken: this.shareToken
+				}
+			}).then((response) => {
+				this.document = response.data.document
+				this.currentSession = response.data.session
+				axios.get(OC.generateUrl('/apps/text/session/fetch'),
+					{
+						params: {
+							documentId: this.document.id,
+							sessionId: this.currentSession.id,
+							token: this.currentSession.token
+						}
 					}
-				}
-			},
-			lastSavedStatus() {
-				return (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '') + this.lastSavedString
-			},
-			lastSavedStatusClass() {
-				return this.syncError && this.lastSavedString !== '' ? 'error' : ''
-			},
-			lastSavedStatusTooltip() {
-				let message = t('text', 'Last save {lastSave}', {lastSave: this.lastSavedString})
-				if (this.hasSyncCollission) {
-					message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
-				}
-				if (this.hasUnpushedChanges) {
-					message += ' - ' + t('text', 'Unpushed changes')
-				}
-				if (this.hasUnsavedChanges) {
-					message += ' - ' + t('text', 'Unsaved changes')
-				}
-				return { content: message, placement: 'bottom' }
-			},
-			hasSyncCollission() {
-				return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
-			},
-			hasUnpushedChanges() {
-				return this.dirty
-			},
-			hasUnsavedChanges() {
-				return this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state)
-			}
-		},
-		methods: {
-			updateLastSavedStatus() {
-				if (this.document) {
-					this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow();
-				}
-			},
-			initSession() {
-				if (!this.relativePath && !this.shareToken) {
-					console.error('No relative path given')
-					this.$emit('error', 'No relative path given')
-					return;
-				}
-				axios.get(OC.generateUrl('/apps/text/session/create'), {
-					// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
-					params: {
-						file: this.relativePath,
-						shareToken: this.shareToken
-					}
-				}).then((response) => {
-					this.document = response.data.document;
-					this.session = response.data.session;
-					axios.get(OC.generateUrl('/apps/text/session/fetch',),
-						{
-							params: {
-								documentId: this.document.id,
-								sessionId: this.session.id,
-								token: this.session.token
+				).then((fileContent) => {
+					const { authority } = this.initEditor(this.$refs.editor, response.data, fileContent.data)
+					this.authority = authority
+					this.authority.onSync((data) => {
+						this.syncError = null
+						if (data.document) {
+							this.document = data.document
+						}
+						this.sessions = data.sessions
+					})
+					this.authority.onError((error, data) => {
+						if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
+							this.syncError = {
+								type: ERROR_TYPE.SAVE_COLLISSION,
+								data: data
 							}
 						}
-					).then((fileContent) => {
-						const {editor, authority} = this.initEditor(this.$refs.editor, response.data, fileContent.data);
-						this.authority = authority
-						this.authority.onSync((data) => {
-							this.syncError = null
-							if (data.document) {
-								this.document = data.document
-							}
-							this.sessions = data.sessions
-						})
-						this.authority.onError((error, data) => {
-							if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
-								this.syncError = {
-									type: ERROR_TYPE.SAVE_COLLISSION,
-									data: data
-								}
-							}
-						})
-						this.authority.onStateChange(() => {
-							this.dirty = this.authority.dirty
-							if (!this.initialLoading) {
-								this.initialLoading = !this.authority.dirty && this.document.lastSavedVersion === getVersion(this.authority.view.state)
-							}
-						})
+					})
+					this.authority.onStateChange(() => {
+						this.dirty = this.authority.dirty
+						if (!this.initialLoading) {
+							this.initialLoading = !this.authority.dirty && this.document.lastSavedVersion === getVersion(this.authority.view.state)
+						}
+					})
 
-						this.$emit('update:loaded', true)
-					});
-				}).catch((error) => {
-					console.error(error.response)
-					this.$emit('error', error.response.status)
+					this.$emit('update:loaded', true)
 				})
+			}).catch((error) => {
+				console.error(error.response)
+				this.$emit('error', error.response.status)
+			})
 
-			},
+		},
 
-			resolveUseThisVersion() {
-				this.authority.forceSave()
-				this.authority.view.setProps({editable: () => true})
-			},
+		resolveUseThisVersion() {
+			this.authority.forceSave()
+			this.authority.view.setProps({ editable: () => true })
+		},
 
-			resolveUseServerVersion() {
-				this.authority.view.destroy()
-				this.initSession()
-			},
+		resolveUseServerVersion() {
+			this.authority.view.destroy()
+			this.initSession()
+		},
 
-			initEditor: (ref, data, initialDocument) => {
-				const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data)
+		initEditor: (ref, data, initialDocument) => {
+			const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data)
 
-				const sendStepsDebounce = () => authority.sendSteps()
-				const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
+			const sendStepsDebounce = () => authority.sendSteps()
+			const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
 
-				const view = new EditorView(ref, {
-					state: EditorState.create({
-						doc: authority.doc,
-						plugins: [
-							keymap({
-								'Ctrl-s': () => {
-									authority.manualSave()
-									authority.fetchSteps()
-									return true;
-								}
-							}),
-							...exampleSetup({schema}),
-							collab({
-								version: authority.steps.length,
-								clientID: data.session.id
-							})
-						]
-					}),
-					destroy() {
-						this.view.destroy()
-						authority.destroy()
-					},
-					dispatchTransaction: (transaction) => {
-						const state = view.state.apply(transaction);
-						view.updateState(state);
-						sendStepsDebounced()
-					},
-
-				})
-				authority.view = view;
-				authority.fetchSteps()
-				return {
-					view: view,
-					authority: authority
+			const view = new EditorView(ref, {
+				state: EditorState.create({
+					doc: authority.doc,
+					plugins: [
+						keymap({
+							'Ctrl-s': () => {
+								authority.manualSave()
+								authority.fetchSteps()
+								return true
+							}
+						}),
+						...exampleSetup({ schema }),
+						collab({
+							version: authority.steps.length,
+							clientID: data.session.id
+						})
+					]
+				}),
+				destroy() {
+					this.view.destroy()
+					authority.destroy()
+				},
+				dispatchTransaction: (transaction) => {
+					const state = view.state.apply(transaction)
+					view.updateState(state)
+					sendStepsDebounced()
 				}
-			},
-			onSync(syncState) {
-				this.sessions = syncState.sessions
-				this.document = syncState.document
+
+			})
+			authority.view = view
+			authority.fetchSteps()
+			return {
+				view: view,
+				authority: authority
 			}
+		},
+		onSync(syncState) {
+			this.sessions = syncState.sessions
+			this.document = syncState.document
 		}
 	}
+}
 </script>
 
 <style scoped lang="scss">
@@ -331,8 +342,6 @@
 			box-shadow: 0 0 10px var(--color-box-shadow);
 		}
 	}
-
-
 
 	#editor-container #editor-wrapper.has-conflicts {
 		height: calc(100% - 50px);

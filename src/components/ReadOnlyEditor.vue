@@ -21,51 +21,51 @@
   -->
 
 <template>
-	<div id="remote" ref="remote"></div>
+	<div id="remote" ref="remote" />
 </template>
 
 <script>
-	import {EditorState} from 'prosemirror-state'
-	import {EditorView} from 'prosemirror-view'
-	import {exampleSetup} from 'prosemirror-example-setup'
-	import {schema, defaultMarkdownParser} from 'prosemirror-markdown'
+import { EditorState } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
+import { exampleSetup } from 'prosemirror-example-setup'
+import { schema, defaultMarkdownParser } from 'prosemirror-markdown'
 
-	export default {
-		name: 'ReadOnlyEditor',
-		props: {
-			content: {
-				type: String,
-				required: true
-			},
-		},
-		data: () => {
-			return {
-				remoteView: null
+export default {
+	name: 'ReadOnlyEditor',
+	props: {
+		content: {
+			type: String,
+			required: true
+		}
+	},
+	data: () => {
+		return {
+			remoteView: null
+		}
+	},
+	mounted() {
+		this.initRemoteView()
+	},
+	beforeDestroy() {
+		this.remoteView.destroy()
+	},
+	methods: {
+		initRemoteView() {
+			if (this.remoteView) {
+				return
 			}
-		},
-		mounted() {
-			this.initRemoteView()
-		},
-		beforeDestroy() {
-			this.remoteView.destroy()
-		},
-		methods: {
-			initRemoteView() {
-				if (this.remoteView) {
-					return;
-				}
-				this.remoteView = new EditorView(this.$refs.remote, {
-					state: EditorState.create({
-						doc: defaultMarkdownParser.parse(this.content),
-						plugins: [
-							...exampleSetup({schema})
-						]
-					}),
+			this.remoteView = new EditorView(this.$refs.remote, {
+				state: EditorState.create({
+					doc: defaultMarkdownParser.parse(this.content),
+					plugins: [
+						...exampleSetup({ schema })
+					]
 				})
-				this.remoteView.setProps({editable: () => false})
-			},
+			})
+			this.remoteView.setProps({ editable: () => false })
 		}
 	}
+}
 </script>
 
 <style scoped>

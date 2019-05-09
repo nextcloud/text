@@ -21,37 +21,36 @@
  */
 
 import axios from 'nextcloud-axios'
-import {schema, defaultMarkdownSerializer} from "prosemirror-markdown"
-import {receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab';
-import {Step} from 'prosemirror-transform';
+import { schema, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { receiveTransaction, sendableSteps, getVersion } from 'prosemirror-collab'
+import { Step } from 'prosemirror-transform'
 
 /**
  * Minimum inverval to refetch the document changes
  * @type {number}
  */
-const FETCH_INTERVAL = 200;
+const FETCH_INTERVAL = 200
 
 /**
  * Maximum interval between refetches of document state if multiple users have joined
  * @type {number}
  */
-const FETCH_INTERVAL_MAX = 2000;
+const FETCH_INTERVAL_MAX = 2000
 
 /**
  * Interval to check for changes when there is only one user joined
  * @type {number}
  */
-const FETCH_INTERVAL_SINGLE_EDITOR = 5000;
+const FETCH_INTERVAL_SINGLE_EDITOR = 5000
 
-const MIN_PUSH_RETRY = 500;
-const MAX_PUSH_RETRY = 10000;
-const WARNING_PUSH_RETRY = 2000;
-const COLLABORATOR_DISCONNECT_TIME = 20;
+const MIN_PUSH_RETRY = 500
+const MAX_PUSH_RETRY = 10000
 
-/**
- * Define how often the editor should retry to apply local changes, before warning the user
- */
-const MAX_REBASE_RETRY = 5;
+/* Timeout after that a PUSH_FAILURE error is emitted */
+const WARNING_PUSH_RETRY = 5000
+
+/* Timeout for sessions to be marked as disconnected */
+const COLLABORATOR_DISCONNECT_TIME = 20
 
 const ERROR_TYPE = {
 	/**
@@ -62,13 +61,14 @@ const ERROR_TYPE = {
 	/**
 	 * Failed to push changes for MAX_REBASE_RETRY times
 	 */
-	PUSH_FAILURE: 1,
+	PUSH_FAILURE: 1
 }
 
 const URL_SYNC = OC.generateUrl('/apps/text/session/sync')
-const URL_PUSH = OC.generateUrl('/apps/text/session/push');
+const URL_PUSH = OC.generateUrl('/apps/text/session/push')
 
 class EditorSync {
+
 	constructor(doc, data) {
 		this.view = null
 		this.doc = doc
@@ -79,7 +79,7 @@ class EditorSync {
 		this.lock = false
 		this.retryTime = MIN_PUSH_RETRY
 		this.dirty = false
-		this.fetchInverval = FETCH_INTERVAL;
+		this.fetchInverval = FETCH_INTERVAL
 
 		this.onSyncHandlers = []
 		this.onErrorHandlers = []
@@ -124,15 +124,15 @@ class EditorSync {
 
 	fetchSteps() {
 		if (this.lock) {
-			return;
+			return
 		}
-		this.lock = true;
+		this.lock = true
 		this.triggerStateChange()
-		const authority = this;
-		let autosaveContent = undefined
+		const authority = this
+		let autosaveContent
 		if (
-			this._forcedSave || this._manualSave ||
-			(!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion))
+			this._forcedSave || this._manualSave
+			|| (!sendableSteps(this.view.state) && (authority.steps.length > this.document.lastSavedVersion))
 		) {
 			autosaveContent = this.content()
 		}
@@ -149,22 +149,22 @@ class EditorSync {
 				console.debug('Saved document', response.data.document)
 				this.document = response.data.document
 			}
-			this.view.setProps({editable: () => true})
+			this.view.setProps({ editable: () => true })
 
 			this.onSyncHandlers.forEach((handler) => handler(response.data))
 
 			if (response.data.steps.length === 0) {
-				this.lock = false;
-				if (response.data.sessions.filter((session) => session.lastContact > Date.now()/1000-COLLABORATOR_DISCONNECT_TIME).length < 2) {
-					this.maximumRefetchTimer();
+				this.lock = false
+				if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
+					this.maximumRefetchTimer()
 				} else {
-					this.increaseRefetchTimer();
+					this.increaseRefetchTimer()
 				}
-				return;
+				return
 			}
 
 			for (let i = 0; i < response.data.steps.length; i++) {
-				let steps = response.data.steps[i].data.map(j => Step.fromJSON(schema, j));
+				let steps = response.data.steps[i].data.map(j => Step.fromJSON(schema, j))
 				steps.forEach(step => {
 					authority.steps.push(step)
 					authority.stepClientIDs.push(response.data.steps[i].sessionId)
@@ -174,30 +174,29 @@ class EditorSync {
 			authority.view.dispatch(
 				receiveTransaction(authority.view.state, newData.steps, newData.clientIDs)
 			)
-			console.log(getVersion(authority.view.state))
-			this.lock = false;
-			this._forcedSave = false;
-			//this.sendSteps()
-			this.resetRefetchTimer();
+			console.debug('Synced new steps, current version is ' + getVersion(authority.view.state))
+			this.lock = false
+			this._forcedSave = false
+			// this.sendSteps()
+			this.resetRefetchTimer()
 		}).catch((e) => {
-			this.lock = false;
-			console.log('fetch error sendSteps')
-			//this.sendSteps()
+			this.lock = false
+			// this.sendSteps()
 			if (e.response.status === 409) {
-				console.log('Conflict during file save, please resolve')
-				this.view.setProps({editable: () => false})
+				console.error('Conflict during file save, please resolve')
+				this.view.setProps({ editable: () => false })
 				// TODO recover
 				this.onErrorHandlers.forEach((handler) => handler(ERROR_TYPE.SAVE_COLLISSION, {
 					outsideChange: e.response.data.outsideChange
 				}))
 			}
 		})
-		this._manualSave = false;
-		this._forcedSave = false;
+		this._manualSave = false
+		this._forcedSave = false
 	}
 
 	resetRefetchTimer() {
-		this.fetchInverval = FETCH_INTERVAL;
+		this.fetchInverval = FETCH_INTERVAL
 		clearInterval(this.fetcher)
 		this.fetcher = setInterval(() => this.fetchSteps(), this.fetchInverval)
 
@@ -225,8 +224,9 @@ class EditorSync {
 	carefulRetry(callback) {
 		let newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
-			OC.Notification.showTemporary('Changes could not be sent yet');
-			this.view.setProps({editable: () => false})
+			OC.Notification.showTemporary('Changes could not be sent yet')
+			this.view.setProps({ editable: () => false })
+			this.onErrorHandlers.forEach((handler) => handler(ERROR_TYPE.PUSH_FAILURE, {}))
 			// TODO recover
 		}
 		this.retryTime = newRetry
@@ -242,7 +242,7 @@ class EditorSync {
 		if (!sendable) {
 			this.dirty = false
 			this.triggerStateChange()
-			return;
+			return
 		}
 		this.dirty = true
 		this.triggerStateChange()
@@ -250,7 +250,7 @@ class EditorSync {
 			setTimeout(() => {
 				this.sendSteps()
 			}, 500)
-			return;
+			return
 		}
 		this.lock = true
 		const authority = this
@@ -274,18 +274,14 @@ class EditorSync {
 			this.carefulRetryReset()
 			this.lock = false
 			this.fetchSteps()
-		}).catch((e) =>
-
-
-		{
-			console.log('failed to apply steps due to collission, retrying');
+		}).catch((e) => {
+			console.error('failed to apply steps due to collission, retrying')
 			// TODO: increase retry counter to check against MAX_REBASE_RETRY
 			this.lock = false
 			// TODO: remove if we have state machine
 			this.fetchSteps()
 
 			this.carefulRetry(() => {
-				console.log('carefulRetry sendSteps')
 				this.sendSteps()
 			})
 		})

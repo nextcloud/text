@@ -20,14 +20,16 @@
  *
  */
 
-const newFileMenuPlugin = {
+import Editor from './components/Editor'
+import { documentReady } from './helpers'
 
-	attach: function (menu) {
-		var fileList = menu.fileList;
+const newFileMenuPlugin = {
+	attach: function(menu) {
+		var fileList = menu.fileList
 
 		// only attach to main file list, public view is not supported yet
 		if (fileList.id !== 'files') {
-			return;
+			return
 		}
 
 		// register the new menu entry
@@ -37,23 +39,22 @@ const newFileMenuPlugin = {
 			templateName: t('text', 'New text document.md'),
 			iconClass: 'icon-filetype-text',
 			fileType: 'file',
-			actionHandler: function (name) {
-				fileList.createFile(name).then(function (status, data) {
-					let fileInfoModel = new OCA.Files.FileInfoModel(data);
-					OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList);
-				});
+			actionHandler: function(name) {
+				fileList.createFile(name).then(function(status, data) {
+					let fileInfoModel = new OCA.Files.FileInfoModel(data)
+					OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+				})
 			}
-		});
+		})
 	}
-};
-OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin);
+}
 
-import Editor from './components/Editor'
-$(document).ready(function() {
+OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
+documentReady(() => {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: ['text/markdown'],
 		component: Editor,
 		group: null
-	});
-});
+	})
+})
