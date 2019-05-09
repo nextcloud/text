@@ -47,7 +47,7 @@ class StepMapper extends QBMapper {
 		}
 		$qb
 		// TODO: limiting results currently causes the loading detection to fail
-		//	->setMaxResults(500)
+			->setMaxResults(100)
 			->execute();
 
 		return $this->findEntities($qb);
