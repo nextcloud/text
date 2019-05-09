@@ -26,19 +26,21 @@
 			<div class="save-status" :class="lastSavedStatusClass" v-tooltip="lastSavedStatusTooltip">{{ lastSavedStatus }}</div>
 			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId" :displayName="session.displayName" :style="sessionStyle(session)"></avatar>
 		</div>
-		<div><!-- needs a div wrapping to not force rerendering of the editor -->
-			<p class="msg error" v-if="lastSavedStatusTooltip.content">{{ lastSavedStatusTooltip.content }}</p>
+		<div>
+			<p class="msg icon-error" v-if="hasSyncCollission">
+				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
+			</p>
 		</div>
-		<div id="editor-wrapper" :class="{'has-conflicts': syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION, 'icon-loading': !initialLoading}">
+		<div id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor" ref="editor" v-once></div>
-			<div id="remote" ref="remote" v-show="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION"></div>
+			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
-		<div v-if="syncError && syncError.type === ERROR_TYPE.SAVE_COLLISSION" id="resolve-conflicts">
+		<div id="resolve-conflicts" v-if="hasSyncCollission">
 			<button @click="resolveUseThisVersion">Use your version</button>
 			<button @click="resolveUseServerVersion">Use the server version</button>
 		</div>
 	</div>
-</template>
+</template>c
 
 <script>
 	const COLLABORATOR_IDLE_TIME = 5;
@@ -46,35 +48,34 @@
 	const EDITOR_PUSH_DEBOUNCE = 200;
 
 	import axios from 'nextcloud-axios'
-	import { EditorSync, ERROR_TYPE } from './../collab'
-	import { Avatar } from 'nextcloud-vue'
-	import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+	import debounce from 'lodash/debounce'
+
+	import { EditorSync, ERROR_TYPE } from './../EditorSync'
 	import {collab, receiveTransaction, sendableSteps, getVersion} from 'prosemirror-collab'
 	import {EditorState} from 'prosemirror-state'
 	import {EditorView} from 'prosemirror-view'
 	import {exampleSetup} from 'prosemirror-example-setup'
 	import {schema, defaultMarkdownParser, defaultMarkdownSerializer} from 'prosemirror-markdown'
-	import debounce from 'lodash/debounce'
-	import bind from 'lodash/bind'
-	import {baseKeymap} from "prosemirror-commands"
-	import {keymap} from "prosemirror-keymap"
+	import {keymap} from 'prosemirror-keymap'
 
+	import Avatar from 'nextcloud-vue/dist/Components/Avatar'
+	import ReadOnlyEditor from './ReadOnlyEditor'
+	import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 	export default {
 		name: 'Editor',
 		components: {
-			Avatar
+			Avatar,
+			ReadOnlyEditor
 		},
 		directives: {
 			Tooltip
 		},
-		beforeMount () {
+		beforeMount() {
 			if (this.active || this.shareToken) {
 				this.initSession()
 			}
-		},
-		beforeDestroy() {
-			delete this.authority;
+			setInterval(() => { this.updateLastSavedStatus() }, 2000)
 		},
 		props: {
 			relativePath: {
@@ -93,19 +94,16 @@
 		data() {
 			return {
 				editor: null,
-				remoteView: null,
 				/** @type EditorSync */
 				authority: null,
 				document: null,
-				content: null,
 				session: null,
 				sessions: [],
 				name: 'Guest',
 				dirty: false,
 				initialLoading: false,
 				lastSavedString: '',
-				syncError: null,
-				ERROR_TYPE: ERROR_TYPE
+				syncError: null
 			}
 		},
 		computed: {
@@ -122,40 +120,41 @@
 				}
 			},
 			lastSavedStatus() {
-				let flags = ''
-				// unpushed changes or unsaved transactions
-				if (this.dirty || (this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state))) {
-					flags = '* '
-				}
-				return flags + this.lastSavedString
+				return (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '') + this.lastSavedString
 			},
 			lastSavedStatusClass() {
-				if (!this.syncError) {
-					return '';
-				}
-				return 'error';
+				return this.syncError && this.lastSavedString !== '' ? 'error' : ''
 			},
 			lastSavedStatusTooltip() {
-				if (!this.syncError) {
-					return {}
+				let message = t('text', 'Last save {lastSave}', {lastSave: this.lastSavedString})
+				if (this.hasSyncCollission) {
+					message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 				}
-				// TODO: move to v-popover, trigger reloadEditor for now
-				// TODO: implement conflict resolving
-				return {
-					content: 'The document has been changed outside of the editor. The changes cannot be applied.',
-					placement: 'left'
+				if (this.hasUnpushedChanges) {
+					message += ' - ' + t('text', 'Unpushed changes')
 				}
+				if (this.hasUnsavedChanges) {
+					message += ' - ' + t('text', 'Unsaved changes')
+				}
+				return { content: message, placement: 'bottom' }
+			},
+			hasSyncCollission() {
+				return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			},
+			hasUnpushedChanges() {
+				return this.dirty
+			},
+			hasUnsavedChanges() {
+				return this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state)
 			}
 		},
 		methods: {
-			reloadEditor() {
-
-			},
 			updateLastSavedStatus() {
-				this.lastSavedString = moment(this.document.lastSavedVersionTime*1000).fromNow();
+				if (this.document) {
+					this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow();
+				}
 			},
 			initSession() {
-				var self = this;
 				if (!this.relativePath && !this.shareToken) {
 					console.error('No relative path given')
 					this.$emit('error', 'No relative path given')
@@ -194,20 +193,15 @@
 									type: ERROR_TYPE.SAVE_COLLISSION,
 									data: data
 								}
-								this.$nextTick(() => {
-									this.initRemoteView()
-								})
 							}
 						})
 						this.authority.onStateChange(() => {
 							this.dirty = this.authority.dirty
 							if (!this.initialLoading) {
-								// TODO: this doesn't work with a limit on the steps fetched
-								this.initialLoading = !this.authority.dirty
+								this.initialLoading = !this.authority.dirty && this.document.lastSavedVersion === getVersion(this.authority.view.state)
 							}
 						})
 
-						setInterval(() => { this.updateLastSavedStatus() }, 2000)
 						this.$emit('update:loaded', true)
 					});
 				}).catch((error) => {
@@ -217,37 +211,18 @@
 
 			},
 
-			initRemoteView() {
-				if (this.remoteView) {
-					return;
-				}
-				this.remoteView = new EditorView(this.$refs.remote, {
-					state: EditorState.create({
-						doc: defaultMarkdownParser.parse(this.syncError.data.outsideChange),
-						plugins: [
-							...exampleSetup({schema})
-						]
-					}),
-				})
-				this.remoteView.setProps({editable: () => false})
-			},
-
 			resolveUseThisVersion() {
 				this.authority.forceSave()
-				this.remoteView.destroy()
-				this.remoteView = null;
 				this.authority.view.setProps({editable: () => true})
 			},
 
 			resolveUseServerVersion() {
-				this.remoteView.destroy()
-				this.remoteView = null;
 				this.authority.view.destroy()
 				this.initSession()
 			},
 
-			initEditor: (ref, data, fileContent) => {
-				const authority = new EditorSync(defaultMarkdownParser.parse(fileContent), data)
+			initEditor: (ref, data, initialDocument) => {
+				const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data)
 
 				const sendStepsDebounce = () => authority.sendSteps()
 				const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
@@ -257,7 +232,7 @@
 						doc: authority.doc,
 						plugins: [
 							keymap({
-								"Ctrl-s": (state, dispatch, event) => {
+								'Ctrl-s': () => {
 									authority.manualSave()
 									authority.fetchSteps()
 									return true;
@@ -270,9 +245,7 @@
 							})
 						]
 					}),
-					focus() { this.view.focus() },
 					destroy() {
-						console.log('destroy view')
 						this.view.destroy()
 						authority.destroy()
 					},
@@ -325,6 +298,24 @@
 		}
 	}
 
+	.msg.icon-error {
+		padding: 12px;
+		border-bottom:1px solid var(--color-error);
+		padding-left: 30px;
+		background-position: 8px center;
+	}
+
+	.save-status {
+		padding: 6px;
+		color: var(--color-text-lighter);
+
+		&.error {
+			background-color: var(--color-error);
+			color: var(--color-main-background);
+			border-radius: 3px;
+		}
+	}
+
 	#resolve-conflicts {
 		display: flex;
 		position: fixed;
@@ -333,27 +324,22 @@
 		max-width: 900px;
 		width: 100vw;
 		margin: auto;
-		padding: 10px;
-		filter: drop-shadow(0px 0px 5px #000);
+		padding: 20px 0;
 
 		button {
 			margin: auto;
+			box-shadow: 0 0 10px var(--color-box-shadow);
 		}
 	}
 
-	#editor {
-		height: 100%;
-	}
 
-	.msg.error {
-		padding: 11px;
-	}
 
 	#editor-container #editor-wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
 		#remote, #editor {
 			width: 50%;
+			height: 100%;
 		}
 
 		.ProseMirror-menubar {
@@ -372,17 +358,6 @@
 		input, div {
 			vertical-align: middle;
 			margin-left: 3px;
-		}
-	}
-
-	.save-status {
-		padding: 6px;
-		color: var(--color-text-lighter);
-
-		&.error {
-			background-color: var(--color-error);
-			color: var(--color-main-background);
-			border-radius: 3px;
 		}
 	}
 
