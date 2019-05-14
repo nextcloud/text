@@ -20,8 +20,8 @@ documentReady(() => {
 
 	const container = document.createElement('div')
 	container.id = 'texteditor'
-	const body = document.getElementById('app-content');
-	body.append(container);
+	const body = document.getElementById('app-content')
+	body.append(container)
 
 	if (mimetype === 'text/markdown') {
 		const vm = new Vue({

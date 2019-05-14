@@ -71,7 +71,7 @@ const endpointUrl = (endpoint, isPublic = false) => {
 		return `${baseUrl}/public/${endpoint}`
 	}
 	return `${baseUrl}/${endpoint}`
-};
+}
 
 class EditorSync {
 
@@ -162,7 +162,7 @@ class EditorSync {
 				this.document = response.data.document
 			}
 			if (!this.view.props.editable) {
-				this.view.setProps({editable: () => true})
+				this.view.setProps({ editable: () => true })
 			}
 
 			this.onSyncHandlers.forEach((handler) => handler(response.data))

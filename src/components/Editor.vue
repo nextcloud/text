@@ -159,7 +159,7 @@ export default {
 		}
 	},
 	mounted() {
-		if (this.active && this.fileId || (this.shareToken)) {
+		if (this.active && (this.fileId || this.shareToken)) {
 			this.initSession()
 		}
 		setInterval(() => { this.updateLastSavedStatus() }, 2000)
@@ -171,7 +171,7 @@ export default {
 			}
 		},
 		initSession() {
-			if ((!this.relativePath && !this.fileId) && !this.shareToken ) {
+			if ((!this.relativePath && !this.fileId) && !this.shareToken) {
 				console.error('No file given')
 				this.$emit('error', 'No relative path given')
 				return
@@ -255,7 +255,7 @@ export default {
 								return true
 							}
 						}),
-						...exampleSetup({ schema, floatingMenu: false}),
+						...exampleSetup({ schema, floatingMenu: false }),
 						collab({
 							version: authority.steps.length,
 							clientID: data.session.id
