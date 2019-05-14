@@ -1,18 +1,12 @@
 {
-	"name": "type",
-	"description": "🎉 Nextcloud becomes part of the federated social networks!",
+	"name": "text",
+	"description": "Collaborative markdown editing",
 	"version": "0.0.1",
 	"authors": [
 		{
-			"name": "John Molakvoæ",
-			"email": "skjnldsv@protonmail.com",
+			"name": "Julius Härtl",
+			"email": "jus@bitgrid.net",
 			"role": "Developer"
-		},
-		{
-			"name": "Jan-Christoph Borchardt",
-			"email": "hey@jancborchardt.net",
-			"homepage": "https://jancborchardt.net",
-			"role": "Designer"
 		}
 	],
 	"license": "agpl",
