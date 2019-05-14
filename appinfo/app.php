@@ -13,5 +13,5 @@ if (\OC::$server->getUserSession()->isLoggedIn()) {
 }
 
 $eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
-	// load public stuff
+	\OCP\Util::addScript('text', 'public');
 });

@@ -4,124 +4,57 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
-use OC\Files\Node\File;
-use OCA\Text\Service\DocumentService;
-use OCA\Text\Service\SessionService;
-use OCA\Text\VersionMismatchException;
+use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\FileDisplayResponse;
-use OCP\AppFramework\Http\NotFoundResponse;
-use OCP\Files\IRootFolder;
-use OCP\Files\NotFoundException;
-use OCP\ICacheFactory;
+use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
-use OCP\ITempManager;
-use OCP\Security\ISecureRandom;
-use OCA\Text\DocumentSaveConflictException;
 
 class SessionController extends Controller {
 
-	private $cache;
-	private $sessionService;
-	private $documentService;
+	/**
+	 * @var ApiService
+	 */
+	private $apiService;
 
-	public function __construct(string $appName, IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
+	public function __construct(string $appName, IRequest $request, ApiService $apiService) {
 		parent::__construct($appName, $request);
-
-		$this->cache = $cacheFactory->createDistributed('textSession');
-		$this->sessionService = $sessionService;
-		$this->documentService = $documentService;
+		$this->apiService = $apiService;
 	}
 
 	/**
-	 * Initialize the session as a client so it can use the other methods
-	 *
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function create($file) {
-		$document = $this->documentService->createDocumentByPath($file);
-		$session = $this->sessionService->initSession($document->getId());
-		return new DataResponse([
-			'document' => $document,
-			'session' => $session
-		]);
+	public function create(int $fileId = null, string $file = null): DataResponse {
+		return $this->apiService->create($fileId, $file);
 	}
 
 	/**
-	 *
-	 *
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function fetch($documentId, $sessionId, $token) {
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $token)) {
-			$this->sessionService->removeInactiveSessions($documentId);
-			$file = $this->documentService->getBaseFile($documentId);
-			return new FileDisplayResponse($file);
-		}
-		return new NotFoundResponse();
+	public function fetch(int $documentId, int $sessionId, string $sessionToken): Response {
+		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
 	}
 
 	/**
-	 * Close existing session when quiting the client gracefully
-	 * This reduces some cleanup work if used by the client
-	 *
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function close($documentId, $sessionId, $token): DataResponse {
-		// TODO: To implement
-		return new DataResponse([]);
+	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+		return $this->apiService->close($documentId, $sessionId, $sessionToken);
 	}
 
 	/**
-	 * Client tries to commit a set of transactions to the document
-	 *
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function push($documentId, $sessionId, $token, $version, $steps): DataResponse {
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $token)) {
-			try {
-				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
-			} catch (VersionMismatchException $e) {
-				return new DataResponse($e->getMessage(), $e->getStatus());
-			}
-			return new DataResponse($steps);
-		}
-		return new DataResponse([], 500);
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
+		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
 	}
 
 	/**
-	 * Eventsource based handler
-	 *
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
-	 * @PublicPage
 	 */
-	public function sync($documentId, $sessionId, $token, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $token)) {
-			return new DataResponse([], 500);
-		}
-		if ($version === $this->cache->get('document-version-'.$documentId)) {
-			return new DataResponse(['steps' => []]);
-		}
-		try {
-			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave);
-		} catch (DocumentSaveConflictException $e) {
-			/** @var File $file */
-			$file = $this->documentService->getFile($documentId);
-			return new DataResponse([
-				'outsideChange' => $file->getContent()
-			], 409);
-		}
-		return new DataResponse([
-			'steps' => $this->documentService->getSteps($documentId, $version),
-			'sessions' => $this->sessionService->getActiveSessions($documentId),
-			'document' => $document
-		]);
+	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
+		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);
 	}
 
 }

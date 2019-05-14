@@ -46,7 +46,7 @@ class SessionService {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
-		$this->userId = $userId;
+		$this->userId = $userId ?? 'Guest';
 	}
 
 	public function initSession($documentId): Session {

@@ -23,42 +23,73 @@
 
 namespace OCA\Text\Service;
 
-use http\Exception\InvalidArgumentException;
+use \InvalidArgumentException;
 use function json_encode;
 use OC\Files\Node\File;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
-use OCA\Text\Db\SessionMapper;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
+use OCP\Constants;
+use OCP\Files\Folder;
+use OCP\Files\GenericFileException;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\ILogger;
-use OCP\Lock\ILockingProvider;
+use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IManager as ShareManager;
 
 class DocumentService {
 
 	/**
 	 * Delay to wait for between autosave versions
 	 */
-	const AUTOSAVE_MINIMUM_DELAY = 60;
+	public const AUTOSAVE_MINIMUM_DELAY = 60;
 
-	private $sessionMapper;
+	/**
+	 * @var string|null
+	 */
 	private $userId;
+	/**
+	 * @var DocumentMapper
+	 */
 	private $documentMapper;
+	/**
+	 * @var ILogger
+	 */
 	private $logger;
+	/**
+	 * @var ShareManager
+	 */
+	private $shareManager;
+	/**
+	 * @var StepMapper
+	 */
+	private $stepMapper;
+	/**
+	 * @var IRootFolder
+	 */
+	private $rootFolder;
+	/**
+	 * @var ICache
+	 */
+	private $cache;
+	/**
+	 * @var IAppData
+	 */
+	private $appData;
 
-	public function __construct(SessionMapper $sessionMapper, DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger) {
-		$this->sessionMapper = $sessionMapper;
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->userId = $userId;
@@ -66,7 +97,7 @@ class DocumentService {
 		$this->rootFolder = $rootFolder;
 		$this->cache = $cacheFactory->createDistributed('text');
 		$this->logger = $logger;
-
+		$this->shareManager = $shareManager;
 		try {
 			$this->appData->getFolder('documents');
 		} catch (NotFoundException $e) {
@@ -94,29 +125,25 @@ class DocumentService {
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
 	 */
-	public function getDocumentById($fileId) {
-		return $this->createDocument($this->getFile($fileId));
+	public function createDocumentByFileId($fileId) {
+		$file = $this->getFileById($fileId);
+		return $this->createDocument($file);
 	}
 
-	public function getFile($fileId) {
-		/** @var File $file */
-		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
+	/**
+	 * @param $shareToken
+	 * @param null $filePath
+	 * @return Entity
+	 * @throws InvalidPathException
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
+	public function createDocumentByShareToken($shareToken, $filePath = null) {
+		$file = $this->getFileByShareToken($shareToken, $filePath);
+		return $this->createDocument($file);
 	}
 
-	public function getFileForShare($token) {
 
-		$userFolder = $this->rootFolder->getUserFolder($share->getShareOwner());
-		$originalSharePath = $userFolder->getRelativePath($share->getNode()->getPath());
-
-
-		// Single file share
-		if ($share->getNode() instanceof \OCP\Files\File) {
-			// Single file download
-			return $share->getNode();
-		}
-
-		return null;
-	}
 
 	/**
 	 * @param File $file
@@ -125,7 +152,7 @@ class DocumentService {
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
 	 */
-	protected function createDocument(File $file) {
+	protected function createDocument(File $file): Document {
 		try {
 			$document = $this->documentMapper->find($file->getFileInfo()->getId());
 
@@ -174,7 +201,7 @@ class DocumentService {
 	 * @return ISimpleFile
 	 * @throws NotFoundException
 	 */
-	public function getBaseFile($document) {
+	public function getBaseFile($document): ISimpleFile {
 		return $this->appData->getFolder('documents')->getFile($document);
 	}
 
@@ -187,7 +214,7 @@ class DocumentService {
 	 * @throws DoesNotExistException
 	 * @throws VersionMismatchException
 	 */
-	public function addStep($documentId, $sessionId, $steps, $version) {
+	public function addStep($documentId, $sessionId, $steps, $version): array {
 		// TODO check cache
 		$document = $this->documentMapper->find($documentId);
 		if ($version !== $document->getCurrentVersion()) {
@@ -200,7 +227,7 @@ class DocumentService {
 		$newVersion = $document->getCurrentVersion() + count($steps);
 		$document->setCurrentVersion($newVersion);
 		$this->documentMapper->update($document);
-		$step = new Step($stepsJson);
+		$step = new Step();
 		$step->setData($stepsJson);
 		$step->setSessionId($sessionId);
 		$step->setDocumentId($documentId);
@@ -222,20 +249,27 @@ class DocumentService {
 	 * @param $autoaveDocument
 	 * @param bool $force
 	 * @param bool $manualSave
+	 * @param null $token
 	 * @return Document
 	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
+	 * @throws GenericFileException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
-	 * @throws \OCP\Files\GenericFileException
+	 * @throws ShareNotFound
 	 */
-	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false) {
+	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $token = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
 		/** @var File $file */
-		$file = $this->rootFolder->getUserFolder($this->userId)->getById($documentId)[0];
+		if (!$token) {
+			$file = $this->rootFolder->getUserFolder($this->userId)->getById($documentId)[0];
+		} else {
+			$share = $this->shareManager->getShareByToken($token);
+			$file = $share->getNode();
+		}
 
 		$lastMTime = $document->getLastSavedVersionTime();
 		if ($lastMTime > 0 && $file->getEtag() !== $document->getLastSavedVersionEtag() && $force === false) {
@@ -275,6 +309,52 @@ class DocumentService {
 			$this->appData->getFolder('documents')->getFile($documentId)->delete();
 		} catch (NotFoundException $e) {
 		} catch (NotPermittedException $e) {
+		}
+	}
+
+	public function getFileById($fileId) {
+		/** @var File $file */
+		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
+	}
+
+	/**
+	 * @param $shareToken
+	 * @param null|string $path
+	 * @return \OCP\Files\File|Folder|\OCP\Files\Node
+	 * @throws NotFoundException
+	 */
+	public function getFileByShareToken($shareToken, $path = null) {
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+
+		} catch (ShareNotFound $e) {
+			throw new NotFoundException();
+		}
+
+		$node = $share->getNode();
+		if ($node instanceof \OCP\Files\File) {
+			return $node;
+		}
+		if ($node instanceof Folder) {
+			return $node->get($path);
+		}
+		throw new \InvalidArgumentException('No proper share data');
+	}
+
+	/**
+	 * @param $shareToken
+	 * @return void
+	 * @throws NotFoundException
+	 */
+	public function checkSharePermissions($shareToken, $permission = Constants::PERMISSION_READ): void {
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+		} catch (ShareNotFound $e) {
+			throw new NotFoundException();
+		}
+
+		if (($share->getPermissions() & $permission) === 0) {
+			throw new NotFoundException();
 		}
 	}
 
