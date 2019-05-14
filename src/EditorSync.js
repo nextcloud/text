@@ -161,7 +161,9 @@ class EditorSync {
 				console.debug('Saved document', response.data.document)
 				this.document = response.data.document
 			}
-			this.view.setProps({ editable: () => true })
+			if (!this.view.props.editable) {
+				this.view.setProps({editable: () => true})
+			}
 
 			this.onSyncHandlers.forEach((handler) => handler(response.data))
 
