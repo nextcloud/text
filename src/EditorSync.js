@@ -64,12 +64,18 @@ const ERROR_TYPE = {
 	PUSH_FAILURE: 1
 }
 
-const URL_SYNC = OC.generateUrl('/apps/text/session/sync')
-const URL_PUSH = OC.generateUrl('/apps/text/session/push')
+const baseUrl = OC.generateUrl('/apps/text')
+
+const endpointUrl = (endpoint, isPublic = false) => {
+	if (isPublic) {
+		return `${baseUrl}/public/${endpoint}`
+	}
+	return `${baseUrl}/${endpoint}`
+};
 
 class EditorSync {
 
-	constructor(doc, data) {
+	constructor(doc, data, shareToken) {
 		this.view = null
 		this.doc = doc
 		this.session = data.session
@@ -80,6 +86,7 @@ class EditorSync {
 		this.retryTime = MIN_PUSH_RETRY
 		this.dirty = false
 		this.fetchInverval = FETCH_INTERVAL
+		this.shareToken = shareToken
 
 		this.onSyncHandlers = []
 		this.onErrorHandlers = []
@@ -88,6 +95,10 @@ class EditorSync {
 		// example for polling
 		// the interval will be adjusted dynamically depending on the time without any change
 		this.fetcher = setInterval(() => this.fetchSteps(), this.fetchInverval)
+	}
+
+	isPublic() {
+		return !!this.shareToken
 	}
 
 	destroy() {
@@ -136,14 +147,15 @@ class EditorSync {
 		) {
 			autosaveContent = this.content()
 		}
-		axios.post(URL_SYNC, {
+		axios.post(endpointUrl('session/sync', this.isPublic()), {
 			documentId: this.document.id,
 			sessionId: this.session.id,
-			token: this.session.token,
+			sessionToken: this.session.token,
 			version: authority.steps.length,
 			autosaveContent,
 			force: !!this._forcedSave,
-			manualSave: !!this._manualSave
+			manualSave: !!this._manualSave,
+			token: this.shareToken
 		}).then((response) => {
 			if (this.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
@@ -255,12 +267,13 @@ class EditorSync {
 		this.lock = true
 		const authority = this
 		let steps = sendable.steps
-		axios.post(URL_PUSH, {
+		axios.post(endpointUrl('session/push', this.isPublic()), {
 			documentId: this.document.id,
 			sessionId: this.session.id,
-			token: this.session.token,
+			sessionToken: this.session.token,
 			steps: steps.map(s => s.toJSON()) || [],
-			version: getVersion(authority.view.state)
+			version: getVersion(authority.view.state),
+			token: this.shareToken
 		}).then((response) => {
 			// sucessfully applied steps on the server
 			steps.forEach(step => {
@@ -289,4 +302,4 @@ class EditorSync {
 
 }
 
-export { EditorSync, ERROR_TYPE }
+export { EditorSync, ERROR_TYPE, endpointUrl }

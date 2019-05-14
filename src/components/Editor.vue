@@ -47,13 +47,13 @@
 			</button>
 		</div>
 	</div>
-</template>c
+</template>
 
 <script>
 import axios from 'nextcloud-axios'
 import debounce from 'lodash/debounce'
 
-import { EditorSync, ERROR_TYPE } from './../EditorSync'
+import { EditorSync, ERROR_TYPE, endpointUrl } from './../EditorSync'
 import { collab, getVersion } from 'prosemirror-collab'
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
@@ -104,7 +104,7 @@ export default {
 			document: null,
 			currentSession: null,
 			sessions: [],
-			name: 'Guest',
+			name: null,
 			dirty: false,
 			initialLoading: false,
 			lastSavedString: '',
@@ -151,10 +151,15 @@ export default {
 		},
 		hasUnsavedChanges() {
 			return this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state)
+		},
+		backendUrl() {
+			return (endpoint) => {
+				return endpointUrl(endpoint, !!this.shareToken)
+			}
 		}
 	},
-	beforeMount() {
-		if (this.active || this.shareToken) {
+	mounted() {
+		if (this.active && this.fileId || (this.shareToken)) {
 			this.initSession()
 		}
 		setInterval(() => { this.updateLastSavedStatus() }, 2000)
@@ -166,30 +171,31 @@ export default {
 			}
 		},
 		initSession() {
-			if (!this.relativePath && !this.shareToken) {
-				console.error('No relative path given')
+			if ((!this.relativePath && !this.fileId) && !this.shareToken ) {
+				console.error('No file given')
 				this.$emit('error', 'No relative path given')
 				return
 			}
-			axios.get(OC.generateUrl('/apps/text/session/create'), {
-				// TODO: viewer should provide the file id so we can use it in all places (also for public pages)
+			axios.get(this.backendUrl('session/create'), {
 				params: {
+					fileId: this.fileId,
 					file: this.relativePath,
-					shareToken: this.shareToken
+					token: this.shareToken
 				}
 			}).then((response) => {
 				this.document = response.data.document
 				this.currentSession = response.data.session
-				axios.get(OC.generateUrl('/apps/text/session/fetch'),
+				axios.get(this.backendUrl('session/fetch'),
 					{
 						params: {
 							documentId: this.document.id,
 							sessionId: this.currentSession.id,
-							token: this.currentSession.token
+							sessionToken: this.currentSession.token,
+							token: this.shareToken
 						}
 					}
 				).then((fileContent) => {
-					const { authority } = this.initEditor(this.$refs.editor, response.data, fileContent.data)
+					const { authority } = this.initEditor(this.$refs.editor, response.data, fileContent.data, this.shareToken)
 					this.authority = authority
 					this.authority.onSync((data) => {
 						this.syncError = null
@@ -232,8 +238,8 @@ export default {
 			this.initSession()
 		},
 
-		initEditor: (ref, data, initialDocument) => {
-			const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data)
+		initEditor: (ref, data, initialDocument, shareToken) => {
+			const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data, shareToken)
 
 			const sendStepsDebounce = () => authority.sendSteps()
 			const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
@@ -373,4 +379,8 @@ export default {
 </style>
 <style lang="scss">
 	@import './../../css/style';
+
+	#files-public-content {
+		width: 100% !important;
+	}
 </style>

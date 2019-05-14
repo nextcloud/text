@@ -6,6 +6,7 @@ module.exports = {
 	entry: {
 		type: path.join(__dirname, 'src', 'main.js'),
 		files: path.join(__dirname, 'src', 'files.js'),
+		public: path.join(__dirname, 'src', 'public.js'),
 	},
 	output: {
 		path: path.resolve(__dirname, './js'),

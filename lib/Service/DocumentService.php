@@ -137,6 +137,7 @@ class DocumentService {
 			}
 
 			// TODO: Only do this when no sessions active, otherise we need to resolve the conflict differently
+			// TODO: Add parameter so that we can force this, else just opening the document will cause a rebuild
 			$lastMTime = $document->getLastSavedVersionTime();
 			if ($file->getMTime() > $lastMTime && $lastMTime > 0) {
 				$this->resetDocument($document->getId());
