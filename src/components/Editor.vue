@@ -255,7 +255,7 @@ export default {
 								return true
 							}
 						}),
-						...exampleSetup({ schema }),
+						...exampleSetup({ schema, floatingMenu: false}),
 						collab({
 							version: authority.steps.length,
 							clientID: data.session.id

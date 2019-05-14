@@ -356,7 +356,8 @@ li.ProseMirror-selectednode:after {
   color: var(--color-main-text);
   background-clip: padding-box;
   border-radius: 4px;
-  padding: 5px 0;
+  padding: 0;
+  position: relative;
 }
 
 div[contenteditable=true],
