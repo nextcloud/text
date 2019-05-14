@@ -17,11 +17,4 @@
 	<dependencies>
 		<nextcloud min-version="16" max-version="17"/>
 	</dependencies>
-	<navigations>
-		<navigation>
-			<name>Text</name>
-			<route>text.Navigation.navigate</route>
-			<order>6</order>
-		</navigation>
-	</navigations>
 </info>
