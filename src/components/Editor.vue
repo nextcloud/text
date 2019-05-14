@@ -383,4 +383,13 @@ export default {
 	#files-public-content {
 		width: 100% !important;
 	}
+
+	#viewer-content.modal-mask .modal-wrapper .modal-container {
+		border-radius: 3px !important;
+	}
+
+	.modal-container #editor-container {
+		height: calc(100vh - 88px - 50px) !important;
+	}
+
 </style>

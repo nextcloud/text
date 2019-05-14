@@ -428,21 +428,3 @@ div[contenteditable=false] {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-
-// TODO: properly move this to the viewer as an option
-.modal-mask {
-  height: calc(100% - 50px) !important;
-  top: 50px !important;
-}
-
-#app-sidebar.app-sidebar--full {
-  position: unset !important;
-}
-
-#viewer-content.modal-mask .modal-wrapper .modal-container {
-  border-radius: 3px !important;
-}
-
-.modal-container #editor-container {
-  height: calc(100vh - 88px - 50px) !important;
-}
