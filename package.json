@@ -35,6 +35,8 @@
 		"prosemirror-schema-list": "^1.0.3",
 		"prosemirror-state": "^1.2.3",
 		"prosemirror-view": "^1.9.6",
+		"tiptap": "^1.19.2",
+		"tiptap-extensions": "^1.19.3",
 		"uuid": "^3.3.2",
 		"v-tooltip": "^2.0.2",
 		"vue": "^2.6.10",

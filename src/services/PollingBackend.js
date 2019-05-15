@@ -116,7 +116,7 @@ class PollingBackend {
 				return
 			}
 
-			this._authority._receiveSteps(response.data.steps)
+			this._authority._receiveSteps(response.data)
 			this.lock = false
 			this._forcedSave = false
 			this.resetRefetchTimer()
@@ -137,23 +137,24 @@ class PollingBackend {
 		this._forcedSave = false
 	}
 
-	sendSteps(sendable) {
+	sendSteps(_sendable) {
 		this._authority.emit('stateChange', { dirty: true })
 		if (this.lock) {
 			setTimeout(() => {
-				this._authority.sendSteps(sendable)
+				this._authority.sendSteps(_sendable)
 			}, 100)
 			return
 		}
 		this.lock = true
 		const authority = this
+		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable;
 		let steps = sendable.steps
 		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
-			steps: steps.map(s => s.toJSON()) || [],
-			version: this._authority._getVersion(),
+			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
+			version: sendable.version,
 			token: this._authority.options.shareToken
 		}).then((response) => {
 			this._authority.emit('stateChange', { dirty: false })
@@ -165,9 +166,9 @@ class PollingBackend {
 			this.lock = false
 			this._fetchSteps()
 
-			this.carefulRetry(() => {
+			/*this.carefulRetry(() => {
 				this.sendSteps(sendable)
-			})
+			})*/
 		})
 	}
 

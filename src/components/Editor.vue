@@ -35,7 +35,97 @@
 			</p>
 		</div>
 		<div id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
-			<div v-once id="editor" ref="editor" />
+			<div id="editor">
+				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }">
+					<div class="menubar">
+						<Actions>
+							<ActionButton
+									icon="icon-info"
+									:class="{ 'is-active': isActive.bold() }"
+									@click="commands.bold">
+	B						</ActionButton>
+						</Actions>
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.bold() }"
+								@click="commands.bold"
+						>
+							B
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.italic() }"
+								@click="commands.italic"
+						>
+							I
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.heading({ level: 1 }) }"
+								@click="commands.heading({ level: 1 })"
+						>
+							H1
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.heading({ level: 2 }) }"
+								@click="commands.heading({ level: 2 })"
+						>
+							H2
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.heading({ level: 3 }) }"
+								@click="commands.heading({ level: 3 })"
+						>
+							H3
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.bullet_list() }"
+								@click="commands.bullet_list"
+						>
+							-
+						</button>
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.ordered_list() }"
+								@click="commands.ordered_list"
+						>
+							1.
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.blockquote() }"
+								@click="commands.blockquote"
+						>
+							"
+						</button>
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.code() }"
+								@click="commands.code"
+						>
+							{}
+						</button>
+
+						<button
+								class="menubar__button"
+								:class="{ 'is-active': isActive.paragraph() }"
+								@click="commands.paragraph"
+						>
+							P
+						</button>
+					</div>
+				</editor-menu-bar>
+				<editor-content class="editor__content" :editor="tiptap"  />
+			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
 		<div v-if="hasSyncCollission" id="resolve-conflicts">
@@ -50,22 +140,43 @@
 </template>
 
 <script>
+	import Vue from 'vue'
 import debounce from 'lodash/debounce'
 
 import { EditorSync, ERROR_TYPE } from './../EditorSync'
 import SyncService from './../services/SyncService'
 import { endpointUrl } from './../helpers'
 
-import {collab, getVersion, receiveTransaction, sendableSteps} from 'prosemirror-collab'
-import { EditorState } from 'prosemirror-state'
-import { EditorView } from 'prosemirror-view'
-import { exampleSetup } from 'prosemirror-example-setup'
-import { schema, defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
-import { keymap } from 'prosemirror-keymap'
+import { getVersion } from 'prosemirror-collab'
+import { defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
+
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import {
+	HardBreak,
+	Heading,
+	Bold,
+	Code,
+	Italic,
+	Strike,
+	Link,
+	Underline,
+	BulletList,
+	OrderedList,
+	ListItem,
+	Blockquote,
+	CodeBlock,
+	History,
+	Collaboration,
+} from 'tiptap-extensions'
+import { Keymap } from './../extensions'
+import MarkdownIt from 'markdown-it'
+
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import ReadOnlyEditor from './ReadOnlyEditor'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+import Actions from 'nextcloud-vue/dist/Components/Actions'
+import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -74,8 +185,11 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
-		Avatar,
-		ReadOnlyEditor
+		Avatar,Actions,
+		ReadOnlyEditor,
+		EditorContent,
+		EditorMenuBar,
+		ActionButton
 	},
 	directives: {
 		Tooltip
@@ -100,6 +214,8 @@ export default {
 	},
 	data() {
 		return {
+			editor: null,
+			tiptap: null,
 			/** @type EditorSync */
 			authority: null,
 			/** @type SyncService */
@@ -128,6 +244,24 @@ export default {
 				}
 			}
 		},
+		filteredSessions() {
+			let filteredSessions = {}
+			for (let index in this.sessions) {
+				let session = this.sessions[index]
+				if (!session.userId) {
+					session.userId = session.id
+				}
+				if (this.filteredSessions.hasOwnProperty(session.userId)) {
+					if (filteredSessions[session.userId].lastContact < session.lastContact) {
+						filteredSessions[session.userId] = session
+					}
+				} else {
+					filteredSessions[session.userId] = session
+				}
+			}
+			return filteredSessions
+		},
+
 		lastSavedStatus() {
 			return (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '') + this.lastSavedString
 		},
@@ -154,7 +288,7 @@ export default {
 			return this.dirty
 		},
 		hasUnsavedChanges() {
-			return this.authority && this.document.lastSavedVersion !== getVersion(this.authority.view.state)
+			return this.authority && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
 		},
 		backendUrl() {
 			return (endpoint) => {
@@ -176,7 +310,6 @@ export default {
 			this.currentSession = null
 			this.syncService.close()
 			this.syncService = null
-			this.view.destroy()
 		}
 	},
 	methods: {
@@ -192,7 +325,6 @@ export default {
 			}
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
-				schema: schema,
 				serialize: (document) => {
 					return defaultMarkdownSerializer.serialize(document)
 				}
@@ -203,21 +335,7 @@ export default {
 				})
 				.on('change', ({document, sessions}) => {
 					this.sessions = sessions.sort((a,b) => b.lastContact - a.lastContact)
-					this.filteredSessions = {}
-					for (let index in this.sessions) {
-						let session = this.sessions[index]
-						if (!session.userId) {
-							session.userId = session.id
-						}
-						if (this.filteredSessions.hasOwnProperty(session.userId)) {
-							if (this.filteredSessions[session.userId].lastContact < session.lastContact) {
-								this.filteredSessions[session.userId] = session
-							}
-						} else {
-							this.filteredSessions[session.userId] = session
-						}
-					}
-					console.log(this.filteredSessions)
+
 
 					this.document = document
 				})
@@ -228,42 +346,58 @@ export default {
 					const sendStepsDebounce = () => this.syncService.sendSteps()
 					const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 5000 })
 
-					this.view = new EditorView(this.$refs.editor, {
-						state: EditorState.create({
-							doc: initialDocument,
-							plugins: [
-								keymap({
-									'Ctrl-s': () => {
-										//authority.manualSave()
-										//authority.fetchSteps()
-										return true
-									}
-								}),
-								...exampleSetup({ schema, floatingMenu: false }),
-								collab({
-									version: this.syncService.steps.length,
-									clientID: this.currentSession.id
-								})
-							]
-						}),
-						dispatchTransaction: (transaction) => {
-							const state = this.view.state.apply(transaction)
-							this.view.updateState(state)
+					/** tiptap */
+					this.markdownit = MarkdownIt('commonmark', {html: false});
+					this.tiptap = new Editor({
+						content: "<p>Hello world</p>", //this.markdownit.render(documentSource),
+						onUpdate: ({state}) => {
+							console.log(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
-							sendStepsDebounced()
-						}
-
+						},
+						extensions: [
+							new HardBreak(),
+							new Heading({ levels: [1, 2, 3] }),
+							new Bold(),
+							new Underline,
+							new Strike,
+							new Code(),
+							new Italic(),
+							new BulletList(),
+							new OrderedList(),
+							new Blockquote(),
+							new CodeBlock(),
+							new ListItem,
+							new Link,
+							new History(),
+							new Collaboration({
+								// the initial version we start with
+								// version is an integer which is incremented with every change
+								version: this.syncService.steps.length,
+								clientID: this.currentSession.id,
+								// debounce changes so we can save some bandwidth
+								debounce: 250,
+								onSendable: ({ sendable }) => {
+									// This is not working properly with polling and the careful retry logic
+									this.syncService.sendSteps(sendable)
+								}
+							}),
+							new Keymap({
+								'Ctrl-s': () => {
+									this.syncService.save()
+									console.log('save', this);
+									return true;
+								}
+							})
+						],
 					})
-					this.syncService.state = this.view.state
+					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
 				})
-				.on('sync', (steps) => {
-					let newData = this.syncService.stepsSince(getVersion(this.view.state))
-					this.view.dispatch(
-						receiveTransaction(this.view.state, newData.steps, newData.clientIDs)
-					)
-					this.syncService.state = this.view.state
-
+				.on('sync', ({steps, document}) => {
+					this.tiptap.extensions.options.collaboration.update({
+						version: document.version,
+						steps: steps
+					})
 				})
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {

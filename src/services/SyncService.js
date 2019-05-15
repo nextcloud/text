@@ -28,7 +28,6 @@ import {getVersion, sendableSteps} from 'prosemirror-collab'
 
 const defaultOptions = {
 	shareToken: null,
-	schema: null,
 	serialize: (document) => document
 };
 
@@ -131,8 +130,8 @@ class SyncService {
 		)
 	}
 
-	sendSteps() {
-		let sendable = sendableSteps(this.state)
+	sendSteps(_sendable) {
+		let sendable = _sendable ? _sendable : sendableSteps(this.state)
 		if (!sendable) {
 			return
 		}
@@ -146,15 +145,20 @@ class SyncService {
 		}
 	}
 
-	_receiveSteps(steps) {
+	_receiveSteps({steps, document}) {
+		let newSteps = []
 		for (let i = 0; i < steps.length; i++) {
-			let singleSteps = steps[i].data.map(j => Step.fromJSON(this.options.schema, j))
+			let singleSteps = steps[i].data
 			singleSteps.forEach(step => {
 				this.steps.push(step)
-				this.stepClientIDs.push(steps[i].sessionId)
+				newSteps.push({
+					step,
+					clientID: steps[i].sessionId
+				})
 			})
 		}
-		this.emit('sync', steps)
+		this.emit('sync', {steps: newSteps, document})
+		console.log('receivedSteps', 'newVersion', getVersion(this.state))
 	}
 
 	_getVersion() {
