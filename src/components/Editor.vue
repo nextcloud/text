@@ -50,15 +50,17 @@
 </template>
 
 <script>
-import axios from 'nextcloud-axios'
 import debounce from 'lodash/debounce'
 
-import { EditorSync, ERROR_TYPE, endpointUrl } from './../EditorSync'
-import { collab, getVersion } from 'prosemirror-collab'
+import { EditorSync, ERROR_TYPE } from './../EditorSync'
+import SyncService from './../services/SyncService'
+import { endpointUrl } from './../helpers'
+
+import {collab, getVersion, receiveTransaction, sendableSteps} from 'prosemirror-collab'
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 import { exampleSetup } from 'prosemirror-example-setup'
-import { schema, defaultMarkdownParser } from 'prosemirror-markdown'
+import { schema, defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { keymap } from 'prosemirror-keymap'
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
@@ -98,12 +100,14 @@ export default {
 	},
 	data() {
 		return {
-			editor: null,
 			/** @type EditorSync */
 			authority: null,
+			/** @type SyncService */
+			syncService: null,
 			document: null,
 			currentSession: null,
 			sessions: [],
+			filteredSessions: {},
 			name: null,
 			dirty: false,
 			initialLoading: false,
@@ -114,7 +118,7 @@ export default {
 	computed: {
 		activeSessions() {
 			// TODO: filter out duplicate user ids
-			return this.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME)
+			return Object.values(this.filteredSessions).filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME)
 		},
 		sessionStyle() {
 			return (session) => {
@@ -156,13 +160,24 @@ export default {
 			return (endpoint) => {
 				return endpointUrl(endpoint, !!this.shareToken)
 			}
+		},
+		hasDocumentParameters() {
+			return this.fileId || this.shareToken
 		}
 	},
 	mounted() {
-		if (this.active && (this.fileId || this.shareToken)) {
+		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
 		}
 		setInterval(() => { this.updateLastSavedStatus() }, 2000)
+	},
+	beforeDestroy() {
+		if (this.currentSession && this.syncService) {
+			this.currentSession = null
+			this.syncService.close()
+			this.syncService = null
+			this.view.destroy()
+		}
 	},
 	methods: {
 		updateLastSavedStatus() {
@@ -170,62 +185,93 @@ export default {
 				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
 			}
 		},
-		initSession() {
-			if ((!this.relativePath && !this.fileId) && !this.shareToken) {
-				console.error('No file given')
-				this.$emit('error', 'No relative path given')
+		initSession () {
+			if (!this.hasDocumentParameters) {
+				this.$emit('error', 'No valid file provided')
 				return
 			}
-			axios.get(this.backendUrl('session/create'), {
-				params: {
-					fileId: this.fileId,
-					file: this.relativePath,
-					token: this.shareToken
+			this.syncService = new SyncService({
+				shareToken: this.shareToken,
+				schema: schema,
+				serialize: (document) => {
+					return defaultMarkdownSerializer.serialize(document)
 				}
-			}).then((response) => {
-				this.document = response.data.document
-				this.currentSession = response.data.session
-				axios.get(this.backendUrl('session/fetch'),
-					{
-						params: {
-							documentId: this.document.id,
-							sessionId: this.currentSession.id,
-							sessionToken: this.currentSession.token,
-							token: this.shareToken
+			})
+				.on('opened', ({document, session}) => {
+					this.currentSession = session
+					this.document = document
+				})
+				.on('change', ({document, sessions}) => {
+					this.sessions = sessions.sort((a,b) => b.lastContact - a.lastContact)
+					this.filteredSessions = {}
+					for (let index in this.sessions) {
+						let session = this.sessions[index]
+						if (!session.userId) {
+							session.userId = session.id
+						}
+						if (this.filteredSessions.hasOwnProperty(session.userId)) {
+							if (this.filteredSessions[session.userId].lastContact < session.lastContact) {
+								this.filteredSessions[session.userId] = session
+							}
+						} else {
+							this.filteredSessions[session.userId] = session
 						}
 					}
-				).then((fileContent) => {
-					const { authority } = this.initEditor(this.$refs.editor, response.data, fileContent.data, this.shareToken)
-					this.authority = authority
-					this.authority.onSync((data) => {
-						this.syncError = null
-						if (data.document) {
-							this.document = data.document
-						}
-						this.sessions = data.sessions
-					})
-					this.authority.onError((error, data) => {
-						if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
-							this.syncError = {
-								type: ERROR_TYPE.SAVE_COLLISSION,
-								data: data
-							}
-						}
-					})
-					this.authority.onStateChange(() => {
-						this.dirty = this.authority.dirty
-						if (!this.initialLoading) {
-							this.initialLoading = !this.authority.dirty && this.document.lastSavedVersion === getVersion(this.authority.view.state)
-						}
-					})
+					console.log(this.filteredSessions)
 
+					this.document = document
+				})
+				.on('loaded', ({document, session, documentSource}) => {
+					const documentData = {document, session}
+					const initialDocument = defaultMarkdownParser.parse(documentSource)
+
+					const sendStepsDebounce = () => this.syncService.sendSteps()
+					const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 5000 })
+
+					this.view = new EditorView(this.$refs.editor, {
+						state: EditorState.create({
+							doc: initialDocument,
+							plugins: [
+								keymap({
+									'Ctrl-s': () => {
+										//authority.manualSave()
+										//authority.fetchSteps()
+										return true
+									}
+								}),
+								...exampleSetup({ schema, floatingMenu: false }),
+								collab({
+									version: this.syncService.steps.length,
+									clientID: this.currentSession.id
+								})
+							]
+						}),
+						dispatchTransaction: (transaction) => {
+							const state = this.view.state.apply(transaction)
+							this.view.updateState(state)
+							this.syncService.state = state
+							sendStepsDebounced()
+						}
+
+					})
+					this.syncService.state = this.view.state
 					this.$emit('update:loaded', true)
 				})
-			}).catch((error) => {
-				console.error(error.response)
-				this.$emit('error', error.response.status)
-			})
+				.on('sync', (steps) => {
+					let newData = this.syncService.stepsSince(getVersion(this.view.state))
+					this.view.dispatch(
+						receiveTransaction(this.view.state, newData.steps, newData.clientIDs)
+					)
+					this.syncService.state = this.view.state
 
+				})
+				.on('stateChange', (state) => {
+					if (state.initialLoading && !this.initialLoading) {
+						this.initialLoading = true
+					}
+					this.dirty = state.dirty
+				})
+			this.syncService.open({ fileId: this.fileId, filePath: this.filePath})
 		},
 
 		resolveUseThisVersion() {
@@ -236,53 +282,6 @@ export default {
 		resolveUseServerVersion() {
 			this.authority.view.destroy()
 			this.initSession()
-		},
-
-		initEditor: (ref, data, initialDocument, shareToken) => {
-			const authority = new EditorSync(defaultMarkdownParser.parse(initialDocument), data, shareToken)
-
-			const sendStepsDebounce = () => authority.sendSteps()
-			const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 500 })
-
-			const view = new EditorView(ref, {
-				state: EditorState.create({
-					doc: authority.doc,
-					plugins: [
-						keymap({
-							'Ctrl-s': () => {
-								authority.manualSave()
-								authority.fetchSteps()
-								return true
-							}
-						}),
-						...exampleSetup({ schema, floatingMenu: false }),
-						collab({
-							version: authority.steps.length,
-							clientID: data.session.id
-						})
-					]
-				}),
-				destroy() {
-					this.view.destroy()
-					authority.destroy()
-				},
-				dispatchTransaction: (transaction) => {
-					const state = view.state.apply(transaction)
-					view.updateState(state)
-					sendStepsDebounced()
-				}
-
-			})
-			authority.view = view
-			authority.fetchSteps()
-			return {
-				view: view,
-				authority: authority
-			}
-		},
-		onSync(syncState) {
-			this.sessions = syncState.sessions
-			this.document = syncState.document
 		}
 	}
 }
@@ -389,7 +388,8 @@ export default {
 	}
 
 	.modal-container #editor-container {
-		height: calc(100vh - 88px - 50px) !important;
+		position: absolute;
+		max-height: calc(100% - 100px);
 	}
 
 </style>

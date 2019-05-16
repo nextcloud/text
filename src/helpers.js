@@ -33,6 +33,16 @@ const documentReady = function(callback) {
 	}
 }
 
+const _baseUrl = OC.generateUrl('/apps/text')
+const endpointUrl = (endpoint, isPublic = false) => {
+	if (isPublic) {
+		return `${_baseUrl}/public/${endpoint}`
+	}
+	return `${_baseUrl}/${endpoint}`
+}
+
+
 export {
-	documentReady
+	documentReady,
+	endpointUrl
 }

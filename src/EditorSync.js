@@ -24,6 +24,7 @@ import axios from 'nextcloud-axios'
 import { schema, defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { receiveTransaction, sendableSteps, getVersion } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
+import { endpointUrl } from './helpers'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -64,20 +65,11 @@ const ERROR_TYPE = {
 	PUSH_FAILURE: 1
 }
 
-const baseUrl = OC.generateUrl('/apps/text')
-
-const endpointUrl = (endpoint, isPublic = false) => {
-	if (isPublic) {
-		return `${baseUrl}/public/${endpoint}`
-	}
-	return `${baseUrl}/${endpoint}`
-}
 
 class EditorSync {
 
-	constructor(doc, data, shareToken) {
+	constructor(data, shareToken) {
 		this.view = null
-		this.doc = doc
 		this.session = data.session
 		this.document = data.document
 		this.steps = []
@@ -185,9 +177,9 @@ class EditorSync {
 				})
 			}
 			let newData = authority.stepsSince(getVersion(authority.view.state))
-			authority.view.dispatch(
+			/*authority.view.dispatch(
 				receiveTransaction(authority.view.state, newData.steps, newData.clientIDs)
-			)
+			)*/
 			console.debug('Synced new steps, current version is ' + getVersion(authority.view.state))
 			this.lock = false
 			this._forcedSave = false
@@ -278,14 +270,14 @@ class EditorSync {
 			token: this.shareToken
 		}).then((response) => {
 			// sucessfully applied steps on the server
-			steps.forEach(step => {
+			/*steps.forEach(step => {
 				authority.steps.push(step)
 				authority.stepClientIDs.push(this.session.id)
 			})
 			let newData = authority.stepsSince(getVersion(authority.view.state))
 			authority.view.dispatch(
 				receiveTransaction(authority.view.state, newData.steps, newData.clientIDs)
-			)
+			)*/
 			this.carefulRetryReset()
 			this.lock = false
 			this.fetchSteps()
