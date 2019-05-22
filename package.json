@@ -34,7 +34,7 @@
 		"prosemirror-schema-basic": "^1.0.1",
 		"prosemirror-schema-list": "^1.0.3",
 		"prosemirror-state": "^1.2.3",
-		"prosemirror-view": "^1.9.4",
+		"prosemirror-view": "^1.9.6",
 		"uuid": "^3.3.2",
 		"v-tooltip": "^2.0.2",
 		"vue": "^2.6.10",
@@ -51,9 +51,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.4.4",
+		"@babel/core": "^7.4.5",
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
-		"@babel/preset-env": "^7.4.4",
+		"@babel/preset-env": "^7.4.5",
 		"@vue/test-utils": "^1.0.0-beta.29",
 		"acorn": "^6.1.1",
 		"babel-eslint": "^10.0.1",
@@ -83,7 +83,7 @@
 		"vue-loader": "^15.7.0",
 		"vue-style-loader": "^4.1.1",
 		"vue-template-compiler": "^2.6.10",
-		"webpack": "^4.31.0",
+		"webpack": "^4.32.1",
 		"webpack-cli": "^3.3.2",
 		"webpack-merge": "^4.2.1"
 	},
