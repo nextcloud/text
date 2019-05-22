@@ -24,6 +24,7 @@
 namespace OCA\Text\Service;
 
 
+use OC\Files\Node\File;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Http\DataResponse;
@@ -45,14 +46,14 @@ class ApiService {
 		$this->documentService = $documentService;
 	}
 
-	public function create($fileId = null, $file = null, $token = null): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null): DataResponse {
 		try {
 			if ($token) {
-				$document = $this->documentService->createDocumentByShareToken($token, $file);
+				$document = $this->documentService->createDocumentByShareToken($token, $filePath);
 			} else if ($fileId) {
 				$document = $this->documentService->createDocumentByFileId($fileId);
-			} else if ($file) {
-				$document = $this->documentService->createDocumentByPath($file);
+			} else if ($filePath) {
+				$document = $this->documentService->createDocumentByPath($filePath);
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
@@ -80,7 +81,10 @@ class ApiService {
 	}
 
 	public function close($documentId, $sessionId, $sessionToken): DataResponse {
-		// TODO: To implement
+		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
+		//if ($this->documentService->)
+		//$this->sessionService->cleanupSessions();
+		$this->sessionService->removeInactiveSessions($documentId);
 		return new DataResponse([]);
 	}
 
@@ -106,11 +110,15 @@ class ApiService {
 		try {
 			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
 		} catch (DocumentSaveConflictException $e) {
-			/** @var \OC\Files\Node\File $file */
+			/** @var File $file */
 			$file = $this->documentService->getFileByShareToken($token);
 			return new DataResponse([
 				'outsideChange' => $file->getContent()
 			], 409);
+		} catch (\Exception $e) {
+			return new DataResponse([
+				'message' => $e->getMessage()
+			], 500);
 		}
 		return new DataResponse([
 			'steps' => $this->documentService->getSteps($documentId, $version),

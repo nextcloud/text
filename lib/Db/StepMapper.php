@@ -41,7 +41,6 @@ class StepMapper extends QBMapper {
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($fromVersion)));
-		// WIP: only return steps that were persisted completely
 		if ($lastAckedVersion) {
 			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
 		}

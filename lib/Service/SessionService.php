@@ -64,13 +64,12 @@ class SessionService {
 		return $this->sessionMapper->insert($session);
 	}
 
-	/**
-	 * @throws DoesNotExistException
-	 */
-	public function closeSession($documentId, $sessionId, $token): void {
-		$session = $this->sessionMapper->find($documentId, $sessionId, $token);
-		// TODO: check for unpersisited changes from session?
-		$this->sessionMapper->delete($session);
+	public function closeSession(int $documentId, int $sessionId, string $token): void {
+		try {
+			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
+			$this->sessionMapper->delete($session);
+		} catch (DoesNotExistException $e) {
+		}
 	}
 
 	public function getActiveSessions($documentId): array {

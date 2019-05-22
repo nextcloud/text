@@ -358,4 +358,8 @@ class DocumentService {
 		}
 	}
 
+	public function hasUnsavedChanges(Document $document) {
+		return $document->getCurrentVersion() !== $document->getLastSavedVersion();
+	}
+
 }
