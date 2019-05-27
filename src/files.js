@@ -51,6 +51,10 @@ const newFileMenuPlugin = {
 
 OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
 documentReady(() => {
+	if (typeof OCA.Viewer === 'undefined') {
+		console.error('Viewer app is not installed')
+		return
+	}
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: ['text/markdown'],

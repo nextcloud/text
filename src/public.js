@@ -3,6 +3,8 @@ import Editor from './components/Editor'
 import { documentReady } from './helpers'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_public_path__ = OC.linkTo('text', 'js') // eslint-disable-line
+console.log(__webpack_public_path__)
 
 Vue.prototype.t = t
 Vue.prototype.OCA = OCA

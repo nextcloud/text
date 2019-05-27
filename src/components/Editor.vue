@@ -38,93 +38,46 @@
 			<div id="editor">
 				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }">
 					<div class="menubar">
+						<button class="icon-bold" :class="{ 'is-active': isActive.bold() }" @click="commands.bold"></button>
+						<button class="icon-italic" :class="{ 'is-active': isActive.italic() }" @click="commands.italic"></button>
+						<button class="icon-underline" :class="{ 'is-active': isActive.underline() }" @click="commands.underline"></button>
+
+						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">H1</button>
+						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">H2</button>
+						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">H3</button>
 						<Actions>
-							<ActionButton
-									icon="icon-info"
-									:class="{ 'is-active': isActive.bold() }"
-									@click="commands.bold">
-	B						</ActionButton>
+							<ActionButton @click="commands.heading({ level: 4 })">H4</ActionButton>
+							<ActionButton @click="commands.heading({ level: 5 })">H5</ActionButton>
+							<ActionButton @click="commands.heading({ level: 6 })">H6</ActionButton>
 						</Actions>
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.bold() }"
-								@click="commands.bold"
-						>
-							B
-						</button>
 
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.italic() }"
-								@click="commands.italic"
-						>
-							I
-						</button>
+						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list"></button>
+						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list"></button>
+						<button class="icon-quote" :class="{ 'is-active': isActive.blockquote() }" @click="commands.blockquote"></button>
 
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.heading({ level: 1 }) }"
-								@click="commands.heading({ level: 1 })"
-						>
-							H1
-						</button>
-
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.heading({ level: 2 }) }"
-								@click="commands.heading({ level: 2 })"
-						>
-							H2
-						</button>
-
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.heading({ level: 3 }) }"
-								@click="commands.heading({ level: 3 })"
-						>
-							H3
-						</button>
-
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.bullet_list() }"
-								@click="commands.bullet_list"
-						>
-							-
-						</button>
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.ordered_list() }"
-								@click="commands.ordered_list"
-						>
-							1.
-						</button>
-
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.blockquote() }"
-								@click="commands.blockquote"
-						>
-							"
-						</button>
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.code() }"
-								@click="commands.code"
-						>
-							{}
-						</button>
-
-						<button
-								class="menubar__button"
-								:class="{ 'is-active': isActive.paragraph() }"
-								@click="commands.paragraph"
-						>
-							P
-						</button>
+						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code"></button>
+						<button class="icon-image" @click="showImagePrompt(commands.image)"></button>
 					</div>
 				</editor-menu-bar>
-				<editor-content class="editor__content" :editor="tiptap"  />
+				<editor-menu-bubble class="menububble" :editor="tiptap" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
+					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
+
+						<form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
+							<input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
+							<button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button"></button>
+						</form>
+
+						<template v-else>
+							<button
+									class="menububble__button"
+									@click="showLinkMenu(getMarkAttrs('link'))"
+									:class="{ 'is-active': isActive.link() }"
+							><span>{{ isActive.link() ? 'Update Link' : 'Add Link'}}</span></button>
+						</template>
+
+					</div>
+				</editor-menu-bubble>
+				<editor-content class="editor__content" :editor="tiptap" />
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
@@ -140,7 +93,7 @@
 </template>
 
 <script>
-	import Vue from 'vue'
+import Vue from 'vue'
 import debounce from 'lodash/debounce'
 
 import { EditorSync, ERROR_TYPE } from './../EditorSync'
@@ -150,7 +103,7 @@ import { endpointUrl } from './../helpers'
 import { getVersion } from 'prosemirror-collab'
 import { defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import {
 	HardBreak,
 	Heading,
@@ -165,6 +118,7 @@ import {
 	ListItem,
 	Blockquote,
 	CodeBlock,
+	Image,
 	History,
 	Collaboration,
 } from 'tiptap-extensions'
@@ -189,6 +143,7 @@ export default {
 		ReadOnlyEditor,
 		EditorContent,
 		EditorMenuBar,
+		EditorMenuBubble,
 		ActionButton
 	},
 	directives: {
@@ -228,7 +183,10 @@ export default {
 			dirty: false,
 			initialLoading: false,
 			lastSavedString: '',
-			syncError: null
+			syncError: null,
+
+			linkUrl: null,
+			linkMenuIsActive: false,
 		}
 	},
 	computed: {
@@ -329,14 +287,14 @@ export default {
 					/** tiptap */
 					this.markdownit = MarkdownIt('commonmark', {html: false});
 					this.tiptap = new Editor({
-						content: "<p>Hello world</p>", //this.markdownit.render(documentSource),
+						content: "<p> </p>", //this.markdownit.render(documentSource),
 						onUpdate: ({state}) => {
 							console.log(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
 						},
 						extensions: [
 							new HardBreak(),
-							new Heading({ levels: [1, 2, 3] }),
+							new Heading(),
 							new Bold(),
 							new Underline,
 							new Strike,
@@ -348,6 +306,7 @@ export default {
 							new CodeBlock(),
 							new ListItem,
 							new Link,
+							new Image,
 							new History(),
 							new Collaboration({
 								// the initial version we start with
@@ -425,7 +384,35 @@ export default {
 					Vue.set(this.filteredSessions, session.userId, session)
 				}
 			}
-		}
+		},
+
+		showLinkMenu(attrs) {
+			this.linkUrl = attrs.href
+			this.linkMenuIsActive = true
+			this.$nextTick(() => {
+				this.$refs.linkInput.focus()
+			})
+		},
+		hideLinkMenu() {
+			this.linkUrl = null
+			this.linkMenuIsActive = false
+		},
+
+		setLinkUrl(command, url) {
+			command({ href: url })
+			this.hideLinkMenu()
+			this.tiptap.focus()
+		},
+
+		showImagePrompt(command) {
+			const _command = command
+			OC.dialogs.filepicker('Insert an image',  (file) => {
+				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024`
+				_command({ src })
+				// TODO: check permissions
+				// TODO: check for available preview
+			}, false, false)
+		},
 	}
 }
 </script>
@@ -508,13 +495,131 @@ export default {
 		position: absolute;
 		top: 0;
 		right: 0;
-		z-index: 100;
+		z-index: 110;
 		padding: 6px;
+		padding-right: 16px;
 		display: flex;
 
 		input, div {
 			vertical-align: middle;
 			margin-left: 3px;
+		}
+	}
+
+	.menubar {
+		width: 100%;
+		position: fixed;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background-color: var(--color-main-background-translucent);
+	}
+
+	.menubar button {
+		width: 44px;
+		height: 44px;
+		background-size: 16px;
+		border: 0;
+		background-color: var(--color-main-background);
+		opacity: 0.6;
+		background-position: center center;
+		vertical-align: top;
+		&:hover, &:focus, &:active {
+			background-color: var(--color-background-dark);
+		}
+		&.is-active {
+			opacity: 1;
+		}
+	}
+
+	.icon-bold {
+		background-image: url('./../../img/icons/bold.svg');
+	}
+	.icon-italic {
+		background-image: url('./../../img/icons/italic.svg');
+	}
+	.icon-underline {
+		background-image: url('./../../img/icons/underline.svg');
+	}
+	.icon-link {
+		background-image: url('./../../img/icons/link.svg');
+	}
+	.icon-ol {
+		background-image: url('./../../img/icons/ol.svg');
+	}
+	.icon-ul {
+		background-image: url('./../../img/icons/ul.svg');
+	}
+	.icon-hr {
+		background-image: url('./../../img/icons/hr.svg');
+	}
+	.icon-quote {
+		background-image: url('./../../img/icons/quote.svg');
+	}
+	.icon-paragraph {
+		background-image: url('./../../img/icons/paragraph.svg');
+	}
+	.icon-code {
+		background-image: url('./../../img/icons/code.svg');
+	}
+	.icon-image {
+		background-image: url('./../../img/icons/image.svg');
+	}
+
+
+	$color-white: #fff;
+	$color-black: #000;
+
+	.menububble {
+		position: absolute;
+		display: flex;
+		z-index: 220;
+		background: $color-black;
+		border-radius: 5px;
+		padding: 0.3rem;
+		margin-bottom: 0.5rem;
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.2s, visibility 0.2s;
+
+		&.is-active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		&__button {
+			display: inline-flex;
+			background: transparent;
+			border: 0;
+			color: $color-white;
+			padding: 0.2rem 0.5rem;
+			margin-right: 0.2rem;
+			border-radius: 3px;
+			cursor: pointer;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			&:hover {
+				background-color: rgba($color-white, 0.1);
+			}
+
+			&.is-active {
+				background-color: rgba($color-white, 0.2);
+			}
+		}
+
+		&__form {
+			display: flex;
+			align-items: center;
+		}
+
+		&__input {
+			font: inherit;
+			border: none;
+			background: transparent;
+			color: $color-white;
 		}
 	}
 

@@ -358,6 +358,7 @@ li.ProseMirror-selectednode:after {
   border-radius: 4px;
   padding: 0;
   position: relative;
+  overflow: scroll;
 }
 
 div[contenteditable=true],
