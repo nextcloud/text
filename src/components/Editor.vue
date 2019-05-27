@@ -233,7 +233,6 @@ export default {
 	},
 	computed: {
 		activeSessions() {
-			// TODO: filter out duplicate user ids
 			return Object.values(this.filteredSessions).filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME)
 		},
 		sessionStyle() {
@@ -243,23 +242,6 @@ export default {
 					'border-color': session.color
 				}
 			}
-		},
-		filteredSessions() {
-			let filteredSessions = {}
-			for (let index in this.sessions) {
-				let session = this.sessions[index]
-				if (!session.userId) {
-					session.userId = session.id
-				}
-				if (this.filteredSessions.hasOwnProperty(session.userId)) {
-					if (filteredSessions[session.userId].lastContact < session.lastContact) {
-						filteredSessions[session.userId] = session
-					}
-				} else {
-					filteredSessions[session.userId] = session
-				}
-			}
-			return filteredSessions
 		},
 
 		lastSavedStatus() {
@@ -334,9 +316,7 @@ export default {
 					this.document = document
 				})
 				.on('change', ({document, sessions}) => {
-					this.sessions = sessions.sort((a,b) => b.lastContact - a.lastContact)
-
-
+					this.updateSessions.bind(this)(sessions);
 					this.document = document
 				})
 				.on('loaded', ({document, session, documentSource}) => {
@@ -416,6 +396,35 @@ export default {
 		resolveUseServerVersion() {
 			this.authority.view.destroy()
 			this.initSession()
+		},
+
+		updateSessions(sessions) {
+			this.sessions = sessions.sort((a,b) => b.lastContact - a.lastContact)
+			let currentSessionIds = this.sessions.map((session) => session.userId)
+			const stillExistingSessions = Object.keys(this.filteredSessions)
+				.filter(sessionId => currentSessionIds.includes(sessionId))
+			const removedSessions = Object.keys(this.filteredSessions)
+				.filter(sessionId => !currentSessionIds.includes(sessionId))
+
+			// remove sessions
+			for (let index in removedSessions) {
+				Vue.delete(this.filteredSessions, removedSessions[index])
+			}
+			for (let index in this.sessions) {
+				let session = this.sessions[index]
+				if (!session.userId) {
+					session.userId = session.id
+				}
+
+				if (this.filteredSessions[session.userId]) {
+					// update timestamp if relevant
+					if (this.filteredSessions[session.userId].lastContact < session.lastContact) {
+						Vue.set(this.filteredSessions[session.userId], 'lastContact', session.lastContact)
+					}
+				} else {
+					Vue.set(this.filteredSessions, session.userId, session)
+				}
+			}
 		}
 	}
 }
