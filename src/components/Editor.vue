@@ -47,11 +47,11 @@
 						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">H2</button>
 						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">H3</button>
 						<Actions>
-							<ActionButton @click="commands.heading({ level: 4 })">Heading 4</ActionButton>
-							<ActionButton @click="commands.heading({ level: 5 })">Heading 5</ActionButton>
-							<ActionButton @click="commands.heading({ level: 6 })">Heading 6</ActionButton>
-							<ActionButton @click="commands.code_block()">Code block</ActionButton>
-							<ActionButton @click="commands.blockquote()">Blockquote</ActionButton>
+							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 4 })">Heading 4</ActionButton>
+							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 5 })">Heading 5</ActionButton>
+							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 6 })">Heading 6</ActionButton>
+							<ActionButton icon="icon-code" @click="commands.code_block()">Code block</ActionButton>
+							<ActionButton icon="icon-quote" @click="commands.blockquote()">Blockquote</ActionButton>
 						</Actions>
 
 						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list"></button>
@@ -519,6 +519,7 @@ export default {
 	.menubar button {
 		width: 44px;
 		height: 44px;
+		margin: 0;
 		background-size: 16px;
 		border: 0;
 		background-color: var(--color-main-background);
@@ -531,40 +532,6 @@ export default {
 		&.is-active {
 			opacity: 1;
 		}
-	}
-
-	.icon-bold {
-		background-image: url('./../../img/icons/bold.svg');
-	}
-	.icon-italic {
-		background-image: url('./../../img/icons/italic.svg');
-	}
-	.icon-underline {
-		background-image: url('./../../img/icons/underline.svg');
-	}
-	.icon-link {
-		background-image: url('./../../img/icons/link.svg');
-	}
-	.icon-ol {
-		background-image: url('./../../img/icons/ol.svg');
-	}
-	.icon-ul {
-		background-image: url('./../../img/icons/ul.svg');
-	}
-	.icon-hr {
-		background-image: url('./../../img/icons/hr.svg');
-	}
-	.icon-quote {
-		background-image: url('./../../img/icons/quote.svg');
-	}
-	.icon-paragraph {
-		background-image: url('./../../img/icons/paragraph.svg');
-	}
-	.icon-code {
-		background-image: url('./../../img/icons/code.svg');
-	}
-	.icon-image {
-		background-image: url('./../../img/icons/image.svg');
 	}
 
 
@@ -635,6 +602,7 @@ export default {
 
 	#files-public-content {
 		width: 100% !important;
+		height: 100%;
 	}
 
 	#viewer-content.modal-mask .modal-wrapper .modal-container {
