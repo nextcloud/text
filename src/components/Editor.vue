@@ -41,21 +41,22 @@
 						<button class="icon-bold" :class="{ 'is-active': isActive.bold() }" @click="commands.bold"></button>
 						<button class="icon-italic" :class="{ 'is-active': isActive.italic() }" @click="commands.italic"></button>
 						<button class="icon-underline" :class="{ 'is-active': isActive.underline() }" @click="commands.underline"></button>
+						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code"></button>
 
 						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">H1</button>
 						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">H2</button>
 						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">H3</button>
 						<Actions>
-							<ActionButton @click="commands.heading({ level: 4 })">H4</ActionButton>
-							<ActionButton @click="commands.heading({ level: 5 })">H5</ActionButton>
-							<ActionButton @click="commands.heading({ level: 6 })">H6</ActionButton>
+							<ActionButton @click="commands.heading({ level: 4 })">Heading 4</ActionButton>
+							<ActionButton @click="commands.heading({ level: 5 })">Heading 5</ActionButton>
+							<ActionButton @click="commands.heading({ level: 6 })">Heading 6</ActionButton>
+							<ActionButton @click="commands.code_block()">Code block</ActionButton>
+							<ActionButton @click="commands.blockquote()">Blockquote</ActionButton>
 						</Actions>
 
 						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list"></button>
 						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list"></button>
-						<button class="icon-quote" :class="{ 'is-active': isActive.blockquote() }" @click="commands.blockquote"></button>
 
-						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code"></button>
 						<button class="icon-image" @click="showImagePrompt(commands.image)"></button>
 					</div>
 				</editor-menu-bar>
@@ -407,7 +408,7 @@ export default {
 		showImagePrompt(command) {
 			const _command = command
 			OC.dialogs.filepicker('Insert an image',  (file) => {
-				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024`
+				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
 				_command({ src })
 				// TODO: check permissions
 				// TODO: check for available preview
@@ -621,6 +622,11 @@ export default {
 			background: transparent;
 			color: $color-white;
 		}
+	}
+
+	.editor__content {
+		max-width: 800px;
+		margin: auto;
 	}
 
 </style>

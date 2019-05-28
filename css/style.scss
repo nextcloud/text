@@ -30,6 +30,10 @@
 
 .ProseMirror pre {
   white-space: pre-wrap;
+  background-color: var(--color-background-dark);
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 11px;
 }
 
 .ProseMirror li {
@@ -297,7 +301,8 @@ li.ProseMirror-selectednode:after {
   margin-left: 0; margin-right: 0;
 }
 
-.ProseMirror-example-setup-style img {
+.ProseMirror-example-setup-style img,
+.ProseMirror img {
   cursor: default;
   max-height: 50vh;
   max-width: 100%;
