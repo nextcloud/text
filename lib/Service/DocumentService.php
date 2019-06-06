@@ -115,7 +115,7 @@ class DocumentService {
 	public function createDocumentByPath($path) {
 		/** @var File $file */
 		$file = $this->rootFolder->getUserFolder($this->userId)->get($path);
-		return $this->createDocument($file);
+		return [$this->createDocument($file), $file];
 	}
 
 	/**
@@ -127,7 +127,7 @@ class DocumentService {
 	 */
 	public function createDocumentByFileId($fileId) {
 		$file = $this->getFileById($fileId);
-		return $this->createDocument($file);
+		return [$this->createDocument($file), $file];
 	}
 
 	/**
@@ -140,7 +140,7 @@ class DocumentService {
 	 */
 	public function createDocumentByShareToken($shareToken, $filePath = null) {
 		$file = $this->getFileByShareToken($shareToken, $filePath);
-		return $this->createDocument($file);
+		return [$this->createDocument($file), $file];
 	}
 
 

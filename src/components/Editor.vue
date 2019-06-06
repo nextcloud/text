@@ -181,6 +181,7 @@ export default {
 			initialLoading: false,
 			lastSavedString: '',
 			syncError: null,
+			readOnly: true,
 
 			linkUrl: null,
 			linkMenuIsActive: false,
@@ -236,14 +237,7 @@ export default {
 			return this.fileId || this.shareToken
 		},
 		isPublic() {
-			return document.getElementById('isPublic') && document.getElementById('isPublic') === '1'
-		},
-		readOnly() {
-			if (OCA.Files.App) {
-				const file = OCA.Files.App.fileList.files.find((f) => f.id === this.fileId);
-				return !(file.permissions & OC.PERMISSION_UPDATE);
-			}
-			return true;
+			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
 		}
 	},
 	mounted() {
@@ -279,6 +273,7 @@ export default {
 				.on('opened', ({document, session}) => {
 					this.currentSession = session
 					this.document = document
+					this.readOnly = document.readOnly
 				})
 				.on('change', ({document, sessions}) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {

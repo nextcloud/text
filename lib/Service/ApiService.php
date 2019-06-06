@@ -30,6 +30,7 @@ use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
+use OCP\Constants;
 use OCP\Files\NotFoundException;
 use OCP\ICacheFactory;
 use OCP\IRequest;
@@ -48,22 +49,33 @@ class ApiService {
 
 	public function create($fileId = null, $filePath = null, $token = null): DataResponse {
 		try {
+			$readOnly = true;
+			/** @var File $file */
+			$file = null;
 			if ($token) {
-				$document = $this->documentService->createDocumentByShareToken($token, $filePath);
+				list($document, $file) = $this->documentService->createDocumentByShareToken($token, $filePath);
+				try {
+					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
+					$readOnly = false;
+				} catch (NotFoundException $e) {}
 			} else if ($fileId) {
-				$document = $this->documentService->createDocumentByFileId($fileId);
+				list($document, $file) = $this->documentService->createDocumentByFileId($fileId);
+				$readOnly = !$file->isUpdateable();
 			} else if ($filePath) {
-				$document = $this->documentService->createDocumentByPath($filePath);
+				list($document, $file) = $this->documentService->createDocumentByPath($filePath);
+				$readOnly = !$file->isUpdateable();
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}
+
 		$session = $this->sessionService->initSession($document->getId());
 		return new DataResponse([
 			'document' => $document,
-			'session' => $session
+			'session' => $session,
+			'readOnly' => $readOnly
 		]);
 	}
 

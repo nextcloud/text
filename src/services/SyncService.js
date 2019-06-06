@@ -112,6 +112,7 @@ class SyncService {
 			}
 		}).then((response) => {
 			this.document = response.data.document
+			this.document.readOnly = response.data.readOnly
 			this.session = response.data.session
 			return response.data
 		})
