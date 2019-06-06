@@ -110,8 +110,12 @@ class ApiService {
 		try {
 			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
 		} catch (DocumentSaveConflictException $e) {
-			/** @var File $file */
-			$file = $this->documentService->getFileByShareToken($token);
+			if ($token) {
+				/** @var File $file */
+				$file = $this->documentService->getFileByShareToken($token);
+			} else {
+				$file = $this->documentService->getFileById($documentId);
+			}
 			return new DataResponse([
 				'outsideChange' => $file->getContent()
 			], 409);

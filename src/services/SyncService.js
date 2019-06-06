@@ -157,6 +157,7 @@ class SyncService {
 				})
 			})
 		}
+		console.log(newSteps);
 		this.emit('sync', {steps: newSteps, document})
 		console.log('receivedSteps', 'newVersion', getVersion(this.state))
 	}
@@ -180,6 +181,12 @@ class SyncService {
 	save() {
 		if (this.backend.save) {
 			this.backend.save()
+		}
+	}
+
+	forceSave() {
+		if (this.backend.forceSave) {
+			this.backend.forceSave()
 		}
 	}
 

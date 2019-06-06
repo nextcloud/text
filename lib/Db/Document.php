@@ -50,6 +50,7 @@ class Document extends Entity implements \JsonSerializable {
 			'currentVersion' => $this->currentVersion,
 			'lastSavedVersion' => $this->lastSavedVersion,
 			'lastSavedVersionTime' => $this->lastSavedVersionTime,
+			'baseVersionEtag' => $this->baseVersionEtag,
 		];
 	}
 

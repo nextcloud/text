@@ -36,11 +36,10 @@
 		</div>
 		<div id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor">
-				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }">
+				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }" v-if="!syncError && !readOnly">
 					<div class="menubar">
-						<button class="icon-bold" :class="{ 'is-active': isActive.bold() }" @click="commands.bold"></button>
-						<button class="icon-italic" :class="{ 'is-active': isActive.italic() }" @click="commands.italic"></button>
-						<button class="icon-underline" :class="{ 'is-active': isActive.underline() }" @click="commands.underline"></button>
+						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong"></button>
+						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em"></button>
 						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code"></button>
 
 						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">H1</button>
@@ -57,10 +56,10 @@
 						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list"></button>
 						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list"></button>
 
-						<button class="icon-image" @click="showImagePrompt(commands.image)"></button>
+						<button v-if="!isPublic" class="icon-image" @click="showImagePrompt(commands.image)"></button>
 					</div>
 				</editor-menu-bar>
-				<editor-menu-bubble class="menububble" :editor="tiptap" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
+				<editor-menu-bubble v-if="!readOnly" class="menububble" :editor="tiptap" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
 					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
 
 						<form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
@@ -82,7 +81,7 @@
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
-		<div v-if="hasSyncCollission" id="resolve-conflicts">
+		<div v-if="hasSyncCollission && !readOnly" id="resolve-conflicts">
 			<button @click="resolveUseThisVersion">
 				Use your version
 			</button>
@@ -110,10 +109,7 @@ import {
 	Heading,
 	Bold,
 	Code,
-	Italic,
-	Strike,
 	Link,
-	Underline,
 	BulletList,
 	OrderedList,
 	ListItem,
@@ -123,6 +119,7 @@ import {
 	History,
 	Collaboration,
 } from 'tiptap-extensions'
+import { Strong, Italic } from './../marks'
 import { Keymap } from './../extensions'
 import MarkdownIt from 'markdown-it'
 
@@ -140,7 +137,8 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
-		Avatar,Actions,
+		Avatar,
+		Actions,
 		ReadOnlyEditor,
 		EditorContent,
 		EditorMenuBar,
@@ -172,8 +170,6 @@ export default {
 		return {
 			editor: null,
 			tiptap: null,
-			/** @type EditorSync */
-			authority: null,
 			/** @type SyncService */
 			syncService: null,
 			document: null,
@@ -229,7 +225,7 @@ export default {
 			return this.dirty
 		},
 		hasUnsavedChanges() {
-			return this.authority && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
+			return this.syncService && this.tiptap && this.tiptap.state  && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
 		},
 		backendUrl() {
 			return (endpoint) => {
@@ -238,6 +234,16 @@ export default {
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken
+		},
+		isPublic() {
+			return document.getElementById('isPublic') && document.getElementById('isPublic') === '1'
+		},
+		readOnly() {
+			if (OCA.Files.App) {
+				const file = OCA.Files.App.fileList.files.find((f) => f.id === this.fileId);
+				return !(file.permissions & OC.PERMISSION_UPDATE);
+			}
+			return true;
 		}
 	},
 	mounted() {
@@ -275,36 +281,37 @@ export default {
 					this.document = document
 				})
 				.on('change', ({document, sessions}) => {
+					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
+						this.resolveUseServerVersion()
+						return
+					}
 					this.updateSessions.bind(this)(sessions);
 					this.document = document
+					this.syncError = null
+					this.tiptap.setOptions({editable: true && !this.readOnly})
 				})
 				.on('loaded', ({document, session, documentSource}) => {
 					const documentData = {document, session}
 					const initialDocument = defaultMarkdownParser.parse(documentSource)
 
-					const sendStepsDebounce = () => this.syncService.sendSteps()
-					const sendStepsDebounced = debounce(sendStepsDebounce, EDITOR_PUSH_DEBOUNCE, { maxWait: 5000 })
-
-					/** tiptap */
 					this.markdownit = MarkdownIt('commonmark', {html: false});
 					this.tiptap = new Editor({
-						content: "<p> </p>", //this.markdownit.render(documentSource),
+						content: this.markdownit.render(documentSource),
 						onUpdate: ({state}) => {
+							console.log("=> FROM doc")
 							console.log(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
 						},
 						extensions: [
-							new HardBreak(),
-							new Heading(),
-							new Bold(),
-							new Underline,
-							new Strike,
-							new Code(),
-							new Italic(),
-							new BulletList(),
-							new OrderedList(),
-							new Blockquote(),
-							new CodeBlock(),
+							new HardBreak,
+							new Heading,
+							new Code,
+							new Strong,
+							new Italic,
+							new BulletList,
+							new OrderedList,
+							new Blockquote,
+							new CodeBlock,
 							new ListItem,
 							new Link,
 							new Image,
@@ -318,7 +325,7 @@ export default {
 								debounce: 250,
 								onSendable: ({ sendable }) => {
 									// This is not working properly with polling and the careful retry logic
-									this.syncService.sendSteps(sendable)
+									this.syncService.sendSteps()
 								}
 							}),
 							new Keymap({
@@ -332,12 +339,25 @@ export default {
 					})
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
+					this.tiptap.focus('end')
 				})
 				.on('sync', ({steps, document}) => {
 					this.tiptap.extensions.options.collaboration.update({
-						version: document.version,
+						version: document.currentVersion,
 						steps: steps
 					})
+					this.syncService.state = this.tiptap.state
+				})
+				.on('error', (error, data) => {
+					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
+						this.initialLoading = true
+						this.syncError = {
+							type: ERROR_TYPE.SAVE_COLLISSION,
+							data: data
+						}
+						this.tiptap.setOptions({editable: false})
+
+					}
 				})
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {
@@ -349,12 +369,14 @@ export default {
 		},
 
 		resolveUseThisVersion() {
-			this.authority.forceSave()
-			this.authority.view.setProps({ editable: () => true })
+			this.syncService.forceSave()
+			this.tiptap.setOptions({editable: true && !this.readOnly})
 		},
 
 		resolveUseServerVersion() {
-			this.authority.view.destroy()
+			this.syncService.close()
+			this.syncService = null
+			this.tiptap.destroy()
 			this.initSession()
 		},
 

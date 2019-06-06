@@ -71,6 +71,16 @@ class PollingBackend {
 		return !!this._authority.options.shareToken
 	}
 
+	forceSave() {
+		this._forcedSave = true
+		this._fetchSteps()
+	}
+
+	save() {
+		this._manualSave = true
+		this._fetchSteps()
+	}
+
 	_fetchSteps() {
 		if (this.lock) {
 			return
