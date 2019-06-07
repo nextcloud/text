@@ -83,16 +83,10 @@
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
-		<div v-if="hasSyncCollission && !readOnly" id="resolve-conflicts">
-			<button @click="resolveUseThisVersion">
-				Use your version
-			</button>
-			<button @click="resolveUseServerVersion">
-				Use the server version
-			</button>
-		</div>
 
-		<guest-name-dialog v-if="isPublic && !guestNameConfirmed" :value="guestName" @input="setGuestName($event)"></guest-name-dialog>
+		<collision-resolve-dialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
+
+		<guest-name-dialog v-if="isPublic && !guestNameConfirmed" :value="guestName" @input="setGuestName($event)" />
 	</div>
 </template>
 
@@ -117,6 +111,7 @@ import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
+import CollisionResolveDialog from './CollisionResolveDialog';
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -125,6 +120,7 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
+		CollisionResolveDialog,
 		Avatar,
 		Actions,
 		ReadOnlyEditor,
@@ -469,22 +465,6 @@ export default {
 			background-color: var(--color-error);
 			color: var(--color-main-background);
 			border-radius: 3px;
-		}
-	}
-
-	#resolve-conflicts {
-		display: flex;
-		position: fixed;
-		z-index: 10000;
-		bottom: 0;
-		max-width: 900px;
-		width: 100vw;
-		margin: auto;
-		padding: 20px 0;
-
-		button {
-			margin: auto;
-			box-shadow: 0 0 10px var(--color-box-shadow);
 		}
 	}
 
