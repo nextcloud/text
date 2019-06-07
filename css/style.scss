@@ -200,7 +200,6 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror {
   margin-top: 44px;
-  overflow: scroll;
   height: 100%;
   position: relative;
 }
@@ -358,7 +357,8 @@ li.ProseMirror-selectednode:after {
   border-radius: 4px;
   padding: 0;
   position: relative;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 div[contenteditable=true],
