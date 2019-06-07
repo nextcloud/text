@@ -21,20 +21,22 @@
   -->
 
 <template>
-	<div v-if="currentSession && active" id="editor-container">
-		<div id="editor-session-list">
+	<div id="editor-container">
+		<div id="editor-session-list" v-if="currentSession && active">
 			<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 				{{ lastSavedStatus }}
 			</div>
-			<avatar v-for="session in activeSessions" :key="session.id" :user="session.userId"
-				:display-name="session.displayName" :style="sessionStyle(session)" />
+			<avatar v-for="session in activeSessions" :key="session.id"
+					:user="session.userId"
+					:display-name="session.guestName ? session.guestName : session.displayName"
+					:style="sessionStyle(session)" />
 		</div>
-		<div>
+		<div v-if="currentSession && active">
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
 		</div>
-		<div id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor">
 				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }" v-if="!syncError && !readOnly">
 					<div class="menubar">
@@ -88,6 +90,14 @@
 			<button @click="resolveUseServerVersion">
 				Use the server version
 			</button>
+		</div>
+
+		<div v-if="isPublic && !guestNameConfirmed" class="guest-name-dialog">
+			<p>{{ t('text', 'Please enter a name to identify you as a public editor:') }}</p>
+			<form @submit.prevent="setGuestName()">
+				<input type="text" v-model="guestName" />
+				<input type="submit" class="icon-confirm" value="" />
+			</form>
 		</div>
 	</div>
 </template>
@@ -183,13 +193,16 @@ export default {
 			syncError: null,
 			readOnly: true,
 
+			guestName: '',
+			guestNameConfirmed: false,
+
 			linkUrl: null,
 			linkMenuIsActive: false,
 		}
 	},
 	computed: {
 		activeSessions() {
-			return Object.values(this.filteredSessions).filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME)
+			return Object.values(this.filteredSessions).filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && session.id !== this.currentSession.id && session.userId !== null)
 		},
 		sessionStyle() {
 			return (session) => {
@@ -241,7 +254,12 @@ export default {
 		}
 	},
 	mounted() {
-		if (this.active && (this.hasDocumentParameters)) {
+		const guestName = localStorage.getItem('text-guestName')
+		if (guestName !== null) {
+			this.guestName = guestName
+		}
+
+		if (this.active && (this.hasDocumentParameters) && !this.isPublic) {
 			this.initSession()
 		}
 		setInterval(() => { this.updateLastSavedStatus() }, 2000)
@@ -254,6 +272,11 @@ export default {
 		}
 	},
 	methods: {
+		setGuestName() {
+			this.guestNameConfirmed = true
+			localStorage.setItem('text-guestName', this.guestName)
+			this.initSession()
+		},
 		updateLastSavedStatus() {
 			if (this.document) {
 				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
@@ -266,6 +289,7 @@ export default {
 			}
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
+				guestName: this.guestName,
 				serialize: (document) => {
 					return defaultMarkdownSerializer.serialize(document)
 				}
@@ -611,6 +635,23 @@ export default {
 	.editor__content {
 		max-width: 800px;
 		margin: auto;
+	}
+
+	.guest-name-dialog {
+		padding: 30px;
+		text-align: center;
+
+		form {
+			display: flex;
+			width: 100%;
+			max-width: 200px;
+			margin: auto;
+			margin-top: 30px;
+
+			input[type=text] {
+				flex-grow: 1;
+			}
+		}
 	}
 
 </style>

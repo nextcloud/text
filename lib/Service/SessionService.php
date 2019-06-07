@@ -46,20 +46,21 @@ class SessionService {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
-		$this->userId = $userId ?? 'Guest';
+		$this->userId = $userId;
 	}
 
-	public function initSession($documentId): Session {
+	public function initSession($documentId, $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
-		$session->setUserId($this->userId);
+		$userName = $this->userId ? $this->userId : $guestName;
+		$session->setUserId($userName);
 		$session->setToken($this->secureRandom->generate(64));
 		/** @var IAvatarManager $avatarGenerator */
 		$avatarGenerator = \OC::$server->query(IAvatarManager::class);
-		$color = $avatarGenerator->getGuestAvatar($this->userId)->avatarBackgroundColor($this->userId);
+		$color = $avatarGenerator->getGuestAvatar($userName)->avatarBackgroundColor($userName);
 		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
 		$session->setColor($color);
-		$session->setGuestName(null);
+		$session->setGuestName($guestName);
 		$session->setLastContact($this->timeFactory->getTime());
 		return $this->sessionMapper->insert($session);
 	}

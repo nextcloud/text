@@ -108,7 +108,8 @@ class SyncService {
 			params: {
 				fileId: fileId,
 				file: filePath,
-				token: this.options.shareToken
+				token: this.options.shareToken,
+				guestName: this.options.guestName
 			}
 		}).then((response) => {
 			this.document = response.data.document

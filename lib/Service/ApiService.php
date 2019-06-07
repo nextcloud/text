@@ -47,7 +47,7 @@ class ApiService {
 		$this->documentService = $documentService;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null, $guestName = null): DataResponse {
 		try {
 			$readOnly = true;
 			/** @var File $file */
@@ -71,7 +71,7 @@ class ApiService {
 			return new DataResponse($e->getMessage(), 500);
 		}
 
-		$session = $this->sessionService->initSession($document->getId());
+		$session = $this->sessionService->initSession($document->getId(), $guestName);
 		return new DataResponse([
 			'document' => $document,
 			'session' => $session,

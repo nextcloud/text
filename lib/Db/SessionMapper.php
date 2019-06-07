@@ -64,7 +64,7 @@ class SessionMapper extends QBMapper {
 	public function findAllActive($documentId) {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('id','color','document_id', 'last_contact','user_id')
+		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)))

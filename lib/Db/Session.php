@@ -49,7 +49,8 @@ class Session extends Entity implements \JsonSerializable {
 			'userId' => $this->userId,
 			'token' => $this->token,
 			'color' => $this->color,
-			'lastContact' => $this->lastContact
+			'lastContact' => $this->lastContact,
+			'guestName' => $this->guestName
 		];
 	}
 }
