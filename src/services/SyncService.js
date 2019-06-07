@@ -23,8 +23,7 @@ import axios from 'nextcloud-axios'
 
 import PollingBackend from './PollingBackend'
 import { endpointUrl } from './../helpers'
-import {Step} from 'prosemirror-transform';
-import {getVersion, sendableSteps} from 'prosemirror-collab'
+import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 const defaultOptions = {
 	shareToken: null,
@@ -222,4 +221,5 @@ class SyncService {
 	}
 }
 
-export default SyncService;
+export default SyncService
+export { SyncService, ERROR_TYPE }

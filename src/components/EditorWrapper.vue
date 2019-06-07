@@ -65,7 +65,7 @@
 					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
 
 						<form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-							<input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
+							<input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu" />
 							<button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button"></button>
 						</form>
 
@@ -92,53 +92,31 @@
 			</button>
 		</div>
 
-		<div v-if="isPublic && !guestNameConfirmed" class="guest-name-dialog">
-			<p>{{ t('text', 'Please enter a name to identify you as a public editor:') }}</p>
-			<form @submit.prevent="setGuestName()">
-				<input type="text" v-model="guestName" />
-				<input type="submit" class="icon-confirm" value="" />
-			</form>
-		</div>
+		<guest-name-dialog v-if="isPublic && !guestNameConfirmed" :value="guestName" @input="setGuestName($event)"></guest-name-dialog>
 	</div>
 </template>
 
 <script>
 import Vue from 'vue'
-import debounce from 'lodash/debounce'
 
-import { EditorSync, ERROR_TYPE } from './../EditorSync'
-import SyncService from './../services/SyncService'
+import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
+import { createEditor, markdownit } from './../EditorFactory'
 
-import { getVersion } from 'prosemirror-collab'
 import { defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
-import {
-	HardBreak,
-	Heading,
-	Bold,
-	Code,
-	Link,
-	BulletList,
-	OrderedList,
-	ListItem,
-	Blockquote,
-	CodeBlock,
-	Image,
-	History,
-	Collaboration,
-} from 'tiptap-extensions'
-import { Strong, Italic } from './../marks'
+import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
-import MarkdownIt from 'markdown-it'
-
+import { getVersion } from 'prosemirror-collab'
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
-import ReadOnlyEditor from './ReadOnlyEditor'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
+
+import ReadOnlyEditor from './ReadOnlyEditor'
+import GuestNameDialog from './GuestNameDialog'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -153,7 +131,8 @@ export default {
 		EditorContent,
 		EditorMenuBar,
 		EditorMenuBubble,
-		ActionButton
+		ActionButton,
+		GuestNameDialog
 	},
 	directives: {
 		Tooltip
@@ -178,15 +157,16 @@ export default {
 	},
 	data() {
 		return {
-			editor: null,
 			tiptap: null,
 			/** @type SyncService */
 			syncService: null,
+
 			document: null,
-			currentSession: null,
 			sessions: [],
+			currentSession: null,
+
 			filteredSessions: {},
-			name: null,
+
 			dirty: false,
 			initialLoading: false,
 			lastSavedString: '',
@@ -253,12 +233,13 @@ export default {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
 		}
 	},
-	mounted() {
+	beforeMount() {
 		const guestName = localStorage.getItem('text-guestName')
 		if (guestName !== null) {
 			this.guestName = guestName
 		}
-
+	},
+	mounted() {
 		if (this.active && (this.hasDocumentParameters) && !this.isPublic) {
 			this.initSession()
 		}
@@ -272,7 +253,8 @@ export default {
 		}
 	},
 	methods: {
-		setGuestName() {
+		setGuestName(guestName) {
+			this.guestName = guestName
 			this.guestNameConfirmed = true
 			localStorage.setItem('text-guestName', this.guestName)
 			this.initSession()
@@ -307,34 +289,20 @@ export default {
 					this.updateSessions.bind(this)(sessions);
 					this.document = document
 					this.syncError = null
-					this.tiptap.setOptions({editable: true && !this.readOnly})
+					this.tiptap.setOptions({editable: !this.readOnly})
 				})
 				.on('loaded', ({document, session, documentSource}) => {
 					const documentData = {document, session}
 					const initialDocument = defaultMarkdownParser.parse(documentSource)
 
-					this.markdownit = MarkdownIt('commonmark', {html: false});
-					this.tiptap = new Editor({
-						content: this.markdownit.render(documentSource),
+					this.tiptap = createEditor({
+						content: markdownit.render(documentSource),
 						onUpdate: ({state}) => {
 							console.log("=> FROM doc")
 							console.log(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
 						},
 						extensions: [
-							new HardBreak,
-							new Heading,
-							new Code,
-							new Strong,
-							new Italic,
-							new BulletList,
-							new OrderedList,
-							new Blockquote,
-							new CodeBlock,
-							new ListItem,
-							new Link,
-							new Image,
-							new History(),
 							new Collaboration({
 								// the initial version we start with
 								// version is an integer which is incremented with every change
@@ -523,13 +491,9 @@ export default {
 	#editor-container #editor-wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
-		#remote, #editor {
+		#editor, #read-only-editor {
 			width: 50%;
 			height: 100%;
-		}
-
-		.ProseMirror-menubar {
-			visibility: hidden;
 		}
 	}
 
@@ -637,39 +601,8 @@ export default {
 		margin: auto;
 	}
 
-	.guest-name-dialog {
-		padding: 30px;
-		text-align: center;
-
-		form {
-			display: flex;
-			width: 100%;
-			max-width: 200px;
-			margin: auto;
-			margin-top: 30px;
-
-			input[type=text] {
-				flex-grow: 1;
-			}
-		}
-	}
-
 </style>
 <style lang="scss">
 	@import './../../css/style';
-
-	#files-public-content {
-		width: 100% !important;
-		height: 100%;
-	}
-
-	#viewer-content.modal-mask .modal-wrapper .modal-container {
-		border-radius: 3px !important;
-	}
-
-	.modal-container #editor-container {
-		position: absolute;
-		max-height: calc(100% - 100px);
-	}
-
+	@import './../../css/prosemirror';
 </style>

@@ -21,17 +21,16 @@
   -->
 
 <template>
-	<div id="remote" ref="remote" />
+	<EditorContent id="read-only-editor" v-if="editor" :editor="editor"></EditorContent>
 </template>
 
 <script>
-import { EditorState } from 'prosemirror-state'
-import { EditorView } from 'prosemirror-view'
-import { exampleSetup } from 'prosemirror-example-setup'
-import { schema, defaultMarkdownParser } from 'prosemirror-markdown'
+import { EditorContent } from 'tiptap'
+import {createEditor, markdownit} from '../EditorFactory'
 
 export default {
 	name: 'ReadOnlyEditor',
+	components: {EditorContent},
 	props: {
 		content: {
 			type: String,
@@ -40,34 +39,25 @@ export default {
 	},
 	data: () => {
 		return {
-			remoteView: null
+			editor: null
 		}
 	},
 	mounted() {
-		this.initRemoteView()
+		this.editor = createEditor({
+			content: markdownit.render(this.content)
+		})
+		this.editor.setOptions({editable: false})
 	},
 	beforeDestroy() {
-		this.remoteView.destroy()
-	},
-	methods: {
-		initRemoteView() {
-			if (this.remoteView) {
-				return
-			}
-			this.remoteView = new EditorView(this.$refs.remote, {
-				state: EditorState.create({
-					doc: defaultMarkdownParser.parse(this.content),
-					plugins: [
-						...exampleSetup({ schema })
-					]
-				})
-			})
-			this.remoteView.setProps({ editable: () => false })
-		}
+		this.editor.destroy()
 	}
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+	#read-only-editor {
+		overflow: scroll;
+	}
 
 </style>

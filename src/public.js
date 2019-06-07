@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Editor from './components/Editor'
+import Editor from './components/EditorWrapper'
 import { documentReady } from './helpers'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line

@@ -20,7 +20,7 @@
  *
  */
 
-import Editor from './components/Editor'
+import Editor from './components/EditorWrapper'
 import { documentReady } from './helpers'
 
 const newFileMenuPlugin = {
