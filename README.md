@@ -1,6 +1,14 @@
 # Nextcloud Text
 
-**Collaborative markdown editing**
+**📑 Collaborative document editing!**
+
+![](img/screenshot.png)
+
+- **📝 Focused writing:** No distractions, only the formatting you need.
+- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
+- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
+- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
+
 
 ## 🏗 Development setup
 
