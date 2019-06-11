@@ -22,14 +22,14 @@
 
 <template>
 	<div id="editor-container">
-		<div id="editor-session-list" v-if="currentSession && active">
+		<div v-if="currentSession && active" id="editor-session-list">
 			<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 				{{ lastSavedStatus }}
 			</div>
 			<avatar v-for="session in activeSessions" :key="session.id"
-					:user="session.userId"
-					:display-name="session.guestName ? session.guestName : session.displayName"
-					:style="sessionStyle(session)" />
+				:user="session.userId"
+				:display-name="session.guestName ? session.guestName : session.displayName"
+				:style="sessionStyle(session)" />
 		</div>
 		<div v-if="currentSession && active">
 			<p v-if="hasSyncCollission" class="msg icon-error">
@@ -38,45 +38,62 @@
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor">
-				<editor-menu-bar :editor="tiptap" v-slot="{ commands, isActive }" v-if="!syncError && !readOnly">
+				<editor-menu-bar v-if="!syncError && !readOnly" v-slot="{ commands, isActive }" :editor="tiptap">
 					<div class="menubar">
-						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong"></button>
-						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em"></button>
-						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code"></button>
+						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong" />
+						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em" />
+						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code" />
 
-						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">H1</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">H2</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">H3</button>
-						<Actions>
-							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 4 })">Heading 4</ActionButton>
-							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 5 })">Heading 5</ActionButton>
-							<ActionButton icon="icon-paragraph" @click="commands.heading({ level: 6 })">Heading 6</ActionButton>
-							<ActionButton icon="icon-code" @click="commands.code_block()">Code block</ActionButton>
-							<ActionButton icon="icon-quote" @click="commands.blockquote()">Blockquote</ActionButton>
-						</Actions>
+						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">
+							H1
+						</button>
+						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">
+							H2
+						</button>
+						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">
+							H3
+						</button>
+						<actions>
+							<action-button icon="icon-paragraph" @click="commands.heading({ level: 4 })">
+								Heading 4
+							</action-button>
+							<action-button icon="icon-paragraph" @click="commands.heading({ level: 5 })">
+								Heading 5
+							</action-button>
+							<action-button icon="icon-paragraph" @click="commands.heading({ level: 6 })">
+								Heading 6
+							</action-button>
+							<action-button icon="icon-code" @click="commands.code_block()">
+								Code block
+							</action-button>
+							<action-button icon="icon-quote" @click="commands.blockquote()">
+								Blockquote
+							</action-button>
+						</actions>
 
-						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list"></button>
-						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list"></button>
+						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list" />
+						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list" />
 
-						<button v-if="!isPublic" class="icon-image" @click="showImagePrompt(commands.image)"></button>
+						<button v-if="!isPublic" class="icon-image" @click="showImagePrompt(commands.image)" />
 					</div>
 				</editor-menu-bar>
-				<editor-menu-bubble v-if="!readOnly" class="menububble" :editor="tiptap" @hide="hideLinkMenu" v-slot="{ commands, isActive, getMarkAttrs, menu }">
+				<editor-menu-bubble v-if="!readOnly" v-slot="{ commands, isActive, getMarkAttrs, menu }" class="menububble"
+					:editor="tiptap" @hide="hideLinkMenu">
 					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
-
-						<form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-							<input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu" />
-							<button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button"></button>
+						<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
+							<input ref="linkInput" v-model="linkUrl" class="menububble__input"
+								type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
+							<button class="menububble__button" type="button" @click="setLinkUrl(commands.link, null)" />
 						</form>
 
 						<template v-else>
 							<button
-									class="menububble__button"
-									@click="showLinkMenu(getMarkAttrs('link'))"
-									:class="{ 'is-active': isActive.link() }"
-							><span>{{ isActive.link() ? 'Update Link' : 'Add Link'}}</span></button>
+								class="menububble__button"
+								:class="{ 'is-active': isActive.link() }"
+								@click="showLinkMenu(getMarkAttrs('link'))">
+								<span>{{ isActive.link() ? 'Update Link' : 'Add Link' }}</span>
+							</button>
 						</template>
-
 					</div>
 				</editor-menu-bubble>
 				<editor-content class="editor__content" :editor="tiptap" />
@@ -97,9 +114,9 @@ import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
 import { createEditor, markdownit } from './../EditorFactory'
 
-import { defaultMarkdownParser, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
+import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 import { getVersion } from 'prosemirror-collab'
@@ -111,7 +128,7 @@ import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
-import CollisionResolveDialog from './CollisionResolveDialog';
+import CollisionResolveDialog from './CollisionResolveDialog'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -173,7 +190,7 @@ export default {
 			guestNameConfirmed: false,
 
 			linkUrl: null,
-			linkMenuIsActive: false,
+			linkMenuIsActive: false
 		}
 	},
 	computed: {
@@ -215,7 +232,7 @@ export default {
 			return this.dirty
 		},
 		hasUnsavedChanges() {
-			return this.syncService && this.tiptap && this.tiptap.state  && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
+			return this.syncService && this.tiptap && this.tiptap.state && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
 		},
 		backendUrl() {
 			return (endpoint) => {
@@ -260,7 +277,7 @@ export default {
 				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
 			}
 		},
-		initSession () {
+		initSession() {
 			if (!this.hasDocumentParameters) {
 				this.$emit('error', 'No valid file provided')
 				return
@@ -272,30 +289,26 @@ export default {
 					return defaultMarkdownSerializer.serialize(document)
 				}
 			})
-				.on('opened', ({document, session}) => {
+				.on('opened', ({ document, session }) => {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
 				})
-				.on('change', ({document, sessions}) => {
+				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
 						this.resolveUseServerVersion()
 						return
 					}
-					this.updateSessions.bind(this)(sessions);
+					this.updateSessions.bind(this)(sessions)
 					this.document = document
 					this.syncError = null
-					this.tiptap.setOptions({editable: !this.readOnly})
+					this.tiptap.setOptions({ editable: !this.readOnly })
 				})
-				.on('loaded', ({document, session, documentSource}) => {
-					const documentData = {document, session}
-					const initialDocument = defaultMarkdownParser.parse(documentSource)
-
+				.on('loaded', ({ document, session, documentSource }) => {
 					this.tiptap = createEditor({
 						content: markdownit.render(documentSource),
-						onUpdate: ({state}) => {
-							console.log("=> FROM doc")
-							console.log(defaultMarkdownSerializer.serialize(state.doc))
+						onUpdate: ({ state }) => {
+							console.debug(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
 						},
 						extensions: [
@@ -305,7 +318,7 @@ export default {
 								version: this.syncService.steps.length,
 								clientID: this.currentSession.id,
 								// debounce changes so we can save some bandwidth
-								debounce: 250,
+								debounce: EDITOR_PUSH_DEBOUNCE,
 								onSendable: ({ sendable }) => {
 									// This is not working properly with polling and the careful retry logic
 									this.syncService.sendSteps()
@@ -314,17 +327,16 @@ export default {
 							new Keymap({
 								'Ctrl-s': () => {
 									this.syncService.save()
-									console.log('save', this);
-									return true;
+									return true
 								}
 							})
-						],
+						]
 					})
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
 					this.tiptap.focus('end')
 				})
-				.on('sync', ({steps, document}) => {
+				.on('sync', ({ steps, document }) => {
 					this.tiptap.extensions.options.collaboration.update({
 						version: document.currentVersion,
 						steps: steps
@@ -338,7 +350,7 @@ export default {
 							type: ERROR_TYPE.SAVE_COLLISSION,
 							data: data
 						}
-						this.tiptap.setOptions({editable: false})
+						this.tiptap.setOptions({ editable: false })
 
 					}
 				})
@@ -348,12 +360,12 @@ export default {
 					}
 					this.dirty = state.dirty
 				})
-			this.syncService.open({ fileId: this.fileId, filePath: this.filePath})
+			this.syncService.open({ fileId: this.fileId, filePath: this.filePath })
 		},
 
 		resolveUseThisVersion() {
 			this.syncService.forceSave()
-			this.tiptap.setOptions({editable: true && !this.readOnly})
+			this.tiptap.setOptions({ editable: true && !this.readOnly })
 		},
 
 		resolveUseServerVersion() {
@@ -364,10 +376,8 @@ export default {
 		},
 
 		updateSessions(sessions) {
-			this.sessions = sessions.sort((a,b) => b.lastContact - a.lastContact)
+			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
 			let currentSessionIds = this.sessions.map((session) => session.userId)
-			const stillExistingSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => currentSessionIds.includes(sessionId))
 			const removedSessions = Object.keys(this.filteredSessions)
 				.filter(sessionId => !currentSessionIds.includes(sessionId))
 
@@ -412,13 +422,13 @@ export default {
 
 		showImagePrompt(command) {
 			const _command = command
-			OC.dialogs.filepicker('Insert an image',  (file) => {
+			OC.dialogs.filepicker('Insert an image', (file) => {
 				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
 				_command({ src })
 				// TODO: check permissions
 				// TODO: check for available preview
 			}, false, false)
-		},
+		}
 	}
 }
 </script>
@@ -519,7 +529,6 @@ export default {
 		}
 	}
 
-
 	$color-white: #fff;
 	$color-black: #000;
 
@@ -577,7 +586,7 @@ export default {
 	}
 
 	.editor__content {
-		max-width: 800px;
+		max-width: 500px;
 		margin: auto;
 	}
 

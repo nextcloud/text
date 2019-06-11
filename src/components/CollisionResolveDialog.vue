@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div class="collision-resolve-dialog" id="resolve-conflicts">
+	<div id="resolve-conflicts" class="collision-resolve-dialog">
 		<button @click="$emit('resolveUseThisVersion')">
 			Use your version
 		</button>
@@ -32,9 +32,9 @@
 </template>
 
 <script>
-	export default {
-		name: 'CollisionResolveDialog'
-	}
+export default {
+	name: 'CollisionResolveDialog'
+}
 </script>
 
 <style scoped lang="scss">

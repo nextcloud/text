@@ -31,4 +31,5 @@ export default class Keymap extends Extension {
 	keys({ schema }) {
 		return this.options
 	}
+
 }

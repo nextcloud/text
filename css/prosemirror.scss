@@ -1,0 +1,119 @@
+/* Document rendering styles */
+
+.ProseMirror {
+	margin-top: 44px;
+	height: 100%;
+	position: relative;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	-webkit-font-variant-ligatures: none;
+	font-variant-ligatures: none;
+	padding: 4px 8px 4px 14px;
+	line-height: 150%;
+	font-size: 14px;
+	outline: none;
+}
+
+.ProseMirror p:first-child,
+.ProseMirror h1:first-child,
+.ProseMirror h2:first-child,
+.ProseMirror h3:first-child,
+.ProseMirror h4:first-child,
+.ProseMirror h5:first-child,
+.ProseMirror h6:first-child {
+	margin-top: 10px;
+}
+
+.ProseMirror a {
+	color: var(--color-primary);
+	text-decoration: underline;
+}
+
+.ProseMirror p {
+	margin-bottom: 1em;
+	line-height: 150%;
+}
+.ProseMirror em {
+	font-style: italic;
+}
+
+.ProseMirror h1 {
+	font-size: 24px;
+}
+.ProseMirror h2 {
+	font-size: 22px;
+}
+.ProseMirror h3 {
+	font-size: 20px;
+}
+.ProseMirror h4 {
+	font-size: 18px;
+}
+.ProseMirror h5 {
+	font-size: 16px;
+}
+.ProseMirror h6 {
+	font-size: 14px;
+}
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+	font-weight: 600;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.ProseMirror img {
+	cursor: default;
+	max-height: 50vh;
+	max-width: 100%;
+}
+
+.ProseMirror-focused .ProseMirror-gapcursor {
+	display: block;
+}
+/* Add space around the hr to make clicking it easier */
+
+.ProseMirror hr {
+	padding: 2px 10px;
+	border: none;
+	margin: 1em 0;
+	width: 100%;
+}
+
+.ProseMirror hr:after {
+	content: "";
+	display: block;
+	height: 1px;
+	background-color: silver;
+	line-height: 2px;
+}
+
+.ProseMirror pre {
+	white-space: pre-wrap;
+	background-color: var(--color-background-dark);
+	border-radius: 5px;
+	padding: 5px;
+	padding-left: 11px;
+}
+
+.ProseMirror li {
+	position: relative;
+}
+
+.ProseMirror ul, .ProseMirror ol {
+	padding-left: 30px;
+}
+
+.ProseMirror ul li {
+	list-style-type: disc;
+}
+
+.ProseMirror blockquote {
+	padding-left: 1em;
+	border-left: 3px solid var(--color-text-lighter);
+	margin-left: 0; margin-right: 0;
+}

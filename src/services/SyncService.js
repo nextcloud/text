@@ -28,7 +28,7 @@ import { getVersion, sendableSteps } from 'prosemirror-collab'
 const defaultOptions = {
 	shareToken: null,
 	serialize: (document) => document
-};
+}
 
 const ERROR_TYPE = {
 	/**
@@ -41,11 +41,12 @@ const ERROR_TYPE = {
 	 */
 	PUSH_FAILURE: 1,
 
-	LOAD_ERROR: 2,
+	LOAD_ERROR: 2
 }
 
 class SyncService {
-	constructor (options) {
+
+	constructor(options) {
 		this.eventHandlers = {
 			/* Document state */
 			opened: [],
@@ -59,7 +60,7 @@ class SyncService {
 			/* error */
 			error: [],
 			/* Events for session and document meta data */
-			change: [],
+			change: []
 		}
 
 		this.backend = new PollingBackend(this)
@@ -79,13 +80,13 @@ class SyncService {
 		return this
 	}
 
-	open({fileId, filePath}) {
-		return this._openDocument({fileId, filePath}).then(() => {
+	open({ fileId, filePath }) {
+		return this._openDocument({ fileId, filePath }).then(() => {
 			this.emit('opened', {
 				document: this.document,
-				session: this.session,
+				session: this.session
 			})
-			return this._fetchDocument().then(({data}) => {
+			return this._fetchDocument().then(({ data }) => {
 				this.emit('loaded', {
 					document: this.document,
 					session: this.session,
@@ -102,7 +103,7 @@ class SyncService {
 		})
 	}
 
-	_openDocument({fileId, filePath}) {
+	_openDocument({ fileId, filePath }) {
 		return axios.get(endpointUrl('session/create', !!this.options.shareToken), {
 			params: {
 				fileId: fileId,
@@ -132,7 +133,7 @@ class SyncService {
 	}
 
 	sendSteps(_sendable) {
-		let sendable = _sendable ? _sendable : sendableSteps(this.state)
+		let sendable = _sendable || sendableSteps(this.state)
 		if (!sendable) {
 			return
 		}
@@ -146,7 +147,7 @@ class SyncService {
 		}
 	}
 
-	_receiveSteps({steps, document}) {
+	_receiveSteps({ steps, document }) {
 		let newSteps = []
 		for (let i = 0; i < steps.length; i++) {
 			let singleSteps = steps[i].data
@@ -158,9 +159,9 @@ class SyncService {
 				})
 			})
 		}
-		console.log(newSteps);
-		this.emit('sync', {steps: newSteps, document})
-		console.log('receivedSteps', 'newVersion', getVersion(this.state))
+		console.debug(newSteps)
+		this.emit('sync', { steps: newSteps, document })
+		console.debug('receivedSteps', 'newVersion', getVersion(this.state))
 	}
 
 	_getVersion() {
@@ -219,6 +220,7 @@ class SyncService {
 			console.error('Event not found', event)
 		}
 	}
+
 }
 
 export default SyncService

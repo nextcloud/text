@@ -28,15 +28,19 @@ import { Bold, Italic as TipTapItalic } from 'tiptap-extensions'
  */
 
 class Strong extends Bold {
+
 	get name() {
 		return 'strong'
 	}
+
 }
 
 class Italic extends TipTapItalic {
+
 	get name() {
 		return 'em'
 	}
+
 }
 
 /** Strike is currently unsupported by prosemirror-markdown */

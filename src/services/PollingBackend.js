@@ -21,9 +21,8 @@
  */
 import axios from 'nextcloud-axios'
 import { endpointUrl } from '../helpers'
-import {ERROR_TYPE} from '../EditorSync'
-import {sendableSteps} from 'prosemirror-collab';
-
+import { ERROR_TYPE } from './SyncService'
+import { sendableSteps } from 'prosemirror-collab'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -86,11 +85,10 @@ class PollingBackend {
 			return
 		}
 		this.lock = true
-		const authority = this
 		let autosaveContent
-		if (this._forcedSave || this._manualSave ||
-			(!sendableSteps(this._authority.state) &&
-			(this._authority.steps.length > this._authority.document.lastSavedVersion))
+		if (this._forcedSave || this._manualSave
+			|| (!sendableSteps(this._authority.state)
+			&& (this._authority.steps.length > this._authority.document.lastSavedVersion))
 		) {
 			autosaveContent = this._authority._getContent()
 		}
@@ -111,7 +109,7 @@ class PollingBackend {
 
 			this._authority.document = response.data.document
 			this._authority.sessions = response.data.sessions
-			this._authority.emit('change', {document: this._authority.document, sessions: this._authority.sessions })
+			this._authority.emit('change', { document: this._authority.document, sessions: this._authority.sessions })
 
 			if (response.data.steps.length === 0) {
 				this.lock = false
@@ -120,8 +118,8 @@ class PollingBackend {
 				} else {
 					this.increaseRefetchTimer()
 				}
-				this._authority.emit('stateChange', { dirty: false})
-				this._authority.emit('stateChange', { initialLoading: true})
+				this._authority.emit('stateChange', { dirty: false })
+				this._authority.emit('stateChange', { initialLoading: true })
 
 				return
 			}
@@ -156,8 +154,7 @@ class PollingBackend {
 			return
 		}
 		this.lock = true
-		const authority = this
-		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable;
+		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
 		let steps = sendable.steps
 		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
 			documentId: this._authority.document.id,
@@ -176,9 +173,9 @@ class PollingBackend {
 			this.lock = false
 			this._fetchSteps()
 
-			/*this.carefulRetry(() => {
+			/* this.carefulRetry(() => {
 				this.sendSteps(sendable)
-			})*/
+			}) */
 		})
 	}
 
@@ -209,7 +206,7 @@ class PollingBackend {
 		let newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
 			OC.Notification.showTemporary('Changes could not be sent yet')
-			this._authority.emit('error',ERROR_TYPE.PUSH_FAILURE, {})
+			this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
 		}
 		this.retryTime = newRetry
 		setTimeout(callback, this.retryTime)

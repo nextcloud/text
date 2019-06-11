@@ -41,7 +41,6 @@ const endpointUrl = (endpoint, isPublic = false) => {
 	return `${_baseUrl}/${endpoint}`
 }
 
-
 export {
 	documentReady,
 	endpointUrl

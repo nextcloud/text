@@ -12,7 +12,7 @@
   -
   - This program is distributed in the hope that it will be useful,
   - but WITHOUT ANY WARRANTY; without even the implied warranty of
-  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
   - GNU Affero General Public License for more details.
   -
   - You should have received a copy of the GNU Affero General Public License
@@ -21,43 +21,47 @@
   -->
 
 <template>
-	<editor-content v-if="editor" id="read-only-editor" :editor="editor" />
+	<div class="guest-name-dialog">
+		<p>{{ t('text', 'Please enter a name to identify you as a public editor:') }}</p>
+		<form @submit.prevent="setGuestName()">
+			<input ref="guestNameField" type="text" :value="value">
+			<input type="submit" class="icon-confirm" value="">
+		</form>
+	</div>
 </template>
 
 <script>
-import { EditorContent } from 'tiptap'
-import { createEditor, markdownit } from '../EditorFactory'
-
 export default {
-	name: 'ReadOnlyEditor',
-	components: { EditorContent },
+	name: 'GuestNameDialog',
 	props: {
-		content: {
+		value: {
 			type: String,
-			required: true
+			default: ''
 		}
 	},
-	data: () => {
-		return {
-			editor: null
+	methods: {
+		setGuestName() {
+			this.$emit('input', this.$refs.guestNameField.value)
 		}
-	},
-	mounted() {
-		this.editor = createEditor({
-			content: markdownit.render(this.content)
-		})
-		this.editor.setOptions({ editable: false })
-	},
-	beforeDestroy() {
-		this.editor.destroy()
 	}
 }
 </script>
 
 <style scoped lang="scss">
+	.guest-name-dialog {
+		padding: 30px;
+		text-align: center;
 
-	#read-only-editor {
-		overflow: scroll;
+		form {
+			display: flex;
+			width: 100%;
+			max-width: 200px;
+			margin: auto;
+			margin-top: 30px;
+
+			input[type=text] {
+				flex-grow: 1;
+			}
+		}
 	}
-
 </style>

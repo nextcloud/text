@@ -19,11 +19,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import {Editor} from 'tiptap';
+import { Editor } from 'tiptap'
 import {
 	HardBreak,
 	Heading,
-	Bold,
 	Code,
 	Link,
 	BulletList,
@@ -37,31 +36,30 @@ import {
 import { Strong, Italic } from './marks'
 import MarkdownIt from 'markdown-it'
 
-const createEditor = ({content, onUpdate, extensions}) => {
-	extensions = extensions ? extensions : []
+const createEditor = ({ content, onUpdate, extensions }) => {
+	extensions = extensions || []
 	return new Editor({
 		content: content,
 		onUpdate: onUpdate,
 		extensions: [
-			new HardBreak,
-			new Heading,
-			new Code,
-			new Strong,
-			new Italic,
-			new BulletList,
-			new OrderedList,
-			new Blockquote,
-			new CodeBlock,
-			new ListItem,
-			new Link,
-			new Image,
+			new HardBreak(),
+			new Heading(),
+			new Code(),
+			new Strong(),
+			new Italic(),
+			new BulletList(),
+			new OrderedList(),
+			new Blockquote(),
+			new CodeBlock(),
+			new ListItem(),
+			new Link(),
+			new Image(),
 			new History()
-		].concat(extensions),
+		].concat(extensions)
 	})
 }
 
-const markdownit = MarkdownIt('commonmark', {html: false});
-
+const markdownit = MarkdownIt('commonmark', { html: false })
 
 export default createEditor
-export { markdownit, createEditor}
+export { markdownit, createEditor }

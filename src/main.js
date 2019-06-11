@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import Editor from './components/Editor'
+import Editor from './components/EditorWrapper'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
