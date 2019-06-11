@@ -41,10 +41,17 @@ class Step extends Entity implements \JsonSerializable {
 		$this->addType('sessionId', 'integer');
 	}
 
+	/**
+	 * @return array|mixed
+	 */
 	public function jsonSerialize() {
+		$jsonData = \json_decode($this->data, false);
+		if (\json_last_error() !== JSON_ERROR_NONE) {
+			throw new \InvalidArgumentException('Failed to parse step data');
+		}
 		return [
 			'id' => $this->id,
-			'data' => json_decode($this->data),
+			'data' => $jsonData,
 			'version' => $this->version,
 			'sessionId' => $this->sessionId
 		];

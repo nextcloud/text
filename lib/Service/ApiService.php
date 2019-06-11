@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -24,6 +26,7 @@
 namespace OCA\Text\Service;
 
 
+use Exception;
 use OC\Files\Node\File;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
@@ -41,7 +44,7 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 
-	public function __construct(string $appName, IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
+	public function __construct(IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
 		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
@@ -67,7 +70,7 @@ class ApiService {
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}
 
@@ -101,6 +104,7 @@ class ApiService {
 	}
 
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps): DataResponse {
+		// TODO block if readonly
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
@@ -116,10 +120,12 @@ class ApiService {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 500);
 		}
-		if ($version === $this->cache->get('document-version-'.$documentId)) {
+		if ($version === $this->cache->get('document-version-' . $documentId)) {
 			return new DataResponse(['steps' => []]);
 		}
+
 		try {
+			// TODO block if readonly
 			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
 		} catch (DocumentSaveConflictException $e) {
 			if ($token) {
@@ -131,11 +137,12 @@ class ApiService {
 			return new DataResponse([
 				'outsideChange' => $file->getContent()
 			], 409);
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			return new DataResponse([
 				'message' => $e->getMessage()
 			], 500);
 		}
+
 		return new DataResponse([
 			'steps' => $this->documentService->getSteps($documentId, $version),
 			'sessions' => $this->sessionService->getActiveSessions($documentId),

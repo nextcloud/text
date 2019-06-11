@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -40,6 +42,7 @@ use OCP\Files\GenericFileException;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -107,7 +110,7 @@ class DocumentService {
 
 	/**
 	 * @param $path
-	 * @return Entity
+	 * @return array
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
@@ -120,7 +123,7 @@ class DocumentService {
 
 	/**
 	 * @param $fileId
-	 * @return Entity
+	 * @return array
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
@@ -133,7 +136,7 @@ class DocumentService {
 	/**
 	 * @param $shareToken
 	 * @param null $filePath
-	 * @return Entity
+	 * @return array
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
@@ -221,8 +224,14 @@ class DocumentService {
 			throw new VersionMismatchException('Version does not match');
 		}
 		$stepsJson = json_encode($steps);
-		if ($stepsJson === null) {
+		if (!is_array($steps) || $stepsJson === null) {
 			throw new InvalidArgumentException('Failed to encode steps');
+		}
+		$validStepTypes = ['addMark', 'removeMark', 'replace', 'replaceAround'];
+		foreach ($steps as $step) {
+			if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
+				throw new InvalidArgumentException('Invalid step data');
+			}
 		}
 		$newVersion = $document->getCurrentVersion() + count($steps);
 		$document->setCurrentVersion($newVersion);
@@ -272,15 +281,10 @@ class DocumentService {
 		}
 
 		$lastMTime = $document->getLastSavedVersionTime();
-		if ($lastMTime > 0 && $file->getEtag() !== $document->getLastSavedVersionEtag() && $force === false) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
-		}
 
 		if ($autoaveDocument === null) {
 			return $document;
 		}
-
-		// TODO: check for etag rather than mtime
 		// Do not save if version already saved
 		if (!$force && $version <= (string)$document->getLastSavedVersion()) {
 			return $document;
@@ -288,6 +292,9 @@ class DocumentService {
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
+		}
+		if ($lastMTime > 0 && $file->getEtag() !== $document->getLastSavedVersionEtag() && $force === false) {
+			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
 		$file->putContent($autoaveDocument);
 		$document->setLastSavedVersion($version);
@@ -297,7 +304,7 @@ class DocumentService {
 		return $document;
 	}
 
-	public function resetDocument($documentId) {
+	public function resetDocument($documentId): void {
 		$this->stepMapper->deleteAll($documentId);
 		try {
 			$document = $this->documentMapper->find($documentId);
@@ -312,15 +319,14 @@ class DocumentService {
 		}
 	}
 
-	public function getFileById($fileId) {
-		/** @var File $file */
+	public function getFileById($fileId): Node {
 		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
 	}
 
 	/**
 	 * @param $shareToken
 	 * @param null|string $path
-	 * @return \OCP\Files\File|Folder|\OCP\Files\Node
+	 * @return \OCP\Files\File|Folder|Node
 	 * @throws NotFoundException
 	 */
 	public function getFileByShareToken($shareToken, $path = null) {
