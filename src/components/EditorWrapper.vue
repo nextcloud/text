@@ -83,7 +83,7 @@
 						<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
 							<input ref="linkInput" v-model="linkUrl" class="menububble__input"
 								type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
-							<button class="menububble__button" type="button" @click="setLinkUrl(commands.link, null)" />
+							<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, null)" />
 						</form>
 
 						<template v-else>
@@ -529,14 +529,12 @@ export default {
 		}
 	}
 
-	$color-white: #fff;
-	$color-black: #000;
-
 	.menububble {
 		position: absolute;
 		display: flex;
 		z-index: 220;
-		background: $color-black;
+		background: var(--color-main-background-translucent);
+		box-shadow: 0 1px 5px var(--color-box-shadow);
 		border-radius: 5px;
 		padding: 0.3rem;
 		margin-bottom: 0.5rem;
@@ -551,9 +549,7 @@ export default {
 
 		&__button {
 			display: inline-flex;
-			background: transparent;
 			border: 0;
-			color: $color-white;
 			padding: 0.2rem 0.5rem;
 			margin-right: 0.2rem;
 			border-radius: 3px;
@@ -561,14 +557,6 @@ export default {
 
 			&:last-child {
 				margin-right: 0;
-			}
-
-			&:hover {
-				background-color: rgba($color-white, 0.1);
-			}
-
-			&.is-active {
-				background-color: rgba($color-white, 0.2);
 			}
 		}
 
@@ -581,7 +569,7 @@ export default {
 			font: inherit;
 			border: none;
 			background: transparent;
-			color: $color-white;
+			min-width: 150px;
 		}
 	}
 

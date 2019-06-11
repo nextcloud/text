@@ -1,6 +1,6 @@
 <?php
-script('text', 'type');
-style('text', 'style');
+script('text', 'text');
+style('text', 'icons');
 ?>
 <div id="app-content">
 	<div id="maineditor"></div>
