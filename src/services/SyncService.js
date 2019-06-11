@@ -151,6 +151,11 @@ class SyncService {
 		let newSteps = []
 		for (let i = 0; i < steps.length; i++) {
 			let singleSteps = steps[i].data
+			if (!Array.isArray(singleSteps)) {
+				console.error('Invalid step data, skipping step', steps[i])
+				// TODO: recover
+				continue
+			}
 			singleSteps.forEach(step => {
 				this.steps.push(step)
 				newSteps.push({
@@ -159,9 +164,8 @@ class SyncService {
 				})
 			})
 		}
-		console.debug(newSteps)
 		this.emit('sync', { steps: newSteps, document })
-		console.debug('receivedSteps', 'newVersion', getVersion(this.state))
+		console.debug('receivedSteps', 'newVersion', this._getVersion())
 	}
 
 	_getVersion() {
@@ -193,6 +197,7 @@ class SyncService {
 	}
 
 	close() {
+		// TODO: save before close
 		this.backend.disconnect()
 		return axios.get(
 			endpointUrl('session/close', !!this.options.shareToken), {

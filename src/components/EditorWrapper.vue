@@ -91,7 +91,7 @@
 								class="menububble__button"
 								:class="{ 'is-active': isActive.link() }"
 								@click="showLinkMenu(getMarkAttrs('link'))">
-								<span>{{ isActive.link() ? 'Update Link' : 'Add Link' }}</span>
+								<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
 							</button>
 						</template>
 					</div>
@@ -119,7 +119,6 @@ import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
-import { getVersion } from 'prosemirror-collab'
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
@@ -232,7 +231,7 @@ export default {
 			return this.dirty
 		},
 		hasUnsavedChanges() {
-			return this.syncService && this.tiptap && this.tiptap.state && this.document.lastSavedVersion !== getVersion(this.tiptap.state)
+			return this.document && this.document.lastSavedVersion < this.document.currentVersion
 		},
 		backendUrl() {
 			return (endpoint) => {
@@ -286,7 +285,9 @@ export default {
 				shareToken: this.shareToken,
 				guestName: this.guestName,
 				serialize: (document) => {
-					return defaultMarkdownSerializer.serialize(document)
+					const markdown = defaultMarkdownSerializer.serialize(document)
+					console.debug('serialized document', { markdown })
+					return markdown
 				}
 			})
 				.on('opened', ({ document, session }) => {
@@ -301,14 +302,15 @@ export default {
 					}
 					this.updateSessions.bind(this)(sessions)
 					this.document = document
+
 					this.syncError = null
 					this.tiptap.setOptions({ editable: !this.readOnly })
+
 				})
 				.on('loaded', ({ document, session, documentSource }) => {
 					this.tiptap = createEditor({
 						content: markdownit.render(documentSource),
 						onUpdate: ({ state }) => {
-							console.debug(defaultMarkdownSerializer.serialize(state.doc))
 							this.syncService.state = state
 						},
 						extensions: [
@@ -337,11 +339,17 @@ export default {
 					this.tiptap.focus('end')
 				})
 				.on('sync', ({ steps, document }) => {
-					this.tiptap.extensions.options.collaboration.update({
-						version: document.currentVersion,
-						steps: steps
-					})
-					this.syncService.state = this.tiptap.state
+					try {
+						this.tiptap.extensions.options.collaboration.update({
+							version: document.currentVersion,
+							steps: steps
+						})
+						this.syncService.state = this.tiptap.state
+					} catch (e) {
+						console.error('Failed to update steps in collaboration plugin', e)
+						// TODO: we should recreate the editing session when this happens
+					}
+					this.document = document
 				})
 				.on('error', (error, data) => {
 					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
@@ -358,14 +366,16 @@ export default {
 					if (state.initialLoading && !this.initialLoading) {
 						this.initialLoading = true
 					}
-					this.dirty = state.dirty
+					if (state.hasOwnProperty('dirty')) {
+						this.dirty = state.dirty
+					}
 				})
 			this.syncService.open({ fileId: this.fileId, filePath: this.filePath })
 		},
 
 		resolveUseThisVersion() {
 			this.syncService.forceSave()
-			this.tiptap.setOptions({ editable: true && !this.readOnly })
+			this.tiptap.setOptions({ editable: !this.readOnly })
 		},
 
 		resolveUseServerVersion() {

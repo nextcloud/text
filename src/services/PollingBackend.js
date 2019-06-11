@@ -88,7 +88,7 @@ class PollingBackend {
 		let autosaveContent
 		if (this._forcedSave || this._manualSave
 			|| (!sendableSteps(this._authority.state)
-			&& (this._authority.steps.length > this._authority.document.lastSavedVersion))
+			&& (this._authority._getVersion() !== this._authority.document.lastSavedVersion))
 		) {
 			autosaveContent = this._authority._getContent()
 		}
@@ -104,12 +104,11 @@ class PollingBackend {
 		}).then((response) => {
 			if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
-				this.document = response.data.document
 			}
 
+			this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
 			this._authority.document = response.data.document
 			this._authority.sessions = response.data.sessions
-			this._authority.emit('change', { document: this._authority.document, sessions: this._authority.sessions })
 
 			if (response.data.steps.length === 0) {
 				this.lock = false
