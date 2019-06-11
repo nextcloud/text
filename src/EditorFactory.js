@@ -30,6 +30,7 @@ import {
 	ListItem,
 	Blockquote,
 	CodeBlock,
+	HorizontalRule,
 	Image,
 	History
 } from 'tiptap-extensions'
@@ -50,6 +51,7 @@ const createEditor = ({ content, onUpdate, extensions }) => {
 			new Strong(),
 			new Italic(),
 			new Strike(),
+			new HorizontalRule(),
 			new BulletList(),
 			new OrderedList(),
 			new Blockquote(),
