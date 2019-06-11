@@ -42,6 +42,7 @@
 					<div class="menubar">
 						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong" />
 						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em" />
+						<button class="icon-strike" :class="{ 'is-active': isActive.strike() }" @click="commands.strike" />
 						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code" />
 
 						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">
@@ -112,9 +113,7 @@ import Vue from 'vue'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
-import { createEditor, markdownit } from './../EditorFactory'
-
-import { defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
 
 import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
@@ -285,7 +284,7 @@ export default {
 				shareToken: this.shareToken,
 				guestName: this.guestName,
 				serialize: (document) => {
-					const markdown = defaultMarkdownSerializer.serialize(document)
+					const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
 					console.debug('serialized document', { markdown })
 					return markdown
 				}

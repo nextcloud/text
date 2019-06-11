@@ -20,7 +20,7 @@
  *
  */
 
-import { Bold, Italic as TipTapItalic } from 'tiptap-extensions'
+import { Bold, Italic as TipTapItalic, Strike as TipTapStrike } from 'tiptap-extensions'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -43,9 +43,41 @@ class Italic extends TipTapItalic {
 
 }
 
+class Strike extends TipTapStrike {
+
+	get schema() {
+		return {
+			parseDOM: [
+				{
+					tag: 's'
+				},
+				{
+					tag: 'del'
+				},
+				{
+					tag: 'strike'
+				},
+				{
+					style: 'text-decoration',
+					getAttrs: value => value === 'line-through'
+				}
+			],
+			toDOM: () => ['s', 0],
+			toMarkdown: {
+				open: '~~',
+				close: '~~',
+				mixable: true,
+				expelEnclosingWhitespace: true
+			}
+		}
+	}
+
+}
+
 /** Strike is currently unsupported by prosemirror-markdown */
 
 export {
 	Strong,
-	Italic
+	Italic,
+	Strike
 }

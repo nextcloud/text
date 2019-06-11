@@ -33,8 +33,10 @@ import {
 	Image,
 	History
 } from 'tiptap-extensions'
-import { Strong, Italic } from './marks'
+import { Strong, Italic, Strike } from './marks'
 import MarkdownIt from 'markdown-it'
+
+import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 const createEditor = ({ content, onUpdate, extensions }) => {
 	extensions = extensions || []
@@ -47,6 +49,7 @@ const createEditor = ({ content, onUpdate, extensions }) => {
 			new Code(),
 			new Strong(),
 			new Italic(),
+			new Strike(),
 			new BulletList(),
 			new OrderedList(),
 			new Blockquote(),
@@ -59,7 +62,29 @@ const createEditor = ({ content, onUpdate, extensions }) => {
 	})
 }
 
-const markdownit = MarkdownIt('commonmark', { html: false })
+const markdownit = MarkdownIt({ html: false })
+
+const createMarkdownSerializer = (_nodes, _marks) => {
+	const nodes = Object
+		.entries(_nodes)
+		.filter(([, node]) => node.toMarkdown)
+		.reduce((items, [name, { toMarkdown }]) => ({
+			...items,
+			[name]: toMarkdown
+		}), {})
+
+	const marks = Object
+		.entries(_marks)
+		.filter(([, node]) => node.toMarkdown)
+		.reduce((items, [name, { toMarkdown }]) => ({
+			...items,
+			[name]: toMarkdown
+		}), {})
+	return new MarkdownSerializer(
+		{ ...defaultMarkdownSerializer.nodes, ...nodes },
+		{ ...defaultMarkdownSerializer.marks, ...marks }
+	)
+}
 
 export default createEditor
-export { markdownit, createEditor }
+export { markdownit, createEditor, createMarkdownSerializer }
