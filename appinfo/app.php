@@ -9,9 +9,11 @@ $eventDispatcher = \OC::$server->getEventDispatcher();
 if (\OC::$server->getUserSession()->isLoggedIn()) {
 	$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () {
 		\OCP\Util::addScript('text', 'files');
+		\OCP\Util::addStyle('text', 'icons');
 	});
 }
 
 $eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
 	\OCP\Util::addScript('text', 'public');
+	\OCP\Util::addStyle('text', 'icons');
 });
