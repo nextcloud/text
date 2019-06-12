@@ -28,13 +28,13 @@ import { sendableSteps } from 'prosemirror-collab'
  * Minimum inverval to refetch the document changes
  * @type {number}
  */
-const FETCH_INTERVAL = 200
+const FETCH_INTERVAL = 300
 
 /**
  * Maximum interval between refetches of document state if multiple users have joined
  * @type {number}
  */
-const FETCH_INTERVAL_MAX = 2000
+const FETCH_INTERVAL_MAX = 3000
 
 /**
  * Interval to check for changes when there is only one user joined
@@ -58,12 +58,11 @@ class PollingBackend {
 		this._authority = authority
 		this.fetchInterval = FETCH_INTERVAL
 		this.retryTime = MIN_PUSH_RETRY
-
 		this.lock = false
 	}
 
 	connect() {
-		this.fetcher = setInterval(() => this._fetchSteps(), this.fetchInterval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 	}
 
 	_isPublic() {
@@ -72,16 +71,23 @@ class PollingBackend {
 
 	forceSave() {
 		this._forcedSave = true
-		this._fetchSteps()
+		this.fetchSteps()
 	}
 
 	save() {
 		this._manualSave = true
+		this.fetchSteps()
+	}
+
+	fetchSteps() {
 		this._fetchSteps()
 	}
 
+	/**
+	 * This method is only called though the timer
+	 */
 	_fetchSteps() {
-		if (this.lock) {
+		if (this.lock || !this.fetcher) {
 			return
 		}
 		this.lock = true
@@ -134,10 +140,11 @@ class PollingBackend {
 			}
 			if (e.response.status === 409) {
 				console.error('Conflict during file save, please resolve')
-				// TODO recover
 				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
 					outsideChange: e.response.data.outsideChange
 				})
+			} else {
+				console.error('Failed to fetch steps due to other reason', e);
 			}
 		})
 		this._manualSave = false
@@ -166,11 +173,11 @@ class PollingBackend {
 			this._authority.emit('stateChange', { dirty: false })
 			this.carefulRetryReset()
 			this.lock = false
-			this._fetchSteps()
+			this.fetchSteps()
 		}).catch((e) => {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
-			this._fetchSteps()
+			this.fetchSteps()
 
 			/* this.carefulRetry(() => {
 				this.sendSteps(sendable)
@@ -180,25 +187,35 @@ class PollingBackend {
 
 	disconnect() {
 		clearInterval(this.fetcher)
+		this.fetcher = 0
 	}
 
 	resetRefetchTimer() {
+		if (this.fetcher === 0) {
+			return
+		}
 		this.fetchInverval = FETCH_INTERVAL
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(() => this._fetchSteps(), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
 
 	}
 
 	increaseRefetchTimer() {
+		if (this.fetcher === 0) {
+			return
+		}
 		this.fetchInverval = Math.min(this.fetchInverval + 100, FETCH_INTERVAL_MAX)
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(() => this._fetchSteps(), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
 	}
 
 	maximumRefetchTimer() {
+		if (this.fetcher === 0) {
+			return
+		}
 		this.fetchInverval = FETCH_INTERVAL_SINGLE_EDITOR
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(() => this._fetchSteps(), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
 	}
 
 	carefulRetry(callback) {

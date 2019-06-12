@@ -227,10 +227,13 @@ class DocumentService {
 
 		/** @var File $file */
 		if (!$token) {
-			$file = $this->rootFolder->getUserFolder($this->userId)->getById($documentId)[0];
+			$file = $this->getFileById($documentId);
 		} else {
-			$share = $this->shareManager->getShareByToken($token);
-			$file = $share->getNode();
+			 $file = $this->getFileByShareToken($token);
+		}
+
+		if ($this->isReadOnly($file, $token)) {
+			return $document;
 		}
 
 		$lastMTime = $document->getLastSavedVersionTime();
@@ -275,9 +278,7 @@ class DocumentService {
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}
-			}
-
-			if ($this->hasUnsavedChanges($document)) {
+			} else if ($this->hasUnsavedChanges($document)) {
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 		} catch (DoesNotExistException $e) {
@@ -314,6 +315,20 @@ class DocumentService {
 			return $node->get($path);
 		}
 		throw new \InvalidArgumentException('No proper share data');
+	}
+
+
+	public function isReadOnly($file, $token) {
+		$readOnly = true;
+		if ($token) {
+			try {
+				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
+				$readOnly = false;
+			} catch (NotFoundException $e) {}
+		} else {
+			$readOnly = !$file->isUpdateable();
+		}
+		return $readOnly;
 	}
 
 	/**

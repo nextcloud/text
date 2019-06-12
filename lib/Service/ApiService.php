@@ -51,7 +51,7 @@ class ApiService {
 		$this->documentService = $documentService;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, $forceRecreate = false): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
 		try {
 			$readOnly = true;
 			/** @var File $file */
@@ -74,7 +74,7 @@ class ApiService {
 
 			$this->sessionService->removeInactiveSessions($file->getId());
 			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
-			if (count($activeSessions) === 0) {
+			if (count($activeSessions) === 0 || $forceRecreate) {
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
 				} catch (DocumentHasUnsavedChangesException $e) {}
@@ -118,9 +118,13 @@ class ApiService {
 		return new DataResponse([]);
 	}
 
-	public function push($documentId, $sessionId, $sessionToken, $version, $steps): DataResponse {
-		// TODO block if readonly
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
+		if ($token) {
+			$file = $this->documentService->getFileByShareToken($token);
+		} else {
+			$file = $this->documentService->getFileById($documentId);
+		}
+		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
 			} catch (VersionMismatchException $e) {
@@ -140,7 +144,6 @@ class ApiService {
 		}
 
 		try {
-			// TODO block if readonly
 			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
 		} catch (DocumentSaveConflictException $e) {
 			if ($token) {

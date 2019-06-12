@@ -74,7 +74,7 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function create(string $token, string $file = null, $guestName = null, $forceRecreate = false): DataResponse {
+	public function create(string $token, string $file = null, $guestName = null, bool $forceRecreate = false): DataResponse {
 		return $this->apiService->create(null, $file, $token, $guestName, $forceRecreate);
 	}
 
@@ -90,8 +90,16 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
+	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
+		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @PublicPage
+	 */
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $token): DataResponse {
+		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $token);
 	}
 
 	/**
