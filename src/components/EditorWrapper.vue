@@ -530,14 +530,17 @@ export default {
 		margin: 0;
 		background-size: 16px;
 		border: 0;
-		background-color: var(--color-main-background);
-		opacity: 0.6;
+		background-color: transparent;
+		opacity: .5;
+		color: var(--color-main-text);
 		background-position: center center;
 		vertical-align: top;
 		&:hover, &:focus, &:active {
 			background-color: var(--color-background-dark);
 		}
-		&.is-active {
+		&.is-active,
+		&:hover,
+		&:focus {
 			opacity: 1;
 		}
 	}
