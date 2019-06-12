@@ -78,7 +78,7 @@
 /* Add space around the hr to make clicking it easier */
 
 .ProseMirror hr {
-	padding: 2px 10px;
+	padding: 2px 0;
 	border: none;
 	margin: 1em 0;
 	width: 100%;
@@ -88,7 +88,7 @@
 	content: "";
 	display: block;
 	height: 1px;
-	background-color: silver;
+	background-color: var(--color-border-dark);
 	line-height: 2px;
 }
 
