@@ -1,0 +1,27 @@
+[package]
+exclude = [
+	"src/",
+	".git/",
+	"tests/",
+	".codecov.yml",
+	"composer.json",
+	"composer.lock",
+	"_config.yml",
+	".drone.yml",
+	".travis.yml",
+	".eslintignore",
+	".eslintrc.yml",
+	".gitignore",
+	"issue_template.md",
+	"krankerl.toml",
+	"Makefile",
+	"mkdocs.yml",
+	"run-eslint.sh",
+	"webpack.*",
+	"node_modules/"
+]
+
+before_cmds = [
+	"npm install",
+	"npm run build"
+]
