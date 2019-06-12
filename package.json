@@ -91,8 +91,9 @@
 		"moduleNameMapper": {
 			"^@/(.*)$": "<rootDir>/src/$1"
 		},
-		"modulePathIgnorePatterns": [
-			"<rootDir>/src/tests/fixtures/"
+		"testPathIgnorePatterns": [
+			"<rootDir>/src/tests/fixtures/",
+			"<rootDir>/build"
 		],
 		"transform": {
 			"^.+\\.js$": "<rootDir>/node_modules/babel-jest",

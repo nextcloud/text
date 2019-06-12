@@ -144,7 +144,7 @@ class PollingBackend {
 					outsideChange: e.response.data.outsideChange
 				})
 			} else {
-				console.error('Failed to fetch steps due to other reason', e);
+				console.error('Failed to fetch steps due to other reason', e)
 			}
 		})
 		this._manualSave = false
