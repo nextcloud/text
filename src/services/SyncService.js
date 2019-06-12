@@ -27,6 +27,7 @@ import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 const defaultOptions = {
 	shareToken: null,
+	forceRecreate: false,
 	serialize: (document) => document
 }
 
@@ -90,7 +91,7 @@ class SyncService {
 				this.emit('loaded', {
 					document: this.document,
 					session: this.session,
-					documentSource: data
+					documentSource: '' + data
 				})
 			})
 		}).catch((error) => {
@@ -109,7 +110,8 @@ class SyncService {
 				fileId: fileId,
 				file: filePath,
 				token: this.options.shareToken,
-				guestName: this.options.guestName
+				guestName: this.options.guestName,
+				forceRecreate: this.options.forceRecreate
 			}
 		}).then((response) => {
 			this.document = response.data.document

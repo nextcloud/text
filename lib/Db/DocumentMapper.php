@@ -35,7 +35,12 @@ class DocumentMapper extends QBMapper {
 		parent::__construct($db, 'text_documents', Document::class);
 	}
 
-	public function find($documentId) {
+	/**
+	 * @param $documentId
+	 * @return Document
+	 * @throws DoesNotExistException
+	 */
+	public function find($documentId): Document {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
@@ -50,4 +55,5 @@ class DocumentMapper extends QBMapper {
 		}
 		return Document::fromRow($data);
 	}
+
 }

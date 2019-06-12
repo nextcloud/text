@@ -25,8 +25,8 @@ class SessionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $fileId = null, string $file = null): DataResponse {
-		return $this->apiService->create($fileId, $file);
+	public function create(int $fileId = null, string $file = null, $forceRecreate = false): DataResponse {
+		return $this->apiService->create($fileId, $file, null, null, $forceRecreate);
 	}
 
 	/**

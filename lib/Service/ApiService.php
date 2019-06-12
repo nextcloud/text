@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OC\Files\Node\File;
+use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Http\DataResponse;
@@ -50,26 +51,36 @@ class ApiService {
 		$this->documentService = $documentService;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null, $guestName = null): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, $forceRecreate = false): DataResponse {
 		try {
 			$readOnly = true;
 			/** @var File $file */
 			$file = null;
 			if ($token) {
-				list($document, $file) = $this->documentService->createDocumentByShareToken($token, $filePath);
+				$file = $this->documentService->getFileByShareToken($token, $filePath);
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
 					$readOnly = false;
 				} catch (NotFoundException $e) {}
 			} else if ($fileId) {
-				list($document, $file) = $this->documentService->createDocumentByFileId($fileId);
+				$file = $this->documentService->getFileById($fileId);
 				$readOnly = !$file->isUpdateable();
 			} else if ($filePath) {
-				list($document, $file) = $this->documentService->createDocumentByPath($filePath);
+				$file = $this->documentService->getFileByPath($filePath);
 				$readOnly = !$file->isUpdateable();
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
+
+			$this->sessionService->removeInactiveSessions($file->getId());
+			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
+			if (count($activeSessions) === 0) {
+				try {
+					$this->documentService->resetDocument($file->getId(), $forceRecreate);
+				} catch (DocumentHasUnsavedChangesException $e) {}
+			}
+
+			$document = $this->documentService->createDocument($file);
 		} catch (Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}
@@ -97,9 +108,13 @@ class ApiService {
 
 	public function close($documentId, $sessionId, $sessionToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
-		//if ($this->documentService->)
-		//$this->sessionService->cleanupSessions();
 		$this->sessionService->removeInactiveSessions($documentId);
+		$activeSessions = $this->sessionService->getActiveSessions($documentId);
+		if (count($activeSessions) === 0) {
+			try {
+				$this->documentService->resetDocument($documentId);
+			} catch (DocumentHasUnsavedChangesException $e) {}
+		}
 		return new DataResponse([]);
 	}
 

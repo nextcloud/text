@@ -89,6 +89,7 @@ class SessionService {
 	public function removeInactiveSessions($documentId) {
 		return $this->sessionMapper->deleteInactive($documentId);
 	}
+
 	public function isValidSession($documentId, $sessionId, $token) {
 		try {
 			$session = $this->sessionMapper->find($documentId, $sessionId, $token);

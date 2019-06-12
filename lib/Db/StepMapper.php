@@ -59,4 +59,13 @@ class StepMapper extends QBMapper {
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->execute();
 	}
+
+	public function deleteBeforeVersion($documentId, $version) {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($version)))
+			->execute();
+	}
 }

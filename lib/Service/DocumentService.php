@@ -32,6 +32,7 @@ use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
+use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -109,53 +110,13 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $path
-	 * @return array
-	 * @throws NotFoundException
-	 * @throws InvalidPathException
-	 * @throws NotPermittedException
-	 */
-	public function createDocumentByPath($path) {
-		/** @var File $file */
-		$file = $this->rootFolder->getUserFolder($this->userId)->get($path);
-		return [$this->createDocument($file), $file];
-	}
-
-	/**
-	 * @param $fileId
-	 * @return array
-	 * @throws NotFoundException
-	 * @throws InvalidPathException
-	 * @throws NotPermittedException
-	 */
-	public function createDocumentByFileId($fileId) {
-		$file = $this->getFileById($fileId);
-		return [$this->createDocument($file), $file];
-	}
-
-	/**
-	 * @param $shareToken
-	 * @param null $filePath
-	 * @return array
-	 * @throws InvalidPathException
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 */
-	public function createDocumentByShareToken($shareToken, $filePath = null) {
-		$file = $this->getFileByShareToken($shareToken, $filePath);
-		return [$this->createDocument($file), $file];
-	}
-
-
-
-	/**
 	 * @param File $file
 	 * @return Entity
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
 	 * @throws NotPermittedException
 	 */
-	protected function createDocument(File $file): Document {
+	public function createDocument(File $file): Document {
 		try {
 			$document = $this->documentMapper->find($file->getFileInfo()->getId());
 
@@ -164,14 +125,6 @@ class DocumentService {
 			if ($document->getLastSavedVersion() !== $document->getCurrentVersion()) {
 				$this->logger->debug('Unsaved steps but collission with file, continue collaborative editing');
 				return $document;
-			}
-
-			// TODO: Only do this when no sessions active, otherise we need to resolve the conflict differently
-			// TODO: Add parameter so that we can force this, else just opening the document will cause a rebuild
-			$lastMTime = $document->getLastSavedVersionTime();
-			if ($file->getMTime() > $lastMTime && $lastMTime > 0) {
-				$this->resetDocument($document->getId());
-				throw new NotFoundException();
 			}
 
 			return $document;
@@ -304,23 +257,39 @@ class DocumentService {
 		return $document;
 	}
 
-	public function resetDocument($documentId): void {
-		$this->stepMapper->deleteAll($documentId);
+	/**
+	 * @param $documentId
+	 * @param bool $force
+	 * @throws DocumentHasUnsavedChangesException
+	 */
+	public function resetDocument($documentId, $force = false): void {
 		try {
 			$document = $this->documentMapper->find($documentId);
-			$this->documentMapper->delete($document);
-		} catch (DoesNotExistException $e) {
-		}
 
-		try {
-			$this->appData->getFolder('documents')->getFile($documentId)->delete();
-		} catch (NotFoundException $e) {
-		} catch (NotPermittedException $e) {
+			if ($force || !$this->hasUnsavedChanges($document)) {
+				$this->stepMapper->deleteAll($documentId);
+				$this->documentMapper->delete($document);
+
+				try {
+					$this->appData->getFolder('documents')->getFile($documentId)->delete();
+				} catch (NotFoundException $e) {
+				} catch (NotPermittedException $e) {
+				}
+			}
+
+			if ($this->hasUnsavedChanges($document)) {
+				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
+			}
+		} catch (DoesNotExistException $e) {
 		}
 	}
 
 	public function getFileById($fileId): Node {
 		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
+	}
+
+	public function getFileByPath($path): Node {
+		return $this->rootFolder->getUserFolder($this->userId)->get($path);
 	}
 
 	/**

@@ -73,6 +73,17 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	public function findAllInactive() {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
+			->from($this->getTableName())
+			->where($qb->expr()->gt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)))
+			->execute();
+
+		return $this->findEntities($qb);
+	}
+
 	public function deleteInactive($documentId) {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();

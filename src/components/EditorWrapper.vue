@@ -183,6 +183,7 @@ export default {
 			lastSavedString: '',
 			syncError: null,
 			readOnly: true,
+			forceRecreate: false,
 
 			guestName: '',
 			guestNameConfirmed: false,
@@ -283,6 +284,7 @@ export default {
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
 				guestName: this.guestName,
+				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
 					console.debug('serialized document', { markdown })
@@ -316,7 +318,7 @@ export default {
 							new Collaboration({
 								// the initial version we start with
 								// version is an integer which is incremented with every change
-								version: this.syncService.steps.length,
+								version: this.document.initialVersion,
 								clientID: this.currentSession.id,
 								// debounce changes so we can save some bandwidth
 								debounce: EDITOR_PUSH_DEBOUNCE,
@@ -370,6 +372,7 @@ export default {
 					}
 				})
 			this.syncService.open({ fileId: this.fileId, filePath: this.filePath })
+			this.forceRecreate = false
 		},
 
 		resolveUseThisVersion() {
@@ -378,6 +381,7 @@ export default {
 		},
 
 		resolveUseServerVersion() {
+			this.forceRecreate = true
 			this.syncService.close()
 			this.syncService = null
 			this.tiptap.destroy()

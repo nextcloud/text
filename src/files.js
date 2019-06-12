@@ -80,5 +80,5 @@ documentReady(() => {
 })
 
 OCA.Text = {
-
+	Editor
 }
