@@ -587,7 +587,7 @@ export default {
 	}
 
 	.editor__content {
-		max-width: 500px;
+		max-width: 630px;
 		margin: auto;
 	}
 
