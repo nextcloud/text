@@ -38,19 +38,19 @@
 }
 
 .ProseMirror h1 {
-	font-size: 24px;
+	font-size: 36px;
 }
 .ProseMirror h2 {
-	font-size: 22px;
+	font-size: 28px;
 }
 .ProseMirror h3 {
-	font-size: 20px;
+	font-size: 24px;
 }
 .ProseMirror h4 {
-	font-size: 18px;
+	font-size: 21px;
 }
 .ProseMirror h5 {
-	font-size: 16px;
+	font-size: 17px;
 }
 .ProseMirror h6 {
 	font-size: 14px;
@@ -62,8 +62,10 @@
 .ProseMirror h5,
 .ProseMirror h6 {
 	font-weight: 600;
-	margin-top: 10px;
-	margin-bottom: 20px;
+	line-height: 120%;
+	margin-top: 24px;
+	margin-bottom: 12px;
+	color: var(--color-main-text);
 }
 
 .ProseMirror img {
