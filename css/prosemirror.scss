@@ -95,9 +95,15 @@
 .ProseMirror pre {
 	white-space: pre-wrap;
 	background-color: var(--color-background-dark);
-	border-radius: 5px;
-	padding: 5px;
-	padding-left: 11px;
+	border-radius: var(--border-radius);
+	padding: 1em 1.3em;
+	margin-bottom: 1em;
+}
+
+.ProseMirror p code {
+	background-color: var(--color-background-dark);
+	border-radius: var(--border-radius);
+	padding: .1em .3em;
 }
 
 .ProseMirror li {
