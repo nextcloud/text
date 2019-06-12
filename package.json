@@ -91,6 +91,7 @@
 		"moduleNameMapper": {
 			"^@/(.*)$": "<rootDir>/src/$1"
 		},
+		"modulePathIgnorePatterns": ["<rootDir>/src/tests/fixtures/"],
 		"transform": {
 			"^.+\\.js$": "<rootDir>/node_modules/babel-jest",
 			".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"

@@ -64,7 +64,8 @@ const createEditor = ({ content, onUpdate, extensions }) => {
 	})
 }
 
-const markdownit = MarkdownIt({ html: false })
+const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
+	.enable('strikethrough')
 
 const createMarkdownSerializer = (_nodes, _marks) => {
 	const nodes = Object

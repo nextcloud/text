@@ -25,5 +25,4 @@ export default async function () {
   global.OC = {
     requestToken: '123'
   }
-  console.log(global)
 };
