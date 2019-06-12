@@ -23,6 +23,10 @@
 import Editor from './components/EditorWrapper'
 import { documentReady } from './helpers'
 
+const openFileExtensions = [
+	'md', 'markdown'
+]
+
 const newFileMenuPlugin = {
 	attach: function(menu) {
 		var fileList = menu.fileList
@@ -41,8 +45,20 @@ const newFileMenuPlugin = {
 			fileType: 'file',
 			actionHandler: function(name) {
 				fileList.createFile(name).then(function(status, data) {
-					let fileInfoModel = new OCA.Files.FileInfoModel(data)
-					OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+					const fileExtension = name.split('.').pop()
+					if (openFileExtensions.indexOf(fileExtension) > -1) {
+						let fileInfoModel = new OCA.Files.FileInfoModel(data)
+						OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+					} else if (typeof OCA.Files_Texteditor !== 'undefined') {
+						const dir = fileList.getCurrentDirectory()
+						OCA.Files_Texteditor._onEditorTrigger(
+							name,
+							{
+								fileList: fileList,
+								dir: dir
+							}
+						)
+					}
 				})
 			}
 		})
@@ -62,3 +78,7 @@ documentReady(() => {
 		group: null
 	})
 })
+
+OCA.Text = {
+
+}
