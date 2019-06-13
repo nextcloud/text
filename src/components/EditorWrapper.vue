@@ -452,7 +452,8 @@ export default {
 		display: block;
 		width: 100vw;
 		max-width: 100%;
-		height: 100%;
+		height: calc(100% - 50px);
+		top: 50px;
 		margin: 0 auto;
 		position: relative;
 		background-color: var(--color-main-background);

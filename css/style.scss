@@ -36,7 +36,7 @@
 }
 
 // Overwrite Viewer component styles
-.modal-header {
+/*.modal-header {
     &.invisible {
         visibility: visible !important;
         opacity: 1 !important;
@@ -70,7 +70,7 @@
             opacity: 1;
         }
     }
-}
+}*/
 
 .modal-container #editor-container {
   position: absolute;
