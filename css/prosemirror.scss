@@ -27,6 +27,7 @@
 .ProseMirror a {
 	color: var(--color-primary);
 	text-decoration: underline;
+	padding: .5em 0;
 }
 
 .ProseMirror p {
@@ -38,19 +39,19 @@
 }
 
 .ProseMirror h1 {
-	font-size: 24px;
+	font-size: 36px;
 }
 .ProseMirror h2 {
-	font-size: 22px;
+	font-size: 28px;
 }
 .ProseMirror h3 {
-	font-size: 20px;
+	font-size: 24px;
 }
 .ProseMirror h4 {
-	font-size: 18px;
+	font-size: 21px;
 }
 .ProseMirror h5 {
-	font-size: 16px;
+	font-size: 17px;
 }
 .ProseMirror h6 {
 	font-size: 14px;
@@ -62,8 +63,10 @@
 .ProseMirror h5,
 .ProseMirror h6 {
 	font-weight: 600;
-	margin-top: 10px;
-	margin-bottom: 20px;
+	line-height: 120%;
+	margin-top: 24px;
+	margin-bottom: 12px;
+	color: var(--color-main-text);
 }
 
 .ProseMirror img {
@@ -78,7 +81,7 @@
 /* Add space around the hr to make clicking it easier */
 
 .ProseMirror hr {
-	padding: 2px 10px;
+	padding: 2px 0;
 	border: none;
 	margin: 1em 0;
 	width: 100%;
@@ -88,16 +91,22 @@
 	content: "";
 	display: block;
 	height: 1px;
-	background-color: silver;
+	background-color: var(--color-border-dark);
 	line-height: 2px;
 }
 
 .ProseMirror pre {
 	white-space: pre-wrap;
 	background-color: var(--color-background-dark);
-	border-radius: 5px;
-	padding: 5px;
-	padding-left: 11px;
+	border-radius: var(--border-radius);
+	padding: 1em 1.3em;
+	margin-bottom: 1em;
+}
+
+.ProseMirror p code {
+	background-color: var(--color-background-dark);
+	border-radius: var(--border-radius);
+	padding: .1em .3em;
 }
 
 .ProseMirror li {
@@ -105,7 +114,7 @@
 }
 
 .ProseMirror ul, .ProseMirror ol {
-	padding-left: 30px;
+	padding-left: 14px;
 }
 
 .ProseMirror ul li {
@@ -114,6 +123,7 @@
 
 .ProseMirror blockquote {
 	padding-left: 1em;
-	border-left: 3px solid var(--color-text-lighter);
-	margin-left: 0; margin-right: 0;
+	border-left: 4px solid var(--color-primary);
+	margin-left: 0;
+	margin-right: 0;
 }
