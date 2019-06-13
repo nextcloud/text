@@ -450,12 +450,10 @@ export default {
 
 	#editor-container {
 		display: block;
-		// Size that is used for modal as well
-		max-width: 900px;
 		width: 100vw;
+		max-width: 100%;
 		height: 100%;
 		margin: 0 auto;
-		border-radius: 3px;
 		position: relative;
 		background-color: var(--color-main-background);
 	}
@@ -503,9 +501,9 @@ export default {
 	#editor-session-list {
 		position: absolute;
 		top: 0;
-		right: 0;
+		right: 96px;
 		z-index: 110;
-		padding: 6px;
+		padding: 9px;
 		padding-right: 16px;
 		display: flex;
 
@@ -516,11 +514,13 @@ export default {
 	}
 
 	.menubar {
-		width: 100%;
 		position: fixed;
 		position: sticky;
 		top: 0;
-		z-index: 100;
+		width: calc(100% - 450px);
+		margin-left: 200px;
+		margin-right: 250px;
+		z-index: 10010; // above modal-header so buttons are clickable
 		background-color: var(--color-main-background-translucent);
 	}
 

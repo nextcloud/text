@@ -1,15 +1,79 @@
-#files-public-content {
-  width: 100% !important;
-  height: 100%;
+// Fix share link footer for now by just not showing it
+#body-public #content {
+    height: 100%;
+}
+#body-public footer {
+    display: none;
 }
 
-#viewer-content.modal-mask .modal-wrapper .modal-container {
-  border-radius: 3px !important;
+
+@media only screen and (max-width: 1024px) { // $breakpoint-mobile
+    .modal-header .modal-title {
+        display: none;
+    }
+
+    .menubar { // all the !important is unfortunately needed
+        width: calc(100% - 250px) !important;
+        margin-left: 0 !important;
+        margin-right: 250px !important;
+    }
+}
+
+
+#files-public-content {
+    width: 100% !important;
+    height: 100%;
+
+    .menubar { // all the !important is unfortunately needed
+        width: calc(100% - 150px) !important;
+        margin-left: 0 !important;
+        margin-right: 150px !important;
+    }
+
+    #editor-session-list {
+        right: 0;
+    }
+}
+
+// Overwrite Viewer component styles
+.modal-header {
+    &.invisible {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .modal-title {
+        position: absolute;
+        left: 0;
+        padding: 0 16px !important;
+        max-width: 200px !important;
+        font-weight: bold;
+        color: var(--color-main-text) !important;
+    }
+
+    .icons-menu .header-actions {
+        filter: invert(100%);
+        opacity: .4;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
+    }
+
+    .icons-menu .icon-close::before {
+        color: var(--color-main-text);
+        opacity: .6;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
+    }
 }
 
 .modal-container #editor-container {
   position: absolute;
-  max-height: calc(100% - 100px);
 }
 
 .ProseMirror-hideselection *::selection { background: transparent; }
@@ -67,7 +131,7 @@ li.ProseMirror-selectednode:after {
   background: var(--color-main-background);
   color: var(--color-main-text);
   background-clip: padding-box;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   padding: 0;
   position: relative;
   overflow-y: scroll;
