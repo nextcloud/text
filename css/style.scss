@@ -6,71 +6,14 @@
     display: none;
 }
 
-
-@media only screen and (max-width: 1024px) { // $breakpoint-mobile
-    .modal-header .modal-title {
-        display: none;
-    }
-
-    .menubar { // all the !important is unfortunately needed
-        width: calc(100% - 250px) !important;
-        margin-left: 0 !important;
-        margin-right: 250px !important;
-    }
-}
-
-
 #files-public-content {
     width: 100% !important;
     height: 100%;
 
-    .menubar { // all the !important is unfortunately needed
-        width: calc(100% - 150px) !important;
-        margin-left: 0 !important;
-        margin-right: 150px !important;
-    }
-
-    #editor-session-list {
-        right: 0;
+    #editor-container {
+        top: 0;
     }
 }
-
-// Overwrite Viewer component styles
-/*.modal-header {
-    &.invisible {
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-
-    .modal-title {
-        position: absolute;
-        left: 0;
-        padding: 0 16px !important;
-        max-width: 200px !important;
-        font-weight: bold;
-        color: var(--color-main-text) !important;
-    }
-
-    .icons-menu .header-actions {
-        filter: invert(100%);
-        opacity: .4;
-
-        &:hover,
-        &:focus {
-            opacity: 1;
-        }
-    }
-
-    .icons-menu .icon-close::before {
-        color: var(--color-main-text);
-        opacity: .6;
-
-        &:hover,
-        &:focus {
-            opacity: 1;
-        }
-    }
-}*/
 
 .modal-container #editor-container {
   position: absolute;
