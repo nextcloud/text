@@ -29,47 +29,17 @@
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor">
-				<editor-menu-bar v-if="!syncError && !readOnly" v-slot="{ commands, isActive }" :editor="tiptap">
-					<div class="menubar">
-						<div ref="menubar" class="menubar-icons">
-							<template v-for="icon in iconsToShow">
-								<button v-if="icon.class" :key="icon.label"
-									:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
-								<template v-else>
-									<div :key="icon.label" class="submenu">
-										<button v-click-outside="() => hideChildMenu(icon)" :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
-										<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
-											<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
-										</div>
-									</div>
-								</template>
-							</template>
-							<actions>
-								<template v-for="icon in iconsToShowInMenu">
-									<action-button v-if="icon.class" :key="icon.class"
-										:icon="icon.class" @click="clickIcon(commands, icon)">
-										{{ icon.label }}
-									</action-button>
-									<template v-else>
-										<action-button v-for="childIcon in icon.children" :key="childIcon.class" :icon="childIcon.class"
-											@click="clickIcon(commands, childIcon)">
-											{{ childIcon.label }}
-										</action-button>
-									</template>
-								</template>
-							</actions>
+				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
+					<div v-if="currentSession && active" id="editor-session-list">
+						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
+							{{ lastSavedStatus }}
 						</div>
-						<div v-if="currentSession && active" id="editor-session-list">
-							<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
-								{{ lastSavedStatus }}
-							</div>
-							<avatar v-for="session in activeSessions" :key="session.id"
-								:user="session.userId"
-								:display-name="session.guestName ? session.guestName : session.displayName"
-								:style="sessionStyle(session)" />
-						</div>
+						<avatar v-for="session in activeSessions" :key="session.id"
+							:user="session.userId"
+							:display-name="session.guestName ? session.guestName : session.displayName"
+							:style="sessionStyle(session)" />
 					</div>
-				</editor-menu-bar>
+				</menu-bar>
 				<menu-bubble v-if="!readOnly" :editor="tiptap" />
 				<editor-content class="editor__content" :editor="tiptap" />
 			</div>
@@ -89,21 +59,18 @@ import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
 import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
 
-import { EditorContent, EditorMenuBar } from 'tiptap'
+import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-import Actions from 'nextcloud-vue/dist/Components/Actions'
-import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
-import PopoverMenu from 'nextcloud-vue/dist/Components/PopoverMenu'
-import ClickOutside from 'vue-click-outside'
 
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
 import CollisionResolveDialog from './CollisionResolveDialog'
 import { iconBar } from './../mixins/menubar'
+import MenuBar from './MenuBar'
 import MenuBubble from './MenuBubble'
 
 const COLLABORATOR_IDLE_TIME = 5
@@ -113,20 +80,16 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
+		MenuBar,
 		MenuBubble,
 		CollisionResolveDialog,
 		Avatar,
-		Actions,
 		ReadOnlyEditor,
 		EditorContent,
-		EditorMenuBar,
-		ActionButton,
-		PopoverMenu,
 		GuestNameDialog
 	},
 	directives: {
-		Tooltip,
-		ClickOutside
+		Tooltip
 	},
 	mixins: [
 		iconBar
@@ -226,7 +189,7 @@ export default {
 		}
 	},
 	watch: {
-		lastSavedStatus: function() { this.redrawMenuBar() }
+		lastSavedStatus: function() { this.$refs.menubar.redrawMenuBar() }
 	},
 	beforeMount() {
 		const guestName = localStorage.getItem('text-guestName')
@@ -321,7 +284,6 @@ export default {
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
 					this.tiptap.focus('end')
-					this.redrawMenuBar()
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
@@ -474,48 +436,6 @@ export default {
 			vertical-align: middle;
 			margin-left: 3px;
 		}
-	}
-
-	.menubar {
-		position: fixed;
-		position: sticky;
-		top: 0;
-		display: flex;
-		z-index: 10010; // above modal-header so buttons are clickable
-		background-color: var(--color-main-background-translucent);
-		height: 44px;
-		.menubar-icons {
-			flex-grow: 1;
-		}
-	}
-
-	.menubar button {
-		width: 44px;
-		height: 44px;
-		margin: 0;
-		background-size: 16px;
-		border: 0;
-		background-color: transparent;
-		opacity: .5;
-		color: var(--color-main-text);
-		background-position: center center;
-		vertical-align: top;
-		&:hover, &:focus, &:active {
-			background-color: var(--color-background-dark);
-		}
-		&.is-active,
-		&:hover,
-		&:focus {
-			opacity: 1;
-		}
-	}
-
-	.menubar .submenu {
-		display: inline-block;
-		width: 44px;
-		height: 44px;
-		position: relative;
-		vertical-align: top;
 	}
 
 	.editor__content {
