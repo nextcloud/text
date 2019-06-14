@@ -32,13 +32,31 @@
 				<editor-menu-bar v-if="!syncError && !readOnly" v-slot="{ commands, isActive }" :editor="tiptap">
 					<div class="menubar">
 						<div ref="menubar" class="menubar-icons">
-							<button v-for="icon in iconsToShow" :key="icon.class" :class="getIconClasses(isActive, icon)"
-								@click="clickIcon(commands, icon)" />
+							<template v-for="icon in iconsToShow">
+								<button v-if="icon.class" :key="icon.label"
+									:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
+								<template v-else>
+									<actions :key="icon.label">
+										<action-button v-for="childIcon in icon.children" :key="childIcon.class" :icon="childIcon.class"
+											@click="clickIcon(commands, childIcon)">
+											{{ childIcon.label }}
+										</action-button>
+									</actions>
+								</template>
+							</template>
 							<actions>
-								<action-button v-for="icon in iconsToShowInMenu" :key="icon.class" :icon="icon.class"
-									@click="clickIcon(commands, icon)">
-									{{ icon.label }}
-								</action-button>
+								<template v-for="icon in iconsToShowInMenu">
+									<action-button v-if="icon.class" :key="icon.class"
+										:icon="icon.class" @click="clickIcon(commands, icon)">
+										{{ icon.label }}
+									</action-button>
+									<template v-else>
+										<action-button v-for="childIcon in icon.children" :key="childIcon.class" :icon="childIcon.class"
+											@click="clickIcon(commands, childIcon)">
+											{{ childIcon.label }}
+										</action-button>
+									</template>
+								</template>
 							</actions>
 						</div>
 						<div v-if="currentSession && active" id="editor-session-list">

@@ -19,20 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-/**
- * <!--
- <actions>
- <action-button icon="icon-code" @click="commands.code_block()">
- Code block
- </action-button>
- <action-button icon="icon-quote" @click="commands.blockquote()">
- Blockquote
- </action-button>
- </actions>
- -->
 
- * @type {*[]}
- */
 const icons = [
 	{
 		label: t('text', 'Undo'),
@@ -71,36 +58,73 @@ const icons = [
 		}
 	},
 	{
-		label: 'Heading 1',
-		class: 'icon-h1',
-		isActive: (isActive) => isActive.heading({ level: 1 }),
-		action: (command) => {
-			return command.heading({ level: 1 })
-		}
-	},
-	{
-		label: 'Heading 2',
-		class: 'icon-h2',
-		isActive: (isActive) => isActive.heading({ level: 2 }),
-		action: (command) => {
-			return command.heading({ level: 2 })
-		}
-	},
-	{
-		label: 'Heading 3',
-		class: 'icon-h3',
-		isActive: (isActive) => isActive.heading({ level: 3 }),
-		action: (command) => {
-			return command.heading({ level: 3 })
-		}
-	},
-	{
-		label: 'Heading 4',
-		class: 'icon-h4',
-		isActive: (isActive) => isActive.heading({ level: 4 }),
-		action: (command) => {
-			return command.heading({ level: 4 })
-		}
+		label: 'Headings',
+		children: [
+			{
+				label: 'Heading 1',
+				class: 'icon-h1',
+				isActive: (isActive) => isActive.heading({ level: 1 }),
+				action: (command) => {
+					return command.heading({ level: 1 })
+				}
+			},
+			{
+				label: 'Heading 2',
+				class: 'icon-h2',
+				isActive: (isActive) => isActive.heading({ level: 2 }),
+				action: (command) => {
+					return command.heading({ level: 2 })
+				}
+			},
+			{
+				label: 'Heading 3',
+				class: 'icon-h3',
+				isActive: (isActive) => isActive.heading({ level: 3 }),
+				action: (command) => {
+					return command.heading({ level: 3 })
+				}
+			},
+			{
+				label: 'Heading 4',
+				class: 'icon-h4',
+				isActive: (isActive) => isActive.heading({ level: 4 }),
+				action: (command) => {
+					return command.heading({ level: 4 })
+				}
+			},
+			{
+				label: 'Heading 5',
+				class: 'icon-h5',
+				isActive: (isActive) => isActive.heading({ level: 5 }),
+				action: (command) => {
+					return command.heading({ level: 5 })
+				}
+			},
+			{
+				label: 'Paragraph',
+				class: 'icon-paragraph',
+				isActive: (isActive) => isActive.paragraph(),
+				action: (command) => {
+					return command.paragraph()
+				}
+			},
+			{
+				label: 'Blockquote',
+				class: 'icon-quote',
+				isActive: (isActive) => isActive.blockquote(),
+				action: (command) => {
+					return command.blockquote()
+				}
+			},
+			{
+				label: 'Code block',
+				class: 'icon-code',
+				isActive: (isActive) => isActive.code_block(),
+				action: (command) => {
+					return command.code_block()
+				}
+			}
+		]
 	},
 	{
 		label: 'Unordered list',
@@ -127,6 +151,7 @@ const icons = [
 		}
 	}
 ]
+
 const iconBar = {
 	mounted() {
 		this.getWindowWidth()
@@ -183,7 +208,6 @@ const iconBar = {
 			this.windowWidth // eslint-disable-line
 			const menuBarWidth = this.$refs.menubar ? this.$refs.menubar.clientWidth : 0
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 1), 0)
-			console.debug(iconCount)
 			return iconCount
 		}
 	}
