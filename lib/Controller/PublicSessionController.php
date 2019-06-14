@@ -110,4 +110,12 @@ class PublicSessionController extends PublicShareController {
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave, $token);
 	}
 
+	/**
+	 * @NoAdminRequired
+	 * @PublicPage
+	 */
+	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
+		return $this->apiService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
+	}
+
 }

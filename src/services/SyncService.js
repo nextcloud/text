@@ -134,6 +134,27 @@ class SyncService {
 		)
 	}
 
+	updateSession(guestName) {
+		if (!this.isPublic()) {
+			return
+		}
+		return axios.post(
+			endpointUrl('session', !!this.options.shareToken), {
+				documentId: this.document.id,
+				sessionId: this.session.id,
+				sessionToken: this.session.token,
+				token: this.options.shareToken,
+				guestName
+			}
+		).then(({ data }) => {
+			this.session = data
+			return data
+		}).catch((error) => {
+			console.error('Failed to update the session', error)
+			return Promise.reject(error)
+		})
+	}
+
 	sendSteps(_sendable) {
 		let sendable = _sendable || sendableSteps(this.state)
 		if (!sendable) {
@@ -226,6 +247,10 @@ class SyncService {
 		} else {
 			console.error('Event not found', event)
 		}
+	}
+
+	isPublic() {
+		return !!this.options.shareToken
 	}
 
 }

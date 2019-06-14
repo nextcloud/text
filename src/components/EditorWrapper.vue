@@ -31,6 +31,7 @@
 			<div id="editor">
 				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
 					<div v-if="currentSession && active" id="editor-session-list">
+						<guest-name-dialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
@@ -47,8 +48,6 @@
 		</div>
 
 		<collision-resolve-dialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
-
-		<guest-name-dialog v-if="isPublic && !guestNameConfirmed" :value="guestName" @input="setGuestName($event)" />
 	</div>
 </template>
 
@@ -56,7 +55,7 @@
 import Vue from 'vue'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
-import { endpointUrl } from './../helpers'
+import { endpointUrl, getRandomGuestName } from './../helpers'
 import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
 
 import { EditorContent } from 'tiptap'
@@ -129,10 +128,7 @@ export default {
 			lastSavedString: '',
 			syncError: null,
 			readOnly: true,
-			forceRecreate: false,
-
-			guestName: '',
-			guestNameConfirmed: false
+			forceRecreate: false
 		}
 	},
 	computed: {
@@ -191,14 +187,8 @@ export default {
 	watch: {
 		lastSavedStatus: function() { this.$refs.menubar.redrawMenuBar() }
 	},
-	beforeMount() {
-		const guestName = localStorage.getItem('text-guestName')
-		if (guestName !== null) {
-			this.guestName = guestName
-		}
-	},
 	mounted() {
-		if (this.active && (this.hasDocumentParameters) && !this.isPublic) {
+		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
 		}
 		setInterval(() => { this.updateLastSavedStatus() }, 2000)
@@ -211,12 +201,6 @@ export default {
 		}
 	},
 	methods: {
-		setGuestName(guestName) {
-			this.guestName = guestName
-			this.guestNameConfirmed = true
-			localStorage.setItem('text-guestName', this.guestName)
-			this.initSession()
-		},
 		updateLastSavedStatus() {
 			if (this.document) {
 				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
@@ -227,9 +211,10 @@ export default {
 				this.$emit('error', 'No valid file provided')
 				return
 			}
+			const guestName = localStorage.getItem('text-guestName') ? localStorage.getItem('text-guestName') : getRandomGuestName()
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
-				guestName: this.guestName,
+				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
@@ -241,6 +226,7 @@ export default {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
+					localStorage.setItem('text-guestName', this.currentSession.guestName)
 				})
 				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
@@ -254,7 +240,7 @@ export default {
 					this.tiptap.setOptions({ editable: !this.readOnly })
 
 				})
-				.on('loaded', ({ document, session, documentSource }) => {
+				.on('loaded', ({ documentSource }) => {
 					this.tiptap = createEditor({
 						content: markdownit.render(documentSource),
 						onUpdate: ({ state }) => {
@@ -337,26 +323,25 @@ export default {
 		updateSessions(sessions) {
 			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
 			let currentSessionIds = this.sessions.map((session) => session.userId)
-			const removedSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => !currentSessionIds.includes(sessionId))
+			let currentGuestIds = this.sessions.map((session) => session.guestId)
 
-			// remove sessions
+			const removedSessions = Object.keys(this.filteredSessions)
+				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
+
+			// remove sessions TODO: remove guest sessions
 			for (let index in removedSessions) {
 				Vue.delete(this.filteredSessions, removedSessions[index])
 			}
 			for (let index in this.sessions) {
 				let session = this.sessions[index]
-				if (!session.userId) {
-					session.userId = session.id
-				}
-
-				if (this.filteredSessions[session.userId]) {
+				const sessionKey = session.displayName ? session.userId : session.id
+				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant
-					if (this.filteredSessions[session.userId].lastContact < session.lastContact) {
-						Vue.set(this.filteredSessions[session.userId], 'lastContact', session.lastContact)
+					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
+						Vue.set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
 					}
 				} else {
-					Vue.set(this.filteredSessions, session.userId, session)
+					Vue.set(this.filteredSessions, sessionKey, session)
 				}
 			}
 		},

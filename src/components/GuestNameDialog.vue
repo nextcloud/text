@@ -21,47 +21,51 @@
   -->
 
 <template>
-	<div class="guest-name-dialog">
-		<p>{{ t('text', 'Please enter a name to identify you as a public editor:') }}</p>
-		<form @submit.prevent="setGuestName()">
-			<input ref="guestNameField" type="text" :value="value">
-			<input type="submit" class="icon-confirm" value="">
-		</form>
-	</div>
+	<form v-tooltip="t('text', 'Please enter a name to identify you as a public editor:')" class="guest-name-dialog" @submit.prevent="setGuestName()">
+		<input v-model="guestName" type="text">
+		<input type="submit" class="icon-confirm" value="">
+	</form>
 </template>
 
 <script>
 export default {
 	name: 'GuestNameDialog',
 	props: {
-		value: {
-			type: String,
-			default: ''
+		syncService: {
+			type: Object,
+			default: null
 		}
+	},
+	data() {
+		return {
+			guestName: ''
+		}
+	},
+	beforeMount() {
+		this.guestName = this.syncService.session.guestName
 	},
 	methods: {
 		setGuestName() {
-			this.$emit('input', this.$refs.guestNameField.value)
+			const previousGuestName = this.syncService.session.guestName
+			this.syncService.updateSession(this.guestName).then(() => {
+				localStorage.setItem('text-guestName', this.guestName)
+			}).catch((e) => {
+				this.guestName = previousGuestName
+			})
 		}
 	}
 }
 </script>
 
 <style scoped lang="scss">
-	.guest-name-dialog {
-		padding: 30px;
-		text-align: center;
+	form.guest-name-dialog {
+		display: flex;
+		width: 100%;
+		max-width: 200px;
+		margin: auto;
 
-		form {
-			display: flex;
-			width: 100%;
-			max-width: 200px;
-			margin: auto;
-			margin-top: 30px;
-
-			input[type=text] {
-				flex-grow: 1;
-			}
+		input[type=text] {
+			flex-grow: 1;
 		}
 	}
 </style>

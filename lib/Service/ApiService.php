@@ -61,7 +61,8 @@ class ApiService {
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
 					$readOnly = false;
-				} catch (NotFoundException $e) {}
+				} catch (NotFoundException $e) {
+				}
 			} else if ($fileId) {
 				$file = $this->documentService->getFileById($fileId);
 				$readOnly = !$file->isUpdateable();
@@ -77,7 +78,8 @@ class ApiService {
 			if (count($activeSessions) === 0 || $forceRecreate) {
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
-				} catch (DocumentHasUnsavedChangesException $e) {}
+				} catch (DocumentHasUnsavedChangesException $e) {
+				}
 			}
 
 			$document = $this->documentService->createDocument($file);
@@ -113,7 +115,8 @@ class ApiService {
 		if (count($activeSessions) === 0) {
 			try {
 				$this->documentService->resetDocument($documentId);
-			} catch (DocumentHasUnsavedChangesException $e) {}
+			} catch (DocumentHasUnsavedChangesException $e) {
+			}
 		}
 		return new DataResponse([]);
 	}
@@ -166,5 +169,16 @@ class ApiService {
 			'sessions' => $this->sessionService->getActiveSessions($documentId),
 			'document' => $document
 		]);
+	}
+
+	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 500);
+		}
+
+		if ($guestName === '') {
+			return new DataResponse([ 'message' => 'A guest name needs to be provided'], 500);
+		}
+		return $this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
 	}
 }

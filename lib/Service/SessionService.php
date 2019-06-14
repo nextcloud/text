@@ -60,7 +60,9 @@ class SessionService {
 		$color = $avatarGenerator->getGuestAvatar($userName)->avatarBackgroundColor($userName);
 		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
 		$session->setColor($color);
-		$session->setGuestName($guestName);
+		if ($this->userId === null) {
+			$session->setGuestName($guestName);
+		}
 		$session->setLastContact($this->timeFactory->getTime());
 		return $this->sessionMapper->insert($session);
 	}
@@ -102,8 +104,20 @@ class SessionService {
 		return true;
 	}
 
-	public function cleanupSession() {
-		// find expired sessions
-		// remove them
+	/**
+	 * @param $documentId
+	 * @param $sessionId
+	 * @param $sessionToken
+	 * @param $guestName
+	 * @return Session
+	 * @throws DoesNotExistException
+	 */
+	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): Session {
+		if ($this->userId !== null) {
+			throw new \Exception('Logged in users cannot set a guest name');
+		}
+		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
+		$session->setGuestName($guestName);
+		return $this->sessionMapper->update($session);
 	}
 }
