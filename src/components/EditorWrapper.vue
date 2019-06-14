@@ -70,25 +70,7 @@
 						</div>
 					</div>
 				</editor-menu-bar>
-				<editor-menu-bubble v-if="!readOnly" v-slot="{ commands, isActive, getMarkAttrs, menu }" class="menububble"
-					:editor="tiptap" @hide="hideLinkMenu">
-					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
-						<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-							<input ref="linkInput" v-model="linkUrl" class="menububble__input"
-								type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
-							<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, null)" />
-						</form>
-
-						<template v-else>
-							<button
-								class="menububble__button"
-								:class="{ 'is-active': isActive.link() }"
-								@click="showLinkMenu(getMarkAttrs('link'))">
-								<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
-							</button>
-						</template>
-					</div>
-				</editor-menu-bubble>
+				<menu-bubble v-if="!readOnly" :editor="tiptap" />
 				<editor-content class="editor__content" :editor="tiptap" />
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
@@ -107,7 +89,7 @@ import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
 import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
 
-import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
+import { EditorContent, EditorMenuBar } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 
@@ -122,6 +104,7 @@ import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
 import CollisionResolveDialog from './CollisionResolveDialog'
 import { iconBar } from './../mixins/menubar'
+import MenuBubble from './MenuBubble'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -130,13 +113,13 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
+		MenuBubble,
 		CollisionResolveDialog,
 		Avatar,
 		Actions,
 		ReadOnlyEditor,
 		EditorContent,
 		EditorMenuBar,
-		EditorMenuBubble,
 		ActionButton,
 		PopoverMenu,
 		GuestNameDialog
@@ -186,10 +169,7 @@ export default {
 			forceRecreate: false,
 
 			guestName: '',
-			guestNameConfirmed: false,
-
-			linkUrl: null,
-			linkMenuIsActive: false
+			guestNameConfirmed: false
 		}
 	},
 	computed: {
@@ -419,24 +399,6 @@ export default {
 			}
 		},
 
-		showLinkMenu(attrs) {
-			this.linkUrl = attrs.href
-			this.linkMenuIsActive = true
-			this.$nextTick(() => {
-				this.$refs.linkInput.focus()
-			})
-		},
-		hideLinkMenu() {
-			this.linkUrl = null
-			this.linkMenuIsActive = false
-		},
-
-		setLinkUrl(command, url) {
-			command({ href: url })
-			this.hideLinkMenu()
-			this.tiptap.focus()
-		},
-
 		showImagePrompt(command) {
 			const _command = command
 			OC.dialogs.filepicker('Insert an image', (file) => {
@@ -554,50 +516,6 @@ export default {
 		height: 44px;
 		position: relative;
 		vertical-align: top;
-	}
-
-	.menububble {
-		position: absolute;
-		display: flex;
-		z-index: 220;
-		background: var(--color-main-background-translucent);
-		box-shadow: 0 1px 5px var(--color-box-shadow);
-		border-radius: 5px;
-		padding: 0.3rem;
-		margin-bottom: 0.5rem;
-		visibility: hidden;
-		opacity: 0;
-		transition: opacity 0.2s, visibility 0.2s;
-
-		&.is-active {
-			opacity: 1;
-			visibility: visible;
-		}
-
-		&__button {
-			display: inline-flex;
-			border: 0;
-			padding: 0.2rem 0.5rem;
-			margin-right: 0.2rem;
-			border-radius: 3px;
-			cursor: pointer;
-
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-
-		&__form {
-			display: flex;
-			align-items: center;
-		}
-
-		&__input {
-			font: inherit;
-			border: none;
-			background: transparent;
-			min-width: 150px;
-		}
 	}
 
 	.editor__content {
