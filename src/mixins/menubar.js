@@ -222,13 +222,16 @@ const iconBar = {
 			return icons.slice((this.iconCount - 1 > 0) ? this.iconCount - 1 : 0, icons.length)
 		},
 		childPopoverMenu() {
-			return (isActive, commands, icons) => {
+			return (isActive, commands, icons, parent) => {
 				let popoverMenuItems = []
 				for (const index in icons) {
 					popoverMenuItems.push({
 						text: icons[index].label,
 						icon: icons[index].class,
-						action: () => icons[index].action(commands),
+						action: () => {
+							icons[index].action(commands)
+							this.hideChildMenu(parent)
+						},
 						active: icons[index].isActive(isActive)
 					})
 				}

@@ -39,7 +39,7 @@
 									<div :key="icon.label" class="submenu">
 										<button v-click-outside="() => hideChildMenu(icon)" :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
 										<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
-											<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children)" />
+											<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
 										</div>
 									</div>
 								</template>
