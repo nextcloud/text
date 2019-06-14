@@ -60,6 +60,14 @@ const icons = [
 		}
 	},
 	{
+		label: 'Paragraph',
+		class: 'icon-paragraph',
+		isActive: (isActive) => {},
+		action: (command) => {
+			return command.paragraph()
+		}
+	},
+	{
 		label: 'Headings',
 		visible: false,
 		children: [
@@ -102,30 +110,6 @@ const icons = [
 				action: (command) => {
 					return command.heading({ level: 5 })
 				}
-			},
-			{
-				label: 'Paragraph',
-				class: 'icon-paragraph',
-				isActive: (isActive) => isActive.paragraph(),
-				action: (command) => {
-					return command.paragraph()
-				}
-			},
-			{
-				label: 'Blockquote',
-				class: 'icon-quote',
-				isActive: (isActive) => isActive.blockquote(),
-				action: (command) => {
-					return command.blockquote()
-				}
-			},
-			{
-				label: 'Code block',
-				class: 'icon-code',
-				isActive: (isActive) => isActive.code_block(),
-				action: (command) => {
-					return command.code_block()
-				}
 			}
 		]
 	},
@@ -143,6 +127,22 @@ const icons = [
 		isActive: (isActive) => isActive.ordered_list(),
 		action: (command) => {
 			return command.ordered_list()
+		}
+	},
+	{
+		label: 'Blockquote',
+		class: 'icon-quote',
+		isActive: (isActive) => isActive.blockquote(),
+		action: (command) => {
+			return command.blockquote()
+		}
+	},
+	{
+		label: 'Code block',
+		class: 'icon-code',
+		isActive: (isActive) => isActive.code_block(),
+		action: (command) => {
+			return command.code_block()
 		}
 	},
 	{
@@ -243,7 +243,7 @@ const iconBar = {
 						return icon.class
 					}
 				}
-				return 'icon-paragraph'
+				return 'icon-h1'
 			}
 		},
 		iconCount() {
