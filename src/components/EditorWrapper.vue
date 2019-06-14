@@ -22,15 +22,6 @@
 
 <template>
 	<div id="editor-container">
-		<div v-if="currentSession && active" id="editor-session-list">
-			<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
-				{{ lastSavedStatus }}
-			</div>
-			<avatar v-for="session in activeSessions" :key="session.id"
-				:user="session.userId"
-				:display-name="session.guestName ? session.guestName : session.displayName"
-				:style="sessionStyle(session)" />
-		</div>
 		<div v-if="currentSession && active">
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
@@ -40,42 +31,25 @@
 			<div id="editor">
 				<editor-menu-bar v-if="!syncError && !readOnly" v-slot="{ commands, isActive }" :editor="tiptap">
 					<div class="menubar">
-						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong" />
-						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em" />
-						<button class="icon-strike" :class="{ 'is-active': isActive.strike() }" @click="commands.strike" />
-						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code" />
-
-						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">
-							H1
-						</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">
-							H2
-						</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">
-							H3
-						</button>
-						<actions>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 4 })">
-								Heading 4
-							</action-button>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 5 })">
-								Heading 5
-							</action-button>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 6 })">
-								Heading 6
-							</action-button>
-							<action-button icon="icon-code" @click="commands.code_block()">
-								Code block
-							</action-button>
-							<action-button icon="icon-quote" @click="commands.blockquote()">
-								Blockquote
-							</action-button>
-						</actions>
-
-						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list" />
-						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list" />
-
-						<button v-if="!isPublic" class="icon-image" @click="showImagePrompt(commands.image)" />
+						<div ref="menubar" class="menubar-icons">
+							<button v-for="icon in iconsToShow" :key="icon.class" :class="getIconClasses(isActive, icon)"
+								@click="clickIcon(commands, icon)" />
+							<actions>
+								<action-button v-for="icon in iconsToShowInMenu" :key="icon.class" :icon="icon.class"
+									@click="clickIcon(commands, icon)">
+									{{ icon.label }}
+								</action-button>
+							</actions>
+						</div>
+						<div v-if="currentSession && active" id="editor-session-list">
+							<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
+								{{ lastSavedStatus }}
+							</div>
+							<avatar v-for="session in activeSessions" :key="session.id"
+								:user="session.userId"
+								:display-name="session.guestName ? session.guestName : session.displayName"
+								:style="sessionStyle(session)" />
+						</div>
 					</div>
 				</editor-menu-bar>
 				<editor-menu-bubble v-if="!readOnly" v-slot="{ commands, isActive, getMarkAttrs, menu }" class="menububble"
@@ -127,6 +101,7 @@ import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
 import CollisionResolveDialog from './CollisionResolveDialog'
+import { iconBar } from './../mixins/menubar'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -148,6 +123,9 @@ export default {
 	directives: {
 		Tooltip
 	},
+	mixins: [
+		iconBar
+	],
 	props: {
 		relativePath: {
 			type: String,
@@ -245,6 +223,9 @@ export default {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
 		}
 	},
+	watch: {
+		lastSavedStatus: function() { this.redrawMenuBar() }
+	},
 	beforeMount() {
 		const guestName = localStorage.getItem('text-guestName')
 		if (guestName !== null) {
@@ -338,6 +319,7 @@ export default {
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
 					this.tiptap.focus('end')
+					this.redrawMenuBar()
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
@@ -500,10 +482,6 @@ export default {
 	}
 
 	#editor-session-list {
-		position: absolute;
-		top: 0;
-		right: 96px;
-		z-index: 110;
 		padding: 9px;
 		padding-right: 16px;
 		display: flex;
@@ -518,11 +496,13 @@ export default {
 		position: fixed;
 		position: sticky;
 		top: 0;
-		width: calc(100% - 450px);
-		margin-left: 200px;
-		margin-right: 250px;
+		display: flex;
 		z-index: 10010; // above modal-header so buttons are clickable
 		background-color: var(--color-main-background-translucent);
+		height: 44px;
+		.menubar-icons {
+			flex-grow: 1;
+		}
 	}
 
 	.menubar button {
