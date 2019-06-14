@@ -110,6 +110,14 @@ const icons = [
 				action: (command) => {
 					return command.heading({ level: 5 })
 				}
+			},
+			{
+				label: 'Heading 6',
+				class: 'icon-h6',
+				isActive: (isActive) => isActive.heading({ level: 6 }),
+				action: (command) => {
+					return command.heading({ level: 6 })
+				}
 			}
 		]
 	},
