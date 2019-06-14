@@ -1,12 +1,7 @@
-import Vue from 'vue'
-import Editor from './components/EditorWrapper'
 import { documentReady } from './helpers'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('text', 'js') // eslint-disable-line
-
-Vue.prototype.t = t
-Vue.prototype.OCA = OCA
+__webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 documentReady(() => {
 	const sharingToken = document.getElementById('sharingToken').value
@@ -25,14 +20,23 @@ documentReady(() => {
 	body.append(container)
 
 	if (mimetype === 'text/markdown') {
-		const vm = new Vue({
-			render: h => h(Editor, {
-				props: {
-					active: true,
-					shareToken: sharingToken
-				}
+		Promise.all([
+			import('vue'),
+			import('./components/EditorWrapper')
+		]).then((imports) => {
+			const Vue = imports[0].default
+			Vue.prototype.t = window.t
+			Vue.prototype.OCA = window.OCA
+			const Editor = imports[1].default
+			const vm = new Vue({
+				render: h => h(Editor, {
+					props: {
+						active: true,
+						shareToken: sharingToken
+					}
+				})
 			})
+			vm.$mount(document.getElementById('preview'))
 		})
-		vm.$mount(document.getElementById('preview'))
 	}
 })

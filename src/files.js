@@ -20,8 +20,11 @@
  *
  */
 
-import Editor from './components/EditorWrapper'
+import FilesEditor from './components/FilesEditor'
 import { documentReady } from './helpers'
+
+__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 const openFileExtensions = [
 	'md', 'markdown'
@@ -74,11 +77,11 @@ documentReady(() => {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: ['text/markdown'],
-		component: Editor,
+		component: FilesEditor,
 		group: null
 	})
 })
 
 OCA.Text = {
-	Editor
+	Editor: FilesEditor
 }
