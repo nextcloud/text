@@ -20,6 +20,8 @@
  *
  */
 
+import Vue from 'vue'
+
 const icons = [
 	{
 		label: t('text', 'Undo'),
@@ -59,6 +61,7 @@ const icons = [
 	},
 	{
 		label: 'Headings',
+		visible: false,
 		children: [
 			{
 				label: 'Heading 1',
@@ -166,7 +169,8 @@ const iconBar = {
 		return {
 			windowWidth: 0,
 			windowHeight: 0,
-			forceRecompute: 0
+			forceRecompute: 0,
+			submenuVisibility: {}
 		}
 	},
 	methods: {
@@ -182,9 +186,18 @@ const iconBar = {
 		getWindowWidth(event) {
 			this.windowWidth = document.documentElement.clientWidth
 		},
-
 		getWindowHeight(event) {
 			this.windowHeight = document.documentElement.clientHeight
+		},
+		showChildMenu(icon) {
+			Vue.set(this.submenuVisibility, icon.label, true)
+		},
+		hideChildMenu(icon) {
+			Vue.set(this.submenuVisibility, icon.label, false)
+		},
+		toggleChildMenu(icon) {
+			const lastValue = this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+			Vue.set(this.submenuVisibility, icon.label, !lastValue)
 		}
 	},
 	computed: {
@@ -197,11 +210,41 @@ const iconBar = {
 				return classes
 			}
 		},
+		isChildMenuVisible() {
+			return (icon) => {
+				return this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+			}
+		},
 		iconsToShow() {
 			return icons.slice(0, (this.iconCount - 1 > 0) ? this.iconCount - 1 : 0)
 		},
 		iconsToShowInMenu() {
 			return icons.slice((this.iconCount - 1 > 0) ? this.iconCount - 1 : 0, icons.length)
+		},
+		childPopoverMenu() {
+			return (isActive, commands, icons) => {
+				let popoverMenuItems = []
+				for (const index in icons) {
+					popoverMenuItems.push({
+						text: icons[index].label,
+						icon: icons[index].class,
+						action: () => icons[index].action(commands),
+						active: icons[index].isActive(isActive)
+					})
+				}
+				return popoverMenuItems
+			}
+		},
+		childIconClass() {
+			return (isActive, icons) => {
+				for (const index in icons) {
+					var icon = icons[index]
+					if (icon.isActive(isActive)) {
+						return icon.class
+					}
+				}
+				return 'icon-paragraph'
+			}
 		},
 		iconCount() {
 			this.forceRecompute // eslint-disable-line

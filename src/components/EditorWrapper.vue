@@ -36,12 +36,12 @@
 								<button v-if="icon.class" :key="icon.label"
 									:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
 								<template v-else>
-									<actions :key="icon.label">
-										<action-button v-for="childIcon in icon.children" :key="childIcon.class" :icon="childIcon.class"
-											@click="clickIcon(commands, childIcon)">
-											{{ childIcon.label }}
-										</action-button>
-									</actions>
+									<div :key="icon.label" class="submenu">
+										<button v-click-outside="() => hideChildMenu(icon)" :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
+										<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
+											<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children)" />
+										</div>
+									</div>
 								</template>
 							</template>
 							<actions>
@@ -115,6 +115,8 @@ import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
+import PopoverMenu from 'nextcloud-vue/dist/Components/PopoverMenu'
+import ClickOutside from 'vue-click-outside'
 
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
@@ -136,10 +138,12 @@ export default {
 		EditorMenuBar,
 		EditorMenuBubble,
 		ActionButton,
+		PopoverMenu,
 		GuestNameDialog
 	},
 	directives: {
-		Tooltip
+		Tooltip,
+		ClickOutside
 	},
 	mixins: [
 		iconBar
@@ -542,6 +546,14 @@ export default {
 		&:focus {
 			opacity: 1;
 		}
+	}
+
+	.menubar .submenu {
+		display: inline-block;
+		width: 44px;
+		height: 44px;
+		position: relative;
+		vertical-align: top;
 	}
 
 	.menububble {
