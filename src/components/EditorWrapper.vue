@@ -360,7 +360,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 	#editor-container {
 		display: block;
 		width: 100vw;
@@ -426,6 +425,32 @@ export default {
 	.editor__content {
 		max-width: 630px;
 		margin: auto;
+		padding-bottom: 100px;
+	}
+
+	#body-public {
+		height: auto;
+	}
+
+	#files-public-content {
+		height: auto;
+		#editor-wrapper {
+			position: relative;
+		}
+		#editor-container {
+			top: 0;
+
+			#editor::v-deep .menubar {
+				// sticky position is not working as body is our scroll container
+				position: fixed;
+				top: 50px;
+				width: 100%;
+			}
+
+			#editor {
+				padding-top: 50px;
+			}
+		}
 	}
 
 </style>

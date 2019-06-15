@@ -1,20 +1,3 @@
-// Fix share link footer for now by just not showing it
-#body-public #content {
-    height: 100%;
-}
-#body-public footer {
-    display: none;
-}
-
-#files-public-content {
-    width: 100% !important;
-    height: 100%;
-
-    #editor-container {
-        top: 0;
-    }
-}
-
 .modal-container #editor-container {
   position: absolute;
 }
