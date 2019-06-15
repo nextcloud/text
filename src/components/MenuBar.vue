@@ -29,7 +29,7 @@
 						:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
 					<template v-else>
 						<div :key="icon.label" class="submenu">
-							<button v-click-outside="() => hideChildMenu(icon)" :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
+							<button :class="childIconClass(isActive, icon.children, )" @click.prevent.stop="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
 								<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
 							</div>

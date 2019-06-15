@@ -117,7 +117,9 @@ export default {
 			lastSavedString: '',
 			syncError: null,
 			readOnly: true,
-			forceRecreate: false
+			forceRecreate: false,
+
+			saveStatusPolling: null
 		}
 	},
 	computed: {
@@ -180,9 +182,14 @@ export default {
 		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
 		}
-		setInterval(() => { this.updateLastSavedStatus() }, 2000)
+	},
+	created() {
+		this.saveStatusPolling = setInterval(() => {
+			this.updateLastSavedStatus()
+		}, 2000)
 	},
 	beforeDestroy() {
+		clearInterval(this.saveStatusPolling)
 		if (this.currentSession && this.syncService) {
 			this.currentSession = null
 			this.syncService.close()
@@ -266,6 +273,7 @@ export default {
 							steps: steps
 						})
 						this.syncService.state = this.tiptap.state
+						this.updateLastSavedStatus()
 					} catch (e) {
 						console.error('Failed to update steps in collaboration plugin', e)
 						// TODO: we should recreate the editing session when this happens

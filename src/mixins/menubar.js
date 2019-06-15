@@ -156,11 +156,11 @@ const icons = [
 ]
 
 const iconBar = {
+	beforeMount() {
+		this.redrawMenuBar()
+	},
 	mounted() {
-		this.getWindowWidth()
-		this.$nextTick(() => {
-			window.addEventListener('resize', this.getWindowWidth)
-		})
+		window.addEventListener('resize', this.getWindowWidth)
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)
@@ -170,7 +170,8 @@ const iconBar = {
 			windowWidth: 0,
 			windowHeight: 0,
 			forceRecompute: 0,
-			submenuVisibility: {}
+			submenuVisibility: {},
+			icons: [...icons]
 		}
 	},
 	methods: {
@@ -191,13 +192,18 @@ const iconBar = {
 		},
 		showChildMenu(icon) {
 			Vue.set(this.submenuVisibility, icon.label, true)
+			this.redrawMenuBar()
 		},
 		hideChildMenu(icon) {
 			Vue.set(this.submenuVisibility, icon.label, false)
+			this.redrawMenuBar()
 		},
 		toggleChildMenu(icon) {
 			const lastValue = this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
 			Vue.set(this.submenuVisibility, icon.label, !lastValue)
+			// TODO properly fix this
+			// setting the submenuVisibility doesn't trigger updating for some reason
+			this.redrawMenuBar()
 		}
 	},
 	computed: {
@@ -217,9 +223,9 @@ const iconBar = {
 		},
 		allIcons() {
 			if (this.isPublic) {
-				return icons
+				return this.icons
 			}
-			return [...icons, {
+			return [...this.icons, {
 				label: 'Insert image',
 				class: 'icon-image',
 				isActive: () => {
@@ -266,7 +272,7 @@ const iconBar = {
 		iconCount() {
 			this.forceRecompute // eslint-disable-line
 			this.windowWidth // eslint-disable-line
-			const menuBarWidth = this.$refs.menubar ? this.$refs.menubar.clientWidth : 0
+			const menuBarWidth = this.$refs.menubar ? this.$refs.menubar.clientWidth : this.windowWidth - 200
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 1), 0)
 			return iconCount
 		}
