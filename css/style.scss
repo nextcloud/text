@@ -1,15 +1,22 @@
-#files-public-content {
-  width: 100% !important;
-  height: 100%;
+// Fix share link footer for now by just not showing it
+#body-public #content {
+    height: 100%;
+}
+#body-public footer {
+    display: none;
 }
 
-#viewer-content.modal-mask .modal-wrapper .modal-container {
-  border-radius: 3px !important;
+#files-public-content {
+    width: 100% !important;
+    height: 100%;
+
+    #editor-container {
+        top: 0;
+    }
 }
 
 .modal-container #editor-container {
   position: absolute;
-  max-height: calc(100% - 100px);
 }
 
 .ProseMirror-hideselection *::selection { background: transparent; }
@@ -67,7 +74,7 @@ li.ProseMirror-selectednode:after {
   background: var(--color-main-background);
   color: var(--color-main-text);
   background-clip: padding-box;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   padding: 0;
   position: relative;
   overflow-y: scroll;

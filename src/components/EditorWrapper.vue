@@ -22,15 +22,6 @@
 
 <template>
 	<div id="editor-container">
-		<div v-if="currentSession && active" id="editor-session-list">
-			<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
-				{{ lastSavedStatus }}
-			</div>
-			<avatar v-for="session in activeSessions" :key="session.id"
-				:user="session.userId"
-				:display-name="session.guestName ? session.guestName : session.displayName"
-				:style="sessionStyle(session)" />
-		</div>
 		<div v-if="currentSession && active">
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
@@ -38,65 +29,18 @@
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
 			<div id="editor">
-				<editor-menu-bar v-if="!syncError && !readOnly" v-slot="{ commands, isActive }" :editor="tiptap">
-					<div class="menubar">
-						<button class="icon-bold" :class="{ 'is-active': isActive.strong() }" @click="commands.strong" />
-						<button class="icon-italic" :class="{ 'is-active': isActive.em() }" @click="commands.em" />
-						<button class="icon-strike" :class="{ 'is-active': isActive.strike() }" @click="commands.strike" />
-						<button class="icon-code" :class="{ 'is-active': isActive.code() }" @click="commands.code" />
-
-						<button	:class="{ 'is-active': isActive.heading({ level: 1 }) }" @click="commands.heading({ level: 1 })">
-							H1
-						</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">
-							H2
-						</button>
-						<button :class="{ 'is-active': isActive.heading({ level: 3 }) }" @click="commands.heading({ level: 3 })">
-							H3
-						</button>
-						<actions>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 4 })">
-								Heading 4
-							</action-button>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 5 })">
-								Heading 5
-							</action-button>
-							<action-button icon="icon-paragraph" @click="commands.heading({ level: 6 })">
-								Heading 6
-							</action-button>
-							<action-button icon="icon-code" @click="commands.code_block()">
-								Code block
-							</action-button>
-							<action-button icon="icon-quote" @click="commands.blockquote()">
-								Blockquote
-							</action-button>
-						</actions>
-
-						<button class="icon-ul" :class="{ 'is-active': isActive.bullet_list() }" @click="commands.bullet_list" />
-						<button class="icon-ol" :class="{ 'is-active': isActive.ordered_list() }" @click="commands.ordered_list" />
-
-						<button v-if="!isPublic" class="icon-image" @click="showImagePrompt(commands.image)" />
+				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
+					<div v-if="currentSession && active" id="editor-session-list">
+						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
+							{{ lastSavedStatus }}
+						</div>
+						<avatar v-for="session in activeSessions" :key="session.id"
+							:user="session.userId"
+							:display-name="session.guestName ? session.guestName : session.displayName"
+							:style="sessionStyle(session)" />
 					</div>
-				</editor-menu-bar>
-				<editor-menu-bubble v-if="!readOnly" v-slot="{ commands, isActive, getMarkAttrs, menu }" class="menububble"
-					:editor="tiptap" @hide="hideLinkMenu">
-					<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
-						<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-							<input ref="linkInput" v-model="linkUrl" class="menububble__input"
-								type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
-							<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, null)" />
-						</form>
-
-						<template v-else>
-							<button
-								class="menububble__button"
-								:class="{ 'is-active': isActive.link() }"
-								@click="showLinkMenu(getMarkAttrs('link'))">
-								<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
-							</button>
-						</template>
-					</div>
-				</editor-menu-bubble>
+				</menu-bar>
+				<menu-bubble v-if="!readOnly" :editor="tiptap" />
 				<editor-content class="editor__content" :editor="tiptap" />
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
@@ -115,18 +59,19 @@ import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl } from './../helpers'
 import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
 
-import { EditorContent, EditorMenuBar, EditorMenuBubble } from 'tiptap'
+import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-import Actions from 'nextcloud-vue/dist/Components/Actions'
-import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
 
 import ReadOnlyEditor from './ReadOnlyEditor'
 import GuestNameDialog from './GuestNameDialog'
 import CollisionResolveDialog from './CollisionResolveDialog'
+import { iconBar } from './../mixins/menubar'
+import MenuBar from './MenuBar'
+import MenuBubble from './MenuBubble'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
@@ -135,19 +80,20 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'Editor',
 	components: {
+		MenuBar,
+		MenuBubble,
 		CollisionResolveDialog,
 		Avatar,
-		Actions,
 		ReadOnlyEditor,
 		EditorContent,
-		EditorMenuBar,
-		EditorMenuBubble,
-		ActionButton,
 		GuestNameDialog
 	},
 	directives: {
 		Tooltip
 	},
+	mixins: [
+		iconBar
+	],
 	props: {
 		relativePath: {
 			type: String,
@@ -186,10 +132,7 @@ export default {
 			forceRecreate: false,
 
 			guestName: '',
-			guestNameConfirmed: false,
-
-			linkUrl: null,
-			linkMenuIsActive: false
+			guestNameConfirmed: false
 		}
 	},
 	computed: {
@@ -244,6 +187,9 @@ export default {
 		isPublic() {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
 		}
+	},
+	watch: {
+		lastSavedStatus: function() { this.$refs.menubar.redrawMenuBar() }
 	},
 	beforeMount() {
 		const guestName = localStorage.getItem('text-guestName')
@@ -415,24 +361,6 @@ export default {
 			}
 		},
 
-		showLinkMenu(attrs) {
-			this.linkUrl = attrs.href
-			this.linkMenuIsActive = true
-			this.$nextTick(() => {
-				this.$refs.linkInput.focus()
-			})
-		},
-		hideLinkMenu() {
-			this.linkUrl = null
-			this.linkMenuIsActive = false
-		},
-
-		setLinkUrl(command, url) {
-			command({ href: url })
-			this.hideLinkMenu()
-			this.tiptap.focus()
-		},
-
 		showImagePrompt(command) {
 			const _command = command
 			OC.dialogs.filepicker('Insert an image', (file) => {
@@ -450,12 +378,11 @@ export default {
 
 	#editor-container {
 		display: block;
-		// Size that is used for modal as well
-		max-width: 900px;
 		width: 100vw;
-		height: 100%;
+		max-width: 100%;
+		height: calc(100% - 50px);
+		top: 50px;
 		margin: 0 auto;
-		border-radius: 3px;
 		position: relative;
 		background-color: var(--color-main-background);
 	}
@@ -501,91 +428,13 @@ export default {
 	}
 
 	#editor-session-list {
-		position: absolute;
-		top: 0;
-		right: 0;
-		z-index: 110;
-		padding: 6px;
+		padding: 9px;
 		padding-right: 16px;
 		display: flex;
 
 		input, div {
 			vertical-align: middle;
 			margin-left: 3px;
-		}
-	}
-
-	.menubar {
-		width: 100%;
-		position: fixed;
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background-color: var(--color-main-background-translucent);
-	}
-
-	.menubar button {
-		width: 44px;
-		height: 44px;
-		margin: 0;
-		background-size: 16px;
-		border: 0;
-		background-color: transparent;
-		opacity: .5;
-		color: var(--color-main-text);
-		background-position: center center;
-		vertical-align: top;
-		&:hover, &:focus, &:active {
-			background-color: var(--color-background-dark);
-		}
-		&.is-active,
-		&:hover,
-		&:focus {
-			opacity: 1;
-		}
-	}
-
-	.menububble {
-		position: absolute;
-		display: flex;
-		z-index: 220;
-		background: var(--color-main-background-translucent);
-		box-shadow: 0 1px 5px var(--color-box-shadow);
-		border-radius: 5px;
-		padding: 0.3rem;
-		margin-bottom: 0.5rem;
-		visibility: hidden;
-		opacity: 0;
-		transition: opacity 0.2s, visibility 0.2s;
-
-		&.is-active {
-			opacity: 1;
-			visibility: visible;
-		}
-
-		&__button {
-			display: inline-flex;
-			border: 0;
-			padding: 0.2rem 0.5rem;
-			margin-right: 0.2rem;
-			border-radius: 3px;
-			cursor: pointer;
-
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-
-		&__form {
-			display: flex;
-			align-items: center;
-		}
-
-		&__input {
-			font: inherit;
-			border: none;
-			background: transparent;
-			min-width: 150px;
 		}
 	}
 

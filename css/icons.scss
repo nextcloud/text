@@ -31,7 +31,8 @@
 .icon-image {
 	background-image: url('./../../img/icons/image.svg');
 }
-
+@include icon-black-white('undo', 'text', 1);
+@include icon-black-white('redo', 'text', 1);
 @include icon-black-white('bold', 'text', 1);
 @include icon-black-white('italic', 'text', 1);
 @include icon-black-white('strike', 'text', 1);
@@ -44,3 +45,10 @@
 @include icon-black-white('paragraph', 'text', 1);
 @include icon-black-white('code', 'text', 1);
 @include icon-black-white('image', 'text', 1);
+@include icon-black-white('h1', 'text', 2);
+@include icon-black-white('h2', 'text', 2);
+@include icon-black-white('h3', 'text', 2);
+@include icon-black-white('h4', 'text', 2);
+@include icon-black-white('h5', 'text', 2);
+@include icon-black-white('h6', 'text', 2);
+
