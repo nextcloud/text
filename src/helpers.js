@@ -24,6 +24,9 @@
  * Callback that should be executed after the document is ready
  * @param callback
  */
+import axios from 'axios'
+import { generateRemoteUrl } from 'nextcloud-server/dist/router'
+
 const documentReady = function(callback) {
 	const fn = () => setTimeout(callback, 0)
 	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
@@ -46,8 +49,50 @@ const getRandomGuestName = () => {
 	return randomGuestNames[Math.floor(Math.random() * randomGuestNames.length)]
 }
 
+const fetchFileInfo = async function(user, path) {
+	const response = await axios({
+		method: 'PROPFIND',
+		url: generateRemoteUrl(`dav/files/${user}${path}`),
+		headers: {
+			requesttoken: OC.requestToken,
+			'content-Type': 'text/xml'
+		},
+		data: `<?xml version="1.0"?>
+<d:propfind  xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns" xmlns:nc="http://nextcloud.org/ns" xmlns:ocs="http://open-collaboration-services.org/ns">
+  <d:prop>
+    <d:getlastmodified />
+    <d:getetag />
+    <d:getcontenttype />
+    <d:resourcetype />
+    <oc:fileid />
+    <oc:permissions />
+    <oc:size />
+    <d:getcontentlength />
+    <nc:has-preview />
+    <nc:mount-type />
+    <nc:is-encrypted />
+    <ocs:share-permissions />
+    <oc:tags />
+    <oc:favorite />
+    <oc:comments-unread />
+    <oc:owner-id />
+    <oc:owner-display-name />
+    <oc:share-types />
+  </d:prop>
+</d:propfind>`
+	})
+
+	const files = OCA.Files.App.fileList.filesClient._client.parseMultiStatus(response.data)
+	return files.map(file => {
+		const fileInfo = OCA.Files.App.fileList.filesClient._parseFileInfo(file)
+		fileInfo.href = file.href
+		return fileInfo
+	})
+}
+
 export {
 	documentReady,
 	endpointUrl,
-	getRandomGuestName
+	getRandomGuestName,
+	fetchFileInfo
 }

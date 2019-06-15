@@ -62,6 +62,7 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 import { iconBar } from './../mixins/menubar'
+import { fetchFileInfo } from './../helpers'
 
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
@@ -97,12 +98,33 @@ export default {
 	},
 	methods: {
 		showImagePrompt(command) {
+			const currentUser = OC.getCurrentUser()
+			if (!currentUser) {
+				return
+			}
 			const _command = command
 			OC.dialogs.filepicker('Insert an image', (file) => {
-				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
-				_command({ src, alt: file })
-				// TODO: check permissions
-				// TODO: check for available preview
+				fetchFileInfo(currentUser.uid, file).then((info) => {
+					const fileInfo = info[0]
+					console.debug(fileInfo)
+					const previewUrl = OC.generateUrl('/core/preview?') + `fileId=${fileInfo.id}&x=1024&y=1024&a=true`
+					const internalLink = OC.generateUrl('/f/' + fileInfo.id)
+
+					// dirty but works so we have the information stored in markdown
+					const appendMeta = {
+						mimetype: fileInfo.mimetype,
+						hasPreview: fileInfo.hasPreview,
+						fileId: fileInfo.id
+					}
+					const src = (fileInfo.hasPreview ? previewUrl : internalLink)
+						+ '#'
+						+ Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+
+					_command({
+						src: src,
+						alt: fileInfo.name
+					})
+				})
 			}, false, false, true)
 		}
 	}

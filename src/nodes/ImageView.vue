@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<div class="image" :class="{'icon-loading': !loaded}">
-		<div v-if="imageLoaded">
+	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
+		<div v-if="imageLoaded && isSupportedImage">
 			<transition name="fade">
 				<img v-show="loaded" :src="src"
 					class="image__main" @load="onLoaded">
@@ -37,8 +37,8 @@
 		<div v-else class="image__placeholder">
 			<transition name="fade">
 				<div v-show="loaded" class="image__main">
-					<div class="icon-image" />
-					<p>{{ t('text', 'Insufficient permissions to view image') }}</p>
+					<div class="icon-image" :style="mimeIcon" />
+					<p><a :href="internalLinkOrImage" target="_blank">{{ t('text', 'Show file') }}</a></p>
 				</div>
 			</transition>
 			<transition name="fade">
@@ -52,6 +52,33 @@
 </template>
 
 <script>
+
+const imageMimes = [
+	'image/png',
+	'image/jpeg',
+	'image/gif',
+	'image/x-xbitmap',
+	'image/bmp',
+	'image/svg+xml'
+]
+
+const getQueryVariable = (src, variable) => {
+	var query = src.split('#')[1]
+	if (typeof query === 'undefined') {
+		return
+	}
+	var vars = query.split('&')
+	if (typeof vars === 'undefined') {
+		return
+	}
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=')
+		if (decodeURIComponent(pair[0]) === variable) {
+			return decodeURIComponent(pair[1])
+		}
+	}
+}
+
 export default {
 	name: 'ImageView',
 	props: ['node', 'updateAttrs', 'view'], // eslint-disable-line
@@ -63,6 +90,26 @@ export default {
 		}
 	},
 	computed: {
+		mimeIcon() {
+			const mime = getQueryVariable(this.src, 'mimetype')
+			if (mime) {
+				return {
+					backgroundImage: 'url(' + window.OC.MimeType.getIconUrl(mime) + ')'
+				}
+			}
+			return {}
+		},
+		isSupportedImage() {
+			const mime = getQueryVariable(this.src, 'mimetype')
+			return typeof mime === 'undefined' || imageMimes.indexOf(mime) !== -1
+		},
+		internalLinkOrImage() {
+			const fileId = getQueryVariable(this.src, 'fileId')
+			if (fileId) {
+				return OC.generateUrl('/f/' + fileId)
+			}
+			return this.src
+		},
 		src: {
 			get() {
 				return this.node.attrs.src
@@ -88,6 +135,13 @@ export default {
 		}
 	},
 	beforeMount() {
+		if (!this.isSupportedImage) {
+			// TODO check if hasPreview and render a file preview if available
+			this.failed = true
+			this.imageLoaded = false
+			this.loaded = true
+			return
+		}
 		var img = new Image()
 		img.src = this.node.attrs.src
 		img.onload = () => {
@@ -130,6 +184,7 @@ export default {
 		margin-top: 10px;
 		height: 32px;
 		padding: 20px;
+		background-size: contain;
 	}
 	.image__loading {
 		height: 100px;
