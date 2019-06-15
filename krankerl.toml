@@ -1,8 +1,9 @@
 [package]
 exclude = [
-	"src/",
-	".git/",
-	"tests/",
+	"src",
+	".git",
+	"tests",
+	"node_modules",
 	".codecov.yml",
 	"composer.json",
 	"composer.lock",
@@ -17,8 +18,7 @@ exclude = [
 	"Makefile",
 	"mkdocs.yml",
 	"run-eslint.sh",
-	"webpack.*",
-	"node_modules/"
+	"webpack.*"
 ]
 
 before_cmds = [
