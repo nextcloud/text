@@ -38,7 +38,9 @@
 			<transition name="fade">
 				<div v-show="loaded" class="image__main">
 					<div class="icon-image" :style="mimeIcon" />
-					<p><a :href="internalLinkOrImage" target="_blank">{{ t('text', 'Show file') }}</a></p>
+					<p>
+						<a :href="internalLinkOrImage" target="_blank">{{ isSupportedImage ? t('text', 'Show image') : t('text', 'Show file') }}</a>
+					</p>
 				</div>
 			</transition>
 			<transition name="fade">
