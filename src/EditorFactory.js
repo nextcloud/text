@@ -31,10 +31,10 @@ import {
 	Blockquote,
 	CodeBlock,
 	HorizontalRule,
-	Image,
 	History
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
+import { Image } from './nodes'
 import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'

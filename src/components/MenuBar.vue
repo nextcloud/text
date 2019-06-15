@@ -100,7 +100,7 @@ export default {
 			const _command = command
 			OC.dialogs.filepicker('Insert an image', (file) => {
 				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
-				_command({ src })
+				_command({ src, alt: file })
 				// TODO: check permissions
 				// TODO: check for available preview
 			}, false, false, true)

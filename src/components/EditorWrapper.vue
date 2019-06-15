@@ -269,7 +269,7 @@ export default {
 					})
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
-					this.tiptap.focus('end')
+					this.tiptap.focus('start')
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
