@@ -269,7 +269,6 @@ export default {
 					})
 					this.syncService.state = this.tiptap.state
 					this.$emit('update:loaded', true)
-					this.tiptap.focus('start')
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
@@ -298,6 +297,7 @@ export default {
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {
 						this.initialLoading = true
+						this.tiptap.focus('start')
 					}
 					if (state.hasOwnProperty('dirty')) {
 						this.dirty = state.dirty
