@@ -62,37 +62,26 @@ import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 
-import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-
-import ReadOnlyEditor from './ReadOnlyEditor'
-import GuestNameDialog from './GuestNameDialog'
-import CollisionResolveDialog from './CollisionResolveDialog'
-import { iconBar } from './../mixins/menubar'
-import MenuBar from './MenuBar'
-import MenuBubble from './MenuBubble'
 
 const COLLABORATOR_IDLE_TIME = 5
 const COLLABORATOR_DISCONNECT_TIME = 20
 const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
-	name: 'Editor',
+	name: 'EditorWrapper',
 	components: {
-		MenuBar,
-		MenuBubble,
-		CollisionResolveDialog,
-		Avatar,
-		ReadOnlyEditor,
 		EditorContent,
-		GuestNameDialog
+		Avatar: () => import('nextcloud-vue/dist/Components/Avatar'),
+		MenuBar: () => import('./MenuBar'),
+		MenuBubble: () => import('./MenuBubble'),
+		ReadOnlyEditor: () => import('./ReadOnlyEditor'),
+		CollisionResolveDialog: () => import('./CollisionResolveDialog'),
+		GuestNameDialog: () => import('./GuestNameDialog')
 	},
 	directives: {
 		Tooltip
 	},
-	mixins: [
-		iconBar
-	],
 	props: {
 		relativePath: {
 			type: String,
@@ -208,7 +197,7 @@ export default {
 		},
 		initSession() {
 			if (!this.hasDocumentParameters) {
-				this.$emit('error', 'No valid file provided')
+				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
 			const guestName = localStorage.getItem('text-guestName') ? localStorage.getItem('text-guestName') : getRandomGuestName()
@@ -268,7 +257,7 @@ export default {
 						]
 					})
 					this.syncService.state = this.tiptap.state
-					this.$emit('update:loaded', true)
+					this.$parent.$emit('update:loaded', true)
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
