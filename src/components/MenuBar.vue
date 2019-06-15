@@ -89,6 +89,22 @@ export default {
 			required: false,
 			default: null
 		}
+	},
+	computed: {
+		isPublic() {
+			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+		}
+	},
+	methods: {
+		showImagePrompt(command) {
+			const _command = command
+			OC.dialogs.filepicker('Insert an image', (file) => {
+				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
+				_command({ src })
+				// TODO: check permissions
+				// TODO: check for available preview
+			}, false, false, true)
+		}
 	}
 }
 </script>

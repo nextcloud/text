@@ -344,16 +344,6 @@ export default {
 					Vue.set(this.filteredSessions, sessionKey, session)
 				}
 			}
-		},
-
-		showImagePrompt(command) {
-			const _command = command
-			OC.dialogs.filepicker('Insert an image', (file) => {
-				const src = OC.generateUrl('/core/preview.png?') + `file=${file}&x=1024&y=1024&a=true`
-				_command({ src })
-				// TODO: check permissions
-				// TODO: check for available preview
-			}, false, false)
 		}
 	}
 }

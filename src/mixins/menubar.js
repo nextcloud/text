@@ -152,14 +152,6 @@ const icons = [
 		action: (command) => {
 			return command.code_block()
 		}
-	},
-	{
-		label: 'Insert image',
-		class: 'icon-image',
-		isActive: () => {},
-		click: (commands) => {
-			this.showImagePrompt(commands.image)
-		}
 	}
 ]
 
@@ -223,11 +215,25 @@ const iconBar = {
 				return this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
 			}
 		},
+		allIcons() {
+			if (this.isPublic) {
+				return icons
+			}
+			return [...icons, {
+				label: 'Insert image',
+				class: 'icon-image',
+				isActive: () => {
+				},
+				action: (commands) => {
+					this.showImagePrompt(commands.image)
+				}
+			}]
+		},
 		iconsToShow() {
-			return icons.slice(0, (this.iconCount - 1 > 0) ? this.iconCount - 1 : 0)
+			return this.allIcons.slice(0, (this.iconCount - 1 > 0) ? this.iconCount - 1 : 0)
 		},
 		iconsToShowInMenu() {
-			return icons.slice((this.iconCount - 1 > 0) ? this.iconCount - 1 : 0, icons.length)
+			return this.allIcons.slice((this.iconCount - 1 > 0) ? this.iconCount - 1 : 0, this.allIcons.length)
 		},
 		childPopoverMenu() {
 			return (isActive, commands, icons, parent) => {
