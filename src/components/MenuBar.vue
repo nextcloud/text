@@ -275,6 +275,10 @@ export default {
 		&:focus {
 			opacity: 1;
 		}
+
+		&.icon-undo, &.icon-redo {
+			opacity: .4;
+		}
 	}
 
 	.menubar .submenu {
