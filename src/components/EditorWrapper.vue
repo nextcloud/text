@@ -61,6 +61,7 @@ import { createEditor, markdownit, createMarkdownSerializer } from './../EditorF
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
+import isMobile from './../mixins/isMobile'
 
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
@@ -82,6 +83,9 @@ export default {
 	directives: {
 		Tooltip
 	},
+	mixins: [
+		isMobile
+	],
 	props: {
 		relativePath: {
 			type: String,
@@ -136,7 +140,11 @@ export default {
 		},
 
 		lastSavedStatus() {
-			return (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '') + this.lastSavedString
+			let status = (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '')
+			if (!this.isMobile) {
+				status += this.lastSavedString
+			}
+			return status
 		},
 		lastSavedStatusClass() {
 			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
