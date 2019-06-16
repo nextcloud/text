@@ -24,12 +24,13 @@
 	<editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
 		<div class="menubar">
 			<div ref="menubar" class="menubar-icons">
-				<template v-for="icon in iconsToShow">
-					<button v-if="icon.class" :key="icon.label"
+				<template v-for="(icon, $index) in allIcons">
+					<button v-if="icon.class" v-show="$index < iconCount" :key="icon.label"
 						:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
 					<template v-else>
-						<div :key="icon.label" class="submenu">
-							<button :class="childIconClass(isActive, icon.children, )" @click.prevent.stop="toggleChildMenu(icon)" />
+						<div v-show="$index < iconCount" :key="icon.label" v-click-outside="() => hideChildMenu(icon)"
+							class="submenu">
+							<button :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
 								<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
 							</div>
@@ -37,13 +38,14 @@
 					</template>
 				</template>
 				<actions>
-					<template v-for="icon in iconsToShowInMenu">
-						<action-button v-if="icon.class" :key="icon.class"
+					<template v-for="(icon, $index) in allIcons">
+						<action-button v-if="icon.class && isHiddenInMenu($index)" :key="icon.class"
 							:icon="icon.class" @click="clickIcon(commands, icon)">
 							{{ icon.label }}
 						</action-button>
-						<template v-else>
-							<action-button v-for="childIcon in icon.children" :key="childIcon.class" :icon="childIcon.class"
+						<template v-else-if="!icon.class && isHiddenInMenu($index)">
+							<action-button v-for="childIcon in icon.children" :key="childIcon.class"
+								:icon="childIcon.class"
 								@click="clickIcon(commands, childIcon)">
 								{{ childIcon.label }}
 							</action-button>
@@ -61,7 +63,7 @@
 <script>
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-import { iconBar } from './../mixins/menubar'
+import menuBarIcons from './../mixins/menubar'
 import { fetchFileInfo } from './../helpers'
 
 import Actions from 'nextcloud-vue/dist/Components/Actions'
@@ -81,9 +83,6 @@ export default {
 		Tooltip,
 		ClickOutside
 	},
-	mixins: [
-		iconBar
-	],
 	props: {
 		editor: {
 			type: Object,
@@ -91,12 +90,118 @@ export default {
 			default: null
 		}
 	},
+	data: () => {
+		return {
+			windowWidth: 0,
+			windowHeight: 0,
+			forceRecompute: 0,
+			submenuVisibility: {},
+			icons: [...menuBarIcons]
+		}
+	},
 	computed: {
 		isPublic() {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+		},
+		isHiddenInMenu() {
+			return ($index) => $index - this.iconCount >= 0
+		},
+		getIconClasses() {
+			return (isActive, icon) => {
+				let classes = {
+					'is-active': icon.isActive(isActive)
+				}
+				classes[icon.class] = true
+				return classes
+			}
+		},
+		isChildMenuVisible() {
+			return (icon) => {
+				return this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+			}
+		},
+		allIcons() {
+			if (this.isPublic) {
+				return this.icons
+			}
+			return [...this.icons, {
+				label: 'Insert image',
+				class: 'icon-image',
+				isActive: () => {
+				},
+				action: (commands) => {
+					this.showImagePrompt(commands.image)
+				}
+			}]
+		},
+		childPopoverMenu() {
+			return (isActive, commands, icons, parent) => {
+				let popoverMenuItems = []
+				for (const index in icons) {
+					popoverMenuItems.push({
+						text: icons[index].label,
+						icon: icons[index].class,
+						action: () => {
+							icons[index].action(commands)
+							this.hideChildMenu(parent)
+						},
+						active: icons[index].isActive(isActive)
+					})
+				}
+				return popoverMenuItems
+			}
+		},
+		childIconClass() {
+			return (isActive, icons) => {
+				for (const index in icons) {
+					var icon = icons[index]
+					if (icon.isActive(isActive)) {
+						return icon.class
+					}
+				}
+				return 'icon-h1'
+			}
+		},
+		iconCount() {
+			this.forceRecompute // eslint-disable-line
+			this.windowWidth // eslint-disable-line
+			const menuBarWidth = this.$refs.menubar ? this.$refs.menubar.clientWidth : this.windowWidth - 200
+			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
+			return iconCount
 		}
 	},
+	beforeMount() {
+		this.redrawMenuBar()
+	},
+	mounted() {
+		window.addEventListener('resize', this.getWindowWidth)
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.getWindowWidth)
+	},
 	methods: {
+		redrawMenuBar() {
+			this.$nextTick(() => {
+				this.getWindowWidth()
+				this.forceRecompute++
+			})
+		},
+		clickIcon(commands, icon) {
+			return icon.action(commands)
+		},
+		getWindowWidth(event) {
+			this.windowWidth = document.documentElement.clientWidth
+		},
+		getWindowHeight(event) {
+			this.windowHeight = document.documentElement.clientHeight
+		},
+		hideChildMenu(icon) {
+			this.$set(this.submenuVisibility, icon.label, false)
+		},
+		toggleChildMenu(icon) {
+			const lastValue = this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+			this.$set(this.submenuVisibility, icon.label, !lastValue)
+		},
 		showImagePrompt(command) {
 			const currentUser = OC.getCurrentUser()
 			if (!currentUser) {
@@ -142,6 +247,12 @@ export default {
 		height: 44px;
 		.menubar-icons {
 			flex-grow: 1;
+			margin-left: calc((100vw - 660px) / 2);
+		}
+		@media (max-width: 660px) {
+			.menubar-icons {
+				margin-left: 0;
+			}
 		}
 	}
 

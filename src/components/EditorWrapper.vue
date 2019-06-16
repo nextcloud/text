@@ -88,7 +88,7 @@ export default {
 			default: null
 		},
 		fileId: {
-			type: String,
+			type: Number,
 			default: null
 		},
 		active: {
@@ -369,6 +369,18 @@ export default {
 				opacity: 0.3;
 			}
 		}
+	}
+
+	#editor, .editor {
+		background: var(--color-main-background);
+		color: var(--color-main-text);
+		background-clip: padding-box;
+		border-radius: var(--border-radius);
+		padding: 0;
+		position: relative;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		width: 100%;
 	}
 
 	.msg.icon-error {

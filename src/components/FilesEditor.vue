@@ -37,7 +37,7 @@ export default {
 			default: null
 		},
 		fileId: {
-			type: String,
+			type: Number,
 			default: null
 		},
 		active: {
