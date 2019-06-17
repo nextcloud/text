@@ -140,7 +140,7 @@ export default {
 		},
 
 		lastSavedStatus() {
-			let status = (this.hasUnsavedChanges || this.hasUnpushedChanges ? '*' : '')
+			let status = (this.dirtyStateIndicator ? '*' : '')
 			if (!this.isMobile) {
 				status += this.lastSavedString
 			}
@@ -148,6 +148,9 @@ export default {
 		},
 		lastSavedStatusClass() {
 			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
+		},
+		dirtyStateIndicator() {
+			return this.hasUnpushedChanges || this.hasUnsavedChanges
 		},
 		lastSavedStatusTooltip() {
 			let message = t('text', 'Last save {lastSave}', { lastSave: this.lastSavedString })

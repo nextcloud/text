@@ -170,7 +170,6 @@ class PollingBackend {
 			version: sendable.version,
 			token: this._authority.options.shareToken
 		}).then((response) => {
-			this._authority.emit('stateChange', { dirty: false })
 			this.carefulRetryReset()
 			this.lock = false
 			this.fetchSteps()
