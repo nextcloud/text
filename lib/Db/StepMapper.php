@@ -45,7 +45,6 @@ class StepMapper extends QBMapper {
 			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
 		}
 		$qb
-		// TODO: limiting results currently causes the loading detection to fail
 			->setMaxResults(100)
 			->execute();
 

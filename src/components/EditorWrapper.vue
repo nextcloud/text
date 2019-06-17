@@ -333,7 +333,6 @@ export default {
 			const removedSessions = Object.keys(this.filteredSessions)
 				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
 
-			// remove sessions TODO: remove guest sessions
 			for (let index in removedSessions) {
 				Vue.delete(this.filteredSessions, removedSessions[index])
 			}
