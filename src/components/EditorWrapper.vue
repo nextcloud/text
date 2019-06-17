@@ -398,7 +398,8 @@ export default {
 	}
 
 	.save-status {
-		padding: 6px;
+		padding: 9px;
+		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
 
 		&.error {

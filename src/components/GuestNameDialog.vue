@@ -21,15 +21,20 @@
   -->
 
 <template>
-	<form v-tooltip="t('text', 'Please enter a name to identify you as a public editor:')" class="guest-name-dialog" @submit.prevent="setGuestName()">
+	<form v-tooltip="t('text', 'Enter your name so other users can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
 		<input v-model="guestName" type="text">
 		<input type="submit" class="icon-confirm" value="">
 	</form>
 </template>
 
 <script>
+import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+
 export default {
 	name: 'GuestNameDialog',
+	directives: {
+		tooltip: Tooltip
+	},
 	props: {
 		syncService: {
 			type: Object,
@@ -60,9 +65,9 @@ export default {
 <style scoped lang="scss">
 	form.guest-name-dialog {
 		display: flex;
-		width: 100%;
 		max-width: 200px;
 		margin: auto;
+		margin-top: -2px;
 
 		input[type=text] {
 			flex-grow: 1;
