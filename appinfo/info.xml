@@ -23,4 +23,7 @@
 	<dependencies>
 		<nextcloud min-version="16" max-version="17"/>
 	</dependencies>
+	<background-jobs>
+		<job>OCA\Text\Cron\Cleanup</job>
+	</background-jobs>
 </info>

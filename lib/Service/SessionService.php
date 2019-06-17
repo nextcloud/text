@@ -88,7 +88,11 @@ class SessionService {
 		}, $sessions);
 	}
 
-	public function removeInactiveSessions($documentId) {
+	public function findAllInactive() {
+		return $this->sessionMapper->findAllInactive();
+	}
+
+	public function removeInactiveSessions($documentId = -1) {
 		return $this->sessionMapper->deleteInactive($documentId);
 	}
 
