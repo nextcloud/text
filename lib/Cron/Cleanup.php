@@ -27,13 +27,12 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
-use OC\BackgroundJob\TimedJob;
 use OCA\Text\Db\Session;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
-use OCP\BackgroundJob\Job;
+use OCP\BackgroundJob\TimedJob;
 use OCP\ILogger;
 
 /**
@@ -53,7 +52,7 @@ class Cleanup extends TimedJob {
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
-		$this->setInterval(5 * 60);
+		$this->setInterval(SessionService::SESSION_VALID_TIME);
 	}
 
 	protected function run($argument) {
