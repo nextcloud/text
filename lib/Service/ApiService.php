@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OC\Files\Node\File;
+use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
@@ -37,7 +38,6 @@ use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
 use OCP\Files\NotFoundException;
 use OCP\ICacheFactory;
-use OCP\IRequest;
 
 class ApiService {
 
@@ -45,7 +45,7 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 
-	public function __construct(IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
+	public function __construct(ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
 		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
@@ -75,7 +75,7 @@ class ApiService {
 
 			$this->sessionService->removeInactiveSessions($file->getId());
 			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
-			if (count($activeSessions) === 0 || $forceRecreate) {
+			if ($forceRecreate || count($activeSessions) === 0) {
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
 				} catch (DocumentHasUnsavedChangesException $e) {
@@ -121,6 +121,10 @@ class ApiService {
 		return new DataResponse([]);
 	}
 
+	/**
+	 * @throws NotFoundException
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
 		if ($token) {
 			$file = $this->documentService->getFileByShareToken($token);
@@ -171,7 +175,10 @@ class ApiService {
 		]);
 	}
 
-	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
+	/**
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 */
+	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 500);
 		}

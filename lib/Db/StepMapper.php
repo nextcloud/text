@@ -51,7 +51,7 @@ class StepMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function deleteAll($documentId) {
+	public function deleteAll($documentId): void {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
@@ -59,7 +59,7 @@ class StepMapper extends QBMapper {
 			->execute();
 	}
 
-	public function deleteBeforeVersion($documentId, $version) {
+	public function deleteBeforeVersion($documentId, $version): void {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())

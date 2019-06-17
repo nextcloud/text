@@ -47,7 +47,7 @@ class SessionMapper extends QBMapper {
 	 * @return Session
 	 * @throws DoesNotExistException
 	 */
-	public function find($documentId, $sessionId, $token) {
+	public function find($documentId, $sessionId, $token): Session {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
