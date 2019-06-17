@@ -1,36 +1,3 @@
-.icon-bold {
-	background-image: url('./../../img/icons/bold.svg');
-}
-.icon-italic {
-	background-image: url('./../../img/icons/italic.svg');
-}
-.icon-underline {
-	background-image: url('./../../img/icons/underline.svg');
-}
-.icon-link {
-	background-image: url('./../../img/icons/link.svg');
-}
-.icon-ol {
-	background-image: url('./../../img/icons/ol.svg');
-}
-.icon-ul {
-	background-image: url('./../../img/icons/ul.svg');
-}
-.icon-hr {
-	background-image: url('./../../img/icons/hr.svg');
-}
-.icon-quote {
-	background-image: url('./../../img/icons/quote.svg');
-}
-.icon-paragraph {
-	background-image: url('./../../img/icons/paragraph.svg');
-}
-.icon-code {
-	background-image: url('./../../img/icons/code.svg');
-}
-.icon-image {
-	background-image: url('./../../img/icons/image.svg');
-}
 @include icon-black-white('undo', 'text', 1);
 @include icon-black-white('redo', 'text', 1);
 @include icon-black-white('bold', 'text', 1);

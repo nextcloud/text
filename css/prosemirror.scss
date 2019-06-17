@@ -1,5 +1,4 @@
 /* Document rendering styles */
-
 .ProseMirror {
 	margin-top: 44px;
 	height: 100%;
@@ -12,118 +11,125 @@
 	line-height: 150%;
 	font-size: 14px;
 	outline: none;
-}
 
-.ProseMirror p:first-child,
-.ProseMirror h1:first-child,
-.ProseMirror h2:first-child,
-.ProseMirror h3:first-child,
-.ProseMirror h4:first-child,
-.ProseMirror h5:first-child,
-.ProseMirror h6:first-child {
-	margin-top: 10px;
-}
+	p:first-child,
+	h1:first-child,
+	h2:first-child,
+	h3:first-child,
+	h4:first-child,
+	h5:first-child,
+	h6:first-child {
+		margin-top: 10px;
+	}
 
-.ProseMirror a {
-	color: var(--color-primary);
-	text-decoration: underline;
-	padding: .5em 0;
-}
+	a {
+		color: var(--color-primary);
+		text-decoration: underline;
+		padding: .5em 0;
+	}
 
-.ProseMirror p {
-	margin-bottom: 1em;
-	line-height: 150%;
-}
-.ProseMirror em {
-	font-style: italic;
-}
+	p {
+		margin-bottom: 1em;
+		line-height: 150%;
+	}
 
-.ProseMirror h1 {
-	font-size: 36px;
-}
-.ProseMirror h2 {
-	font-size: 28px;
-}
-.ProseMirror h3 {
-	font-size: 24px;
-}
-.ProseMirror h4 {
-	font-size: 21px;
-}
-.ProseMirror h5 {
-	font-size: 17px;
-}
-.ProseMirror h6 {
-	font-size: 14px;
-}
-.ProseMirror h1,
-.ProseMirror h2,
-.ProseMirror h3,
-.ProseMirror h4,
-.ProseMirror h5,
-.ProseMirror h6 {
-	font-weight: 600;
-	line-height: 120%;
-	margin-top: 24px;
-	margin-bottom: 12px;
-	color: var(--color-main-text);
-}
+	em {
+		font-style: italic;
+	}
 
-.ProseMirror img {
-	cursor: default;
-	max-height: 50vh;
-	max-width: 100%;
+	h1 {
+		font-size: 36px;
+	}
+
+	h2 {
+		font-size: 28px;
+	}
+
+	h3 {
+		font-size: 24px;
+	}
+
+	h4 {
+		font-size: 21px;
+	}
+
+	h5 {
+		font-size: 17px;
+	}
+
+	h6 {
+		font-size: 14px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: 600;
+		line-height: 120%;
+		margin-top: 24px;
+		margin-bottom: 12px;
+		color: var(--color-main-text);
+	}
+
+	img {
+		cursor: default;
+		max-height: 50vh;
+		max-width: 100%;
+	}
+
+	hr {
+		padding: 2px 0;
+		border: none;
+		margin: 1em 0;
+		width: 100%;
+	}
+
+	hr:after {
+		content: "";
+		display: block;
+		height: 1px;
+		background-color: var(--color-border-dark);
+		line-height: 2px;
+	}
+
+	pre {
+		white-space: pre-wrap;
+		background-color: var(--color-background-dark);
+		border-radius: var(--border-radius);
+		padding: 1em 1.3em;
+		margin-bottom: 1em;
+	}
+
+	p code {
+		background-color: var(--color-background-dark);
+		border-radius: var(--border-radius);
+		padding: .1em .3em;
+	}
+
+	li {
+		position: relative;
+	}
+
+	ul, ol {
+		padding-left: 14px;
+	}
+
+	ul li {
+		list-style-type: disc;
+	}
+
+	blockquote {
+		padding-left: 1em;
+		border-left: 4px solid var(--color-primary);
+		margin-left: 0;
+		margin-right: 0;
+	}
+
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
 	display: block;
-}
-/* Add space around the hr to make clicking it easier */
-
-.ProseMirror hr {
-	padding: 2px 0;
-	border: none;
-	margin: 1em 0;
-	width: 100%;
-}
-
-.ProseMirror hr:after {
-	content: "";
-	display: block;
-	height: 1px;
-	background-color: var(--color-border-dark);
-	line-height: 2px;
-}
-
-.ProseMirror pre {
-	white-space: pre-wrap;
-	background-color: var(--color-background-dark);
-	border-radius: var(--border-radius);
-	padding: 1em 1.3em;
-	margin-bottom: 1em;
-}
-
-.ProseMirror p code {
-	background-color: var(--color-background-dark);
-	border-radius: var(--border-radius);
-	padding: .1em .3em;
-}
-
-.ProseMirror li {
-	position: relative;
-}
-
-.ProseMirror ul, .ProseMirror ol {
-	padding-left: 14px;
-}
-
-.ProseMirror ul li {
-	list-style-type: disc;
-}
-
-.ProseMirror blockquote {
-	padding-left: 1em;
-	border-left: 4px solid var(--color-primary);
-	margin-left: 0;
-	margin-right: 0;
 }
