@@ -52,7 +52,7 @@ export default {
 		EditorMenuBubble
 	},
 	directives: {
-		Tooltip
+		tooltip: Tooltip
 	},
 	props: {
 		editor: {
@@ -93,7 +93,7 @@ export default {
 	.menububble {
 		position: absolute;
 		display: flex;
-		z-index: 1300;
+		z-index: 10020;
 		background: var(--color-main-background-translucent);
 		box-shadow: 0 1px 5px var(--color-box-shadow);
 		border-radius: 5px;

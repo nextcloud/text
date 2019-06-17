@@ -21,7 +21,6 @@
  */
 
 import FilesEditor from './components/FilesEditor'
-import { documentReady } from './helpers'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -69,7 +68,7 @@ const newFileMenuPlugin = {
 }
 
 OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
-documentReady(() => {
+document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
 		return
