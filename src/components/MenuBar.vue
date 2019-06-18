@@ -239,6 +239,7 @@ export default {
 <style scoped lang="scss">
 	.menubar {
 		position: fixed;
+		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
 		display: flex;

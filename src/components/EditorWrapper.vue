@@ -363,6 +363,7 @@ export default {
 		max-width: 100%;
 		height: calc(100% - 50px);
 		top: 50px;
+		left: 0;
 		margin: 0 auto;
 		position: relative;
 		background-color: var(--color-main-background);
@@ -462,6 +463,18 @@ export default {
 			#editor {
 				padding-top: 50px;
 			}
+		}
+	}
+
+	.ie {
+		#editor::v-deep .menubar {
+			// sticky position is not working as body is our scroll container
+			position: fixed;
+			top: 50px;
+			width: 100%;
+		}
+		.editor__content::v-deep .ProseMirror {
+				padding-top: 50px;
 		}
 	}
 
