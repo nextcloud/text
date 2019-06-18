@@ -435,7 +435,9 @@ export default {
 	.editor__content {
 		max-width: 630px;
 		margin: auto;
-		padding-bottom: 100px;
+		& /deep/ .ProseMirror {
+			padding-bottom: 200px;
+		}
 	}
 
 	#body-public {
