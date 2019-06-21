@@ -38,17 +38,21 @@ use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
 use OCP\Files\NotFoundException;
 use OCP\ICacheFactory;
+use OCP\ILogger;
+use OCP\Lock\LockedException;
 
 class ApiService {
 
 	protected $cache;
 	protected $sessionService;
 	protected $documentService;
+	protected $logger;
 
-	public function __construct(ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService) {
+	public function __construct(ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
 		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
+		$this->logger = $logger;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
@@ -144,38 +148,40 @@ class ApiService {
 
 	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 500);
+			return new DataResponse([], 403);
 		}
 		if ($version === $this->cache->get('document-version-' . $documentId)) {
 			return new DataResponse(['steps' => []]);
 		}
 
+		$result = [
+			'steps' => $this->documentService->getSteps($documentId, $version),
+			'sessions' => $this->sessionService->getActiveSessions($documentId),
+			'document' => $this->documentService->get($documentId)
+		];
+
 		try {
-			$document = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
+			$result['document'] = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
 		} catch (DocumentSaveConflictException $e) {
-			if ($token) {
-				/** @var File $file */
-				$file = $this->documentService->getFileByShareToken($token);
-			} else {
-				$file = $this->documentService->getFileById($documentId);
+			try {
+				if ($token) {
+					/** @var File $file */
+					$file = $this->documentService->getFileByShareToken($token);
+				} else {
+					$file = $this->documentService->getFileById($documentId);
+				}
+				$result['outsideChange'] = $file->getContent();
+			} catch (LockedException $e) {
+				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
-			return new DataResponse([
-				'outsideChange' => $file->getContent(),
-				'steps' => $this->documentService->getSteps($documentId, $version),
-				'sessions' => $this->sessionService->getActiveSessions($documentId),
-				'document' => $this->documentService->get($documentId)
-			], 409);
 		} catch (Exception $e) {
+			$this->logger->logException($e);
 			return new DataResponse([
 				'message' => $e->getMessage()
 			], 500);
 		}
 
-		return new DataResponse([
-			'steps' => $this->documentService->getSteps($documentId, $version),
-			'sessions' => $this->sessionService->getActiveSessions($documentId),
-			'document' => $document ?? $document = $this->documentService->get($documentId)
-		]);
+		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
 	}
 
 	/**
