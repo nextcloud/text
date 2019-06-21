@@ -160,7 +160,10 @@ class ApiService {
 				$file = $this->documentService->getFileById($documentId);
 			}
 			return new DataResponse([
-				'outsideChange' => $file->getContent()
+				'outsideChange' => $file->getContent(),
+				'steps' => $this->documentService->getSteps($documentId, $version),
+				'sessions' => $this->sessionService->getActiveSessions($documentId),
+				'document' => $this->documentService->get($documentId)
 			], 409);
 		} catch (Exception $e) {
 			return new DataResponse([
@@ -171,7 +174,7 @@ class ApiService {
 		return new DataResponse([
 			'steps' => $this->documentService->getSteps($documentId, $version),
 			'sessions' => $this->sessionService->getActiveSessions($documentId),
-			'document' => $document
+			'document' => $document ?? $document = $this->documentService->get($documentId)
 		]);
 	}
 

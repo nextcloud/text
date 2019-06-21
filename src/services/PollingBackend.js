@@ -138,7 +138,8 @@ class PollingBackend {
 			if (!e.response) {
 				throw e
 			}
-			if (e.response.status === 409) {
+			// Only emit conflict event if we have synced until the latest version
+			if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
 				console.error('Conflict during file save, please resolve')
 				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
 					outsideChange: e.response.data.outsideChange

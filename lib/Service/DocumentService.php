@@ -161,6 +161,10 @@ class DocumentService {
 		return $this->appData->getFolder('documents')->getFile($document);
 	}
 
+	public function get($documentId) {
+		return $this->documentMapper->find($documentId);
+	}
+
 	/**
 	 * @param $documentId
 	 * @param $sessionId
