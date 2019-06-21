@@ -27,7 +27,7 @@
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
 				<input ref="linkInput" v-model="linkUrl" class="menububble__input"
 					type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
-				<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, null)" />
+				<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, linkUrl)" />
 			</form>
 
 			<template v-else>
@@ -81,9 +81,11 @@ export default {
 		},
 
 		setLinkUrl(command, url) {
+			if (url && !url.match(/^[a-zA-Z]+:\/\//) && !url.match(/^\//)) {
+				url = 'https://' + url
+			}
 			command({ href: url })
 			this.hideLinkMenu()
-			this.tiptap.focus()
 		}
 	}
 }
