@@ -248,7 +248,7 @@ export default {
 		height: 44px;
 		.menubar-icons {
 			flex-grow: 1;
-			margin-left: calc((100vw - 660px) / 2);
+			margin-left: calc((100% - 660px) / 2);
 		}
 		@media (max-width: 660px) {
 			.menubar-icons {
