@@ -168,10 +168,8 @@ export default {
 
 <style scoped lang="scss">
 	.image {
-		border: 1px solid transparent !important;
-		&:hover {
-			border: 1px solid var(--color-background-darker) !important;
-		}
+		margin: 0;
+		padding: 0;
 	}
 	.image__caption {
 		text-align: center;
@@ -195,6 +193,7 @@ export default {
 		background-color: var(--color-background-dark);
 		text-align: center;
 		padding: 20px;
+		border-radius: var(--border-radius);
 		.icon-image {
 			opacity: 0.7;
 		}
