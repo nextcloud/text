@@ -186,6 +186,6 @@ class ApiService {
 		if ($guestName === '') {
 			return new DataResponse([ 'message' => 'A guest name needs to be provided'], 500);
 		}
-		return $this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
+		return new DataResponse($this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName));
 	}
 }

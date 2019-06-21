@@ -35,10 +35,7 @@
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
-						<avatar v-for="session in activeSessions" :key="session.id"
-							:user="session.userId"
-							:display-name="session.guestName ? session.guestName : session.displayName"
-							:style="sessionStyle(session)" />
+						<session-list :sessions="filteredSessions" />
 					</div>
 				</menu-bar>
 				<menu-bubble v-if="!readOnly" :editor="tiptap" />
@@ -65,20 +62,18 @@ import isMobile from './../mixins/isMobile'
 
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
-const COLLABORATOR_IDLE_TIME = 5
-const COLLABORATOR_DISCONNECT_TIME = 20
 const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		Avatar: () => import('nextcloud-vue/dist/Components/Avatar'),
 		MenuBar: () => import('./MenuBar'),
 		MenuBubble: () => import('./MenuBubble'),
 		ReadOnlyEditor: () => import('./ReadOnlyEditor'),
 		CollisionResolveDialog: () => import('./CollisionResolveDialog'),
-		GuestNameDialog: () => import('./GuestNameDialog')
+		GuestNameDialog: () => import('./GuestNameDialog'),
+		SessionList: () => import('./SessionList')
 	},
 	directives: {
 		Tooltip
@@ -127,18 +122,6 @@ export default {
 		}
 	},
 	computed: {
-		activeSessions() {
-			return Object.values(this.filteredSessions).filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && session.id !== this.currentSession.id && session.userId !== null)
-		},
-		sessionStyle() {
-			return (session) => {
-				return {
-					'opacity': session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
-					'border-color': session.color
-				}
-			}
-		},
-
 		lastSavedStatus() {
 			let status = (this.dirtyStateIndicator ? '*' : '')
 			if (!this.isMobile) {
@@ -349,6 +332,9 @@ export default {
 					}
 				} else {
 					Vue.set(this.filteredSessions, sessionKey, session)
+				}
+				if (session.id === this.currentSession.id) {
+					Vue.set(this.filteredSessions[sessionKey], 'isCurrent', true)
 				}
 			}
 		}
