@@ -22,7 +22,7 @@
 
 <template>
 	<div class="session-list">
-		<div class="avatar-list" @click="popoverVisible=!popoverVisible">
+		<div v-tooltip.left="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
 			<div v-if="sessionsPopover.length > 0" class="avatardiv icon-more" />
 			<avatar v-for="session in sessionsVisible" :key="session.id"
 				:url="avatarUrl(session)" :disable-tooltip="true" :style="sessionStyle(session)"
@@ -35,6 +35,7 @@
 <script>
 import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import PopoverMenu from 'nextcloud-vue/dist/Components/PopoverMenu'
+import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 const COLLABORATOR_IDLE_TIME = 10
 const COLLABORATOR_DISCONNECT_TIME = 30
@@ -44,6 +45,9 @@ export default {
 	components: {
 		Avatar,
 		PopoverMenu
+	},
+	directives: {
+		tooltip: Tooltip
 	},
 	props: {
 		sessions: {
@@ -58,6 +62,14 @@ export default {
 		}
 	},
 	computed: {
+		editorsTooltip() {
+			if (this.sessionsPopover.length > 0) {
+				let first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
+				let others = this.activeSessions.slice(3).length
+				return first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
+			}
+			return this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
+		},
 		avatarUrl() {
 			return (session) => {
 				const user = !session.guestName ? session.userId : session.guestName
@@ -137,6 +149,7 @@ export default {
 				height: 32px;
 				opacity: .5;
 				background-color: var(--color-background-dark) !important;
+				cursor: pointer;
 			}
 		}
 	}

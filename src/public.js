@@ -28,6 +28,7 @@ documentReady(() => {
 					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default
 					Vue.prototype.t = window.t
+					Vue.prototype.n = window.n
 					Vue.prototype.OCA = window.OCA
 					const Editor = imports[1].default
 					const vm = new Vue({
