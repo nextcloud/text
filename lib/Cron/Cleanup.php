@@ -60,6 +60,11 @@ class Cleanup extends TimedJob {
 		$inactive = $this->sessionService->findAllInactive();
 		/** @var Session $session */
 		foreach ($inactive as $session) {
+			$activeSessions = $this->sessionService->getActiveSessions($session->getDocumentId());
+			if (count($activeSessions) > 0) {
+				continue;
+			}
+
 			try {
 				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
 				$this->documentService->resetDocument($session->getDocumentId());
