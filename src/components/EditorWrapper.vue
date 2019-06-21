@@ -245,8 +245,9 @@ export default {
 								// debounce changes so we can save some bandwidth
 								debounce: EDITOR_PUSH_DEBOUNCE,
 								onSendable: ({ sendable }) => {
-									// This is not working properly with polling and the careful retry logic
-									this.syncService.sendSteps()
+									if (this.syncService) {
+										this.syncService.sendSteps()
+									}
 								}
 							}),
 							new Keymap({
