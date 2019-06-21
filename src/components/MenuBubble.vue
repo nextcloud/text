@@ -36,6 +36,7 @@
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
 					<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
+					<span>{{ t('text', 'Add link') }}</span>
 				</button>
 			</template>
 		</div>
