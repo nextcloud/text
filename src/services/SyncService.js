@@ -108,7 +108,7 @@ class SyncService {
 		return axios.get(endpointUrl('session/create', !!this.options.shareToken), {
 			params: {
 				fileId: fileId,
-				file: filePath,
+				filePath,
 				token: this.options.shareToken,
 				guestName: this.options.guestName,
 				forceRecreate: this.options.forceRecreate

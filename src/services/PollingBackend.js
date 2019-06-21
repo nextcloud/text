@@ -106,7 +106,8 @@ class PollingBackend {
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
-			token: this._authority.options.shareToken
+			token: this._authority.options.shareToken,
+			filePath: this._authority.options.filePath
 		}).then((response) => {
 			if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
@@ -169,7 +170,8 @@ class PollingBackend {
 			sessionToken: this._authority.session.token,
 			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
 			version: sendable.version,
-			token: this._authority.options.shareToken
+			token: this._authority.options.shareToken,
+			filePath: this._authority.options.filePath
 		}).then((response) => {
 			this.carefulRetryReset()
 			this.lock = false

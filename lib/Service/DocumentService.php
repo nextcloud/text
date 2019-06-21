@@ -225,7 +225,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws ShareNotFound
 	 */
-	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $token = null): Document {
+	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $token = null, $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
@@ -233,7 +233,7 @@ class DocumentService {
 		if (!$token) {
 			$file = $this->getFileById($documentId);
 		} else {
-			 $file = $this->getFileByShareToken($token);
+			 $file = $this->getFileByShareToken($token, $filePath);
 		}
 
 		if ($this->isReadOnly($file, $token)) {

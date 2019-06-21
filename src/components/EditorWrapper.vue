@@ -170,7 +170,9 @@ export default {
 		}
 	},
 	watch: {
-		lastSavedStatus: function() { this.$refs.menubar.redrawMenuBar() }
+		lastSavedStatus: function() {
+			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
+		}
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -205,6 +207,7 @@ export default {
 			const guestName = localStorage.getItem('text-guestName') ? localStorage.getItem('text-guestName') : getRandomGuestName()
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
+				filePath: this.relativePath,
 				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
@@ -295,7 +298,7 @@ export default {
 						this.dirty = state.dirty
 					}
 				})
-			this.syncService.open({ fileId: this.fileId, filePath: this.filePath })
+			this.syncService.open({ fileId: this.fileId, filePath: this.relativePath })
 			this.forceRecreate = false
 		},
 

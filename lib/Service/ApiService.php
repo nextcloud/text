@@ -39,6 +39,7 @@ use OCP\Constants;
 use OCP\Files\NotFoundException;
 use OCP\ICacheFactory;
 use OCP\ILogger;
+use OCP\IRequest;
 use OCP\Lock\LockedException;
 
 class ApiService {
@@ -48,7 +49,8 @@ class ApiService {
 	protected $documentService;
 	protected $logger;
 
-	public function __construct(ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+		$this->request = $request;
 		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
@@ -61,7 +63,7 @@ class ApiService {
 			/** @var File $file */
 			$file = null;
 			if ($token) {
-				$file = $this->documentService->getFileByShareToken($token, $filePath);
+				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
 					$readOnly = false;
@@ -131,7 +133,7 @@ class ApiService {
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
 		if ($token) {
-			$file = $this->documentService->getFileByShareToken($token);
+			$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 		} else {
 			$file = $this->documentService->getFileById($documentId);
 		}
@@ -161,12 +163,12 @@ class ApiService {
 		];
 
 		try {
-			$result['document'] = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token);
+			$result['document'] = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'));
 		} catch (DocumentSaveConflictException $e) {
 			try {
 				if ($token) {
 					/** @var File $file */
-					$file = $this->documentService->getFileByShareToken($token);
+					$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				} else {
 					$file = $this->documentService->getFileById($documentId);
 				}
