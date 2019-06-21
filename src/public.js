@@ -11,7 +11,6 @@ documentReady(() => {
 
 	// Load regular viewer integration
 	if (dir !== '') {
-		const path = window.FileList.getCurrentDirectory() + '/' + filename
 		const ViewerRoot = document.createElement('div')
 		ViewerRoot.id = 'viewerpublic'
 		document.body.appendChild(ViewerRoot)
@@ -26,6 +25,7 @@ documentReady(() => {
 					import('vue'),
 					import('./components/PublicFilesEditor')
 				]).then((imports) => {
+					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default
 					Vue.prototype.t = window.t
 					Vue.prototype.OCA = window.OCA
@@ -44,7 +44,7 @@ documentReady(() => {
 			},
 			t('text', 'Edit')
 		)
-		OCA.Files.fileActions.setDefault('text/markdown', 'Edit with text');
+		OCA.Files.fileActions.setDefault('text/markdown', 'Edit with text')
 	} else {
 		const container = document.createElement('div')
 		container.id = 'texteditor'

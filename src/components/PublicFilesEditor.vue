@@ -21,9 +21,9 @@
   -->
 
 <template>
-	<Modal v-if="active" @close="close" :title="fileName">
+	<modal v-if="active" :title="fileName" @close="close">
 		<editor-wrapper :relative-path="relativePath" :active="active" :share-token="shareToken" />
-	</Modal>
+	</modal>
 </template>
 
 <script>
@@ -49,14 +49,14 @@ export default {
 			default: null
 		}
 	},
+	computed: {
+		fileName() {
+			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
+		}
+	},
 	methods: {
 		close() {
 			this.active = false
-		}
-	},
-	computed: {
-		fileName() {
-			return this.relativePath.substring(this.relativePath.lastIndexOf('/')+1)
 		}
 	}
 }

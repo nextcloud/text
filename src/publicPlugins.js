@@ -20,13 +20,16 @@
  *
  */
 
+const openFileExtensions = [
+	'md', 'markdown'
+]
 
 const newFileMenuPlugin = {
 	attach: function(menu) {
 		var fileList = menu.fileList
 
 		// only attach to main file list, public view is not supported yet
-		if (fileList.id !== 'files') {
+		if (fileList.id !== 'files.public') {
 			return
 		}
 
@@ -42,7 +45,7 @@ const newFileMenuPlugin = {
 					const fileExtension = name.split('.').pop()
 					if (openFileExtensions.indexOf(fileExtension) > -1) {
 						let fileInfoModel = new OCA.Files.FileInfoModel(data)
-						OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+						OCA.Files.fileActions.triggerAction('Edit with text', fileInfoModel, fileList)
 					} else if (typeof OCA.Files_Texteditor !== 'undefined') {
 						const dir = fileList.getCurrentDirectory()
 						OCA.Files_Texteditor._onEditorTrigger(

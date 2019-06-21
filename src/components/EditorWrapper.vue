@@ -39,7 +39,7 @@
 					</div>
 				</menu-bar>
 				<menu-bubble v-if="!readOnly" :editor="tiptap" />
-				<editor-content class="editor__content" :editor="tiptap" v-show="initialLoading"/>
+				<editor-content v-show="initialLoading" class="editor__content" :editor="tiptap" />
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
