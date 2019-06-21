@@ -230,7 +230,7 @@ export default {
 						alt: fileInfo.name
 					})
 				})
-			}, false, false, true)
+			}, false, [], true)
 		}
 	}
 }
