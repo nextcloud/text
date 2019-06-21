@@ -39,7 +39,7 @@
 					</div>
 				</menu-bar>
 				<menu-bubble v-if="!readOnly" :editor="tiptap" />
-				<editor-content class="editor__content" :editor="tiptap" />
+				<editor-content class="editor__content" :editor="tiptap" v-show="initialLoading"/>
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
 		</div>
@@ -176,6 +176,7 @@ export default {
 		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
 		}
+		this.$parent.$emit('update:loaded', true)
 	},
 	created() {
 		this.saveStatusPolling = setInterval(() => {
@@ -259,7 +260,6 @@ export default {
 						]
 					})
 					this.syncService.state = this.tiptap.state
-					this.$parent.$emit('update:loaded', true)
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
