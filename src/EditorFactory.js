@@ -39,13 +39,10 @@ import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-const createEditor = ({ content, onUpdate, extensions }) => {
-	extensions = extensions || []
-	return new Editor({
-		content: content,
-		onUpdate: onUpdate,
-		extensions: [
-			new HardBreak(),
+const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
+	let richEditingExtensions = []
+	if (enableRichEditing) {
+		richEditingExtensions = [
 			new Heading(),
 			new Code(),
 			new Strong(),
@@ -58,7 +55,16 @@ const createEditor = ({ content, onUpdate, extensions }) => {
 			new CodeBlock(),
 			new ListItem(),
 			new Link(),
-			new Image(),
+			new Image()
+		]
+	}
+	extensions = extensions || []
+	return new Editor({
+		content: content,
+		onUpdate: onUpdate,
+		extensions: [
+			new HardBreak(),
+			...richEditingExtensions,
 			new History()
 		].concat(extensions)
 	})

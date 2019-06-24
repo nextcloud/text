@@ -22,7 +22,7 @@
 
 <template>
 	<editor-wrapper :file-id="fileId" :relative-path="relativePath" :active="active"
-		:share-token="shareToken" />
+		:share-token="shareToken" :mime="mime" />
 </template>
 
 <script>
@@ -45,6 +45,10 @@ export default {
 			default: false
 		},
 		shareToken: {
+			type: String,
+			default: null
+		},
+		mime: {
 			type: String,
 			default: null
 		}

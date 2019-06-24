@@ -97,6 +97,10 @@ export default {
 		shareToken: {
 			type: String,
 			default: null
+		},
+		mime: {
+			type: String,
+			default: null
 		}
 	},
 	data() {
@@ -260,7 +264,8 @@ export default {
 									return true
 								}
 							})
-						]
+						],
+						enableRichEditing: true
 					})
 					this.syncService.state = this.tiptap.state
 				})

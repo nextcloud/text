@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	OCA.Viewer.registerHandler({
 		id: 'text',
-		mimes: ['text/markdown'],
+		mimes: ['text/markdown', 'text/plain'],
 		component: FilesEditor,
 		group: null
 	})
