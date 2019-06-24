@@ -26,11 +26,14 @@
 			<div ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<button v-if="icon.class" v-show="$index < iconCount" :key="icon.label"
+						:title="icon.label"
 						:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
 					<template v-else>
 						<div v-show="$index < iconCount" :key="icon.label" v-click-outside="() => hideChildMenu(icon)"
 							class="submenu">
-							<button :class="childIconClass(isActive, icon.children, )" @click.prevent="toggleChildMenu(icon)" />
+							<button :class="childIconClass(isActive, icon.children, )"
+								:title="icon.label"
+								@click.prevent="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
 								<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
 							</div>
