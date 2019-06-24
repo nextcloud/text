@@ -42,8 +42,7 @@
 						<a :href="internalLinkOrImage" target="_blank">{{ isSupportedImage ? t('text', 'Show image') : t('text', 'Show file') }}</a>
 					</p>
 				</div>
-			</transition>
-			<transition name="fade">
+			</transition><transition name="fade">
 				<div v-show="loaded" class="image__caption">
 					<input ref="altInput" type="text" :value="alt"
 						@keyup.enter="updateAlt()">
