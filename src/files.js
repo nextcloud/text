@@ -21,56 +21,15 @@
  */
 
 import FilesEditor from './components/FilesEditor'
+import { registerFileActionFallback, registerFileCreate } from './helpers'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
-const openFileExtensions = [
-	'md', 'markdown'
-]
-
-const newFileMenuPlugin = {
-	attach: function(menu) {
-		var fileList = menu.fileList
-
-		// only attach to main file list, public view is not supported yet
-		if (fileList.id !== 'files') {
-			return
-		}
-
-		// register the new menu entry
-		menu.addMenuEntry({
-			id: 'file',
-			displayName: t('text', 'New text document'),
-			templateName: t('text', 'New text document.md'),
-			iconClass: 'icon-filetype-text',
-			fileType: 'file',
-			actionHandler: function(name) {
-				fileList.createFile(name).then(function(status, data) {
-					const fileExtension = name.split('.').pop()
-					if (openFileExtensions.indexOf(fileExtension) > -1) {
-						let fileInfoModel = new OCA.Files.FileInfoModel(data)
-						OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
-					} else if (typeof OCA.Files_Texteditor !== 'undefined') {
-						const dir = fileList.getCurrentDirectory()
-						OCA.Files_Texteditor._onEditorTrigger(
-							name,
-							{
-								fileList: fileList,
-								dir: dir
-							}
-						)
-					}
-				})
-			}
-		})
-	}
-}
-
-OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
+		registerFileActionFallback()
 		return
 	}
 	OCA.Viewer.registerHandler({
@@ -79,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		component: FilesEditor,
 		group: null
 	})
+	registerFileCreate()
 })
 
 OCA.Text = {

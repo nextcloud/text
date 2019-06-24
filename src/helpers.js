@@ -27,6 +27,14 @@
 import axios from 'axios'
 import { generateRemoteUrl } from 'nextcloud-server/dist/router'
 
+const openFileExtensions = [
+	'md', 'markdown', 'txt'
+]
+
+const openMimetypes = [
+	'text/markdown', 'text/plain'
+]
+
 const documentReady = function(callback) {
 	const fn = () => setTimeout(callback, 0)
 	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
@@ -90,9 +98,103 @@ const fetchFileInfo = async function(user, path) {
 	})
 }
 
+const registerFileCreate = () => {
+	const newFileMenuPlugin = {
+		attach: function(menu) {
+			var fileList = menu.fileList
+
+			// only attach to main file list, public view is not supported yet
+			if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+				return
+			}
+
+			// register the new menu entry
+			menu.addMenuEntry({
+				id: 'file',
+				displayName: t('text', 'New text document'),
+				templateName: t('text', 'New text document.md'),
+				iconClass: 'icon-filetype-text',
+				fileType: 'file',
+				actionHandler: function(name) {
+					fileList.createFile(name).then(function(status, data) {
+						const fileExtension = name.split('.').pop()
+						let fileInfoModel = new OCA.Files.FileInfoModel(data)
+						if (typeof OCA.Viewer !== 'undefined' && openFileExtensions.indexOf(fileExtension) > -1) {
+							OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+						} else if (typeof OCA.Viewer === 'undefined' && openFileExtensions.indexOf(fileExtension) > -1) {
+							OCA.Files.fileActions.triggerAction('Edit with text', fileInfoModel, fileList)
+						} else if (typeof OCA.Files_Texteditor !== 'undefined') {
+							const dir = fileList.getCurrentDirectory()
+							OCA.Files_Texteditor._onEditorTrigger(
+								name,
+								{
+									fileList: fileList,
+									dir: dir
+								}
+							)
+						}
+					})
+				}
+			})
+		}
+	}
+	OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
+}
+
+const registerFileActionFallback = () => {
+	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+	const dir = document.getElementById('dir').value
+
+	if (!sharingToken || dir !== '') {
+		const ViewerRoot = document.createElement('div')
+		ViewerRoot.id = 'text-viewer-fallback'
+		document.body.appendChild(ViewerRoot)
+		const registerAction = (mime) => OCA.Files.fileActions.register(
+			mime,
+			'Edit with text',
+			OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
+			OC.imagePath('core', 'actions/rename'),
+			(filename) => {
+				const file = window.FileList.findFile(filename)
+				Promise.all([
+					import('vue'),
+					import('./components/PublicFilesEditor')
+				]).then((imports) => {
+					const path = window.FileList.getCurrentDirectory() + '/' + filename
+					const Vue = imports[0].default
+					Vue.prototype.t = window.t
+					Vue.prototype.n = window.n
+					Vue.prototype.OCA = window.OCA
+					const Editor = imports[1].default
+					const vm = new Vue({
+						render: h => h(Editor, {
+							props: {
+								fileId: file ? file.id : null,
+								active: true,
+								shareToken: sharingToken,
+								relativePath: path
+							}
+						})
+					})
+					vm.$mount(ViewerRoot)
+				})
+			},
+			t('text', 'Edit')
+		)
+		registerAction('text/markdown')
+		registerAction('text/plain')
+		OCA.Files.fileActions.setDefault('text/markdown', 'Edit with text')
+		OCA.Files.fileActions.setDefault('text/plain', 'Edit with text')
+	}
+
+}
+
 export {
 	documentReady,
 	endpointUrl,
 	getRandomGuestName,
-	fetchFileInfo
+	fetchFileInfo,
+	openFileExtensions, openMimetypes,
+	registerFileActionFallback,
+	registerFileCreate
 }

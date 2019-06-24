@@ -22,7 +22,8 @@
 
 <template>
 	<modal v-if="active" :title="fileName" @close="close">
-		<editor-wrapper :relative-path="relativePath" :active="active" :share-token="shareToken" />
+		<editor-wrapper :file-id="fileId" :relative-path="relativePath" :active="active"
+			:share-token="shareToken" />
 	</modal>
 </template>
 
@@ -36,6 +37,10 @@ export default {
 		EditorWrapper: () => import('./EditorWrapper')
 	},
 	props: {
+		fileId: {
+			type: Number,
+			default: null
+		},
 		relativePath: {
 			type: String,
 			default: null
