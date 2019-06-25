@@ -28,7 +28,10 @@
 				:url="avatarUrl(session)" :disable-tooltip="true" :style="sessionStyle(session)"
 				:size="32" />
 		</div>
-		<popover-menu v-show="sessionsPopover.length > 0 && popoverVisible" :menu="sessionsPopover" class="popovermenu menu-right" />
+		<div v-show="popoverVisible" class="popovermenu menu-right">
+			<popover-menu :menu="sessionsPopover" />
+			<slot />
+		</div>
 	</div>
 </template>
 
@@ -152,5 +155,8 @@ export default {
 				cursor: pointer;
 			}
 		}
+	}
+	.popovermenu {
+		display: block;
 	}
 </style>

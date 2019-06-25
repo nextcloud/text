@@ -31,11 +31,12 @@
 			<div id="editor">
 				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
 					<div v-if="currentSession && active" id="editor-session-list">
-						<guest-name-dialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
-						<session-list :sessions="filteredSessions" />
+						<session-list :sessions="filteredSessions">
+							<guest-name-dialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
+						</session-list>
 					</div>
 				</menu-bar>
 				<menu-bubble v-if="!readOnly" :editor="tiptap" />

@@ -22,6 +22,7 @@
 
 <template>
 	<form v-tooltip="t('text', 'Enter your name so other users can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
+		<label><avatar :url="avatarUrl" :disable-tooltip="true" :size="32" /></label>
 		<input v-model="guestName" type="text">
 		<input type="submit" class="icon-confirm" value="">
 	</form>
@@ -29,9 +30,13 @@
 
 <script>
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 
 export default {
 	name: 'GuestNameDialog',
+	components: {
+		Avatar
+	},
 	directives: {
 		tooltip: Tooltip
 	},
@@ -43,20 +48,38 @@ export default {
 	},
 	data() {
 		return {
-			guestName: ''
+			guestName: '',
+			guestNameBuffered: ''
+		}
+	},
+	computed: {
+		avatarUrl() {
+			const size = 32
+			const avatarUrl = OC.generateUrl(
+				'/avatar/guest/{user}/{size}',
+				{
+					user: this.guestNameBuffered,
+					size: size
+				})
+			return window.location.protocol + '//' + window.location.host + avatarUrl
 		}
 	},
 	beforeMount() {
 		this.guestName = this.syncService.session.guestName
+		this.updateBufferedGuestName()
 	},
 	methods: {
 		setGuestName() {
 			const previousGuestName = this.syncService.session.guestName
 			this.syncService.updateSession(this.guestName).then(() => {
 				localStorage.setItem('text-guestName', this.guestName)
+				this.updateBufferedGuestName()
 			}).catch((e) => {
 				this.guestName = previousGuestName
 			})
+		},
+		updateBufferedGuestName() {
+			this.guestNameBuffered = this.guestName
 		}
 	}
 }
@@ -68,9 +91,18 @@ export default {
 		max-width: 200px;
 		margin: auto;
 		margin-top: -2px;
+		padding: 3px;
+
+		& /deep/ img {
+			margin: 0 !important;
+		}
 
 		input[type=text] {
 			flex-grow: 1;
+		}
+		label {
+			padding: 3px;
+			height: 32px;
 		}
 	}
 </style>
