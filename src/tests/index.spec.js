@@ -3,7 +3,8 @@ import spec from "./fixtures/spec"
 
 const markdownToDocument = (markdown) => {
   const tiptap = createEditor({
-    content: markdownit.render(markdown)
+    content: markdownit.render(markdown),
+    enableRichEditing: true
   })
   const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
   return tiptap.state.doc
@@ -11,7 +12,8 @@ const markdownToDocument = (markdown) => {
 
 const documentToMarkdown = (document) => {
   const tiptap = createEditor({
-    content: document
+    content: document,
+    enableRichEditing: true
   })
   const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
   const markdown = serializer.serialize(document)
@@ -19,7 +21,8 @@ const documentToMarkdown = (document) => {
 
 const markdownThroughEditor = (markdown) => {
   const tiptap = createEditor({
-    content: markdownit.render(markdown)
+    content: markdownit.render(markdown),
+    enableRichEditing: true
   })
   const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
   return serializer.serialize(tiptap.state.doc)
@@ -27,7 +30,8 @@ const markdownThroughEditor = (markdown) => {
 
 const markdownThroughEditorHtml = (html) => {
   const tiptap = createEditor({
-    content: html
+    content: html,
+    enableRichEditing: true
   })
   const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
   return serializer.serialize(tiptap.state.doc)
