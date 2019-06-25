@@ -384,7 +384,7 @@ export default {
 		border-radius: var(--border-radius);
 		padding: 0;
 		position: relative;
-		overflow-y: scroll;
+		overflow-y: auto;
 		overflow-x: hidden;
 		width: 100%;
 	}
@@ -449,6 +449,7 @@ export default {
 		}
 		#editor-container {
 			top: 0;
+			width: 100%;
 
 			#editor::v-deep .menubar {
 				// sticky position is not working as body is our scroll container
@@ -459,6 +460,7 @@ export default {
 
 			#editor {
 				padding-top: 50px;
+				overflow: auto;
 			}
 		}
 	}
