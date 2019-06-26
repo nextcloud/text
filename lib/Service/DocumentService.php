@@ -50,6 +50,7 @@ use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\ILogger;
+use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 
@@ -256,7 +257,12 @@ class DocumentService {
 		if ($lastMTime > 0 && $file->getEtag() !== $document->getLastSavedVersionEtag() && $force === false) {
 			throw new DocumentSaveConflictException('File changed in the meantime from outside');
 		}
-		$file->putContent($autoaveDocument);
+		try {
+			$file->putContent($autoaveDocument);
+		} catch (LockedException $e) {
+			// Ignore lock since it might occur when multiple people save at the same time
+			return $document;
+		}
 		$document->setLastSavedVersion($version);
 		$document->setLastSavedVersionTime(time());
 		$document->setLastSavedVersionEtag($file->getEtag());
