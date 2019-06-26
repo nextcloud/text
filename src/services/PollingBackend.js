@@ -34,7 +34,7 @@ const FETCH_INTERVAL = 300
  * Maximum interval between refetches of document state if multiple users have joined
  * @type {number}
  */
-const FETCH_INTERVAL_MAX = 3000
+const FETCH_INTERVAL_MAX = 5000
 
 /**
  * Interval to check for changes when there is only one user joined
@@ -180,10 +180,7 @@ class PollingBackend {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
 			this.fetchSteps()
-
-			/* this.carefulRetry(() => {
-				this.sendSteps(sendable)
-			}) */
+			this.carefulRetry()
 		})
 	}
 
@@ -206,7 +203,7 @@ class PollingBackend {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = Math.min(this.fetchInverval + 100, FETCH_INTERVAL_MAX)
+		this.fetchInverval = Math.min(this.fetchInverval * 2, FETCH_INTERVAL_MAX)
 		clearInterval(this.fetcher)
 		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
 	}
@@ -220,14 +217,13 @@ class PollingBackend {
 		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
 	}
 
-	carefulRetry(callback) {
+	carefulRetry() {
 		let newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
 			OC.Notification.showTemporary('Changes could not be sent yet')
 			this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
 		}
 		this.retryTime = newRetry
-		setTimeout(callback, this.retryTime)
 	}
 
 	carefulRetryReset() {
