@@ -211,7 +211,7 @@ export default {
 				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
-			const guestName = localStorage.getItem('text-guestName') ? localStorage.getItem('text-guestName') : getRandomGuestName()
+			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
@@ -227,7 +227,7 @@ export default {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
-					localStorage.setItem('text-guestName', this.currentSession.guestName)
+					localStorage.setItem('nick', this.currentSession.guestName)
 				})
 				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {

@@ -72,7 +72,7 @@ export default {
 		setGuestName() {
 			const previousGuestName = this.syncService.session.guestName
 			this.syncService.updateSession(this.guestName).then(() => {
-				localStorage.setItem('text-guestName', this.guestName)
+				localStorage.setItem('nick', this.guestName)
 				this.updateBufferedGuestName()
 			}).catch((e) => {
 				this.guestName = previousGuestName
