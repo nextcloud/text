@@ -23,8 +23,8 @@
 <template>
 	<form v-tooltip="t('text', 'Enter your name so other users can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
 		<label><avatar :url="avatarUrl" :disable-tooltip="true" :size="32" /></label>
-		<input v-model="guestName" type="text">
-		<input type="submit" class="icon-confirm" value="">
+		<input v-model="guestName" type="text" :aria-label="t('text', 'Edit guest name')">
+		<input type="submit" class="icon-confirm" :aria-label="t('text', 'Save guest name')">
 	</form>
 </template>
 
