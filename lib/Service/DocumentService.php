@@ -241,6 +241,7 @@ class DocumentService {
 			return $document;
 		}
 
+		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
 
 		if ($autoaveDocument === null) {
@@ -254,9 +255,14 @@ class DocumentService {
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
-		if ($lastMTime > 0 && $file->getEtag() !== $document->getLastSavedVersionEtag() && $force === false) {
-			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $force === false) {
+			if (!$this->cache->get('document-save-lock-' . $documentId)) {
+				throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			} else {
+				return $document;
+			}
 		}
+		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$file->putContent($autoaveDocument);
 		} catch (LockedException $e) {
@@ -267,6 +273,7 @@ class DocumentService {
 		$document->setLastSavedVersionTime(time());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$this->documentMapper->update($document);
+		$this->cache->remove('document-save-lock-' . $documentId);
 		return $document;
 	}
 
