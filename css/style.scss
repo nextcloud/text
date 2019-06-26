@@ -60,4 +60,6 @@ div[contenteditable=false] {
   background-color: transparent;
   color: var(--color-main-text);
   opacity: 1;
+ -webkit-user-select: text;
+  user-select: text;
 }
