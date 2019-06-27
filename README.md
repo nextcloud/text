@@ -2,7 +2,7 @@
 
 **📑 Collaborative document editing!**
 
-![](img/screenshot.png)
+![](img/screenshots/screenshot1.png)
 
 - **📝 Focused writing:** No distractions, only the formatting you need.
 - **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
