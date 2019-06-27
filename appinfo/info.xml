@@ -11,7 +11,7 @@
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
 	]]></description>
-	<version>1.0.0-alpha2</version>
+	<version>1.0.0</version>
 	<licence>agpl</licence>
 	<author mail="jus@bitgrid.net">Julius Härtl</author>
 	<namespace>Text</namespace>
@@ -19,7 +19,9 @@
 	<website>https://github.com/nextcloud/text</website>
 	<bugs>https://github.com/nextcloud/text/issues</bugs>
 	<repository type="git">https://github.com/nextcloud/text.git</repository>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshot.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot1.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot2.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot3.gff</screenshot>
 	<dependencies>
 		<nextcloud min-version="16" max-version="17"/>
 	</dependencies>
