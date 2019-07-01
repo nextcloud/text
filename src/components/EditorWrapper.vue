@@ -227,7 +227,7 @@ export default {
 						console.debug('serialized document', { markdown })
 						return markdown
 					}
-					const file = serializePlainText(this.tipta)
+					const file = serializePlainText(this.tiptap)
 					console.debug('serialized document', { file })
 					return file
 
@@ -252,7 +252,7 @@ export default {
 
 				})
 				.on('loaded', ({ documentSource }) => {
-					this.tiptap = createEditor({
+					createEditor({
 						content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
 						onUpdate: ({ state }) => {
 							this.syncService.state = state
@@ -278,9 +278,12 @@ export default {
 								}
 							})
 						],
-						enableRichEditing: this.isRichEditor
+						enableRichEditing: this.isRichEditor,
+						languages: ['cpp', 'css', 'php']
+					}).then(editor => {
+						this.tiptap = editor
+						this.syncService.state = this.tiptap.state
 					})
-					this.syncService.state = this.tiptap.state
 				})
 				.on('sync', ({ steps, document }) => {
 					try {

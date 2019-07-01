@@ -39,10 +39,21 @@ import { Image, PlainTextDocument } from './nodes'
 import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
-import cpp from 'highlight.js/lib/languages/cpp'
-import javascript from 'highlight.js/lib/languages/javascript'
-import css from 'highlight.js/lib/languages/css'
-const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
+
+const loadSyntaxHighlight = async (languages) => {
+	let modules = {}
+	for (let i = 0; i < languages.length; i++) {
+		const lang = await import('highlight.js/lib/languages/' + languages[i])
+		modules[languages[i]] = lang.default
+	}
+	if (Object.keys(modules).length === 0 && modules.constructor === Object) {
+		return undefined
+	}
+	return { languages: modules }
+}
+
+const createEditor = async ({ content, onUpdate, extensions, enableRichEditing, languages }) => {
+	const highlight = await loadSyntaxHighlight(languages)
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -66,9 +77,7 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 			new PlainTextDocument(),
 			new Text(),
 			new CodeBlockHighlight({
-				languages: {
-					cpp, css, javascript
-				}
+				...highlight
 			})
 		]
 	}
