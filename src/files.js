@@ -26,6 +26,20 @@ import { registerFileActionFallback, registerFileCreate } from './helpers'
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
+const supportedTextMimeTypes = [
+	'text/plain',
+	'application/cmd',
+	'application/javascript',
+	'application/json',
+	'application/xml',
+	'application/x-empty',
+	'application/x-msdos-program',
+	'application/x-php',
+	'application/x-pearl',
+	'application/x-text',
+	'application/yaml'
+]
+
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
@@ -34,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	OCA.Viewer.registerHandler({
 		id: 'text',
-		mimes: ['text/markdown', 'text/plain'],
+		mimes: ['text/markdown', ...supportedTextMimeTypes],
 		component: FilesEditor,
 		group: null
 	})

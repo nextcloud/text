@@ -23,7 +23,7 @@
 <template>
 	<editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
 		<div class="menubar">
-			<div ref="menubar" class="menubar-icons">
+			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<button v-if="icon.class" v-show="$index < iconCount" :key="icon.label"
 						:title="icon.label"
@@ -91,6 +91,10 @@ export default {
 			type: Object,
 			required: false,
 			default: null
+		},
+		isRichEditor: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data: () => {

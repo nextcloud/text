@@ -20,10 +20,17 @@
  *
  */
 
-import Image from './Image'
-import PlainTextDocument from './PlainTextDocument'
+import { Node } from 'tiptap'
+export default class PlainTextDocument extends Node {
 
-export {
-	Image,
-	PlainTextDocument
+	get name() {
+		return 'doc'
+	}
+
+	get schema() {
+		return {
+			content: 'block'
+		}
+	}
+
 }

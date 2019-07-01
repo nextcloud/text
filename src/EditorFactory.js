@@ -19,7 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { Editor } from 'tiptap'
+import { Editor, Text } from 'tiptap'
 import {
 	HardBreak,
 	Heading,
@@ -30,15 +30,18 @@ import {
 	ListItem,
 	Blockquote,
 	CodeBlock,
+	CodeBlockHighlight,
 	HorizontalRule,
 	History
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
-import { Image } from './nodes'
+import { Image, PlainTextDocument } from './nodes'
 import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
-
+import cpp from 'highlight.js/lib/languages/cpp'
+import javascript from 'highlight.js/lib/languages/javascript'
+import css from 'highlight.js/lib/languages/css'
 const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
@@ -48,6 +51,7 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 			new Strong(),
 			new Italic(),
 			new Strike(),
+			new HardBreak(),
 			new HorizontalRule(),
 			new BulletList(),
 			new OrderedList(),
@@ -57,16 +61,26 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 			new Link(),
 			new Image()
 		]
+	} else {
+		richEditingExtensions = [
+			new PlainTextDocument(),
+			new Text(),
+			new CodeBlockHighlight({
+				languages: {
+					cpp, css, javascript
+				}
+			})
+		]
 	}
 	extensions = extensions || []
 	return new Editor({
 		content: content,
 		onUpdate: onUpdate,
 		extensions: [
-			new HardBreak(),
 			...richEditingExtensions,
 			new History()
-		].concat(extensions)
+		].concat(extensions),
+		useBuiltInExtensions: enableRichEditing
 	})
 }
 
@@ -95,5 +109,10 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 	)
 }
 
+const serializePlainText = (tiptap) => {
+	const doc = tiptap.getHTML().replace(/<[^>]*>?/gm, '')
+	return new DOMParser().parseFromString(doc, 'text/html').body.textContent
+}
+
 export default createEditor
-export { markdownit, createEditor, createMarkdownSerializer }
+export { markdownit, createEditor, createMarkdownSerializer, serializePlainText }

@@ -27,9 +27,10 @@
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading, 'richEditor': isRichEditor}">
 			<div id="editor">
-				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
+				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap"
+					:is-rich-editor="isRichEditor">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -39,7 +40,7 @@
 						</session-list>
 					</div>
 				</menu-bar>
-				<menu-bubble v-if="!readOnly" :editor="tiptap" />
+				<menu-bubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
 				<editor-content v-show="initialLoading" class="editor__content" :editor="tiptap" />
 			</div>
 			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
@@ -54,7 +55,7 @@ import Vue from 'vue'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
-import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
+import { createEditor, markdownit, createMarkdownSerializer, serializePlainText } from './../EditorFactory'
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
@@ -172,6 +173,9 @@ export default {
 		},
 		isPublic() {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+		},
+		isRichEditor() {
+			return this.mime === 'text/markdown'
 		}
 	},
 	watch: {
@@ -218,9 +222,15 @@ export default {
 				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
-					const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
-					console.debug('serialized document', { markdown })
-					return markdown
+					if (this.isRichEditor) {
+						const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
+						console.debug('serialized document', { markdown })
+						return markdown
+					}
+					const file = serializePlainText(this.tipta)
+					console.debug('serialized document', { file })
+					return file
+
 				}
 			})
 				.on('opened', ({ document, session }) => {
@@ -243,7 +253,7 @@ export default {
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.tiptap = createEditor({
-						content: markdownit.render(documentSource),
+						content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
 						onUpdate: ({ state }) => {
 							this.syncService.state = state
 						},
@@ -268,7 +278,7 @@ export default {
 								}
 							})
 						],
-						enableRichEditing: true
+						enableRichEditing: this.isRichEditor
 					})
 					this.syncService.state = this.tiptap.state
 				})
