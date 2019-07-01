@@ -23,11 +23,6 @@ trigger:
 kind: pipeline
 name: syntax
 steps:
-  - name: syntax-php7.0
-    image: nextcloudci/php7.0:php7.0-17
-    commands:
-      - composer install
-      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
   - name: syntax-php7.1
     image: nextcloudci/php7.1:php7.1-15
     commands:
