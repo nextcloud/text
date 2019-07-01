@@ -132,6 +132,11 @@ steps:
     commands:
       - npm install
       - npm run lint
+  - name: stylelint
+    image: node:lts-alpine
+    commands:
+      - npm install
+      - npm run stylelint
   - name: vue-build
     image: node:lts-alpine
     commands:

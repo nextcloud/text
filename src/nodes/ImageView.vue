@@ -170,24 +170,28 @@ export default {
 		margin: 0;
 		padding: 0;
 	}
+
 	.image__caption {
 		text-align: center;
 		color: var(--color-text-lighter);
-		input[type="text"] {
+		input[type='text'] {
 			width: 100%;
 			border: none;
 			text-align: center;
 		}
 	}
+
 	.icon-image {
 		margin-top: 10px;
 		height: 32px;
 		padding: 20px;
 		background-size: contain;
 	}
+
 	.image__loading {
 		height: 100px;
 	}
+
 	.image__placeholder .image__main {
 		background-color: var(--color-background-dark);
 		text-align: center;
