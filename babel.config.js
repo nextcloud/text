@@ -4,11 +4,14 @@ module.exports = {
 		[
 			'@babel/preset-env',
 			{
-				targets: {
-					browsers: ['last 2 versions', 'ie >= 11']
-				}
+				"modules": false
 			}
 		]
-	]
+	],
+	env: {
+		test: {
+			plugins: ["transform-es2015-modules-commonjs"]
+		}
+	}
 }
 

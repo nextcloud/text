@@ -17,8 +17,8 @@
 		"build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.prod.js",
 		"lint": "eslint --ext .js,.vue src",
 		"lint:fix": "eslint --ext .js,.vue src --fix",
-		"test": "jest --passWithNoTests",
-		"test:coverage": "jest --coverage"
+		"test": "NODE_ENV=test jest --passWithNoTests",
+		"test:coverage": "NODE_ENV=test jest --coverage"
 	},
 	"dependencies": {
 		"nextcloud-axios": "^0.2.0",
@@ -32,8 +32,7 @@
 		"vue-click-outside": "^1.0.7"
 	},
 	"browserslist": [
-		"last 2 versions",
-		"not ie <= 11"
+		"extends browserslist-config-nextcloud"
 	],
 	"engines": {
 		"node": ">=10.0.0"
@@ -49,6 +48,7 @@
 		"babel-eslint": "^10.0.2",
 		"babel-jest": "^24.8.0",
 		"babel-loader": "^8.0.6",
+		"browserslist-config-nextcloud": "0.0.1",
 		"css-loader": "^3.0.0",
 		"eslint": "^5.16.0",
 		"eslint-config-standard": "^12.0.0",
@@ -75,11 +75,12 @@
 		"vue-loader": "^15.7.0",
 		"vue-style-loader": "^4.1.1",
 		"vue-template-compiler": "^2.6.10",
-		"webpack": "^4.35.0",
+		"webpack": "^4.35.2",
 		"webpack-cli": "^3.3.5",
 		"webpack-merge": "^4.2.1"
 	},
 	"jest": {
+		"verbose": true,
 		"moduleFileExtensions": [
 			"js",
 			"vue"
