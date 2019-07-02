@@ -67,7 +67,7 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
-import { fetchFileInfo } from './../helpers'
+import { fetchFileInfo } from './../helpers/files'
 
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'

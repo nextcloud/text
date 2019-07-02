@@ -43,8 +43,13 @@ import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markd
 const loadSyntaxHighlight = async(languages) => {
 	let modules = {}
 	for (let i = 0; i < languages.length; i++) {
-		const lang = await import('highlight.js/lib/languages/' + languages[i])
-		modules[languages[i]] = lang.default
+		try {
+			const lang = await import('highlight.js/lib/languages/' + languages[i])
+			modules[languages[i]] = lang.default
+		} catch (e) {
+			// No matching highlighing found, fallback to none
+			return undefined
+		}
 	}
 	if (Object.keys(modules).length === 0 && modules.constructor === Object) {
 		return undefined

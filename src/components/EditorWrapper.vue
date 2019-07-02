@@ -179,7 +179,7 @@ export default {
 			return this.mime === 'text/markdown'
 		},
 		fileExtension() {
-			return this.relativePath.split('/').pop().split('.').pop()
+			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
 		}
 	},
 	watch: {

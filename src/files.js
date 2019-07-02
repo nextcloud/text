@@ -21,24 +21,11 @@
  */
 
 import FilesEditor from './components/FilesEditor'
-import { registerFileActionFallback, registerFileCreate } from './helpers'
+import { registerFileActionFallback, registerFileCreate } from './helpers/files'
+import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
-
-const supportedTextMimeTypes = [
-	'text/plain',
-	'application/cmd',
-	'application/javascript',
-	'application/json',
-	'application/xml',
-	'application/x-empty',
-	'application/x-msdos-program',
-	'application/x-php',
-	'application/x-pearl',
-	'application/x-text',
-	'application/yaml'
-]
 
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
@@ -48,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	OCA.Viewer.registerHandler({
 		id: 'text',
-		mimes: ['text/markdown', ...supportedTextMimeTypes],
+		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
 		component: FilesEditor,
 		group: null
 	})

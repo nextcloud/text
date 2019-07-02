@@ -23,7 +23,7 @@
 <template>
 	<modal v-if="active" :title="fileName" @close="close">
 		<editor-wrapper :file-id="fileId" :relative-path="relativePath" :active="active"
-			:share-token="shareToken" />
+			:share-token="shareToken" :mime="mimeType" />
 	</modal>
 </template>
 
@@ -50,6 +50,10 @@ export default {
 			default: false
 		},
 		shareToken: {
+			type: String,
+			default: null
+		},
+		mimeType: {
 			type: String,
 			default: null
 		}

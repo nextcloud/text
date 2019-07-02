@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -26,36 +26,9 @@
  */
 import axios from 'axios'
 import { generateRemoteUrl } from 'nextcloud-server/dist/router'
+import { openMimetypes } from './mime'
 
-const openFileExtensions = [
-	'md', 'markdown', 'txt'
-]
-
-const openMimetypes = [
-	'text/markdown', 'text/plain'
-]
-
-const documentReady = function(callback) {
-	const fn = () => setTimeout(callback, 0)
-	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
-		fn()
-	} else {
-		document.addEventListener('DOMContentLoaded', callback)
-	}
-}
-
-const _baseUrl = OC.generateUrl('/apps/text')
-const endpointUrl = (endpoint, isPublic = false) => {
-	if (isPublic) {
-		return `${_baseUrl}/public/${endpoint}`
-	}
-	return `${_baseUrl}/${endpoint}`
-}
-
-const randomGuestNames = ['Artichoke', 'Arugula', 'Asparagus', 'Avocado', 'Bamboo Shoot', 'Bean Sprout', 'Bean', 'Beet', 'Belgian Endive', 'Bell Pepper', 'Bitter Melon', 'Bitter Gourd', 'Bok Choy', 'Broccoli', 'Brussels Sprout', 'Burdock Root', 'Cabbage', 'Calabash', 'Caper', 'Carrot', 'Cassava', 'Cauliflower', 'Celery', 'Celery Root', 'Celtuce', 'Chayote', 'Chinese Broccoli', 'Corn', 'Baby Corn', 'Cucumber', 'English Cucumber', 'Gherkin', 'Pickling Cucumber', 'Daikon Radish', 'Edamame', 'Eggplant', 'Elephant Garlic', 'Endive', 'Curly', 'Escarole', 'Fennel', 'Fiddlehead', 'Galangal', 'Garlic', 'Ginger', 'Grape Leave', 'Green Bean', 'Wax Bean', 'Green', 'Amaranth Leave', 'Beet Green', 'Collard Green', 'Dandelion Green', 'Kale', 'Kohlrabi Green', 'Mustard Green', 'Rapini', 'Spinach', 'Swiss Chard', 'Turnip Green', 'Hearts of Palm', 'Horseradish', 'Jerusalem Artichoke', 'Jícama', 'Kale', 'Curly', 'Lacinato', 'Ornamental', 'Kohlrabi', 'Leeks', 'Lemongrass', 'Lettuce', 'Butterhead', 'Iceberg', 'Leaf', 'Romaine', 'Lotus Root', 'Lotus Seed', 'Mushroom', 'Napa Cabbage', 'Nopales', 'Okra', 'Olive', 'Onion', 'Green Onion', 'Parsley', 'Parsley Root', 'Parsnip', 'Pepper', 'Plantain', 'Potato', 'Pumpkin', 'Purslane', 'Radicchio', 'Radish', 'Rutabaga', 'Shallots', 'Spinach', 'Squash', 'Sweet Potato', 'Swiss Chard', 'Taro', 'Tomatillo', 'Tomato', 'Turnip', 'Water Chestnut', 'Water Spinach', 'Watercress', 'Winter Melon', 'Yams', 'Zucchini']
-const getRandomGuestName = () => {
-	return randomGuestNames[Math.floor(Math.random() * randomGuestNames.length)]
-}
+const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
 const fetchFileInfo = async function(user, path) {
 	const response = await axios({
@@ -117,21 +90,11 @@ const registerFileCreate = () => {
 				fileType: 'file',
 				actionHandler: function(name) {
 					fileList.createFile(name).then(function(status, data) {
-						const fileExtension = name.split('.').pop()
 						let fileInfoModel = new OCA.Files.FileInfoModel(data)
-						if (typeof OCA.Viewer !== 'undefined' && openFileExtensions.indexOf(fileExtension) > -1) {
+						if (typeof OCA.Viewer !== 'undefined') {
 							OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
-						} else if (typeof OCA.Viewer === 'undefined' && openFileExtensions.indexOf(fileExtension) > -1) {
-							OCA.Files.fileActions.triggerAction('Edit with text', fileInfoModel, fileList)
-						} else if (typeof OCA.Files_Texteditor !== 'undefined') {
-							const dir = fileList.getCurrentDirectory()
-							OCA.Files_Texteditor._onEditorTrigger(
-								name,
-								{
-									fileList: fileList,
-									dir: dir
-								}
-							)
+						} else if (typeof OCA.Viewer === 'undefined') {
+							OCA.Files.fileActions.triggerAction(FILE_ACTION_IDENTIFIER, fileInfoModel, fileList)
 						}
 					})
 				}
@@ -151,14 +114,14 @@ const registerFileActionFallback = () => {
 		document.body.appendChild(ViewerRoot)
 		const registerAction = (mime) => OCA.Files.fileActions.register(
 			mime,
-			'Edit with text',
+			FILE_ACTION_IDENTIFIER,
 			OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
 			OC.imagePath('core', 'actions/rename'),
 			(filename) => {
 				const file = window.FileList.findFile(filename)
 				Promise.all([
 					import('vue'),
-					import('./components/PublicFilesEditor')
+					import('./../components/PublicFilesEditor')
 				]).then((imports) => {
 					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default
@@ -172,7 +135,8 @@ const registerFileActionFallback = () => {
 								fileId: file ? file.id : null,
 								active: true,
 								shareToken: sharingToken,
-								relativePath: path
+								relativePath: path,
+								mimeType: file.mimetype
 							}
 						})
 					})
@@ -181,20 +145,18 @@ const registerFileActionFallback = () => {
 			},
 			t('text', 'Edit')
 		)
-		registerAction('text/markdown')
-		registerAction('text/plain')
-		OCA.Files.fileActions.setDefault('text/markdown', 'Edit with text')
-		OCA.Files.fileActions.setDefault('text/plain', 'Edit with text')
+
+		for (let i = 0; i < openMimetypes; i++) {
+			registerAction(openMimetypes[i])
+			OCA.Files.fileActions.setDefault(openMimetypes[i], FILE_ACTION_IDENTIFIER)
+		}
 	}
 
 }
 
 export {
-	documentReady,
-	endpointUrl,
-	getRandomGuestName,
 	fetchFileInfo,
-	openFileExtensions, openMimetypes,
 	registerFileActionFallback,
-	registerFileCreate
+	registerFileCreate,
+	FILE_ACTION_IDENTIFIER
 }
