@@ -483,7 +483,7 @@ export default {
 			width: 100%;
 		}
 		.editor__content::v-deep .ProseMirror {
-				padding-top: 50px;
+			padding-top: 50px;
 		}
 	}
 
