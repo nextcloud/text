@@ -55,6 +55,7 @@ import Vue from 'vue'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
+import { extensionHighlight } from '../helpers/mappings'
 import { createEditor, markdownit, createMarkdownSerializer, serializePlainText } from './../EditorFactory'
 
 import { EditorContent } from 'tiptap'
@@ -176,6 +177,9 @@ export default {
 		},
 		isRichEditor() {
 			return this.mime === 'text/markdown'
+		},
+		fileExtension() {
+			return this.relativePath.split('/').pop().split('.').pop()
 		}
 	},
 	watch: {
@@ -279,7 +283,9 @@ export default {
 							})
 						],
 						enableRichEditing: this.isRichEditor,
-						languages: ['cpp', 'css', 'php']
+						languages: [
+							extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension
+						]
 					}).then(editor => {
 						this.tiptap = editor
 						this.syncService.state = this.tiptap.state

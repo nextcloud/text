@@ -40,7 +40,7 @@ import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-const loadSyntaxHighlight = async (languages) => {
+const loadSyntaxHighlight = async(languages) => {
 	let modules = {}
 	for (let i = 0; i < languages.length; i++) {
 		const lang = await import('highlight.js/lib/languages/' + languages[i])
@@ -52,7 +52,7 @@ const loadSyntaxHighlight = async (languages) => {
 	return { languages: modules }
 }
 
-const createEditor = async ({ content, onUpdate, extensions, enableRichEditing, languages }) => {
+const createEditor = async({ content, onUpdate, extensions, enableRichEditing, languages }) => {
 	const highlight = await loadSyntaxHighlight(languages)
 	let richEditingExtensions = []
 	if (enableRichEditing) {
