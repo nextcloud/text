@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 lang_map = bg_BG: bg, cs_CZ: cs, fi_FI: fi, hu_HU: hu, nb_NO: nb, sk_SK: sk, th_TH: th, ja_JP: ja
 
-[nextcloud.social]
+[nextcloud.text]
 file_filter = translationfiles/<lang>/text.po
 source_file = translationfiles/templates/text.pot
 source_lang = en
