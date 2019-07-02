@@ -1,5 +1,6 @@
 import { markdownit, createEditor, createMarkdownSerializer, serializePlainText } from './../EditorFactory';
 import spec from "./fixtures/spec"
+import xssFuzzVectors from './fixtures/xssFuzzVectors';
 
 const escapeHTML = (s) => {
   return s.toString()
@@ -19,7 +20,7 @@ const plaintextThroughEditor = (markdown) => {
   return serializePlainText(tiptap) || 'failed'
 }
 
-describe('Markdown though editor', () => {
+describe('commonmark as plaintext', () => {
   // FIXME: Those two tests currently fail as trailing whitespace seems to be stripped,
   // if it occurs in the first line which is empty otherwise.
   const skippedMarkdownTests = [
@@ -34,7 +35,8 @@ describe('Markdown though editor', () => {
       expect(plaintextThroughEditor(entry.markdown)).toBe(entry.markdown)
     })
   })
-
+})
+describe('markdown as plaintext', () => {
   test('headlines', () => {
     expect(plaintextThroughEditor('# Test')).toBe('# Test')
     expect(plaintextThroughEditor('## Test')).toBe('## Test')
@@ -64,5 +66,17 @@ describe('Markdown though editor', () => {
   })
   test('images', () => {
     expect(plaintextThroughEditor('![test](foo)')).toBe('![test](foo)')
+  })
+})
+
+describe('html as plain text', () => {
+  test('link', () => {
+    expect(plaintextThroughEditor('<a>sdf</a>')).toBe('<a>sdf</a>')
+    expect(plaintextThroughEditor('<a href="foobar">sdf</a>')).toBe('<a href="foobar">sdf</a>')
+
+  })
+  test('special characters', () => {
+    expect(plaintextThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
+    expect(plaintextThroughEditor(xssFuzzVectors)).toBe(xssFuzzVectors)
   })
 })

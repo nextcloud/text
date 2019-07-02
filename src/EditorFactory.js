@@ -101,6 +101,9 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing, langua
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
 
+const SerializeException = (message) => {
+	this.message = message
+}
 const createMarkdownSerializer = (_nodes, _marks) => {
 	const nodes = Object
 		.entries(_nodes)
@@ -124,9 +127,16 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 }
 
 const serializePlainText = (tiptap) => {
-	const tmp = document.createElement('div')
-	tmp.innerHTML = tiptap.getHTML()
-	return tmp.textContent || tmp.innerText || ''
+	const doc = tiptap.getJSON()
+
+	if (doc.content.length !== 1 || doc.content[0].content.length !== 1) {
+		throw new SerializeException('Failed to serialize document to plain text')
+	}
+	const codeBlock = doc.content[0].content[0]
+	if (codeBlock.type !== 'text') {
+		throw new SerializeException('Failed to serialize document to plain text')
+	}
+	return codeBlock.text
 }
 
 export default createEditor

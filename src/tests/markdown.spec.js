@@ -75,6 +75,9 @@ describe('Markdown though editor', () => {
   test('images', () => {
     expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
   })
+  test('special characters', () => {
+    expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
+  })
 })
 
 describe('Markdown serializer from html', () => {
