@@ -25,7 +25,6 @@ const openMimetypesMarkdown = [
 ]
 
 const openMimetypesPlainText = [
-	'text',
 	'text/plain',
 	'application/cmd',
 	'application/javascript',

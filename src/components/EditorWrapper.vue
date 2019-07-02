@@ -56,7 +56,7 @@ import Vue from 'vue'
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
 import { extensionHighlight } from '../helpers/mappings'
-import { createEditor, markdownit, createMarkdownSerializer, serializePlainText } from './../EditorFactory'
+import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
@@ -256,8 +256,8 @@ export default {
 
 				})
 				.on('loaded', ({ documentSource }) => {
-					const highlight = loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
-						createEditor({
+					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
+						this.tiptap = createEditor({
 							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
 							onUpdate: ({ state }) => {
 								this.syncService.state = state
@@ -284,9 +284,8 @@ export default {
 								})
 							],
 							enableRichEditing: this.isRichEditor,
-							...languages
+							languages
 						})
-						this.tiptap = editor
 						this.syncService.state = this.tiptap.state
 					})
 				})

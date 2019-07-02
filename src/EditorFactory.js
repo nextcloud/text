@@ -40,7 +40,8 @@ import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-const loadSyntaxHighlight = async(languages) => {
+const loadSyntaxHighlight = async(language) => {
+	const languages = [language]
 	let modules = {}
 	for (let i = 0; i < languages.length; i++) {
 		try {
@@ -123,10 +124,10 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 }
 
 const serializePlainText = (tiptap) => {
-	const tmp = document.createElement('div');
-	tmp.innerHTML = tiptap.getHTML();
-	return tmp.textContent || tmp.innerText || '';
+	const tmp = document.createElement('div')
+	tmp.innerHTML = tiptap.getHTML()
+	return tmp.textContent || tmp.innerText || ''
 }
 
 export default createEditor
-export { markdownit, createEditor, createMarkdownSerializer, serializePlainText }
+export { markdownit, createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight }
