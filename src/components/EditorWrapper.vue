@@ -256,37 +256,36 @@ export default {
 
 				})
 				.on('loaded', ({ documentSource }) => {
-					createEditor({
-						content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
-						onUpdate: ({ state }) => {
-							this.syncService.state = state
-						},
-						extensions: [
-							new Collaboration({
-								// the initial version we start with
-								// version is an integer which is incremented with every change
-								version: this.document.initialVersion,
-								clientID: this.currentSession.id,
-								// debounce changes so we can save some bandwidth
-								debounce: EDITOR_PUSH_DEBOUNCE,
-								onSendable: ({ sendable }) => {
-									if (this.syncService) {
-										this.syncService.sendSteps()
+					const highlight = loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
+						createEditor({
+							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
+							onUpdate: ({ state }) => {
+								this.syncService.state = state
+							},
+							extensions: [
+								new Collaboration({
+									// the initial version we start with
+									// version is an integer which is incremented with every change
+									version: this.document.initialVersion,
+									clientID: this.currentSession.id,
+									// debounce changes so we can save some bandwidth
+									debounce: EDITOR_PUSH_DEBOUNCE,
+									onSendable: ({ sendable }) => {
+										if (this.syncService) {
+											this.syncService.sendSteps()
+										}
 									}
-								}
-							}),
-							new Keymap({
-								'Ctrl-s': () => {
-									this.syncService.save()
-									return true
-								}
-							})
-						],
-						enableRichEditing: this.isRichEditor,
-						languages: [
-							extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension
-						]
-					}).then(editor => {
+								}),
+								new Keymap({
+									'Ctrl-s': () => {
+										this.syncService.save()
+										return true
+									}
+								})
+							],
+							enableRichEditing: this.isRichEditor,
+							...languages
+						})
 						this.tiptap = editor
 						this.syncService.state = this.tiptap.state
 					})

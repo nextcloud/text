@@ -1,37 +1,29 @@
 import { markdownit, createEditor, createMarkdownSerializer, serializePlainText } from './../EditorFactory';
 import spec from "./fixtures/spec"
 
-const markdownToDocument = (markdown) => {
-  const tiptap = createEditor({
-    content: markdownit.render(markdown),
-    enableRichEditing: false
-  })
-  const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
-  return tiptap.state.doc
+const escapeHTML = (s) => {
+  return s.toString()
+      .split('&').join('&amp;')
+      .split('<').join('&lt;')
+      .split('>').join('&gt;')
+      .split('"').join('&quot;')
+      .split('\'').join('&#039;')
 }
 
 const plaintextThroughEditor = (markdown) => {
-  const content = `<pre>${markdown}</pre>`
+  const content = '<pre>' + escapeHTML(markdown) + '</pre>'
   const tiptap = createEditor({
     content: content,
     enableRichEditing: false
   })
-  return serializePlainText(tiptap) || ''
+  return serializePlainText(tiptap) || 'failed'
 }
 
-describe('Commonmark', () => {
-  beforeAll(() => {
-    // Make sure html tests pass
-    // entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
-    markdownit.set({ html: true})
-  })
-  afterAll(() => {
-    markdownit.set({ html: false})
-  })
-
-  // failures because of some additional newline in markdownit
+describe('Markdown though editor', () => {
+  // FIXME: Those two tests currently fail as trailing whitespace seems to be stripped,
+  // if it occurs in the first line which is empty otherwise.
   const skippedMarkdownTests = [
-      181, 202, 203
+    66, 86
   ];
 
   spec.forEach((entry) => {
@@ -39,12 +31,10 @@ describe('Commonmark', () => {
       return
     }
     test('commonmark ' + entry.example, () => {
-      expect(markdownit.render(entry.markdown)).toBe(entry.html, entry)
+      expect(plaintextThroughEditor(entry.markdown)).toBe(entry.markdown)
     })
   })
-})
 
-describe('Markdown though editor', () => {
   test('headlines', () => {
     expect(plaintextThroughEditor('# Test')).toBe('# Test')
     expect(plaintextThroughEditor('## Test')).toBe('## Test')

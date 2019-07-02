@@ -57,8 +57,7 @@ const loadSyntaxHighlight = async(languages) => {
 	return { languages: modules }
 }
 
-const createEditor = async({ content, onUpdate, extensions, enableRichEditing, languages }) => {
-	const highlight = await loadSyntaxHighlight(languages)
+const createEditor = ({ content, onUpdate, extensions, enableRichEditing, languages }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -82,7 +81,7 @@ const createEditor = async({ content, onUpdate, extensions, enableRichEditing, l
 			new PlainTextDocument(),
 			new Text(),
 			new CodeBlockHighlight({
-				...highlight
+				...languages
 			})
 		]
 	}
@@ -124,8 +123,9 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 }
 
 const serializePlainText = (tiptap) => {
-	const doc = tiptap.getHTML().replace(/<[^>]*>?/gm, '')
-	return new DOMParser().parseFromString(doc, 'text/html').body.textContent
+	const tmp = document.createElement('div');
+	tmp.innerHTML = tiptap.getHTML();
+	return tmp.textContent || tmp.innerText || '';
 }
 
 export default createEditor
