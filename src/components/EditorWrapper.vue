@@ -43,7 +43,8 @@
 				<menu-bubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
 				<editor-content v-show="initialLoading" class="editor__content" :editor="tiptap" />
 			</div>
-			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
+			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange"
+				:is-rich-editor="isRichEditor" />
 		</div>
 
 		<collision-resolve-dialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
@@ -397,6 +398,9 @@ export default {
 		height: 100%;
 		overflow: hidden;
 		position: absolute;
+		.ProseMirror {
+			margin-top: 0 !important;
+		}
 		&.icon-loading {
 			#editor {
 				opacity: 0.3;
@@ -488,6 +492,9 @@ export default {
 			#editor {
 				padding-top: 50px;
 				overflow: auto;
+			}
+			.has-conflicts #editor {
+				padding-top: 0px;
 			}
 		}
 	}

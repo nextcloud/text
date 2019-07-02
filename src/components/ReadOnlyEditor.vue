@@ -35,6 +35,10 @@ export default {
 		content: {
 			type: String,
 			required: true
+		},
+		isRichEditor: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data: () => {
@@ -44,7 +48,8 @@ export default {
 	},
 	mounted() {
 		this.editor = createEditor({
-			content: markdownit.render(this.content)
+			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + window.escapeHTML(this.content) + '</pre>',
+			enableRichEditing: this.isRichEditor
 		})
 		this.editor.setOptions({ editable: false })
 	},
