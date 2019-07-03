@@ -1,0 +1,25 @@
+OC.L10N.register(
+    "text",
+    {
+    "Text" : "Testu",
+    "📝 Collaborative document editing" : "Elkarlaneko dokumentuen edizioa",
+    "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Elkarlaneko dokumentuen edizioa!**\n\n- **📝 Idazkeran zentratua:** Distraziorik gabe, bakarrik behar duzun formatua.\n- **🙋 Elkarlanean:** Partekatu eta elkarrekin aritu lagun eta lankideekin, ez du axola haiek Nextcloud erabiltzen duten ala ez!\n- **💾 Formatu irekia:** Fitxategiak [Markdown](https://eu.wikipedia.org/wiki/Markdown) formatuan gordetzen dira, beraz beste testu-aplikazioren bidez ere edita dezakezu.\n- **✊ Fundazio sendoa:**  [🐈 tiptap](https://tiptap.scrumpy.io) erabiltzen dugu [🦉 ProseMirror](https://prosemirror.net) – lanabesean oinarritua -eskerrik asko haiei-.",
+    "Use current version" : "Erabili uneko bertsioa",
+    "Use the saved version" : "Erabili gordetako bertsioa",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu.",
+    "Last save {lastSave}" : "Azken gordetzea {lastSave}",
+    "Unpushed changes" : "Bidali gabeko aldaketak",
+    "Unsaved changes" : "Gorde gabeko aldaketak",
+    "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
+    "Edit guest name" : "Editatu gonbidatuaren izena",
+    "Save guest name" : "Gorde gonbidatuaren izena",
+    "Add link" : "Gehitu esteka",
+    "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
+    "Show image" : "Bistaratu irudia",
+    "Show file" : "Bistaratu fitxategia",
+    "New text document" : "Testu dokumentu berria",
+    "New text document.md" : "Testu dokumentu berria.md",
+    "Edit" : "Editatu",
+    "Undo" : "Desegin"
+},
+"nplurals=2; plural=(n != 1);");

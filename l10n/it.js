@@ -1,0 +1,25 @@
+OC.L10N.register(
+    "text",
+    {
+    "Text" : "Testo",
+    "📝 Collaborative document editing" : "Modifica documenti collaborativa",
+    "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Modifica documenti collaborativa!**\n\n- **📝 Scrittura focalizzata:** Nessuna distrazione, solo la formattazione che ti serve.\n- **🙋 Lavora insieme:** Condividi e collabora con amici e colleghi, non importa se utilizzano Nextcloud o no!\n- **💾 Formato aperto:** I files sono salvati come  [Markdown](https://en.wikipedia.org/wiki/Markdown), così puoi editarli anche da qualsiasi altra applicazione.\n- **✊ Una forte fondazione:** Noi usiamo [🐈 tiptap](https://tiptap.scrumpy.io) che è basato su [🦉 ProseMirror](https://prosemirror.net) – un grande ringraziamento a loro!",
+    "Use current version" : "Utilizza la versione corrente",
+    "Use the saved version" : "Utilizza la versione salvata",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "Il documento è stato modificato al di fuori dell'editor. Le modifiche non saranno applicate.",
+    "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
+    "Unpushed changes" : "Modifiche non depositate",
+    "Unsaved changes" : "Modifiche non salvate",
+    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome così gli altri utenti possono vedere chi sta modificando",
+    "Edit guest name" : "Modifica nome ospite",
+    "Save guest name" : "Salva nome ospite",
+    "Add link" : "Aggiungi collegamento",
+    "_and %n other editor_::_and %n other editors_" : ["e %n altro redattore","e %n altri redattori"],
+    "Show image" : "Mostra immagine",
+    "Show file" : "Mostra file",
+    "New text document" : "Nuovo documento di testo",
+    "New text document.md" : "Nuovo documento di testo,md",
+    "Edit" : "Modifica",
+    "Undo" : "Annulla"
+},
+"nplurals=2; plural=(n != 1);");
