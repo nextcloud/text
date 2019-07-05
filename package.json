@@ -23,6 +23,7 @@
 		"test:coverage": "NODE_ENV=test jest --coverage"
 	},
 	"dependencies": {
+		"highlight.js": "^9.15.8",
 		"nextcloud-axios": "^0.2.0",
 		"nextcloud-server": "^0.15.10",
 		"nextcloud-vue": "^0.11.4",
@@ -42,6 +43,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.5.0",
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
+		"@babel/plugin-transform-runtime": "^7.4.4",
 		"@babel/polyfill": "^7.4.4",
 		"@babel/preset-env": "^7.5.0",
 		"@vue/test-utils": "^1.0.0-beta.29",
@@ -63,6 +65,7 @@
 		"eslint-plugin-vue": "^5.2.3",
 		"file-loader": "^4.0.0",
 		"jest": "^24.8.0",
+		"jest-environment-jsdom-fourteen": "^0.1.0",
 		"jest-serializer-vue": "^2.0.2",
 		"node-sass": "^4.12.0",
 		"prettier-eslint": "^9.0.0",
@@ -83,6 +86,7 @@
 	},
 	"jest": {
 		"verbose": true,
+		"testEnvironment": "jest-environment-jsdom-fourteen",
 		"moduleFileExtensions": [
 			"js",
 			"vue"

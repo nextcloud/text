@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<editor-wrapper :file-id="fileId" :relative-path="relativePath" :active="active"
+	<editor-wrapper :file-id="fileId" :relative-path="davPath" :active="active"
 		:share-token="shareToken" :mime="mime" />
 </template>
 
@@ -32,7 +32,7 @@ export default {
 		EditorWrapper: () => import('./EditorWrapper')
 	},
 	props: {
-		relativePath: {
+		davPath: {
 			type: String,
 			default: null
 		},

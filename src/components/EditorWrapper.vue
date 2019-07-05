@@ -27,9 +27,10 @@
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading, 'richEditor': isRichEditor}">
 			<div id="editor">
-				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap">
+				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap"
+					:is-rich-editor="isRichEditor">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -39,10 +40,11 @@
 						</session-list>
 					</div>
 				</menu-bar>
-				<menu-bubble v-if="!readOnly" :editor="tiptap" />
+				<menu-bubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
 				<editor-content v-show="initialLoading" class="editor__content" :editor="tiptap" />
 			</div>
-			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange" />
+			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange"
+				:is-rich-editor="isRichEditor" />
 		</div>
 
 		<collision-resolve-dialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
@@ -54,7 +56,8 @@ import Vue from 'vue'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
-import { createEditor, markdownit, createMarkdownSerializer } from './../EditorFactory'
+import { extensionHighlight } from '../helpers/mappings'
+import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
@@ -172,6 +175,12 @@ export default {
 		},
 		isPublic() {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+		},
+		isRichEditor() {
+			return this.mime === 'text/markdown'
+		},
+		fileExtension() {
+			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
 		}
 	},
 	watch: {
@@ -218,9 +227,15 @@ export default {
 				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
-					const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
-					console.debug('serialized document', { markdown })
-					return markdown
+					if (this.isRichEditor) {
+						const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
+						console.debug('serialized document', { markdown })
+						return markdown
+					}
+					const file = serializePlainText(this.tiptap)
+					console.debug('serialized document', { file })
+					return file
+
 				}
 			})
 				.on('opened', ({ document, session }) => {
@@ -242,35 +257,38 @@ export default {
 
 				})
 				.on('loaded', ({ documentSource }) => {
-					this.tiptap = createEditor({
-						content: markdownit.render(documentSource),
-						onUpdate: ({ state }) => {
-							this.syncService.state = state
-						},
-						extensions: [
-							new Collaboration({
-								// the initial version we start with
-								// version is an integer which is incremented with every change
-								version: this.document.initialVersion,
-								clientID: this.currentSession.id,
-								// debounce changes so we can save some bandwidth
-								debounce: EDITOR_PUSH_DEBOUNCE,
-								onSendable: ({ sendable }) => {
-									if (this.syncService) {
-										this.syncService.sendSteps()
+					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
+						this.tiptap = createEditor({
+							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
+							onUpdate: ({ state }) => {
+								this.syncService.state = state
+							},
+							extensions: [
+								new Collaboration({
+									// the initial version we start with
+									// version is an integer which is incremented with every change
+									version: this.document.initialVersion,
+									clientID: this.currentSession.id,
+									// debounce changes so we can save some bandwidth
+									debounce: EDITOR_PUSH_DEBOUNCE,
+									onSendable: ({ sendable }) => {
+										if (this.syncService) {
+											this.syncService.sendSteps()
+										}
 									}
-								}
-							}),
-							new Keymap({
-								'Ctrl-s': () => {
-									this.syncService.save()
-									return true
-								}
-							})
-						],
-						enableRichEditing: true
+								}),
+								new Keymap({
+									'Ctrl-s': () => {
+										this.syncService.save()
+										return true
+									}
+								})
+							],
+							enableRichEditing: this.isRichEditor,
+							languages
+						})
+						this.syncService.state = this.tiptap.state
 					})
-					this.syncService.state = this.tiptap.state
 				})
 				.on('sync', ({ steps, document }) => {
 					try {
@@ -380,6 +398,9 @@ export default {
 		height: 100%;
 		overflow: hidden;
 		position: absolute;
+		.ProseMirror {
+			margin-top: 0 !important;
+		}
 		&.icon-loading {
 			#editor {
 				opacity: 0.3;
@@ -441,11 +462,6 @@ export default {
 	.editor__content {
 		max-width: 670px;
 		margin: auto;
-		& /deep/ .ProseMirror {
-			margin: 0;
-			padding: 14px;
-			padding-bottom: 200px;
-		}
 	}
 
 	#body-public {
@@ -471,6 +487,9 @@ export default {
 			#editor {
 				padding-top: 50px;
 				overflow: auto;
+			}
+			.has-conflicts #editor {
+				padding-top: 0px;
 			}
 		}
 	}

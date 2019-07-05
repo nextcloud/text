@@ -23,7 +23,7 @@
 <template>
 	<editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
 		<div class="menubar">
-			<div ref="menubar" class="menubar-icons">
+			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<button v-if="icon.class" v-show="$index < iconCount" :key="icon.label"
 						:title="icon.label"
@@ -67,7 +67,7 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
-import { fetchFileInfo } from './../helpers'
+import { fetchFileInfo } from './../helpers/files'
 
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import ActionButton from 'nextcloud-vue/dist/Components/ActionButton'
@@ -91,6 +91,10 @@ export default {
 			type: Object,
 			required: false,
 			default: null
+		},
+		isRichEditor: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data: () => {

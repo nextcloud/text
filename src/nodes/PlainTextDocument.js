@@ -20,10 +20,28 @@
  *
  */
 
-import Image from './Image'
-import PlainTextDocument from './PlainTextDocument'
+import { Node } from 'tiptap'
+import { insertText } from 'tiptap-commands'
 
-export {
-	Image,
-	PlainTextDocument
+export default class PlainTextDocument extends Node {
+
+	get name() {
+		return 'doc'
+	}
+
+	get schema() {
+		return {
+			content: 'block'
+		}
+	}
+
+	keys() {
+		return {
+			Tab: (state) => {
+				insertText('\t')(state, this.editor.view.dispatch, this.editor.view)
+				return true
+			}
+		}
+	}
+
 }

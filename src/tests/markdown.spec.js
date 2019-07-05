@@ -1,24 +1,6 @@
 import { markdownit, createEditor, createMarkdownSerializer } from './../EditorFactory';
 import spec from "./fixtures/spec"
 
-const markdownToDocument = (markdown) => {
-  const tiptap = createEditor({
-    content: markdownit.render(markdown),
-    enableRichEditing: true
-  })
-  const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
-  return tiptap.state.doc
-}
-
-const documentToMarkdown = (document) => {
-  const tiptap = createEditor({
-    content: document,
-    enableRichEditing: true
-  })
-  const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
-  const markdown = serializer.serialize(document)
-}
-
 const markdownThroughEditor = (markdown) => {
   const tiptap = createEditor({
     content: markdownit.render(markdown),
@@ -92,6 +74,9 @@ describe('Markdown though editor', () => {
   })
   test('images', () => {
     expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
+  })
+  test('special characters', () => {
+    expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
   })
 })
 

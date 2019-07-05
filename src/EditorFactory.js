@@ -19,7 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { Editor } from 'tiptap'
+import { Editor, Text } from 'tiptap'
 import {
 	HardBreak,
 	Heading,
@@ -30,16 +30,35 @@ import {
 	ListItem,
 	Blockquote,
 	CodeBlock,
+	CodeBlockHighlight,
 	HorizontalRule,
 	History
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
-import { Image } from './nodes'
+import { Image, PlainTextDocument } from './nodes'
 import MarkdownIt from 'markdown-it'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
+const loadSyntaxHighlight = async(language) => {
+	const languages = [language]
+	let modules = {}
+	for (let i = 0; i < languages.length; i++) {
+		try {
+			const lang = await import('highlight.js/lib/languages/' + languages[i])
+			modules[languages[i]] = lang.default
+		} catch (e) {
+			// No matching highlighing found, fallback to none
+			return undefined
+		}
+	}
+	if (Object.keys(modules).length === 0 && modules.constructor === Object) {
+		return undefined
+	}
+	return { languages: modules }
+}
+
+const createEditor = ({ content, onUpdate, extensions, enableRichEditing, languages }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -48,6 +67,7 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 			new Strong(),
 			new Italic(),
 			new Strike(),
+			new HardBreak(),
 			new HorizontalRule(),
 			new BulletList(),
 			new OrderedList(),
@@ -57,22 +77,33 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing }) => {
 			new Link(),
 			new Image()
 		]
+	} else {
+		richEditingExtensions = [
+			new PlainTextDocument(),
+			new Text(),
+			new CodeBlockHighlight({
+				...languages
+			})
+		]
 	}
 	extensions = extensions || []
 	return new Editor({
 		content: content,
 		onUpdate: onUpdate,
 		extensions: [
-			new HardBreak(),
 			...richEditingExtensions,
 			new History()
-		].concat(extensions)
+		].concat(extensions),
+		useBuiltInExtensions: enableRichEditing
 	})
 }
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
 
+const SerializeException = (message) => {
+	this.message = message
+}
 const createMarkdownSerializer = (_nodes, _marks) => {
 	const nodes = Object
 		.entries(_nodes)
@@ -95,5 +126,18 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 	)
 }
 
+const serializePlainText = (tiptap) => {
+	const doc = tiptap.getJSON()
+
+	if (doc.content.length !== 1 || doc.content[0].content.length !== 1) {
+		throw new SerializeException('Failed to serialize document to plain text')
+	}
+	const codeBlock = doc.content[0].content[0]
+	if (codeBlock.type !== 'text') {
+		throw new SerializeException('Failed to serialize document to plain text')
+	}
+	return codeBlock.text
+}
+
 export default createEditor
-export { markdownit, createEditor, createMarkdownSerializer }
+export { markdownit, createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight }

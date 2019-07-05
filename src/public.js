@@ -1,9 +1,6 @@
-import {
-	documentReady,
-	registerFileActionFallback,
-	openMimetypes,
-	registerFileCreate
-} from './helpers'
+import { documentReady } from './helpers'
+import { registerFileActionFallback, registerFileCreate } from './helpers/files'
+import { openMimetypes } from './helpers/mime'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -36,7 +33,8 @@ documentReady(() => {
 					render: h => h(Editor, {
 						props: {
 							active: true,
-							shareToken: sharingToken
+							shareToken: sharingToken,
+							mimetype: mimetype
 						}
 					})
 				})
