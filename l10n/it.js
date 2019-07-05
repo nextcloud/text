@@ -10,7 +10,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
     "Unpushed changes" : "Modifiche non depositate",
     "Unsaved changes" : "Modifiche non salvate",
-    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome così gli altri utenti possono vedere chi sta modificando",
+    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Edit guest name" : "Modifica nome ospite",
     "Save guest name" : "Salva nome ospite",
     "Add link" : "Aggiungi collegamento",
