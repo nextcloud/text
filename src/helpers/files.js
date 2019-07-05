@@ -146,7 +146,7 @@ const registerFileActionFallback = () => {
 			t('text', 'Edit')
 		)
 
-		for (let i = 0; i < openMimetypes; i++) {
+		for (let i = 0; i < openMimetypes.length; i++) {
 			registerAction(openMimetypes[i])
 			OCA.Files.fileActions.setDefault(openMimetypes[i], FILE_ACTION_IDENTIFIER)
 		}
