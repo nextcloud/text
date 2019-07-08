@@ -23,7 +23,7 @@
 	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot2.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot3.gff</screenshot>
 	<dependencies>
-		<nextcloud min-version="16" max-version="17"/>
+		<nextcloud min-version="16.0.1" max-version="17"/>
 	</dependencies>
 	<background-jobs>
 		<job>OCA\Text\Cron\Cleanup</job>
