@@ -27,6 +27,8 @@ import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
+registerFileCreate()
+
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
@@ -39,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		component: FilesEditor,
 		group: null
 	})
-	registerFileCreate()
 })
 
 OCA.Text = {
