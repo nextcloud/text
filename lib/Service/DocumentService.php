@@ -237,6 +237,10 @@ class DocumentService {
 			 $file = $this->getFileByShareToken($token, $filePath);
 		}
 
+		if ($file === null) {
+			throw new NotFoundException();
+		}
+
 		if ($this->isReadOnly($file, $token)) {
 			return $document;
 		}

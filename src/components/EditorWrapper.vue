@@ -305,14 +305,24 @@ export default {
 					this.document = document
 				})
 				.on('error', (error, data) => {
+					this.tiptap.setOptions({ editable: false })
 					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 						this.initialLoading = true
 						this.syncError = {
-							type: ERROR_TYPE.SAVE_COLLISSION,
+							type: error,
 							data: data
 						}
-						this.tiptap.setOptions({ editable: false })
-
+					}
+					if (error === ERROR_TYPE.CONNECTION_FAILED) {
+						this.initialLoading = false
+						// FIXME: ideally we just try to reconnect in the service, so we don't loose steps
+						OC.Notification.showTemporary('Connection failed, reconnecting')
+						this.reconnect()
+					}
+					if (error === ERROR_TYPE.SOURCE_NOT_FOUND) {
+						this.initialLoading = false
+						OC.Notification.showTemporary('Source not found')
+						this.$emit('close')
 					}
 				})
 				.on('stateChange', (state) => {
@@ -334,6 +344,11 @@ export default {
 		},
 
 		resolveUseServerVersion() {
+			this.forceRecreate = true
+			this.reconnect()
+		},
+
+		reconnect() {
 			this.forceRecreate = true
 			this.syncService.close()
 			this.syncService = null
