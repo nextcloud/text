@@ -78,6 +78,11 @@ describe('Markdown though editor', () => {
   test('special characters', () => {
     expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
   })
+  test('checkboxes', () => {
+    expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
+    expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
+    expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* \\[ [asd](sdf)')
+  })
 })
 
 describe('Markdown serializer from html', () => {

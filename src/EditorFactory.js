@@ -120,10 +120,16 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 			...items,
 			[name]: toMarkdown
 		}), {})
-	return new MarkdownSerializer(
-		{ ...defaultMarkdownSerializer.nodes, ...nodes },
-		{ ...defaultMarkdownSerializer.marks, ...marks }
-	)
+	return {
+		serializer: new MarkdownSerializer(
+			{ ...defaultMarkdownSerializer.nodes, ...nodes },
+			{ ...defaultMarkdownSerializer.marks, ...marks }
+		),
+		serialize: function(content, options) {
+			return this.serializer.serialize(content, options).split('\\[ \\]').join('[ ]')
+				.split('\\[x\\]').join('[x]')
+		}
+	}
 }
 
 const serializePlainText = (tiptap) => {
