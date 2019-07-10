@@ -42,7 +42,11 @@ const ERROR_TYPE = {
 	 */
 	PUSH_FAILURE: 1,
 
-	LOAD_ERROR: 2
+	LOAD_ERROR: 2,
+
+	CONNECTION_FAILED: 3,
+
+	SOURCE_NOT_FOUND: 4
 }
 
 class SyncService {

@@ -145,6 +145,8 @@ class PollingBackend {
 				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
 					outsideChange: e.response.data.outsideChange
 				})
+			} else if (e.response.status === 403) {
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 			} else {
 				console.error('Failed to fetch steps due to other reason', e)
 			}
@@ -179,6 +181,15 @@ class PollingBackend {
 		}).catch((e) => {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
+			if (!e.response) {
+				throw e
+			}
+			// Only emit conflict event if we have synced until the latest version
+			if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+				this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
+				OC.Notification.showTemporary('Changes could not be sent yet')
+			}
+
 			this.fetchSteps()
 			this.carefulRetry()
 		})

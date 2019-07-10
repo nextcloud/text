@@ -145,7 +145,7 @@ class ApiService {
 			}
 			return new DataResponse($steps);
 		}
-		return new DataResponse([], 500);
+		return new DataResponse([], 403);
 	}
 
 	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
@@ -176,6 +176,8 @@ class ApiService {
 			} catch (LockedException $e) {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
+		} catch (NotFoundException $e) {
+			return new DataResponse([], 404);
 		} catch (Exception $e) {
 			$this->logger->logException($e);
 			return new DataResponse([
