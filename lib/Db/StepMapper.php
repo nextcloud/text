@@ -46,6 +46,7 @@ class StepMapper extends QBMapper {
 		}
 		$qb
 			->setMaxResults(100)
+			->orderBy('version')
 			->execute();
 
 		return $this->findEntities($qb);
