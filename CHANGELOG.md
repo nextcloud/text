@@ -1,4 +1,19 @@
-# 1.0.0
+# Changelog
+
+## 1.0.1
+
+### Added
+- Implement proper plain text handling
+- Add translations
+
+### Fixed
+- Fix document loading caused by wrong step order
+- Properly register file action when viewer is disabled
+- Require at least 16.0.1
+- Reconnect the editor after the session has timed out
+- Keep markdown checkboxes in unescaped plain text
+
+## 1.0.0
 
 - Opening and editing markdown files
 - Collaborative editing
