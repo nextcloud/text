@@ -34,7 +34,7 @@ documentReady(() => {
 						props: {
 							active: true,
 							shareToken: sharingToken,
-							mimetype: mimetype
+							mime: mimetype
 						}
 					})
 				})
