@@ -349,7 +349,6 @@ export default {
 		},
 
 		reconnect() {
-			this.forceRecreate = true
 			this.syncService.close()
 			this.syncService = null
 			this.tiptap.destroy()
