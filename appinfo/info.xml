@@ -16,6 +16,7 @@
 	<author mail="jus@bitgrid.net">Julius Härtl</author>
 	<namespace>Text</namespace>
 	<category>office</category>
+	<default_enable/>
 	<website>https://github.com/nextcloud/text</website>
 	<bugs>https://github.com/nextcloud/text/issues</bugs>
 	<repository type="git">https://github.com/nextcloud/text.git</repository>
