@@ -5,7 +5,7 @@ steps:
     image: nextcloudci/php7.1:php7.1-15
     environment:
       APP_NAME: text
-      CORE_BRANCH: stable16
+      CORE_BRANCH: master
       DB: sqlite
     commands:
       - composer install
