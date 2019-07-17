@@ -22,8 +22,8 @@ documentReady(() => {
 
 		if (openMimetypes.indexOf(mimetype) !== -1) {
 			Promise.all([
-				import('vue'),
-				import('./components/EditorWrapper')
+				import(/* webpackChunkName: "vendor" */'vue'),
+				import(/* webpackChunkName: "editor" */'./components/EditorWrapper')
 			]).then((imports) => {
 				const Vue = imports[0].default
 				Vue.prototype.t = window.t

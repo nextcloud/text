@@ -1,7 +1,7 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	entry: {
@@ -13,7 +13,7 @@ module.exports = {
 		path: path.resolve(__dirname, './js'),
 		publicPath: '/js/',
 		filename: '[name].js',
-		chunkFilename: '[name].[chunkhash].js'
+		chunkFilename: '[name].js?v=[contenthash]'
 	},
 	module: {
 		rules: [
@@ -57,12 +57,26 @@ module.exports = {
 		new VueLoaderPlugin(),
 		new StyleLintPlugin({
 			files: ['src/**/*.vue', 'src/**/*.scss', 'src/**/*.css']
-		})
+		}),
+		new CleanWebpackPlugin()
 	],
 	resolve: {
 		alias: {
 			vue$: 'vue/dist/vue.esm.js'
 		},
 		extensions: ['*', '.js', '.vue', '.json']
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				highlight: {
+					test: /[\\/]node_modules[\\/](hightlight\.js)[\\/]/,
+				},
+				vendors: {
+					test: /[\\/]node_modules[\\/]/,
+					reuseExistingChunk: true
+				}
+			}
+		}
 	}
 };

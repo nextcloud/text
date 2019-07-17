@@ -29,7 +29,7 @@
 export default {
 	name: 'FilesEditor',
 	components: {
-		EditorWrapper: () => import('./EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
 	},
 	props: {
 		davPath: {

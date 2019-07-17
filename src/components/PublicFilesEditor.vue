@@ -34,7 +34,7 @@ export default {
 	name: 'FilesEditor',
 	components: {
 		Modal,
-		EditorWrapper: () => import('./EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
 	},
 	props: {
 		fileId: {

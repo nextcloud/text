@@ -72,12 +72,12 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		MenuBar: () => import('./MenuBar'),
-		MenuBubble: () => import('./MenuBubble'),
-		ReadOnlyEditor: () => import('./ReadOnlyEditor'),
-		CollisionResolveDialog: () => import('./CollisionResolveDialog'),
-		GuestNameDialog: () => import('./GuestNameDialog'),
-		SessionList: () => import('./SessionList')
+		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./MenuBar'),
+		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble'),
+		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor'),
+		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog'),
+		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
+		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList')
 	},
 	directives: {
 		Tooltip
