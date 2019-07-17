@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[176],{260:function(n,e){n.exports=function(n){return{subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
+//# sourceMappingURL=vbscript-html.js.map?v=ee7b8ae266db78b4f91d

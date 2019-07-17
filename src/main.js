@@ -5,8 +5,8 @@ __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 if (document.getElementById('maineditor')) {
 	Promise.all([
-		import('vue'),
-		import('./components/EditorWrapper')
+		import(/* webpackChunkName: "editor" */'vue'),
+		import(/* webpackChunkName: "editor" */'./components/EditorWrapper')
 	]).then((imports) => {
 		const Vue = imports[0].default
 		Vue.prototype.t = window.t
