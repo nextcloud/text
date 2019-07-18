@@ -58,7 +58,7 @@ stylelint-fix:
 
 # Cleaning
 clean:
-	rm -f js/*
+	rm -rf js/*
 
 clean-dev:
 	rm -rf node_modules
