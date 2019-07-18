@@ -42,9 +42,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.5.4",
+		"@babel/core": "^7.5.5",
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
-		"@babel/plugin-transform-runtime": "^7.5.0",
+		"@babel/plugin-transform-runtime": "^7.5.5",
 		"@babel/polyfill": "^7.4.4",
 		"@babel/preset-env": "^7.5.5",
 		"@vue/test-utils": "^1.0.0-beta.29",
@@ -82,7 +82,7 @@
 		"vue-loader": "^15.7.0",
 		"vue-style-loader": "^4.1.1",
 		"vue-template-compiler": "^2.6.10",
-		"webpack": "^4.35.3",
+		"webpack": "^4.36.1",
 		"webpack-cli": "^3.3.6",
 		"webpack-merge": "^4.2.1"
 	},
