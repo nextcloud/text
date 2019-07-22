@@ -132,7 +132,7 @@ export default {
 				return this.icons
 			}
 			return [...this.icons, {
-				label: 'Insert image',
+				label: t('text', 'Insert image'),
 				class: 'icon-image',
 				isActive: () => {
 				},
