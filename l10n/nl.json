@@ -11,6 +11,13 @@
     "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
     "Edit guest name" : "Bewerk gast naam",
     "Save guest name" : "Bewaar gast naam",
-    "Add link" : "Voeg link toe"
+    "Add link" : "Voeg link toe",
+    "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
+    "Show image" : "Toon afbeelding",
+    "Show file" : "Toon bestand",
+    "New text document" : "Nieuw tekstdocument",
+    "New text document.md" : "Nieuw tekstdocument.md",
+    "Edit" : "Bewerken",
+    "Undo" : "Ongedaan maken"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
