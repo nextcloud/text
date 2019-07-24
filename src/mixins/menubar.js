@@ -50,7 +50,7 @@ export default [
 		}
 	},
 	{
-		label: t('text', 'Strikethough'),
+		label: t('text', 'Strikethrough'),
 		class: 'icon-strike',
 		isActive: (isActive) => isActive.strike(),
 		action: (command) => {
