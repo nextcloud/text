@@ -11,6 +11,7 @@
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Ziyaretçi adını düzenle",
     "Save guest name" : "Ziyaretçi adını kaydet",
+    "Insert image" : "Görsel ekle",
     "Add link" : "Bağlantı ekle",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show image" : "Görseli görüntüle",
@@ -18,6 +19,22 @@
     "New text document" : "Yeni metin belgesi",
     "New text document.md" : "Yeni metin belgesi.md",
     "Edit" : "Düzenle",
-    "Undo" : "Geri al"
+    "Undo" : "Geri al",
+    "Redo" : "Yinele",
+    "Bold" : "Koyu",
+    "Italic" : "Yatık",
+    "Strikethough" : "Üzeri çizili",
+    "Paragraph" : "Paragraf",
+    "Headings" : "Başlıklar",
+    "Heading 1" : "1. Başlık",
+    "Heading 2" : "2. Başlık",
+    "Heading 3" : "3. Başlık",
+    "Heading 4" : "4. Başlık",
+    "Heading 5" : "5. Başlık",
+    "Heading 6" : "6. Başlık",
+    "Unordered list" : "Sıralı olmayan liste",
+    "Ordered list" : "Sıralı liste",
+    "Blockquote" : "Alıntı",
+    "Code block" : "Kod bloğu"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
