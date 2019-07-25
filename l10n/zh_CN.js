@@ -25,7 +25,6 @@ OC.L10N.register(
     "Redo" : "重做",
     "Bold" : "加粗",
     "Italic" : "斜体",
-    "Strikethough" : "删除线",
     "Paragraph" : "段落",
     "Headings" : "标题",
     "Heading 1" : "标题 1",

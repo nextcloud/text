@@ -25,7 +25,6 @@ OC.L10N.register(
     "Redo" : "Wiederherstellen",
     "Bold" : "Fett",
     "Italic" : "Kursiv",
-    "Strikethough" : "Durchstreichen",
     "Paragraph" : "Paragraf",
     "Headings" : "Überschriften",
     "Heading 1" : "Überschrift 1",

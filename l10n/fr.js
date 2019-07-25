@@ -13,6 +13,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
     "Edit guest name" : "Modifier le nom de l'invité",
     "Save guest name" : "Enregistrer le nom de l'invité",
+    "Insert image" : "Ajouter image",
     "Add link" : "Ajouter un lien",
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"],
     "Show image" : "Afficher l'image",
@@ -20,6 +21,16 @@ OC.L10N.register(
     "New text document" : "Nouveau document texte",
     "New text document.md" : "Nouveau document texte.md",
     "Edit" : "Modifier",
-    "Undo" : "Annuler"
+    "Undo" : "Annuler",
+    "Bold" : "Gras",
+    "Italic" : "Italique",
+    "Paragraph" : "Paragraphe",
+    "Headings" : "Titres",
+    "Heading 1" : "Titre 1",
+    "Heading 2" : "Titre 2",
+    "Heading 3" : "Titre 3",
+    "Heading 4" : "Titre 4",
+    "Heading 5" : "Titre 5",
+    "Heading 6" : "Titre 6"
 },
 "nplurals=2; plural=(n > 1);");
