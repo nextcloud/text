@@ -25,6 +25,7 @@ OC.L10N.register(
     "Redo" : "Yinele",
     "Bold" : "Koyu",
     "Italic" : "Yatık",
+    "Strikethrough" : "Üzeri çizili",
     "Paragraph" : "Paragraf",
     "Headings" : "Başlıklar",
     "Heading 1" : "1. Başlık",

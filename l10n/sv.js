@@ -25,6 +25,7 @@ OC.L10N.register(
     "Redo" : "Upprepa",
     "Bold" : "Fet",
     "Italic" : "Kursiv",
+    "Strikethrough" : "Genomstruken",
     "Paragraph" : "Paragraf",
     "Headings" : "Rubriker",
     "Heading 1" : "Rubrik 1",

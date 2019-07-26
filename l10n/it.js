@@ -25,6 +25,7 @@ OC.L10N.register(
     "Redo" : "Rifai",
     "Bold" : "Grassetto",
     "Italic" : "Corsivo",
+    "Strikethrough" : "Sbarrato",
     "Paragraph" : "Paragrafo",
     "Headings" : "Intestazioni",
     "Heading 1" : "Intestazione 1",

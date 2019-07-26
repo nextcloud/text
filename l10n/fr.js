@@ -22,8 +22,10 @@ OC.L10N.register(
     "New text document.md" : "Nouveau document texte.md",
     "Edit" : "Modifier",
     "Undo" : "Annuler",
+    "Redo" : "Rétablir",
     "Bold" : "Gras",
     "Italic" : "Italique",
+    "Strikethrough" : "Barré",
     "Paragraph" : "Paragraphe",
     "Headings" : "Titres",
     "Heading 1" : "Titre 1",
@@ -31,6 +33,10 @@ OC.L10N.register(
     "Heading 3" : "Titre 3",
     "Heading 4" : "Titre 4",
     "Heading 5" : "Titre 5",
-    "Heading 6" : "Titre 6"
+    "Heading 6" : "Titre 6",
+    "Unordered list" : "Liste non triée",
+    "Ordered list" : "Liste triée",
+    "Blockquote" : "Citation",
+    "Code block" : "Bloc de code"
 },
 "nplurals=2; plural=(n > 1);");

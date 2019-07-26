@@ -25,6 +25,7 @@ OC.L10N.register(
     "Redo" : "Refacer",
     "Bold" : "Grosa",
     "Italic" : "Cursiva",
+    "Strikethrough" : "Riscado",
     "Paragraph" : "Parágrafo",
     "Headings" : "Cabeceiras",
     "Heading 1" : "Título 1",
