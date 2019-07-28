@@ -22,8 +22,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Client details:**
  - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+ - Browser: [e.g. chrome, safari]
+ - Version: [e.g. 22]
  - Device: [e.g. iPhone6, desktop]
 
 <details>
@@ -31,9 +31,10 @@ If applicable, add screenshots to help explain your problem.
 <!--
 You can use the Issue Template application to prefill most of the required information: https://apps.nextcloud.com/apps/issuetemplate
 -->
-**Social app version:**
 
-**Operating system**:
+**Text app version:** (see Nextcloud apps page)
+
+**Operating system:**
 
 **Web server:**
 
