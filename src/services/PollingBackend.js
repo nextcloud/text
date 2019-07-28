@@ -142,7 +142,7 @@ class PollingBackend {
 			this.resetRefetchTimer()
 		}).catch((e) => {
 			this.lock = false
-			if (!e.response) {
+			if (!e.response || e.code === 'ECONNABORTED') {
 				if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 					console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
@@ -192,7 +192,7 @@ class PollingBackend {
 		}).catch((e) => {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
-			if (!e.response) {
+			if (!e.response || e.code === 'ECONNABORTED') {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 				return
 			} else if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {

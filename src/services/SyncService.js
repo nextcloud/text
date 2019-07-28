@@ -98,7 +98,7 @@ class SyncService {
 				})
 			})
 		}).catch((error) => {
-			if (!error.response) {
+			if (!error.response || error.code === 'ECONNABORTED') {
 				this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 			} else {
 				this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
