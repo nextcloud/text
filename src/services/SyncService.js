@@ -65,7 +65,9 @@ class SyncService {
 			/* error */
 			error: [],
 			/* Events for session and document meta data */
-			change: []
+			change: [],
+			/* Emitted after successful save */
+			save: []
 		}
 
 		this.backend = new PollingBackend(this)
@@ -226,7 +228,26 @@ class SyncService {
 	}
 
 	close() {
-		// TODO: save before close
+		let closed = false
+		return new Promise((resolve, reject) => {
+			this.on('save', () => {
+				this._close().then(() => {
+					closed = true
+					resolve()
+				}).catch(() => resolve())
+			})
+			setTimeout(() => {
+				if (!closed) {
+					this._close().then(() => {
+						resolve()
+					}).catch(() => resolve())
+				}
+			}, 2000)
+			this.save()
+		})
+	}
+
+	_close() {
 		if (this.document === null || this.session === null) {
 			return Promise.resolve()
 		}
