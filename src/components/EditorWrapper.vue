@@ -260,6 +260,10 @@ export default {
 					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
 							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
+							onInit: ({ state }) => {
+								this.syncService.state = state
+								this.syncService.startSync()
+							},
 							onUpdate: ({ state }) => {
 								this.syncService.state = state
 							},

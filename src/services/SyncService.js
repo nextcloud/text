@@ -69,9 +69,6 @@ class SyncService {
 		}
 
 		this.backend = new PollingBackend(this)
-		this.on('loaded', () => {
-			this.backend.connect()
-		})
 
 		this.options = Object.assign({}, defaultOptions, options)
 
@@ -106,6 +103,10 @@ class SyncService {
 			this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
 			return Promise.reject(error)
 		})
+	}
+
+	startSync() {
+		this.backend.connect()
 	}
 
 	_openDocument({ fileId, filePath }) {
