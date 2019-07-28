@@ -28,13 +28,13 @@ export default [
 		action: (command) => command.undo()
 	},
 	{
-		label: 'Redo',
+		label: t('text', 'Redo'),
 		class: 'icon-redo',
 		isActive: (isActive) => {},
 		action: (command) => command.redo()
 	},
 	{
-		label: 'Bold',
+		label: t('text', 'Bold'),
 		class: 'icon-bold',
 		isActive: (isActive) => isActive.strong(),
 		action: (command) => {
@@ -42,7 +42,7 @@ export default [
 		}
 	},
 	{
-		label: 'Italic',
+		label: t('text', 'Italic'),
 		class: 'icon-italic',
 		isActive: (isActive) => isActive.em(),
 		action: (command) => {
@@ -50,7 +50,7 @@ export default [
 		}
 	},
 	{
-		label: 'Strikethough',
+		label: t('text', 'Strikethrough'),
 		class: 'icon-strike',
 		isActive: (isActive) => isActive.strike(),
 		action: (command) => {
@@ -58,7 +58,7 @@ export default [
 		}
 	},
 	{
-		label: 'Paragraph',
+		label: t('text', 'Paragraph'),
 		class: 'icon-paragraph',
 		isActive: (isActive) => {},
 		action: (command) => {
@@ -66,11 +66,11 @@ export default [
 		}
 	},
 	{
-		label: 'Headings',
+		label: t('text', 'Headings'),
 		visible: false,
 		children: [
 			{
-				label: 'Heading 1',
+				label: t('text', 'Heading 1'),
 				class: 'icon-h1',
 				isActive: (isActive) => isActive.heading({ level: 1 }),
 				action: (command) => {
@@ -78,7 +78,7 @@ export default [
 				}
 			},
 			{
-				label: 'Heading 2',
+				label: t('text', 'Heading 2'),
 				class: 'icon-h2',
 				isActive: (isActive) => isActive.heading({ level: 2 }),
 				action: (command) => {
@@ -86,7 +86,7 @@ export default [
 				}
 			},
 			{
-				label: 'Heading 3',
+				label: t('text', 'Heading 3'),
 				class: 'icon-h3',
 				isActive: (isActive) => isActive.heading({ level: 3 }),
 				action: (command) => {
@@ -94,7 +94,7 @@ export default [
 				}
 			},
 			{
-				label: 'Heading 4',
+				label: t('text', 'Heading 4'),
 				class: 'icon-h4',
 				isActive: (isActive) => isActive.heading({ level: 4 }),
 				action: (command) => {
@@ -102,7 +102,7 @@ export default [
 				}
 			},
 			{
-				label: 'Heading 5',
+				label: t('text', 'Heading 5'),
 				class: 'icon-h5',
 				isActive: (isActive) => isActive.heading({ level: 5 }),
 				action: (command) => {
@@ -110,7 +110,7 @@ export default [
 				}
 			},
 			{
-				label: 'Heading 6',
+				label: t('text', 'Heading 6'),
 				class: 'icon-h6',
 				isActive: (isActive) => isActive.heading({ level: 6 }),
 				action: (command) => {
@@ -120,7 +120,7 @@ export default [
 		]
 	},
 	{
-		label: 'Unordered list',
+		label: t('text', 'Unordered list'),
 		class: 'icon-ul',
 		isActive: (isActive) => isActive.bullet_list(),
 		action: (command) => {
@@ -128,7 +128,7 @@ export default [
 		}
 	},
 	{
-		label: 'Ordered list',
+		label: t('text', 'Ordered list'),
 		class: 'icon-ol',
 		isActive: (isActive) => isActive.ordered_list(),
 		action: (command) => {
@@ -136,7 +136,7 @@ export default [
 		}
 	},
 	{
-		label: 'Blockquote',
+		label: t('text', 'Blockquote'),
 		class: 'icon-quote',
 		isActive: (isActive) => isActive.blockquote(),
 		action: (command) => {
@@ -144,7 +144,7 @@ export default [
 		}
 	},
 	{
-		label: 'Code block',
+		label: t('text', 'Code block'),
 		class: 'icon-code',
 		isActive: (isActive) => isActive.code_block(),
 		action: (command) => {

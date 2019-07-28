@@ -11,6 +11,7 @@
     "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
     "Edit guest name" : "Editar nome de convidado",
     "Save guest name" : "Salvar nome de convidado",
+    "Insert image" : "Inserir imagem",
     "Add link" : "Adicionar link",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "Show image" : "Mostrar imagem",
@@ -18,6 +19,22 @@
     "New text document" : "Novo documento de texto",
     "New text document.md" : "Novo texto document.md",
     "Edit" : "Editar",
-    "Undo" : "Desfazer"
+    "Undo" : "Desfazer",
+    "Redo" : "Refazer",
+    "Bold" : "Negrito",
+    "Italic" : "Itálico",
+    "Strikethrough" : "Riscado",
+    "Paragraph" : "Parágrafo",
+    "Headings" : "Títulos",
+    "Heading 1" : "Título 1",
+    "Heading 2" : "Título 2",
+    "Heading 3" : "Título 3",
+    "Heading 4" : "Título 4",
+    "Heading 5" : "Título 5",
+    "Heading 6" : "Título 6",
+    "Unordered list" : "Lista sem ordenação",
+    "Ordered list" : "Lista ordenada",
+    "Blockquote" : "Bloco de citação",
+    "Code block" : "Bloco de código"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
