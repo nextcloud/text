@@ -117,6 +117,7 @@ class PollingBackend {
 
 			if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
+				this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
 			}
 
 			this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
@@ -145,6 +146,7 @@ class PollingBackend {
 				if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 					console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+
 				} else {
 					console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
 				}
@@ -192,6 +194,7 @@ class PollingBackend {
 			this.lock = false
 			if (!e.response) {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				return
 			} else if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
 				// Only emit conflict event if we have synced until the latest version
 				this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})

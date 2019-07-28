@@ -300,6 +300,7 @@ export default {
 					})
 				})
 				.on('sync', ({ steps, document }) => {
+					this.hasConnectionIssue = false
 					try {
 						this.tiptap.extensions.options.collaboration.update({
 							version: document.currentVersion,
@@ -322,7 +323,7 @@ export default {
 							data: data
 						}
 					}
-					if (error === ERROR_TYPE.CONNECTION_FAILED) {
+					if (error === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
 						this.hasConnectionIssue = true
 						// FIXME: ideally we just try to reconnect in the service, so we don't loose steps
 						OC.Notification.showTemporary('Connection failed, reconnecting')
@@ -363,12 +364,12 @@ export default {
 		},
 
 		reconnect() {
-			this.syncService.close().catch((e) => {
-				// Ignore issues closing the session since those might happen due to network issues
-			}).finally(() => {
+			this.syncService.close().then(() => {
 				this.syncService = null
 				this.tiptap.destroy()
 				this.initSession()
+			}).catch((e) => {
+				// Ignore issues closing the session since those might happen due to network issues
 			})
 		},
 
