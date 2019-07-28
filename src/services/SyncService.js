@@ -97,10 +97,11 @@ class SyncService {
 			})
 		}).catch((error) => {
 			if (!error.response) {
-				throw error
+				this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+			} else {
+				this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
 			}
-			console.error(error.response)
-			this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
+
 			return Promise.reject(error)
 		})
 	}
@@ -226,6 +227,9 @@ class SyncService {
 
 	close() {
 		// TODO: save before close
+		if (this.document === null || this.session === null) {
+			return Promise.resolve()
+		}
 		this.backend.disconnect()
 		return axios.get(
 			endpointUrl('session/close', !!this.options.shareToken), {

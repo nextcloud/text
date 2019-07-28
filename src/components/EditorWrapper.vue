@@ -26,6 +26,9 @@
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
+			<p v-if="hasConnectionIssue" class="msg icon-error">
+				{{ t('text', 'Network connection error: Could not connect to the document') }} <a class="button primary" @click="reconnect">{{ t('text', 'Retry') }}</a>
+			</p>
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading, 'richEditor': isRichEditor}">
 			<div id="editor">
@@ -123,6 +126,7 @@ export default {
 			initialLoading: false,
 			lastSavedString: '',
 			syncError: null,
+			hasConnectionIssue: false,
 			readOnly: true,
 			forceRecreate: false,
 
@@ -257,6 +261,7 @@ export default {
 
 				})
 				.on('loaded', ({ documentSource }) => {
+					this.hasConnectionIssue = false
 					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
 							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
@@ -269,8 +274,8 @@ export default {
 							},
 							extensions: [
 								new Collaboration({
-									// the initial version we start with
-									// version is an integer which is incremented with every change
+								// the initial version we start with
+								// version is an integer which is incremented with every change
 									version: this.document.initialVersion,
 									clientID: this.currentSession.id,
 									// debounce changes so we can save some bandwidth
@@ -318,10 +323,10 @@ export default {
 						}
 					}
 					if (error === ERROR_TYPE.CONNECTION_FAILED) {
-						this.initialLoading = false
+						this.hasConnectionIssue = true
 						// FIXME: ideally we just try to reconnect in the service, so we don't loose steps
 						OC.Notification.showTemporary('Connection failed, reconnecting')
-						this.reconnect()
+						setTimeout(this.reconnect.bind(this), 1000)
 					}
 					if (error === ERROR_TYPE.SOURCE_NOT_FOUND) {
 						this.initialLoading = false
@@ -338,7 +343,12 @@ export default {
 						this.dirty = state.dirty
 					}
 				})
-			this.syncService.open({ fileId: this.fileId, filePath: this.relativePath })
+			this.syncService.open({
+				fileId: this.fileId,
+				filePath: this.relativePath
+			}).catch((e) => {
+				this.hasConnectionIssue = true
+			})
 			this.forceRecreate = false
 		},
 
@@ -353,10 +363,13 @@ export default {
 		},
 
 		reconnect() {
-			this.syncService.close()
-			this.syncService = null
-			this.tiptap.destroy()
-			this.initSession()
+			this.syncService.close().catch((e) => {
+				// Ignore issues closing the session since those might happen due to network issues
+			}).finally(() => {
+				this.syncService = null
+				this.tiptap.destroy()
+				this.initSession()
+			})
 		},
 
 		updateSessions(sessions) {
