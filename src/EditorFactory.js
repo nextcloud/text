@@ -58,7 +58,7 @@ const loadSyntaxHighlight = async(language) => {
 	return { languages: modules }
 }
 
-const createEditor = ({ content, onUpdate, extensions, enableRichEditing, languages }) => {
+const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing, languages }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -89,6 +89,7 @@ const createEditor = ({ content, onUpdate, extensions, enableRichEditing, langua
 	extensions = extensions || []
 	return new Editor({
 		content: content,
+		onInit: onInit,
 		onUpdate: onUpdate,
 		extensions: [
 			...richEditingExtensions,

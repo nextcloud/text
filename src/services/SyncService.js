@@ -65,13 +65,12 @@ class SyncService {
 			/* error */
 			error: [],
 			/* Events for session and document meta data */
-			change: []
+			change: [],
+			/* Emitted after successful save */
+			save: []
 		}
 
 		this.backend = new PollingBackend(this)
-		this.on('loaded', () => {
-			this.backend.connect()
-		})
 
 		this.options = Object.assign({}, defaultOptions, options)
 
@@ -99,13 +98,18 @@ class SyncService {
 				})
 			})
 		}).catch((error) => {
-			if (!error.response) {
-				throw error
+			if (!error.response || error.code === 'ECONNABORTED') {
+				this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+			} else {
+				this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
 			}
-			console.error(error.response)
-			this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
+
 			return Promise.reject(error)
 		})
+	}
+
+	startSync() {
+		this.backend.connect()
 	}
 
 	_openDocument({ fileId, filePath }) {
@@ -224,7 +228,29 @@ class SyncService {
 	}
 
 	close() {
-		// TODO: save before close
+		let closed = false
+		return new Promise((resolve, reject) => {
+			this.on('save', () => {
+				this._close().then(() => {
+					closed = true
+					resolve()
+				}).catch(() => resolve())
+			})
+			setTimeout(() => {
+				if (!closed) {
+					this._close().then(() => {
+						resolve()
+					}).catch(() => resolve())
+				}
+			}, 2000)
+			this.save()
+		})
+	}
+
+	_close() {
+		if (this.document === null || this.session === null) {
+			return Promise.resolve()
+		}
 		this.backend.disconnect()
 		return axios.get(
 			endpointUrl('session/close', !!this.options.shareToken), {
