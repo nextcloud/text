@@ -48,6 +48,9 @@ const MAX_PUSH_RETRY = 10000
 /* Timeout after that a PUSH_FAILURE error is emitted */
 const WARNING_PUSH_RETRY = 5000
 
+/* Maximum number of retries for fetching before emitting a connection error */
+const MAX_RETRY_FETCH_COUNT = 5
+
 /* Timeout for sessions to be marked as disconnected */
 const COLLABORATOR_DISCONNECT_TIME = 20
 
@@ -59,6 +62,7 @@ class PollingBackend {
 		this.fetchInterval = FETCH_INTERVAL
 		this.retryTime = MIN_PUSH_RETRY
 		this.lock = false
+		this.fetchRetryCounter = 0
 	}
 
 	connect() {
@@ -109,8 +113,11 @@ class PollingBackend {
 			token: this._authority.options.shareToken,
 			filePath: this._authority.options.filePath
 		}).then((response) => {
+			this.fetchRetryCounter = 0
+
 			if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
 				console.debug('Saved document', response.data.document)
+				this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
 			}
 
 			this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
@@ -126,7 +133,6 @@ class PollingBackend {
 				}
 				this._authority.emit('stateChange', { dirty: false })
 				this._authority.emit('stateChange', { initialLoading: true })
-
 				return
 			}
 
@@ -136,11 +142,16 @@ class PollingBackend {
 			this.resetRefetchTimer()
 		}).catch((e) => {
 			this.lock = false
-			if (!e.response) {
-				throw e
-			}
-			// Only emit conflict event if we have synced until the latest version
-			if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+			if (!e.response || e.code === 'ECONNABORTED') {
+				if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+					console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
+					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+
+				} else {
+					console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+				}
+			} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+				// Only emit conflict event if we have synced until the latest version
 				console.error('Conflict during file save, please resolve')
 				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
 					outsideChange: e.response.data.outsideChange
@@ -181,11 +192,11 @@ class PollingBackend {
 		}).catch((e) => {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
-			if (!e.response) {
-				throw e
-			}
-			// Only emit conflict event if we have synced until the latest version
-			if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+			if (!e.response || e.code === 'ECONNABORTED') {
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				return
+			} else if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+				// Only emit conflict event if we have synced until the latest version
 				this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
 				OC.Notification.showTemporary('Changes could not be sent yet')
 			}
