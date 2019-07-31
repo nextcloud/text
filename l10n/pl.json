@@ -5,6 +5,8 @@
     "Use current version" : "Użyj bieżącej wersji",
     "Use the saved version" : "Użyj zapisanej wersji",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument został zmieniony poza edytorem. Nie można zastosować zmian.",
+    "Network connection error: Could not connect to the document" : "Błąd połączenia sieciowego: Nie można połączyć się z dokumentem",
+    "Retry" : "Powtórz",
     "Last save {lastSave}" : "Ostatni zapis {lastSave}",
     "Unpushed changes" : "Niewysłane zmiany",
     "Unsaved changes" : "Niezapisane zmiany",

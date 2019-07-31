@@ -5,6 +5,8 @@
     "Use current version" : "Geçerli sürüm kullanılsın",
     "Use the saved version" : "Kaydedilmiş sürüm kullanılsın",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
+    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
+    "Retry" : "Yeniden Dene",
     "Last save {lastSave}" : "Son kayıt {lastSave}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
