@@ -170,7 +170,7 @@ class PollingBackend {
 		this._authority.emit('stateChange', { dirty: true })
 		if (this.lock) {
 			setTimeout(() => {
-				this._authority.sendSteps(_sendable)
+				this._authority.sendSteps()
 			}, 100)
 			return
 		}
