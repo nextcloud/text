@@ -1,0 +1,4 @@
+/js/*.js binary
+/js/*.js.map binary
+/js/*/*.js binary
+/js/*/*.js.map binary
