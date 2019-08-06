@@ -59,7 +59,7 @@ class DocumentService {
 	/**
 	 * Delay to wait for between autosave versions
 	 */
-	public const AUTOSAVE_MINIMUM_DELAY = 60;
+	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
 	/**
 	 * @var string|null
