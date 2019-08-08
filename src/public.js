@@ -18,7 +18,7 @@ documentReady(() => {
 		const container = document.createElement('div')
 		container.id = 'texteditor'
 		const body = document.getElementById('app-content')
-		body.append(container)
+		body.appendChild(container)
 
 		if (openMimetypes.indexOf(mimetype) !== -1) {
 			Promise.all([
