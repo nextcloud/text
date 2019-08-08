@@ -106,7 +106,7 @@ class PollingBackend {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
-			version: this._authority.steps.length,
+			version: this._authority._getVersion(),
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
