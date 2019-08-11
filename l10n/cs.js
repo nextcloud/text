@@ -33,6 +33,8 @@ OC.L10N.register(
     "Heading 4" : "Nadpis 4",
     "Heading 5" : "Nadpis 5",
     "Heading 6" : "Nadpis 6",
+    "Unordered list" : "Neuspořádaný seznam",
+    "Ordered list" : "Uspořádaný seznam",
     "Code block" : "Blok kódu"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
