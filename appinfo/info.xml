@@ -15,7 +15,6 @@
 	<licence>agpl</licence>
 	<author mail="jus@bitgrid.net">Julius Härtl</author>
 	<namespace>Text</namespace>
-	<default_enable/>
 	<category>office</category>
 	<website>https://github.com/nextcloud/text</website>
 	<bugs>https://github.com/nextcloud/text/issues</bugs>
