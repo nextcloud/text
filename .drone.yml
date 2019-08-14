@@ -54,7 +54,7 @@ steps:
     image: nextcloudci/php7.1:php7.1-16
     environment:
       APP_NAME: text
-      CORE_BRANCH: stable16
+      CORE_BRANCH: stable17
       DB: sqlite
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -76,7 +76,7 @@ steps:
     image: nextcloudci/php7.1:php7.1-16
     environment:
       APP_NAME: text
-      CORE_BRANCH: stable16
+      CORE_BRANCH: stable17
       DB: mysql
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -107,7 +107,7 @@ steps:
     image: nextcloudci/php7.1:php7.1-16
     environment:
       APP_NAME: text
-      CORE_BRANCH: stable16
+      CORE_BRANCH: stable17
       DB: postgres
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
