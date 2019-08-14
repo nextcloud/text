@@ -132,6 +132,7 @@ class SyncService {
 	_fetchDocument() {
 		return axios.get(
 			endpointUrl('session/fetch', !!this.options.shareToken), {
+				transformResponse: [(data) => data],
 				params: {
 					documentId: this.document.id,
 					sessionId: this.session.id,
