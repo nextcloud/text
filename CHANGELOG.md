@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.2
+
+### Fixed
+- Improved dynamic chunk loading
+- Add translations and fix wording for menu bar icons
+- Fix network error handling
+- Improve autosave behaviour
+- Dependency updates
+
 ## 1.0.1
 
 ### Added

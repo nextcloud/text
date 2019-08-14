@@ -59,7 +59,7 @@ class DocumentService {
 	/**
 	 * Delay to wait for between autosave versions
 	 */
-	public const AUTOSAVE_MINIMUM_DELAY = 60;
+	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
 	/**
 	 * @var string|null
@@ -252,9 +252,10 @@ class DocumentService {
 			return $document;
 		}
 		// Do not save if version already saved
-		if (!$force && $version <= (string)$document->getLastSavedVersion()) {
+		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$document->getCurrentVersion())) {
 			return $document;
 		}
+
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;

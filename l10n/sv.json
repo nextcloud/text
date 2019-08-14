@@ -5,6 +5,8 @@
     "Use current version" : "Använd nuvarande version",
     "Use the saved version" : "Använd den sparade versionen",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
+    "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
+    "Retry" : "Försök igen",
     "Last save {lastSave}" : "Senast sparade {lastSave}",
     "Unpushed changes" : "Ej slutförda ändringar",
     "Unsaved changes" : "Osparade ändringar",
