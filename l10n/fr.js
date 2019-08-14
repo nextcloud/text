@@ -7,6 +7,8 @@ OC.L10N.register(
     "Use current version" : "Utiliser la version actuelle",
     "Use the saved version" : "Utiliser la version enregistrée",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Le document a été modifié par un autre programme que l'éditeur. Les changements ne peuvent être appliqués.",
+    "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
+    "Retry" : "Réessayer",
     "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
     "Unpushed changes" : "Modifications non poussées",
     "Unsaved changes" : "Modifications non enregistrées",

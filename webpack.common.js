@@ -13,7 +13,8 @@ module.exports = {
 		path: path.resolve(__dirname, './js'),
 		publicPath: '/js/',
 		filename: '[name].js',
-		chunkFilename: '[name].js?v=[contenthash]'
+		chunkFilename: '[name].js?v=[contenthash]',
+		jsonpFunction: 'textWebpackJsonp'
 	},
 	module: {
 		rules: [
