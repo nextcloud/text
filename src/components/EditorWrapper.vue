@@ -47,7 +47,10 @@
 				</MenuBar>
 				<div class="editor__content">
 					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
-					<EditorContent v-show="initialLoading" :editor="tiptap" />
+					<EditorContent v-show="initialLoading"
+						class="editor__content"
+						:editor="tiptap"
+						spellcheck="false" />
 				</div>
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"
@@ -106,6 +109,10 @@ export default {
 		active: {
 			type: Boolean,
 			default: false
+		},
+		autofocus: {
+			type: Boolean,
+			default: true
 		},
 		shareToken: {
 			type: String,
@@ -347,7 +354,10 @@ export default {
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {
 						this.initialLoading = true
-						this.tiptap.focus('start')
+						if (this.autofocus) {
+							this.tiptap.focus('start')
+						}
+						this.$emit('ready')
 					}
 					if (state.hasOwnProperty('dirty')) {
 						this.dirty = state.dirty

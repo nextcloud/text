@@ -66,7 +66,7 @@ class PollingBackend {
 	}
 
 	connect() {
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), 0)
 	}
 
 	_isPublic() {
@@ -215,9 +215,9 @@ class PollingBackend {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = FETCH_INTERVAL
+		this.fetchInterval = FETCH_INTERVAL
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 
 	}
 
@@ -225,18 +225,18 @@ class PollingBackend {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = Math.min(this.fetchInverval * 2, FETCH_INTERVAL_MAX)
+		this.fetchInterval = Math.min(this.fetchInterval * 2, FETCH_INTERVAL_MAX)
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 	}
 
 	maximumRefetchTimer() {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = FETCH_INTERVAL_SINGLE_EDITOR
+		this.fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 	}
 
 	carefulRetry() {

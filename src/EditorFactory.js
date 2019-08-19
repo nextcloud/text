@@ -32,7 +32,8 @@ import {
 	CodeBlock,
 	CodeBlockHighlight,
 	HorizontalRule,
-	History
+	History,
+	Placeholder
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
 import { Image, PlainTextDocument } from './nodes'
@@ -75,7 +76,12 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new CodeBlock(),
 			new ListItem(),
 			new Link(),
-			new Image()
+			new Image(),
+			new Placeholder({
+				emptyNodeClass: 'is-empty',
+				emptyNodeText: 'Write something …',
+				showOnlyWhenEditable: true
+			})
 		]
 	} else {
 		richEditingExtensions = [

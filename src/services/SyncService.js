@@ -91,6 +91,7 @@ class SyncService {
 				session: this.session
 			})
 			return this._fetchDocument().then(({ data }) => {
+
 				this.emit('loaded', {
 					document: this.document,
 					session: this.session,

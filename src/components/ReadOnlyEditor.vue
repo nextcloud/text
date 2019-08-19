@@ -39,7 +39,7 @@ export default {
 		},
 		isRichEditor: {
 			type: Boolean,
-			default: false
+			default: true
 		}
 	},
 	data: () => {
@@ -77,4 +77,7 @@ export default {
 		}
 	}
 
+</style>
+<style lang="scss">
+	@import './../../css/prosemirror';
 </style>

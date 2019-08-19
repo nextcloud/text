@@ -24,6 +24,8 @@ import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
+import RichWorkspace from './views/RichWorkspace'
+import Vue from 'vue'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -45,6 +47,45 @@ document.addEventListener('DOMContentLoaded', () => {
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
 })
+
+const FilesPlugin = {
+
+	el: null,
+
+	attach: (fileList) => {
+		if (fileList.id !== 'files') {
+			return
+		}
+
+		FilesPlugin.el = document.createElement('div')
+		fileList.registerHeader({
+			id: 'workspace',
+			el: FilesPlugin.el,
+			render: FilesPlugin.render.bind(FilesPlugin),
+			priority: 10
+		})
+	},
+
+	render: (fileList) => {
+		FilesPlugin.el.id = 'files-workspace-wrapper'
+		Vue.prototype.t = window.t
+		Vue.prototype.n = window.n
+		Vue.prototype.OCA = window.OCA
+		const View = Vue.extend(RichWorkspace)
+		const vm = new View({
+			propsData: {
+				path: fileList.getCurrentDirectory()
+			}
+		}).$mount(FilesPlugin.el)
+
+		fileList.$el.on('changeDirectory', data => {
+			vm.path = data.dir.toString()
+			// TODO Switch to path/README.md
+		})
+	}
+}
+
+OC.Plugins.register('OCA.Files.FileList', FilesPlugin)
 
 OCA.Text = {
 	Editor: FilesEditor
