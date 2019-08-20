@@ -1,6 +1,6 @@
 # Nextcloud Text
 
-![Drone (self-hosted) with branch](https://img.shields.io/drone/build/nextcloud/text/master?server=https%3A%2F%2Fdrone.nextcloud.com) ![start contributing good first issues](https://img.shields.io/github/issues/nextcloud/text/?color=%237057ff&label=start%20contributing) 
+![Drone (self-hosted) with branch](https://img.shields.io/drone/build/nextcloud/text/master?server=https%3A%2F%2Fdrone.nextcloud.com) ![start contributing good first issues](https://img.shields.io/github/issues/nextcloud/text?color=7057ff&label=good%20first%20issues) 
 
 
 **📑 Collaborative document editing!**
