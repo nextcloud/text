@@ -23,7 +23,7 @@
 	}
 
 	a {
-		color: var(--color-primary);
+		color: var(--color-primary-element);
 		text-decoration: underline;
 		padding: .5em 0;
 	}
@@ -122,7 +122,7 @@
 
 	blockquote {
 		padding-left: 1em;
-		border-left: 4px solid var(--color-primary);
+		border-left: 4px solid var(--color-primary-element);
 		color: var(--color-text-maxcontrast);
 		margin-left: 0;
 		margin-right: 0;
