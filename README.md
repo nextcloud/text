@@ -13,6 +13,7 @@
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
 
+Nextcloud Text is available for Nextcloud 16 and will be part of Nextcloud 17 as the default text editor. To start editing just open an existing markdown or plaintext file or create a new one.
 
 ## 🏗 Development setup
 
