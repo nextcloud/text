@@ -15,10 +15,10 @@ if (document.getElementById('maineditor')) {
 		const vm = new Vue({
 			render: h => h(Editor, {
 				props: {
-					fileId: OCP.InitialState.loadState('text', 'direct_file_id'),
+					fileId: window.OCP.InitialState.loadState('text', 'direct_file_id'),
 					active: true,
-					directToken: OCP.InitialState.loadState('text', 'direct_token'),
-					mime: OCP.InitialState.loadState('text', 'direct_mime')
+					directToken: window.OCP.InitialState.loadState('text', 'direct_token'),
+					mime: window.OCP.InitialState.loadState('text', 'direct_mime')
 				}
 			})
 		})

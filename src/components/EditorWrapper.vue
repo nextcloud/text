@@ -71,6 +71,38 @@ import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
+const callMobileMessage = (messageName, attributes) => {
+	console.debug('callMobileMessage', messageName, attributes)
+	let message = messageName
+	if (typeof attributes !== 'undefined') {
+		message = {
+			MessageName: messageName,
+			Values: attributes
+		}
+	}
+	let attributesString = null
+	try {
+		attributesString = JSON.stringify(attributes)
+	} catch (e) {
+		attributesString = null
+	}
+	// Forward to mobile handler
+	if (window.TextMobileInterface && typeof window.TextMobileInterface[messageName] === 'function') {
+		if (attributesString === null || typeof attributesString === 'undefined') {
+			window.TextMobileInterface[messageName]()
+		} else {
+			window.TextMobileInterface[messageName](attributesString)
+		}
+	}
+
+	// iOS webkit fallback
+	if (window.webkit
+		&& window.webkit.messageHandlers
+		&& window.webkit.messageHandlers.TextMobileInterface) {
+		window.webkit.messageHandlers.TextMobileInterface.postMessage(message)
+	}
+}
+
 export default {
 	name: 'EditorWrapper',
 	components: {
@@ -252,6 +284,7 @@ export default {
 					this.document = document
 					this.readOnly = document.readOnly
 					localStorage.setItem('nick', this.currentSession.guestName)
+					callMobileMessage('documentLoaded')
 				})
 				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
@@ -417,7 +450,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	#editor-container:not(.direct) {
+	#editor-container {
 		display: block;
 		width: 100vw;
 		max-width: 100%;
@@ -427,6 +460,10 @@ export default {
 		margin: 0 auto;
 		position: relative;
 		background-color: var(--color-main-background);
+		&.direct {
+			height: 100%;
+			top: 0;
+		}
 	}
 
 	#editor-wrapper {
