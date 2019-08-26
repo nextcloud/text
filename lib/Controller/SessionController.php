@@ -52,15 +52,15 @@ class SessionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function fetch(int $documentId, int $sessionId, string $sessionToken): Response {
-		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
+	public function fetch(int $documentId): Response {
+		return $this->apiService->fetch($documentId);
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+	public function close(int $documentId): DataResponse {
+		return $this->apiService->close($documentId);
 	}
 
 	/**

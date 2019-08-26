@@ -25,10 +25,8 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-
 use Exception;
 use OC\Files\Node\File;
-use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
@@ -117,7 +115,7 @@ class ApiService {
 			return new DataResponse($e->getMessage(), 500);
 		}
 
-		$session = $this->sessionService->initSession($document->getId(), $direct, !!$direct ? null : $guestName);
+		$session = $this->sessionService->initSession($document->getId(), $direct, (bool)$direct ? null : $guestName);
 
 		return new DataResponse([
 			'document' => $document,
@@ -126,8 +124,8 @@ class ApiService {
 		]);
 	}
 
-	public function fetch($documentId, $sessionId, $sessionToken) {
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+	public function fetch($documentId) {
+		if ($this->sessionService->isValidSession()) {
 			$this->sessionService->removeInactiveSessions($documentId);
 			try {
 				$file = $this->documentService->getBaseFile($documentId);
@@ -139,8 +137,8 @@ class ApiService {
 		return new NotFoundResponse();
 	}
 
-	public function close($documentId, $sessionId, $sessionToken): DataResponse {
-		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
+	public function close($documentId): DataResponse {
+		$this->sessionService->closeSession();
 		$this->sessionService->removeInactiveSessions($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
@@ -154,10 +152,10 @@ class ApiService {
 
 	/**
 	 * @throws NotFoundException
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
-		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$session = $this->sessionService->getSession();
 		if ($this->sessionService->isDirectSession()) {
 			$file = $this->documentService->getFileById($documentId, $session->getUserId());
 		} elseif ($token) {
@@ -165,7 +163,7 @@ class ApiService {
 		} else {
 			$file = $this->documentService->getFileById($documentId);
 		}
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $session->getDirect() ? null : $token)) {
+		if ($this->sessionService->isValidSession() && !$this->documentService->isReadOnly($file, $session->getDirect() ? null : $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
 			} catch (VersionMismatchException $e) {
@@ -177,7 +175,7 @@ class ApiService {
 	}
 
 	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+		if (!$this->sessionService->isValidSession()) {
 			return new DataResponse([], 403);
 		}
 		if ($version === $this->cache->get('document-version-' . $documentId)) {
@@ -220,10 +218,10 @@ class ApiService {
 	}
 
 	/**
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+		if (!$this->sessionService->isValidSession()) {
 			return new DataResponse([], 500);
 		}
 

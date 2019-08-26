@@ -100,8 +100,8 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function fetch(int $documentId, string $sessionId, string $sessionToken): Response {
-		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
+	public function fetch(int $documentId): Response {
+		return $this->apiService->fetch($documentId);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class PublicSessionController extends PublicShareController {
 	 * @PublicPage
 	 */
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
-		return $this->apiService->close($documentId, $sessionId, $sessionToken);
+		return $this->apiService->close($documentId);
 	}
 
 	/**

@@ -76,10 +76,10 @@ class SessionService {
 		return $this->session;
 	}
 
-	public function closeSession(int $documentId, int $sessionId, string $token): void {
+	public function closeSession(): void {
 		try {
-			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
-			$this->sessionMapper->delete($session);
+			$this->sessionMapper->delete($this->session);
+			$this->session = null;
 		} catch (DoesNotExistException $e) {
 		}
 	}
@@ -141,27 +141,24 @@ class SessionService {
 		return null;
 	}
 
-	public function isDirectSession() {
+	public function isDirectSession(): bool {
 		if ($this->session !== null) {
 			return $this->session->getDirect();
 		}
 		return false;
 	}
 
-	public function clearDirectSession($token) {
+	public function clearDirectSession($token): void {
 		$direct = $this->directMapper->getByToken($token);
 		$this->directMapper->delete($direct);
 	}
 
-	public function isValidSession($documentId, $sessionId, $token) {
-		try {
-			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
-		} catch (DoesNotExistException $e) {
+	public function isValidSession(): bool {
+		if (!$this->session) {
 			return false;
 		}
-		// TODO: move to cache
-		$session->setLastContact($this->timeFactory->getTime());
-		$this->sessionMapper->update($session);
+		$this->session->setLastContact($this->timeFactory->getTime());
+		$this->session = $this->sessionMapper->update($this->session);
 		return true;
 	}
 
