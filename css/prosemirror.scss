@@ -1,6 +1,8 @@
 /* Document rendering styles */
-#editor-wrapper .ProseMirror {
+#editor-container:not(.direct) .ProseMirror {
 	margin-top: 44px;
+}
+#editor-wrapper .ProseMirror {
 	height: 100%;
 	position: relative;
 	word-wrap: break-word;
