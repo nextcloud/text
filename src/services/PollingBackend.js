@@ -70,7 +70,7 @@ class PollingBackend {
 	}
 
 	_isPublic() {
-		return !!this._authority.options.shareToken
+		return !!this._authority.options.shareToken || !!this._authority.options.directToken
 	}
 
 	forceSave() {
@@ -110,7 +110,7 @@ class PollingBackend {
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
-			token: this._authority.options.shareToken,
+			token: this._authority.options.shareToken || this._authority.session.token,
 			filePath: this._authority.options.filePath
 		}).then((response) => {
 			this.fetchRetryCounter = 0
@@ -177,13 +177,13 @@ class PollingBackend {
 		this.lock = true
 		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
 		let steps = sendable.steps
-		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
+		axios.post(endpointUrl('session/push', !!this._isPublic()), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
 			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
 			version: sendable.version,
-			token: this._authority.options.shareToken,
+			token: this._authority.options.shareToken || this._authority.session.token,
 			filePath: this._authority.options.filePath
 		}).then((response) => {
 			this.carefulRetryReset()

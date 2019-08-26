@@ -89,7 +89,7 @@ export default {
 		},
 		activeSessions() {
 			return Object.values(this.sessions).filter((session) =>
-				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent && session.userId !== null)
+				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent)
 		},
 		sessionStyle() {
 			return (session) => {

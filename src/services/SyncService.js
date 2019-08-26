@@ -112,12 +112,16 @@ class SyncService {
 		this.backend.connect()
 	}
 
+	_usePublicEndpoint() {
+		return !!this.options.shareToken || !!this.options.directToken
+	}
+
 	_openDocument({ fileId, filePath }) {
-		return axios.get(endpointUrl('session/create', !!this.options.shareToken), {
+		return axios.get(endpointUrl('session/create', this._usePublicEndpoint()), {
 			params: {
 				fileId: fileId,
 				filePath,
-				token: this.options.shareToken,
+				token: this.options.shareToken ? this.options.shareToken : this.options.directToken,
 				guestName: this.options.guestName,
 				forceRecreate: this.options.forceRecreate
 			}
@@ -131,13 +135,13 @@ class SyncService {
 
 	_fetchDocument() {
 		return axios.get(
-			endpointUrl('session/fetch', !!this.options.shareToken), {
+			endpointUrl('session/fetch', this._usePublicEndpoint()), {
 				transformResponse: [(data) => data],
 				params: {
 					documentId: this.document.id,
 					sessionId: this.session.id,
 					sessionToken: this.session.token,
-					token: this.options.shareToken
+					token: this.options.shareToken || 'foo'
 				}
 			}
 		)
@@ -152,7 +156,7 @@ class SyncService {
 				documentId: this.document.id,
 				sessionId: this.session.id,
 				sessionToken: this.session.token,
-				token: this.options.shareToken,
+				token: this.options.shareToken || this.session.token,
 				guestName
 			}
 		).then(({ data }) => {
@@ -254,7 +258,7 @@ class SyncService {
 		}
 		this.backend.disconnect()
 		return axios.get(
-			endpointUrl('session/close', !!this.options.shareToken), {
+			endpointUrl('session/close', this._usePublicEndpoint()), {
 				params: {
 					documentId: this.document.id,
 					sessionId: this.session.id,

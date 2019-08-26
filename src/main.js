@@ -15,12 +15,14 @@ if (document.getElementById('maineditor')) {
 		const vm = new Vue({
 			render: h => h(Editor, {
 				props: {
-					relativePath: '/welcome.md',
-					active: true
+					fileId: OCP.InitialState.loadState('text', 'direct_file_id'),
+					active: true,
+					directToken: OCP.InitialState.loadState('text', 'direct_token'),
+					mime: OCP.InitialState.loadState('text', 'direct_mime')
 				}
 			})
 		})
-		vm.$mount(document.getElementById('preview'))
+		vm.$mount(document.getElementById('content'))
 	})
 }
 

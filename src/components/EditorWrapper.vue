@@ -105,6 +105,10 @@ export default {
 			type: String,
 			default: null
 		},
+		directToken: {
+			type: String,
+			default: null
+		},
 		mime: {
 			type: String,
 			default: null
@@ -171,11 +175,11 @@ export default {
 		},
 		backendUrl() {
 			return (endpoint) => {
-				return endpointUrl(endpoint, !!this.shareToken)
+				return endpointUrl(endpoint, !!this.shareToken || !!this.directToken)
 			}
 		},
 		hasDocumentParameters() {
-			return this.fileId || this.shareToken
+			return this.fileId || !!this.shareToken || !!this.directToken
 		},
 		isPublic() {
 			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
@@ -227,6 +231,7 @@ export default {
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,
+				directToken: this.directToken,
 				filePath: this.relativePath,
 				guestName,
 				forceRecreate: this.forceRecreate,
