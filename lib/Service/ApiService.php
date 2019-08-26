@@ -85,6 +85,7 @@ class ApiService {
 			if ($token && $direct = $this->sessionService->getDirect($token)) {
 				$file = $this->documentService->getFileById($direct->getFileId(), $direct->getUserId());
 				$readOnly = !$file->isUpdateable();
+				$this->sessionService->clearDirectSession($token);
 			} elseif ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				try {

@@ -34,7 +34,7 @@ use OCP\Security\ISecureRandom;
  */
 class DirectMapper extends QBMapper {
 
-	public const TOKEN_TTL = 600000;
+	public const TOKEN_TTL = 600;
 
 	/** @var ISecureRandom */
 	protected $random;

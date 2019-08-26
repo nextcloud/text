@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container">
+	<div id="editor-container" :class="{'direct': !!directToken}">
 		<div v-if="currentSession && active">
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
@@ -417,7 +417,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	#editor-container {
+	#editor-container:not(.direct) {
 		display: block;
 		width: 100vw;
 		max-width: 100%;
