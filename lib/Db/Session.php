@@ -35,11 +35,13 @@ class Session extends Entity implements \JsonSerializable {
 	protected $guestName;
 	protected $lastContact;
 	protected $documentId;
+	protected $direct;
 
 	public function __construct() {
 		$this->addType('id', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('lastContact', 'integer');
+		$this->addType('direct', 'bool');
 
 	}
 

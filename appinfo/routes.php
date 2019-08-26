@@ -38,5 +38,10 @@ return [
 		['name' => 'PublicSession#sync', 'url' => '/public/session/sync', 'verb' => 'POST'],
 		['name' => 'PublicSession#push', 'url' => '/public/session/push', 'verb' => 'POST'],
 		['name' => 'PublicSession#close', 'url' => '/public/session/close', 'verb' => 'GET'],
-	]
+
+		['name' => 'DirectView#show', 'url' => '/direct', 'verb' => 'GET'],
+	],
+	'ocs' => [
+		['name' => 'DirectOCS#create', 'url' => '/api/v1/document', 'verb' => 'POST'],
+	],
 ];

@@ -32,6 +32,7 @@ use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
@@ -49,20 +50,42 @@ class ApiService {
 	protected $documentService;
 	protected $logger;
 
+	/**
+	 * ApiService constructor.
+	 *
+	 * @param IRequest $request
+	 * @param ICacheFactory $cacheFactory
+	 * @param SessionService $sessionService
+	 * @param DocumentService $documentService
+	 * @param ILogger $logger
+	 * @param IRequest $request
+	 */
 	public function __construct(IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
 		$this->request = $request;
 		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
+
+		try {
+			$this->sessionService->loadSession(
+				$request->getParam('documentId'),
+				$request->getParam('sessionId'),
+				$request->getParam('sessionToken')
+			);
+		} catch (DoesNotExistException $e) {}
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
 		try {
 			$readOnly = true;
+			$direct = false;
 			/** @var File $file */
 			$file = null;
-			if ($token) {
+			if ($token && $direct = $this->sessionService->getDirect($token)) {
+				$file = $this->documentService->getFileById($direct->getFileId(), $direct->getUserId());
+				$readOnly = !$file->isUpdateable();
+			} elseif ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
@@ -93,7 +116,8 @@ class ApiService {
 			return new DataResponse($e->getMessage(), 500);
 		}
 
-		$session = $this->sessionService->initSession($document->getId(), $guestName);
+		$session = $this->sessionService->initSession($document->getId(), $direct, !!$direct ? null : $guestName);
+
 		return new DataResponse([
 			'document' => $document,
 			'session' => $session,
@@ -132,12 +156,15 @@ class ApiService {
 	 * @throws \OCP\AppFramework\Db\DoesNotExistException
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
-		if ($token) {
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		if ($this->sessionService->isDirectSession()) {
+			$file = $this->documentService->getFileById($documentId, $session->getUserId());
+		} elseif ($token) {
 			$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 		} else {
 			$file = $this->documentService->getFileById($documentId);
 		}
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $token)) {
+		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $session->getDirect() ? null : $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
 			} catch (VersionMismatchException $e) {
@@ -162,11 +189,14 @@ class ApiService {
 			'document' => $this->documentService->get($documentId)
 		];
 
+		$session = $this->sessionService->getSession();
 		try {
-			$result['document'] = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'));
+			$result['document'] = $this->documentService->autosave($documentId, $this->sessionService->getSession(), $version, $autosaveContent, $force, $manualSave, $session->getDirect() ? null : $token, $this->request->getParam('filePath'));
 		} catch (DocumentSaveConflictException $e) {
 			try {
-				if ($token) {
+				if ($this->sessionService->isDirectSession()) {
+					$file = $this->documentService->getFileById($documentId, $session->getUserId());
+				} elseif ($token) {
 					/** @var File $file */
 					$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				} else {

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -14,7 +13,7 @@ declare(strict_types=1);
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -22,26 +21,29 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\Text\AppInfo;
+namespace OCA\Text\Db;
 
-use OCA\Text\Capabilities;
-use OCP\AppFramework\App;
+use OCP\AppFramework\Db\Entity;
 
-class Application extends App {
+class Direct extends Entity {
 
-	const APP_NAME = 'text';
+	/** @var string */
+	protected $token;
 
-	/**
-	 * Application constructor.
-	 *
-	 * @param array $params
-	 */
-	public function __construct(array $params = []) {
-		parent::__construct(self::APP_NAME, $params);
+	/** @var string */
+	protected $userId;
 
-		$this->getContainer()->registerCapability(Capabilities::class);
+	/** @var int */
+	protected $fileId;
 
+	/** @var int */
+	protected $timestamp;
+
+	public function __construct() {
+		$this->addType('token', 'string');
+		$this->addType('userId', 'string');
+		$this->addType('fileId', 'int');
+		$this->addType('timestamp', 'int');
 	}
 
 }
-

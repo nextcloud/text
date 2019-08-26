@@ -25,6 +25,7 @@ namespace OCA\Text\Service;
 
 
 use OC\Avatar\Avatar;
+use OCA\Text\Db\DirectMapper;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -41,20 +42,27 @@ class SessionService {
 	private $secureRandom;
 	private $timeFactory;
 	private $userId;
+	/** @var Session Current session */
+	private $session;
 
-	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, $userId) {
+	public function __construct(SessionMapper $sessionMapper, DirectMapper $directMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, $userId) {
 		$this->sessionMapper = $sessionMapper;
+		$this->directMapper = $directMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
 		$this->userId = $userId;
 	}
 
-	public function initSession($documentId, $guestName = null): Session {
+	public function initSession($documentId, $direct = false, $guestName = null): Session {
+		if ($direct) {
+			$this->userId = $direct->getUserId();
+		}
 		$session = new Session();
 		$session->setDocumentId($documentId);
 		$userName = $this->userId ? $this->userId : $guestName;
 		$session->setUserId($userName);
 		$session->setToken($this->secureRandom->generate(64));
+		$session->setDirect($direct);
 		/** @var IAvatarManager $avatarGenerator */
 		$avatarGenerator = \OC::$server->query(IAvatarManager::class);
 		$color = $avatarGenerator->getGuestAvatar($userName)->avatarBackgroundColor($userName);
@@ -64,7 +72,8 @@ class SessionService {
 			$session->setGuestName($guestName);
 		}
 		$session->setLastContact($this->timeFactory->getTime());
-		return $this->sessionMapper->insert($session);
+		$this->session = $this->sessionMapper->insert($session);
+		return $this->session;
 	}
 
 	public function closeSession(int $documentId, int $sessionId, string $token): void {
@@ -94,6 +103,54 @@ class SessionService {
 
 	public function removeInactiveSessions($documentId = -1) {
 		return $this->sessionMapper->deleteInactive($documentId);
+	}
+
+	public function isDirectToken($token): bool {
+		try {
+			$this->directMapper->getByToken($token);
+		} catch (DoesNotExistException $e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @return Session
+	 */
+	public function getSession(): Session {
+		return $this->session;
+	}
+
+	/**
+	 * @param $documentId
+	 * @param $sessionId
+	 * @param $token
+	 * @return Session
+	 * @throws DoesNotExistException
+	 */
+	public function loadSession($documentId, $sessionId, $token) {
+		$this->session = $this->sessionMapper->find($documentId, $sessionId, $token);
+		return $this->session;
+	}
+
+	public function getDirect($token) {
+		try {
+			return $this->directMapper->getByToken($token);
+		} catch (DoesNotExistException $e) {
+		}
+		return null;
+	}
+
+	public function isDirectSession() {
+		if ($this->session !== null) {
+			return $this->session->getDirect();
+		}
+		return false;
+	}
+
+	public function clearDirectSession($token) {
+		$direct = $this->directMapper->getByToken($token);
+		$this->directMapper->delete($direct);
 	}
 
 	public function isValidSession($documentId, $sessionId, $token) {

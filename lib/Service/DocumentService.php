@@ -30,6 +30,7 @@ use function json_encode;
 use OC\Files\Node\File;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
+use OCA\Text\Db\Session;
 use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\DocumentHasUnsavedChangesException;
@@ -226,12 +227,14 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws ShareNotFound
 	 */
-	public function autosave($documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $token = null, $filePath = null): Document {
+	public function autosave($documentId, Session $session, $version, $autoaveDocument, $force = false, $manualSave = false, $token = null, $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
 		/** @var File $file */
-		if (!$token) {
+		if ($session->getDirect()) {
+			$file = $this->getFileById($documentId, $session->getUserId());
+		} elseif (!$token) {
 			$file = $this->getFileById($documentId);
 		} else {
 			 $file = $this->getFileByShareToken($token, $filePath);
@@ -307,12 +310,12 @@ class DocumentService {
 		}
 	}
 
-	public function getFileById($fileId): Node {
-		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
+	public function getFileById($fileId, $userId = null): Node {
+		return $this->rootFolder->getUserFolder($userId ?? $this->userId)->getById($fileId)[0];
 	}
 
-	public function getFileByPath($path): Node {
-		return $this->rootFolder->getUserFolder($this->userId)->get($path);
+	public function getFileByPath($path, $userId = null): Node {
+		return $this->rootFolder->getUserFolder($userId ?? $this->userId)->get($path);
 	}
 
 	/**

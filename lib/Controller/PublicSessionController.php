@@ -25,6 +25,8 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\SessionService;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\PublicShareController;
 use OCP\ISession;
@@ -45,10 +47,14 @@ class PublicSessionController extends PublicShareController {
 	/** @var ApiService */
 	private $apiService;
 
-	public function __construct(string $appName, IRequest $request, ISession $session, ShareManager $shareManager, ApiService $apiService) {
+	/** @var SessionService */
+	private $sessionService;
+
+	public function __construct(string $appName, IRequest $request, ISession $session, ShareManager $shareManager, ApiService $apiService, SessionService $sessionService) {
 		parent::__construct($appName, $request, $session);
 		$this->shareManager = $shareManager;
 		$this->apiService = $apiService;
+		$this->sessionService = $sessionService;
 	}
 
 	protected function getPasswordHash(): string {
@@ -56,16 +62,30 @@ class PublicSessionController extends PublicShareController {
 	}
 
 	public function isValidToken(): bool {
+
 		try {
 			$this->share = $this->shareManager->getShareByToken($this->getToken());
 			return true;
-		} catch (ShareNotFound $e) {
-			return false;
+		} catch (ShareNotFound $e) {}
+
+		if ($this->sessionService->isDirectToken($this->getToken())) {
+			//$this->sessionService->clearDirectSession($this->getToken());
+			return true;
 		}
+		try {
+			$session = $this->sessionService->loadSession(
+				$this->request->getParam('documentId'),
+				$this->request->getParam('sessionId'),
+				$this->request->getParam('sessionToken')
+			);
+			return $session->getDirect();
+		} catch (DoesNotExistException $e) {}
+
+		return false;
 	}
 
 	protected function isPasswordProtected(): bool {
-		return $this->share->getPassword() !== null;
+		return $this->share !== null && $this->share->getPassword() !== null;
 	}
 
 	/**
