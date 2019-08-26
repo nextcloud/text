@@ -1,2 +1,2 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[176],{257:function(n,e){n.exports=function(n){return{subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
-//# sourceMappingURL=vbscript-html.js.map?v=68e3ac295a725028c03d
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[176],{257:function(n,e){n.exports=function(n){return{subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
+//# sourceMappingURL=vbscript-html.js.map?v=edb950c6b760addc42fa
