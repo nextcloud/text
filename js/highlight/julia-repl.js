@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[88],{169:function(e,n){e.exports=function(e){return{contains:[{className:"meta",begin:/^julia>/,relevance:10,starts:{end:/^(?![ ]{6})/,subLanguage:"julia"},aliases:["jldoctest"]}]}}}}]);
-//# sourceMappingURL=julia-repl.js.map?v=b52f85581d33ec6e7454
+//# sourceMappingURL=julia-repl.js.map?v=4bceab31a289e1935451
