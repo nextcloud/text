@@ -21,46 +21,54 @@
   -->
 
 <template>
-	<editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
+	<EditorMenuBar v-slot="{ commands, isActive }" :editor="editor">
 		<div class="menubar">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
-					<button v-if="icon.class" v-show="$index < iconCount" :key="icon.label"
+					<button v-if="icon.class"
+						v-show="$index < iconCount"
+						:key="icon.label"
 						:title="icon.label"
-						:class="getIconClasses(isActive, icon)" @click="clickIcon(commands, icon)" />
+						:class="getIconClasses(isActive, icon)"
+						@click="clickIcon(commands, icon)" />
 					<template v-else>
-						<div v-show="$index < iconCount" :key="icon.label" v-click-outside="() => hideChildMenu(icon)"
+						<div v-show="$index < iconCount"
+							:key="icon.label"
+							v-click-outside="() => hideChildMenu(icon)"
 							class="submenu">
 							<button :class="childIconClass(isActive, icon.children, )"
 								:title="icon.label"
 								@click.prevent="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
-								<popover-menu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
+								<PopoverMenu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
 							</div>
 						</div>
 					</template>
 				</template>
-				<actions>
+				<Actions>
 					<template v-for="(icon, $index) in allIcons">
-						<action-button v-if="icon.class && isHiddenInMenu($index)" :key="icon.class"
-							:icon="icon.class" @click="clickIcon(commands, icon)">
+						<ActionButton v-if="icon.class && isHiddenInMenu($index)"
+							:key="icon.class"
+							:icon="icon.class"
+							@click="clickIcon(commands, icon)">
 							{{ icon.label }}
-						</action-button>
+						</ActionButton>
 						<template v-else-if="!icon.class && isHiddenInMenu($index)">
-							<action-button v-for="childIcon in icon.children" :key="childIcon.class"
+							<ActionButton v-for="childIcon in icon.children"
+								:key="childIcon.class"
 								:icon="childIcon.class"
 								@click="clickIcon(commands, childIcon)">
 								{{ childIcon.label }}
-							</action-button>
+							</ActionButton>
 						</template>
 					</template>
-				</actions>
+				</Actions>
 			</div>
 			<slot>
 				Left side
 			</slot>
 		</div>
-	</editor-menu-bar>
+	</EditorMenuBar>
 </template>
 
 <script>

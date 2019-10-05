@@ -21,12 +21,18 @@
   -->
 
 <template>
-	<editor-menu-bubble v-slot="{ commands, isActive, getMarkAttrs, menu }" class="menububble"
-		:editor="editor" @hide="hideLinkMenu">
+	<EditorMenuBubble v-slot="{ commands, isActive, getMarkAttrs, menu }"
+		class="menububble"
+		:editor="editor"
+		@hide="hideLinkMenu">
 		<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-				<input ref="linkInput" v-model="linkUrl" class="menububble__input"
-					type="text" placeholder="https://" @keydown.esc="hideLinkMenu">
+				<input ref="linkInput"
+					v-model="linkUrl"
+					class="menububble__input"
+					type="text"
+					placeholder="https://"
+					@keydown.esc="hideLinkMenu">
 				<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, linkUrl)" />
 			</form>
 
@@ -40,7 +46,7 @@
 				</button>
 			</template>
 		</div>
-	</editor-menu-bubble>
+	</EditorMenuBubble>
 </template>
 
 <script>

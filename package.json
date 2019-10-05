@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^0.4.1",
+		"escape-html": "^1.0.3",
 		"highlight.js": "^9.15.10",
 		"markdown-it": "^10.0.0",
 		"nextcloud-axios": "^0.2.1",

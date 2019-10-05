@@ -21,11 +21,12 @@
   -->
 
 <template>
-	<editor-content v-if="editor" id="read-only-editor" :editor="editor" />
+	<EditorContent v-if="editor" id="read-only-editor" :editor="editor" />
 </template>
 
 <script>
 import { EditorContent } from 'tiptap'
+import escapeHtml from 'escape-html'
 import { createEditor, markdownit } from '../EditorFactory'
 
 export default {
@@ -48,7 +49,7 @@ export default {
 	},
 	mounted() {
 		this.editor = createEditor({
-			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + window.escapeHTML(this.content) + '</pre>',
+			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + escapeHtml(this.content) + '</pre>',
 			enableRichEditing: this.isRichEditor
 		})
 		this.editor.setOptions({ editable: false })
