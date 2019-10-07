@@ -21,17 +21,20 @@
   -->
 
 <template>
-	<modal v-if="active" :title="fileName" @close="close">
-		<editor-wrapper :file-id="fileId" :relative-path="relativePath" :active="active"
-			:share-token="shareToken" :mime="mimeType" />
-	</modal>
+	<Modal v-if="active" :title="fileName" @close="close">
+		<EditorWrapper :file-id="fileId"
+			:relative-path="relativePath"
+			:active="active"
+			:share-token="shareToken"
+			:mime="mimeType" />
+	</Modal>
 </template>
 
 <script>
 import Modal from 'nextcloud-vue/dist/Components/Modal'
 
 export default {
-	name: 'FilesEditor',
+	name: 'PublicFilesEditor',
 	components: {
 		Modal,
 		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')

@@ -24,7 +24,7 @@
  * Callback that should be executed after the document is ready
  * @param callback
  */
-import axios from 'axios'
+import axios from '@nextcloud/axios'
 import { generateRemoteUrl } from 'nextcloud-server/dist/router'
 import { openMimetypes } from './mime'
 

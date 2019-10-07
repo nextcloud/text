@@ -32,30 +32,34 @@
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading, 'richEditor': isRichEditor}">
 			<div id="editor">
-				<menu-bar v-if="!syncError && !readOnly" ref="menubar" :editor="tiptap"
+				<MenuBar v-if="!syncError && !readOnly"
+					ref="menubar"
+					:editor="tiptap"
 					:is-rich-editor="isRichEditor">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
-						<session-list :sessions="filteredSessions">
-							<guest-name-dialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
-						</session-list>
+						<SessionList :sessions="filteredSessions">
+							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
+						</SessionList>
 					</div>
-				</menu-bar>
-				<menu-bubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
-				<editor-content v-show="initialLoading" class="editor__content" :editor="tiptap" />
+				</MenuBar>
+				<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
+				<EditorContent v-show="initialLoading" class="editor__content" :editor="tiptap" />
 			</div>
-			<read-only-editor v-if="hasSyncCollission" :content="syncError.data.outsideChange"
+			<ReadOnlyEditor v-if="hasSyncCollission"
+				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</div>
 
-		<collision-resolve-dialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
+		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
 	</div>
 </template>
 
 <script>
 import Vue from 'vue'
+import escapeHtml from 'escape-html'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -264,7 +268,7 @@ export default {
 					this.hasConnectionIssue = false
 					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
-							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + window.escapeHTML(documentSource) + '</pre>',
+							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + escapeHtml(documentSource) + '</pre>',
 							onInit: ({ state }) => {
 								this.syncService.state = state
 								this.syncService.startSync()
