@@ -1,5 +1,5 @@
 /* Document rendering styles */
-.ProseMirror {
+div.ProseMirror {
 	margin-top: 44px;
 	height: 100%;
 	position: relative;
@@ -21,6 +21,7 @@
 		opacity: 1;
 		-webkit-user-select: text;
 		user-select: text;
+		font-size: 14px;
 	}
 
 	p:first-child,
@@ -208,7 +209,7 @@
 .editor__content p.is-empty:first-child::before {
 	content: attr(data-empty-text);
 	float: left;
-	color: #aaa;
+	color: var(--color-text-maxcontrast);
 	pointer-events: none;
 	height: 0;
 	font-style: italic;

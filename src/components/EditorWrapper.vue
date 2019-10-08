@@ -49,8 +49,7 @@
 					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
-						:editor="tiptap"
-						spellcheck="false" />
+						:editor="tiptap" />
 				</div>
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"

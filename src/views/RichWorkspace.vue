@@ -22,9 +22,13 @@
 
 <template>
 	<div id="rich-workspace" :class="{'icon-loading': !loaded || !ready }">
-		<div v-if="!file && loaded" class="empty-workspace" @click="createNew">
-			<i>Click to enter notes, lists or links</i>
+		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
+			<i>{{ t('text', 'Click to enter notes, lists or links …') }}</i>
 		</div>
+		<div v-if="(file && !ready)" class="empty-workspace">
+			<i>{{ t('text', 'Write something …') }}</i>
+		</div>
+
 		<EditorWrapper v-if="file"
 			v-show="ready"
 			:key="file.id"
@@ -92,11 +96,14 @@ export default {
 
 <style scoped>
 	#rich-workspace {
-		padding: 20px;
-		min-height: 141px;
+		padding: 0 20px;
+		min-height: 90px;
 	}
 	.empty-workspace {
-		opacity: 0.7;
+		margin-top: 54px;
+		color: var(--color-text-maxcontrast);
+		height: 0;
+		font-style: italic;
 	}
 	#rich-workspace::v-deep div[contenteditable=false] {
 		width: 100%;
@@ -104,10 +111,6 @@ export default {
 		background-color: var(--color-main-background);
 		opacity: 1;
 		border: none;
-	}
-
-	#rich-workspace::v-deep #read-only-editor {
-		margin-top: 44px;
 	}
 
 	#rich-workspace::v-deep #editor-container {
@@ -131,12 +134,5 @@ export default {
 	#rich-workspace::v-deep .editor__content {
 		margin: 0;
 		max-width: 100%;
-	}
-	.component-fade-enter-active, .component-fade-leave-active {
-		transition: opacity .3s ease;
-	}
-	.component-fade-enter, .component-fade-leave-to
-		/* .component-fade-leave-active below version 2.1.8 */ {
-		opacity: 0;
 	}
 </style>
