@@ -212,9 +212,12 @@ export default {
 		document.removeEventListener('keydown', this._keyUpHandler, true)
 		clearInterval(this.saveStatusPolling)
 		if (this.currentSession && this.syncService) {
-			this.currentSession = null
-			this.syncService.close()
-			this.syncService = null
+			this.syncService.close().then(() => {
+				this.currentSession = null
+				this.syncService = null
+			}).catch((e) => {
+				// Ignore issues closing the session since those might happen due to network issues
+			})
 		}
 	},
 	methods: {
@@ -368,13 +371,19 @@ export default {
 		},
 
 		reconnect() {
-			this.syncService.close().then(() => {
+			if (this.syncService) {
+				this.syncService.close().then(() => {
+					this.syncService = null
+					this.tiptap.destroy()
+					this.initSession()
+				}).catch((e) => {
+					// Ignore issues closing the session since those might happen due to network issues
+				})
+			} else {
 				this.syncService = null
 				this.tiptap.destroy()
 				this.initSession()
-			}).catch((e) => {
-				// Ignore issues closing the session since those might happen due to network issues
-			})
+			}
 		},
 
 		updateSessions(sessions) {
