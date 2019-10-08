@@ -24,8 +24,7 @@ import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
-import RichWorkspace from './views/RichWorkspace'
-import Vue from 'vue'
+
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -67,6 +66,9 @@ const FilesPlugin = {
 	},
 
 	render: (fileList) => {
+
+		const RichWorkspace = import(/* webpackChunkName: "richworkspace" */'./views/RichWorkspace')
+		const Vue = import('vue')
 		FilesPlugin.el.id = 'files-workspace-wrapper'
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
@@ -80,6 +82,10 @@ const FilesPlugin = {
 
 		fileList.$el.on('changeDirectory', data => {
 			vm.path = data.dir.toString()
+			vm.changeDirectory({
+				dir: data.dir,
+				fileList
+			})
 			// TODO Switch to path/README.md
 		})
 	}

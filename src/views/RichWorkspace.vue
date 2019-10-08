@@ -41,11 +41,10 @@
 </template>
 
 <script>
-import EditorWrapper from '../components/EditorWrapper'
 export default {
 	name: 'RichWorkspace',
 	components: {
-		EditorWrapper
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
 	},
 	props: {
 		path: {
@@ -70,6 +69,9 @@ export default {
 		this.getFileInfo()
 	},
 	methods: {
+		changeDirectory({ dir, fileList }) {
+			console.log('vue cchangeDirectory', dir, fileList)
+		},
 		getFileInfo() {
 			this.loaded = false
 			this.autofocus = false
