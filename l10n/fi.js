@@ -33,6 +33,8 @@ OC.L10N.register(
     "Heading 4" : "Otsikko 4",
     "Heading 5" : "Otsikko 5",
     "Heading 6" : "Otsikko 6",
+    "Unordered list" : "Järjestämätön lista",
+    "Ordered list" : "Järjestetty lista",
     "Code block" : "Koodilohko"
 },
 "nplurals=2; plural=(n != 1);");
