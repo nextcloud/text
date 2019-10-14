@@ -132,36 +132,25 @@ trigger:
 kind: pipeline
 name: frontend
 steps:
-  - name: eslint
+  - name: install
     image: node:lts-alpine
     commands:
       - npm install
+  - name: eslint
+    image: node:lts-alpine
+    commands:
       - npm run lint
   - name: stylelint
     image: node:lts-alpine
     commands:
-      - npm install
       - npm run stylelint
   - name: vue-build
     image: node:lts-alpine
     commands:
-      - npm install
       - npm run build
-trigger:
-  branch:
-    - master
-    - stable*
-  event:
-    - pull_request
-    - push
----
-kind: pipeline
-name: jest
-steps:
   - name: jest
     image: node:lts-alpine
     commands:
-      - npm install
       - npm run test
 trigger:
   branch:
