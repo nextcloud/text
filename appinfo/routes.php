@@ -37,6 +37,7 @@ return [
 		['name' => 'PublicSession#fetch', 'url' => '/public/session/fetch', 'verb' => 'GET'],
 		['name' => 'PublicSession#sync', 'url' => '/public/session/sync', 'verb' => 'POST'],
 		['name' => 'PublicSession#push', 'url' => '/public/session/push', 'verb' => 'POST'],
+
 		['name' => 'PublicSession#close', 'url' => '/public/session/close', 'verb' => 'GET'],
 	],
 	'ocs' => [

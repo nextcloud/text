@@ -84,28 +84,38 @@ class SyncService {
 		return this
 	}
 
-	open({ fileId, filePath }) {
-		return this._openDocument({ fileId, filePath }).then(() => {
-			this.emit('opened', {
+	async open({ fileId, filePath, initialSession }) {
+		let connectionData = null
+		if (typeof initialSession === 'undefined') {
+			try {
+				const response = await this._openDocument({ fileId, filePath })
+				connectionData = response.data
+			} catch (error) {
+				if (!error.response || error.code === 'ECONNABORTED') {
+					this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				} else {
+					this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
+				}
+				throw error
+			}
+		} else {
+			connectionData = initialSession
+		}
+
+		this.document = connectionData.document
+		this.document.readOnly = connectionData.readOnly
+		this.session = connectionData.session
+
+		this.emit('opened', {
+			document: this.document,
+			session: this.session,
+		})
+		return this._fetchDocument().then(({ data }) => {
+			this.emit('loaded', {
 				document: this.document,
 				session: this.session,
+				documentSource: '' + data,
 			})
-			return this._fetchDocument().then(({ data }) => {
-
-				this.emit('loaded', {
-					document: this.document,
-					session: this.session,
-					documentSource: '' + data,
-				})
-			})
-		}).catch((error) => {
-			if (!error.response || error.code === 'ECONNABORTED') {
-				this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
-			} else {
-				this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
-			}
-
-			return Promise.reject(error)
 		})
 	}
 
@@ -122,11 +132,6 @@ class SyncService {
 				guestName: this.options.guestName,
 				forceRecreate: this.options.forceRecreate,
 			},
-		}).then((response) => {
-			this.document = response.data.document
-			this.document.readOnly = response.data.readOnly
-			this.session = response.data.session
-			return response.data
 		})
 	}
 

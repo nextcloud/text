@@ -61,7 +61,6 @@ class ApiService {
 		try {
 			$readOnly = true;
 			/** @var File $file */
-			$file = null;
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 				try {
@@ -71,9 +70,6 @@ class ApiService {
 				}
 			} else if ($fileId) {
 				$file = $this->documentService->getFileById($fileId);
-				$readOnly = !$file->isUpdateable();
-			} else if ($filePath) {
-				$file = $this->documentService->getFileByPath($filePath);
 				$readOnly = !$file->isUpdateable();
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
@@ -132,11 +128,8 @@ class ApiService {
 	 * @throws \OCP\AppFramework\Db\DoesNotExistException
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
-		if ($token) {
-			$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
-		} else {
-			$file = $this->documentService->getFileById($documentId);
-		}
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$file = $this->documentService->getFileForSession($session, $token);
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
@@ -162,16 +155,13 @@ class ApiService {
 			'document' => $this->documentService->get($documentId)
 		];
 
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$file = $this->documentService->getFileForSession($session, $token);
+
 		try {
-			$result['document'] = $this->documentService->autosave($documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'));
+			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'), $userId);
 		} catch (DocumentSaveConflictException $e) {
 			try {
-				if ($token) {
-					/** @var File $file */
-					$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
-				} else {
-					$file = $this->documentService->getFileById($documentId);
-				}
 				$result['outsideChange'] = $file->getContent();
 			} catch (LockedException $e) {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time

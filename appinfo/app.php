@@ -38,3 +38,5 @@ $eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', functi
 	\OCP\Util::addScript('text', 'public');
 	\OCP\Util::addStyle('text', 'icons');
 });
+
+$app = \OC::$server->query(Application::class);
