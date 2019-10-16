@@ -23,10 +23,9 @@
 <template>
 	<div id="rich-workspace" :class="{'icon-loading': !loaded || !ready }">
 		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
-			<i>{{ t('text', 'Click to enter notes, lists or links …') }}</i>
-		</div>
-		<div v-if="(file && !ready)" class="empty-workspace">
-			<i>{{ t('text', 'Write something …') }}</i>
+			<p class="placeholder">
+				{{ t('text', 'Add notes, lists or links …') }}
+			</p>
 		</div>
 
 		<EditorWrapper v-if="file"
@@ -44,7 +43,7 @@
 export default {
 	name: 'RichWorkspace',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper')
 	},
 	props: {
 		path: {
@@ -69,9 +68,6 @@ export default {
 		this.getFileInfo()
 	},
 	methods: {
-		changeDirectory({ dir, fileList }) {
-			console.log('vue cchangeDirectory', dir, fileList)
-		},
 		getFileInfo() {
 			this.loaded = false
 			this.autofocus = false
@@ -87,7 +83,7 @@ export default {
 			})
 		},
 		createNew() {
-			window.FileList.createFile('README.md', { scrollTo: false }).then((status, data) => {
+			window.FileList.createFile('README.md', { scrollTo: false, animate: false }).then((status, data) => {
 				this.getFileInfo()
 				this.autofocus = true
 			})
@@ -98,15 +94,16 @@ export default {
 
 <style scoped>
 	#rich-workspace {
-		padding: 0 20px;
+		padding: 0 60px;
 		min-height: 90px;
 	}
+
 	.empty-workspace {
 		margin-top: 54px;
 		color: var(--color-text-maxcontrast);
 		height: 0;
-		font-style: italic;
 	}
+
 	#rich-workspace::v-deep div[contenteditable=false] {
 		width: 100%;
 		padding: 0px;
@@ -135,6 +132,5 @@ export default {
 
 	#rich-workspace::v-deep .editor__content {
 		margin: 0;
-		max-width: 100%;
 	}
 </style>

@@ -79,7 +79,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Image(),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
-				emptyNodeText: 'Write something …',
+				emptyNodeText: 'Add notes, lists or links …',
 				showOnlyWhenEditable: true
 			})
 		]

@@ -22,9 +22,10 @@
 
 import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
+import RichWorkspace from './views/RichWorkspace'
+
 import { registerFileActionFallback, registerFileCreate } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
-
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -67,26 +68,22 @@ const FilesPlugin = {
 
 	render: (fileList) => {
 
-		const RichWorkspace = import(/* webpackChunkName: "richworkspace" */'./views/RichWorkspace')
-		const Vue = import('vue')
-		FilesPlugin.el.id = 'files-workspace-wrapper'
-		Vue.prototype.t = window.t
-		Vue.prototype.n = window.n
-		Vue.prototype.OCA = window.OCA
-		const View = Vue.extend(RichWorkspace)
-		const vm = new View({
-			propsData: {
-				path: fileList.getCurrentDirectory()
-			}
-		}).$mount(FilesPlugin.el)
+		import('vue').then((module) => {
+			const Vue = module.default
+			FilesPlugin.el.id = 'files-workspace-wrapper'
+			Vue.prototype.t = window.t
+			Vue.prototype.n = window.n
+			Vue.prototype.OCA = window.OCA
+			const View = Vue.extend(RichWorkspace)
+			const vm = new View({
+				propsData: {
+					path: fileList.getCurrentDirectory()
+				}
+			}).$mount(FilesPlugin.el)
 
-		fileList.$el.on('changeDirectory', data => {
-			vm.path = data.dir.toString()
-			vm.changeDirectory({
-				dir: data.dir,
-				fileList
+			fileList.$el.on('changeDirectory', data => {
+				vm.path = data.dir.toString()
 			})
-			// TODO Switch to path/README.md
 		})
 	}
 }
