@@ -85,7 +85,7 @@ const registerFileCreate = () => {
 			menu.addMenuEntry({
 				id: 'file',
 				displayName: t('text', 'New text document'),
-				templateName: t('text', 'New text document.md'),
+				templateName: t('text', 'New text document') + '.md',
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
 				actionHandler: function(name) {
