@@ -13,8 +13,8 @@ OC.L10N.register(
     "Show image" : "Kép megjelenítése",
     "Show file" : "Fájl megjelenítése",
     "New text document" : "Új szöveg dokumentum",
-    "New text document.md" : "Új szöveg dokumentum.md",
     "Edit" : "Szerkesztés",
-    "Undo" : "Visszavon"
+    "Undo" : "Visszavon",
+    "New text document.md" : "Új szöveg dokumentum.md"
 },
 "nplurals=2; plural=(n != 1);");

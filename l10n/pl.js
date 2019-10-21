@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Pokaż obraz",
     "Show file" : "Pokaż plik",
     "New text document" : "Nowy dokument tekstowy",
-    "New text document.md" : "Nowy dokument tekstowy.md",
     "Edit" : "Edytuj",
     "Undo" : "Cofnij",
     "Redo" : "Powtórzenie",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Lista nieuporządkowana",
     "Ordered list" : "Lista uporządkowana",
     "Blockquote" : "Cytat",
-    "Code block" : "Blok kodu"
+    "Code block" : "Blok kodu",
+    "New text document.md" : "Nowy dokument tekstowy.md"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

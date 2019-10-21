@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "显示图片",
     "Show file" : "显示文件",
     "New text document" : "新建文本文档",
-    "New text document.md" : "新建文本文档.md",
     "Edit" : "编辑",
     "Undo" : "撤销",
     "Redo" : "重做",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "无编号列表",
     "Ordered list" : "编号列表",
     "Blockquote" : "块引用",
-    "Code block" : "代码块"
+    "Code block" : "代码块",
+    "New text document.md" : "新建文本文档.md"
 },
 "nplurals=1; plural=0;");

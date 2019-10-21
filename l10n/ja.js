@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "画像を表示する",
     "Show file" : "ファイルを表示する",
     "New text document" : "新しいテキストドキュメント",
-    "New text document.md" : "新しいテキストドキュメント.md",
     "Edit" : "編集",
     "Undo" : "元に戻す",
     "Redo" : "やり直し",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "番号なしのリスト",
     "Ordered list" : "順序付きリスト",
     "Blockquote" : "引用",
-    "Code block" : "コードブロック"
+    "Code block" : "コードブロック",
+    "New text document.md" : "新しいテキストドキュメント.md"
 },
 "nplurals=1; plural=0;");

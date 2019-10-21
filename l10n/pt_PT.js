@@ -18,8 +18,8 @@ OC.L10N.register(
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar ficheiro",
     "New text document" : "Novo documento de texto",
-    "New text document.md" : "Novo documento de texto.md",
     "Edit" : "Editar",
-    "Undo" : "Desfazer"
+    "Undo" : "Desfazer",
+    "New text document.md" : "Novo documento de texto.md"
 },
 "nplurals=2; plural=(n != 1);");

@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Visa bild",
     "Show file" : "Visa fil",
     "New text document" : "Nytt textdokument",
-    "New text document.md" : "Nytt textdokument.md",
     "Edit" : "Redigera",
     "Undo" : "Ångra",
     "Redo" : "Upprepa",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Punktlista",
     "Ordered list" : "Numrerad lista",
     "Blockquote" : "Blockcitat",
-    "Code block" : "Kodblock"
+    "Code block" : "Kodblock",
+    "New text document.md" : "Nytt textdokument.md"
 },
 "nplurals=2; plural=(n != 1);");
