@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand",
     "New text document" : "Nieuw tekstdocument",
-    "New text document.md" : "Nieuw tekstdocument.md",
     "Edit" : "Bewerken",
     "Undo" : "Ongedaan maken",
     "Redo" : "Opnieuw doen",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Ongesorteerde lijst",
     "Ordered list" : "Gesorteerde lijst",
     "Blockquote" : "Tekstblok",
-    "Code block" : "Code blok"
+    "Code block" : "Code blok",
+    "New text document.md" : "Nieuw tekstdocument.md"
 },
 "nplurals=2; plural=(n != 1);");
