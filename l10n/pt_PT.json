@@ -16,8 +16,8 @@
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar ficheiro",
     "New text document" : "Novo documento de texto",
-    "New text document.md" : "Novo documento de texto.md",
     "Edit" : "Editar",
-    "Undo" : "Desfazer"
+    "Undo" : "Desfazer",
+    "New text document.md" : "Novo documento de texto.md"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

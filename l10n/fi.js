@@ -18,7 +18,6 @@ OC.L10N.register(
     "Show image" : "Näytä kuva",
     "Show file" : "Näytä tiedosto",
     "New text document" : "Uusi tekstiasiakirja",
-    "New text document.md" : "Uusi tekstiasiakirja.md",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Heading 6" : "Otsikko 6",
     "Unordered list" : "Järjestämätön lista",
     "Ordered list" : "Järjestetty lista",
-    "Code block" : "Koodilohko"
+    "Code block" : "Koodilohko",
+    "New text document.md" : "Uusi tekstiasiakirja.md"
 },
 "nplurals=2; plural=(n != 1);");

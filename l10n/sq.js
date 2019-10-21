@@ -18,8 +18,8 @@ OC.L10N.register(
     "Show image" : "Shfaq imazhin",
     "Show file" : "Shfaq skedarin",
     "New text document" : "Dokument tekst i ri",
-    "New text document.md" : "Dokument tekst .md i ri",
     "Edit" : "Përpuno",
-    "Undo" : "Ktheje pas"
+    "Undo" : "Ktheje pas",
+    "New text document.md" : "Dokument tekst .md i ri"
 },
 "nplurals=2; plural=(n != 1);");

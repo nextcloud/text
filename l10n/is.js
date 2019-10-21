@@ -15,7 +15,6 @@ OC.L10N.register(
     "Show image" : "Birta mynd",
     "Show file" : "Sýna skrá",
     "New text document" : "Nýtt textaskjal",
-    "New text document.md" : "Nýtt textaskjal.md",
     "Edit" : "Breyta",
     "Undo" : "Afturkalla",
     "Redo" : "Endurtaka",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Unordered list" : "Óraðaður listi",
     "Ordered list" : "Raðaður listi",
     "Blockquote" : "Tilvitnun",
-    "Code block" : "Kóðablokk"
+    "Code block" : "Kóðablokk",
+    "New text document.md" : "Nýtt textaskjal.md"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

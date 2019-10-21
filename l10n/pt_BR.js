@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
     "New text document" : "Novo documento de texto",
-    "New text document.md" : "Novo texto document.md",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Redo" : "Refazer",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Lista sem ordenação",
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Bloco de citação",
-    "Code block" : "Bloco de código"
+    "Code block" : "Bloco de código",
+    "New text document.md" : "Novo texto document.md"
 },
 "nplurals=2; plural=(n > 1);");

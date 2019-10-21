@@ -19,7 +19,6 @@
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
     "New text document" : "Novo documento de texto",
-    "New text document.md" : "Novo texto document.md",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Redo" : "Refazer",
@@ -37,6 +36,7 @@
     "Unordered list" : "Lista sem ordenação",
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Bloco de citação",
-    "Code block" : "Bloco de código"
+    "Code block" : "Bloco de código",
+    "New text document.md" : "Novo texto document.md"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

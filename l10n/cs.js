@@ -18,7 +18,6 @@ OC.L10N.register(
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",
     "New text document" : "Nový textový dokument",
-    "New text document.md" : "Nový textový dokument.md",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
     "Redo" : "Zopakovat",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Heading 6" : "Nadpis 6",
     "Unordered list" : "Neuspořádaný seznam",
     "Ordered list" : "Uspořádaný seznam",
-    "Code block" : "Blok kódu"
+    "Code block" : "Blok kódu",
+    "New text document.md" : "Nový textový dokument.md"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

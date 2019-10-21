@@ -17,7 +17,6 @@ OC.L10N.register(
     "Show image" : "Εμφάνιση εικόνας",
     "Show file" : "Εμφάνιση αρχείου",
     "New text document" : "Νέο έγγραφο κειμένου",
-    "New text document.md" : "Νέο έγγραφο κειμένου.md",
     "Edit" : "Επεξεργασία",
     "Undo" : "Aναίρεση",
     "Redo" : "Ακύρωση αναίρεσης",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Unordered list" : "Αταξινόμητη λίστα",
     "Ordered list" : "Ταξινομημένη λίστα",
     "Blockquote" : "Παράθεση",
-    "Code block" : "Μπλοκ κώδικα"
+    "Code block" : "Μπλοκ κώδικα",
+    "New text document.md" : "Νέο έγγραφο κειμένου.md"
 },
 "nplurals=2; plural=(n != 1);");

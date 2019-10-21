@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
     "New text document" : "Yeni metin belgesi",
-    "New text document.md" : "Yeni metin belgesi.md",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Sıralı olmayan liste",
     "Ordered list" : "Sıralı liste",
     "Blockquote" : "Alıntı",
-    "Code block" : "Kod bloğu"
+    "Code block" : "Kod bloğu",
+    "New text document.md" : "Yeni metin belgesi.md"
 },
 "nplurals=2; plural=(n > 1);");

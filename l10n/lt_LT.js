@@ -18,7 +18,6 @@ OC.L10N.register(
     "Show image" : "Rodyti paveikslą",
     "Show file" : "Rodyti failą",
     "New text document" : "Naujas tekstinis dokumentas",
-    "New text document.md" : "Naujas tekstinis dokumentas.md",
     "Edit" : "Taisyti",
     "Undo" : "Atšaukti",
     "Redo" : "Grąžinti",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Heading 5" : "Antraštė 5",
     "Heading 6" : "Antraštė 6",
     "Blockquote" : "Citata",
-    "Code block" : "Kodo blokas"
+    "Code block" : "Kodo blokas",
+    "New text document.md" : "Naujas tekstinis dokumentas.md"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

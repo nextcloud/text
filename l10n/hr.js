@@ -21,7 +21,6 @@ OC.L10N.register(
     "Show image" : "Prikaži sliku",
     "Show file" : "Prikaži datoteku",
     "New text document" : "Novi tekstni dokument",
-    "New text document.md" : "Novi tekstni dokument.md",
     "Edit" : "Uredi",
     "Undo" : "Poništi",
     "Redo" : "Ponovno",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Nerazvrstani popis",
     "Ordered list" : "Razvrstani popis",
     "Blockquote" : "Oblikovano navođenje",
-    "Code block" : "Odjeljak s kodom"
+    "Code block" : "Odjeljak s kodom",
+    "New text document.md" : "Novi tekstni dokument.md"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");
