@@ -74,7 +74,7 @@ class Cleanup extends TimedJob {
 			}
 		}
 		$removedSessions = $this->sessionService->removeInactiveSessions(null);
-		$this->logger->info('Removed ' . $removedSessions . ' inactive sessions');
+		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 	}
 
 
