@@ -1,5 +1,9 @@
 # Nextcloud Text
 
+[![Drone (self-hosted) with branch](https://img.shields.io/drone/build/nextcloud/text/master?server=https%3A%2F%2Fdrone.nextcloud.com)](https://drone.nextcloud.com/nextcloud/text) 
+[![Start contributing](https://img.shields.io/github/issues/nextcloud/text/good%20first%20issue?color=7057ff&label=Contribute)](https://github.com/nextcloud/text/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22)
+
+
 **📑 Collaborative document editing!**
 
 ![](img/screenshots/screenshot1.png)
@@ -9,6 +13,7 @@
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
 
+Nextcloud Text is available for Nextcloud 16 and will be part of Nextcloud 17 as the default text editor. To start editing just open an existing markdown or plaintext file or create a new one.
 
 ## 🏗 Development setup
 

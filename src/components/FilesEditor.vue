@@ -21,8 +21,11 @@
   -->
 
 <template>
-	<editor-wrapper :file-id="fileId" :relative-path="davPath" :active="active"
-		:share-token="shareToken" :mime="mime" />
+	<EditorWrapper :file-id="fileId"
+		:relative-path="davPath"
+		:active="active"
+		:share-token="shareToken"
+		:mime="mime" />
 </template>
 
 <script>

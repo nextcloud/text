@@ -59,12 +59,12 @@ describe('Markdown though editor', () => {
     expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
   })
   test('ul', () => {
-    expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n\n* bar')
-    expect(markdownThroughEditor('- foo\n\n- bar')).toBe('* foo\n\n* bar')
-    expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('* foo\n\n* bar')
+    expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n* bar')
+    expect(markdownThroughEditor('- foo\n\n- bar')).toBe('* foo\n* bar')
+    expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('* foo\n* bar')
   })
   test('ol', () => {
-    expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n\n2. bar')
+    expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
   })
   test('paragraph', () => {
     expect(markdownThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo bar\n\nfoobar foobar')

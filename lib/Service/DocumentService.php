@@ -307,8 +307,16 @@ class DocumentService {
 		}
 	}
 
+	/**
+	 * @throws NotFoundException
+	 */
 	public function getFileById($fileId): Node {
-		return $this->rootFolder->getUserFolder($this->userId)->getById($fileId)[0];
+		$files = $this->rootFolder->getUserFolder($this->userId)->getById($fileId);
+		if (count($files) === 0) {
+			throw new NotFoundException();
+		}
+
+		return $files[0];
 	}
 
 	public function getFileByPath($path): Node {

@@ -127,7 +127,7 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 			{ ...defaultMarkdownSerializer.marks, ...marks }
 		),
 		serialize: function(content, options) {
-			return this.serializer.serialize(content, options).split('\\[ \\]').join('[ ]')
+			return this.serializer.serialize(content, { ...options, tightLists: true }).split('\\[ \\]').join('[ ]')
 				.split('\\[x\\]').join('[x]')
 		}
 	}

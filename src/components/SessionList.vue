@@ -24,12 +24,15 @@
 	<div class="session-list">
 		<div v-tooltip.left="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
 			<div v-if="sessionsPopover.length > 0" class="avatardiv icon-more" />
-			<avatar v-for="session in sessionsVisible" :key="session.id"
-				:url="avatarUrl(session)" :disable-tooltip="true" :style="sessionStyle(session)"
+			<Avatar v-for="session in sessionsVisible"
+				:key="session.id"
+				:url="avatarUrl(session)"
+				:disable-tooltip="true"
+				:style="sessionStyle(session)"
 				:size="32" />
 		</div>
 		<div v-show="popoverVisible" class="popovermenu menu-right">
-			<popover-menu :menu="sessionsPopover" />
+			<PopoverMenu :menu="sessionsPopover" />
 			<slot />
 		</div>
 	</div>
