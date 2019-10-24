@@ -45,8 +45,10 @@
 						</SessionList>
 					</div>
 				</MenuBar>
-				<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
-				<EditorContent v-show="initialLoading" class="editor__content" :editor="tiptap" />
+				<div class="editor__content">
+					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
+					<EditorContent v-show="initialLoading" :editor="tiptap" />
+				</div>
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
@@ -507,6 +509,7 @@ export default {
 	.editor__content {
 		max-width: 670px;
 		margin: auto;
+		position: relative;
 	}
 
 	#body-public {
