@@ -21,6 +21,7 @@
  */
 
 import FilesEditor from './components/FilesEditor'
+import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 
@@ -41,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		component: FilesEditor,
 		group: null
 	})
+	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
+
 })
 
 OCA.Text = {

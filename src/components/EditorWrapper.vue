@@ -557,5 +557,8 @@ export default {
 </style>
 <style lang="scss">
 	@import './../../css/style';
-	@import './../../css/prosemirror';
+
+	#editor-wrapper {
+		@import './../../css/prosemirror';
+	}
 </style>
