@@ -27,6 +27,7 @@
 import axios from '@nextcloud/axios'
 import { generateRemoteUrl } from 'nextcloud-server/dist/router'
 import { openMimetypes } from './mime'
+import RichWorkspace from '../views/RichWorkspace'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -154,9 +155,50 @@ const registerFileActionFallback = () => {
 
 }
 
+const FilesWorkspacePlugin = {
+
+	el: null,
+
+	attach: function(fileList) {
+		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+			return
+		}
+
+		this.el = document.createElement('div')
+		fileList.registerHeader({
+			id: 'workspace',
+			el: this.el,
+			render: this.render.bind(this),
+			priority: 10
+		})
+	},
+
+	render: function(fileList) {
+
+		import('vue').then((module) => {
+			const Vue = module.default
+			this.el.id = 'files-workspace-wrapper'
+			Vue.prototype.t = window.t
+			Vue.prototype.n = window.n
+			Vue.prototype.OCA = window.OCA
+			const View = Vue.extend(RichWorkspace)
+			const vm = new View({
+				propsData: {
+					path: fileList.getCurrentDirectory()
+				}
+			}).$mount(this.el)
+
+			fileList.$el.on('changeDirectory', data => {
+				vm.path = data.dir.toString()
+			})
+		})
+	}
+}
+
 export {
 	fetchFileInfo,
 	registerFileActionFallback,
 	registerFileCreate,
+	FilesWorkspacePlugin,
 	FILE_ACTION_IDENTIFIER
 }

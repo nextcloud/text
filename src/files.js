@@ -23,8 +23,7 @@
 import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
 import RichWorkspace from './views/RichWorkspace'
-
-import { registerFileActionFallback, registerFileCreate } from './helpers/files'
+import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
@@ -48,47 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-const FilesPlugin = {
-
-	el: null,
-
-	attach: (fileList) => {
-		if (fileList.id !== 'files') {
-			return
-		}
-
-		FilesPlugin.el = document.createElement('div')
-		fileList.registerHeader({
-			id: 'workspace',
-			el: FilesPlugin.el,
-			render: FilesPlugin.render.bind(FilesPlugin),
-			priority: 10
-		})
-	},
-
-	render: (fileList) => {
-
-		import('vue').then((module) => {
-			const Vue = module.default
-			FilesPlugin.el.id = 'files-workspace-wrapper'
-			Vue.prototype.t = window.t
-			Vue.prototype.n = window.n
-			Vue.prototype.OCA = window.OCA
-			const View = Vue.extend(RichWorkspace)
-			const vm = new View({
-				propsData: {
-					path: fileList.getCurrentDirectory()
-				}
-			}).$mount(FilesPlugin.el)
-
-			fileList.$el.on('changeDirectory', data => {
-				vm.path = data.dir.toString()
-			})
-		})
-	}
-}
-
-OC.Plugins.register('OCA.Files.FileList', FilesPlugin)
+OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 
 OCA.Text = {
 	Editor: FilesEditor

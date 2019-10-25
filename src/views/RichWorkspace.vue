@@ -32,6 +32,8 @@
 			v-show="ready"
 			:key="file.id"
 			:file-id="file.id"
+			:relative-path="file.path"
+			:share-token="shareToken"
 			:active="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
@@ -40,6 +42,12 @@
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+import { generateOcsUrl } from '@nextcloud/router'
+
+const IS_PUBLIC = !!(document.getElementById('isPublic'))
+const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : ''), 2) + 'workspace'
+
 export default {
 	name: 'RichWorkspace',
 	components: {
@@ -59,6 +67,11 @@ export default {
 			autofocus: false
 		}
 	},
+	computed: {
+		shareToken() {
+			return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+		}
+	},
 	watch: {
 		path: function() {
 			this.getFileInfo()
@@ -72,20 +85,30 @@ export default {
 			this.loaded = false
 			this.autofocus = false
 			this.ready = false
-			OCA.Files.App.fileList.filesClient.getFileInfo(this.path + '/README.md').then((status, fileInfo) => {
-				this.file = fileInfo
+			const params = { path: this.path }
+			if (IS_PUBLIC) {
+				params.shareToken = this.shareToken
+			}
+			axios.get(WORKSPACE_URL, { params }).then((response) => {
+				const data = response.data.ocs.data
+				this.file = data.file
 				this.editing = true
 				this.loaded = true
-			}).fail(() => {
+			}).catch(() => {
 				this.file = null
 				this.loaded = true
 				this.ready = true
 			})
 		},
 		createNew() {
+			if (this.creating) {
+				return
+			}
+			this.creating = true
 			window.FileList.createFile('README.md', { scrollTo: false, animate: false }).then((status, data) => {
 				this.getFileInfo()
 				this.autofocus = true
+				this.creating = false
 			})
 		}
 	}
@@ -96,6 +119,7 @@ export default {
 	#rich-workspace {
 		padding: 0 60px;
 		min-height: 90px;
+		text-align: left;
 	}
 
 	.empty-workspace {
