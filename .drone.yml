@@ -135,7 +135,7 @@ steps:
   - name: install
     image: node:lts-alpine
     commands:
-      - npm install
+      - npm ci
   - name: eslint
     image: node:lts-alpine
     commands:
@@ -152,6 +152,11 @@ steps:
     image: node:lts-alpine
     commands:
       - npm run test
+  - name: changes
+    image: nextcloudci/node:node-4
+    commands:
+      - git status
+      - bash -c "[[ ! \"`git status --porcelain `\" ]] || ( echo 'Uncommited changes in webpack build' && exit 1 )"
 trigger:
   branch:
     - master
