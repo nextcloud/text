@@ -24,12 +24,16 @@
 	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
 		<div v-if="imageLoaded && isSupportedImage">
 			<transition name="fade">
-				<img v-show="loaded" :src="src"
-					class="image__main" @load="onLoaded">
+				<img v-show="loaded"
+					:src="src"
+					class="image__main"
+					@load="onLoaded">
 			</transition>
 			<transition name="fade">
 				<div v-show="loaded" class="image__caption">
-					<input ref="altInput" type="text" :value="alt"
+					<input ref="altInput"
+						type="text"
+						:value="alt"
 						@keyup.enter="updateAlt()">
 				</div>
 			</transition>
@@ -44,7 +48,9 @@
 				</div>
 			</transition><transition name="fade">
 				<div v-show="loaded" class="image__caption">
-					<input ref="altInput" type="text" :value="alt"
+					<input ref="altInput"
+						type="text"
+						:value="alt"
 						@keyup.enter="updateAlt()">
 				</div>
 			</transition>

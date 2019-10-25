@@ -24,7 +24,7 @@
  * Callback that should be executed after the document is ready
  * @param callback
  */
-import axios from 'axios'
+import axios from '@nextcloud/axios'
 import { generateRemoteUrl } from 'nextcloud-server/dist/router'
 import { openMimetypes } from './mime'
 
@@ -85,7 +85,7 @@ const registerFileCreate = () => {
 			menu.addMenuEntry({
 				id: 'file',
 				displayName: t('text', 'New text document'),
-				templateName: t('text', 'New text document.md'),
+				templateName: t('text', 'New text document') + '.md',
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
 				actionHandler: function(name) {

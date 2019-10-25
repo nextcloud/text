@@ -63,3 +63,6 @@ clean:
 clean-dev:
 	rm -rf node_modules
 
+clean-git:
+	rm -r js/
+	git checkout -- js/
