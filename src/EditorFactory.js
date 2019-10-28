@@ -43,7 +43,7 @@ import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markd
 
 const loadSyntaxHighlight = async(language) => {
 	const languages = [language]
-	let modules = {}
+	const modules = {}
 	for (let i = 0; i < languages.length; i++) {
 		try {
 			const lang = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + languages[i])

@@ -123,7 +123,7 @@ export default {
 		},
 		getIconClasses() {
 			return (isActive, icon) => {
-				let classes = {
+				const classes = {
 					'is-active': icon.isActive(isActive)
 				}
 				classes[icon.class] = true
@@ -151,7 +151,7 @@ export default {
 		},
 		childPopoverMenu() {
 			return (isActive, commands, icons, parent) => {
-				let popoverMenuItems = []
+				const popoverMenuItems = []
 				for (const index in icons) {
 					popoverMenuItems.push({
 						text: icons[index].label,
@@ -169,7 +169,7 @@ export default {
 		childIconClass() {
 			return (isActive, icons) => {
 				for (const index in icons) {
-					var icon = icons[index]
+					const icon = icons[index]
 					if (icon.isActive(isActive)) {
 						return icon.class
 					}

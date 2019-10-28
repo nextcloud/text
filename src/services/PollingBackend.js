@@ -175,8 +175,8 @@ class PollingBackend {
 			return
 		}
 		this.lock = true
-		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
-		let steps = sendable.steps
+		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
+		const steps = sendable.steps
 		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
@@ -240,7 +240,7 @@ class PollingBackend {
 	}
 
 	carefulRetry() {
-		let newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
+		const newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
 			OC.Notification.showTemporary('Changes could not be sent yet')
 			this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})

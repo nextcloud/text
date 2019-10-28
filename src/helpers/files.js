@@ -75,7 +75,7 @@ const fetchFileInfo = async function(user, path) {
 const registerFileCreate = () => {
 	const newFileMenuPlugin = {
 		attach: function(menu) {
-			var fileList = menu.fileList
+			const fileList = menu.fileList
 
 			// only attach to main file list, public view is not supported yet
 			if (fileList.id !== 'files' && fileList.id !== 'files.public') {
@@ -91,7 +91,7 @@ const registerFileCreate = () => {
 				fileType: 'file',
 				actionHandler: function(name) {
 					fileList.createFile(name).then(function(status, data) {
-						let fileInfoModel = new OCA.Files.FileInfoModel(data)
+						const fileInfoModel = new OCA.Files.FileInfoModel(data)
 						if (typeof OCA.Viewer !== 'undefined') {
 							OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
 						} else if (typeof OCA.Viewer === 'undefined') {

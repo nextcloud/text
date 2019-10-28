@@ -399,17 +399,17 @@ export default {
 
 		updateSessions(sessions) {
 			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
-			let currentSessionIds = this.sessions.map((session) => session.userId)
-			let currentGuestIds = this.sessions.map((session) => session.guestId)
+			const currentSessionIds = this.sessions.map((session) => session.userId)
+			const currentGuestIds = this.sessions.map((session) => session.guestId)
 
 			const removedSessions = Object.keys(this.filteredSessions)
 				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
 
-			for (let index in removedSessions) {
+			for (const index in removedSessions) {
 				Vue.delete(this.filteredSessions, removedSessions[index])
 			}
-			for (let index in this.sessions) {
-				let session = this.sessions[index]
+			for (const index in this.sessions) {
+				const session = this.sessions[index]
 				const sessionKey = session.displayName ? session.userId : session.id
 				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant

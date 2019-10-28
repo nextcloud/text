@@ -70,16 +70,16 @@ const imageMimes = [
 ]
 
 const getQueryVariable = (src, variable) => {
-	var query = src.split('#')[1]
+	const query = src.split('#')[1]
 	if (typeof query === 'undefined') {
 		return
 	}
-	var vars = query.split('&')
+	const vars = query.split('&')
 	if (typeof vars === 'undefined') {
 		return
 	}
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=')
+	for (let i = 0; i < vars.length; i++) {
+		const pair = vars[i].split('=')
 		if (decodeURIComponent(pair[0]) === variable) {
 			return decodeURIComponent(pair[1])
 		}
@@ -149,7 +149,7 @@ export default {
 			this.loaded = true
 			return
 		}
-		var img = new Image()
+		const img = new Image()
 		img.src = this.node.attrs.src
 		img.onload = () => {
 			this.imageLoaded = true

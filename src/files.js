@@ -22,7 +22,6 @@
 
 import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
-import RichWorkspace from './views/RichWorkspace'
 import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 

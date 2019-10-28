@@ -166,7 +166,7 @@ class SyncService {
 	}
 
 	sendSteps(_sendable) {
-		let sendable = _sendable || sendableSteps(this.state)
+		const sendable = _sendable || sendableSteps(this.state)
 		if (!sendable) {
 			return
 		}
@@ -181,9 +181,9 @@ class SyncService {
 	}
 
 	_receiveSteps({ steps, document }) {
-		let newSteps = []
+		const newSteps = []
 		for (let i = 0; i < steps.length; i++) {
-			let singleSteps = steps[i].data
+			const singleSteps = steps[i].data
 			if (!Array.isArray(singleSteps)) {
 				console.error('Invalid step data, skipping step', steps[i])
 				// TODO: recover
