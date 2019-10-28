@@ -52,14 +52,3 @@ li.ProseMirror-selectednode:after {
     visibility: hidden;
   }
 }
-
-div[contenteditable=true],
-div[contenteditable=false] {
-  border: none !important;
-  width: 100%;
-  background-color: transparent;
-  color: var(--color-main-text);
-  opacity: 1;
- -webkit-user-select: text;
-  user-select: text;
-}

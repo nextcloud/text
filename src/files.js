@@ -21,6 +21,7 @@
  */
 
 import FilesEditor from './components/FilesEditor'
+import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 
@@ -29,18 +30,22 @@ __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 registerFileCreate()
 
-document.addEventListener('DOMContentLoaded', () => {
-	if (typeof OCA.Viewer === 'undefined') {
-		console.error('Viewer app is not installed')
-		registerFileActionFallback()
-		return
-	}
+if (typeof OCA.Viewer !== 'undefined') {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
 		component: FilesEditor,
 		group: null
 	})
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	if (typeof OCA.Viewer === 'undefined') {
+		console.error('Viewer app is not installed')
+		registerFileActionFallback()
+		return
+	}
+	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 })
 
 OCA.Text = {

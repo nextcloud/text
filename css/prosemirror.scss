@@ -1,5 +1,5 @@
 /* Document rendering styles */
-#editor-wrapper .ProseMirror {
+.ProseMirror {
 	margin-top: 44px;
 	height: 100%;
 	position: relative;
@@ -11,6 +11,17 @@
 	line-height: 150%;
 	font-size: 14px;
 	outline: none;
+
+	&[contenteditable=true],
+	&[contenteditable=false] {
+		border: none !important;
+		width: 100%;
+		background-color: transparent;
+		color: var(--color-main-text);
+		opacity: 1;
+		-webkit-user-select: text;
+		user-select: text;
+	}
 
 	p:first-child,
 	h1:first-child,
@@ -133,7 +144,7 @@
 .ProseMirror-focused .ProseMirror-gapcursor {
 	display: block;
 }
-#editor-wrapper:not(.richEditor) .ProseMirror {
+&:not(.richEditor) .ProseMirror {
 	pre {
 		background-color: var(--color-main-background);
 

@@ -60,10 +60,21 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 	#read-only-editor {
+		@import './../../css/prosemirror';
 		overflow: scroll;
+	}
+
+	.thumbnailContainer #read-only-editor  {
+		width: 100%;
+
+		.ProseMirror {
+			height: auto;
+			margin: 0 0 0 0;
+			padding: 0;
+		}
 	}
 
 </style>
