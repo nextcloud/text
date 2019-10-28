@@ -34,7 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
 		registerFileActionFallback()
-		return
+	} else {
+		OCA.Viewer.registerHandler({
+			id: 'text',
+			mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
+			component: FilesEditor,
+			group: null,
+		})
 	}
 	OCA.Viewer.registerHandler({
 		id: 'text',

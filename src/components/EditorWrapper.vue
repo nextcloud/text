@@ -35,7 +35,8 @@
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
-					:is-rich-editor="isRichEditor">
+					:is-rich-editor="isRichEditor"
+					:autohide="autohide">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -119,8 +120,12 @@ export default {
 		},
 		mime: {
 			type: String,
-			default: null
-		}
+			default: null,
+		},
+		autohide: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -569,5 +574,65 @@ export default {
 
 	#editor-wrapper {
 		@import './../../css/prosemirror';
+
+		&:not(.richEditor) .ProseMirror {
+			pre {
+				background-color: var(--color-main-background);
+
+				&::before {
+					content: attr(data-language);
+					text-transform: uppercase;
+					display: block;
+					text-align: right;
+					font-weight: bold;
+					font-size: 0.6rem;
+				}
+				code {
+					.hljs-comment,
+					.hljs-quote {
+						color: #999999;
+					}
+					.hljs-variable,
+					.hljs-template-variable,
+					.hljs-attribute,
+					.hljs-tag,
+					.hljs-name,
+					.hljs-regexp,
+					.hljs-link,
+					.hljs-selector-id,
+					.hljs-selector-class {
+						color: #f2777a;
+					}
+					.hljs-number,
+					.hljs-meta,
+					.hljs-built_in,
+					.hljs-builtin-name,
+					.hljs-literal,
+					.hljs-type,
+					.hljs-params {
+						color: #f99157;
+					}
+					.hljs-string,
+					.hljs-symbol,
+					.hljs-bullet {
+						color: #99cc99;
+					}
+					.hljs-title,
+					.hljs-section {
+						color: #ffcc66;
+					}
+					.hljs-keyword,
+					.hljs-selector-tag {
+						color: #6699cc;
+					}
+					.hljs-emphasis {
+						font-style: italic;
+					}
+					.hljs-strong {
+						font-weight: 700;
+					}
+				}
+			}
+		}
 	}
 </style>

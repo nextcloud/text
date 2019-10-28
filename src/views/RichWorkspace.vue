@@ -35,6 +35,7 @@
 			:relative-path="file.path"
 			:share-token="shareToken"
 			:active="true"
+			:autohide="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
 			@ready="ready=true" />

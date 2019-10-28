@@ -22,7 +22,7 @@
 
 <template>
 	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
-		<div class="menubar autohide" :class="{ 'is-focused': focused }">
+		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<button v-if="icon.class"
@@ -102,8 +102,12 @@ export default {
 		},
 		isRichEditor: {
 			type: Boolean,
-			default: true
-		}
+			default: true,
+		},
+		autohide: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data: () => {
 		return {
