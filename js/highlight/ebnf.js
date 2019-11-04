@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[50],{399:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/;/,contains:[a,{className:"meta",begin:/\?.*\?/},n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
-//# sourceMappingURL=ebnf.js.map?v=8e157d5866f562e43168
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[50],{404:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/;/,contains:[a,{className:"meta",begin:/\?.*\?/},n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
+//# sourceMappingURL=ebnf.js.map?v=76f42962d6e43f76a328
