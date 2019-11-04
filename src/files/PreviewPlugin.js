@@ -33,8 +33,8 @@ export default class PreviewPlugin {
 	init() {
 		if (!this.initPromise) {
 			this.initPromise = Promise.all([
-				import('vue'),
-				import('./../components/ReadOnlyEditor')
+				import(/* webpackChunkName: "preview" */'vue'),
+				import(/* webpackChunkName: "preview" */'./../components/ReadOnlyEditor'),
 			]).then((exports) => {
 				this.Vue = exports[0].default
 				this.ReadOnlyEditor = exports[1].default
