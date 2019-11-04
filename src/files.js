@@ -30,22 +30,20 @@ __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 registerFileCreate()
 
-if (typeof OCA.Viewer !== 'undefined') {
-	OCA.Viewer.registerHandler({
-		id: 'text',
-		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: FilesEditor,
-		group: null
-	})
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
 		registerFileActionFallback()
 		return
 	}
+	OCA.Viewer.registerHandler({
+		id: 'text',
+		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
+		component: FilesEditor,
+		group: null
+	})
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
+
 })
 
 OCA.Text = {
