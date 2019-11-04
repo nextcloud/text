@@ -32,7 +32,8 @@ import {
 	CodeBlock,
 	CodeBlockHighlight,
 	HorizontalRule,
-	History
+	History,
+	Placeholder
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
 import { Image, PlainTextDocument } from './nodes'
@@ -42,7 +43,7 @@ import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markd
 
 const loadSyntaxHighlight = async(language) => {
 	const languages = [language]
-	let modules = {}
+	const modules = {}
 	for (let i = 0; i < languages.length; i++) {
 		try {
 			const lang = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + languages[i])
@@ -75,7 +76,12 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new CodeBlock(),
 			new ListItem(),
 			new Link(),
-			new Image()
+			new Image(),
+			new Placeholder({
+				emptyNodeClass: 'is-empty',
+				emptyNodeText: 'Add notes, lists or links …',
+				showOnlyWhenEditable: true
+			})
 		]
 	} else {
 		richEditingExtensions = [

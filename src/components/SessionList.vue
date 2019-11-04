@@ -70,8 +70,8 @@ export default {
 	computed: {
 		editorsTooltip() {
 			if (this.sessionsPopover.length > 0) {
-				let first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
-				let others = this.activeSessions.slice(3).length
+				const first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
+				const others = this.activeSessions.slice(3).length
 				return first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
 			}
 			return this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')

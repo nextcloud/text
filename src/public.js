@@ -1,5 +1,9 @@
 import { documentReady } from './helpers'
-import { registerFileActionFallback, registerFileCreate } from './helpers/files'
+import {
+	FilesWorkspacePlugin,
+	registerFileActionFallback,
+	registerFileCreate
+} from './helpers/files'
 import { openMimetypes } from './helpers/mime'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
@@ -11,6 +15,7 @@ documentReady(() => {
 	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
 
 	if (dir !== '') {
+		OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 		registerFileActionFallback()
 		registerFileCreate()
 	} else {

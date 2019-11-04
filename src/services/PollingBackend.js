@@ -66,7 +66,7 @@ class PollingBackend {
 	}
 
 	connect() {
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), 0)
 	}
 
 	_isPublic() {
@@ -175,8 +175,8 @@ class PollingBackend {
 			return
 		}
 		this.lock = true
-		let sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
-		let steps = sendable.steps
+		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
+		const steps = sendable.steps
 		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
@@ -215,9 +215,9 @@ class PollingBackend {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = FETCH_INTERVAL
+		this.fetchInterval = FETCH_INTERVAL
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 
 	}
 
@@ -225,22 +225,22 @@ class PollingBackend {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = Math.min(this.fetchInverval * 2, FETCH_INTERVAL_MAX)
+		this.fetchInterval = Math.min(this.fetchInterval * 2, FETCH_INTERVAL_MAX)
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 	}
 
 	maximumRefetchTimer() {
 		if (this.fetcher === 0) {
 			return
 		}
-		this.fetchInverval = FETCH_INTERVAL_SINGLE_EDITOR
+		this.fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInverval)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
 	}
 
 	carefulRetry() {
-		let newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
+		const newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
 			OC.Notification.showTemporary('Changes could not be sent yet')
 			this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})

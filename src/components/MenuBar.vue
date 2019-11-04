@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<EditorMenuBar v-slot="{ commands, isActive }" :editor="editor">
-		<div class="menubar">
+	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
+		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<button v-if="icon.class"
@@ -102,8 +102,12 @@ export default {
 		},
 		isRichEditor: {
 			type: Boolean,
-			default: true
-		}
+			default: true,
+		},
+		autohide: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data: () => {
 		return {
@@ -123,7 +127,7 @@ export default {
 		},
 		getIconClasses() {
 			return (isActive, icon) => {
-				let classes = {
+				const classes = {
 					'is-active': icon.isActive(isActive)
 				}
 				classes[icon.class] = true
@@ -151,7 +155,7 @@ export default {
 		},
 		childPopoverMenu() {
 			return (isActive, commands, icons, parent) => {
-				let popoverMenuItems = []
+				const popoverMenuItems = []
 				for (const index in icons) {
 					popoverMenuItems.push({
 						text: icons[index].label,
@@ -169,7 +173,7 @@ export default {
 		childIconClass() {
 			return (isActive, icons) => {
 				for (const index in icons) {
-					var icon = icons[index]
+					const icon = icons[index]
 					if (icon.isActive(isActive)) {
 						return icon.class
 					}
@@ -180,7 +184,7 @@ export default {
 		iconCount() {
 			this.forceRecompute // eslint-disable-line
 			this.windowWidth // eslint-disable-line
-			const menuBarWidth = this.$refs.menubar ? this.$refs.menubar.clientWidth : this.windowWidth - 200
+			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 100 ? this.$refs.menubar.clientWidth : this.windowWidth - 200
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
 			return iconCount
 		}
@@ -261,6 +265,16 @@ export default {
 		z-index: 10010; // above modal-header so buttons are clickable
 		background-color: var(--color-main-background-translucent);
 		height: 44px;
+
+		&.autohide {
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
+			&.is-focused {
+				visibility: visible;
+				opacity: 1;
+			}
+		}
 		.menubar-icons {
 			flex-grow: 1;
 			margin-left: calc((100% - 660px) / 2);
