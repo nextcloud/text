@@ -24,7 +24,7 @@
  * Callback that should be executed after the document is ready
  * @param callback
  */
-import { generateUrl } from 'nextcloud-server/dist/router'
+import { generateUrl } from '@nextcloud/router'
 
 const documentReady = function(callback) {
 	const fn = () => setTimeout(callback, 0)
@@ -51,5 +51,5 @@ const getRandomGuestName = () => {
 export {
 	documentReady,
 	endpointUrl,
-	getRandomGuestName
+	getRandomGuestName,
 }

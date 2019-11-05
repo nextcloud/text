@@ -19,7 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from 'nextcloud-axios'
+import axios from '@nextcloud/axios'
 import { endpointUrl } from '../helpers'
 import { ERROR_TYPE } from './SyncService'
 import { sendableSteps } from 'prosemirror-collab'
@@ -111,7 +111,7 @@ class PollingBackend {
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
 			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath
+			filePath: this._authority.options.filePath,
 		}).then((response) => {
 			this.fetchRetryCounter = 0
 
@@ -154,7 +154,7 @@ class PollingBackend {
 				// Only emit conflict event if we have synced until the latest version
 				console.error('Conflict during file save, please resolve')
 				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
-					outsideChange: e.response.data.outsideChange
+					outsideChange: e.response.data.outsideChange,
 				})
 			} else if (e.response.status === 403) {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
@@ -184,7 +184,7 @@ class PollingBackend {
 			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
 			version: sendable.version,
 			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath
+			filePath: this._authority.options.filePath,
 		}).then((response) => {
 			this.carefulRetryReset()
 			this.lock = false

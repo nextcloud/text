@@ -23,7 +23,7 @@
 export default {
 	data() {
 		return {
-			isMobile: this._isMobile()
+			isMobile: this._isMobile(),
 		}
 	},
 	beforeMount() {
@@ -40,6 +40,6 @@ export default {
 		_isMobile() {
 			// check if content width is under 768px
 			return document.documentElement.clientWidth < 768
-		}
-	}
+		},
+	},
 }

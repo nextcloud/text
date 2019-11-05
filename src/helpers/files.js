@@ -25,7 +25,7 @@
  * @param callback
  */
 import axios from '@nextcloud/axios'
-import { generateRemoteUrl } from 'nextcloud-server/dist/router'
+import { generateRemoteUrl } from '@nextcloud/router'
 import { openMimetypes } from './mime'
 import RichWorkspace from '../views/RichWorkspace'
 
@@ -37,7 +37,7 @@ const fetchFileInfo = async function(user, path) {
 		url: generateRemoteUrl(`dav/files/${user}${path}`),
 		headers: {
 			requesttoken: OC.requestToken,
-			'content-Type': 'text/xml'
+			'content-Type': 'text/xml',
 		},
 		data: `<?xml version="1.0"?>
 <d:propfind  xmlns:d="DAV:" xmlns:oc="http://owncloud.org/ns" xmlns:nc="http://nextcloud.org/ns" xmlns:ocs="http://open-collaboration-services.org/ns">
@@ -61,7 +61,7 @@ const fetchFileInfo = async function(user, path) {
     <oc:owner-display-name />
     <oc:share-types />
   </d:prop>
-</d:propfind>`
+</d:propfind>`,
 	})
 
 	const files = OCA.Files.App.fileList.filesClient._client.parseMultiStatus(response.data)
@@ -98,9 +98,9 @@ const registerFileCreate = () => {
 							OCA.Files.fileActions.triggerAction(FILE_ACTION_IDENTIFIER, fileInfoModel, fileList)
 						}
 					})
-				}
+				},
 			})
-		}
+		},
 	}
 	OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin)
 }
@@ -122,7 +122,7 @@ const registerFileActionFallback = () => {
 				const file = window.FileList.findFile(filename)
 				Promise.all([
 					import('vue'),
-					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor')
+					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor'),
 				]).then((imports) => {
 					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default
@@ -137,9 +137,9 @@ const registerFileActionFallback = () => {
 								active: true,
 								shareToken: sharingToken,
 								relativePath: path,
-								mimeType: file.mimetype
-							}
-						})
+								mimeType: file.mimetype,
+							},
+						}),
 					})
 					vm.$mount(ViewerRoot)
 				})
@@ -169,7 +169,7 @@ const FilesWorkspacePlugin = {
 			id: 'workspace',
 			el: this.el,
 			render: this.render.bind(this),
-			priority: 10
+			priority: 10,
 		})
 	},
 
@@ -184,15 +184,15 @@ const FilesWorkspacePlugin = {
 			const View = Vue.extend(RichWorkspace)
 			const vm = new View({
 				propsData: {
-					path: fileList.getCurrentDirectory()
-				}
+					path: fileList.getCurrentDirectory(),
+				},
 			}).$mount(this.el)
 
 			fileList.$el.on('changeDirectory', data => {
 				vm.path = data.dir.toString()
 			})
 		})
-	}
+	},
 }
 
 export {
@@ -200,5 +200,5 @@ export {
 	registerFileActionFallback,
 	registerFileCreate,
 	FilesWorkspacePlugin,
-	FILE_ACTION_IDENTIFIER
+	FILE_ACTION_IDENTIFIER,
 }

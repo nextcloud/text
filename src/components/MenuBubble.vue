@@ -56,22 +56,22 @@ import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 export default {
 	name: 'MenuBubble',
 	components: {
-		EditorMenuBubble
+		EditorMenuBubble,
 	},
 	directives: {
-		tooltip: Tooltip
+		tooltip: Tooltip,
 	},
 	props: {
 		editor: {
 			type: Object,
 			required: false,
-			default: null
-		}
+			default: null,
+		},
 	},
 	data: () => {
 		return {
 			linkUrl: null,
-			linkMenuIsActive: false
+			linkMenuIsActive: false,
 		}
 	},
 	methods: {
@@ -93,8 +93,8 @@ export default {
 			}
 			command({ href: url })
 			this.hideLinkMenu()
-		}
-	}
+		},
+	},
 }
 </script>
 

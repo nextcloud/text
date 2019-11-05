@@ -66,7 +66,7 @@ const imageMimes = [
 	'image/gif',
 	'image/x-xbitmap',
 	'image/bmp',
-	'image/svg+xml'
+	'image/svg+xml',
 ]
 
 const getQueryVariable = (src, variable) => {
@@ -93,7 +93,7 @@ export default {
 		return {
 			imageLoaded: false,
 			loaded: false,
-			failed: false
+			failed: false,
 		}
 	},
 	computed: {
@@ -101,7 +101,7 @@ export default {
 			const mime = getQueryVariable(this.src, 'mimetype')
 			if (mime) {
 				return {
-					backgroundImage: 'url(' + window.OC.MimeType.getIconUrl(mime) + ')'
+					backgroundImage: 'url(' + window.OC.MimeType.getIconUrl(mime) + ')',
 				}
 			}
 			return {}
@@ -123,9 +123,9 @@ export default {
 			},
 			set(src) {
 				this.updateAttrs({
-					src
+					src,
 				})
-			}
+			},
 		},
 		alt: {
 			get() {
@@ -133,13 +133,13 @@ export default {
 			},
 			set(alt) {
 				this.updateAttrs({
-					alt
+					alt,
 				})
-			}
+			},
 		},
 		t() {
 			return (a, s) => window.t(a, s)
-		}
+		},
 	},
 	beforeMount() {
 		if (!this.isSupportedImage) {
@@ -166,8 +166,8 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
-		}
-	}
+		},
+	},
 }
 </script>
 

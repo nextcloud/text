@@ -88,17 +88,17 @@ export default {
 		EditorMenuBar,
 		ActionButton,
 		PopoverMenu,
-		Actions
+		Actions,
 	},
 	directives: {
 		Tooltip,
-		ClickOutside
+		ClickOutside,
 	},
 	props: {
 		editor: {
 			type: Object,
 			required: false,
-			default: null
+			default: null,
 		},
 		isRichEditor: {
 			type: Boolean,
@@ -115,7 +115,7 @@ export default {
 			windowHeight: 0,
 			forceRecompute: 0,
 			submenuVisibility: {},
-			icons: [...menuBarIcons]
+			icons: [...menuBarIcons],
 		}
 	},
 	computed: {
@@ -128,7 +128,7 @@ export default {
 		getIconClasses() {
 			return (isActive, icon) => {
 				const classes = {
-					'is-active': icon.isActive(isActive)
+					'is-active': icon.isActive(isActive),
 				}
 				classes[icon.class] = true
 				return classes
@@ -150,7 +150,7 @@ export default {
 				},
 				action: (commands) => {
 					this.showImagePrompt(commands.image)
-				}
+				},
 			}]
 		},
 		childPopoverMenu() {
@@ -164,7 +164,7 @@ export default {
 							icons[index].action(commands)
 							this.hideChildMenu(parent)
 						},
-						active: icons[index].isActive(isActive)
+						active: icons[index].isActive(isActive),
 					})
 				}
 				return popoverMenuItems
@@ -187,7 +187,7 @@ export default {
 			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 100 ? this.$refs.menubar.clientWidth : this.windowWidth - 200
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
 			return iconCount
-		}
+		},
 	},
 	beforeMount() {
 		this.redrawMenuBar()
@@ -238,7 +238,7 @@ export default {
 					const appendMeta = {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
-						fileId: fileInfo.id
+						fileId: fileInfo.id,
 					}
 					const src = (fileInfo.hasPreview ? previewUrl : internalLink)
 						+ '#'
@@ -246,12 +246,12 @@ export default {
 
 					_command({
 						src: src,
-						alt: fileInfo.name
+						alt: fileInfo.name,
 					})
 				})
 			}, false, [], true)
-		}
-	}
+		},
+	},
 }
 </script>
 

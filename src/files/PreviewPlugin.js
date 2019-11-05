@@ -58,7 +58,7 @@ export default class PreviewPlugin {
 
 		Promise.all([
 			this.getFileContent(model.getFullPath()),
-			this.init()
+			this.init(),
 		]).then(([{ data }]) => {
 			$thumbnailContainer.addClass('text')
 			const textPreview = document.createElement('div')
@@ -74,9 +74,9 @@ export default class PreviewPlugin {
 				render: h => h(this.ReadOnlyEditor, {
 					props: {
 						content: data,
-						isRichEditor: model.get('mimetype') === 'text/markdown'
-					}
-				})
+						isRichEditor: model.get('mimetype') === 'text/markdown',
+					},
+				}),
 			})
 			this.view.$mount(textPreview)
 		}).catch(() => {

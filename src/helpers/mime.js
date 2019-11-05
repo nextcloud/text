@@ -21,7 +21,7 @@
  */
 
 const openMimetypesMarkdown = [
-	'text/markdown'
+	'text/markdown',
 ]
 
 const openMimetypesPlainText = [
@@ -35,7 +35,7 @@ const openMimetypesPlainText = [
 	'application/x-php',
 	'application/x-pearl',
 	'application/x-text',
-	'application/yaml'
+	'application/yaml',
 ]
 
 const openMimetypes = [...openMimetypesMarkdown, ...openMimetypesPlainText]
@@ -43,5 +43,5 @@ const openMimetypes = [...openMimetypesMarkdown, ...openMimetypesPlainText]
 export {
 	openMimetypes,
 	openMimetypesMarkdown,
-	openMimetypesPlainText
+	openMimetypesPlainText,
 }

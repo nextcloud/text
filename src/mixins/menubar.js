@@ -25,13 +25,13 @@ export default [
 		label: t('text', 'Undo'),
 		class: 'icon-undo',
 		isActive: (isActive) => {},
-		action: (command) => command.undo()
+		action: (command) => command.undo(),
 	},
 	{
 		label: t('text', 'Redo'),
 		class: 'icon-redo',
 		isActive: (isActive) => {},
-		action: (command) => command.redo()
+		action: (command) => command.redo(),
 	},
 	{
 		label: t('text', 'Bold'),
@@ -39,7 +39,7 @@ export default [
 		isActive: (isActive) => isActive.strong(),
 		action: (command) => {
 			return command.strong()
-		}
+		},
 	},
 	{
 		label: t('text', 'Italic'),
@@ -47,7 +47,7 @@ export default [
 		isActive: (isActive) => isActive.em(),
 		action: (command) => {
 			return command.em()
-		}
+		},
 	},
 	{
 		label: t('text', 'Strikethrough'),
@@ -55,7 +55,7 @@ export default [
 		isActive: (isActive) => isActive.strike(),
 		action: (command) => {
 			return command.strike()
-		}
+		},
 	},
 	{
 		label: t('text', 'Paragraph'),
@@ -63,7 +63,7 @@ export default [
 		isActive: (isActive) => {},
 		action: (command) => {
 			return command.paragraph()
-		}
+		},
 	},
 	{
 		label: t('text', 'Headings'),
@@ -75,7 +75,7 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 1 }),
 				action: (command) => {
 					return command.heading({ level: 1 })
-				}
+				},
 			},
 			{
 				label: t('text', 'Heading 2'),
@@ -83,7 +83,7 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 2 }),
 				action: (command) => {
 					return command.heading({ level: 2 })
-				}
+				},
 			},
 			{
 				label: t('text', 'Heading 3'),
@@ -91,7 +91,7 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 3 }),
 				action: (command) => {
 					return command.heading({ level: 3 })
-				}
+				},
 			},
 			{
 				label: t('text', 'Heading 4'),
@@ -99,7 +99,7 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 4 }),
 				action: (command) => {
 					return command.heading({ level: 4 })
-				}
+				},
 			},
 			{
 				label: t('text', 'Heading 5'),
@@ -107,7 +107,7 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 5 }),
 				action: (command) => {
 					return command.heading({ level: 5 })
-				}
+				},
 			},
 			{
 				label: t('text', 'Heading 6'),
@@ -115,9 +115,9 @@ export default [
 				isActive: (isActive) => isActive.heading({ level: 6 }),
 				action: (command) => {
 					return command.heading({ level: 6 })
-				}
-			}
-		]
+				},
+			},
+		],
 	},
 	{
 		label: t('text', 'Unordered list'),
@@ -125,7 +125,7 @@ export default [
 		isActive: (isActive) => isActive.bullet_list(),
 		action: (command) => {
 			return command.bullet_list()
-		}
+		},
 	},
 	{
 		label: t('text', 'Ordered list'),
@@ -133,7 +133,7 @@ export default [
 		isActive: (isActive) => isActive.ordered_list(),
 		action: (command) => {
 			return command.ordered_list()
-		}
+		},
 	},
 	{
 		label: t('text', 'Blockquote'),
@@ -141,7 +141,7 @@ export default [
 		isActive: (isActive) => isActive.blockquote(),
 		action: (command) => {
 			return command.blockquote()
-		}
+		},
 	},
 	{
 		label: t('text', 'Code block'),
@@ -149,6 +149,6 @@ export default [
 		isActive: (isActive) => isActive.code_block(),
 		action: (command) => {
 			return command.code_block()
-		}
-	}
+		},
+	},
 ]

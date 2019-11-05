@@ -88,10 +88,10 @@ const extensionHighlight = {
 	rs: 'rust',
 	sci: 'scilab',
 	vb: 'vbnet',
-	vbs: 'vbscript'
+	vbs: 'vbscript',
 }
 
 export default extensionHighlight
 export {
-	extensionHighlight
+	extensionHighlight,
 }

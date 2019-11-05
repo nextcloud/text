@@ -31,7 +31,7 @@ export default class PlainTextDocument extends Node {
 
 	get schema() {
 		return {
-			content: 'block'
+			content: 'block',
 		}
 	}
 
@@ -40,7 +40,7 @@ export default class PlainTextDocument extends Node {
 			Tab: (state) => {
 				insertText('\t')(state, this.editor.view.dispatch, this.editor.view)
 				return true
-			}
+			},
 		}
 	}
 

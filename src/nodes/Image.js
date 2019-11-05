@@ -32,7 +32,7 @@ export default class Image extends TiptapImage {
 	get schema() {
 		return {
 			...super.schema,
-			selectable: false
+			selectable: false,
 		}
 	}
 

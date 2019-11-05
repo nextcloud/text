@@ -33,7 +33,7 @@
 
 <script>
 export default {
-	name: 'CollisionResolveDialog'
+	name: 'CollisionResolveDialog',
 }
 </script>
 
