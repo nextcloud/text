@@ -443,7 +443,7 @@ export default {
 <style scoped lang="scss">
 	#editor-container {
 		display: block;
-		width: 100vw;
+		width: 100%;
 		max-width: 100%;
 		height: calc(100% - 50px);
 		top: 50px;
