@@ -23,7 +23,6 @@
 		"test:coverage": "NODE_ENV=test jest --coverage"
 	},
 	"dependencies": {
-		"@nextcloud/axios": "^0.4.2",
 		"@nextcloud/router": "^0.1.0",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^9.15.10",
@@ -53,6 +52,7 @@
 		"@babel/plugin-transform-runtime": "^7.6.2",
 		"@babel/polyfill": "^7.6.0",
 		"@babel/preset-env": "^7.6.3",
+		"@nextcloud/axios": "^0.5.0",
 		"@vue/test-utils": "^1.0.0-beta.29",
 		"acorn": "^7.1.0",
 		"babel-core": "^7.0.0-bridge.0",
@@ -77,7 +77,7 @@
 		"jest": "^24.9.0",
 		"jest-environment-jsdom-fourteen": "^0.1.0",
 		"jest-serializer-vue": "^2.0.2",
-		"node-sass": "^4.12.0",
+		"node-sass": "^4.13.0",
 		"prettier-eslint": "^9.0.0",
 		"raw-loader": "^3.1.0",
 		"sass-loader": "^7.3.1",
