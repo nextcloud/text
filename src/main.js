@@ -6,7 +6,7 @@ __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 if (document.getElementById('maineditor')) {
 	Promise.all([
 		import(/* webpackChunkName: "editor" */'vue'),
-		import(/* webpackChunkName: "editor" */'./components/EditorWrapper')
+		import(/* webpackChunkName: "editor" */'./components/EditorWrapper'),
 	]).then((imports) => {
 		const Vue = imports[0].default
 		Vue.prototype.t = window.t
@@ -16,14 +16,14 @@ if (document.getElementById('maineditor')) {
 			render: h => h(Editor, {
 				props: {
 					relativePath: '/welcome.md',
-					active: true
-				}
-			})
+					active: true,
+				},
+			}),
 		})
 		vm.$mount(document.getElementById('preview'))
 	})
 }
 
 OCA.Text = {
-	Editor: FilesEditor
+	Editor: FilesEditor,
 }

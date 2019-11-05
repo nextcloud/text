@@ -52,31 +52,31 @@ const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : ''),
 export default {
 	name: 'RichWorkspace',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper'),
 	},
 	props: {
 		path: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 	data() {
 		return {
 			file: null,
 			loaded: false,
 			ready: false,
-			autofocus: false
+			autofocus: false,
 		}
 	},
 	computed: {
 		shareToken() {
 			return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
-		}
+		},
 	},
 	watch: {
 		path: function() {
 			this.getFileInfo()
-		}
+		},
 	},
 	async mounted() {
 		this.getFileInfo()
@@ -111,8 +111,8 @@ export default {
 				this.autofocus = true
 				this.creating = false
 			})
-		}
-	}
+		},
+	},
 }
 </script>
 

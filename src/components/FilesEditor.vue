@@ -32,35 +32,35 @@
 export default {
 	name: 'FilesEditor',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
 	},
 	props: {
 		davPath: {
 			type: String,
-			default: null
+			default: null,
 		},
 		fileId: {
 			type: Number,
-			default: null
+			default: null,
 		},
 		active: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		shareToken: {
 			type: String,
-			default: null
+			default: null,
 		},
 		mime: {
 			type: String,
-			default: null
-		}
+			default: null,
+		},
 	},
 	beforeMount() {
 		// FIXME Dirty fix to avoid recreating the component on stable16
 		if (typeof this.$parent.$parent !== 'undefined' && this.$parent.$parent.onResize) {
 			window.removeEventListener('resize', this.$parent.$parent.onResize)
 		}
-	}
+	},
 }
 </script>

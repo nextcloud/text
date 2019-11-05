@@ -2,7 +2,7 @@ import { documentReady } from './helpers'
 import {
 	FilesWorkspacePlugin,
 	registerFileActionFallback,
-	registerFileCreate
+	registerFileCreate,
 } from './helpers/files'
 import { openMimetypes } from './helpers/mime'
 
@@ -28,7 +28,7 @@ documentReady(() => {
 		if (openMimetypes.indexOf(mimetype) !== -1) {
 			Promise.all([
 				import(/* webpackChunkName: "vendor" */'vue'),
-				import(/* webpackChunkName: "editor" */'./components/EditorWrapper')
+				import(/* webpackChunkName: "editor" */'./components/EditorWrapper'),
 			]).then((imports) => {
 				const Vue = imports[0].default
 				Vue.prototype.t = window.t
@@ -39,9 +39,9 @@ documentReady(() => {
 						props: {
 							active: true,
 							shareToken: sharingToken,
-							mime: mimetype
-						}
-					})
+							mime: mimetype,
+						},
+					}),
 				})
 				vm.$mount(document.getElementById('preview'))
 			})

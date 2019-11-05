@@ -50,21 +50,21 @@ export default {
 	name: 'SessionList',
 	components: {
 		Avatar,
-		PopoverMenu
+		PopoverMenu,
 	},
 	directives: {
-		tooltip: Tooltip
+		tooltip: Tooltip,
 	},
 	props: {
 		sessions: {
 			type: Object,
-			default: () => { return {} }
-		}
+			default: () => { return {} },
+		},
 	},
 	data() {
 		return {
 			popoverVisible: '',
-			myName: ''
+			myName: '',
 		}
 	},
 	computed: {
@@ -85,7 +85,7 @@ export default {
 					guest ? '/avatar/guest/{user}/{size}' : '/avatar/{user}/{size}',
 					{
 						user: user,
-						size: size
+						size: size,
 					})
 				return window.location.protocol + '//' + window.location.host + avatarUrl
 			}
@@ -97,7 +97,7 @@ export default {
 		sessionStyle() {
 			return (session) => {
 				return {
-					'opacity': session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5
+					'opacity': session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
 					// 'border-color': session.color
 				}
 			}
@@ -111,14 +111,14 @@ export default {
 					return {
 						href: '#',
 						icon: this.avatarUrl(session),
-						text: session.guestName ? session.guestName : session.displayName
+						text: session.guestName ? session.guestName : session.displayName,
 					}
-				})
+				}),
 			]
-		}
+		},
 	},
 	methods: {
-	}
+	},
 }
 </script>
 

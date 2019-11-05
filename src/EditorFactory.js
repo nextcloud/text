@@ -33,7 +33,7 @@ import {
 	CodeBlockHighlight,
 	HorizontalRule,
 	History,
-	Placeholder
+	Placeholder,
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
 import { Image, PlainTextDocument } from './nodes'
@@ -80,16 +80,16 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
 				emptyNodeText: 'Add notes, lists or links …',
-				showOnlyWhenEditable: true
-			})
+				showOnlyWhenEditable: true,
+			}),
 		]
 	} else {
 		richEditingExtensions = [
 			new PlainTextDocument(),
 			new Text(),
 			new CodeBlockHighlight({
-				...languages
-			})
+				...languages,
+			}),
 		]
 	}
 	extensions = extensions || []
@@ -99,9 +99,9 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 		onUpdate: onUpdate,
 		extensions: [
 			...richEditingExtensions,
-			new History()
+			new History(),
 		].concat(extensions),
-		useBuiltInExtensions: enableRichEditing
+		useBuiltInExtensions: enableRichEditing,
 	})
 }
 
@@ -117,7 +117,7 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 		.filter(([, node]) => node.toMarkdown)
 		.reduce((items, [name, { toMarkdown }]) => ({
 			...items,
-			[name]: toMarkdown
+			[name]: toMarkdown,
 		}), {})
 
 	const marks = Object
@@ -125,7 +125,7 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 		.filter(([, node]) => node.toMarkdown)
 		.reduce((items, [name, { toMarkdown }]) => ({
 			...items,
-			[name]: toMarkdown
+			[name]: toMarkdown,
 		}), {})
 	return {
 		serializer: new MarkdownSerializer(
@@ -135,7 +135,7 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 		serialize: function(content, options) {
 			return this.serializer.serialize(content, { ...options, tightLists: true }).split('\\[ \\]').join('[ ]')
 				.split('\\[x\\]').join('[x]')
-		}
+		},
 	}
 }
 

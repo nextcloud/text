@@ -37,39 +37,39 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		Modal,
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper')
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
 	},
 	props: {
 		fileId: {
 			type: Number,
-			default: null
+			default: null,
 		},
 		relativePath: {
 			type: String,
-			default: null
+			default: null,
 		},
 		active: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		shareToken: {
 			type: String,
-			default: null
+			default: null,
 		},
 		mimeType: {
 			type: String,
-			default: null
-		}
+			default: null,
+		},
 	},
 	computed: {
 		fileName() {
 			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
-		}
+		},
 	},
 	methods: {
 		close() {
 			this.active = false
-		}
-	}
+		},
+	},
 }
 </script>

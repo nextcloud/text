@@ -35,28 +35,28 @@ export default {
 	props: {
 		content: {
 			type: String,
-			required: true
+			required: true,
 		},
 		isRichEditor: {
 			type: Boolean,
-			default: true
-		}
+			default: true,
+		},
 	},
 	data: () => {
 		return {
-			editor: null
+			editor: null,
 		}
 	},
 	mounted() {
 		this.editor = createEditor({
 			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + escapeHtml(this.content) + '</pre>',
-			enableRichEditing: this.isRichEditor
+			enableRichEditing: this.isRichEditor,
 		})
 		this.editor.setOptions({ editable: false })
 	},
 	beforeDestroy() {
 		this.editor.destroy()
-	}
+	},
 }
 </script>
 

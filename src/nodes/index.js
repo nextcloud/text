@@ -25,5 +25,5 @@ import PlainTextDocument from './PlainTextDocument'
 
 export {
 	Image,
-	PlainTextDocument
+	PlainTextDocument,
 }

@@ -35,21 +35,21 @@ import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 export default {
 	name: 'GuestNameDialog',
 	components: {
-		Avatar
+		Avatar,
 	},
 	directives: {
-		tooltip: Tooltip
+		tooltip: Tooltip,
 	},
 	props: {
 		syncService: {
 			type: Object,
-			default: null
-		}
+			default: null,
+		},
 	},
 	data() {
 		return {
 			guestName: '',
-			guestNameBuffered: ''
+			guestNameBuffered: '',
 		}
 	},
 	computed: {
@@ -59,10 +59,10 @@ export default {
 				'/avatar/guest/{user}/{size}',
 				{
 					user: this.guestNameBuffered,
-					size: size
+					size: size,
 				})
 			return window.location.protocol + '//' + window.location.host + avatarUrl
-		}
+		},
 	},
 	beforeMount() {
 		this.guestName = this.syncService.session.guestName
@@ -80,8 +80,8 @@ export default {
 		},
 		updateBufferedGuestName() {
 			this.guestNameBuffered = this.guestName
-		}
-	}
+		},
+	},
 }
 </script>
 

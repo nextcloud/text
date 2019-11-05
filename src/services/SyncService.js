@@ -19,7 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from 'nextcloud-axios'
+import axios from '@nextcloud/axios'
 
 import PollingBackend from './PollingBackend'
 import { endpointUrl } from './../helpers'
@@ -28,7 +28,7 @@ import { getVersion, sendableSteps } from 'prosemirror-collab'
 const defaultOptions = {
 	shareToken: null,
 	forceRecreate: false,
-	serialize: (document) => document
+	serialize: (document) => document,
 }
 
 const ERROR_TYPE = {
@@ -46,7 +46,7 @@ const ERROR_TYPE = {
 
 	CONNECTION_FAILED: 3,
 
-	SOURCE_NOT_FOUND: 4
+	SOURCE_NOT_FOUND: 4,
 }
 
 class SyncService {
@@ -67,7 +67,7 @@ class SyncService {
 			/* Events for session and document meta data */
 			change: [],
 			/* Emitted after successful save */
-			save: []
+			save: [],
 		}
 
 		this.backend = new PollingBackend(this)
@@ -88,14 +88,14 @@ class SyncService {
 		return this._openDocument({ fileId, filePath }).then(() => {
 			this.emit('opened', {
 				document: this.document,
-				session: this.session
+				session: this.session,
 			})
 			return this._fetchDocument().then(({ data }) => {
 
 				this.emit('loaded', {
 					document: this.document,
 					session: this.session,
-					documentSource: '' + data
+					documentSource: '' + data,
 				})
 			})
 		}).catch((error) => {
@@ -120,8 +120,8 @@ class SyncService {
 				filePath,
 				token: this.options.shareToken,
 				guestName: this.options.guestName,
-				forceRecreate: this.options.forceRecreate
-			}
+				forceRecreate: this.options.forceRecreate,
+			},
 		}).then((response) => {
 			this.document = response.data.document
 			this.document.readOnly = response.data.readOnly
@@ -138,8 +138,8 @@ class SyncService {
 					documentId: this.document.id,
 					sessionId: this.session.id,
 					sessionToken: this.session.token,
-					token: this.options.shareToken
-				}
+					token: this.options.shareToken,
+				},
 			}
 		)
 	}
@@ -154,7 +154,7 @@ class SyncService {
 				sessionId: this.session.id,
 				sessionToken: this.session.token,
 				token: this.options.shareToken,
-				guestName
+				guestName,
 			}
 		).then(({ data }) => {
 			this.session = data
@@ -176,7 +176,7 @@ class SyncService {
 	stepsSince(version) {
 		return {
 			steps: this.steps.slice(version),
-			clientIDs: this.stepClientIDs.slice(version)
+			clientIDs: this.stepClientIDs.slice(version),
 		}
 	}
 
@@ -193,7 +193,7 @@ class SyncService {
 				this.steps.push(step)
 				newSteps.push({
 					step,
-					clientID: steps[i].sessionId
+					clientID: steps[i].sessionId,
 				})
 			})
 		}
@@ -260,8 +260,8 @@ class SyncService {
 					documentId: this.document.id,
 					sessionId: this.session.id,
 					sessionToken: this.session.token,
-					token: this.options.shareToken
-				}
+					token: this.options.shareToken,
+				},
 			}
 		)
 	}

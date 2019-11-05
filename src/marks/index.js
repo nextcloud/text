@@ -49,26 +49,26 @@ class Strike extends TipTapStrike {
 		return {
 			parseDOM: [
 				{
-					tag: 's'
+					tag: 's',
 				},
 				{
-					tag: 'del'
+					tag: 'del',
 				},
 				{
-					tag: 'strike'
+					tag: 'strike',
 				},
 				{
 					style: 'text-decoration',
-					getAttrs: value => value === 'line-through'
-				}
+					getAttrs: value => value === 'line-through',
+				},
 			],
 			toDOM: () => ['s', 0],
 			toMarkdown: {
 				open: '~~',
 				close: '~~',
 				mixable: true,
-				expelEnclosingWhitespace: true
-			}
+				expelEnclosingWhitespace: true,
+			},
 		}
 	}
 
@@ -79,5 +79,5 @@ class Strike extends TipTapStrike {
 export {
 	Strong,
 	Italic,
-	Strike
+	Strike,
 }

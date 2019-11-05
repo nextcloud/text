@@ -89,34 +89,34 @@ export default {
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
-		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList')
+		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList'),
 	},
 	directives: {
-		Tooltip
+		Tooltip,
 	},
 	mixins: [
-		isMobile
+		isMobile,
 	],
 	props: {
 		relativePath: {
 			type: String,
-			default: null
+			default: null,
 		},
 		fileId: {
 			type: Number,
-			default: null
+			default: null,
 		},
 		active: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		autofocus: {
 			type: Boolean,
-			default: true
+			default: true,
 		},
 		shareToken: {
 			type: String,
-			default: null
+			default: null,
 		},
 		mime: {
 			type: String,
@@ -147,7 +147,7 @@ export default {
 			readOnly: true,
 			forceRecreate: false,
 
-			saveStatusPolling: null
+			saveStatusPolling: null,
 		}
 	},
 	computed: {
@@ -202,12 +202,12 @@ export default {
 		},
 		fileExtension() {
 			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
-		}
+		},
 	},
 	watch: {
 		lastSavedStatus: function() {
 			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
-		}
+		},
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -260,7 +260,7 @@ export default {
 					console.debug('serialized document', { file })
 					return file
 
-				}
+				},
 			})
 				.on('opened', ({ document, session }) => {
 					this.currentSession = session
@@ -304,17 +304,17 @@ export default {
 										if (this.syncService) {
 											this.syncService.sendSteps()
 										}
-									}
+									},
 								}),
 								new Keymap({
 									'Ctrl-s': () => {
 										this.syncService.save()
 										return true
-									}
-								})
+									},
+								}),
 							],
 							enableRichEditing: this.isRichEditor,
-							languages
+							languages,
 						})
 						this.syncService.state = this.tiptap.state
 					})
@@ -324,7 +324,7 @@ export default {
 					try {
 						this.tiptap.extensions.options.collaboration.update({
 							version: document.currentVersion,
-							steps: steps
+							steps: steps,
 						})
 						this.syncService.state = this.tiptap.state
 						this.updateLastSavedStatus()
@@ -340,7 +340,7 @@ export default {
 						this.initialLoading = true
 						this.syncError = {
 							type: error,
-							data: data
+							data: data,
 						}
 					}
 					if (error === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
@@ -369,7 +369,7 @@ export default {
 				})
 			this.syncService.open({
 				fileId: this.fileId,
-				filePath: this.relativePath
+				filePath: this.relativePath,
 			}).catch((e) => {
 				this.hasConnectionIssue = true
 			})
@@ -435,8 +435,8 @@ export default {
 				event.stopPropagation()
 				return true
 			}
-		}
-	}
+		},
+	},
 }
 </script>
 

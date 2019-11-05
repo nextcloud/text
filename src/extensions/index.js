@@ -23,5 +23,5 @@
 import Keymap from './Keymap'
 
 export {
-	Keymap
+	Keymap,
 }

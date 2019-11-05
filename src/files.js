@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
 		component: FilesEditor,
-		group: null
+		group: null,
 	})
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
@@ -55,5 +55,5 @@ document.addEventListener('DOMContentLoaded', () => {
 OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 
 OCA.Text = {
-	Editor: FilesEditor
+	Editor: FilesEditor,
 }
