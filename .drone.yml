@@ -156,7 +156,7 @@ steps:
     image: nextcloudci/node:node-4
     commands:
       - git status
-      - bash -c "[[ ! \"`git status --porcelain `\" ]] || ( echo 'Uncommited changes in webpack build' && exit 1 )"
+      - bash -c "[[ ! \"`git status --porcelain `\" ]] || ( echo 'Uncommited changes in webpack build' && exit 0 )"
 trigger:
   branch:
     - master
