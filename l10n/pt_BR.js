@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
+    "Add notes, lists or links …" : "Adicionar observações, listas ou links...",
     "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
