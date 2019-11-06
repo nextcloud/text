@@ -18,6 +18,7 @@
     "_and %n other editor_::_and %n other editors_" : ["y %n otro editor","y %n otros editores"],
     "Show image" : "Mostrar imagen",
     "Show file" : "Mostrar archivo",
+    "Add notes, lists or links …" : "Añadir notas, listas o enlaces ...",
     "New text document" : "Nuevo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Deshacer",
