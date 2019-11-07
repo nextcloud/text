@@ -49,12 +49,27 @@ div.ProseMirror {
 		font-style: italic;
 	}
 
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: 600;
+		line-height: 120%;
+		margin-top: 24px;
+		margin-bottom: 12px;
+		color: var(--color-main-text);
+	}
+
 	h1 {
 		font-size: 36px;
+		margin-top: 48px;
 	}
 
 	h2 {
 		font-size: 28px;
+		margin-top: 48px;
 	}
 
 	h3 {
@@ -71,19 +86,6 @@ div.ProseMirror {
 
 	h6 {
 		font-size: 14px;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-weight: 600;
-		line-height: 120%;
-		margin-top: 24px;
-		margin-bottom: 12px;
-		color: var(--color-main-text);
 	}
 
 	img {
