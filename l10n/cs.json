@@ -15,6 +15,7 @@
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor","a %n další editoři/editorky","a %n další editorů/editorek","a %n další editoři/editorky"],
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",
+    "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "New text document" : "Nový textový dokument",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
