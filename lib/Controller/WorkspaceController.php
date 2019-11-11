@@ -48,6 +48,7 @@ namespace OCA\Text\Controller;
 
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\SessionService;
+use OCA\Text\Service\WorkspaceService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -68,17 +69,18 @@ class WorkspaceController extends OCSController {
 	/** @var IManager */
 	private $shareManager;
 
-	private const SUPPORTED_FILENAMES = [
-		'README.md',
-		'Readme.md',
-		'readme.md'
-	];
+	/** @var WorkspaceService */
+	private $workspaceService;
+
+	/** @var string */
+	private $userId;
 
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, $userId) {
+	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, WorkspaceService $workspaceService, $userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
+		$this->workspaceService = $workspaceService;
 		$this->userId = $userId;
 	}
 
@@ -92,7 +94,7 @@ class WorkspaceController extends OCSController {
 		try {
 			$folder = $this->rootFolder->getUserFolder($this->userId)->get($path);
 			if ($folder instanceof Folder) {
-				$file = $this->getFile($folder);
+				$file = $this->workspaceService->getFile($folder);
 				if ($file === null) {
 					return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
 				}
@@ -122,7 +124,7 @@ class WorkspaceController extends OCSController {
 			$share = $this->shareManager->getShareByToken($shareToken);
 			$folder = $share->getNode()->get($path);
 			if ($folder instanceof Folder) {
-				$file = $this->getFile($folder);
+				$file = $this->workspaceService->getFile($folder);
 				if ($file === null) {
 					return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
 				}
@@ -141,17 +143,6 @@ class WorkspaceController extends OCSController {
 		} catch (ShareNotFound $e) {
 			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
 		}
-	}
-
-	private function getFile(Folder $folder) {
-		$file = null;
-		foreach (self::SUPPORTED_FILENAMES as $filename) {
-			if ($folder->nodeExists($filename)) {
-				$file = $folder->get($filename);
-				continue;
-			}
-		}
-		return $file;
 	}
 
 }

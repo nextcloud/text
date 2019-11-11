@@ -11,11 +11,14 @@
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
 	]]></description>
-	<version>1.2.0</version>
+	<version>1.2.3</version>
 	<licence>agpl</licence>
 	<author mail="jus@bitgrid.net">Julius Härtl</author>
 	<namespace>Text</namespace>
 	<default_enable/>
+	<types>
+		<dav />
+	</types>
 	<category>office</category>
 	<website>https://github.com/nextcloud/text</website>
 	<bugs>https://github.com/nextcloud/text/issues</bugs>
@@ -29,4 +32,9 @@
 	<background-jobs>
 		<job>OCA\Text\Cron\Cleanup</job>
 	</background-jobs>
+	<sabre>
+		<plugins>
+			<plugin>OCA\Text\DAV\WorkspacePlugin</plugin>
+		</plugins>
+	</sabre>
 </info>
