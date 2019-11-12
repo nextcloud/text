@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
     "Show image" : "Mostra la imatge",
     "Show file" : "Mostra el fitxer",
+    "Add notes, lists or links …" : "Afegir anotacions, llistes o enllaços...",
     "New text document" : "Nou document de text",
     "Edit" : "Edita",
     "Undo" : "Desfés",
