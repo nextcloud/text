@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
+    "Add notes, lists or links …" : "Notlar, listeler yada linkleri ekle",
     "New text document" : "Yeni metin belgesi",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
