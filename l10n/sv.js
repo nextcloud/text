@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "Show image" : "Visa bild",
     "Show file" : "Visa fil",
+    "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "New text document" : "Nytt textdokument",
     "Edit" : "Redigera",
     "Undo" : "Ångra",
