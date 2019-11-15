@@ -31,7 +31,7 @@
 		"nextcloud-vue": "^0.12.7",
 		"prosemirror-collab": "^1.2.0",
 		"prosemirror-markdown": "^1.4.0",
-		"prosemirror-view": "^1.13.0",
+		"prosemirror-view": "^1.13.2",
 		"tiptap": "^1.26.4",
 		"tiptap-commands": "^1.12.3",
 		"tiptap-extensions": "^1.28.4",
