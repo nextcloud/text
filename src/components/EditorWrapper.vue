@@ -46,7 +46,7 @@
 						</SessionList>
 					</div>
 				</MenuBar>
-				<div class="editor__content">
+				<div>
 					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
@@ -315,6 +315,12 @@ export default {
 							],
 							enableRichEditing: this.isRichEditor,
 							languages,
+						})
+						this.tiptap.on('focus', () => {
+							this.$emit('focus')
+						})
+						this.tiptap.on('blur', () => {
+							this.$emit('blur')
 						})
 						this.syncService.state = this.tiptap.state
 					})

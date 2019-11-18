@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="rich-workspace" :class="{'icon-loading': !loaded || !ready }">
+	<div id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus }">
 		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -38,7 +38,9 @@
 			:autohide="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
-			@ready="ready=true" />
+			@ready="ready=true"
+			@focus="focus=true"
+			@blur="focus=false" />
 	</div>
 </template>
 
@@ -62,6 +64,7 @@ export default {
 	},
 	data() {
 		return {
+			focus: false,
 			file: null,
 			loaded: false,
 			ready: false,
@@ -158,4 +161,24 @@ export default {
 	#rich-workspace::v-deep .editor__content {
 		margin: 0;
 	}
+
+	@media only screen and (max-width: 1024px) {
+		#rich-workspace:not(.focus) {
+			max-height: 30vh;
+			position: relative;
+			overflow: hidden;
+		}
+		#rich-workspace:not(.focus):not(.icon-loading):after {
+			content: '';
+			position: absolute;
+			z-index: 1;
+			bottom: 0;
+			left: 0;
+			pointer-events: none;
+			background-image: linear-gradient(to bottom, rgba(0,0,0, 0), var(--color-main-background));
+			width: 100%;
+			height: 4em;
+		}
+	}
+
 </style>
