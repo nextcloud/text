@@ -23,6 +23,7 @@ OC.L10N.register(
     "Redo" : "Grąžinti",
     "Bold" : "Pusjuodis",
     "Italic" : "Kursyvas",
+    "Strikethrough" : "Perbrauktas",
     "Paragraph" : "Pastraipa",
     "Headings" : "Antraštės",
     "Heading 1" : "Antraštė 1",
