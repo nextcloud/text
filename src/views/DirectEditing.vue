@@ -21,8 +21,11 @@
   -->
 
 <template>
-	<div id="editor-wrapper">
-		<EditorWrapper :initial-session="initialSession" :active="true" mime="text/markdown">
+	<div id="direct-editor">
+		<EditorWrapper :initial-session="initialSession"
+			:active="true"
+			mime="text/markdown"
+			@ready="loaded">
 			<template #header>
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
@@ -45,15 +48,46 @@ const log = Vue.observable({
 	mtime: 0,
 })
 
-window.OCP.DirectEditing = {
-	close() {
-		log.messages.push('OCP.DirectEditing.close got called')
-	},
+const callMobileMessage = (messageName, attributes) => {
+	console.debug('callMobileMessage ' + messageName, attributes)
+	let message = messageName
+	if (typeof attributes !== 'undefined') {
+		message = {
+			MessageName: messageName,
+			Values: attributes,
+		}
+	}
+	let attributesString = null
+	try {
+		attributesString = JSON.stringify(attributes)
+	} catch (e) {
+		attributesString = null
+	}
+
+	// Forward to mobile handler
+	if (window.DirectEditingMobileInterface && typeof window.DirectEditingMobileInterface[messageName] === 'function') {
+		if (attributesString === null || typeof attributesString === 'undefined') {
+			window.DirectEditingMobileInterface[messageName]()
+		} else {
+			window.DirectEditingMobileInterface[messageName](attributesString)
+		}
+	}
+
+	// iOS webkit fallback
+	if (window.webkit
+		&& window.webkit.messageHandlers
+		&& window.webkit.messageHandlers.DirectEditingMobileInterface) {
+		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(message)
+	}
+
+	window.postMessage(message)
 }
 
 window.addEventListener('message', function(message) {
 	log.messages.push(message.data)
+	console.debug('postMessage', message)
 })
+
 export default {
 	name: 'DirectEditing',
 	components: { EditorWrapper },
@@ -69,18 +103,29 @@ export default {
 			return JSON.parse(this.initial.session) || null
 		},
 	},
+	beforeMount() {
+		callMobileMessage('loading')
+	},
 	methods: {
 		close() {
-			window.postMessage('close')
+			callMobileMessage('close')
 		},
 		share() {
-			window.postMessage('share')
+			callMobileMessage('share')
+		},
+		loaded() {
+			callMobileMessage('loaded')
 		},
 	},
 }
 </script>
 
 <style scoped lang="scss">
+	#direct-editor {
+		width: 100%;
+		height: 100vh;
+	}
+
 	pre {
 		width: 100%;
 		max-width: 700px;
