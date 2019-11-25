@@ -36,6 +36,7 @@
 					ref="menubar"
 					:editor="tiptap"
 					:is-rich-editor="isRichEditor"
+					:is-public="isPublic"
 					:autohide="autohide">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
@@ -131,6 +132,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		isDirectEditing: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -200,7 +205,7 @@ export default {
 			return this.fileId || this.shareToken || this.initialSession
 		},
 		isPublic() {
-			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+			return this.isDirectEditing || (document.getElementById('isPublic') && document.getElementById('isPublic').value === '1')
 		},
 		isRichEditor() {
 			return this.mime === 'text/markdown'

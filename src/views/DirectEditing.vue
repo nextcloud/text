@@ -25,6 +25,7 @@
 		<EditorWrapper :initial-session="initialSession"
 			:active="true"
 			mime="text/markdown"
+			:is-direct-editing="true"
 			@ready="loaded">
 			<template #header>
 				<button class="icon-share" @click="share" />
