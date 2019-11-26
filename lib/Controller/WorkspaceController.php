@@ -56,6 +56,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\OCSController;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -89,8 +90,10 @@ class WorkspaceController extends OCSController {
 		'Readme.md',
 		'readme.md'
 	];
+	/** @var IEventDispatcher */
+	private $eventDispatcher;
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, $userId) {
+	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, $userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
@@ -98,6 +101,7 @@ class WorkspaceController extends OCSController {
 		$this->userId = $userId;
 		$this->directEditingManager = $directEditingManager;
 		$this->urlGenerator = $urlGenerator;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
@@ -165,6 +169,8 @@ class WorkspaceController extends OCSController {
 	 * @NoAdminRequired
 	 */
 	public function direct(string $path): DataResponse {
+		$this->eventDispatcher->dispatchTyped(new RegisterDirectEditorEvent($this->directEditingManager));
+
 		try {
 			$folder = $this->rootFolder->getUserFolder($this->userId)->get($path);
 			if ($folder instanceof Folder) {

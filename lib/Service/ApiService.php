@@ -159,7 +159,7 @@ class ApiService {
 		$file = $this->documentService->getFileForSession($session, $token);
 
 		try {
-			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'), $userId);
+			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'));
 		} catch (DocumentSaveConflictException $e) {
 			try {
 				$result['outsideChange'] = $file->getContent();

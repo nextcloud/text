@@ -240,7 +240,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws ShareNotFound
 	 */
-	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null, $userId = null): Document {
+	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
