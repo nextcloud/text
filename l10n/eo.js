@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"],
     "Show image" : "Montri bildon",
     "Show file" : "Montri dosieron",
+    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "New text document" : "Nova tekstdokumento",
     "Edit" : "Modifi",
     "Undo" : "Malfari",
