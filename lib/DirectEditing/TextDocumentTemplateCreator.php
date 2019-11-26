@@ -70,6 +70,10 @@ class TextDocumentTemplateCreator extends ACreateFromTemplate {
 		return self::TEMPLATES;
 	}
 
+	public function getMimetype(): string {
+		return 'text/markdown';
+	}
+
 	public function create(File $file, string $creatorId = null, string $templateId = null): void {
 		$template = self::TEMPLATES[$templateId];
 		$file->putContent('## ' . $template['name'] . '\n\n' . 'Created from a template with Nextcloud text');
