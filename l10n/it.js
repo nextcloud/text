@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Readme" : "Leggimi",
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Modifica documenti collaborativa!**\n\n- **📝 Scrittura focalizzata:** Nessuna distrazione, solo la formattazione che ti serve.\n- **🙋 Lavora insieme:** Condividi e collabora con amici e colleghi, non importa se utilizzano Nextcloud o no!\n- **💾 Formato aperto:** I file sono salvati come [Markdown](https://en.wikipedia.org/wiki/Markdown), così puoi modificarli anche da qualsiasi altra applicazione.\n- **✊ Una forte fondazione:** Noi usiamo [🐈 tiptap](https://tiptap.scrumpy.io) che è basato su [🦉 ProseMirror](https://prosemirror.net) – un grande ringraziamento a loro!",
