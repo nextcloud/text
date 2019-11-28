@@ -2,7 +2,7 @@ kind: pipeline
 name: compatibility
 steps:
   - name: compatibility
-    image: nextcloudci/php7.1:php7.1-15
+    image: nextcloudci/php7.2:php7.2-9
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -24,11 +24,6 @@ trigger:
 kind: pipeline
 name: syntax
 steps:
-  - name: syntax-php7.1
-    image: nextcloudci/php7.1:php7.1-15
-    commands:
-      - composer install
-      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
   - name: syntax-php7.2
     image: nextcloudci/php7.2:php7.2-9
     commands:
@@ -36,6 +31,11 @@ steps:
       - ./vendor/bin/parallel-lint --exclude ./vendor/ .
   - name: syntax-php7.3
     image: nextcloudci/php7.3:php7.3-2
+    commands:
+      - composer install
+      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
+  - name: syntax-php7.4
+    image: nextcloudci/php7.4:2
     commands:
       - composer install
       - ./vendor/bin/parallel-lint --exclude ./vendor/ .
@@ -48,10 +48,32 @@ trigger:
     - push
 ---
 kind: pipeline
-name: php7.1-sqlite
+name: php-sqlite
 steps:
-  - name: php7.1
-    image: nextcloudci/php7.1:php7.1-16
+  - name: php7.2
+    image: nextcloudci/php7.2:php7.2-13
+    environment:
+      APP_NAME: text
+      CORE_BRANCH: master
+      DB: sqlite
+    commands:
+      - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/apps/$APP_NAME
+      - composer install
+      - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
+  - name: php7.3
+    image: nextcloudci/php7.3:php7.3-5
+    environment:
+      APP_NAME: text
+      CORE_BRANCH: master
+      DB: sqlite
+    commands:
+      - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
+      - cd ../server/apps/$APP_NAME
+      - composer install
+      - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
+  - name: php7.4
+    image: nextcloudci/php7.4:2
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -70,10 +92,10 @@ trigger:
     - push
 ---
 kind: pipeline
-name: php7.1-mysql
+name: php-mysql
 steps:
-  - name: php7.1
-    image: nextcloudci/php7.1:php7.1-16
+  - name: php7.2
+    image: nextcloudci/php7.2:php7.2-13
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -101,10 +123,10 @@ trigger:
     - push
 ---
 kind: pipeline
-name: php7.1-postgres
+name: php-postgres
 steps:
-  - name: php7.1
-    image: nextcloudci/php7.1:php7.1-16
+  - name: php7.2
+    image: nextcloudci/php7.2:php7.2-13
     environment:
       APP_NAME: text
       CORE_BRANCH: master
