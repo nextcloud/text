@@ -43,7 +43,7 @@ return [
 	'ocs' => [
 		['name' => 'Workspace#folder', 'url' => '/workspace', 'verb' => 'GET'],
 		['name' => 'Workspace#publicFolder', 'url' => '/public/workspace', 'verb' => 'GET'],
-		['name' => 'Workspace#direct', 'url' => '/workspace/direct', 'verb' => 'GET'],
+		['name' => 'Workspace#direct', 'url' => '/workspace/direct', 'verb' => 'POST'],
 
 	]
 ];
