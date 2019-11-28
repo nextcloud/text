@@ -30,7 +30,7 @@
 		"markdown-it": "^8.4.2",
 		"nextcloud-vue": "^0.12.7",
 		"prosemirror-collab": "^1.2.2",
-		"prosemirror-markdown": "^1.4.0",
+		"prosemirror-markdown": "^1.4.2",
 		"prosemirror-view": "^1.13.2",
 		"tiptap": "^1.26.4",
 		"tiptap-commands": "^1.12.3",
