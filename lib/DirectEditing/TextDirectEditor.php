@@ -23,7 +23,6 @@
 
 namespace OCA\Text\DirectEditing;
 
-use OCA\Files\Controller\ApiController;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Http\NotFoundResponse;
@@ -106,7 +105,6 @@ class TextDirectEditor implements IEditor {
 	public function getCreators(): array {
 		return [
 			new TextDocumentCreator($this->l10n),
-			new TextDocumentTemplateCreator($this->l10n)
 		];
 	}
 
