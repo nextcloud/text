@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 use \InvalidArgumentException;
 use OCA\Text\Db\Session;
 use OCP\DirectEditing\IManager;
+use OCP\IRequest;
 use function json_encode;
 use OC\Files\Node\File;
 use OCA\Text\Db\Document;
@@ -96,7 +97,7 @@ class DocumentService {
 	 */
 	private $appData;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->userId = $userId;
@@ -111,12 +112,10 @@ class DocumentService {
 			$this->appData->newFolder('documents');
 		}
 
-		// FIXME
-		$token = \OC::$server->getRequest()->getParam('token');
+		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
-			$this->directManager = \OC::$server->query(IManager::class);
 			try {
-				$tokenObject = $this->directManager->getToken($token);
+				$tokenObject = $directManager->getToken($token);
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();

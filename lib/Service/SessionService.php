@@ -32,6 +32,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DirectEditing\IManager;
 use OCP\IAvatar;
 use OCP\IAvatarManager;
+use OCP\IRequest;
 use OCP\Security\ISecureRandom;
 
 class SessionService {
@@ -47,23 +48,22 @@ class SessionService {
 	/** @var Session cache current session in the request */
 	private $session = null;
 
-	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, IAvatarManager $avatarManager, $userId) {
+	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, IAvatarManager $avatarManager, IRequest $request, IManager $directManager, $userId) {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
+		$this->avatarManager = $avatarManager;
 		$this->userId = $userId;
-		// FIXME
-		$token = \OC::$server->getRequest()->getParam('token');
+
+		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
-			$this->directManager = \OC::$server->query(IManager::class);
 			try {
-				$tokenObject = $this->directManager->getToken($token);
+				$tokenObject = $directManager->getToken($token);
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
 			} catch (\Exception $e) {}
 		}
-		$this->avatarManager = $avatarManager;
 	}
 
 	public function initSession($documentId, $guestName = null): Session {
