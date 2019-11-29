@@ -22,8 +22,10 @@
 
 import Image from './Image'
 import PlainTextDocument from './PlainTextDocument'
+import ListItem from './ListItem'
 
 export {
 	Image,
 	PlainTextDocument,
+	ListItem,
 }
