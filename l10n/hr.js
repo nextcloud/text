@@ -20,6 +20,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
     "Show image" : "Prikaži sliku",
     "Show file" : "Prikaži datoteku",
+    "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "New text document" : "Novi tekstni dokument",
     "Edit" : "Uredi",
     "Undo" : "Poništi",
