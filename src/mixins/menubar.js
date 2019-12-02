@@ -138,7 +138,7 @@ export default [
 	{
 		label: t('text', 'ToDo list'),
 		class: 'icon-checkmark',
-		isActive: (isActive) => isActive.list_item(),
+		isActive: (isActive) => false,
 		action: (command) => command.todo_item(),
 	},
 	{
