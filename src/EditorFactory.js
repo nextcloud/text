@@ -27,7 +27,6 @@ import {
 	Link,
 	BulletList,
 	OrderedList,
-	ListItem,
 	Blockquote,
 	CodeBlock,
 	CodeBlockHighlight,
@@ -36,8 +35,9 @@ import {
 	Placeholder,
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike } from './marks'
-import { Image, PlainTextDocument } from './nodes'
+import { Image, PlainTextDocument, ListItem } from './nodes'
 import MarkdownIt from 'markdown-it'
+import taskLists from 'markdown-it-task-lists'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
@@ -107,6 +107,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
+	.use(taskLists, { enable: true, labelAfter: true })
 
 const SerializeException = function(message) {
 	this.message = message
@@ -133,8 +134,9 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 			{ ...defaultMarkdownSerializer.marks, ...marks }
 		),
 		serialize: function(content, options) {
-			return this.serializer.serialize(content, { ...options, tightLists: true }).split('\\[ \\]').join('[ ]')
-				.split('\\[x\\]').join('[x]')
+			return this.serializer.serialize(content, { ...options, tightLists: true })
+				.split('\\[').join('[')
+				.split('\\]').join(']')
 		},
 	}
 }

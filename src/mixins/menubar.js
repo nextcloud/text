@@ -124,7 +124,7 @@ export default [
 		class: 'icon-ul',
 		isActive: (isActive) => isActive.bullet_list(),
 		action: (command) => {
-			return command.bullet_list()
+			return command.bullet_list_item()
 		},
 	},
 	{
@@ -134,6 +134,12 @@ export default [
 		action: (command) => {
 			return command.ordered_list()
 		},
+	},
+	{
+		label: t('text', 'ToDo list'),
+		class: 'icon-checkmark',
+		isActive: (isActive) => false,
+		action: (command) => command.todo_item(),
 	},
 	{
 		label: t('text', 'Blockquote'),

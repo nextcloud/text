@@ -24,6 +24,25 @@ div.ProseMirror {
 		font-size: 14px;
 	}
 
+	li label.checkbox-label {
+		width: 100%;
+		display: flex;
+		margin-top: 10px;
+		margin-bottom: 1em;
+
+		&:before {
+			position: relative;
+			top: 2px;
+		}
+		div.checkbox-wrapper {
+			margin-bottom: -1em;
+			& > p {
+				margin-top: -1px;
+				margin-bottom: 0;
+				padding-bottom: 10px;
+			}
+		}
+	}
 	p:first-child,
 	h1:first-child,
 	h2:first-child,
@@ -127,7 +146,8 @@ div.ProseMirror {
 	}
 
 	ul, ol {
-		padding-left: 14px;
+		padding-left: 10px;
+		margin-left: 10px;
 	}
 
 	ul li {
