@@ -20,10 +20,12 @@
  *
  */
 
+import Vue from 'vue'
 import FilesEditor from './components/FilesEditor'
 import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
+import FilesSettings from './views/FilesSettings'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -50,10 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
+	const settings = document.createElement('div')
+	document.getElementById('files-setting-showhidden').insertAdjacentElement('afterend', settings)
+	Vue.prototype.t = window.t
+	Vue.prototype.n = window.n
+	Vue.prototype.OCA = window.OCA
+	const vm = new Vue({
+		render: h => h(FilesSettings, {}),
+	})
+	vm.$mount(settings)
+
 })
 
 OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 
 OCA.Text = {
 	Editor: FilesEditor,
+	// FIXME get from capabilities
+	RichWorkspaceEnabled: true,
 }
