@@ -145,7 +145,8 @@ export default class ListItem extends TiptapListItem {
 							return node.type === schema.nodes.list_item
 						})(selection)
 
-						if (parentList.node.attrs.type !== TYPES.CHECKBOX) {
+						const isLabel = event.target.tagName.toLowerCase() === 'label'
+						if (parentList.node.attrs.type !== TYPES.CHECKBOX || !isLabel) {
 							return
 						}
 
