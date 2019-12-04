@@ -39,6 +39,7 @@ OC.L10N.register(
     "Heading 6" : "Nadpis 6",
     "Unordered list" : "Neuspořádaný seznam",
     "Ordered list" : "Uspořádaný seznam",
+    "ToDo list" : "Seznam úkolů",
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
     "New text document.md" : "Nový textový dokument.md"

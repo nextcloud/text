@@ -7,6 +7,8 @@ OC.L10N.register(
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
+    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
+    "Retry" : "Bandyti dar kartą",
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
@@ -32,6 +34,7 @@ OC.L10N.register(
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
     "Heading 6" : "Antraštė 6",
+    "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
     "New text document.md" : "Naujas tekstinis dokumentas.md"

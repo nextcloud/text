@@ -39,6 +39,7 @@ OC.L10N.register(
     "Heading 6" : "Intestazione 6",
     "Unordered list" : "Elenco non ordinato",
     "Ordered list" : "Elenco ordinato",
+    "ToDo list" : "Elenco Cose da fare",
     "Blockquote" : "Citazione",
     "Code block" : "Blocco di codice",
     "New text document.md" : "Nuovo documento di testo,md"
