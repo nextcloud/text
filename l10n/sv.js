@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Readme" : "Readme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "Gemensam dokumentredigering",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Gemensam dokumentredigering!**\n\n- **📝 Fokuserat skrivande:** Inga distraktioner, endast den formatering du behöver.\n- **🙋 Arbeta tillsammans:** Dela och samarbeta med vänner och kollegor, vare dej de använder Nextcloud eller ej!\n- **💾 Öppna format:** Filer sparas som [Markdown](https://en.wikipedia.org/wiki/Markdown), så du kan redigera dem från valfri text-app också.\n- **✊ Stark grund:** Vi använder [🐈 tiptap](https://tiptap.scrumpy.io) som baseras på [🦉 ProseMirror](https://prosemirror.net) – tack till dem!",
@@ -38,6 +39,7 @@ OC.L10N.register(
     "Heading 6" : "Rubrik 6",
     "Unordered list" : "Punktlista",
     "Ordered list" : "Numrerad lista",
+    "ToDo list" : "Att göra lista",
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "New text document.md" : "Nytt textdokument.md"
