@@ -39,6 +39,7 @@ OC.L10N.register(
     "Heading 6" : "Überschrift 6",
     "Unordered list" : "Ungeordnete Liste",
     "Ordered list" : "Geordnete Liste",
+    "ToDo list" : "ToDo-Liste",
     "Blockquote" : "Blockzitat",
     "Code block" : "Codeblock",
     "New text document.md" : "Neues Textdokument.md"
