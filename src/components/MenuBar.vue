@@ -108,6 +108,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		isPublic: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data: () => {
 		return {
@@ -119,9 +123,6 @@ export default {
 		}
 	},
 	computed: {
-		isPublic() {
-			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
-		},
 		isHiddenInMenu() {
 			return ($index) => $index - this.iconCount >= 0
 		},

@@ -24,7 +24,10 @@ declare(strict_types=1);
 
 namespace OCA\Text\AppInfo;
 
+use OCA\Text\DirectEditing\TextDirectEditor;
 use OCP\AppFramework\App;
+use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\EventDispatcher\IEventDispatcher;
 
 class Application extends App {
 
@@ -36,9 +39,18 @@ class Application extends App {
 	 * Application constructor.
 	 *
 	 * @param array $params
+	 * @throws \OCP\AppFramework\QueryException
 	 */
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);
+
+		$container = $this->getContainer();
+		/** @var IEventDispatcher $eventDispatcher */
+		$eventDispatcher = $this->getContainer()->getServer()->query(IEventDispatcher::class);
+		$eventDispatcher->addListener(RegisterDirectEditorEvent::class, function (RegisterDirectEditorEvent $event) use ($container) {
+			$editor = $container->query(TextDirectEditor::class);
+			$event->register($editor);
+		});
 	}
 
 }

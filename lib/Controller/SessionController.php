@@ -51,6 +51,7 @@ class SessionController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 */
 	public function fetch(int $documentId, int $sessionId, string $sessionToken): Response {
 		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
@@ -58,6 +59,7 @@ class SessionController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 */
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
 		return $this->apiService->close($documentId, $sessionId, $sessionToken);
@@ -65,6 +67,7 @@ class SessionController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 */
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
 		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
@@ -72,6 +75,7 @@ class SessionController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 */
 	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);

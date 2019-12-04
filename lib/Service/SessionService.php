@@ -29,8 +29,10 @@ use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\DirectEditing\IManager;
 use OCP\IAvatar;
 use OCP\IAvatarManager;
+use OCP\IRequest;
 use OCP\Security\ISecureRandom;
 
 class SessionService {
@@ -40,13 +42,28 @@ class SessionService {
 	private $sessionMapper;
 	private $secureRandom;
 	private $timeFactory;
+	private $avatarManager;
 	private $userId;
 
-	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, $userId) {
+	/** @var Session cache current session in the request */
+	private $session = null;
+
+	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, IAvatarManager $avatarManager, IRequest $request, IManager $directManager, $userId) {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
+		$this->avatarManager = $avatarManager;
 		$this->userId = $userId;
+
+		$token = $request->getParam('token');
+		if ($this->userId === null && $token !== null) {
+			try {
+				$tokenObject = $directManager->getToken($token);
+				$tokenObject->extend();
+				$tokenObject->useTokenScope();
+				$this->userId = $tokenObject->getUser();
+			} catch (\Exception $e) {}
+		}
 	}
 
 	public function initSession($documentId, $guestName = null): Session {
@@ -55,9 +72,7 @@ class SessionService {
 		$userName = $this->userId ? $this->userId : $guestName;
 		$session->setUserId($userName);
 		$session->setToken($this->secureRandom->generate(64));
-		/** @var IAvatarManager $avatarGenerator */
-		$avatarGenerator = \OC::$server->query(IAvatarManager::class);
-		$color = $avatarGenerator->getGuestAvatar($userName)->avatarBackgroundColor($userName);
+		$color = $this->avatarManager->getGuestAvatar($userName)->avatarBackgroundColor($userName);
 		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
 		$session->setColor($color);
 		if ($this->userId === null) {
@@ -96,9 +111,24 @@ class SessionService {
 		return $this->sessionMapper->deleteInactive($documentId);
 	}
 
-	public function isValidSession($documentId, $sessionId, $token) {
+	public function getSession($documentId, $sessionId, $token) {
+		if ($this->session !== null) {
+			return $this->session;
+		}
 		try {
-			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
+			return $this->sessionMapper->find($documentId, $sessionId, $token);
+		} catch (DoesNotExistException $e) {
+			$this->session = false;
+			return false;
+		}
+	}
+
+	public function isValidSession($documentId, $sessionId, $token) {
+		if ($this->userId) {
+			return true;
+		}
+		try {
+			$session = $this->getSession($documentId, $sessionId, $token);
 		} catch (DoesNotExistException $e) {
 			return false;
 		}

@@ -36,6 +36,7 @@
 					ref="menubar"
 					:editor="tiptap"
 					:is-rich-editor="isRichEditor"
+					:is-public="isPublic"
 					:autohide="autohide">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
@@ -45,6 +46,7 @@
 							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
 						</SessionList>
 					</div>
+					<slot name="header" />
 				</MenuBar>
 				<div>
 					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
@@ -98,6 +100,10 @@ export default {
 		isMobile,
 	],
 	props: {
+		initialSession: {
+			type: Object,
+			default: null,
+		},
 		relativePath: {
 			type: String,
 			default: null,
@@ -123,6 +129,10 @@ export default {
 			default: null,
 		},
 		autohide: {
+			type: Boolean,
+			default: false,
+		},
+		isDirectEditing: {
 			type: Boolean,
 			default: false,
 		},
@@ -192,10 +202,10 @@ export default {
 			}
 		},
 		hasDocumentParameters() {
-			return this.fileId || this.shareToken
+			return this.fileId || this.shareToken || this.initialSession
 		},
 		isPublic() {
-			return document.getElementById('isPublic') && document.getElementById('isPublic').value === '1'
+			return this.isDirectEditing || (document.getElementById('isPublic') && document.getElementById('isPublic').value === '1')
 		},
 		isRichEditor() {
 			return this.mime === 'text/markdown'
@@ -373,12 +383,20 @@ export default {
 						this.dirty = state.dirty
 					}
 				})
-			this.syncService.open({
-				fileId: this.fileId,
-				filePath: this.relativePath,
-			}).catch((e) => {
-				this.hasConnectionIssue = true
-			})
+			if (this.initialSession === null) {
+				this.syncService.open({
+					fileId: this.fileId,
+					filePath: this.relativePath,
+				}).catch((e) => {
+					this.hasConnectionIssue = true
+				})
+			} else {
+				this.syncService.open({
+					initialSession: this.initialSession,
+				}).catch((e) => {
+					this.hasConnectionIssue = true
+				})
+			}
 			this.forceRecreate = false
 		},
 
@@ -451,8 +469,7 @@ export default {
 		display: block;
 		width: 100%;
 		max-width: 100%;
-		height: calc(100% - 50px);
-		top: 50px;
+		height: 100%;
 		left: 0;
 		margin: 0 auto;
 		position: relative;
@@ -516,8 +533,7 @@ export default {
 	}
 
 	#editor-session-list {
-		padding: 9px;
-		padding-right: 16px;
+		padding: 4px 16px 4px 4px;
 		display: flex;
 
 		input, div {

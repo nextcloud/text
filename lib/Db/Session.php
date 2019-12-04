@@ -26,6 +26,11 @@ namespace OCA\Text\Db;
 
 use OCP\AppFramework\Db\Entity;
 
+/**
+ * @method setLastContact(int $getTime)
+ * @method getDocumentId()
+ * @method getUserId()
+ */
 class Session extends Entity implements \JsonSerializable {
 
 	public $id;

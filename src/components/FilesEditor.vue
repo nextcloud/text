@@ -64,3 +64,9 @@ export default {
 	},
 }
 </script>
+<style>
+#editor-container {
+	height: calc(100% - 50px);
+	top: 50px;
+}
+</style>

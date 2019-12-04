@@ -54,10 +54,14 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\OCSController;
+use OCP\DirectEditing\IManager as IDirectEditingManager;
+use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 
@@ -72,16 +76,32 @@ class WorkspaceController extends OCSController {
 	/** @var WorkspaceService */
 	private $workspaceService;
 
-	/** @var string */
+	/** @var string|null */
 	private $userId;
 
+	/** @var IDirectEditingManager */
+	private $directEditingManager;
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, WorkspaceService $workspaceService, $userId) {
+	/** @var IURLGenerator */
+	private $urlGenerator;
+
+	private const SUPPORTED_FILENAMES = [
+		'README.md',
+		'Readme.md',
+		'readme.md'
+	];
+	/** @var IEventDispatcher */
+	private $eventDispatcher;
+
+	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, $userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
 		$this->workspaceService = $workspaceService;
 		$this->userId = $userId;
+		$this->directEditingManager = $directEditingManager;
+		$this->urlGenerator = $urlGenerator;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
@@ -143,6 +163,43 @@ class WorkspaceController extends OCSController {
 		} catch (ShareNotFound $e) {
 			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
 		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function direct(string $path): DataResponse {
+		$this->eventDispatcher->dispatchTyped(new RegisterDirectEditorEvent($this->directEditingManager));
+
+		try {
+			$folder = $this->rootFolder->getUserFolder($this->userId)->get($path);
+			if ($folder instanceof Folder) {
+				$file = $this->getFile($folder);
+				if ($file === null) {
+					$token = $this->directEditingManager->create($path . '/'. self::SUPPORTED_FILENAMES[0], Application::APP_NAME, 'textdocument');
+				} else {
+					$token = $this->directEditingManager->open($file->getId(), Application::APP_NAME);
+				}
+				return new DataResponse([
+					'url' => $this->urlGenerator->linkToRouteAbsolute('files.DirectEditingView.edit', ['token' => $token])
+				]);
+			}
+
+		} catch (Exception $e) {
+			$this->logger->logException($e, ['message' => 'Exception when creating a new file through direct editing']);
+			return new DataResponse('Failed to create file', Http::STATUS_FORBIDDEN);
+		}
+	}
+
+	private function getFile(Folder $folder) {
+		$file = null;
+		foreach (self::SUPPORTED_FILENAMES as $filename) {
+			if ($folder->nodeExists($filename)) {
+				$file = $folder->get($filename);
+				continue;
+			}
+		}
+		return $file;
 	}
 
 }
