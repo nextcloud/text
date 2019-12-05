@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nuovo documento di testo",
     "Readme" : "Leggimi",
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Mostra immagine",
     "Show file" : "Mostra file",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
-    "New text document" : "Nuovo documento di testo",
     "Edit" : "Modifica",
     "Undo" : "Annulla",
     "Redo" : "Rifai",

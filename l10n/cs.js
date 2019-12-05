@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nový textový dokument",
     "Readme" : "Čtimne",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Upravování dokumentů vícero uživateli naráz",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
-    "New text document" : "Nový textový dokument",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
     "Redo" : "Zopakovat",
