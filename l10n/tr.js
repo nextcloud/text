@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Yeni metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
     "📝 Collaborative document editing" : "📝 İşbirlikli belge düzenleme",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle…",
-    "New text document" : "Yeni metin belgesi",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",

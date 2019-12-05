@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Νέο έγγραφο κειμένου",
     "Text" : "Κείμενο",
     "📝 Collaborative document editing" : "📝 Συνεργατική επεξεργασία εγγράφων",
     "Use current version" : "Χρήση τρέχουσας έκδοσης",
@@ -16,7 +17,6 @@ OC.L10N.register(
     "Add link" : "Προσθήκη συνδέσμου",
     "Show image" : "Εμφάνιση εικόνας",
     "Show file" : "Εμφάνιση αρχείου",
-    "New text document" : "Νέο έγγραφο κειμένου",
     "Edit" : "Επεξεργασία",
     "Undo" : "Aναίρεση",
     "Redo" : "Ακύρωση αναίρεσης",

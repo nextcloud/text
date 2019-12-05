@@ -1,4 +1,5 @@
 { "translations": {
+    "New text document" : "Neues Textdokument",
     "Readme" : "Anleitung",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Gemeinschaftliche Dokumentenbearbeitung",
@@ -20,7 +21,6 @@
     "Show image" : "Bild anzeigen",
     "Show file" : "Datei anzeigen",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen...",
-    "New text document" : "Neues Textdokument",
     "Edit" : "Bearbeiten",
     "Undo" : "Rückgängig",
     "Redo" : "Wiederherstellen",

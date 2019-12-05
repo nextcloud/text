@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nuevo documento de texto",
     "Readme" : "Léeme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Mostrar imagen",
     "Show file" : "Mostrar archivo",
     "Add notes, lists or links …" : "Añadir notas, listas o enlaces ...",
-    "New text document" : "Nuevo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",
@@ -39,6 +39,7 @@ OC.L10N.register(
     "Heading 6" : "Título 6",
     "Unordered list" : "Lista desordenada",
     "Ordered list" : "Lista ordenada",
+    "ToDo list" : "Lista de Tareas",
     "Blockquote" : "Bloque citado",
     "Code block" : "Bloque de código",
     "New text document.md" : "Nuevo documento de texto.md"

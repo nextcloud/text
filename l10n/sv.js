@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nytt textdokument",
     "Readme" : "Readme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "Gemensam dokumentredigering",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Visa bild",
     "Show file" : "Visa fil",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
-    "New text document" : "Nytt textdokument",
     "Edit" : "Redigera",
     "Undo" : "Ångra",
     "Redo" : "Upprepa",
