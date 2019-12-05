@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Testu dokumentu berria",
     "Readme" : "IrakurNazazu",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "Elkarlaneko dokumentuen edizioa",
@@ -22,7 +23,6 @@ OC.L10N.register(
     "Show image" : "Bistaratu irudia",
     "Show file" : "Bistaratu fitxategia",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
-    "New text document" : "Testu dokumentu berria",
     "Edit" : "Editatu",
     "Undo" : "Desegin",
     "Redo" : "Berregin",

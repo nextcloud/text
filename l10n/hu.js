@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Új szöveg dokumentum",
     "Text" : "Szöveg",
     "Use current version" : "Aktuális verzió használata",
     "Use the saved version" : "A mentett verzió használata",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "Add link" : "Hivatkozás hozzáadása",
     "Show image" : "Kép megjelenítése",
     "Show file" : "Fájl megjelenítése",
-    "New text document" : "Új szöveg dokumentum",
     "Edit" : "Szerkesztés",
     "Undo" : "Visszavon",
     "New text document.md" : "Új szöveg dokumentum.md"

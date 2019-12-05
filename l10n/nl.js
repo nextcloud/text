@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nieuw tekstdocument",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Gezamenlijke documentbewerking",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Gezamenlijke documentbewerking!**\n\n- **📝 Gericht schrijven:** Geen afleiding, alleen de edit mogelijkheden die je nodig hebt.\n- **🙋 Werk samen:** Deel en werk samen met vrienden en collega's, of je nu Nextcloud gebruikt of niet!\n- **💾 Open formaat:** Bestanden worden bewaard als [Markdown] (https://en.wikipedia.org/wiki/Markdown), je kan ze bewerken met elke andere tekst app.\n- **✊ Sterke basis:** We gebruiken [🐈 tiptap](https://tiptap.scrumpy.io) welke gebaseerd is op [🦉 ProseMirror](https://prosemirror.net) – Credits voor hen!",
@@ -20,7 +21,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand",
-    "New text document" : "Nieuw tekstdocument",
     "Edit" : "Bewerken",
     "Undo" : "Ongedaan maken",
     "Redo" : "Opnieuw doen",

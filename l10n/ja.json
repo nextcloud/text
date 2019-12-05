@@ -1,4 +1,5 @@
 { "translations": {
+    "New text document" : "新しいテキストドキュメント",
     "Text" : "テキスト",
     "📝 Collaborative document editing" : "📝 共同文書編集",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "**📝共同文書編集！**\n\n- **📝 集中執筆：集中モードで、必要なフォーマットだけ。\n- **🙋 一緒に仕事をする：**友達や同僚と、Nextcloudを使っていようとなかろうと、共有して共同作業しよう！\n- **💾 オープンフォーマット:** ファイルは[Markdown](https://en.wikipedia.org/wiki/Markdown)として保存されるので、他のテキストアプリからも編集できます。\n- **✊ 強固な基盤：**私たちは[🦉 ProseMirror](https://prosemirror.net)をベースにした[🐈 tiptap](https://tiptap.scrumpy.io)を使用しています - 本当にありがとうございます！",
@@ -18,7 +19,6 @@
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "Show image" : "画像を表示する",
     "Show file" : "ファイルを表示する",
-    "New text document" : "新しいテキストドキュメント",
     "Edit" : "編集",
     "Undo" : "元に戻す",
     "Redo" : "やり直し",

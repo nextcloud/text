@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Dokument tekst i ri",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Redaktimi i dokumenteve bashkëpunuese",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝Redaktimi i dokumenteve bashkëpunuese**\n\n- **📝 Shkrim i fokusuar:** Jo shpërqëndrime, vetëm formatimi që ju nevojitet.\n- **🙋 Punoni sëbashku** Shpërnda dhe bashkëpuno me shokët dhe kolegët, nuk ka rëndësi nëse përdorin apo jo Nextcloud !\n- **💾 Format i hapur:** Skedarët janë ruajtur si [Markdown](https://en.wikipedia.org/wiki/Markdown), kështu që ju mund ti ndryshoni nga çdo aplikacion tjetër teksti gjithashtu.\n- **✊ Fondacion i fortë:** Ne përdorim [🐈 tiptap](https://tiptap.scrumpy.io) bazuar në [🦉 ProseMirror](https://prosemirror.net) –falenderim i madh për ta!",
@@ -17,7 +18,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"],
     "Show image" : "Shfaq imazhin",
     "Show file" : "Shfaq skedarin",
-    "New text document" : "Dokument tekst i ri",
     "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
     "New text document.md" : "Dokument tekst .md i ri"
