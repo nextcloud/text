@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Nextcloud Text",
     "New text document" : "Nouveau document texte",
     "Readme" : "Lisez moi",
     "Text" : "Texte",
