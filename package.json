@@ -25,11 +25,11 @@
 	"dependencies": {
 		"@nextcloud/axios": "^0.5.0",
 		"@nextcloud/router": "^0.1.0",
+		"@nextcloud/vue": "^1.2.2",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^9.16.2",
 		"markdown-it": "^8.4.2",
 		"markdown-it-task-lists": "^2.1.1",
-		"nextcloud-vue": "^0.12.7",
 		"prosemirror-collab": "^1.2.2",
 		"prosemirror-inputrules": "^1.1.2",
 		"prosemirror-markdown": "^1.4.2",

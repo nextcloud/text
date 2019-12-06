@@ -51,7 +51,7 @@
 
 <script>
 import { EditorMenuBubble } from 'tiptap'
-import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 
 export default {
 	name: 'MenuBubble',
