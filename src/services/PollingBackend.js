@@ -160,7 +160,7 @@ class PollingBackend {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 			} else {
 				this.increaseRefetchTimer()
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {retry: false})
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
 				console.error('Failed to fetch steps due to other reason', e)
 			}
 		})
