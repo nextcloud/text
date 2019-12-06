@@ -70,7 +70,7 @@ class SessionService {
 		$session = new Session();
 		$session->setDocumentId($documentId);
 		$userName = $this->userId ? $this->userId : $guestName;
-		$session->setUserId($userName);
+		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
 		$color = $this->avatarManager->getGuestAvatar($userName)->avatarBackgroundColor($userName);
 		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
@@ -124,9 +124,6 @@ class SessionService {
 	}
 
 	public function isValidSession($documentId, $sessionId, $token) {
-		if ($this->userId) {
-			return true;
-		}
 		try {
 			$session = $this->getSession($documentId, $sessionId, $token);
 		} catch (DoesNotExistException $e) {
