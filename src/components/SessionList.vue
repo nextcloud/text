@@ -22,11 +22,12 @@
 
 <template>
 	<div class="session-list">
-		<div v-tooltip.left="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
+		<div v-tooltip.bottom="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
 			<div v-if="sessionsPopover.length > 0" class="avatardiv icon-more" />
 			<Avatar v-for="session in sessionsVisible"
 				:key="session.id"
-				:url="avatarUrl(session)"
+				:user="session.userId ? session.userId : session.guestName"
+				:is-guest="session.userId === null"
 				:disable-tooltip="true"
 				:style="sessionStyle(session)"
 				:size="32" />
@@ -92,7 +93,12 @@ export default {
 		},
 		activeSessions() {
 			return Object.values(this.sessions).filter((session) =>
-				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent && session.userId !== null)
+				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent
+					&& (session.userId !== null || session.guestName !== null)
+			)
+		},
+		currentSession() {
+			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		sessionStyle() {
 			return (session) => {
