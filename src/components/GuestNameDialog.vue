@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
-import Avatar from 'nextcloud-vue/dist/Components/Avatar'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 
 export default {
 	name: 'GuestNameDialog',

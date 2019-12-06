@@ -78,7 +78,7 @@ import { Collaboration } from 'tiptap-extensions'
 import { Keymap } from './../extensions'
 import isMobile from './../mixins/isMobile'
 
-import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 

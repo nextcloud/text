@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import Avatar from 'nextcloud-vue/dist/Components/Avatar'
-import PopoverMenu from 'nextcloud-vue/dist/Components/PopoverMenu'
-import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
+import Avatar from '@nextcloud/vue/dist/Components/Avatar'
+import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 
 const COLLABORATOR_IDLE_TIME = 10
 const COLLABORATOR_DISCONNECT_TIME = 30
