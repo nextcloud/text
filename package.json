@@ -24,6 +24,8 @@
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^0.5.0",
+		"@nextcloud/event-bus": "^0.2.1",
+		"@nextcloud/initial-state": "^0.2.0",
 		"@nextcloud/router": "^0.1.0",
 		"@nextcloud/vue": "^1.2.2",
 		"escape-html": "^1.0.3",

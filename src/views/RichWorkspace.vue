@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus }">
+	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus }">
 		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -47,6 +47,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
+import { subscribe } from '@nextcloud/event-bus'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : ''), 2) + 'workspace'
@@ -69,6 +70,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
+			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
 	},
 	computed: {
@@ -82,7 +84,16 @@ export default {
 		},
 	},
 	async mounted() {
-		this.getFileInfo()
+		if (this.enabled) {
+			this.getFileInfo()
+		}
+		subscribe('Text::showRichWorkspace', () => {
+			this.enabled = true
+			this.getFileInfo()
+		})
+		subscribe('Text::hideRichWorkspace', () => {
+			this.enabled = false
+		})
 	},
 	methods: {
 		getFileInfo() {
