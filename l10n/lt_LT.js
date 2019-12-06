@@ -34,6 +34,8 @@ OC.L10N.register(
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
     "Heading 6" : "Antraštė 6",
+    "Unordered list" : "Netvarkusis sąrašas",
+    "Ordered list" : "Tvarkusis sąrašas",
     "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
