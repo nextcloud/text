@@ -28,11 +28,23 @@ use OCA\Text\DirectEditing\TextDirectEditor;
 use OCP\AppFramework\App;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
+use OCP\IInitialStateService;
 
 class Application extends App {
 
 
 	const APP_NAME = 'text';
+
+	/** @var IInitialStateService */
+	private $initialStateService;
+	/**
+	 * @var \OCP\IUserSession
+	 */
+	private $userSession;
+	/**
+	 * @var \OCP\IConfig
+	 */
+	private $config;
 
 
 	/**
@@ -45,11 +57,39 @@ class Application extends App {
 		parent::__construct(self::APP_NAME, $params);
 
 		$container = $this->getContainer();
+		$server = $container->getServer();
 		/** @var IEventDispatcher $eventDispatcher */
-		$eventDispatcher = $this->getContainer()->getServer()->query(IEventDispatcher::class);
+		$eventDispatcher = $server->query(IEventDispatcher::class);
+		$this->initialStateService = $server->query(IInitialStateService::class);
+		$this->userSession = $server->getUserSession();
+		$this->config = $this->getContainer()->getServer()->getConfig();
+
 		$eventDispatcher->addListener(RegisterDirectEditorEvent::class, function (RegisterDirectEditorEvent $event) use ($container) {
 			$editor = $container->query(TextDirectEditor::class);
 			$event->register($editor);
+		});
+
+		if ($this->userSession->isLoggedIn()) {
+			$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () use ($initialStateService) {
+				\OCP\Util::addScript('text', 'files');
+				\OCP\Util::addStyle('text', 'icons');
+
+				$this->initialStateService->provideInitialState(
+					self::APP_NAME,
+					'workspace_available',
+					$this->config->getAppValue(self::APP_NAME, 'workspace_available', true)
+				);
+				$this->initialStateService->provideInitialState(
+					self::APP_NAME,
+					'workspace_enabled',
+					$this->config->getUserValue($this->userSession->getUser()->getUID(), self::APP_NAME, 'workspace_enabled', '1') === '1'
+				);
+			});
+		}
+
+		$eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
+			\OCP\Util::addScript('text', 'public');
+			\OCP\Util::addStyle('text', 'icons');
 		});
 	}
 

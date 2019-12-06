@@ -32,6 +32,8 @@
 
 <script>
 import { emit } from '@nextcloud/event-bus'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'FilesSettings',
@@ -45,8 +47,16 @@ export default {
 			// FIXME: save to app config
 			if (this.showWorkspace) {
 				emit('Text::showRichWorkspace')
+				axios.post(generateUrl('/apps/text/settings'), {
+					key: 'workspace_enabled',
+					value: '1',
+				})
 			} else {
 				emit('Text::hideRichWorkspace')
+				axios.post(generateUrl('/apps/text/settings'), {
+					key: 'workspace_enabled',
+					value: '0',
+				})
 			}
 		},
 	},
