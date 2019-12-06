@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Nextcloud Text",
     "New text document" : "Yeni metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
@@ -39,6 +40,7 @@ OC.L10N.register(
     "Heading 6" : "6. Başlık",
     "Unordered list" : "Sıralı olmayan liste",
     "Ordered list" : "Sıralı liste",
+    "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "New text document.md" : "Yeni metin belgesi.md"
