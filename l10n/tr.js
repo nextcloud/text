@@ -23,7 +23,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
-    "Add notes, lists or links …" : "Not, liste yada bağlantı ekle…",
+    "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",
