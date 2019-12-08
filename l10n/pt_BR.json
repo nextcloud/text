@@ -21,6 +21,7 @@
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
+    "Show rich workspaces" : "Mostrar áreas de trabalho avançadas",
     "Add notes, lists or links …" : "Adicionar observações, listas ou links...",
     "Edit" : "Editar",
     "Undo" : "Desfazer",

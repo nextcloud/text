@@ -21,6 +21,7 @@
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
+    "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
