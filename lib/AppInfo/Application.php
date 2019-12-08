@@ -70,7 +70,7 @@ class Application extends App {
 		});
 
 		if ($this->userSession->isLoggedIn()) {
-			$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () use ($initialStateService) {
+			$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () {
 				\OCP\Util::addScript('text', 'files');
 				\OCP\Util::addStyle('text', 'icons');
 
