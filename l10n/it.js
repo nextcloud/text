@@ -23,6 +23,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["e %n altro redattore","e %n altri redattori"],
     "Show image" : "Mostra immagine",
     "Show file" : "Mostra file",
+    "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
     "Edit" : "Modifica",
     "Undo" : "Annulla",
