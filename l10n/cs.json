@@ -21,6 +21,7 @@
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",
+    "Show rich workspaces" : "Zobrazit rich workspaces",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
