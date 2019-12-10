@@ -120,7 +120,7 @@ export default {
 				return
 			}
 			this.creating = true
-			window.FileList.createFile('README.md', { scrollTo: false, animate: false }).then((status, data) => {
+			window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
 				this.getFileInfo()
 				this.autofocus = true
 				this.creating = false
@@ -134,11 +134,18 @@ export default {
 	#rich-workspace {
 		padding: 0 60px;
 		min-height: 90px;
+		/* Slightly reduce vertical space */
+		margin-bottom: -24px;
 		text-align: left;
 	}
 
+	/* For subfolders, where there are no Recommendations */
+	#rich-workspace:only-child {
+		margin-bottom: 0;
+	}
+
 	.empty-workspace {
-		margin-top: 54px;
+		padding-top: 43px;
 		color: var(--color-text-maxcontrast);
 		height: 0;
 	}
@@ -163,6 +170,12 @@ export default {
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
 		padding: 0px;
 		margin: 0;
+	}
+
+	#rich-workspace::v-deep .menubar {
+		z-index: 50;
+		/* Slightly reduce vertical space */
+		margin-bottom: -10px;
 	}
 
 	#rich-workspace::v-deep .menubar .menubar-icons {
