@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Некстклауд Текст",
     "New text document" : "Нови текстуални документ",
     "Readme" : "Прочитај ме",
     "Text" : "Текст",
@@ -22,6 +23,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
     "Show image" : "Прикажи слику",
     "Show file" : "Прикажи фајл",
+    "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Edit" : "Измени",
     "Undo" : "Поништи",
@@ -39,6 +41,7 @@ OC.L10N.register(
     "Heading 6" : "Наслов 6",
     "Unordered list" : "Неуређена листа",
     "Ordered list" : "Уређена листа",
+    "ToDo list" : "ToDo листа",
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
     "New text document.md" : "Нови текстуални документ.md"
