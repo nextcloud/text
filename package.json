@@ -37,7 +37,7 @@
 		"prosemirror-markdown": "^1.4.2",
 		"prosemirror-schema-list": "^1.1.2",
 		"prosemirror-utils": "^0.9.6",
-		"prosemirror-view": "^1.13.4",
+		"prosemirror-view": "^1.13.6",
 		"tiptap": "^1.26.4",
 		"tiptap-commands": "^1.12.3",
 		"tiptap-extensions": "^1.28.4",
