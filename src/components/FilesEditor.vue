@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<EditorWrapper :file-id="fileId"
-		:relative-path="davPath"
+	<EditorWrapper :file-id="fileid"
+		:relative-path="filename"
 		:active="active"
 		:share-token="shareToken"
 		:mime="mime" />
@@ -35,11 +35,11 @@ export default {
 		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
 	},
 	props: {
-		davPath: {
+		filename: {
 			type: String,
 			default: null,
 		},
-		fileId: {
+		fileid: {
 			type: Number,
 			default: null,
 		},
