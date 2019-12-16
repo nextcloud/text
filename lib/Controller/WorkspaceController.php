@@ -178,7 +178,7 @@ class WorkspaceController extends OCSController {
 				if ($file === null) {
 					$token = $this->directEditingManager->create($path . '/'. self::SUPPORTED_FILENAMES[0], Application::APP_NAME, 'textdocument');
 				} else {
-					$token = $this->directEditingManager->open($path, Application::APP_NAME);
+					$token = $this->directEditingManager->open($path . '/'. $file->getName(), Application::APP_NAME);
 				}
 				return new DataResponse([
 					'url' => $this->urlGenerator->linkToRouteAbsolute('files.DirectEditingView.edit', ['token' => $token])
