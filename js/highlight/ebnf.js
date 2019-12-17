@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[51],{480:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/;/,contains:[a,{className:"meta",begin:/\?.*\?/},n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
-//# sourceMappingURL=ebnf.js.map?v=bc9db10a9a2e491ac982
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[51],{480:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-_]*([\s-_]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/[.;]/,contains:[a,{className:"meta",begin:/\?.*\?/},{className:"string",variants:[n.APOS_STRING_MODE,n.QUOTE_STRING_MODE,{begin:"`",end:"`"}]}]}]}}}}]);
+//# sourceMappingURL=ebnf.js.map?v=3be6b7bae646f8dac7b0

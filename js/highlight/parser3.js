@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[122],{551:function(e,a){e.exports=function(e){var a=e.COMMENT("{","}",{contains:["self"]});return{subLanguage:"xml",relevance:0,contains:[e.COMMENT("^#","$"),e.COMMENT("\\^rem{","}",{relevance:10,contains:[a]}),{className:"meta",begin:"^@(?:BASE|USE|CLASS|OPTIONS)$",relevance:10},{className:"title",begin:"@[\\w\\-]+\\[[\\w^;\\-]*\\](?:\\[[\\w^;\\-]*\\])?(?:.*)$"},{className:"variable",begin:"\\$\\{?[\\w\\-\\.\\:]+\\}?"},{className:"keyword",begin:"\\^[\\w\\-\\.\\:]+"},{className:"number",begin:"\\^#[0-9a-fA-F]+"},e.C_NUMBER_MODE]}}}}]);
-//# sourceMappingURL=parser3.js.map?v=7dc8b7ccb7d4f35b0e2d
+//# sourceMappingURL=parser3.js.map?v=87ec4ff1e47ef01d061e

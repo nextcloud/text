@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[162],{591:function(e,n){e.exports=function(e){return{aliases:["p21","step","stp"],case_insensitive:!0,lexemes:"[A-Z_][A-Z0-9_.]*",keywords:{keyword:"HEADER ENDSEC DATA"},contains:[{className:"meta",begin:"ISO-10303-21;",relevance:10},{className:"meta",begin:"END-ISO-10303-21;",relevance:10},e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,e.COMMENT("/\\*\\*!","\\*/"),e.C_NUMBER_MODE,e.inherit(e.APOS_STRING_MODE,{illegal:null}),e.inherit(e.QUOTE_STRING_MODE,{illegal:null}),{className:"string",begin:"'",end:"'"},{className:"symbol",variants:[{begin:"#",end:"\\d+",illegal:"\\W"}]}]}}}}]);
-//# sourceMappingURL=step21.js.map?v=e26d5036e9e2f2707c9a
+//# sourceMappingURL=step21.js.map?v=f07c106fe02c00d51043
