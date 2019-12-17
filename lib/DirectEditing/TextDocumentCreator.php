@@ -48,7 +48,7 @@ class TextDocumentCreator extends ACreateEmpty {
 	}
 
 	public function getExtension(): string {
-		return '.md';
+		return 'md';
 	}
 
 	public function getMimetype(): string {
