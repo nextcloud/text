@@ -174,6 +174,9 @@ const FilesWorkspacePlugin = {
 	},
 
 	render: function(fileList) {
+		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+			return
+		}
 
 		import('vue').then((module) => {
 			const Vue = module.default
