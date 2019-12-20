@@ -172,7 +172,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getBaseFile($document): ISimpleFile {
-		return $this->appData->getFolder('documents')->getFile($document);
+		return $this->appData->getFolder('documents')->getFile((string) $document);
 	}
 
 	public function get($documentId) {
