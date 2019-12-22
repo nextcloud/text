@@ -1,0 +1,9 @@
+{ "translations": {
+    "Text" : "文字",
+    "Retry" : "重試",
+    "Edit" : "退出",
+    "Undo" : "復原",
+    "Bold" : "粗體",
+    "Italic" : "斜體"
+},"pluralForm" :"nplurals=1; plural=0;"
+}
