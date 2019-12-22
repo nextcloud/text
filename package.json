@@ -27,7 +27,7 @@
 		"@nextcloud/event-bus": "^0.2.1",
 		"@nextcloud/initial-state": "^0.2.0",
 		"@nextcloud/router": "^0.1.0",
-		"@nextcloud/vue": "^1.2.2",
+		"@nextcloud/vue": "^1.2.3",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^9.16.2",
 		"markdown-it": "^8.4.2",
