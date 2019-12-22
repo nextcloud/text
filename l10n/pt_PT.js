@@ -8,6 +8,7 @@ OC.L10N.register(
     "Use current version" : "Usar esta versão",
     "Use the saved version" : "Usar a versão guardada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi modificado fora do editor. As modificações não podem ser guardadas.",
+    "Retry" : "Repetir",
     "Last save {lastSave}" : "Última versão guardada {lastSave}",
     "Unpushed changes" : "Modificações não enviadas",
     "Unsaved changes" : "Modificações não guardadas",
