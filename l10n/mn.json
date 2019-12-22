@@ -1,0 +1,6 @@
+{ "translations": {
+    "Retry" : "Дахин оролдох",
+    "Edit" : "засварлах",
+    "Undo" : "буцах"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

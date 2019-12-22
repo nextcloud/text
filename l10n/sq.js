@@ -8,6 +8,7 @@ OC.L10N.register(
     "Use current version" : "Përdor versionin aktual",
     "Use the saved version" : "Përdor versionin e ruajtur",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumenti është ndryshuar jashtë redaktuesit. Ndryshimet nuk mund të aplikohen.",
+    "Retry" : "Riprovoni",
     "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
     "Unpushed changes" : "Ndryshime të pavendosura",
     "Unsaved changes" : "Ndryshime të paruajtura",
@@ -20,6 +21,9 @@ OC.L10N.register(
     "Show file" : "Shfaq skedarin",
     "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
+    "Redo" : "Ribëj",
+    "Bold" : "I theksuar",
+    "Italic" : "I pjerrët",
     "New text document.md" : "Dokument tekst .md i ri"
 },
 "nplurals=2; plural=(n != 1);");
