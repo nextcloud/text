@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Nextcloud Testua",
     "New text document" : "Testu dokumentu berria",
     "Readme" : "IrakurNazazu",
     "Text" : "Testu",
@@ -22,6 +23,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "Show image" : "Bistaratu irudia",
     "Show file" : "Bistaratu fitxategia",
+    "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Edit" : "Editatu",
     "Undo" : "Desegin",
@@ -39,6 +41,7 @@ OC.L10N.register(
     "Heading 6" : "6. goiburua",
     "Unordered list" : "Ordenatu gabeko zerrenda",
     "Ordered list" : "Ordenatutako zerrenda",
+    "ToDo list" : "Egiteko zerrenda",
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "New text document.md" : "Testu dokumentu berria.md"
