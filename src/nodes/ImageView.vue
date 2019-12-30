@@ -22,7 +22,7 @@
 
 <template>
 	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
-		<div v-if="imageLoaded && isSupportedImage">
+		<div v-if="imageLoaded && isSupportedImage" class="image__view">
 			<transition name="fade">
 				<img v-show="loaded"
 					:src="src"
@@ -38,13 +38,20 @@
 				</div>
 			</transition>
 		</div>
+		<div v-else-if="isRelativeImage">
+			<img :src="relativeSrc">
+			<input ref="srcInput"
+				type="text"
+				:value="src"
+				@keyup.enter="updateSrc()">
+		</div>
 		<div v-else class="image__placeholder">
 			<transition name="fade">
 				<div v-show="loaded" class="image__main">
-					<div class="icon-image" :style="mimeIcon" />
-					<p>
-						<a :href="internalLinkOrImage" target="_blank">{{ isSupportedImage ? t('text', 'Show image') : t('text', 'Show file') }}</a>
-					</p>
+					<a :href="internalLinkOrImage" target="_blank">
+						<div class="icon-image" :style="mimeIcon" />
+						<p v-if="!isSupportedImage">{{ alt }}</p>
+					</a>
 				</div>
 			</transition><transition name="fade">
 				<div v-show="loaded" class="image__caption">
@@ -59,6 +66,8 @@
 </template>
 
 <script>
+import path from 'path'
+import { generateUrl } from '@nextcloud/router'
 
 const imageMimes = [
 	'image/png',
@@ -97,6 +106,14 @@ export default {
 		}
 	},
 	computed: {
+		isRelativeImage() {
+			return !this.src.match(/\/core\/preview/)
+		},
+		relativeSrc() {
+			const f = FileList.getCurrentDirectory() + '/' + this.src
+			const pathParam = encodeURIComponent(path.normalize(f))
+			return generateUrl('/core/preview.png') + `?file=${pathParam}&x=1024&y=1024&a=true`
+		},
 		mimeIcon() {
 			const mime = getQueryVariable(this.src, 'mimetype')
 			if (mime) {
@@ -164,6 +181,9 @@ export default {
 		updateAlt() {
 			this.alt = this.$refs.altInput.value
 		},
+		updateSrc() {
+			this.src = this.$refs.srcInput.value
+		},
 		onLoaded() {
 			this.loaded = true
 		},
@@ -198,13 +218,31 @@ export default {
 		height: 100px;
 	}
 
-	.image__placeholder .image__main {
-		background-color: var(--color-background-dark);
+	.image__view {
 		text-align: center;
-		padding: 20px;
-		border-radius: var(--border-radius);
-		.icon-image {
-			opacity: 0.7;
+
+		.image__main {
+			max-height: 40vh;
+		}
+	}
+
+	.image__placeholder {
+		a {
+			display: flex;
+		}
+		.image__main {
+			background-color: var(--color-background-dark);
+			text-align: center;
+			padding: 5px;
+			border-radius: var(--border-radius);
+
+			.icon-image {
+				margin: 0;
+			}
+
+			p {
+				padding: 10px;
+			}
 		}
 	}
 
