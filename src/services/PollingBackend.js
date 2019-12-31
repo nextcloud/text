@@ -158,6 +158,12 @@ class PollingBackend {
 				})
 			} else if (e.response.status === 403) {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+			} else if (e.response.status === 404) {
+				this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
+			} else if (e.response.status === 503) {
+				this.increaseRefetchTimer()
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: true })
+				console.error('Failed to fetch steps due to unavailable service', e)
 			} else {
 				this.increaseRefetchTimer()
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })

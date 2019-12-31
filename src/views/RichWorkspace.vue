@@ -40,7 +40,8 @@
 			:autofocus="autofocus"
 			@ready="ready=true"
 			@focus="focus=true"
-			@blur="focus=false" />
+			@blur="focus=false"
+			@error="reset" />
 	</div>
 </template>
 
@@ -96,6 +97,12 @@ export default {
 		})
 	},
 	methods: {
+		reset() {
+			this.file = null
+			this.$nextTick(() => {
+				this.getFileInfo()
+			})
+		},
 		getFileInfo() {
 			this.loaded = false
 			this.autofocus = false
