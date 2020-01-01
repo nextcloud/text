@@ -19,8 +19,8 @@
 		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
 		"stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix",
-		"test": "NODE_ENV=test jest --passWithNoTests",
-		"test:coverage": "NODE_ENV=test jest --coverage"
+		"test": "NODE_ENV=test jest --passWithNoTests src/",
+		"test:coverage": "NODE_ENV=test jest --coverage src/"
 	},
 	"dependencies": {
 		"@nextcloud/axios": "^1.1.0",
@@ -60,6 +60,7 @@
 		"@babel/plugin-transform-runtime": "^7.7.6",
 		"@babel/polyfill": "^7.7.0",
 		"@babel/preset-env": "^7.7.7",
+		"@cypress/browserify-preprocessor": "^2.1.1",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@vue/test-utils": "^1.0.0-beta.30",
 		"acorn": "^7.1.0",
@@ -69,6 +70,8 @@
 		"babel-loader": "^8.0.6",
 		"clean-webpack-plugin": "^3.0.0",
 		"css-loader": "^3.4.0",
+		"cypress": "^3.8.1",
+		"cypress-image-snapshot": "^3.1.1",
 		"eslint": "^5.16.0",
 		"eslint-config-nextcloud": "0.1.1",
 		"eslint-config-standard": "^12.0.0",
