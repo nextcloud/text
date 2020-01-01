@@ -25,6 +25,7 @@ import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } 
 import FilesSettings from './views/FilesSettings'
 import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
+import store from './store'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		Vue.prototype.OCA = window.OCA
 		const vm = new Vue({
 			render: h => h(FilesSettings, {}),
+			store,
 		})
 		const el = vm.$mount().$el
 		OCA.Files.Settings.register(new OCA.Files.Settings.Setting('text', {

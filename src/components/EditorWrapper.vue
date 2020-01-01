@@ -33,7 +33,7 @@
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
 			<div id="editor">
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
@@ -74,6 +74,7 @@
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
+import { mapState } from 'vuex'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -82,10 +83,11 @@ import { createEditor, markdownit, createMarkdownSerializer, serializePlainText,
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
-import { Keymap } from './../extensions'
+import { Keymap, UserColor } from './../extensions'
 import isMobile from './../mixins/isMobile'
-
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { getVersion, receiveTransaction } from 'prosemirror-collab'
+import { Step } from 'prosemirror-transform'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
@@ -171,6 +173,9 @@ export default {
 		}
 	},
 	computed: {
+		...mapState({
+			showAuthorAnnotations: state => state.showAuthorAnnotations,
+		}),
 		lastSavedStatus() {
 			let status = (this.dirtyStateIndicator ? '*' : '')
 			if (!this.isMobile) {
@@ -328,6 +333,34 @@ export default {
 											this.syncService.sendSteps()
 										}
 									},
+									update: ({ steps, version, editor }) => {
+										const { state, view, schema } = editor
+
+										if (getVersion(state) > version) {
+											return
+										}
+
+										const tr = receiveTransaction(
+											state,
+											steps.map(item => Step.fromJSON(schema, item.step)),
+											steps.map(item => item.clientID),
+										)
+										tr.setMeta('clientID', steps[0].clientID)
+										view.dispatch(tr)
+									},
+								}),
+								new UserColor({
+									clientID: this.currentSession.id,
+									color: (clientID) => {
+										const session = this.sessions.find(item => '' + item.id === '' + clientID)
+										return session ? session.color : 'var(--color-background-hover)'
+									},
+									name: (clientID) => {
+										const session = this.sessions.find(item => '' + item.id === '' + clientID)
+										return session ? (
+											session.userId ? session.userId : session.guestName
+										) : null
+									},
 								}),
 								new Keymap({
 									'Mod-s': () => {
@@ -351,10 +384,14 @@ export default {
 				.on('sync', ({ steps, document }) => {
 					this.hasConnectionIssue = false
 					try {
-						this.tiptap.extensions.options.collaboration.update({
-							version: document.currentVersion,
-							steps,
-						})
+						for (let i = 0; i < steps.length; i++) {
+							// FIXME: seems pretty bad performance wise (maybe grouping the steps by user in the backend would be good)
+							this.tiptap.extensions.options.collaboration.update({
+								version: document.currentVersion,
+								steps: [steps[i]],
+								editor: this.tiptap,
+							})
+						}
 						this.syncService.state = this.tiptap.state
 						this.updateLastSavedStatus()
 					} catch (e) {
@@ -500,6 +537,12 @@ export default {
 		height: 100%;
 		overflow: hidden;
 		position: absolute;
+
+		&:not(.show-color-annotations)::v-deep .author-annotation {
+			background-color: transparent !important;
+			color: var(--color-main-text) !important;
+		}
+
 		.ProseMirror {
 			margin-top: 0 !important;
 		}

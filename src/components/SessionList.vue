@@ -23,7 +23,7 @@
 <template>
 	<div class="session-list">
 		<div v-tooltip.bottom="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
-			<div v-if="sessionsPopover.length > 0" class="avatardiv icon-more" />
+			<div class="avatardiv icon-more" />
 			<Avatar v-for="session in sessionsVisible"
 				:key="session.id"
 				:user="session.userId ? session.userId : session.guestName"
@@ -35,6 +35,14 @@
 		<div v-show="popoverVisible" class="popovermenu menu-right">
 			<PopoverMenu :menu="sessionsPopover" />
 			<slot />
+			<input id="toggle-color-annotations"
+				v-model="showAuthorAnnotations"
+				type="checkbox"
+				class="checkbox">
+			<label for="toggle-color-annotations">{{ t('text', 'Show color annotations') }}</label>
+			<p class="hint">
+				{{ t('text', 'Color annotations will only show during editing sessions, they are not persisted after closing the document.') }}
+			</p>
 		</div>
 	</div>
 </template>
@@ -70,6 +78,14 @@ export default {
 		}
 	},
 	computed: {
+		showAuthorAnnotations: {
+			get() {
+				return this.$store.state.showAuthorAnnotations
+			},
+			set(value) {
+				this.$store.commit('setShowAuthorAnnotations', value)
+			},
+		},
 		editorsTooltip() {
 			if (this.sessionsPopover.length > 0) {
 				const first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
@@ -135,6 +151,7 @@ export default {
 
 		/deep/ .popovermenu {
 			margin-right: -4px;
+			min-width: 240px;
 			img {
 				padding: 0;
 				width: 32px !important;
@@ -168,5 +185,14 @@ export default {
 
 	.popovermenu {
 		display: block;
+	}
+
+	label {
+		display: block;
+		margin: 8px;
+	}
+	.hint {
+		margin: 8px;
+		color: var(--color-text-maxcontrast);
 	}
 </style>

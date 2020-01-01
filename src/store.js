@@ -1,5 +1,5 @@
 /*
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
@@ -20,10 +20,24 @@
  *
  */
 
-import Keymap from './Keymap'
-import UserColor from './UserColor'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { getBuilder } from '@nextcloud/browser-storage'
 
-export {
-	Keymap,
-	UserColor,
-}
+const persistentStorage = getBuilder('text').persist().build()
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+	state: {
+		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
+	},
+	mutations: {
+		setShowAuthorAnnotations(state, value) {
+			state.showAuthorAnnotations = value
+			persistentStorage.setItem('showAuthorAnnotations', '' + value)
+		},
+	},
+})
+
+export default store
