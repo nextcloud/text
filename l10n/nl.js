@@ -21,6 +21,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand",
+    "Add notes, lists or links …" : "Toevoegen notities, lijsten of links...",
     "Edit" : "Bewerken",
     "Undo" : "Ongedaan maken",
     "Redo" : "Opnieuw doen",
