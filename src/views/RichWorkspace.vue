@@ -165,6 +165,11 @@ export default {
 
 	#rich-workspace::v-deep #editor-wrapper {
 		position: unset !important;
+		overflow: visible;
+	}
+
+	#rich-workspace::v-deep #editor {
+		overflow: visible !important;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
@@ -173,7 +178,7 @@ export default {
 	}
 
 	#rich-workspace::v-deep .menubar {
-		z-index: 50;
+		z-index: 90;
 		/* Slightly reduce vertical space */
 		margin-bottom: -10px;
 	}

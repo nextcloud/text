@@ -185,16 +185,22 @@ export default {
 		iconCount() {
 			this.forceRecompute // eslint-disable-line
 			this.windowWidth // eslint-disable-line
-			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 100 ? this.$refs.menubar.clientWidth : this.windowWidth - 200
+			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 100 ? this.$refs.menubar.clientWidth : 100
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
 			return iconCount
 		},
 	},
-	beforeMount() {
-		this.redrawMenuBar()
-	},
 	mounted() {
 		window.addEventListener('resize', this.getWindowWidth)
+		this.checkInterval = setInterval(() => {
+			const isWidthAvailable = (this.$refs.menubar && this.$refs.menubar.clientWidth > 0)
+			if (this.isRichEditor && isWidthAvailable) {
+				this.redrawMenuBar()
+			}
+			if (!this.isRichEditor || isWidthAvailable) {
+				clearInterval(this.checkInterval)
+			}
+		}, 100)
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)

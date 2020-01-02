@@ -30,6 +30,12 @@ const TYPES = {
 	CHECKBOX: 1,
 }
 
+const getParentList = (schema, selection) => {
+	return findParentNode(function(node) {
+		return node.type === schema.nodes.list_item
+	})(selection)
+}
+
 export default class ListItem extends TiptapListItem {
 
 	get defaultOptions() {
@@ -104,17 +110,23 @@ export default class ListItem extends TiptapListItem {
 					const $from = selection.$from
 					const $to = selection.$to
 					const range = $from.blockRange($to)
-					const tr = state.tr
 
-					if (!range) {
+					let tr = state.tr
+					let parentList = getParentList(schema, selection)
+
+					if (typeof parentList === 'undefined') {
+						toggleList(schema.nodes.bullet_list, type)(state, (_transaction) => {
+							tr = _transaction
+						}, view)
+						parentList = getParentList(schema, tr.selection)
+					}
+
+					if (!range || typeof parentList === 'undefined') {
 						return false
 					}
 
-					const parentList = findParentNode(function(node) {
-						return node.type === schema.nodes.list_item
-					})(selection)
-
 					tr.setNodeMarkup(parentList.pos, schema.nodes.list_item, { type: parentList.node.attrs.type === TYPES.CHECKBOX ? TYPES.BULLET : TYPES.CHECKBOX })
+					tr.scrollIntoView()
 
 					if (dispatch) {
 						dispatch(tr)
@@ -146,7 +158,7 @@ export default class ListItem extends TiptapListItem {
 						})(selection)
 
 						const isLabel = event.target.tagName.toLowerCase() === 'label'
-						if (parentList.node.attrs.type !== TYPES.CHECKBOX || !isLabel) {
+						if (typeof parentList === 'undefined' || parentList.node.attrs.type !== TYPES.CHECKBOX || !isLabel) {
 							return
 						}
 
