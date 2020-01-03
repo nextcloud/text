@@ -42,7 +42,7 @@
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
 					<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
-					<span>{{ t('text', 'Add link') }}</span>
+					<span class="menububble__buttontext">{{ t('text', 'Add link') }}</span>
 				</button>
 			</template>
 		</div>
@@ -105,9 +105,9 @@ export default {
 		z-index: 10020;
 		background: var(--color-main-background-translucent);
 		box-shadow: 0 1px 5px var(--color-box-shadow);
-		border-radius: 5px;
-		padding: 0.3rem;
-		margin-bottom: 0.5rem;
+		border-radius: var(--border-radius);
+		padding: 0;
+		margin-bottom: 0.4rem;
 		visibility: hidden;
 		opacity: 0;
 		transform: translateX(-50%);
@@ -119,16 +119,22 @@ export default {
 		}
 
 		&__button {
-			display: inline-flex;
+			display: block;
 			border: 0;
-			padding: 0.2rem 0.5rem;
+			padding: 0.3rem 0.7rem;
+			margin: 0;
 			margin-right: 0.2rem;
-			border-radius: 3px;
+			border-radius: var(--border-radius);
 			cursor: pointer;
 
 			&:last-child {
 				margin-right: 0;
 			}
+		}
+
+		&__buttontext {
+			padding: 0.4rem;
+			padding-right: 0;
 		}
 
 		&__form {
