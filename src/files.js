@@ -48,12 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			group: null,
 		})
 	}
-	OCA.Viewer.registerHandler({
-		id: 'text',
-		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: FilesEditor,
-		group: null,
-	})
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
 	if (workspaceAvailable) {
