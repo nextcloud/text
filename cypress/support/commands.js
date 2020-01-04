@@ -41,10 +41,15 @@ Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
 })
 
 Cypress.Commands.add('logout', () => {
-	cy.get('#expanddiv li[data-id="logout"] a').then(logout => {
-		if (logout) {
-			cy.visit(logout[0].href)
-		}
+	Cypress.Cookies.defaults({
+		whitelist: []
+	})
+
+	cy.clearLocalStorage()
+	cy.clearCookies()
+
+	Cypress.Cookies.defaults({
+		whitelist: /^(oc|nc)/
 	})
 })
 
