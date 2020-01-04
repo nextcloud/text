@@ -9,6 +9,6 @@ services:
             - 8081:80
         environment:
             CYPRESS_baseUrl:
-            APP_SOURCE: /home/runner/work/text/text
+            APP_SOURCE:
         volumes:
-            - $APP_SOURCE:/var/www/html/apps/text
+            - ${APP_SOURCE}:/var/www/html/apps/text

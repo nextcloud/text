@@ -62,18 +62,20 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
-			Authorization: 'Basic YWRtaW46YWRtaW4='
 		}
 	}).then(response => {
 		cy.log(`Created user ${user}`, response.status)
 	})
 })
 
-Cypress.Commands.add('uploadFile', (fileName, mimeType) => {
+Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	cy.fixture(fileName, 'base64')
 		.then(Cypress.Blob.base64StringToBlob)
 		.then(async blob => {
 			const file = new File([blob], fileName, { type: mimeType })
+			if (typeof target !== 'undefined') {
+				fileName = target
+			}
 			await cy.window().then(async window => {
 				await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
 					headers: {
