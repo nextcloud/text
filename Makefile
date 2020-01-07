@@ -24,23 +24,22 @@ watch-js:
 	npm run watch
 
 # Testing
-test:
-	npm run test
-
-test-watch:
-	npm run test:watch
-
-test-coverage:
-	npm run test:coverage
+test: test-js test-cypress
 
 test-cypress:
-	echo "Init server for $(app_name)"
-	./cypress/start.sh $(app_name)
-	npm run cypress:gui
-	./cypress/stop.sh $(app_name)
+	cd cypress && ./runLocal.sh run
 
-test-cypress-kill:
-	./cypress/stop.sh $(app_name)
+test-cypress-watch:
+	cd cypress && ./runLocal.sh open
+
+test-js:
+	npm run test
+
+test-js-watch:
+	npm run test:watch
+
+test-js-coverage:
+	npm run test:coverage
 
 # Linting
 lint:

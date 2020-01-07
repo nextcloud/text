@@ -1,0 +1,40 @@
+name: Cypress
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        containers: [1, 2, 3]
+
+    steps:
+    - name: Checkout text app
+      uses: actions/checkout@v2
+    - name: Build the stack
+      run: |
+        cd cypress/
+        docker-compose up -d
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Wait for server
+      env:
+        CYPRESS_baseUrl: http://localhost:8081/index.php
+      run: |
+          npm install -g wait-on
+          wait-on -i 500 -t 240000 $CYPRESS_baseUrl || (cd cypress && docker-compose logs && exit 1)
+          cd cypress/ && docker-compose exec -T nextcloud bash /var/www/html/apps/text/cypress/server.sh
+    - name: Cypress run
+      uses: cypress-io/github-action@v1
+      with:
+        record: true
+        parallel: true
+      env:
+        CYPRESS_baseUrl: http://localhost:8081/index.php
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

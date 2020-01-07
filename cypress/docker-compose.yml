@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    nextcloud:
+        build:
+            context: .
+        restart: always
+        ports:
+            - 8081:80
+        environment:
+            CYPRESS_baseUrl:
+            APP_SOURCE:
+        volumes:
+            - ${APP_SOURCE}:/var/www/html/apps/text
