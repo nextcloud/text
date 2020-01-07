@@ -1,7 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "Text" : "文字",
+    "Nextcloud Text" : "Nextcloud 文字編輯器",
+    "Text" : "文字編輯器",
     "Retry" : "重試",
     "Edit" : "退出",
     "Undo" : "復原",
