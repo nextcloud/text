@@ -5,7 +5,7 @@ steps:
     image: nextcloudci/php7.2:php7.2-9
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: sqlite
     commands:
       - composer install
@@ -15,7 +15,7 @@ steps:
       - ./occ app:check-code $APP_NAME -c deprecation
 trigger:
   branch:
-    - master
+    - stable18
     - stable*
   event:
     - pull_request
@@ -41,7 +41,7 @@ steps:
       - ./vendor/bin/parallel-lint --exclude ./vendor/ .
 trigger:
   branch:
-    - master
+    - stable18
     - stable*
   event:
     - pull_request
@@ -54,7 +54,7 @@ steps:
     image: nextcloudci/php7.2:php7.2-13
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: sqlite
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -65,7 +65,7 @@ steps:
     image: nextcloudci/php7.3:php7.3-5
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: sqlite
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -76,7 +76,7 @@ steps:
     image: nextcloudci/php7.4:2
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: sqlite
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -85,7 +85,7 @@ steps:
       - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
 trigger:
   branch:
-    - master
+    - stable18
     - stable*
   event:
     - pull_request
@@ -98,7 +98,7 @@ steps:
     image: nextcloudci/php7.2:php7.2-13
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: mysql
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -116,7 +116,7 @@ services:
     command: [ "--innodb_large_prefix=true", "--innodb_file_format=barracuda", "--innodb_file_per_table=true" ]
 trigger:
   branch:
-    - master
+    - stable18
     - stable*
   event:
     - pull_request
@@ -129,7 +129,7 @@ steps:
     image: nextcloudci/php7.2:php7.2-13
     environment:
       APP_NAME: text
-      CORE_BRANCH: master
+      CORE_BRANCH: stable18
       DB: postgres
     commands:
       - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
@@ -145,7 +145,7 @@ services:
       POSTGRES_PASSWORD: owncloud
 trigger:
   branch:
-    - master
+    - stable18
     - stable*
   event:
     - pull_request
