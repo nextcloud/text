@@ -111,6 +111,9 @@ class SessionService {
 		return $this->sessionMapper->deleteInactive($documentId);
 	}
 
+	/**
+	 * @return bool|Session
+	 */
 	public function getSession($documentId, $sessionId, $token) {
 		if ($this->session !== null) {
 			return $this->session;
@@ -123,10 +126,9 @@ class SessionService {
 		}
 	}
 
-	public function isValidSession($documentId, $sessionId, $token) {
-		try {
-			$session = $this->getSession($documentId, $sessionId, $token);
-		} catch (DoesNotExistException $e) {
+	public function isValidSession($documentId, $sessionId, $token): bool {
+		$session = $this->getSession($documentId, $sessionId, $token);
+		if ($session === false) {
 			return false;
 		}
 		// TODO: move to cache
