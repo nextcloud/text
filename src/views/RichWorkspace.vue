@@ -176,7 +176,9 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor {
-		overflow: visible !important;
+		padding-bottom: 80px;
+		overflow: scroll !important;
+		height: 50vh;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
@@ -198,22 +200,27 @@ export default {
 		margin: 0;
 	}
 
+	#rich-workspace:not(.focus) {
+		max-height: 30vh;
+		position: relative;
+		overflow: hidden;
+	}
+
+	#rich-workspace:not(.focus):not(.icon-loading):after {
+		content: '';
+		position: absolute;
+		z-index: 1;
+		bottom: 0;
+		left: 0;
+		pointer-events: none;
+		background-image: linear-gradient(to bottom, rgba(0,0,0, 0), var(--color-main-background));
+		width: 100%;
+		height: 4em;
+	}
+
 	@media only screen and (max-width: 1024px) {
 		#rich-workspace:not(.focus) {
 			max-height: 30vh;
-			position: relative;
-			overflow: hidden;
-		}
-		#rich-workspace:not(.focus):not(.icon-loading):after {
-			content: '';
-			position: absolute;
-			z-index: 1;
-			bottom: 0;
-			left: 0;
-			pointer-events: none;
-			background-image: linear-gradient(to bottom, rgba(0,0,0, 0), var(--color-main-background));
-			width: 100%;
-			height: 4em;
 		}
 	}
 
