@@ -156,7 +156,14 @@ class ApiService {
 		];
 
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		$file = $this->documentService->getFileForSession($session, $token);
+		try {
+			$file = $this->documentService->getFileForSession($session, $token);
+		} catch (NotFoundException $e) {
+			$this->logger->logException($e);
+			return new DataResponse([
+				'message' => 'File not found'
+			], 404);
+		}
 
 		try {
 			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $force, $manualSave, $token, $this->request->getParam('filePath'));

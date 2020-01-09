@@ -26,11 +26,11 @@
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
-			<p v-if="hasConnectionIssue" class="msg icon-error">
-				{{ t('text', 'Network connection error: Could not connect to the document') }} <a class="button primary" @click="reconnect">{{ t('text', 'Retry') }}</a>
+			<p v-if="hasConnectionIssue" class="msg icon-info">
+				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Retry') }}</a>
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading, 'richEditor': isRichEditor}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading || hasConnectionIssue, 'richEditor': isRichEditor}">
 			<div id="editor">
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
@@ -369,8 +369,8 @@ export default {
 					}
 					if (error === ERROR_TYPE.SOURCE_NOT_FOUND) {
 						this.initialLoading = false
-						OC.Notification.showTemporary('Source not found')
 						this.$emit('close')
+						this.$emit('error')
 					}
 				})
 				.on('stateChange', (state) => {
@@ -508,7 +508,7 @@ export default {
 
 	.msg.icon-error {
 		padding: 12px;
-		border-bottom:1px solid var(--color-error);
+		border-bottom:1px solid var(--color-border);
 		padding-left: 30px;
 		background-position: 8px center;
 	}
