@@ -21,8 +21,9 @@
   -->
 
 <template>
-	<div id="direct-editor">
-		<EditorWrapper :initial-session="initialSession"
+	<div id="direct-editor" :class="{'icon-loading': saving}">
+		<EditorWrapper ref="editor"
+			:initial-session="initialSession"
 			:active="true"
 			mime="text/markdown"
 			:is-direct-editing="true"
@@ -32,11 +33,6 @@
 				<button class="icon-close" @click="close" />
 			</template>
 		</EditorWrapper>
-		<!--<hr>
-		<h3>Debug output</h3>
-		<pre>{{ initialSession }}</pre>
-		<pre>Last request time: {{ log.mtime }}</pre>
-		<pre>{{ messages }}</pre>-->
 	</div>
 </template>
 
@@ -97,6 +93,7 @@ export default {
 			initial: OCP.InitialState.loadState('text', 'file'),
 			messages: log.messages,
 			log: log,
+			saving: false,
 		}
 	},
 	computed: {
@@ -108,8 +105,12 @@ export default {
 		callMobileMessage('loading')
 	},
 	methods: {
-		close() {
-			callMobileMessage('close')
+		async close() {
+			this.saving = true
+			setTimeout(async() => {
+				await this.$refs.editor.close()
+				callMobileMessage('close')
+			}, 0)
 		},
 		share() {
 			callMobileMessage('share')
@@ -125,6 +126,9 @@ export default {
 	#direct-editor {
 		width: 100%;
 		height: 100vh;
+		&::v-deep #editor-wrapper div.ProseMirror {
+			margin-top: 0;
+		}
 	}
 
 	pre {
