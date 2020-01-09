@@ -232,18 +232,23 @@ export default {
 		document.addEventListener('keydown', this._keyUpHandler, true)
 	},
 	beforeDestroy() {
-		document.removeEventListener('keydown', this._keyUpHandler, true)
-		clearInterval(this.saveStatusPolling)
-		if (this.currentSession && this.syncService) {
-			this.syncService.close().then(() => {
-				this.currentSession = null
-				this.syncService = null
-			}).catch((e) => {
-				// Ignore issues closing the session since those might happen due to network issues
-			})
-		}
+		this.close()
 	},
 	methods: {
+		async close() {
+			document.removeEventListener('keydown', this._keyUpHandler, true)
+			clearInterval(this.saveStatusPolling)
+			if (this.currentSession && this.syncService) {
+				try {
+					await this.syncService.close()
+					this.currentSession = null
+					this.syncService = null
+				} catch (e) {
+					// Ignore issues closing the session since those might happen due to network issues
+				}
+			}
+			return true
+		},
 		updateLastSavedStatus() {
 			if (this.document) {
 				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
