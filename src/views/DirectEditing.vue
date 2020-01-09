@@ -32,11 +32,6 @@
 				<button class="icon-close" @click="close" />
 			</template>
 		</EditorWrapper>
-		<!--<hr>
-		<h3>Debug output</h3>
-		<pre>{{ initialSession }}</pre>
-		<pre>Last request time: {{ log.mtime }}</pre>
-		<pre>{{ messages }}</pre>-->
 	</div>
 </template>
 
@@ -125,6 +120,9 @@ export default {
 	#direct-editor {
 		width: 100%;
 		height: 100vh;
+		&::v-deep #editor-wrapper div.ProseMirror {
+			margin-top: 0;
+		}
 	}
 
 	pre {
