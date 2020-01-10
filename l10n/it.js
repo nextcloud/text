@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "Utilizza la versione corrente",
     "Use the saved version" : "Utilizza la versione salvata",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Il documento è stato modificato al di fuori dell'editor. Le modifiche non saranno applicate.",
-    "Network connection error: Could not connect to the document" : "Errore di connessione di rete: impossibile connettersi al documento",
     "Retry" : "Riprova",
     "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
     "Unpushed changes" : "Modifiche non depositate",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "Elenco Cose da fare",
     "Blockquote" : "Citazione",
     "Code block" : "Blocco di codice",
+    "Network connection error: Could not connect to the document" : "Errore di connessione di rete: impossibile connettersi al documento",
     "New text document.md" : "Nuovo documento di testo,md"
 },
 "nplurals=2; plural=(n != 1);");

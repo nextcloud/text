@@ -5,7 +5,6 @@ OC.L10N.register(
     "Text" : "Text",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",
-    "Network connection error: Could not connect to the document" : "Probleme conexiune: Nu m-am putut conecta la document",
     "Retry" : "Reîncearcă",
     "Last save {lastSave}" : "Ultima salvare {lastSave}",
     "Unsaved changes" : "Modificări nesalvate",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "Show image" : "Arată imaginea",
     "Show file" : "Arată fișierul",
     "Edit" : "Editează",
-    "Undo" : "Anulează ultima acțiune"
+    "Undo" : "Anulează ultima acțiune",
+    "Network connection error: Could not connect to the document" : "Probleme conexiune: Nu m-am putut conecta la document"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

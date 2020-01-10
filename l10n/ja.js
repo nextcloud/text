@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use current version" : "現在のバージョンを使用",
     "Use the saved version" : "保存済みのバージョンを使用",
     "The document has been changed outside of the editor. The changes cannot be applied." : "ドキュメントがエディタの外部から変更されました。変更点を適用できません。",
-    "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
     "Retry" : "再試行",
     "Last save {lastSave}" : "最終保存 {lastSave}",
     "Unpushed changes" : "プッシュされていない変更",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Ordered list" : "順序付きリスト",
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
+    "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
     "New text document.md" : "新しいテキストドキュメント.md"
 },
 "nplurals=1; plural=0;");
