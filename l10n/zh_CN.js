@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "使用当前版本",
     "Use the saved version" : "使用保存的版本",
     "The document has been changed outside of the editor. The changes cannot be applied." : "本文档在编辑器外被更改。无法应用更改。",
-    "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
     "Retry" : "重试",
     "Last save {lastSave}" : "最近保存 {lastSave}",
     "Unpushed changes" : "未推送的更改",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "待办事项清单",
     "Blockquote" : "块引用",
     "Code block" : "代码块",
+    "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
     "New text document.md" : "新建文本文档.md"
 },
 "nplurals=1; plural=0;");

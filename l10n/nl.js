@@ -9,7 +9,6 @@ OC.L10N.register(
     "Use current version" : "Gebruik huidige versie",
     "Use the saved version" : "Gebruik opgeslagen versie",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Het document is gewijzigd buiten de editor. Veranderingen kunnen niet worden toegepast.",
-    "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
     "Retry" : "Opnieuw proberen",
     "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
     "Unpushed changes" : "Niet verwerkte veranderingen",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lijst",
     "Blockquote" : "Tekstblok",
     "Code block" : "Code blok",
+    "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
     "New text document.md" : "Nieuw tekstdocument.md"
 },
 "nplurals=2; plural=(n != 1);");

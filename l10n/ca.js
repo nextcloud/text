@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use current version" : "Fes servir la versió actual",
     "Use the saved version" : "Fes servir la versió desada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El document ha estat canviat des de fora d'aquest editor. Els canvis no es poden aplicar.",
-    "Network connection error: Could not connect to the document" : "Error de connexió de xarxa: No s'ha pogut connectar amb el document",
     "Retry" : "Torna a intentar",
     "Last save {lastSave}" : "Darrera modificació {lastSave}",
     "Unpushed changes" : "Canvis sense aplicar",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Ordered list" : "Llista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloc de codi",
+    "Network connection error: Could not connect to the document" : "Error de connexió de xarxa: No s'ha pogut connectar amb el document",
     "New text document.md" : "Nou document de text .md"
 },
 "nplurals=2; plural=(n != 1);");

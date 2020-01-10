@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "Geçerli sürüm kullanılsın",
     "Use the saved version" : "Kaydedilmiş sürüm kullanılsın",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
-    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
     "Retry" : "Yeniden Dene",
     "Last save {lastSave}" : "Son kayıt {lastSave}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
+    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
     "New text document.md" : "Yeni metin belgesi.md"
 },
 "nplurals=2; plural=(n > 1);");

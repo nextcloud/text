@@ -6,7 +6,6 @@
     "Use current version" : "Использовать текущую версию",
     "Use the saved version" : "Использовать сохранённую версию",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ был изменен вне редактора. Изменения не могут быть применены.",
-    "Network connection error: Could not connect to the document" : "Ошибка сетевого соединения: Не удалось подключиться к документу",
     "Retry" : "Попробовать снова",
     "Last save {lastSave}" : "Последнее сохранение {lastSave}",
     "Unpushed changes" : "Нефиксированные изменения",
@@ -37,6 +36,7 @@
     "Ordered list" : "Упорядоченный список",
     "Blockquote" : "Блок цитаты",
     "Code block" : "Блок кода",
+    "Network connection error: Could not connect to the document" : "Ошибка сетевого соединения: Не удалось подключиться к документу",
     "New text document.md" : "Новый текстовый документ.md"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

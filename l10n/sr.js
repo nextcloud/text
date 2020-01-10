@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "Користи тренутну верзију",
     "Use the saved version" : "Користи сачувану верзију",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ је измењен ван уређивача. Измене се не могу применити.",
-    "Network connection error: Could not connect to the document" : "Грешка у мрежној конекцији: Не могу да се повежем са документом",
     "Retry" : "Покушај поново",
     "Last save {lastSave}" : "Последње чување {lastSave}",
     "Unpushed changes" : "Негурнуте измене",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "ToDo листа",
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
+    "Network connection error: Could not connect to the document" : "Грешка у мрежној конекцији: Не могу да се повежем са документом",
     "New text document.md" : "Нови текстуални документ.md"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

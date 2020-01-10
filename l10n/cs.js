@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "Použít stávající verzi",
     "Use the saved version" : "Použít uloženou verzi",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument byl mezitím změněn mimo editor. Změny provedené v editoru proto nelze uplatnit.",
-    "Network connection error: Could not connect to the document" : "Chyba nastavení sítě: nedaří se připojit k dokumentu",
     "Retry" : "Zkusit znovu",
     "Last save {lastSave}" : "Poslední uložení {lastSave}",
     "Unpushed changes" : "Neodeslané změny",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "Seznam úkolů",
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
+    "Network connection error: Could not connect to the document" : "Chyba nastavení sítě: nedaří se připojit k dokumentu",
     "New text document.md" : "Nový textový dokument.md"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
