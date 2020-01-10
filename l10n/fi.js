@@ -6,7 +6,6 @@ OC.L10N.register(
     "📝 Collaborative document editing" : "📝 Yhteistyöhön perustuvaa asiakirjojen muokkausta",
     "Use current version" : "Käytä nykyistä versiota",
     "Use the saved version" : "Käytä tallennettua versiota",
-    "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
     "Retry" : "Yritä uudelleen",
     "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "Unsaved changes" : "Tallentamattomia muutoksia",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Unordered list" : "Järjestämätön lista",
     "Ordered list" : "Järjestetty lista",
     "Code block" : "Koodilohko",
+    "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
     "New text document.md" : "Uusi tekstiasiakirja.md"
 },
 "nplurals=2; plural=(n != 1);");

@@ -6,7 +6,6 @@
     "Use current version" : "Koristi trenutnu verziju",
     "Use the saved version" : "Koristi spremljenu verziju",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument je promijenjen izvan uređivača teksta. Nije moguće primijeniti izmjene.",
-    "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
     "Retry" : "Pokušaj ponovno",
     "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
     "Unpushed changes" : "Neprimijenjene promjene",
@@ -38,6 +37,7 @@
     "Ordered list" : "Razvrstani popis",
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
+    "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
     "New text document.md" : "Novi tekstni dokument.md"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

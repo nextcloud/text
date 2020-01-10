@@ -10,7 +10,6 @@ OC.L10N.register(
     "Use current version" : "Använd nuvarande version",
     "Use the saved version" : "Använd den sparade versionen",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
-    "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
     "Retry" : "Försök igen",
     "Last save {lastSave}" : "Senast sparade {lastSave}",
     "Unpushed changes" : "Inte slutförda ändringar",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "ToDo list" : "Att göra lista",
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
+    "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
     "New text document.md" : "Nytt textdokument.md"
 },
 "nplurals=2; plural=(n != 1);");

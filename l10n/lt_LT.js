@@ -9,7 +9,6 @@ OC.L10N.register(
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
-    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
     "Retry" : "Bandyti dar kartą",
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
+    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
     "New text document.md" : "Naujas tekstinis dokumentas.md"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use current version" : "Uzi nunan version",
     "Use the saved version" : "Uzi la konservitan version",
     "The document has been changed outside of the editor. The changes cannot be applied." : "La dokumento ŝanĝiĝis ekster la redaktilo. La ŝanĝoj ne povas esti konservitaj.",
-    "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
     "Retry" : "Reprovi",
     "Last save {lastSave}" : "Lasta konservado {lastSave}",
     "Unpushed changes" : "Nesenditaj ŝanĝoj",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Ordered list" : "Ordigita listo",
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
+    "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
     "New text document.md" : "Nova tekstdokumento.md"
 },
 "nplurals=2; plural=(n != 1);");
