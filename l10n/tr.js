@@ -10,6 +10,7 @@ OC.L10N.register(
     "Use current version" : "Geçerli sürüm kullanılsın",
     "Use the saved version" : "Kaydedilmiş sürüm kullanılsın",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
+    "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "Retry" : "Yeniden Dene",
     "Last save {lastSave}" : "Son kayıt {lastSave}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",

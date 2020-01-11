@@ -7,6 +7,7 @@
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
+    "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Retry" : "Bandyti dar kartą",
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Unsaved changes" : "Neįrašyti pakeitimai",

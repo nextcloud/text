@@ -1,7 +1,9 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Nextcloud Text",
     "New text document" : "Novi tekstni dokument",
+    "Readme" : "Informacije",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Zajedničko obrađivanje dokumenata",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Zajedničko obrađivanje dokumenata!**\n\n- **📝 Usredotočite se na pisanje:** bez ikakvih ometanja, koristite se formatiranjem koje vam je potrebno.\n- **🙋 Radite zajedno:** dijelite i surađujte s prijateljima i kolegama neovisno o tome imaju li Nextcloud!\n- **💾 Otvoren format:** datoteke se spremaju kao [Markdown](https://en.wikipedia.org/wiki/Markdown) kako biste ih mogli uređivati iz bilo koje aplikacije za uređivanje teksta.\n- **✊ Snažni temelji:** koristimo [🐈 tiptap](https://tiptap.scrumpy.io) temeljen na [🦉 ProseMirror](https://prosemirror.net) – puno im hvala!",
@@ -20,6 +22,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
     "Show image" : "Prikaži sliku",
     "Show file" : "Prikaži datoteku",
+    "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
     "Undo" : "Poništi",
@@ -37,6 +40,7 @@ OC.L10N.register(
     "Heading 6" : "Naslov 6",
     "Unordered list" : "Nerazvrstani popis",
     "Ordered list" : "Razvrstani popis",
+    "ToDo list" : "Popis zadataka",
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
