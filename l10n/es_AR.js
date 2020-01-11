@@ -4,6 +4,8 @@ OC.L10N.register(
     "Text" : "Texto",
     "Retry" : "Reintentar",
     "Edit" : "Editar",
-    "Undo" : "Deshacer"
+    "Undo" : "Deshacer",
+    "Bold" : "Negrita",
+    "Italic" : "Itálico"
 },
 "nplurals=2; plural=(n != 1);");
