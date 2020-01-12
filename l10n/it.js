@@ -10,6 +10,7 @@ OC.L10N.register(
     "Use current version" : "Utilizza la versione corrente",
     "Use the saved version" : "Utilizza la versione salvata",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Il documento è stato modificato al di fuori dell'editor. Le modifiche non saranno applicate.",
+    "File could not be loaded. Please check your internet connection." : "Il file non può essere caricato. Controlla la tua connessione a Internet.",
     "Retry" : "Riprova",
     "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
     "Unpushed changes" : "Modifiche non depositate",
