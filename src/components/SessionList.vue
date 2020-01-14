@@ -154,13 +154,11 @@ export default {
 			height: 36px;
 			margin-right: -8px;
 			border: 2px solid var(--color-main-background);
-			background-color: var(--color-main-background) !important;
 			box-sizing: content-box !important;
 			&.icon-more {
 				width: 32px;
 				height: 32px;
 				opacity: .5;
-				background-color: var(--color-background-dark) !important;
 				cursor: pointer;
 			}
 		}
