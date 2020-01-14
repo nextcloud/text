@@ -140,6 +140,7 @@ export default {
 				height: 32px !important;
 				margin: 6px;
 				border-radius: 50%;
+				filter: none !important;
 			}
 		}
 	}
