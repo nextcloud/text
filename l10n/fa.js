@@ -7,6 +7,9 @@ OC.L10N.register(
     "Add link" : "افزودن لینک",
     "Show image" : "نمایش تصویر",
     "Show file" : "نمایش فایل",
-    "Edit" : "ویرایش"
+    "Edit" : "ویرایش",
+    "Undo" : "برگرداندن",
+    "Bold" : "درشت",
+    "Italic" : "Italic"
 },
 "nplurals=2; plural=(n > 1);");
