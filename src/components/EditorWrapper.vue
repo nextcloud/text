@@ -175,7 +175,7 @@ export default {
 			return this.hasUnpushedChanges || this.hasUnsavedChanges
 		},
 		lastSavedStatusTooltip() {
-			let message = t('text', 'Last save {lastSave}', { lastSave: this.lastSavedString })
+			let message = t('text', 'Last saved {lastSaved}', { lastSaved: this.lastSavedString })
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 			}
