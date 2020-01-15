@@ -320,12 +320,11 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getFileForSession(Session $session, $shareToken) {
-		if ($session->getUserId() !== null) {
+		if ($session->getUserId() !== null && $shareToken === null) {
 			return $this->getFileById($session->getDocumentId(), $session->getUserId());
 		}
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-
 		} catch (ShareNotFound $e) {
 			throw new NotFoundException();
 		}
