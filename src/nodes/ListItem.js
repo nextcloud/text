@@ -23,7 +23,7 @@
 import { ListItem as TiptapListItem } from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { toggleList } from 'tiptap-commands'
-import { findParentNode } from 'prosemirror-utils'
+import { findParentNode, findParentNodeClosestToPos } from 'prosemirror-utils'
 
 const TYPES = {
 	BULLET: 0,
@@ -54,26 +54,28 @@ export default class ListItem extends TiptapListItem {
 					default: TYPES.BULLET,
 				},
 			},
-			draggable: true,
+			draggable: false,
 			content: 'paragraph block*',
 			toDOM: node => {
 				if (node.attrs.type === TYPES.BULLET) {
 					return ['li', 0]
 				}
-				const checkboxAttributes = { type: 'checkbox', class: 'checkbox' }
+				const listAttributes = { class: 'checkbox-item' }
+				const checkboxAttributes = { type: 'checkbox', class: '', 'contenteditable': false }
 				if (node.attrs.done) {
 					checkboxAttributes.checked = true
+					listAttributes.class += ' checked'
 				}
 				return [
 					'li',
+					listAttributes,
 					[
 						'input',
 						checkboxAttributes,
 					],
 					[
 						'label',
-						{ class: 'checkbox-label' },
-						['div', { class: 'checkbox-wrapper' }, 0],
+						0,
 					],
 				]
 			},
@@ -144,22 +146,15 @@ export default class ListItem extends TiptapListItem {
 					handleClick: (view, pos, event) => {
 						const state = view.state
 						const schema = state.schema
-						const selection = state.selection
-						const $from = selection.$from
-						const $to = selection.$to
-						const range = $from.blockRange($to)
 
-						if (!range) {
-							return false
-						}
-
-						const parentList = findParentNode(function(node) {
+						const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+						const position = state.doc.resolve(coordinates.pos)
+						const parentList = findParentNodeClosestToPos(position, function(node) {
 							return node.type === schema.nodes.list_item
-						})(selection)
-
-						const isLabel = event.target.tagName.toLowerCase() === 'label'
-						if (typeof parentList === 'undefined' || parentList.node.attrs.type !== TYPES.CHECKBOX || !isLabel) {
-							return
+						})
+						const isListClicked = event.target.tagName.toLowerCase() === 'li'
+						if (typeof parentList === 'undefined' || parentList.node.attrs.type !== TYPES.CHECKBOX || !isListClicked) {
+							return true
 						}
 
 						const tr = state.tr
