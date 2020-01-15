@@ -12,7 +12,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
     "File could not be loaded. Please check your internet connection." : "Filen kunde inte laddas. Kontrollera din internetanslutning.",
     "Retry" : "Försök igen",
-    "Last save {lastSave}" : "Senast sparade {lastSave}",
     "Unpushed changes" : "Inte slutförda ändringar",
     "Unsaved changes" : "Osparade ändringar",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
+    "Last save {lastSave}" : "Senast sparade {lastSave}",
     "New text document.md" : "Nytt textdokument.md"
 },
 "nplurals=2; plural=(n != 1);");

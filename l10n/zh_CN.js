@@ -12,7 +12,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "本文档在编辑器外被更改。无法应用更改。",
     "File could not be loaded. Please check your internet connection." : "无法加载文件。 请检查您的互联网连接。",
     "Retry" : "重试",
-    "Last save {lastSave}" : "最近保存 {lastSave}",
     "Unpushed changes" : "未推送的更改",
     "Unsaved changes" : "未保存的更改",
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "块引用",
     "Code block" : "代码块",
     "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
+    "Last save {lastSave}" : "最近保存 {lastSave}",
     "New text document.md" : "新建文本文档.md"
 },
 "nplurals=1; plural=0;");

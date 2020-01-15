@@ -9,7 +9,6 @@ OC.L10N.register(
     "Use the saved version" : "Përdor versionin e ruajtur",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumenti është ndryshuar jashtë redaktuesit. Ndryshimet nuk mund të aplikohen.",
     "Retry" : "Riprovoni",
-    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
     "Unpushed changes" : "Ndryshime të pavendosura",
     "Unsaved changes" : "Ndryshime të paruajtura",
     "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
@@ -24,6 +23,7 @@ OC.L10N.register(
     "Redo" : "Ribëj",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
+    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
     "New text document.md" : "Dokument tekst .md i ri"
 },
 "nplurals=2; plural=(n != 1);");

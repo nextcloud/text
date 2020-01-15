@@ -11,7 +11,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
     "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Retry" : "Bandyti dar kartą",
-    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
     "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
+    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "New text document.md" : "Naujas tekstinis dokumentas.md"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

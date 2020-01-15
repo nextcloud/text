@@ -7,7 +7,6 @@ OC.L10N.register(
     "Use current version" : "Käytä nykyistä versiota",
     "Use the saved version" : "Käytä tallennettua versiota",
     "Retry" : "Yritä uudelleen",
-    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "Unsaved changes" : "Tallentamattomia muutoksia",
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkyvät kuka muokkaa asiakirjaa",
     "Edit guest name" : "Muokkaa vieraan nimeä",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Ordered list" : "Järjestetty lista",
     "Code block" : "Koodilohko",
     "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
+    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "New text document.md" : "Uusi tekstiasiakirja.md"
 },
 "nplurals=2; plural=(n != 1);");

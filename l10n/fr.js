@@ -12,7 +12,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Le document a été modifié par un autre programme que l'éditeur. Les changements ne peuvent être appliqués.",
     "File could not be loaded. Please check your internet connection." : "Le fichier n'a pu être chargé. Vérifiez votre connexion Internet.",
     "Retry" : "Réessayer",
-    "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
     "Unpushed changes" : "Modifications non poussées",
     "Unsaved changes" : "Modifications non enregistrées",
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Citation",
     "Code block" : "Bloc de code",
     "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
+    "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
     "New text document.md" : "Nouveau document texte.md"
 },
 "nplurals=2; plural=(n > 1);");

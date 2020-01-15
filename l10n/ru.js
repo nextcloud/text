@@ -9,7 +9,6 @@ OC.L10N.register(
     "Use the saved version" : "Использовать сохранённую версию",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ был изменен вне редактора. Изменения не могут быть применены.",
     "Retry" : "Попробовать снова",
-    "Last save {lastSave}" : "Последнее сохранение {lastSave}",
     "Unpushed changes" : "Нефиксированные изменения",
     "Unsaved changes" : "Несохранённые изменения",
     "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Blockquote" : "Блок цитаты",
     "Code block" : "Блок кода",
     "Network connection error: Could not connect to the document" : "Ошибка сетевого соединения: Не удалось подключиться к документу",
+    "Last save {lastSave}" : "Последнее сохранение {lastSave}",
     "New text document.md" : "Новый текстовый документ.md"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

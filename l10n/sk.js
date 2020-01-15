@@ -11,7 +11,6 @@ OC.L10N.register(
     "Use the saved version" : "Použiť uloženú verziu",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument bol medzitým zmenený mimo editora. Zmeny nie je možné použiť.",
     "Retry" : "Skúsiť znova",
-    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
     "Unpushed changes" : "Neodoslané zmeny",
     "Unsaved changes" : "Neuložené zmeny",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
     "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
+    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
     "New text document.md" : "Nový textový dokument.md"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

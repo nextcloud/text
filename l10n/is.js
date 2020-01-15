@@ -7,7 +7,6 @@ OC.L10N.register(
     "Use current version" : "Nota fyrirliggjandi útgáfu",
     "Use the saved version" : "Nota vistuðu útgáfuna",
     "Retry" : "Reyna aftur",
-    "Last save {lastSave}" : "Síðast vistað {lastSave}",
     "Unsaved changes" : "Óvistaðar breytingar",
     "Edit guest name" : "Breyta nafni gests",
     "Save guest name" : "Vista nafn gests",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Ordered list" : "Raðaður listi",
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
+    "Last save {lastSave}" : "Síðast vistað {lastSave}",
     "New text document.md" : "Nýtt textaskjal.md"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
