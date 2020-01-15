@@ -12,7 +12,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "Retry" : "Yeniden Dene",
-    "Last save {lastSave}" : "Son kayıt {lastSave}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
+    "Last save {lastSave}" : "Son kayıt {lastSave}",
     "New text document.md" : "Yeni metin belgesi.md"
 },
 "nplurals=2; plural=(n > 1);");

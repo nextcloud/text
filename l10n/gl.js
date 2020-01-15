@@ -12,7 +12,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi modificado fora do editor. Non é posíbel aplicar os cambios.",
     "File could not be loaded. Please check your internet connection." : "Non foi posíbel cargar o ficheiro. Comprobe a súa conexión a Internet.",
     "Retry" : "Volver tentar",
-    "Last save {lastSave}" : "Último gardado {lastSave}",
     "Unpushed changes" : "Cambios sen enviar",
     "Unsaved changes" : "Cambios sen gardar",
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Network connection error: Could not connect to the document" : "Produciuse un erro de conexión de rede: non foi posíbel conectar co documento",
+    "Last save {lastSave}" : "Último gardado {lastSave}",
     "New text document.md" : "Novo documento.md de texto"
 },
 "nplurals=2; plural=(n != 1);");

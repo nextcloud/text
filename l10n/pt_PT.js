@@ -9,7 +9,6 @@ OC.L10N.register(
     "Use the saved version" : "Usar a versão guardada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi modificado fora do editor. As modificações não podem ser guardadas.",
     "Retry" : "Repetir",
-    "Last save {lastSave}" : "Última versão guardada {lastSave}",
     "Unpushed changes" : "Modificações não enviadas",
     "Unsaved changes" : "Modificações não guardadas",
     "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
@@ -21,6 +20,7 @@ OC.L10N.register(
     "Show file" : "Mostrar ficheiro",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
+    "Last save {lastSave}" : "Última versão guardada {lastSave}",
     "New text document.md" : "Novo documento de texto.md"
 },
 "nplurals=2; plural=(n != 1);");

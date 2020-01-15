@@ -11,7 +11,6 @@ OC.L10N.register(
     "Use the saved version" : "Koristi spremljenu verziju",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument je promijenjen izvan uređivača teksta. Nije moguće primijeniti izmjene.",
     "Retry" : "Pokušaj ponovno",
-    "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
     "Unpushed changes" : "Neprimijenjene promjene",
     "Unsaved changes" : "Nespremljene promjene",
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
+    "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
     "New text document.md" : "Novi tekstni dokument.md"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

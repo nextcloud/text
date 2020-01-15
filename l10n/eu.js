@@ -11,7 +11,6 @@ OC.L10N.register(
     "Use the saved version" : "Erabili gordetako bertsioa",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu.",
     "Retry" : "Saiatu berriro",
-    "Last save {lastSave}" : "Azken gordetzea {lastSave}",
     "Unpushed changes" : "Bidali gabeko aldaketak",
     "Unsaved changes" : "Gorde gabeko aldaketak",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "Network connection error: Could not connect to the document" : "Sare konexio errorea: Ezin izan da dokumentuarekin konektatu",
+    "Last save {lastSave}" : "Azken gordetzea {lastSave}",
     "New text document.md" : "Testu dokumentu berria.md"
 },
 "nplurals=2; plural=(n != 1);");

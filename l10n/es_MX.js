@@ -11,7 +11,6 @@ OC.L10N.register(
     "Use the saved version" : "Usar la versión guardada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha sido cambiado fuera de el editor. Los cambios no pueden ser aplicados.",
     "Retry" : "Reintentar",
-    "Last save {lastSave}" : "Última actualización {lastSave}",
     "Unpushed changes" : "Cambios no enviados",
     "Unsaved changes" : "Cambios no guardados",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Network connection error: Could not connect to the document" : "Error de conexión de red: No se pudo acceder al documento",
+    "Last save {lastSave}" : "Última actualización {lastSave}",
     "New text document.md" : "Nuevo documento de texto.md"
 },
 "nplurals=2; plural=(n != 1);");

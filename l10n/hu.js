@@ -6,7 +6,6 @@ OC.L10N.register(
     "Use current version" : "Aktuális verzió használata",
     "Use the saved version" : "A mentett verzió használata",
     "Retry" : "Újra",
-    "Last save {lastSave}" : "Utolsó mentés {lastSave}",
     "Unsaved changes" : "Mentetlen változtatások",
     "Enter your name so other users can see who is editing" : "Add meg a neved, hogy mások lássák ki szerkeszti",
     "Edit guest name" : "Vendég név szerkesztése",
@@ -20,6 +19,7 @@ OC.L10N.register(
     "Bold" : "Vastag",
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
+    "Last save {lastSave}" : "Utolsó mentés {lastSave}",
     "New text document.md" : "Új szöveg dokumentum.md"
 },
 "nplurals=2; plural=(n != 1);");

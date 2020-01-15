@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use the saved version" : "Χρήση αποθηκευμένης έκδοσης",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Το έγγραφο έχει αλλάξει εκτός του επεξεργαστή. Οι αλλαγές δεν μπορούν να εφαρμοστούν.",
     "Retry" : "Δοκιμή ξανά",
-    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
     "Unsaved changes" : "Μη αποθηκευμένες αλλαγές",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Ordered list" : "Ταξινομημένη λίστα",
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
+    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
     "New text document.md" : "Νέο έγγραφο κειμένου.md"
 },
 "nplurals=2; plural=(n != 1);");
