@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus }">
+	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme }">
 		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -71,6 +71,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
+			darkTheme: OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
 	},
@@ -82,6 +83,11 @@ export default {
 	watch: {
 		path: function() {
 			this.getFileInfo()
+		},
+		focus: function(newValue) {
+			if (!newValue) {
+				document.querySelector('#editor').scrollTo(0, 0)
+			}
 		},
 	},
 	async mounted() {
@@ -213,9 +219,13 @@ export default {
 		bottom: 0;
 		left: 0;
 		pointer-events: none;
-		background-image: linear-gradient(to bottom, rgba(0,0,0, 0), var(--color-main-background));
+		background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-main-background));
 		width: 100%;
 		height: 4em;
+	}
+
+	#rich-workspace.dark:not(.focus):not(.icon-loading):after {
+		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));
 	}
 
 	@media only screen and (max-width: 1024px) {
