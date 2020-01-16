@@ -25,7 +25,7 @@
 		<EditorWrapper ref="editor"
 			:initial-session="initialSession"
 			:active="true"
-			mime="text/markdown"
+			:mime="initial.mimetype"
 			:is-direct-editing="true"
 			@ready="loaded">
 			<template #header>
