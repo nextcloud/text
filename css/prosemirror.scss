@@ -24,6 +24,47 @@ div.ProseMirror {
 		font-size: 14px;
 	}
 
+	.checkbox-item {
+		display: flex;
+		align-items: start;
+
+		input[type=checkbox] {
+			display: none;
+		}
+		&:before {
+			content: '';
+			display: inline-block;
+			height: 14px;
+			width: 14px;
+			vertical-align: middle;
+			border-radius: 50%;
+			margin: 0 6px 3px 3px;
+			margin-left: 3px;
+			border: 1px solid #878787;
+			content: "";
+			position: relative;
+			width: 44px;
+			height: 44px;
+			display: block;
+			border-radius: 1px;
+			height: 14px;
+			width: 14px;
+			box-shadow: none !important;
+			background-position: center;
+		}
+		&.checked:before {
+			background-image: url('/core/css/../img/actions/checkbox-mark.svg');
+			background-color: var(--color-primary-element);
+		}
+		label {
+			display: block;
+			flex-grow: 1;
+			> *:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+
 	li label.checkbox-label {
 		width: 100%;
 		display: flex;
