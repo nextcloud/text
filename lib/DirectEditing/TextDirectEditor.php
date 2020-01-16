@@ -134,6 +134,7 @@ class TextDirectEditor implements IEditor {
 			$session = $this->apiService->create($token->getFile()->getId());
 			$this->initialStateService->provideInitialState('text', 'file', [
 				'fileId' => $token->getFile()->getId(),
+				'mimetype' => $token->getFile()->getMimeType(),
 				'content' => $token->getFile()->getContent(),
 				'session' => \json_encode($session->getData())
 			]);
