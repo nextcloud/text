@@ -12,6 +12,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument byl mezitím změněn mimo editor. Změny provedené v editoru proto nelze uplatnit.",
     "File could not be loaded. Please check your internet connection." : "Soubor se nepodařilo načíst. Zkontrolujte své připojení k Internetu.",
     "Retry" : "Zkusit znovu",
+    "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
     "Unpushed changes" : "Neodeslané změny",
     "Unsaved changes" : "Neuložené změny",
     "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
