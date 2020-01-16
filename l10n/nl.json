@@ -10,6 +10,7 @@
     "The document has been changed outside of the editor. The changes cannot be applied." : "Het document is gewijzigd buiten de editor. Veranderingen kunnen niet worden toegepast.",
     "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
     "Retry" : "Opnieuw proberen",
+    "Last saved {lastSaved}" : "Laatste opgeslagen {lastSaved}",
     "Unpushed changes" : "Niet verwerkte veranderingen",
     "Unsaved changes" : "Niet opgeslagen veranderingen",
     "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
