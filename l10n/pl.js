@@ -12,6 +12,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument został zmieniony poza edytorem. Nie można zastosować zmian.",
     "File could not be loaded. Please check your internet connection." : "Nie można załadować pliku. Sprawdź połączenie z internetem.",
     "Retry" : "Powtórz",
+    "Last saved {lastSaved}" : "Ostatnio zapisane {lastSaved}",
     "Unpushed changes" : "Niewysłane zmiany",
     "Unsaved changes" : "Niezapisane zmiany",
     "Enter your name so other users can see who is editing" : "Wprowadź swoje imię, aby inni użytkownicy mogli zobaczyć, kto edytuje",

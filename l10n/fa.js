@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Text" : "متن",
+    "Retry" : "تلاش دوباره",
     "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "Add link" : "افزودن لینک",

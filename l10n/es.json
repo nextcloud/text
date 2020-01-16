@@ -10,6 +10,7 @@
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha cambiado fuera del editor. Los cambios no se pueden aplicar.",
     "File could not be loaded. Please check your internet connection." : "El archivo no se pudo cargar. Por favor, compruebe su conexión a internet.",
     "Retry" : "Reintentar",
+    "Last saved {lastSaved}" : "Guardado por última vez: {lastSave}",
     "Unpushed changes" : "Cambios sin subir",
     "Unsaved changes" : "Cambios sin guardar",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",

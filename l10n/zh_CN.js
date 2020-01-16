@@ -12,6 +12,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "本文档在编辑器外被更改。无法应用更改。",
     "File could not be loaded. Please check your internet connection." : "无法加载文件。 请检查您的互联网连接。",
     "Retry" : "重试",
+    "Last saved {lastSaved}" : "最近保存 {lastSave}",
     "Unpushed changes" : "未推送的更改",
     "Unsaved changes" : "未保存的更改",
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
