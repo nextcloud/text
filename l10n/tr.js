@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "Nextcloud Text" : "Nextcloud Text",
+    "Nextcloud Text" : "Nextcloud Metin",
     "New text document" : "Yeni metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
@@ -12,6 +12,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "Retry" : "Yeniden Dene",
+    "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
