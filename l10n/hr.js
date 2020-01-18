@@ -10,6 +10,7 @@ OC.L10N.register(
     "Use current version" : "Koristi trenutnu verziju",
     "Use the saved version" : "Koristi spremljenu verziju",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument je promijenjen izvan uređivača teksta. Nije moguće primijeniti izmjene.",
+    "File could not be loaded. Please check your internet connection." : "Datoteka nije učitana. Provjerite internetsku vezu.",
     "Retry" : "Pokušaj ponovno",
     "Unpushed changes" : "Neprimijenjene promjene",
     "Unsaved changes" : "Nespremljene promjene",
