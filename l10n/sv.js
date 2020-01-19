@@ -14,7 +14,7 @@ OC.L10N.register(
     "Retry" : "Försök igen",
     "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
     "Unpushed changes" : "Inte slutförda ändringar",
-    "Unsaved changes" : "Osparade ändringar",
+    "Unsaved changes" : "Ej sparade ändringar",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Edit guest name" : "Ändra gästnamn",
     "Save guest name" : "Spara gästnamn",
