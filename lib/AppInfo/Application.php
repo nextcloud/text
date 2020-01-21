@@ -77,7 +77,7 @@ class Application extends App {
 				$this->initialStateService->provideInitialState(
 					self::APP_NAME,
 					'workspace_available',
-					$this->config->getAppValue(self::APP_NAME, 'workspace_available', true)
+					$this->config->getAppValue(self::APP_NAME, 'workspace_available', '1') === '1'
 				);
 				$this->initialStateService->provideInitialState(
 					self::APP_NAME,
