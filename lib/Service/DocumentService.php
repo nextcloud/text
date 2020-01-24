@@ -228,7 +228,20 @@ class DocumentService {
 	}
 
 	public function getSteps($documentId, $lastVersion) {
-		return $this->stepMapper->find($documentId, $lastVersion);
+		$steps = $this->stepMapper->find($documentId, $lastVersion);
+		//return $steps;
+		$unique_array = [];
+		foreach($steps as $step) {
+			$version = $step->getVersion();
+			if (!array_key_exists($version, $unique_array)) {
+				$unique_array[(string)$version] = $step;
+			} else {
+				// found duplicate step
+				// FIXME: verify that this version is the correct one
+				//$this->stepMapper->delete($step);
+			}
+		}
+		return array_values($unique_array);
 	}
 
 	/**
