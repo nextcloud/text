@@ -20,7 +20,7 @@
   -
   -->
 <template>
-	<div id="files-setting-showhidden">
+	<div id="files-setting-richworkspace">
 		<input id="showRichWorkspacesToggle"
 			v-model="showWorkspace"
 			class="checkbox"
