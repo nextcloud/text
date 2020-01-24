@@ -193,7 +193,7 @@ export default {
 	}
 
 	#rich-workspace::v-deep .menubar {
-		z-index: 90;
+		z-index: 50;
 		/* Slightly reduce vertical space */
 		margin-bottom: -10px;
 	}
