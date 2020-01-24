@@ -75,7 +75,9 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Blockquote(),
 			new CodeBlock(),
 			new ListItem(),
-			new Link(),
+			new Link({
+				openOnClick: true
+			}),
 			new Image(),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
