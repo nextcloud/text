@@ -122,10 +122,12 @@ export default {
 				this.file = data.file
 				this.editing = true
 				this.loaded = true
+				this.creating = false
 			}).catch(() => {
 				this.file = null
 				this.loaded = true
 				this.ready = true
+				this.creating = false
 			})
 		},
 		createNew() {
@@ -136,7 +138,6 @@ export default {
 			window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
 				this.getFileInfo()
 				this.autofocus = true
-				this.creating = false
 			})
 		},
 	},
