@@ -44,7 +44,7 @@ class TextDocumentCreator extends ACreateEmpty {
 	}
 
 	public function getName(): string {
-		return $this->l10n->t('New text document');
+		return $this->l10n->t('text document');
 	}
 
 	public function getExtension(): string {
