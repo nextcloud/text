@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Nytt textdokument",
     "Readme" : "Readme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "Gemensam dokumentredigering",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "Visa fil",
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
+    "New text document" : "Nytt textdokument",
     "Edit" : "Redigera",
     "Undo" : "Ångra",
     "Redo" : "Upprepa",

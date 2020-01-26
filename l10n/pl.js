@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Nowy dokument tekstowy",
     "Readme" : "Przeczytaj",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Współpraca przy edycji dokumentów",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "Pokaż plik",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
+    "New text document" : "Nowy dokument tekstowy",
     "Edit" : "Edytuj",
     "Undo" : "Cofnij",
     "Redo" : "Powtórzenie",
