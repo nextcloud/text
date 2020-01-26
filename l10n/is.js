@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nýtt textaskjal",
     "Text" : "Texti",
     "📝 Collaborative document editing" : "📝 Samstarfsforrit til vinnslu skjala",
     "Use current version" : "Nota fyrirliggjandi útgáfu",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "Add link" : "Bæta við tengli",
     "Show image" : "Birta mynd",
     "Show file" : "Sýna skrá",
+    "New text document" : "Nýtt textaskjal",
     "Edit" : "Breyta",
     "Undo" : "Afturkalla",
     "Redo" : "Endurtaka",

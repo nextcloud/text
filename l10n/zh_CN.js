@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud 文本",
-    "New text document" : "新建文本文档",
     "Readme" : "自述文件",
     "Text" : "文本 ",
     "📝 Collaborative document editing" : "文档协作编辑",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "显示文件",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
+    "New text document" : "新建文本文档",
     "Edit" : "编辑",
     "Undo" : "撤销",
     "Redo" : "重做",

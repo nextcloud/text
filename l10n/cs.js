@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Nový textový dokument",
     "Readme" : "Čtimne",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Upravování dokumentů vícero uživateli naráz",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "Zobrazit soubor",
     "Show rich workspaces" : "Zobrazit rich workspaces",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
+    "New text document" : "Nový textový dokument",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
     "Redo" : "Zopakovat",

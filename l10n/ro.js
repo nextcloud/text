@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nou document text",
     "Text" : "Text",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",
@@ -11,6 +10,7 @@ OC.L10N.register(
     "Add link" : "Adaugă link",
     "Show image" : "Arată imaginea",
     "Show file" : "Arată fișierul",
+    "New text document" : "Nou document text",
     "Edit" : "Editează",
     "Undo" : "Anulează ultima acțiune",
     "Network connection error: Could not connect to the document" : "Probleme conexiune: Nu m-am putut conecta la document",

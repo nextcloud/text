@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Uusi tekstiasiakirja",
     "Text" : "Teksti",
     "📝 Collaborative document editing" : "📝 Yhteistyöhön perustuvaa asiakirjojen muokkausta",
     "Use current version" : "Käytä nykyistä versiota",
@@ -16,6 +15,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "Show image" : "Näytä kuva",
     "Show file" : "Näytä tiedosto",
+    "New text document" : "Uusi tekstiasiakirja",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",

@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Testo di Nextcloud",
-    "New text document" : "Nuovo documento di testo",
     "Readme" : "Leggimi",
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "Mostra file",
     "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
+    "New text document" : "Nuovo documento di testo",
     "Edit" : "Modifica",
     "Undo" : "Annulla",
     "Redo" : "Rifai",
