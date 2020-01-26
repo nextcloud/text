@@ -1,6 +1,5 @@
 { "translations": {
     "Nextcloud Text" : "Nextcloud Metin",
-    "New text document" : "Yeni metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
     "📝 Collaborative document editing" : "📝 İşbirlikli belge düzenleme",
@@ -23,6 +22,7 @@
     "Show file" : "Dosyayı görüntüle",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
+    "New text document" : "Yeni metin belgesi",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",

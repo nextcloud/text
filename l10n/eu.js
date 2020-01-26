@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Testua",
-    "New text document" : "Testu dokumentu berria",
     "Readme" : "IrakurNazazu",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "Elkarlaneko dokumentuen edizioa",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Show file" : "Bistaratu fitxategia",
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
+    "New text document" : "Testu dokumentu berria",
     "Edit" : "Editatu",
     "Undo" : "Desegin",
     "Redo" : "Berregin",

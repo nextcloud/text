@@ -1,5 +1,4 @@
 { "translations": {
-    "New text document" : "Nou document de text",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Edició col·laborativa de documents",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Edició col·laborativa de documents!**\n\n- **📝 Escriptura focalitzada:** Sense distraccions, només amb les eines de formatació que necessiteu.\n- **🙋 Treballar plegats:** Compartiu i col·laboreu amb amics i col·legues, no importa que emprin Nextcloud o no!\n- **💾 Format obert:** Els fitxers es desen com a [Markdown](https://ca.wikipedia.org/wiki/Markdown), així que sempre podreu editar-los emprant qualsevol editor de text.\n- **✊ Fonaments sòlids:** Emprem [🐈 tiptap](https://tiptap.scrumpy.io) que es basa en [🦉 ProseMirror](https://prosemirror.net) – moltes gràcies per ells!",
@@ -18,6 +17,7 @@
     "Show image" : "Mostra la imatge",
     "Show file" : "Mostra el fitxer",
     "Add notes, lists or links …" : "Afegir anotacions, llistes o enllaços...",
+    "New text document" : "Nou document de text",
     "Edit" : "Edita",
     "Undo" : "Desfés",
     "Redo" : "Refer",
