@@ -103,6 +103,8 @@ export default {
 	},
 	beforeMount() {
 		callMobileMessage('loading')
+	},
+	mounted() {
 		document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
 	},
 	methods: {
@@ -124,9 +126,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	body {
+		position: fixed;
+	}
+
 	#direct-editor {
 		width: 100%;
-		height: 100vh;
+		height: 100%;
+		position: fixed;
+		overflow: hidden;
+
+		&::v-deep #editor-container {
+			height: 100%;
+			top: 0;
+		}
 		&::v-deep #editor-wrapper div.ProseMirror {
 			margin-top: 0;
 		}
