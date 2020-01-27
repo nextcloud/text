@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Κειμενογράφος Nextcloud",
+    "text document" : "Έγγραφο κειμένου",
     "Readme" : "Γενικές πληροφορίες",
     "Text" : "Κείμενο",
     "📝 Collaborative document editing" : "📝 Συνεργατική επεξεργασία εγγράφων",
