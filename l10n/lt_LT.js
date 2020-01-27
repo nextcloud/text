@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud tekstas",
+    "text document" : "tekstinis dokumentas",
     "Text" : "Tekstas",
     "📝 Collaborative document editing" : "📝 Dokumentų taisymas bendradarbiaujant",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Dokumentų taisymas bendradarbiaujant!**\n\n- **📝 Rašymas susitelkus:** Jokio blaškymosi. Tik tas formatavimas, kurio jums reikia.\n- **🙋 Dirbkite kartu:** Bendrinkite ir bendradarbiaukite su draugais ir kolegomis, nepriklausomai nuo to, ar jie naudoja Nextcloud, ar ne!\n- **💾 Atvirasis formatas:** Failai yra įrašomi kaip [Markdown](https://en.wikipedia.org/wiki/Markdown), taigi, galite juos taisyti naudodami bet kurią kitą tekstų programėlę.\n- **✊ Stiprus pagrindas:** Mes naudojame [🐈 tiptap](https://tiptap.scrumpy.io), kuris yra pagrįstas [🦉 ProseMirror](https://prosemirror.net) – didelis jiems ačiū!",
@@ -10,6 +11,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
     "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Retry" : "Bandyti dar kartą",
+    "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
