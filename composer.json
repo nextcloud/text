@@ -13,5 +13,8 @@
             "email": "jus@bitgrid.net"
         }
     ],
-    "require": {}
+    "require": {},
+    "scripts": {
+      "lint": "find . -name \\*.php -not -path './vendor/*' -exec php -l \"{}\" \\;"
+    }
 }

@@ -22,32 +22,6 @@ trigger:
     - push
 ---
 kind: pipeline
-name: syntax
-steps:
-  - name: syntax-php7.2
-    image: nextcloudci/php7.2:php7.2-9
-    commands:
-      - composer install
-      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
-  - name: syntax-php7.3
-    image: nextcloudci/php7.3:php7.3-2
-    commands:
-      - composer install
-      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
-  - name: syntax-php7.4
-    image: nextcloudci/php7.4:2
-    commands:
-      - composer install
-      - ./vendor/bin/parallel-lint --exclude ./vendor/ .
-trigger:
-  branch:
-    - master
-    - stable*
-  event:
-    - pull_request
-    - push
----
-kind: pipeline
 name: php-sqlite
 steps:
   - name: php7.2
