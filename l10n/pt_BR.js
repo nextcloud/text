@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Texto",
+    "text document" : "documento de texto",
     "Readme" : "Leiame",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edição colaborativa de documentos",
