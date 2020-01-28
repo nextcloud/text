@@ -32,7 +32,7 @@
 						:class="getIconClasses(isActive, icon)"
 						@click="clickIcon(commands, icon)" />
 					<template v-else>
-						<div v-show="$index < iconCount"
+						<div v-show="$index < iconCount || !icon.class"
 							:key="icon.label"
 							v-click-outside="() => hideChildMenu(icon)"
 							class="submenu">
@@ -53,14 +53,14 @@
 							@click="clickIcon(commands, icon)">
 							{{ icon.label }}
 						</ActionButton>
-						<template v-else-if="!icon.class && isHiddenInMenu($index)">
+						<!--<template v-else-if="!icon.class && isHiddenInMenu($index)">
 							<ActionButton v-for="childIcon in icon.children"
 								:key="childIcon.class"
 								:icon="childIcon.class"
 								@click="clickIcon(commands, childIcon)">
 								{{ childIcon.label }}
 							</ActionButton>
-						</template>
+						</template>-->
 					</template>
 				</Actions>
 			</div>

@@ -2,9 +2,9 @@
   position: absolute;
 }
 
-.ProseMirror-hideselection *::selection { background: transparent; }
-.ProseMirror-hideselection *::-moz-selection { background: transparent; }
-.ProseMirror-hideselection { caret-color: transparent; }
+.ProseMirror-hideselection *::selection { background: transparent; color: var(--color-main-text); }
+.ProseMirror-hideselection *::-moz-selection { background: transparent; color: var(--color-main-text); }
+.ProseMirror-hideselection { caret-color: transparent; color: var(--color-main-text); }
 
 .ProseMirror-selectednode {
   outline: 2px solid #8cf;

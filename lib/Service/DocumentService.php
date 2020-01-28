@@ -148,9 +148,9 @@ class DocumentService {
 		}
 
 		try {
-			$documentBaseFile = $this->appData->getFolder('documents')->getFile($file->getFileInfo()->getId());
+			$documentBaseFile = $this->appData->getFolder('documents')->getFile((string)$file->getFileInfo()->getId());
 		} catch (NotFoundException $e) {
-			$documentBaseFile = $this->appData->getFolder('documents')->newFile($file->getFileInfo()->getId());
+			$documentBaseFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
 		}
 		$documentBaseFile->putContent($file->fopen('r'));
 
@@ -302,7 +302,7 @@ class DocumentService {
 				$this->documentMapper->delete($document);
 
 				try {
-					$this->appData->getFolder('documents')->getFile($documentId)->delete();
+					$this->appData->getFolder('documents')->getFile((string)$documentId)->delete();
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}
