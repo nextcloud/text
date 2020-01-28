@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Metin",
+    "text document" : "metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
     "📝 Collaborative document editing" : "📝 İşbirlikli belge düzenleme",
