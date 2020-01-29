@@ -343,7 +343,14 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getFileById($fileId, $userId = null): Node {
-		$files = $this->rootFolder->getUserFolder($this->userId ?? $userId)->getById($fileId);
+		try {
+			$userFolder = $this->rootFolder->getUserFolder($this->userId ?? $userId);
+		} catch (\OC\User\NoUserException $e) {
+			// It is a bit hacky to depend on internal exceptions here. But it is the best we can do for now
+			throw new NotFoundException();
+		}
+
+		$files = $userFolder->getById($fileId);
 		if (count($files) === 0) {
 			throw new NotFoundException();
 		}
