@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Некстклауд Текст",
+    "text document" : "текстуални документ",
     "Readme" : "Прочитај ме",
     "Text" : "Текст",
     "📝 Collaborative document editing" : "📝 Заједничко уређивање докумената",
@@ -9,7 +10,9 @@ OC.L10N.register(
     "Use current version" : "Користи тренутну верзију",
     "Use the saved version" : "Користи сачувану верзију",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ је измењен ван уређивача. Измене се не могу применити.",
+    "File could not be loaded. Please check your internet connection." : "Фајл не може да се учита. Проверите интернет конекцију.",
     "Retry" : "Покушај поново",
+    "Last saved {lastSaved}" : "Последње чување {lastSaved}",
     "Unpushed changes" : "Негурнуте измене",
     "Unsaved changes" : "Несачуване измене",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
