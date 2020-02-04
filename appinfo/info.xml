@@ -29,4 +29,7 @@
 	<background-jobs>
 		<job>OCA\Text\Cron\Cleanup</job>
 	</background-jobs>
+	<commands>
+		<command>OCA\Text\Command\ResetDocument</command>
+	</commands>
 </info>
