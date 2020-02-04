@@ -32,6 +32,9 @@
 	<background-jobs>
 		<job>OCA\Text\Cron\Cleanup</job>
 	</background-jobs>
+	<commands>
+		<command>OCA\Text\Command\ResetDocument</command>
+	</commands>
 	<sabre>
 		<plugins>
 			<plugin>OCA\Text\DAV\WorkspacePlugin</plugin>

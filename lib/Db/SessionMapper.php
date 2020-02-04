@@ -101,4 +101,12 @@ class SessionMapper extends QBMapper {
 		return $qb->execute();
 	}
 
+	public function deleteByDocumentId($documentId) {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
+		return $qb->execute();
+	}
+
 }

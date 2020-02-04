@@ -189,42 +189,59 @@ class DocumentService {
 	 * @throws VersionMismatchException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
-		if (!$this->cache->get('document-push-lock-' . $documentId)) {
+		$document = null;
+		$oldVersion = null;
+
+		if ($this->cache->get('document-push-lock-' . $documentId)) {
 			throw new VersionMismatchException('Version does not match');
 		}
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 
-		$document = $this->documentMapper->find($documentId);
-
-		if ($version !== $document->getCurrentVersion()) {
-			throw new VersionMismatchException('Version does not match');
-		}
-		$stepsJson = json_encode($steps);
-		if (!is_array($steps) || $stepsJson === null) {
-			throw new InvalidArgumentException('Failed to encode steps');
-		}
-		$validStepTypes = ['addMark', 'removeMark', 'replace', 'replaceAround'];
-		foreach ($steps as $step) {
-			if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
-				throw new InvalidArgumentException('Invalid step data');
+		try {
+			$document = $this->documentMapper->find($documentId);
+			if ($version !== $document->getCurrentVersion()) {
+				throw new VersionMismatchException('Version does not match');
 			}
+			$stepsJson = json_encode($steps);
+			if (!is_array($steps) || $stepsJson === null) {
+				throw new InvalidArgumentException('Failed to encode steps');
+			}
+			$validStepTypes = ['addMark', 'removeMark', 'replace', 'replaceAround'];
+			foreach ($steps as $step) {
+				if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
+					throw new InvalidArgumentException('Invalid step data');
+				}
+			}
+			$oldVersion = $document->getCurrentVersion();
+			$newVersion = $oldVersion + count($steps);
+			$this->cache->set('document-version-' . $document->getId(), $newVersion);
+			$document->setCurrentVersion($newVersion);
+			$this->documentMapper->update($document);
+			$step = new Step();
+			$step->setData($stepsJson);
+			$step->setSessionId($sessionId);
+			$step->setDocumentId($documentId);
+			$step->setVersion($version + 1);
+			$this->stepMapper->insert($step);
+			// TODO restore old version for document if adding steps has failed
+			// TODO write steps to cache for quicker reading
+			$this->cache->remove('document-push-lock-' . $documentId);
+			return $steps;
+		} catch (DoesNotExistException $e) {
+			$this->cache->remove('document-push-lock-' . $documentId);
+			throw $e;
+		} catch (\Throwable $e) {
+			if ($document !== null && $oldVersion !== null) {
+				$this->logger->error('This should never happen. An error occured when storing the version, trying to recover the last stable one');
+				$this->logger->logException($e);
+				$document->setCurrentVersion($oldVersion);
+				$this->documentMapper->update($document);
+				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
+				$this->stepMapper->deleteAfterVersion($documentId, $oldVersion);
+			}
+			$this->cache->remove('document-push-lock-' . $documentId);
+			throw $e;
 		}
-		$newVersion = $document->getCurrentVersion() + count($steps);
-		$this->cache->set('document-version-'.$document->getId(), $newVersion);
-		$document->setCurrentVersion($newVersion);
-		$this->documentMapper->update($document);
-		// FIXME: DEBUG
-		// there might be a race condition here where the version is updated w
-		$step = new Step();
-		$step->setData($stepsJson);
-		$step->setSessionId($sessionId);
-		$step->setDocumentId($documentId);
-		$step->setVersion($version+1);
-		$this->stepMapper->insert($step);
-		// TODO restore old version for document if adding steps has failed
-		// TODO write steps to cache for quicker reading
-		$this->cache->remove('document-push-lock-' . $documentId);
-		return $steps;
 	}
 
 	public function getSteps($documentId, $lastVersion) {
