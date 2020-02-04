@@ -154,7 +154,7 @@ export default class ListItem extends TiptapListItem {
 						})
 						const isListClicked = event.target.tagName.toLowerCase() === 'li'
 						if (typeof parentList === 'undefined' || parentList.node.attrs.type !== TYPES.CHECKBOX || !isListClicked) {
-							return true
+							return
 						}
 
 						const tr = state.tr
