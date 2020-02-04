@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use \InvalidArgumentException;
+use OCP\Lock\ILockingProvider;
 use function json_encode;
 use OC\Files\Node\File;
 use OCA\Text\Db\Document;
@@ -93,8 +94,12 @@ class DocumentService {
 	 * @var IAppData
 	 */
 	private $appData;
+	/**
+	 * @var ILockingProvider
+	 */
+	private $lockingProvider;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, ILockingProvider $lockingProvider) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->userId = $userId;
@@ -103,6 +108,7 @@ class DocumentService {
 		$this->cache = $cacheFactory->createDistributed('text');
 		$this->logger = $logger;
 		$this->shareManager = $shareManager;
+		$this->lockingProvider = $lockingProvider;
 		try {
 			$this->appData->getFolder('documents');
 		} catch (NotFoundException $e) {
@@ -179,10 +185,11 @@ class DocumentService {
 		$document = null;
 		$oldVersion = null;
 
-		if ($this->cache->get('document-push-lock-' . $documentId)) {
+		try {
+			$this->lockingProvider->acquireLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
+		} catch (LockedException $e) {
 			throw new VersionMismatchException('Version does not match');
 		}
-		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 
 		try {
 			$document = $this->documentMapper->find($documentId);
@@ -210,23 +217,21 @@ class DocumentService {
 			$step->setDocumentId($documentId);
 			$step->setVersion($version + 1);
 			$this->stepMapper->insert($step);
-			// TODO restore old version for document if adding steps has failed
 			// TODO write steps to cache for quicker reading
-			$this->cache->remove('document-push-lock-' . $documentId);
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			return $steps;
 		} catch (DoesNotExistException $e) {
-			$this->cache->remove('document-push-lock-' . $documentId);
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		} catch (\Throwable $e) {
 			if ($document !== null && $oldVersion !== null) {
-				$this->logger->error('This should never happen. An error occured when storing the version, trying to recover the last stable one');
-				$this->logger->logException($e);
+				$this->logger->logException($e, ['message' => 'This should never happen. An error occured when storing the version, trying to recover the last stable one']);
 				$document->setCurrentVersion($oldVersion);
 				$this->documentMapper->update($document);
 				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
 				$this->stepMapper->deleteAfterVersion($documentId, $oldVersion);
 			}
-			$this->cache->remove('document-push-lock-' . $documentId);
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		}
 	}
