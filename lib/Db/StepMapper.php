@@ -47,6 +47,7 @@ class StepMapper extends QBMapper {
 		$qb
 			->setMaxResults(100)
 			->orderBy('version')
+			->orderBy('id')
 			->execute();
 
 		return $this->findEntities($qb);
@@ -68,4 +69,14 @@ class StepMapper extends QBMapper {
 			->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($version)))
 			->execute();
 	}
+
+	public function deleteAfterVersion($documentId, $version): int {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		return $qb->delete($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($version)))
+			->execute();
+	}
+
 }
