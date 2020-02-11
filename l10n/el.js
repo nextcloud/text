@@ -13,6 +13,7 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Το αρχείο δεν μπορεί να φορτωθεί. Παρακαλώ ελέξτε την σύνδεσή σας.",
     "Retry" : "Δοκιμή ξανά",
     "Last saved {lastSaved}" : "Τελευταία αποθήκευση {lastSave}",
+    "Unpushed changes" : "Παλιές ανενεργές αλλαγές",
     "Unsaved changes" : "Μη αποθηκευμένες αλλαγές",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
