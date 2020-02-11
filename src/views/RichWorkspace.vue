@@ -71,7 +71,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
-			darkTheme: OCA.Accessibility.theme === 'dark',
+			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
 	},
