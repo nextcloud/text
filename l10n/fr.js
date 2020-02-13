@@ -41,6 +41,7 @@ OC.L10N.register(
     "Heading 6" : "Titre 6",
     "Unordered list" : "Liste non triée",
     "Ordered list" : "Liste triée",
+    "ToDo list" : "Liste des tâches",
     "Blockquote" : "Citation",
     "Code block" : "Bloc de code",
     "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
