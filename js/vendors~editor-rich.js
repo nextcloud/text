@@ -109,4 +109,4 @@ t.default=n.a},,,,,,,,,,,,,,,,function(A,t){A.exports=e(395)},function(A,t){A.ex
  *
  */
 t.default=n.a}})},496:function(A,t){function e(A){return"function"==typeof A.value||(console.warn("[Vue-click-outside:] provided expression",A.expression,"is not a function."),!1)}function n(A){return void 0!==A.componentInstance&&A.componentInstance.$isServer}A.exports={bind:function(A,t,i){function o(t){if(i.context){var e=t.path||t.composedPath&&t.composedPath();e&&e.length>0&&e.unshift(t.target),A.contains(t.target)||function(A,t){if(!A||!t)return!1;for(var e=0,n=t.length;e<n;e++)try{if(A.contains(t[e]))return!0;if(t[e].contains(A))return!1}catch(A){return!1}return!1}(i.context.popupItem,e)||A.__vueClickOutside__.callback(t)}}e(t)&&(A.__vueClickOutside__={handler:o,callback:t.value},!n(i)&&document.addEventListener("click",o))},update:function(A,t){e(t)&&(A.__vueClickOutside__.callback=t.value)},unbind:function(A,t,e){!n(e)&&document.removeEventListener("click",A.__vueClickOutside__.handler),delete A.__vueClickOutside__}}}}]);
-//# sourceMappingURL=vendors~editor-rich.js.map?v=6f6acb00211a9d0ed6b1
+//# sourceMappingURL=vendors~editor-rich.js.map?v=2a6c08c66502f6981188

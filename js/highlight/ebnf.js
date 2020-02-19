@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[51],{235:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-_]*([\s-_]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/[.;]/,contains:[a,{className:"meta",begin:/\?.*\?/},{className:"string",variants:[n.APOS_STRING_MODE,n.QUOTE_STRING_MODE,{begin:"`",end:"`"}]}]}]}}}}]);
-//# sourceMappingURL=ebnf.js.map?v=8894fd561c2d88624c8e
+//# sourceMappingURL=ebnf.js.map?v=61b1b7b9df2d95a320b9
