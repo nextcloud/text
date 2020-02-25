@@ -22,6 +22,7 @@
 
 <template>
 	<EditorMenuBubble v-slot="{ commands, isActive, getMarkAttrs, menu }"
+		:is-active-callback="({ isActive }) => isActive.link()"
 		class="menububble"
 		:editor="editor"
 		@hide="hideLinkMenu">
@@ -37,12 +38,13 @@
 			</form>
 
 			<template v-else>
+				<a :href="getMarkAttrs('link').href" target="_blank" class="icon-external">{{ getMarkAttrs('link').href }}</a>
 				<button
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
-					<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
-					<span class="menububble__buttontext">{{ t('text', 'Add link') }}</span>
+					<span v-tooltip="isActive.link() ? t('text', 'Update Link') : t('text', 'Add Link')" class="icon-link" />
+					<span class="menububble__buttontext">{{ isActive.link() ? t('text', 'Update Link') : t('text', 'Add Link') }}</span>
 				</button>
 			</template>
 		</div>
@@ -147,6 +149,17 @@ export default {
 			border: none;
 			background: transparent;
 			min-width: 150px;
+		}
+
+		.icon-external {
+			max-width: 50vw;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			display: block;
+			white-space: nowrap;
+			padding: 5px 20px 5px 5px;
+			background-position: right;
+			margin-right: 5px;
 		}
 	}
 </style>
