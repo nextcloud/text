@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
+    "text document" : "textový dokument",
     "Readme" : "Čítajma",
     "Text" : "Text",
     "📝 Collaborative document editing" : "Spoločná úprava dokumentov",
@@ -9,7 +10,9 @@ OC.L10N.register(
     "Use current version" : "Použiť aktuálnu verziu",
     "Use the saved version" : "Použiť uloženú verziu",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument bol medzitým zmenený mimo editora. Zmeny nie je možné použiť.",
+    "File could not be loaded. Please check your internet connection." : "Súbor sa nepodarilo nahrať. Skontrolujte pripojenie na internet.",
     "Retry" : "Skúsiť znova",
+    "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
     "Unpushed changes" : "Neodoslané zmeny",
     "Unsaved changes" : "Neuložené zmeny",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
