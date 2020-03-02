@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use \InvalidArgumentException;
+use OCP\Lock\ILockingProvider;
 use function json_encode;
 use OC\Files\Node\File;
 use OCA\Text\Db\Document;
@@ -93,8 +94,12 @@ class DocumentService {
 	 * @var IAppData
 	 */
 	private $appData;
+	/**
+	 * @var ILockingProvider
+	 */
+	private $lockingProvider;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, ILockingProvider $lockingProvider) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->userId = $userId;
@@ -103,6 +108,7 @@ class DocumentService {
 		$this->cache = $cacheFactory->createDistributed('text');
 		$this->logger = $logger;
 		$this->shareManager = $shareManager;
+		$this->lockingProvider = $lockingProvider;
 		try {
 			$this->appData->getFolder('documents');
 		} catch (NotFoundException $e) {
@@ -176,38 +182,75 @@ class DocumentService {
 	 * @throws VersionMismatchException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
-		// TODO check cache
-		$document = $this->documentMapper->find($documentId);
-		if ($version !== $document->getCurrentVersion()) {
+		$document = null;
+		$oldVersion = null;
+
+		try {
+			$this->lockingProvider->acquireLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
+		} catch (LockedException $e) {
 			throw new VersionMismatchException('Version does not match');
 		}
-		$stepsJson = json_encode($steps);
-		if (!is_array($steps) || $stepsJson === null) {
-			throw new InvalidArgumentException('Failed to encode steps');
-		}
-		$validStepTypes = ['addMark', 'removeMark', 'replace', 'replaceAround'];
-		foreach ($steps as $step) {
-			if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
-				throw new InvalidArgumentException('Invalid step data');
+
+		try {
+			$document = $this->documentMapper->find($documentId);
+			if ($version !== $document->getCurrentVersion()) {
+				throw new VersionMismatchException('Version does not match');
 			}
+			$stepsJson = json_encode($steps);
+			if (!is_array($steps) || $stepsJson === null) {
+				throw new InvalidArgumentException('Failed to encode steps');
+			}
+			$validStepTypes = ['addMark', 'removeMark', 'replace', 'replaceAround'];
+			foreach ($steps as $step) {
+				if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
+					throw new InvalidArgumentException('Invalid step data');
+				}
+			}
+			$oldVersion = $document->getCurrentVersion();
+			$newVersion = $oldVersion + count($steps);
+			$this->cache->set('document-version-' . $document->getId(), $newVersion);
+			$document->setCurrentVersion($newVersion);
+			$this->documentMapper->update($document);
+			$step = new Step();
+			$step->setData($stepsJson);
+			$step->setSessionId($sessionId);
+			$step->setDocumentId($documentId);
+			$step->setVersion($version + 1);
+			$this->stepMapper->insert($step);
+			// TODO write steps to cache for quicker reading
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
+			return $steps;
+		} catch (DoesNotExistException $e) {
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
+			throw $e;
+		} catch (\Throwable $e) {
+			if ($document !== null && $oldVersion !== null) {
+				$this->logger->logException($e, ['message' => 'This should never happen. An error occured when storing the version, trying to recover the last stable one']);
+				$document->setCurrentVersion($oldVersion);
+				$this->documentMapper->update($document);
+				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
+				$this->stepMapper->deleteAfterVersion($documentId, $oldVersion);
+			}
+			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
+			throw $e;
 		}
-		$newVersion = $document->getCurrentVersion() + count($steps);
-		$document->setCurrentVersion($newVersion);
-		$this->documentMapper->update($document);
-		$step = new Step();
-		$step->setData($stepsJson);
-		$step->setSessionId($sessionId);
-		$step->setDocumentId($documentId);
-		$step->setVersion($version+1);
-		$this->stepMapper->insert($step);
-		$this->cache->set('document-version-'.$document->getId(), $newVersion);
-		// TODO restore old version for document if adding steps has failed
-		// TODO write steps to cache for quicker reading
-		return $steps;
 	}
 
 	public function getSteps($documentId, $lastVersion) {
-		return $this->stepMapper->find($documentId, $lastVersion);
+		$steps = $this->stepMapper->find($documentId, $lastVersion);
+		//return $steps;
+		$unique_array = [];
+		foreach($steps as $step) {
+			$version = $step->getVersion();
+			if (!array_key_exists($version, $unique_array)) {
+				$unique_array[(string)$version] = $step;
+			} else {
+				// found duplicate step
+				// FIXME: verify that this version is the correct one
+				//$this->stepMapper->delete($step);
+			}
+		}
+		return array_values($unique_array);
 	}
 
 	/**
@@ -274,7 +317,7 @@ class DocumentService {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		}
-		$document->setLastSavedVersion($version);
+		$document->setLastSavedVersion($document->getCurrentVersion());
 		$document->setLastSavedVersionTime(time());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$this->documentMapper->update($document);
