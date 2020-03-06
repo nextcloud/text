@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
+    "text document" : "tekstni dokument",
     "Readme" : "Informacije",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Zajedničko obrađivanje dokumenata",
@@ -11,6 +12,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument je promijenjen izvan uređivača teksta. Nije moguće primijeniti izmjene.",
     "File could not be loaded. Please check your internet connection." : "Datoteka nije učitana. Provjerite internetsku vezu.",
     "Retry" : "Pokušaj ponovno",
+    "Last saved {lastSaved}" : "Posljednje spremljeno {lastSave}",
     "Unpushed changes" : "Neprimijenjene promjene",
     "Unsaved changes" : "Nespremljene promjene",
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
