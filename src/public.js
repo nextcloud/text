@@ -48,3 +48,7 @@ documentReady(() => {
 		}
 	}
 })
+
+OCA.Text = {
+	RichWorkspaceEnabled: false,
+}
