@@ -67,6 +67,7 @@ export default {
 	data() {
 		return {
 			focus: false,
+			folder: null,
 			file: null,
 			loaded: false,
 			ready: false,
@@ -124,10 +125,13 @@ export default {
 			}
 			axios.get(WORKSPACE_URL, { params }).then((response) => {
 				const data = response.data.ocs.data
+				this.folder = data.folder || null
 				this.file = data.file
 				this.editing = true
 				this.loaded = true
-			}).catch(() => {
+			}).catch((error) => {
+				const data = error.response.data.ocs.data
+				this.folder = data.folder || null
 				this.file = null
 				this.loaded = true
 				this.ready = true
