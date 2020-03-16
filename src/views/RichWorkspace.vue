@@ -22,7 +22,7 @@
 
 <template>
 	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme }">
-		<div v-if="!file || (autofocus && !ready)" class="empty-workspace" @click="createNew">
+		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
 			</p>
@@ -79,6 +79,12 @@ export default {
 	computed: {
 		shareToken() {
 			return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+		},
+		canCreate() {
+			return !!(this.folder && (this.folder.permissions & OC.PERMISSION_CREATE))
+		},
+		showEmptyWorkspace() {
+			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
 		},
 	},
 	watch: {
