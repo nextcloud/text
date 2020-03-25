@@ -50,16 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
-	if (workspaceAvailable) {
-		const settings = document.createElement('div')
-		document.getElementById('files-setting-showhidden').insertAdjacentElement('afterend', settings)
+	if (workspaceAvailable && OCA && OCA.Files && OCA.Files.Settings) {
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
 		Vue.prototype.OCA = window.OCA
 		const vm = new Vue({
 			render: h => h(FilesSettings, {}),
 		})
-		vm.$mount(settings)
+		const el = vm.$mount().$el
+		OCA.Files.Settings.register(new OCA.Files.Settings.Setting('text', {
+			el: () => { return el },
+		}))
 	}
 
 })
