@@ -5,6 +5,7 @@ import {
 	registerFileCreate,
 } from './helpers/files'
 import { openMimetypes } from './helpers/mime'
+import { loadState } from '@nextcloud/initial-state'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -48,3 +49,7 @@ documentReady(() => {
 		}
 	}
 })
+
+OCA.Text = {
+	RichWorkspaceEnabled: loadState('text', 'workspace_available'),
+}
