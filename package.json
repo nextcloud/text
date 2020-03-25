@@ -26,7 +26,7 @@
 		"@nextcloud/axios": "^1.1.0",
 		"@nextcloud/event-bus": "^1.0.0",
 		"@nextcloud/initial-state": "^1.0.0",
-		"@nextcloud/router": "^1.0.0",
+		"@nextcloud/router": "^1.0.2",
 		"@nextcloud/vue": "^1.4.0",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^9.18.0",
