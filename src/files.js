@@ -21,9 +21,7 @@
  */
 
 import Vue from 'vue'
-import FilesEditor from './components/FilesEditor'
 import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
-import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 import FilesSettings from './views/FilesSettings'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -39,13 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
 		console.error('Viewer app is not installed')
 		registerFileActionFallback()
-	} else {
-		OCA.Viewer.registerHandler({
-			id: 'text',
-			mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-			component: FilesEditor,
-			group: null,
-		})
 	}
 
 	if (workspaceAvailable && OCA && OCA.Files && OCA.Files.Settings) {

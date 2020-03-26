@@ -8,6 +8,7 @@ module.exports = {
 		text: path.join(__dirname, 'src', 'main.js'),
 		files: path.join(__dirname, 'src', 'files.js'),
 		public: path.join(__dirname, 'src', 'public.js'),
+		viewer: path.join(__dirname, 'src', 'viewer.js'),
 	},
 	output: {
 		path: path.resolve(__dirname, './js'),

@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Text\AppInfo;
 
 use OCA\Text\DirectEditing\TextDirectEditor;
+use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -67,6 +68,11 @@ class Application extends App {
 		$eventDispatcher->addListener(RegisterDirectEditorEvent::class, function (RegisterDirectEditorEvent $event) use ($container) {
 			$editor = $container->query(TextDirectEditor::class);
 			$event->register($editor);
+		});
+
+		$eventDispatcher->addListener(LoadViewer::class, function () {
+			\OCP\Util::addScript('text', 'viewer');
+			\OCP\Util::addStyle('text', 'icons');
 		});
 
 		if ($this->userSession->isLoggedIn()) {

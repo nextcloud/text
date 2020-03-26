@@ -30,7 +30,7 @@
 
 <script>
 export default {
-	name: 'FilesEditor',
+	name: 'ViewerComponent',
 	components: {
 		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
 	},
