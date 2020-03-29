@@ -10,7 +10,7 @@ OC.L10N.register(
     "Use current version" : "Använd nuvarande version",
     "Use the saved version" : "Använd den sparade versionen",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
-    "File could not be loaded. Please check your internet connection." : "Filen kunde inte laddas. Kontrollera din internetanslutning.",
+    "File could not be loaded. Please check your internet connection." : "Filen kunde inte läsas in. Vänligen kontrollera din internetanslutning.",
     "Retry" : "Försök igen",
     "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
     "Unpushed changes" : "Inte slutförda ändringar",
@@ -28,7 +28,7 @@ OC.L10N.register(
     "New text document" : "Nytt textdokument",
     "Edit" : "Redigera",
     "Undo" : "Ångra",
-    "Redo" : "Upprepa",
+    "Redo" : "Gör om",
     "Bold" : "Fet",
     "Italic" : "Kursiv",
     "Strikethrough" : "Genomstruken",
@@ -46,7 +46,7 @@ OC.L10N.register(
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
-    "Last save {lastSave}" : "Senast sparade {lastSave}",
+    "Last save {lastSave}" : "Senast sparad {lastSave}",
     "New text document.md" : "Nytt textdokument.md"
 },
 "nplurals=2; plural=(n != 1);");
