@@ -82,7 +82,8 @@ class TextDirectEditor implements IEditor {
 	 */
 	public function getMimetypes(): array {
 		return [
-			'text/markdown'
+			'text/markdown',
+			'text/plain'
 		];
 	}
 
@@ -92,9 +93,7 @@ class TextDirectEditor implements IEditor {
 	 * @return array
 	 */
 	public function getMimetypesOptional(): array {
-		return [
-			'text/plain'
-		];
+		return [];
 	}
 
 	/**
