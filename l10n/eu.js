@@ -42,7 +42,7 @@ OC.L10N.register(
     "Heading 6" : "6. goiburua",
     "Unordered list" : "Ordenatu gabeko zerrenda",
     "Ordered list" : "Ordenatutako zerrenda",
-    "ToDo list" : "Egiteko zerrenda",
+    "ToDo list" : "Egitekoen zerrenda",
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "Network connection error: Could not connect to the document" : "Sare konexio errorea: Ezin izan da dokumentuarekin konektatu",
