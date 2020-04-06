@@ -43,7 +43,7 @@
 		"prosemirror-view": "^1.14.6",
 		"tiptap": "^1.26.6",
 		"tiptap-commands": "^1.12.5",
-		"tiptap-extensions": "^1.28.6",
+		"tiptap-extensions": "^1.28.8",
 		"tiptap-utils": "^1.8.3",
 		"vue": "^2.6.11",
 		"vue-click-outside": "^1.0.7"
