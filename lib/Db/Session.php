@@ -30,6 +30,7 @@ use OCP\AppFramework\Db\Entity;
  * @method setLastContact(int $getTime)
  * @method getDocumentId()
  * @method getUserId()
+ * @method string getToken()
  */
 class Session extends Entity implements \JsonSerializable {
 
@@ -55,7 +56,8 @@ class Session extends Entity implements \JsonSerializable {
 			'token' => $this->token,
 			'color' => $this->color,
 			'lastContact' => $this->lastContact,
-			'guestName' => $this->guestName
+			'guestName' => $this->guestName,
+			'documentId' => $this->documentId,
 		];
 	}
 }
