@@ -32,6 +32,8 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DirectEditing\IManager;
 use OCP\IAvatar;
 use OCP\IAvatarManager;
+use OCP\ICache;
+use OCP\ICacheFactory;
 use OCP\IRequest;
 use OCP\Security\ISecureRandom;
 
@@ -39,16 +41,37 @@ class SessionService {
 
 	public const SESSION_VALID_TIME = 60*5;
 
+	/** @var SessionMapper */
 	private $sessionMapper;
+
+	/** @var ISecureRandom */
 	private $secureRandom;
+
+	/** @var ITimeFactory */
 	private $timeFactory;
+
+	/** @var IAvatarManager */
 	private $avatarManager;
+
+	/** @var string */
 	private $userId;
 
 	/** @var Session cache current session in the request */
 	private $session = null;
 
-	public function __construct(SessionMapper $sessionMapper, ISecureRandom $secureRandom, ITimeFactory $timeFactory, IAvatarManager $avatarManager, IRequest $request, IManager $directManager, $userId) {
+	/** @var ICache */
+	private $cache;
+
+	public function __construct(
+		SessionMapper $sessionMapper,
+		ISecureRandom $secureRandom,
+		ITimeFactory $timeFactory,
+		IAvatarManager $avatarManager,
+		IRequest $request,
+		IManager $directManager,
+		$userId,
+		ICacheFactory $cacheFactory
+	) {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
@@ -64,6 +87,8 @@ class SessionService {
 				$this->userId = $tokenObject->getUser();
 			} catch (\Exception $e) {}
 		}
+
+		$this->cache = $cacheFactory->createDistributed('text_sessions');
 	}
 
 	public function initSession($documentId, $guestName = null): Session {
@@ -79,12 +104,17 @@ class SessionService {
 			$session->setGuestName($guestName);
 		}
 		$session->setLastContact($this->timeFactory->getTime());
-		return $this->sessionMapper->insert($session);
+
+		$session = $this->sessionMapper->insert($session);
+		$this->cache->set($session->getToken(), json_encode($session), self::SESSION_VALID_TIME);
+
+		return $session;
 	}
 
 	public function closeSession(int $documentId, int $sessionId, string $token): void {
 		try {
 			$session = $this->sessionMapper->find($documentId, $sessionId, $token);
+			$this->cache->remove($token);
 			$this->sessionMapper->delete($session);
 		} catch (DoesNotExistException $e) {
 		}
@@ -108,6 +138,7 @@ class SessionService {
 	}
 
 	public function removeInactiveSessions($documentId = -1) {
+		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactive($documentId);
 	}
 
@@ -118,8 +149,16 @@ class SessionService {
 		if ($this->session !== null) {
 			return $this->session;
 		}
+
+		$data = $this->cache->get($token);
+		if ($data !== null) {
+			return Session::fromRow(json_decode($data, true));
+		}
+
 		try {
-			return $this->sessionMapper->find($documentId, $sessionId, $token);
+			$data = $this->sessionMapper->find($documentId, $sessionId, $token);
+			$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME);
+			return $data;
 		} catch (DoesNotExistException $e) {
 			$this->session = false;
 			return false;
@@ -131,9 +170,10 @@ class SessionService {
 		if ($session === false) {
 			return false;
 		}
-		// TODO: move to cache
+
 		$session->setLastContact($this->timeFactory->getTime());
 		$this->sessionMapper->update($session);
+		$this->cache->set($token, json_encode($session), self::SESSION_VALID_TIME);
 		return true;
 	}
 
