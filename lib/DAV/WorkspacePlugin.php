@@ -28,8 +28,10 @@ use OC\Files\Node\File;
 use OC\Files\Node\Folder;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
+use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\IRootFolder;
+use OCP\IConfig;
 use Sabre\DAV\INode;
 use Sabre\DAV\PropFind;
 use Sabre\DAV\Server;
@@ -37,7 +39,7 @@ use Sabre\DAV\ServerPlugin;
 
 class WorkspacePlugin extends ServerPlugin {
 
-	public const WORKSPACE = '{http://nextcloud.org/ns}rich-workspace';
+	public const WORKSPACE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace';
 
 	/** @var Server */
 	private $server;
@@ -48,12 +50,16 @@ class WorkspacePlugin extends ServerPlugin {
 	/**  @var IRootFolder */
 	private $rootFolder;
 
+	/** @var IConfig */
+	private $config;
+
 	/** @var string|null */
 	private $userId;
 
-	public function __construct(WorkspaceService $workspaceService, IRootFolder $rootFolder, $userId) {
+	public function __construct(WorkspaceService $workspaceService, IRootFolder $rootFolder, IConfig $config, $userId) {
 		$this->workspaceService = $workspaceService;
 		$this->rootFolder = $rootFolder;
+		$this->config = $config;
 		$this->userId = $userId;
 	}
 
@@ -80,7 +86,14 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
-		$propFind->handle(self::WORKSPACE, function () use ($node) {
+		$workspaceAvailable = $this->config->getAppValue(Application::APP_NAME, 'workspace_available', '1') === '1';
+		$workspaceEnabled = $this->config->getUserValue($this->userId, Application::APP_NAME, 'workspace_enabled', '1') === '1';
+
+		if (!$workspaceAvailable || !$workspaceEnabled) {
+			return;
+		}
+
+		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
 			/** @var Folder[] $nodes */
 			$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
 			if (count($nodes) > 0) {
@@ -90,6 +103,7 @@ class WorkspacePlugin extends ServerPlugin {
 					return $file->getContent();
 				}
 			}
+			return '';
 		});
 
 	}
