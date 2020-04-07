@@ -40,7 +40,7 @@
 			:autofocus="autofocus"
 			@ready="ready=true"
 			@focus="focus=true"
-			@blur="focus=false"
+			@blur="unfocus"
 			@error="reset" />
 	</div>
 </template>
@@ -103,9 +103,14 @@ export default {
 		})
 	},
 	methods: {
+		unfocus() {
+			// setTimeout(() => this.focus = false, 2000)
+		},
 		reset() {
 			this.file = null
+			this.focus = false
 			this.$nextTick(() => {
+				this.creating = false
 				this.getFileInfo()
 			})
 		},
@@ -122,7 +127,6 @@ export default {
 				this.file = data.file
 				this.editing = true
 				this.loaded = true
-				this.creating = false
 			}).catch(() => {
 				this.file = null
 				this.loaded = true
@@ -151,6 +155,8 @@ export default {
 		/* Slightly reduce vertical space */
 		margin-bottom: -24px;
 		text-align: left;
+		max-height: 0;
+		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
 	}
 
 	/* For subfolders, where there are no Recommendations */
@@ -183,9 +189,8 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor {
-		padding-bottom: 80px;
 		overflow: scroll !important;
-		height: 50vh;
+		max-height: 50vh;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
@@ -205,6 +210,10 @@ export default {
 
 	#rich-workspace::v-deep .editor__content {
 		margin: 0;
+	}
+
+	#rich-workspace.focus {
+		max-height: 50vh;
 	}
 
 	#rich-workspace:not(.focus) {
