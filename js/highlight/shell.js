@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[154],{339:function(n,s){n.exports=function(n){return{aliases:["console"],contains:[{className:"meta",begin:"^\\s{0,3}[/\\w\\d\\[\\]()@-]*[>%$#]",starts:{end:"$",subLanguage:"bash"}}]}}}}]);
-//# sourceMappingURL=shell.js.map?v=8643ff96ee9896f16097
+//# sourceMappingURL=shell.js.map?v=250a354b4464b8d426dd

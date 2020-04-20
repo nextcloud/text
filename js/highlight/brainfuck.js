@@ -1,2 +1,2 @@
 (window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[23],{208:function(e,n){e.exports=function(e){var n={className:"literal",begin:"[\\+\\-]",relevance:0};return{aliases:["bf"],contains:[e.COMMENT("[^\\[\\]\\.,\\+\\-<> \r\n]","[\\[\\]\\.,\\+\\-<> \r\n]",{returnEnd:!0,relevance:0}),{className:"title",begin:"[\\[\\]]",relevance:0},{className:"string",begin:"[\\.,]",relevance:0},{begin:/(?:\+\+|\-\-)/,contains:[n]},n]}}}}]);
-//# sourceMappingURL=brainfuck.js.map?v=c4b2ce7f2b3644acc4c4
+//# sourceMappingURL=brainfuck.js.map?v=8067c293db56cf3c0e2f
