@@ -22,7 +22,6 @@
 
 import Vue from 'vue'
 import FilesEditor from './components/FilesEditor'
-import PreviewPlugin from './files/PreviewPlugin'
 import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 import FilesSettings from './views/FilesSettings'
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			group: null,
 		})
 	}
-	OC.Plugins.register('OCA.Files.SidebarPreviewManager', new PreviewPlugin())
 
 	if (workspaceAvailable) {
 		const settings = document.createElement('div')
