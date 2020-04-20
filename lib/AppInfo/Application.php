@@ -90,6 +90,11 @@ class Application extends App {
 		$eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
 			\OCP\Util::addScript('text', 'public');
 			\OCP\Util::addStyle('text', 'icons');
+			$this->initialStateService->provideInitialState(
+				self::APP_NAME,
+				'workspace_available',
+				$this->config->getAppValue(self::APP_NAME, 'workspace_available', '1') === '1'
+			);
 		});
 	}
 

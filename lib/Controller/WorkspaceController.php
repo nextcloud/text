@@ -111,7 +111,12 @@ class WorkspaceController extends OCSController {
 			if ($folder instanceof Folder) {
 				$file = $this->workspaceService->getFile($folder);
 				if ($file === null) {
-					return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
+					return new DataResponse([
+						'message' => 'No workspace file found',
+						'folder' => [
+							'permissions' => $folder->getPermissions()
+						]
+					], Http::STATUS_NOT_FOUND);
 				}
 
 				return new DataResponse([
@@ -119,6 +124,9 @@ class WorkspaceController extends OCSController {
 						'id' => $file->getId(),
 						'mimetype' => $file->getMimetype(),
 						'name' => $file->getName()
+					],
+					'folder' => [
+						'permissions' => $folder->getPermissions()
 					]
 				]);
 			}
