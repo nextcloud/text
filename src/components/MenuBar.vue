@@ -137,7 +137,7 @@ export default {
 		},
 		isChildMenuVisible() {
 			return (icon) => {
-				return this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+				return Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			}
 		},
 		allIcons() {
@@ -225,7 +225,7 @@ export default {
 			this.$set(this.submenuVisibility, icon.label, false)
 		},
 		toggleChildMenu(icon) {
-			const lastValue = this.submenuVisibility.hasOwnProperty(icon.label) ? this.submenuVisibility[icon.label] : false
+			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
 		},
 		showImagePrompt(command) {
