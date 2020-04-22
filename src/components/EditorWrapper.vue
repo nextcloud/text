@@ -386,7 +386,7 @@ export default {
 						}
 						this.$emit('ready')
 					}
-					if (state.hasOwnProperty('dirty')) {
+					if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 						this.dirty = state.dirty
 					}
 				})
