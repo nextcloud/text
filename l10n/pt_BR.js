@@ -2,7 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Texto",
-    "New text document" : "Novo documento de texto",
+    "text document" : "documento de texto",
     "Readme" : "Leiame",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edição colaborativa de documentos",
@@ -10,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Usar versão atual",
     "Use the saved version" : "Usar a versão salva",
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi alterado fora do editor. As alterações não podem ser aplicadas.",
-    "Network connection error: Could not connect to the document" : "Erro de rede: não foi possível conectar ao documento",
+    "File could not be loaded. Please check your internet connection." : "Não foi possível carregar o arquivo. Verifique sua conexão à internet.",
     "Retry" : "Tentar novamente",
-    "Last save {lastSave}" : "Última gravação {lastSave}",
+    "Last saved {lastSaved}" : "Salvo por último {lastSaved}",
     "Unpushed changes" : "Alterações não gravadas",
     "Unsaved changes" : "Alterações não salvas",
     "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show file" : "Mostrar arquivo",
     "Show rich workspaces" : "Mostrar áreas de trabalho avançadas",
     "Add notes, lists or links …" : "Adicionar observações, listas ou links...",
+    "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Redo" : "Refazer",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "ToDo list" : "Lista ToDo",
     "Blockquote" : "Bloco de citação",
     "Code block" : "Bloco de código",
+    "Network connection error: Could not connect to the document" : "Erro de rede: não foi possível conectar ao documento",
+    "Last save {lastSave}" : "Última gravação {lastSave}",
     "New text document.md" : "Novo texto document.md"
 },
 "nplurals=2; plural=(n > 1);");

@@ -1,14 +1,13 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Uusi tekstiasiakirja",
     "Text" : "Teksti",
     "📝 Collaborative document editing" : "📝 Yhteistyöhön perustuvaa asiakirjojen muokkausta",
     "Use current version" : "Käytä nykyistä versiota",
     "Use the saved version" : "Käytä tallennettua versiota",
-    "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
+    "File could not be loaded. Please check your internet connection." : "Tiedostoa ei voitu ladata. Tarkista internetyhteytesi tila.",
     "Retry" : "Yritä uudelleen",
-    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
+    "Last saved {lastSaved}" : "Viimeksi tallennettu {lastSaved}",
     "Unsaved changes" : "Tallentamattomia muutoksia",
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkyvät kuka muokkaa asiakirjaa",
     "Edit guest name" : "Muokkaa vieraan nimeä",
@@ -18,6 +17,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "Show image" : "Näytä kuva",
     "Show file" : "Näytä tiedosto",
+    "New text document" : "Uusi tekstiasiakirja",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",
@@ -35,6 +35,8 @@ OC.L10N.register(
     "Unordered list" : "Järjestämätön lista",
     "Ordered list" : "Järjestetty lista",
     "Code block" : "Koodilohko",
+    "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
+    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "New text document.md" : "Uusi tekstiasiakirja.md"
 },
 "nplurals=2; plural=(n != 1);");

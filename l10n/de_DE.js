@@ -2,7 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Neues Textdokument",
+    "text document" : "Textdokument",
     "Readme" : "Anleitung",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Gemeinschaftliche Dokumentenbearbeitung",
@@ -10,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Verwende aktuelle Version",
     "Use the saved version" : "Die gespeicherte Version verwenden",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Das Dokument wurde außerhalb des Editors gespeichert. Die Änderungen könnten nicht angewandt werden.",
-    "Network connection error: Could not connect to the document" : "Netzwerk-Verbindungsfehler: Konnte nicht mit dem Dokument verbinden",
+    "File could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Internetverbindung prüfen.",
     "Retry" : "Wiederholen",
-    "Last save {lastSave}" : "Zuletzt gespeichert {lastSave}",
+    "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",
     "Unpushed changes" : "Nicht synchronisiert Änderungen",
     "Unsaved changes" : "Ungespeicherte Änderungen",
     "Enter your name so other users can see who is editing" : "Geben Sie Ihren Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show file" : "Datei anzeigen",
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen...",
+    "New text document" : "Neues Textdokument",
     "Edit" : "Bearbeiten",
     "Undo" : "Rückgängig",
     "Redo" : "Wiederherstellen",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "ToDo list" : "ToDo-Liste",
     "Blockquote" : "Blockzitat",
     "Code block" : "Codeblock",
+    "Network connection error: Could not connect to the document" : "Netzwerk-Verbindungsfehler: Konnte nicht mit dem Dokument verbinden",
+    "Last save {lastSave}" : "Zuletzt gespeichert {lastSave}",
     "New text document.md" : "Neues Textdokument.md"
 },
 "nplurals=2; plural=(n != 1);");

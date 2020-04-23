@@ -1,7 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nieuw tekstdocument",
+    "Nextcloud Text" : "Nextcloud Tekst",
+    "text document" : "tekst document",
     "Readme" : "Leesmij",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Gezamenlijke documentbewerking",
@@ -9,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Gebruik huidige versie",
     "Use the saved version" : "Gebruik opgeslagen versie",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Het document is gewijzigd buiten de editor. Veranderingen kunnen niet worden toegepast.",
-    "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
+    "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
     "Retry" : "Opnieuw proberen",
-    "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
+    "Last saved {lastSaved}" : "Laatste opgeslagen {lastSaved}",
     "Unpushed changes" : "Niet verwerkte veranderingen",
     "Unsaved changes" : "Niet opgeslagen veranderingen",
     "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
@@ -22,7 +23,9 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand",
+    "Show rich workspaces" : "Toon rijke werkplekken",
     "Add notes, lists or links …" : "Toevoegen notities, lijsten of links...",
+    "New text document" : "Nieuw tekstdocument",
     "Edit" : "Bewerken",
     "Undo" : "Ongedaan maken",
     "Redo" : "Opnieuw doen",
@@ -39,8 +42,11 @@ OC.L10N.register(
     "Heading 6" : "Kop 6",
     "Unordered list" : "Ongesorteerde lijst",
     "Ordered list" : "Gesorteerde lijst",
+    "ToDo list" : "ToDo overzicht",
     "Blockquote" : "Tekstblok",
     "Code block" : "Code blok",
+    "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
+    "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
     "New text document.md" : "Nieuw tekstdocument.md"
 },
 "nplurals=2; plural=(n != 1);");

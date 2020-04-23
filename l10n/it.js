@@ -2,7 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Testo di Nextcloud",
-    "New text document" : "Nuovo documento di testo",
+    "text document" : "documento di testo",
     "Readme" : "Leggimi",
     "Text" : "Testo",
     "📝 Collaborative document editing" : "Modifica documenti collaborativa",
@@ -10,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Utilizza la versione corrente",
     "Use the saved version" : "Utilizza la versione salvata",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Il documento è stato modificato al di fuori dell'editor. Le modifiche non saranno applicate.",
-    "Network connection error: Could not connect to the document" : "Errore di connessione di rete: impossibile connettersi al documento",
+    "File could not be loaded. Please check your internet connection." : "Il file non può essere caricato. Controlla la tua connessione a Internet.",
     "Retry" : "Riprova",
-    "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
+    "Last saved {lastSaved}" : "Ultimo salvataggio {lastSave}",
     "Unpushed changes" : "Modifiche non depositate",
     "Unsaved changes" : "Modifiche non salvate",
     "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show file" : "Mostra file",
     "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
+    "New text document" : "Nuovo documento di testo",
     "Edit" : "Modifica",
     "Undo" : "Annulla",
     "Redo" : "Rifai",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "ToDo list" : "Elenco Cose da fare",
     "Blockquote" : "Citazione",
     "Code block" : "Blocco di codice",
+    "Network connection error: Could not connect to the document" : "Errore di connessione di rete: impossibile connettersi al documento",
+    "Last save {lastSave}" : "Ultimo salvataggio {lastSave}",
     "New text document.md" : "Nuovo documento di testo,md"
 },
 "nplurals=2; plural=(n != 1);");

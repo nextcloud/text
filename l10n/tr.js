@@ -1,8 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Yeni metin belgesi",
+    "Nextcloud Text" : "Nextcloud Metin",
+    "text document" : "metin belgesi",
     "Readme" : "Benioku",
     "Text" : "Metin",
     "📝 Collaborative document editing" : "📝 İşbirlikli belge düzenleme",
@@ -10,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Geçerli sürüm kullanılsın",
     "Use the saved version" : "Kaydedilmiş sürüm kullanılsın",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
-    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
+    "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "Retry" : "Yeniden Dene",
-    "Last save {lastSave}" : "Son kayıt {lastSave}",
+    "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show file" : "Dosyayı görüntüle",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
+    "New text document" : "Yeni metin belgesi",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
+    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
+    "Last save {lastSave}" : "Son kayıt {lastSave}",
     "New text document.md" : "Yeni metin belgesi.md"
 },
 "nplurals=2; plural=(n > 1);");

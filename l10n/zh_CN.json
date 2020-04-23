@@ -1,6 +1,6 @@
 { "translations": {
     "Nextcloud Text" : "Nextcloud 文本",
-    "New text document" : "新建文本文档",
+    "text document" : "文本文档",
     "Readme" : "自述文件",
     "Text" : "文本 ",
     "📝 Collaborative document editing" : "文档协作编辑",
@@ -8,9 +8,9 @@
     "Use current version" : "使用当前版本",
     "Use the saved version" : "使用保存的版本",
     "The document has been changed outside of the editor. The changes cannot be applied." : "本文档在编辑器外被更改。无法应用更改。",
-    "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
+    "File could not be loaded. Please check your internet connection." : "无法加载文件。 请检查您的互联网连接。",
     "Retry" : "重试",
-    "Last save {lastSave}" : "最近保存 {lastSave}",
+    "Last saved {lastSaved}" : "最近保存 {lastSave}",
     "Unpushed changes" : "未推送的更改",
     "Unsaved changes" : "未保存的更改",
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
@@ -23,6 +23,7 @@
     "Show file" : "显示文件",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
+    "New text document" : "新建文本文档",
     "Edit" : "编辑",
     "Undo" : "撤销",
     "Redo" : "重做",
@@ -42,6 +43,8 @@
     "ToDo list" : "待办事项清单",
     "Blockquote" : "块引用",
     "Code block" : "代码块",
+    "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
+    "Last save {lastSave}" : "最近保存 {lastSave}",
     "New text document.md" : "新建文本文档.md"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

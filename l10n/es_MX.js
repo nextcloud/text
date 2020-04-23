@@ -2,7 +2,6 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Texto de Nextcloud",
-    "New text document" : "Nuevo documento de texto",
     "Readme" : "Leame",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documento ",
@@ -10,9 +9,7 @@ OC.L10N.register(
     "Use current version" : "Usar la versión actual",
     "Use the saved version" : "Usar la versión guardada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha sido cambiado fuera de el editor. Los cambios no pueden ser aplicados.",
-    "Network connection error: Could not connect to the document" : "Error de conexión de red: No se pudo acceder al documento",
     "Retry" : "Reintentar",
-    "Last save {lastSave}" : "Última actualización {lastSave}",
     "Unpushed changes" : "Cambios no enviados",
     "Unsaved changes" : "Cambios no guardados",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
@@ -24,6 +21,7 @@ OC.L10N.register(
     "Show image" : "Mostrar imagen",
     "Show file" : "Mostrar archivo",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
+    "New text document" : "Nuevo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",
@@ -43,6 +41,8 @@ OC.L10N.register(
     "ToDo list" : "Lista de penditentes",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
+    "Network connection error: Could not connect to the document" : "Error de conexión de red: No se pudo acceder al documento",
+    "Last save {lastSave}" : "Última actualización {lastSave}",
     "New text document.md" : "Nuevo documento de texto.md"
 },
 "nplurals=2; plural=(n != 1);");

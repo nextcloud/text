@@ -1,15 +1,15 @@
 { "translations": {
     "Nextcloud Text" : "Nextcloud tekstas",
-    "New text document" : "Naujas tekstinis dokumentas",
+    "text document" : "tekstinis dokumentas",
     "Text" : "Tekstas",
     "📝 Collaborative document editing" : "📝 Dokumentų taisymas bendradarbiaujant",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Dokumentų taisymas bendradarbiaujant!**\n\n- **📝 Rašymas susitelkus:** Jokio blaškymosi. Tik tas formatavimas, kurio jums reikia.\n- **🙋 Dirbkite kartu:** Bendrinkite ir bendradarbiaukite su draugais ir kolegomis, nepriklausomai nuo to, ar jie naudoja Nextcloud, ar ne!\n- **💾 Atvirasis formatas:** Failai yra įrašomi kaip [Markdown](https://en.wikipedia.org/wiki/Markdown), taigi, galite juos taisyti naudodami bet kurią kitą tekstų programėlę.\n- **✊ Stiprus pagrindas:** Mes naudojame [🐈 tiptap](https://tiptap.scrumpy.io), kuris yra pagrįstas [🦉 ProseMirror](https://prosemirror.net) – didelis jiems ačiū!",
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
-    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
+    "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Retry" : "Bandyti dar kartą",
-    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
+    "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
@@ -21,6 +21,7 @@
     "Show file" : "Rodyti failą",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
+    "New text document" : "Naujas tekstinis dokumentas",
     "Edit" : "Taisyti",
     "Undo" : "Atšaukti",
     "Redo" : "Grąžinti",
@@ -40,6 +41,8 @@
     "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
+    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
+    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "New text document.md" : "Naujas tekstinis dokumentas.md"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

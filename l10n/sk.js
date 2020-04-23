@@ -2,7 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Nový textový dokument",
+    "text document" : "textový dokument",
     "Readme" : "Čítajma",
     "Text" : "Text",
     "📝 Collaborative document editing" : "Spoločná úprava dokumentov",
@@ -10,9 +10,9 @@ OC.L10N.register(
     "Use current version" : "Použiť aktuálnu verziu",
     "Use the saved version" : "Použiť uloženú verziu",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument bol medzitým zmenený mimo editora. Zmeny nie je možné použiť.",
-    "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
+    "File could not be loaded. Please check your internet connection." : "Súbor sa nepodarilo nahrať. Skontrolujte pripojenie na internet.",
     "Retry" : "Skúsiť znova",
-    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
+    "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
     "Unpushed changes" : "Neodoslané zmeny",
     "Unsaved changes" : "Neuložené zmeny",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show file" : "Zobraziť súbor",
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
+    "New text document" : "Nový textový dokument",
     "Edit" : "Upraviť",
     "Undo" : "Odvolať",
     "Redo" : "Obnoviť",
@@ -44,6 +45,8 @@ OC.L10N.register(
     "ToDo list" : "Zoznam úloh",
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
+    "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
+    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
     "New text document.md" : "Nový textový dokument.md"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

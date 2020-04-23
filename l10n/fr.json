@@ -1,6 +1,6 @@
 { "translations": {
     "Nextcloud Text" : "Nextcloud Text",
-    "New text document" : "Nouveau document texte",
+    "text document" : "document texte",
     "Readme" : "Lisez moi",
     "Text" : "Texte",
     "📝 Collaborative document editing" : "📝 Édition de documents collaborative",
@@ -8,9 +8,9 @@
     "Use current version" : "Utiliser la version actuelle",
     "Use the saved version" : "Utiliser la version enregistrée",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Le document a été modifié par un autre programme que l'éditeur. Les changements ne peuvent être appliqués.",
-    "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
+    "File could not be loaded. Please check your internet connection." : "Le fichier n'a pu être chargé. Vérifiez votre connexion Internet.",
     "Retry" : "Réessayer",
-    "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
+    "Last saved {lastSaved}" : "Dernier enregistrement {lastSave}",
     "Unpushed changes" : "Modifications non poussées",
     "Unsaved changes" : "Modifications non enregistrées",
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
@@ -21,7 +21,9 @@
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"],
     "Show image" : "Afficher l'image",
     "Show file" : "Afficher le fichier",
+    "Show rich workspaces" : "Montrer les espaces de travail riches.",
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
+    "New text document" : "Nouveau document texte",
     "Edit" : "Modifier",
     "Undo" : "Annuler",
     "Redo" : "Rétablir",
@@ -38,8 +40,11 @@
     "Heading 6" : "Titre 6",
     "Unordered list" : "Liste non triée",
     "Ordered list" : "Liste triée",
+    "ToDo list" : "Liste des tâches",
     "Blockquote" : "Citation",
     "Code block" : "Bloc de code",
+    "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
+    "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
     "New text document.md" : "Nouveau document texte.md"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

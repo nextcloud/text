@@ -1,11 +1,14 @@
 { "translations": {
-    "New text document" : "Nýtt textaskjal",
+    "Nextcloud Text" : "Nextcloud Texti",
+    "text document" : "textaskjal",
+    "Readme" : "Readme upplýsingaskrá",
     "Text" : "Texti",
     "📝 Collaborative document editing" : "📝 Samstarfsforrit til vinnslu skjala",
     "Use current version" : "Nota fyrirliggjandi útgáfu",
     "Use the saved version" : "Nota vistuðu útgáfuna",
     "Retry" : "Reyna aftur",
-    "Last save {lastSave}" : "Síðast vistað {lastSave}",
+    "Last saved {lastSaved}" : "Síðast vistað {lastSaved}",
+    "Unpushed changes" : "Breytingar sem ekki er búið að senda inn",
     "Unsaved changes" : "Óvistaðar breytingar",
     "Edit guest name" : "Breyta nafni gests",
     "Save guest name" : "Vista nafn gests",
@@ -13,6 +16,9 @@
     "Add link" : "Bæta við tengli",
     "Show image" : "Birta mynd",
     "Show file" : "Sýna skrá",
+    "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
+    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
+    "New text document" : "Nýtt textaskjal",
     "Edit" : "Breyta",
     "Undo" : "Afturkalla",
     "Redo" : "Endurtaka",
@@ -29,8 +35,10 @@
     "Heading 6" : "Fyrirsögn 6",
     "Unordered list" : "Óraðaður listi",
     "Ordered list" : "Raðaður listi",
+    "ToDo list" : "Verkefnalisti",
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
+    "Last save {lastSave}" : "Síðast vistað {lastSave}",
     "New text document.md" : "Nýtt textaskjal.md"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }
