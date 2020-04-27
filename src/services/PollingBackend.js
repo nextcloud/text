@@ -157,7 +157,7 @@ class PollingBackend {
 					outsideChange: e.response.data.outsideChange,
 				})
 			} else if (e.response.status === 403) {
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
 			} else if (e.response.status === 404) {
 				this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
 			} else if (e.response.status === 503) {
