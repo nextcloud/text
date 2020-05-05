@@ -20,7 +20,7 @@ OC.L10N.register(
     "Save guest name" : "Zapisz nazwę gościa",
     "Insert image" : "Wstaw obraz",
     "Add link" : "Dodaj link",
-    "_and %n other editor_::_and %n other editors_" : ["i %n inny redaktor","i %n innych redaktorów","i %n innych redaktorów","i %n innych redaktorów"],
+    "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
     "Show image" : "Pokaż obraz",
     "Show file" : "Pokaż plik",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
