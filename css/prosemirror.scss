@@ -61,6 +61,7 @@ div.ProseMirror {
 		label {
 			display: block;
 			flex-grow: 1;
+			max-width: calc(100% - 28px);
 			> *:first-child {
 				margin-top: 0;
 			}
