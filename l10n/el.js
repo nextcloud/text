@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
     "Network connection error: Could not connect to the document" : "Σφάλμα σύνδεσης δικτύου: Δεν υπάρχει σύνδεση με το έγγραφο.",
-    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
-    "New text document.md" : "Νέο έγγραφο κειμένου.md"
+    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");

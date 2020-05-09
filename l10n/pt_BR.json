@@ -44,7 +44,6 @@
     "Blockquote" : "Bloco de citação",
     "Code block" : "Bloco de código",
     "Network connection error: Could not connect to the document" : "Erro de rede: não foi possível conectar ao documento",
-    "Last save {lastSave}" : "Última gravação {lastSave}",
-    "New text document.md" : "Novo texto document.md"
+    "Last save {lastSave}" : "Última gravação {lastSave}"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

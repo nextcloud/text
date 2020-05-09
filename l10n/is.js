@@ -40,7 +40,6 @@ OC.L10N.register(
     "ToDo list" : "Verkefnalisti",
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
-    "Last save {lastSave}" : "Síðast vistað {lastSave}",
-    "New text document.md" : "Nýtt textaskjal.md"
+    "Last save {lastSave}" : "Síðast vistað {lastSave}"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -44,7 +44,6 @@
     "Blockquote" : "块引用",
     "Code block" : "代码块",
     "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
-    "Last save {lastSave}" : "最近保存 {lastSave}",
-    "New text document.md" : "新建文本文档.md"
+    "Last save {lastSave}" : "最近保存 {lastSave}"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
