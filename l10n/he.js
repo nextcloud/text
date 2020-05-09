@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
     "Network connection error: Could not connect to the document" : "שגיאה בחיבור לרשת: לא ניתן להתחבר למסמך",
-    "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
-    "New text document.md" : "מסמך טקסט חדש.md"
+    "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

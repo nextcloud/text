@@ -39,7 +39,6 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
-    "Last save {lastSave}" : "Lasta konservado {lastSave}",
-    "New text document.md" : "Nova tekstdokumento.md"
+    "Last save {lastSave}" : "Lasta konservado {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");

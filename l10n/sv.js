@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
-    "Last save {lastSave}" : "Senast sparad {lastSave}",
-    "New text document.md" : "Nytt textdokument.md"
+    "Last save {lastSave}" : "Senast sparad {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");

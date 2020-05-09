@@ -44,7 +44,6 @@
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
     "Network connection error: Could not connect to the document" : "Chyba nastavení sítě: nedaří se připojit k dokumentu",
-    "Last save {lastSave}" : "Poslední uložení {lastSave}",
-    "New text document.md" : "Nový textový dokument.md"
+    "Last save {lastSave}" : "Poslední uložení {lastSave}"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

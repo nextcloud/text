@@ -44,7 +44,6 @@
     "Blockquote" : "Cita",
     "Code block" : "Bloc de codi",
     "Network connection error: Could not connect to the document" : "Error de connexió de xarxa: No s'ha pogut connectar amb el document",
-    "Last save {lastSave}" : "Darrera modificació {lastSave}",
-    "New text document.md" : "Nou document de text .md"
+    "Last save {lastSave}" : "Darrera modificació {lastSave}"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

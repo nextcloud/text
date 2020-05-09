@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
-    "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
-    "New text document.md" : "Novi tekstni dokument.md"
+    "Last save {lastSave}" : "Posljednje spremanje {lastSave}"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

@@ -20,7 +20,6 @@ OC.L10N.register(
     "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
-    "Last save {lastSave}" : "Última versão guardada {lastSave}",
-    "New text document.md" : "Novo documento de texto.md"
+    "Last save {lastSave}" : "Última versão guardada {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");
