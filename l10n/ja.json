@@ -43,7 +43,6 @@
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
     "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
-    "Last save {lastSave}" : "最終保存 {lastSave}",
-    "New text document.md" : "新しいテキストドキュメント.md"
+    "Last save {lastSave}" : "最終保存 {lastSave}"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

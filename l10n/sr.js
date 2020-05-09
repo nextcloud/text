@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
     "Network connection error: Could not connect to the document" : "Грешка у мрежној конекцији: Не могу да се повежем са документом",
-    "Last save {lastSave}" : "Последње чување {lastSave}",
-    "New text document.md" : "Нови текстуални документ.md"
+    "Last save {lastSave}" : "Последње чување {lastSave}"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

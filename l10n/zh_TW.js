@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
     "Network connection error: Could not connect to the document" : "網路連線錯誤：無法連線至文件",
-    "Last save {lastSave}" : "上次儲存於 {lastSave}",
-    "New text document.md" : "新文字文件.md"
+    "Last save {lastSave}" : "上次儲存於 {lastSave}"
 },
 "nplurals=1; plural=0;");

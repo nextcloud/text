@@ -23,7 +23,6 @@ OC.L10N.register(
     "Redo" : "Ribëj",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
-    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
-    "New text document.md" : "Dokument tekst .md i ri"
+    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");
