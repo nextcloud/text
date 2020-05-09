@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Blockzitat",
     "Code block" : "Codeblock",
     "Network connection error: Could not connect to the document" : "Netzwerk-Verbindungsfehler: Konnte nicht mit dem Dokument verbinden",
-    "Last save {lastSave}" : "Zuletzt gespeichert {lastSave}",
-    "New text document.md" : "Neues Textdokument.md"
+    "Last save {lastSave}" : "Zuletzt gespeichert {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");

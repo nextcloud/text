@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
-    "Last save {lastSave}" : "Son kayıt {lastSave}",
-    "New text document.md" : "Yeni metin belgesi.md"
+    "Last save {lastSave}" : "Son kayıt {lastSave}"
 },
 "nplurals=2; plural=(n > 1);");

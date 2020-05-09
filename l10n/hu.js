@@ -19,7 +19,6 @@ OC.L10N.register(
     "Bold" : "Vastag",
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
-    "Last save {lastSave}" : "Utolsó mentés {lastSave}",
-    "New text document.md" : "Új szöveg dokumentum.md"
+    "Last save {lastSave}" : "Utolsó mentés {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");
