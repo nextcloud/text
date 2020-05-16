@@ -385,6 +385,7 @@ export default {
 							this.tiptap.focus('start')
 						}
 						this.$emit('ready')
+						this.$parent.$emit('ready', true)
 					}
 					if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 						this.dirty = state.dirty
