@@ -13,7 +13,9 @@ div.ProseMirror {
 	outline: none;
 
 	&[contenteditable=true],
-	&[contenteditable=false] {
+	&[contenteditable=false],
+	[contenteditable=true],
+	[contenteditable=false] {
 		border: none !important;
 		width: 100%;
 		background-color: transparent;
