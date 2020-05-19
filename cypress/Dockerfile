@@ -1,4 +1,4 @@
-FROM nextcloudci/server:server-16
+FROM nextcloudci/server:server-17
 
 RUN mkdir /var/www/html/data
 RUN chown -R www-data:www-data /var/www/html/data
