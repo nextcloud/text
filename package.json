@@ -60,7 +60,7 @@
 		"@babel/plugin-transform-runtime": "^7.9.0",
 		"@babel/polyfill": "^7.8.7",
 		"@babel/preset-env": "^7.9.5",
-		"@cypress/browserify-preprocessor": "^2.1.4",
+		"@cypress/browserify-preprocessor": "^2.2.4",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@nextcloud/eslint-config": "^2.0.0",
 		"@nextcloud/eslint-plugin": "^1.4.0",
