@@ -24,17 +24,15 @@ class WorkspaceService {
 	}
 
 	public function getFile(Folder $folder) {
-		$file = null;
 		foreach ($this->getSupportedFilenames() as $filename) {
 			if ($folder->nodeExists($filename)) {
 				try {
-					$file = $folder->get($filename);
+					return $folder->get($filename);
 				} catch (NotFoundException $e) {
 				}
-				continue;
 			}
 		}
-		return $file;
+		return null;
 	}
 
 	public function getSupportedFilenames() {
