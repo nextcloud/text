@@ -25,7 +25,7 @@
 		<div v-if="imageLoaded && isSupportedImage" class="image__view">
 			<transition name="fade">
 				<img v-show="loaded"
-					:src="src"
+					:src="imageUrl"
 					class="image__main"
 					@load="onLoaded">
 			</transition>
@@ -37,13 +37,6 @@
 						@keyup.enter="updateAlt()">
 				</div>
 			</transition>
-		</div>
-		<div v-else-if="isRelativeImage">
-			<img :src="relativeSrc">
-			<input ref="srcInput"
-				type="text"
-				:value="src"
-				@keyup.enter="updateSrc()">
 		</div>
 		<div v-else class="image__placeholder">
 			<transition name="fade">
@@ -79,11 +72,11 @@ const imageMimes = [
 ]
 
 const getQueryVariable = (src, variable) => {
-	const query = src.split('#')[1]
+	const query = src.split('?')[1]
 	if (typeof query === 'undefined') {
 		return
 	}
-	const vars = query.split('&')
+	const vars = query.split(/[&#]/)
 	if (typeof vars === 'undefined') {
 		return
 	}
@@ -106,13 +99,22 @@ export default {
 		}
 	},
 	computed: {
-		isRelativeImage() {
-			return !this.src.match(/\/core\/preview/)
-		},
-		relativeSrc() {
+		imageUrl() {
+			if (this.hasPreviewUrl) {
+				return this.src
+			}
+			if (this.fileId) {
+				return generateUrl('/core/preview') + `?fileId=${this.fileId}&x=1024&y=1024&a=true`
+			}
 			const f = FileList.getCurrentDirectory() + '/' + this.src
 			const pathParam = encodeURIComponent(path.normalize(f))
 			return generateUrl('/core/preview.png') + `?file=${pathParam}&x=1024&y=1024&a=true`
+		},
+		fileId() {
+			return getQueryVariable(this.src, 'fileId')
+		},
+		hasPreviewUrl() {
+			return this.src.match(/^(\/index.php)?\/core\/preview/)
 		},
 		mimeIcon() {
 			const mime = getQueryVariable(this.src, 'mimetype')
@@ -167,7 +169,7 @@ export default {
 			return
 		}
 		const img = new Image()
-		img.src = this.node.attrs.src
+		img.src = this.imageUrl
 		img.onload = () => {
 			this.imageLoaded = true
 		}
@@ -180,9 +182,6 @@ export default {
 	methods: {
 		updateAlt() {
 			this.alt = this.$refs.altInput.value
-		},
-		updateSrc() {
-			this.src = this.$refs.srcInput.value
 		},
 		onLoaded() {
 			this.loaded = true
