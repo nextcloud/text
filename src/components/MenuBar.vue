@@ -237,19 +237,14 @@ export default {
 			OC.dialogs.filepicker('Insert an image', (file) => {
 				fetchFileInfo(currentUser.uid, file).then((info) => {
 					const fileInfo = info[0]
-					console.debug(fileInfo)
-					const previewUrl = OC.generateUrl('/core/preview?') + `fileId=${fileInfo.id}&x=1024&y=1024&a=true`
-					const internalLink = OC.generateUrl('/f/' + fileInfo.id)
 
 					// dirty but works so we have the information stored in markdown
 					const appendMeta = {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
-						fileId: fileInfo.id,
 					}
-					const src = (fileInfo.hasPreview ? previewUrl : internalLink)
-						+ '#'
-						+ Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+					const src = `${fileInfo.path}/${fileInfo.name}?fileId=${fileInfo.id}#${meta}`
 
 					_command({
 						src: src,
