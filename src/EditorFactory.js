@@ -38,6 +38,7 @@ import { Strong, Italic, Strike } from './marks'
 import { Image, PlainTextDocument, ListItem } from './nodes'
 import MarkdownIt from 'markdown-it'
 import taskLists from 'markdown-it-task-lists'
+import { translate as t } from '@nextcloud/l10n'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
@@ -81,7 +82,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Image(),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
-				emptyNodeText: 'Add notes, lists or links …',
+				emptyNodeText: t('text', 'Add notes, lists or links …'),
 				showOnlyWhenEditable: true,
 			}),
 		]
