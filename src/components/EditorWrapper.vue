@@ -35,6 +35,7 @@
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
+					:filePath="relativePath"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
 					:autohide="autohide">

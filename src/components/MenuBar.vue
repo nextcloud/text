@@ -112,6 +112,11 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		filePath: {
+			type: String,
+			required: false,
+			default: '',
+		},
 	},
 	data: () => {
 		return {
@@ -243,8 +248,10 @@ export default {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
 					}
+					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-					const src = `${fileInfo.path}/${fileInfo.name}?fileId=${fileInfo.id}#${meta}`
+					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
 
 					_command({
 						src: src,
@@ -252,6 +259,23 @@ export default {
 					})
 				})
 			}, false, [], true)
+		},
+		optimalPathTo(targetFile) {
+			const absolutePath = targetFile.split('/')
+			const relativePath = this.relativePathTo(targetFile).split('/')
+			return relativePath.length < absolutePath.length
+				? relativePath.join('/')
+				: targetFile
+		},
+		relativePathTo(targetFile) {
+			const current = this.filePath.split('/')
+			const target = targetFile.split('/')
+			current.pop() // ignore filename
+			while (current[0] === target[0]) {
+				current.shift()
+				target.shift()
+			}
+			return current.fill('..').concat(target).join('/')
 		},
 	},
 }
