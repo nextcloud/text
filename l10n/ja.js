@@ -24,6 +24,7 @@ OC.L10N.register(
     "Show image" : "画像を表示する",
     "Show file" : "ファイルを表示する",
     "Show rich workspaces" : "豊富なワークスペースを表示",
+    "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "New text document" : "新しいテキストドキュメント",
     "Edit" : "編集",
     "Undo" : "元に戻す",
@@ -45,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
     "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
-    "Last save {lastSave}" : "最終保存 {lastSave}",
-    "New text document.md" : "新しいテキストドキュメント.md"
+    "Last save {lastSave}" : "最終保存 {lastSave}"
 },
 "nplurals=1; plural=0;");

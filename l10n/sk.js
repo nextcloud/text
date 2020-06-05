@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
     "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
-    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
-    "New text document.md" : "Nový textový dokument.md"
+    "Last save {lastSave}" : "Posledné uloženie {lastSave}"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

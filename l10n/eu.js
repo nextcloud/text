@@ -46,7 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "Network connection error: Could not connect to the document" : "Sare konexio errorea: Ezin izan da dokumentuarekin konektatu",
-    "Last save {lastSave}" : "Azken gordetzea {lastSave}",
-    "New text document.md" : "Testu dokumentu berria.md"
+    "Last save {lastSave}" : "Azken gordetzea {lastSave}"
 },
 "nplurals=2; plural=(n != 1);");
