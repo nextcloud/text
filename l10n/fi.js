@@ -1,6 +1,9 @@
 OC.L10N.register(
     "text",
     {
+    "Nextcloud Text" : "Nextcloud Text",
+    "text document" : "Tekstiasiakirja",
+    "Readme" : "Lueminut",
     "Text" : "Teksti",
     "📝 Collaborative document editing" : "📝 Yhteistyöhön perustuvaa asiakirjojen muokkausta",
     "Use current version" : "Käytä nykyistä versiota",
@@ -34,6 +37,7 @@ OC.L10N.register(
     "Heading 6" : "Otsikko 6",
     "Unordered list" : "Järjestämätön lista",
     "Ordered list" : "Järjestetty lista",
+    "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
     "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
     "Last save {lastSave}" : "Viimeisin tallennus {lastSave}"
