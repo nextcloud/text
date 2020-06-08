@@ -40,6 +40,8 @@ import MarkdownIt from 'markdown-it'
 import taskLists from 'markdown-it-task-lists'
 import { translate as t } from '@nextcloud/l10n'
 
+import 'proxy-polyfill'
+
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 const loadSyntaxHighlight = async(language) => {
