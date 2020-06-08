@@ -38,6 +38,8 @@ import { Strong, Italic, Strike } from './marks'
 import { Image, PlainTextDocument } from './nodes'
 import MarkdownIt from 'markdown-it'
 
+import 'proxy-polyfill'
+
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 const loadSyntaxHighlight = async(language) => {
