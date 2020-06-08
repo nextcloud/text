@@ -67,6 +67,7 @@
 <script>
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
+import moment from '@nextcloud/moment'
 
 import { SyncService, ERROR_TYPE } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -251,7 +252,7 @@ export default {
 		},
 		updateLastSavedStatus() {
 			if (this.document) {
-				this.lastSavedString = window.moment(this.document.lastSavedVersionTime * 1000).fromNow()
+				this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow()
 			}
 		},
 		initSession() {
