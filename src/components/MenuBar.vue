@@ -124,6 +124,7 @@ export default {
 			windowHeight: 0,
 			forceRecompute: 0,
 			submenuVisibility: {},
+			lastImagePath: null,
 			icons: [...menuBarIcons],
 		}
 	},
@@ -194,6 +195,10 @@ export default {
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
 			return iconCount
 		},
+		imagePath() {
+			return this.lastImagePath
+				|| this.filePath.split('/').slice(0, -1).join('/')
+		},
 	},
 	mounted() {
 		window.addEventListener('resize', this.getWindowWidth)
@@ -242,6 +247,7 @@ export default {
 			OC.dialogs.filepicker('Insert an image', (file) => {
 				fetchFileInfo(currentUser.uid, file).then((info) => {
 					const fileInfo = info[0]
+					this.lastImagePath = fileInfo.path
 
 					// dirty but works so we have the information stored in markdown
 					const appendMeta = {
@@ -258,7 +264,7 @@ export default {
 						alt: fileInfo.name,
 					})
 				})
-			}, false, [], true)
+			}, false, [], true, undefined, this.imagePath)
 		},
 		optimalPathTo(targetFile) {
 			const absolutePath = targetFile.split('/')
