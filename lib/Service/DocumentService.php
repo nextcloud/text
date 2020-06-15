@@ -293,6 +293,15 @@ class DocumentService {
 		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
 
+		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $force === false) {
+			if (!$this->cache->get('document-save-lock-' . $documentId)) {
+				throw new DocumentSaveConflictException('File changed in the meantime from outside');
+			} else {
+				// Only return here if the document is locked, otherwise we can continue to save
+				return $document;
+			}
+		}
+
 		if ($autoaveDocument === null) {
 			return $document;
 		}
@@ -304,13 +313,6 @@ class DocumentService {
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
-		}
-		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $force === false) {
-			if (!$this->cache->get('document-save-lock-' . $documentId)) {
-				throw new DocumentSaveConflictException('File changed in the meantime from outside');
-			} else {
-				return $document;
-			}
 		}
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
