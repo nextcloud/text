@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[110],{337:function(e,n){e.exports=function(e){return{subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
-//# sourceMappingURL=mojolicious.js.map?v=911fa91b9f6dcfc58dd3
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[110],{338:function(e,n){e.exports=function(e){return{subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
+//# sourceMappingURL=mojolicious.js.map?v=5d08fb8d637e07779020
