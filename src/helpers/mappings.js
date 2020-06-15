@@ -59,6 +59,7 @@ const extensionHighlight = {
 	cson: 'coffescript',
 	iced: 'coffescript',
 	c: 'cpp',
+	h: 'cpp',
 	'c++': 'cpp',
 	'h++': 'cpp',
 	hh: 'cpp',
