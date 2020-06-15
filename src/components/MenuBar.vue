@@ -158,6 +158,14 @@ export default {
 				action: (commands) => {
 					this.showImagePrompt(commands.image)
 				},
+			}, {
+				label: t('text', 'Insert link'),
+				class: 'icon-link',
+				isActive: () => {
+				},
+				action: (commands) => {
+					this.showLinkPrompt(commands.link)
+				},
 			}]
 		},
 		childPopoverMenu() {
@@ -197,6 +205,10 @@ export default {
 		},
 		imagePath() {
 			return this.lastImagePath
+				|| this.filePath.split('/').slice(0, -1).join('/')
+		},
+		linkPath() {
+			return this.lastLinkPath
 				|| this.filePath.split('/').slice(0, -1).join('/')
 		},
 	},
@@ -265,6 +277,26 @@ export default {
 					})
 				})
 			}, false, [], true, undefined, this.imagePath)
+		},
+		showLinkPrompt(command) {
+			const currentUser = OC.getCurrentUser()
+			if (!currentUser) {
+				return
+			}
+			const _command = command
+			OC.dialogs.filepicker('Insert a link', (file) => {
+				const client = OC.Files.getClient()
+				client.getFileInfo(file).then((_status, fileInfo) => {
+					this.lastLinkPath = fileInfo.path
+					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
+					const href = `${encodedPath}?fileId=${fileInfo.id}`
+
+					_command({
+						href,
+					})
+				})
+			}, false, [], true, undefined, this.linkPath)
 		},
 		optimalPathTo(targetFile) {
 			const absolutePath = targetFile.split('/')
