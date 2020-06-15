@@ -123,7 +123,8 @@ class WorkspaceController extends OCSController {
 					'file' => [
 						'id' => $file->getId(),
 						'mimetype' => $file->getMimetype(),
-						'name' => $file->getName()
+						'name' => $file->getName(),
+						'path' => $file->getPath()
 					],
 					'folder' => [
 						'permissions' => $folder->getPermissions()
