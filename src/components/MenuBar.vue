@@ -112,6 +112,11 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		filePath: {
+			type: String,
+			required: false,
+			default: '',
+		},
 	},
 	data: () => {
 		return {
@@ -119,6 +124,7 @@ export default {
 			windowHeight: 0,
 			forceRecompute: 0,
 			submenuVisibility: {},
+			lastImagePath: null,
 			icons: [...menuBarIcons],
 		}
 	},
@@ -189,6 +195,10 @@ export default {
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
 			return iconCount
 		},
+		imagePath() {
+			return this.lastImagePath
+				|| this.filePath.split('/').slice(0, -1).join('/')
+		},
 	},
 	mounted() {
 		window.addEventListener('resize', this.getWindowWidth)
@@ -237,26 +247,41 @@ export default {
 			OC.dialogs.filepicker('Insert an image', (file) => {
 				fetchFileInfo(currentUser.uid, file).then((info) => {
 					const fileInfo = info[0]
-					console.debug(fileInfo)
-					const previewUrl = OC.generateUrl('/core/preview?') + `fileId=${fileInfo.id}&x=1024&y=1024&a=true`
-					const internalLink = OC.generateUrl('/f/' + fileInfo.id)
+					this.lastImagePath = fileInfo.path
 
 					// dirty but works so we have the information stored in markdown
 					const appendMeta = {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
-						fileId: fileInfo.id,
 					}
-					const src = (fileInfo.hasPreview ? previewUrl : internalLink)
-						+ '#'
-						+ Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
+					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
 
 					_command({
 						src: src,
 						alt: fileInfo.name,
 					})
 				})
-			}, false, [], true)
+			}, false, [], true, undefined, this.imagePath)
+		},
+		optimalPathTo(targetFile) {
+			const absolutePath = targetFile.split('/')
+			const relativePath = this.relativePathTo(targetFile).split('/')
+			return relativePath.length < absolutePath.length
+				? relativePath.join('/')
+				: targetFile
+		},
+		relativePathTo(targetFile) {
+			const current = this.filePath.split('/')
+			const target = targetFile.split('/')
+			current.pop() // ignore filename
+			while (current[0] === target[0]) {
+				current.shift()
+				target.shift()
+			}
+			return current.fill('..').concat(target).join('/')
 		},
 	},
 }

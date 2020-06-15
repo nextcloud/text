@@ -22,10 +22,10 @@
 
 <template>
 	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
-		<div v-if="imageLoaded && isSupportedImage">
+		<div v-if="imageLoaded && isSupportedImage" class="image__view">
 			<transition name="fade">
 				<img v-show="loaded"
-					:src="src"
+					:src="imageUrl"
 					class="image__main"
 					@load="onLoaded">
 			</transition>
@@ -41,10 +41,10 @@
 		<div v-else class="image__placeholder">
 			<transition name="fade">
 				<div v-show="loaded" class="image__main">
-					<div class="icon-image" :style="mimeIcon" />
-					<p>
-						<a :href="internalLinkOrImage" target="_blank">{{ isSupportedImage ? t('text', 'Show image') : t('text', 'Show file') }}</a>
-					</p>
+					<a :href="internalLinkOrImage" target="_blank">
+						<div class="icon-image" :style="mimeIcon" />
+						<p v-if="!isSupportedImage">{{ alt }}</p>
+					</a>
 				</div>
 			</transition><transition name="fade">
 				<div v-show="loaded" class="image__caption">
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import path from 'path'
+import { generateUrl } from '@nextcloud/router'
 
 const imageMimes = [
 	'image/png',
@@ -70,11 +72,11 @@ const imageMimes = [
 ]
 
 const getQueryVariable = (src, variable) => {
-	const query = src.split('#')[1]
+	const query = src.split('?')[1]
 	if (typeof query === 'undefined') {
 		return
 	}
-	const vars = query.split('&')
+	const vars = query.split(/[&#]/)
 	if (typeof vars === 'undefined') {
 		return
 	}
@@ -97,6 +99,23 @@ export default {
 		}
 	},
 	computed: {
+		imageUrl() {
+			if (this.hasPreviewUrl) {
+				return this.src
+			}
+			if (this.fileId) {
+				return generateUrl('/core/preview') + `?fileId=${this.fileId}&x=1024&y=1024&a=true`
+			}
+			const f = FileList.getCurrentDirectory() + '/' + this.src
+			const pathParam = encodeURIComponent(path.normalize(f))
+			return generateUrl('/core/preview.png') + `?file=${pathParam}&x=1024&y=1024&a=true`
+		},
+		fileId() {
+			return getQueryVariable(this.src, 'fileId')
+		},
+		hasPreviewUrl() {
+			return this.src.match(/^(\/index.php)?\/core\/preview/)
+		},
 		mimeIcon() {
 			const mime = getQueryVariable(this.src, 'mimetype')
 			if (mime) {
@@ -150,7 +169,7 @@ export default {
 			return
 		}
 		const img = new Image()
-		img.src = this.node.attrs.src
+		img.src = this.imageUrl
 		img.onload = () => {
 			this.imageLoaded = true
 		}
@@ -198,13 +217,31 @@ export default {
 		height: 100px;
 	}
 
-	.image__placeholder .image__main {
-		background-color: var(--color-background-dark);
+	.image__view {
 		text-align: center;
-		padding: 20px;
-		border-radius: var(--border-radius);
-		.icon-image {
-			opacity: 0.7;
+
+		.image__main {
+			max-height: 40vh;
+		}
+	}
+
+	.image__placeholder {
+		a {
+			display: flex;
+		}
+		.image__main {
+			background-color: var(--color-background-dark);
+			text-align: center;
+			padding: 5px;
+			border-radius: var(--border-radius);
+
+			.icon-image {
+				margin: 0;
+			}
+
+			p {
+				padding: 10px;
+			}
 		}
 	}
 
