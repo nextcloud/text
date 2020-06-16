@@ -20,8 +20,6 @@ OC.L10N.register(
     "Insert image" : "Додати зображення",
     "Add link" : "Додати посиланя",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
-    "Show image" : "Показати зображення",
-    "Show file" : "Показати файл",
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
     "New text document" : "Новий текстовий документ",
@@ -45,6 +43,8 @@ OC.L10N.register(
     "Blockquote" : "Цитування",
     "Code block" : "Код",
     "Network connection error: Could not connect to the document" : "Помилка з'єднання з мережею: неможливо з'єднатися з документом",
-    "Last save {lastSave}" : "Збережено {lastSave}"
+    "Last save {lastSave}" : "Збережено {lastSave}",
+    "Show image" : "Показати зображення",
+    "Show file" : "Показати файл"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

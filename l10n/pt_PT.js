@@ -15,11 +15,11 @@ OC.L10N.register(
     "Save guest name" : "Guardar o nome do convidado",
     "Add link" : "Adicionar ligação",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
-    "Show image" : "Mostrar imagem",
-    "Show file" : "Mostrar ficheiro",
     "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
-    "Last save {lastSave}" : "Última versão guardada {lastSave}"
+    "Last save {lastSave}" : "Última versão guardada {lastSave}",
+    "Show image" : "Mostrar imagem",
+    "Show file" : "Mostrar ficheiro"
 },
 "nplurals=2; plural=(n != 1);");

@@ -19,8 +19,6 @@
     "Insert image" : "Убаци слику",
     "Add link" : "Додај везу",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
-    "Show image" : "Прикажи слику",
-    "Show file" : "Прикажи фајл",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "New text document" : "Нови текстуални документ",
@@ -44,6 +42,8 @@
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
     "Network connection error: Could not connect to the document" : "Грешка у мрежној конекцији: Не могу да се повежем са документом",
-    "Last save {lastSave}" : "Последње чување {lastSave}"
+    "Last save {lastSave}" : "Последње чување {lastSave}",
+    "Show image" : "Прикажи слику",
+    "Show file" : "Прикажи фајл"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

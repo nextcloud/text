@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "Umetni sliku",
     "Add link" : "Dodaj poveznicu",
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
-    "Show image" : "Prikaži sliku",
-    "Show file" : "Prikaži datoteku",
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "New text document" : "Novi tekstni dokument",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
-    "Last save {lastSave}" : "Posljednje spremanje {lastSave}"
+    "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
+    "Show image" : "Prikaži sliku",
+    "Show file" : "Prikaži datoteku"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

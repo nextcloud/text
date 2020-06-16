@@ -19,8 +19,6 @@
     "Insert image" : "Vstavi sliko",
     "Add link" : "Dodaj povezavo",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
-    "Show image" : "Pokaži sliko",
-    "Show file" : "Pokaži datoteko",
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ...",
     "New text document" : "Nov besedilni dokument",
@@ -44,6 +42,8 @@
     "Blockquote" : "Bločni navedek",
     "Code block" : "Navedek s kodo",
     "Network connection error: Could not connect to the document" : "Napaka omrežne povezave: ni mogoče vzpostaviti povezave za urejanje dokumenta",
-    "Last save {lastSave}" : "Zadnje shranjevanje {lastSaved}"
+    "Last save {lastSave}" : "Zadnje shranjevanje {lastSaved}",
+    "Show image" : "Pokaži sliko",
+    "Show file" : "Pokaži datoteko"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

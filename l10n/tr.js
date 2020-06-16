@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "Görsel ekle",
     "Add link" : "Bağlantı ekle",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
-    "Show image" : "Görseli görüntüle",
-    "Show file" : "Dosyayı görüntüle",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "New text document" : "Yeni metin belgesi",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
-    "Last save {lastSave}" : "Son kayıt {lastSave}"
+    "Last save {lastSave}" : "Son kayıt {lastSave}",
+    "Show image" : "Görseli görüntüle",
+    "Show file" : "Dosyayı görüntüle"
 },
 "nplurals=2; plural=(n > 1);");
