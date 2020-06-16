@@ -19,8 +19,6 @@
     "Insert image" : "Vložiť obrázok",
     "Add link" : "Pridať odkaz",
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
-    "Show image" : "Zobraziť obrázok",
-    "Show file" : "Zobraziť súbor",
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "New text document" : "Nový textový dokument",
@@ -44,6 +42,8 @@
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
     "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
-    "Last save {lastSave}" : "Posledné uloženie {lastSave}"
+    "Last save {lastSave}" : "Posledné uloženie {lastSave}",
+    "Show image" : "Zobraziť obrázok",
+    "Show file" : "Zobraziť súbor"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

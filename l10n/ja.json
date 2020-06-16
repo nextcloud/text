@@ -19,8 +19,6 @@
     "Insert image" : "画像の挿入",
     "Add link" : "リンクを追加",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
-    "Show image" : "画像を表示する",
-    "Show file" : "ファイルを表示する",
     "Show rich workspaces" : "豊富なワークスペースを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "New text document" : "新しいテキストドキュメント",
@@ -44,6 +42,8 @@
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
     "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
-    "Last save {lastSave}" : "最終保存 {lastSave}"
+    "Last save {lastSave}" : "最終保存 {lastSave}",
+    "Show image" : "画像を表示する",
+    "Show file" : "ファイルを表示する"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

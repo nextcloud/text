@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "Εισαγωγή εικόνας",
     "Add link" : "Προσθήκη συνδέσμου",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι επεξεργαστές"],
-    "Show image" : "Εμφάνιση εικόνας",
-    "Show file" : "Εμφάνιση αρχείου",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένου χώρου",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων ...",
     "New text document" : "Νέο έγγραφο κειμένου",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
     "Network connection error: Could not connect to the document" : "Σφάλμα σύνδεσης δικτύου: Δεν υπάρχει σύνδεση με το έγγραφο.",
-    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}"
+    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
+    "Show image" : "Εμφάνιση εικόνας",
+    "Show file" : "Εμφάνιση αρχείου"
 },
 "nplurals=2; plural=(n != 1);");

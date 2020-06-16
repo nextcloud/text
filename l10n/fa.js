@@ -6,11 +6,11 @@ OC.L10N.register(
     "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "Add link" : "افزودن لینک",
-    "Show image" : "نمایش تصویر",
-    "Show file" : "نمایش فایل",
     "Edit" : "ویرایش",
     "Undo" : "برگرداندن",
     "Bold" : "درشت",
-    "Italic" : "Italic"
+    "Italic" : "Italic",
+    "Show image" : "نمایش تصویر",
+    "Show file" : "نمایش فایل"
 },
 "nplurals=2; plural=(n > 1);");

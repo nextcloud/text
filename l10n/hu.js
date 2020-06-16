@@ -14,8 +14,6 @@ OC.L10N.register(
     "Edit guest name" : "Vendég név szerkesztése",
     "Save guest name" : "Vendég név mentése",
     "Add link" : "Hivatkozás hozzáadása",
-    "Show image" : "Kép megjelenítése",
-    "Show file" : "Fájl megjelenítése",
     "New text document" : "Új szöveg dokumentum",
     "Edit" : "Szerkesztés",
     "Undo" : "Visszavon",
@@ -23,6 +21,8 @@ OC.L10N.register(
     "Bold" : "Vastag",
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
-    "Last save {lastSave}" : "Utolsó mentés {lastSave}"
+    "Last save {lastSave}" : "Utolsó mentés {lastSave}",
+    "Show image" : "Kép megjelenítése",
+    "Show file" : "Fájl megjelenítése"
 },
 "nplurals=2; plural=(n != 1);");

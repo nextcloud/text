@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "插入图片",
     "Add link" : "添加链接",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
-    "Show image" : "显示图片",
-    "Show file" : "显示文件",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "New text document" : "新建文本文档",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "块引用",
     "Code block" : "代码块",
     "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
-    "Last save {lastSave}" : "最近保存 {lastSave}"
+    "Last save {lastSave}" : "最近保存 {lastSave}",
+    "Show image" : "显示图片",
+    "Show file" : "显示文件"
 },
 "nplurals=1; plural=0;");

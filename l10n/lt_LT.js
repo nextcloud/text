@@ -19,8 +19,6 @@ OC.L10N.register(
     "Insert image" : "Įterpti paveikslą",
     "Add link" : "Pridėti nuorodą",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
-    "Show image" : "Rodyti paveikslą",
-    "Show file" : "Rodyti failą",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "New text document" : "Naujas tekstinis dokumentas",
@@ -44,6 +42,8 @@ OC.L10N.register(
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
     "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
-    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}"
+    "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
+    "Show image" : "Rodyti paveikslą",
+    "Show file" : "Rodyti failą"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

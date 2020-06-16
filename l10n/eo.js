@@ -16,8 +16,6 @@ OC.L10N.register(
     "Insert image" : "Enmeti bildon",
     "Add link" : "Aldoni ligilon",
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"],
-    "Show image" : "Montri bildon",
-    "Show file" : "Montri dosieron",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "New text document" : "Nova tekstdokumento",
     "Edit" : "Modifi",
@@ -39,6 +37,8 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
-    "Last save {lastSave}" : "Lasta konservado {lastSave}"
+    "Last save {lastSave}" : "Lasta konservado {lastSave}",
+    "Show image" : "Montri bildon",
+    "Show file" : "Montri dosieron"
 },
 "nplurals=2; plural=(n != 1);");
