@@ -30,6 +30,7 @@
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.1.0",
 		"@nextcloud/vue": "^2.0.0",
+		"entities": "^2.0.3",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^9.16.2",
 		"markdown-it": "^11.0.0",
