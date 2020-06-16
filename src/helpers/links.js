@@ -21,11 +21,32 @@
  */
 
 const domHref = function(node) {
-	return node.attrs.href
+	const ref = node.attrs.href
+	if (!ref) {
+		return ref
+	}
+	if (ref.match(/^[a-zA-Z]*:/)) {
+		return ref
+	}
+	const match = ref.match(/^([^?]*)\?fileId=(\d*)/)
+	if (match) {
+		const [, path, id] = match
+		const dir = OC.Util.History.parseUrlQuery().dir
+		return `?dir=${dir}&openfile=${id}&relPath=${path}`
+	}
 }
 
 const parseHref = function(dom) {
-	return dom.getAttribute('href')
+	const ref = dom.getAttribute('href')
+	if (!ref) {
+		return ref
+	}
+	const match = ref.match(/^\?dir=([^&]*)&openfile=([^&]*)&relPath=([^&]*)/)
+	if (match) {
+		const [, , id, path] = match
+		return `${path}?fileId=${id}`
+	}
+	return ref
 }
 
 export {
