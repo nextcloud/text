@@ -18,8 +18,6 @@ OC.L10N.register(
     "Insert image" : "Lisää kuva",
     "Add link" : "Lisää linkki",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
-    "Show image" : "Näytä kuva",
-    "Show file" : "Näytä tiedosto",
     "New text document" : "Uusi tekstiasiakirja",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
@@ -40,6 +38,8 @@ OC.L10N.register(
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
     "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
-    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}"
+    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
+    "Show image" : "Näytä kuva",
+    "Show file" : "Näytä tiedosto"
 },
 "nplurals=2; plural=(n != 1);");

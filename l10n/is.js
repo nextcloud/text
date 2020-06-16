@@ -20,8 +20,6 @@ OC.L10N.register(
     "Insert image" : "Setja inn mynd",
     "Add link" : "Bæta við tengli",
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
-    "Show image" : "Birta mynd",
-    "Show file" : "Sýna skrá",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "New text document" : "Nýtt textaskjal",
@@ -45,6 +43,8 @@ OC.L10N.register(
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
     "Network connection error: Could not connect to the document" : "Villa í netkerfi: tókst ekki að tengjast skjalinu",
-    "Last save {lastSave}" : "Síðast vistað {lastSave}"
+    "Last save {lastSave}" : "Síðast vistað {lastSave}",
+    "Show image" : "Birta mynd",
+    "Show file" : "Sýna skrá"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

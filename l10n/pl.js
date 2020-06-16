@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "Wstaw obraz",
     "Add link" : "Dodaj link",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
-    "Show image" : "Pokaż obraz",
-    "Show file" : "Pokaż plik",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
     "New text document" : "Nowy dokument tekstowy",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "Cytat",
     "Code block" : "Blok kodu",
     "Network connection error: Could not connect to the document" : "Błąd połączenia sieciowego: Nie można połączyć się z dokumentem",
-    "Last save {lastSave}" : "Ostatni zapis {lastSave}"
+    "Last save {lastSave}" : "Ostatni zapis {lastSave}",
+    "Show image" : "Pokaż obraz",
+    "Show file" : "Pokaż plik"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

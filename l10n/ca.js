@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "Inserir imatge",
     "Add link" : "Afegeix un enllaç",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
-    "Show image" : "Mostra la imatge",
-    "Show file" : "Mostra el fitxer",
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços...",
     "New text document" : "Nou document de text",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloc de codi",
     "Network connection error: Could not connect to the document" : "Error de connexió de xarxa: No s'ha pogut connectar amb el document",
-    "Last save {lastSave}" : "Darrera modificació {lastSave}"
+    "Last save {lastSave}" : "Darrera modificació {lastSave}",
+    "Show image" : "Mostra la imatge",
+    "Show file" : "Mostra el fitxer"
 },
 "nplurals=2; plural=(n != 1);");

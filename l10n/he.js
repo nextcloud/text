@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "הוספת תמונה",
     "Add link" : "הוספת קישור",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
-    "Show image" : "הצגת תמונה",
-    "Show file" : "הצגת קובץ",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "New text document" : "מסמך טקסט חדש",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
     "Network connection error: Could not connect to the document" : "שגיאה בחיבור לרשת: לא ניתן להתחבר למסמך",
-    "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}"
+    "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
+    "Show image" : "הצגת תמונה",
+    "Show file" : "הצגת קובץ"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

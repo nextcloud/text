@@ -7,7 +7,6 @@ OC.L10N.register(
     "Retry" : "Prøv igen",
     "Unsaved changes" : "Ikke gemte ændringer",
     "Insert image" : "Indsæt billede",
-    "Show file" : "Vis fil",
     "Edit" : "Redigér",
     "Undo" : "Fortryd",
     "Redo" : "Annullér fortryd",
@@ -24,6 +23,7 @@ OC.L10N.register(
     "Heading 6" : "Overskrift 6",
     "Unordered list" : "Usorteret liste",
     "Ordered list" : "Sorteret liste",
-    "Code block" : "Kodeblok"
+    "Code block" : "Kodeblok",
+    "Show file" : "Vis fil"
 },
 "nplurals=2; plural=(n != 1);");

@@ -7,8 +7,8 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
     "Add link" : "Lisa link",
+    "Edit" : "Redigeeri",
     "Show image" : "Näita pilti",
-    "Show file" : "Näita faili",
-    "Edit" : "Redigeeri"
+    "Show file" : "Näita faili"
 },
 "nplurals=2; plural=(n != 1);");
