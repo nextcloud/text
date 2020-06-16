@@ -11,7 +11,7 @@ global.OC = {
 	webroot: ''
 }
 
-describe('Image View html source based on md source', () => {
+describe('Image View src attribute based on markdown', () => {
 
 	const factory = attrs => {
 		const propsData = {

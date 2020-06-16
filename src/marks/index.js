@@ -21,6 +21,7 @@
  */
 
 import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
+import { domHref, parseHref } from './../helpers/links'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -88,12 +89,13 @@ class Link extends TipTapLink {
 				{
 					tag: 'a[href]',
 					getAttrs: dom => ({
-						href: dom.getAttribute('href'),
+						href: parseHref(dom),
 					}),
 				},
 			],
 			toDOM: node => ['a', {
 				...node.attrs,
+				href: domHref(node),
 				title: node.attrs.href,
 				rel: 'noopener noreferrer nofollow',
 			}, 0],

@@ -20,10 +20,6 @@
  *
  */
 
-/**
- * Callback that should be executed after the document is ready
- * @param callback
- */
 import { openMimetypes } from './mime'
 import RichWorkspace from '../views/RichWorkspace'
 import { imagePath } from '@nextcloud/router'
