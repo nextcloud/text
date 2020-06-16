@@ -75,6 +75,7 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
+import { optimalPath } from './../helpers/files'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -158,14 +159,6 @@ export default {
 				action: (commands) => {
 					this.showImagePrompt(commands.image)
 				},
-			}, {
-				label: t('text', 'Insert link'),
-				class: 'icon-link',
-				isActive: () => {
-				},
-				action: (commands) => {
-					this.showLinkPrompt(commands.link)
-				},
 			}]
 		},
 		childPopoverMenu() {
@@ -205,10 +198,6 @@ export default {
 		},
 		imagePath() {
 			return this.lastImagePath
-				|| this.filePath.split('/').slice(0, -1).join('/')
-		},
-		linkPath() {
-			return this.lastLinkPath
 				|| this.filePath.split('/').slice(0, -1).join('/')
 		},
 	},
@@ -266,7 +255,7 @@ export default {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
 					}
-					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
 					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`

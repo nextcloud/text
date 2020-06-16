@@ -50,7 +50,9 @@
 					<slot name="header" />
 				</MenuBar>
 				<div>
-					<MenuBubble v-if="!readOnly && isRichEditor" :editor="tiptap" />
+					<MenuBubble v-if="!readOnly && isRichEditor"
+						:editor="tiptap"
+						:filePath="relativePath" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
 						:editor="tiptap" />

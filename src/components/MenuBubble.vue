@@ -27,16 +27,16 @@
 		@hide="hideLinkMenu">
 		<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-				<button
-					class="icon-file"
-					@click="selectFile(commands.link)" />
 				<input ref="linkInput"
 					v-model="linkUrl"
 					class="menububble__input"
 					type="text"
 					placeholder="https://"
 					@keydown.esc="hideLinkMenu">
-				<button class="menububble__button icon-confirm" type="button" @click="setLinkUrl(commands.link, linkUrl)" />
+				<button class="menububble__button icon-confirm"
+					type="button"
+					tabindex="0"
+					@click="setLinkUrl(commands.link, linkUrl)" />
 			</form>
 
 			<template v-else>
@@ -45,7 +45,16 @@
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
 					<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
-					<span class="menububble__buttontext">{{ t('text', 'Add link') }}</span>
+					<span class="menububble__buttontext">
+						{{ t('text', isActive.link() ? 'Update Link' : 'Add Link') }}
+					</span>
+				</button>
+				<button
+					class="menububble__button"
+					:class="{ 'is-active': isActive.link() }"
+					@click="selectFile(commands.link)">
+					<span v-tooltip="'Link file'" class="icon-file" />
+					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
 			</template>
 		</div>
@@ -55,6 +64,7 @@
 <script>
 import { EditorMenuBubble } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { optimalPath } from './../helpers/files'
 
 export default {
 	name: 'MenuBubble',
@@ -69,6 +79,11 @@ export default {
 			type: Object,
 			required: false,
 			default: null,
+		},
+		filePath: {
+			type: String,
+			required: false,
+			default: '',
 		},
 	},
 	data: () => {
@@ -89,27 +104,33 @@ export default {
 			this.linkUrl = null
 			this.linkMenuIsActive = false
 		},
-
 		selectFile(command) {
 			const currentUser = OC.getCurrentUser()
 			if (!currentUser) {
 				return
 			}
+			const startPath = this.filePath.split('/').slice(0, -1).join('/')
 			OC.dialogs.filepicker('Select file to link to', (file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
-					// todo: use optimal path
-					const path = (`${fileInfo.path}/${fileInfo.name}`)
+					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-					const href = `${encodedPath}?fileId=${fileInfo.id}`
-
-					this.setLinkUrl(command, href)
+					command({ href: `${encodedPath}?fileId=${fileInfo.id}` })
+					this.hideLinkMenu()
 				})
-			}, false, [], true)
-			// todo: ,  undefined, this.linkPath)
+			}, false, [], true, undefined, startPath)
 		},
 		setLinkUrl(command, url) {
-			if (url && !url.match(/^[a-zA-Z]+:\/\//) && !url.match(/^\//)) {
+			// Heuristics for determining if we need a https:// prefix.
+			const noPrefixes = [
+				/^[a-zA-Z]+:/, // url with protocol ("mailTo:email@domain.tld")
+				/^\//, // absolute path
+				/\?fileId=/, // relative link with fileId
+				/^\.\.?\//, // relative link starting with ./ or ../
+				/^[^.]*[/$]/, // no dots before first '/' - not a domain name
+				/^#/, // url fragment
+			]
+			if (url && !noPrefixes.find(regex => url.match(regex))) {
 				url = 'https://' + url
 			}
 			command({ href: url })
