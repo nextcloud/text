@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme }">
+	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
 		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -158,15 +158,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 	#rich-workspace {
 		padding: 0 60px;
-		min-height: 90px;
 		/* Slightly reduce vertical space */
 		margin-bottom: -24px;
 		text-align: left;
 		max-height: 0;
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+		&.creatable {
+			min-height: 90px;
+		}
 	}
 
 	/* For subfolders, where there are no Recommendations */
