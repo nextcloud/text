@@ -31,7 +31,7 @@ describe('Commonmark', () => {
 
   // failures because of some additional newline in markdownit
   const skippedMarkdownTests = [
-      181, 202, 203
+    187, 209, 210
   ];
 
   spec.forEach((entry) => {
