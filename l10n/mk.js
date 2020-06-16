@@ -13,8 +13,8 @@ OC.L10N.register(
     "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
     "Add link" : "Додади линк",
+    "Edit" : "Уреди",
     "Show image" : "Прикаши слика",
-    "Show file" : "Прикажи датотека",
-    "Edit" : "Уреди"
+    "Show file" : "Прикажи датотека"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

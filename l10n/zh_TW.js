@@ -21,8 +21,6 @@ OC.L10N.register(
     "Insert image" : "插入影像",
     "Add link" : "加入連結",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
-    "Show image" : "顯示影像",
-    "Show file" : "顯示檔案",
     "Show rich workspaces" : "顯示較多功能的工作區",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "New text document" : "新文字文件",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
     "Network connection error: Could not connect to the document" : "網路連線錯誤：無法連線至文件",
-    "Last save {lastSave}" : "上次儲存於 {lastSave}"
+    "Last save {lastSave}" : "上次儲存於 {lastSave}",
+    "Show image" : "顯示影像",
+    "Show file" : "顯示檔案"
 },
 "nplurals=1; plural=0;");

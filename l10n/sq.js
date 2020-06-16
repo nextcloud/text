@@ -15,14 +15,14 @@ OC.L10N.register(
     "Save guest name" : "Ruaj emrin e të ftuarit",
     "Add link" : "Shto link",
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"],
-    "Show image" : "Shfaq imazhin",
-    "Show file" : "Shfaq skedarin",
     "New text document" : "Dokument tekst i ri",
     "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
-    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}"
+    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
+    "Show image" : "Shfaq imazhin",
+    "Show file" : "Shfaq skedarin"
 },
 "nplurals=2; plural=(n != 1);");
