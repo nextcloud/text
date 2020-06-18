@@ -44,7 +44,7 @@
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
-					<span v-tooltip="isActive.link() ? 'Update Link' : 'Add Link'" class="icon-link" />
+					<span v-tooltip="t('text', isActive.link() ? 'Update Link' : 'Add Link')" class="icon-link" />
 					<span class="menububble__buttontext">
 						{{ t('text', isActive.link() ? 'Update Link' : 'Add Link') }}
 					</span>
@@ -53,7 +53,7 @@
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="selectFile(commands.link)">
-					<span v-tooltip="'Link file'" class="icon-file" />
+					<span v-tooltip="t('text', 'Link file')" class="icon-file" />
 					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
 			</template>
@@ -110,7 +110,7 @@ export default {
 				return
 			}
 			const startPath = this.filePath.split('/').slice(0, -1).join('/')
-			OC.dialogs.filepicker('Select file to link to', (file) => {
+			OC.dialogs.filepicker(t('text', 'Select file to link to'), (file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
 					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)

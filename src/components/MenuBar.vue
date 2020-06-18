@@ -245,7 +245,7 @@ export default {
 				return
 			}
 			const _command = command
-			OC.dialogs.filepicker('Insert an image', (file) => {
+			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
 					this.lastImagePath = fileInfo.path
