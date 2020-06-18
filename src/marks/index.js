@@ -119,10 +119,10 @@ class Link extends TipTapLink {
 						if (attrs.href && event.target instanceof HTMLAnchorElement) {
 							event.stopPropagation()
 							const htmlHref = event.target.attributes.href.value
-							if (htmlHref.match(/^\?/)) {
+							if (event.button === 0 && !event.ctrlKey && htmlHref.match(/^\?/)) {
 								window.location = htmlHref
 							} else {
-								window.open(attrs.href)
+								window.open(htmlHref)
 							}
 						}
 					},
