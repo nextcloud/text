@@ -8,6 +8,8 @@ global.OC = {
 			}),
 		},
 	},
+	config: {modRewriteWorking: true},
+	webroot: ''
 }
 
 describe('Preparing href attributes for the DOM', () => {
@@ -32,22 +34,22 @@ describe('Preparing href attributes for the DOM', () => {
 
 	test('relative link with fileid', () => {
 		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
-			.toBe('?dir=/Wiki&openfile=123&relPath=otherfile')
+			.toBe('/apps/files/?dir=/Wiki&openfile=123#relPath=otherfile')
 	})
 
 	test('relative path with ../', () => {
 		expect(domHref({attrs: {href: '../other/otherfile?fileId=123'}}))
-			.toBe('?dir=/other&openfile=123&relPath=../other/otherfile')
+			.toBe('/apps/files/?dir=/other&openfile=123#relPath=../other/otherfile')
 	})
 
 	test('absolute path', () => {
 		expect(domHref({attrs: {href: '/other/otherfile?fileId=123'}}))
-			.toBe('?dir=/other&openfile=123&relPath=/other/otherfile')
+			.toBe('/apps/files/?dir=/other&openfile=123#relPath=/other/otherfile')
 	})
 
 	test('absolute path', () => {
 		expect(domHref({attrs: {href: '/otherfile?fileId=123'}}))
-			.toBe('?dir=/&openfile=123&relPath=/otherfile')
+			.toBe('/apps/files/?dir=/&openfile=123#relPath=/otherfile')
 	})
 
 })
@@ -69,7 +71,7 @@ describe('Extracting short urls from the DOM', () => {
 	})
 
 	test('relative link with fileid', () => {
-		expect(parseHref(domStub('?dir=/other&openfile=123&relPath=../other/otherfile')))
+		expect(parseHref(domStub('?dir=/other&openfile=123#relPath=../other/otherfile')))
 			.toBe('../other/otherfile?fileId=123')
 	})
 

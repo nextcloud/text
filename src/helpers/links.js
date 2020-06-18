@@ -20,6 +20,8 @@
  *
  */
 
+import { generateUrl } from '@nextcloud/router'
+
 const absolutePath = function(base, rel) {
 	if (!rel) {
 		return base
@@ -59,7 +61,7 @@ const domHref = function(node) {
 		const currentDir = OC.Util.History.parseUrlQuery().dir
 			|| basedir(OCA.Viewer.state.file)
 		const dir = absolutePath(currentDir, basedir(relPath))
-		return `?dir=${dir}&openfile=${id}&relPath=${relPath}`
+		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
 	}
 }
 
@@ -68,7 +70,7 @@ const parseHref = function(dom) {
 	if (!ref) {
 		return ref
 	}
-	const match = ref.match(/^\?dir=([^&]*)&openfile=([^&]*)&relPath=([^&]*)/)
+	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
 		const [, , id, path] = match
 		return `${path}?fileId=${id}`
