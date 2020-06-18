@@ -120,7 +120,10 @@ class Link extends TipTapLink {
 							event.stopPropagation()
 							const htmlHref = event.target.attributes.href.value
 							if (event.button === 0 && !event.ctrlKey && htmlHref.match(/^\?/)) {
-								window.location = htmlHref
+								const query = OC.parseQueryString(htmlHref)
+								const filename = query.relPath.split('/').pop()
+								const path = `${query.dir}/${filename}`
+								OCA.Viewer.open({ path })
 							} else {
 								window.open(htmlHref)
 							}
