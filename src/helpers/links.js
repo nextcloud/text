@@ -20,6 +20,31 @@
  *
  */
 
+const absolutePath = function(base, rel) {
+	if (!rel) {
+		return base
+	}
+	if (rel[0] === '/') {
+		return rel
+	}
+	base = base.split('/')
+	rel = rel.split('/')
+	while (rel[0] === '..' || rel[0] === '.') {
+		if (rel[0] === '..') {
+			base.pop()
+		}
+		rel.shift()
+	}
+	return base.concat(rel).join('/')
+}
+
+const basedir = function(file) {
+	const end = file.lastIndexOf('/')
+	return (end > 0)
+		? file.slice(0, end)
+		: file.slice(0, end + 1) // basedir('/toplevel') should return '/'
+}
+
 const domHref = function(node) {
 	const ref = node.attrs.href
 	if (!ref) {
@@ -30,9 +55,11 @@ const domHref = function(node) {
 	}
 	const match = ref.match(/^([^?]*)\?fileId=(\d*)/)
 	if (match) {
-		const [, path, id] = match
-		const dir = OC.Util.History.parseUrlQuery().dir
-		return `?dir=${dir}&openfile=${id}&relPath=${path}`
+		const [, relPath, id] = match
+		const currentDir = OC.Util.History.parseUrlQuery().dir
+			|| basedir(OCA.Viewer.state.file)
+		const dir = absolutePath(currentDir, basedir(relPath))
+		return `?dir=${dir}&openfile=${id}&relPath=${relPath}`
 	}
 }
 
