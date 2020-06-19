@@ -125,6 +125,12 @@ class Link extends TipTapLink {
 								if (query.dir && fragment.relPath) {
 									const filename = fragment.relPath.split('/').pop()
 									const path = `${query.dir}/${filename}`
+									document.title = `${filename} - ${OC.theme.title}`
+									if (window.location.pathname.match(/apps\/files\/$/)) {
+										// The files app still lacks a popState handler
+										// to allow for using the back button
+										// OC.Util.History.pushState('', htmlHref)
+									}
 									OCA.Viewer.open({ path })
 								} else {
 									window.open(htmlHref)
