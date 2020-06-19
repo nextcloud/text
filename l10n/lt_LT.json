@@ -10,6 +10,7 @@
     "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Retry" : "Bandyti dar kartą",
     "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
+    "Unpushed changes" : "Nepatvirtinti pakeitimai",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
