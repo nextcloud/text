@@ -20,7 +20,7 @@
  *
  */
 
-import { Bold, Italic as TipTapItalic, Strike as TipTapStrike } from 'tiptap-extensions'
+import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -74,10 +74,39 @@ class Strike extends TipTapStrike {
 
 }
 
+class Link extends TipTapLink {
+
+	get schema() {
+		return {
+			attrs: {
+				href: {
+					default: null
+				}
+			},
+			inclusive: false,
+			parseDOM: [
+				{
+					tag: 'a[href]',
+					getAttrs: dom => ({
+						href: dom.getAttribute('href')
+					})
+				}
+			],
+			toDOM: node => ['a', {
+				...node.attrs,
+				title: node.attrs.href,
+				rel: 'noopener noreferrer nofollow'
+			}, 0]
+		}
+	}
+
+}
+
 /** Strike is currently unsupported by prosemirror-markdown */
 
 export {
 	Strong,
 	Italic,
-	Strike
+	Strike,
+	Link
 }
