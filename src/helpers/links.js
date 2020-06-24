@@ -55,7 +55,7 @@ const domHref = function(node) {
 	if (ref.match(/^[a-zA-Z]*:/)) {
 		return ref
 	}
-	const match = ref.match(/^([^?]*)\?fileId=(\d*)/)
+	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
 		const currentDir = OC.Util.History.parseUrlQuery().dir
