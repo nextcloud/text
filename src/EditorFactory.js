@@ -24,7 +24,6 @@ import {
 	HardBreak,
 	Heading,
 	Code,
-	Link,
 	BulletList,
 	OrderedList,
 	Blockquote,
@@ -34,7 +33,7 @@ import {
 	History,
 	Placeholder,
 } from 'tiptap-extensions'
-import { Strong, Italic, Strike } from './marks'
+import { Strong, Italic, Strike, Link } from './marks'
 import { Image, PlainTextDocument, ListItem } from './nodes'
 import MarkdownIt from 'markdown-it'
 import taskLists from 'markdown-it-task-lists'
