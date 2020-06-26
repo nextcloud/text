@@ -129,12 +129,13 @@ export default {
 			if (IS_PUBLIC) {
 				params.shareToken = this.shareToken
 			}
-			axios.get(WORKSPACE_URL, { params }).then((response) => {
+			return axios.get(WORKSPACE_URL, { params }).then((response) => {
 				const data = response.data.ocs.data
 				this.folder = data.folder || null
 				this.file = data.file
 				this.editing = true
 				this.loaded = true
+				return true
 			}).catch((error) => {
 				const data = error.response.data.ocs.data
 				this.folder = data.folder || null
@@ -142,6 +143,7 @@ export default {
 				this.loaded = true
 				this.ready = true
 				this.creating = false
+				return false
 			})
 		},
 		createNew() {
@@ -149,9 +151,13 @@ export default {
 				return
 			}
 			this.creating = true
-			window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
-				this.getFileInfo()
+			this.getFileInfo().then((workspaceFileExists) => {
 				this.autofocus = true
+				if (!workspaceFileExists) {
+					window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
+						this.getFileInfo()
+					})
+				}
 			})
 		},
 	},
