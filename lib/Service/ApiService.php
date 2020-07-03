@@ -159,7 +159,7 @@ class ApiService {
 		try {
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
-			$this->logger->logException($e);
+			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			return new DataResponse([
 				'message' => 'File not found'
 			], 404);
@@ -176,7 +176,7 @@ class ApiService {
 		} catch (NotFoundException $e) {
 			return new DataResponse([], 404);
 		} catch (Exception $e) {
-			$this->logger->logException($e);
+			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			return new DataResponse([
 				'message' => $e->getMessage()
 			], 500);
