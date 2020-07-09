@@ -1,13 +1,14 @@
 import { domHref, parseHref } from '../../helpers/links'
 
-global.OC = {
-	Util: {
-		History: {
-			parseUrlQuery: () => ({
-				dir: '/Wiki',
-			}),
+global.OCA = {
+	Viewer: {
+		state: {
+			file: '/Wiki/file.md',
 		},
 	},
+}
+
+global.OC = {
 	config: {modRewriteWorking: true},
 	webroot: ''
 }
