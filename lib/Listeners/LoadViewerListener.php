@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 /**
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2020 Morris Jobke <hey@morrisjobke.de>
  *
- * @author Julius Härtl <jus@bitgrid.net>
+ * @author Morris Jobke <hey@morrisjobke.de>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -22,6 +23,18 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\Text\AppInfo;
+namespace OCA\Text\Listeners;
 
-$app = \OC::$server->query(Application::class);
+use OCA\Viewer\Event\LoadViewer;
+use OCP\EventDispatcher\Event;
+use OCP\EventDispatcher\IEventListener;
+
+class LoadViewerListener implements IEventListener {
+	public function handle(Event $event): void {
+		if (!$event instanceof LoadViewer) {
+			return;
+		}
+		\OCP\Util::addScript('text', 'viewer');
+		\OCP\Util::addStyle('text', 'icons');
+	}
+}

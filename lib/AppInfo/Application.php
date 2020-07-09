@@ -24,85 +24,33 @@ declare(strict_types=1);
 
 namespace OCA\Text\AppInfo;
 
-use OCA\Text\DirectEditing\TextDirectEditor;
+use OCA\Files\Event\LoadAdditionalScriptsEvent;
+use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
+use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
+use OCA\Text\Listeners\LoadViewerListener;
+use OCA\Text\Listeners\RegisterDirectEditorEventListener;
 use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
-use OCP\EventDispatcher\IEventDispatcher;
-use OCP\IInitialStateService;
 
-class Application extends App {
-
-
+class Application extends App implements IBootstrap {
 	const APP_NAME = 'text';
 
-	/** @var IInitialStateService */
-	private $initialStateService;
-	/**
-	 * @var \OCP\IUserSession
-	 */
-	private $userSession;
-	/**
-	 * @var \OCP\IConfig
-	 */
-	private $config;
-
-
-	/**
-	 * Application constructor.
-	 *
-	 * @param array $params
-	 * @throws \OCP\AppFramework\QueryException
-	 */
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);
-
-		$container = $this->getContainer();
-		$server = $container->getServer();
-		/** @var IEventDispatcher $eventDispatcher */
-		$eventDispatcher = $server->query(IEventDispatcher::class);
-		$this->initialStateService = $server->query(IInitialStateService::class);
-		$this->userSession = $server->getUserSession();
-		$this->config = $this->getContainer()->getServer()->getConfig();
-
-		$eventDispatcher->addListener(RegisterDirectEditorEvent::class, function (RegisterDirectEditorEvent $event) use ($container) {
-			$editor = $container->query(TextDirectEditor::class);
-			$event->register($editor);
-		});
-
-		$eventDispatcher->addListener(LoadViewer::class, function () {
-			\OCP\Util::addScript('text', 'viewer');
-			\OCP\Util::addStyle('text', 'icons');
-		});
-
-		if ($this->userSession->isLoggedIn()) {
-			$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () {
-				\OCP\Util::addScript('text', 'files');
-				\OCP\Util::addStyle('text', 'icons');
-
-				$this->initialStateService->provideInitialState(
-					self::APP_NAME,
-					'workspace_available',
-					$this->config->getAppValue(self::APP_NAME, 'workspace_available', '1') === '1'
-				);
-				$this->initialStateService->provideInitialState(
-					self::APP_NAME,
-					'workspace_enabled',
-					$this->config->getUserValue($this->userSession->getUser()->getUID(), self::APP_NAME, 'workspace_enabled', '1') === '1'
-				);
-			});
-		}
-
-		$eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts', function () {
-			\OCP\Util::addScript('text', 'public');
-			\OCP\Util::addStyle('text', 'icons');
-			$this->initialStateService->provideInitialState(
-				self::APP_NAME,
-				'workspace_available',
-				$this->config->getAppValue(self::APP_NAME, 'workspace_available', '1') === '1'
-			);
-		});
 	}
 
+	public function register(IRegistrationContext $context): void {
+		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);
+		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
+		$context->registerEventListener('OCA\Files_Sharing::loadAdditionalScripts', FilesSharingLoadAdditionalScriptsListener::class);
+		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
+	}
+
+	public function boot(IBootContext $context): void {
+	}
 }
 
