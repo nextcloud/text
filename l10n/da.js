@@ -7,6 +7,7 @@ OC.L10N.register(
     "Retry" : "Prøv igen",
     "Unsaved changes" : "Ikke gemte ændringer",
     "Insert image" : "Indsæt billede",
+    "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
     "Undo" : "Fortryd",
     "Redo" : "Annullér fortryd",
@@ -23,6 +24,7 @@ OC.L10N.register(
     "Heading 6" : "Overskrift 6",
     "Unordered list" : "Usorteret liste",
     "Ordered list" : "Sorteret liste",
+    "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
     "Show file" : "Vis fil"
 },
