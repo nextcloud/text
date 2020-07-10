@@ -10,6 +10,6 @@ services:
         environment:
             CYPRESS_baseUrl:
             APP_SOURCE:
-            BRANCH: stable19
+            BRANCH: master
         volumes:
             - ${APP_SOURCE}:/var/www/html/apps/text
