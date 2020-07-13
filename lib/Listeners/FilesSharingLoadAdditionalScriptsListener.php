@@ -47,9 +47,6 @@ class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	}
 
 	public function handle(Event $event): void {
-		if (!$this->userSession->isLoggedIn()) {
-			return;
-		}
 		\OCP\Util::addScript('text', 'public');
 		\OCP\Util::addStyle('text', 'icons');
 
