@@ -35,6 +35,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\EventDispatcher\Event;
 
 class Application extends App implements IBootstrap {
 	const APP_NAME = 'text';
@@ -46,11 +47,16 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);
 		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
-		$context->registerEventListener('OCA\Files_Sharing::loadAdditionalScripts', FilesSharingLoadAdditionalScriptsListener::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
 	}
 
 	public function boot(IBootContext $context): void {
+		// TODO migrate this to the new IEventDispatcher
+		$container = $context->getAppContainer();
+		$context->getServerContainer()->getEventDispatcher()->addListener('OCA\Files_Sharing::loadAdditionalScripts', function() use ($container) {
+			$listener = $container->query(FilesSharingLoadAdditionalScriptsListener::class);
+			$listener->handle(new Event());
+		});
 	}
 }
 
