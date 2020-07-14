@@ -30,26 +30,19 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IConfig;
 use OCP\IInitialStateService;
-use OCP\IUserSession;
 
 class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	/** @var IConfig */
 	protected $config;
 	/** @var IInitialStateService */
 	protected $initialStateService;
-	/** @var IUserSession */
-	protected $userSession;
 
-	public function __construct(IConfig $config, IInitialStateService $initialStateService, IUserSession $userSession) {
+	public function __construct(IConfig $config, IInitialStateService $initialStateService) {
 		$this->config = $config;
 		$this->initialStateService = $initialStateService;
-		$this->userSession = $userSession;
 	}
 
 	public function handle(Event $event): void {
-		if (!$this->userSession->isLoggedIn()) {
-			return;
-		}
 		\OCP\Util::addScript('text', 'public');
 		\OCP\Util::addStyle('text', 'icons');
 

@@ -15,6 +15,10 @@ documentReady(() => {
 	const mimetype = document.getElementById('mimetype').value
 	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
 
+	if (!sharingToken) {
+		return
+	}
+
 	if (dir !== '') {
 		OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 		registerFileActionFallback()
