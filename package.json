@@ -32,7 +32,7 @@
 		"@nextcloud/vue": "^2.0.0",
 		"entities": "^2.0.3",
 		"escape-html": "^1.0.3",
-		"highlight.js": "^9.16.2",
+		"highlight.js": "^10.1.1",
 		"markdown-it": "^11.0.0",
 		"markdown-it-task-lists": "^2.1.1",
 		"prosemirror-collab": "^1.2.2",
