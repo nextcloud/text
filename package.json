@@ -46,7 +46,7 @@
 		"prosemirror-view": "^1.14.13",
 		"proxy-polyfill": "^0.3.1",
 		"tiptap": "^1.27.1",
-		"tiptap-commands": "^1.13.1",
+		"tiptap-commands": "^1.14.1",
 		"tiptap-extensions": "^1.29.1",
 		"tiptap-utils": "^1.9.1",
 		"vue": "^2.6.11",
