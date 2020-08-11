@@ -212,6 +212,7 @@ class SyncService {
 		}
 		return 0
 	}
+
 	_getDocument() {
 		if (this.state) {
 			return this.state.doc

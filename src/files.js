@@ -24,9 +24,10 @@ import Vue from 'vue'
 import { registerFileActionFallback, registerFileCreate, FilesWorkspacePlugin } from './helpers/files'
 import FilesSettings from './views/FilesSettings'
 import { loadState } from '@nextcloud/initial-state'
+import { linkTo } from '@nextcloud/router'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
+__webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 const workspaceEnabled = loadState('text', 'workspace_enabled')

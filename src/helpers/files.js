@@ -26,6 +26,7 @@
  */
 import { openMimetypes } from './mime'
 import RichWorkspace from '../views/RichWorkspace'
+import { imagePath } from '@nextcloud/router'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -74,7 +75,7 @@ const registerFileActionFallback = () => {
 			mime,
 			FILE_ACTION_IDENTIFIER,
 			OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
-			OC.imagePath('core', 'actions/rename'),
+			imagePath('core', 'actions/rename'),
 			(filename) => {
 				const file = window.FileList.findFile(filename)
 				Promise.all([
