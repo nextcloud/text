@@ -85,8 +85,8 @@ export default {
 				const avatarUrl = OC.generateUrl(
 					guest ? '/avatar/guest/{user}/{size}' : '/avatar/{user}/{size}',
 					{
-						user: user,
-						size: size,
+						user,
+						size,
 					})
 				return window.location.protocol + '//' + window.location.host + avatarUrl
 			}

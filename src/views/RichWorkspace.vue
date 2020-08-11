@@ -88,10 +88,10 @@ export default {
 		},
 	},
 	watch: {
-		path: function() {
+		path() {
 			this.getFileInfo()
 		},
-		focus: function(newValue) {
+		focus(newValue) {
 			if (!newValue) {
 				document.querySelector('#editor').scrollTo(0, 0)
 			}
