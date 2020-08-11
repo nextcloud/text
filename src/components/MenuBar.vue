@@ -259,7 +259,7 @@ export default {
 					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
 
 					_command({
-						src: src,
+						src,
 						alt: fileInfo.name,
 					})
 				})
