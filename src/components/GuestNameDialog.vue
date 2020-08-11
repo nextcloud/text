@@ -34,6 +34,7 @@
 <script>
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'GuestNameDialog',
@@ -58,7 +59,7 @@ export default {
 	computed: {
 		avatarUrl() {
 			const size = 32
-			const avatarUrl = OC.generateUrl(
+			const avatarUrl = generateUrl(
 				'/avatar/guest/{user}/{size}',
 				{
 					user: this.guestNameBuffered,

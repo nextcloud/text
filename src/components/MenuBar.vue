@@ -80,6 +80,7 @@ import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import ClickOutside from 'vue-click-outside'
+import { getCurrentUser } from '@nextcloud/auth'
 
 export default {
 	name: 'MenuBar',
@@ -238,7 +239,7 @@ export default {
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
 		},
 		showImagePrompt(command) {
-			const currentUser = OC.getCurrentUser()
+			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}

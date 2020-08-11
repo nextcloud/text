@@ -61,7 +61,7 @@ export default class ListItem extends TiptapListItem {
 					return ['li', 0]
 				}
 				const listAttributes = { class: 'checkbox-item' }
-				const checkboxAttributes = { type: 'checkbox', class: '', 'contenteditable': false }
+				const checkboxAttributes = { type: 'checkbox', class: '', contenteditable: false }
 				if (node.attrs.done) {
 					checkboxAttributes.checked = true
 					listAttributes.class += ' checked'
@@ -100,12 +100,12 @@ export default class ListItem extends TiptapListItem {
 
 	commands({ type, schema }) {
 		return {
-			'bullet_list_item': () => {
+			bullet_list_item: () => {
 				return (state, dispatch, view) => {
 					return toggleList(schema.nodes.bullet_list, type)(state, dispatch, view)
 				}
 			},
-			'todo_item': () => {
+			todo_item: () => {
 				return (state, dispatch, view) => {
 					const schema = state.schema
 					const selection = state.selection

@@ -43,6 +43,7 @@
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { generateUrl } from '@nextcloud/router'
 
 const COLLABORATOR_IDLE_TIME = 10
 const COLLABORATOR_DISCONNECT_TIME = 30
@@ -82,7 +83,7 @@ export default {
 				const user = !session.guestName ? session.userId : session.guestName
 				const size = 32
 				const guest = !!session.guestName
-				const avatarUrl = OC.generateUrl(
+				const avatarUrl = generateUrl(
 					guest ? '/avatar/guest/{user}/{size}' : '/avatar/{user}/{size}',
 					{
 						user,
@@ -103,7 +104,7 @@ export default {
 		sessionStyle() {
 			return (session) => {
 				return {
-					'opacity': session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
+					opacity: session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
 					// 'border-color': session.color
 				}
 			}

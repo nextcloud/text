@@ -132,7 +132,7 @@ export default {
 		internalLinkOrImage() {
 			const fileId = getQueryVariable(this.src, 'fileId')
 			if (fileId) {
-				return OC.generateUrl('/f/' + fileId)
+				return generateUrl('/f/' + fileId)
 			}
 			return this.src
 		},

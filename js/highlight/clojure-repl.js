@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[29],{397:function(n,e){n.exports=function(n){return{contains:[{className:"meta",begin:/^([\w.-]+|\s*#_)?=>/,starts:{end:/$/,subLanguage:"clojure"}}]}}}}]);
-//# sourceMappingURL=clojure-repl.js.map?v=40fd48467721797a55e1
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[29],{395:function(n,e){n.exports=function(n){return{contains:[{className:"meta",begin:/^([\w.-]+|\s*#_)?=>/,starts:{end:/$/,subLanguage:"clojure"}}]}}}}]);
+//# sourceMappingURL=clojure-repl.js.map?v=1202ed203adda685cb20
