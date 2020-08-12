@@ -75,6 +75,7 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
+import { optimalPath } from './../helpers/files'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -244,7 +245,7 @@ export default {
 				return
 			}
 			const _command = command
-			OC.dialogs.filepicker('Insert an image', (file) => {
+			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
 					this.lastImagePath = fileInfo.path
@@ -254,7 +255,7 @@ export default {
 						mimetype: fileInfo.mimetype,
 						hasPreview: fileInfo.hasPreview,
 					}
-					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
 					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
@@ -265,6 +266,26 @@ export default {
 					})
 				})
 			}, false, [], true, undefined, this.imagePath)
+		},
+		showLinkPrompt(command) {
+			const currentUser = OC.getCurrentUser()
+			if (!currentUser) {
+				return
+			}
+			const _command = command
+			OC.dialogs.filepicker('Insert a link', (file) => {
+				const client = OC.Files.getClient()
+				client.getFileInfo(file).then((_status, fileInfo) => {
+					this.lastLinkPath = fileInfo.path
+					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
+					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
+					const href = `${encodedPath}?fileId=${fileInfo.id}`
+
+					_command({
+						href,
+					})
+				})
+			}, false, [], true, undefined, this.linkPath)
 		},
 		optimalPathTo(targetFile) {
 			const absolutePath = targetFile.split('/')

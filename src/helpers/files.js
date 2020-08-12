@@ -20,15 +20,26 @@
  *
  */
 
-/**
- * Callback that should be executed after the document is ready
- * @param callback
- */
 import { openMimetypes } from './mime'
 import RichWorkspace from '../views/RichWorkspace'
 import { imagePath } from '@nextcloud/router'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
+
+const optimalPath = function(from, to) {
+	const current = from.split('/')
+	const target = to.split('/')
+	current.pop() // ignore filename
+	while (current[0] === target[0]) {
+		current.shift()
+		target.shift()
+	}
+	const relativePath = current.fill('..').concat(target)
+	const absolutePath = to.split('/')
+	return relativePath.length < absolutePath.length
+		? relativePath.join('/')
+		: to
+}
 
 const registerFileCreate = () => {
 	const newFileMenuPlugin = {
@@ -157,6 +168,7 @@ const FilesWorkspacePlugin = {
 }
 
 export {
+	optimalPath,
 	registerFileActionFallback,
 	registerFileCreate,
 	FilesWorkspacePlugin,

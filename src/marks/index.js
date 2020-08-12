@@ -21,6 +21,9 @@
  */
 
 import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
+import { Plugin } from 'tiptap'
+import { getMarkAttrs } from 'tiptap-utils'
+import { domHref, parseHref } from './../helpers/links'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -88,16 +91,58 @@ class Link extends TipTapLink {
 				{
 					tag: 'a[href]',
 					getAttrs: dom => ({
-						href: dom.getAttribute('href'),
+						href: parseHref(dom),
 					}),
 				},
 			],
 			toDOM: node => ['a', {
 				...node.attrs,
+				href: domHref(node),
 				title: node.attrs.href,
 				rel: 'noopener noreferrer nofollow',
 			}, 0],
 		}
+	}
+
+	get plugins() {
+		if (!this.options.openOnClick) {
+			return []
+		}
+
+		return [
+			new Plugin({
+				props: {
+					handleClick: (view, pos, event) => {
+						const { schema } = view.state
+						const attrs = getMarkAttrs(view.state, schema.marks.link)
+
+						if (attrs.href && event.target instanceof HTMLAnchorElement) {
+							event.stopPropagation()
+							const htmlHref = event.target.href
+							if (event.button === 0 && !event.ctrlKey && htmlHref.startsWith(window.location.origin)) {
+								const query = OC.parseQueryString(htmlHref)
+								const fragment = OC.parseQueryString(htmlHref.split('#').pop())
+								if (query.dir && fragment.relPath) {
+									const filename = fragment.relPath.split('/').pop()
+									const path = `${query.dir}/${filename}`
+									document.title = `${filename} - ${OC.theme.title}`
+									if (window.location.pathname.match(/apps\/files\/$/)) {
+										// The files app still lacks a popState handler
+										// to allow for using the back button
+										// OC.Util.History.pushState('', htmlHref)
+									}
+									OCA.Viewer.open({ path })
+								} else {
+									window.open(htmlHref)
+								}
+							} else {
+								window.open(htmlHref)
+							}
+						}
+					},
+				},
+			}),
+		]
 	}
 
 }
