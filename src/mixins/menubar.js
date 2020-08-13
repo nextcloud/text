@@ -58,14 +58,6 @@ export default [
 		},
 	},
 	{
-		label: t('text', 'Paragraph'),
-		class: 'icon-paragraph',
-		isActive: (isActive) => {},
-		action: (command) => {
-			return command.paragraph()
-		},
-	},
-	{
 		label: t('text', 'Headings'),
 		visible: false,
 		children: [
