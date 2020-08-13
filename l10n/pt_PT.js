@@ -13,12 +13,12 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
     "Edit guest name" : "Inserir o nome do convidado",
     "Save guest name" : "Guardar o nome do convidado",
-    "Add link" : "Adicionar ligação",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Last save {lastSave}" : "Última versão guardada {lastSave}",
+    "Add link" : "Adicionar ligação",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar ficheiro"
 },

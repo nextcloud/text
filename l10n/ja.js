@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "ゲスト名を編集",
     "Save guest name" : "ゲスト名を保存",
     "Insert image" : "画像の挿入",
-    "Add link" : "リンクを追加",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "Show rich workspaces" : "Readme.mdを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "コードブロック",
     "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
     "Last save {lastSave}" : "最終保存 {lastSave}",
+    "Add link" : "リンクを追加",
     "Show image" : "画像を表示する",
     "Show file" : "ファイルを表示する"
 },

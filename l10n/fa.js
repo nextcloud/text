@@ -5,11 +5,11 @@ OC.L10N.register(
     "Retry" : "تلاش دوباره",
     "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
-    "Add link" : "افزودن لینک",
     "Edit" : "ویرایش",
     "Undo" : "برگرداندن",
     "Bold" : "درشت",
     "Italic" : "Italic",
+    "Add link" : "افزودن لینک",
     "Show image" : "نمایش تصویر",
     "Show file" : "نمایش فایل"
 },

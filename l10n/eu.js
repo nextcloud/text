@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Editatu gonbidatuaren izena",
     "Save guest name" : "Gorde gonbidatuaren izena",
     "Insert image" : "Txertatu irudia",
-    "Add link" : "Gehitu esteka",
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Kode blokea",
     "Network connection error: Could not connect to the document" : "Sare konexio errorea: Ezin izan da dokumentuarekin konektatu",
     "Last save {lastSave}" : "Azken gordetzea {lastSave}",
+    "Add link" : "Gehitu esteka",
     "Show image" : "Bistaratu irudia",
     "Show file" : "Bistaratu fitxategia"
 },

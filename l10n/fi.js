@@ -16,7 +16,6 @@ OC.L10N.register(
     "Edit guest name" : "Muokkaa vieraan nimeä",
     "Save guest name" : "Tallenna vieraan nimi",
     "Insert image" : "Lisää kuva",
-    "Add link" : "Lisää linkki",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "New text document" : "Uusi tekstiasiakirja",
     "Edit" : "Muokkaa",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Code block" : "Koodilohko",
     "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
     "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
+    "Add link" : "Lisää linkki",
     "Show image" : "Näytä kuva",
     "Show file" : "Näytä tiedosto"
 },

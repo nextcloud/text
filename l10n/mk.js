@@ -12,8 +12,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
-    "Add link" : "Додади линк",
     "Edit" : "Уреди",
+    "Add link" : "Додади линк",
     "Show image" : "Прикаши слика",
     "Show file" : "Прикажи датотека"
 },

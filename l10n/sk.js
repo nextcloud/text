@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Upraviť meno hosťa",
     "Save guest name" : "Uložiť meno hosťa",
     "Insert image" : "Vložiť obrázok",
-    "Add link" : "Pridať odkaz",
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Blok kódu",
     "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
     "Last save {lastSave}" : "Posledné uloženie {lastSave}",
+    "Add link" : "Pridať odkaz",
     "Show image" : "Zobraziť obrázok",
     "Show file" : "Zobraziť súbor"
 },

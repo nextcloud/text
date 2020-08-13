@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Ändra gästnamn",
     "Save guest name" : "Spara gästnamn",
     "Insert image" : "Infoga bild",
-    "Add link" : "Lägg till länk",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Kodblock",
     "Network connection error: Could not connect to the document" : "Nätverksfel: Kunde inte komma åt dokumentet",
     "Last save {lastSave}" : "Senast sparad {lastSave}",
+    "Add link" : "Lägg till länk",
     "Show image" : "Visa bild",
     "Show file" : "Visa fil"
 },

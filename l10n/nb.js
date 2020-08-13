@@ -18,7 +18,6 @@ OC.L10N.register(
     "Edit guest name" : "Rediger gjestenavn",
     "Save guest name" : "Lagre gjestenavn",
     "Insert image" : "Sett inn bilde",
-    "Add link" : "Legg ved lenke",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Code block" : "Kode",
     "Network connection error: Could not connect to the document" : "Nettverksfeil: Kunne ikke koble til dokumentet",
     "Last save {lastSave}" : "Sist lagret {lastSave}",
+    "Add link" : "Legg ved lenke",
     "Show image" : "Vis bilde",
     "Show file" : "Vis fil"
 },

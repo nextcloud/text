@@ -17,7 +17,6 @@
     "Edit guest name" : "Edita el nom de convidat",
     "Save guest name" : "Desa el nom de convidat",
     "Insert image" : "Inserir imatge",
-    "Add link" : "Afegeix un enllaç",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços...",
@@ -43,6 +42,7 @@
     "Code block" : "Bloc de codi",
     "Network connection error: Could not connect to the document" : "Error de connexió de xarxa: No s'ha pogut connectar amb el document",
     "Last save {lastSave}" : "Darrera modificació {lastSave}",
+    "Add link" : "Afegeix un enllaç",
     "Show image" : "Mostra la imatge",
     "Show file" : "Mostra el fitxer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Taisyti svečio vardą",
     "Save guest name" : "Įrašyti svečio vardą",
     "Insert image" : "Įterpti paveikslą",
-    "Add link" : "Pridėti nuorodą",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Kodo blokas",
     "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
+    "Add link" : "Pridėti nuorodą",
     "Show image" : "Rodyti paveikslą",
     "Show file" : "Rodyti failą"
 },

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "עריכת שם אורח",
     "Save guest name" : "שמירת שם אורח",
     "Insert image" : "הוספת תמונה",
-    "Add link" : "הוספת קישור",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "מקטע קוד",
     "Network connection error: Could not connect to the document" : "שגיאה בחיבור לרשת: לא ניתן להתחבר למסמך",
     "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
+    "Add link" : "הוספת קישור",
     "Show image" : "הצגת תמונה",
     "Show file" : "הצגת קובץ"
 },

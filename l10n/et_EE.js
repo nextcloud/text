@@ -6,8 +6,8 @@ OC.L10N.register(
     "Retry" : "Proovi uuesti",
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
-    "Add link" : "Lisa link",
     "Edit" : "Redigeeri",
+    "Add link" : "Lisa link",
     "Show image" : "Näita pilti",
     "Show file" : "Näita faili"
 },
