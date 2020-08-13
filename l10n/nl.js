@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Bewerk gast naam",
     "Save guest name" : "Bewaar gast naam",
     "Insert image" : "Invoegen afbeelding",
-    "Add link" : "Voeg link toe",
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "Show rich workspaces" : "Toon rijke werkplekken",
     "Add notes, lists or links …" : "Toevoegen notities, lijsten of links...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Code blok",
     "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
     "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
+    "Add link" : "Voeg link toe",
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand"
 },

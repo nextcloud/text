@@ -17,7 +17,6 @@
     "Edit guest name" : "עריכת שם אורח",
     "Save guest name" : "שמירת שם אורח",
     "Insert image" : "הוספת תמונה",
-    "Add link" : "הוספת קישור",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
@@ -43,6 +42,7 @@
     "Code block" : "מקטע קוד",
     "Network connection error: Could not connect to the document" : "שגיאה בחיבור לרשת: לא ניתן להתחבר למסמך",
     "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
+    "Add link" : "הוספת קישור",
     "Show image" : "הצגת תמונה",
     "Show file" : "הצגת קובץ"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"

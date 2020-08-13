@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Uredi ime gosta",
     "Save guest name" : "Shrani ime gosta",
     "Insert image" : "Vstavi sliko",
-    "Add link" : "Dodaj povezavo",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Navedek s kodo",
     "Network connection error: Could not connect to the document" : "Napaka omrežne povezave: ni mogoče vzpostaviti povezave za urejanje dokumenta",
     "Last save {lastSave}" : "Zadnje shranjevanje {lastSaved}",
+    "Add link" : "Dodaj povezavo",
     "Show image" : "Pokaži sliko",
     "Show file" : "Pokaži datoteko"
 },

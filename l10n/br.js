@@ -12,8 +12,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Lakait o anv ma vo posuple d'an implijourien all gwellet piv a zo oc'h embannañ",
     "Edit guest name" : "Embannañ anv an hini pedet",
     "Save guest name" : "Enrollañ anv an hini pedet",
-    "Add link" : "Ouzhpnna ul liamm",
     "Edit" : "Cheñch",
+    "Add link" : "Ouzhpnna ul liamm",
     "Show image" : "Diskouez ar skeudenn",
     "Show file" : "Diskouez ar restr"
 },

@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Измени име госта",
     "Save guest name" : "Сачувај име госта",
     "Insert image" : "Убаци слику",
-    "Add link" : "Додај везу",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Блок са изворним кôдом",
     "Network connection error: Could not connect to the document" : "Грешка у мрежној конекцији: Не могу да се повежем са документом",
     "Last save {lastSave}" : "Последње чување {lastSave}",
+    "Add link" : "Додај везу",
     "Show image" : "Прикажи слику",
     "Show file" : "Прикажи фајл"
 },

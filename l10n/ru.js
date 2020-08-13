@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Изменить гостевое имя",
     "Save guest name" : "Сохранить гостевое имя",
     "Insert image" : "Вставить изображение",
-    "Add link" : "Добавить ссылку",
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
     "Show rich workspaces" : "Показывать дополнительные сведения",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Блок кода",
     "Network connection error: Could not connect to the document" : "Ошибка сетевого соединения: Не удалось подключиться к документу",
     "Last save {lastSave}" : "Последнее сохранение {lastSave}",
+    "Add link" : "Добавить ссылку",
     "Show image" : "Показать изображение",
     "Show file" : "Показать файл"
 },
