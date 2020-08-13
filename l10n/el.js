@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
     "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
     "Insert image" : "Εισαγωγή εικόνας",
-    "Add link" : "Προσθήκη συνδέσμου",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι επεξεργαστές"],
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένου χώρου",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων ...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Μπλοκ κώδικα",
     "Network connection error: Could not connect to the document" : "Σφάλμα σύνδεσης δικτύου: Δεν υπάρχει σύνδεση με το έγγραφο.",
     "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
+    "Add link" : "Προσθήκη συνδέσμου",
     "Show image" : "Εμφάνιση εικόνας",
     "Show file" : "Εμφάνιση αρχείου"
 },

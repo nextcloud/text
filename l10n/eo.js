@@ -14,7 +14,6 @@ OC.L10N.register(
     "Edit guest name" : "Modifi la gastonomon",
     "Save guest name" : "Koservi la gastonomon",
     "Insert image" : "Enmeti bildon",
-    "Add link" : "Aldoni ligilon",
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"],
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "New text document" : "Nova tekstdokumento",
@@ -38,6 +37,7 @@ OC.L10N.register(
     "Code block" : "Kodbloko",
     "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
     "Last save {lastSave}" : "Lasta konservado {lastSave}",
+    "Add link" : "Aldoni ligilon",
     "Show image" : "Montri bildon",
     "Show file" : "Montri dosieron"
 },

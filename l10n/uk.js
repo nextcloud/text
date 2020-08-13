@@ -18,7 +18,6 @@ OC.L10N.register(
     "Edit guest name" : "Редагувати ім'я гостя",
     "Save guest name" : "Зберегти ім'я гостя",
     "Insert image" : "Додати зображення",
-    "Add link" : "Додати посиланя",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Code block" : "Код",
     "Network connection error: Could not connect to the document" : "Помилка з'єднання з мережею: неможливо з'єднатися з документом",
     "Last save {lastSave}" : "Збережено {lastSave}",
+    "Add link" : "Додати посиланя",
     "Show image" : "Показати зображення",
     "Show file" : "Показати файл"
 },

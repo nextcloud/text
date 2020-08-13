@@ -13,7 +13,6 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Add meg a neved, hogy mások lássák ki szerkeszti",
     "Edit guest name" : "Vendég név szerkesztése",
     "Save guest name" : "Vendég név mentése",
-    "Add link" : "Hivatkozás hozzáadása",
     "New text document" : "Új szöveg dokumentum",
     "Edit" : "Szerkesztés",
     "Undo" : "Visszavon",
@@ -22,6 +21,7 @@ OC.L10N.register(
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
     "Last save {lastSave}" : "Utolsó mentés {lastSave}",
+    "Add link" : "Hivatkozás hozzáadása",
     "Show image" : "Kép megjelenítése",
     "Show file" : "Fájl megjelenítése"
 },

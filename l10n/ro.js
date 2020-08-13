@@ -7,12 +7,12 @@ OC.L10N.register(
     "Retry" : "Reîncearcă",
     "Unsaved changes" : "Modificări nesalvate",
     "Insert image" : "Introdu imagine",
-    "Add link" : "Adaugă link",
     "New text document" : "Nou document text",
     "Edit" : "Editează",
     "Undo" : "Anulează ultima acțiune",
     "Network connection error: Could not connect to the document" : "Probleme conexiune: Nu m-am putut conecta la document",
     "Last save {lastSave}" : "Ultima salvare {lastSave}",
+    "Add link" : "Adaugă link",
     "Show image" : "Arată imaginea",
     "Show file" : "Arată fișierul"
 },
