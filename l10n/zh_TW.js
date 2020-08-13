@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "編輯訪客名稱",
     "Save guest name" : "儲存訪客名稱",
     "Insert image" : "插入影像",
-    "Add link" : "加入連結",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
     "Show rich workspaces" : "顯示較多功能的工作區",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "程式碼區塊",
     "Network connection error: Could not connect to the document" : "網路連線錯誤：無法連線至文件",
     "Last save {lastSave}" : "上次儲存於 {lastSave}",
+    "Add link" : "加入連結",
     "Show image" : "顯示影像",
     "Show file" : "顯示檔案"
 },

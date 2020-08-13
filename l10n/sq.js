@@ -13,7 +13,6 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
     "Edit guest name" : "Ndryshoni emrin e të ftuarit",
     "Save guest name" : "Ruaj emrin e të ftuarit",
-    "Add link" : "Shto link",
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"],
     "New text document" : "Dokument tekst i ri",
     "Edit" : "Përpuno",
@@ -22,6 +21,7 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
+    "Add link" : "Shto link",
     "Show image" : "Shfaq imazhin",
     "Show file" : "Shfaq skedarin"
 },

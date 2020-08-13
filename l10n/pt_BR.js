@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Editar nome de convidado",
     "Save guest name" : "Salvar nome de convidado",
     "Insert image" : "Inserir imagem",
-    "Add link" : "Adicionar link",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "Show rich workspaces" : "Mostrar áreas de trabalho avançadas",
     "Add notes, lists or links …" : "Adicionar observações, listas ou links...",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Bloco de código",
     "Network connection error: Could not connect to the document" : "Erro de rede: não foi possível conectar ao documento",
     "Last save {lastSave}" : "Última gravação {lastSave}",
+    "Add link" : "Adicionar link",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo"
 },

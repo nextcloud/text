@@ -19,7 +19,6 @@ OC.L10N.register(
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
     "Insert image" : "Görsel ekle",
-    "Add link" : "Bağlantı ekle",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Code block" : "Kod bloğu",
     "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
     "Last save {lastSave}" : "Son kayıt {lastSave}",
+    "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle"
 },
