@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Vet",
     "Italic" : "Cursief",
     "Strikethrough" : "Doorgehaald",
-    "Paragraph" : "Paragraaf",
     "Headings" : "Kopstijlen",
     "Heading 1" : "Kop 1",
     "Heading 2" : "Kop 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
     "Add link" : "Voeg link toe",
     "Show image" : "Toon afbeelding",
-    "Show file" : "Toon bestand"
+    "Show file" : "Toon bestand",
+    "Paragraph" : "Paragraaf"
 },
 "nplurals=2; plural=(n != 1);");
