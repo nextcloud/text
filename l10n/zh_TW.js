@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "粗體",
     "Italic" : "斜體",
     "Strikethrough" : "刪除線",
-    "Paragraph" : "段落",
     "Headings" : "標題",
     "Heading 1" : "標題 1",
     "Heading 2" : "標題 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "上次儲存於 {lastSave}",
     "Add link" : "加入連結",
     "Show image" : "顯示影像",
-    "Show file" : "顯示檔案"
+    "Show file" : "顯示檔案",
+    "Paragraph" : "段落"
 },
 "nplurals=1; plural=0;");

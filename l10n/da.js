@@ -14,7 +14,6 @@ OC.L10N.register(
     "Bold" : "Fed",
     "Italic" : "Kursiv",
     "Strikethrough" : "Gennemstreget ",
-    "Paragraph" : "Paragraf",
     "Headings" : "Overskrifter",
     "Heading 1" : "Overskrift 1",
     "Heading 2" : "Overskrift 2",
@@ -26,6 +25,7 @@ OC.L10N.register(
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
-    "Show file" : "Vis fil"
+    "Show file" : "Vis fil",
+    "Paragraph" : "Paragraf"
 },
 "nplurals=2; plural=(n != 1);");

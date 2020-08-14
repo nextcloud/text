@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Подебљано",
     "Italic" : "Курзив",
     "Strikethrough" : "Прецртано",
-    "Paragraph" : "Пасус",
     "Headings" : "Наслови",
     "Heading 1" : "Наслов 1",
     "Heading 2" : "Наслов 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Последње чување {lastSave}",
     "Add link" : "Додај везу",
     "Show image" : "Прикажи слику",
-    "Show file" : "Прикажи фајл"
+    "Show file" : "Прикажи фајл",
+    "Paragraph" : "Пасус"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

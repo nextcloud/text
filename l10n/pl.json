@@ -17,6 +17,9 @@
     "Edit guest name" : "Edytuj nazwę gościa",
     "Save guest name" : "Zapisz nazwę gościa",
     "Insert image" : "Wstaw obraz",
+    "Insert an image" : "Wstaw obraz",
+    "Link file" : "Link pliku",
+    "Select file to link to" : "Wybierz plik dla linku",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
@@ -27,7 +30,6 @@
     "Bold" : "Tekst pogrubiony",
     "Italic" : "Kursywa",
     "Strikethrough" : "Tekst przekreślony",
-    "Paragraph" : "Ustęp",
     "Headings" : "Nagłówki",
     "Heading 1" : "Nagłówek 1",
     "Heading 2" : "Nagłówek 2",
@@ -44,6 +46,7 @@
     "Last save {lastSave}" : "Ostatni zapis {lastSave}",
     "Add link" : "Dodaj link",
     "Show image" : "Pokaż obraz",
-    "Show file" : "Pokaż plik"
+    "Show file" : "Pokaż plik",
+    "Paragraph" : "Ustęp"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

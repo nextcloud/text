@@ -23,7 +23,6 @@ OC.L10N.register(
     "Bold" : "Grasa",
     "Italic" : "Kursiva",
     "Strikethrough" : "Trastreka",
-    "Paragraph" : "Alineo",
     "Headings" : "Titolaro",
     "Heading 1" : "Titolo 1",
     "Heading 2" : "Titolo 2",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Lasta konservado {lastSave}",
     "Add link" : "Aldoni ligilon",
     "Show image" : "Montri bildon",
-    "Show file" : "Montri dosieron"
+    "Show file" : "Montri dosieron",
+    "Paragraph" : "Alineo"
 },
 "nplurals=2; plural=(n != 1);");

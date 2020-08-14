@@ -25,7 +25,6 @@ OC.L10N.register(
     "Bold" : "Negritas",
     "Italic" : "Cursiva",
     "Strikethrough" : "Tachada",
-    "Paragraph" : "Párrafo",
     "Headings" : "Títulos",
     "Heading 1" : "Título 1",
     "Heading 2" : "Título 2",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Última actualización {lastSave}",
     "Add link" : "Añadir liga",
     "Show image" : "Mostrar imagen",
-    "Show file" : "Mostrar archivo"
+    "Show file" : "Mostrar archivo",
+    "Paragraph" : "Párrafo"
 },
 "nplurals=2; plural=(n != 1);");

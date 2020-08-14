@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Жирный",
     "Italic" : "Курсив",
     "Strikethrough" : "Зачеркнутый",
-    "Paragraph" : "Абзац",
     "Headings" : "Заголовки",
     "Heading 1" : "Заголовок 1",
     "Heading 2" : "Заголовок 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Последнее сохранение {lastSave}",
     "Add link" : "Добавить ссылку",
     "Show image" : "Показать изображение",
-    "Show file" : "Показать файл"
+    "Show file" : "Показать файл",
+    "Paragraph" : "Абзац"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

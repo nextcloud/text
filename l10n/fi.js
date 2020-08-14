@@ -24,7 +24,6 @@ OC.L10N.register(
     "Bold" : "Lihavoitu",
     "Italic" : "Kursivoitu",
     "Strikethrough" : "Yliviivattu",
-    "Paragraph" : "Kappale",
     "Headings" : "Otsikot",
     "Heading 1" : "Otsikko 1",
     "Heading 2" : "Otsikko 2",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "Add link" : "Lisää linkki",
     "Show image" : "Näytä kuva",
-    "Show file" : "Näytä tiedosto"
+    "Show file" : "Näytä tiedosto",
+    "Paragraph" : "Kappale"
 },
 "nplurals=2; plural=(n != 1);");

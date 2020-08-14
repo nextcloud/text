@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Krepko",
     "Italic" : "Ležeče",
     "Strikethrough" : "Prečrtano",
-    "Paragraph" : "Odstavek",
     "Headings" : "Naslovi",
     "Heading 1" : "Naslov 1",
     "Heading 2" : "Naslov 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Zadnje shranjevanje {lastSaved}",
     "Add link" : "Dodaj povezavo",
     "Show image" : "Pokaži sliko",
-    "Show file" : "Pokaži datoteko"
+    "Show file" : "Pokaži datoteko",
+    "Paragraph" : "Odstavek"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

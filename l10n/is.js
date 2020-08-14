@@ -28,7 +28,6 @@ OC.L10N.register(
     "Bold" : "Feitletrað",
     "Italic" : "Skáletrað",
     "Strikethrough" : "Gegnumstrikað",
-    "Paragraph" : "Málsgrein",
     "Headings" : "Fyrirsagnir",
     "Heading 1" : "Fyrirsögn 1",
     "Heading 2" : "Fyrirsögn 2",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Síðast vistað {lastSave}",
     "Add link" : "Bæta við tengli",
     "Show image" : "Birta mynd",
-    "Show file" : "Sýna skrá"
+    "Show file" : "Sýna skrá",
+    "Paragraph" : "Málsgrein"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -19,6 +19,9 @@ OC.L10N.register(
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
     "Insert image" : "Görsel ekle",
+    "Insert an image" : "Bir görsel ekle",
+    "Link file" : "Dosya bağla",
+    "Select file to link to" : "Bağlanacak dosyayı seçin",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
@@ -29,7 +32,6 @@ OC.L10N.register(
     "Bold" : "Koyu",
     "Italic" : "Yatık",
     "Strikethrough" : "Üzeri çizili",
-    "Paragraph" : "Paragraf",
     "Headings" : "Başlıklar",
     "Heading 1" : "1. Başlık",
     "Heading 2" : "2. Başlık",
@@ -46,6 +48,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Son kayıt {lastSave}",
     "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
-    "Show file" : "Dosyayı görüntüle"
+    "Show file" : "Dosyayı görüntüle",
+    "Paragraph" : "Paragraf"
 },
 "nplurals=2; plural=(n > 1);");

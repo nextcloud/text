@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Fet",
     "Italic" : "Kursiv",
     "Strikethrough" : "Genomstruken",
-    "Paragraph" : "Paragraf",
     "Headings" : "Rubriker",
     "Heading 1" : "Rubrik 1",
     "Heading 2" : "Rubrik 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Senast sparad {lastSave}",
     "Add link" : "Lägg till länk",
     "Show image" : "Visa bild",
-    "Show file" : "Visa fil"
+    "Show file" : "Visa fil",
+    "Paragraph" : "Paragraf"
 },
 "nplurals=2; plural=(n != 1);");
