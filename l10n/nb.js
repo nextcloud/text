@@ -28,7 +28,6 @@ OC.L10N.register(
     "Bold" : "Uthevet",
     "Italic" : "Kursiv",
     "Strikethrough" : "Gjennomstreking",
-    "Paragraph" : "Paragraf",
     "Headings" : "Overskrifter",
     "Heading 1" : "Overskrift 1",
     "Heading 2" : "Overskrift 2",
@@ -45,6 +44,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Sist lagret {lastSave}",
     "Add link" : "Legg ved lenke",
     "Show image" : "Vis bilde",
-    "Show file" : "Vis fil"
+    "Show file" : "Vis fil",
+    "Paragraph" : "Paragraf"
 },
 "nplurals=2; plural=(n != 1);");

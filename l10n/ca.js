@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Negreta",
     "Italic" : "Italica",
     "Strikethrough" : "Ratllat",
-    "Paragraph" : "Paràgraf",
     "Headings" : "Títols",
     "Heading 1" : "Títol 1",
     "Heading 2" : "Títol 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Darrera modificació {lastSave}",
     "Add link" : "Afegeix un enllaç",
     "Show image" : "Mostra la imatge",
-    "Show file" : "Mostra el fitxer"
+    "Show file" : "Mostra el fitxer",
+    "Paragraph" : "Paràgraf"
 },
 "nplurals=2; plural=(n != 1);");

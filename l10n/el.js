@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Έντονα",
     "Italic" : "Πλάγια",
     "Strikethrough" : "Διαγράμμιση",
-    "Paragraph" : "Παράγραφος",
     "Headings" : "Επικεφαλίδες",
     "Heading 1" : "Επικεφαλίδα 1",
     "Heading 2" : "Επικεφαλίδα 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
     "Add link" : "Προσθήκη συνδέσμου",
     "Show image" : "Εμφάνιση εικόνας",
-    "Show file" : "Εμφάνιση αρχείου"
+    "Show file" : "Εμφάνιση αρχείου",
+    "Paragraph" : "Παράγραφος"
 },
 "nplurals=2; plural=(n != 1);");

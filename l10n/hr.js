@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Podebljano",
     "Italic" : "U kurzivu",
     "Strikethrough" : "Precrtano",
-    "Paragraph" : "Odjeljak",
     "Headings" : "Naslovi",
     "Heading 1" : "Naslov 1",
     "Heading 2" : "Naslov 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
     "Add link" : "Dodaj poveznicu",
     "Show image" : "Prikaži sliku",
-    "Show file" : "Prikaži datoteku"
+    "Show file" : "Prikaži datoteku",
+    "Paragraph" : "Odjeljak"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

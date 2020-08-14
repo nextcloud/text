@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Lodia",
     "Italic" : "Etzana",
     "Strikethrough" : "Marratua",
-    "Paragraph" : "Paragrafoa",
     "Headings" : "Goiburuak",
     "Heading 1" : "1. goiburua",
     "Heading 2" : "2. goiburua",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Azken gordetzea {lastSave}",
     "Add link" : "Gehitu esteka",
     "Show image" : "Bistaratu irudia",
-    "Show file" : "Bistaratu fitxategia"
+    "Show file" : "Bistaratu fitxategia",
+    "Paragraph" : "Paragrafoa"
 },
 "nplurals=2; plural=(n != 1);");

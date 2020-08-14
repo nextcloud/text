@@ -19,6 +19,9 @@ OC.L10N.register(
     "Edit guest name" : "Gast-Namen bearbeiten",
     "Save guest name" : "Gast-Namen speichern",
     "Insert image" : "Bild einfügen",
+    "Insert an image" : "Ein Bild einfügen",
+    "Link file" : "Datei verknüpfen",
+    "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
     "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "],
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen...",
@@ -29,7 +32,6 @@ OC.L10N.register(
     "Bold" : "Fett",
     "Italic" : "Kursiv",
     "Strikethrough" : "Durchgestrichen",
-    "Paragraph" : "Absatz",
     "Headings" : "Überschriften",
     "Heading 1" : "Überschrift 1",
     "Heading 2" : "Überschrift 2",
@@ -46,6 +48,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Zuletzt gespeichert {lastSave}",
     "Add link" : "Link einfügen",
     "Show image" : "Bild anzeigen",
-    "Show file" : "Datei anzeigen"
+    "Show file" : "Datei anzeigen",
+    "Paragraph" : "Absatz"
 },
 "nplurals=2; plural=(n != 1);");
