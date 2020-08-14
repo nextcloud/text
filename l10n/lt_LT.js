@@ -19,6 +19,9 @@ OC.L10N.register(
     "Edit guest name" : "Taisyti svečio vardą",
     "Save guest name" : "Įrašyti svečio vardą",
     "Insert image" : "Įterpti paveikslą",
+    "Insert an image" : "Įterpti paveikslą",
+    "Link file" : "Susieti failą",
+    "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
@@ -29,7 +32,6 @@ OC.L10N.register(
     "Bold" : "Pusjuodis",
     "Italic" : "Kursyvas",
     "Strikethrough" : "Perbrauktas",
-    "Paragraph" : "Pastraipa",
     "Headings" : "Antraštės",
     "Heading 1" : "Antraštė 1",
     "Heading 2" : "Antraštė 2",
@@ -46,6 +48,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Add link" : "Pridėti nuorodą",
     "Show image" : "Rodyti paveikslą",
-    "Show file" : "Rodyti failą"
+    "Show file" : "Rodyti failą",
+    "Paragraph" : "Pastraipa"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

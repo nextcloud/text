@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "Tučné",
     "Italic" : "Kurzíva",
     "Strikethrough" : "Prečiarknuté",
-    "Paragraph" : "Odstavec",
     "Headings" : "Nadpisy",
     "Heading 1" : "Nadpis 1",
     "Heading 2" : "Nadpis 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "Posledné uloženie {lastSave}",
     "Add link" : "Pridať odkaz",
     "Show image" : "Zobraziť obrázok",
-    "Show file" : "Zobraziť súbor"
+    "Show file" : "Zobraziť súbor",
+    "Paragraph" : "Odstavec"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

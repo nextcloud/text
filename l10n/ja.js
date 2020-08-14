@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "太字",
     "Italic" : "斜体",
     "Strikethrough" : "取り消し線",
-    "Paragraph" : "段落",
     "Headings" : "見出し",
     "Heading 1" : "見出し1",
     "Heading 2" : "見出し2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "最終保存 {lastSave}",
     "Add link" : "リンクを追加",
     "Show image" : "画像を表示する",
-    "Show file" : "ファイルを表示する"
+    "Show file" : "ファイルを表示する",
+    "Paragraph" : "段落"
 },
 "nplurals=1; plural=0;");

@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "加粗",
     "Italic" : "斜体",
     "Strikethrough" : "删除线",
-    "Paragraph" : "段落",
     "Headings" : "标题",
     "Heading 1" : "标题 1",
     "Heading 2" : "标题 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "最近保存 {lastSave}",
     "Add link" : "添加链接",
     "Show image" : "显示图片",
-    "Show file" : "显示文件"
+    "Show file" : "显示文件",
+    "Paragraph" : "段落"
 },
 "nplurals=1; plural=0;");

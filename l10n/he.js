@@ -29,7 +29,6 @@ OC.L10N.register(
     "Bold" : "מודגש",
     "Italic" : "נטוי",
     "Strikethrough" : "קו חוצה",
-    "Paragraph" : "פסקה",
     "Headings" : "כותרות",
     "Heading 1" : "כותרת 1",
     "Heading 2" : "כותרת 2",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
     "Add link" : "הוספת קישור",
     "Show image" : "הצגת תמונה",
-    "Show file" : "הצגת קובץ"
+    "Show file" : "הצגת קובץ",
+    "Paragraph" : "פסקה"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

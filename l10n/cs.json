@@ -17,6 +17,9 @@
     "Edit guest name" : "Upravit jméno hosta",
     "Save guest name" : "Uložit jméno hosta",
     "Insert image" : "Vložit obrázek",
+    "Insert an image" : "Vložit obrázek",
+    "Link file" : "Soubor pro odkaz",
+    "Select file to link to" : "Vyberte soubor na který poslat odkaz",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
     "Show rich workspaces" : "Zobrazit rich workspaces",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
@@ -27,7 +30,6 @@
     "Bold" : "Tučné",
     "Italic" : "Skloněné",
     "Strikethrough" : "Přeškrtnuté",
-    "Paragraph" : "Odstavec",
     "Headings" : "Nadpisy",
     "Heading 1" : "Nadpis 1",
     "Heading 2" : "Nadpis 2",
@@ -44,6 +46,7 @@
     "Last save {lastSave}" : "Poslední uložení {lastSave}",
     "Add link" : "Přidat odkaz",
     "Show image" : "Zobrazit obrázek",
-    "Show file" : "Zobrazit soubor"
+    "Show file" : "Zobrazit soubor",
+    "Paragraph" : "Odstavec"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
