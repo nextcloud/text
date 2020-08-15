@@ -20,7 +20,7 @@ OC.L10N.register(
     "Save guest name" : "Gardar o nome do convidado",
     "Insert image" : "Inserir unha imaxe",
     "Insert an image" : "Inserir unha imaxe",
-    "Link file" : "Ligar ficheiro",
+    "Link file" : "Ligar un ficheiro",
     "Select file to link to" : "Seleccione o ficheiro ao que ligar",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
     "Show rich workspaces" : "Amosa espazos de traballo mellorados",
