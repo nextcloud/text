@@ -27,7 +27,7 @@ OC.L10N.register(
     "Undo" : "Desfés",
     "Redo" : "Refer",
     "Bold" : "Negreta",
-    "Italic" : "Italica",
+    "Italic" : "Cursiva",
     "Strikethrough" : "Ratllat",
     "Headings" : "Títols",
     "Heading 1" : "Títol 1",
