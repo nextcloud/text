@@ -36,7 +36,7 @@
 							:key="icon.label"
 							v-click-outside="() => hideChildMenu(icon)"
 							class="submenu">
-							<button :class="childIconClass(isActive, icon.children, )"
+							<button :class="childIconClasses(isActive, icon.children, )"
 								:title="icon.label"
 								@click.prevent="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
@@ -178,15 +178,21 @@ export default {
 				return popoverMenuItems
 			}
 		},
-		childIconClass() {
+		childIconClasses() {
+			return (isActive, icons) => {
+				const icon = this.childIcon(isActive, icons)
+				return this.getIconClasses(isActive, icon)
+			}
+		},
+		childIcon() {
 			return (isActive, icons) => {
 				for (const index in icons) {
 					const icon = icons[index]
 					if (icon.isActive(isActive)) {
-						return icon.class
+						return icon
 					}
 				}
-				return 'icon-h1'
+				return icons[0]
 			}
 		},
 		iconCount() {
