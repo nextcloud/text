@@ -229,14 +229,12 @@ export default {
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
-		document.addEventListener('keydown', this._keyUpHandler, true)
 	},
 	beforeDestroy() {
 		this.close()
 	},
 	methods: {
 		async close() {
-			document.removeEventListener('keydown', this._keyUpHandler, true)
 			clearInterval(this.saveStatusPolling)
 			if (this.currentSession && this.syncService) {
 				try {
@@ -322,7 +320,7 @@ export default {
 									},
 								}),
 								new Keymap({
-									'Ctrl-s': () => {
+									'Mod-s': () => {
 										this.syncService.save()
 										return true
 									},
@@ -458,13 +456,6 @@ export default {
 				if (session.id === this.currentSession.id) {
 					Vue.set(this.filteredSessions[sessionKey], 'isCurrent', true)
 				}
-			}
-		},
-		_keyUpHandler(event) {
-			const key = event.key || event.keyCode
-			if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
-				event.stopPropagation()
-				return true
 			}
 		},
 	},
