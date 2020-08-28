@@ -6,6 +6,7 @@ namespace OCA\Text\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
+use OCP\Files\StorageNotAvailableException;
 use OCP\IL10N;
 
 class WorkspaceService {
