@@ -93,24 +93,24 @@ class WorkspacePlugin extends ServerPlugin {
 		if (!$workspaceAvailable || !$workspaceEnabled) {
 			return;
 		}
-
-		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
-			/** @var Folder[] $nodes */
-			$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
-			if (count($nodes) > 0) {
-				/** @var File $file */
-				try {
-					$file = $this->workspaceService->getFile($nodes[0]);
-					if ($file instanceof File) {
-						return $file->getContent();
-					}
-				} catch (StorageNotAvailableException $e) {
+		if ($propFind->getDepth() > 0) {
+			$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
+				/** @var Folder[] $nodes */
+				$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
+				if (count($nodes) > 0) {
+					/** @var File $file */
+					try {
+						$file = $this->workspaceService->getFile($nodes[0]);
+						if ($file instanceof File) {
+							return $file->getContent();
+					  }
+				  	} catch (StorageNotAvailableException $e) {
 					// If a storage is not available we can for the propfind response assume that there is no rich workspace present
+					}
 				}
-			}
-			return '';
-		});
-
+				return '';
+			});
+		}
 	}
 
 }
