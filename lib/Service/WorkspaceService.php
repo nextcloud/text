@@ -6,6 +6,7 @@ namespace OCA\Text\Service;
 
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
+use OCP\Files\StorageNotAvailableException;
 use OCP\IL10N;
 
 class WorkspaceService {
@@ -25,6 +26,7 @@ class WorkspaceService {
 
 	/**
 	 * @param Folder $folder
+	 * @throws StorageNotAvailableException
 	 * @return \OCP\Files\File
 	 */
 	public function getFile(Folder $folder) {
