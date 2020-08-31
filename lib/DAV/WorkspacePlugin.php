@@ -31,6 +31,7 @@ use OCA\DAV\Files\FilesHome;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\WorkspaceService;
 use OCP\Files\IRootFolder;
+use OCP\Files\StorageNotAvailableException;
 use OCP\IConfig;
 use Sabre\DAV\INode;
 use Sabre\DAV\PropFind;
@@ -98,9 +99,13 @@ class WorkspacePlugin extends ServerPlugin {
 			$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
 			if (count($nodes) > 0) {
 				/** @var File $file */
-				$file = $this->workspaceService->getFile($nodes[0]);
-				if ($file instanceof File) {
-					return $file->getContent();
+				try {
+					$file = $this->workspaceService->getFile($nodes[0]);
+					if ($file instanceof File) {
+						return $file->getContent();
+					}
+				} catch (StorageNotAvailableException $e) {
+					// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 				}
 			}
 			return '';

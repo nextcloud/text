@@ -60,6 +60,7 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\Files\StorageNotAvailableException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -132,6 +133,8 @@ class WorkspaceController extends OCSController {
 			}
 		} catch (NotFoundException $e) {
 			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
+		} catch (StorageNotAvailableException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -165,6 +168,8 @@ class WorkspaceController extends OCSController {
 			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
 		} catch (ShareNotFound $e) {
 			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
+		} catch (StorageNotAvailableException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 
