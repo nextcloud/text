@@ -25,7 +25,7 @@ declare(strict_types=1);
 namespace OCA\Text\AppInfo;
 
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
-use OCA\Files_Sharing\Event\LoadAdditionalScriptsEvent as FilesSharingLoadAdditionalScriptsEvent;
+use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadViewerListener;
@@ -48,7 +48,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(RegisterDirectEditorEvent::class, RegisterDirectEditorEventListener::class);
 		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
-		$context->registerEventListener(FilesSharingLoadAdditionalScriptsEvent::class, FilesSharingLoadAdditionalScriptsListener::class);
+		$context->registerEventListener(BeforeTemplateRenderedEvent::class, FilesSharingLoadAdditionalScriptsListener::class);
 	}
 
 	public function boot(IBootContext $context): void {
