@@ -46,14 +46,13 @@ use OCP\Lock\LockedException;
 
 class ApiService {
 
-	protected $cache;
+	protected $request;
 	protected $sessionService;
 	protected $documentService;
 	protected $logger;
 
-	public function __construct(IRequest $request, ICacheFactory $cacheFactory, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
 		$this->request = $request;
-		$this->cache = $cacheFactory->createDistributed('textSession');
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
@@ -157,9 +156,6 @@ class ApiService {
 	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 403);
-		}
-		if ($version === $this->cache->get('document-version-' . $documentId)) {
-			return new DataResponse(['steps' => []]);
 		}
 
 		try {
