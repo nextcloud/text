@@ -32,6 +32,7 @@ use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
@@ -64,6 +65,17 @@ class ApiService {
 			$file = null;
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
+
+				/*
+				 * Check if we have proper read access (files drop)
+				 * If not then well 404 it is.
+				 */
+				try {
+					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
+				} catch (NotFoundException $e) {
+					return new DataResponse([], Http::STATUS_NOT_FOUND);
+				}
+
 				try {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
 					$readOnly = false;
