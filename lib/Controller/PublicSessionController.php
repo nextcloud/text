@@ -80,7 +80,7 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function fetch(int $documentId, string $sessionId, string $sessionToken): Response {
+	public function fetch(int $documentId, int $sessionId, string $sessionToken): Response {
 		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
 	}
 
