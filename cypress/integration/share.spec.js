@@ -83,8 +83,9 @@ describe('Open test.md in viewer', function() {
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
 		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menutoggle').trigger('click')
-		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menu input[type=checkbox]').first().check({ force: true })
-		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menu input[type=checkbox]', { timeout: 4000 }).first().should('be.checked')
+		const checkboxAllowEditing = '.popover.open input[type=checkbox]'
+		cy.get(checkboxAllowEditing).first().check({ force: true })
+		cy.get(checkboxAllowEditing, { timeout: 4000 }).first().should('be.checked')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
 			.then((href) => {
