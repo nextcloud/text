@@ -152,7 +152,14 @@ class SessionService {
 
 		$data = $this->cache->get($token);
 		if ($data !== null) {
-			return Session::fromRow(json_decode($data, true));
+			$session = Session::fromRow(json_decode($data, true));
+			if ($session->getId() !== $sessionId || $session->getDocumentId() !== $documentId) {
+				$this->cache->remove($token);
+				$this->session = false;
+				return false;
+			}
+
+			return $session;
 		}
 
 		try {
