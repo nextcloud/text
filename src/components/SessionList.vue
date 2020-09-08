@@ -45,8 +45,8 @@ import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { generateUrl } from '@nextcloud/router'
 
-const COLLABORATOR_IDLE_TIME = 10
-const COLLABORATOR_DISCONNECT_TIME = 30
+const COLLABORATOR_IDLE_TIME = 60
+const COLLABORATOR_DISCONNECT_TIME = 90
 
 export default {
 	name: 'SessionList',

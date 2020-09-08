@@ -164,7 +164,7 @@ class SessionService {
 
 		try {
 			$data = $this->sessionMapper->find($documentId, $sessionId, $token);
-			$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME);
+			$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME - 30);
 			return $data;
 		} catch (DoesNotExistException $e) {
 			$this->session = false;
@@ -178,9 +178,23 @@ class SessionService {
 			return false;
 		}
 
-		$session->setLastContact($this->timeFactory->getTime());
-		$this->sessionMapper->update($session);
-		$this->cache->set($token, json_encode($session), self::SESSION_VALID_TIME);
+		$currentTime = $this->timeFactory->getTime();
+		if (($currentTime - $session->getLastContact()) >= 30) {
+			/*
+			 * We need to update the timestamp.
+			 * Make sure that the session we got is still in the database
+			 */
+			try {
+				$session = $this->sessionMapper->find($documentId, $sessionId, $token);
+			} catch (DoesNotExistException $e) {
+				$this->session = false;
+				$this->cache->remove($token);
+				return false;
+			}
+			$session->setLastContact($this->timeFactory->getTime());
+			$this->sessionMapper->update($session);
+			$this->cache->set($token, json_encode($session), self::SESSION_VALID_TIME - 30);
+		}
 		return true;
 	}
 

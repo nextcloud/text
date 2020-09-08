@@ -27,6 +27,7 @@ namespace OCA\Text\Db;
 use OCP\AppFramework\Db\Entity;
 
 /**
+ * @method int getLastContact()
  * @method setLastContact(int $getTime)
  * @method getDocumentId()
  * @method getUserId()
