@@ -47,7 +47,6 @@ module.exports = {
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: /node_modules(?!(\/|\\)(proxy-polyfill)(\/|\\))/,
 			},
 			{
 				test: /\.(png|jpg|gif|svg)$/,
