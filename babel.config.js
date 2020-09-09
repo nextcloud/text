@@ -1,12 +1,17 @@
 module.exports = {
-	plugins: ['@babel/plugin-syntax-dynamic-import'],
+	plugins: [
+		'@babel/plugin-syntax-dynamic-import',
+		'@babel/plugin-transform-classes',
+		['@babel/plugin-proposal-class-properties', { loose: true }],
+	],
 	presets: [
 		[
 			'@babel/preset-env',
 			{
-				"modules": false
-			}
-		]
+				corejs: 3,
+				useBuiltIns: 'entry',
+			},
+		],
 	],
 	env: {
 		test: {
