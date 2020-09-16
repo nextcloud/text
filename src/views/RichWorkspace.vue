@@ -166,7 +166,7 @@ export default {
 
 <style lang="scss" scoped>
 	#rich-workspace {
-		padding: 0 60px;
+		padding: 0 50px;
 		/* Slightly reduce vertical space */
 		margin-bottom: -24px;
 		text-align: left;
@@ -210,6 +210,7 @@ export default {
 	#rich-workspace::v-deep #editor {
 		overflow: scroll !important;
 		max-height: 50vh;
+		padding-left: 10px;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
