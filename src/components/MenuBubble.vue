@@ -44,7 +44,7 @@
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="showLinkMenu(getMarkAttrs('link'))">
-					<span v-tooltip="t('text', isActive.link() ? 'Update Link' : 'Add Link')" class="icon-link" />
+					<span class="icon-link" />
 					<span class="menububble__buttontext">
 						{{ t('text', isActive.link() ? 'Update Link' : 'Add Link') }}
 					</span>
@@ -53,7 +53,7 @@
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="selectFile(commands.link)">
-					<span v-tooltip="t('text', 'Link file')" class="icon-file" />
+					<span class="icon-file" />
 					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
 			</template>
@@ -147,13 +147,16 @@ export default {
 		z-index: 10020;
 		background: var(--color-main-background-translucent);
 		box-shadow: 0 1px 5px var(--color-box-shadow);
-		border-radius: var(--border-radius);
+		border-radius: var(--border-radius-large);
+		overflow: hidden;
 		padding: 0;
-		margin-bottom: 0.4rem;
+		margin-bottom: -3px;
+		margin-left: 10px;
 		visibility: hidden;
 		opacity: 0;
 		transform: translateX(-50%);
 		transition: opacity 0.2s, visibility 0.2s;
+		height: 44px;
 
 		&.is-active {
 			opacity: 1;
@@ -162,15 +165,24 @@ export default {
 
 		&__button {
 			display: block;
+			flex-grow: 1;
 			border: 0;
-			padding: 0.3rem 0.7rem;
+			padding: 0.9rem 0.7rem;
 			margin: 0;
-			margin-right: 0.2rem;
-			border-radius: var(--border-radius);
+			border-radius: 0;
 			cursor: pointer;
+			background-color: var(--color-main-background);
+			border-right: 1px solid var(--color-border);
+
+			&:focus,
+			&:hover {
+				background-color: var(--color-background-hover);
+				border: 0;
+				border-right: 1px solid var(--color-border) !important;
+			}
 
 			&:last-child {
-				margin-right: 0;
+				border: 0 !important;
 			}
 		}
 
