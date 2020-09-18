@@ -2,7 +2,7 @@ kind: pipeline
 name: compatibility
 steps:
   - name: compatibility
-    image: nextcloudci/php7.2:php7.2-9
+    image: nextcloudci/php7.3:php7.3-5
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -24,17 +24,6 @@ trigger:
 kind: pipeline
 name: php-sqlite
 steps:
-  - name: php7.2
-    image: nextcloudci/php7.2:php7.2-13
-    environment:
-      APP_NAME: text
-      CORE_BRANCH: master
-      DB: sqlite
-    commands:
-      - bash ./tests/drone-server-setup.sh $APP_NAME $CORE_BRANCH $DB
-      - cd ../server/apps/$APP_NAME
-      - composer install
-      - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
   - name: php7.3
     image: nextcloudci/php7.3:php7.3-5
     environment:
@@ -68,8 +57,8 @@ trigger:
 kind: pipeline
 name: php-mysql
 steps:
-  - name: php7.2
-    image: nextcloudci/php7.2:php7.2-13
+  - name: php7.3
+    image: nextcloudci/php7.3:php7.3-5
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -99,8 +88,8 @@ trigger:
 kind: pipeline
 name: php-postgres
 steps:
-  - name: php7.2
-    image: nextcloudci/php7.2:php7.2-13
+  - name: php7.3
+    image: nextcloudci/php7.3:php7.3-5
     environment:
       APP_NAME: text
       CORE_BRANCH: master
