@@ -137,8 +137,11 @@ export default {
 				this.loaded = true
 				return true
 			}).catch((error) => {
-				const data = error.response.data.ocs.data
-				this.folder = data.folder || null
+				if (error.response.data.ocs && error.response.data.ocs.data.folder) {
+					this.folder = error.response.data.ocs.data.folder
+				} else {
+					this.folder = null
+				}
 				this.file = null
 				this.loaded = true
 				this.ready = true
