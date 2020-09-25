@@ -29,6 +29,8 @@ div.ProseMirror {
 	.checkbox-item {
 		display: flex;
 		align-items: start;
+		// Left-align with list item text
+		margin-left: -24px;
 
 		input[type=checkbox] {
 			display: none;
@@ -40,23 +42,24 @@ div.ProseMirror {
 			width: 14px;
 			vertical-align: middle;
 			border-radius: 50%;
-			margin: 0 6px 3px 3px;
-			margin-left: 3px;
-			border: 1px solid #878787;
+			margin: 2px 6px 3px 3px;
+			border: 1px solid var(--color-text-maxcontrast);
 			content: "";
 			position: relative;
 			width: 44px;
 			height: 44px;
 			display: block;
-			border-radius: 1px;
+			border-radius: var(--border-radius);
 			height: 14px;
 			width: 14px;
 			box-shadow: none !important;
 			background-position: center;
+			cursor: pointer;
 		}
 		&.checked:before {
-			background-image: url('/core/css/../img/actions/checkbox-mark.svg');
+			background-image: url('../../img/checkbox-mark.svg');
 			background-color: var(--color-primary-element);
+			border-color: var(--color-primary-element);
 		}
 		label {
 			display: block;
