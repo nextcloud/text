@@ -100,6 +100,9 @@ export default {
 	},
 	computed: {
 		imageUrl() {
+			if (this.src.startsWith('http://') || this.src.startsWith('https://')) {
+				return this.src
+			}
 			if (this.hasPreviewUrl) {
 				return this.src
 			}
@@ -114,7 +117,7 @@ export default {
 			return getQueryVariable(this.src, 'fileId')
 		},
 		hasPreviewUrl() {
-			return this.src.match(/^(\/index.php)?\/core\/preview/)
+			return this.src.match(/^(\/index.php)?\/core\/preview/) || this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
 		},
 		mimeIcon() {
 			const mime = getQueryVariable(this.src, 'mimetype')
