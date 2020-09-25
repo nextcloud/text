@@ -106,12 +106,24 @@ export default {
 			if (this.hasPreviewUrl) {
 				return this.src
 			}
-			if (this.fileId) {
-				return generateUrl('/core/preview') + `?fileId=${this.fileId}&x=1024&y=1024&a=true`
+
+			const isPublic = document.getElementById('isPublic')?.value === '1'
+			const sharingToken = document.getElementById('sharingToken')?.value
+			const previewPath = (!isPublic ? generateUrl('/core/preview.png') : generateUrl('/apps/files_sharing/publicpreview/' + sharingToken))
+
+			if (this.fileId && !isPublic) {
+				return previewPath + `?fileId=${this.fileId}&x=1024&y=1024&a=true`
 			}
+
+			if (isPublic) {
+				const f = FileList.getCurrentDirectory() + '/' + this.src.split('?')[0]
+				const pathParam = encodeURIComponent(path.normalize(f))
+				return previewPath + `?file=${pathParam}&x=1024&y=1024&a=true`
+			}
+
 			const f = FileList.getCurrentDirectory() + '/' + this.src
 			const pathParam = encodeURIComponent(path.normalize(f))
-			return generateUrl('/core/preview.png') + `?file=${pathParam}&x=1024&y=1024&a=true`
+			return previewPath + `?file=${pathParam}&x=1024&y=1024&a=true`
 		},
 		fileId() {
 			return getQueryVariable(this.src, 'fileId')
