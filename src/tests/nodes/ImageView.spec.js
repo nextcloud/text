@@ -50,4 +50,11 @@ describe('Image View src attribute based on markdown', () => {
 		expect(wrapper.find('.image__main').attributes('src'))
 			.toBe('/core/preview.png?file=%2Fcurrent%2Fsub%2Fasdf.jpg&x=1024&y=1024&a=true')
 	})
+
+	test('public share link previews are just used as they are', () => {
+		const wrapper = factory({src: 'https://nextcloud/index.php/apps/files_sharing/publicpreview/CSYoWifBzrsMWeA?file=/deck11-calendar.png&x=1760&y=990&a=true'})
+		expect(wrapper.vm.isSupportedImage).toBe(true)
+		expect(wrapper.find('.image__main').attributes('src'))
+			.toBe('https://nextcloud/index.php/apps/files_sharing/publicpreview/CSYoWifBzrsMWeA?file=/deck11-calendar.png&x=1760&y=990&a=true')
+	})
 })
