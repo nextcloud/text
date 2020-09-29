@@ -166,7 +166,7 @@ export default {
 
 <style lang="scss" scoped>
 	#rich-workspace {
-		padding: 0 60px;
+		padding: 0 50px;
 		/* Slightly reduce vertical space */
 		margin-bottom: -24px;
 		text-align: left;
@@ -199,6 +199,7 @@ export default {
 	#rich-workspace::v-deep #editor-container {
 		height: 100%;
 		position: unset !important;
+		top: auto !important;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper {
@@ -209,6 +210,7 @@ export default {
 	#rich-workspace::v-deep #editor {
 		overflow: scroll !important;
 		max-height: 50vh;
+		padding-left: 10px;
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
@@ -259,6 +261,40 @@ export default {
 	@media only screen and (max-width: 1024px) {
 		#rich-workspace:not(.focus) {
 			max-height: 30vh;
+		}
+	}
+
+	html.ie {
+		#rich-workspace::v-deep {
+			#editor-container {
+				position: initial;
+			}
+
+			#editor-wrapper {
+				position: relative !important;
+				top: auto !important;
+			}
+
+			#editor {
+				display: flex;
+				flex-direction: column;
+				overflow: hidden !important;
+			}
+
+			.menubar {
+				position: relative;
+				overflow: hidden;
+				flex-shrink: 0;
+				height: 44px;
+				top: auto;
+			}
+
+			#editor > div:nth-child(2) {
+				min-height: 44px;
+				overflow-x: hidden;
+				overflow-y: auto;
+				flex-shrink: 1;
+			}
 		}
 	}
 
