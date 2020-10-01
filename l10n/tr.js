@@ -49,6 +49,7 @@ OC.L10N.register(
     "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
-    "Paragraph" : "Paragraf"
+    "Paragraph" : "Paragraf",
+    "Update link" : "Bağlantıyı güncelle"
 },
 "nplurals=2; plural=(n > 1);");
