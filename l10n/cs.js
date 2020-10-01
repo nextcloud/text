@@ -49,6 +49,7 @@ OC.L10N.register(
     "Add link" : "Přidat odkaz",
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",
-    "Paragraph" : "Odstavec"
+    "Paragraph" : "Odstavec",
+    "Update link" : "Aktualizovat odkaz"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
