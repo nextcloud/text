@@ -108,11 +108,6 @@ class DocumentService {
 		$this->logger = $logger;
 		$this->shareManager = $shareManager;
 		$this->lockingProvider = $lockingProvider;
-		try {
-			$this->appData->getFolder('documents');
-		} catch (NotFoundException $e) {
-			$this->appData->newFolder('documents');
-		}
 
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
@@ -149,8 +144,12 @@ class DocumentService {
 		} catch (NotFoundException $e) {
 		}
 
+		if (!$this->ensureDocumentsFolder()) {
+			throw new NotFoundException('No app data folder present for text documents');
+		}
+
 		try {
-			$documentBaseFile = $this->appData->getFolder('documents')->getFile((string)$file->getFileInfo()->getId());
+			$documentBaseFile = $this->getBaseFile((string)$file->getFileInfo()->getId());
 		} catch (NotFoundException $e) {
 			$documentBaseFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
 		}
@@ -174,6 +173,9 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getBaseFile($document): ISimpleFile {
+		if (!$this->ensureDocumentsFolder()) {
+			throw new NotFoundException('No app data folder present for text documents');
+		}
 		return $this->appData->getFolder('documents')->getFile((string) $document);
 	}
 
@@ -343,7 +345,7 @@ class DocumentService {
 				$this->documentMapper->delete($document);
 
 				try {
-					$this->appData->getFolder('documents')->getFile((string)$documentId)->delete();
+					$this->getBaseFile($documentId)->delete();
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}
@@ -455,6 +457,20 @@ class DocumentService {
 
 	public function hasUnsavedChanges(Document $document) {
 		return $document->getCurrentVersion() !== $document->getLastSavedVersion();
+	}
+
+	private function ensureDocumentsFolder(): bool {
+		try {
+			$this->appData->getFolder('documents');
+		} catch (NotFoundException $e) {
+			$this->appData->newFolder('documents');
+		} catch (\RuntimeException $e) {
+			// Do not fail hard
+			$this->logger->logException($e);
+			return false;
+		}
+
+		return true;
 	}
 
 }
