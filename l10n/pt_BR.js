@@ -49,6 +49,7 @@ OC.L10N.register(
     "Add link" : "Adicionar link",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
-    "Paragraph" : "Parágrafo"
+    "Paragraph" : "Parágrafo",
+    "Update link" : "Atualizar link"
 },
 "nplurals=2; plural=(n > 1);");
