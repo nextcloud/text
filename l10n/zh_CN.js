@@ -41,7 +41,6 @@ OC.L10N.register(
     "ToDo list" : "待办事项清单",
     "Blockquote" : "块引用",
     "Code block" : "代码块",
-    "Network connection error: Could not connect to the document" : "网络连接错误：无法连接到文档",
     "Last save {lastSave}" : "最近保存 {lastSave}",
     "Add link" : "添加链接",
     "Show image" : "显示图片",

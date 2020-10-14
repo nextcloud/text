@@ -44,7 +44,6 @@ OC.L10N.register(
     "ToDo list" : "Egitekoen zerrenda",
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
-    "Network connection error: Could not connect to the document" : "Sare konexio errorea: Ezin izan da dokumentuarekin konektatu",
     "Last save {lastSave}" : "Azken gordetzea {lastSave}",
     "Add link" : "Gehitu esteka",
     "Show image" : "Bistaratu irudia",

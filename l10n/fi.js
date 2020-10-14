@@ -38,7 +38,6 @@ OC.L10N.register(
     "Ordered list" : "Järjestetty lista",
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
-    "Network connection error: Could not connect to the document" : "Verkkoyhteysvirhe: ei voitu yhdistää asiakirjaan",
     "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "Add link" : "Lisää linkki",
     "Show image" : "Näytä kuva",

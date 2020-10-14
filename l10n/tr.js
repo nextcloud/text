@@ -44,12 +44,11 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
-    "Network connection error: Could not connect to the document" : "Ağ bağlantısı sorunu: Belge ile bağlantı kurulamadı",
     "Last save {lastSave}" : "Son kayıt {lastSave}",
+    "Update link" : "Bağlantıyı güncelle",
     "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",
-    "Paragraph" : "Paragraf",
-    "Update link" : "Bağlantıyı güncelle"
+    "Paragraph" : "Paragraf"
 },
 "nplurals=2; plural=(n > 1);");

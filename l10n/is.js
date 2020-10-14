@@ -43,7 +43,6 @@ OC.L10N.register(
     "ToDo list" : "Verkefnalisti",
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
-    "Network connection error: Could not connect to the document" : "Villa í netkerfi: tókst ekki að tengjast skjalinu",
     "Last save {lastSave}" : "Síðast vistað {lastSave}",
     "Add link" : "Bæta við tengli",
     "Show image" : "Birta mynd",

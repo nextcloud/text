@@ -41,7 +41,6 @@ OC.L10N.register(
     "ToDo list" : "ToDo リスト",
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
-    "Network connection error: Could not connect to the document" : "ネットワーク接続エラー：ドキュメントの接続ができませんでした",
     "Last save {lastSave}" : "最終保存 {lastSave}",
     "Add link" : "リンクを追加",
     "Show image" : "画像を表示する",

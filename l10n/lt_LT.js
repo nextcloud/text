@@ -44,7 +44,6 @@ OC.L10N.register(
     "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
-    "Network connection error: Could not connect to the document" : "Tinklo ryšio klaida: Nepavyko prisijungti prie dokumento",
     "Last save {lastSave}" : "Paskutinis įrašymas {lastSave}",
     "Add link" : "Pridėti nuorodą",
     "Show image" : "Rodyti paveikslą",

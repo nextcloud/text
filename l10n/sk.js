@@ -44,7 +44,6 @@ OC.L10N.register(
     "ToDo list" : "Zoznam úloh",
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
-    "Network connection error: Could not connect to the document" : "Chyba sieťového pripojenia: K dokumentu sa nepodarilo pripojiť",
     "Last save {lastSave}" : "Posledné uloženie {lastSave}",
     "Add link" : "Pridať odkaz",
     "Show image" : "Zobraziť obrázok",
