@@ -42,12 +42,11 @@
     "ToDo list" : "Lista ToDo",
     "Blockquote" : "Bloco de citação",
     "Code block" : "Bloco de código",
-    "Network connection error: Could not connect to the document" : "Erro de rede: não foi possível conectar ao documento",
     "Last save {lastSave}" : "Última gravação {lastSave}",
+    "Update link" : "Atualizar link",
     "Add link" : "Adicionar link",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar arquivo",
-    "Paragraph" : "Parágrafo",
-    "Update link" : "Atualizar link"
+    "Paragraph" : "Parágrafo"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

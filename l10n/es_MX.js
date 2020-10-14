@@ -37,7 +37,6 @@ OC.L10N.register(
     "ToDo list" : "Lista de penditentes",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
-    "Network connection error: Could not connect to the document" : "Error de conexión de red: No se pudo acceder al documento",
     "Last save {lastSave}" : "Última actualización {lastSave}",
     "Add link" : "Añadir liga",
     "Show image" : "Mostrar imagen",

@@ -40,7 +40,6 @@ OC.L10N.register(
     "ToDo list" : "Gjøreliste",
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
-    "Network connection error: Could not connect to the document" : "Nettverksfeil: Kunne ikke koble til dokumentet",
     "Last save {lastSave}" : "Sist lagret {lastSave}",
     "Add link" : "Legg ved lenke",
     "Show image" : "Vis bilde",

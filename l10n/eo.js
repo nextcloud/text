@@ -34,7 +34,6 @@ OC.L10N.register(
     "Ordered list" : "Ordigita listo",
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
-    "Network connection error: Could not connect to the document" : "Eraro de reta konekto: konekto al la dokumento ne sukcesis",
     "Last save {lastSave}" : "Lasta konservado {lastSave}",
     "Add link" : "Aldoni ligilon",
     "Show image" : "Montri bildon",
