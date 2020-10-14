@@ -44,12 +44,11 @@ OC.L10N.register(
     "ToDo list" : "ToDo λίστα",
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
-    "Network connection error: Could not connect to the document" : "Σφάλμα σύνδεσης δικτύου: Δεν υπάρχει σύνδεση με το έγγραφο",
     "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
+    "Update link" : "Ενημέρωση συνδέσμου",
     "Add link" : "Προσθήκη συνδέσμου",
     "Show image" : "Εμφάνιση εικόνας",
     "Show file" : "Εμφάνιση αρχείου",
-    "Paragraph" : "Παράγραφος",
-    "Update link" : "Ενημέρωση συνδέσμου"
+    "Paragraph" : "Παράγραφος"
 },
 "nplurals=2; plural=(n != 1);");

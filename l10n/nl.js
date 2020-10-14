@@ -44,7 +44,6 @@ OC.L10N.register(
     "ToDo list" : "ToDo overzicht",
     "Blockquote" : "Tekstblok",
     "Code block" : "Code blok",
-    "Network connection error: Could not connect to the document" : "Netwerkfout: kon niet verbinden met het document",
     "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
     "Add link" : "Voeg link toe",
     "Show image" : "Toon afbeelding",

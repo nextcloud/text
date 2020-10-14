@@ -44,12 +44,11 @@ OC.L10N.register(
     "ToDo list" : "Liste des tâches",
     "Blockquote" : "Citation",
     "Code block" : "Bloc de code",
-    "Network connection error: Could not connect to the document" : "Erreur de connexion réseau : Impossible de se connecter au document",
     "Last save {lastSave}" : "Enregistré pour la dernière fois le {lastSave}",
+    "Update link" : "Mettre à jour le lien",
     "Add link" : "Ajouter un lien",
     "Show image" : "Afficher l'image",
     "Show file" : "Afficher le fichier",
-    "Paragraph" : "Paragraphe",
-    "Update link" : "Mettre à jour le lien"
+    "Paragraph" : "Paragraphe"
 },
 "nplurals=2; plural=(n > 1);");

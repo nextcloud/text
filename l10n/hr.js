@@ -41,7 +41,6 @@ OC.L10N.register(
     "ToDo list" : "Popis zadataka",
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
-    "Network connection error: Could not connect to the document" : "Pogreška veze: povezivanje s dokumentom nije moguće",
     "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
     "Add link" : "Dodaj poveznicu",
     "Show image" : "Prikaži sliku",
