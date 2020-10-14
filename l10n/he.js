@@ -44,7 +44,6 @@ OC.L10N.register(
     "ToDo list" : "רשימת מטלות",
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
-    "Network connection error: Could not connect to the document" : "שגיאה בחיבור לרשת: לא ניתן להתחבר למסמך",
     "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
     "Add link" : "הוספת קישור",
     "Show image" : "הצגת תמונה",

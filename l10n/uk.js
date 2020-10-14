@@ -40,7 +40,6 @@ OC.L10N.register(
     "ToDo list" : "Список завдань",
     "Blockquote" : "Цитування",
     "Code block" : "Код",
-    "Network connection error: Could not connect to the document" : "Помилка з'єднання з мережею: неможливо з'єднатися з документом",
     "Last save {lastSave}" : "Збережено {lastSave}",
     "Add link" : "Додати посиланя",
     "Show image" : "Показати зображення",

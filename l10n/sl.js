@@ -41,7 +41,6 @@ OC.L10N.register(
     "ToDo list" : "Seznam opravil",
     "Blockquote" : "Bločni navedek",
     "Code block" : "Navedek s kodo",
-    "Network connection error: Could not connect to the document" : "Napaka omrežne povezave: ni mogoče vzpostaviti povezave za urejanje dokumenta",
     "Last save {lastSave}" : "Zadnje shranjevanje {lastSaved}",
     "Add link" : "Dodaj povezavo",
     "Show image" : "Pokaži sliko",
