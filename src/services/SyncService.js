@@ -31,6 +31,13 @@ const defaultOptions = {
 	serialize: (document) => document,
 }
 
+/**
+ * Timeout after which the editor will consider a document without changes being synced as idle
+ * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
+ * @type {number}
+ */
+const IDLE_TIMEOUT = 30
+
 const ERROR_TYPE = {
 	/**
 	 * Failed to save collaborative document due to external change
@@ -68,6 +75,8 @@ class SyncService {
 			change: [],
 			/* Emitted after successful save */
 			save: [],
+			/* Emitted once a document becomes idle */
+			idle: [],
 		}
 
 		this.backend = new PollingBackend(this)
@@ -80,6 +89,8 @@ class SyncService {
 
 		this.steps = []
 		this.stepClientIDs = []
+
+		this.lastStepPush = Date.now()
 
 		return this
 	}
@@ -202,8 +213,17 @@ class SyncService {
 				})
 			})
 		}
+		this.lastStepPush = Date.now()
 		this.emit('sync', { steps: newSteps, document })
 		console.debug('receivedSteps', 'newVersion', this._getVersion())
+	}
+
+	checkIdle() {
+		const lastPushMinutesAgo = (Date.now() - this.lastStepPush) / 1000 / 60
+		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
+			console.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
+			this.emit('idle')
+		}
 	}
 
 	_getVersion() {
@@ -294,4 +314,4 @@ class SyncService {
 }
 
 export default SyncService
-export { SyncService, ERROR_TYPE }
+export { SyncService, ERROR_TYPE, IDLE_TIMEOUT }

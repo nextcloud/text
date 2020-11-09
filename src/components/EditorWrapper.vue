@@ -22,12 +22,15 @@
 
 <template>
 	<div id="editor-container">
-		<div v-if="currentSession && active">
+		<div v-if="currentSession && active" class="document-status">
+			<p v-if="idle" class="msg icon-info">
+				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+			</p>
 			<p v-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
 			<p v-if="hasConnectionIssue" class="msg icon-info">
-				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Retry') }}</a>
+				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
 		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading || hasConnectionIssue, 'richEditor': isRichEditor}">
@@ -72,7 +75,7 @@ import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 
-import { SyncService, ERROR_TYPE } from './../services/SyncService'
+import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
 import { extensionHighlight } from '../helpers/mappings'
 import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
@@ -143,6 +146,8 @@ export default {
 	},
 	data() {
 		return {
+			IDLE_TIMEOUT,
+
 			tiptap: null,
 			/** @type SyncService */
 			syncService: null,
@@ -153,6 +158,7 @@ export default {
 
 			filteredSessions: {},
 
+			idle: false,
 			dirty: false,
 			initialLoading: false,
 			lastSavedString: '',
@@ -393,6 +399,12 @@ export default {
 						this.dirty = state.dirty
 					}
 				})
+				.on('idle', () => {
+					this.syncService.close()
+					this.idle = true
+					this.readOnly = true
+					this.tiptap.setOptions({ editable: !this.readOnly })
+				})
 			if (this.initialSession === null) {
 				this.syncService.open({
 					fileId: this.fileId,
@@ -421,6 +433,7 @@ export default {
 		},
 
 		reconnect() {
+			this.initialLoading = true
 			if (this.syncService) {
 				this.syncService.close().then(() => {
 					this.syncService = null
@@ -434,6 +447,7 @@ export default {
 				this.tiptap.destroy()
 				this.initSession()
 			}
+			this.idle = false
 		},
 
 		updateSessions(sessions) {
@@ -508,10 +522,10 @@ export default {
 		width: 100%;
 	}
 
-	.msg.icon-error {
+	.document-status .msg {
 		padding: 12px;
-		border-bottom:1px solid var(--color-border);
 		padding-left: 30px;
+		border-bottom: 1px solid var(--color-border);
 		background-position: 8px center;
 	}
 
