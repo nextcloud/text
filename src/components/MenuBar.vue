@@ -252,7 +252,7 @@ export default {
 						+ Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
 
 					_command({
-						src: src,
+						src,
 						alt: fileInfo.name,
 					})
 				})

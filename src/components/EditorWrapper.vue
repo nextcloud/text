@@ -215,7 +215,7 @@ export default {
 		},
 	},
 	watch: {
-		lastSavedStatus: function() {
+		lastSavedStatus() {
 			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
 		},
 	},
@@ -343,7 +343,7 @@ export default {
 					try {
 						this.tiptap.extensions.options.collaboration.update({
 							version: document.currentVersion,
-							steps: steps,
+							steps,
 						})
 						this.syncService.state = this.tiptap.state
 						this.updateLastSavedStatus()
@@ -359,7 +359,7 @@ export default {
 						this.initialLoading = true
 						this.syncError = {
 							type: error,
-							data: data,
+							data,
 						}
 					}
 					if (error === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {

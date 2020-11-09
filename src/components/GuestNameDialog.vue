@@ -62,7 +62,7 @@ export default {
 				'/avatar/guest/{user}/{size}',
 				{
 					user: this.guestNameBuffered,
-					size: size,
+					size,
 				})
 			return window.location.protocol + '//' + window.location.host + avatarUrl
 		},

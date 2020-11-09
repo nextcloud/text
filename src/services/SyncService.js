@@ -126,7 +126,7 @@ class SyncService {
 	_openDocument({ fileId, filePath }) {
 		return axios.get(endpointUrl('session/create', !!this.options.shareToken), {
 			params: {
-				fileId: fileId,
+				fileId,
 				filePath,
 				token: this.options.shareToken,
 				guestName: this.options.guestName,
