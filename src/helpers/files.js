@@ -74,7 +74,7 @@ const fetchFileInfo = async function(user, path) {
 
 const registerFileCreate = () => {
 	const newFileMenuPlugin = {
-		attach: function(menu) {
+		attach(menu) {
 			const fileList = menu.fileList
 
 			// only attach to main file list, public view is not supported yet
@@ -89,7 +89,7 @@ const registerFileCreate = () => {
 				templateName: t('text', 'New text document') + '.md',
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
-				actionHandler: function(name) {
+				actionHandler(name) {
 					fileList.createFile(name).then(function(status, data) {
 						const fileInfoModel = new OCA.Files.FileInfoModel(data)
 						if (typeof OCA.Viewer !== 'undefined') {
@@ -159,7 +159,7 @@ const FilesWorkspacePlugin = {
 
 	el: null,
 
-	attach: function(fileList) {
+	attach(fileList) {
 		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
 			return
 		}
@@ -173,7 +173,7 @@ const FilesWorkspacePlugin = {
 		})
 	},
 
-	render: function(fileList) {
+	render(fileList) {
 		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
 			return
 		}

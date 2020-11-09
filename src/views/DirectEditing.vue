@@ -92,7 +92,7 @@ export default {
 		return {
 			initial: OCP.InitialState.loadState('text', 'file'),
 			messages: log.messages,
-			log: log,
+			log,
 			saving: false,
 		}
 	},

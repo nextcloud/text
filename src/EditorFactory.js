@@ -98,9 +98,9 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 	}
 	extensions = extensions || []
 	return new Editor({
-		content: content,
-		onInit: onInit,
-		onUpdate: onUpdate,
+		content,
+		onInit,
+		onUpdate,
 		extensions: [
 			...richEditingExtensions,
 			new History(),
@@ -137,7 +137,7 @@ const createMarkdownSerializer = (_nodes, _marks) => {
 			{ ...defaultMarkdownSerializer.nodes, ...nodes },
 			{ ...defaultMarkdownSerializer.marks, ...marks }
 		),
-		serialize: function(content, options) {
+		serialize(content, options) {
 			return this.serializer.serialize(content, { ...options, tightLists: true })
 				.split('\\[').join('[')
 				.split('\\]').join(']')
