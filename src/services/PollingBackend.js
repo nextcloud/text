@@ -26,21 +26,28 @@ import { sendableSteps } from 'prosemirror-collab'
 
 /**
  * Minimum inverval to refetch the document changes
- * @type {number}
+ * @type {number} time in ms
  */
 const FETCH_INTERVAL = 300
 
 /**
  * Maximum interval between refetches of document state if multiple users have joined
- * @type {number}
+ * @type {number} time in ms
  */
 const FETCH_INTERVAL_MAX = 5000
 
 /**
  * Interval to check for changes when there is only one user joined
- * @type {number}
+ * @type {number} time in ms
  */
 const FETCH_INTERVAL_SINGLE_EDITOR = 5000
+
+/**
+ * Interval to fetch for changes when a browser window is considered invisible by the
+ * page visibility API https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
+ * @type {number} time in ms
+ */
+const FETCH_INTERVAL_INVISIBLE = 60000
 
 const MIN_PUSH_RETRY = 500
 const MAX_PUSH_RETRY = 10000
@@ -51,8 +58,11 @@ const WARNING_PUSH_RETRY = 5000
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
 
-/* Timeout for sessions to be marked as disconnected */
-const COLLABORATOR_DISCONNECT_TIME = 20
+/**
+ * Timeout for sessions to be marked as disconnected
+ * Make sure that this is higher than any FETCH_INTERVAL_ values
+ **/
+const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
 
@@ -67,6 +77,7 @@ class PollingBackend {
 
 	connect() {
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 0)
+		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
 	_isPublic() {
@@ -220,6 +231,7 @@ class PollingBackend {
 	disconnect() {
 		clearInterval(this.fetcher)
 		this.fetcher = 0
+		document.removeEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
 	resetRefetchTimer() {
@@ -248,6 +260,19 @@ class PollingBackend {
 		this.fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 		clearInterval(this.fetcher)
 		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+	}
+
+	visibilitychange() {
+		if (this.fetcher === 0) {
+			return
+		}
+		if (document.visibilityState === 'hidden') {
+			this.fetchInterval = FETCH_INTERVAL_INVISIBLE
+			clearInterval(this.fetcher)
+			this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		} else {
+			this.resetRefetchTimer()
+		}
 	}
 
 	carefulRetry() {
