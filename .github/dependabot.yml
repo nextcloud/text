@@ -22,3 +22,42 @@ updates:
   labels:
   - 3. to review
   - dependencies
+- package-ecosystem: npm
+  target-branch: stable18
+  versioning-strategy: lockfile-only
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "03:00"
+    timezone: Europe/Paris
+  open-pull-requests-limit: 10
+  labels:
+  - 3. to review
+  - dependencies
+- package-ecosystem: npm
+  target-branch: stable19
+  versioning-strategy: lockfile-only
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "03:00"
+    timezone: Europe/Paris
+  open-pull-requests-limit: 10
+  labels:
+  - 3. to review
+  - dependencies
+- package-ecosystem: npm
+  target-branch: stable20
+  versioning-strategy: lockfile-only
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "03:00"
+    timezone: Europe/Paris
+  open-pull-requests-limit: 10
+  labels:
+  - 3. to review
+  - dependencies
