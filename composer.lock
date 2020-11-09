@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "v20.0.0",
+            "version": "v20.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "898b3b7feda1d8a761dffeaeda6fccace44eb649"
+                "reference": "1bcaddc55baef2e21ee1fecad8c189fe32b72bdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/898b3b7feda1d8a761dffeaeda6fccace44eb649",
-                "reference": "898b3b7feda1d8a761dffeaeda6fccace44eb649",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/1bcaddc55baef2e21ee1fecad8c189fe32b72bdf",
+                "reference": "1bcaddc55baef2e21ee1fecad8c189fe32b72bdf",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 }
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2020-10-05T12:40:45+00:00"
+            "time": "2020-10-30T11:54:50+00:00"
         },
         {
             "name": "jakub-onderka/php-parallel-lint",
@@ -98,12 +98,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff"
+                "reference": "327370943772f9917bc2dc2aa4263db2d572a112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ba5d234b3a1559321b816b64aafc2ce6728799ff",
-                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/327370943772f9917bc2dc2aa4263db2d572a112",
+                "reference": "327370943772f9917bc2dc2aa4263db2d572a112",
                 "shasum": ""
             },
             "conflict": {
@@ -203,6 +203,7 @@
                 "magento/magento1ee": ">=1,<1.14.4.3",
                 "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
                 "marcwillmann/turn": "<0.3.3",
+                "mediawiki/core": ">=1.31,<1.31.4|>=1.32,<1.32.4|>=1.33,<1.33.1",
                 "mittwald/typo3_forum": "<1.2.1",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
@@ -399,7 +400,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-08T21:02:27+00:00"
+            "time": "2020-10-19T07:02:45+00:00"
         }
     ],
     "aliases": [],
