@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Text" : "Текст",
     "Use current version" : "Користи ја моменталната верзија",
     "Use the saved version" : "Користи ја зачуваната верзија",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документот не е изменет од уредникот. Промените не можат да се применат.",
@@ -13,6 +14,9 @@ OC.L10N.register(
     "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
     "Edit" : "Уреди",
+    "Undo" : "Врати",
+    "Bold" : "Болд",
+    "Italic" : "Италик",
     "Add link" : "Додади линк",
     "Show image" : "Прикаши слика",
     "Show file" : "Прикажи датотека"
