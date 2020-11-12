@@ -24,6 +24,7 @@ import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLin
 import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
 import { domHref, parseHref } from './../helpers/links'
+import { markdownit } from './../EditorFactory'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -132,12 +133,16 @@ class Link extends TipTapLink {
 										// OC.Util.History.pushState('', htmlHref)
 									}
 									OCA.Viewer.open({ path })
-								} else {
-									window.open(htmlHref)
+									return
 								}
-							} else {
-								window.open(htmlHref)
 							}
+
+							if (!markdownit.validateLink(htmlHref)) {
+								console.error('Invalid link', htmlHref)
+								return
+							}
+
+							window.open(htmlHref)
 						}
 					},
 				},
