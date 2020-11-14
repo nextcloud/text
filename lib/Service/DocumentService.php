@@ -282,8 +282,12 @@ class DocumentService {
 	 */
 	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
 		/** @var Document $document */
-		$document = $this->documentMapper->find($documentId);
-
+		try {
+			$document = $this->documentMapper->find($documentId);
+		} catch (DoesNotExistException $e) {
+			$document = $this->createDocument($file);
+		}
+		
 		if ($file === null) {
 			throw new NotFoundException();
 		}
@@ -318,7 +322,11 @@ class DocumentService {
 		}
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
-			$file->putContent($autoaveDocument);
+			if (empty($autoaveDocument)) {
+				$file->delete();
+			} else {
+				$file->putContent($autoaveDocument);
+			}
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
