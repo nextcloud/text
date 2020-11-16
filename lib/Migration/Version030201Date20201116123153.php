@@ -56,7 +56,7 @@ class Version030201Date20201116123153 extends SimpleMigrationStep {
 				'length' => 64,
 				'default' => ''
 			]);
-			$table->addColumn('base_version_etag', TYPE::STRING, [
+			$table->addColumn('base_version_etag', Type::STRING, [
 				'notnull' => false,
 				'length' => 64,
 				'default' => ''
