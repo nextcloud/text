@@ -20,7 +20,10 @@
  *
  */
 
+import { Plugin } from 'tiptap'
+import { getMarkAttrs } from 'tiptap-utils'
 import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
+import { markdownit } from '../EditorFactory'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -98,6 +101,35 @@ class Link extends TipTapLink {
 				rel: 'noopener noreferrer nofollow',
 			}, 0],
 		}
+	}
+
+	get plugins() {
+		if (!this.options.openOnClick) {
+			return []
+		}
+
+		return [
+			new Plugin({
+				props: {
+					handleClick: (view, pos, event) => {
+						const { schema } = view.state
+						const attrs = getMarkAttrs(view.state, schema.marks.link)
+
+						if (attrs.href && event.target instanceof HTMLAnchorElement) {
+							event.stopPropagation()
+							const htmlHref = event.target.href
+
+							if (!markdownit.validateLink(htmlHref)) {
+								console.error('Invalid link', htmlHref)
+								return
+							}
+
+							window.open(htmlHref)
+						}
+					},
+				},
+			}),
+		]
 	}
 
 }
