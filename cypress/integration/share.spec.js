@@ -31,21 +31,25 @@ describe('Open test.md in viewer', function() {
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
 
-		// Upload test files
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
-		cy.createFolder('folder')
-		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
-		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test.md"]', {timeout: 10000})
-			.should('contain', 'test.md')
-
 		// FIXME: files app is thowing the following error for some reason
 		// Uncaught TypeError: Cannot read property 'protocol' of undefined
 		// Same for appswebroots setting in tests
 		cy.on('uncaught:exception', (err, runnable) => {
 			return false
 		})
+
+		cy.get('#fileList tr[data-file="welcome.txt"]', {timeout: 10000})
+			.should('contain', 'welcome.txt')
+		
+		// Upload test files
+		cy.createFolder('folder')
+		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
+		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
+		cy.uploadFile('test.md', 'text/markdown')
+		cy.wait(1000)
+		cy.visit('/apps/files')
+		cy.get('#fileList tr[data-file="test.md"]', {timeout: 10000})
+			.should('contain', 'test.md')
 	})
 	after(function () {
 		cy.visit('/apps/files')
