@@ -80,7 +80,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public link with write permissions', function () {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
+		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000})
+			.click({force: true})
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -107,7 +108,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Opens the editor as guest', function () {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
+		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000})
+			.click({force: true})
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -131,7 +133,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares a folder as a public read only link', function () {
 		cy.visit('/apps/files', { timeout: 10000 })
-		cy.get('#fileList tr[data-file="folder"] a.action-share', {timeout: 10000}).trigger('click')
+		cy.get('#fileList tr[data-file="folder"] a.action-share', {timeout: 10000})
+			.click({force: true})
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
