@@ -31,21 +31,25 @@ describe('Open test.md in viewer', function() {
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
 
-		// Upload test files
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
-		cy.createFolder('folder')
-		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
-		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test.md"]', {timeout: 10000})
-			.should('contain', 'test.md')
-
 		// FIXME: files app is thowing the following error for some reason
 		// Uncaught TypeError: Cannot read property 'protocol' of undefined
 		// Same for appswebroots setting in tests
 		cy.on('uncaught:exception', (err, runnable) => {
 			return false
 		})
+
+		cy.get('#fileList tr[data-file="welcome.txt"]', {timeout: 10000})
+			.should('contain', 'welcome.txt')
+
+		// Upload test files
+		cy.createFolder('folder')
+		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
+		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
+		cy.uploadFile('test.md', 'text/markdown')
+		cy.wait(1000)
+		cy.visit('/apps/files')
+		cy.get('#fileList tr[data-file="test.md"]', {timeout: 10000})
+			.should('contain', 'test.md')
 	})
 	after(function () {
 		cy.visit('/apps/files')
@@ -54,8 +58,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public read only link', function () {
 		cy.visit('/apps/files', { timeout: 10000 })
-		cy.wait(1000)
-		cy.get('#fileList tr[data-file="test.md"] a.action-share', {timeout: 10000}).trigger('click')
+		cy.get('#fileList tr[data-file="test.md"] a.action-share', { timeout: 10000 })
+			.click({force: true})
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -76,22 +80,21 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public link with write permissions', function () {
 		cy.visit('/apps/files')
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
 		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menutoggle').trigger('click')
-		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menu input[type=checkbox]').first().check({ force: true })
-		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menu input[type=checkbox]', { timeout: 4000 }).first().should('be.checked')
+		const checkboxAllowEditing = '.popover.open input[type=checkbox]'
+		cy.get(checkboxAllowEditing).first().check({ force: true })
+		cy.get(checkboxAllowEditing, { timeout: 4000 }).first().should('be.checked')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
 			.then((href) => {
 				cy.visit(href)
 				cy.window().then(win => {
 					win.OC.appswebroots['files_texteditor'] = true
-					cy.wait(1000)
 					cy.get('#editor', {timeout: 10000}).should('be.visible')
 					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
 					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
@@ -104,7 +107,6 @@ describe('Open test.md in viewer', function() {
 
 	it('Opens the editor as guest', function () {
 		cy.visit('/apps/files')
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -129,7 +131,6 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares a folder as a public read only link', function () {
 		cy.visit('/apps/files', { timeout: 10000 })
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="folder"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
