@@ -49,21 +49,21 @@ describe('Open test.md in viewer', function() {
 	it('Open the viewer on file click', function() {
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
-		cy.get('#viewer-content').should('be.visible')
-		cy.get('#viewer-content .modal-title').should('contain', 'test.md')
-		cy.get('#viewer-content .modal-header button.icon-menu-sidebar-white-forced').should('be.visible')
-		cy.get('#viewer-content .modal-header button.icon-close').should('be.visible')
+		cy.get('#viewer').should('be.visible')
+		cy.get('#viewer .modal-title').should('contain', 'test.md')
+		cy.get('#viewer .modal-header button.icon-menu-sidebar-white-forced').should('be.visible')
+		cy.get('#viewer .modal-header button.icon-close').should('be.visible')
 
 		cy.wait(2000)
-		cy.get('#viewer-content', { timeout: 4000 })
+		cy.get('#viewer', { timeout: 4000 })
 			.should('be.visible')
 			.and('have.class', 'modal-mask')
 			.and('not.have.class', 'icon-loading')
 	})
 
 	it('Has opened the file', function() {
-		cy.get('#viewer-content #editor .ProseMirror').should('contain', 'Hello world')
-		cy.get('#viewer-content #editor .ProseMirror h2').should('contain', 'Hello world')
+		cy.get('#viewer #editor .ProseMirror').should('contain', 'Hello world')
+		cy.get('#viewer #editor .ProseMirror h2').should('contain', 'Hello world')
 	})
 
 	it('Shows the menu bar icons', function() {
@@ -76,7 +76,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Closes the editor', function() {
 		cy.get('.modal-header button.icon-close').click()
-		cy.get('#viewer-content').should('not.be.visible')
+		cy.get('#viewer').should('not.be.visible')
 	})
 
 	it('Take screenshot', function() {
