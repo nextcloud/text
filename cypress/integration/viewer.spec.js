@@ -51,7 +51,7 @@ describe('Open test.md in viewer', function() {
 		cy.openFile('test.md')
 		cy.get('#viewer').should('be.visible')
 		cy.get('#viewer .modal-title').should('contain', 'test.md')
-		cy.get('#viewer .modal-header button.icon-menu-sidebar-white-forced').should('be.visible')
+		cy.get('#viewer .modal-header button.action-item__menutoggle').should('be.visible')
 		cy.get('#viewer .modal-header button.icon-close').should('be.visible')
 
 		cy.wait(2000)
