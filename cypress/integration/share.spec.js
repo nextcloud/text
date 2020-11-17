@@ -40,7 +40,7 @@ describe('Open test.md in viewer', function() {
 
 		cy.get('#fileList tr[data-file="welcome.txt"]', {timeout: 10000})
 			.should('contain', 'welcome.txt')
-		
+
 		// Upload test files
 		cy.createFolder('folder')
 		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
@@ -58,8 +58,8 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public read only link', function () {
 		cy.visit('/apps/files', { timeout: 10000 })
-		cy.wait(1000)
-		cy.get('#fileList tr[data-file="test.md"] a.action-share', {timeout: 10000}).trigger('click')
+		cy.get('#fileList tr[data-file="test.md"] a.action-share', { timeout: 10000 })
+			.click({force: true})
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -80,7 +80,6 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public link with write permissions', function () {
 		cy.visit('/apps/files')
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -96,7 +95,6 @@ describe('Open test.md in viewer', function() {
 				cy.visit(href)
 				cy.window().then(win => {
 					win.OC.appswebroots['files_texteditor'] = true
-					cy.wait(1000)
 					cy.get('#editor', {timeout: 10000}).should('be.visible')
 					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
 					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
@@ -109,7 +107,6 @@ describe('Open test.md in viewer', function() {
 
 	it('Opens the editor as guest', function () {
 		cy.visit('/apps/files')
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -134,7 +131,6 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares a folder as a public read only link', function () {
 		cy.visit('/apps/files', { timeout: 10000 })
-		cy.wait(1000)
 		cy.get('#fileList tr[data-file="folder"] a.action-share', {timeout: 10000}).trigger('click')
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
