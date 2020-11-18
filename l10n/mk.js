@@ -6,7 +6,6 @@ OC.L10N.register(
     "Use the saved version" : "Користи ја зачуваната верзија",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документот не е изменет од уредникот. Промените не можат да се применат.",
     "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
-    "Retry" : "Обидете се повторно",
     "Last saved {lastSaved}" : "Последно зачувано {lastSaved}",
     "Unpushed changes" : "Необјавени промени",
     "Unsaved changes" : "Незачувани промени",
@@ -17,6 +16,7 @@ OC.L10N.register(
     "Undo" : "Врати",
     "Bold" : "Болд",
     "Italic" : "Италик",
+    "Retry" : "Обидете се повторно",
     "Add link" : "Додади линк",
     "Show image" : "Прикаши слика",
     "Show file" : "Прикажи датотека"

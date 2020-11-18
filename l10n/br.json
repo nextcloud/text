@@ -3,7 +3,6 @@
     "Use the saved version" : "Implij ",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Cheñchet eo bet an diel er maez eus an embanner. N'eo ket posuple lakaat pez a oa bet cheñchet.",
     "File could not be loaded. Please check your internet connection." : "N'eo ket bet karget ar restr. Gwiriit o genstagadenn  internet.",
-    "Retry" : "Klaskit en dro",
     "Last saved {lastSaved}" : "Enrolladen  divezhañ {lastSaved}",
     "Unpushed changes" : "Kemmoù n'int ket bet bountet",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",
@@ -14,6 +13,7 @@
     "Link file" : "Liamm restr",
     "Select file to link to" : "Choaz ur restr da liammañ da",
     "Edit" : "Cheñch",
+    "Retry" : "Klaskit en dro",
     "Add link" : "Ouzhpnna ul liamm",
     "Show image" : "Diskouez ar skeudenn",
     "Show file" : "Diskouez ar restr"
