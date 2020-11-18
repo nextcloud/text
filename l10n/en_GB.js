@@ -2,11 +2,11 @@ OC.L10N.register(
     "text",
     {
     "Text" : "Text",
-    "Retry" : "Retry",
     "Unsaved changes" : "Unsaved changes",
     "Edit" : "Edit",
     "Undo" : "Undo",
     "Bold" : "Bold",
-    "Italic" : "Italic"
+    "Italic" : "Italic",
+    "Retry" : "Retry"
 },
 "nplurals=2; plural=(n != 1);");

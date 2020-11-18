@@ -1,7 +1,7 @@
 { "translations": {
     "Text" : "Testu",
-    "Retry" : "Retentar",
     "Edit" : "Editar",
-    "Undo" : "Desfacer"
+    "Undo" : "Desfacer",
+    "Retry" : "Retentar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

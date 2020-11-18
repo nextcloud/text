@@ -1,8 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "Retry" : "Дахин оролдох",
     "Edit" : "засварлах",
-    "Undo" : "буцах"
+    "Undo" : "буцах",
+    "Retry" : "Дахин оролдох"
 },
 "nplurals=2; plural=(n != 1);");

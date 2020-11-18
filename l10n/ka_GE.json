@@ -1,8 +1,8 @@
 { "translations": {
     "Text" : "ტექსტი",
-    "Retry" : "ვცადოთ ახლიდან",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
     "Edit" : "ცვლილება",
-    "Undo" : "დაბრუნება"
+    "Undo" : "დაბრუნება",
+    "Retry" : "ვცადოთ ახლიდან"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

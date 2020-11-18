@@ -2,13 +2,13 @@ OC.L10N.register(
     "text",
     {
     "Text" : "متن",
-    "Retry" : "تلاش دوباره",
     "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "Edit" : "ویرایش",
     "Undo" : "برگرداندن",
     "Bold" : "درشت",
     "Italic" : "Italic",
+    "Retry" : "تلاش دوباره",
     "Add link" : "افزودن لینک",
     "Show image" : "نمایش تصویر",
     "Show file" : "نمایش فایل"
