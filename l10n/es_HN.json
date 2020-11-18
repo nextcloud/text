@@ -1,8 +1,8 @@
 { "translations": {
     "Text" : "Texto",
-    "Retry" : "Reintentar",
     "Unsaved changes" : "Cambios no guardados",
     "Edit" : "Editar",
-    "Undo" : "Deshacer"
+    "Undo" : "Deshacer",
+    "Retry" : "Reintentar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
