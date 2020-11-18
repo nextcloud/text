@@ -4,7 +4,6 @@ OC.L10N.register(
     "Text" : "Tekst",
     "Use current version" : "Brug aktuelle version",
     "Use the saved version" : "Brug den gemte version",
-    "Retry" : "Prøv igen",
     "Unsaved changes" : "Ikke gemte ændringer",
     "Insert image" : "Indsæt billede",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
@@ -25,6 +24,7 @@ OC.L10N.register(
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
+    "Retry" : "Prøv igen",
     "Show file" : "Vis fil",
     "Paragraph" : "Paragraf"
 },

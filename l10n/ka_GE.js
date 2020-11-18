@@ -2,9 +2,9 @@ OC.L10N.register(
     "text",
     {
     "Text" : "ტექსტი",
-    "Retry" : "ვცადოთ ახლიდან",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
     "Edit" : "ცვლილება",
-    "Undo" : "დაბრუნება"
+    "Undo" : "დაბრუნება",
+    "Retry" : "ვცადოთ ახლიდან"
 },
 "nplurals=2; plural=(n!=1);");

@@ -3,10 +3,10 @@ OC.L10N.register(
     {
     "Use current version" : "Kasuta praegust versiooni",
     "Use the saved version" : "Kasuta salvestatud versiooni",
-    "Retry" : "Proovi uuesti",
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
     "Edit" : "Redigeeri",
+    "Retry" : "Proovi uuesti",
     "Add link" : "Lisa link",
     "Show image" : "Näita pilti",
     "Show file" : "Näita faili"

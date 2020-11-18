@@ -2,8 +2,8 @@ OC.L10N.register(
     "text",
     {
     "Text" : "Testu",
-    "Retry" : "Retentar",
     "Edit" : "Editar",
-    "Undo" : "Desfacer"
+    "Undo" : "Desfacer",
+    "Retry" : "Retentar"
 },
 "nplurals=2; plural=(n != 1);");
