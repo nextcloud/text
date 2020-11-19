@@ -6,6 +6,7 @@
     "📝 Collaborative document editing" : "📝 Samstarfsforrit til vinnslu skjala",
     "Use current version" : "Nota fyrirliggjandi útgáfu",
     "Use the saved version" : "Nota vistuðu útgáfuna",
+    "Reconnect" : "Endurtengjast",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Skjalinu hefur verið breytt utan ritilsins. Ekki var hægt að framkvæma breytingarnar.",
     "File could not be loaded. Please check your internet connection." : "Ekki var hægt að hlaða inn skránni. Athugaðu nettenginguna þína.",
     "Last saved {lastSaved}" : "Síðast vistað {lastSaved}",
