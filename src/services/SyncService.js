@@ -135,27 +135,22 @@ class SyncService {
 	}
 
 	_openDocument({ fileId, filePath }) {
-		return axios.get(endpointUrl('session/create', !!this.options.shareToken), {
-			params: {
-				fileId,
-				filePath,
-				token: this.options.shareToken,
-				guestName: this.options.guestName,
-				forceRecreate: this.options.forceRecreate,
-			},
+		return axios.put(endpointUrl('session/create', !!this.options.shareToken), {
+			fileId,
+			filePath,
+			token: this.options.shareToken,
+			guestName: this.options.guestName,
+			forceRecreate: this.options.forceRecreate,
 		})
 	}
 
 	_fetchDocument() {
-		return axios.get(
+		return axios.post(
 			endpointUrl('session/fetch', !!this.options.shareToken), {
-				transformResponse: [(data) => data],
-				params: {
-					documentId: this.document.id,
-					sessionId: this.session.id,
-					sessionToken: this.session.token,
-					token: this.options.shareToken,
-				},
+				documentId: this.document.id,
+				sessionId: this.session.id,
+				sessionToken: this.session.token,
+				token: this.options.shareToken,
 			}
 		)
 	}
@@ -280,16 +275,13 @@ class SyncService {
 			return Promise.resolve()
 		}
 		this.backend.disconnect()
-		return axios.get(
+		return axios.post(
 			endpointUrl('session/close', !!this.options.shareToken), {
-				params: {
-					documentId: this.document.id,
-					sessionId: this.session.id,
-					sessionToken: this.session.token,
-					token: this.options.shareToken,
-				},
-			}
-		)
+				documentId: this.document.id,
+				sessionId: this.session.id,
+				sessionToken: this.session.token,
+				token: this.options.shareToken,
+			})
 	}
 
 	on(event, callback, _this) {
