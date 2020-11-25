@@ -26,14 +26,14 @@
 			<p v-if="idle" class="msg icon-info">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
-			<p v-if="hasSyncCollission" class="msg icon-error">
+			<p v-else-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
-			<p v-if="hasConnectionIssue" class="msg icon-info">
+			<p v-else-if="hasConnectionIssue" class="msg icon-info">
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading || hasConnectionIssue, 'richEditor': isRichEditor}">
+		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor}">
 			<div id="editor">
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
@@ -55,7 +55,7 @@
 				<div>
 					<MenuBubble v-if="!readOnly && isRichEditor"
 						:editor="tiptap"
-						:filePath="relativePath" />
+						:file-path="relativePath" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
 						:editor="tiptap" />
@@ -381,10 +381,9 @@ export default {
 						}
 					}
 					if (error === ERROR_TYPE.SOURCE_NOT_FOUND) {
-						this.initialLoading = false
-						this.$emit('close')
-						this.$emit('error')
+						this.hasConnectionIssue = true
 					}
+					this.$emit('ready')
 				})
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {
@@ -433,7 +432,8 @@ export default {
 		},
 
 		reconnect() {
-			this.initialLoading = true
+			this.initialLoading = false
+			this.hasConnectionIssue = false
 			if (this.syncService) {
 				this.syncService.close().then(() => {
 					this.syncService = null
