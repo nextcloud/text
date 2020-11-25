@@ -32,6 +32,7 @@ use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
@@ -161,19 +162,24 @@ class ApiService {
 			return new DataResponse(['steps' => []]);
 		}
 
-		$result = [
-			'steps' => $this->documentService->getSteps($documentId, $version),
-			'sessions' => $this->sessionService->getActiveSessions($documentId),
-			'document' => $this->documentService->get($documentId)
-		];
-
-		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		try {
+			$result = [
+				'steps' => $this->documentService->getSteps($documentId, $version),
+				'sessions' => $this->sessionService->getActiveSessions($documentId),
+				'document' => $this->documentService->get($documentId)
+			];
+
+			$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
 			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			return new DataResponse([
 				'message' => 'File not found'
+			], 404);
+		} catch (DoesNotExistException $e) {
+			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			return new DataResponse([
+				'message' => 'Document no longer exists'
 			], 404);
 		}
 
