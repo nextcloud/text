@@ -4,6 +4,7 @@ OC.L10N.register(
     "Text" : "텍스트",
     "Use current version" : "최근 버젼을 사용하십시오.",
     "Use the saved version" : "이전 버전 사용하기",
+    "Reconnect" : "재연결",
     "The document has been changed outside of the editor. The changes cannot be applied." : "문서가 에디터 밖에서 변경되었습니다. 변경사항이 적용되지 않습니다.",
     "File could not be loaded. Please check your internet connection." : "파일을 가져올 수 없습니다. 인터넷 연결을 확인해주십시오.",
     "Unsaved changes" : "저장하지 않은 변경 사항",
