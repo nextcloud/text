@@ -29,7 +29,7 @@ OC.L10N.register(
     "New text document" : "Nowy dokument tekstowy",
     "Edit" : "Edytuj",
     "Undo" : "Cofnij",
-    "Redo" : "Powtórzenie",
+    "Redo" : "Powtórz",
     "Bold" : "Tekst pogrubiony",
     "Italic" : "Kursywa",
     "Strikethrough" : "Tekst przekreślony",
