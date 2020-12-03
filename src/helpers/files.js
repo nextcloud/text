@@ -191,6 +191,9 @@ const FilesWorkspacePlugin = {
 				},
 			}).$mount(this.el)
 
+			fileList.$el.on('urlChanged', data => {
+				vm.path = data.dir.toString()
+			})
 			fileList.$el.on('changeDirectory', data => {
 				vm.path = data.dir.toString()
 			})
