@@ -27,6 +27,7 @@ namespace OCA\Text\Service;
 
 use \InvalidArgumentException;
 use OCA\Text\Db\Session;
+use OCA\Text\Db\SessionMapper;
 use OCP\DirectEditing\IManager;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
@@ -74,6 +75,10 @@ class DocumentService {
 	 */
 	private $documentMapper;
 	/**
+	 * @var SessionMapper
+	 */
+	private $sessionMapper;
+	/**
 	 * @var ILogger
 	 */
 	private $logger;
@@ -98,9 +103,10 @@ class DocumentService {
 	 */
 	private $appData;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
+		$this->sessionMapper = $sessionMapper;
 		$this->userId = $userId;
 		$this->appData = $appData;
 		$this->rootFolder = $rootFolder;
@@ -342,6 +348,7 @@ class DocumentService {
 
 			if ($force || !$this->hasUnsavedChanges($document)) {
 				$this->stepMapper->deleteAll($documentId);
+				$this->sessionMapper->deleteByDocumentId($documentId);
 				$this->documentMapper->delete($document);
 
 				try {
