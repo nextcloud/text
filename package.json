@@ -33,7 +33,7 @@
 		"@nextcloud/l10n": "^1.4.1",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.2.0",
-		"@nextcloud/vue": "^2.7.0",
+		"@nextcloud/vue": "^3.3.1",
 		"core-js": "^3.8.1",
 		"entities": "^2.0.3",
 		"escape-html": "^1.0.3",
