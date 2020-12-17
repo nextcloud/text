@@ -253,9 +253,11 @@ class DocumentService {
 		}
 	}
 
-	public function getSteps($documentId, $lastVersion) {
+	public function getSteps($documentId, $lastVersion): array {
+		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
+			return [];
+		}
 		$steps = $this->stepMapper->find($documentId, $lastVersion);
-		//return $steps;
 		$unique_array = [];
 		foreach($steps as $step) {
 			$version = $step->getVersion();
