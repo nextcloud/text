@@ -49,10 +49,6 @@ jobs:
         with:
           path: apps/${{ env.APP_NAME }}
 
-      - name: Set up PHPUnit
-        working-directory: apps/${{ env.APP_NAME }}
-        run: composer i
-
       - name: Set up php ${{ matrix.php-versions }}
         uses: "shivammathur/setup-php@v2"
         with:
@@ -60,6 +56,10 @@ jobs:
           extensions: mbstring, iconv, fileinfo, intl, oci8
           tools: phpunit:8.5.2
           coverage: none
+
+      - name: Set up PHPUnit
+        working-directory: apps/${{ env.APP_NAME }}
+        run: composer i
 
       - name: Set up Nextcloud
         run: |
