@@ -40,6 +40,7 @@ const openMimetypesPlainText = [
 	'text/css',
 	'text/csv',
 	'text/html',
+	'text/org',
 	'text/x-c',
 	'text/x-c++src',
 	'text/x-h',
