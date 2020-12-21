@@ -2,6 +2,10 @@ name: PHPUnit
 
 on:
   pull_request:
+    paths:
+      - 'appinfo/**'
+      - 'lib/**'
+      - 'tests/**'
   push:
     branches:
       - master
