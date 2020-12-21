@@ -140,6 +140,8 @@ class SyncService {
 				sessionId: this.session.id,
 				sessionToken: this.session.token,
 				token: this.options.shareToken,
+			}, {
+				transformResponse: [(data) => data],
 			}
 		)
 	}
