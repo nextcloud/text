@@ -107,11 +107,12 @@ export default {
 		box-shadow: 0 1px 5px var(--color-box-shadow);
 		border-radius: var(--border-radius);
 		padding: 0;
-		margin-bottom: 0.4rem;
 		visibility: hidden;
+		margin-left: 3px;
 		opacity: 0;
 		transform: translateX(-50%);
 		transition: opacity 0.2s, visibility 0.2s;
+		width: 200px;
 
 		&.is-active {
 			opacity: 1;
@@ -126,6 +127,7 @@ export default {
 			margin-right: 0.2rem;
 			border-radius: var(--border-radius);
 			cursor: pointer;
+			flex-grow: 1;
 
 			&:last-child {
 				margin-right: 0;
@@ -140,6 +142,7 @@ export default {
 		&__form {
 			display: flex;
 			align-items: center;
+			flex-grow: 1;
 		}
 
 		&__input {
