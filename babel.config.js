@@ -3,6 +3,7 @@ module.exports = {
 		'@babel/plugin-syntax-dynamic-import',
 		'@babel/plugin-transform-classes',
 		['@babel/plugin-proposal-class-properties', { loose: true }],
+		'@babel/plugin-transform-modules-commonjs',
 	],
 	presets: [
 		[
