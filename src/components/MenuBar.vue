@@ -75,7 +75,6 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
-import { fetchFileInfo } from './../helpers/files'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -235,9 +234,8 @@ export default {
 			}
 			const _command = command
 			OC.dialogs.filepicker('Insert an image', (file) => {
-				fetchFileInfo(currentUser.uid, file).then((info) => {
-					const fileInfo = info[0]
-					console.debug(fileInfo)
+				const client = OC.Files.getClient()
+				client.getFileInfo(file).then((_status, fileInfo) => {
 					const previewUrl = OC.generateUrl('/core/preview?') + `fileId=${fileInfo.id}&x=1024&y=1024&a=true`
 					const internalLink = OC.generateUrl('/f/' + fileInfo.id)
 
