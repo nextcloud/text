@@ -76,7 +76,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Closes the editor', function() {
 		cy.get('.modal-header button.icon-close').click()
-		cy.get('#viewer').should('not.be.visible')
+		cy.get('#viewer').should('not.exist')
 	})
 
 	it('Take screenshot', function() {
