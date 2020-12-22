@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[51],{288:function(n,a){n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/;/,contains:[a,{className:"meta",begin:/\?.*\?/},n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
-//# sourceMappingURL=ebnf.js.map?v=bd9b0a47e4467611fbd3
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[51],{324:function(n,a,e){"use strict";n.exports=function(n){var a=n.COMMENT(/\(\*/,/\*\)/);return{illegal:/\S/,contains:[a,{className:"attribute",begin:/^[ ]*[a-zA-Z][a-zA-Z-]*([\s-]+[a-zA-Z][a-zA-Z]*)*/},{begin:/=/,end:/;/,contains:[a,{className:"meta",begin:/\?.*\?/},n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
+//# sourceMappingURL=ebnf.js.map?v=6b6e3254f4fd60a0985a
