@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[154],{517:function(n,s){n.exports=function(n){return{aliases:["console"],contains:[{className:"meta",begin:"^\\s{0,3}[/\\w\\d\\[\\]()@-]*[>%$#]",starts:{end:"$",subLanguage:"bash"}}]}}}}]);
-//# sourceMappingURL=shell.js.map?v=8a4c9a64712cfd2a5b95
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[160],{557:function(s,e,n){"use strict";s.exports=function(s){return{name:"Shell Session",aliases:["console"],contains:[{className:"meta",begin:/^\s{0,3}[/~\w\d[\]()@-]*[>%$#]/,starts:{end:/[^\\](?=\s*$)/,subLanguage:"bash"}}]}}}}]);
+//# sourceMappingURL=shell.js.map?v=43c7410713894a5597b1

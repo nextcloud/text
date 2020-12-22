@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[127],{490:function(t,e){t.exports=function(t){return{disableAutodetect:!0}}}}]);
-//# sourceMappingURL=plaintext.js.map?v=ffa7acf0149d51dde0eb
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[132],{529:function(t,e,n){"use strict";t.exports=function(t){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}}}]);
+//# sourceMappingURL=plaintext.js.map?v=883209f105956d9f37da
