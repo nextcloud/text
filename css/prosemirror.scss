@@ -30,24 +30,17 @@ div.ProseMirror {
 		display: flex;
 		align-items: start;
 		// Left-align with list item text
-		margin-left: -24px;
+		margin-left: -23px;
 
 		input[type=checkbox] {
 			display: none;
 		}
 		&:before {
 			content: '';
-			display: inline-block;
-			height: 14px;
-			width: 14px;
 			vertical-align: middle;
-			border-radius: 50%;
-			margin: 2px 6px 3px 3px;
+			margin: 3px 6px 3px 2px;
 			border: 1px solid var(--color-text-maxcontrast);
-			content: "";
 			position: relative;
-			width: 44px;
-			height: 44px;
 			display: block;
 			border-radius: var(--border-radius);
 			height: 14px;
@@ -65,40 +58,10 @@ div.ProseMirror {
 			display: block;
 			flex-grow: 1;
 			max-width: calc(100% - 28px);
-			> *:first-child {
-				margin-top: 0;
-			}
 		}
 	}
 
-	li label.checkbox-label {
-		width: 100%;
-		display: flex;
-		margin-top: 10px;
-		margin-bottom: 1em;
-
-		&:before {
-			position: relative;
-			top: 2px;
-		}
-		div.checkbox-wrapper {
-			margin-bottom: -1em;
-			width: 100%;
-
-			& > p {
-				margin-top: -1px;
-				margin-bottom: 0;
-				padding-bottom: 10px;
-			}
-		}
-	}
-	p:first-child,
-	h1:first-child,
-	h2:first-child,
-	h3:first-child,
-	h4:first-child,
-	h5:first-child,
-	h6:first-child {
+	> *:first-child {
 		margin-top: 10px;
 	}
 
@@ -193,6 +156,11 @@ div.ProseMirror {
 
 	li {
 		position: relative;
+		padding-left: 3px;
+
+		p {
+			margin-bottom: 0.5em;
+		}
 	}
 
 	ul, ol {
