@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[89],{451:function(e,n){e.exports=function(e){return{contains:[{className:"meta",begin:/^julia>/,relevance:10,starts:{end:/^(?![ ]{6})/,subLanguage:"julia"},aliases:["jldoctest"]}]}}}}]);
-//# sourceMappingURL=julia-repl.js.map?v=aac712a9b3b01a921e13
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[91],{487:function(e,a,n){"use strict";e.exports=function(e){return{name:"Julia REPL",contains:[{className:"meta",begin:/^julia>/,relevance:10,starts:{end:/^(?![ ]{6})/,subLanguage:"julia"},aliases:["jldoctest"]}]}}}}]);
+//# sourceMappingURL=julia-repl.js.map?v=a64126cad0acd9d6107b

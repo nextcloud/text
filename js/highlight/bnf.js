@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[22],{385:function(n,t){n.exports=function(n){return{contains:[{className:"attribute",begin:/</,end:/>/},{begin:/::=/,starts:{end:/$/,contains:[{begin:/</,end:/>/},n.C_LINE_COMMENT_MODE,n.C_BLOCK_COMMENT_MODE,n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}}]}}}}]);
-//# sourceMappingURL=bnf.js.map?v=8ebb4c3fae1422f67d81
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[22],{419:function(n,e,t){"use strict";n.exports=function(n){return{name:"Backus–Naur Form",contains:[{className:"attribute",begin:/</,end:/>/},{begin:/::=/,end:/$/,contains:[{begin:/</,end:/>/},n.C_LINE_COMMENT_MODE,n.C_BLOCK_COMMENT_MODE,n.APOS_STRING_MODE,n.QUOTE_STRING_MODE]}]}}}}]);
+//# sourceMappingURL=bnf.js.map?v=9a9eaa0b8d7d9cd06e57
