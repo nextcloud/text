@@ -10,6 +10,5 @@ services:
         environment:
             CYPRESS_baseUrl:
             APP_SOURCE:
-            BRANCH: bugfix/noid/initial-stte-cspv3
         volumes:
             - ${APP_SOURCE}:/var/www/html/apps/text
