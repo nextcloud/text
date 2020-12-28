@@ -22,7 +22,7 @@
 
 import { ListItem as TiptapListItem } from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
-import { toggleList } from 'tiptap-commands'
+import { toggleList, wrappingInputRule } from 'tiptap-commands'
 import { findParentNode, findParentNodeClosestToPos } from 'prosemirror-utils'
 
 const TYPES = {
@@ -137,6 +137,23 @@ export default class ListItem extends TiptapListItem {
 				}
 			},
 		}
+	}
+
+	inputRules({ type }) {
+		return [
+			wrappingInputRule(/^\s*([-+*])\s(\[ ?\])\s$/, type, (match) => {
+				return {
+					type: TYPES.CHECKBOX,
+				}
+			}),
+			wrappingInputRule(/^\s*([-+*])\s(\[(x|X)\])\s$/, type, (match) => {
+				return {
+					type: TYPES.CHECKBOX,
+					done: true,
+				}
+			}),
+			wrappingInputRule(/^\s*([-+*])\s[^\s[]$/, type),
+		]
 	}
 
 	get plugins() {
