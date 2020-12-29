@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
@@ -38,7 +39,7 @@ use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 
 class Application extends App implements IBootstrap {
-	const APP_NAME = 'text';
+	public const APP_NAME = 'text';
 
 	public function __construct(array $params = []) {
 		parent::__construct(self::APP_NAME, $params);
@@ -54,4 +55,3 @@ class Application extends App implements IBootstrap {
 	public function boot(IBootContext $context): void {
 	}
 }
-

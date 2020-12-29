@@ -23,7 +23,6 @@
 
 namespace OCA\Text\Db;
 
-
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
@@ -35,7 +34,6 @@ use OCP\IDBConnection;
  * @method Session insert(Session $session)
  */
 class SessionMapper extends QBMapper {
-
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'text_sessions', Session::class);
 	}
@@ -71,7 +69,7 @@ class SessionMapper extends QBMapper {
 		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-			->andWhere($qb->expr()->gt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)))
+			->andWhere($qb->expr()->gt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)))
 			->execute();
 
 		return $this->findEntities($qb);
@@ -82,7 +80,7 @@ class SessionMapper extends QBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
 			->from($this->getTableName())
-			->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)))
+			->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)))
 			->execute();
 
 		return $this->findEntities($qb);
@@ -93,10 +91,10 @@ class SessionMapper extends QBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName());
 		if ($documentId === null) {
-			$qb->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)));
+			$qb->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
 		} else {
 			$qb->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-				->andWhere($qb->expr()->lt('last_contact', $qb->createNamedParameter(time()-SessionService::SESSION_VALID_TIME)));
+				->andWhere($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
 		}
 		return $qb->execute();
 	}
@@ -108,5 +106,4 @@ class SessionMapper extends QBMapper {
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		return $qb->execute();
 	}
-
 }

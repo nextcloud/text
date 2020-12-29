@@ -23,7 +23,5 @@
 
 namespace OCA\Text;
 
-
 class DocumentSaveConflictException extends \Exception {
-
 }

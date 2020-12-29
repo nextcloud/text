@@ -145,5 +145,4 @@ class TextDirectEditor implements IEditor {
 		}
 		return new NotFoundResponse();
 	}
-
 }

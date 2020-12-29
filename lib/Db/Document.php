@@ -23,11 +23,9 @@
 
 namespace OCA\Text\Db;
 
-
 use OCP\AppFramework\Db\Entity;
 
 class Document extends Entity implements \JsonSerializable {
-
 	public $id;
 	protected $currentVersion = 0;
 	protected $lastSavedVersion = 0;
@@ -54,5 +52,4 @@ class Document extends Entity implements \JsonSerializable {
 			'initialVersion' => $this->initialVersion
 		];
 	}
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -25,10 +26,8 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-
 use Exception;
 use OC\Files\Node\File;
-use OCA\Activity\Data;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
@@ -39,13 +38,11 @@ use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
 use OCP\Files\NotFoundException;
-use OCP\ICacheFactory;
 use OCP\ILogger;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
 
 class ApiService {
-
 	protected $request;
 	protected $sessionService;
 	protected $documentService;
@@ -80,7 +77,7 @@ class ApiService {
 					$readOnly = false;
 				} catch (NotFoundException $e) {
 				}
-			} else if ($fileId) {
+			} elseif ($fileId) {
 				$file = $this->documentService->getFileById($fileId);
 				$readOnly = !$file->isUpdateable();
 			} else {

@@ -50,10 +50,7 @@ use OC\Authentication\Exceptions\InvalidTokenException;
 use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Response;
-use OCP\AppFramework\PublicShareController;
 use OCP\DirectEditing\IManager;
-use OCP\ISession;
-use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
@@ -137,5 +134,4 @@ class DirectSessionController extends Controller {
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
 		return $this->apiService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
 	}
-
 }

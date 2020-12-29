@@ -23,7 +23,6 @@
 
 namespace OCA\Text\Db;
 
-
 use OCP\AppFramework\Db\Entity;
 
 /**
@@ -34,7 +33,6 @@ use OCP\AppFramework\Db\Entity;
  * @method string getToken()
  */
 class Session extends Entity implements \JsonSerializable {
-
 	public $id;
 	protected $userId;
 	protected $token;
@@ -47,7 +45,6 @@ class Session extends Entity implements \JsonSerializable {
 		$this->addType('id', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('lastContact', 'integer');
-
 	}
 
 	public function jsonSerialize() {

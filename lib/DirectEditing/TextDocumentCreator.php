@@ -23,9 +23,7 @@
 
 namespace OCA\Text\DirectEditing;
 
-
 use OCP\DirectEditing\ACreateEmpty;
-use OCP\Files\File;
 use OCP\IL10N;
 
 class TextDocumentCreator extends ACreateEmpty {
@@ -54,5 +52,4 @@ class TextDocumentCreator extends ACreateEmpty {
 	public function getMimetype(): string {
 		return 'text/markdown';
 	}
-
 }
