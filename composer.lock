@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa6cd47af0015137fd6c4a376ffbad34",
+    "content-hash": "a3b7237135c9dd17a5f98f968b21155d",
     "packages": [],
     "packages-dev": [
         {
@@ -560,6 +560,37 @@
                 "diff"
             ],
             "time": "2020-10-14T08:39:05+00:00"
+        },
+        {
+            "name": "psalm/phar",
+            "version": "4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psalm/phar.git",
+                "reference": "f61d8f0eaaf5f7c26f1269ddeaf1fbe29dff1bee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/f61d8f0eaaf5f7c26f1269ddeaf1fbe29dff1bee",
+                "reference": "f61d8f0eaaf5f7c26f1269ddeaf1fbe29dff1bee",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "vimeo/psalm": "*"
+            },
+            "bin": [
+                "psalm.phar"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer-based Psalm Phar",
+            "time": "2020-12-03T21:44:12+00:00"
         },
         {
             "name": "psr/container",
