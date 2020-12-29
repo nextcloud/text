@@ -45,6 +45,7 @@ OC.L10N.register(
     "Code block" : "Code blok",
     "Retry" : "Opnieuw proberen",
     "Last save {lastSave}" : "Laatste opgeslagen versie {lastSave}",
+    "Update link" : "Bijwerken link",
     "Add link" : "Voeg link toe",
     "Show image" : "Toon afbeelding",
     "Show file" : "Toon bestand",
