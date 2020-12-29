@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -122,7 +123,8 @@ class DocumentService {
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
-			} catch (\Exception $e) {}
+			} catch (\Exception $e) {
+			}
 		}
 	}
 
@@ -259,7 +261,7 @@ class DocumentService {
 		}
 		$steps = $this->stepMapper->find($documentId, $lastVersion);
 		$unique_array = [];
-		foreach($steps as $step) {
+		foreach ($steps as $step) {
 			$version = $step->getVersion();
 			if (!array_key_exists($version, $unique_array)) {
 				$unique_array[(string)$version] = $step;
@@ -358,7 +360,7 @@ class DocumentService {
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}
-			} else if ($this->hasUnsavedChanges($document)) {
+			} elseif ($this->hasUnsavedChanges($document)) {
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 		} catch (DoesNotExistException $e) {
@@ -440,7 +442,8 @@ class DocumentService {
 			try {
 				$this->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
 				$readOnly = false;
-			} catch (NotFoundException $e) {}
+			} catch (NotFoundException $e) {
+			}
 		} else {
 			$readOnly = !$file->isUpdateable();
 		}
@@ -481,5 +484,4 @@ class DocumentService {
 
 		return true;
 	}
-
 }

@@ -33,7 +33,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetDocument extends Command {
-
 	protected $documentService;
 	protected $documentMapper;
 	protected $stepMapper;
@@ -72,7 +71,6 @@ class ResetDocument extends Command {
 	 * @return void
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output) {
-
 		$fileId = $input->getArgument('file-id');
 		$fullReset = $input->getOption('full');
 
@@ -92,8 +90,5 @@ class ResetDocument extends Command {
 				$output->writeln('Failed revert changes that are newer than the last saved version');
 			}
 		}
-
 	}
 }
-
-

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
@@ -115,5 +116,4 @@ class PublicSessionController extends PublicShareController {
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
 		return $this->apiService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
 	}
-
 }

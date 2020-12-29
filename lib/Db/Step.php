@@ -23,11 +23,9 @@
 
 namespace OCA\Text\Db;
 
-
 use OCP\AppFramework\Db\Entity;
 
 class Step extends Entity implements \JsonSerializable {
-
 	public $id;
 	protected $data;
 	protected $version;

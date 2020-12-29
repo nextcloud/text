@@ -23,14 +23,11 @@
 
 namespace OCA\Text\Service;
 
-
-use OC\Avatar\Avatar;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DirectEditing\IManager;
-use OCP\IAvatar;
 use OCP\IAvatarManager;
 use OCP\ICache;
 use OCP\ICacheFactory;
@@ -38,8 +35,7 @@ use OCP\IRequest;
 use OCP\Security\ISecureRandom;
 
 class SessionService {
-
-	public const SESSION_VALID_TIME = 60*5;
+	public const SESSION_VALID_TIME = 60 * 5;
 
 	/** @var SessionMapper */
 	private $sessionMapper;
@@ -85,7 +81,8 @@ class SessionService {
 				$tokenObject->extend();
 				$tokenObject->useTokenScope();
 				$this->userId = $tokenObject->getUser();
-			} catch (\Exception $e) {}
+			} catch (\Exception $e) {
+			}
 		}
 
 		$this->cache = $cacheFactory->createDistributed('text_sessions');
@@ -122,7 +119,7 @@ class SessionService {
 
 	public function getActiveSessions($documentId): array {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
-		return array_map(function(Session $session) {
+		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
 			$userManager = \OC::$server->getUserManager();
 			$user = $userManager->get($session->getUserId());

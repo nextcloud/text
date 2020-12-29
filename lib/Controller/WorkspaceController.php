@@ -47,12 +47,9 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\AppInfo\Application;
-use OCA\Text\Service\SessionService;
 use OCA\Text\Service\WorkspaceService;
-use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\OCSController;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
@@ -194,7 +191,6 @@ class WorkspaceController extends OCSController {
 					'url' => $this->urlGenerator->linkToRouteAbsolute('files.DirectEditingView.edit', ['token' => $token])
 				]);
 			}
-
 		} catch (Exception $e) {
 			$this->logger->logException($e, ['message' => 'Exception when creating a new file through direct editing']);
 			return new DataResponse('Failed to create file', Http::STATUS_FORBIDDEN);
@@ -211,5 +207,4 @@ class WorkspaceController extends OCSController {
 		}
 		return $file;
 	}
-
 }

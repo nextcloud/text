@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
@@ -40,5 +41,4 @@ class NavigationController extends Controller {
 	public function navigate(): TemplateResponse {
 		return new TemplateResponse(Application::APP_NAME, 'main');
 	}
-
 }

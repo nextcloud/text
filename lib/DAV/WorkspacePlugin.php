@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
@@ -39,7 +40,6 @@ use Sabre\DAV\Server;
 use Sabre\DAV\ServerPlugin;
 
 class WorkspacePlugin extends ServerPlugin {
-
 	public const WORKSPACE_PROPERTY = '{http://nextcloud.org/ns}rich-workspace';
 
 	/** @var Server */
@@ -75,7 +75,7 @@ class WorkspacePlugin extends ServerPlugin {
 	 * @param Server $server
 	 * @return void
 	 */
-	function initialize(Server $server) {
+	public function initialize(Server $server) {
 		$this->server = $server;
 
 		$this->server->on('propFind', [$this, 'propFind']);
@@ -103,14 +103,13 @@ class WorkspacePlugin extends ServerPlugin {
 						$file = $this->workspaceService->getFile($nodes[0]);
 						if ($file instanceof File) {
 							return $file->getContent();
-					  }
-				  	} catch (StorageNotAvailableException $e) {
-					// If a storage is not available we can for the propfind response assume that there is no rich workspace present
+						}
+					} catch (StorageNotAvailableException $e) {
+						// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 					}
 				}
 				return '';
 			});
 		}
 	}
-
 }

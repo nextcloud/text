@@ -23,8 +23,6 @@
 
 namespace OCA\Text\Controller;
 
-
-use OCA\Activity\Data;
 use OCA\Text\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
@@ -39,7 +37,7 @@ class SettingsController extends Controller {
 	 */
 	private $config;
 
-	const ACCEPTED_KEYS = [
+	public const ACCEPTED_KEYS = [
 		'workspace_enabled'
 	];
 

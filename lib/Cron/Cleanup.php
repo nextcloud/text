@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -41,7 +42,6 @@ use OCP\ILogger;
  * @package OCA\Social\Cron
  */
 class Cleanup extends TimedJob {
-
 	private $sessionService;
 	private $documentService;
 	private $logger;
@@ -76,7 +76,4 @@ class Cleanup extends TimedJob {
 		$removedSessions = $this->sessionService->removeInactiveSessions(null);
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 	}
-
-
-
 }
