@@ -42,7 +42,7 @@ OC.L10N.register(
     "Heading 6" : "Überschrift 6",
     "Unordered list" : "Ungeordnete Liste",
     "Ordered list" : "Geordnete Liste",
-    "ToDo list" : "ToDo-Liste",
+    "ToDo list" : "To-do-Liste",
     "Blockquote" : "Blockzitat",
     "Code block" : "Codeblock",
     "Retry" : "Wiederholen",
