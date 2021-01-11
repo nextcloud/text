@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OCA\Text\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
@@ -35,32 +35,32 @@ class Version010000Date20190617184535 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('text_documents')) {
 			$table = $schema->createTable('text_documents');
-			$table->addColumn('id', Type::BIGINT, [
+			$table->addColumn('id', Types::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
 				'unsigned' => true,
 			]);
-			$table->addColumn('current_version', Type::BIGINT, [
+			$table->addColumn('current_version', Types::BIGINT, [
 				'notnull' => true,
 				'default' => 0,
 				'unsigned' => true,
 			]);
-			$table->addColumn('last_saved_version', Type::BIGINT, [
+			$table->addColumn('last_saved_version', Types::BIGINT, [
 				'notnull' => true,
 				'default' => 0,
 				'unsigned' => true,
 			]);
-			$table->addColumn('last_saved_version_time', Type::BIGINT, [
+			$table->addColumn('last_saved_version_time', Types::BIGINT, [
 				'notnull' => true,
 				'length' => 20,
 				'unsigned' => true,
 			]);
-			$table->addColumn('last_saved_version_etag', Type::STRING, [
+			$table->addColumn('last_saved_version_etag', Types::STRING, [
 				'notnull' => false,
 				'length' => 64,
 				'default' => ''
 			]);
-			$table->addColumn('base_version_etag', TYPE::STRING, [
+			$table->addColumn('base_version_etag', Types::STRING, [
 				'notnull' => false,
 				'length' => 64,
 				'default' => ''
@@ -70,31 +70,31 @@ class Version010000Date20190617184535 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('text_sessions')) {
 			$table = $schema->createTable('text_sessions');
-			$table->addColumn('id', Type::BIGINT, [
+			$table->addColumn('id', Types::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
 				'unsigned' => true,
 			]);
-			$table->addColumn('user_id', Type::STRING, [
+			$table->addColumn('user_id', Types::STRING, [
 				'notnull' => false,
 				'length' => 64,
 			]);
-			$table->addColumn('guest_name', Type::STRING, [
+			$table->addColumn('guest_name', Types::STRING, [
 				'notnull' => false,
 				'length' => 64,
 			]);
-			$table->addColumn('color', Type::STRING, [
+			$table->addColumn('color', Types::STRING, [
 				'notnull' => false,
 				'length' => 7,
 			]);
-			$table->addColumn('token', Type::STRING, [
+			$table->addColumn('token', Types::STRING, [
 				'notnull' => true,
 				'length' => 64,
 			]);
-			$table->addColumn('document_id', Type::BIGINT, [
+			$table->addColumn('document_id', Types::BIGINT, [
 				'notnull' => true,
 			]);
-			$table->addColumn('last_contact', Type::BIGINT, [
+			$table->addColumn('last_contact', Types::BIGINT, [
 				'notnull' => true,
 				'length' => 20,
 				'unsigned' => true,
@@ -105,23 +105,23 @@ class Version010000Date20190617184535 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('text_steps')) {
 			$table = $schema->createTable('text_steps');
-			$table->addColumn('id', Type::BIGINT, [
+			$table->addColumn('id', Types::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
 				'unsigned' => true,
 			]);
-			$table->addColumn('document_id', Type::BIGINT, [
+			$table->addColumn('document_id', Types::BIGINT, [
 				'notnull' => true,
 				'unsigned' => true,
 			]);
-			$table->addColumn('session_id', Type::BIGINT, [
+			$table->addColumn('session_id', Types::BIGINT, [
 				'notnull' => true,
 				'unsigned' => true,
 			]);
-			$table->addColumn('data', Type::TEXT, [
+			$table->addColumn('data', Types::TEXT, [
 				'notnull' => true,
 			]);
-			$table->addColumn('version', Type::BIGINT, [
+			$table->addColumn('version', Types::BIGINT, [
 				'notnull' => true,
 				'default' => 0,
 				'unsigned' => true,
