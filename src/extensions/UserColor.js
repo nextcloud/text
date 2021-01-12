@@ -135,7 +135,9 @@ class TrackState {
 class Span {
 
 	constructor(from, to, commit) {
-		this.from = from; this.to = to; this.commit = commit
+		this.from = from
+		this.to = to
+		this.commit = commit
 	}
 
 }
@@ -196,17 +198,16 @@ class UserColor extends Extension {
 							})
 							tState = tracked
 						}
-
 						decos = tState.blameMap
-							.filter(span => typeof tState.commits[span.commit] !== 'undefined')
+							.filter(span => span !== null && typeof tState.commits[span.commit] !== 'undefined' && tState.commits[span.commit] !== null)
 							.map(span => {
 								const commit = tState.commits[span.commit]
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
-									style: 'background-color: ' + commit.author.color + '; color:' + (contrastRatio(commit.author.color) > 0.4 ? '#fff' : '#000'),
+									style: 'background-color: ' + commit.author.color + 'ee;',
 									title: commit.author.name,
 								})
-							})
+							}).filter(dec => dec !== null)
 						return { tracked, deco: DecorationSet.create(state.doc, decos) }
 					},
 				},
