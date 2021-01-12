@@ -21,37 +21,62 @@
   -->
 
 <template>
-	<div class="session-list">
-		<div v-tooltip.bottom="editorsTooltip" class="avatar-list" @click="popoverVisible=!popoverVisible">
-			<div class="avatardiv icon-more" />
-			<Avatar v-for="session in sessionsVisible"
+	<Popover class="session-list" placement="top">
+		<button slot="trigger"
+			v-tooltip.bottom="editorsTooltip"
+			class="avatar-list">
+			<div class="avatardiv" :class="{ 'icon-more': sessionPopoverList.length > 0, 'icon-settings-dark': sessionPopoverList.length === 0 }" />
+			<div v-for="session in sessionsVisible"
 				:key="session.id"
-				:user="session.userId ? session.userId : session.guestName"
-				:is-guest="session.userId === null"
-				:disable-tooltip="true"
-				:style="sessionStyle(session)"
-				:size="32" />
-		</div>
-		<div v-show="popoverVisible" class="popovermenu menu-right">
-			<PopoverMenu :menu="sessionsPopover" />
-			<slot />
-			<input id="toggle-color-annotations"
-				v-model="showAuthorAnnotations"
-				type="checkbox"
-				class="checkbox">
-			<label for="toggle-color-annotations">{{ t('text', 'Show color annotations') }}</label>
-			<p class="hint">
-				{{ t('text', 'Color annotations will only show during editing sessions, they are not persisted after closing the document.') }}
-			</p>
-		</div>
-	</div>
+				class="avatar-wrapper"
+				:style="sessionStyle(session)">
+				<Avatar
+					:style="avatarStyle(session)"
+					:user="session.userId ? session.userId : session.guestName"
+					:is-guest="session.userId === null"
+					:disable-menu="true"
+					:show-user-status="false"
+					:disable-tooltip="true"
+					:size="32" />
+			</div>
+		</button>
+		<template>
+			<div class="session-menu">
+				<ul>
+					<slot />
+					<li v-for="session in sessionPopoverList"
+						:key="session.id"
+						:style="avatarStyle(session)">
+						<div class="avatar-wrapper"
+							:style="sessionStyle(session)">
+							<Avatar
+								:user="session.userId ? session.userId : session.guestName"
+								:is-guest="session.userId === null"
+								:disable-menu="true"
+								:show-user-status="false"
+								:disable-tooltip="true"
+								:size="32" />
+						</div>
+						{{ session.guestName ? session.guestName : session.displayName }}
+					</li>
+				</ul>
+				<input id="toggle-color-annotations"
+					v-model="showAuthorAnnotations"
+					type="checkbox"
+					class="checkbox">
+				<label for="toggle-color-annotations">{{ t('text', 'Show color annotations') }}</label>
+				<p class="hint">
+					{{ t('text', 'Color annotations will only show during editing sessions, they are not persisted after closing the document.') }}
+				</p>
+			</div>
+		</template>
+	</Popover>
 </template>
 
 <script>
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
-import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
+import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import { generateUrl } from '@nextcloud/router'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90
@@ -60,7 +85,7 @@ export default {
 	name: 'SessionList',
 	components: {
 		Avatar,
-		PopoverMenu,
+		Popover,
 	},
 	directives: {
 		tooltip: Tooltip,
@@ -73,7 +98,6 @@ export default {
 	},
 	data() {
 		return {
-			popoverVisible: '',
 			myName: '',
 		}
 	},
@@ -87,32 +111,18 @@ export default {
 			},
 		},
 		editorsTooltip() {
-			if (this.sessionsPopover.length > 0) {
+			if (this.sessionPopoverList.length > 0) {
 				const first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
 				const others = this.activeSessions.slice(3).length
 				return first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
 			}
 			return this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
 		},
-		avatarUrl() {
-			return (session) => {
-				const user = !session.guestName ? session.userId : session.guestName
-				const size = 32
-				const guest = !!session.guestName
-				const avatarUrl = generateUrl(
-					guest ? '/avatar/guest/{user}/{size}' : '/avatar/{user}/{size}',
-					{
-						user,
-						size,
-					})
-				return window.location.protocol + '//' + window.location.host + avatarUrl
-			}
-		},
 		activeSessions() {
 			return Object.values(this.sessions).filter((session) =>
 				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent
 					&& (session.userId !== null || session.guestName !== null)
-			)
+			).sort((a, b) => a.lastContact < b.lastContact)
 		},
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
@@ -120,24 +130,23 @@ export default {
 		sessionStyle() {
 			return (session) => {
 				return {
+					'border-color': session.color,
+					'background-color': session.color + ' !important',
+				}
+			}
+		},
+		avatarStyle() {
+			return (session) => {
+				return {
 					opacity: session.lastContact > Date.now() / 1000 - COLLABORATOR_IDLE_TIME ? 1 : 0.5,
-					// 'border-color': session.color
 				}
 			}
 		},
 		sessionsVisible() {
 			return this.activeSessions.slice(0, 3)
 		},
-		sessionsPopover() {
-			return [
-				...this.activeSessions.slice(3).map((session) => {
-					return {
-						href: '#',
-						icon: this.avatarUrl(session),
-						text: session.guestName ? session.guestName : session.displayName,
-					}
-				}),
-			]
+		sessionPopoverList() {
+			return this.activeSessions.slice(3)
 		},
 	},
 	methods: {
@@ -146,45 +155,56 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.session-list {
-		position: relative;
-
-		/deep/ .popovermenu {
-			margin-right: -4px;
-			min-width: 240px;
-			img {
-				padding: 0;
-				width: 32px !important;
-				height: 32px !important;
-				margin: 6px;
-				border-radius: 50%;
-				filter: none !important;
-			}
-		}
-	}
-
 	.avatar-list {
+		border: none;
+		background-color: var(--color-main-background);
+		padding: 0;
+		margin: 0;
+		padding-left: 6px;
 		display: inline-flex;
 		flex-direction: row-reverse;
 
-		.avatardiv,
-		/deep/ .avatardiv {
+		&:focus {
+			background-color: #eee;
+		}
+
+		.avatar-wrapper {
+			margin: 6px;
+			margin-right: -8px;
+			margin-left: 0;
+		}
+
+		.icon-more {
+			background-color: var(--color-background-dark);
 			width: 36px;
 			height: 36px;
-			margin-right: -8px;
-			border: 2px solid var(--color-main-background);
-			box-sizing: content-box !important;
-			&.icon-more {
-				width: 32px;
-				height: 32px;
-				opacity: .5;
-				cursor: pointer;
-			}
+			margin: 6px 6px 6px 0px;
 		}
 	}
 
-	.popovermenu {
-		display: block;
+	.avatar-wrapper {
+		width: 32px;
+		height: 32px;
+		z-index: 1;
+		border-radius: 50%;
+		overflow: hidden;
+		border: 2px solid var(--color-main-background);
+		box-sizing: content-box !important;
+	}
+
+	.session-menu {
+		max-width: 280px;
+		padding-bottom: 6px;
+
+		ul li {
+			align-items: center;
+			display: flex;
+			padding: 6px;
+
+			.avatar-wrapper {
+				margin-right: 6px;
+			}
+		}
 	}
 
 	label {

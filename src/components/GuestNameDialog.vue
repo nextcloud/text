@@ -92,10 +92,7 @@ export default {
 <style scoped lang="scss">
 	form.guest-name-dialog {
 		display: flex;
-		max-width: 200px;
-		margin: auto;
-		margin-top: -2px;
-		padding: 3px;
+		padding: 6px;
 
 		& /deep/ img {
 			margin: 0 !important;

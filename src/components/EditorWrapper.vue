@@ -280,13 +280,9 @@ export default {
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
-						const markdown = (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
-						console.debug('serialized document', { markdown })
-						return markdown
+						return (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
 					}
-					const file = serializePlainText(this.tiptap)
-					console.debug('serialized document', { file })
-					return file
+					return serializePlainText(this.tiptap)
 
 				},
 			})
