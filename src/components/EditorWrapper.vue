@@ -85,6 +85,7 @@ import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
 import { Keymap, UserColor } from './../extensions'
 import isMobile from './../mixins/isMobile'
+import store from './../mixins/store'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
@@ -107,6 +108,7 @@ export default {
 	},
 	mixins: [
 		isMobile,
+		store,
 	],
 	props: {
 		initialSession: {

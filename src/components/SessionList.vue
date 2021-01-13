@@ -77,6 +77,7 @@
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import store from '../mixins/store'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90
@@ -90,6 +91,7 @@ export default {
 	directives: {
 		tooltip: Tooltip,
 	},
+	mixins: [store],
 	props: {
 		sessions: {
 			type: Object,
@@ -193,6 +195,7 @@ export default {
 
 	.session-menu {
 		max-width: 280px;
+		padding-top: 6px;
 		padding-bottom: 6px;
 
 		ul li {

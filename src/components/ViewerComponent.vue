@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import store from './../store'
-
 export default {
 	name: 'ViewerComponent',
 	components: {
@@ -59,7 +57,6 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.$store = store
 		// FIXME Dirty fix to avoid recreating the component on stable16
 		if (typeof this.$parent.$parent !== 'undefined' && this.$parent.$parent.onResize) {
 			window.removeEventListener('resize', this.$parent.$parent.onResize)
