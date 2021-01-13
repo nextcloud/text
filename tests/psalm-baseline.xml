@@ -144,13 +144,18 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/Service/SessionService.php">
-    <UndefinedDocblockClass occurrences="4">
+    <UndefinedDocblockClass occurrences="8">
+      <code>$color-&gt;b</code>
       <code>$color-&gt;b</code>
       <code>$color-&gt;g</code>
+      <code>$color-&gt;g</code>
       <code>$color-&gt;r</code>
+      <code>$color-&gt;r</code>
+      <code>$this-&gt;avatarManager-&gt;getGuestAvatar($guestName)-&gt;avatarBackgroundColor($guestName)</code>
       <code>$this-&gt;avatarManager-&gt;getGuestAvatar($userName)-&gt;avatarBackgroundColor($userName)</code>
     </UndefinedDocblockClass>
-    <UndefinedMagicMethod occurrences="6">
+    <UndefinedMagicMethod occurrences="7">
+      <code>setColor</code>
       <code>setColor</code>
       <code>setDocumentId</code>
       <code>setGuestName</code>

@@ -302,7 +302,6 @@ export default {
 
 					this.syncError = null
 					this.tiptap.setOptions({ editable: !this.readOnly })
-
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
@@ -483,6 +482,12 @@ export default {
 
 		updateSessions(sessions) {
 			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
+
+			// Make sure we get our own session updated
+			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
+			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
+			Vue.set(this, 'currentSession', currentUpdatedSession)
+
 			const currentSessionIds = this.sessions.map((session) => session.userId)
 			const currentGuestIds = this.sessions.map((session) => session.guestId)
 

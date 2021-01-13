@@ -222,6 +222,9 @@ class SessionService {
 		}
 		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
 		$session->setGuestName($guestName);
+		$color = $this->avatarManager->getGuestAvatar($guestName)->avatarBackgroundColor($guestName);
+		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
+		$session->setColor($color);
 		return $this->sessionMapper->update($session);
 	}
 }

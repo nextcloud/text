@@ -73,10 +73,11 @@ export default class UserColor extends Extension {
 							.filter(span => typeof tState.commits[span.commit]?.author?.color !== 'undefined')
 							.map(span => {
 								const commit = tState.commits[span.commit]
+								const clientID = commit.author.clientID
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
-									style: 'background-color: ' + commit.author.color + 'ee;',
-									title: commit.author.name,
+									style: 'background-color: ' + this.spec.color(clientID) + 'ee;',
+									title: this.spec.name(clientID),
 								})
 							}).filter(dec => dec !== null)
 						return { tracked, deco: DecorationSet.create(state.doc, decos) }
