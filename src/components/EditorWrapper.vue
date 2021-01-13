@@ -559,6 +559,12 @@ export default {
 		width: 100%;
 	}
 
+	.document-status {
+		z-index: 1010;
+		position: relative;
+		background-color: var(--color-main-background);
+	}
+
 	.document-status .msg {
 		padding: 12px;
 		padding-left: 30px;
