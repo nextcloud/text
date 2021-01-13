@@ -76,7 +76,7 @@ export default class UserColor extends Extension {
 								const clientID = commit.author.clientID
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
-									style: 'background-color: ' + this.spec.color(clientID) + 'ee;',
+									style: 'background-color: ' + this.spec.color(clientID) + '66;',
 									title: this.spec.name(clientID),
 								})
 							}).filter(dec => dec !== null)
