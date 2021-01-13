@@ -51,12 +51,20 @@
       <code>open</code>
     </UndefinedInterfaceMethod>
   </file>
+  <file src="lib/Cron/Cleanup.php">
+    <InvalidReturnType occurrences="1">
+      <code>run</code>
+    </InvalidReturnType>
+  </file>
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass occurrences="1">
       <code>ServerPlugin</code>
     </UndefinedClass>
   </file>
   <file src="lib/Db/SessionMapper.php">
+    <ImplicitToStringCast occurrences="1">
+      <code>$qb-&gt;createNamedParameter($activeSessions, IQueryBuilder::PARAM_INT_ARRAY)</code>
+    </ImplicitToStringCast>
     <MoreSpecificImplementedParamType occurrences="1"/>
   </file>
   <file src="lib/Db/StepMapper.php">
@@ -86,8 +94,11 @@
     </UndefinedClass>
   </file>
   <file src="lib/Service/ApiService.php">
-    <InvalidArgument occurrences="1">
+    <InvalidArgument occurrences="4">
+      <code>$e-&gt;getMessage()</code>
+      <code>$e-&gt;getMessage()</code>
       <code>$file</code>
+      <code>'No valid file argument provided'</code>
     </InvalidArgument>
     <UndefinedDocblockClass occurrences="1"/>
   </file>

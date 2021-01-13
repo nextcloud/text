@@ -63,8 +63,17 @@ class SessionMapper extends QBMapper {
 		return Session::fromRow($data);
 	}
 
+	public function findAll($documentId) {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->execute();
+
+		return $this->findEntities($qb);
+	}
+
 	public function findAllActive($documentId) {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
 			->from($this->getTableName())
@@ -76,7 +85,6 @@ class SessionMapper extends QBMapper {
 	}
 
 	public function findAllInactive() {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id','color','document_id', 'last_contact','user_id','guest_name')
 			->from($this->getTableName())
@@ -87,20 +95,29 @@ class SessionMapper extends QBMapper {
 	}
 
 	public function deleteInactive($documentId = -1) {
-		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('session_id')
+			->from('text_steps');
+		if ($documentId !== null) {
+			$qb->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
+		}
+		$result = $qb
+			->groupBy('session_id')
+			->execute();
+		$activeSessions = $result->fetchAll(\PDO::FETCH_COLUMN);
+		$result->closeCursor();
+
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName());
-		if ($documentId === null) {
-			$qb->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
-		} else {
-			$qb->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-				->andWhere($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
+		$qb->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
+		if ($documentId !== null) {
+			$qb->andWhere($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		}
+		$qb->andWhere($qb->expr()->notIn('id', $qb->createNamedParameter($activeSessions, IQueryBuilder::PARAM_INT_ARRAY)));
 		return $qb->execute();
 	}
 
 	public function deleteByDocumentId($documentId) {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));

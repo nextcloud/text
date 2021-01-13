@@ -35,7 +35,7 @@ use OCP\IRequest;
 use OCP\Security\ISecureRandom;
 
 class SessionService {
-	public const SESSION_VALID_TIME = 60 * 5;
+	public const SESSION_VALID_TIME = 5 * 60;
 
 	/** @var SessionMapper */
 	private $sessionMapper;
@@ -115,6 +115,19 @@ class SessionService {
 			$this->sessionMapper->delete($session);
 		} catch (DoesNotExistException $e) {
 		}
+	}
+
+	public function getAllSessions($documentId): array {
+		$sessions = $this->sessionMapper->findAll($documentId);
+		return array_map(function (Session $session) {
+			$result = $session->jsonSerialize();
+			$userManager = \OC::$server->getUserManager();
+			$user = $userManager->get($session->getUserId());
+			if ($user) {
+				$result['displayName'] = $user->getDisplayName();
+			}
+			return $result;
+		}, $sessions);
 	}
 
 	public function getActiveSessions($documentId): array {
