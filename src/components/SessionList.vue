@@ -111,12 +111,13 @@ export default {
 			},
 		},
 		editorsTooltip() {
+			const tooltipPrefix = t('text', 'Currently active users:') + ' '
 			if (this.sessionPopoverList.length > 0) {
 				const first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
 				const others = this.activeSessions.slice(3).length
-				return first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
+				return tooltipPrefix + first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
 			}
-			return this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
+			return tooltipPrefix + this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
 		},
 		activeSessions() {
 			return Object.values(this.sessions).filter((session) =>
@@ -149,8 +150,6 @@ export default {
 			return this.activeSessions.slice(3)
 		},
 	},
-	methods: {
-	},
 }
 </script>
 
@@ -174,7 +173,7 @@ export default {
 			margin-left: 0;
 		}
 
-		.icon-more {
+		.icon-more, .icon-settings-dark {
 			background-color: var(--color-background-dark);
 			width: 36px;
 			height: 36px;
@@ -211,6 +210,7 @@ export default {
 		display: block;
 		margin: 8px;
 	}
+
 	.hint {
 		margin: 8px;
 		color: var(--color-text-maxcontrast);

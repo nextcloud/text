@@ -349,13 +349,11 @@ export default {
 									clientID: this.currentSession.id,
 									color: (clientID) => {
 										const session = this.sessions.find(item => '' + item.id === '' + clientID)
-										return session ? session.color : 'var(--color-background-hover)'
+										return session?.color
 									},
 									name: (clientID) => {
 										const session = this.sessions.find(item => '' + item.id === '' + clientID)
-										return session ? (
-											session.userId ? session.userId : session.guestName
-										) : null
+										return session?.userId ? session.userId : session?.guestName
 									},
 								}),
 								new Keymap({
