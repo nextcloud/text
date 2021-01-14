@@ -6,6 +6,7 @@ import {
 } from './helpers/files'
 import { openMimetypes } from './helpers/mime'
 import { loadState } from '@nextcloud/initial-state'
+import store from './store'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -47,6 +48,7 @@ documentReady(() => {
 							mime: mimetype,
 						},
 					}),
+					store,
 				})
 				vm.$mount(document.getElementById('preview'))
 			})

@@ -21,7 +21,9 @@
  */
 
 import Keymap from './Keymap'
+import UserColor from './UserColor'
 
 export {
 	Keymap,
+	UserColor,
 }

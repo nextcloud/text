@@ -1,3 +1,5 @@
+import store from './store'
+
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
@@ -12,6 +14,7 @@ if (document.getElementById('app-content')) {
 		const DirectEditing = imports[1].default
 		const vm = new Vue({
 			render: h => h(DirectEditing),
+			store,
 		})
 		vm.$mount(document.getElementById('app-content'))
 	})

@@ -23,6 +23,7 @@
 import { openMimetypes } from './mime'
 import RichWorkspace from '../views/RichWorkspace'
 import { imagePath } from '@nextcloud/router'
+import store from '../store'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -158,6 +159,7 @@ const FilesWorkspacePlugin = {
 				propsData: {
 					path: fileList.getCurrentDirectory(),
 				},
+				store,
 			}).$mount(this.el)
 
 			fileList.$el.on('urlChanged', data => {

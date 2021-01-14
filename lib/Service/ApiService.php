@@ -158,7 +158,7 @@ class ApiService {
 		try {
 			$result = [
 				'steps' => $this->documentService->getSteps($documentId, $version),
-				'sessions' => $this->sessionService->getActiveSessions($documentId),
+				'sessions' => $this->sessionService->getAllSessions($documentId),
 				'document' => $this->documentService->get($documentId)
 			];
 
