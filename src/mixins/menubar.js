@@ -24,13 +24,15 @@ export default [
 	{
 		label: t('text', 'Undo'),
 		class: 'icon-undo',
-		isActive: (isActive) => {},
+		isActive: (isActive) => false,
+		isDisabled: (command) => command.undoDepth() === 0,
 		action: (command) => command.undo(),
 	},
 	{
 		label: t('text', 'Redo'),
 		class: 'icon-redo',
-		isActive: (isActive) => {},
+		isActive: (isActive) => false,
+		isDisabled: (command) => command.redoDepth() === 0,
 		action: (command) => command.redo(),
 	},
 	{

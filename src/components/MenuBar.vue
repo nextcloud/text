@@ -30,6 +30,7 @@
 						:key="icon.label"
 						:title="icon.label"
 						:class="getIconClasses(isActive, icon)"
+						:disabled="disabled(commands, icon)"
 						@click="clickIcon(commands, icon)" />
 					<template v-else>
 						<div v-show="$index < iconCount || !icon.class"
@@ -136,10 +137,15 @@ export default {
 		getIconClasses() {
 			return (isActive, icon) => {
 				const classes = {
-					'is-active': icon.isActive(isActive),
+					'is-active': typeof icon.isActive === 'function' ? icon.isActive(isActive) : false,
 				}
 				classes[icon.class] = true
 				return classes
+			}
+		},
+		disabled() {
+			return (commands, menuItem) => {
+				return typeof menuItem.isDisabled === 'function' ? menuItem.isDisabled(commands) : false
 			}
 		},
 		isChildMenuVisible() {
@@ -316,6 +322,7 @@ export default {
 
 <style scoped lang="scss">
 	.menubar {
+		--background-blur: blur(10px);
 		position: fixed;
 		position: -webkit-sticky;
 		position: sticky;
@@ -323,7 +330,11 @@ export default {
 		display: flex;
 		z-index: 10010; // above modal-header so buttons are clickable
 		background-color: var(--color-main-background-translucent);
-		height: 44px;
+		-webkit-backdrop-filter: var(--background-blur);
+		backdrop-filter: var(--background-blur);
+		height: 50px;
+		padding-top:3px;
+		padding-bottom: 3px;
 
 		&.autohide {
 			visibility: hidden;
@@ -350,6 +361,7 @@ export default {
 	}
 
 	.menubar button {
+		position: relative;
 		width: 44px;
 		height: 44px;
 		margin: 0;
@@ -363,14 +375,32 @@ export default {
 		&:hover, &:focus, &:active {
 			background-color: var(--color-background-dark);
 		}
+
+		&.is-active::before {
+			transform: translateX(-50%);
+			border-radius: 100%;
+			position: absolute;
+			background: var(--color-primary-element);
+			bottom: 3px;
+			height: 6px;
+			width: 6px;
+			content: '';
+			left: 50%;
+
+		}
 		&.is-active,
 		&:hover,
 		&:focus {
 			opacity: 1;
 		}
 
-		&.icon-undo, &.icon-redo {
-			opacity: .4;
+		&.icon-undo,
+		&.icon-redo {
+			opacity: .8;
+
+			&:disabled {
+				opacity: .4;
+			}
 		}
 	}
 
