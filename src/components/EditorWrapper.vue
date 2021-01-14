@@ -178,11 +178,7 @@ export default {
 			return this.$store.state.showAuthorAnnotations
 		},
 		lastSavedStatus() {
-			let status = (this.dirtyStateIndicator ? '*' : '')
-			if (!this.isMobile) {
-				status += this.lastSavedString
-			}
-			return status
+			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
 		lastSavedStatusClass() {
 			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
@@ -195,10 +191,7 @@ export default {
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 			}
-			if (this.hasUnpushedChanges) {
-				message += ' - ' + t('text', 'Unpushed changes')
-			}
-			if (this.hasUnsavedChanges) {
+			if (this.hasUnpushedChanges || this.hasUnsavedChanges) {
 				message += ' - ' + t('text', 'Unsaved changes')
 			}
 			return { content: message, placement: 'bottom' }
@@ -576,7 +569,10 @@ export default {
 	}
 
 	.save-status {
-		padding: 9px;
+		display: inline-flex;
+		align-items: center;
+		padding: 0;
+		padding-right: 12px;
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
 
@@ -597,7 +593,7 @@ export default {
 	}
 
 	#editor-session-list {
-		padding: 4px 16px 4px 4px;
+		padding-right: 16px;
 		display: flex;
 
 		input, div {
