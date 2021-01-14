@@ -614,9 +614,6 @@ export default {
 
 	#files-public-content {
 		height: auto;
-		#editor-wrapper {
-			position: relative;
-		}
 		#editor-container {
 			top: 0;
 			width: 100%;
@@ -629,13 +626,12 @@ export default {
 			}
 
 			#editor {
-				padding-top: 50px;
 				overflow: auto;
 				// Fix for IE11 issue where the menubar sometimes was positioned under the text
 				z-index: 1000;
 			}
 			.has-conflicts #editor {
-				padding-top: 0px;
+				padding-top: 0;
 			}
 		}
 	}
