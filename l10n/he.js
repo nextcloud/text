@@ -23,6 +23,7 @@ OC.L10N.register(
     "Insert an image" : "הוספת תמונה",
     "Link file" : "קישור לקובץ",
     "Select file to link to" : "לבחור קובץ לקשר אליו",
+    "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
