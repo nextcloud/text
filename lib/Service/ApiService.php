@@ -138,6 +138,10 @@ class ApiService {
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		if ($session === false || !$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 403);
+		}
+
 		$file = $this->documentService->getFileForSession($session, $token);
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $token)) {
 			try {

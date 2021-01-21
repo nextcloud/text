@@ -214,15 +214,20 @@ class PollingBackend {
 			this.lock = false
 			this.fetchSteps()
 		}).catch((e) => {
-			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
 			if (!e.response || e.code === 'ECONNABORTED') {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 				return
-			} else if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
-				// Only emit conflict event if we have synced until the latest version
-				this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
-				OC.Notification.showTemporary('Changes could not be sent yet')
+			} else if (e.response.status === 403) {
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+				return
+			} else if (e.response.status === 412) {
+				console.error('failed to apply steps due to collission, retrying', e)
+				if (e.response?.data?.document?.currentVersion === this._authority.document.currentVersion) {
+					// Only emit conflict event if we have synced until the latest version
+					this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
+					OC.Notification.showTemporary('Changes could not be sent yet')
+				}
 			}
 
 			this.fetchSteps()
