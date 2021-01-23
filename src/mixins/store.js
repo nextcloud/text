@@ -28,6 +28,11 @@ import store from '../store'
  * are mounted in other apps e.g. viewer
  */
 export default {
+	data() {
+		return {
+			$store: store,
+		}
+	},
 	beforeMount() {
 		if (typeof this.$store === 'undefined') {
 			this.$store = store
