@@ -29,7 +29,6 @@ const openMimetypesPlainText = [
 	'application/cmd',
 	'application/x-empty',
 	'application/x-msdos-program',
-	'application/epub+zip',
 	'application/javascript',
 	'application/json',
 	'application/x-perl',
