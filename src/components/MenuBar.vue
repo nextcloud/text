@@ -145,7 +145,9 @@ export default {
 		},
 		disabled() {
 			return (commands, menuItem) => {
-				return typeof menuItem.isDisabled === 'function' ? menuItem.isDisabled(commands) : false
+				return false
+				// FIXME with this we seem to be running into an endless rerender loop, so this needs more investigation at some later point
+				// typeof menuItem.isDisabled === 'function' ? menuItem.isDisabled()(commands) : false
 			}
 		},
 		isChildMenuVisible() {
