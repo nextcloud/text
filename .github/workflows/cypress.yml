@@ -18,7 +18,7 @@ jobs:
         containers: [1, 2, 3]
         php-versions: [ '7.4' ]
         databases: [ 'sqlite' ]
-        server-versions: [ 'master' ]
+        server-versions: [ 'stable20' ]
 
     steps:
       - name: Checkout server
