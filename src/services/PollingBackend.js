@@ -28,13 +28,13 @@ import { sendableSteps } from 'prosemirror-collab'
  * Minimum inverval to refetch the document changes
  * @type {number} time in ms
  */
-const FETCH_INTERVAL = 300
+const FETCH_INTERVAL = 150
 
 /**
  * Maximum interval between refetches of document state if multiple users have joined
  * @type {number} time in ms
  */
-const FETCH_INTERVAL_MAX = 5000
+const FETCH_INTERVAL_MAX = 150
 
 /**
  * Interval to check for changes when there is only one user joined
@@ -123,6 +123,7 @@ class PollingBackend {
 			manualSave: !!this._manualSave,
 			token: this._authority.options.shareToken,
 			filePath: this._authority.options.filePath,
+			cursor: this._authority.state.selection.from,
 		}).then((response) => {
 			this.fetchRetryCounter = 0
 
@@ -160,9 +161,10 @@ class PollingBackend {
 				if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 					console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
-
 				} else {
-					console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+					this.disconnect()
+					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+					console.error('Failed to fetch steps due to other reason', e)
 				}
 			} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
 				// Only emit conflict event if we have synced until the latest version

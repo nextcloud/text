@@ -22,8 +22,12 @@
 
 import Keymap from './Keymap'
 import UserColor from './UserColor'
+import Collaboration from './Collaboration'
+import Cursors from './Cursors'
 
 export {
 	Keymap,
 	UserColor,
+	Collaboration,
+	Cursors,
 }

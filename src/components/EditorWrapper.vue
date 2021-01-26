@@ -76,14 +76,13 @@ import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { mapState } from 'vuex'
 
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
-import { endpointUrl, getRandomGuestName } from './../helpers'
+import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService'
+import { endpointUrl, getRandomGuestName } from '../helpers'
 import { extensionHighlight } from '../helpers/mappings'
-import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
+import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from '../EditorFactory'
 
 import { EditorContent } from 'tiptap'
-import { Collaboration } from 'tiptap-extensions'
-import { Keymap, UserColor } from './../extensions'
+import { Collaboration, Cursors, Keymap, UserColor } from './../extensions'
 import isMobile from './../mixins/isMobile'
 import store from './../mixins/store'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
@@ -304,6 +303,7 @@ export default {
 
 					this.syncError = null
 					this.tiptap.setOptions({ editable: !this.readOnly })
+					this.tiptap.extensions.options.cursors.update(sessions)
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
@@ -361,6 +361,16 @@ export default {
 									'Mod-s': () => {
 										this.syncService.save()
 										return true
+									},
+								}),
+								new Cursors({
+									color: (clientID) => {
+										const session = this.sessions.find(item => '' + item.id === '' + clientID)
+										return session?.color
+									},
+									name: (clientID) => {
+										const session = this.sessions.find(item => '' + item.id === '' + clientID)
+										return session?.userId ? session.userId : session?.guestName
 									},
 								}),
 							],

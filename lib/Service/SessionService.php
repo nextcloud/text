@@ -126,6 +126,9 @@ class SessionService {
 			if ($user) {
 				$result['displayName'] = $user->getDisplayName();
 			}
+			$cursor = $this->cache->get($session->getId() . ':cursor');
+			$result['cursor'] = $cursor ? $cursor : -1;
+
 			return $result;
 		}, $sessions);
 	}
@@ -180,6 +183,10 @@ class SessionService {
 			$this->session = false;
 			return false;
 		}
+	}
+
+	public function setCursor($sessionId, $cursor) {
+		$this->cache->set($sessionId . ':cursor', $cursor);
 	}
 
 	public function isValidSession($documentId, $sessionId, $token): bool {

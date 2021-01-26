@@ -150,7 +150,7 @@ class ApiService {
 		return new DataResponse([], 403);
 	}
 
-	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
+	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, bool $force = false, bool $manualSave = false, $token = null, $cursor = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 403);
 		}
@@ -163,6 +163,7 @@ class ApiService {
 			];
 
 			$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+			$this->sessionService->setCursor($sessionId, $cursor);
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
 			$this->logger->logException($e, ['level' => ILogger::INFO]);

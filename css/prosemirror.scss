@@ -190,6 +190,60 @@ div.ProseMirror {
 		margin-right: 0;
 	}
 
+	.prosemirror-cursor {
+		position: absolute;
+		height: 1.3em;
+		width: 1px;
+		&::before {
+			content: '';
+			display: block;
+			width: 1px;
+			height: 120%;
+			background-color: var(--background);
+			position: absolute;
+			top: 0;
+			left: 0;
+			margin-top: -1px;
+			margin-left: -1px;
+		}
+		&::after {
+			content: '';
+			display: block;
+			border-radius: 4px;
+			height: 8px;
+			width: 8px;
+			background-color: var(--background);
+			position: absolute;
+			top: -6px;
+			left: -4px;
+		}
+		&:hover::after {
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-bottom: 5px solid var(--background);
+			width: 0;
+			height: 0;
+			border-radius: 0;
+		}
+		& > span {
+			position: absolute;
+			top: calc(-1.2em * 2);
+			background-color: var(--background);
+			border-radius: 3px;
+			padding: 3px;
+			font-size: 0.8em;
+			transform: translateX(-50%);
+			min-width: 50px;
+			width: auto;
+			max-width: 200px;
+			display: none;
+			white-space: nowrap;
+		}
+		&:hover span {
+			display: block;
+		}
+	}
+
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
