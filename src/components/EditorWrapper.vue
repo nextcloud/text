@@ -74,7 +74,6 @@
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
-import { mapState } from 'vuex'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -175,9 +174,9 @@ export default {
 		}
 	},
 	computed: {
-		...mapState({
-			showAuthorAnnotations: state => state.showAuthorAnnotations,
-		}),
+		showAuthorAnnotations() {
+			return this.$store.state.showAuthorAnnotations
+		},
 		lastSavedStatus() {
 			let status = (this.dirtyStateIndicator ? '*' : '')
 			if (!this.isMobile) {
@@ -342,7 +341,7 @@ export default {
 											steps.map(item => Step.fromJSON(schema, item.step)),
 											steps.map(item => item.clientID),
 										)
-										tr.setMeta('clientID', steps[0].clientID)
+										tr.setMeta('clientID', steps.map(item => item.clientID))
 										view.dispatch(tr)
 									},
 								}),
@@ -379,14 +378,11 @@ export default {
 				.on('sync', ({ steps, document }) => {
 					this.hasConnectionIssue = false
 					try {
-						for (let i = 0; i < steps.length; i++) {
-							// FIXME: seems pretty bad performance wise (maybe grouping the steps by user in the backend would be good)
-							this.tiptap.extensions.options.collaboration.update({
-								version: document.currentVersion,
-								steps: [steps[i]],
-								editor: this.tiptap,
-							})
-						}
+						this.tiptap.extensions.options.collaboration.update({
+							version: document.currentVersion,
+							steps,
+							editor: this.tiptap,
+						})
 						this.syncService.state = this.tiptap.state
 						this.updateLastSavedStatus()
 					} catch (e) {

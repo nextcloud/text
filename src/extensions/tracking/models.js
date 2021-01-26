@@ -22,21 +22,9 @@
 
 export class Span {
 
-	constructor(from, to, commit) {
+	constructor(from, to, author) {
 		this.from = from
 		this.to = to
-		this.commit = commit
-	}
-
-}
-
-export class Commit {
-
-	constructor(message, time, steps, maps, author) {
-		this.message = message
-		this.time = time
-		this.steps = steps
-		this.maps = maps
 		this.author = author
 	}
 

@@ -76,7 +76,7 @@ class PollingBackend {
 	}
 
 	connect() {
-		this.fetcher = setInterval(this._fetchSteps.bind(this), 0)
+		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 

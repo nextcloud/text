@@ -109,7 +109,7 @@ export default {
 				return this.$store.state.showAuthorAnnotations
 			},
 			set(value) {
-				this.$store.commit('setShowAuthorAnnotations', value)
+				this.$store.dispatch('setShowAuthorAnnotations', value)
 			},
 		},
 		editorsTooltip() {

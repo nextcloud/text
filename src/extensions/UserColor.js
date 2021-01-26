@@ -60,20 +60,16 @@ export default class UserColor extends Extension {
 						let { tracked, decos } = instance
 						let tState = this.getState(oldState).tracked
 						if (tr.docChanged) {
+							if (!tr.getMeta('clientID')) {
+								// we have an undefined client id for own transactions
+								tr.setMeta('clientID', tr.steps.map(i => this.spec.clientID))
+							}
 							tracked = tracked.applyTransform(tr)
-							const clientID = tr.getMeta('clientID') ? tr.getMeta('clientID') : this.spec.clientID
-							tracked = tracked.applyCommit(clientID, new Date(tr.time), {
-								clientID,
-								color: this.spec.color(clientID),
-								name: this.spec.name(clientID),
-							})
 							tState = tracked
 						}
 						decos = tState.blameMap
-							.filter(span => typeof tState.commits[span.commit]?.author?.color !== 'undefined')
 							.map(span => {
-								const commit = tState.commits[span.commit]
-								const clientID = commit.author.clientID
+								const clientID = span.author
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
 									style: 'background-color: ' + this.spec.color(clientID) + '66;',

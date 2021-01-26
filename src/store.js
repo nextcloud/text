@@ -33,9 +33,14 @@ const store = new Vuex.Store({
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 	},
 	mutations: {
-		setShowAuthorAnnotations(state, value) {
+		SET_SHOW_AUTHOR_ANNOTATIONS(state, value) {
 			state.showAuthorAnnotations = value
 			persistentStorage.setItem('showAuthorAnnotations', '' + value)
+		},
+	},
+	actions: {
+		setShowAuthorAnnotations({ commit }, value) {
+			store.commit('SET_SHOW_AUTHOR_ANNOTATIONS', value)
 		},
 	},
 })
