@@ -528,6 +528,11 @@ export default {
 		overflow: hidden;
 		position: absolute;
 
+		&.show-color-annotations::v-deep .author-annotation {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+
 		&:not(.show-color-annotations)::v-deep .author-annotation {
 			background-color: transparent !important;
 			color: var(--color-main-text) !important;

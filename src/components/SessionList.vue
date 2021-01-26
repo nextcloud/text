@@ -25,7 +25,7 @@
 		<button slot="trigger"
 			v-tooltip.bottom="editorsTooltip"
 			class="avatar-list">
-			<div class="avatardiv" :class="{ 'icon-more': sessionPopoverList.length > 0, 'icon-settings-dark': sessionPopoverList.length === 0 }" />
+			<div class="avatardiv icon-group" />
 			<div v-for="session in sessionsVisible"
 				:key="session.id"
 				class="avatar-wrapper"
@@ -64,9 +64,9 @@
 					v-model="showAuthorAnnotations"
 					type="checkbox"
 					class="checkbox">
-				<label for="toggle-color-annotations">{{ t('text', 'Show color annotations') }}</label>
+				<label for="toggle-color-annotations">{{ t('text', 'Show author colors') }}</label>
 				<p class="hint">
-					{{ t('text', 'Color annotations will only show during editing sessions, they are not persisted after closing the document.') }}
+					{{ t('text', 'Author colors are only shown until everyone has closed the document.') }}
 				</p>
 			</div>
 		</template>
@@ -175,7 +175,7 @@ export default {
 			margin-left: 0;
 		}
 
-		.icon-more, .icon-settings-dark {
+		.icon-more, .icon-group, .icon-settings-dark {
 			background-color: var(--color-background-dark);
 			width: 36px;
 			height: 36px;

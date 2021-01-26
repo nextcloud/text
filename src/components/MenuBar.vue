@@ -404,6 +404,14 @@ export default {
 				opacity: .4;
 			}
 		}
+
+		&.icon-redo {
+			margin-right: 22px;
+		}
+
+		&.icon-ul {
+			margin-left: 22px;
+		}
 	}
 
 	.menubar .submenu {
