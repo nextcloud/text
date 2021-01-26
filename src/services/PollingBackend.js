@@ -76,6 +76,7 @@ class PollingBackend {
 	}
 
 	connect() {
+		this.initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
@@ -136,6 +137,9 @@ class PollingBackend {
 			this._authority.sessions = response.data.sessions
 
 			if (response.data.steps.length === 0) {
+				if (!this.initialLoadingFinished) {
+					this.initialLoadingFinished = true
+				}
 				if (this._authority.checkIdle()) {
 					return
 				}
@@ -153,7 +157,9 @@ class PollingBackend {
 			this._authority._receiveSteps(response.data)
 			this.lock = false
 			this._forcedSave = false
-			this.resetRefetchTimer()
+			if (this.initialLoadingFinished) {
+				this.resetRefetchTimer()
+			}
 		}).catch((e) => {
 			this.lock = false
 			if (!e.response || e.code === 'ECONNABORTED') {
