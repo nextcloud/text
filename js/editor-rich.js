@@ -63,5 +63,5 @@ var o=[{label:t("text","Undo"),class:"icon-undo",isActive:function(n){},action:f
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-var i=["text/markdown"];t.openMimetypesMarkdown=i;var o=["text/plain","application/cmd","application/x-empty","application/x-msdos-program","application/epub+zip","application/javascript","application/json","application/x-perl","application/x-php","application/x-tex","application/xml","application/yaml","text/css","text/csv","text/html","text/org","text/x-c","text/x-c++src","text/x-h","text/x-java-source","text/x-ldif","text/x-python","text/x-shellscript"];t.openMimetypesPlainText=o;var r=[].concat(i,o);t.openMimetypes=r}}]);
-//# sourceMappingURL=editor-rich.js.map?v=619c2fdf0bef3e666718
+var i=["text/markdown"];t.openMimetypesMarkdown=i;var o=["text/plain","application/cmd","application/x-empty","application/x-msdos-program","application/javascript","application/json","application/x-perl","application/x-php","application/x-tex","application/xml","application/yaml","text/css","text/csv","text/html","text/org","text/x-c","text/x-c++src","text/x-h","text/x-java-source","text/x-ldif","text/x-python","text/x-shellscript"];t.openMimetypesPlainText=o;var r=[].concat(i,o);t.openMimetypes=r}}]);
+//# sourceMappingURL=editor-rich.js.map?v=1b3585da968cb6b53b48

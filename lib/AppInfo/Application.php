@@ -37,6 +37,9 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\Files\Template\ITemplateManager;
+use OCP\Files\Template\TemplateFileCreator;
+use OCP\IL10N;
 
 class Application extends App implements IBootstrap {
 	public const APP_NAME = 'text';
@@ -53,5 +56,16 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
+		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l) {
+			$templateManager->registerTemplateFileCreator(function () use ($l) {
+				$markdownFile = new TemplateFileCreator(Application::APP_NAME, $l->t('New text document'), '.md');
+				$markdownFile->addMimetype('text/markdown');
+				$markdownFile->addMimetype('text/plain');
+				$markdownFile->setIconClass('icon-filetype-text');
+				$markdownFile->setRatio(1);
+				$markdownFile->setOrder(10);
+				return $markdownFile;
+			});
+		});
 	}
 }
