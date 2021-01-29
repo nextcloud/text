@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "新しいテキストドキュメント",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "テキストドキュメント",
     "Readme" : "Readme",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "Show rich workspaces" : "Readme.mdを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
-    "New text document" : "新しいテキストドキュメント",
     "Edit" : "編集",
     "Undo" : "元に戻す",
     "Redo" : "やり直し",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nýtt textaskjal",
     "Nextcloud Text" : "Nextcloud Texti",
     "text document" : "textaskjal",
     "Readme" : "Readme upplýsingaskrá",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
-    "New text document" : "Nýtt textaskjal",
     "Edit" : "Breyta",
     "Undo" : "Afturkalla",
     "Redo" : "Endurtaka",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "新文字文件",
     "Nextcloud Text" : "Nextcloud 文字編輯器",
     "text document" : "文字文件",
     "Readme" : "說明",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
     "Show rich workspaces" : "顯示較多功能的工作區",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
-    "New text document" : "新文字文件",
     "Edit" : "編輯",
     "Undo" : "復原",
     "Redo" : "重作",

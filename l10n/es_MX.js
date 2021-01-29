@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nuevo documento de texto",
     "Nextcloud Text" : "Texto de Nextcloud",
     "Readme" : "Leame",
     "Text" : "Texto",
@@ -17,7 +18,6 @@ OC.L10N.register(
     "Insert image" : "Añadir imagen",
     "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores"],
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
-    "New text document" : "Nuevo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",

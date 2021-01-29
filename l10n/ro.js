@@ -1,12 +1,12 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nou document text",
     "Text" : "Text",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",
     "Unsaved changes" : "Modificări nesalvate",
     "Insert image" : "Introdu imagine",
-    "New text document" : "Nou document text",
     "Edit" : "Editează",
     "Undo" : "Anulează ultima acțiune",
     "Retry" : "Reîncearcă",
