@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Novi tekstni dokument",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "tekstni dokument",
     "Readme" : "Informacije",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
-    "New text document" : "Novi tekstni dokument",
     "Edit" : "Uredi",
     "Undo" : "Poništi",
     "Redo" : "Ponovno",

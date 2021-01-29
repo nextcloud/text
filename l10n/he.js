@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "מסמך טקסט חדש",
     "Nextcloud Text" : "טקסט Nextcloud",
     "text document" : "מסמך טקסט",
     "Readme" : "הסבר",
@@ -27,7 +28,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
-    "New text document" : "מסמך טקסט חדש",
     "Edit" : "עריכה",
     "Undo" : "ביטול",
     "Redo" : "שחזור",

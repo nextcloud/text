@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Yeni metin belgesi",
     "Nextcloud Text" : "Nextcloud Metin",
     "text document" : "metin belgesi",
     "Readme" : "Benioku",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
-    "New text document" : "Yeni metin belgesi",
     "Edit" : "Düzenle",
     "Undo" : "Geri al",
     "Redo" : "Yinele",

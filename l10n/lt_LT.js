@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Naujas tekstinis dokumentas",
     "Nextcloud Text" : "Nextcloud tekstas",
     "text document" : "tekstinis dokumentas",
     "Readme" : "Perskaityti",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
-    "New text document" : "Naujas tekstinis dokumentas",
     "Edit" : "Taisyti",
     "Undo" : "Atšaukti",
     "Redo" : "Grąžinti",
