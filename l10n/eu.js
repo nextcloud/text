@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Testu dokumentu berria",
     "Nextcloud Text" : "Nextcloud Testua",
     "text document" : "testu dokumentua",
     "Readme" : "IrakurNazazu",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
-    "New text document" : "Testu dokumentu berria",
     "Edit" : "Editatu",
     "Undo" : "Desegin",
     "Redo" : "Berregin",

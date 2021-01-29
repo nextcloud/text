@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nov besedilni dokument",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "besedilni dokument",
     "Readme" : "Preberime",
@@ -23,10 +24,12 @@ OC.L10N.register(
     "Insert an image" : "Vstavi sliko",
     "Link file" : "Datoteka povezave",
     "Select file to link to" : "Izbor datoteke za povezavo",
+    "Show color annotations" : "Pokaži barvne opombe",
+    "Color annotations will only show during editing sessions, they are not persisted after closing the document." : "Barvne opombe so prikazane le v času urejanja in so združene, ko je dokument zaprt.",
+    "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ...",
-    "New text document" : "Nov besedilni dokument",
     "Edit" : "Uredi",
     "Undo" : "Razveljavi",
     "Redo" : "Ponovi",

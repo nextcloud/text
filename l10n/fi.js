@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Uusi tekstiasiakirja",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "Tekstiasiakirja",
     "Readme" : "Lueminut",
@@ -20,7 +21,6 @@ OC.L10N.register(
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
-    "New text document" : "Uusi tekstiasiakirja",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Новый текстовый документ",
     "Nextcloud Text" : "Текстовый редактор",
     "text document" : "текстовый документ",
     "Readme" : "Readme",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
     "Show rich workspaces" : "Показывать дополнительные сведения",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
-    "New text document" : "Новый текстовый документ",
     "Edit" : "Редактировать",
     "Undo" : "Отменить",
     "Redo" : "Повторить",

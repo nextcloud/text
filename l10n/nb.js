@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Nytt tekstdokument",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "tekstdokument",
     "Readme" : "Lesmeg",
@@ -20,7 +21,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "New text document" : "Nytt tekstdokument",
     "Edit" : "Rediger",
     "Undo" : "Angre",
     "Redo" : "Gjør om",

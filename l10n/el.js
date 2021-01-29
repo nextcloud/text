@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Νέο έγγραφο κειμένου",
     "Nextcloud Text" : "Κειμενογράφος Nextcloud",
     "text document" : "έγγραφο κειμένου",
     "Readme" : "Γενικές πληροφορίες",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι επεξεργαστές"],
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένου χώρου",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
-    "New text document" : "Νέο έγγραφο κειμένου",
     "Edit" : "Επεξεργασία",
     "Undo" : "Aναίρεση",
     "Redo" : "Επανάληψη",

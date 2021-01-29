@@ -1,4 +1,5 @@
 { "translations": {
+    "New text document" : "Novo documento de texto",
     "Nextcloud Text" : "Texto do Nextcloud",
     "text document" : "documento de texto",
     "Readme" : "Léeme",
@@ -27,7 +28,6 @@
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
     "Show rich workspaces" : "Amosa espazos de traballo mellorados",
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
-    "New text document" : "Novo documento de texto",
     "Edit" : "Editar",
     "Undo" : "Desfacer",
     "Redo" : "Refacer",
