@@ -1,4 +1,5 @@
 { "translations": {
+    "New text document" : "Nový textový dokument",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "textový dokument",
     "Readme" : "Čtimne",
@@ -27,7 +28,6 @@
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
     "Show rich workspaces" : "Zobrazit rich workspaces",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
-    "New text document" : "Nový textový dokument",
     "Edit" : "Upravit",
     "Undo" : "Zpět",
     "Redo" : "Zopakovat",

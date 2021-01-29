@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Új szöveg dokumentum",
     "Text" : "Szöveg",
     "Use current version" : "Aktuális verzió használata",
     "Use the saved version" : "A mentett verzió használata",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Edit guest name" : "Vendég név szerkesztése",
     "Save guest name" : "Vendég név mentése",
     "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…",
-    "New text document" : "Új szöveg dokumentum",
     "Edit" : "Szerkesztés",
     "Undo" : "Visszavon",
     "Redo" : "Újra",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "Новий текстовий документ",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "текстовий документ",
     "Readme" : "Readme",
@@ -20,7 +21,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
-    "New text document" : "Новий текстовий документ",
     "Edit" : "Редашувати",
     "Undo" : "Скасувати",
     "Redo" : "Повторити",
