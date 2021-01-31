@@ -24,6 +24,7 @@ OC.L10N.register(
     "Insert an image" : "Εισαγωγή εικόνας",
     "Link file" : "Σύνδεσμος αρχείου",
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
+    "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι επεξεργαστές"],
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένου χώρου",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
