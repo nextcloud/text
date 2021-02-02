@@ -178,11 +178,7 @@ export default {
 			return this.$store.state.showAuthorAnnotations
 		},
 		lastSavedStatus() {
-			let status = (this.dirtyStateIndicator ? '*' : '')
-			if (!this.isMobile) {
-				status += this.lastSavedString
-			}
-			return status
+			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
 		lastSavedStatusClass() {
 			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
@@ -195,10 +191,7 @@ export default {
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 			}
-			if (this.hasUnpushedChanges) {
-				message += ' - ' + t('text', 'Unpushed changes')
-			}
-			if (this.hasUnsavedChanges) {
+			if (this.hasUnpushedChanges || this.hasUnsavedChanges) {
 				message += ' - ' + t('text', 'Unsaved changes')
 			}
 			return { content: message, placement: 'bottom' }
@@ -535,6 +528,11 @@ export default {
 		overflow: hidden;
 		position: absolute;
 
+		&.show-color-annotations::v-deep .author-annotation {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+
 		&:not(.show-color-annotations)::v-deep .author-annotation {
 			background-color: transparent !important;
 			color: var(--color-main-text) !important;
@@ -576,7 +574,10 @@ export default {
 	}
 
 	.save-status {
-		padding: 9px;
+		display: inline-flex;
+		align-items: center;
+		padding: 0;
+		padding-right: 12px;
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
 
@@ -597,7 +598,7 @@ export default {
 	}
 
 	#editor-session-list {
-		padding: 4px 16px 4px 4px;
+		padding-right: 16px;
 		display: flex;
 
 		input, div {
@@ -617,29 +618,23 @@ export default {
 	}
 
 	#files-public-content {
-		height: auto;
-		#editor-wrapper {
-			position: relative;
-		}
 		#editor-container {
 			top: 0;
 			width: 100%;
 
 			#editor::v-deep .menubar {
-				// sticky position is not working as body is our scroll container
-				position: fixed;
-				top: 50px;
+				position: sticky;
+				top: 0px;
 				width: 100%;
 			}
 
 			#editor {
-				padding-top: 50px;
 				overflow: auto;
 				// Fix for IE11 issue where the menubar sometimes was positioned under the text
 				z-index: 1000;
 			}
 			.has-conflicts #editor {
-				padding-top: 0px;
+				padding-top: 0;
 			}
 		}
 	}
@@ -722,5 +717,11 @@ export default {
 				}
 			}
 		}
+	}
+
+	// Required in order to make the public pages behave the same if talk is enabled or not
+	// as Talk overwrites the public page styles and changes the DOM layout for the sidebar injection
+	#files-public-content {
+		height: 100%;
 	}
 </style>
