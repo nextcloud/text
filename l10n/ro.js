@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "Editează",
     "Undo" : "Anulează ultima acțiune",
     "Retry" : "Reîncearcă",
-    "Last save {lastSave}" : "Ultima salvare {lastSave}",
     "Add link" : "Adaugă link",
     "Show image" : "Arată imaginea",
     "Show file" : "Arată fișierul"

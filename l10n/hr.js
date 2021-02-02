@@ -46,8 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Retry" : "Pokušaj ponovno",
-    "Last save {lastSave}" : "Posljednje spremanje {lastSave}",
-    "Update link" : "Ažuriraj poveznicu",
     "Add link" : "Dodaj poveznicu",
     "Show image" : "Prikaži sliku",
     "Show file" : "Prikaži datoteku",

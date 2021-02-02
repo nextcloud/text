@@ -44,8 +44,6 @@ OC.L10N.register(
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
     "Retry" : "Покушај поново",
-    "Last save {lastSave}" : "Последње чување {lastSave}",
-    "Update link" : "Ажурирај везу",
     "Add link" : "Додај везу",
     "Show image" : "Прикажи слику",
     "Show file" : "Прикажи фајл",

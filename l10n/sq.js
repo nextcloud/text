@@ -20,7 +20,6 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "Retry" : "Riprovoni",
-    "Last save {lastSave}" : "Ruajtja e fundit {lastSave}",
     "Add link" : "Shto link",
     "Show image" : "Shfaq imazhin",
     "Show file" : "Shfaq skedarin"

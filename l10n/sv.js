@@ -46,8 +46,6 @@ OC.L10N.register(
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Retry" : "Försök igen",
-    "Last save {lastSave}" : "Senast sparad {lastSave}",
-    "Update link" : "Uppdatera länk",
     "Add link" : "Lägg till länk",
     "Show image" : "Visa bild",
     "Show file" : "Visa fil",

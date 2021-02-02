@@ -44,7 +44,6 @@ OC.L10N.register(
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "Retry" : "Saiatu berriro",
-    "Last save {lastSave}" : "Azken gordetzea {lastSave}",
     "Add link" : "Gehitu esteka",
     "Show image" : "Bistaratu irudia",
     "Show file" : "Bistaratu fitxategia",

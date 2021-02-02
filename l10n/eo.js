@@ -34,7 +34,6 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Retry" : "Reprovi",
-    "Last save {lastSave}" : "Lasta konservado {lastSave}",
     "Add link" : "Aldoni ligilon",
     "Show image" : "Montri bildon",
     "Show file" : "Montri dosieron",

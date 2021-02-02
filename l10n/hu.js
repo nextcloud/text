@@ -21,7 +21,6 @@ OC.L10N.register(
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
     "Retry" : "Újra",
-    "Last save {lastSave}" : "Utolsó mentés {lastSave}",
     "Add link" : "Hivatkozás hozzáadása",
     "Show image" : "Kép megjelenítése",
     "Show file" : "Fájl megjelenítése"

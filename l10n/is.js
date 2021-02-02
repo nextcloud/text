@@ -44,8 +44,6 @@ OC.L10N.register(
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
     "Retry" : "Reyna aftur",
-    "Last save {lastSave}" : "Síðast vistað {lastSave}",
-    "Update link" : "Uppfæra tengil",
     "Add link" : "Bæta við tengli",
     "Show image" : "Birta mynd",
     "Show file" : "Sýna skrá",

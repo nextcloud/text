@@ -17,7 +17,6 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Retry" : "Repetir",
-    "Last save {lastSave}" : "Última versão guardada {lastSave}",
     "Add link" : "Adicionar ligação",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar ficheiro"
