@@ -49,8 +49,6 @@ OC.L10N.register(
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
     "Retry" : "Zkusit znovu",
-    "Last save {lastSave}" : "Poslední uložení {lastSave}",
-    "Update link" : "Aktualizovat odkaz",
     "Add link" : "Přidat odkaz",
     "Show image" : "Zobrazit obrázek",
     "Show file" : "Zobrazit soubor",

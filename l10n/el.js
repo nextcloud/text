@@ -47,8 +47,6 @@ OC.L10N.register(
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
     "Retry" : "Δοκιμή ξανά",
-    "Last save {lastSave}" : "Τελευταία αποθήκευση {lastSave}",
-    "Update link" : "Ενημέρωση συνδέσμου",
     "Add link" : "Προσθήκη συνδέσμου",
     "Show image" : "Εμφάνιση εικόνας",
     "Show file" : "Εμφάνιση αρχείου",

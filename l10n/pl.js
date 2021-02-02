@@ -49,8 +49,6 @@ OC.L10N.register(
     "Blockquote" : "Cytat",
     "Code block" : "Blok kodu",
     "Retry" : "Powtórz",
-    "Last save {lastSave}" : "Ostatni zapis {lastSave}",
-    "Update link" : "Aktualizuj link",
     "Add link" : "Dodaj link",
     "Show image" : "Pokaż obraz",
     "Show file" : "Pokaż plik",

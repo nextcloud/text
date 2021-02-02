@@ -49,8 +49,6 @@ OC.L10N.register(
     "Blockquote" : "块引用",
     "Code block" : "代码块",
     "Retry" : "重试",
-    "Last save {lastSave}" : "最近保存 {lastSave}",
-    "Update link" : "更新链接",
     "Add link" : "添加链接",
     "Show image" : "显示图片",
     "Show file" : "显示文件",

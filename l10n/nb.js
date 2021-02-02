@@ -40,7 +40,6 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
     "Retry" : "Prøv igjen",
-    "Last save {lastSave}" : "Sist lagret {lastSave}",
     "Add link" : "Legg ved lenke",
     "Show image" : "Vis bilde",
     "Show file" : "Vis fil",
