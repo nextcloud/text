@@ -330,6 +330,7 @@ export default {
 		position: sticky;
 		top: 0;
 		display: flex;
+		justify-content: flex-end;
 		z-index: 10010; // above modal-header so buttons are clickable
 		background-color: var(--color-main-background-translucent);
 		-webkit-backdrop-filter: var(--background-blur);
