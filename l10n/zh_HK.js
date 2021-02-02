@@ -49,8 +49,6 @@ OC.L10N.register(
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
     "Retry" : "重試",
-    "Last save {lastSave}" : "上次儲存於 {lastSave}",
-    "Update link" : "更新鏈接",
     "Add link" : "加入鏈接",
     "Show image" : "顯示圖像",
     "Show file" : "顯示檔案",

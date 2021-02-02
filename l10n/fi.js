@@ -40,7 +40,6 @@ OC.L10N.register(
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
     "Retry" : "Yritä uudelleen",
-    "Last save {lastSave}" : "Viimeisin tallennus {lastSave}",
     "Add link" : "Lisää linkki",
     "Show image" : "Näytä kuva",
     "Show file" : "Näytä tiedosto",

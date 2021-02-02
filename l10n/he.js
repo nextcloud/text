@@ -47,8 +47,6 @@ OC.L10N.register(
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
     "Retry" : "ניסיון חוזר",
-    "Last save {lastSave}" : "שמירה אחרונה: {lastSaved}",
-    "Update link" : "עדכן את הקישור",
     "Add link" : "הוספת קישור",
     "Show image" : "הצגת תמונה",
     "Show file" : "הצגת קובץ",

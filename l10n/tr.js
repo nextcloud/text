@@ -49,8 +49,6 @@ OC.L10N.register(
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "Retry" : "Yeniden Dene",
-    "Last save {lastSave}" : "Son kayıt {lastSave}",
-    "Update link" : "Bağlantıyı güncelle",
     "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
     "Show file" : "Dosyayı görüntüle",

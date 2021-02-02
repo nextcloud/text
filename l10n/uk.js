@@ -40,7 +40,6 @@ OC.L10N.register(
     "Blockquote" : "Цитування",
     "Code block" : "Код",
     "Retry" : "Ще раз",
-    "Last save {lastSave}" : "Збережено {lastSave}",
     "Add link" : "Додати посиланя",
     "Show image" : "Показати зображення",
     "Show file" : "Показати файл",
