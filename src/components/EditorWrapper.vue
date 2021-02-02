@@ -618,15 +618,13 @@ export default {
 	}
 
 	#files-public-content {
-		height: auto;
 		#editor-container {
 			top: 0;
 			width: 100%;
 
 			#editor::v-deep .menubar {
-				// sticky position is not working as body is our scroll container
-				position: fixed;
-				top: 50px;
+				position: sticky;
+				top: 0px;
 				width: 100%;
 			}
 
@@ -719,5 +717,11 @@ export default {
 				}
 			}
 		}
+	}
+
+	// Required in order to make the public pages behave the same if talk is enabled or not
+	// as Talk overwrites the public page styles and changes the DOM layout for the sidebar injection
+	#files-public-content {
+		height: 100%;
 	}
 </style>
