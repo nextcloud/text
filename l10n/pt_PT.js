@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use current version" : "Usar esta versão",
     "Use the saved version" : "Usar a versão guardada",
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi modificado fora do editor. As modificações não podem ser guardadas.",
-    "Unpushed changes" : "Modificações não enviadas",
     "Unsaved changes" : "Modificações não guardadas",
     "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
     "Edit guest name" : "Inserir o nome do convidado",
@@ -17,6 +16,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Retry" : "Repetir",
+    "Unpushed changes" : "Modificações não enviadas",
     "Add link" : "Adicionar ligação",
     "Show image" : "Mostrar imagem",
     "Show file" : "Mostrar ficheiro"

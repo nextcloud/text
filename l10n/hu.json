@@ -6,7 +6,6 @@
     "The document has been changed outside of the editor. The changes cannot be applied." : "A dokumentum a szerkesztőn kívül változott meg. A módosítások nem alkalmazhatók.",
     "File could not be loaded. Please check your internet connection." : "A fájl betöltése sikertelen. Ellenőrizze az internetkapcsolatot.",
     "Last saved {lastSaved}" : "Legutóbb mentve: {lastSaved}",
-    "Unpushed changes" : "El nem küldött változtatások",
     "Unsaved changes" : "Mentetlen változtatások",
     "Enter your name so other users can see who is editing" : "Add meg a neved, hogy mások lássák ki szerkeszti",
     "Edit guest name" : "Vendég név szerkesztése",
@@ -19,6 +18,7 @@
     "Italic" : "Dőlt",
     "Strikethrough" : "Áthúzott",
     "Retry" : "Újra",
+    "Unpushed changes" : "El nem küldött változtatások",
     "Add link" : "Hivatkozás hozzáadása",
     "Show image" : "Kép megjelenítése",
     "Show file" : "Fájl megjelenítése"

@@ -8,7 +8,6 @@ OC.L10N.register(
     "Use current version" : "Përdor versionin aktual",
     "Use the saved version" : "Përdor versionin e ruajtur",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumenti është ndryshuar jashtë redaktuesit. Ndryshimet nuk mund të aplikohen.",
-    "Unpushed changes" : "Ndryshime të pavendosura",
     "Unsaved changes" : "Ndryshime të paruajtura",
     "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
     "Edit guest name" : "Ndryshoni emrin e të ftuarit",
@@ -20,6 +19,7 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "Retry" : "Riprovoni",
+    "Unpushed changes" : "Ndryshime të pavendosura",
     "Add link" : "Shto link",
     "Show image" : "Shfaq imazhin",
     "Show file" : "Shfaq skedarin"

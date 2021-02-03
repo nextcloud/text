@@ -7,7 +7,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документот не е изменет од уредникот. Промените не можат да се применат.",
     "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
     "Last saved {lastSaved}" : "Последно зачувано {lastSaved}",
-    "Unpushed changes" : "Необјавени промени",
     "Unsaved changes" : "Незачувани промени",
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Edit guest name" : "Промени име на гостин",
@@ -17,6 +16,7 @@ OC.L10N.register(
     "Bold" : "Болд",
     "Italic" : "Италик",
     "Retry" : "Обидете се повторно",
+    "Unpushed changes" : "Необјавени промени",
     "Add link" : "Додади линк",
     "Show image" : "Прикаши слика",
     "Show file" : "Прикажи датотека"
