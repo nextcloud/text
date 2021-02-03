@@ -6,7 +6,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Cheñchet eo bet an diel er maez eus an embanner. N'eo ket posuple lakaat pez a oa bet cheñchet.",
     "File could not be loaded. Please check your internet connection." : "N'eo ket bet karget ar restr. Gwiriit o genstagadenn  internet.",
     "Last saved {lastSaved}" : "Enrolladen  divezhañ {lastSaved}",
-    "Unpushed changes" : "Kemmoù n'int ket bet bountet",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",
     "Enter your name so other users can see who is editing" : "Lakait o anv ma vo posuple d'an implijourien all gwellet piv a zo oc'h embannañ",
     "Edit guest name" : "Embannañ anv an hini pedet",
@@ -16,6 +15,7 @@ OC.L10N.register(
     "Select file to link to" : "Choaz ur restr da liammañ da",
     "Edit" : "Cheñch",
     "Retry" : "Klaskit en dro",
+    "Unpushed changes" : "Kemmoù n'int ket bet bountet",
     "Add link" : "Ouzhpnna ul liamm",
     "Show image" : "Diskouez ar skeudenn",
     "Show file" : "Diskouez ar restr"
