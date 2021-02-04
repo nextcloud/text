@@ -14,6 +14,8 @@ OC.L10N.register(
     "Reconnect" : "Επανασύνδεση",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Το έγγραφο έχει αλλάξει εκτός του επεξεργαστή. Οι αλλαγές δεν μπορούν να εφαρμοστούν.",
     "File could not be loaded. Please check your internet connection." : "Το αρχείο δεν μπορεί να φορτωθεί. Παρακαλώ ελέγξτε την σύνδεσή σας.",
+    "Saving …" : "Γίνεται αποθήκευση...",
+    "Saved" : "Αποθηκεύτηκε",
     "Last saved {lastSaved}" : "Τελευταία αποθήκευση {lastSave}",
     "Unsaved changes" : "Μη αποθηκευμένες αλλαγές",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
