@@ -117,9 +117,11 @@ class Link extends TipTapLink {
 						const { schema } = view.state
 						const attrs = getMarkAttrs(view.state, schema.marks.link)
 
-						if (attrs.href && event.target instanceof HTMLAnchorElement) {
+						const isLink = event.target instanceof HTMLAnchorElement || event.target.parentElement instanceof HTMLAnchorElement
+						if (attrs.href && isLink) {
+							const linkElement = event.target.parentElement instanceof HTMLAnchorElement ? event.target.parentElement : event.target
 							event.stopPropagation()
-							const htmlHref = event.target.href
+							const htmlHref = linkElement.href
 							if (event.button === 0 && !event.ctrlKey && htmlHref.startsWith(window.location.origin)) {
 								const query = OC.parseQueryString(htmlHref)
 								const fragment = OC.parseQueryString(htmlHref.split('#').pop())
