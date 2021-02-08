@@ -14,7 +14,7 @@ OC.L10N.register(
     "Reconnect" : "Wiederverbinden",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Das Dokument wurde außerhalb des Editors gespeichert. Die Änderungen könnten nicht angewandt werden.",
     "File could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
-    "Saving …" : "Speichern…",
+    "Saving …" : "Speichern …",
     "Saved" : "Gespeichert",
     "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",
     "Unsaved changes" : "Ungespeicherte Änderungen",
