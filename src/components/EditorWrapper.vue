@@ -23,13 +23,13 @@
 <template>
 	<div id="editor-container">
 		<div v-if="currentSession && active" class="document-status">
-			<p v-if="idle" class="msg icon-info">
+			<p v-if="idle" class="msg">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 			<p v-else-if="hasSyncCollission" class="msg icon-error">
 				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 			</p>
-			<p v-else-if="hasConnectionIssue" class="msg icon-info">
+			<p v-else-if="hasConnectionIssue" class="msg">
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
@@ -564,13 +564,20 @@ export default {
 		z-index: 1010;
 		position: relative;
 		background-color: var(--color-main-background);
-	}
 
-	.document-status .msg {
-		padding: 12px;
-		padding-left: 30px;
-		border-bottom: 1px solid var(--color-border);
-		background-position: 8px center;
+		.msg {
+			padding: 12px;
+			background-position: 8px center;
+			color: var(--color-text-maxcontrast);
+
+			&.icon-error {
+				padding-left: 30px;
+			}
+
+			.button {
+				margin-left: 8px;
+			}
+		}
 	}
 
 	.save-status {
