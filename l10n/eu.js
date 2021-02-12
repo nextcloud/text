@@ -12,6 +12,8 @@ OC.L10N.register(
     "Use the saved version" : "Erabili gordetako bertsioa",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu.",
     "File could not be loaded. Please check your internet connection." : "Ezin izan da fitxategia kargatu. Egiaztatu zure internet konexioa.",
+    "Saving …" : "Gordetzen ...",
+    "Saved" : "Gordeta",
     "Last saved {lastSaved}" : "Azken gordetzea {lastSave}",
     "Unsaved changes" : "Gorde gabeko aldaketak",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
