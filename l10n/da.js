@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "text document" : "tekst dokument",
     "Text" : "Tekst",
     "Use current version" : "Brug aktuelle version",
     "Use the saved version" : "Brug den gemte version",
