@@ -14,6 +14,8 @@ OC.L10N.register(
     "Reconnect" : "Ponovno poveži",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument je bil spremenjen izven urejevalnika. Sprememb ni mogoče uveljaviti.",
     "File could not be loaded. Please check your internet connection." : "Datoteke ni mogoče naložiti. Preverite internetno povezavo.",
+    "Saving …" : "Poteka shranjevanje ...",
+    "Saved" : "Shranjeno",
     "Last saved {lastSaved}" : "Nazadnje shranjeno {lastSaved}",
     "Unsaved changes" : "Neshranjene spremembe",
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
