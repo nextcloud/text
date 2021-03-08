@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [12.x]
-        containers: [1, 2, 3]
+        # containers: [1, 2, 3]
         php-versions: [ '7.4' ]
         databases: [ 'sqlite' ]
         server-versions: [ 'stable20' ]
@@ -51,7 +51,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite
+          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, zip, gd, apcu
           coverage: none
 
       - name: Set up Nextcloud
@@ -75,8 +75,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          record: true
-          parallel: true
+          record: false
+          parallel: false
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
         env:
