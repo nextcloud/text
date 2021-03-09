@@ -15,6 +15,15 @@
 
 Nextcloud Text is available for Nextcloud 16 and will be part of Nextcloud 17 as the default text editor. To start editing just open an existing markdown or plaintext file or create a new one.
 
+## Configuration
+
+The rich workspaces in the file list can be disabled either by the users in the files app settings or globally by the admin with the following occ command:
+
+```
+occ config:app:set text workspace_available --value=0
+```
+
+
 ## 🏗 Development setup
 
 Currently this app requires the master branch of the [Viewer app](https://github.com/nextcloud/viewer).
@@ -26,3 +35,4 @@ Currently this app requires the master branch of the [Viewer app](https://github
 
 ### 🧙 Advanced development stuff
 To build the Javascript whenever you make changes, instead of the full `make` you can also run `npm run build`. Or run `npm run watch` to rebuild on every file save.
+
