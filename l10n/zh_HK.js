@@ -46,7 +46,7 @@ OC.L10N.register(
     "Heading 6" : "標題 6",
     "Unordered list" : "無序清單",
     "Ordered list" : "有序清單",
-    "ToDo list" : "待辦列表",
+    "ToDo list" : "待辦清單",
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
     "Retry" : "重試",
