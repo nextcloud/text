@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[94],{500:function(e,n,t){"use strict";e.exports=function(e){return{name:"LDIF",contains:[{className:"attribute",begin:"^dn",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0},relevance:10},{className:"attribute",begin:"^\\w",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0}},{className:"literal",begin:"^-",end:"$"},e.HASH_COMMENT_MODE]}}}}]);
-//# sourceMappingURL=ldif.js.map?v=db738b6fb1a4281331af
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[94],{548:function(e,n,t){"use strict";e.exports=function(e){return{name:"LDIF",contains:[{className:"attribute",begin:"^dn",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0},relevance:10},{className:"attribute",begin:"^\\w",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0}},{className:"literal",begin:"^-",end:"$"},e.HASH_COMMENT_MODE]}}}}]);
+//# sourceMappingURL=ldif.js.map?v=f4abf51098580d9bec5e
