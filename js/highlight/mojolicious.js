@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[112],{518:function(e,n,s){"use strict";e.exports=function(e){return{name:"Mojolicious",subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
-//# sourceMappingURL=mojolicious.js.map?v=fbf061af7f7959aa485f
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[112],{566:function(e,n,s){"use strict";e.exports=function(e){return{name:"Mojolicious",subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
+//# sourceMappingURL=mojolicious.js.map?v=4e7312dd891988a22a8b
