@@ -99,7 +99,7 @@ div.ProseMirror {
 	}
 
 	h2 {
-		font-size: 28px;
+		font-size: 30px;
 		margin-top: 48px;
 	}
 
@@ -127,7 +127,7 @@ div.ProseMirror {
 	hr {
 		padding: 2px 0;
 		border: none;
-		margin: 1em 0;
+		margin: 3em 0;
 		width: 100%;
 	}
 
@@ -166,6 +166,7 @@ div.ProseMirror {
 	ul, ol {
 		padding-left: 10px;
 		margin-left: 10px;
+		margin-bottom: 1em;
 	}
 
 	ul li {
