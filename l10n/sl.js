@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert an image" : "Vstavi sliko",
     "Link file" : "Datoteka povezave",
     "Select file to link to" : "Izbor datoteke za povezavo",
+    "Show author colors" : "Pokaži barve avtorja",
     "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
