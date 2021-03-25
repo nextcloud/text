@@ -81,3 +81,8 @@ jobs:
           working-directory: 'apps/${{ env.APP_NAME }}'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Nextcloud logs
+        if: ${{ failure() }}
+        run: |
+          cat data/nextcloud.log
