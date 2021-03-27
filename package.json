@@ -38,7 +38,7 @@
 		"core-js": "^3.9.1",
 		"entities": "^2.1.0",
 		"escape-html": "^1.0.3",
-		"highlight.js": "^10.4.1",
+		"highlight.js": "^10.7.1",
 		"markdown-it": "^12.0.4",
 		"markdown-it-task-lists": "^2.1.1",
 		"prosemirror-collab": "^1.2.2",
