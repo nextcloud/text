@@ -24,7 +24,7 @@
     "Link file" : "Link pliku",
     "Select file to link to" : "Wybierz plik dla linku",
     "Show author colors" : "Pokaż kolory autora",
-    "Author colors are only shown until everyone has closed the document." : "Kolory autora są wyświetlane tylko do momentu, gdy wszyscy zamkną dokument.",
+    "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Currently active users:" : "Aktualnie aktywni użytkownicy:",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
