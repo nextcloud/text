@@ -21,11 +21,11 @@
     "Insert an image" : "Inserta·nche un'immàgine",
     "Link file" : "Ligòngiu a archìviu",
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
-    "Show author colors" : "Ammustra is colores de sa persone autora",
-    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora s'ammustrant isceti finas a cando totus ant serradu s'archìviu.",
+    "Show author colors" : "Mustra is colores de sa persone autora",
+    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
-    "Show rich workspaces" : "Ammustra àreas de traballu avantzadas",
+    "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
     "Undo" : "Iscontza",
@@ -48,8 +48,8 @@
     "Retry" : "Torra a proare",
     "Unpushed changes" : "Modìficas non depositadas",
     "Add link" : "Agiunghe ligòngiu",
-    "Show image" : "Ammustra immàgine",
-    "Show file" : "Ammustra archìviu",
+    "Show image" : "Mustra immàgine",
+    "Show file" : "Mustra archìviu",
     "Paragraph" : "Paràgrafu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
