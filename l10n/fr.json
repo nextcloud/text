@@ -27,7 +27,7 @@
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
     "Currently active users:" : "Utilisateurs actuellement actifs :",
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"],
-    "Show rich workspaces" : "Montrer les espaces de travail riches.",
+    "Show rich workspaces" : "Afficher les espaces de travail riches",
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
     "Edit" : "Modifier",
     "Undo" : "Annuler",
