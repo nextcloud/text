@@ -19,6 +19,8 @@
     "Edit guest name" : "ゲスト名を編集",
     "Save guest name" : "ゲスト名を保存",
     "Insert image" : "画像の挿入",
+    "Link file" : "ファイルをリンク",
+    "Select file to link to" : "リンク先のファイルを選択",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "Show rich workspaces" : "Readme.mdを表示",
