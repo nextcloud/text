@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[181],{634:function(n,t,e){"use strict";n.exports=function(n){return{name:"VBScript in HTML",subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
-//# sourceMappingURL=vbscript-html.js.map?v=15732d73a4c42dc14992
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[181],{636:function(n,t,e){"use strict";n.exports=function(n){return{name:"VBScript in HTML",subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
+//# sourceMappingURL=vbscript-html.js.map?v=3a0d54aaf0a915732e96
