@@ -1,6 +1,9 @@
 OC.L10N.register(
     "text",
     {
+    "New text document" : "مستند نصي جديد",
+    "text document" : "مستند نصي",
+    "Readme" : "إقرأني",
     "Text" : "نص",
     "Edit" : "تعديل",
     "Undo" : "تراجع",
