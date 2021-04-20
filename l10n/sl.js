@@ -26,6 +26,7 @@ OC.L10N.register(
     "Link file" : "Datoteka povezave",
     "Select file to link to" : "Izbor datoteke za povezavo",
     "Show author colors" : "Pokaži barve avtorja",
+    "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
     "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
