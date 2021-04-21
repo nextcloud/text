@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
+<files psalm-version="4.x-dev@">
   <file src="lib/AppInfo/Application.php">
-    <UndefinedClass occurrences="4">
+    <UndefinedClass occurrences="3">
       <code>BeforeTemplateRenderedEvent</code>
-      <code>ITemplateManager</code>
       <code>LoadAdditionalScriptsEvent</code>
       <code>LoadViewer</code>
     </UndefinedClass>
@@ -19,6 +18,7 @@
     </UndefinedClass>
   </file>
   <file src="lib/Controller/PublicSessionController.php">
+    <InvalidCatch occurrences="1"/>
     <MissingDependency occurrences="1">
       <code>ShareNotFound</code>
     </MissingDependency>
@@ -32,17 +32,21 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/Controller/WorkspaceController.php">
+    <InvalidCatch occurrences="2"/>
     <InvalidReturnType occurrences="3">
       <code>DataResponse</code>
       <code>DataResponse</code>
       <code>DataResponse</code>
     </InvalidReturnType>
-    <MissingDependency occurrences="6">
+    <MissingDependency occurrences="9">
+      <code>$e</code>
+      <code>$e</code>
       <code>$this-&gt;rootFolder</code>
       <code>$this-&gt;rootFolder</code>
       <code>IRootFolder</code>
       <code>IRootFolder</code>
       <code>ShareNotFound</code>
+      <code>StorageNotAvailableException</code>
       <code>StorageNotAvailableException</code>
     </MissingDependency>
     <UndefinedClass occurrences="1">
@@ -51,11 +55,9 @@
     <UndefinedInterfaceMethod occurrences="1">
       <code>open</code>
     </UndefinedInterfaceMethod>
-  </file>
-  <file src="lib/Cron/Cleanup.php">
-    <InvalidReturnType occurrences="1">
-      <code>run</code>
-    </InvalidReturnType>
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;logger</code>
+    </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass occurrences="1">
@@ -63,9 +65,6 @@
     </UndefinedClass>
   </file>
   <file src="lib/Db/SessionMapper.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>$qb-&gt;createNamedParameter($activeSessions, IQueryBuilder::PARAM_INT_ARRAY)</code>
-    </ImplicitToStringCast>
     <MoreSpecificImplementedParamType occurrences="1"/>
   </file>
   <file src="lib/Db/StepMapper.php">
@@ -95,15 +94,14 @@
     </UndefinedClass>
   </file>
   <file src="lib/Service/ApiService.php">
-    <InvalidArgument occurrences="4">
-      <code>$e-&gt;getMessage()</code>
-      <code>$e-&gt;getMessage()</code>
+    <InvalidArgument occurrences="1">
       <code>$file</code>
-      <code>'No valid file argument provided'</code>
     </InvalidArgument>
     <UndefinedDocblockClass occurrences="1"/>
   </file>
   <file src="lib/Service/DocumentService.php">
+    <InvalidCatch occurrences="3"/>
+    <InvalidScalarArgument occurrences="1"/>
     <MismatchingDocblockReturnType occurrences="1">
       <code>Entity</code>
     </MismatchingDocblockReturnType>
