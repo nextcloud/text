@@ -93,7 +93,9 @@ class WorkspacePlugin extends ServerPlugin {
 		if (!$workspaceAvailable || !$workspaceEnabled) {
 			return;
 		}
-		if ($propFind->getDepth() > 0) {
+
+		// Only return the property for the parent node and ignore it for further in depth nodes
+		if ($propFind->getDepth() === $this->server->getHTTPDepth()) {
 			$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
 				/** @var Folder[] $nodes */
 				$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
