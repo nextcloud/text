@@ -8,18 +8,20 @@
 
 ![](img/screenshots/screenshot1.png)
 
-- **📝 Focused writing:** No distractions, only the formatting you need.
+## Features
+
+- **📝Simple Focused writing:** No distractions, only the formatting you need.
 - **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
 - **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
 - **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
 
-Nextcloud Text is available for Nextcloud 16 and will be part of Nextcloud 17 as the default text editor. To start editing just open an existing markdown or plaintext file or create a new one.
+Nextcloud Text is the default text editor since Nextcloud 17. To start editing just open an existing markdown or plaintext file or create a new one.
 
 ## Configuration
 
 The rich workspaces in the file list can be disabled either by the users in the files app settings or globally by the admin with the following occ command:
 
-```
+```bash
 occ config:app:set text workspace_available --value=0
 ```
 
