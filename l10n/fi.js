@@ -9,6 +9,7 @@ OC.L10N.register(
     "📝 Collaborative document editing" : "📝 Yhteistyöhön perustuvaa asiakirjojen muokkausta",
     "Use current version" : "Käytä nykyistä versiota",
     "Use the saved version" : "Käytä tallennettua versiota",
+    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentti on ollut käyttämättömänä {timeout} minuuttia, klikkaa jatkaaksesi muokkausta",
     "Reconnect" : "Yhdistä uudelleen",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumenttia on muutettu editorin ulkopuolella. Muutoksia ei voida tallentaa.",
     "File could not be loaded. Please check your internet connection." : "Tiedostoa ei voitu ladata. Tarkista internetyhteytesi tila.",
