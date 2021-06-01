@@ -206,7 +206,7 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor-wrapper {
-		position: unset !important;
+		position: sticky !important;
 		overflow: visible;
 	}
 
