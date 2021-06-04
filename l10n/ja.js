@@ -12,7 +12,7 @@ OC.L10N.register(
     "Use the saved version" : "保存済みのバージョンを使用",
     "Document idle for {timeout} minutes, click to continue editing" : "ドキュメントが{timeout}分間アイドル状態です。クリックして編集を続行します",
     "Reconnect" : "再接続",
-    "The document has been changed outside of the editor. The changes cannot be applied." : "ドキュメントがエディタの外部から変更されました。変更点を適用できません。",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "ドキュメントがエディターの外部から変更されました。変更点を適用できません。",
     "File could not be loaded. Please check your internet connection." : "ファイルを読み込めませんでした。 インターネット接続を確認してください。",
     "Saving …" : "保存中 ...",
     "Saved" : "保存済み",
