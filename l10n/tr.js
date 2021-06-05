@@ -49,7 +49,7 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
-    "Retry" : "Yeniden Dene",
+    "Retry" : "Yeniden dene",
     "Unpushed changes" : "Gönderilmemiş değişiklikler",
     "Add link" : "Bağlantı ekle",
     "Show image" : "Görseli görüntüle",
