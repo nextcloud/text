@@ -24,6 +24,7 @@
 	<EditorWrapper :file-id="fileid"
 		:relative-path="filename"
 		:active="active"
+		:autofocus="autofocus"
 		:share-token="shareToken"
 		:mime="mime" />
 </template>
@@ -46,6 +47,10 @@ export default {
 		active: {
 			type: Boolean,
 			default: false,
+		},
+		autofocus: {
+			type: Boolean,
+			default: true,
 		},
 		shareToken: {
 			type: String,
