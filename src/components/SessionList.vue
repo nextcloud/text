@@ -40,7 +40,7 @@
 					:size="32" />
 			</div>
 		</button>
-		<template>
+		<template #default>
 			<div class="session-menu">
 				<ul>
 					<slot />
