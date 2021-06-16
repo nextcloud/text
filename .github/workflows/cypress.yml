@@ -62,6 +62,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, zip, gd, apcu
+          ini-values:
+            apc.enable_cli=on
           coverage: none
 
       - name: Set up Nextcloud
