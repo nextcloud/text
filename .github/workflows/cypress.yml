@@ -14,13 +14,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
         # containers: [1, 2, 3]
         php-versions: [ '7.4' ]
         databases: [ 'sqlite' ]
         server-versions: [ 'master' ]
 
     steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set up npm7
+        run: npm i -g npm@7
+
       - name: Checkout server
         uses: actions/checkout@v2
         with:
@@ -40,11 +47,6 @@ jobs:
           repository: nextcloud/viewer
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: npm install, build viewer in testing mode
         working-directory: apps/viewer
