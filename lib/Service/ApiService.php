@@ -114,7 +114,7 @@ class ApiService {
 			} catch (NotFoundException $e) {
 				return new NotFoundResponse();
 			}
-			return new FileDisplayResponse($file);
+			return new FileDisplayResponse($file, 200, ['Content-Type' => 'text/plain']);
 		}
 		return new NotFoundResponse();
 	}
