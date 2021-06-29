@@ -20,10 +20,7 @@
  *
  */
 
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
 import axios from '@nextcloud/axios'
-
-addMatchImageSnapshotCommand()
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
@@ -110,15 +107,4 @@ Cypress.Commands.add('openFile', fileName => {
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
-})
-
-Cypress.Commands.overwrite('matchImageSnapshot', (originalFn, subject, name, options) => {
-	// hide avatar because random colour break the visual regression tests
-	cy.window().then(win => {
-		const avatarDiv = win.document.querySelector('.avatardiv')
-		if (avatarDiv) {
-			avatarDiv.remove()
-		}
-	})
-	return originalFn(subject, name, options)
 })
