@@ -99,7 +99,8 @@ class ApiService {
 
 			$document = $this->documentService->createDocument($file);
 		} catch (Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
+			$this->logger->logException($e);
+			return new DataResponse('Failed to create the document session', 500);
 		}
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
@@ -194,9 +195,9 @@ class ApiService {
 		} catch (NotFoundException $e) {
 			return new DataResponse([], 404);
 		} catch (Exception $e) {
-			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			$this->logger->logException($e);
 			return new DataResponse([
-				'message' => $e->getMessage()
+				'message' => 'Failed to autosave document'
 			], 500);
 		}
 
