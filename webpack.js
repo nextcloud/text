@@ -9,21 +9,17 @@ webpackConfig.entry = {
 	viewer: path.join(__dirname, 'src', 'viewer.js'),
 }
 
-webpackConfig.output.chunkFilename = '[name].js?v=[contenthash]'
-webpackConfig.optimization.splitChunks.chunks = 'all'
-Object.assign(webpackConfig.optimization.splitChunks, {
-	cacheGroups: {
-		highlight: {
-			enforce: true,
-			test: /[\\/]node_modules[\\/](hightlight\.js)[\\/]/,
-		},
-		vendors: {
-			test: /[\\/]node_modules[\\/]/,
-			reuseExistingChunk: true
-		}
-	}
-})
+webpackConfig.output.chunkFilename = '[id].js?v=[contenthash]'
 
-console.log(webpackConfig)
+webpackConfig.optimization.chunkIds = 'named'
+webpackConfig.optimization.splitChunks.cacheGroups = {
+	defaultVendors: {
+		test(module) {
+			return module.resource && module.resource.includes(`${path.sep}node_modules${path.sep}`) &&
+				!module.resource.includes(`${path.sep}highlight.js${path.sep}`)
+		},
+		name: 'vendors',
+	}
+}
 
 module.exports = webpackConfig
