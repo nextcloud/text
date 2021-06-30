@@ -22,4 +22,9 @@ webpackConfig.optimization.splitChunks.cacheGroups = {
 	}
 }
 
+webpackConfig.resolve.modules = [
+	path.resolve(__dirname, 'node_modules'),
+	'node_modules'
+]
+
 module.exports = webpackConfig
