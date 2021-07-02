@@ -82,7 +82,7 @@ import { createEditor, markdownit, createMarkdownSerializer, serializePlainText,
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
-import { Keymap, UserColor } from './../extensions'
+import { Emoji, Keymap, UserColor } from './../extensions'
 import isMobile from './../mixins/isMobile'
 import store from './../mixins/store'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
@@ -355,6 +355,7 @@ export default {
 										return true
 									},
 								}),
+								new Emoji(),
 							],
 							enableRichEditing: this.isRichEditor,
 							languages,

@@ -20,10 +20,12 @@
  *
  */
 
+import Emoji from './Emoji'
 import Keymap from './Keymap'
 import UserColor from './UserColor'
 
 export {
+	Emoji,
 	Keymap,
 	UserColor,
 }
