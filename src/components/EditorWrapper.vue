@@ -520,6 +520,9 @@ export default {
 		padding: 9px;
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
+		position: relative;
+		top: 10px;
+		min-width: 85px;
 
 		&.error {
 			background-color: var(--color-error);

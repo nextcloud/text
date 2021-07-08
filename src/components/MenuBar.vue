@@ -322,7 +322,7 @@ export default {
 		top: 0;
 		display: flex;
 		justify-content: flex-end;
-		z-index: 10010; // above modal-header so buttons are clickable
+		z-index: 10021; // above modal-header and menububble so menubar is always on top
 		background-color: var(--color-main-background-translucent);
 		height: 44px;
 
