@@ -331,11 +331,11 @@ export default {
 		top: 0;
 		display: flex;
 		justify-content: flex-end;
-		z-index: 10010; // above modal-header so buttons are clickable
+		z-index: 10021; // above modal-header and menububble so menubar is always on top
 		background-color: var(--color-main-background-translucent);
 		-webkit-backdrop-filter: var(--background-blur);
 		backdrop-filter: var(--background-blur);
-		height: 50px;
+		min-height: 50px; // important for mobile so that the buttons are always inside the container
 		padding-top:3px;
 		padding-bottom: 3px;
 
@@ -404,14 +404,6 @@ export default {
 			&:disabled {
 				opacity: .4;
 			}
-		}
-
-		&.icon-redo {
-			margin-right: 22px;
-		}
-
-		&.icon-ul {
-			margin-left: 22px;
 		}
 	}
 
