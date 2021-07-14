@@ -46,6 +46,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use Exception;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\WorkspaceService;
 use OCP\AppFramework\Http;
@@ -57,11 +58,13 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\Files\StorageNotAvailableException;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
+use Psr\Log\LoggerInterface;
 
 class WorkspaceController extends OCSController {
 
@@ -86,7 +89,10 @@ class WorkspaceController extends OCSController {
 	/** @var IEventDispatcher */
 	private $eventDispatcher;
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, $userId) {
+	/** @var LoggerInterface */
+	private $logger;
+
+	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, LoggerInterface $logger, $userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
@@ -95,6 +101,7 @@ class WorkspaceController extends OCSController {
 		$this->directEditingManager = $directEditingManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->eventDispatcher = $eventDispatcher;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -130,10 +137,11 @@ class WorkspaceController extends OCSController {
 					]
 				]);
 			}
-		} catch (NotFoundException $e) {
-			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
-		} catch (StorageNotAvailableException $e) {
-			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException | NotPermittedException $e) {
+			return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to get workspace file', ['exception' => $e]);
+			return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -163,12 +171,11 @@ class WorkspaceController extends OCSController {
 					]
 				]);
 			}
-		} catch (NotFoundException $e) {
-			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
-		} catch (ShareNotFound $e) {
-			return new DataResponse(['message' => 'No valid folder found'], Http::STATUS_BAD_REQUEST);
-		} catch (StorageNotAvailableException $e) {
-			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException | ShareNotFound | StorageNotAvailableException $e) {
+			return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
+		} catch (Exception $e) {
+			$this->logger->error('Failed to get public workspace file', ['exception' => $e]);
+			return new DataResponse(['message' => 'No workspace file found'], Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -192,7 +199,7 @@ class WorkspaceController extends OCSController {
 				]);
 			}
 		} catch (Exception $e) {
-			$this->logger->logException($e, ['message' => 'Exception when creating a new file through direct editing']);
+			$this->logger->error('Exception when creating a new file through direct editing', ['exception' => $e]);
 			return new DataResponse('Failed to create file', Http::STATUS_FORBIDDEN);
 		}
 	}
