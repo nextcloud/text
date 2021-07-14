@@ -1,5 +1,5 @@
 <?php
-script('text', 'text');
+script('text', 'text-text');
 style('text', 'icons');
 ?>
 <div id="app-content">

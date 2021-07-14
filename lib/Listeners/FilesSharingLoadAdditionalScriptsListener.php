@@ -43,7 +43,7 @@ class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	}
 
 	public function handle(Event $event): void {
-		\OCP\Util::addScript('text', 'public');
+		\OCP\Util::addScript('text', 'text-public');
 		\OCP\Util::addStyle('text', 'icons');
 
 		$this->initialStateService->provideInitialState(
