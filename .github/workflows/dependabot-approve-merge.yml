@@ -5,11 +5,7 @@
 
 name: Dependabot
 
-on:
-  pull_request_target:
-     branches:
-      - master
-      - stable*
+on: pull_request_target
 
 jobs:
   auto-merge:
