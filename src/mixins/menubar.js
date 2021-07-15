@@ -151,4 +151,12 @@ export default [
 			return command.code_block()
 		},
 	},
+	{
+		label: t('text', 'Emoji picker'),
+		class: 'icon-emoji',
+		isActive: (isActive) => false,
+		action: (command, emojiObject) => {
+			return command.emoji(emojiObject)
+		},
+	},
 ]

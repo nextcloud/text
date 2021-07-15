@@ -25,7 +25,16 @@
 		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
-					<button v-if="icon.class"
+					<EmojiPicker v-if="icon.class === 'icon-emoji'"
+						:key="icon.label"
+						class="menuitem-emoji"
+						@select="emojiObject => addEmoji(commands, allIcons.find(i => i.class === 'icon-emoji'), emojiObject)">
+						<button class="icon-emoji"
+							:title="t('text', 'Insert emoji')"
+							:aria-label="t('text', 'Insert emoji')"
+							:aria-haspopup="true" />
+					</EmojiPicker>
+					<button v-else-if="icon.class"
 						v-show="$index < iconCount"
 						:key="icon.label"
 						:title="icon.label"
@@ -48,7 +57,7 @@
 				</template>
 				<Actions>
 					<template v-for="(icon, $index) in allIcons">
-						<ActionButton v-if="icon.class && isHiddenInMenu($index)"
+						<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
 							:key="icon.class"
 							:icon="icon.class"
 							@click="clickIcon(commands, icon)">
@@ -81,6 +90,7 @@ import { optimalPath } from './../helpers/files'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
+import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
 
@@ -91,6 +101,7 @@ export default {
 		ActionButton,
 		PopoverMenu,
 		Actions,
+		EmojiPicker,
 	},
 	directives: {
 		Tooltip,
@@ -208,7 +219,7 @@ export default {
 			this.windowWidth // eslint-disable-line
 			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 200 ? this.$refs.menubar.clientWidth : 200
 			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
-			return iconCount
+			return iconCount - 1
 		},
 		imagePath() {
 			return this.lastImagePath
@@ -318,6 +329,9 @@ export default {
 			}
 			return current.fill('..').concat(target).join('/')
 		},
+		addEmoji(commands, icon, emojiObject) {
+			return icon.action(commands, emojiObject)
+		},
 	},
 }
 </script>
@@ -407,7 +421,7 @@ export default {
 		}
 	}
 
-	.menubar .submenu {
+	.menubar .submenu, .menubar .menuitem-emoji {
 		display: inline-block;
 		width: 44px;
 		height: 44px;
