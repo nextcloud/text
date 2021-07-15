@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
     "Retry" : "Zkusit znovu",
-    "Unpushed changes" : "Neodeslané změny",
-    "Add link" : "Přidat odkaz",
-    "Show image" : "Zobrazit obrázek",
-    "Show file" : "Zobrazit soubor",
-    "Paragraph" : "Odstavec"
+    "Unpushed changes" : "Neodeslané změny"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -48,10 +48,6 @@
     "Blockquote" : "Bločni navedek",
     "Code block" : "Navedek s kodo",
     "Retry" : "Poskusi  znova",
-    "Unpushed changes" : "Neposlane spremembe",
-    "Add link" : "Dodaj povezavo",
-    "Show image" : "Pokaži sliko",
-    "Show file" : "Pokaži datoteko",
-    "Paragraph" : "Odstavek"
+    "Unpushed changes" : "Neposlane spremembe"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

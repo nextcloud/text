@@ -49,10 +49,6 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Code block" : "Khối mã",
     "Retry" : "Thử lại",
-    "Unpushed changes" : "Các thay đổi chưa được đưa lên",
-    "Add link" : "Thêm đường dẫn",
-    "Show image" : "Hiển thị ảnh",
-    "Show file" : "Hiển thị tài liệu",
-    "Paragraph" : "Đoạn văn"
+    "Unpushed changes" : "Các thay đổi chưa được đưa lên"
 },
 "nplurals=1; plural=0;");

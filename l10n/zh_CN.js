@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "块引用",
     "Code block" : "代码块",
     "Retry" : "重试",
-    "Unpushed changes" : "未推送的更改",
-    "Add link" : "添加链接",
-    "Show image" : "显示图片",
-    "Show file" : "显示文件",
-    "Paragraph" : "段落"
+    "Unpushed changes" : "未推送的更改"
 },
 "nplurals=1; plural=0;");

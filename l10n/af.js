@@ -36,10 +36,6 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lys",
     "ToDo list" : "Moet-doen-lys",
     "Blockquote" : "Blokaanhaling",
-    "Retry" : "Herprobeer",
-    "Add link" : "Voeg skakel toe",
-    "Show image" : "Toon beeld",
-    "Show file" : "Toon lêer",
-    "Paragraph" : "Paragraaf"
+    "Retry" : "Herprobeer"
 },
 "nplurals=2; plural=(n != 1);");

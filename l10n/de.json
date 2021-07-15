@@ -48,10 +48,6 @@
     "Blockquote" : "Blockzitat",
     "Code block" : "Codeblock",
     "Retry" : "Wiederholen",
-    "Unpushed changes" : "Nicht synchronisiert Änderungen",
-    "Add link" : "Link einfügen",
-    "Show image" : "Bild anzeigen",
-    "Show file" : "Datei anzeigen",
-    "Paragraph" : "Absatz"
+    "Unpushed changes" : "Nicht synchronisiert Änderungen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
     "Retry" : "重試",
-    "Unpushed changes" : "未推送變更",
-    "Add link" : "加入連結",
-    "Show image" : "顯示圖像",
-    "Show file" : "顯示檔案",
-    "Paragraph" : "段落"
+    "Unpushed changes" : "未推送變更"
 },
 "nplurals=1; plural=0;");

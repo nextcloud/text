@@ -19,9 +19,6 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "Retry" : "Riprovoni",
-    "Unpushed changes" : "Ndryshime të pavendosura",
-    "Add link" : "Shto link",
-    "Show image" : "Shfaq imazhin",
-    "Show file" : "Shfaq skedarin"
+    "Unpushed changes" : "Ndryshime të pavendosura"
 },
 "nplurals=2; plural=(n != 1);");

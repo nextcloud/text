@@ -8,9 +8,6 @@ OC.L10N.register(
     "Save guest name" : "Simpan nama tamu",
     "Edit" : "Sunting",
     "Undo" : "Undo",
-    "Retry" : "Ulangi",
-    "Add link" : "Tambah tautan",
-    "Show image" : "Tampilkan gambar",
-    "Show file" : "Tampilkan berkas"
+    "Retry" : "Ulangi"
 },
 "nplurals=1; plural=0;");

@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
     "Retry" : "Saiatu berriro",
-    "Unpushed changes" : "Bidali gabeko aldaketak",
-    "Add link" : "Gehitu esteka",
-    "Show image" : "Bistaratu irudia",
-    "Show file" : "Bistaratu fitxategia",
-    "Paragraph" : "Paragrafoa"
+    "Unpushed changes" : "Bidali gabeko aldaketak"
 },
 "nplurals=2; plural=(n != 1);");
