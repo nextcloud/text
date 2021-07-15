@@ -16,9 +16,6 @@ OC.L10N.register(
     "Bold" : "Болд",
     "Italic" : "Италик",
     "Retry" : "Обидете се повторно",
-    "Unpushed changes" : "Необјавени промени",
-    "Add link" : "Додади линк",
-    "Show image" : "Прикаши слика",
-    "Show file" : "Прикажи датотека"
+    "Unpushed changes" : "Необјавени промени"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -14,9 +14,6 @@
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Retry" : "Repetir",
-    "Unpushed changes" : "Modificações não enviadas",
-    "Add link" : "Adicionar ligação",
-    "Show image" : "Mostrar imagem",
-    "Show file" : "Mostrar ficheiro"
+    "Unpushed changes" : "Modificações não enviadas"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

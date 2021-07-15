@@ -13,9 +13,6 @@ OC.L10N.register(
     "Save guest name" : "게스트 이름 저장하기",
     "Edit" : "편집",
     "Undo" : "실행 취소",
-    "Retry" : "다시 시도",
-    "Add link" : "링크 추가",
-    "Show image" : "이미지 보여주기",
-    "Show file" : "파일 보여주기"
+    "Retry" : "다시 시도"
 },
 "nplurals=1; plural=0;");

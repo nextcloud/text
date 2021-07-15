@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Tekstblok",
     "Code block" : "Code blok",
     "Retry" : "Opnieuw proberen",
-    "Unpushed changes" : "Niet verwerkte veranderingen",
-    "Add link" : "Voeg link toe",
-    "Show image" : "Toon afbeelding",
-    "Show file" : "Toon bestand",
-    "Paragraph" : "Paragraaf"
+    "Unpushed changes" : "Niet verwerkte veranderingen"
 },
 "nplurals=2; plural=(n != 1);");

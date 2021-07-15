@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Retry" : "Volver tentar",
-    "Unpushed changes" : "Cambios sen enviar",
-    "Add link" : "Engadir a ligazón",
-    "Show image" : "Amosar a imaxe",
-    "Show file" : "Amosar o ficheiro",
-    "Paragraph" : "Parágrafo"
+    "Unpushed changes" : "Cambios sen enviar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -42,10 +42,6 @@ OC.L10N.register(
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
     "Retry" : "Tornar ensajar",
-    "Unpushed changes" : "Modificacions pas enviadas",
-    "Add link" : "Apondre un ligam",
-    "Show image" : "Afichar imatge",
-    "Show file" : "Afichar fichièr",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Modificacions pas enviadas"
 },
 "nplurals=2; plural=(n > 1);");

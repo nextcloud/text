@@ -6,9 +6,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
     "Edit" : "Redigeeri",
-    "Retry" : "Proovi uuesti",
-    "Add link" : "Lisa link",
-    "Show image" : "Näita pilti",
-    "Show file" : "Näita faili"
+    "Retry" : "Proovi uuesti"
 },
 "nplurals=2; plural=(n != 1);");

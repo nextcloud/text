@@ -6,9 +6,6 @@
     "Undo" : "برگرداندن",
     "Bold" : "درشت",
     "Italic" : "Italic",
-    "Retry" : "تلاش دوباره",
-    "Add link" : "افزودن لینک",
-    "Show image" : "نمایش تصویر",
-    "Show file" : "نمایش فایل"
+    "Retry" : "تلاش دوباره"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
