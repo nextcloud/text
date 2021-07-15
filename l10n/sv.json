@@ -12,6 +12,8 @@
     "Reconnect" : "Återanslut",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
     "File could not be loaded. Please check your internet connection." : "Filen kunde inte läsas in. Vänligen kontrollera din internetanslutning.",
+    "Saving …" : "Sparar …",
+    "Saved" : "Sparad",
     "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
     "Unsaved changes" : "Ej sparade ändringar",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
@@ -21,6 +23,9 @@
     "Insert an image" : "Infoga en bild",
     "Link file" : "Länka fil",
     "Select file to link to" : "Välj fil att länka till",
+    "Show author colors" : "Visa författarfärger",
+    "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
+    "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
@@ -43,10 +48,6 @@
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Retry" : "Försök igen",
-    "Unpushed changes" : "Inte slutförda ändringar",
-    "Add link" : "Lägg till länk",
-    "Show image" : "Visa bild",
-    "Show file" : "Visa fil",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Inte slutförda ändringar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

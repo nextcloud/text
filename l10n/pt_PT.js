@@ -16,9 +16,6 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Undo" : "Desfazer",
     "Retry" : "Repetir",
-    "Unpushed changes" : "Modificações não enviadas",
-    "Add link" : "Adicionar ligação",
-    "Show image" : "Mostrar imagem",
-    "Show file" : "Mostrar ficheiro"
+    "Unpushed changes" : "Modificações não enviadas"
 },
 "nplurals=2; plural=(n != 1);");

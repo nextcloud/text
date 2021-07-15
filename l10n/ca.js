@@ -43,10 +43,6 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloc de codi",
     "Retry" : "Torna a intentar",
-    "Unpushed changes" : "Canvis sense aplicar",
-    "Add link" : "Afegeix un enllaç",
-    "Show image" : "Mostra la imatge",
-    "Show file" : "Mostra el fitxer",
-    "Paragraph" : "Paràgraf"
+    "Unpushed changes" : "Canvis sense aplicar"
 },
 "nplurals=2; plural=(n != 1);");

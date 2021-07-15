@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Retry" : "Pokušaj ponovno",
-    "Unpushed changes" : "Neprimijenjene promjene",
-    "Add link" : "Dodaj poveznicu",
-    "Show image" : "Prikaži sliku",
-    "Show file" : "Prikaži datoteku",
-    "Paragraph" : "Odjeljak"
+    "Unpushed changes" : "Neprimijenjene promjene"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

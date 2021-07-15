@@ -8,9 +8,6 @@ OC.L10N.register(
     "Undo" : "برگرداندن",
     "Bold" : "درشت",
     "Italic" : "Italic",
-    "Retry" : "تلاش دوباره",
-    "Add link" : "افزودن لینک",
-    "Show image" : "نمایش تصویر",
-    "Show file" : "نمایش فایل"
+    "Retry" : "تلاش دوباره"
 },
 "nplurals=2; plural=(n > 1);");

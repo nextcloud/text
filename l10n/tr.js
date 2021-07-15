@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
     "Retry" : "Yeniden dene",
-    "Unpushed changes" : "Gönderilmemiş değişiklikler",
-    "Add link" : "Bağlantı ekle",
-    "Show image" : "Görseli görüntüle",
-    "Show file" : "Dosyayı görüntüle",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Gönderilmemiş değişiklikler"
 },
 "nplurals=2; plural=(n > 1);");
