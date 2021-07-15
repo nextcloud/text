@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
     "Retry" : "Försök igen",
-    "Unpushed changes" : "Inte slutförda ändringar",
-    "Add link" : "Lägg till länk",
-    "Show image" : "Visa bild",
-    "Show file" : "Visa fil",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Inte slutförda ändringar"
 },
 "nplurals=2; plural=(n != 1);");

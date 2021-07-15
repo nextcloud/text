@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Idézet",
     "Code block" : "Kód blokkolása",
     "Retry" : "Újra",
-    "Unpushed changes" : "El nem küldött változtatások",
-    "Add link" : "Hivatkozás hozzáadása",
-    "Show image" : "Kép megjelenítése",
-    "Show file" : "Fájl megjelenítése",
-    "Paragraph" : "Bekezdés"
+    "Unpushed changes" : "El nem küldött változtatások"
 },
 "nplurals=2; plural=(n != 1);");

@@ -46,10 +46,6 @@
     "Blockquote" : "Παράθεση",
     "Code block" : "Μπλοκ κώδικα",
     "Retry" : "Δοκιμή ξανά",
-    "Unpushed changes" : "Παλιές ανενεργές αλλαγές",
-    "Add link" : "Προσθήκη συνδέσμου",
-    "Show image" : "Εμφάνιση εικόνας",
-    "Show file" : "Εμφάνιση αρχείου",
-    "Paragraph" : "Παράγραφος"
+    "Unpushed changes" : "Παλιές ανενεργές αλλαγές"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

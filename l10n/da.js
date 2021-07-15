@@ -25,8 +25,6 @@ OC.L10N.register(
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
-    "Retry" : "Prøv igen",
-    "Show file" : "Vis fil",
-    "Paragraph" : "Paragraf"
+    "Retry" : "Prøv igen"
 },
 "nplurals=2; plural=(n != 1);");

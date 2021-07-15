@@ -50,10 +50,6 @@ OC.L10N.register(
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
     "Retry" : "再試行",
-    "Unpushed changes" : "プッシュされていない変更",
-    "Add link" : "リンクを追加",
-    "Show image" : "画像を表示する",
-    "Show file" : "ファイルを表示する",
-    "Paragraph" : "段落"
+    "Unpushed changes" : "プッシュされていない変更"
 },
 "nplurals=1; plural=0;");

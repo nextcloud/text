@@ -48,10 +48,6 @@ OC.L10N.register(
     "Blockquote" : "Mentovu",
     "Code block" : "Blocu de còdighe",
     "Retry" : "Torra a proare",
-    "Unpushed changes" : "Modìficas non depositadas",
-    "Add link" : "Agiunghe ligòngiu",
-    "Show image" : "Mustra immàgine",
-    "Show file" : "Mustra archìviu",
-    "Paragraph" : "Paràgrafu"
+    "Unpushed changes" : "Modìficas non depositadas"
 },
 "nplurals=2; plural=(n != 1);");

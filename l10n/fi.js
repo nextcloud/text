@@ -45,10 +45,6 @@ OC.L10N.register(
     "ToDo list" : "Tehtävälista",
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
-    "Retry" : "Yritä uudelleen",
-    "Add link" : "Lisää linkki",
-    "Show image" : "Näytä kuva",
-    "Show file" : "Näytä tiedosto",
-    "Paragraph" : "Kappale"
+    "Retry" : "Yritä uudelleen"
 },
 "nplurals=2; plural=(n != 1);");
