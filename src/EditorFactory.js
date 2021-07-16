@@ -30,6 +30,7 @@ import {
 	CodeBlockHighlight,
 	HorizontalRule,
 	History,
+	TrailingNode,
 	Placeholder,
 } from 'tiptap-extensions'
 import { Strong, Italic, Strike, Link } from './marks'
@@ -103,6 +104,10 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 		extensions: [
 			...richEditingExtensions,
 			new History(),
+			new TrailingNode({
+				node: 'paragraph',
+				notAfter: ['paragraph'],
+			  }),
 		].concat(extensions),
 		useBuiltInExtensions: enableRichEditing,
 	})
