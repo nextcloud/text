@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
+    "Insert emoji" : "Emoji ekle",
     "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",
     "Link file" : "Dosya bağla",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
+    "Emoji picker" : "Emoji seçici",
     "Retry" : "Yeniden dene",
     "Unpushed changes" : "Gönderilmemiş değişiklikler"
 },
