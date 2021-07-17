@@ -19,6 +19,7 @@
     "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Edit guest name" : "Upravit jméno hosta",
     "Save guest name" : "Uložit jméno hosta",
+    "Insert emoji" : "Vložit emotikonu",
     "Insert image" : "Vložit obrázek",
     "Insert an image" : "Vložit obrázek",
     "Link file" : "Odkázat na soubor",
@@ -47,6 +48,7 @@
     "ToDo list" : "Seznam úkolů",
     "Blockquote" : "Citace",
     "Code block" : "Blok kódu",
+    "Emoji picker" : "Volba emotikony",
     "Retry" : "Zkusit znovu",
     "Unpushed changes" : "Neodeslané změny"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"

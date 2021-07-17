@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他使用者才能查看是誰在編輯",
     "Edit guest name" : "編輯訪客名稱",
     "Save guest name" : "儲存訪客名稱",
+    "Insert emoji" : "插入表情符號",
     "Insert image" : "插入影像",
     "Insert an image" : "插入圖片",
     "Link file" : "連結檔案",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "待辦列表",
     "Blockquote" : "引文",
     "Code block" : "程式碼區塊",
+    "Emoji picker" : "表情符號挑選器",
     "Retry" : "重試",
     "Unpushed changes" : "未推送變更"
 },
