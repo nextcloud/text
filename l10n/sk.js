@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Edit guest name" : "Upraviť meno hosťa",
     "Save guest name" : "Uložiť meno hosťa",
+    "Insert emoji" : "Vložiť emotikon",
     "Insert image" : "Vložiť obrázok",
     "Insert an image" : "Vložiť obrázok",
     "Link file" : "Súbor pre odkaz",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Zoznam úloh",
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
+    "Emoji picker" : "Výber emotikonov",
     "Retry" : "Skúsiť znova",
     "Unpushed changes" : "Neodoslané zmeny"
 },
