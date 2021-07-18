@@ -58,7 +58,7 @@ const domHref = function(node) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
-		const currentDir = basedir(OCA.Viewer.state.file)
+		const currentDir = basedir(OCA.Viewer.file)
 		const dir = absolutePath(currentDir, basedir(relPath))
 		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
 	}
