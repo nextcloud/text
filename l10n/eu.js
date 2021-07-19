@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Edit guest name" : "Editatu gonbidatuaren izena",
     "Save guest name" : "Gorde gonbidatuaren izena",
+    "Insert emoji" : "Txertatu emojia",
     "Insert image" : "Txertatu irudia",
     "Insert an image" : "Txertatu irudi bat",
     "Link file" : "Estekatu fitxategia",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Egitekoen zerrenda",
     "Blockquote" : "Aipamena",
     "Code block" : "Kode blokea",
+    "Emoji picker" : " Emotikono-hautatzailea",
     "Retry" : "Saiatu berriro",
     "Unpushed changes" : "Bidali gabeko aldaketak"
 },
