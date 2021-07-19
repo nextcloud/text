@@ -2,9 +2,7 @@ import { domHref, parseHref } from '../../helpers/links'
 
 global.OCA = {
 	Viewer: {
-		state: {
-			file: '/Wiki/file.md',
-		},
+		file: '/Wiki/file.md',
 	},
 }
 
