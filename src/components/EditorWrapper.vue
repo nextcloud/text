@@ -575,11 +575,12 @@ export default {
 
 	.save-status {
 		display: inline-flex;
-		align-items: center;
 		padding: 0;
-		padding-right: 12px;
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
+		position: relative;
+		top: 10px;
+		min-width: 85px;
 
 		&.error {
 			background-color: var(--color-error);
@@ -598,7 +599,6 @@ export default {
 	}
 
 	#editor-session-list {
-		padding-right: 16px;
 		display: flex;
 
 		input, div {
