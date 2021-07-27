@@ -24,6 +24,7 @@ import { ListItem as TiptapListItem } from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { toggleList, wrappingInputRule } from 'tiptap-commands'
 import { findParentNode, findParentNodeClosestToPos } from 'prosemirror-utils'
+import { listInputRule } from '../commands'
 
 const TYPES = {
 	BULLET: 0,
@@ -152,7 +153,7 @@ export default class ListItem extends TiptapListItem {
 					done: true,
 				}
 			}),
-			wrappingInputRule(/^\s*([-+*])\s[^\s[]$/, type),
+			listInputRule(/^\s*([-+*])\s([^\s[])$/, type),
 		]
 	}
 
