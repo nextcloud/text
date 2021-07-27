@@ -47,7 +47,7 @@ class ResetDocument extends Command {
 		$this->sessionMapper = $sessionMapper;
 	}
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName('text:reset')
 			->setDescription('Reset a text document')
@@ -68,15 +68,17 @@ class ResetDocument extends Command {
 	/**
 	 * @param InputInterface $input
 	 * @param OutputInterface $output
-	 * @return void
+	 * @return int
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$fileId = $input->getArgument('file-id');
 		$fullReset = $input->getOption('full');
 
 		if ($fullReset) {
 			$output->writeln('Full document reset');
 			$this->documentService->resetDocument($fileId, true);
+
+			return 0;
 		} else {
 			$output->writeln('Trying to restore to last saved version');
 			$document = $this->documentMapper->find($fileId);
@@ -86,9 +88,13 @@ class ResetDocument extends Command {
 				$this->documentMapper->update($document);
 				$this->sessionMapper->deleteByDocumentId($fileId);
 				$output->writeln('Reverted document to the last saved version');
+
+				return 0;
 			} else {
 				$output->writeln('Failed revert changes that are newer than the last saved version');
 			}
+
+			return 1;
 		}
 	}
 }
