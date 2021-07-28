@@ -116,7 +116,7 @@ export default {
 		},
 		relativePath: {
 			type: String,
-			default: null,
+			default: '',
 		},
 		fileId: {
 			type: Number,
@@ -221,6 +221,11 @@ export default {
 		},
 		fileExtension() {
 			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
+		},
+		currentDirectory() {
+			return this.relativePath
+				? this.relativePath.split('/').slice(0, -1).join('/')
+				: '/'
 		},
 	},
 	watch: {
@@ -359,6 +364,7 @@ export default {
 							],
 							enableRichEditing: this.isRichEditor,
 							languages,
+							currentDirectory: this.currentDirectory,
 						})
 						this.tiptap.on('focus', () => {
 							this.$emit('focus')
