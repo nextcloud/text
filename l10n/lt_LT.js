@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
     "Save guest name" : "Įrašyti svečio vardą",
+    "Insert emoji" : "Įterpti šypsenėlę",
     "Insert image" : "Įterpti paveikslą",
     "Insert an image" : "Įterpti paveikslą",
     "Link file" : "Susieti failą",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Užduočių sąrašas",
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
+    "Emoji picker" : "Šypsenėlių parinkiklis",
     "Retry" : "Bandyti dar kartą",
     "Unpushed changes" : "Nepatvirtinti pakeitimai"
 },
