@@ -60,7 +60,7 @@ const loadSyntaxHighlight = async(language) => {
 	return { languages: modules }
 }
 
-const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing, languages }) => {
+const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing, languages, currentDirectory }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -79,7 +79,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Link({
 				openOnClick: true,
 			}),
-			new Image(),
+			new Image({ currentDirectory }),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
 				emptyNodeText: t('text', 'Add notes, lists or links …'),

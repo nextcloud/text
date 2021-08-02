@@ -60,7 +60,8 @@
 
 <script>
 import path from 'path'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
 
 const imageMimes = [
 	'image/png',
@@ -69,6 +70,7 @@ const imageMimes = [
 	'image/x-xbitmap',
 	'image/bmp',
 	'image/svg+xml',
+	'image/webp',
 ]
 
 const getQueryVariable = (src, variable) => {
@@ -90,7 +92,7 @@ const getQueryVariable = (src, variable) => {
 
 export default {
 	name: 'ImageView',
-	props: ['node', 'updateAttrs', 'view'], // eslint-disable-line
+	props: ['node', 'options', 'updateAttrs', 'view'], // eslint-disable-line
 	data() {
 		return {
 			imageLoaded: false,
@@ -99,38 +101,75 @@ export default {
 		}
 	},
 	computed: {
+		davUrl() {
+			if (getCurrentUser()) {
+				const uid = getCurrentUser().uid
+				const encoded = encodeURI(path.normalize(this.filePath))
+				return generateRemoteUrl(`dav/files/${uid}/${encoded}`)
+			} else {
+				return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
+					{
+						token: this.token,
+						dirname: this.options.currentDirectory,
+						basename: this.basename,
+					})
+			}
+		},
 		imageUrl() {
 			if (this.src.startsWith('http://') || this.src.startsWith('https://')) {
 				return this.src
 			}
-			if (this.hasPreviewUrl) {
-				return this.src
+			if (this.hasPreview && this.mime !== 'image/gif') {
+				return this.previewUrl
 			}
-			if (this.fileId) {
-				return generateUrl('/core/preview') + `?fileId=${this.fileId}&x=1024&y=1024&a=true`
-			}
-			const f = FileList.getCurrentDirectory() + '/' + this.src
-			const pathParam = encodeURIComponent(path.normalize(f))
-			return generateUrl('/core/preview.png') + `?file=${pathParam}&x=1024&y=1024&a=true`
+			return this.davUrl
+		},
+		basename() {
+			return decodeURI(this.src.split('?')[0])
 		},
 		fileId() {
 			return getQueryVariable(this.src, 'fileId')
 		},
-		hasPreviewUrl() {
-			return this.src.match(/^(\/index.php)?\/core\/preview/) || this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
+		filePath() {
+			const f = [
+				this.options.currentDirectory,
+				this.basename,
+			].join('/')
+			return path.normalize(f)
+		},
+		hasPreview() {
+			return getQueryVariable(this.src, 'hasPreview') === 'true'
+		},
+		previewUrl() {
+			if (this.src.match(/^(\/index.php)?\/core\/preview/)
+				|| this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
+			) {
+				return this.src
+			}
+			const fileQuery = (this.fileId)
+				? `?fileId=${this.fileId}&file=${encodeURIComponent(this.filePath)}`
+				: `?file=${encodeURIComponent(this.filePath)}`
+			const query = fileQuery + '&x=1024&y=1024&a=true'
+
+			if (getCurrentUser()) {
+				return generateUrl('/core/preview') + query
+			} else {
+				return generateUrl(`/apps/files_sharing/publicpreview/${this.token}${query}`)
+			}
+		},
+		mime() {
+			return getQueryVariable(this.src, 'mimetype')
 		},
 		mimeIcon() {
-			const mime = getQueryVariable(this.src, 'mimetype')
-			if (mime) {
-				return {
-					backgroundImage: 'url(' + window.OC.MimeType.getIconUrl(mime) + ')',
-				}
+			if (this.mime) {
+				const mimeIconUrl = window.OC.MimeType.getIconUrl(this.mime)
+				return { backgroundImage: `url(${mimeIconUrl})` }
 			}
 			return {}
 		},
 		isSupportedImage() {
-			const mime = getQueryVariable(this.src, 'mimetype')
-			return typeof mime === 'undefined' || imageMimes.indexOf(mime) !== -1
+			return typeof this.mime === 'undefined'
+				|| imageMimes.indexOf(this.mime) !== -1
 		},
 		internalLinkOrImage() {
 			const fileId = getQueryVariable(this.src, 'fileId')
@@ -141,7 +180,7 @@ export default {
 		},
 		src: {
 			get() {
-				return this.node.attrs.src
+				return this.node.attrs.src || ''
 			},
 			set(src) {
 				this.updateAttrs({
@@ -161,6 +200,10 @@ export default {
 		},
 		t() {
 			return (a, s) => window.t(a, s)
+		},
+		token() {
+			return document.getElementById('sharingToken')
+				&& document.getElementById('sharingToken').value
 		},
 	},
 	beforeMount() {
