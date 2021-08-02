@@ -52,7 +52,7 @@ describe('Open test.md in viewer', function() {
 		cy.get('#viewer').should('be.visible')
 		cy.get('#viewer .modal-title').should('contain', 'test.md')
 		cy.get('#viewer .modal-header button.action-item__menutoggle').should('be.visible')
-		cy.get('#viewer .modal-header button.icon-close').should('be.visible')
+		cy.get('#viewer .modal-header button.header-close').should('be.visible')
 
 		cy.wait(2000)
 		cy.get('#viewer', { timeout: 4000 })
@@ -75,7 +75,7 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Closes the editor', function() {
-		cy.get('.modal-header button.icon-close').click()
+		cy.get('.modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
 	})
 
