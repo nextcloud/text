@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Edit guest name" : "Modifica nome ospite",
     "Save guest name" : "Salva nome ospite",
+    "Insert emoji" : "Inserisci emoji",
     "Insert image" : "Inserisci immagine",
     "Insert an image" : "Inserisci un'immagine",
     "Link file" : "Collegamento a file",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Elenco Cose da fare",
     "Blockquote" : "Citazione",
     "Code block" : "Blocco di codice",
+    "Emoji picker" : "Selettore di emoji",
     "Retry" : "Riprova",
     "Unpushed changes" : "Modifiche non depositate"
 },
