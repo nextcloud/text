@@ -33,6 +33,9 @@ use OCP\IConfig;
 use OCP\IInitialStateService;
 use OCP\IUserSession;
 
+/**
+ * @implements IEventListener<Event>
+ */
 class FilesLoadAdditionalScriptsListener implements IEventListener {
 	/** @var IConfig */
 	protected $config;

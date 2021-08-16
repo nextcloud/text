@@ -29,6 +29,7 @@ use OCA\Viewer\Event\LoadViewer;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/** @implements IEventListener<Event> */
 class LoadViewerListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!$event instanceof LoadViewer) {
