@@ -30,6 +30,7 @@ use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/** @implements IEventListener<RegisterDirectEditorEvent> */
 class RegisterDirectEditorEventListener implements IEventListener {
 	/** @var TextDirectEditor */
 	protected $editor;

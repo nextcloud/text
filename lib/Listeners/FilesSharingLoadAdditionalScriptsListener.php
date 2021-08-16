@@ -31,6 +31,7 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\IConfig;
 use OCP\IInitialStateService;
 
+/** @implements IEventListener<Event> */
 class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	/** @var IConfig */
 	protected $config;
