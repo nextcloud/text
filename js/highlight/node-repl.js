@@ -1,2 +1,2 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/node-repl"],{93668:function(e){e.exports=function(e){return{name:"Node REPL",contains:[{className:"meta",starts:{end:/ |$/,starts:{end:"$",subLanguage:"javascript"}},variants:[{begin:/^>(?=[ ]|$)/},{begin:/^\.\.\.(?=[ ]|$)/}]}]}}}}]);
-//# sourceMappingURL=node-repl.js.map?v=83e0c1a26b02bbff27f7
+(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/node-repl"],{93668:e=>{e.exports=function(e){return{name:"Node REPL",contains:[{className:"meta",starts:{end:/ |$/,starts:{end:"$",subLanguage:"javascript"}},variants:[{begin:/^>(?=[ ]|$)/},{begin:/^\.\.\.(?=[ ]|$)/}]}]}}}}]);
+//# sourceMappingURL=node-repl.js.map?v=0c3e792799f7ae02c87c

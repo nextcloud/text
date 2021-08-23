@@ -1,2 +1,2 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/vbscript-html"],{3316:function(n){n.exports=function(n){return{name:"VBScript in HTML",subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
-//# sourceMappingURL=vbscript-html.js.map?v=885a29f49b33c1704494
+(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/vbscript-html"],{3316:e=>{e.exports=function(e){return{name:"VBScript in HTML",subLanguage:"xml",contains:[{begin:"<%",end:"%>",subLanguage:"vbscript"}]}}}}]);
+//# sourceMappingURL=vbscript-html.js.map?v=8947b810e913fa6a35ef
