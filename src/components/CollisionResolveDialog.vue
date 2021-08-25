@@ -22,10 +22,10 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog">
-		<button @click="$emit('resolveUseThisVersion')">
+		<button @click="$emit('resolve-use-this-version')">
 			{{ t('text', 'Use current version') }}
 		</button>
-		<button @click="$emit('resolveUseServerVersion')">
+		<button @click="$emit('resolve-use-server-version')">
 			{{ t('text', 'Use the saved version') }}
 		</button>
 	</div>

@@ -22,6 +22,7 @@
 
 /**
  * Callback that should be executed after the document is ready
+ *
  * @param callback
  */
 import { generateUrl } from '@nextcloud/router'

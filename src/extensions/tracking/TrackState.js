@@ -27,6 +27,11 @@ import { Span } from './models'
  * https://github.com/ProseMirror/website/blob/master/example/track/index.js
  */
 
+/**
+ * @param map
+ * @param transform
+ * @param clientIDs
+ */
 function updateBlameMap(map, transform, clientIDs) {
 	const result = []
 	const mapping = transform.mapping
@@ -47,6 +52,12 @@ function updateBlameMap(map, transform, clientIDs) {
 	return result
 }
 
+/**
+ * @param map
+ * @param from
+ * @param to
+ * @param author
+ */
 function insertIntoBlameMap(map, from, to, author) {
 	if (from >= to) {
 		return

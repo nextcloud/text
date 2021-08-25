@@ -66,7 +66,7 @@
 				:is-rich-editor="isRichEditor" />
 		</div>
 
-		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolveUseThisVersion="resolveUseThisVersion" @resolveUseServerVersion="resolveUseServerVersion" />
+		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolve-use-this-version="resolveUseThisVersion" @resolve-use-server-version="resolveUseServerVersion" />
 	</div>
 </template>
 

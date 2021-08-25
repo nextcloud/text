@@ -34,6 +34,7 @@ const defaultOptions = {
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
+ *
  * @type {number}
  */
 const IDLE_TIMEOUT = 30
