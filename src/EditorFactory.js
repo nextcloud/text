@@ -42,7 +42,7 @@ import 'proxy-polyfill'
 
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
 
-const loadSyntaxHighlight = async(language) => {
+const loadSyntaxHighlight = async (language) => {
 	const languages = [language]
 	const modules = {}
 	for (let i = 0; i < languages.length; i++) {

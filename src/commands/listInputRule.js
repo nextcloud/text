@@ -22,6 +22,11 @@
 
 import { InputRule, wrappingInputRule } from 'prosemirror-inputrules'
 
+/**
+ * @param regexp
+ * @param nodeType
+ * @param getAttrs
+ */
 export default function(regexp, nodeType, getAttrs) {
 	return new InputRule(regexp, (state, match, start, end) => {
 		const tr = wrappingInputRule(regexp, nodeType).handler(state, match, start, end)

@@ -26,18 +26,21 @@ import { sendableSteps } from 'prosemirror-collab'
 
 /**
  * Minimum inverval to refetch the document changes
+ *
  * @type {number} time in ms
  */
 const FETCH_INTERVAL = 300
 
 /**
  * Maximum interval between refetches of document state if multiple users have joined
+ *
  * @type {number} time in ms
  */
 const FETCH_INTERVAL_MAX = 5000
 
 /**
  * Interval to check for changes when there is only one user joined
+ *
  * @type {number} time in ms
  */
 const FETCH_INTERVAL_SINGLE_EDITOR = 5000
@@ -45,6 +48,7 @@ const FETCH_INTERVAL_SINGLE_EDITOR = 5000
 /**
  * Interval to fetch for changes when a browser window is considered invisible by the
  * page visibility API https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
+ *
  * @type {number} time in ms
  */
 const FETCH_INTERVAL_INVISIBLE = 60000
@@ -61,7 +65,7 @@ const MAX_RETRY_FETCH_COUNT = 5
 /**
  * Timeout for sessions to be marked as disconnected
  * Make sure that this is higher than any FETCH_INTERVAL_ values
- **/
+ */
 const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
