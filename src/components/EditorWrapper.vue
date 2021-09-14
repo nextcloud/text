@@ -561,7 +561,6 @@ export default {
 	}
 
 	.document-status {
-		z-index: 1010;
 		position: relative;
 		background-color: var(--color-main-background);
 
