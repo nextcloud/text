@@ -4,6 +4,7 @@ OC.L10N.register(
     "New text document" : "Tài liệu văn bản mới",
     "Nextcloud Text" : "Văn bản vWorkspace",
     "text document" : "tài liệu văn bản",
+    "Readme" : "Readme",
     "Text" : "Văn bản",
     "📝 Collaborative document editing" : "📝 Hợp tác chỉnh sửa tài liệu!",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Hợp tác chỉnh sửa tài liệu!**\n\n- **📝 Tập trung viết:** Chỉ tập trung vào những định dạng bạn cần.\n- **🙋 Làm việc cùng nhau:** Chia sẻ và cộng tác với bạn bè và đồng nghiệp, bất kể họ có sử dụng vWorkspace hay không!\n- **💾 Định dạng mở:** Tài liệu được lưu dưới dạng [Markdown](https://en.wikipedia.org/wiki/Markdown), vì vậy bạn cũng có thể chỉnh sửa chúng từ bất kỳ ứng dụng văn bản nào khác.\n- **✊ Nền tảng vững chắc:** Chúng tôi sử dụng [🐈 tiptap](https://tiptap.scrumpy.io) dựa trên [🦉 ProseMirror](https://prosemirror.net) !",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
     "Edit guest name" : "Chỉnh sửa tên khách",
     "Save guest name" : "Lưu tên khách",
+    "Insert emoji" : "Chèn emoji",
     "Insert image" : "Chèn ảnh",
     "Insert an image" : "Chèn ảnh",
     "Link file" : "Liên kết tệp tin",
@@ -48,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Cần làm",
     "Blockquote" : "Trích dẫn",
     "Code block" : "Khối mã",
+    "Emoji picker" : "Trình chọn emoji",
     "Retry" : "Thử lại",
     "Unpushed changes" : "Các thay đổi chưa được đưa lên"
 },
