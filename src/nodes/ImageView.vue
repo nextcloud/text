@@ -22,7 +22,12 @@
 
 <template>
 	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
-		<div v-if="imageLoaded && isSupportedImage" class="image__view">
+		<div v-if="imageLoaded && isSupportedImage"
+			v-click-outside="() => showIcons = false"
+			class="image__view"
+			@click="showIcons = true"
+			@mouseover="showIcons = true"
+			@mouseleave="showIcons = false">
 			<transition name="fade">
 				<img v-show="loaded"
 					:src="imageUrl"
@@ -35,6 +40,13 @@
 						type="text"
 						:value="alt"
 						@keyup.enter="updateAlt()">
+					<div
+						v-if="showIcons"
+						class="trash-icon"
+						title="Delete this image"
+						@click="deleteImage">
+						<TrashCanIcon />
+					</div>
 				</div>
 			</transition>
 		</div>
@@ -45,7 +57,8 @@
 						<span v-if="!isSupportedImage">{{ alt }}</span>
 					</a>
 				</div>
-			</transition><transition v-if="isSupportedImage" name="fade">
+			</transition>
+			<transition v-if="isSupportedImage" name="fade">
 				<div v-show="loaded" class="image__caption">
 					<input ref="altInput"
 						type="text"
@@ -61,6 +74,8 @@
 import path from 'path'
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import { getCurrentUser } from '@nextcloud/auth'
+import ClickOutside from 'vue-click-outside'
+import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
 import store from './../mixins/store'
 
 const imageMimes = [
@@ -94,6 +109,12 @@ const getQueryVariable = (src, variable) => {
 
 export default {
 	name: 'ImageView',
+	components: {
+		TrashCanIcon,
+	},
+	directives: {
+		ClickOutside,
+	},
 	mixins: [
 		store,
 	],
@@ -103,6 +124,7 @@ export default {
 			imageLoaded: false,
 			loaded: false,
 			failed: false,
+			showIcons: false,
 		}
 	},
 	computed: {
@@ -267,6 +289,12 @@ export default {
 		onLoaded() {
 			this.loaded = true
 		},
+		deleteImage() {
+			const tr = this.view.state.tr
+			const pos = this.getPos()
+			tr.delete(pos, pos + this.node.nodeSize)
+			this.view.dispatch(tr)
+		},
 	},
 }
 </script>
@@ -280,8 +308,11 @@ export default {
 	.image__caption {
 		text-align: center;
 		color: var(--color-text-lighter);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		input[type='text'] {
-			width: 100%;
+			max-width: 80%;
 			border: none;
 			text-align: center;
 		}
@@ -293,6 +324,8 @@ export default {
 
 	.image__view {
 		text-align: center;
+		position: relative;
+
 		img {
 			max-width: 100%;
 		}
@@ -312,5 +345,16 @@ export default {
 
 	.fade-enter {
 		opacity: 0;
+	}
+
+	.trash-icon {
+		position: absolute;
+		right: 0;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		svg {
+			cursor: pointer;
+		}
 	}
 </style>
