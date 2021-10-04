@@ -140,8 +140,7 @@ div.ProseMirror {
 	}
 
 	pre {
-		white-space: pre;
-		overflow-x: auto;
+		white-space: pre-wrap;
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
 		padding: 1em 1.3em;
