@@ -45,7 +45,7 @@
 		"prosemirror-inputrules": "^1.1.3",
 		"prosemirror-markdown": "^1.6.0",
 		"prosemirror-model": "^1.14.1",
-		"prosemirror-schema-list": "^1.1.5",
+		"prosemirror-schema-list": "^1.1.6",
 		"prosemirror-state": "^1.3.4",
 		"prosemirror-transform": "^1.3.3",
 		"prosemirror-utils": "^0.9.6",
