@@ -54,6 +54,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\OCSController;
+use OCP\Constants;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -62,6 +63,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\StorageNotAvailableException;
 use OCP\IRequest;
+use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
@@ -148,6 +150,15 @@ class WorkspaceController extends OCSController {
 	public function publicFolder(string $shareToken, string $path = '/'): DataResponse {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
+			if (!($share->getPermissions() & Constants::PERMISSION_READ)) {
+				throw new ShareNotFound();
+			}
+			if ($share->getPassword() !== null) {
+				$shareId = $this->session->get('public_link_authenticated');
+				if ($share->getId() !== $shareId) {
+					throw new ShareNotFound();
+				}
+			}
 			$folder = $share->getNode()->get($path);
 			if ($folder instanceof Folder) {
 				$file = $this->workspaceService->getFile($folder);
