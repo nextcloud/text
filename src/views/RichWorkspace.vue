@@ -51,7 +51,7 @@ import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe } from '@nextcloud/event-bus'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
-const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : ''), 2) + 'workspace'
+const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + 'workspace', 2)
 
 export default {
 	name: 'RichWorkspace',
