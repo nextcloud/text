@@ -630,8 +630,7 @@ export default {
 
 			#editor {
 				overflow: auto;
-				// Fix for IE11 issue where the menubar sometimes was positioned under the text
-				z-index: 1000;
+				z-index: 20;
 			}
 			.has-conflicts #editor {
 				padding-top: 0;
