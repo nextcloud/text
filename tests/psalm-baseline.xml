@@ -7,11 +7,6 @@
       <code>LoadViewer</code>
     </UndefinedClass>
   </file>
-  <file src="lib/Command/ResetDocument.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>void</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="lib/Controller/DirectSessionController.php">
     <UndefinedClass occurrences="1">
       <code>InvalidTokenException</code>
@@ -32,32 +27,25 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/Controller/WorkspaceController.php">
-    <InvalidCatch occurrences="2"/>
+    <InvalidCatch occurrences="1"/>
     <InvalidReturnType occurrences="3">
       <code>DataResponse</code>
       <code>DataResponse</code>
       <code>DataResponse</code>
     </InvalidReturnType>
-    <MissingDependency occurrences="9">
-      <code>$e</code>
-      <code>$e</code>
+    <MissingDependency occurrences="8">
       <code>$this-&gt;rootFolder</code>
       <code>$this-&gt;rootFolder</code>
       <code>IRootFolder</code>
       <code>IRootFolder</code>
       <code>ShareNotFound</code>
-      <code>StorageNotAvailableException</code>
+      <code>ShareNotFound</code>
+      <code>ShareNotFound</code>
       <code>StorageNotAvailableException</code>
     </MissingDependency>
-    <UndefinedClass occurrences="1">
-      <code>Exception</code>
-    </UndefinedClass>
     <UndefinedInterfaceMethod occurrences="1">
       <code>open</code>
     </UndefinedInterfaceMethod>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;logger</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass occurrences="1">

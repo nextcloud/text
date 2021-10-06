@@ -52,6 +52,7 @@ use OCA\Text\Service\WorkspaceService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\Constants;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -61,6 +62,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\StorageNotAvailableException;
 use OCP\IRequest;
+use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
@@ -92,7 +94,10 @@ class WorkspaceController extends OCSController {
 	/** @var LoggerInterface */
 	private $logger;
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, LoggerInterface $logger, $userId) {
+	/** @var ISession */
+	private $session;
+
+	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, LoggerInterface $logger, ISession $session, $userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
@@ -102,6 +107,7 @@ class WorkspaceController extends OCSController {
 		$this->urlGenerator = $urlGenerator;
 		$this->eventDispatcher = $eventDispatcher;
 		$this->logger = $logger;
+		$this->session = $session;
 	}
 
 	/**
@@ -155,6 +161,15 @@ class WorkspaceController extends OCSController {
 	public function publicFolder(string $shareToken, string $path = '/'): DataResponse {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
+			if (!($share->getPermissions() & Constants::PERMISSION_READ)) {
+				throw new ShareNotFound();
+			}
+			if ($share->getPassword() !== null) {
+				$shareId = $this->session->get('public_link_authenticated');
+				if ($share->getId() !== $shareId) {
+					throw new ShareNotFound();
+				}
+			}
 			$folder = $share->getNode()->get($path);
 			if ($folder instanceof Folder) {
 				$file = $this->workspaceService->getFile($folder);
