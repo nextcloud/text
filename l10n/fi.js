@@ -20,10 +20,12 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkyvät kuka muokkaa asiakirjaa",
     "Edit guest name" : "Muokkaa vieraan nimeä",
     "Save guest name" : "Tallenna vieraan nimi",
+    "Insert emoji" : "Lisää emoji",
     "Insert image" : "Lisää kuva",
     "Insert an image" : "Lisää kuva",
     "Link file" : "Linkitä tiedosto",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
+    "Show author colors" : "Näytä tekijän värit",
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
@@ -45,6 +47,7 @@ OC.L10N.register(
     "ToDo list" : "Tehtävälista",
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
+    "Emoji picker" : "Emoji-valitsin",
     "Retry" : "Yritä uudelleen"
 },
 "nplurals=2; plural=(n != 1);");
