@@ -1,4 +1,4 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[196],{145:function(n,e,i){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.FILE_ACTION_IDENTIFIER=e.FilesWorkspacePlugin=e.registerFileCreate=e.registerFileActionFallback=e.optimalPath=void 0;var o=i(78),r=l(i(155)),a=i(53),c=l(i(72));function l(n){return n&&n.__esModule?n:{default:n}}
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[196],{145:function(n,e,i){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.registerFileCreate=e.registerFileActionFallback=e.optimalPath=e.FilesWorkspacePlugin=e.FILE_ACTION_IDENTIFIER=void 0;var o=i(78),r=l(i(155)),a=i(53),c=l(i(72));function l(n){return n&&n.__esModule?n:{default:n}}
 /*
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -64,4 +64,4 @@ var o=[{label:t("text","Undo"),class:"icon-undo",isActive:function(n){return!1},
  *
  */
 var i=["text/markdown"];t.openMimetypesMarkdown=i;var o=["text/plain","application/cmd","application/x-empty","application/x-msdos-program","application/javascript","application/json","application/x-perl","application/x-php","application/x-tex","application/xml","application/yaml","text/css","text/csv","text/html","text/org","text/x-c","text/x-c++src","text/x-h","text/x-java-source","text/x-ldif","text/x-python","text/x-shellscript"];t.openMimetypesPlainText=o;var r=[].concat(i,o);t.openMimetypes=r}}]);
-//# sourceMappingURL=editor-rich.js.map?v=7c90f67705197f92e832
+//# sourceMappingURL=editor-rich.js.map?v=2ee3f560ed810a821ad4
