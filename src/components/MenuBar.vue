@@ -24,10 +24,11 @@
 	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
 		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
 			<input
-				type="file"
-				style="display: none"
 				ref="imageFileInput"
+				type="file"
 				accept="image/*"
+				aria-hidden="true"
+				class="hidden-visually"
 				@change="onImageFilePicked" />
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
@@ -297,46 +298,33 @@ export default {
 			this.$refs.imageFileInput.click()
 		},
 		onImageFilePicked(event) {
+			const uploadId = new Date().getTime()
 			console.debug('onImageFilePicked', event)
 			const files = event.target.files
-			const filename = files[0].name
-			const fileReader = new FileReader()
-			fileReader.addEventListener('load', () => {
-				this.imageUrl = fileReader.result
-			})
-			fileReader.readAsDataURL(files[0])
+			const filename = uploadId + '-' + files[0].name
 			const image = files[0]
 			console.debug('filename', filename)
 			console.debug('image', image)
 
+			// Clear input to ensure that the change event will be emitted if
+			// the same file is picked again.
+			event.target.value = ''
+
+			const filePath = '/Text/' + filename
 			console.debug('OC.Files.getClient()', OC.Files.getClient())
 			const client = OC.Files.getClient()
-			client.putFileContents('/Text/' + filename, image, {
+			client.putFileContents(filePath, image, {
 				contentType: image.type,
 				contentLength: image.size,
 				overwrite: false,
 			}).then((response) => {
 				console.debug('file uploaded!!!!!!!!')
-				client.getFileInfo('/Text/' + filename).then((_status, fileInfo) => {
-					this.lastImagePath = fileInfo.path
-
-					// dirty but works so we have the information stored in markdown
-					const appendMeta = {
-						mimetype: fileInfo.mimetype,
-						hasPreview: fileInfo.hasPreview,
-					}
-					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
-					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
-
-					this.imageCommand({
-						src,
-						alt: fileInfo.name,
-					})
-				})
+				this.insertImage(filePath, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
+			}).then(() => {
+				console.debug('THEN')
+				this.imageCommand = null
 			})
 		},
 		showImagePrompt(command) {
@@ -344,28 +332,30 @@ export default {
 			if (!currentUser) {
 				return
 			}
-			const _command = command
 			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
-				const client = OC.Files.getClient()
-				client.getFileInfo(file).then((_status, fileInfo) => {
-					this.lastImagePath = fileInfo.path
-
-					// dirty but works so we have the information stored in markdown
-					const appendMeta = {
-						mimetype: fileInfo.mimetype,
-						hasPreview: fileInfo.hasPreview,
-					}
-					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
-					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
-
-					_command({
-						src,
-						alt: fileInfo.name,
-					})
-				})
+				this.insertImage(file, command)
 			}, false, [], true, undefined, this.imagePath)
+		},
+		insertImage(path, command) {
+			const client = OC.Files.getClient()
+			client.getFileInfo(path).then((_status, fileInfo) => {
+				this.lastImagePath = fileInfo.path
+
+				// dirty but works so we have the information stored in markdown
+				const appendMeta = {
+					mimetype: fileInfo.mimetype,
+					hasPreview: fileInfo.hasPreview,
+				}
+				const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
+				const encodedPath = path.split('/').map(encodeURIComponent).join('/')
+				const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+				const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
+
+				command({
+					src,
+					alt: fileInfo.name,
+				})
+			})
 		},
 		showLinkPrompt(command) {
 			const currentUser = OC.getCurrentUser()
