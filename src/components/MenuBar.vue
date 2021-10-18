@@ -298,28 +298,48 @@ export default {
 			this.$refs.imageFileInput.click()
 		},
 		onImageFilePicked(event) {
+			const client = OC.Files.getClient()
 			const uploadId = new Date().getTime()
 			console.debug('onImageFilePicked', event)
 			const files = event.target.files
 			const filename = uploadId + '-' + files[0].name
+			const targetDirectoryPath = '/Text'
+			const targetFilePath = targetDirectoryPath + '/' + filename
 			const image = files[0]
-			console.debug('filename', filename)
+			console.debug('targetFilePath', targetFilePath)
 			console.debug('image', image)
 
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
 			event.target.value = ''
 
-			const filePath = '/Text/' + filename
-			console.debug('OC.Files.getClient()', OC.Files.getClient())
+			// create /Text
+			client.getFileInfo(targetDirectoryPath).then((status, fileInfo) => {
+				console.debug('INFO SUCCESS!!', fileInfo)
+				if (fileInfo.type === 'dir') {
+					this.uploadImage(targetFilePath, image)
+				}
+			}).catch((error) => {
+				console.debug('INFO error', error)
+				client.createDirectory('/Text').then((response) => {
+					console.debug('MKDIR SUCCESS!!')
+					this.uploadImage(targetFilePath, image)
+				}).catch((error) => {
+					console.debug('MKDIR error')
+					console.error(error)
+				})
+			})
+		},
+		uploadImage(targetFilePath, image) {
 			const client = OC.Files.getClient()
-			client.putFileContents(filePath, image, {
+			console.debug('OC.Files.getClient()', OC.Files.getClient())
+			client.putFileContents(targetFilePath, image, {
 				contentType: image.type,
 				contentLength: image.size,
 				overwrite: false,
 			}).then((response) => {
 				console.debug('file uploaded!!!!!!!!')
-				this.insertImage(filePath, this.imageCommand)
+				this.insertImage(targetFilePath, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 			}).then(() => {
