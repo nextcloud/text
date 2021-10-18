@@ -23,6 +23,12 @@
 <template>
 	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
 		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
+			<input
+				type="file"
+				style="display: none"
+				ref="imageFileInput"
+				accept="image/*"
+				@change="onImageFilePicked" />
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<EmojiPicker v-if="icon.class === 'icon-emoji'"
@@ -34,6 +40,27 @@
 							:aria-label="t('text', 'Insert emoji')"
 							:aria-haspopup="true" />
 					</EmojiPicker>
+					<Actions v-else-if="icon.class === 'icon-image'"
+						:key="icon.label"
+						:default-icon="'icon-image'">
+						<button slot="icon"
+							class="icon-image"
+							:title="icon.label"
+							:aria-label="icon.label"
+							:aria-haspopup="true" />
+						<ActionButton
+							icon="icon-folder"
+							:close-after-click="true"
+							@click="showImagePrompt(commands.image)">
+							{{ t('text', 'From files') }}
+						</ActionButton>
+						<ActionButton
+							icon="icon-upload"
+							:close-after-click="true"
+							@click="onUploadImage(commands.image)">
+							{{ t('text', 'Upload file') }}
+						</ActionButton>
+					</Actions>
 					<button v-else-if="icon.class"
 						v-show="$index < iconCount"
 						:key="icon.label"
@@ -263,6 +290,23 @@ export default {
 		toggleChildMenu(icon) {
 			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
+		},
+		onUploadImage(command) {
+			console.debug('onUploadImage', command)
+			this.$refs.imageFileInput.click()
+		},
+		onImageFilePicked(event) {
+			console.debug('onImageFilePicked', event)
+			const files = event.target.files
+			const filename = files[0].name
+			const fileReader = new FileReader()
+			fileReader.addEventListener('load', () => {
+				this.imageUrl = fileReader.result
+			})
+			fileReader.readAsDataURL(files[0])
+			this.image = files[0]
+			console.debug('filename', filename)
+			console.debug('this.image', this.image)
 		},
 		showImagePrompt(command) {
 			const currentUser = getCurrentUser()
