@@ -293,6 +293,7 @@ export default {
 		},
 		onUploadImage(command) {
 			console.debug('onUploadImage', command)
+			this.imageCommand = command
 			this.$refs.imageFileInput.click()
 		},
 		onImageFilePicked(event) {
@@ -304,9 +305,39 @@ export default {
 				this.imageUrl = fileReader.result
 			})
 			fileReader.readAsDataURL(files[0])
-			this.image = files[0]
+			const image = files[0]
 			console.debug('filename', filename)
-			console.debug('this.image', this.image)
+			console.debug('image', image)
+
+			console.debug('OC.Files.getClient()', OC.Files.getClient())
+			const client = OC.Files.getClient()
+			client.putFileContents('/Text/' + filename, image, {
+				contentType: image.type,
+				contentLength: image.size,
+				overwrite: false,
+			}).then((response) => {
+				console.debug('file uploaded!!!!!!!!')
+				client.getFileInfo('/Text/' + filename).then((_status, fileInfo) => {
+					this.lastImagePath = fileInfo.path
+
+					// dirty but works so we have the information stored in markdown
+					const appendMeta = {
+						mimetype: fileInfo.mimetype,
+						hasPreview: fileInfo.hasPreview,
+					}
+					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
+					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
+					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
+					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
+
+					this.imageCommand({
+						src,
+						alt: fileInfo.name,
+					})
+				})
+			}).catch((error) => {
+				console.error(error)
+			})
 		},
 		showImagePrompt(command) {
 			const currentUser = getCurrentUser()
