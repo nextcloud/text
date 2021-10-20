@@ -70,7 +70,9 @@
 						</ActionButton>
 						<ActionInput v-show="showImageLinkPrompt"
 							icon="icon-link"
-							@submit="onImageLinksubmit($event, commands.image)">
+							:value="imageLink"
+							@update:value="onImageLinkUpdateValue"
+							@submit="onImageLinksubmit(commands.image)">
 							{{ t('text', 'Image link') }}
 						</ActionInput>
 					</Actions>
@@ -192,6 +194,7 @@ export default {
 			lastImagePath: null,
 			showImageLinkPrompt: false,
 			uploadingImage: false,
+			imageLink: '',
 			icons: [...menuBarIcons],
 		}
 	},
@@ -382,14 +385,17 @@ export default {
 				this.uploadingImage = false
 			})
 		},
-		onImageLinksubmit(event, command) {
+		onImageLinkUpdateValue(newImageLink) {
+			// this avoids the input being reset on each file polling
+			this.imageLink = newImageLink
+		},
+		onImageLinksubmit(command) {
 			this.uploadingImage = true
 			this.showImageLinkPrompt = false
-			const link = event.target[1].value
 			this.$refs.imageActions[0].closeMenu()
 
 			const params = {
-				link,
+				link: this.imageLink,
 			}
 			const url = generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
@@ -399,6 +405,7 @@ export default {
 				showError(error?.response?.data?.error)
 			}).then(() => {
 				this.uploadingImage = false
+				this.imageLink = ''
 			})
 		},
 		showImagePrompt(command) {
