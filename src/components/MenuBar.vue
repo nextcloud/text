@@ -140,6 +140,7 @@ import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import { showError } from '@nextcloud/dialogs'
 
 export default {
 	name: 'MenuBar',
@@ -375,6 +376,7 @@ export default {
 				this.insertImage(targetFilePath, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
+				showError(error?.response?.data?.error)
 			}).then(() => {
 				this.imageCommand = null
 				this.uploadingImage = false
@@ -394,6 +396,7 @@ export default {
 				this.insertImage(response.data?.path, command)
 			}).catch((error) => {
 				console.error(error)
+				showError(error?.response?.data?.error)
 			}).then(() => {
 				this.uploadingImage = false
 			})
