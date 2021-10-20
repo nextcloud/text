@@ -730,6 +730,13 @@ export default {
 				}
 			}
 		}
+
+		// relative position for the alignment of the menububble
+		#editor {
+			.content-wrapper {
+				position: relative;
+			}
+		}
 	}
 
 	// Required in order to make the public pages behave the same if talk is enabled or not
