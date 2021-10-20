@@ -29,7 +29,7 @@
 				accept="image/*"
 				aria-hidden="true"
 				class="hidden-visually"
-				@change="onImageFilePicked" />
+				@change="onImageFilePicked">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<EmojiPicker v-if="icon.class === 'icon-emoji'"
@@ -43,6 +43,7 @@
 					</EmojiPicker>
 					<Actions v-else-if="icon.class === 'icon-image'"
 						:key="icon.label"
+						ref="imageActions"
 						:default-icon="'icon-image'">
 						<button slot="icon"
 							class="icon-image"
@@ -61,6 +62,17 @@
 							@click="onUploadImage(commands.image)">
 							{{ t('text', 'Upload file') }}
 						</ActionButton>
+						<ActionButton v-show="!showImageLinkPrompt"
+							icon="icon-link"
+							:close-after-click="false"
+							@click="showImageLinkPrompt = true">
+							{{ t('text', 'From link') }}
+						</ActionButton>
+						<ActionInput v-show="showImageLinkPrompt"
+							icon="icon-link"
+							@submit="onImageLinksubmit($event, commands.image)">
+							{{ t('text', 'Image link') }}
+						</ActionInput>
 					</Actions>
 					<button v-else-if="icon.class"
 						v-show="$index < iconCount"
@@ -117,16 +129,20 @@ import { optimalPath } from './../helpers/files'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'MenuBar',
 	components: {
 		EditorMenuBar,
 		ActionButton,
+		ActionInput,
 		PopoverMenu,
 		Actions,
 		EmojiPicker,
@@ -166,6 +182,7 @@ export default {
 			forceRecompute: 0,
 			submenuVisibility: {},
 			lastImagePath: null,
+			showImageLinkPrompt: false,
 			icons: [...menuBarIcons],
 		}
 	},
@@ -345,6 +362,24 @@ export default {
 			}).then(() => {
 				console.debug('THEN')
 				this.imageCommand = null
+			})
+		},
+		onImageLinksubmit(event, command) {
+			this.showImageLinkPrompt = false
+			const link = event.target[1].value
+			this.$refs.imageActions[0].closeMenu()
+
+			const params = {
+				link,
+			}
+			const url = generateUrl('/apps/text/image/link')
+			axios.post(url, params).then((response) => {
+				console.debug('link success', response.data)
+				this.insertImage(response.data?.path, command)
+			}).catch((error) => {
+				console.debug('link error', error)
+			}).then(() => {
+
 			})
 		},
 		showImagePrompt(command) {
