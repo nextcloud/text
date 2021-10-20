@@ -43,10 +43,6 @@ use function preg_replace;
 class ImageService {
 
 	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
 	 * @var ShareManager
 	 */
 	private $shareManager;
@@ -89,7 +85,7 @@ class ImageService {
 			}
 			$savedFile->touch();
 			if (isset($res['Content-Type'])) {
-				if ($res['Content-Type'] === 'image/jpg') {
+				if (in_array($res['Content-Type'], ['image/jpg', 'image/jpeg'])) {
 					$fileName = $fileName . '.jpg';
 				} elseif ($res['Content-Type'] === 'image/png') {
 					$fileName = $fileName . '.png';
@@ -179,12 +175,13 @@ class ImageService {
 			//$response = $e->getResponse();
 			//if ($response->getStatusCode() === 401) {
 			$this->logger->warning('Impossible to download image: '.$e->getMessage(), ['app' => Application::APP_NAME]);
-			return ['error' => $e->getMessage()];
+			return ['error' => 'Impossible to download image'];
 		} catch (ConnectException $e) {
 			$this->logger->error('Connection error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
-			return ['error' => 'Connection error: ' . $e->getMessage()];
+			return ['error' => 'Connection error'];
 		} catch (Throwable | Exception $e) {
-			return ['error' => 'Unknown error: ' . $e->getMessage()];
+			$this->logger->error('Unknown error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return ['error' => 'Unknown error'];
 		}
 	}
 }
