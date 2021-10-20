@@ -27,8 +27,6 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use Exception;
-use OCP\Files\Node;
-use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use Throwable;
 use GuzzleHttp\Exception\ClientException;
@@ -82,41 +80,48 @@ class ImageService {
 	public function downloadImageLink(string $link, string $userId): array {
 		$fileName = (string) time();
 		$saveDir = $this->getOrCreateTextDirectory($userId);
-		$savedFile = $saveDir->newFile($fileName);
-		$resource = $savedFile->fopen('w');
-		$res = $this->simpleDownload($link, $resource);
-		if (is_resource($resource)) {
-			fclose($resource);
-		}
-		$savedFile->touch();
-		if (isset($res['Content-Type'])) {
-			if ($res['Content-Type'] === 'image/jpg') {
-				$fileName = $fileName . '.jpg';
-			} elseif ($res['Content-Type'] === 'image/png') {
-				$fileName = $fileName . '.png';
-			} else {
-				return [
-					'error' => 'Unsupported file type',
-				];
+		if ($saveDir !== null) {
+			$savedFile = $saveDir->newFile($fileName);
+			$resource = $savedFile->fopen('w');
+			$res = $this->simpleDownload($link, $resource);
+			if (is_resource($resource)) {
+				fclose($resource);
 			}
-			$targetPath = $saveDir->getPath() . '/' . $fileName;
-			$savedFile->move($targetPath);
-			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
-			// get file type and name
-			return [
-				'name' => $fileName,
-				'path' => $path,
-			];
+			$savedFile->touch();
+			if (isset($res['Content-Type'])) {
+				if ($res['Content-Type'] === 'image/jpg') {
+					$fileName = $fileName . '.jpg';
+				} elseif ($res['Content-Type'] === 'image/png') {
+					$fileName = $fileName . '.png';
+				} else {
+					return [
+						'error' => 'Unsupported file type',
+					];
+				}
+				$targetPath = $saveDir->getPath() . '/' . $fileName;
+				$savedFile->move($targetPath);
+				$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
+				// get file type and name
+				return [
+					'name' => $fileName,
+					'path' => $path,
+				];
+			} else {
+				return $res;
+			}
 		} else {
-			return $res;
+			return [
+				'error' => 'Impossible to create /Text directory',
+			];
 		}
 	}
 
-	private function getOrCreateTextDirectory(string $userId): ?Node {
+	private function getOrCreateTextDirectory(string $userId): ?Folder {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists('/Text')) {
 			$node = $userFolder->get('Text');
-			if ($node->getType() === FileInfo::TYPE_FOLDER) {
+			//if ($node->getType() === FileInfo::TYPE_FOLDER) {
+			if ($node instanceof Folder) {
 				return $node;
 			} else {
 				return null;
@@ -151,11 +156,11 @@ class ImageService {
 
 			if ($method === 'GET') {
 				$response = $client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $client->delete($url, $options);
 			} else {
 				return ['error' => 'Bad HTTP method'];

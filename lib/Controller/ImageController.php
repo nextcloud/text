@@ -29,7 +29,6 @@ use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
 
 class ImageController extends Controller {

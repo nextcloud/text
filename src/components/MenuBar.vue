@@ -46,7 +46,7 @@
 						ref="imageActions"
 						:default-icon="'icon-image'">
 						<button slot="icon"
-							class="icon-image"
+							:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
 							:title="icon.label"
 							:aria-label="icon.label"
 							:aria-haspopup="true" />
@@ -183,6 +183,7 @@ export default {
 			submenuVisibility: {},
 			lastImagePath: null,
 			showImageLinkPrompt: false,
+			uploadingImage: false,
 			icons: [...menuBarIcons],
 		}
 	},
@@ -310,21 +311,19 @@ export default {
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
 		},
 		onUploadImage(command) {
-			console.debug('onUploadImage', command)
 			this.imageCommand = command
 			this.$refs.imageFileInput.click()
 		},
 		onImageFilePicked(event) {
+			this.uploadingImage = true
+
 			const client = OC.Files.getClient()
 			const uploadId = new Date().getTime()
-			console.debug('onImageFilePicked', event)
 			const files = event.target.files
 			const filename = uploadId + '-' + files[0].name
 			const targetDirectoryPath = '/Text'
 			const targetFilePath = targetDirectoryPath + '/' + filename
 			const image = files[0]
-			console.debug('targetFilePath', targetFilePath)
-			console.debug('image', image)
 
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
@@ -332,39 +331,38 @@ export default {
 
 			// create /Text
 			client.getFileInfo(targetDirectoryPath).then((status, fileInfo) => {
-				console.debug('INFO SUCCESS!!', fileInfo)
 				if (fileInfo.type === 'dir') {
 					this.uploadImage(targetFilePath, image)
+				} else {
+					this.uploadingImage = false
 				}
 			}).catch((error) => {
-				console.debug('INFO error', error)
+				console.debug('/Text directory does not exist', error)
 				client.createDirectory('/Text').then((response) => {
-					console.debug('MKDIR SUCCESS!!')
 					this.uploadImage(targetFilePath, image)
 				}).catch((error) => {
-					console.debug('MKDIR error')
 					console.error(error)
+					this.uploadingImage = false
 				})
 			})
 		},
 		uploadImage(targetFilePath, image) {
 			const client = OC.Files.getClient()
-			console.debug('OC.Files.getClient()', OC.Files.getClient())
 			client.putFileContents(targetFilePath, image, {
 				contentType: image.type,
 				contentLength: image.size,
 				overwrite: false,
 			}).then((response) => {
-				console.debug('file uploaded!!!!!!!!')
 				this.insertImage(targetFilePath, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 			}).then(() => {
-				console.debug('THEN')
 				this.imageCommand = null
+				this.uploadingImage = false
 			})
 		},
 		onImageLinksubmit(event, command) {
+			this.uploadingImage = true
 			this.showImageLinkPrompt = false
 			const link = event.target[1].value
 			this.$refs.imageActions[0].closeMenu()
@@ -374,12 +372,11 @@ export default {
 			}
 			const url = generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
-				console.debug('link success', response.data)
 				this.insertImage(response.data?.path, command)
 			}).catch((error) => {
-				console.debug('link error', error)
+				console.error(error)
 			}).then(() => {
-
+				this.uploadingImage = false
 			})
 		},
 		showImagePrompt(command) {
