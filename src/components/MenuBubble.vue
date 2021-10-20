@@ -154,7 +154,6 @@ export default {
 		border-radius: var(--border-radius-large);
 		overflow: hidden;
 		padding: 0;
-		margin-bottom: -3px;
 		margin-left: 10px;
 		visibility: hidden;
 		opacity: 0;
@@ -165,6 +164,7 @@ export default {
 		&.is-active {
 			opacity: 1;
 			visibility: visible;
+			margin-bottom: -3px;
 		}
 
 		&__button {
