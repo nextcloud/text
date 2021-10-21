@@ -70,10 +70,34 @@ class ImageService {
 	}
 
 	/**
+	 * @param string $textFilePath
+	 * @param string $newFileName
+	 * @param string $newFileContent
+	 * @param string $userId
+	 * @return array
+	 */
+	public function uploadImage(string $textFilePath, string $newFileName, string $newFileContent, string $userId): array {
+		$fileName = (string) time() . '-' . $newFileName;
+		$saveDir = $this->getOrCreateTextDirectory($userId);
+		if ($saveDir !== null) {
+			$savedFile = $saveDir->newFile($fileName, $newFileContent);
+			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
+			return [
+				'name' => $fileName,
+				'path' => $path,
+			];
+		} else {
+			return [
+				'error' => 'Impossible to create /Text directory',
+			];
+		}
+	}
+
+	/**
 	 * @param string $link
 	 * @return array
 	 */
-	public function downloadImageLink(string $link, string $userId): array {
+	public function insertImageLink(string $link, string $userId): array {
 		$fileName = (string) time();
 		$saveDir = $this->getOrCreateTextDirectory($userId);
 		if ($saveDir !== null) {

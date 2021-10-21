@@ -351,13 +351,18 @@ export default {
 			})
 		},
 		uploadImage(targetFilePath, image) {
-			const client = OC.Files.getClient()
-			client.putFileContents(targetFilePath, image, {
-				contentType: image.type,
-				contentLength: image.size,
-				overwrite: false,
+			const formData = new FormData()
+			formData.append('image', image)
+			formData.append('textFilePath', this.filePath)
+			// TODO change the url if we are in a public context
+			const url = generateUrl('/apps/text/image/upload')
+			axios.post(url, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
 			}).then((response) => {
-				this.insertImage(targetFilePath, this.imageCommand)
+				console.debug('upload RESPONSE', response.data)
+				this.insertImage(response.data?.path, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -365,6 +370,17 @@ export default {
 				this.imageCommand = null
 				this.uploadingImage = false
 			})
+			// this can be done in a simple fashion with the file client
+			/*
+			const client = OC.Files.getClient()
+			client.putFileContents(targetFilePath, image, {
+				contentType: image.type,
+				contentLength: image.size,
+				overwrite: false,
+			}).then((response) => {
+				this.insertImage(targetFilePath, this.imageCommand)
+			})
+			*/
 		},
 		onImageLinkUpdateValue(newImageLink) {
 			// this avoids the input being reset on each file polling
@@ -412,6 +428,17 @@ export default {
 				const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 				const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
 				const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
+				/*
+				const getParams = {
+					fileId: fileInfo.id,
+				}
+				const getParamsArray = []
+				for (const k in getParams) {
+					getParamsArray.push(encodeURIComponent(k) + '=' + encodeURIComponent(getParams[k]))
+				}
+				const src2 = window.location.protocol + '//' + window.location.host + generateUrl('/apps/text/image?') + getParamsArray.join('&')
+				console.debug('SRC', src2)
+				*/
 
 				command({
 					src,
