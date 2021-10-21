@@ -175,6 +175,8 @@ export default {
 		text-align: left;
 		max-height: 0;
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+		z-index: 61;
+		position: relative;
 		&.creatable {
 			min-height: 90px;
 		}
