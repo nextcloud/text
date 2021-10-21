@@ -52,6 +52,9 @@ describe('Open test.md in viewer', function() {
 			.should('contain', 'test.md')
 	})
 	after(function () {
+		cy.on('uncaught:exception', (err, runnable) => {
+			return false
+		})
 		cy.visit('/apps/files')
 		cy.logout()
 	})
