@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use Exception;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
@@ -49,17 +50,37 @@ class ImageController extends Controller {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->imageService = $imageService;
+		$this->request = $request;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function downloadImageLink(string $link): DataResponse {
-		$downloadResult = $this->imageService->downloadImageLink($link, $this->userId);
+	public function insertImageLink(string $link): DataResponse {
+		$downloadResult = $this->imageService->insertImageLink($link, $this->userId);
 		if (isset($downloadResult['error'])) {
 			return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
 		} else {
 			return new DataResponse($downloadResult);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function uploadImage(string $textFilePath): DataResponse {
+		try {
+			$file = $this->request->getUploadedFile('image');
+			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
+				$newFileContent = file_get_contents($file['tmp_name']);
+				$newFileName = $file['name'];
+				$uploadResult = $this->imageService->uploadImage($textFilePath, $newFileName, $newFileContent, $this->userId);
+				return new DataResponse($uploadResult);
+			} else {
+				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
+			}
+		} catch (Exception $e) {
+			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 }
