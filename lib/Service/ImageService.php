@@ -29,6 +29,7 @@ namespace OCA\Text\Service;
 use Exception;
 use OCP\Files\Folder;
 use OCP\Files\File;
+use OCP\Files\NotFoundException;
 use Throwable;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -72,27 +73,25 @@ class ImageService {
 
 	/**
 	 * @param int $textFileId
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @param string $userId
 	 * @return string|null
-	 * @throws \OCP\Files\NotFoundException
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImage(int $textFileId, int $imageFileId, string $userId): ?string {
-		error_log('ImageService::getImage');
+	public function getImage(int $textFileId, string $imageFileName, string $userId): ?string {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
 		if ($attachmentFolder !== null) {
-			error_log('ATT OK');
-			$imageFile = $attachmentFolder->getById($imageFileId);
-			if (count($imageFile) > 0) {
-				error_log('IMG file found');
-				$imageFile = $imageFile[0];
-				if ($imageFile instanceof File) {
-					error_log('IMG IS FILE');
-					return $imageFile->getContent();
-				}
+			try {
+				$imageFile = $attachmentFolder->get($imageFileName);
+			} catch (NotFoundException $e) {
+				return null;
+			}
+			if ($imageFile instanceof File) {
+				return $imageFile->getContent();
 			}
 		}
 		return null;
