@@ -98,4 +98,19 @@ class ImageController extends Controller {
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @PublicPage
+	 */
+	public function getImagePublic(int $textFileId, string $imageFileName, string $token): DataDisplayResponse {
+		$imageContent = $this->imageService->getImagePublic($textFileId, $imageFileName, $token);
+		if ($imageContent !== null) {
+			return new DataDisplayResponse($imageContent);
+		} else {
+			error_log('image not found response');
+			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+		}
+	}
 }
