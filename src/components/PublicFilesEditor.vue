@@ -63,6 +63,7 @@ export default {
 	},
 	computed: {
 		fileName() {
+			console.debug('PUBLIC FILE ID', this.fileId)
 			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
 		},
 	},

@@ -68,6 +68,19 @@ class ImageController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
+	 */
+	public function insertImageLinkPublic(?int $textFileId, string $link, string $token): DataResponse {
+		$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $token);
+		if (isset($downloadResult['error'])) {
+			return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
+		} else {
+			return new DataResponse($downloadResult);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
 	 */
 	public function uploadImage(int $textFileId): DataResponse {
 		try {
@@ -76,6 +89,26 @@ class ImageController extends Controller {
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
 				$uploadResult = $this->imageService->uploadImage($textFileId, $newFileName, $newFileContent, $this->userId);
+				return new DataResponse($uploadResult);
+			} else {
+				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
+			}
+		} catch (Exception $e) {
+			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @PublicPage
+	 */
+	public function uploadImagePublic(?int $textFileId, string $token): DataResponse {
+		try {
+			$file = $this->request->getUploadedFile('image');
+			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
+				$newFileContent = file_get_contents($file['tmp_name']);
+				$newFileName = $file['name'];
+				$uploadResult = $this->imageService->uploadImagePublic($textFileId, $newFileName, $newFileContent, $token);
 				return new DataResponse($uploadResult);
 			} else {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
