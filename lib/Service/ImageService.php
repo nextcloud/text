@@ -217,7 +217,7 @@ class ImageService {
 	private function hasUpdatePermissions(string $token): bool {
 		try {
 			$share = $this->shareManager->getShareByToken($token);
-			return ($share->getShareType() === IShare::TYPE_LINK && $share->getPermissions() | Constants::PERMISSION_UPDATE);
+			return ($share->getShareType() === IShare::TYPE_LINK && $share->getPermissions() & Constants::PERMISSION_UPDATE);
 		} catch (ShareNotFound $e) {
 			return false;
 		}
