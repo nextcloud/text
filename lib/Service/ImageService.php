@@ -130,6 +130,9 @@ class ImageService {
 	 */
 	public function uploadImage(int $textFileId, string $newFileName, string $newFileContent, string $userId): array {
 		$textFile = $this->getTextFile($textFileId, $userId);
+		if (!$textFile->isUpdateable()) {
+			throw new Exception('No write permissions');
+		}
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
@@ -139,7 +142,7 @@ class ImageService {
 				'name' => $fileName,
 				'path' => $path,
 				'id' => $savedFile->getId(),
-				'textFileId' => $textFile->getById(),
+				'textFileId' => $textFile->getId(),
 			];
 		} else {
 			return [
@@ -150,9 +153,7 @@ class ImageService {
 
 	public function uploadImagePublic(?int $textFileId, string $newFileName, string $newFileContent, string $token): array {
 		if (!$this->hasUpdatePermissions($token)) {
-			return [
-				'error' => 'No update permissions',
-			];
+			throw new Exception('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($textFileId, $token);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
@@ -186,7 +187,9 @@ class ImageService {
 	 */
 	public function insertImageLink(int $textFileId, string $link, string $userId): array {
 		$textFile = $this->getTextFile($textFileId, $userId);
-		// TODO check user share permissions
+		if (!$textFile->isUpdateable()) {
+			throw new Exception('No write permissions');
+		}
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
@@ -199,9 +202,7 @@ class ImageService {
 
 	public function insertImageLinkPublic(?int $textFileId, string $link, string $token): array {
 		if (!$this->hasUpdatePermissions($token)) {
-			return [
-				'error' => 'No update permissions',
-			];
+			throw new Exception('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($textFileId, $token);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);

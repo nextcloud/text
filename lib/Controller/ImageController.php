@@ -58,11 +58,15 @@ class ImageController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function insertImageLink(int $textFileId, string $link): DataResponse {
-		$downloadResult = $this->imageService->insertImageLink($textFileId, $link, $this->userId);
-		if (isset($downloadResult['error'])) {
-			return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
-		} else {
-			return new DataResponse($downloadResult);
+		try {
+			$downloadResult = $this->imageService->insertImageLink($textFileId, $link, $this->userId);
+			if (isset($downloadResult['error'])) {
+				return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
+			} else {
+				return new DataResponse($downloadResult);
+			}
+		} catch (Exception $e) {
+			return new DataResponse(['error' => 'Link insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -71,11 +75,15 @@ class ImageController extends Controller {
 	 * @PublicPage
 	 */
 	public function insertImageLinkPublic(?int $textFileId, string $link, string $token): DataResponse {
-		$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $token);
-		if (isset($downloadResult['error'])) {
-			return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
-		} else {
-			return new DataResponse($downloadResult);
+		try {
+			$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $token);
+			if (isset($downloadResult['error'])) {
+				return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
+			} else {
+				return new DataResponse($downloadResult);
+			}
+		} catch (Exception $e) {
+			return new DataResponse(['error' => 'Link insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -94,7 +102,7 @@ class ImageController extends Controller {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
+			return new DataResponse(['error' => 'Upload error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -114,7 +122,7 @@ class ImageController extends Controller {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
+			return new DataResponse(['error' => 'Upload error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
