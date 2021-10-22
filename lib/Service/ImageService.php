@@ -86,7 +86,8 @@ class ImageService {
 	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName, string $userId): ?string {
-		$attachmentFolder = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
+		$textFile = $this->getTextFile($textFileId, $userId);
+		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
 			try {
 				$imageFile = $attachmentFolder->get($imageFileName);
@@ -101,7 +102,8 @@ class ImageService {
 	}
 
 	public function getImagePublic(int $textFileId, string $imageFileName, string $token): ?string {
-		$attachmentFolder = $this->getOrCreateAttachmentDirectoryPublic($textFileId, $token);
+		$textFile = $this->getTextFilePublic($textFileId, $token);
+		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
 			try {
 				$imageFile = $attachmentFolder->get($imageFileName);
@@ -127,17 +129,17 @@ class ImageService {
 	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImage(int $textFileId, string $newFileName, string $newFileContent, string $userId): array {
-		$fileName = (string) time() . '-' . $newFileName;
-		// $saveDir = $this->getOrCreateTextDirectory($userId);
-		$saveDir = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
+		$textFile = $this->getTextFile($textFileId, $userId);
+		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
+			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
 			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 			return [
 				'name' => $fileName,
 				'path' => $path,
 				'id' => $savedFile->getId(),
-				'textFileId' => $textFileId,
+				'textFileId' => $textFile->getById(),
 			];
 		} else {
 			return [
@@ -152,16 +154,17 @@ class ImageService {
 				'error' => 'No update permissions',
 			];
 		}
-		$fileName = (string) time() . '-' . $newFileName;
-		$saveDir = $this->getOrCreateAttachmentDirectoryPublic($textFileId, $token);
+		$textFile = $this->getTextFilePublic($textFileId, $token);
+		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
+			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
 			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 			return [
 				'name' => $fileName,
 				'path' => $path,
 				'id' => $savedFile->getId(),
-				'textFileId' => $textFileId ?: $this->getFileIdFromShareToken(),
+				'textFileId' => $textFile->getId(),
 			];
 		} else {
 			return [
@@ -182,10 +185,11 @@ class ImageService {
 	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageLink(int $textFileId, string $link, string $userId): array {
-		// $saveDir = $this->getOrCreateTextDirectory($userId);
-		$saveDir = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
+		$textFile = $this->getTextFile($textFileId, $userId);
+		// TODO check user share permissions
+		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
-			return $this->downloadLink($saveDir, $link);
+			return $this->downloadLink($saveDir, $link, $textFile);
 		} else {
 			return [
 				'error' => 'Impossible to get attachment directory',
@@ -199,9 +203,10 @@ class ImageService {
 				'error' => 'No update permissions',
 			];
 		}
-		$saveDir = $this->getOrCreateAttachmentDirectoryPublic($textFileId, $token);
+		$textFile = $this->getTextFilePublic($textFileId, $token);
+		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
-			return $this->downloadLink($saveDir, $link);
+			return $this->downloadLink($saveDir, $link, $textFile);
 		} else {
 			return [
 				'error' => 'Impossible to get attachment directory',
@@ -218,7 +223,7 @@ class ImageService {
 		}
 	}
 
-	private function downloadLink(Folder $saveDir, string $link): array {
+	private function downloadLink(Folder $saveDir, string $link, File $textFile): array {
 		$fileName = (string) time();
 		$savedFile = $saveDir->newFile($fileName);
 		$resource = $savedFile->fopen('w');
@@ -245,6 +250,7 @@ class ImageService {
 				'name' => $fileName,
 				'path' => $path,
 				'id' => $savedFile->getId(),
+				'textFileId' => $textFile->getId(),
 			];
 		} else {
 			return $res;
@@ -296,17 +302,17 @@ class ImageService {
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OC\User\NoUserException
 	 */
-	private function getOrCreateAttachmentDirectory(int $textFileId, string $userId): ?Folder {
+	private function getTextFile(int $textFileId, string $userId): ?File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		$textFile = $userFolder->getById($textFileId);
 		if (count($textFile) > 0 && $textFile[0] instanceof File) {
-			$textFile = $textFile[0];
-			return $this->getOrCreateAttachmentDirectoryForFile($textFile);
+			return $textFile[0];
+			//return $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		}
 		return null;
 	}
 
-	private function getOrCreateAttachmentDirectoryPublic(?int $textFileId, string $token): ?Folder {
+	private function getTextFilePublic(?int $textFileId, string $token): ?File {
 		// $textFile = $this->rootFolder->getById($textFileId);
 		// is the file shared with this token?
 		try {
@@ -316,15 +322,16 @@ class ImageService {
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
 					if ($textFile instanceof File) {
-						return $this->getOrCreateAttachmentDirectoryForFile($textFile);
+						return $textFile;
+						//return $this->getOrCreateAttachmentDirectoryForFile($textFile);
 					}
 				} elseif ($share->getNodeType() === 'folder' && $textFileId !== null) {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
 						$textFile = $folder->getById($textFileId);
 						if (count($textFile) > 0 && $textFile[0] instanceof File) {
-							$textFile = $textFile[0];
-							return $this->getOrCreateAttachmentDirectoryForFile($textFile);
+							return $textFile[0];
+							//return $this->getOrCreateAttachmentDirectoryForFile($textFile);
 						}
 					}
 				}
