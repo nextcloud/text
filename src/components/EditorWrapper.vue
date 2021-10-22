@@ -39,6 +39,7 @@
 					ref="menubar"
 					:editor="tiptap"
 					:file-path="relativePath"
+					:file-id="fileId"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
 					:autohide="autohide"

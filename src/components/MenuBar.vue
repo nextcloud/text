@@ -29,7 +29,7 @@
 				accept="image/*"
 				aria-hidden="true"
 				class="hidden-visually"
-				@change="onImageFilePicked">
+				@change="onImageUploadFilePicked">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<EmojiPicker v-if="icon.class === 'icon-emoji'"
@@ -184,6 +184,11 @@ export default {
 			required: false,
 			default: '',
 		},
+		fileId: {
+			type: Number,
+			required: false,
+			default: 0,
+		},
 	},
 	data: () => {
 		return {
@@ -295,6 +300,7 @@ export default {
 		},
 	},
 	mounted() {
+		console.debug('MY FILE ID', this.fileId)
 		window.addEventListener('resize', this.getWindowWidth)
 		this.checkInterval = setInterval(() => {
 			const isWidthAvailable = (this.$refs.menubar && this.$refs.menubar.clientWidth > 0)
@@ -337,51 +343,27 @@ export default {
 			this.imageCommand = command
 			this.$refs.imageFileInput.click()
 		},
-		onImageFilePicked(event) {
+		onImageUploadFilePicked(event) {
 			this.uploadingImage = true
-
-			const client = OC.Files.getClient()
-			const uploadId = new Date().getTime()
 			const files = event.target.files
-			const filename = uploadId + '-' + files[0].name
-			const targetDirectoryPath = '/Text'
-			const targetFilePath = targetDirectoryPath + '/' + filename
 			const image = files[0]
 
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
 			event.target.value = ''
 
-			// create /Text
-			client.getFileInfo(targetDirectoryPath).then((status, fileInfo) => {
-				if (fileInfo.type === 'dir') {
-					this.uploadImage(targetFilePath, image)
-				} else {
-					this.uploadingImage = false
-				}
-			}).catch((error) => {
-				console.debug('/Text directory does not exist', error)
-				client.createDirectory('/Text').then((response) => {
-					this.uploadImage(targetFilePath, image)
-				}).catch((error) => {
-					console.error(error)
-					this.uploadingImage = false
-				})
-			})
-		},
-		uploadImage(targetFilePath, image) {
 			const formData = new FormData()
 			formData.append('image', image)
-			formData.append('textFilePath', this.filePath)
+			formData.append('textFileId', this.fileId)
 			// TODO change the url if we are in a public context
 			const url = generateUrl('/apps/text/image/upload')
 			axios.post(url, formData, {
 				headers: {
-					'Content-Type': 'multipart/form-data'
-				}
+					'Content-Type': 'multipart/form-data',
+				},
 			}).then((response) => {
-				console.debug('upload RESPONSE', response.data)
-				this.insertImage(response.data?.path, this.imageCommand)
+				// this.insertImage(response.data?.path, this.imageCommand)
+				this.insertImageById(response.data?.id, response.data?.name, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -389,17 +371,6 @@ export default {
 				this.imageCommand = null
 				this.uploadingImage = false
 			})
-			// this can be done in a simple fashion with the file client
-			/*
-			const client = OC.Files.getClient()
-			client.putFileContents(targetFilePath, image, {
-				contentType: image.type,
-				contentLength: image.size,
-				overwrite: false,
-			}).then((response) => {
-				this.insertImage(targetFilePath, this.imageCommand)
-			})
-			*/
 		},
 		onImageLinkUpdateValue(newImageLink) {
 			// this avoids the input being reset on each file polling
@@ -411,11 +382,13 @@ export default {
 			this.$refs.imageActions[0].closeMenu()
 
 			const params = {
+				textFileId: this.fileId,
 				link: this.imageLink,
 			}
 			const url = generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
-				this.insertImage(response.data?.path, command)
+				// this.insertImage(response.data?.path, command)
+				this.insertImageById(response.data?.id, response.data?.name, command)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -432,6 +405,13 @@ export default {
 			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
 				this.insertImage(file, command)
 			}, false, [], true, undefined, this.imagePath)
+		},
+		insertImageById(id, name, command) {
+			const src = 'text://image?imageFileId=' + id + '&textFileId=' + this.fileId
+			command({
+				src,
+				alt: name,
+			})
 		},
 		insertImage(path, command) {
 			const client = OC.Files.getClient()

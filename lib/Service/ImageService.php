@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OCP\Files\Folder;
+use OCP\Files\File;
 use Throwable;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -70,36 +71,78 @@ class ImageService {
 	}
 
 	/**
-	 * @param string $textFilePath
+	 * @param int $textFileId
+	 * @param int $imageFileId
+	 * @param string $userId
+	 * @return string|null
+	 * @throws \OCP\Files\NotFoundException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getImage(int $textFileId, int $imageFileId, string $userId): ?string {
+		error_log('ImageService::getImage');
+		$attachmentFolder = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
+		if ($attachmentFolder !== null) {
+			error_log('ATT OK');
+			$imageFile = $attachmentFolder->getById($imageFileId);
+			if (count($imageFile) > 0) {
+				error_log('IMG file found');
+				$imageFile = $imageFile[0];
+				if ($imageFile instanceof File) {
+					error_log('IMG IS FILE');
+					return $imageFile->getContent();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param int $textFileId
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $userId
 	 * @return array
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotFoundException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImage(string $textFilePath, string $newFileName, string $newFileContent, string $userId): array {
+	public function uploadImage(int $textFileId, string $newFileName, string $newFileContent, string $userId): array {
 		$fileName = (string) time() . '-' . $newFileName;
-		$saveDir = $this->getOrCreateTextDirectory($userId);
+		// $saveDir = $this->getOrCreateTextDirectory($userId);
+		$saveDir = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
 		if ($saveDir !== null) {
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
 			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 			return [
 				'name' => $fileName,
 				'path' => $path,
+				'id' => $savedFile->getId(),
 			];
 		} else {
 			return [
-				'error' => 'Impossible to create /Text directory',
+				'error' => 'Impossible to get attachment directory',
 			];
 		}
 	}
 
 	/**
+	 * @param string $textFilePath
 	 * @param string $link
+	 * @param string $userId
 	 * @return array
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotFoundException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
-	public function insertImageLink(string $link, string $userId): array {
+	public function insertImageLink(int $textFileId, string $link, string $userId): array {
 		$fileName = (string) time();
-		$saveDir = $this->getOrCreateTextDirectory($userId);
+		// $saveDir = $this->getOrCreateTextDirectory($userId);
+		$saveDir = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
 		if ($saveDir !== null) {
 			$savedFile = $saveDir->newFile($fileName);
 			$resource = $savedFile->fopen('w');
@@ -125,6 +168,7 @@ class ImageService {
 				return [
 					'name' => $fileName,
 					'path' => $path,
+					'id' => $savedFile->getId(),
 				];
 			} else {
 				return $res;
@@ -149,6 +193,41 @@ class ImageService {
 		} else {
 			return $userFolder->newFolder('/Text');
 		}
+	}
+
+	/**
+	 * @param int $textFileId
+	 * @param string $userId
+	 * @return Folder|null
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotFoundException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getOrCreateAttachmentDirectory(int $textFileId, string $userId): ?Folder {
+		$userFolder = $this->rootFolder->getUserFolder($userId);
+		$textFile = $userFolder->getById($textFileId);
+		if (count($textFile) > 0 && $textFile[0] instanceof File) {
+			$textFile = $textFile[0];
+			$owner = $textFile->getOwner();
+			$ownerId = $owner->getUID();
+			$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
+			$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
+			if (count($ownerTextFile) > 0) {
+				$ownerTextFile = $ownerTextFile[0];
+				$ownerParentFolder = $ownerTextFile->getParent();
+				$attachmentFolderName = '.' . $textFile->getId();
+				if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
+					$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
+					if ($attachmentFolder instanceof Folder) {
+						return $attachmentFolder;
+					}
+				} else {
+					return $ownerParentFolder->newFolder($attachmentFolderName);
+				}
+			}
+		}
+		return null;
 	}
 
 	private function simpleDownload(string $url, $resource, array $params = [], string $method = 'GET'): array {
