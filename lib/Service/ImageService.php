@@ -30,6 +30,8 @@ use Exception;
 use OCP\Files\Folder;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
+use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IShare;
 use Throwable;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -84,6 +86,21 @@ class ImageService {
 	 */
 	public function getImage(int $textFileId, string $imageFileName, string $userId): ?string {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectory($textFileId, $userId);
+		if ($attachmentFolder !== null) {
+			try {
+				$imageFile = $attachmentFolder->get($imageFileName);
+			} catch (NotFoundException $e) {
+				return null;
+			}
+			if ($imageFile instanceof File) {
+				return $imageFile->getContent();
+			}
+		}
+		return null;
+	}
+
+	public function getImagePublic(int $textFileId, string $imageFileName, string $token): ?string {
+		$attachmentFolder = $this->getOrCreateAttachmentDirectoryPublic($textFileId, $token);
 		if ($attachmentFolder !== null) {
 			try {
 				$imageFile = $attachmentFolder->get($imageFileName);
@@ -194,6 +211,27 @@ class ImageService {
 		}
 	}
 
+	private function getOrCreateAttachmentDirectoryForFile(File $textFile): ?Folder {
+		$owner = $textFile->getOwner();
+		$ownerId = $owner->getUID();
+		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
+		$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
+		if (count($ownerTextFile) > 0) {
+			$ownerTextFile = $ownerTextFile[0];
+			$ownerParentFolder = $ownerTextFile->getParent();
+			$attachmentFolderName = '.' . $textFile->getId();
+			if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
+				$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
+				if ($attachmentFolder instanceof Folder) {
+					return $attachmentFolder;
+				}
+			} else {
+				return $ownerParentFolder->newFolder($attachmentFolderName);
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * @param int $textFileId
 	 * @param string $userId
@@ -208,23 +246,36 @@ class ImageService {
 		$textFile = $userFolder->getById($textFileId);
 		if (count($textFile) > 0 && $textFile[0] instanceof File) {
 			$textFile = $textFile[0];
-			$owner = $textFile->getOwner();
-			$ownerId = $owner->getUID();
-			$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
-			$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
-			if (count($ownerTextFile) > 0) {
-				$ownerTextFile = $ownerTextFile[0];
-				$ownerParentFolder = $ownerTextFile->getParent();
-				$attachmentFolderName = '.' . $textFile->getId();
-				if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
-					$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
-					if ($attachmentFolder instanceof Folder) {
-						return $attachmentFolder;
+			return $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		}
+		return null;
+	}
+
+	private function getOrCreateAttachmentDirectoryPublic(int $textFileId, string $token): ?Folder {
+		$textFile = $this->rootFolder->getById($textFileId);
+		// is the file shared with this token?
+		try {
+			$share = $this->shareManager->getShareByToken($token);
+			if ($share->getShareType() === IShare::TYPE_LINK) {
+				// shared file or folder?
+				if ($share->getNodeType() === 'file') {
+					$textFile = $share->getNode();
+					if ($textFile instanceof File) {
+						return $this->getOrCreateAttachmentDirectoryForFile($textFile);
 					}
-				} else {
-					return $ownerParentFolder->newFolder($attachmentFolderName);
+				} elseif ($share->getNodeType() === 'folder') {
+					$folder = $share->getNode();
+					if ($folder instanceof Folder) {
+						$textFile = $folder->getById($textFileId);
+						if (count($textFile) > 0 && $textFile[0] instanceof File) {
+							$textFile = $textFile[0];
+							return $this->getOrCreateAttachmentDirectoryForFile($textFile);
+						}
+					}
 				}
 			}
+		} catch (ShareNotFound $e) {
+			return null;
 		}
 		return null;
 	}
