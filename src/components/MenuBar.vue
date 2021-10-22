@@ -370,7 +370,7 @@ export default {
 				},
 			}).then((response) => {
 				// this.insertImage(response.data?.path, this.imageCommand)
-				this.insertAttachmentImage(response.data?.name, this.imageCommand)
+				this.insertAttachmentImage(response.data?.name, this.imageCommand, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -400,7 +400,7 @@ export default {
 				: generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
 				// this.insertImage(response.data?.path, command)
-				this.insertAttachmentImage(response.data?.name, command)
+				this.insertAttachmentImage(response.data?.name, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -418,8 +418,8 @@ export default {
 				this.insertImage(file, command)
 			}, false, [], true, undefined, this.imagePath)
 		},
-		insertAttachmentImage(name, command) {
-			const src = 'text://image?imageFileName=' + encodeURI(name) + '&textFileId=' + this.fileId
+		insertAttachmentImage(name, command, textFileId) {
+			const src = 'text://image?imageFileName=' + encodeURI(name) + '&textFileId=' + textFileId
 			command({
 				src,
 				alt: name,
@@ -439,17 +439,6 @@ export default {
 				const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 				const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
 				const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
-				/*
-				const getParams = {
-					fileId: fileInfo.id,
-				}
-				const getParamsArray = []
-				for (const k in getParams) {
-					getParamsArray.push(encodeURIComponent(k) + '=' + encodeURIComponent(getParams[k]))
-				}
-				const src2 = window.location.protocol + '//' + window.location.host + generateUrl('/apps/text/image?') + getParamsArray.join('&')
-				console.debug('SRC', src2)
-				*/
 
 				command({
 					src,
