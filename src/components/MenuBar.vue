@@ -50,7 +50,7 @@
 							:title="icon.label"
 							:aria-label="icon.label"
 							:aria-haspopup="true" />
-						<ActionButton
+						<ActionButton v-if="!isPublic"
 							icon="icon-folder"
 							:close-after-click="true"
 							@click="showImagePrompt(commands.image)">
@@ -298,6 +298,10 @@ export default {
 			return this.lastImagePath
 				|| this.filePath.split('/').slice(0, -1).join('/')
 		},
+		token() {
+			return document.getElementById('sharingToken')
+				&& document.getElementById('sharingToken').value
+		},
 	},
 	mounted() {
 		window.addEventListener('resize', this.getWindowWidth)
@@ -354,8 +358,12 @@ export default {
 			const formData = new FormData()
 			formData.append('image', image)
 			formData.append('textFileId', this.fileId)
-			// TODO change the url if we are in a public context
-			const url = generateUrl('/apps/text/image/upload')
+			if (this.isPublic) {
+				formData.append('token', this.token)
+			}
+			const url = this.isPublic
+				? generateUrl('/apps/text/public/image/upload')
+				: generateUrl('/apps/text/image/upload')
 			axios.post(url, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
@@ -384,7 +392,12 @@ export default {
 				textFileId: this.fileId,
 				link: this.imageLink,
 			}
-			const url = generateUrl('/apps/text/image/link')
+			if (this.isPublic) {
+				params.token = this.token
+			}
+			const url = this.isPublic
+				? generateUrl('/apps/text/public/image/link')
+				: generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
 				// this.insertImage(response.data?.path, command)
 				this.insertAttachmentImage(response.data?.name, command)

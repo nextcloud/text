@@ -26,6 +26,7 @@ documentReady(() => {
 		registerFileCreate()
 	} else {
 		// single file share
+		console.debug('SINGLE FILE SHARE !!!!!!!!!!!')
 		const container = document.createElement('div')
 		container.id = 'texteditor'
 		const body = document.getElementById('app-content')
