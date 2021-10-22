@@ -282,7 +282,6 @@ export default {
 		},
 	},
 	mounted() {
-		console.debug('MY FILE ID', this.fileId)
 		window.addEventListener('resize', this.getWindowWidth)
 		this.checkInterval = setInterval(() => {
 			const isWidthAvailable = (this.$refs.menubar && this.$refs.menubar.clientWidth > 0)
@@ -344,7 +343,7 @@ export default {
 				},
 			}).then((response) => {
 				// this.insertImage(response.data?.path, this.imageCommand)
-				this.insertImageById(response.data?.id, response.data?.name, this.imageCommand)
+				this.insertAttachmentImage(response.data?.name, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -369,7 +368,7 @@ export default {
 			const url = generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
 				// this.insertImage(response.data?.path, command)
-				this.insertImageById(response.data?.id, response.data?.name, command)
+				this.insertAttachmentImage(response.data?.name, command)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -387,8 +386,8 @@ export default {
 				this.insertImage(file, command)
 			}, false, [], true, undefined, this.imagePath)
 		},
-		insertImageById(id, name, command) {
-			const src = 'text://image?imageFileId=' + id + '&textFileId=' + this.fileId
+		insertAttachmentImage(name, command) {
+			const src = 'text://image?imageFileName=' + encodeURI(name) + '&textFileId=' + this.fileId
 			command({
 				src,
 				alt: name,

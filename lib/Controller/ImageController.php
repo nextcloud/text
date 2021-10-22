@@ -89,8 +89,8 @@ class ImageController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function getImage(int $textFileId, int $imageFileId): DataDisplayResponse {
-		$imageContent = $this->imageService->getImage($textFileId, $imageFileId, $this->userId);
+	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
+		$imageContent = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
 		if ($imageContent !== null) {
 			return new DataDisplayResponse($imageContent);
 		} else {
