@@ -29,6 +29,7 @@ use Exception;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
@@ -56,8 +57,8 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function insertImageLink(string $link): DataResponse {
-		$downloadResult = $this->imageService->insertImageLink($link, $this->userId);
+	public function insertImageLink(int $textFileId, string $link): DataResponse {
+		$downloadResult = $this->imageService->insertImageLink($textFileId, $link, $this->userId);
 		if (isset($downloadResult['error'])) {
 			return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
 		} else {
@@ -68,19 +69,33 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function uploadImage(string $textFilePath): DataResponse {
+	public function uploadImage(int $textFileId): DataResponse {
 		try {
 			$file = $this->request->getUploadedFile('image');
 			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
-				$uploadResult = $this->imageService->uploadImage($textFilePath, $newFileName, $newFileContent, $this->userId);
+				$uploadResult = $this->imageService->uploadImage($textFileId, $newFileName, $newFileContent, $this->userId);
 				return new DataResponse($uploadResult);
 			} else {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 			}
 		} catch (Exception $e) {
 			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function getImage(int $textFileId, int $imageFileId): DataDisplayResponse {
+		$imageContent = $this->imageService->getImage($textFileId, $imageFileId, $this->userId);
+		if ($imageContent !== null) {
+			return new DataDisplayResponse($imageContent);
+		} else {
+			error_log('image not found response');
+			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}
 }

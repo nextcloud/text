@@ -116,6 +116,23 @@ export default {
 			}
 		},
 		imageUrl() {
+			if (this.src.startsWith('text://')) {
+				const imageFileId = getQueryVariable(this.src, 'imageFileId')
+				const textFileId = getQueryVariable(this.src, 'textFileId')
+				if (getCurrentUser()) {
+					return generateUrl('/apps/text/image?textFileId={textFileId}&imageFileId={imageFileId}',
+						{
+							textFileId,
+							imageFileId,
+						})
+				} else {
+					return generateUrl('/apps/text/image/public?textFileId={textFileId}&imageFileId={imageFileId}',
+						{
+							textFileId,
+							imageFileId,
+						})
+				}
+			}
 			if (this.src.startsWith('http://') || this.src.startsWith('https://')) {
 				return this.src
 			}
