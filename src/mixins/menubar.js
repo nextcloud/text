@@ -60,6 +60,16 @@ export default [
 		},
 	},
 	{
+		label: t('text', 'Underline'),
+		keyChar: 'u',
+		keyModifiers: ['ctrl'],
+		class: 'icon-underline',
+		isActive: (isActive) => isActive.underline(),
+		action: (command) => {
+			return command.underline()
+		},
+	},
+	{
 		label: t('text', 'Strikethrough'),
 		keyChar: 'd',
 		keyModifiers: ['ctrl'],

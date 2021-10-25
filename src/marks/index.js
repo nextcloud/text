@@ -20,7 +20,13 @@
  *
  */
 
-import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
+import {
+	Bold,
+	Italic as TipTapItalic,
+	Strike as TipTapStrike,
+	Link as TipTapLink,
+	Underline as TipTapUnderline,
+} from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
 import { markInputRule, markPasteRule } from 'tiptap-commands'
@@ -201,11 +207,36 @@ class Link extends TipTapLink {
 
 }
 
-/** Strike is currently unsupported by prosemirror-markdown */
+class Underline extends TipTapUnderline {
 
+	get schema() {
+		return {
+			parseDOM: [
+				{
+					tag: 'u',
+				},
+				{
+					style: 'text-decoration',
+					getAttrs: value => value === 'underline',
+				},
+			],
+			toDOM: () => ['u', 0],
+			toMarkdown: {
+				open: '____',
+				close: '____',
+				mixable: true,
+				expelEnclosingWhitespace: true,
+			},
+		}
+	}
+
+}
+
+/** Strike is currently unsupported by prosemirror-markdown */
 export {
 	Strong,
 	Italic,
 	Strike,
 	Link,
+	Underline,
 }

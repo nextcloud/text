@@ -33,7 +33,7 @@ import {
 	TrailingNode,
 	Placeholder,
 } from 'tiptap-extensions'
-import { Strong, Italic, Strike, Link } from './marks'
+import { Strong, Italic, Strike, Link, Underline } from './marks'
 import { Image, PlainTextDocument, ListItem, BulletList } from './nodes'
 import MarkdownIt from 'markdown-it'
 import taskLists from 'markdown-it-task-lists'
@@ -80,6 +80,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Link({
 				openOnClick: true,
 			}),
+			new Underline(),
 			new Image({ currentDirectory }),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
