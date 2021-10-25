@@ -37,5 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
 		component: ViewerComponent,
 		group: null,
+		theme: 'default',
 	})
 })
