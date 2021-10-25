@@ -1,2 +1,0 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/python-repl"],{93725:e=>{e.exports=function(e){return{aliases:["pycon"],contains:[{className:"meta",starts:{end:/ |$/,starts:{end:"$",subLanguage:"python"}},variants:[{begin:/^>>>(?=[ ]|$)/},{begin:/^\.\.\.(?=[ ]|$)/}]}]}}}}]);
-//# sourceMappingURL=python-repl.js.map?v=90a5e88916e032e0bc29

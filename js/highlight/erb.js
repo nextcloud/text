@@ -1,2 +1,0 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/erb"],{328:e=>{e.exports=function(e){return{name:"ERB",subLanguage:"xml",contains:[e.COMMENT("<%#","%>"),{begin:"<%[%=-]?",end:"[%-]?%>",subLanguage:"ruby",excludeBegin:!0,excludeEnd:!0}]}}}}]);
-//# sourceMappingURL=erb.js.map?v=f27c36005e384b957772

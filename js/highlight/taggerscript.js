@@ -1,2 +1,0 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/taggerscript"],{54858:e=>{e.exports=function(e){return{name:"Tagger Script",contains:[{className:"comment",begin:/\$noop\(/,end:/\)/,contains:[{begin:/\(/,end:/\)/,contains:["self",{begin:/\\./}]}],relevance:10},{className:"keyword",begin:/\$(?!noop)[a-zA-Z][_a-zA-Z0-9]*/,end:/\(/,excludeEnd:!0},{className:"variable",begin:/%[_a-zA-Z0-9:]*/,end:"%"},{className:"symbol",begin:/\\./}]}}}}]);
-//# sourceMappingURL=taggerscript.js.map?v=2550e1cd88751298d5e5

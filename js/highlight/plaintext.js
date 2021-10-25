@@ -1,2 +1,0 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/plaintext"],{76572:t=>{t.exports=function(t){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}}}]);
-//# sourceMappingURL=plaintext.js.map?v=6105fbd096df916ddba8

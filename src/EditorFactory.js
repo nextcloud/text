@@ -48,7 +48,8 @@ const loadSyntaxHighlight = async (language) => {
 	const modules = {}
 	for (let i = 0; i < languages.length; i++) {
 		try {
-			const lang = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + languages[i])
+			const langModule = 'highlight.js/lib/languages/' + languages[i]
+			const lang = await import(/* webpackChunkName: "highlight/[request]" */langModule)
 			modules[languages[i]] = lang.default
 		} catch (e) {
 			// No matching highlighing found, fallback to none
