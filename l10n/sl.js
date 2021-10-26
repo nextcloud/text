@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Edit guest name" : "Uredi ime gosta",
     "Save guest name" : "Shrani ime gosta",
+    "Insert emoji" : "Vstavi izrazno ikono",
     "Insert image" : "Vstavi sliko",
     "Insert an image" : "Vstavi sliko",
     "Link file" : "Datoteka povezave",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Seznam opravil",
     "Blockquote" : "Bločni navedek",
     "Code block" : "Navedek s kodo",
+    "Emoji picker" : "Izbirnik izraznih ikon",
     "Retry" : "Poskusi  znova",
     "Unpushed changes" : "Neposlane spremembe"
 },
