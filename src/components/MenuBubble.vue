@@ -151,7 +151,7 @@ export default {
 				...vertical,
 				left: `${menu.left}px`,
 			}
-		}
+		},
 	},
 }
 </script>
@@ -176,7 +176,6 @@ export default {
 		&.is-active {
 			opacity: 1;
 			visibility: visible;
-			margin-bottom: -3px;
 		}
 
 		&__button {
