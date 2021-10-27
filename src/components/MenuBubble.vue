@@ -149,7 +149,7 @@ export default {
 				...vertical,
 				left: `${menu.left}px`,
 			}
-		}
+		},
 	},
 }
 </script>
