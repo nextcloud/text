@@ -86,6 +86,10 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 				emptyNodeText: t('text', 'Add notes, lists or links …'),
 				showOnlyWhenEditable: true,
 			}),
+			new TrailingNode({
+				node: 'paragraph',
+				notAfter: ['paragraph'],
+			}),
 		]
 	} else {
 		richEditingExtensions = [
@@ -104,10 +108,6 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 		extensions: [
 			...richEditingExtensions,
 			new History(),
-			new TrailingNode({
-				node: 'paragraph',
-				notAfter: ['paragraph'],
-			  }),
 		].concat(extensions),
 		useBuiltInExtensions: enableRichEditing,
 	})
