@@ -32,6 +32,8 @@ use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
+use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\IPreview;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
 use Throwable;
@@ -64,15 +66,21 @@ class ImageService {
 	 * @var LoggerInterface
 	 */
 	private $logger;
+	/**
+	 * @var IPreview
+	 */
+	private $previewManager;
 
 	public function __construct(IRootFolder $rootFolder,
 								LoggerInterface $logger,
 								ShareManager $shareManager,
+								IPreview $previewManager,
 								IClientService $clientService) {
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
 		$this->clientService = $clientService;
 		$this->logger = $logger;
+		$this->previewManager = $previewManager;
 	}
 
 	/**
@@ -88,7 +96,7 @@ class ImageService {
 	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImage(int $textFileId, string $imageFileName, string $userId): ?File {
+	public function getImage(int $textFileId, string $imageFileName, string $userId): ?ISimpleFile {
 		$textFile = $this->getTextFile($textFileId, $userId);
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
@@ -98,7 +106,8 @@ class ImageService {
 				return null;
 			}
 			if ($imageFile instanceof File) {
-				return $imageFile;
+//				return $imageFile;
+				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}
 		}
 		return null;
@@ -117,7 +126,7 @@ class ImageService {
 	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?File {
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?ISimpleFile {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
@@ -127,7 +136,8 @@ class ImageService {
 				return null;
 			}
 			if ($imageFile instanceof File) {
-				return $imageFile;
+//				return $imageFile;
+				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}
 		}
 		return null;
