@@ -1,9 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import ImageView from '../../nodes/ImageView.vue'
 
-global.FileList = {
-	getCurrentDirectory: function() {return '/current'},
-}
 global.OC = {
 	requestToken: '123',
 	config: {modRewriteWorking: true},
@@ -15,6 +12,7 @@ describe('Image View src attribute based on markdown', () => {
 
 	const factory = attrs => {
 		const propsData = {
+			options: {currentDirectory: '/current'},
 			node: {attrs}
 		}
 		const data = () => ({
