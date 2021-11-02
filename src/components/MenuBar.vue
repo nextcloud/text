@@ -359,7 +359,7 @@ export default {
 			formData.append('image', image)
 			formData.append('textFileId', this.fileId)
 			if (this.isPublic) {
-				formData.append('token', this.token)
+				formData.append('shareToken', this.token)
 			}
 			const url = this.isPublic
 				? generateUrl('/apps/text/public/image/upload')
@@ -393,7 +393,7 @@ export default {
 				link: this.imageLink,
 			}
 			if (this.isPublic) {
-				params.token = this.token
+				params.shareToken = this.token
 			}
 			const url = this.isPublic
 				? generateUrl('/apps/text/public/image/link')

@@ -125,7 +125,7 @@ export default {
 							imageFileName,
 						})
 				} else {
-					return generateUrl('/apps/text/public/image?textFileId={textFileId}&imageFileName={imageFileName}&token={token}',
+					return generateUrl('/apps/text/public/image?textFileId={textFileId}&imageFileName={imageFileName}&shareToken={token}',
 						{
 							textFileId,
 							imageFileName,
