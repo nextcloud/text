@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use Exception;
+use OCA\Text\Controller\ImageController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
@@ -80,14 +81,14 @@ class ImageService {
 	 * @param int $textFileId
 	 * @param string $imageFileName
 	 * @param string $userId
-	 * @return string|null
+	 * @return File|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImage(int $textFileId, string $imageFileName, string $userId): ?string {
+	public function getImage(int $textFileId, string $imageFileName, string $userId): ?File {
 		$textFile = $this->getTextFile($textFileId, $userId);
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
@@ -97,7 +98,7 @@ class ImageService {
 				return null;
 			}
 			if ($imageFile instanceof File) {
-				return $imageFile->getContent();
+				return $imageFile;
 			}
 		}
 		return null;
@@ -109,11 +110,14 @@ class ImageService {
 	 * @param int $textFileId
 	 * @param string $imageFileName
 	 * @param string $shareToken
-	 * @return string|null
+	 * @return File|null
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?string {
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?File {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
@@ -123,7 +127,7 @@ class ImageService {
 				return null;
 			}
 			if ($imageFile instanceof File) {
-				return $imageFile->getContent();
+				return $imageFile;
 			}
 		}
 		return null;
@@ -288,27 +292,41 @@ class ImageService {
 		}
 		$savedFile->touch();
 		if (isset($res['Content-Type'])) {
-			if (in_array($res['Content-Type'], ['image/jpg', 'image/jpeg'])) {
-				$fileName = $fileName . '.jpg';
-			} elseif ($res['Content-Type'] === 'image/png') {
-				$fileName = $fileName . '.png';
+			if (in_array($res['Content-Type'], ImageController::IMAGE_MIME_TYPES)) {
+				if ($res['Content-Type'] === 'image/jpeg') {
+					$fileName = $fileName . '.jpg';
+				} elseif ($res['Content-Type'] === 'image/x-xbitmap' || $res['Content-Type'] === 'image/x-ms-bmp') {
+					$fileName = $fileName . '.bmp';
+				} elseif ($res['Content-Type'] === 'image/svg+xml') {
+					$fileName = $fileName . '.svg';
+				} else {
+					$ext = preg_replace('/^image\//i', '', $res['Content-Type']);
+					$fileName = $fileName . '.' . $ext;
+				}
+				$targetPath = $saveDir->getPath() . '/' . $fileName;
+				$savedFile->move($targetPath);
+				$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
+				// get file type and name
+				return [
+					'name' => $fileName,
+					'path' => $path,
+					'id' => $savedFile->getId(),
+					'textFileId' => $textFile->getId(),
+				];
 			} else {
+				$savedFile->delete();
 				return [
 					'error' => 'Unsupported file type',
 				];
 			}
-			$targetPath = $saveDir->getPath() . '/' . $fileName;
-			$savedFile->move($targetPath);
-			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
-			// get file type and name
-			return [
-				'name' => $fileName,
-				'path' => $path,
-				'id' => $savedFile->getId(),
-				'textFileId' => $textFile->getId(),
-			];
-		} else {
+		} elseif (isset($res['error'])) {
+			$savedFile->delete();
 			return $res;
+		} else {
+			$savedFile->delete();
+			return [
+				'error' => 'Link download error',
+			];
 		}
 	}
 

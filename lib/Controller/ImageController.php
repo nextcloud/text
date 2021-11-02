@@ -40,8 +40,10 @@ class ImageController extends Controller {
 	public const IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',
+		'image/jpg',
 		'image/gif',
 		'image/x-xbitmap',
+		'image/x-ms-bmp',
 		'image/bmp',
 		'image/svg+xml',
 		'image/webp',
@@ -191,11 +193,10 @@ class ImageController extends Controller {
 	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
-		$imageContent = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
-		if ($imageContent !== null) {
-			return new DataDisplayResponse($imageContent);
+		$imageFile = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
+		if ($imageFile !== null) {
+			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
 		} else {
-			error_log('image not found response');
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}
@@ -211,11 +212,10 @@ class ImageController extends Controller {
 	 * @return DataDisplayResponse
 	 */
 	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): DataDisplayResponse {
-		$imageContent = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);
-		if ($imageContent !== null) {
-			return new DataDisplayResponse($imageContent);
+		$imageFile = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);
+		if ($imageFile !== null) {
+			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
 		} else {
-			error_log('image not found response');
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}
