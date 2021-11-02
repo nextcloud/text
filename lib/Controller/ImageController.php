@@ -26,14 +26,26 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
+use OCA\Text\AppInfo\Application;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
+use Psr\Log\LoggerInterface;
 
 class ImageController extends Controller {
+
+	public const IMAGE_MIME_TYPES = [
+		'image/png',
+		'image/jpeg',
+		'image/gif',
+		'image/x-xbitmap',
+		'image/bmp',
+		'image/svg+xml',
+		'image/webp',
+	];
 
 	/**
 	 * @var string|null
@@ -43,15 +55,21 @@ class ImageController extends Controller {
 	 * @var ImageService
 	 */
 	private $imageService;
+	/**
+	 * @var LoggerInterface
+	 */
+	private $logger;
 
 	public function __construct(string $appName,
 								IRequest $request,
+								LoggerInterface $logger,
 								ImageService $imageService,
 								?string $userId) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->imageService = $imageService;
 		$this->request = $request;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -105,16 +123,24 @@ class ImageController extends Controller {
 	public function uploadImage(int $textFileId): DataResponse {
 		try {
 			$file = $this->request->getUploadedFile('image');
-			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
+			if ($file !== null && isset($file['tmp_name'], $file['name'], $file['type'])) {
+				if (!in_array($file['type'], self::IMAGE_MIME_TYPES)) {
+					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
+				}
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
 				$uploadResult = $this->imageService->uploadImage($textFileId, $newFileName, $newFileContent, $this->userId);
-				return new DataResponse($uploadResult);
+				if (isset($uploadResult['error'])) {
+					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
+				} else {
+					return new DataResponse($uploadResult);
+				}
 			} else {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Upload error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			$this->logger->error('Upload error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -129,16 +155,24 @@ class ImageController extends Controller {
 	public function uploadImagePublic(?int $textFileId, string $shareToken): DataResponse {
 		try {
 			$file = $this->request->getUploadedFile('image');
-			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
+			if ($file !== null && isset($file['tmp_name'], $file['name'], $file['type'])) {
+				if (!in_array($file['type'], self::IMAGE_MIME_TYPES)) {
+					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
+				}
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
 				$uploadResult = $this->imageService->uploadImagePublic($textFileId, $newFileName, $newFileContent, $shareToken);
-				return new DataResponse($uploadResult);
+				if (isset($uploadResult['error'])) {
+					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
+				} else {
+					return new DataResponse($uploadResult);
+				}
 			} else {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Upload error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			$this->logger->error('Upload error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 

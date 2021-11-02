@@ -144,6 +144,16 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
+const imageMimes = [
+	'image/png',
+	'image/jpeg',
+	'image/gif',
+	'image/x-xbitmap',
+	'image/bmp',
+	'image/svg+xml',
+	'image/webp',
+]
+
 export default {
 	name: 'MenuBar',
 	components: {
@@ -350,6 +360,12 @@ export default {
 			this.uploadingImage = true
 			const files = event.target.files
 			const image = files[0]
+			if (!imageMimes.includes(image.type)) {
+				showError(t('text', 'Image format not supported'))
+				this.imageCommand = null
+				this.uploadingImage = false
+				return
+			}
 
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
