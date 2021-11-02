@@ -91,7 +91,19 @@ class WorkspaceController extends OCSController {
 	/** @var IEventDispatcher */
 	private $eventDispatcher;
 
-	public function __construct($appName, IRequest $request, IRootFolder $rootFolder, IManager $shareManager, IDirectEditingManager $directEditingManager, IURLGenerator $urlGenerator,	WorkspaceService $workspaceService, IEventDispatcher $eventDispatcher, $userId) {
+	/** @var ISession */
+	private $session;
+
+	public function __construct($appName,
+								IRequest $request,
+								IRootFolder $rootFolder,
+								IManager $shareManager,
+								IDirectEditingManager $directEditingManager,
+								IURLGenerator $urlGenerator,
+								WorkspaceService $workspaceService,
+								IEventDispatcher $eventDispatcher,
+								ISession $session,
+								$userId) {
 		parent::__construct($appName, $request);
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
@@ -100,6 +112,7 @@ class WorkspaceController extends OCSController {
 		$this->directEditingManager = $directEditingManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->eventDispatcher = $eventDispatcher;
+		$this->session = $session;
 	}
 
 	/**
