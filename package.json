@@ -48,7 +48,7 @@
 		"prosemirror-schema-list": "^1.1.6",
 		"prosemirror-state": "^1.3.4",
 		"prosemirror-transform": "^1.3.3",
-		"prosemirror-utils": "^0.9.6",
+		"prosemirror-utils": "^1.0.0-0",
 		"prosemirror-view": "^1.21.0",
 		"proxy-polyfill": "^0.3.2",
 		"tiptap": "^1.32.2",
@@ -71,15 +71,16 @@
 		"@nextcloud/stylelint-config": "^1.0.0-beta.0",
 		"@nextcloud/webpack-vue-config": "^4.1.0",
 		"@vue/test-utils": "^1.2.2",
+		"babel-core": "^7.0.0-bridge.0",
 		"cypress": "^8.7.0",
 		"jest": "^27.3.1",
-		"jest-environment-jsdom-fourteen": "^1.0.1",
+		"jest-environment-jsdom": "^27.3.1",
 		"jest-serializer-vue": "^2.0.2",
 		"vue-jest": "^3.0.7"
 	},
 	"jest": {
 		"verbose": true,
-		"testEnvironment": "jest-environment-jsdom-fourteen",
+		"testEnvironment": "jest-environment-jsdom",
 		"moduleFileExtensions": [
 			"js",
 			"vue"
