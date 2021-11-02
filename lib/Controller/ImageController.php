@@ -56,6 +56,10 @@ class ImageController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param int $textFileId
+	 * @param string $link
+	 * @return DataResponse
 	 */
 	public function insertImageLink(int $textFileId, string $link): DataResponse {
 		try {
@@ -73,10 +77,15 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @PublicPage
+	 *
+	 * @param int|null $textFileId can be null with public file share
+	 * @param string $link
+	 * @param string $shareToken
+	 * @return DataResponse
 	 */
-	public function insertImageLinkPublic(?int $textFileId, string $link, string $token): DataResponse {
+	public function insertImageLinkPublic(?int $textFileId, string $link, string $shareToken): DataResponse {
 		try {
-			$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $token);
+			$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $shareToken);
 			if (isset($downloadResult['error'])) {
 				return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
 			} else {
@@ -89,6 +98,9 @@ class ImageController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param int $textFileId
+	 * @return DataResponse
 	 */
 	public function uploadImage(int $textFileId): DataResponse {
 		try {
@@ -109,14 +121,18 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @PublicPage
+	 *
+	 * @param int|null $textFileId can be null with public file share
+	 * @param string $shareToken
+	 * @return DataResponse
 	 */
-	public function uploadImagePublic(?int $textFileId, string $token): DataResponse {
+	public function uploadImagePublic(?int $textFileId, string $shareToken): DataResponse {
 		try {
 			$file = $this->request->getUploadedFile('image');
 			if ($file !== null && isset($file['tmp_name'], $file['name'])) {
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
-				$uploadResult = $this->imageService->uploadImagePublic($textFileId, $newFileName, $newFileContent, $token);
+				$uploadResult = $this->imageService->uploadImagePublic($textFileId, $newFileName, $newFileContent, $shareToken);
 				return new DataResponse($uploadResult);
 			} else {
 				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
@@ -129,6 +145,16 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 *
+	 * Serve the images in the editor
+	 * @param int $textFileId
+	 * @param string $imageFileName
+	 * @return DataDisplayResponse
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotFoundException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
 		$imageContent = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
@@ -144,9 +170,14 @@ class ImageController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @PublicPage
+	 *
+	 * @param int $textFileId
+	 * @param string $imageFileName
+	 * @param string $shareToken
+	 * @return DataDisplayResponse
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $token): DataDisplayResponse {
-		$imageContent = $this->imageService->getImagePublic($textFileId, $imageFileName, $token);
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): DataDisplayResponse {
+		$imageContent = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);
 		if ($imageContent !== null) {
 			return new DataDisplayResponse($imageContent);
 		} else {
