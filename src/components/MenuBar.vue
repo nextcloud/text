@@ -143,8 +143,10 @@ import { showError } from '@nextcloud/dialogs'
 const imageMimes = [
 	'image/png',
 	'image/jpeg',
+	'image/jpg',
 	'image/gif',
 	'image/x-xbitmap',
+	'image/x-ms-bmp',
 	'image/bmp',
 	'image/svg+xml',
 	'image/webp',
