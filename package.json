@@ -100,7 +100,8 @@
 		"snapshotSerializers": [
 			"<rootDir>/node_modules/jest-serializer-vue"
 		],
-		"globalSetup": "<rootDir>/src/tests/setup.js",
-		"setupFilesAfterEnv": ["<rootDir>/src/tests/setupAfterEnv.js"]
+		"setupFilesAfterEnv": [
+			"<rootDir>/src/tests/setup.js"
+		]
 	}
 }
