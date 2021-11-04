@@ -26,6 +26,15 @@ import Vue from 'vue'
 global.t = jest.fn().mockImplementation((app, text) => text)
 global.n = jest.fn().mockImplementation((app, text) => text)
 
+jest.mock('@nextcloud/auth', () => ({
+	getCurrentUser: jest.fn().mockImplementation(() => ({
+		uid: 'user1',
+		displayName: 'User 1',
+		isAdmin: false,
+	}))
+}))
+
+
 global.OC = {
 	requestToken: '123',
 	webroot: '/nc-webroot',
