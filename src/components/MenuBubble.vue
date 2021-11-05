@@ -25,7 +25,9 @@
 		class="menububble"
 		:editor="editor"
 		@hide="hideLinkMenu">
-		<div class="menububble" :class="{ 'is-active': menu.isActive }" :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`">
+		<div class="menububble"
+			:class="{ 'is-active': menu.isActive }"
+			:style="bubblePosition(menu)">
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
 				<input ref="linkInput"
 					v-model="linkUrl"
@@ -140,6 +142,16 @@ export default {
 			command({ href: url })
 			this.hideLinkMenu()
 		},
+		bubblePosition(menu) {
+			// below the first line, above all others
+			const vertical = menu.top < 45
+				? { top: `${menu.top}px` }
+				: { bottom: `${menu.bottom}px` }
+			return {
+				...vertical,
+				left: `${menu.left}px`,
+			}
+		},
 	},
 }
 </script>
@@ -164,7 +176,6 @@ export default {
 		&.is-active {
 			opacity: 1;
 			visibility: visible;
-			margin-bottom: -3px;
 		}
 
 		&__button {
