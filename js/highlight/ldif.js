@@ -1,2 +1,2 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/ldif"],{33310:e=>{e.exports=function(e){return{name:"LDIF",contains:[{className:"attribute",begin:"^dn",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0},relevance:10},{className:"attribute",begin:"^\\w",end:": ",excludeEnd:!0,starts:{end:"$",relevance:0}},{className:"literal",begin:"^-",end:"$"},e.HASH_COMMENT_MODE]}}}}]);
-//# sourceMappingURL=ldif.js.map?v=c52a6c92ac78cda4630e
+(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/ldif"],{33310:t=>{t.exports=function(t){return{name:"LDIF",contains:[{className:"attribute",match:"^dn(?=:)",relevance:10},{className:"attribute",match:"^\\w+(?=:)"},{className:"literal",match:"^-"},t.HASH_COMMENT_MODE]}}}}]);
+//# sourceMappingURL=ldif.js.map?v=c2fd416bdae05064575c

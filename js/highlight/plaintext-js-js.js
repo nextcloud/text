@@ -1,0 +1,2 @@
+(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/plaintext-js-js","highlight/plaintext"],{76572:e=>{e.exports=function(e){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}},14610:(e,t,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/plaintext" instead of "highlight.js/lib/languages/plaintext.js"'))}(),e.exports=i(76572)}}]);
+//# sourceMappingURL=plaintext-js-js.js.map?v=b691cfd339df9f2e8481

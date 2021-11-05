@@ -1,0 +1,2 @@
+(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/gml-js-js"],{3161:(e,i,s)=>{var g=s(25108);!function e(){e.warned||(e.warned=!0,g.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gml" instead of "highlight.js/lib/languages/gml.js"'))}(),e.exports=s(94807)}}]);
+//# sourceMappingURL=gml-js-js.js.map?v=770b77c485266400ff62
