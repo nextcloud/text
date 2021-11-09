@@ -1,30 +1,23150 @@
-!function(t){function e(e){for(var n,i,o=e[0],a=e[1],s=0,u=[];s<o.length;s++)i=o[s],Object.prototype.hasOwnProperty.call(r,i)&&r[i]&&u.push(r[i][0]),r[i]=0;for(n in a)Object.prototype.hasOwnProperty.call(a,n)&&(t[n]=a[n]);for(c&&c(e);u.length;)u.shift()()}var n={},r={200:0};function i(e){if(n[e])return n[e].exports;var r=n[e]={i:e,l:!1,exports:{}};return t[e].call(r.exports,r,r.exports,i),r.l=!0,r.exports}i.e=function(t){var e=[],n=r[t];if(0!==n)if(n)e.push(n[2]);else{var o=new Promise((function(e,i){n=r[t]=[e,i]}));e.push(n[2]=o);var a,s=document.createElement("script");s.charset="utf-8",s.timeout=120,i.nc&&s.setAttribute("nonce",i.nc),s.src=function(t){return i.p+""+({0:"vendors~editor-collab~editor-guest~editor-rich~files-modal",1:"highlight/1c",2:"highlight/abnf",3:"highlight/accesslog",4:"highlight/actionscript",5:"highlight/ada",6:"highlight/angelscript",7:"highlight/apache",8:"highlight/applescript",9:"highlight/arcade",10:"highlight/arduino",11:"highlight/armasm",12:"highlight/asciidoc",13:"highlight/aspectj",14:"highlight/autohotkey",15:"highlight/autoit",16:"highlight/avrasm",17:"highlight/awk",18:"highlight/axapta",19:"highlight/bash",20:"highlight/basic",21:"highlight/bnf",22:"highlight/brainfuck",23:"highlight/c",24:"highlight/c-like",25:"highlight/cal",26:"highlight/capnproto",27:"highlight/ceylon",28:"highlight/clean",29:"highlight/clojure",30:"highlight/clojure-repl",31:"highlight/cmake",32:"highlight/coffeescript",33:"highlight/coq",34:"highlight/cos",35:"highlight/cpp",36:"highlight/crmsh",37:"highlight/crystal",38:"highlight/csharp",39:"highlight/csp",40:"highlight/css",41:"highlight/d",42:"highlight/dart",43:"highlight/delphi",44:"highlight/diff",45:"highlight/django",46:"highlight/dns",47:"highlight/dockerfile",48:"highlight/dos",49:"highlight/dsconfig",50:"highlight/dts",51:"highlight/dust",52:"highlight/ebnf",53:"highlight/elixir",54:"highlight/elm",55:"highlight/erb",56:"highlight/erlang",57:"highlight/erlang-repl",58:"highlight/excel",59:"highlight/fix",60:"highlight/flix",61:"highlight/fortran",62:"highlight/fsharp",63:"highlight/gams",64:"highlight/gauss",65:"highlight/gcode",66:"highlight/gherkin",67:"highlight/glsl",68:"highlight/gml",69:"highlight/go",70:"highlight/golo",71:"highlight/gradle",72:"highlight/groovy",73:"highlight/haml",74:"highlight/handlebars",75:"highlight/haskell",76:"highlight/haxe",77:"highlight/hsp",78:"highlight/htmlbars",79:"highlight/http",80:"highlight/hy",81:"highlight/inform7",82:"highlight/ini",83:"highlight/irpf90",84:"highlight/isbl",85:"highlight/java",86:"highlight/javascript",87:"highlight/jboss-cli",88:"highlight/json",89:"highlight/julia",90:"highlight/julia-repl",91:"highlight/kotlin",92:"highlight/lasso",93:"highlight/latex",94:"highlight/ldif",95:"highlight/leaf",96:"highlight/less",97:"highlight/lisp",98:"highlight/livecodeserver",99:"highlight/livescript",100:"highlight/llvm",101:"highlight/lsl",102:"highlight/lua",103:"highlight/makefile",104:"highlight/markdown",105:"highlight/mathematica",106:"highlight/matlab",107:"highlight/maxima",108:"highlight/mel",109:"highlight/mercury",110:"highlight/mipsasm",111:"highlight/mizar",112:"highlight/mojolicious",113:"highlight/monkey",114:"highlight/moonscript",115:"highlight/n1ql",116:"highlight/nginx",117:"highlight/nim",118:"highlight/nix",119:"highlight/node-repl",120:"highlight/nsis",121:"highlight/objectivec",122:"highlight/ocaml",123:"highlight/openscad",124:"highlight/oxygene",125:"highlight/parser3",126:"highlight/perl",127:"highlight/pf",128:"highlight/pgsql",129:"highlight/php",130:"highlight/php-template",131:"highlight/plaintext",132:"highlight/pony",133:"highlight/powershell",134:"highlight/processing",135:"highlight/profile",136:"highlight/prolog",137:"highlight/properties",138:"highlight/protobuf",139:"highlight/puppet",140:"highlight/purebasic",141:"highlight/python",142:"highlight/python-repl",143:"highlight/q",144:"highlight/qml",145:"highlight/r",146:"highlight/reasonml",147:"highlight/rib",148:"highlight/roboconf",149:"highlight/routeros",150:"highlight/rsl",151:"highlight/ruby",152:"highlight/ruleslanguage",153:"highlight/rust",154:"highlight/sas",155:"highlight/scala",156:"highlight/scheme",157:"highlight/scilab",158:"highlight/scss",159:"highlight/shell",160:"highlight/smali",161:"highlight/smalltalk",162:"highlight/sml",163:"highlight/sqf",164:"highlight/sql",165:"highlight/sql_more",166:"highlight/stan",167:"highlight/stata",168:"highlight/step21",169:"highlight/stylus",170:"highlight/subunit",171:"highlight/swift",172:"highlight/taggerscript",173:"highlight/tap",174:"highlight/tcl",175:"highlight/thrift",176:"highlight/tp",177:"highlight/twig",178:"highlight/typescript",179:"highlight/vala",180:"highlight/vbnet",181:"highlight/vbscript",182:"highlight/vbscript-html",183:"highlight/verilog",184:"highlight/vhdl",185:"highlight/vim",186:"highlight/x86asm",187:"highlight/xl",188:"highlight/xml",189:"highlight/xquery",190:"highlight/yaml",191:"highlight/zephir",192:"vendors~editor-collab~editor-guest",193:"vendors~editor~files-modal",194:"editor",195:"editor-collab",196:"editor-guest",197:"editor-rich",199:"files-modal",202:"vendors~editor",203:"vendors~editor-rich",204:"vendors~files-modal"}[t]||t)+".js?v="+{0:"ead8d3457de47aab0dbe",1:"2906af1e08398cc3e072",2:"c3af46470222dfa67f13",3:"b6e0e59d3676ed132555",4:"539acdbcdecbe434eb64",5:"1afde85ca5e22dfdba16",6:"ab6c6b9c0d62bdd87fae",7:"2eebc5327f7311f70a1e",8:"376319e9f996ebeff745",9:"7da3150e3640738a050b",10:"17f7e19d4aeb8ec2b218",11:"9901994e9473aac12d54",12:"b46a0c66d30aae3cd20d",13:"9f68947109150aa2a011",14:"93e472e48ac9e175f8eb",15:"56db0fc146c771cb723b",16:"62b8b48322939b977366",17:"5d3e5b91b8ae89b264d2",18:"51a3f44f1837d3c5dee1",19:"600b58a57af471e75dc9",20:"9d2375016af2986c611b",21:"e589fe48dd57e8c0e290",22:"7e4d682701de8ed96fb7",23:"efd9893abb38c25d94b8",24:"5a35024cc752422e1d5d",25:"d3aacd946550b30a9bcf",26:"d20b705dcf0049aa55f5",27:"226e5c86d4f5a771176f",28:"e493f1ec8c80ad78adf4",29:"ef6e33bf7bf8f8fe4e7d",30:"76447e7b474cb77228d9",31:"176d173c7beac3e97b8e",32:"9ed2950dca9f014a00e1",33:"9076931bf496eaed097f",34:"ae9047d9a4c2882bdf7e",35:"0260365ca42f27ca6b6f",36:"fe02b2dcff1b44f31765",37:"27b8d316001fd8908a61",38:"1ef4739611a1d8febb15",39:"2b1ebe5dee353f6f738d",40:"1c40de1f5de4ce198eb5",41:"175ff5ca9c7e2c147d04",42:"74d4a3270cf2fdc04f46",43:"68273983c386d23b1797",44:"c79d4541a7aaa46cc39d",45:"579a73d87b5a837a683e",46:"77cf77d80dcfa494a520",47:"082039bf92f0958d92eb",48:"051015744fb652706ffc",49:"bc9b5b8a1694fce7631d",50:"2d7eaf445a6c47aa0897",51:"8e8b7b153d07634a814f",52:"764b684e6ad1fbca7deb",53:"e43939ac65ca89010d5b",54:"219cbfea3889414e44c8",55:"40bd9288cc8caa17c6dc",56:"cbfdbb013f55c846e2c0",57:"33fea024278becf15aad",58:"407b86cd2694797d2316",59:"3f42d07b564ba2faec15",60:"60ec32918ef4bd90cff6",61:"f7e17a3e18cf96e0b6ba",62:"e48cbdc51841d3025c42",63:"44d553a8e8ae0f566377",64:"49c24cb6533bf433efb0",65:"55fc0ae97d7dee801431",66:"480cc65667531fc0b932",67:"ccbddbc2b7abbe73282e",68:"869307f41a7ed74b7a92",69:"647749f80505ac8e9243",70:"253b581a79e8f2d9f913",71:"e464f5226cb07f652465",72:"8586b4b03574c2986084",73:"9eddaf0787b360d25f11",74:"1a8b16e0f924816ab591",75:"64714ba47cdd44d1f2ca",76:"4107df6ea06a71a25a0e",77:"4355ebc61eab5dda91c7",78:"c176dabc65c18998c517",79:"e0219ecf7c5287bf2197",80:"2face495c80f7e8129a6",81:"bd105aee73e0d89c609f",82:"6ef3c90682a5df27faa7",83:"e5cb4f51b5b17cfaefd4",84:"b23322ed0097f4d69dfd",85:"02fb9337fa6cb7707af3",86:"e6f3d7c9f2086c87eea7",87:"b3729d2aa49591b83d1e",88:"4cb77721f60f6217d6e1",89:"b1e10589b28feced8027",90:"4b5a567f4a6b86c1b769",91:"1fc8fd5242ab38cf318d",92:"421d456250e11d54af68",93:"2c3264f98664053a7dc3",94:"f4abf51098580d9bec5e",95:"a39bb207f156e29bc4c4",96:"d3210160100c0f0a82ab",97:"87fbd5fc4792dd7fe912",98:"a8dc6ecf56f69bbe7973",99:"abb39cdf186895020d8c",100:"5dd7d981ff5013e240c0",101:"ef5d647a331bb4adfe2d",102:"8b82c9930a902e9f2c46",103:"e92b74234a905178cea8",104:"899358de9548b8003bca",105:"64fc6243b1f7c9786347",106:"2e26c0061ec00bf2b8ec",107:"52197b86c1c290006433",108:"18863e73289c8eb2bda5",109:"ad08e3b0dff0ef7e8bb2",110:"cefd441e1e9c8212b295",111:"aece37a8f9f340f2a3b7",112:"4e7312dd891988a22a8b",113:"aae0ac2220bb1e7379e2",114:"064722532ac8e06124f8",115:"a01b944fb49ede802232",116:"bb19f709ad44f83db67a",117:"a0ad898712b3509b1d92",118:"8620f74ea4b4d4fd8054",119:"328f8f12944ada75b14e",120:"b123c351ba02de8393d1",121:"117f2de4ab707af7dfc6",122:"528ecc64777790d59655",123:"c2d7bc91bb6c35b465d4",124:"574498f36ab4e64d4fbc",125:"844d3447076bba545e8c",126:"aa73e5ab058ccad8290f",127:"66a789bc1386dbf8d3f0",128:"a9bd433bc8f11c8bcb21",129:"d6b93024ed3ccf6ed497",130:"bbe58b4a52a5ffba1393",131:"fd1ee7680fa1ab80d606",132:"4bdc7fafa357b93aa451",133:"d54d12d24b179ab87b21",134:"918d6186fbc546a5d9fa",135:"325e0c425504f417a051",136:"20b89bcff7c70dac7ed7",137:"cdc902b8b3107f635f41",138:"e7f2a135d8cc3027ec41",139:"50894e040317ce457420",140:"92ab5707c90a0129876b",141:"45c6f9a165b84359c680",142:"8eb2176da4999cfc8aec",143:"e08860c7addcb4b4586b",144:"60d609e34825eca762cd",145:"cb35d1d2e2a9c098e980",146:"06c7f7f85f2b7ab1345f",147:"7450e362bba0cd085d93",148:"ea1a99e3c31cf9d1b70f",149:"1d06045e0c8e2351b37d",150:"e08bf098de1dd0790d57",151:"d6dcc41e733e8cc67979",152:"2c02762827ddbdb73768",153:"29c31344519c9bb231f7",154:"40468f8e92fbdf6df4ee",155:"3db4fc1d909e6014ffe7",156:"be8435ba75901c5187b1",157:"2d2b1fd94bd10d2b5f79",158:"1d96e0f8e2494ec56c9a",159:"f0b81b7ce452ecaa7292",160:"08570a82597e6ae56975",161:"8c3c479d9a7c53f88c58",162:"8b7211149d7b882d57b6",163:"a1fb1905fbfe435d6e01",164:"3b52e4898446f74d59c1",165:"23627e8209cf109b7957",166:"e08250c97ceb883b4969",167:"e370fa2e60206dc9b090",168:"ade36a039cd46c9733f7",169:"52494f2382383dd230ae",170:"a446be0f4028af4639e8",171:"686b8dab41f1a062296e",172:"fc6940062f9b322bf4f4",173:"29c651845272c540231f",174:"3887cd5982943d9a09d7",175:"29d147f578968582b332",176:"2290d023de04df2489c4",177:"16d55ca672a83c0f7a09",178:"2b76b6e82eaab5c5422d",179:"359472122742d4874097",180:"8eae609bd2341060a2e3",181:"cdf40c6aeec5d1189923",182:"026e99825b2e5205580b",183:"c4078b5f1cb1cbda4e5e",184:"1b9e6ea5de1350b76224",185:"92c6e5ac4dcde115ffbb",186:"323989fc1accba979bfa",187:"b14e467c0f1df1acd0a3",188:"a35e10f45ed85bf67f8e",189:"7934bd178b0cd10a6506",190:"b16c1b9786a171ba3b43",191:"448b3c88cbb099606d56",192:"3e3ab9d616065802cf48",193:"d5caeecdaa283ef9efd1",194:"4591143479187bd1d2d9",195:"a8aa6d6a862b7c216b8f",196:"ba8583464d01294aaa2e",197:"dd9b5509aa24455fc693",199:"5ed5733042010343131c",202:"6f2251b4f16558661909",203:"74c88d5f95cfc67b9916",204:"5ca9b5c142361d375907"}[t]}(t);var c=new Error;a=function(e){s.onerror=s.onload=null,clearTimeout(u);var n=r[t];if(0!==n){if(n){var i=e&&("load"===e.type?"missing":e.type),o=e&&e.target&&e.target.src;c.message="Loading chunk "+t+" failed.\n("+i+": "+o+")",c.name="ChunkLoadError",c.type=i,c.request=o,n[1](c)}r[t]=void 0}};var u=setTimeout((function(){a({type:"timeout",target:s})}),12e4);s.onerror=s.onload=a,document.head.appendChild(s)}return Promise.all(e)},i.m=t,i.c=n,i.d=function(t,e,n){i.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},i.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},i.t=function(t,e){if(1&e&&(t=i(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(i.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)i.d(n,r,function(e){return t[e]}.bind(null,r));return n},i.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return i.d(e,"a",e),e},i.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},i.p="/js/",i.oe=function(t){throw console.error(t),t};var o=window.textWebpackJsonp=window.textWebpackJsonp||[],a=o.push.bind(o);o.push=e,o=o.slice();for(var s=0;s<o.length;s++)e(o[s]);var c=a;i(i.s=196)}([function(t,e,n){"use strict";t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,e,n){"use strict";(function(e){function n(t){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var r=function(t){return t&&t.Math==Math&&t};t.exports=r("object"==("undefined"==typeof globalThis?"undefined":n(globalThis))&&globalThis)||r("object"==("undefined"==typeof window?"undefined":n(window))&&window)||r("object"==("undefined"==typeof self?"undefined":n(self))&&self)||r("object"==(void 0===e?"undefined":n(e))&&e)||function(){return this}()||Function("return this")()}).call(this,n(14))},function(t,e,n){"use strict";var r=n(1),i=n(35),o=n(4),a=n(36),s=n(54),c=n(96),u=i("wks"),l=r.Symbol,f=c?l:l&&l.withoutSetter||a;t.exports=function(t){return o(u,t)&&(s||"string"==typeof u[t])||(s&&o(l,t)?u[t]=l[t]:u[t]=f("Symbol."+t)),u[t]}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}t.exports=function(t){return"object"===r(t)?null!==t:"function"==typeof t}},function(t,e,n){"use strict";var r=n(11),i={}.hasOwnProperty;t.exports=function(t,e){return i.call(r(t),e)}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(1),o=n(24).f,a=n(8),s=n(13),c=n(30),u=n(94),l=n(62);t.exports=function(t,e){var n,f,d,p,h,v=t.target,m=t.global,g=t.stat;if(n=m?i:g?i[v]||c(v,{}):(i[v]||{}).prototype)for(f in e){if(p=e[f],d=t.noTargetGet?(h=o(n,f))&&h.value:n[f],!l(m?f:v+(g?".":"#")+f,t.forced)&&void 0!==d){if(r(p)===r(d))continue;u(p,d)}(t.sham||d&&d.sham)&&a(p,"sham",!0),s(n,f,p,t)}}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(98),o=Object.prototype.toString;function a(t){return"[object Array]"===o.call(t)}function s(t){return void 0===t}function c(t){return null!==t&&"object"===r(t)}function u(t){if("[object Object]"!==o.call(t))return!1;var e=Object.getPrototypeOf(t);return null===e||e===Object.prototype}function l(t){return"[object Function]"===o.call(t)}function f(t,e){if(null!=t)if("object"!==r(t)&&(t=[t]),a(t))for(var n=0,i=t.length;n<i;n++)e.call(null,t[n],n,t);else for(var o in t)Object.prototype.hasOwnProperty.call(t,o)&&e.call(null,t[o],o,t)}t.exports={isArray:a,isArrayBuffer:function(t){return"[object ArrayBuffer]"===o.call(t)},isBuffer:function(t){return null!==t&&!s(t)&&null!==t.constructor&&!s(t.constructor)&&"function"==typeof t.constructor.isBuffer&&t.constructor.isBuffer(t)},isFormData:function(t){return"undefined"!=typeof FormData&&t instanceof FormData},isArrayBufferView:function(t){return"undefined"!=typeof ArrayBuffer&&ArrayBuffer.isView?ArrayBuffer.isView(t):t&&t.buffer&&t.buffer instanceof ArrayBuffer},isString:function(t){return"string"==typeof t},isNumber:function(t){return"number"==typeof t},isObject:c,isPlainObject:u,isUndefined:s,isDate:function(t){return"[object Date]"===o.call(t)},isFile:function(t){return"[object File]"===o.call(t)},isBlob:function(t){return"[object Blob]"===o.call(t)},isFunction:l,isStream:function(t){return c(t)&&l(t.pipe)},isURLSearchParams:function(t){return"undefined"!=typeof URLSearchParams&&t instanceof URLSearchParams},isStandardBrowserEnv:function(){return("undefined"==typeof navigator||"ReactNative"!==navigator.product&&"NativeScript"!==navigator.product&&"NS"!==navigator.product)&&("undefined"!=typeof window&&"undefined"!=typeof document)},forEach:f,merge:function t(){var e={};function n(n,r){u(e[r])&&u(n)?e[r]=t(e[r],n):u(n)?e[r]=t({},n):a(n)?e[r]=n.slice():e[r]=n}for(var r=0,i=arguments.length;r<i;r++)f(arguments[r],n);return e},extend:function(t,e,n){return f(e,(function(e,r){t[r]=n&&"function"==typeof e?i(e,n):e})),t},trim:function(t){return t.replace(/^\s*/,"").replace(/\s*$/,"")},stripBOM:function(t){return 65279===t.charCodeAt(0)&&(t=t.slice(1)),t}}},function(t,e,n){"use strict";var r=n(3);t.exports=function(t){if(!r(t))throw TypeError(String(t)+" is not an object");return t}},function(t,e,n){"use strict";var r=n(10),i=n(9),o=n(18);t.exports=r?function(t,e,n){return i.f(t,e,o(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e,n){"use strict";var r=n(10),i=n(57),o=n(7),a=n(26),s=Object.defineProperty;e.f=r?s:function(t,e,n){if(o(t),e=a(e,!0),o(n),i)try{return s(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported");return"value"in n&&(t[e]=n.value),t}},function(t,e,n){"use strict";var r=n(0);t.exports=!r((function(){return 7!=Object.defineProperty({},1,{get:function(){return 7}})[1]}))},function(t,e,n){"use strict";var r=n(16);t.exports=function(t){return Object(r(t))}},function(t,e,n){"use strict";var r=n(22),i=Math.min;t.exports=function(t){return t>0?i(r(t),9007199254740991):0}},function(t,e,n){"use strict";var r=n(1),i=n(8),o=n(4),a=n(30),s=n(53),c=n(25),u=c.get,l=c.enforce,f=String(String).split("String");(t.exports=function(t,e,n,s){var c,u=!!s&&!!s.unsafe,d=!!s&&!!s.enumerable,p=!!s&&!!s.noTargetGet;"function"==typeof n&&("string"!=typeof e||o(n,"name")||i(n,"name",e),(c=l(n)).source||(c.source=f.join("string"==typeof e?e:""))),t!==r?(u?!p&&t[e]&&(d=!0):delete t[e],d?t[e]=n:i(t,e,n)):d?t[e]=n:a(e,n)})(Function.prototype,"toString",(function(){return"function"==typeof this&&u(this).source||s(this)}))},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i;i=function(){return this}();try{i=i||new Function("return this")()}catch(t){"object"===("undefined"==typeof window?"undefined":r(window))&&(i=window)}t.exports=i},function(t,e,n){"use strict";var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,e,n){"use strict";t.exports=function(t){if(null==t)throw TypeError("Can't call method on "+t);return t}},function(t,e,n){"use strict";var r=n(34),i=n(16);t.exports=function(t){return r(i(t))}},function(t,e,n){"use strict";t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e,n){"use strict";(function(t,n){function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	function webpackJsonpCallback(data) {
+/******/ 		var chunkIds = data[0];
+/******/ 		var moreModules = data[1];
+/******/
+/******/
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [];
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
+/******/
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
+/******/
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading chunks
+/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 	// Promise = chunk loading, 0 = chunk loaded
+/******/ 	var installedChunks = {
+/******/ 		"public": 0
+/******/ 	};
+/******/
+/******/
+/******/
+/******/ 	// script path function
+/******/ 	function jsonpScriptSrc(chunkId) {
+/******/ 		return __webpack_require__.p + "" + ({"vendors~editor-collab~editor-guest~editor-rich~files-modal":"vendors~editor-collab~editor-guest~editor-rich~files-modal","vendors~editor~files-modal":"vendors~editor~files-modal","vendors~files-modal":"vendors~files-modal","files-modal":"files-modal","vendors~editor":"vendors~editor","editor":"editor","highlight/1c":"highlight/1c","highlight/abnf":"highlight/abnf","highlight/accesslog":"highlight/accesslog","highlight/actionscript":"highlight/actionscript","highlight/ada":"highlight/ada","highlight/angelscript":"highlight/angelscript","highlight/apache":"highlight/apache","highlight/applescript":"highlight/applescript","highlight/arcade":"highlight/arcade","highlight/arduino":"highlight/arduino","highlight/armasm":"highlight/armasm","highlight/asciidoc":"highlight/asciidoc","highlight/aspectj":"highlight/aspectj","highlight/autohotkey":"highlight/autohotkey","highlight/autoit":"highlight/autoit","highlight/avrasm":"highlight/avrasm","highlight/awk":"highlight/awk","highlight/axapta":"highlight/axapta","highlight/bash":"highlight/bash","highlight/basic":"highlight/basic","highlight/bnf":"highlight/bnf","highlight/brainfuck":"highlight/brainfuck","highlight/c":"highlight/c","highlight/c-like":"highlight/c-like","highlight/cal":"highlight/cal","highlight/capnproto":"highlight/capnproto","highlight/ceylon":"highlight/ceylon","highlight/clean":"highlight/clean","highlight/clojure":"highlight/clojure","highlight/clojure-repl":"highlight/clojure-repl","highlight/cmake":"highlight/cmake","highlight/coffeescript":"highlight/coffeescript","highlight/coq":"highlight/coq","highlight/cos":"highlight/cos","highlight/cpp":"highlight/cpp","highlight/crmsh":"highlight/crmsh","highlight/crystal":"highlight/crystal","highlight/csharp":"highlight/csharp","highlight/csp":"highlight/csp","highlight/css":"highlight/css","highlight/d":"highlight/d","highlight/dart":"highlight/dart","highlight/delphi":"highlight/delphi","highlight/diff":"highlight/diff","highlight/django":"highlight/django","highlight/dns":"highlight/dns","highlight/dockerfile":"highlight/dockerfile","highlight/dos":"highlight/dos","highlight/dsconfig":"highlight/dsconfig","highlight/dts":"highlight/dts","highlight/dust":"highlight/dust","highlight/ebnf":"highlight/ebnf","highlight/elixir":"highlight/elixir","highlight/elm":"highlight/elm","highlight/erb":"highlight/erb","highlight/erlang":"highlight/erlang","highlight/erlang-repl":"highlight/erlang-repl","highlight/excel":"highlight/excel","highlight/fix":"highlight/fix","highlight/flix":"highlight/flix","highlight/fortran":"highlight/fortran","highlight/fsharp":"highlight/fsharp","highlight/gams":"highlight/gams","highlight/gauss":"highlight/gauss","highlight/gcode":"highlight/gcode","highlight/gherkin":"highlight/gherkin","highlight/glsl":"highlight/glsl","highlight/gml":"highlight/gml","highlight/go":"highlight/go","highlight/golo":"highlight/golo","highlight/gradle":"highlight/gradle","highlight/groovy":"highlight/groovy","highlight/haml":"highlight/haml","highlight/handlebars":"highlight/handlebars","highlight/haskell":"highlight/haskell","highlight/haxe":"highlight/haxe","highlight/hsp":"highlight/hsp","highlight/htmlbars":"highlight/htmlbars","highlight/http":"highlight/http","highlight/hy":"highlight/hy","highlight/inform7":"highlight/inform7","highlight/ini":"highlight/ini","highlight/irpf90":"highlight/irpf90","highlight/isbl":"highlight/isbl","highlight/java":"highlight/java","highlight/javascript":"highlight/javascript","highlight/jboss-cli":"highlight/jboss-cli","highlight/json":"highlight/json","highlight/julia":"highlight/julia","highlight/julia-repl":"highlight/julia-repl","highlight/kotlin":"highlight/kotlin","highlight/lasso":"highlight/lasso","highlight/latex":"highlight/latex","highlight/ldif":"highlight/ldif","highlight/leaf":"highlight/leaf","highlight/less":"highlight/less","highlight/lisp":"highlight/lisp","highlight/livecodeserver":"highlight/livecodeserver","highlight/livescript":"highlight/livescript","highlight/llvm":"highlight/llvm","highlight/lsl":"highlight/lsl","highlight/lua":"highlight/lua","highlight/makefile":"highlight/makefile","highlight/markdown":"highlight/markdown","highlight/mathematica":"highlight/mathematica","highlight/matlab":"highlight/matlab","highlight/maxima":"highlight/maxima","highlight/mel":"highlight/mel","highlight/mercury":"highlight/mercury","highlight/mipsasm":"highlight/mipsasm","highlight/mizar":"highlight/mizar","highlight/mojolicious":"highlight/mojolicious","highlight/monkey":"highlight/monkey","highlight/moonscript":"highlight/moonscript","highlight/n1ql":"highlight/n1ql","highlight/nginx":"highlight/nginx","highlight/nim":"highlight/nim","highlight/nix":"highlight/nix","highlight/node-repl":"highlight/node-repl","highlight/nsis":"highlight/nsis","highlight/objectivec":"highlight/objectivec","highlight/ocaml":"highlight/ocaml","highlight/openscad":"highlight/openscad","highlight/oxygene":"highlight/oxygene","highlight/parser3":"highlight/parser3","highlight/perl":"highlight/perl","highlight/pf":"highlight/pf","highlight/pgsql":"highlight/pgsql","highlight/php":"highlight/php","highlight/php-template":"highlight/php-template","highlight/plaintext":"highlight/plaintext","highlight/pony":"highlight/pony","highlight/powershell":"highlight/powershell","highlight/processing":"highlight/processing","highlight/profile":"highlight/profile","highlight/prolog":"highlight/prolog","highlight/properties":"highlight/properties","highlight/protobuf":"highlight/protobuf","highlight/puppet":"highlight/puppet","highlight/purebasic":"highlight/purebasic","highlight/python":"highlight/python","highlight/python-repl":"highlight/python-repl","highlight/q":"highlight/q","highlight/qml":"highlight/qml","highlight/r":"highlight/r","highlight/reasonml":"highlight/reasonml","highlight/rib":"highlight/rib","highlight/roboconf":"highlight/roboconf","highlight/routeros":"highlight/routeros","highlight/rsl":"highlight/rsl","highlight/ruby":"highlight/ruby","highlight/ruleslanguage":"highlight/ruleslanguage","highlight/rust":"highlight/rust","highlight/sas":"highlight/sas","highlight/scala":"highlight/scala","highlight/scheme":"highlight/scheme","highlight/scilab":"highlight/scilab","highlight/scss":"highlight/scss","highlight/shell":"highlight/shell","highlight/smali":"highlight/smali","highlight/smalltalk":"highlight/smalltalk","highlight/sml":"highlight/sml","highlight/sqf":"highlight/sqf","highlight/sql":"highlight/sql","highlight/sql_more":"highlight/sql_more","highlight/stan":"highlight/stan","highlight/stata":"highlight/stata","highlight/step21":"highlight/step21","highlight/stylus":"highlight/stylus","highlight/subunit":"highlight/subunit","highlight/swift":"highlight/swift","highlight/taggerscript":"highlight/taggerscript","highlight/tap":"highlight/tap","highlight/tcl":"highlight/tcl","highlight/thrift":"highlight/thrift","highlight/tp":"highlight/tp","highlight/twig":"highlight/twig","highlight/typescript":"highlight/typescript","highlight/vala":"highlight/vala","highlight/vbnet":"highlight/vbnet","highlight/vbscript":"highlight/vbscript","highlight/vbscript-html":"highlight/vbscript-html","highlight/verilog":"highlight/verilog","highlight/vhdl":"highlight/vhdl","highlight/vim":"highlight/vim","highlight/x86asm":"highlight/x86asm","highlight/xl":"highlight/xl","highlight/xml":"highlight/xml","highlight/xquery":"highlight/xquery","highlight/yaml":"highlight/yaml","highlight/zephir":"highlight/zephir","vendors~editor-collab~editor-guest":"vendors~editor-collab~editor-guest","editor-guest":"editor-guest","vendors~editor-collab":"vendors~editor-collab","editor-collab":"editor-collab","vendors~editor-rich":"vendors~editor-rich","editor-rich":"editor-rich"}[chunkId]||chunkId) + ".js?v=" + {"vendors~editor-collab~editor-guest~editor-rich~files-modal":"b72919af2b21652ed3cf","vendors~editor~files-modal":"44fc65c6931a1c1a7a9d","vendors~files-modal":"636aaf37728fa5ff13f5","files-modal":"2f0e44650c6138e81582","vendors~editor":"ab7d6c79ed614bdc4d7b","editor":"c19e9e57a2cf3f08248c","highlight/1c":"97a68e6fb16ca694df7d","highlight/abnf":"69805b2100eb1b33a416","highlight/accesslog":"bea56a975f4ee870e771","highlight/actionscript":"2b7a835a98032931dce8","highlight/ada":"07205b08a233cfff1d3b","highlight/angelscript":"76da61e6d7fada43da61","highlight/apache":"2024b78d98a90fc77187","highlight/applescript":"df41ff5ae164d104a31c","highlight/arcade":"0a3b34536a64873e179e","highlight/arduino":"6af645751fbcda226398","highlight/armasm":"a6ac475d1f50c3d7ae39","highlight/asciidoc":"9e8b03722fcdb1d0c6c0","highlight/aspectj":"029f74984944cdbe24b5","highlight/autohotkey":"9133024176949194d0eb","highlight/autoit":"69cc09293635db634cc1","highlight/avrasm":"5894f80bdc8febd4bbe9","highlight/awk":"6c3b258edcd85284fc92","highlight/axapta":"7fb7c4dc9a34476374f8","highlight/bash":"b8536d613301090285c0","highlight/basic":"88ca617d069c4f7db7b6","highlight/bnf":"9ae00ec5f7f2f5ac392c","highlight/brainfuck":"a36ebae8da84c62c9b12","highlight/c":"3095bb0277bfb89eb74f","highlight/c-like":"88a1c1b13dd83db9916b","highlight/cal":"592093a49377d29bbd53","highlight/capnproto":"a6459dc089b4e7683682","highlight/ceylon":"7f2be5a8f895d94a7572","highlight/clean":"430fdab19ea261921568","highlight/clojure":"d7428567d861642c01c9","highlight/clojure-repl":"88fa664a94c790db025a","highlight/cmake":"d124d1f1d086233fe1fc","highlight/coffeescript":"3d0cc6a2c9e2edfbee1d","highlight/coq":"a7d1f7ffb06fbf07de70","highlight/cos":"f795bf0a449a82f09555","highlight/cpp":"4438ee526fb988f6f4df","highlight/crmsh":"8ae6befab92379391b1b","highlight/crystal":"8ca1db6082ad06a5b71f","highlight/csharp":"148a750e56470d2912f3","highlight/csp":"3b282a34fc3ff043cf3a","highlight/css":"9f9d7851456db3b25774","highlight/d":"979ff7e8b4f0a9b21070","highlight/dart":"865826c09fc7553151a4","highlight/delphi":"3a006e0c4b9791cffb88","highlight/diff":"bbb9296722eace98aabd","highlight/django":"6b0c4e446ae072bc58b1","highlight/dns":"5cec0851818f5143d387","highlight/dockerfile":"5dd5de0be078d3ce50ad","highlight/dos":"a2d2fd4c9c144fa05420","highlight/dsconfig":"ab194556e942a950e85d","highlight/dts":"c5af0eab574cf6cf6500","highlight/dust":"78d5f0f83ba1d52751f7","highlight/ebnf":"9d166f2b70620c2c820a","highlight/elixir":"1eee89b620fa9122f2f2","highlight/elm":"2c02a8ee37abc11f6dd5","highlight/erb":"dd2f9b7577dc246f0edd","highlight/erlang":"45b5754807acc2041416","highlight/erlang-repl":"67a8eb40a2425c6647d8","highlight/excel":"f3fb8966642703eaac3e","highlight/fix":"a8e19e2adbe62fce23a6","highlight/flix":"a1e4b02ae80e85fa8c22","highlight/fortran":"839ef06a50f3b98b8e93","highlight/fsharp":"2b1582bc1318d2db2ce6","highlight/gams":"eaf0d791fd506df599ff","highlight/gauss":"a00d8b6917ae9a4c5c76","highlight/gcode":"788d54a21fcb4716ea80","highlight/gherkin":"bfeeabcb800a1373c0b4","highlight/glsl":"088b189622eacafd7a36","highlight/gml":"a6dec6fdfc7221ac899d","highlight/go":"d4fd395c06f71a0f4e24","highlight/golo":"630b108487f660c555c6","highlight/gradle":"d3da03b50d230dc73da6","highlight/groovy":"d35ea2c93374a225afe8","highlight/haml":"217ea9da90627b33f035","highlight/handlebars":"b2355a6abf1f0d9830f2","highlight/haskell":"96e2860c086cdf50ace7","highlight/haxe":"f4f0e657b328d1659e46","highlight/hsp":"64f3fff6e351afaeaef0","highlight/htmlbars":"8a98e4921311bfe31a44","highlight/http":"e4b52fd62e90fc6bb3cc","highlight/hy":"ade4b85616d966f9a325","highlight/inform7":"9b7838c03ceb55e32bda","highlight/ini":"88d439f5f6419f1d994e","highlight/irpf90":"8df2189cb478d1803808","highlight/isbl":"39e7e4f0ba8c2c9cede5","highlight/java":"90ce90e455dd27a8b718","highlight/javascript":"f4eddb5614e4ead538e8","highlight/jboss-cli":"f5e73fc753d1c629bb60","highlight/json":"d27bc39a34bda6d19231","highlight/julia":"86129343f8cd76df062c","highlight/julia-repl":"288a8bc23a52d94e1147","highlight/kotlin":"902e63681ff010d8a91a","highlight/lasso":"d7854bddd4adffc3e4d3","highlight/latex":"c284394e1aa586d3d613","highlight/ldif":"ad4f32986701ab02f17e","highlight/leaf":"e1adb90af145dfafd4cc","highlight/less":"1f1f1b315302658f05d5","highlight/lisp":"994895303e63f1efff03","highlight/livecodeserver":"2c45e5be9e88c2a88e15","highlight/livescript":"b59cf5506030c7a0c66e","highlight/llvm":"47dacce958f8125fda21","highlight/lsl":"3ce9cea06fbfee31d86f","highlight/lua":"2b1a58d5487f44dd8035","highlight/makefile":"e7926c15117f90713750","highlight/markdown":"aff9d64cf31285f1a37a","highlight/mathematica":"89bb6d01622b1c1c3fd3","highlight/matlab":"a7d4dfdb318189835801","highlight/maxima":"65882aaa322cb544f3b7","highlight/mel":"1a49ad4aceeb68c5e942","highlight/mercury":"a2e6449aa89e99dd34f2","highlight/mipsasm":"4e25ba3230bf3adde68b","highlight/mizar":"2e9f313c06472e0f5ccf","highlight/mojolicious":"1af58fd695fff8ec480e","highlight/monkey":"17fd005efd2b0a98f376","highlight/moonscript":"5b6b60ca03dfb9bf0c50","highlight/n1ql":"d90e862179bff8ee95e9","highlight/nginx":"3e0fa9256f968207dd69","highlight/nim":"1d7e55fbc1aa557da76e","highlight/nix":"d69d7d16a99c9361291e","highlight/node-repl":"e505561b7b70ede6a429","highlight/nsis":"874655284974eac7717f","highlight/objectivec":"6fd60c23cf49cf077e1b","highlight/ocaml":"3b3cd0e9396322302171","highlight/openscad":"f4e1c5a632b5ee8f603c","highlight/oxygene":"1eb6220e871b57ec3f74","highlight/parser3":"16183edc7953e06a3f5d","highlight/perl":"2db6b55ccfc1f496a060","highlight/pf":"5a57e61c04391c296ee9","highlight/pgsql":"46bb4adb4a1f829df818","highlight/php":"18475eef9c64856531d8","highlight/php-template":"9e9bd24f58af6181f527","highlight/plaintext":"0ee7fbe76345cba37b94","highlight/pony":"63c1f3baf4d9bb3b7b16","highlight/powershell":"284ebc58a4b23bde8e76","highlight/processing":"b9d69fcbac36852207da","highlight/profile":"1cac9d671161756f849e","highlight/prolog":"e2e22b502708b04719eb","highlight/properties":"d4850d0df86bed4b2fa8","highlight/protobuf":"8045b3bdde2e5d048ac5","highlight/puppet":"b24baea7f2bd3966a7ec","highlight/purebasic":"ec25373ca0fb7ba710b6","highlight/python":"46f56a5733f2d5b20031","highlight/python-repl":"8df2899632669ddd41b1","highlight/q":"b1226ac13ca86d204a53","highlight/qml":"ff6dc5351651eb6b8074","highlight/r":"fa0a99657facdda0e1f8","highlight/reasonml":"91c3cce49ff9c72c47aa","highlight/rib":"64d83e5ce9d89e57c1e2","highlight/roboconf":"c60991983ae63815169d","highlight/routeros":"46edb6a6908900869bb9","highlight/rsl":"09add9f46b4f0ee1a48d","highlight/ruby":"cbd7e00e4beb5ef53b2c","highlight/ruleslanguage":"211487ced021c9d1a15a","highlight/rust":"f0b33dc5f51088d564ee","highlight/sas":"f7ffc43c00cb842ac437","highlight/scala":"ab02376870dd23737c64","highlight/scheme":"5eb9c9732baebf49be67","highlight/scilab":"e39095d27df230081f85","highlight/scss":"237cf0acf9f66bd2ce20","highlight/shell":"3b89aab7c23298453b98","highlight/smali":"9e5c3d26daa10b8d9a13","highlight/smalltalk":"c0e556fa61176001d2ea","highlight/sml":"c9f12fca76f3f3396a72","highlight/sqf":"19cc3aca262e321da956","highlight/sql":"f1fe6f4c234161f7487c","highlight/sql_more":"f19555ea6e87a687d9ed","highlight/stan":"361c56fbb87ea6c7dfc3","highlight/stata":"50eba271716f287ea606","highlight/step21":"2f799595be85db3da28d","highlight/stylus":"eb533ce588e5e144468a","highlight/subunit":"3cbd5427ab29243f2711","highlight/swift":"2595bf294e100f66e239","highlight/taggerscript":"2ee19f7a29e680ca9f2f","highlight/tap":"4bb20249512bc448b684","highlight/tcl":"45813b9b8bf1eb19e395","highlight/thrift":"a8718408fa3a650391ca","highlight/tp":"007bfa5a3c3574131447","highlight/twig":"f7d67a9c22a017de13c3","highlight/typescript":"32660ce4ef4898972f72","highlight/vala":"0fe8ac2cc4f71588d27b","highlight/vbnet":"0cccaec8c7fb4fa98764","highlight/vbscript":"8ade9a1edc5a311a7dad","highlight/vbscript-html":"e028d9dfbbadf1db35e3","highlight/verilog":"1f867b702f1036d59102","highlight/vhdl":"78d7fd01da7e7c2dfdd1","highlight/vim":"c000be6a6c2cbcbdbc19","highlight/x86asm":"db6521bcd01bac60391a","highlight/xl":"122679752f8ae8b62e3d","highlight/xml":"d0f98aed182dcab28928","highlight/xquery":"1d1198a8af8a3adec46e","highlight/yaml":"05029146c0c896079e49","highlight/zephir":"b402010d71179b054544","vendors~editor-collab~editor-guest":"454ecd7bc8416fb0247e","editor-guest":"664f74324d2a3c34a015","vendors~editor-collab":"b7e8c773924478eddfdf","editor-collab":"14adbfbd5bd796dbab09","vendors~editor-rich":"a5a437b0ebd760958b05","editor-rich":"e57626c4dac87889956e"}[chunkId] + ""
+/******/ 	}
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var promises = [];
+/******/
+/******/
+/******/ 		// JSONP chunk loading for javascript
+/******/
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
+/******/
+/******/ 			// a Promise means "currently loading".
+/******/ 			if(installedChunkData) {
+/******/ 				promises.push(installedChunkData[2]);
+/******/ 			} else {
+/******/ 				// setup Promise in chunk cache
+/******/ 				var promise = new Promise(function(resolve, reject) {
+/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 				});
+/******/ 				promises.push(installedChunkData[2] = promise);
+/******/
+/******/ 				// start chunk loading
+/******/ 				var script = document.createElement('script');
+/******/ 				var onScriptComplete;
+/******/
+/******/ 				script.charset = 'utf-8';
+/******/ 				script.timeout = 120;
+/******/ 				if (__webpack_require__.nc) {
+/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 				}
+/******/ 				script.src = jsonpScriptSrc(chunkId);
+/******/
+/******/ 				// create error before stack unwound to get useful stacktrace later
+/******/ 				var error = new Error();
+/******/ 				onScriptComplete = function (event) {
+/******/ 					// avoid mem leaks in IE.
+/******/ 					script.onerror = script.onload = null;
+/******/ 					clearTimeout(timeout);
+/******/ 					var chunk = installedChunks[chunkId];
+/******/ 					if(chunk !== 0) {
+/******/ 						if(chunk) {
+/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 							var realSrc = event && event.target && event.target.src;
+/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+/******/ 							error.name = 'ChunkLoadError';
+/******/ 							error.type = errorType;
+/******/ 							error.request = realSrc;
+/******/ 							chunk[1](error);
+/******/ 						}
+/******/ 						installedChunks[chunkId] = undefined;
+/******/ 					}
+/******/ 				};
+/******/ 				var timeout = setTimeout(function(){
+/******/ 					onScriptComplete({ type: 'timeout', target: script });
+/******/ 				}, 120000);
+/******/ 				script.onerror = script.onload = onScriptComplete;
+/******/ 				document.head.appendChild(script);
+/******/ 			}
+/******/ 		}
+/******/ 		return Promise.all(promises);
+/******/ 	};
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/js/";
+/******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
+/******/ 	var jsonpArray = window["textWebpackJsonp"] = window["textWebpackJsonp"] || [];
+/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
+/******/ 	jsonpArray.push = webpackJsonpCallback;
+/******/ 	jsonpArray = jsonpArray.slice();
+/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+/******/ 	var parentJsonpFunction = oldJsonpFunction;
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/public.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/@nextcloud/auth/dist/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@nextcloud/auth/dist/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "getRequestToken", {
+  enumerable: true,
+  get: function get() {
+    return _requesttoken.getRequestToken;
+  }
+});
+Object.defineProperty(exports, "onRequestTokenUpdate", {
+  enumerable: true,
+  get: function get() {
+    return _requesttoken.onRequestTokenUpdate;
+  }
+});
+Object.defineProperty(exports, "getCurrentUser", {
+  enumerable: true,
+  get: function get() {
+    return _user.getCurrentUser;
+  }
+});
+
+var _requesttoken = __webpack_require__(/*! ./requesttoken */ "./node_modules/@nextcloud/auth/dist/requesttoken.js");
+
+var _user = __webpack_require__(/*! ./user */ "./node_modules/@nextcloud/auth/dist/user.js");
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/auth/dist/requesttoken.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@nextcloud/auth/dist/requesttoken.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRequestToken = getRequestToken;
+exports.onRequestTokenUpdate = onRequestTokenUpdate;
+
+var _eventBus = __webpack_require__(/*! @nextcloud/event-bus */ "./node_modules/@nextcloud/event-bus/dist/index.js");
+
+var tokenElement = document.getElementsByTagName('head')[0];
+var token = tokenElement ? tokenElement.getAttribute('data-requesttoken') : null;
+var observers = [];
+
+function getRequestToken() {
+  return token;
+}
+
+function onRequestTokenUpdate(observer) {
+  observers.push(observer);
+} // Listen to server event and keep token in sync
+
+
+(0, _eventBus.subscribe)('csrf-token-update', function (e) {
+  token = e.token;
+  observers.forEach(function (observer) {
+    try {
+      observer(e.token);
+    } catch (e) {
+      console.error('error updating CSRF token observer', e);
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/auth/dist/user.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@nextcloud/auth/dist/user.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getCurrentUser = getCurrentUser; /// <reference types="@nextcloud/typings" />
+
+var uidElement = document.getElementsByTagName('head')[0];
+var uid = uidElement ? uidElement.getAttribute('data-user') : null;
+var displayNameElement = document.getElementsByTagName('head')[0];
+var displayName = displayNameElement ? displayNameElement.getAttribute('data-user-displayname') : null;
+var isAdmin = typeof OC === 'undefined' ? false : OC.isUserAdmin();
+
+function getCurrentUser() {
+  if (uid === null) {
+    return null;
+  }
+
+  return {
+    uid: uid,
+    displayName: displayName,
+    isAdmin: isAdmin
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/axios/dist/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@nextcloud/axios/dist/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.object.assign.js */ "./node_modules/core-js/modules/es.object.assign.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+
+var _auth = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+var client = _axios.default.create({
+  headers: {
+    requesttoken: (0, _auth.getRequestToken)()
+  }
+});
+
+var cancelableClient = Object.assign(client, {
+  CancelToken: _axios.default.CancelToken,
+  isCancel: _axios.default.isCancel
+});
+(0, _auth.onRequestTokenUpdate)(function (token) {
+  return client.defaults.headers.requesttoken = token;
+});
+var _default = cancelableClient;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/browser-storage/dist/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@nextcloud/browser-storage/dist/index.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+
+__webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+
+__webpack_require__(/*! core-js/modules/es.object.keys.js */ "./node_modules/core-js/modules/es.object.keys.js");
+
+__webpack_require__(/*! core-js/modules/es.string.starts-with.js */ "./node_modules/core-js/modules/es.string.starts-with.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getBuilder = getBuilder;
+exports.clearAll = clearAll;
+exports.clearNonPersistent = clearNonPersistent;
+
+var _storagebuilder = _interopRequireDefault(__webpack_require__(/*! ./storagebuilder */ "./node_modules/@nextcloud/browser-storage/dist/storagebuilder.js"));
+
+var _scopedstorage = _interopRequireDefault(__webpack_require__(/*! ./scopedstorage */ "./node_modules/@nextcloud/browser-storage/dist/scopedstorage.js"));
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+function getBuilder(appId) {
+  return new _storagebuilder.default(appId);
+}
+
+function clearStorage(storage, pred) {
+  Object.keys(storage).filter(function (k) {
+    return pred ? pred(k) : true;
+  }).map(storage.removeItem.bind(storage));
+}
+
+function clearAll() {
+  var storages = [window.sessionStorage, window.localStorage];
+  storages.map(function (s) {
+    return clearStorage(s);
+  });
+}
+
+function clearNonPersistent() {
+  var storages = [window.sessionStorage, window.localStorage];
+  storages.map(function (s) {
+    return clearStorage(s, function (k) {
+      return !k.startsWith(_scopedstorage.default.GLOBAL_SCOPE_PERSISTENT);
+    });
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/browser-storage/dist/scopedstorage.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@nextcloud/browser-storage/dist/scopedstorage.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+
+__webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+
+__webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+
+__webpack_require__(/*! core-js/modules/es.object.keys.js */ "./node_modules/core-js/modules/es.object.keys.js");
+
+__webpack_require__(/*! core-js/modules/es.string.starts-with.js */ "./node_modules/core-js/modules/es.string.starts-with.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var ScopedStorage = /*#__PURE__*/function () {
+  function ScopedStorage(scope, wrapped, persistent) {
+    _classCallCheck(this, ScopedStorage);
+
+    _defineProperty(this, "scope", void 0);
+
+    _defineProperty(this, "wrapped", void 0);
+
+    this.scope = "".concat(persistent ? ScopedStorage.GLOBAL_SCOPE_PERSISTENT : ScopedStorage.GLOBAL_SCOPE_VOLATILE, "_").concat(btoa(scope), "_");
+    this.wrapped = wrapped;
+  }
+
+  _createClass(ScopedStorage, [{
+    key: "scopeKey",
+    value: function scopeKey(key) {
+      return "".concat(this.scope).concat(key);
+    }
+  }, {
+    key: "setItem",
+    value: function setItem(key, value) {
+      this.wrapped.setItem(this.scopeKey(key), value);
+    }
+  }, {
+    key: "getItem",
+    value: function getItem(key) {
+      return this.wrapped.getItem(this.scopeKey(key));
+    }
+  }, {
+    key: "removeItem",
+    value: function removeItem(key) {
+      this.wrapped.removeItem(this.scopeKey(key));
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      var _this = this;
+
+      Object.keys(this.wrapped).filter(function (key) {
+        return key.startsWith(_this.scope);
+      }).map(this.wrapped.removeItem.bind(this.wrapped));
+    }
+  }]);
+
+  return ScopedStorage;
+}();
+
+exports.default = ScopedStorage;
+
+_defineProperty(ScopedStorage, "GLOBAL_SCOPE_VOLATILE", 'nextcloud_vol');
+
+_defineProperty(ScopedStorage, "GLOBAL_SCOPE_PERSISTENT", 'nextcloud_per');
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/browser-storage/dist/storagebuilder.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@nextcloud/browser-storage/dist/storagebuilder.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _scopedstorage = _interopRequireDefault(__webpack_require__(/*! ./scopedstorage */ "./node_modules/@nextcloud/browser-storage/dist/scopedstorage.js"));
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var StorageBuilder = /*#__PURE__*/function () {
+  function StorageBuilder(appId) {
+    _classCallCheck(this, StorageBuilder);
+
+    _defineProperty(this, "appId", void 0);
+
+    _defineProperty(this, "persisted", false);
+
+    _defineProperty(this, "clearedOnLogout", false);
+
+    this.appId = appId;
+  }
+
+  _createClass(StorageBuilder, [{
+    key: "persist",
+    value: function persist() {
+      var _persist = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      this.persisted = _persist;
+      return this;
+    }
+  }, {
+    key: "clearOnLogout",
+    value: function clearOnLogout() {
+      var clear = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      this.clearedOnLogout = clear;
+      return this;
+    }
+  }, {
+    key: "build",
+    value: function build() {
+      return new _scopedstorage.default(this.appId, this.persisted ? window.localStorage : window.sessionStorage, !this.clearedOnLogout);
+    }
+  }]);
+
+  return StorageBuilder;
+}();
+
+exports.default = StorageBuilder;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/dist/ProxyBus.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/dist/ProxyBus.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ProxyBus = void 0;
+
+var _valid = _interopRequireDefault(__webpack_require__(/*! semver/functions/valid */ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/valid.js"));
+
+var _major = _interopRequireDefault(__webpack_require__(/*! semver/functions/major */ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/major.js"));
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var packageJson = {
+  name: "@nextcloud/event-bus",
+  version: "1.2.0",
+  description: "",
+  main: "dist/index.js",
+  types: "dist/index.d.ts",
+  scripts: {
+    build: "babel ./lib --out-dir dist --extensions '.ts,.tsx' --source-maps && tsc --emitDeclarationOnly",
+    "build:doc": "typedoc --excludeNotExported --mode file --out dist/doc lib/index.ts && touch dist/doc/.nojekyll",
+    "check-types": "tsc",
+    dev: "babel ./lib --out-dir dist --extensions '.ts,.tsx' --watch",
+    test: "jest",
+    "test:watch": "jest --watchAll"
+  },
+  keywords: ["nextcloud"],
+  homepage: "https://github.com/nextcloud/nextcloud-event-bus#readme",
+  author: "Christoph Wurst",
+  license: "GPL-3.0-or-later",
+  repository: {
+    type: "git",
+    url: "https://github.com/nextcloud/nextcloud-event-bus"
+  },
+  dependencies: {
+    "@types/semver": "^7.1.0",
+    "core-js": "^3.6.2",
+    semver: "^7.3.2"
+  },
+  devDependencies: {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@nextcloud/browserslist-config": "^1.0.0",
+    "babel-jest": "^26.0.1",
+    "babel-plugin-inline-json-import": "^0.3.2",
+    jest: "^26.0.1",
+    typedoc: "^0.17.2",
+    typescript: "^3.6.3"
+  },
+  browserslist: ["extends @nextcloud/browserslist-config"]
+};
+
+var ProxyBus = /*#__PURE__*/function () {
+  function ProxyBus(bus) {
+    _classCallCheck(this, ProxyBus);
+
+    _defineProperty(this, "bus", void 0);
+
+    if (typeof bus.getVersion !== 'function' || !(0, _valid.default)(bus.getVersion())) {
+      console.warn('Proxying an event bus with an unknown or invalid version');
+    } else if ((0, _major.default)(bus.getVersion()) !== (0, _major.default)(this.getVersion())) {
+      console.warn('Proxying an event bus of version ' + bus.getVersion() + ' with ' + this.getVersion());
+    }
+
+    this.bus = bus;
+  }
+
+  _createClass(ProxyBus, [{
+    key: "getVersion",
+    value: function getVersion() {
+      return packageJson.version;
+    }
+  }, {
+    key: "subscribe",
+    value: function subscribe(name, handler) {
+      this.bus.subscribe(name, handler);
+    }
+  }, {
+    key: "unsubscribe",
+    value: function unsubscribe(name, handler) {
+      this.bus.unsubscribe(name, handler);
+    }
+  }, {
+    key: "emit",
+    value: function emit(name, event) {
+      this.bus.emit(name, event);
+    }
+  }]);
+
+  return ProxyBus;
+}();
+
+exports.ProxyBus = ProxyBus;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/dist/SimpleBus.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/dist/SimpleBus.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+
+__webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+
+__webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+
+__webpack_require__(/*! core-js/modules/es.map.js */ "./node_modules/core-js/modules/es.map.js");
+
+__webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+
+__webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+
+__webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+
+__webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SimpleBus = void 0;
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var packageJson = {
+  name: "@nextcloud/event-bus",
+  version: "1.2.0",
+  description: "",
+  main: "dist/index.js",
+  types: "dist/index.d.ts",
+  scripts: {
+    build: "babel ./lib --out-dir dist --extensions '.ts,.tsx' --source-maps && tsc --emitDeclarationOnly",
+    "build:doc": "typedoc --excludeNotExported --mode file --out dist/doc lib/index.ts && touch dist/doc/.nojekyll",
+    "check-types": "tsc",
+    dev: "babel ./lib --out-dir dist --extensions '.ts,.tsx' --watch",
+    test: "jest",
+    "test:watch": "jest --watchAll"
+  },
+  keywords: ["nextcloud"],
+  homepage: "https://github.com/nextcloud/nextcloud-event-bus#readme",
+  author: "Christoph Wurst",
+  license: "GPL-3.0-or-later",
+  repository: {
+    type: "git",
+    url: "https://github.com/nextcloud/nextcloud-event-bus"
+  },
+  dependencies: {
+    "@types/semver": "^7.1.0",
+    "core-js": "^3.6.2",
+    semver: "^7.3.2"
+  },
+  devDependencies: {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@nextcloud/browserslist-config": "^1.0.0",
+    "babel-jest": "^26.0.1",
+    "babel-plugin-inline-json-import": "^0.3.2",
+    jest: "^26.0.1",
+    typedoc: "^0.17.2",
+    typescript: "^3.6.3"
+  },
+  browserslist: ["extends @nextcloud/browserslist-config"]
+};
+
+var SimpleBus = /*#__PURE__*/function () {
+  function SimpleBus() {
+    _classCallCheck(this, SimpleBus);
+
+    _defineProperty(this, "handlers", new Map());
+  }
+
+  _createClass(SimpleBus, [{
+    key: "getVersion",
+    value: function getVersion() {
+      return packageJson.version;
+    }
+  }, {
+    key: "subscribe",
+    value: function subscribe(name, handler) {
+      this.handlers.set(name, (this.handlers.get(name) || []).concat(handler));
+    }
+  }, {
+    key: "unsubscribe",
+    value: function unsubscribe(name, handler) {
+      this.handlers.set(name, (this.handlers.get(name) || []).filter(function (h) {
+        return h != handler;
+      }));
+    }
+  }, {
+    key: "emit",
+    value: function emit(name, event) {
+      (this.handlers.get(name) || []).forEach(function (h) {
+        try {
+          h(event);
+        } catch (e) {
+          console.error('could not invoke event listener', e);
+        }
+      });
+    }
+  }]);
+
+  return SimpleBus;
+}();
+
+exports.SimpleBus = SimpleBus;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/dist/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/dist/index.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.subscribe = subscribe;
+exports.unsubscribe = unsubscribe;
+exports.emit = emit;
+
+var _ProxyBus = __webpack_require__(/*! ./ProxyBus */ "./node_modules/@nextcloud/event-bus/dist/ProxyBus.js");
+
+var _SimpleBus = __webpack_require__(/*! ./SimpleBus */ "./node_modules/@nextcloud/event-bus/dist/SimpleBus.js");
+
+function getBus() {
+  if (typeof window.OC !== 'undefined' && window.OC._eventBus && typeof window._nc_event_bus === 'undefined') {
+    console.warn('found old event bus instance at OC._eventBus. Update your version!');
+    window._nc_event_bus = window.OC._eventBus;
+  } // Either use an existing event bus instance or create one
+
+
+  if (typeof window._nc_event_bus !== 'undefined') {
+    return new _ProxyBus.ProxyBus(window._nc_event_bus);
+  } else {
+    return window._nc_event_bus = new _SimpleBus.SimpleBus();
+  }
+}
+
+var bus = getBus();
+/**
+ * Register an event listener
+ *
+ * @param name name of the event
+ * @param handler callback invoked for every matching event emitted on the bus
+ */
+
+function subscribe(name, handler) {
+  bus.subscribe(name, handler);
+}
+/**
+ * Unregister a previously registered event listener
+ *
+ * Note: doesn't work with anonymous functions (closures). Use method of an object or store listener function in variable.
+ *
+ * @param name name of the event
+ * @param handler callback passed to `subscribed`
+ */
+
+
+function unsubscribe(name, handler) {
+  bus.unsubscribe(name, handler);
+}
+/**
+ * Emit an event
+ *
+ * @param name name of the event
+ * @param event event payload
+ */
+
+
+function emit(name, event) {
+  bus.emit(name, event);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/classes/semver.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/classes/semver.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var debug = __webpack_require__(/*! ../internal/debug */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/debug.js");
+
+var _require = __webpack_require__(/*! ../internal/constants */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/constants.js"),
+    MAX_LENGTH = _require.MAX_LENGTH,
+    MAX_SAFE_INTEGER = _require.MAX_SAFE_INTEGER;
+
+var _require2 = __webpack_require__(/*! ../internal/re */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/re.js"),
+    re = _require2.re,
+    t = _require2.t;
+
+var _require3 = __webpack_require__(/*! ../internal/identifiers */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/identifiers.js"),
+    compareIdentifiers = _require3.compareIdentifiers;
+
+var SemVer = /*#__PURE__*/function () {
+  function SemVer(version, options) {
+    _classCallCheck(this, SemVer);
+
+    if (!options || _typeof(options) !== 'object') {
+      options = {
+        loose: !!options,
+        includePrerelease: false
+      };
+    }
+
+    if (version instanceof SemVer) {
+      if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+        return version;
+      } else {
+        version = version.version;
+      }
+    } else if (typeof version !== 'string') {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    if (version.length > MAX_LENGTH) {
+      throw new TypeError("version is longer than ".concat(MAX_LENGTH, " characters"));
+    }
+
+    debug('SemVer', version, options);
+    this.options = options;
+    this.loose = !!options.loose; // this isn't actually relevant for versions, but keep it so that we
+    // don't run into trouble passing this.options around.
+
+    this.includePrerelease = !!options.includePrerelease;
+    var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+
+    if (!m) {
+      throw new TypeError("Invalid Version: ".concat(version));
+    }
+
+    this.raw = version; // these are actually numbers
+
+    this.major = +m[1];
+    this.minor = +m[2];
+    this.patch = +m[3];
+
+    if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
+      throw new TypeError('Invalid major version');
+    }
+
+    if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
+      throw new TypeError('Invalid minor version');
+    }
+
+    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
+      throw new TypeError('Invalid patch version');
+    } // numberify any prerelease numeric ids
+
+
+    if (!m[4]) {
+      this.prerelease = [];
+    } else {
+      this.prerelease = m[4].split('.').map(function (id) {
+        if (/^[0-9]+$/.test(id)) {
+          var num = +id;
+
+          if (num >= 0 && num < MAX_SAFE_INTEGER) {
+            return num;
+          }
+        }
+
+        return id;
+      });
+    }
+
+    this.build = m[5] ? m[5].split('.') : [];
+    this.format();
+  }
+
+  _createClass(SemVer, [{
+    key: "format",
+    value: function format() {
+      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
+
+      if (this.prerelease.length) {
+        this.version += "-".concat(this.prerelease.join('.'));
+      }
+
+      return this.version;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.version;
+    }
+  }, {
+    key: "compare",
+    value: function compare(other) {
+      debug('SemVer.compare', this.version, this.options, other);
+
+      if (!(other instanceof SemVer)) {
+        if (typeof other === 'string' && other === this.version) {
+          return 0;
+        }
+
+        other = new SemVer(other, this.options);
+      }
+
+      if (other.version === this.version) {
+        return 0;
+      }
+
+      return this.compareMain(other) || this.comparePre(other);
+    }
+  }, {
+    key: "compareMain",
+    value: function compareMain(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      return compareIdentifiers(this.major, other.major) || compareIdentifiers(this.minor, other.minor) || compareIdentifiers(this.patch, other.patch);
+    }
+  }, {
+    key: "comparePre",
+    value: function comparePre(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      } // NOT having a prerelease is > having one
+
+
+      if (this.prerelease.length && !other.prerelease.length) {
+        return -1;
+      } else if (!this.prerelease.length && other.prerelease.length) {
+        return 1;
+      } else if (!this.prerelease.length && !other.prerelease.length) {
+        return 0;
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.prerelease[i];
+        var b = other.prerelease[i];
+        debug('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers(a, b);
+        }
+      } while (++i);
+    }
+  }, {
+    key: "compareBuild",
+    value: function compareBuild(other) {
+      if (!(other instanceof SemVer)) {
+        other = new SemVer(other, this.options);
+      }
+
+      var i = 0;
+
+      do {
+        var a = this.build[i];
+        var b = other.build[i];
+        debug('prerelease compare', i, a, b);
+
+        if (a === undefined && b === undefined) {
+          return 0;
+        } else if (b === undefined) {
+          return 1;
+        } else if (a === undefined) {
+          return -1;
+        } else if (a === b) {
+          continue;
+        } else {
+          return compareIdentifiers(a, b);
+        }
+      } while (++i);
+    } // preminor will bump the version up to the next minor release, and immediately
+    // down to pre-release. premajor and prepatch work the same way.
+
+  }, {
+    key: "inc",
+    value: function inc(release, identifier) {
+      switch (release) {
+        case 'premajor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor = 0;
+          this.major++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'preminor':
+          this.prerelease.length = 0;
+          this.patch = 0;
+          this.minor++;
+          this.inc('pre', identifier);
+          break;
+
+        case 'prepatch':
+          // If this is already a prerelease, it will bump to the next version
+          // drop any prereleases that might already exist, since they are not
+          // relevant at this point.
+          this.prerelease.length = 0;
+          this.inc('patch', identifier);
+          this.inc('pre', identifier);
+          break;
+        // If the input is a non-prerelease version, this acts the same as
+        // prepatch.
+
+        case 'prerelease':
+          if (this.prerelease.length === 0) {
+            this.inc('patch', identifier);
+          }
+
+          this.inc('pre', identifier);
+          break;
+
+        case 'major':
+          // If this is a pre-major version, bump up to the same major version.
+          // Otherwise increment major.
+          // 1.0.0-5 bumps to 1.0.0
+          // 1.1.0 bumps to 2.0.0
+          if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+            this.major++;
+          }
+
+          this.minor = 0;
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'minor':
+          // If this is a pre-minor version, bump up to the same minor version.
+          // Otherwise increment minor.
+          // 1.2.0-5 bumps to 1.2.0
+          // 1.2.1 bumps to 1.3.0
+          if (this.patch !== 0 || this.prerelease.length === 0) {
+            this.minor++;
+          }
+
+          this.patch = 0;
+          this.prerelease = [];
+          break;
+
+        case 'patch':
+          // If this is not a pre-release version, it will increment the patch.
+          // If it is a pre-release it will bump up to the same patch version.
+          // 1.2.0-5 patches to 1.2.0
+          // 1.2.0 patches to 1.2.1
+          if (this.prerelease.length === 0) {
+            this.patch++;
+          }
+
+          this.prerelease = [];
+          break;
+        // This probably shouldn't be used publicly.
+        // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+
+        case 'pre':
+          if (this.prerelease.length === 0) {
+            this.prerelease = [0];
+          } else {
+            var i = this.prerelease.length;
+
+            while (--i >= 0) {
+              if (typeof this.prerelease[i] === 'number') {
+                this.prerelease[i]++;
+                i = -2;
+              }
+            }
+
+            if (i === -1) {
+              // didn't increment anything
+              this.prerelease.push(0);
+            }
+          }
+
+          if (identifier) {
+            // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+            // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+            if (this.prerelease[0] === identifier) {
+              if (isNaN(this.prerelease[1])) {
+                this.prerelease = [identifier, 0];
+              }
+            } else {
+              this.prerelease = [identifier, 0];
+            }
+          }
+
+          break;
+
+        default:
+          throw new Error("invalid increment argument: ".concat(release));
+      }
+
+      this.format();
+      this.raw = this.version;
+      return this;
+    }
+  }]);
+
+  return SemVer;
+}();
+
+module.exports = SemVer;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/major.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/functions/major.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var SemVer = __webpack_require__(/*! ../classes/semver */ "./node_modules/@nextcloud/event-bus/node_modules/semver/classes/semver.js");
+
+var major = function major(a, loose) {
+  return new SemVer(a, loose).major;
+};
+
+module.exports = major;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/parse.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/functions/parse.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var _require = __webpack_require__(/*! ../internal/constants */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/constants.js"),
+    MAX_LENGTH = _require.MAX_LENGTH;
+
+var _require2 = __webpack_require__(/*! ../internal/re */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/re.js"),
+    re = _require2.re,
+    t = _require2.t;
+
+var SemVer = __webpack_require__(/*! ../classes/semver */ "./node_modules/@nextcloud/event-bus/node_modules/semver/classes/semver.js");
+
+var parse = function parse(version, options) {
+  if (!options || _typeof(options) !== 'object') {
+    options = {
+      loose: !!options,
+      includePrerelease: false
+    };
+  }
+
+  if (version instanceof SemVer) {
+    return version;
+  }
+
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  if (version.length > MAX_LENGTH) {
+    return null;
+  }
+
+  var r = options.loose ? re[t.LOOSE] : re[t.FULL];
+
+  if (!r.test(version)) {
+    return null;
+  }
+
+  try {
+    return new SemVer(version, options);
+  } catch (er) {
+    return null;
+  }
+};
+
+module.exports = parse;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/valid.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/functions/valid.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var parse = __webpack_require__(/*! ./parse */ "./node_modules/@nextcloud/event-bus/node_modules/semver/functions/parse.js");
+
+var valid = function valid(version, options) {
+  var v = parse(version, options);
+  return v ? v.version : null;
+};
+
+module.exports = valid;
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/constants.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/internal/constants.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Note: this is the semver.org version of the spec that it implements
+// Not necessarily the package version of this code.
+var SEMVER_SPEC_VERSION = '2.0.0';
+var MAX_LENGTH = 256;
+var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+/* istanbul ignore next */
+9007199254740991; // Max safe segment length for coercion.
+
+var MAX_SAFE_COMPONENT_LENGTH = 16;
+module.exports = {
+  SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
+  MAX_LENGTH: MAX_LENGTH,
+  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER,
+  MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH
+};
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/debug.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/internal/debug.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var debug = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
+  var _console;
+
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
+} : function () {};
+module.exports = debug;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/identifiers.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/internal/identifiers.js ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var numeric = /^[0-9]+$/;
+
+var compareIdentifiers = function compareIdentifiers(a, b) {
+  var anum = numeric.test(a);
+  var bnum = numeric.test(b);
+
+  if (anum && bnum) {
+    a = +a;
+    b = +b;
+  }
+
+  return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
+};
+
+var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
+  return compareIdentifiers(b, a);
+};
+
+module.exports = {
+  compareIdentifiers: compareIdentifiers,
+  rcompareIdentifiers: rcompareIdentifiers
+};
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/re.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@nextcloud/event-bus/node_modules/semver/internal/re.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! ./constants */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/constants.js"),
+    MAX_SAFE_COMPONENT_LENGTH = _require.MAX_SAFE_COMPONENT_LENGTH;
+
+var debug = __webpack_require__(/*! ./debug */ "./node_modules/@nextcloud/event-bus/node_modules/semver/internal/debug.js");
+
+exports = module.exports = {}; // The actual regexps go on exports.re
+
+var re = exports.re = [];
+var src = exports.src = [];
+var t = exports.t = {};
+var R = 0;
+
+var createToken = function createToken(name, value, isGlobal) {
+  var index = R++;
+  debug(index, value);
+  t[name] = index;
+  src[index] = value;
+  re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
+}; // The following Regular Expressions can be used for tokenizing,
+// validating, and parsing SemVer version strings.
+// ## Numeric Identifier
+// A single `0`, or a non-zero digit followed by zero or more digits.
+
+
+createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+createToken('NUMERICIDENTIFIERLOOSE', '[0-9]+'); // ## Non-numeric Identifier
+// Zero or more digits, followed by a letter or hyphen, and then zero or
+// more letters, digits, or hyphens.
+
+createToken('NONNUMERICIDENTIFIER', '\\d*[a-zA-Z-][a-zA-Z0-9-]*'); // ## Main Version
+// Three dot-separated numeric identifiers.
+
+createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
+createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")")); // ## Pre-release Version Identifier
+// A numeric identifier, or a non-numeric identifier.
+
+createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NUMERICIDENTIFIER], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
+createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NUMERICIDENTIFIERLOOSE], "|").concat(src[t.NONNUMERICIDENTIFIER], ")")); // ## Pre-release Version
+// Hyphen, followed by one or more dot-separated pre-release version
+// identifiers.
+
+createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
+createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))")); // ## Build Metadata Identifier
+// Any combination of digits, letters, or hyphens.
+
+createToken('BUILDIDENTIFIER', '[0-9A-Za-z-]+'); // ## Build Metadata
+// Plus sign, followed by one or more period-separated build metadata
+// identifiers.
+
+createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))")); // ## Full Version String
+// A main version, followed optionally by a pre-release version and
+// build metadata.
+// Note that the only major, minor, patch, and pre-release sections of
+// the version string are capturing groups.  The build metadata is not a
+// capturing group, because it should not ever be used in version
+// comparison.
+
+createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
+createToken('FULL', "^".concat(src[t.FULLPLAIN], "$")); // like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
+// also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
+// common in the npm registry.
+
+createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
+createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
+createToken('GTLT', '((?:<|>)?=?)'); // Something like "2.*" or "1.2.x".
+// Note that "x.x" is a valid xRange identifer, meaning "any version"
+// Only the first item is strictly required.
+
+createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
+createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
+createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
+createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$")); // Coercion.
+// Extract anything that could conceivably be a part of a valid semver
+
+createToken('COERCE', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:$|[^\\d])");
+createToken('COERCERTL', src[t.COERCE], true); // Tilde ranges.
+// Meaning is "reasonably at or greater than"
+
+createToken('LONETILDE', '(?:~>?)');
+createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
+exports.tildeTrimReplace = '$1~';
+createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
+createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$")); // Caret ranges.
+// Meaning is "at least and backwards compatible with"
+
+createToken('LONECARET', '(?:\\^)');
+createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
+exports.caretTrimReplace = '$1^';
+createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
+createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$")); // A simple gt/lt/eq thing, or just "" to indicate "any version"
+
+createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
+createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$")); // An expression to strip any whitespace between the gtlt and the thing
+// it modifies, so that `> 1.2.3` ==> `>1.2.3`
+
+createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
+exports.comparatorTrimReplace = '$1$2$3'; // Something like `1.2.3 - 1.2.4`
+// Note that these all use the loose form, because they'll be
+// checked against either the strict or loose comparator form
+// later.
+
+createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
+createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$"); // Star ranges basically just allow anything at all.
+
+createToken('STAR', '(<|>)?=?\\s*\\*'); // >=0.0.0 is like a star
+
+createToken('GTE0', '^\\s*>=\\s*0\.0\.0\\s*$');
+createToken('GTE0PRE', '^\\s*>=\\s*0\.0\.0-0\\s*$');
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/initial-state/dist/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@nextcloud/initial-state/dist/index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadState = loadState;
+/**
+ * @param app app ID, e.g. "mail"
+ * @param key name of the property
+ * @param fallback optional parameter to use as default value
+ * @throws if the key can't be found
+ */
+
+function loadState(app, key, fallback) {
+  var elem = document.querySelector("#initial-state-".concat(app, "-").concat(key));
+
+  if (elem === null) {
+    if (fallback !== undefined) {
+      return fallback;
+    }
+
+    throw new Error("Could not find initial state ".concat(key, " of ").concat(app));
+  }
+
+  try {
+    return JSON.parse(atob(elem.value));
+  } catch (e) {
+    throw new Error("Could not parse initial state ".concat(key, " of ").concat(app));
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@nextcloud/router/dist/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@nextcloud/router/dist/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(/*! core-js/modules/es.array.index-of.js */ "./node_modules/core-js/modules/es.array.index-of.js");
+
+__webpack_require__(/*! core-js/modules/es.object.assign.js */ "./node_modules/core-js/modules/es.object.assign.js");
+
+__webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+
+__webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+
+__webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+
+__webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRootUrl = exports.generateFilePath = exports.imagePath = exports.generateUrl = exports.generateOcsUrl = exports.generateRemoteUrl = exports.linkTo = void 0; /// <reference types="@nextcloud/typings" />
+
+/**
+ * Get an absolute url to a file in an app
+ *
+ * @param {string} app the id of the app the file belongs to
+ * @param {string} file the file path relative to the app folder
+ * @return {string} Absolute URL to a file
+ */
+
+var linkTo = function linkTo(app, file) {
+  return generateFilePath(app, '', file);
+};
+/**
+ * Creates a relative url for remote use
+ *
+ * @param {string} service id
+ * @return {string} the url
+ */
+
+
+exports.linkTo = linkTo;
+
+var linkToRemoteBase = function linkToRemoteBase(service) {
+  return getRootUrl() + '/remote.php/' + service;
+};
+/**
+ * @brief Creates an absolute url for remote use
+ * @param {string} service id
+ * @return {string} the url
+ */
+
+
+var generateRemoteUrl = function generateRemoteUrl(service) {
+  return window.location.protocol + '//' + window.location.host + linkToRemoteBase(service);
+};
+/**
+ * Get the base path for the given OCS API service
+ *
+ * @param {string} service name
+ * @param {int} version OCS API version
+ * @return {string} OCS API base path
+ */
+
+
+exports.generateRemoteUrl = generateRemoteUrl;
+
+var generateOcsUrl = function generateOcsUrl(service, version) {
+  version = version !== 2 ? 1 : 2;
+  return window.location.protocol + '//' + window.location.host + getRootUrl() + '/ocs/v' + version + '.php/' + service + '/';
+};
+
+exports.generateOcsUrl = generateOcsUrl;
+/**
+ * Generate the absolute url for the given relative url, which can contain parameters
+ *
+ * Parameters will be URL encoded automatically
+ *
+ * @return {string} Absolute URL for the given relative URL
+ */
+
+var generateUrl = function generateUrl(url, params, options) {
+  var allOptions = Object.assign({
+    escape: true,
+    noRewrite: false
+  }, options || {});
+
+  var _build = function _build(text, vars) {
+    vars = vars || {};
+    return text.replace(/{([^{}]*)}/g, function (a, b) {
+      var r = vars[b];
+
+      if (allOptions.escape) {
+        return typeof r === 'string' || typeof r === 'number' ? encodeURIComponent(r.toString()) : encodeURIComponent(a);
+      } else {
+        return typeof r === 'string' || typeof r === 'number' ? r.toString() : a;
+      }
+    });
+  };
+
+  if (url.charAt(0) !== '/') {
+    url = '/' + url;
+  }
+
+  if (OC.config.modRewriteWorking === true && !allOptions.noRewrite) {
+    return getRootUrl() + _build(url, params || {});
+  }
+
+  return getRootUrl() + '/index.php' + _build(url, params || {});
+};
+/**
+ * Get the absolute path to an image file
+ * if no extension is given for the image, it will automatically decide
+ * between .png and .svg based on what the browser supports
+ *
+ * @param {string} app the app id to which the image belongs
+ * @param {string} file the name of the image file
+ * @return {string}
+ */
+
+
+exports.generateUrl = generateUrl;
+
+var imagePath = function imagePath(app, file) {
+  if (file.indexOf('.') === -1) {
+    //if no extension is given, use svg
+    return generateFilePath(app, 'img', file + '.svg');
+  }
+
+  return generateFilePath(app, 'img', file);
+};
+/**
+ * Get the absolute url for a file in an app
+ *
+ * @param {string} app the id of the app
+ * @param {string} type the type of the file to link to (e.g. css,img,ajax.template)
+ * @param {string} file the filename
+ * @return {string} Absolute URL for a file in an app
+ */
+
+
+exports.imagePath = imagePath;
+
+var generateFilePath = function generateFilePath(app, type, file) {
+  var isCore = OC.coreApps.indexOf(app) !== -1;
+  var link = getRootUrl();
+
+  if (file.substring(file.length - 3) === 'php' && !isCore) {
+    link += '/index.php/apps/' + app;
+
+    if (file !== 'index.php') {
+      link += '/';
+
+      if (type) {
+        link += encodeURI(type + '/');
+      }
+
+      link += file;
+    }
+  } else if (file.substring(file.length - 3) !== 'php' && !isCore) {
+    link = OC.appswebroots[app];
+
+    if (type) {
+      link += '/' + type + '/';
+    }
+
+    if (link.substring(link.length - 1) !== '/') {
+      link += '/';
+    }
+
+    link += file;
+  } else {
+    if ((app === 'settings' || app === 'core' || app === 'search') && type === 'ajax') {
+      link += '/index.php/';
+    } else {
+      link += '/';
+    }
+
+    if (!isCore) {
+      link += 'apps/';
+    }
+
+    if (app !== '') {
+      app += '/';
+      link += app;
+    }
+
+    if (type) {
+      link += type + '/';
+    }
+
+    link += file;
+  }
+
+  return link;
+};
+/**
+ * Return the web root path where this Nextcloud instance
+ * is accessible, with a leading slash.
+ * For example "/nextcloud".
+ *
+ * @return {string} web root path
+ */
+
+
+exports.generateFilePath = generateFilePath;
+
+var getRootUrl = function getRootUrl() {
+  return OC.webroot;
+};
+
+exports.getRootUrl = getRootUrl;
+
+/***/ }),
+
+/***/ "./node_modules/axios/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/axios/index.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/adapters/xhr.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/adapters/xhr.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
+
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
+
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
+
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
+
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
+
+var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest(); // HTTP basic authentication
+
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true); // Set the request timeout in MS
+
+    request.timeout = config.timeout; // Listen for ready state
+
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
+        return;
+      } // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+
+
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      } // Prepare the response
+
+
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+      settle(resolve, reject, response); // Clean up request
+
+      request = null;
+    }; // Handle browser request cancellation (as opposed to a manual cancellation)
+
+
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(createError('Request aborted', config, 'ECONNABORTED', request)); // Clean up request
+
+      request = null;
+    }; // Handle low level network errors
+
+
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request)); // Clean up request
+
+      request = null;
+    }; // Handle timeout
+
+
+    request.ontimeout = function handleTimeout() {
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED', request)); // Clean up request
+
+      request = null;
+    }; // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+
+
+    if (utils.isStandardBrowserEnv()) {
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    } // Add headers to the request
+
+
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    } // Add withCredentials to request if needed
+
+
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
+    } // Add responseType to request if needed
+
+
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    } // Handle progress if needed
+
+
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    } // Not all browsers support upload events
+
+
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel); // Clean up request
+
+        request = null;
+      });
+    }
+
+    if (!requestData) {
+      requestData = null;
+    } // Send the request
+
+
+    request.send(requestData);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/axios.js":
+/*!*****************************************!*\
+  !*** ./node_modules/axios/lib/axios.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
+
+var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/axios/lib/core/Axios.js");
+
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
+
+var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/axios/lib/defaults.js");
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+
+
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context); // Copy axios.prototype to instance
+
+  utils.extend(instance, Axios.prototype, context); // Copy context to instance
+
+  utils.extend(instance, context);
+  return instance;
+} // Create the default instance to be exported
+
+
+var axios = createInstance(defaults); // Expose Axios class to allow class inheritance
+
+axios.Axios = Axios; // Factory for creating new instances
+
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+}; // Expose Cancel & CancelToken
+
+
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js"); // Expose all/spread
+
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js"); // Expose isAxiosError
+
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/axios/lib/helpers/isAxiosError.js");
+module.exports = axios; // Allow use of default import syntax in TypeScript
+
+module.exports.default = axios;
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/Cancel.js":
+/*!*************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/Cancel.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+module.exports = Cancel;
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/CancelToken.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/CancelToken.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+
+
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+
+
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+
+
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/isCancel.js":
+/*!***************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/isCancel.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/Axios.js":
+/*!**********************************************!*\
+  !*** ./node_modules/axios/lib/core/Axios.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/axios/lib/core/InterceptorManager.js");
+
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/axios/lib/core/dispatchRequest.js");
+
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+
+
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+
+
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
+  }
+
+  config = mergeConfig(this.defaults, config); // Set config.method
+
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  } // Hook up interceptors middleware
+
+
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+}; // Provide aliases for supported request methods
+
+
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, config) {
+    return this.request(mergeConfig(config || {}, {
+      method: method,
+      url: url,
+      data: (config || {}).data
+    }));
+  };
+});
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, data, config) {
+    return this.request(mergeConfig(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+module.exports = Axios;
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/InterceptorManager.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/axios/lib/core/InterceptorManager.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+
+
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+
+
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+
+
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/buildFullPath.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/buildFullPath.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
+
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+
+
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+
+  return requestedURL;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/createError.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/createError.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "./node_modules/axios/lib/core/enhanceError.js");
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+
+
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/dispatchRequest.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/core/dispatchRequest.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
+
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
+
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+
+
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+
+
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config); // Ensure headers exist
+
+  config.headers = config.headers || {}; // Transform request data
+
+  config.data = transformData(config.data, config.headers, config.transformRequest); // Flatten headers
+
+  config.headers = utils.merge(config.headers.common || {}, config.headers[config.method] || {}, config.headers);
+  utils.forEach(['delete', 'get', 'head', 'post', 'put', 'patch', 'common'], function cleanHeaderConfig(method) {
+    delete config.headers[method];
+  });
+  var adapter = config.adapter || defaults.adapter;
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config); // Transform response data
+
+    response.data = transformData(response.data, response.headers, config.transformResponse);
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config); // Transform response data
+
+      if (reason && reason.response) {
+        reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/enhanceError.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/axios/lib/core/enhanceError.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+
+  if (code) {
+    error.code = code;
+  }
+
+  error.request = request;
+  error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function toJSON() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
+
+  return error;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/mergeConfig.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/mergeConfig.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+
+
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+  var valueFromConfig2Keys = ['url', 'method', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy', 'params'];
+  var defaultToConfig2Keys = ['baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer', 'timeout', 'timeoutMessage', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName', 'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'decompress', 'maxContentLength', 'maxBodyLength', 'maxRedirects', 'transport', 'httpAgent', 'httpsAgent', 'cancelToken', 'socketPath', 'responseEncoding'];
+  var directMergeKeys = ['validateStatus'];
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+
+    return source;
+  }
+
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    }
+  });
+  utils.forEach(mergeDeepPropertiesKeys, mergeDeepProperties);
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      config[prop] = getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+  utils.forEach(directMergeKeys, function merge(prop) {
+    if (prop in config2) {
+      config[prop] = getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      config[prop] = getMergedValue(undefined, config1[prop]);
+    }
+  });
+  var axiosKeys = valueFromConfig2Keys.concat(mergeDeepPropertiesKeys).concat(defaultToConfig2Keys).concat(directMergeKeys);
+  var otherKeys = Object.keys(config1).concat(Object.keys(config2)).filter(function filterAxiosKeys(key) {
+    return axiosKeys.indexOf(key) === -1;
+  });
+  utils.forEach(otherKeys, mergeDeepProperties);
+  return config;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/settle.js":
+/*!***********************************************!*\
+  !*** ./node_modules/axios/lib/core/settle.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios/lib/core/createError.js");
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+
+
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/transformData.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/transformData.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+
+
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+  return data;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/defaults.js":
+/*!********************************************!*\
+  !*** ./node_modules/axios/lib/defaults.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
+
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/axios/lib/helpers/normalizeHeaderName.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
+  }
+
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
+    normalizeHeaderName(headers, 'Content-Type');
+
+    if (utils.isFormData(data) || utils.isArrayBuffer(data) || utils.isBuffer(data) || utils.isStream(data) || utils.isFile(data) || utils.isBlob(data)) {
+      return data;
+    }
+
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+
+    return data;
+  }],
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        /* Ignore */
+      }
+    }
+
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+  maxContentLength: -1,
+  maxBodyLength: -1,
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+module.exports = defaults;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/bind.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/bind.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    return fn.apply(thisArg, args);
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/buildURL.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
+}
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+
+
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/combineURLs.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/combineURLs.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/cookies.js":
+/*!***************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/cookies.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs support document.cookie
+function standardBrowserEnv() {
+  return {
+    write: function write(name, value, expires, path, domain, secure) {
+      var cookie = [];
+      cookie.push(name + '=' + encodeURIComponent(value));
+
+      if (utils.isNumber(expires)) {
+        cookie.push('expires=' + new Date(expires).toGMTString());
+      }
+
+      if (utils.isString(path)) {
+        cookie.push('path=' + path);
+      }
+
+      if (utils.isString(domain)) {
+        cookie.push('domain=' + domain);
+      }
+
+      if (secure === true) {
+        cookie.push('secure');
+      }
+
+      document.cookie = cookie.join('; ');
+    },
+    read: function read(name) {
+      var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+      return match ? decodeURIComponent(match[3]) : null;
+    },
+    remove: function remove(name) {
+      this.write(name, '', Date.now() - 86400000);
+    }
+  };
+}() : // Non standard browser env (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return {
+    write: function write() {},
+    read: function read() {
+      return null;
+    },
+    remove: function remove() {}
+  };
+}();
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isAxiosError.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+module.exports = function isAxiosError(payload) {
+  return _typeof(payload) === 'object' && payload.isAxiosError === true;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = utils.isStandardBrowserEnv() ? // Standard browser envs have full support of the APIs needed to test
+// whether the request URL is of the same origin as current location.
+function standardBrowserEnv() {
+  var msie = /(msie|trident)/i.test(navigator.userAgent);
+  var urlParsingNode = document.createElement('a');
+  var originURL;
+  /**
+  * Parse a URL to discover it's components
+  *
+  * @param {String} url The URL to be parsed
+  * @returns {Object}
+  */
+
+  function resolveURL(url) {
+    var href = url;
+
+    if (msie) {
+      // IE needs attribute set twice to normalize properties
+      urlParsingNode.setAttribute('href', href);
+      href = urlParsingNode.href;
+    }
+
+    urlParsingNode.setAttribute('href', href); // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+
+    return {
+      href: urlParsingNode.href,
+      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+      host: urlParsingNode.host,
+      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+      hostname: urlParsingNode.hostname,
+      port: urlParsingNode.port,
+      pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
+    };
+  }
+
+  originURL = resolveURL(window.location.href);
+  /**
+  * Determine if a URL shares the same origin as the current location
+  *
+  * @param {String} requestURL The URL to test
+  * @returns {boolean} True if URL shares the same origin, otherwise false
+  */
+
+  return function isURLSameOrigin(requestURL) {
+    var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
+    return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
+  };
+}() : // Non standard browser envs (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return function isURLSameOrigin() {
+    return true;
+  };
+}();
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/parseHeaders.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js"); // Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+
+
+var ignoreDuplicateOf = ['age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location', 'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'user-agent'];
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) {
+    return parsed;
+  }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+  return parsed;
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/spread.js":
+/*!**************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/spread.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/utils.js":
+/*!*****************************************!*\
+  !*** ./node_modules/axios/lib/utils.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
+/*global toString:true*/
+// utils is a library of generic helper functions non-specific to axios
+
+
+var toString = Object.prototype.toString;
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+
+
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+
+
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor) && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+
+
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+
+
+function isFormData(val) {
+  return typeof FormData !== 'undefined' && val instanceof FormData;
+}
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+
+
+function isArrayBufferView(val) {
+  var result;
+
+  if (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = val && val.buffer && val.buffer instanceof ArrayBuffer;
+  }
+
+  return result;
+}
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+
+
+function isString(val) {
+  return typeof val === 'string';
+}
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+
+
+function isNumber(val) {
+  return typeof val === 'number';
+}
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+
+
+function isObject(val) {
+  return val !== null && _typeof(val) === 'object';
+}
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+
+
+function isPlainObject(val) {
+  if (toString.call(val) !== '[object Object]') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
+}
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+
+
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+
+
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+
+
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+
+
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+
+
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+
+
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+
+
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ */
+
+
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' || navigator.product === 'NativeScript' || navigator.product === 'NS')) {
+    return false;
+  }
+
+  return typeof window !== 'undefined' && typeof document !== 'undefined';
+}
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+
+
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  } // Force an array if not already something iterable
+
+
+  if (_typeof(obj) !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+
+
+function merge() {
+  var result = {};
+
+  function assignValue(val, key) {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
+      result[key] = merge(result[key], val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+
+  return result;
+}
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+
+
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+
+
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+
+  return content;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isPlainObject: isPlainObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim,
+  stripBOM: stripBOM
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/views/RichWorkspace.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(__webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/index.js"));
+
+var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+
+var _eventBus = __webpack_require__(/*! @nextcloud/event-bus */ "./node_modules/@nextcloud/event-bus/dist/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var IS_PUBLIC = !!document.getElementById('isPublic');
+var WORKSPACE_URL = (0, _router.generateOcsUrl)('apps/text' + (IS_PUBLIC ? '/public' : ''), 2) + 'workspace';
+var _default = {
+  name: 'RichWorkspace',
+  components: {
+    EditorWrapper: function EditorWrapper() {
+      return Promise.all(/*! import() | editor */[__webpack_require__.e("vendors~editor~files-modal"), __webpack_require__.e("vendors~editor"), __webpack_require__.e("editor")]).then(__webpack_require__.bind(null, /*! ./../components/EditorWrapper */ "./src/components/EditorWrapper.vue"));
+    }
+  },
+  props: {
+    path: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      focus: false,
+      folder: null,
+      file: null,
+      loaded: false,
+      ready: false,
+      autofocus: false,
+      darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
+      enabled: OCA.Text.RichWorkspaceEnabled
+    };
+  },
+  computed: {
+    shareToken: function shareToken() {
+      return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null;
+    },
+    canCreate: function canCreate() {
+      return !!(this.folder && this.folder.permissions & OC.PERMISSION_CREATE);
+    },
+    showEmptyWorkspace: function showEmptyWorkspace() {
+      return (!this.file || this.autofocus && !this.ready) && this.canCreate;
+    }
+  },
+  watch: {
+    path: function path() {
+      this.getFileInfo();
+    },
+    focus: function focus(newValue) {
+      if (!newValue) {
+        document.querySelector('#editor').scrollTo(0, 0);
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (_this.enabled) {
+                _this.getFileInfo();
+              }
+
+              (0, _eventBus.subscribe)('Text::showRichWorkspace', function () {
+                _this.enabled = true;
+
+                _this.getFileInfo();
+              });
+              (0, _eventBus.subscribe)('Text::hideRichWorkspace', function () {
+                _this.enabled = false;
+              });
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  methods: {
+    unfocus: function unfocus() {// setTimeout(() => this.focus = false, 2000)
+    },
+    reset: function reset() {
+      var _this2 = this;
+
+      this.file = null;
+      this.focus = false;
+      this.$nextTick(function () {
+        _this2.creating = false;
+
+        _this2.getFileInfo();
+      });
+    },
+    getFileInfo: function getFileInfo() {
+      var _this3 = this;
+
+      this.loaded = false;
+      this.autofocus = false;
+      this.ready = false;
+      var params = {
+        path: this.path
+      };
+
+      if (IS_PUBLIC) {
+        params.shareToken = this.shareToken;
+      }
+
+      return _axios.default.get(WORKSPACE_URL, {
+        params: params
+      }).then(function (response) {
+        var data = response.data.ocs.data;
+        _this3.folder = data.folder || null;
+        _this3.file = data.file;
+        _this3.editing = true;
+        _this3.loaded = true;
+        return true;
+      }).catch(function (error) {
+        if (error.response.data.ocs && error.response.data.ocs.data.folder) {
+          _this3.folder = error.response.data.ocs.data.folder;
+        } else {
+          _this3.folder = null;
+        }
+
+        _this3.file = null;
+        _this3.loaded = true;
+        _this3.ready = true;
+        _this3.creating = false;
+        return false;
+      });
+    },
+    createNew: function createNew() {
+      var _this4 = this;
+
+      if (this.creating) {
+        return;
+      }
+
+      this.creating = true;
+      this.getFileInfo().then(function (workspaceFileExists) {
+        _this4.autofocus = true;
+
+        if (!workspaceFileExists) {
+          window.FileList.createFile('Readme.md', {
+            scrollTo: false,
+            animate: false
+          }).then(function (status, data) {
+            _this4.getFileInfo();
+          });
+        }
+      });
+    }
+  }
+};
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/a-function.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/a-function.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (it) {
+  if (typeof it != 'function') {
+    throw TypeError(String(it) + ' is not a function');
+  }
+
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/a-possible-prototype.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/a-possible-prototype.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+module.exports = function (it) {
+  if (!isObject(it) && it !== null) {
+    throw TypeError("Can't set " + String(it) + ' as a prototype');
+  }
+
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/add-to-unscopables.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/internals/add-to-unscopables.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype; // Array.prototype[@@unscopables]
+// https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+
+if (ArrayPrototype[UNSCOPABLES] == undefined) {
+  definePropertyModule.f(ArrayPrototype, UNSCOPABLES, {
+    configurable: true,
+    value: create(null)
+  });
+} // add a key to Array.prototype[@@unscopables]
+
+
+module.exports = function (key) {
+  ArrayPrototype[UNSCOPABLES][key] = true;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/advance-string-index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/advance-string-index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var charAt = __webpack_require__(/*! ../internals/string-multibyte */ "./node_modules/core-js/internals/string-multibyte.js").charAt; // `AdvanceStringIndex` abstract operation
+// https://tc39.es/ecma262/#sec-advancestringindex
+
+
+module.exports = function (S, index, unicode) {
+  return index + (unicode ? charAt(S, index).length : 1);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/an-instance.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/an-instance.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (it, Constructor, name) {
+  if (!(it instanceof Constructor)) {
+    throw TypeError('Incorrect ' + (name ? name + ' ' : '') + 'invocation');
+  }
+
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/an-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/an-object.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+module.exports = function (it) {
+  if (!isObject(it)) {
+    throw TypeError(String(it) + ' is not an object');
+  }
+
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-for-each.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-for-each.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $forEach = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").forEach;
+
+var arrayMethodIsStrict = __webpack_require__(/*! ../internals/array-method-is-strict */ "./node_modules/core-js/internals/array-method-is-strict.js");
+
+var STRICT_METHOD = arrayMethodIsStrict('forEach'); // `Array.prototype.forEach` method implementation
+// https://tc39.es/ecma262/#sec-array.prototype.foreach
+
+module.exports = !STRICT_METHOD ? function forEach(callbackfn
+/* , thisArg */
+) {
+  return $forEach(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined); // eslint-disable-next-line es/no-array-prototype-foreach -- safe
+} : [].forEach;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-includes.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-includes.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "./node_modules/core-js/internals/to-absolute-index.js"); // `Array.prototype.{ indexOf, includes }` methods implementation
+
+
+var createMethod = function createMethod(IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIndexedObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value; // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare -- NaN check
+
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++]; // eslint-disable-next-line no-self-compare -- NaN check
+
+      if (value != value) return true; // Array#indexOf ignores holes, Array#includes - not
+    } else for (; length > index; index++) {
+      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+    }
+    return !IS_INCLUDES && -1;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.includes` method
+  // https://tc39.es/ecma262/#sec-array.prototype.includes
+  includes: createMethod(true),
+  // `Array.prototype.indexOf` method
+  // https://tc39.es/ecma262/#sec-array.prototype.indexof
+  indexOf: createMethod(false)
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-iteration.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/array-iteration.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js/internals/function-bind-context.js");
+
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var arraySpeciesCreate = __webpack_require__(/*! ../internals/array-species-create */ "./node_modules/core-js/internals/array-species-create.js");
+
+var push = [].push; // `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterOut }` methods implementation
+
+var createMethod = function createMethod(TYPE) {
+  var IS_MAP = TYPE == 1;
+  var IS_FILTER = TYPE == 2;
+  var IS_SOME = TYPE == 3;
+  var IS_EVERY = TYPE == 4;
+  var IS_FIND_INDEX = TYPE == 6;
+  var IS_FILTER_OUT = TYPE == 7;
+  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
+  return function ($this, callbackfn, that, specificCreate) {
+    var O = toObject($this);
+    var self = IndexedObject(O);
+    var boundFunction = bind(callbackfn, that, 3);
+    var length = toLength(self.length);
+    var index = 0;
+    var create = specificCreate || arraySpeciesCreate;
+    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_OUT ? create($this, 0) : undefined;
+    var value, result;
+
+    for (; length > index; index++) {
+      if (NO_HOLES || index in self) {
+        value = self[index];
+        result = boundFunction(value, index, O);
+
+        if (TYPE) {
+          if (IS_MAP) target[index] = result; // map
+          else if (result) switch (TYPE) {
+            case 3:
+              return true;
+            // some
+
+            case 5:
+              return value;
+            // find
+
+            case 6:
+              return index;
+            // findIndex
+
+            case 2:
+              push.call(target, value);
+            // filter
+          } else switch (TYPE) {
+            case 4:
+              return false;
+            // every
+
+            case 7:
+              push.call(target, value);
+            // filterOut
+          }
+        }
+      }
+    }
+
+    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.forEach` method
+  // https://tc39.es/ecma262/#sec-array.prototype.foreach
+  forEach: createMethod(0),
+  // `Array.prototype.map` method
+  // https://tc39.es/ecma262/#sec-array.prototype.map
+  map: createMethod(1),
+  // `Array.prototype.filter` method
+  // https://tc39.es/ecma262/#sec-array.prototype.filter
+  filter: createMethod(2),
+  // `Array.prototype.some` method
+  // https://tc39.es/ecma262/#sec-array.prototype.some
+  some: createMethod(3),
+  // `Array.prototype.every` method
+  // https://tc39.es/ecma262/#sec-array.prototype.every
+  every: createMethod(4),
+  // `Array.prototype.find` method
+  // https://tc39.es/ecma262/#sec-array.prototype.find
+  find: createMethod(5),
+  // `Array.prototype.findIndex` method
+  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
+  findIndex: createMethod(6),
+  // `Array.prototype.filterOut` method
+  // https://github.com/tc39/proposal-array-filtering
+  filterOut: createMethod(7)
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-method-has-species-support.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-method-has-species-support.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var V8_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (METHOD_NAME) {
+  // We can't use this feature detection in V8 since it causes
+  // deoptimization and serious performance degradation
+  // https://github.com/zloirock/core-js/issues/677
+  return V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    var constructor = array.constructor = {};
+
+    constructor[SPECIES] = function () {
+      return {
+        foo: 1
+      };
+    };
+
+    return array[METHOD_NAME](Boolean).foo !== 1;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-method-is-strict.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-method-is-strict.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = function (METHOD_NAME, argument) {
+  var method = [][METHOD_NAME];
+  return !!method && fails(function () {
+    // eslint-disable-next-line no-useless-call,no-throw-literal -- required for testing
+    method.call(null, argument || function () {
+      throw 1;
+    }, 1);
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/array-species-create.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/array-species-create.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var isArray = __webpack_require__(/*! ../internals/is-array */ "./node_modules/core-js/internals/is-array.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var SPECIES = wellKnownSymbol('species'); // `ArraySpeciesCreate` abstract operation
+// https://tc39.es/ecma262/#sec-arrayspeciescreate
+
+module.exports = function (originalArray, length) {
+  var C;
+
+  if (isArray(originalArray)) {
+    C = originalArray.constructor; // cross-realm fallback
+
+    if (typeof C == 'function' && (C === Array || isArray(C.prototype))) C = undefined;else if (isObject(C)) {
+      C = C[SPECIES];
+      if (C === null) C = undefined;
+    }
+  }
+
+  return new (C === undefined ? Array : C)(length === 0 ? 0 : length);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/check-correctness-of-iteration.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/core-js/internals/check-correctness-of-iteration.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var called = 0;
+  var iteratorWithReturn = {
+    next: function next() {
+      return {
+        done: !!called++
+      };
+    },
+    'return': function _return() {
+      SAFE_CLOSING = true;
+    }
+  };
+
+  iteratorWithReturn[ITERATOR] = function () {
+    return this;
+  }; // eslint-disable-next-line es/no-array-from, no-throw-literal -- required for testing
+
+
+  Array.from(iteratorWithReturn, function () {
+    throw 2;
+  });
+} catch (error) {
+  /* empty */
+}
+
+module.exports = function (exec, SKIP_CLOSING) {
+  if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+  var ITERATION_SUPPORT = false;
+
+  try {
+    var object = {};
+
+    object[ITERATOR] = function () {
+      return {
+        next: function next() {
+          return {
+            done: ITERATION_SUPPORT = true
+          };
+        }
+      };
+    };
+
+    exec(object);
+  } catch (error) {
+    /* empty */
+  }
+
+  return ITERATION_SUPPORT;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/classof-raw.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/classof-raw.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/classof.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/classof.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+
+var classofRaw = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag'); // ES3 wrong here
+
+var CORRECT_ARGUMENTS = classofRaw(function () {
+  return arguments;
+}()) == 'Arguments'; // fallback for IE11 Script Access Denied error
+
+var tryGet = function tryGet(it, key) {
+  try {
+    return it[key];
+  } catch (error) {
+    /* empty */
+  }
+}; // getting tag from ES6+ `Object.prototype.toString`
+
+
+module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
+  var O, tag, result;
+  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
+  : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag // builtinTag case
+  : CORRECT_ARGUMENTS ? classofRaw(O) // ES3 arguments fallback
+  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/collection-strong.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/collection-strong.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defineProperty = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f;
+
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+
+var redefineAll = __webpack_require__(/*! ../internals/redefine-all */ "./node_modules/core-js/internals/redefine-all.js");
+
+var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js/internals/function-bind-context.js");
+
+var anInstance = __webpack_require__(/*! ../internals/an-instance */ "./node_modules/core-js/internals/an-instance.js");
+
+var iterate = __webpack_require__(/*! ../internals/iterate */ "./node_modules/core-js/internals/iterate.js");
+
+var defineIterator = __webpack_require__(/*! ../internals/define-iterator */ "./node_modules/core-js/internals/define-iterator.js");
+
+var setSpecies = __webpack_require__(/*! ../internals/set-species */ "./node_modules/core-js/internals/set-species.js");
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var fastKey = __webpack_require__(/*! ../internals/internal-metadata */ "./node_modules/core-js/internals/internal-metadata.js").fastKey;
+
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+
+var setInternalState = InternalStateModule.set;
+var internalStateGetterFor = InternalStateModule.getterFor;
+module.exports = {
+  getConstructor: function getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+    var C = wrapper(function (that, iterable) {
+      anInstance(that, C, CONSTRUCTOR_NAME);
+      setInternalState(that, {
+        type: CONSTRUCTOR_NAME,
+        index: create(null),
+        first: undefined,
+        last: undefined,
+        size: 0
+      });
+      if (!DESCRIPTORS) that.size = 0;
+      if (iterable != undefined) iterate(iterable, that[ADDER], {
+        that: that,
+        AS_ENTRIES: IS_MAP
+      });
+    });
+    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
+
+    var define = function define(that, key, value) {
+      var state = getInternalState(that);
+      var entry = getEntry(that, key);
+      var previous, index; // change existing entry
+
+      if (entry) {
+        entry.value = value; // create new entry
+      } else {
+        state.last = entry = {
+          index: index = fastKey(key, true),
+          key: key,
+          value: value,
+          previous: previous = state.last,
+          next: undefined,
+          removed: false
+        };
+        if (!state.first) state.first = entry;
+        if (previous) previous.next = entry;
+        if (DESCRIPTORS) state.size++;else that.size++; // add to index
+
+        if (index !== 'F') state.index[index] = entry;
+      }
+
+      return that;
+    };
+
+    var getEntry = function getEntry(that, key) {
+      var state = getInternalState(that); // fast case
+
+      var index = fastKey(key);
+      var entry;
+      if (index !== 'F') return state.index[index]; // frozen object case
+
+      for (entry = state.first; entry; entry = entry.next) {
+        if (entry.key == key) return entry;
+      }
+    };
+
+    redefineAll(C.prototype, {
+      // 23.1.3.1 Map.prototype.clear()
+      // 23.2.3.2 Set.prototype.clear()
+      clear: function clear() {
+        var that = this;
+        var state = getInternalState(that);
+        var data = state.index;
+        var entry = state.first;
+
+        while (entry) {
+          entry.removed = true;
+          if (entry.previous) entry.previous = entry.previous.next = undefined;
+          delete data[entry.index];
+          entry = entry.next;
+        }
+
+        state.first = state.last = undefined;
+        if (DESCRIPTORS) state.size = 0;else that.size = 0;
+      },
+      // 23.1.3.3 Map.prototype.delete(key)
+      // 23.2.3.4 Set.prototype.delete(value)
+      'delete': function _delete(key) {
+        var that = this;
+        var state = getInternalState(that);
+        var entry = getEntry(that, key);
+
+        if (entry) {
+          var next = entry.next;
+          var prev = entry.previous;
+          delete state.index[entry.index];
+          entry.removed = true;
+          if (prev) prev.next = next;
+          if (next) next.previous = prev;
+          if (state.first == entry) state.first = next;
+          if (state.last == entry) state.last = prev;
+          if (DESCRIPTORS) state.size--;else that.size--;
+        }
+
+        return !!entry;
+      },
+      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
+      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+      forEach: function forEach(callbackfn
+      /* , that = undefined */
+      ) {
+        var state = getInternalState(this);
+        var boundFunction = bind(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
+        var entry;
+
+        while (entry = entry ? entry.next : state.first) {
+          boundFunction(entry.value, entry.key, this); // revert to the last existing entry
+
+          while (entry && entry.removed) {
+            entry = entry.previous;
+          }
+        }
+      },
+      // 23.1.3.7 Map.prototype.has(key)
+      // 23.2.3.7 Set.prototype.has(value)
+      has: function has(key) {
+        return !!getEntry(this, key);
+      }
+    });
+    redefineAll(C.prototype, IS_MAP ? {
+      // 23.1.3.6 Map.prototype.get(key)
+      get: function get(key) {
+        var entry = getEntry(this, key);
+        return entry && entry.value;
+      },
+      // 23.1.3.9 Map.prototype.set(key, value)
+      set: function set(key, value) {
+        return define(this, key === 0 ? 0 : key, value);
+      }
+    } : {
+      // 23.2.3.1 Set.prototype.add(value)
+      add: function add(value) {
+        return define(this, value = value === 0 ? 0 : value, value);
+      }
+    });
+    if (DESCRIPTORS) defineProperty(C.prototype, 'size', {
+      get: function get() {
+        return getInternalState(this).size;
+      }
+    });
+    return C;
+  },
+  setStrong: function setStrong(C, CONSTRUCTOR_NAME, IS_MAP) {
+    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
+    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
+    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME); // add .keys, .values, .entries, [@@iterator]
+    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+
+    defineIterator(C, CONSTRUCTOR_NAME, function (iterated, kind) {
+      setInternalState(this, {
+        type: ITERATOR_NAME,
+        target: iterated,
+        state: getInternalCollectionState(iterated),
+        kind: kind,
+        last: undefined
+      });
+    }, function () {
+      var state = getInternalIteratorState(this);
+      var kind = state.kind;
+      var entry = state.last; // revert to the last existing entry
+
+      while (entry && entry.removed) {
+        entry = entry.previous;
+      } // get next entry
+
+
+      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
+        // or finish the iteration
+        state.target = undefined;
+        return {
+          value: undefined,
+          done: true
+        };
+      } // return step by kind
+
+
+      if (kind == 'keys') return {
+        value: entry.key,
+        done: false
+      };
+      if (kind == 'values') return {
+        value: entry.value,
+        done: false
+      };
+      return {
+        value: [entry.key, entry.value],
+        done: false
+      };
+    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true); // add [@@species], 23.1.2.2, 23.2.2.2
+
+    setSpecies(CONSTRUCTOR_NAME);
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/collection.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/collection.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var isForced = __webpack_require__(/*! ../internals/is-forced */ "./node_modules/core-js/internals/is-forced.js");
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var InternalMetadataModule = __webpack_require__(/*! ../internals/internal-metadata */ "./node_modules/core-js/internals/internal-metadata.js");
+
+var iterate = __webpack_require__(/*! ../internals/iterate */ "./node_modules/core-js/internals/iterate.js");
+
+var anInstance = __webpack_require__(/*! ../internals/an-instance */ "./node_modules/core-js/internals/an-instance.js");
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var checkCorrectnessOfIteration = __webpack_require__(/*! ../internals/check-correctness-of-iteration */ "./node_modules/core-js/internals/check-correctness-of-iteration.js");
+
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+
+var inheritIfRequired = __webpack_require__(/*! ../internals/inherit-if-required */ "./node_modules/core-js/internals/inherit-if-required.js");
+
+module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
+  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
+  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
+  var ADDER = IS_MAP ? 'set' : 'add';
+  var NativeConstructor = global[CONSTRUCTOR_NAME];
+  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+  var Constructor = NativeConstructor;
+  var exported = {};
+
+  var fixMethod = function fixMethod(KEY) {
+    var nativeMethod = NativePrototype[KEY];
+    redefine(NativePrototype, KEY, KEY == 'add' ? function add(value) {
+      nativeMethod.call(this, value === 0 ? 0 : value);
+      return this;
+    } : KEY == 'delete' ? function (key) {
+      return IS_WEAK && !isObject(key) ? false : nativeMethod.call(this, key === 0 ? 0 : key);
+    } : KEY == 'get' ? function get(key) {
+      return IS_WEAK && !isObject(key) ? undefined : nativeMethod.call(this, key === 0 ? 0 : key);
+    } : KEY == 'has' ? function has(key) {
+      return IS_WEAK && !isObject(key) ? false : nativeMethod.call(this, key === 0 ? 0 : key);
+    } : function set(key, value) {
+      nativeMethod.call(this, key === 0 ? 0 : key, value);
+      return this;
+    });
+  };
+
+  var REPLACE = isForced(CONSTRUCTOR_NAME, typeof NativeConstructor != 'function' || !(IS_WEAK || NativePrototype.forEach && !fails(function () {
+    new NativeConstructor().entries().next();
+  })));
+
+  if (REPLACE) {
+    // create collection constructor
+    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+    InternalMetadataModule.REQUIRED = true;
+  } else if (isForced(CONSTRUCTOR_NAME, true)) {
+    var instance = new Constructor(); // early implementations not supports chaining
+
+    var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance; // V8 ~ Chromium 40- weak-collections throws on primitives, but should return false
+
+    var THROWS_ON_PRIMITIVES = fails(function () {
+      instance.has(1);
+    }); // most early implementations doesn't supports iterables, most modern - not close it correctly
+    // eslint-disable-next-line no-new -- required for testing
+
+    var ACCEPT_ITERABLES = checkCorrectnessOfIteration(function (iterable) {
+      new NativeConstructor(iterable);
+    }); // for early implementations -0 and +0 not the same
+
+    var BUGGY_ZERO = !IS_WEAK && fails(function () {
+      // V8 ~ Chromium 42- fails only with 5+ elements
+      var $instance = new NativeConstructor();
+      var index = 5;
+
+      while (index--) {
+        $instance[ADDER](index, index);
+      }
+
+      return !$instance.has(-0);
+    });
+
+    if (!ACCEPT_ITERABLES) {
+      Constructor = wrapper(function (dummy, iterable) {
+        anInstance(dummy, Constructor, CONSTRUCTOR_NAME);
+        var that = inheritIfRequired(new NativeConstructor(), dummy, Constructor);
+        if (iterable != undefined) iterate(iterable, that[ADDER], {
+          that: that,
+          AS_ENTRIES: IS_MAP
+        });
+        return that;
+      });
+      Constructor.prototype = NativePrototype;
+      NativePrototype.constructor = Constructor;
+    }
+
+    if (THROWS_ON_PRIMITIVES || BUGGY_ZERO) {
+      fixMethod('delete');
+      fixMethod('has');
+      IS_MAP && fixMethod('get');
+    }
+
+    if (BUGGY_ZERO || HASNT_CHAINING) fixMethod(ADDER); // weak collections should not contains .clear method
+
+    if (IS_WEAK && NativePrototype.clear) delete NativePrototype.clear;
+  }
+
+  exported[CONSTRUCTOR_NAME] = Constructor;
+  $({
+    global: true,
+    forced: Constructor != NativeConstructor
+  }, exported);
+  setToStringTag(Constructor, CONSTRUCTOR_NAME);
+  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+  return Constructor;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/copy-constructor-properties.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js/internals/copy-constructor-properties.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var ownKeys = __webpack_require__(/*! ../internals/own-keys */ "./node_modules/core-js/internals/own-keys.js");
+
+var getOwnPropertyDescriptorModule = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/core-js/internals/object-get-own-property-descriptor.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+module.exports = function (target, source) {
+  var keys = ownKeys(source);
+  var defineProperty = definePropertyModule.f;
+  var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (!has(target, key)) defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/correct-is-regexp-logic.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/correct-is-regexp-logic.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var MATCH = wellKnownSymbol('match');
+
+module.exports = function (METHOD_NAME) {
+  var regexp = /./;
+
+  try {
+    '/./'[METHOD_NAME](regexp);
+  } catch (error1) {
+    try {
+      regexp[MATCH] = false;
+      return '/./'[METHOD_NAME](regexp);
+    } catch (error2) {
+      /* empty */
+    }
+  }
+
+  return false;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/correct-prototype-getter.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/correct-prototype-getter.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = !fails(function () {
+  function F() {
+    /* empty */
+  }
+
+  F.prototype.constructor = null; // eslint-disable-next-line es/no-object-getprototypeof -- required for testing
+
+  return Object.getPrototypeOf(new F()) !== F.prototype;
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-iterator-constructor.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-iterator-constructor.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var IteratorPrototype = __webpack_require__(/*! ../internals/iterators-core */ "./node_modules/core-js/internals/iterators-core.js").IteratorPrototype;
+
+var create = __webpack_require__(/*! ../internals/object-create */ "./node_modules/core-js/internals/object-create.js");
+
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var returnThis = function returnThis() {
+  return this;
+};
+
+module.exports = function (IteratorConstructor, NAME, next) {
+  var TO_STRING_TAG = NAME + ' Iterator';
+  IteratorConstructor.prototype = create(IteratorPrototype, {
+    next: createPropertyDescriptor(1, next)
+  });
+  setToStringTag(IteratorConstructor, TO_STRING_TAG, false, true);
+  Iterators[TO_STRING_TAG] = returnThis;
+  return IteratorConstructor;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-non-enumerable-property.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-non-enumerable-property.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+module.exports = DESCRIPTORS ? function (object, key, value) {
+  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-property-descriptor.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/internals/create-property-descriptor.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/create-property.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/create-property.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toPrimitive = __webpack_require__(/*! ../internals/to-primitive */ "./node_modules/core-js/internals/to-primitive.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+module.exports = function (object, key, value) {
+  var propertyKey = toPrimitive(key);
+  if (propertyKey in object) definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));else object[propertyKey] = value;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/define-iterator.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/define-iterator.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var createIteratorConstructor = __webpack_require__(/*! ../internals/create-iterator-constructor */ "./node_modules/core-js/internals/create-iterator-constructor.js");
+
+var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "./node_modules/core-js/internals/object-get-prototype-of.js");
+
+var setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ "./node_modules/core-js/internals/object-set-prototype-of.js");
+
+var setToStringTag = __webpack_require__(/*! ../internals/set-to-string-tag */ "./node_modules/core-js/internals/set-to-string-tag.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var IteratorsCore = __webpack_require__(/*! ../internals/iterators-core */ "./node_modules/core-js/internals/iterators-core.js");
+
+var IteratorPrototype = IteratorsCore.IteratorPrototype;
+var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
+var ITERATOR = wellKnownSymbol('iterator');
+var KEYS = 'keys';
+var VALUES = 'values';
+var ENTRIES = 'entries';
+
+var returnThis = function returnThis() {
+  return this;
+};
+
+module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, IS_SET, FORCED) {
+  createIteratorConstructor(IteratorConstructor, NAME, next);
+
+  var getIterationMethod = function getIterationMethod(KIND) {
+    if (KIND === DEFAULT && defaultIterator) return defaultIterator;
+    if (!BUGGY_SAFARI_ITERATORS && KIND in IterablePrototype) return IterablePrototype[KIND];
+
+    switch (KIND) {
+      case KEYS:
+        return function keys() {
+          return new IteratorConstructor(this, KIND);
+        };
+
+      case VALUES:
+        return function values() {
+          return new IteratorConstructor(this, KIND);
+        };
+
+      case ENTRIES:
+        return function entries() {
+          return new IteratorConstructor(this, KIND);
+        };
+    }
+
+    return function () {
+      return new IteratorConstructor(this);
+    };
+  };
+
+  var TO_STRING_TAG = NAME + ' Iterator';
+  var INCORRECT_VALUES_NAME = false;
+  var IterablePrototype = Iterable.prototype;
+  var nativeIterator = IterablePrototype[ITERATOR] || IterablePrototype['@@iterator'] || DEFAULT && IterablePrototype[DEFAULT];
+  var defaultIterator = !BUGGY_SAFARI_ITERATORS && nativeIterator || getIterationMethod(DEFAULT);
+  var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
+  var CurrentIteratorPrototype, methods, KEY; // fix native
+
+  if (anyNativeIterator) {
+    CurrentIteratorPrototype = getPrototypeOf(anyNativeIterator.call(new Iterable()));
+
+    if (IteratorPrototype !== Object.prototype && CurrentIteratorPrototype.next) {
+      if (!IS_PURE && getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
+        if (setPrototypeOf) {
+          setPrototypeOf(CurrentIteratorPrototype, IteratorPrototype);
+        } else if (typeof CurrentIteratorPrototype[ITERATOR] != 'function') {
+          createNonEnumerableProperty(CurrentIteratorPrototype, ITERATOR, returnThis);
+        }
+      } // Set @@toStringTag to native iterators
+
+
+      setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true, true);
+      if (IS_PURE) Iterators[TO_STRING_TAG] = returnThis;
+    }
+  } // fix Array#{values, @@iterator}.name in V8 / FF
+
+
+  if (DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
+    INCORRECT_VALUES_NAME = true;
+
+    defaultIterator = function values() {
+      return nativeIterator.call(this);
+    };
+  } // define iterator
+
+
+  if ((!IS_PURE || FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
+    createNonEnumerableProperty(IterablePrototype, ITERATOR, defaultIterator);
+  }
+
+  Iterators[NAME] = defaultIterator; // export additional methods
+
+  if (DEFAULT) {
+    methods = {
+      values: getIterationMethod(VALUES),
+      keys: IS_SET ? defaultIterator : getIterationMethod(KEYS),
+      entries: getIterationMethod(ENTRIES)
+    };
+    if (FORCED) for (KEY in methods) {
+      if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
+        redefine(IterablePrototype, KEY, methods[KEY]);
+      }
+    } else $({
+      target: NAME,
+      proto: true,
+      forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME
+    }, methods);
+  }
+
+  return methods;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/descriptors.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/descriptors.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js"); // Detect IE8's incomplete defineProperty implementation
+
+
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+  return Object.defineProperty({}, 1, {
+    get: function get() {
+      return 7;
+    }
+  })[1] != 7;
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/document-create-element.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/document-create-element.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var document = global.document; // typeof document.createElement is 'object' in old IE
+
+var EXISTS = isObject(document) && isObject(document.createElement);
+
+module.exports = function (it) {
+  return EXISTS ? document.createElement(it) : {};
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/dom-iterables.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/dom-iterables.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// iterable DOM collections
+// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
+module.exports = {
+  CSSRuleList: 0,
+  CSSStyleDeclaration: 0,
+  CSSValueList: 0,
+  ClientRectList: 0,
+  DOMRectList: 0,
+  DOMStringList: 0,
+  DOMTokenList: 1,
+  DataTransferItemList: 0,
+  FileList: 0,
+  HTMLAllCollection: 0,
+  HTMLCollection: 0,
+  HTMLFormElement: 0,
+  HTMLSelectElement: 0,
+  MediaList: 0,
+  MimeTypeArray: 0,
+  NamedNodeMap: 0,
+  NodeList: 1,
+  PaintRequestList: 0,
+  Plugin: 0,
+  PluginArray: 0,
+  SVGLengthList: 0,
+  SVGNumberList: 0,
+  SVGPathSegList: 0,
+  SVGPointList: 0,
+  SVGStringList: 0,
+  SVGTransformList: 0,
+  SourceBufferList: 0,
+  StyleSheetList: 0,
+  TextTrackCueList: 0,
+  TextTrackList: 0,
+  TouchList: 0
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/engine-user-agent.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/engine-user-agent.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/engine-v8-version.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/engine-v8-version.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var userAgent = __webpack_require__(/*! ../internals/engine-user-agent */ "./node_modules/core-js/internals/engine-user-agent.js");
+
+var process = global.process;
+var versions = process && process.versions;
+var v8 = versions && versions.v8;
+var match, version;
+
+if (v8) {
+  match = v8.split('.');
+  version = match[0] < 4 ? 1 : match[0] + match[1];
+} else if (userAgent) {
+  match = userAgent.match(/Edge\/(\d+)/);
+
+  if (!match || match[1] >= 74) {
+    match = userAgent.match(/Chrome\/(\d+)/);
+    if (match) version = match[1];
+  }
+}
+
+module.exports = version && +version;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/enum-bug-keys.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/enum-bug-keys.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// IE8- don't enum bug keys
+module.exports = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/export.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/export.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var getOwnPropertyDescriptor = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/core-js/internals/object-get-own-property-descriptor.js").f;
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+
+var copyConstructorProperties = __webpack_require__(/*! ../internals/copy-constructor-properties */ "./node_modules/core-js/internals/copy-constructor-properties.js");
+
+var isForced = __webpack_require__(/*! ../internals/is-forced */ "./node_modules/core-js/internals/is-forced.js");
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/
+
+
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced); // contained in target
+
+    if (!FORCED && targetProperty !== undefined) {
+      if (_typeof(sourceProperty) === _typeof(targetProperty)) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    } // add a flag to not completely full polyfills
+
+
+    if (options.sham || targetProperty && targetProperty.sham) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    } // extend global
+
+
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/fails.js":
+/*!*************************************************!*\
+  !*** ./node_modules/core-js/internals/fails.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ // TODO: Remove from `core-js@4` since it's moved to entry points
+
+__webpack_require__(/*! ../modules/es.regexp.exec */ "./node_modules/core-js/modules/es.regexp.exec.js");
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var regexpExec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var SPECIES = wellKnownSymbol('species');
+var RegExpPrototype = RegExp.prototype;
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  // #replace needs built-in support for named groups.
+  // #match works fine because it just return the exec results, even if it has
+  // a "grops" property.
+  var re = /./;
+
+  re.exec = function () {
+    var result = [];
+    result.groups = {
+      a: '7'
+    };
+    return result;
+  };
+
+  return ''.replace(re, '$<a>') !== '7';
+}); // IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+
+var REPLACE_KEEPS_$0 = function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+}();
+
+var REPLACE = wellKnownSymbol('replace'); // Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+
+  return false;
+}(); // Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+// Weex JS has frozen built-in prototypes, so use try / catch wrapper
+
+
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
+  // eslint-disable-next-line regexp/no-empty-group -- required for testing
+  var re = /(?:)/;
+  var originalExec = re.exec;
+
+  re.exec = function () {
+    return originalExec.apply(this, arguments);
+  };
+
+  var result = 'ab'.split(re);
+  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+});
+
+module.exports = function (KEY, length, exec, sham) {
+  var SYMBOL = wellKnownSymbol(KEY);
+  var DELEGATES_TO_SYMBOL = !fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+
+    O[SYMBOL] = function () {
+      return 7;
+    };
+
+    return ''[KEY](O) != 7;
+  });
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    if (KEY === 'split') {
+      // We can't use real regex here since it causes deoptimization
+      // and serious performance degradation in V8
+      // https://github.com/zloirock/core-js/issues/306
+      re = {}; // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+
+      re.constructor = {};
+
+      re.constructor[SPECIES] = function () {
+        return re;
+      };
+
+      re.flags = '';
+      re[SYMBOL] = /./[SYMBOL];
+    }
+
+    re.exec = function () {
+      execCalled = true;
+      return null;
+    };
+
+    re[SYMBOL]('');
+    return !execCalled;
+  });
+
+  if (!DELEGATES_TO_SYMBOL || !DELEGATES_TO_EXEC || KEY === 'replace' && !(REPLACE_SUPPORTS_NAMED_GROUPS && REPLACE_KEEPS_$0 && !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE) || KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC) {
+    var nativeRegExpMethod = /./[SYMBOL];
+    var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+      var $exec = regexp.exec;
+
+      if ($exec === regexpExec || $exec === RegExpPrototype.exec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return {
+            done: true,
+            value: nativeRegExpMethod.call(regexp, str, arg2)
+          };
+        }
+
+        return {
+          done: true,
+          value: nativeMethod.call(str, regexp, arg2)
+        };
+      }
+
+      return {
+        done: false
+      };
+    }, {
+      REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
+      REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+    });
+    var stringMethod = methods[0];
+    var regexMethod = methods[1];
+    redefine(String.prototype, KEY, stringMethod);
+    redefine(RegExpPrototype, SYMBOL, length == 2 // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+    // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+    ? function (string, arg) {
+      return regexMethod.call(string, this, arg);
+    } // 21.2.5.6 RegExp.prototype[@@match](string)
+    // 21.2.5.9 RegExp.prototype[@@search](string)
+    : function (string) {
+      return regexMethod.call(string, this);
+    });
+  }
+
+  if (sham) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/freezing.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/freezing.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+module.exports = !fails(function () {
+  // eslint-disable-next-line es/no-object-isextensible, es/no-object-preventextensions -- required for testing
+  return Object.isExtensible(Object.preventExtensions({}));
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/function-bind-context.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/function-bind-context.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var aFunction = __webpack_require__(/*! ../internals/a-function */ "./node_modules/core-js/internals/a-function.js"); // optional / simple context binding
+
+
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+
+  switch (length) {
+    case 0:
+      return function () {
+        return fn.call(that);
+      };
+
+    case 1:
+      return function (a) {
+        return fn.call(that, a);
+      };
+
+    case 2:
+      return function (a, b) {
+        return fn.call(that, a, b);
+      };
+
+    case 3:
+      return function (a, b, c) {
+        return fn.call(that, a, b, c);
+      };
+  }
+
+  return function () {
+    return fn.apply(that, arguments);
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-built-in.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/get-built-in.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var path = __webpack_require__(/*! ../internals/path */ "./node_modules/core-js/internals/path.js");
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var aFunction = function aFunction(variable) {
+  return typeof variable == 'function' ? variable : undefined;
+};
+
+module.exports = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace]) : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-iterator-method.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/internals/get-iterator-method.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js");
+
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+
+module.exports = function (it) {
+  if (it != undefined) return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/get-substitution.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/get-substitution.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var floor = Math.floor;
+var replace = ''.replace;
+var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g; // https://tc39.es/ecma262/#sec-getsubstitution
+
+module.exports = function (matched, str, position, captures, namedCaptures, replacement) {
+  var tailPos = position + matched.length;
+  var m = captures.length;
+  var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+
+  if (namedCaptures !== undefined) {
+    namedCaptures = toObject(namedCaptures);
+    symbols = SUBSTITUTION_SYMBOLS;
+  }
+
+  return replace.call(replacement, symbols, function (match, ch) {
+    var capture;
+
+    switch (ch.charAt(0)) {
+      case '$':
+        return '$';
+
+      case '&':
+        return matched;
+
+      case '`':
+        return str.slice(0, position);
+
+      case "'":
+        return str.slice(tailPos);
+
+      case '<':
+        capture = namedCaptures[ch.slice(1, -1)];
+        break;
+
+      default:
+        // \d\d?
+        var n = +ch;
+        if (n === 0) return match;
+
+        if (n > m) {
+          var f = floor(n / 10);
+          if (f === 0) return match;
+          if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+          return match;
+        }
+
+        capture = captures[n - 1];
+    }
+
+    return capture === undefined ? '' : capture;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/global.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/global.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var check = function check(it) {
+  return it && it.Math == Math && it;
+}; // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+
+
+module.exports = // eslint-disable-next-line es/no-global-this -- safe
+check((typeof globalThis === "undefined" ? "undefined" : _typeof(globalThis)) == 'object' && globalThis) || check((typeof window === "undefined" ? "undefined" : _typeof(window)) == 'object' && window) || // eslint-disable-next-line no-restricted-globals -- safe
+check((typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self) || check((typeof global === "undefined" ? "undefined" : _typeof(global)) == 'object' && global) || // eslint-disable-next-line no-new-func -- fallback
+function () {
+  return this;
+}() || Function('return this')();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/has.js":
+/*!***********************************************!*\
+  !*** ./node_modules/core-js/internals/has.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function hasOwn(it, key) {
+  return hasOwnProperty.call(toObject(it), key);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/hidden-keys.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/hidden-keys.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/html.js":
+/*!************************************************!*\
+  !*** ./node_modules/core-js/internals/html.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/ie8-dom-define.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/ie8-dom-define.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var createElement = __webpack_require__(/*! ../internals/document-create-element */ "./node_modules/core-js/internals/document-create-element.js"); // Thank's IE8 for his funny defineProperty
+
+
+module.exports = !DESCRIPTORS && !fails(function () {
+  // eslint-disable-next-line es/no-object-defineproperty -- requied for testing
+  return Object.defineProperty(createElement('div'), 'a', {
+    get: function get() {
+      return 7;
+    }
+  }).a != 7;
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/indexed-object.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/indexed-object.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+var split = ''.split; // fallback for non-array-like ES3 and non-enumerable old V8 strings
+
+module.exports = fails(function () {
+  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
+  // eslint-disable-next-line no-prototype-builtins -- safe
+  return !Object('z').propertyIsEnumerable(0);
+}) ? function (it) {
+  return classof(it) == 'String' ? split.call(it, '') : Object(it);
+} : Object;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/inherit-if-required.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/internals/inherit-if-required.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ "./node_modules/core-js/internals/object-set-prototype-of.js"); // makes subclassing work correct for wrapped built-ins
+
+
+module.exports = function ($this, dummy, Wrapper) {
+  var NewTarget, NewTargetPrototype;
+  if ( // it can work only with native `setPrototypeOf`
+  setPrototypeOf && // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+  typeof (NewTarget = dummy.constructor) == 'function' && NewTarget !== Wrapper && isObject(NewTargetPrototype = NewTarget.prototype) && NewTargetPrototype !== Wrapper.prototype) setPrototypeOf($this, NewTargetPrototype);
+  return $this;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/inspect-source.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/inspect-source.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+
+var functionToString = Function.toString; // this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+
+if (typeof store.inspectSource != 'function') {
+  store.inspectSource = function (it) {
+    return functionToString.call(it);
+  };
+}
+
+module.exports = store.inspectSource;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/internal-metadata.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/internal-metadata.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var defineProperty = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f;
+
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+
+var FREEZING = __webpack_require__(/*! ../internals/freezing */ "./node_modules/core-js/internals/freezing.js");
+
+var METADATA = uid('meta');
+var id = 0; // eslint-disable-next-line es/no-object-isextensible -- safe
+
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+
+var setMetadata = function setMetadata(it) {
+  defineProperty(it, METADATA, {
+    value: {
+      objectID: 'O' + ++id,
+      // object ID
+      weakData: {} // weak collections IDs
+
+    }
+  });
+};
+
+var fastKey = function fastKey(it, create) {
+  // return a primitive with prefix
+  if (!isObject(it)) return _typeof(it) == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+
+  if (!has(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F'; // not necessary to add metadata
+
+    if (!create) return 'E'; // add missing metadata
+
+    setMetadata(it); // return object ID
+  }
+
+  return it[METADATA].objectID;
+};
+
+var getWeakData = function getWeakData(it, create) {
+  if (!has(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true; // not necessary to add metadata
+
+    if (!create) return false; // add missing metadata
+
+    setMetadata(it); // return the store of weak collections IDs
+  }
+
+  return it[METADATA].weakData;
+}; // add metadata on freeze-family methods calling
+
+
+var onFreeze = function onFreeze(it) {
+  if (FREEZING && meta.REQUIRED && isExtensible(it) && !has(it, METADATA)) setMetadata(it);
+  return it;
+};
+
+var meta = module.exports = {
+  REQUIRED: false,
+  fastKey: fastKey,
+  getWeakData: getWeakData,
+  onFreeze: onFreeze
+};
+hiddenKeys[METADATA] = true;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/internal-state.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/internal-state.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var NATIVE_WEAK_MAP = __webpack_require__(/*! ../internals/native-weak-map */ "./node_modules/core-js/internals/native-weak-map.js");
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var objectHas = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var shared = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
+var WeakMap = global.WeakMap;
+var set, get, has;
+
+var enforce = function enforce(it) {
+  return has(it) ? get(it) : set(it, {});
+};
+
+var getterFor = function getterFor(TYPE) {
+  return function (it) {
+    var state;
+
+    if (!isObject(it) || (state = get(it)).type !== TYPE) {
+      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+    }
+
+    return state;
+  };
+};
+
+if (NATIVE_WEAK_MAP || shared.state) {
+  var store = shared.state || (shared.state = new WeakMap());
+  var wmget = store.get;
+  var wmhas = store.has;
+  var wmset = store.set;
+
+  set = function set(it, metadata) {
+    if (wmhas.call(store, it)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    wmset.call(store, it, metadata);
+    return metadata;
+  };
+
+  get = function get(it) {
+    return wmget.call(store, it) || {};
+  };
+
+  has = function has(it) {
+    return wmhas.call(store, it);
+  };
+} else {
+  var STATE = sharedKey('state');
+  hiddenKeys[STATE] = true;
+
+  set = function set(it, metadata) {
+    if (objectHas(it, STATE)) throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+    metadata.facade = it;
+    createNonEnumerableProperty(it, STATE, metadata);
+    return metadata;
+  };
+
+  get = function get(it) {
+    return objectHas(it, STATE) ? it[STATE] : {};
+  };
+
+  has = function has(it) {
+    return objectHas(it, STATE);
+  };
+}
+
+module.exports = {
+  set: set,
+  get: get,
+  has: has,
+  enforce: enforce,
+  getterFor: getterFor
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-array-iterator-method.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/is-array-iterator-method.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var ArrayPrototype = Array.prototype; // check on default Array iterator
+
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-array.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-array.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js"); // `IsArray` abstract operation
+// https://tc39.es/ecma262/#sec-isarray
+// eslint-disable-next-line es/no-array-isarray -- safe
+
+
+module.exports = Array.isArray || function isArray(arg) {
+  return classof(arg) == 'Array';
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-forced.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-forced.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var replacement = /#|\.prototype\./;
+
+var isForced = function isForced(feature, detection) {
+  var value = data[normalize(feature)];
+  return value == POLYFILL ? true : value == NATIVE ? false : typeof detection == 'function' ? fails(detection) : !!detection;
+};
+
+var normalize = isForced.normalize = function (string) {
+  return String(string).replace(replacement, '.').toLowerCase();
+};
+
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+module.exports = isForced;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-object.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+module.exports = function (it) {
+  return _typeof(it) === 'object' ? it !== null : typeof it === 'function';
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-pure.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/is-pure.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = false;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/is-regexp.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/is-regexp.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var classof = __webpack_require__(/*! ../internals/classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var MATCH = wellKnownSymbol('match'); // `IsRegExp` abstract operation
+// https://tc39.es/ecma262/#sec-isregexp
+
+module.exports = function (it) {
+  var isRegExp;
+  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : classof(it) == 'RegExp');
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterate.js":
+/*!***************************************************!*\
+  !*** ./node_modules/core-js/internals/iterate.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var isArrayIteratorMethod = __webpack_require__(/*! ../internals/is-array-iterator-method */ "./node_modules/core-js/internals/is-array-iterator-method.js");
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/core-js/internals/function-bind-context.js");
+
+var getIteratorMethod = __webpack_require__(/*! ../internals/get-iterator-method */ "./node_modules/core-js/internals/get-iterator-method.js");
+
+var iteratorClose = __webpack_require__(/*! ../internals/iterator-close */ "./node_modules/core-js/internals/iterator-close.js");
+
+var Result = function Result(stopped, result) {
+  this.stopped = stopped;
+  this.result = result;
+};
+
+module.exports = function (iterable, unboundFunction, options) {
+  var that = options && options.that;
+  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+  var INTERRUPTED = !!(options && options.INTERRUPTED);
+  var fn = bind(unboundFunction, that, 1 + AS_ENTRIES + INTERRUPTED);
+  var iterator, iterFn, index, length, result, next, step;
+
+  var stop = function stop(condition) {
+    if (iterator) iteratorClose(iterator);
+    return new Result(true, condition);
+  };
+
+  var callFn = function callFn(value) {
+    if (AS_ENTRIES) {
+      anObject(value);
+      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+    }
+
+    return INTERRUPTED ? fn(value, stop) : fn(value);
+  };
+
+  if (IS_ITERATOR) {
+    iterator = iterable;
+  } else {
+    iterFn = getIteratorMethod(iterable);
+    if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
+
+    if (isArrayIteratorMethod(iterFn)) {
+      for (index = 0, length = toLength(iterable.length); length > index; index++) {
+        result = callFn(iterable[index]);
+        if (result && result instanceof Result) return result;
+      }
+
+      return new Result(false);
+    }
+
+    iterator = iterFn.call(iterable);
+  }
+
+  next = iterator.next;
+
+  while (!(step = next.call(iterator)).done) {
+    try {
+      result = callFn(step.value);
+    } catch (error) {
+      iteratorClose(iterator);
+      throw error;
+    }
+
+    if (_typeof(result) == 'object' && result && result instanceof Result) return result;
+  }
+
+  return new Result(false);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterator-close.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/iterator-close.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+module.exports = function (iterator) {
+  var returnMethod = iterator['return'];
+
+  if (returnMethod !== undefined) {
+    return anObject(returnMethod.call(iterator)).value;
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterators-core.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/internals/iterators-core.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var getPrototypeOf = __webpack_require__(/*! ../internals/object-get-prototype-of */ "./node_modules/core-js/internals/object-get-prototype-of.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var BUGGY_SAFARI_ITERATORS = false;
+
+var returnThis = function returnThis() {
+  return this;
+}; // `%IteratorPrototype%` object
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-object
+
+
+var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
+/* eslint-disable es/no-array-prototype-keys -- safe */
+
+if ([].keys) {
+  arrayIterator = [].keys(); // Safari 8 has buggy iterators w/o `next`
+
+  if (!('next' in arrayIterator)) BUGGY_SAFARI_ITERATORS = true;else {
+    PrototypeOfArrayIteratorPrototype = getPrototypeOf(getPrototypeOf(arrayIterator));
+    if (PrototypeOfArrayIteratorPrototype !== Object.prototype) IteratorPrototype = PrototypeOfArrayIteratorPrototype;
+  }
+}
+
+var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+  var test = {}; // FF44- legacy iterators case
+
+  return IteratorPrototype[ITERATOR].call(test) !== test;
+});
+if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {}; // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+
+if ((!IS_PURE || NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
+  createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
+}
+
+module.exports = {
+  IteratorPrototype: IteratorPrototype,
+  BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/iterators.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/iterators.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/native-symbol.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/native-symbol.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* eslint-disable es/no-symbol -- required for testing */
+var V8_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js"); // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
+
+
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+  return !String(Symbol()) || // Chrome 38 Symbol has incorrect toString conversion
+  // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
+  !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/native-weak-map.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/internals/native-weak-map.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "./node_modules/core-js/internals/inspect-source.js");
+
+var WeakMap = global.WeakMap;
+module.exports = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/not-a-regexp.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/not-a-regexp.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isRegExp = __webpack_require__(/*! ../internals/is-regexp */ "./node_modules/core-js/internals/is-regexp.js");
+
+module.exports = function (it) {
+  if (isRegExp(it)) {
+    throw TypeError("The method doesn't accept regular expressions");
+  }
+
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-assign.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/object-assign.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
+
+var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
+
+var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js"); // eslint-disable-next-line es/no-object-assign -- safe
+
+
+var $assign = Object.assign; // eslint-disable-next-line es/no-object-defineproperty -- required for testing
+
+var defineProperty = Object.defineProperty; // `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+
+module.exports = !$assign || fails(function () {
+  // should have correct order of operations (Edge bug)
+  if (DESCRIPTORS && $assign({
+    b: 1
+  }, $assign(defineProperty({}, 'a', {
+    enumerable: true,
+    get: function get() {
+      defineProperty(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), {
+    b: 2
+  })).b !== 1) return true; // should work with symbols and should have deterministic property order (V8 bug)
+
+  var A = {};
+  var B = {}; // eslint-disable-next-line es/no-symbol -- safe
+
+  var symbol = Symbol();
+  var alphabet = 'abcdefghijklmnopqrst';
+  A[symbol] = 7;
+  alphabet.split('').forEach(function (chr) {
+    B[chr] = chr;
+  });
+  return $assign({}, A)[symbol] != 7 || objectKeys($assign({}, B)).join('') != alphabet;
+}) ? function assign(target, source) {
+  // eslint-disable-line no-unused-vars -- required for `.length`
+  var T = toObject(target);
+  var argumentsLength = arguments.length;
+  var index = 1;
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  var propertyIsEnumerable = propertyIsEnumerableModule.f;
+
+  while (argumentsLength > index) {
+    var S = IndexedObject(arguments[index++]);
+    var keys = getOwnPropertySymbols ? objectKeys(S).concat(getOwnPropertySymbols(S)) : objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || propertyIsEnumerable.call(S, key)) T[key] = S[key];
+    }
+  }
+
+  return T;
+} : $assign;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-create.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/internals/object-create.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var defineProperties = __webpack_require__(/*! ../internals/object-define-properties */ "./node_modules/core-js/internals/object-define-properties.js");
+
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js");
+
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+var html = __webpack_require__(/*! ../internals/html */ "./node_modules/core-js/internals/html.js");
+
+var documentCreateElement = __webpack_require__(/*! ../internals/document-create-element */ "./node_modules/core-js/internals/document-create-element.js");
+
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function EmptyConstructor() {
+  /* empty */
+};
+
+var scriptTag = function scriptTag(content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+}; // Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+
+
+var NullProtoObjectViaActiveX = function NullProtoObjectViaActiveX(activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  activeXDocument = null; // avoid memory leak
+
+  return temp;
+}; // Create object with fake `null` prototype: use iframe Object with cleared prototype
+
+
+var NullProtoObjectViaIFrame = function NullProtoObjectViaIFrame() {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe); // https://github.com/zloirock/core-js/issues/475
+
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+}; // Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+
+
+var activeXDocument;
+
+var _NullProtoObject = function NullProtoObject() {
+  try {
+    /* global ActiveXObject -- old IE */
+    activeXDocument = document.domain && new ActiveXObject('htmlfile');
+  } catch (error) {
+    /* ignore */
+  }
+
+  _NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
+  var length = enumBugKeys.length;
+
+  while (length--) {
+    delete _NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  }
+
+  return _NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true; // `Object.create` method
+// https://tc39.es/ecma262/#sec-object.create
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null; // add "__proto__" for Object.getPrototypeOf polyfill
+
+    result[IE_PROTO] = O;
+  } else result = _NullProtoObject();
+
+  return Properties === undefined ? result : defineProperties(result, Properties);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-define-properties.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-define-properties.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var objectKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js"); // `Object.defineProperties` method
+// https://tc39.es/ecma262/#sec-object.defineproperties
+// eslint-disable-next-line es/no-object-defineproperties -- safe
+
+
+module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+
+  while (length > index) {
+    definePropertyModule.f(O, key = keys[index++], Properties[key]);
+  }
+
+  return O;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-define-property.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-define-property.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "./node_modules/core-js/internals/ie8-dom-define.js");
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var toPrimitive = __webpack_require__(/*! ../internals/to-primitive */ "./node_modules/core-js/internals/to-primitive.js"); // eslint-disable-next-line es/no-object-defineproperty -- safe
+
+
+var $defineProperty = Object.defineProperty; // `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+
+exports.f = DESCRIPTORS ? $defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return $defineProperty(O, P, Attributes);
+  } catch (error) {
+    /* empty */
+  }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-descriptor.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-descriptor.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var propertyIsEnumerableModule = __webpack_require__(/*! ../internals/object-property-is-enumerable */ "./node_modules/core-js/internals/object-property-is-enumerable.js");
+
+var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/core-js/internals/create-property-descriptor.js");
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+
+var toPrimitive = __webpack_require__(/*! ../internals/to-primitive */ "./node_modules/core-js/internals/to-primitive.js");
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var IE8_DOM_DEFINE = __webpack_require__(/*! ../internals/ie8-dom-define */ "./node_modules/core-js/internals/ie8-dom-define.js"); // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+
+
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // `Object.getOwnPropertyDescriptor` method
+// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
+
+exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+  O = toIndexedObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return $getOwnPropertyDescriptor(O, P);
+  } catch (error) {
+    /* empty */
+  }
+  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-names.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-names.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "./node_modules/core-js/internals/object-keys-internal.js");
+
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js");
+
+var hiddenKeys = enumBugKeys.concat('length', 'prototype'); // `Object.getOwnPropertyNames` method
+// https://tc39.es/ecma262/#sec-object.getownpropertynames
+// eslint-disable-next-line es/no-object-getownpropertynames -- safe
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return internalObjectKeys(O, hiddenKeys);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-own-property-symbols.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-own-property-symbols.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// eslint-disable-next-line es/no-object-getownpropertysymbols -- safe
+exports.f = Object.getOwnPropertySymbols;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-get-prototype-of.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-get-prototype-of.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var sharedKey = __webpack_require__(/*! ../internals/shared-key */ "./node_modules/core-js/internals/shared-key.js");
+
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(/*! ../internals/correct-prototype-getter */ "./node_modules/core-js/internals/correct-prototype-getter.js");
+
+var IE_PROTO = sharedKey('IE_PROTO');
+var ObjectPrototype = Object.prototype; // `Object.getPrototypeOf` method
+// https://tc39.es/ecma262/#sec-object.getprototypeof
+// eslint-disable-next-line es/no-object-getprototypeof -- safe
+
+module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  }
+
+  return O instanceof Object ? ObjectPrototype : null;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-keys-internal.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-keys-internal.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+
+var indexOf = __webpack_require__(/*! ../internals/array-includes */ "./node_modules/core-js/internals/array-includes.js").indexOf;
+
+var hiddenKeys = __webpack_require__(/*! ../internals/hidden-keys */ "./node_modules/core-js/internals/hidden-keys.js");
+
+module.exports = function (object, names) {
+  var O = toIndexedObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+
+  for (key in O) {
+    !has(hiddenKeys, key) && has(O, key) && result.push(key);
+  } // Don't enum bug & hidden keys
+
+
+  while (names.length > i) {
+    if (has(O, key = names[i++])) {
+      ~indexOf(result, key) || result.push(key);
+    }
+  }
+
+  return result;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-keys.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/object-keys.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var internalObjectKeys = __webpack_require__(/*! ../internals/object-keys-internal */ "./node_modules/core-js/internals/object-keys-internal.js");
+
+var enumBugKeys = __webpack_require__(/*! ../internals/enum-bug-keys */ "./node_modules/core-js/internals/enum-bug-keys.js"); // `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+// eslint-disable-next-line es/no-object-keys -- safe
+
+
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-property-is-enumerable.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-property-is-enumerable.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $propertyIsEnumerable = {}.propertyIsEnumerable; // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // Nashorn ~ JDK8 bug
+
+var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({
+  1: 2
+}, 1); // `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
+
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+  var descriptor = getOwnPropertyDescriptor(this, V);
+  return !!descriptor && descriptor.enumerable;
+} : $propertyIsEnumerable;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-set-prototype-of.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-set-prototype-of.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* eslint-disable no-proto -- safe */
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var aPossiblePrototype = __webpack_require__(/*! ../internals/a-possible-prototype */ "./node_modules/core-js/internals/a-possible-prototype.js"); // `Object.setPrototypeOf` method
+// https://tc39.es/ecma262/#sec-object.setprototypeof
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+// eslint-disable-next-line es/no-object-setprototypeof -- safe
+
+
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+  var CORRECT_SETTER = false;
+  var test = {};
+  var setter;
+
+  try {
+    // eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
+    setter.call(test, []);
+    CORRECT_SETTER = test instanceof Array;
+  } catch (error) {
+    /* empty */
+  }
+
+  return function setPrototypeOf(O, proto) {
+    anObject(O);
+    aPossiblePrototype(proto);
+    if (CORRECT_SETTER) setter.call(O, proto);else O.__proto__ = proto;
+    return O;
+  };
+}() : undefined);
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/object-to-string.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/object-to-string.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+
+var classof = __webpack_require__(/*! ../internals/classof */ "./node_modules/core-js/internals/classof.js"); // `Object.prototype.toString` method implementation
+// https://tc39.es/ecma262/#sec-object.prototype.tostring
+
+
+module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
+  return '[object ' + classof(this) + ']';
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/own-keys.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/own-keys.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+var getOwnPropertyNamesModule = __webpack_require__(/*! ../internals/object-get-own-property-names */ "./node_modules/core-js/internals/object-get-own-property-names.js");
+
+var getOwnPropertySymbolsModule = __webpack_require__(/*! ../internals/object-get-own-property-symbols */ "./node_modules/core-js/internals/object-get-own-property-symbols.js");
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js"); // all object keys, includes non-enumerable and symbols
+
+
+module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
+  var keys = getOwnPropertyNamesModule.f(anObject(it));
+  var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+  return getOwnPropertySymbols ? keys.concat(getOwnPropertySymbols(it)) : keys;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/path.js":
+/*!************************************************!*\
+  !*** ./node_modules/core-js/internals/path.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+module.exports = global;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/redefine-all.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/redefine-all.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+module.exports = function (target, src, options) {
+  for (var key in src) {
+    redefine(target, key, src[key], options);
+  }
+
+  return target;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/redefine.js":
+/*!****************************************************!*\
+  !*** ./node_modules/core-js/internals/redefine.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+
+var inspectSource = __webpack_require__(/*! ../internals/inspect-source */ "./node_modules/core-js/internals/inspect-source.js");
+
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+
+var getInternalState = InternalStateModule.get;
+var enforceInternalState = InternalStateModule.enforce;
+var TEMPLATE = String(String).split('String');
+(module.exports = function (O, key, value, options) {
+  var unsafe = options ? !!options.unsafe : false;
+  var simple = options ? !!options.enumerable : false;
+  var noTargetGet = options ? !!options.noTargetGet : false;
+  var state;
+
+  if (typeof value == 'function') {
+    if (typeof key == 'string' && !has(value, 'name')) {
+      createNonEnumerableProperty(value, 'name', key);
+    }
+
+    state = enforceInternalState(value);
+
+    if (!state.source) {
+      state.source = TEMPLATE.join(typeof key == 'string' ? key : '');
+    }
+  }
+
+  if (O === global) {
+    if (simple) O[key] = value;else setGlobal(key, value);
+    return;
+  } else if (!unsafe) {
+    delete O[key];
+  } else if (!noTargetGet && O[key]) {
+    simple = true;
+  }
+
+  if (simple) O[key] = value;else createNonEnumerableProperty(O, key, value); // add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+})(Function.prototype, 'toString', function toString() {
+  return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-exec-abstract.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-exec-abstract.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var classof = __webpack_require__(/*! ./classof-raw */ "./node_modules/core-js/internals/classof-raw.js");
+
+var regexpExec = __webpack_require__(/*! ./regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js"); // `RegExpExec` abstract operation
+// https://tc39.es/ecma262/#sec-regexpexec
+
+
+module.exports = function (R, S) {
+  var exec = R.exec;
+
+  if (typeof exec === 'function') {
+    var result = exec.call(R, S);
+
+    if (_typeof(result) !== 'object') {
+      throw TypeError('RegExp exec method returned something other than an Object or null');
+    }
+
+    return result;
+  }
+
+  if (classof(R) !== 'RegExp') {
+    throw TypeError('RegExp#exec called on incompatible receiver');
+  }
+
+  return regexpExec.call(R, S);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-exec.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-exec.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable regexp/no-assertion-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
+
+/* eslint-disable regexp/no-useless-quantifier -- testing */
+
+var regexpFlags = __webpack_require__(/*! ./regexp-flags */ "./node_modules/core-js/internals/regexp-flags.js");
+
+var stickyHelpers = __webpack_require__(/*! ./regexp-sticky-helpers */ "./node_modules/core-js/internals/regexp-sticky-helpers.js");
+
+var shared = __webpack_require__(/*! ./shared */ "./node_modules/core-js/internals/shared.js");
+
+var nativeExec = RegExp.prototype.exec;
+var nativeReplace = shared('native-string-replace', String.prototype.replace);
+var patchedExec = nativeExec;
+
+var UPDATES_LAST_INDEX_WRONG = function () {
+  var re1 = /a/;
+  var re2 = /b*/g;
+  nativeExec.call(re1, 'a');
+  nativeExec.call(re2, 'a');
+  return re1.lastIndex !== 0 || re2.lastIndex !== 0;
+}();
+
+var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y || stickyHelpers.BROKEN_CARET; // nonparticipating capturing group, copied from es5-shim's String#split patch.
+
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y;
+
+if (PATCH) {
+  patchedExec = function exec(str) {
+    var re = this;
+    var lastIndex, reCopy, match, i;
+    var sticky = UNSUPPORTED_Y && re.sticky;
+    var flags = regexpFlags.call(re);
+    var source = re.source;
+    var charsAdded = 0;
+    var strCopy = str;
+
+    if (sticky) {
+      flags = flags.replace('y', '');
+
+      if (flags.indexOf('g') === -1) {
+        flags += 'g';
+      }
+
+      strCopy = String(str).slice(re.lastIndex); // Support anchored sticky behavior.
+
+      if (re.lastIndex > 0 && (!re.multiline || re.multiline && str[re.lastIndex - 1] !== '\n')) {
+        source = '(?: ' + source + ')';
+        strCopy = ' ' + strCopy;
+        charsAdded++;
+      } // ^(? + rx + ) is needed, in combination with some str slicing, to
+      // simulate the 'y' flag.
+
+
+      reCopy = new RegExp('^(?:' + source + ')', flags);
+    }
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + source + '$(?!\\s)', flags);
+    }
+
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
+    match = nativeExec.call(sticky ? reCopy : re, strCopy);
+
+    if (sticky) {
+      if (match) {
+        match.input = match.input.slice(charsAdded);
+        match[0] = match[0].slice(charsAdded);
+        match.index = re.lastIndex;
+        re.lastIndex += match[0].length;
+      } else re.lastIndex = 0;
+    } else if (UPDATES_LAST_INDEX_WRONG && match) {
+      re.lastIndex = re.global ? match.index + match[0].length : lastIndex;
+    }
+
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      nativeReplace.call(match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    return match;
+  };
+}
+
+module.exports = patchedExec;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-flags.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-flags.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js"); // `RegExp.prototype.flags` getter implementation
+// https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
+
+
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.dotAll) result += 's';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/regexp-sticky-helpers.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/regexp-sticky-helpers.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__(/*! ./fails */ "./node_modules/core-js/internals/fails.js"); // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
+// so we use an intermediate function.
+
+
+function RE(s, f) {
+  return RegExp(s, f);
+}
+
+exports.UNSUPPORTED_Y = fails(function () {
+  // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
+  var re = RE('a', 'y');
+  re.lastIndex = 2;
+  return re.exec('abcd') != null;
+});
+exports.BROKEN_CARET = fails(function () {
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
+  var re = RE('^r', 'gy');
+  re.lastIndex = 2;
+  return re.exec('str') != null;
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/require-object-coercible.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/core-js/internals/require-object-coercible.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// `RequireObjectCoercible` abstract operation
+// https://tc39.es/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/set-global.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/set-global.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+module.exports = function (key, value) {
+  try {
+    createNonEnumerableProperty(global, key, value);
+  } catch (error) {
+    global[key] = value;
+  }
+
+  return value;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/set-species.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/set-species.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ "./node_modules/core-js/internals/get-built-in.js");
+
+var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/core-js/internals/descriptors.js");
+
+var SPECIES = wellKnownSymbol('species');
+
+module.exports = function (CONSTRUCTOR_NAME) {
+  var Constructor = getBuiltIn(CONSTRUCTOR_NAME);
+  var defineProperty = definePropertyModule.f;
+
+  if (DESCRIPTORS && Constructor && !Constructor[SPECIES]) {
+    defineProperty(Constructor, SPECIES, {
+      configurable: true,
+      get: function get() {
+        return this;
+      }
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/set-to-string-tag.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/set-to-string-tag.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defineProperty = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/core-js/internals/object-define-property.js").f;
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+
+module.exports = function (it, TAG, STATIC) {
+  if (it && !has(it = STATIC ? it : it.prototype, TO_STRING_TAG)) {
+    defineProperty(it, TO_STRING_TAG, {
+      configurable: true,
+      value: TAG
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared-key.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/shared-key.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+
+var keys = shared('keys');
+
+module.exports = function (key) {
+  return keys[key] || (keys[key] = uid(key));
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared-store.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/shared-store.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var setGlobal = __webpack_require__(/*! ../internals/set-global */ "./node_modules/core-js/internals/set-global.js");
+
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || setGlobal(SHARED, {});
+module.exports = store;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/shared.js":
+/*!**************************************************!*\
+  !*** ./node_modules/core-js/internals/shared.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js");
+
+var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules/core-js/internals/shared-store.js");
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: '3.12.1',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/string-multibyte.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/internals/string-multibyte.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
+
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js"); // `String.prototype.{ codePointAt, at }` methods implementation
+
+
+var createMethod = function createMethod(CONVERT_TO_STRING) {
+  return function ($this, pos) {
+    var S = String(requireObjectCoercible($this));
+    var position = toInteger(pos);
+    var size = S.length;
+    var first, second;
+    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+    first = S.charCodeAt(position);
+    return first < 0xD800 || first > 0xDBFF || position + 1 === size || (second = S.charCodeAt(position + 1)) < 0xDC00 || second > 0xDFFF ? CONVERT_TO_STRING ? S.charAt(position) : first : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+  };
+};
+
+module.exports = {
+  // `String.prototype.codePointAt` method
+  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
+  codeAt: createMethod(false),
+  // `String.prototype.at` method
+  // https://github.com/mathiasbynens/String.prototype.at
+  charAt: createMethod(true)
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-absolute-index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-absolute-index.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
+
+var max = Math.max;
+var min = Math.min; // Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+
+module.exports = function (index, length) {
+  var integer = toInteger(index);
+  return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-indexed-object.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-indexed-object.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// toObject with fallback for non-array-like ES3 strings
+var IndexedObject = __webpack_require__(/*! ../internals/indexed-object */ "./node_modules/core-js/internals/indexed-object.js");
+
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+module.exports = function (it) {
+  return IndexedObject(requireObjectCoercible(it));
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-integer.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/internals/to-integer.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var ceil = Math.ceil;
+var floor = Math.floor; // `ToInteger` abstract operation
+// https://tc39.es/ecma262/#sec-tointeger
+
+module.exports = function (argument) {
+  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-length.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/to-length.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
+
+var min = Math.min; // `ToLength` abstract operation
+// https://tc39.es/ecma262/#sec-tolength
+
+module.exports = function (argument) {
+  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-object.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/internals/to-object.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js"); // `ToObject` abstract operation
+// https://tc39.es/ecma262/#sec-toobject
+
+
+module.exports = function (argument) {
+  return Object(requireObjectCoercible(argument));
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-primitive.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/internals/to-primitive.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js"); // `ToPrimitive` abstract operation
+// https://tc39.es/ecma262/#sec-toprimitive
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+
+
+module.exports = function (input, PREFERRED_STRING) {
+  if (!isObject(input)) return input;
+  var fn, val;
+  if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (typeof (fn = input.valueOf) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/to-string-tag-support.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/internals/to-string-tag-support.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+test[TO_STRING_TAG] = 'z';
+module.exports = String(test) === '[object z]';
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/uid.js":
+/*!***********************************************!*\
+  !*** ./node_modules/core-js/internals/uid.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var id = 0;
+var postfix = Math.random();
+
+module.exports = function (key) {
+  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/use-symbol-as-uid.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/use-symbol-as-uid.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/* eslint-disable es/no-symbol -- required for testing */
+var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/native-symbol */ "./node_modules/core-js/internals/native-symbol.js");
+
+module.exports = NATIVE_SYMBOL && !Symbol.sham && _typeof(Symbol.iterator) == 'symbol';
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/well-known-symbol.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/well-known-symbol.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var shared = __webpack_require__(/*! ../internals/shared */ "./node_modules/core-js/internals/shared.js");
+
+var has = __webpack_require__(/*! ../internals/has */ "./node_modules/core-js/internals/has.js");
+
+var uid = __webpack_require__(/*! ../internals/uid */ "./node_modules/core-js/internals/uid.js");
+
+var NATIVE_SYMBOL = __webpack_require__(/*! ../internals/native-symbol */ "./node_modules/core-js/internals/native-symbol.js");
+
+var USE_SYMBOL_AS_UID = __webpack_require__(/*! ../internals/use-symbol-as-uid */ "./node_modules/core-js/internals/use-symbol-as-uid.js");
+
+var WellKnownSymbolsStore = shared('wks');
+var _Symbol = global.Symbol;
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? _Symbol : _Symbol && _Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!has(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+    if (NATIVE_SYMBOL && has(_Symbol, name)) {
+      WellKnownSymbolsStore[name] = _Symbol[name];
+    } else {
+      WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+    }
+  }
+
+  return WellKnownSymbolsStore[name];
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.concat.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.concat.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var isArray = __webpack_require__(/*! ../internals/is-array */ "./node_modules/core-js/internals/is-array.js");
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/core-js/internals/is-object.js");
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var createProperty = __webpack_require__(/*! ../internals/create-property */ "./node_modules/core-js/internals/create-property.js");
+
+var arraySpeciesCreate = __webpack_require__(/*! ../internals/array-species-create */ "./node_modules/core-js/internals/array-species-create.js");
+
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var V8_VERSION = __webpack_require__(/*! ../internals/engine-v8-version */ "./node_modules/core-js/internals/engine-v8-version.js");
+
+var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded'; // We can't use this feature detection in V8 since it causes
+// deoptimization and serious performance degradation
+// https://github.com/zloirock/core-js/issues/679
+
+var IS_CONCAT_SPREADABLE_SUPPORT = V8_VERSION >= 51 || !fails(function () {
+  var array = [];
+  array[IS_CONCAT_SPREADABLE] = false;
+  return array.concat()[0] !== array;
+});
+var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+
+var isConcatSpreadable = function isConcatSpreadable(O) {
+  if (!isObject(O)) return false;
+  var spreadable = O[IS_CONCAT_SPREADABLE];
+  return spreadable !== undefined ? !!spreadable : isArray(O);
+};
+
+var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT; // `Array.prototype.concat` method
+// https://tc39.es/ecma262/#sec-array.prototype.concat
+// with adding support of @@isConcatSpreadable and @@species
+
+$({
+  target: 'Array',
+  proto: true,
+  forced: FORCED
+}, {
+  // eslint-disable-next-line no-unused-vars -- required for `.length`
+  concat: function concat(arg) {
+    var O = toObject(this);
+    var A = arraySpeciesCreate(O, 0);
+    var n = 0;
+    var i, k, length, len, E;
+
+    for (i = -1, length = arguments.length; i < length; i++) {
+      E = i === -1 ? O : arguments[i];
+
+      if (isConcatSpreadable(E)) {
+        len = toLength(E.length);
+        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+
+        for (k = 0; k < len; k++, n++) {
+          if (k in E) createProperty(A, n, E[k]);
+        }
+      } else {
+        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+        createProperty(A, n++, E);
+      }
+    }
+
+    A.length = n;
+    return A;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.filter.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.filter.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var $filter = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").filter;
+
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter'); // `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+
+$({
+  target: 'Array',
+  proto: true,
+  forced: !HAS_SPECIES_SUPPORT
+}, {
+  filter: function filter(callbackfn
+  /* , thisArg */
+  ) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.index-of.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.index-of.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable es/no-array-prototype-indexof -- required for testing */
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var $indexOf = __webpack_require__(/*! ../internals/array-includes */ "./node_modules/core-js/internals/array-includes.js").indexOf;
+
+var arrayMethodIsStrict = __webpack_require__(/*! ../internals/array-method-is-strict */ "./node_modules/core-js/internals/array-method-is-strict.js");
+
+var nativeIndexOf = [].indexOf;
+var NEGATIVE_ZERO = !!nativeIndexOf && 1 / [1].indexOf(1, -0) < 0;
+var STRICT_METHOD = arrayMethodIsStrict('indexOf'); // `Array.prototype.indexOf` method
+// https://tc39.es/ecma262/#sec-array.prototype.indexof
+
+$({
+  target: 'Array',
+  proto: true,
+  forced: NEGATIVE_ZERO || !STRICT_METHOD
+}, {
+  indexOf: function indexOf(searchElement
+  /* , fromIndex = 0 */
+  ) {
+    return NEGATIVE_ZERO // convert -0 to +0
+    ? nativeIndexOf.apply(this, arguments) || 0 : $indexOf(this, searchElement, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.iterator.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.iterator.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toIndexedObject = __webpack_require__(/*! ../internals/to-indexed-object */ "./node_modules/core-js/internals/to-indexed-object.js");
+
+var addToUnscopables = __webpack_require__(/*! ../internals/add-to-unscopables */ "./node_modules/core-js/internals/add-to-unscopables.js");
+
+var Iterators = __webpack_require__(/*! ../internals/iterators */ "./node_modules/core-js/internals/iterators.js");
+
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+
+var defineIterator = __webpack_require__(/*! ../internals/define-iterator */ "./node_modules/core-js/internals/define-iterator.js");
+
+var ARRAY_ITERATOR = 'Array Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(ARRAY_ITERATOR); // `Array.prototype.entries` method
+// https://tc39.es/ecma262/#sec-array.prototype.entries
+// `Array.prototype.keys` method
+// https://tc39.es/ecma262/#sec-array.prototype.keys
+// `Array.prototype.values` method
+// https://tc39.es/ecma262/#sec-array.prototype.values
+// `Array.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-array.prototype-@@iterator
+// `CreateArrayIterator` internal method
+// https://tc39.es/ecma262/#sec-createarrayiterator
+
+module.exports = defineIterator(Array, 'Array', function (iterated, kind) {
+  setInternalState(this, {
+    type: ARRAY_ITERATOR,
+    target: toIndexedObject(iterated),
+    // target
+    index: 0,
+    // next index
+    kind: kind // kind
+
+  }); // `%ArrayIteratorPrototype%.next` method
+  // https://tc39.es/ecma262/#sec-%arrayiteratorprototype%.next
+}, function () {
+  var state = getInternalState(this);
+  var target = state.target;
+  var kind = state.kind;
+  var index = state.index++;
+
+  if (!target || index >= target.length) {
+    state.target = undefined;
+    return {
+      value: undefined,
+      done: true
+    };
+  }
+
+  if (kind == 'keys') return {
+    value: index,
+    done: false
+  };
+  if (kind == 'values') return {
+    value: target[index],
+    done: false
+  };
+  return {
+    value: [index, target[index]],
+    done: false
+  };
+}, 'values'); // argumentsList[@@iterator] is %ArrayProto_values%
+// https://tc39.es/ecma262/#sec-createunmappedargumentsobject
+// https://tc39.es/ecma262/#sec-createmappedargumentsobject
+
+Iterators.Arguments = Iterators.Array; // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
+
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.map.js":
+/*!******************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.map.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var $map = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").map;
+
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map'); // `Array.prototype.map` method
+// https://tc39.es/ecma262/#sec-array.prototype.map
+// with adding support of @@species
+
+$({
+  target: 'Array',
+  proto: true,
+  forced: !HAS_SPECIES_SUPPORT
+}, {
+  map: function map(callbackfn
+  /* , thisArg */
+  ) {
+    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.map.js":
+/*!************************************************!*\
+  !*** ./node_modules/core-js/modules/es.map.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var collection = __webpack_require__(/*! ../internals/collection */ "./node_modules/core-js/internals/collection.js");
+
+var collectionStrong = __webpack_require__(/*! ../internals/collection-strong */ "./node_modules/core-js/internals/collection-strong.js"); // `Map` constructor
+// https://tc39.es/ecma262/#sec-map-objects
+
+
+module.exports = collection('Map', function (init) {
+  return function Map() {
+    return init(this, arguments.length ? arguments[0] : undefined);
+  };
+}, collectionStrong);
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.assign.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.assign.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var assign = __webpack_require__(/*! ../internals/object-assign */ "./node_modules/core-js/internals/object-assign.js"); // `Object.assign` method
+// https://tc39.es/ecma262/#sec-object.assign
+// eslint-disable-next-line es/no-object-assign -- required for testing
+
+
+$({
+  target: 'Object',
+  stat: true,
+  forced: Object.assign !== assign
+}, {
+  assign: assign
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.keys.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.keys.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+
+var nativeKeys = __webpack_require__(/*! ../internals/object-keys */ "./node_modules/core-js/internals/object-keys.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var FAILS_ON_PRIMITIVES = fails(function () {
+  nativeKeys(1);
+}); // `Object.keys` method
+// https://tc39.es/ecma262/#sec-object.keys
+
+$({
+  target: 'Object',
+  stat: true,
+  forced: FAILS_ON_PRIMITIVES
+}, {
+  keys: function keys(it) {
+    return nativeKeys(toObject(it));
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.to-string.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.to-string.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(/*! ../internals/to-string-tag-support */ "./node_modules/core-js/internals/to-string-tag-support.js");
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var toString = __webpack_require__(/*! ../internals/object-to-string */ "./node_modules/core-js/internals/object-to-string.js"); // `Object.prototype.toString` method
+// https://tc39.es/ecma262/#sec-object.prototype.tostring
+
+
+if (!TO_STRING_TAG_SUPPORT) {
+  redefine(Object.prototype, 'toString', toString, {
+    unsafe: true
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.regexp.exec.js":
+/*!********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.regexp.exec.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var exec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/core-js/internals/regexp-exec.js"); // `RegExp.prototype.exec` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.exec
+
+
+$({
+  target: 'RegExp',
+  proto: true,
+  forced: /./.exec !== exec
+}, {
+  exec: exec
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.regexp.to-string.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.regexp.to-string.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var redefine = __webpack_require__(/*! ../internals/redefine */ "./node_modules/core-js/internals/redefine.js");
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var fails = __webpack_require__(/*! ../internals/fails */ "./node_modules/core-js/internals/fails.js");
+
+var flags = __webpack_require__(/*! ../internals/regexp-flags */ "./node_modules/core-js/internals/regexp-flags.js");
+
+var TO_STRING = 'toString';
+var RegExpPrototype = RegExp.prototype;
+var nativeToString = RegExpPrototype[TO_STRING];
+var NOT_GENERIC = fails(function () {
+  return nativeToString.call({
+    source: 'a',
+    flags: 'b'
+  }) != '/a/b';
+}); // FF44- RegExp#toString has a wrong name
+
+var INCORRECT_NAME = nativeToString.name != TO_STRING; // `RegExp.prototype.toString` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.tostring
+
+if (NOT_GENERIC || INCORRECT_NAME) {
+  redefine(RegExp.prototype, TO_STRING, function toString() {
+    var R = anObject(this);
+    var p = String(R.source);
+    var rf = R.flags;
+    var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? flags.call(R) : rf);
+    return '/' + p + '/' + f;
+  }, {
+    unsafe: true
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.iterator.js":
+/*!************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.iterator.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var charAt = __webpack_require__(/*! ../internals/string-multibyte */ "./node_modules/core-js/internals/string-multibyte.js").charAt;
+
+var InternalStateModule = __webpack_require__(/*! ../internals/internal-state */ "./node_modules/core-js/internals/internal-state.js");
+
+var defineIterator = __webpack_require__(/*! ../internals/define-iterator */ "./node_modules/core-js/internals/define-iterator.js");
+
+var STRING_ITERATOR = 'String Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR); // `String.prototype[@@iterator]` method
+// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
+
+defineIterator(String, 'String', function (iterated) {
+  setInternalState(this, {
+    type: STRING_ITERATOR,
+    string: String(iterated),
+    index: 0
+  }); // `%StringIteratorPrototype%.next` method
+  // https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
+}, function next() {
+  var state = getInternalState(this);
+  var string = state.string;
+  var index = state.index;
+  var point;
+  if (index >= string.length) return {
+    value: undefined,
+    done: true
+  };
+  point = charAt(string, index);
+  state.index += point.length;
+  return {
+    value: point,
+    done: false
+  };
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.replace.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.replace.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
+
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+
+var getSubstitution = __webpack_require__(/*! ../internals/get-substitution */ "./node_modules/core-js/internals/get-substitution.js");
+
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+
+var max = Math.max;
+var min = Math.min;
+
+var maybeToString = function maybeToString(it) {
+  return it === undefined ? it : String(it);
+}; // @@replace logic
+
+
+fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
+  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
+  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+  var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
+  return [// `String.prototype.replace` method
+  // https://tc39.es/ecma262/#sec-string.prototype.replace
+  function replace(searchValue, replaceValue) {
+    var O = requireObjectCoercible(this);
+    var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
+    return replacer !== undefined ? replacer.call(searchValue, O, replaceValue) : nativeReplace.call(String(O), searchValue, replaceValue);
+  }, // `RegExp.prototype[@@replace]` method
+  // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
+  function (regexp, replaceValue) {
+    if (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0 || typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1) {
+      var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+      if (res.done) return res.value;
+    }
+
+    var rx = anObject(regexp);
+    var S = String(this);
+    var functionalReplace = typeof replaceValue === 'function';
+    if (!functionalReplace) replaceValue = String(replaceValue);
+    var global = rx.global;
+
+    if (global) {
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+    }
+
+    var results = [];
+
+    while (true) {
+      var result = regExpExec(rx, S);
+      if (result === null) break;
+      results.push(result);
+      if (!global) break;
+      var matchStr = String(result[0]);
+      if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+    }
+
+    var accumulatedResult = '';
+    var nextSourcePosition = 0;
+
+    for (var i = 0; i < results.length; i++) {
+      result = results[i];
+      var matched = String(result[0]);
+      var position = max(min(toInteger(result.index), S.length), 0);
+      var captures = []; // NOTE: This is equivalent to
+      //   captures = result.slice(1).map(maybeToString)
+      // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+      // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+      // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+
+      for (var j = 1; j < result.length; j++) {
+        captures.push(maybeToString(result[j]));
+      }
+
+      var namedCaptures = result.groups;
+
+      if (functionalReplace) {
+        var replacerArgs = [matched].concat(captures, position, S);
+        if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+        var replacement = String(replaceValue.apply(undefined, replacerArgs));
+      } else {
+        replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+      }
+
+      if (position >= nextSourcePosition) {
+        accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+        nextSourcePosition = position + matched.length;
+      }
+    }
+
+    return accumulatedResult + S.slice(nextSourcePosition);
+  }];
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.starts-with.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.starts-with.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+
+var getOwnPropertyDescriptor = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/core-js/internals/object-get-own-property-descriptor.js").f;
+
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+
+var notARegExp = __webpack_require__(/*! ../internals/not-a-regexp */ "./node_modules/core-js/internals/not-a-regexp.js");
+
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+
+var correctIsRegExpLogic = __webpack_require__(/*! ../internals/correct-is-regexp-logic */ "./node_modules/core-js/internals/correct-is-regexp-logic.js");
+
+var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/core-js/internals/is-pure.js"); // eslint-disable-next-line es/no-string-prototype-startswith -- safe
+
+
+var $startsWith = ''.startsWith;
+var min = Math.min;
+var CORRECT_IS_REGEXP_LOGIC = correctIsRegExpLogic('startsWith'); // https://github.com/zloirock/core-js/pull/702
+
+var MDN_POLYFILL_BUG = !IS_PURE && !CORRECT_IS_REGEXP_LOGIC && !!function () {
+  var descriptor = getOwnPropertyDescriptor(String.prototype, 'startsWith');
+  return descriptor && !descriptor.writable;
+}(); // `String.prototype.startsWith` method
+// https://tc39.es/ecma262/#sec-string.prototype.startswith
+
+$({
+  target: 'String',
+  proto: true,
+  forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGEXP_LOGIC
+}, {
+  startsWith: function startsWith(searchString
+  /* , position = 0 */
+  ) {
+    var that = String(requireObjectCoercible(this));
+    notARegExp(searchString);
+    var index = toLength(min(arguments.length > 1 ? arguments[1] : undefined, that.length));
+    var search = String(searchString);
+    return $startsWith ? $startsWith.call(that, search, index) : that.slice(index, index + search.length) === search;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/web.dom-collections.for-each.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom-collections.for-each.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var DOMIterables = __webpack_require__(/*! ../internals/dom-iterables */ "./node_modules/core-js/internals/dom-iterables.js");
+
+var forEach = __webpack_require__(/*! ../internals/array-for-each */ "./node_modules/core-js/internals/array-for-each.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+for (var COLLECTION_NAME in DOMIterables) {
+  var Collection = global[COLLECTION_NAME];
+  var CollectionPrototype = Collection && Collection.prototype; // some Chrome versions have non-configurable methods on DOMTokenList
+
+  if (CollectionPrototype && CollectionPrototype.forEach !== forEach) try {
+    createNonEnumerableProperty(CollectionPrototype, 'forEach', forEach);
+  } catch (error) {
+    CollectionPrototype.forEach = forEach;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/web.dom-collections.iterator.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom-collections.iterator.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/core-js/internals/global.js");
+
+var DOMIterables = __webpack_require__(/*! ../internals/dom-iterables */ "./node_modules/core-js/internals/dom-iterables.js");
+
+var ArrayIteratorMethods = __webpack_require__(/*! ../modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
+
+var createNonEnumerableProperty = __webpack_require__(/*! ../internals/create-non-enumerable-property */ "./node_modules/core-js/internals/create-non-enumerable-property.js");
+
+var wellKnownSymbol = __webpack_require__(/*! ../internals/well-known-symbol */ "./node_modules/core-js/internals/well-known-symbol.js");
+
+var ITERATOR = wellKnownSymbol('iterator');
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var ArrayValues = ArrayIteratorMethods.values;
+
+for (var COLLECTION_NAME in DOMIterables) {
+  var Collection = global[COLLECTION_NAME];
+  var CollectionPrototype = Collection && Collection.prototype;
+
+  if (CollectionPrototype) {
+    // some Chrome versions have non-configurable methods on DOMTokenList
+    if (CollectionPrototype[ITERATOR] !== ArrayValues) try {
+      createNonEnumerableProperty(CollectionPrototype, ITERATOR, ArrayValues);
+    } catch (error) {
+      CollectionPrototype[ITERATOR] = ArrayValues;
+    }
+
+    if (!CollectionPrototype[TO_STRING_TAG]) {
+      createNonEnumerableProperty(CollectionPrototype, TO_STRING_TAG, COLLECTION_NAME);
+    }
+
+    if (DOMIterables[COLLECTION_NAME]) for (var METHOD_NAME in ArrayIteratorMethods) {
+      // some Chrome versions have non-configurable methods on DOMTokenList
+      if (CollectionPrototype[METHOD_NAME] !== ArrayIteratorMethods[METHOD_NAME]) try {
+        createNonEnumerableProperty(CollectionPrototype, METHOD_NAME, ArrayIteratorMethods[METHOD_NAME]);
+      } catch (error) {
+        CollectionPrototype[METHOD_NAME] = ArrayIteratorMethods[METHOD_NAME];
+      }
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib??vue-loader-options!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+// Module
+___CSS_LOADER_EXPORT___.push([module.i, "#rich-workspace[data-v-0cce2262] {\n  padding: 0 50px;\n  /* Slightly reduce vertical space */\n  margin-bottom: -24px;\n  text-align: left;\n  max-height: 0;\n  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);\n}\n#rich-workspace.creatable[data-v-0cce2262] {\n  min-height: 90px;\n}\n\n/* For subfolders, where there are no Recommendations */\n#rich-workspace[data-v-0cce2262]:only-child {\n  margin-bottom: 0;\n}\n.empty-workspace[data-v-0cce2262] {\n  padding-top: 43px;\n  color: var(--color-text-maxcontrast);\n  height: 0;\n}\n#rich-workspace[data-v-0cce2262] div[contenteditable=false] {\n  width: 100%;\n  padding: 0px;\n  background-color: var(--color-main-background);\n  opacity: 1;\n  border: none;\n}\n#rich-workspace[data-v-0cce2262] #editor-container {\n  height: 100%;\n  position: unset !important;\n  top: auto !important;\n}\n#rich-workspace[data-v-0cce2262] #editor-wrapper {\n  position: unset !important;\n  overflow: visible;\n}\n#rich-workspace[data-v-0cce2262] #editor {\n  overflow: visible !important;\n}\n#rich-workspace[data-v-0cce2262] .content-wrapper {\n  overflow: scroll !important;\n  max-height: 50vh;\n  max-height: calc(40vh - 50px);\n  padding-left: 10px;\n}\n#rich-workspace[data-v-0cce2262] #editor-wrapper .ProseMirror {\n  padding: 0px;\n  margin: 0;\n}\n#rich-workspace[data-v-0cce2262] .menubar {\n  z-index: 61;\n  /* Slightly reduce vertical space */\n  margin-bottom: -10px;\n}\n#rich-workspace[data-v-0cce2262] .menubar .menubar-icons {\n  margin-left: 0;\n}\n#rich-workspace[data-v-0cce2262] .editor__content {\n  margin: 0;\n}\n#rich-workspace.focus[data-v-0cce2262] {\n  max-height: 50vh;\n}\n#rich-workspace[data-v-0cce2262]:not(.focus) {\n  max-height: 30vh;\n  position: relative;\n  overflow: hidden;\n}\n#rich-workspace[data-v-0cce2262]:not(.focus):not(.icon-loading):after {\n  content: \"\";\n  position: absolute;\n  z-index: 1;\n  bottom: 0;\n  left: 0;\n  pointer-events: none;\n  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-main-background));\n  width: 100%;\n  height: 4em;\n}\n#rich-workspace.dark[data-v-0cce2262]:not(.focus):not(.icon-loading):after {\n  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));\n}\n@media only screen and (max-width: 1024px) {\n#rich-workspace[data-v-0cce2262]:not(.focus) {\n    max-height: 30vh;\n}\n}\nhtml.ie #rich-workspace[data-v-0cce2262] #editor-container {\n  position: initial;\n}\nhtml.ie #rich-workspace[data-v-0cce2262] #editor-wrapper {\n  position: relative !important;\n  top: auto !important;\n}\nhtml.ie #rich-workspace[data-v-0cce2262] #editor {\n  display: flex;\n  flex-direction: column;\n  overflow: hidden !important;\n}\nhtml.ie #rich-workspace[data-v-0cce2262] .menubar {\n  position: relative;\n  overflow: hidden;\n  flex-shrink: 0;\n  height: 44px;\n  top: auto;\n}\nhtml.ie #rich-workspace[data-v-0cce2262] #editor > div:nth-child(2) {\n  min-height: 44px;\n  overflow-x: hidden;\n  overflow-y: auto;\n  flex-shrink: 1;\n}", "",{"version":3,"sources":["webpack://./src/views/RichWorkspace.vue","webpack://./RichWorkspace.vue"],"names":[],"mappings":"AA0KA;EACC,eAAA;EACA,mCAAA;EACA,oBAAA;EACA,gBAAA;EACA,aAAA;EACA,oDAAA;ACzKD;AD0KC;EACC,gBAAA;ACxKF;;AD4KA,uDAAA;AACA;EACC,gBAAA;ACzKD;AD4KA;EACC,iBAAA;EACA,oCAAA;EACA,SAAA;ACzKD;AD4KA;EACC,WAAA;EACA,YAAA;EACA,8CAAA;EACA,UAAA;EACA,YAAA;ACzKD;AD4KA;EACC,YAAA;EACA,0BAAA;EACA,oBAAA;ACzKD;AD4KA;EACC,0BAAA;EACA,iBAAA;ACzKD;AD4KA;EACC,4BAAA;ACzKD;AD2KA;EACC,2BAAA;EACA,gBAAA;EACA,6BAAA;EACA,kBAAA;ACxKD;AD2KA;EACC,YAAA;EACA,SAAA;ACxKD;AD2KA;EACC,WAAA;EACA,mCAAA;EACA,oBAAA;ACxKD;AD2KA;EACC,cAAA;ACxKD;AD2KA;EACC,SAAA;ACxKD;AD2KA;EACC,gBAAA;ACxKD;AD2KA;EACC,gBAAA;EACA,kBAAA;EACA,gBAAA;ACxKD;AD2KA;EACC,WAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,OAAA;EACA,oBAAA;EACA,kGAAA;EACA,WAAA;EACA,WAAA;ACxKD;AD2KA;EACC,4FAAA;ACxKD;AD2KA;AACC;IACC,gBAAA;ACxKA;AACF;AD6KE;EACC,iBAAA;AC3KH;AD8KE;EACC,6BAAA;EACA,oBAAA;AC5KH;AD+KE;EACC,aAAA;EACA,sBAAA;EACA,2BAAA;AC7KH;ADgLE;EACC,kBAAA;EACA,gBAAA;EACA,cAAA;EACA,YAAA;EACA,SAAA;AC9KH;ADiLE;EACC,gBAAA;EACA,kBAAA;EACA,gBAAA;EACA,cAAA;AC/KH","sourcesContent":["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n#rich-workspace {\n\tpadding: 0 50px;\n\t/* Slightly reduce vertical space */\n\tmargin-bottom: -24px;\n\ttext-align: left;\n\tmax-height: 0;\n\ttransition: max-height 0.5s cubic-bezier(0, 1, 0, 1);\n\t&.creatable {\n\t\tmin-height: 90px;\n\t}\n}\n\n/* For subfolders, where there are no Recommendations */\n#rich-workspace:only-child {\n\tmargin-bottom: 0;\n}\n\n.empty-workspace {\n\tpadding-top: 43px;\n\tcolor: var(--color-text-maxcontrast);\n\theight: 0;\n}\n\n#rich-workspace::v-deep div[contenteditable=false] {\n\twidth: 100%;\n\tpadding: 0px;\n\tbackground-color: var(--color-main-background);\n\topacity: 1;\n\tborder: none;\n}\n\n#rich-workspace::v-deep #editor-container {\n\theight: 100%;\n\tposition: unset !important;\n\ttop: auto !important;\n}\n\n#rich-workspace::v-deep #editor-wrapper {\n\tposition: unset !important;\n\toverflow: visible;\n}\n\n#rich-workspace::v-deep #editor {\n\toverflow: visible !important;\n}\n#rich-workspace::v-deep .content-wrapper {\n\toverflow: scroll !important;\n\tmax-height: 50vh;\n\tmax-height: calc(40vh - 50px);\n\tpadding-left: 10px;\n}\n\n#rich-workspace::v-deep #editor-wrapper .ProseMirror {\n\tpadding: 0px;\n\tmargin: 0;\n}\n\n#rich-workspace::v-deep .menubar {\n\tz-index: 61;\n\t/* Slightly reduce vertical space */\n\tmargin-bottom: -10px;\n}\n\n#rich-workspace::v-deep .menubar .menubar-icons {\n\tmargin-left: 0;\n}\n\n#rich-workspace::v-deep .editor__content {\n\tmargin: 0;\n}\n\n#rich-workspace.focus {\n\tmax-height: 50vh;\n}\n\n#rich-workspace:not(.focus) {\n\tmax-height: 30vh;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n#rich-workspace:not(.focus):not(.icon-loading):after {\n\tcontent: '';\n\tposition: absolute;\n\tz-index: 1;\n\tbottom: 0;\n\tleft: 0;\n\tpointer-events: none;\n\tbackground-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-main-background));\n\twidth: 100%;\n\theight: 4em;\n}\n\n#rich-workspace.dark:not(.focus):not(.icon-loading):after {\n\tbackground-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));\n}\n\n@media only screen and (max-width: 1024px) {\n\t#rich-workspace:not(.focus) {\n\t\tmax-height: 30vh;\n\t}\n}\n\nhtml.ie {\n\t#rich-workspace::v-deep {\n\t\t#editor-container {\n\t\t\tposition: initial;\n\t\t}\n\n\t\t#editor-wrapper {\n\t\t\tposition: relative !important;\n\t\t\ttop: auto !important;\n\t\t}\n\n\t\t#editor {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\toverflow: hidden !important;\n\t\t}\n\n\t\t.menubar {\n\t\t\tposition: relative;\n\t\t\toverflow: hidden;\n\t\t\tflex-shrink: 0;\n\t\t\theight: 44px;\n\t\t\ttop: auto;\n\t\t}\n\n\t\t#editor > div:nth-child(2) {\n\t\t\tmin-height: 44px;\n\t\t\toverflow-x: hidden;\n\t\t\toverflow-y: auto;\n\t\t\tflex-shrink: 1;\n\t\t}\n\t}\n}\n\n","#rich-workspace {\n  padding: 0 50px;\n  /* Slightly reduce vertical space */\n  margin-bottom: -24px;\n  text-align: left;\n  max-height: 0;\n  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);\n}\n#rich-workspace.creatable {\n  min-height: 90px;\n}\n\n/* For subfolders, where there are no Recommendations */\n#rich-workspace:only-child {\n  margin-bottom: 0;\n}\n\n.empty-workspace {\n  padding-top: 43px;\n  color: var(--color-text-maxcontrast);\n  height: 0;\n}\n\n#rich-workspace::v-deep div[contenteditable=false] {\n  width: 100%;\n  padding: 0px;\n  background-color: var(--color-main-background);\n  opacity: 1;\n  border: none;\n}\n\n#rich-workspace::v-deep #editor-container {\n  height: 100%;\n  position: unset !important;\n  top: auto !important;\n}\n\n#rich-workspace::v-deep #editor-wrapper {\n  position: unset !important;\n  overflow: visible;\n}\n\n#rich-workspace::v-deep #editor {\n  overflow: visible !important;\n}\n\n#rich-workspace::v-deep .content-wrapper {\n  overflow: scroll !important;\n  max-height: 50vh;\n  max-height: calc(40vh - 50px);\n  padding-left: 10px;\n}\n\n#rich-workspace::v-deep #editor-wrapper .ProseMirror {\n  padding: 0px;\n  margin: 0;\n}\n\n#rich-workspace::v-deep .menubar {\n  z-index: 61;\n  /* Slightly reduce vertical space */\n  margin-bottom: -10px;\n}\n\n#rich-workspace::v-deep .menubar .menubar-icons {\n  margin-left: 0;\n}\n\n#rich-workspace::v-deep .editor__content {\n  margin: 0;\n}\n\n#rich-workspace.focus {\n  max-height: 50vh;\n}\n\n#rich-workspace:not(.focus) {\n  max-height: 30vh;\n  position: relative;\n  overflow: hidden;\n}\n\n#rich-workspace:not(.focus):not(.icon-loading):after {\n  content: \"\";\n  position: absolute;\n  z-index: 1;\n  bottom: 0;\n  left: 0;\n  pointer-events: none;\n  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-main-background));\n  width: 100%;\n  height: 4em;\n}\n\n#rich-workspace.dark:not(.focus):not(.icon-loading):after {\n  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));\n}\n\n@media only screen and (max-width: 1024px) {\n  #rich-workspace:not(.focus) {\n    max-height: 30vh;\n  }\n}\nhtml.ie #rich-workspace::v-deep #editor-container {\n  position: initial;\n}\nhtml.ie #rich-workspace::v-deep #editor-wrapper {\n  position: relative !important;\n  top: auto !important;\n}\nhtml.ie #rich-workspace::v-deep #editor {\n  display: flex;\n  flex-direction: column;\n  overflow: hidden !important;\n}\nhtml.ie #rich-workspace::v-deep .menubar {\n  position: relative;\n  overflow: hidden;\n  flex-shrink: 0;\n  height: 44px;\n  top: auto;\n}\nhtml.ie #rich-workspace::v-deep #editor > div:nth-child(2) {\n  min-height: 44px;\n  overflow-x: hidden;\n  overflow-y: auto;\n  flex-shrink: 1;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+
+module.exports = function (cssWithMappingToString) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join("");
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === "string") {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, ""]];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/cssWithMappingToString.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]);
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = function cssWithMappingToString(item) {
+  var _item = _slicedToArray(item, 4),
+      content = _item[1],
+      cssMapping = _item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (typeof btoa === "function") {
+    // eslint-disable-next-line no-undef
+    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
+    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+    var sourceMapping = "/*# ".concat(data, " */");
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || "").concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join("\n");
+  }
+
+  return [content].join("\n");
+};
+
+/***/ }),
+
+/***/ "./node_modules/node-libs-browser/node_modules/timers-browserify/main.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/node-libs-browser/node_modules/timers-browserify/main.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+var scope = typeof global !== "undefined" && global || typeof self !== "undefined" && self || window;
+var apply = Function.prototype.apply; // DOM APIs, for completeness
+
+exports.setTimeout = function () {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+
+exports.setInterval = function () {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+
+exports.clearTimeout = exports.clearInterval = function (timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+
+Timeout.prototype.unref = Timeout.prototype.ref = function () {};
+
+Timeout.prototype.close = function () {
+  this._clearFn.call(scope, this._id);
+}; // Does not start the time, just sets up the members needed.
+
+
+exports.enroll = function (item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function (item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function (item) {
+  clearTimeout(item._idleTimeoutId);
+  var msecs = item._idleTimeout;
+
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout) item._onTimeout();
+    }, msecs);
+  }
+}; // setimmediate attaches itself to the global object
+
+
+__webpack_require__(/*! setimmediate */ "./node_modules/setimmediate/setImmediate.js"); // On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+
+
+exports.setImmediate = typeof self !== "undefined" && self.setImmediate || typeof global !== "undefined" && global.setImmediate || void 0 && (void 0).setImmediate;
+exports.clearImmediate = typeof self !== "undefined" && self.clearImmediate || typeof global !== "undefined" && global.clearImmediate || void 0 && (void 0).clearImmediate;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// shim for using process in browser
+var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+  throw new Error('setTimeout has not been defined');
+}
+
+function defaultClearTimeout() {
+  throw new Error('clearTimeout has not been defined');
+}
+
+(function () {
+  try {
+    if (typeof setTimeout === 'function') {
+      cachedSetTimeout = setTimeout;
+    } else {
+      cachedSetTimeout = defaultSetTimout;
+    }
+  } catch (e) {
+    cachedSetTimeout = defaultSetTimout;
+  }
+
+  try {
+    if (typeof clearTimeout === 'function') {
+      cachedClearTimeout = clearTimeout;
+    } else {
+      cachedClearTimeout = defaultClearTimeout;
+    }
+  } catch (e) {
+    cachedClearTimeout = defaultClearTimeout;
+  }
+})();
+
+function runTimeout(fun) {
+  if (cachedSetTimeout === setTimeout) {
+    //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+  } // if setTimeout wasn't available but was latter defined
+
+
+  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+    cachedSetTimeout = setTimeout;
+    return setTimeout(fun, 0);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedSetTimeout(fun, 0);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+      return cachedSetTimeout.call(null, fun, 0);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+      return cachedSetTimeout.call(this, fun, 0);
+    }
+  }
+}
+
+function runClearTimeout(marker) {
+  if (cachedClearTimeout === clearTimeout) {
+    //normal enviroments in sane situations
+    return clearTimeout(marker);
+  } // if clearTimeout wasn't available but was latter defined
+
+
+  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+    cachedClearTimeout = clearTimeout;
+    return clearTimeout(marker);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedClearTimeout(marker);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+      return cachedClearTimeout.call(null, marker);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+      return cachedClearTimeout.call(this, marker);
+    }
+  }
+}
+
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+  if (!draining || !currentQueue) {
+    return;
+  }
+
+  draining = false;
+
+  if (currentQueue.length) {
+    queue = currentQueue.concat(queue);
+  } else {
+    queueIndex = -1;
+  }
+
+  if (queue.length) {
+    drainQueue();
+  }
+}
+
+function drainQueue() {
+  if (draining) {
+    return;
+  }
+
+  var timeout = runTimeout(cleanUpNextTick);
+  draining = true;
+  var len = queue.length;
+
+  while (len) {
+    currentQueue = queue;
+    queue = [];
+
+    while (++queueIndex < len) {
+      if (currentQueue) {
+        currentQueue[queueIndex].run();
+      }
+    }
+
+    queueIndex = -1;
+    len = queue.length;
+  }
+
+  currentQueue = null;
+  draining = false;
+  runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+  var args = new Array(arguments.length - 1);
+
+  if (arguments.length > 1) {
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
+  }
+
+  queue.push(new Item(fun, args));
+
+  if (queue.length === 1 && !draining) {
+    runTimeout(drainQueue);
+  }
+}; // v8 likes predictible objects
+
+
+function Item(fun, array) {
+  this.fun = fun;
+  this.array = array;
+}
+
+Item.prototype.run = function () {
+  this.fun.apply(null, this.array);
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) {
+  return [];
+};
+
+process.binding = function (name) {
+  throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () {
+  return '/';
+};
+
+process.chdir = function (dir) {
+  throw new Error('process.chdir is not supported');
+};
+
+process.umask = function () {
+  return 0;
+};
+
+/***/ }),
+
+/***/ "./node_modules/setimmediate/setImmediate.js":
+/*!***************************************************!*\
+  !*** ./node_modules/setimmediate/setImmediate.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global, process) {
+
+(function (global, undefined) {
+  "use strict";
+
+  if (global.setImmediate) {
+    return;
+  }
+
+  var nextHandle = 1; // Spec says greater than zero
+
+  var tasksByHandle = {};
+  var currentlyRunningATask = false;
+  var doc = global.document;
+  var registerImmediate;
+
+  function setImmediate(callback) {
+    // Callback can either be a function or a string
+    if (typeof callback !== "function") {
+      callback = new Function("" + callback);
+    } // Copy function arguments
+
+
+    var args = new Array(arguments.length - 1);
+
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i + 1];
+    } // Store and register the task
+
+
+    var task = {
+      callback: callback,
+      args: args
+    };
+    tasksByHandle[nextHandle] = task;
+    registerImmediate(nextHandle);
+    return nextHandle++;
+  }
+
+  function clearImmediate(handle) {
+    delete tasksByHandle[handle];
+  }
+
+  function run(task) {
+    var callback = task.callback;
+    var args = task.args;
+
+    switch (args.length) {
+      case 0:
+        callback();
+        break;
+
+      case 1:
+        callback(args[0]);
+        break;
+
+      case 2:
+        callback(args[0], args[1]);
+        break;
+
+      case 3:
+        callback(args[0], args[1], args[2]);
+        break;
+
+      default:
+        callback.apply(undefined, args);
+        break;
+    }
+  }
+
+  function runIfPresent(handle) {
+    // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+    // So if we're currently running a task, we'll need to delay this invocation.
+    if (currentlyRunningATask) {
+      // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+      // "too much recursion" error.
+      setTimeout(runIfPresent, 0, handle);
+    } else {
+      var task = tasksByHandle[handle];
+
+      if (task) {
+        currentlyRunningATask = true;
+
+        try {
+          run(task);
+        } finally {
+          clearImmediate(handle);
+          currentlyRunningATask = false;
+        }
+      }
+    }
+  }
+
+  function installNextTickImplementation() {
+    registerImmediate = function registerImmediate(handle) {
+      process.nextTick(function () {
+        runIfPresent(handle);
+      });
+    };
+  }
+
+  function canUsePostMessage() {
+    // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+    // where `global.postMessage` means something completely different and can't be used for this purpose.
+    if (global.postMessage && !global.importScripts) {
+      var postMessageIsAsynchronous = true;
+      var oldOnMessage = global.onmessage;
+
+      global.onmessage = function () {
+        postMessageIsAsynchronous = false;
+      };
+
+      global.postMessage("", "*");
+      global.onmessage = oldOnMessage;
+      return postMessageIsAsynchronous;
+    }
+  }
+
+  function installPostMessageImplementation() {
+    // Installs an event handler on `global` for the `message` event: see
+    // * https://developer.mozilla.org/en/DOM/window.postMessage
+    // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+    var messagePrefix = "setImmediate$" + Math.random() + "$";
+
+    var onGlobalMessage = function onGlobalMessage(event) {
+      if (event.source === global && typeof event.data === "string" && event.data.indexOf(messagePrefix) === 0) {
+        runIfPresent(+event.data.slice(messagePrefix.length));
+      }
+    };
+
+    if (global.addEventListener) {
+      global.addEventListener("message", onGlobalMessage, false);
+    } else {
+      global.attachEvent("onmessage", onGlobalMessage);
+    }
+
+    registerImmediate = function registerImmediate(handle) {
+      global.postMessage(messagePrefix + handle, "*");
+    };
+  }
+
+  function installMessageChannelImplementation() {
+    var channel = new MessageChannel();
+
+    channel.port1.onmessage = function (event) {
+      var handle = event.data;
+      runIfPresent(handle);
+    };
+
+    registerImmediate = function registerImmediate(handle) {
+      channel.port2.postMessage(handle);
+    };
+  }
+
+  function installReadyStateChangeImplementation() {
+    var html = doc.documentElement;
+
+    registerImmediate = function registerImmediate(handle) {
+      // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+      // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+      var script = doc.createElement("script");
+
+      script.onreadystatechange = function () {
+        runIfPresent(handle);
+        script.onreadystatechange = null;
+        html.removeChild(script);
+        script = null;
+      };
+
+      html.appendChild(script);
+    };
+  }
+
+  function installSetTimeoutImplementation() {
+    registerImmediate = function registerImmediate(handle) {
+      setTimeout(runIfPresent, 0, handle);
+    };
+  } // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+
+
+  var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+  attachTo = attachTo && attachTo.setTimeout ? attachTo : global; // Don't get fooled by e.g. browserify environments.
+
+  if ({}.toString.call(global.process) === "[object process]") {
+    // For Node.js before 0.9
+    installNextTickImplementation();
+  } else if (canUsePostMessage()) {
+    // For non-IE10 modern browsers
+    installPostMessageImplementation();
+  } else if (global.MessageChannel) {
+    // For web workers, where supported
+    installMessageChannelImplementation();
+  } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+    // For IE 6–8
+    installReadyStateChangeImplementation();
+  } else {
+    // For older browsers
+    installSetTimeoutImplementation();
+  }
+
+  attachTo.setImmediate = setImmediate;
+  attachTo.clearImmediate = clearImmediate;
+})(typeof self === "undefined" ? typeof global === "undefined" ? void 0 : global : self);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib??vue-loader-options!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_dist_cjs_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_style_index_0_id_0cce2262_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/css-loader/dist/cjs.js!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/dist/cjs.js!../../node_modules/vue-loader/lib??vue-loader-options!./RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_dist_cjs_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_style_index_0_id_0cce2262_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_dist_cjs_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_style_index_0_id_0cce2262_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
+
+    return memo;
+  };
+}();
+
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
+
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
+
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
+    } else {
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
+    }
+
+    identifiers.push(identifier);
+  }
+
+  return identifiers;
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+  var attributes = options.attributes || {};
+
+  if (typeof attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : undefined;
+
+    if (nonce) {
+      attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(attributes).forEach(function (key) {
+    style.setAttribute(key, attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  } else {
+    style.removeAttribute('media');
+  }
+
+  if (sourceMap && typeof btoa !== 'undefined') {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var singleton = null;
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
+  }
+
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
+  }
+
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    if (Object.prototype.toString.call(newList) !== '[object Array]') {
+      return;
+    }
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
+    }
+
+    var newLastIdentifiers = modulesToDom(newList, options);
+
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
+    }
+
+    lastIdentifiers = newLastIdentifiers;
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.enabled
+    ? _c(
+        "div",
+        {
+          class: {
+            "icon-loading": !_vm.loaded || !_vm.ready,
+            focus: _vm.focus,
+            dark: _vm.darkTheme,
+            creatable: _vm.canCreate
+          },
+          attrs: { id: "rich-workspace" }
+        },
+        [
+          _vm.showEmptyWorkspace
+            ? _c(
+                "div",
+                {
+                  staticClass: "empty-workspace",
+                  on: { click: _vm.createNew }
+                },
+                [
+                  _c("p", { staticClass: "placeholder" }, [
+                    _vm._v(
+                      "\n\t\t\t" +
+                        _vm._s(_vm.t("text", "Add notes, lists or links …")) +
+                        "\n\t\t"
+                    )
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.file
+            ? _c("EditorWrapper", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.ready,
+                    expression: "ready"
+                  }
+                ],
+                key: _vm.file.id,
+                attrs: {
+                  "file-id": _vm.file.id,
+                  "relative-path": _vm.file.path,
+                  "share-token": _vm.shareToken,
+                  active: true,
+                  autohide: true,
+                  mime: _vm.file.mimetype,
+                  autofocus: _vm.autofocus
+                },
+                on: {
+                  ready: function($event) {
+                    _vm.ready = true
+                  },
+                  focus: function($event) {
+                    _vm.focus = true
+                  },
+                  blur: _vm.unfocus,
+                  error: _vm.reset
+                }
+              })
+            : _vm._e()
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () {
+        injectStyles.call(
+          this,
+          (options.functional ? this.parent : this).$root.$options.shadowRoot
+        )
+      }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functional component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vue/dist/vue.esm.js":
+/*!******************************************!*\
+  !*** ./node_modules/vue/dist/vue.esm.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global, setImmediate) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 /*!
  * Vue.js v2.6.14
  * (c) 2014-2021 Evan You
  * Released under the MIT License.
- */Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var i=Object.freeze({});function o(t){return null==t}function a(t){return null!=t}function s(t){return!0===t}function c(t){return"string"==typeof t||"number"==typeof t||"symbol"===r(t)||"boolean"==typeof t}function u(t){return null!==t&&"object"===r(t)}var l=Object.prototype.toString;function f(t){return"[object Object]"===l.call(t)}function d(t){return"[object RegExp]"===l.call(t)}function p(t){var e=parseFloat(String(t));return e>=0&&Math.floor(e)===e&&isFinite(t)}function h(t){return a(t)&&"function"==typeof t.then&&"function"==typeof t.catch}function v(t){return null==t?"":Array.isArray(t)||f(t)&&t.toString===l?JSON.stringify(t,null,2):String(t)}function m(t){var e=parseFloat(t);return isNaN(e)?t:e}function g(t,e){for(var n=Object.create(null),r=t.split(","),i=0;i<r.length;i++)n[r[i]]=!0;return e?function(t){return n[t.toLowerCase()]}:function(t){return n[t]}}var y=g("slot,component",!0),b=g("key,ref,slot,slot-scope,is");function _(t,e){if(t.length){var n=t.indexOf(e);if(n>-1)return t.splice(n,1)}}var w=Object.prototype.hasOwnProperty;function A(t,e){return w.call(t,e)}function x(t){var e=Object.create(null);return function(n){return e[n]||(e[n]=t(n))}}var E=/-(\w)/g,C=x((function(t){return t.replace(E,(function(t,e){return e?e.toUpperCase():""}))})),S=x((function(t){return t.charAt(0).toUpperCase()+t.slice(1)})),O=/\B([A-Z])/g,k=x((function(t){return t.replace(O,"-$1").toLowerCase()}));var T=Function.prototype.bind?function(t,e){return t.bind(e)}:function(t,e){function n(n){var r=arguments.length;return r?r>1?t.apply(e,arguments):t.call(e,n):t.call(e)}return n._length=t.length,n};function I(t,e){e=e||0;for(var n=t.length-e,r=new Array(n);n--;)r[n]=t[n+e];return r}function $(t,e){for(var n in e)t[n]=e[n];return t}function R(t){for(var e={},n=0;n<t.length;n++)t[n]&&$(e,t[n]);return e}function N(t,e,n){}var L=function(t,e,n){return!1},j=function(t){return t};function P(t,e){if(t===e)return!0;var n=u(t),r=u(e);if(!n||!r)return!n&&!r&&String(t)===String(e);try{var i=Array.isArray(t),o=Array.isArray(e);if(i&&o)return t.length===e.length&&t.every((function(t,n){return P(t,e[n])}));if(t instanceof Date&&e instanceof Date)return t.getTime()===e.getTime();if(i||o)return!1;var a=Object.keys(t),s=Object.keys(e);return a.length===s.length&&a.every((function(n){return P(t[n],e[n])}))}catch(t){return!1}}function M(t,e){for(var n=0;n<t.length;n++)if(P(t[n],e))return n;return-1}function B(t){var e=!1;return function(){e||(e=!0,t.apply(this,arguments))}}var D=["component","directive","filter"],F=["beforeCreate","created","beforeMount","mounted","beforeUpdate","updated","beforeDestroy","destroyed","activated","deactivated","errorCaptured","serverPrefetch"],U={optionMergeStrategies:Object.create(null),silent:!1,productionTip:!1,devtools:!1,performance:!1,errorHandler:null,warnHandler:null,ignoredElements:[],keyCodes:Object.create(null),isReservedTag:L,isReservedAttr:L,isUnknownElement:L,getTagNamespace:N,parsePlatformTagName:j,mustUseProp:L,async:!0,_lifecycleHooks:F},G=/a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/;function H(t){var e=(t+"").charCodeAt(0);return 36===e||95===e}function V(t,e,n,r){Object.defineProperty(t,e,{value:n,enumerable:!!r,writable:!0,configurable:!0})}var q=new RegExp("[^"+G.source+".$_\\d]");var z,W="__proto__"in{},X="undefined"!=typeof window,K="undefined"!=typeof WXEnvironment&&!!WXEnvironment.platform,J=K&&WXEnvironment.platform.toLowerCase(),Y=X&&window.navigator.userAgent.toLowerCase(),Z=Y&&/msie|trident/.test(Y),Q=Y&&Y.indexOf("msie 9.0")>0,tt=Y&&Y.indexOf("edge/")>0,et=(Y&&Y.indexOf("android"),Y&&/iphone|ipad|ipod|ios/.test(Y)||"ios"===J),nt=(Y&&/chrome\/\d+/.test(Y),Y&&/phantomjs/.test(Y),Y&&Y.match(/firefox\/(\d+)/)),rt={}.watch,it=!1;if(X)try{var ot={};Object.defineProperty(ot,"passive",{get:function(){it=!0}}),window.addEventListener("test-passive",null,ot)}catch(t){}var at=function(){return void 0===z&&(z=!X&&!K&&void 0!==t&&(t.process&&"server"===t.process.env.VUE_ENV)),z},st=X&&window.__VUE_DEVTOOLS_GLOBAL_HOOK__;function ct(t){return"function"==typeof t&&/native code/.test(t.toString())}var ut,lt="undefined"!=typeof Symbol&&ct(Symbol)&&"undefined"!=typeof Reflect&&ct(Reflect.ownKeys);ut="undefined"!=typeof Set&&ct(Set)?Set:function(){function t(){this.set=Object.create(null)}return t.prototype.has=function(t){return!0===this.set[t]},t.prototype.add=function(t){this.set[t]=!0},t.prototype.clear=function(){this.set=Object.create(null)},t}();var ft=N,dt=0,pt=function(){this.id=dt++,this.subs=[]};pt.prototype.addSub=function(t){this.subs.push(t)},pt.prototype.removeSub=function(t){_(this.subs,t)},pt.prototype.depend=function(){pt.target&&pt.target.addDep(this)},pt.prototype.notify=function(){var t=this.subs.slice();for(var e=0,n=t.length;e<n;e++)t[e].update()},pt.target=null;var ht=[];function vt(t){ht.push(t),pt.target=t}function mt(){ht.pop(),pt.target=ht[ht.length-1]}var gt=function(t,e,n,r,i,o,a,s){this.tag=t,this.data=e,this.children=n,this.text=r,this.elm=i,this.ns=void 0,this.context=o,this.fnContext=void 0,this.fnOptions=void 0,this.fnScopeId=void 0,this.key=e&&e.key,this.componentOptions=a,this.componentInstance=void 0,this.parent=void 0,this.raw=!1,this.isStatic=!1,this.isRootInsert=!0,this.isComment=!1,this.isCloned=!1,this.isOnce=!1,this.asyncFactory=s,this.asyncMeta=void 0,this.isAsyncPlaceholder=!1},yt={child:{configurable:!0}};yt.child.get=function(){return this.componentInstance},Object.defineProperties(gt.prototype,yt);var bt=function(t){void 0===t&&(t="");var e=new gt;return e.text=t,e.isComment=!0,e};function _t(t){return new gt(void 0,void 0,void 0,String(t))}function wt(t){var e=new gt(t.tag,t.data,t.children&&t.children.slice(),t.text,t.elm,t.context,t.componentOptions,t.asyncFactory);return e.ns=t.ns,e.isStatic=t.isStatic,e.key=t.key,e.isComment=t.isComment,e.fnContext=t.fnContext,e.fnOptions=t.fnOptions,e.fnScopeId=t.fnScopeId,e.asyncMeta=t.asyncMeta,e.isCloned=!0,e}var At=Array.prototype,xt=Object.create(At);["push","pop","shift","unshift","splice","sort","reverse"].forEach((function(t){var e=At[t];V(xt,t,(function(){for(var n=[],r=arguments.length;r--;)n[r]=arguments[r];var i,o=e.apply(this,n),a=this.__ob__;switch(t){case"push":case"unshift":i=n;break;case"splice":i=n.slice(2)}return i&&a.observeArray(i),a.dep.notify(),o}))}));var Et=Object.getOwnPropertyNames(xt),Ct=!0;function St(t){Ct=t}var Ot=function(t){this.value=t,this.dep=new pt,this.vmCount=0,V(t,"__ob__",this),Array.isArray(t)?(W?function(t,e){t.__proto__=e}(t,xt):function(t,e,n){for(var r=0,i=n.length;r<i;r++){var o=n[r];V(t,o,e[o])}}(t,xt,Et),this.observeArray(t)):this.walk(t)};function kt(t,e){var n;if(u(t)&&!(t instanceof gt))return A(t,"__ob__")&&t.__ob__ instanceof Ot?n=t.__ob__:Ct&&!at()&&(Array.isArray(t)||f(t))&&Object.isExtensible(t)&&!t._isVue&&(n=new Ot(t)),e&&n&&n.vmCount++,n}function Tt(t,e,n,r,i){var o=new pt,a=Object.getOwnPropertyDescriptor(t,e);if(!a||!1!==a.configurable){var s=a&&a.get,c=a&&a.set;s&&!c||2!==arguments.length||(n=t[e]);var u=!i&&kt(n);Object.defineProperty(t,e,{enumerable:!0,configurable:!0,get:function(){var e=s?s.call(t):n;return pt.target&&(o.depend(),u&&(u.dep.depend(),Array.isArray(e)&&Rt(e))),e},set:function(e){var r=s?s.call(t):n;e===r||e!=e&&r!=r||s&&!c||(c?c.call(t,e):n=e,u=!i&&kt(e),o.notify())}})}}function It(t,e,n){if(Array.isArray(t)&&p(e))return t.length=Math.max(t.length,e),t.splice(e,1,n),n;if(e in t&&!(e in Object.prototype))return t[e]=n,n;var r=t.__ob__;return t._isVue||r&&r.vmCount?n:r?(Tt(r.value,e,n),r.dep.notify(),n):(t[e]=n,n)}function $t(t,e){if(Array.isArray(t)&&p(e))t.splice(e,1);else{var n=t.__ob__;t._isVue||n&&n.vmCount||A(t,e)&&(delete t[e],n&&n.dep.notify())}}function Rt(t){for(var e=void 0,n=0,r=t.length;n<r;n++)(e=t[n])&&e.__ob__&&e.__ob__.dep.depend(),Array.isArray(e)&&Rt(e)}Ot.prototype.walk=function(t){for(var e=Object.keys(t),n=0;n<e.length;n++)Tt(t,e[n])},Ot.prototype.observeArray=function(t){for(var e=0,n=t.length;e<n;e++)kt(t[e])};var Nt=U.optionMergeStrategies;function Lt(t,e){if(!e)return t;for(var n,r,i,o=lt?Reflect.ownKeys(e):Object.keys(e),a=0;a<o.length;a++)"__ob__"!==(n=o[a])&&(r=t[n],i=e[n],A(t,n)?r!==i&&f(r)&&f(i)&&Lt(r,i):It(t,n,i));return t}function jt(t,e,n){return n?function(){var r="function"==typeof e?e.call(n,n):e,i="function"==typeof t?t.call(n,n):t;return r?Lt(r,i):i}:e?t?function(){return Lt("function"==typeof e?e.call(this,this):e,"function"==typeof t?t.call(this,this):t)}:e:t}function Pt(t,e){var n=e?t?t.concat(e):Array.isArray(e)?e:[e]:t;return n?function(t){for(var e=[],n=0;n<t.length;n++)-1===e.indexOf(t[n])&&e.push(t[n]);return e}(n):n}function Mt(t,e,n,r){var i=Object.create(t||null);return e?$(i,e):i}Nt.data=function(t,e,n){return n?jt(t,e,n):e&&"function"!=typeof e?t:jt(t,e)},F.forEach((function(t){Nt[t]=Pt})),D.forEach((function(t){Nt[t+"s"]=Mt})),Nt.watch=function(t,e,n,r){if(t===rt&&(t=void 0),e===rt&&(e=void 0),!e)return Object.create(t||null);if(!t)return e;var i={};for(var o in $(i,t),e){var a=i[o],s=e[o];a&&!Array.isArray(a)&&(a=[a]),i[o]=a?a.concat(s):Array.isArray(s)?s:[s]}return i},Nt.props=Nt.methods=Nt.inject=Nt.computed=function(t,e,n,r){if(!t)return e;var i=Object.create(null);return $(i,t),e&&$(i,e),i},Nt.provide=jt;var Bt=function(t,e){return void 0===e?t:e};function Dt(t,e,n){if("function"==typeof e&&(e=e.options),function(t,e){var n=t.props;if(n){var r,i,o={};if(Array.isArray(n))for(r=n.length;r--;)"string"==typeof(i=n[r])&&(o[C(i)]={type:null});else if(f(n))for(var a in n)i=n[a],o[C(a)]=f(i)?i:{type:i};else 0;t.props=o}}(e),function(t,e){var n=t.inject;if(n){var r=t.inject={};if(Array.isArray(n))for(var i=0;i<n.length;i++)r[n[i]]={from:n[i]};else if(f(n))for(var o in n){var a=n[o];r[o]=f(a)?$({from:o},a):{from:a}}else 0}}(e),function(t){var e=t.directives;if(e)for(var n in e){var r=e[n];"function"==typeof r&&(e[n]={bind:r,update:r})}}(e),!e._base&&(e.extends&&(t=Dt(t,e.extends,n)),e.mixins))for(var r=0,i=e.mixins.length;r<i;r++)t=Dt(t,e.mixins[r],n);var o,a={};for(o in t)s(o);for(o in e)A(t,o)||s(o);function s(r){var i=Nt[r]||Bt;a[r]=i(t[r],e[r],n,r)}return a}function Ft(t,e,n,r){if("string"==typeof n){var i=t[e];if(A(i,n))return i[n];var o=C(n);if(A(i,o))return i[o];var a=S(o);return A(i,a)?i[a]:i[n]||i[o]||i[a]}}function Ut(t,e,n,r){var i=e[t],o=!A(n,t),a=n[t],s=qt(Boolean,i.type);if(s>-1)if(o&&!A(i,"default"))a=!1;else if(""===a||a===k(t)){var c=qt(String,i.type);(c<0||s<c)&&(a=!0)}if(void 0===a){a=function(t,e,n){if(!A(e,"default"))return;var r=e.default;0;if(t&&t.$options.propsData&&void 0===t.$options.propsData[n]&&void 0!==t._props[n])return t._props[n];return"function"==typeof r&&"Function"!==Ht(e.type)?r.call(t):r}(r,i,t);var u=Ct;St(!0),kt(a),St(u)}return a}var Gt=/^\s*function (\w+)/;function Ht(t){var e=t&&t.toString().match(Gt);return e?e[1]:""}function Vt(t,e){return Ht(t)===Ht(e)}function qt(t,e){if(!Array.isArray(e))return Vt(e,t)?0:-1;for(var n=0,r=e.length;n<r;n++)if(Vt(e[n],t))return n;return-1}function zt(t,e,n){vt();try{if(e)for(var r=e;r=r.$parent;){var i=r.$options.errorCaptured;if(i)for(var o=0;o<i.length;o++)try{if(!1===i[o].call(r,t,e,n))return}catch(t){Xt(t,r,"errorCaptured hook")}}Xt(t,e,n)}finally{mt()}}function Wt(t,e,n,r,i){var o;try{(o=n?t.apply(e,n):t.call(e))&&!o._isVue&&h(o)&&!o._handled&&(o.catch((function(t){return zt(t,r,i+" (Promise/async)")})),o._handled=!0)}catch(t){zt(t,r,i)}return o}function Xt(t,e,n){if(U.errorHandler)try{return U.errorHandler.call(null,t,e,n)}catch(e){e!==t&&Kt(e,null,"config.errorHandler")}Kt(t,e,n)}function Kt(t,e,n){if(!X&&!K||"undefined"==typeof console)throw t;console.error(t)}var Jt,Yt=!1,Zt=[],Qt=!1;function te(){Qt=!1;var t=Zt.slice(0);Zt.length=0;for(var e=0;e<t.length;e++)t[e]()}if("undefined"!=typeof Promise&&ct(Promise)){var ee=Promise.resolve();Jt=function(){ee.then(te),et&&setTimeout(N)},Yt=!0}else if(Z||"undefined"==typeof MutationObserver||!ct(MutationObserver)&&"[object MutationObserverConstructor]"!==MutationObserver.toString())Jt=void 0!==n&&ct(n)?function(){n(te)}:function(){setTimeout(te,0)};else{var ne=1,re=new MutationObserver(te),ie=document.createTextNode(String(ne));re.observe(ie,{characterData:!0}),Jt=function(){ne=(ne+1)%2,ie.data=String(ne)},Yt=!0}function oe(t,e){var n;if(Zt.push((function(){if(t)try{t.call(e)}catch(t){zt(t,e,"nextTick")}else n&&n(e)})),Qt||(Qt=!0,Jt()),!t&&"undefined"!=typeof Promise)return new Promise((function(t){n=t}))}var ae=new ut;function se(t){!function t(e,n){var r,i,o=Array.isArray(e);if(!o&&!u(e)||Object.isFrozen(e)||e instanceof gt)return;if(e.__ob__){var a=e.__ob__.dep.id;if(n.has(a))return;n.add(a)}if(o)for(r=e.length;r--;)t(e[r],n);else for(i=Object.keys(e),r=i.length;r--;)t(e[i[r]],n)}(t,ae),ae.clear()}var ce=x((function(t){var e="&"===t.charAt(0),n="~"===(t=e?t.slice(1):t).charAt(0),r="!"===(t=n?t.slice(1):t).charAt(0);return{name:t=r?t.slice(1):t,once:n,capture:r,passive:e}}));function ue(t,e){function n(){var t=arguments,r=n.fns;if(!Array.isArray(r))return Wt(r,null,arguments,e,"v-on handler");for(var i=r.slice(),o=0;o<i.length;o++)Wt(i[o],null,t,e,"v-on handler")}return n.fns=t,n}function le(t,e,n,r,i,a){var c,u,l,f;for(c in t)u=t[c],l=e[c],f=ce(c),o(u)||(o(l)?(o(u.fns)&&(u=t[c]=ue(u,a)),s(f.once)&&(u=t[c]=i(f.name,u,f.capture)),n(f.name,u,f.capture,f.passive,f.params)):u!==l&&(l.fns=u,t[c]=l));for(c in e)o(t[c])&&r((f=ce(c)).name,e[c],f.capture)}function fe(t,e,n){var r;t instanceof gt&&(t=t.data.hook||(t.data.hook={}));var i=t[e];function c(){n.apply(this,arguments),_(r.fns,c)}o(i)?r=ue([c]):a(i.fns)&&s(i.merged)?(r=i).fns.push(c):r=ue([i,c]),r.merged=!0,t[e]=r}function de(t,e,n,r,i){if(a(e)){if(A(e,n))return t[n]=e[n],i||delete e[n],!0;if(A(e,r))return t[n]=e[r],i||delete e[r],!0}return!1}function pe(t){return c(t)?[_t(t)]:Array.isArray(t)?function t(e,n){var r,i,u,l,f=[];for(r=0;r<e.length;r++)o(i=e[r])||"boolean"==typeof i||(u=f.length-1,l=f[u],Array.isArray(i)?i.length>0&&(he((i=t(i,(n||"")+"_"+r))[0])&&he(l)&&(f[u]=_t(l.text+i[0].text),i.shift()),f.push.apply(f,i)):c(i)?he(l)?f[u]=_t(l.text+i):""!==i&&f.push(_t(i)):he(i)&&he(l)?f[u]=_t(l.text+i.text):(s(e._isVList)&&a(i.tag)&&o(i.key)&&a(n)&&(i.key="__vlist"+n+"_"+r+"__"),f.push(i)));return f}(t):void 0}function he(t){return a(t)&&a(t.text)&&!1===t.isComment}function ve(t,e){if(t){for(var n=Object.create(null),r=lt?Reflect.ownKeys(t):Object.keys(t),i=0;i<r.length;i++){var o=r[i];if("__ob__"!==o){for(var a=t[o].from,s=e;s;){if(s._provided&&A(s._provided,a)){n[o]=s._provided[a];break}s=s.$parent}if(!s)if("default"in t[o]){var c=t[o].default;n[o]="function"==typeof c?c.call(e):c}else 0}}return n}}function me(t,e){if(!t||!t.length)return{};for(var n={},r=0,i=t.length;r<i;r++){var o=t[r],a=o.data;if(a&&a.attrs&&a.attrs.slot&&delete a.attrs.slot,o.context!==e&&o.fnContext!==e||!a||null==a.slot)(n.default||(n.default=[])).push(o);else{var s=a.slot,c=n[s]||(n[s]=[]);"template"===o.tag?c.push.apply(c,o.children||[]):c.push(o)}}for(var u in n)n[u].every(ge)&&delete n[u];return n}function ge(t){return t.isComment&&!t.asyncFactory||" "===t.text}function ye(t){return t.isComment&&t.asyncFactory}function be(t,e,n){var r,o=Object.keys(e).length>0,a=t?!!t.$stable:!o,s=t&&t.$key;if(t){if(t._normalized)return t._normalized;if(a&&n&&n!==i&&s===n.$key&&!o&&!n.$hasNormal)return n;for(var c in r={},t)t[c]&&"$"!==c[0]&&(r[c]=_e(e,c,t[c]))}else r={};for(var u in e)u in r||(r[u]=we(e,u));return t&&Object.isExtensible(t)&&(t._normalized=r),V(r,"$stable",a),V(r,"$key",s),V(r,"$hasNormal",o),r}function _e(t,e,n){var i=function(){var t=arguments.length?n.apply(null,arguments):n({}),e=(t=t&&"object"===r(t)&&!Array.isArray(t)?[t]:pe(t))&&t[0];return t&&(!e||1===t.length&&e.isComment&&!ye(e))?void 0:t};return n.proxy&&Object.defineProperty(t,e,{get:i,enumerable:!0,configurable:!0}),i}function we(t,e){return function(){return t[e]}}function Ae(t,e){var n,r,i,o,s;if(Array.isArray(t)||"string"==typeof t)for(n=new Array(t.length),r=0,i=t.length;r<i;r++)n[r]=e(t[r],r);else if("number"==typeof t)for(n=new Array(t),r=0;r<t;r++)n[r]=e(r+1,r);else if(u(t))if(lt&&t[Symbol.iterator]){n=[];for(var c=t[Symbol.iterator](),l=c.next();!l.done;)n.push(e(l.value,n.length)),l=c.next()}else for(o=Object.keys(t),n=new Array(o.length),r=0,i=o.length;r<i;r++)s=o[r],n[r]=e(t[s],s,r);return a(n)||(n=[]),n._isVList=!0,n}function xe(t,e,n,r){var i,o=this.$scopedSlots[t];o?(n=n||{},r&&(n=$($({},r),n)),i=o(n)||("function"==typeof e?e():e)):i=this.$slots[t]||("function"==typeof e?e():e);var a=n&&n.slot;return a?this.$createElement("template",{slot:a},i):i}function Ee(t){return Ft(this.$options,"filters",t)||j}function Ce(t,e){return Array.isArray(t)?-1===t.indexOf(e):t!==e}function Se(t,e,n,r,i){var o=U.keyCodes[e]||n;return i&&r&&!U.keyCodes[e]?Ce(i,r):o?Ce(o,t):r?k(r)!==e:void 0===t}function Oe(t,e,n,r,i){if(n)if(u(n)){var o;Array.isArray(n)&&(n=R(n));var a=function(a){if("class"===a||"style"===a||b(a))o=t;else{var s=t.attrs&&t.attrs.type;o=r||U.mustUseProp(e,s,a)?t.domProps||(t.domProps={}):t.attrs||(t.attrs={})}var c=C(a),u=k(a);c in o||u in o||(o[a]=n[a],i&&((t.on||(t.on={}))["update:"+a]=function(t){n[a]=t}))};for(var s in n)a(s)}else;return t}function ke(t,e){var n=this._staticTrees||(this._staticTrees=[]),r=n[t];return r&&!e||Ie(r=n[t]=this.$options.staticRenderFns[t].call(this._renderProxy,null,this),"__static__"+t,!1),r}function Te(t,e,n){return Ie(t,"__once__"+e+(n?"_"+n:""),!0),t}function Ie(t,e,n){if(Array.isArray(t))for(var r=0;r<t.length;r++)t[r]&&"string"!=typeof t[r]&&$e(t[r],e+"_"+r,n);else $e(t,e,n)}function $e(t,e,n){t.isStatic=!0,t.key=e,t.isOnce=n}function Re(t,e){if(e)if(f(e)){var n=t.on=t.on?$({},t.on):{};for(var r in e){var i=n[r],o=e[r];n[r]=i?[].concat(i,o):o}}else;return t}function Ne(t,e,n,r){e=e||{$stable:!n};for(var i=0;i<t.length;i++){var o=t[i];Array.isArray(o)?Ne(o,e,n):o&&(o.proxy&&(o.fn.proxy=!0),e[o.key]=o.fn)}return r&&(e.$key=r),e}function Le(t,e){for(var n=0;n<e.length;n+=2){var r=e[n];"string"==typeof r&&r&&(t[e[n]]=e[n+1])}return t}function je(t,e){return"string"==typeof t?e+t:t}function Pe(t){t._o=Te,t._n=m,t._s=v,t._l=Ae,t._t=xe,t._q=P,t._i=M,t._m=ke,t._f=Ee,t._k=Se,t._b=Oe,t._v=_t,t._e=bt,t._u=Ne,t._g=Re,t._d=Le,t._p=je}function Me(t,e,n,r,o){var a,c=this,u=o.options;A(r,"_uid")?(a=Object.create(r))._original=r:(a=r,r=r._original);var l=s(u._compiled),f=!l;this.data=t,this.props=e,this.children=n,this.parent=r,this.listeners=t.on||i,this.injections=ve(u.inject,r),this.slots=function(){return c.$slots||be(t.scopedSlots,c.$slots=me(n,r)),c.$slots},Object.defineProperty(this,"scopedSlots",{enumerable:!0,get:function(){return be(t.scopedSlots,this.slots())}}),l&&(this.$options=u,this.$slots=this.slots(),this.$scopedSlots=be(t.scopedSlots,this.$slots)),u._scopeId?this._c=function(t,e,n,i){var o=Ve(a,t,e,n,i,f);return o&&!Array.isArray(o)&&(o.fnScopeId=u._scopeId,o.fnContext=r),o}:this._c=function(t,e,n,r){return Ve(a,t,e,n,r,f)}}function Be(t,e,n,r,i){var o=wt(t);return o.fnContext=n,o.fnOptions=r,e.slot&&((o.data||(o.data={})).slot=e.slot),o}function De(t,e){for(var n in e)t[C(n)]=e[n]}Pe(Me.prototype);var Fe={init:function(t,e){if(t.componentInstance&&!t.componentInstance._isDestroyed&&t.data.keepAlive){var n=t;Fe.prepatch(n,n)}else{(t.componentInstance=function(t,e){var n={_isComponent:!0,_parentVnode:t,parent:e},r=t.data.inlineTemplate;a(r)&&(n.render=r.render,n.staticRenderFns=r.staticRenderFns);return new t.componentOptions.Ctor(n)}(t,Qe)).$mount(e?t.elm:void 0,e)}},prepatch:function(t,e){var n=e.componentOptions;!function(t,e,n,r,o){0;var a=r.data.scopedSlots,s=t.$scopedSlots,c=!!(a&&!a.$stable||s!==i&&!s.$stable||a&&t.$scopedSlots.$key!==a.$key||!a&&t.$scopedSlots.$key),u=!!(o||t.$options._renderChildren||c);t.$options._parentVnode=r,t.$vnode=r,t._vnode&&(t._vnode.parent=r);if(t.$options._renderChildren=o,t.$attrs=r.data.attrs||i,t.$listeners=n||i,e&&t.$options.props){St(!1);for(var l=t._props,f=t.$options._propKeys||[],d=0;d<f.length;d++){var p=f[d],h=t.$options.props;l[p]=Ut(p,h,e,t)}St(!0),t.$options.propsData=e}n=n||i;var v=t.$options._parentListeners;t.$options._parentListeners=n,Ze(t,n,v),u&&(t.$slots=me(o,r.context),t.$forceUpdate());0}(e.componentInstance=t.componentInstance,n.propsData,n.listeners,e,n.children)},insert:function(t){var e,n=t.context,r=t.componentInstance;r._isMounted||(r._isMounted=!0,rn(r,"mounted")),t.data.keepAlive&&(n._isMounted?((e=r)._inactive=!1,an.push(e)):nn(r,!0))},destroy:function(t){var e=t.componentInstance;e._isDestroyed||(t.data.keepAlive?function t(e,n){if(n&&(e._directInactive=!0,en(e)))return;if(!e._inactive){e._inactive=!0;for(var r=0;r<e.$children.length;r++)t(e.$children[r]);rn(e,"deactivated")}}(e,!0):e.$destroy())}},Ue=Object.keys(Fe);function Ge(t,e,n,r,c){if(!o(t)){var l=n.$options._base;if(u(t)&&(t=l.extend(t)),"function"==typeof t){var f;if(o(t.cid)&&void 0===(t=function(t,e){if(s(t.error)&&a(t.errorComp))return t.errorComp;if(a(t.resolved))return t.resolved;var n=ze;n&&a(t.owners)&&-1===t.owners.indexOf(n)&&t.owners.push(n);if(s(t.loading)&&a(t.loadingComp))return t.loadingComp;if(n&&!a(t.owners)){var r=t.owners=[n],i=!0,c=null,l=null;n.$on("hook:destroyed",(function(){return _(r,n)}));var f=function(t){for(var e=0,n=r.length;e<n;e++)r[e].$forceUpdate();t&&(r.length=0,null!==c&&(clearTimeout(c),c=null),null!==l&&(clearTimeout(l),l=null))},d=B((function(n){t.resolved=We(n,e),i?r.length=0:f(!0)})),p=B((function(e){a(t.errorComp)&&(t.error=!0,f(!0))})),v=t(d,p);return u(v)&&(h(v)?o(t.resolved)&&v.then(d,p):h(v.component)&&(v.component.then(d,p),a(v.error)&&(t.errorComp=We(v.error,e)),a(v.loading)&&(t.loadingComp=We(v.loading,e),0===v.delay?t.loading=!0:c=setTimeout((function(){c=null,o(t.resolved)&&o(t.error)&&(t.loading=!0,f(!1))}),v.delay||200)),a(v.timeout)&&(l=setTimeout((function(){l=null,o(t.resolved)&&p(null)}),v.timeout)))),i=!1,t.loading?t.loadingComp:t.resolved}}(f=t,l)))return function(t,e,n,r,i){var o=bt();return o.asyncFactory=t,o.asyncMeta={data:e,context:n,children:r,tag:i},o}(f,e,n,r,c);e=e||{},Sn(t),a(e.model)&&function(t,e){var n=t.model&&t.model.prop||"value",r=t.model&&t.model.event||"input";(e.attrs||(e.attrs={}))[n]=e.model.value;var i=e.on||(e.on={}),o=i[r],s=e.model.callback;a(o)?(Array.isArray(o)?-1===o.indexOf(s):o!==s)&&(i[r]=[s].concat(o)):i[r]=s}(t.options,e);var d=function(t,e,n){var r=e.options.props;if(!o(r)){var i={},s=t.attrs,c=t.props;if(a(s)||a(c))for(var u in r){var l=k(u);de(i,c,u,l,!0)||de(i,s,u,l,!1)}return i}}(e,t);if(s(t.options.functional))return function(t,e,n,r,o){var s=t.options,c={},u=s.props;if(a(u))for(var l in u)c[l]=Ut(l,u,e||i);else a(n.attrs)&&De(c,n.attrs),a(n.props)&&De(c,n.props);var f=new Me(n,c,o,r,t),d=s.render.call(null,f._c,f);if(d instanceof gt)return Be(d,n,f.parent,s,f);if(Array.isArray(d)){for(var p=pe(d)||[],h=new Array(p.length),v=0;v<p.length;v++)h[v]=Be(p[v],n,f.parent,s,f);return h}}(t,d,e,n,r);var p=e.on;if(e.on=e.nativeOn,s(t.options.abstract)){var v=e.slot;e={},v&&(e.slot=v)}!function(t){for(var e=t.hook||(t.hook={}),n=0;n<Ue.length;n++){var r=Ue[n],i=e[r],o=Fe[r];i===o||i&&i._merged||(e[r]=i?He(o,i):o)}}(e);var m=t.options.name||c;return new gt("vue-component-"+t.cid+(m?"-"+m:""),e,void 0,void 0,void 0,n,{Ctor:t,propsData:d,listeners:p,tag:c,children:r},f)}}}function He(t,e){var n=function(n,r){t(n,r),e(n,r)};return n._merged=!0,n}function Ve(t,e,n,r,i,l){return(Array.isArray(n)||c(n))&&(i=r,r=n,n=void 0),s(l)&&(i=2),function(t,e,n,r,i){if(a(n)&&a(n.__ob__))return bt();a(n)&&a(n.is)&&(e=n.is);if(!e)return bt();0;Array.isArray(r)&&"function"==typeof r[0]&&((n=n||{}).scopedSlots={default:r[0]},r.length=0);2===i?r=pe(r):1===i&&(r=function(t){for(var e=0;e<t.length;e++)if(Array.isArray(t[e]))return Array.prototype.concat.apply([],t);return t}(r));var c,l;if("string"==typeof e){var f;l=t.$vnode&&t.$vnode.ns||U.getTagNamespace(e),c=U.isReservedTag(e)?new gt(U.parsePlatformTagName(e),n,r,void 0,void 0,t):n&&n.pre||!a(f=Ft(t.$options,"components",e))?new gt(e,n,r,void 0,void 0,t):Ge(f,n,t,r,e)}else c=Ge(e,n,t,r);return Array.isArray(c)?c:a(c)?(a(l)&&function t(e,n,r){e.ns=n,"foreignObject"===e.tag&&(n=void 0,r=!0);if(a(e.children))for(var i=0,c=e.children.length;i<c;i++){var u=e.children[i];a(u.tag)&&(o(u.ns)||s(r)&&"svg"!==u.tag)&&t(u,n,r)}}(c,l),a(n)&&function(t){u(t.style)&&se(t.style);u(t.class)&&se(t.class)}(n),c):bt()}(t,e,n,r,i)}var qe,ze=null;function We(t,e){return(t.__esModule||lt&&"Module"===t[Symbol.toStringTag])&&(t=t.default),u(t)?e.extend(t):t}function Xe(t){if(Array.isArray(t))for(var e=0;e<t.length;e++){var n=t[e];if(a(n)&&(a(n.componentOptions)||ye(n)))return n}}function Ke(t,e){qe.$on(t,e)}function Je(t,e){qe.$off(t,e)}function Ye(t,e){var n=qe;return function r(){var i=e.apply(null,arguments);null!==i&&n.$off(t,r)}}function Ze(t,e,n){qe=t,le(e,n||{},Ke,Je,Ye,t),qe=void 0}var Qe=null;function tn(t){var e=Qe;return Qe=t,function(){Qe=e}}function en(t){for(;t&&(t=t.$parent);)if(t._inactive)return!0;return!1}function nn(t,e){if(e){if(t._directInactive=!1,en(t))return}else if(t._directInactive)return;if(t._inactive||null===t._inactive){t._inactive=!1;for(var n=0;n<t.$children.length;n++)nn(t.$children[n]);rn(t,"activated")}}function rn(t,e){vt();var n=t.$options[e],r=e+" hook";if(n)for(var i=0,o=n.length;i<o;i++)Wt(n[i],t,null,t,r);t._hasHookEvent&&t.$emit("hook:"+e),mt()}var on=[],an=[],sn={},cn=!1,un=!1,ln=0;var fn=0,dn=Date.now;if(X&&!Z){var pn=window.performance;pn&&"function"==typeof pn.now&&dn()>document.createEvent("Event").timeStamp&&(dn=function(){return pn.now()})}function hn(){var t,e;for(fn=dn(),un=!0,on.sort((function(t,e){return t.id-e.id})),ln=0;ln<on.length;ln++)(t=on[ln]).before&&t.before(),e=t.id,sn[e]=null,t.run();var n=an.slice(),r=on.slice();ln=on.length=an.length=0,sn={},cn=un=!1,function(t){for(var e=0;e<t.length;e++)t[e]._inactive=!0,nn(t[e],!0)}(n),function(t){var e=t.length;for(;e--;){var n=t[e],r=n.vm;r._watcher===n&&r._isMounted&&!r._isDestroyed&&rn(r,"updated")}}(r),st&&U.devtools&&st.emit("flush")}var vn=0,mn=function(t,e,n,r,i){this.vm=t,i&&(t._watcher=this),t._watchers.push(this),r?(this.deep=!!r.deep,this.user=!!r.user,this.lazy=!!r.lazy,this.sync=!!r.sync,this.before=r.before):this.deep=this.user=this.lazy=this.sync=!1,this.cb=n,this.id=++vn,this.active=!0,this.dirty=this.lazy,this.deps=[],this.newDeps=[],this.depIds=new ut,this.newDepIds=new ut,this.expression="","function"==typeof e?this.getter=e:(this.getter=function(t){if(!q.test(t)){var e=t.split(".");return function(t){for(var n=0;n<e.length;n++){if(!t)return;t=t[e[n]]}return t}}}(e),this.getter||(this.getter=N)),this.value=this.lazy?void 0:this.get()};mn.prototype.get=function(){var t;vt(this);var e=this.vm;try{t=this.getter.call(e,e)}catch(t){if(!this.user)throw t;zt(t,e,'getter for watcher "'+this.expression+'"')}finally{this.deep&&se(t),mt(),this.cleanupDeps()}return t},mn.prototype.addDep=function(t){var e=t.id;this.newDepIds.has(e)||(this.newDepIds.add(e),this.newDeps.push(t),this.depIds.has(e)||t.addSub(this))},mn.prototype.cleanupDeps=function(){for(var t=this.deps.length;t--;){var e=this.deps[t];this.newDepIds.has(e.id)||e.removeSub(this)}var n=this.depIds;this.depIds=this.newDepIds,this.newDepIds=n,this.newDepIds.clear(),n=this.deps,this.deps=this.newDeps,this.newDeps=n,this.newDeps.length=0},mn.prototype.update=function(){this.lazy?this.dirty=!0:this.sync?this.run():function(t){var e=t.id;if(null==sn[e]){if(sn[e]=!0,un){for(var n=on.length-1;n>ln&&on[n].id>t.id;)n--;on.splice(n+1,0,t)}else on.push(t);cn||(cn=!0,oe(hn))}}(this)},mn.prototype.run=function(){if(this.active){var t=this.get();if(t!==this.value||u(t)||this.deep){var e=this.value;if(this.value=t,this.user){var n='callback for watcher "'+this.expression+'"';Wt(this.cb,this.vm,[t,e],this.vm,n)}else this.cb.call(this.vm,t,e)}}},mn.prototype.evaluate=function(){this.value=this.get(),this.dirty=!1},mn.prototype.depend=function(){for(var t=this.deps.length;t--;)this.deps[t].depend()},mn.prototype.teardown=function(){if(this.active){this.vm._isBeingDestroyed||_(this.vm._watchers,this);for(var t=this.deps.length;t--;)this.deps[t].removeSub(this);this.active=!1}};var gn={enumerable:!0,configurable:!0,get:N,set:N};function yn(t,e,n){gn.get=function(){return this[e][n]},gn.set=function(t){this[e][n]=t},Object.defineProperty(t,n,gn)}function bn(t){t._watchers=[];var e=t.$options;e.props&&function(t,e){var n=t.$options.propsData||{},r=t._props={},i=t.$options._propKeys=[];t.$parent&&St(!1);var o=function(o){i.push(o);var a=Ut(o,e,n,t);Tt(r,o,a),o in t||yn(t,"_props",o)};for(var a in e)o(a);St(!0)}(t,e.props),e.methods&&function(t,e){t.$options.props;for(var n in e)t[n]="function"!=typeof e[n]?N:T(e[n],t)}(t,e.methods),e.data?function(t){var e=t.$options.data;f(e=t._data="function"==typeof e?function(t,e){vt();try{return t.call(e,e)}catch(t){return zt(t,e,"data()"),{}}finally{mt()}}(e,t):e||{})||(e={});var n=Object.keys(e),r=t.$options.props,i=(t.$options.methods,n.length);for(;i--;){var o=n[i];0,r&&A(r,o)||H(o)||yn(t,"_data",o)}kt(e,!0)}(t):kt(t._data={},!0),e.computed&&function(t,e){var n=t._computedWatchers=Object.create(null),r=at();for(var i in e){var o=e[i],a="function"==typeof o?o:o.get;0,r||(n[i]=new mn(t,a||N,N,_n)),i in t||wn(t,i,o)}}(t,e.computed),e.watch&&e.watch!==rt&&function(t,e){for(var n in e){var r=e[n];if(Array.isArray(r))for(var i=0;i<r.length;i++)En(t,n,r[i]);else En(t,n,r)}}(t,e.watch)}var _n={lazy:!0};function wn(t,e,n){var r=!at();"function"==typeof n?(gn.get=r?An(e):xn(n),gn.set=N):(gn.get=n.get?r&&!1!==n.cache?An(e):xn(n.get):N,gn.set=n.set||N),Object.defineProperty(t,e,gn)}function An(t){return function(){var e=this._computedWatchers&&this._computedWatchers[t];if(e)return e.dirty&&e.evaluate(),pt.target&&e.depend(),e.value}}function xn(t){return function(){return t.call(this,this)}}function En(t,e,n,r){return f(n)&&(r=n,n=n.handler),"string"==typeof n&&(n=t[n]),t.$watch(e,n,r)}var Cn=0;function Sn(t){var e=t.options;if(t.super){var n=Sn(t.super);if(n!==t.superOptions){t.superOptions=n;var r=function(t){var e,n=t.options,r=t.sealedOptions;for(var i in n)n[i]!==r[i]&&(e||(e={}),e[i]=n[i]);return e}(t);r&&$(t.extendOptions,r),(e=t.options=Dt(n,t.extendOptions)).name&&(e.components[e.name]=t)}}return e}function On(t){this._init(t)}function kn(t){t.cid=0;var e=1;t.extend=function(t){t=t||{};var n=this,r=n.cid,i=t._Ctor||(t._Ctor={});if(i[r])return i[r];var o=t.name||n.options.name;var a=function(t){this._init(t)};return(a.prototype=Object.create(n.prototype)).constructor=a,a.cid=e++,a.options=Dt(n.options,t),a.super=n,a.options.props&&function(t){var e=t.options.props;for(var n in e)yn(t.prototype,"_props",n)}(a),a.options.computed&&function(t){var e=t.options.computed;for(var n in e)wn(t.prototype,n,e[n])}(a),a.extend=n.extend,a.mixin=n.mixin,a.use=n.use,D.forEach((function(t){a[t]=n[t]})),o&&(a.options.components[o]=a),a.superOptions=n.options,a.extendOptions=t,a.sealedOptions=$({},a.options),i[r]=a,a}}function Tn(t){return t&&(t.Ctor.options.name||t.tag)}function In(t,e){return Array.isArray(t)?t.indexOf(e)>-1:"string"==typeof t?t.split(",").indexOf(e)>-1:!!d(t)&&t.test(e)}function $n(t,e){var n=t.cache,r=t.keys,i=t._vnode;for(var o in n){var a=n[o];if(a){var s=a.name;s&&!e(s)&&Rn(n,o,r,i)}}}function Rn(t,e,n,r){var i=t[e];!i||r&&i.tag===r.tag||i.componentInstance.$destroy(),t[e]=null,_(n,e)}!function(t){t.prototype._init=function(t){var e=this;e._uid=Cn++,e._isVue=!0,t&&t._isComponent?function(t,e){var n=t.$options=Object.create(t.constructor.options),r=e._parentVnode;n.parent=e.parent,n._parentVnode=r;var i=r.componentOptions;n.propsData=i.propsData,n._parentListeners=i.listeners,n._renderChildren=i.children,n._componentTag=i.tag,e.render&&(n.render=e.render,n.staticRenderFns=e.staticRenderFns)}(e,t):e.$options=Dt(Sn(e.constructor),t||{},e),e._renderProxy=e,e._self=e,function(t){var e=t.$options,n=e.parent;if(n&&!e.abstract){for(;n.$options.abstract&&n.$parent;)n=n.$parent;n.$children.push(t)}t.$parent=n,t.$root=n?n.$root:t,t.$children=[],t.$refs={},t._watcher=null,t._inactive=null,t._directInactive=!1,t._isMounted=!1,t._isDestroyed=!1,t._isBeingDestroyed=!1}(e),function(t){t._events=Object.create(null),t._hasHookEvent=!1;var e=t.$options._parentListeners;e&&Ze(t,e)}(e),function(t){t._vnode=null,t._staticTrees=null;var e=t.$options,n=t.$vnode=e._parentVnode,r=n&&n.context;t.$slots=me(e._renderChildren,r),t.$scopedSlots=i,t._c=function(e,n,r,i){return Ve(t,e,n,r,i,!1)},t.$createElement=function(e,n,r,i){return Ve(t,e,n,r,i,!0)};var o=n&&n.data;Tt(t,"$attrs",o&&o.attrs||i,null,!0),Tt(t,"$listeners",e._parentListeners||i,null,!0)}(e),rn(e,"beforeCreate"),function(t){var e=ve(t.$options.inject,t);e&&(St(!1),Object.keys(e).forEach((function(n){Tt(t,n,e[n])})),St(!0))}(e),bn(e),function(t){var e=t.$options.provide;e&&(t._provided="function"==typeof e?e.call(t):e)}(e),rn(e,"created"),e.$options.el&&e.$mount(e.$options.el)}}(On),function(t){var e={get:function(){return this._data}},n={get:function(){return this._props}};Object.defineProperty(t.prototype,"$data",e),Object.defineProperty(t.prototype,"$props",n),t.prototype.$set=It,t.prototype.$delete=$t,t.prototype.$watch=function(t,e,n){if(f(e))return En(this,t,e,n);(n=n||{}).user=!0;var r=new mn(this,t,e,n);if(n.immediate){var i='callback for immediate watcher "'+r.expression+'"';vt(),Wt(e,this,[r.value],this,i),mt()}return function(){r.teardown()}}}(On),function(t){var e=/^hook:/;t.prototype.$on=function(t,n){var r=this;if(Array.isArray(t))for(var i=0,o=t.length;i<o;i++)r.$on(t[i],n);else(r._events[t]||(r._events[t]=[])).push(n),e.test(t)&&(r._hasHookEvent=!0);return r},t.prototype.$once=function(t,e){var n=this;function r(){n.$off(t,r),e.apply(n,arguments)}return r.fn=e,n.$on(t,r),n},t.prototype.$off=function(t,e){var n=this;if(!arguments.length)return n._events=Object.create(null),n;if(Array.isArray(t)){for(var r=0,i=t.length;r<i;r++)n.$off(t[r],e);return n}var o,a=n._events[t];if(!a)return n;if(!e)return n._events[t]=null,n;for(var s=a.length;s--;)if((o=a[s])===e||o.fn===e){a.splice(s,1);break}return n},t.prototype.$emit=function(t){var e=this,n=e._events[t];if(n){n=n.length>1?I(n):n;for(var r=I(arguments,1),i='event handler for "'+t+'"',o=0,a=n.length;o<a;o++)Wt(n[o],e,r,e,i)}return e}}(On),function(t){t.prototype._update=function(t,e){var n=this,r=n.$el,i=n._vnode,o=tn(n);n._vnode=t,n.$el=i?n.__patch__(i,t):n.__patch__(n.$el,t,e,!1),o(),r&&(r.__vue__=null),n.$el&&(n.$el.__vue__=n),n.$vnode&&n.$parent&&n.$vnode===n.$parent._vnode&&(n.$parent.$el=n.$el)},t.prototype.$forceUpdate=function(){this._watcher&&this._watcher.update()},t.prototype.$destroy=function(){var t=this;if(!t._isBeingDestroyed){rn(t,"beforeDestroy"),t._isBeingDestroyed=!0;var e=t.$parent;!e||e._isBeingDestroyed||t.$options.abstract||_(e.$children,t),t._watcher&&t._watcher.teardown();for(var n=t._watchers.length;n--;)t._watchers[n].teardown();t._data.__ob__&&t._data.__ob__.vmCount--,t._isDestroyed=!0,t.__patch__(t._vnode,null),rn(t,"destroyed"),t.$off(),t.$el&&(t.$el.__vue__=null),t.$vnode&&(t.$vnode.parent=null)}}}(On),function(t){Pe(t.prototype),t.prototype.$nextTick=function(t){return oe(t,this)},t.prototype._render=function(){var t,e=this,n=e.$options,r=n.render,i=n._parentVnode;i&&(e.$scopedSlots=be(i.data.scopedSlots,e.$slots,e.$scopedSlots)),e.$vnode=i;try{ze=e,t=r.call(e._renderProxy,e.$createElement)}catch(n){zt(n,e,"render"),t=e._vnode}finally{ze=null}return Array.isArray(t)&&1===t.length&&(t=t[0]),t instanceof gt||(t=bt()),t.parent=i,t}}(On);var Nn=[String,RegExp,Array],Ln={KeepAlive:{name:"keep-alive",abstract:!0,props:{include:Nn,exclude:Nn,max:[String,Number]},methods:{cacheVNode:function(){var t=this.cache,e=this.keys,n=this.vnodeToCache,r=this.keyToCache;if(n){var i=n.tag,o=n.componentInstance,a=n.componentOptions;t[r]={name:Tn(a),tag:i,componentInstance:o},e.push(r),this.max&&e.length>parseInt(this.max)&&Rn(t,e[0],e,this._vnode),this.vnodeToCache=null}}},created:function(){this.cache=Object.create(null),this.keys=[]},destroyed:function(){for(var t in this.cache)Rn(this.cache,t,this.keys)},mounted:function(){var t=this;this.cacheVNode(),this.$watch("include",(function(e){$n(t,(function(t){return In(e,t)}))})),this.$watch("exclude",(function(e){$n(t,(function(t){return!In(e,t)}))}))},updated:function(){this.cacheVNode()},render:function(){var t=this.$slots.default,e=Xe(t),n=e&&e.componentOptions;if(n){var r=Tn(n),i=this.include,o=this.exclude;if(i&&(!r||!In(i,r))||o&&r&&In(o,r))return e;var a=this.cache,s=this.keys,c=null==e.key?n.Ctor.cid+(n.tag?"::"+n.tag:""):e.key;a[c]?(e.componentInstance=a[c].componentInstance,_(s,c),s.push(c)):(this.vnodeToCache=e,this.keyToCache=c),e.data.keepAlive=!0}return e||t&&t[0]}}};!function(t){var e={get:function(){return U}};Object.defineProperty(t,"config",e),t.util={warn:ft,extend:$,mergeOptions:Dt,defineReactive:Tt},t.set=It,t.delete=$t,t.nextTick=oe,t.observable=function(t){return kt(t),t},t.options=Object.create(null),D.forEach((function(e){t.options[e+"s"]=Object.create(null)})),t.options._base=t,$(t.options.components,Ln),function(t){t.use=function(t){var e=this._installedPlugins||(this._installedPlugins=[]);if(e.indexOf(t)>-1)return this;var n=I(arguments,1);return n.unshift(this),"function"==typeof t.install?t.install.apply(t,n):"function"==typeof t&&t.apply(null,n),e.push(t),this}}(t),function(t){t.mixin=function(t){return this.options=Dt(this.options,t),this}}(t),kn(t),function(t){D.forEach((function(e){t[e]=function(t,n){return n?("component"===e&&f(n)&&(n.name=n.name||t,n=this.options._base.extend(n)),"directive"===e&&"function"==typeof n&&(n={bind:n,update:n}),this.options[e+"s"][t]=n,n):this.options[e+"s"][t]}}))}(t)}(On),Object.defineProperty(On.prototype,"$isServer",{get:at}),Object.defineProperty(On.prototype,"$ssrContext",{get:function(){return this.$vnode&&this.$vnode.ssrContext}}),Object.defineProperty(On,"FunctionalRenderContext",{value:Me}),On.version="2.6.14";var jn=g("style,class"),Pn=g("input,textarea,option,select,progress"),Mn=function(t,e,n){return"value"===n&&Pn(t)&&"button"!==e||"selected"===n&&"option"===t||"checked"===n&&"input"===t||"muted"===n&&"video"===t},Bn=g("contenteditable,draggable,spellcheck"),Dn=g("events,caret,typing,plaintext-only"),Fn=g("allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,truespeed,typemustmatch,visible"),Un="http://www.w3.org/1999/xlink",Gn=function(t){return":"===t.charAt(5)&&"xlink"===t.slice(0,5)},Hn=function(t){return Gn(t)?t.slice(6,t.length):""},Vn=function(t){return null==t||!1===t};function qn(t){for(var e=t.data,n=t,r=t;a(r.componentInstance);)(r=r.componentInstance._vnode)&&r.data&&(e=zn(r.data,e));for(;a(n=n.parent);)n&&n.data&&(e=zn(e,n.data));return function(t,e){if(a(t)||a(e))return Wn(t,Xn(e));return""}(e.staticClass,e.class)}function zn(t,e){return{staticClass:Wn(t.staticClass,e.staticClass),class:a(t.class)?[t.class,e.class]:e.class}}function Wn(t,e){return t?e?t+" "+e:t:e||""}function Xn(t){return Array.isArray(t)?function(t){for(var e,n="",r=0,i=t.length;r<i;r++)a(e=Xn(t[r]))&&""!==e&&(n&&(n+=" "),n+=e);return n}(t):u(t)?function(t){var e="";for(var n in t)t[n]&&(e&&(e+=" "),e+=n);return e}(t):"string"==typeof t?t:""}var Kn={svg:"http://www.w3.org/2000/svg",math:"http://www.w3.org/1998/Math/MathML"},Jn=g("html,body,base,head,link,meta,style,title,address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,s,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,embed,object,param,source,canvas,script,noscript,del,ins,caption,col,colgroup,table,thead,tbody,td,th,tr,button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,output,progress,select,textarea,details,dialog,menu,menuitem,summary,content,element,shadow,template,blockquote,iframe,tfoot"),Yn=g("svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,foreignobject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view",!0),Zn=function(t){return Jn(t)||Yn(t)};function Qn(t){return Yn(t)?"svg":"math"===t?"math":void 0}var tr=Object.create(null);var er=g("text,number,password,search,email,tel,url");function nr(t){if("string"==typeof t){var e=document.querySelector(t);return e||document.createElement("div")}return t}var rr=Object.freeze({createElement:function(t,e){var n=document.createElement(t);return"select"!==t||e.data&&e.data.attrs&&void 0!==e.data.attrs.multiple&&n.setAttribute("multiple","multiple"),n},createElementNS:function(t,e){return document.createElementNS(Kn[t],e)},createTextNode:function(t){return document.createTextNode(t)},createComment:function(t){return document.createComment(t)},insertBefore:function(t,e,n){t.insertBefore(e,n)},removeChild:function(t,e){t.removeChild(e)},appendChild:function(t,e){t.appendChild(e)},parentNode:function(t){return t.parentNode},nextSibling:function(t){return t.nextSibling},tagName:function(t){return t.tagName},setTextContent:function(t,e){t.textContent=e},setStyleScope:function(t,e){t.setAttribute(e,"")}}),ir={create:function(t,e){or(e)},update:function(t,e){t.data.ref!==e.data.ref&&(or(t,!0),or(e))},destroy:function(t){or(t,!0)}};function or(t,e){var n=t.data.ref;if(a(n)){var r=t.context,i=t.componentInstance||t.elm,o=r.$refs;e?Array.isArray(o[n])?_(o[n],i):o[n]===i&&(o[n]=void 0):t.data.refInFor?Array.isArray(o[n])?o[n].indexOf(i)<0&&o[n].push(i):o[n]=[i]:o[n]=i}}var ar=new gt("",{},[]),sr=["create","activate","update","remove","destroy"];function cr(t,e){return t.key===e.key&&t.asyncFactory===e.asyncFactory&&(t.tag===e.tag&&t.isComment===e.isComment&&a(t.data)===a(e.data)&&function(t,e){if("input"!==t.tag)return!0;var n,r=a(n=t.data)&&a(n=n.attrs)&&n.type,i=a(n=e.data)&&a(n=n.attrs)&&n.type;return r===i||er(r)&&er(i)}(t,e)||s(t.isAsyncPlaceholder)&&o(e.asyncFactory.error))}function ur(t,e,n){var r,i,o={};for(r=e;r<=n;++r)a(i=t[r].key)&&(o[i]=r);return o}var lr={create:fr,update:fr,destroy:function(t){fr(t,ar)}};function fr(t,e){(t.data.directives||e.data.directives)&&function(t,e){var n,r,i,o=t===ar,a=e===ar,s=pr(t.data.directives,t.context),c=pr(e.data.directives,e.context),u=[],l=[];for(n in c)r=s[n],i=c[n],r?(i.oldValue=r.value,i.oldArg=r.arg,vr(i,"update",e,t),i.def&&i.def.componentUpdated&&l.push(i)):(vr(i,"bind",e,t),i.def&&i.def.inserted&&u.push(i));if(u.length){var f=function(){for(var n=0;n<u.length;n++)vr(u[n],"inserted",e,t)};o?fe(e,"insert",f):f()}l.length&&fe(e,"postpatch",(function(){for(var n=0;n<l.length;n++)vr(l[n],"componentUpdated",e,t)}));if(!o)for(n in s)c[n]||vr(s[n],"unbind",t,t,a)}(t,e)}var dr=Object.create(null);function pr(t,e){var n,r,i=Object.create(null);if(!t)return i;for(n=0;n<t.length;n++)(r=t[n]).modifiers||(r.modifiers=dr),i[hr(r)]=r,r.def=Ft(e.$options,"directives",r.name);return i}function hr(t){return t.rawName||t.name+"."+Object.keys(t.modifiers||{}).join(".")}function vr(t,e,n,r,i){var o=t.def&&t.def[e];if(o)try{o(n.elm,t,n,r,i)}catch(r){zt(r,n.context,"directive "+t.name+" "+e+" hook")}}var mr=[ir,lr];function gr(t,e){var n=e.componentOptions;if(!(a(n)&&!1===n.Ctor.options.inheritAttrs||o(t.data.attrs)&&o(e.data.attrs))){var r,i,s=e.elm,c=t.data.attrs||{},u=e.data.attrs||{};for(r in a(u.__ob__)&&(u=e.data.attrs=$({},u)),u)i=u[r],c[r]!==i&&yr(s,r,i,e.data.pre);for(r in(Z||tt)&&u.value!==c.value&&yr(s,"value",u.value),c)o(u[r])&&(Gn(r)?s.removeAttributeNS(Un,Hn(r)):Bn(r)||s.removeAttribute(r))}}function yr(t,e,n,r){r||t.tagName.indexOf("-")>-1?br(t,e,n):Fn(e)?Vn(n)?t.removeAttribute(e):(n="allowfullscreen"===e&&"EMBED"===t.tagName?"true":e,t.setAttribute(e,n)):Bn(e)?t.setAttribute(e,function(t,e){return Vn(e)||"false"===e?"false":"contenteditable"===t&&Dn(e)?e:"true"}(e,n)):Gn(e)?Vn(n)?t.removeAttributeNS(Un,Hn(e)):t.setAttributeNS(Un,e,n):br(t,e,n)}function br(t,e,n){if(Vn(n))t.removeAttribute(e);else{if(Z&&!Q&&"TEXTAREA"===t.tagName&&"placeholder"===e&&""!==n&&!t.__ieph){t.addEventListener("input",(function e(n){n.stopImmediatePropagation(),t.removeEventListener("input",e)})),t.__ieph=!0}t.setAttribute(e,n)}}var _r={create:gr,update:gr};function wr(t,e){var n=e.elm,r=e.data,i=t.data;if(!(o(r.staticClass)&&o(r.class)&&(o(i)||o(i.staticClass)&&o(i.class)))){var s=qn(e),c=n._transitionClasses;a(c)&&(s=Wn(s,Xn(c))),s!==n._prevClass&&(n.setAttribute("class",s),n._prevClass=s)}}var Ar,xr,Er,Cr,Sr,Or,kr={create:wr,update:wr},Tr=/[\w).+\-_$\]]/;function Ir(t){var e,n,r,i,o,a=!1,s=!1,c=!1,u=!1,l=0,f=0,d=0,p=0;for(r=0;r<t.length;r++)if(n=e,e=t.charCodeAt(r),a)39===e&&92!==n&&(a=!1);else if(s)34===e&&92!==n&&(s=!1);else if(c)96===e&&92!==n&&(c=!1);else if(u)47===e&&92!==n&&(u=!1);else if(124!==e||124===t.charCodeAt(r+1)||124===t.charCodeAt(r-1)||l||f||d){switch(e){case 34:s=!0;break;case 39:a=!0;break;case 96:c=!0;break;case 40:d++;break;case 41:d--;break;case 91:f++;break;case 93:f--;break;case 123:l++;break;case 125:l--}if(47===e){for(var h=r-1,v=void 0;h>=0&&" "===(v=t.charAt(h));h--);v&&Tr.test(v)||(u=!0)}}else void 0===i?(p=r+1,i=t.slice(0,r).trim()):m();function m(){(o||(o=[])).push(t.slice(p,r).trim()),p=r+1}if(void 0===i?i=t.slice(0,r).trim():0!==p&&m(),o)for(r=0;r<o.length;r++)i=$r(i,o[r]);return i}function $r(t,e){var n=e.indexOf("(");if(n<0)return'_f("'+e+'")('+t+")";var r=e.slice(0,n),i=e.slice(n+1);return'_f("'+r+'")('+t+(")"!==i?","+i:i)}function Rr(t,e){console.error("[Vue compiler]: "+t)}function Nr(t,e){return t?t.map((function(t){return t[e]})).filter((function(t){return t})):[]}function Lr(t,e,n,r,i){(t.props||(t.props=[])).push(Hr({name:e,value:n,dynamic:i},r)),t.plain=!1}function jr(t,e,n,r,i){(i?t.dynamicAttrs||(t.dynamicAttrs=[]):t.attrs||(t.attrs=[])).push(Hr({name:e,value:n,dynamic:i},r)),t.plain=!1}function Pr(t,e,n,r){t.attrsMap[e]=n,t.attrsList.push(Hr({name:e,value:n},r))}function Mr(t,e,n,r,i,o,a,s){(t.directives||(t.directives=[])).push(Hr({name:e,rawName:n,value:r,arg:i,isDynamicArg:o,modifiers:a},s)),t.plain=!1}function Br(t,e,n){return n?"_p("+e+',"'+t+'")':t+e}function Dr(t,e,n,r,o,a,s,c){var u;(r=r||i).right?c?e="("+e+")==='click'?'contextmenu':("+e+")":"click"===e&&(e="contextmenu",delete r.right):r.middle&&(c?e="("+e+")==='click'?'mouseup':("+e+")":"click"===e&&(e="mouseup")),r.capture&&(delete r.capture,e=Br("!",e,c)),r.once&&(delete r.once,e=Br("~",e,c)),r.passive&&(delete r.passive,e=Br("&",e,c)),r.native?(delete r.native,u=t.nativeEvents||(t.nativeEvents={})):u=t.events||(t.events={});var l=Hr({value:n.trim(),dynamic:c},s);r!==i&&(l.modifiers=r);var f=u[e];Array.isArray(f)?o?f.unshift(l):f.push(l):u[e]=f?o?[l,f]:[f,l]:l,t.plain=!1}function Fr(t,e,n){var r=Ur(t,":"+e)||Ur(t,"v-bind:"+e);if(null!=r)return Ir(r);if(!1!==n){var i=Ur(t,e);if(null!=i)return JSON.stringify(i)}}function Ur(t,e,n){var r;if(null!=(r=t.attrsMap[e]))for(var i=t.attrsList,o=0,a=i.length;o<a;o++)if(i[o].name===e){i.splice(o,1);break}return n&&delete t.attrsMap[e],r}function Gr(t,e){for(var n=t.attrsList,r=0,i=n.length;r<i;r++){var o=n[r];if(e.test(o.name))return n.splice(r,1),o}}function Hr(t,e){return e&&(null!=e.start&&(t.start=e.start),null!=e.end&&(t.end=e.end)),t}function Vr(t,e,n){var r=n||{},i=r.number,o="$$v";r.trim&&(o="(typeof $$v === 'string'? $$v.trim(): $$v)"),i&&(o="_n("+o+")");var a=qr(e,o);t.model={value:"("+e+")",expression:JSON.stringify(e),callback:"function ($$v) {"+a+"}"}}function qr(t,e){var n=function(t){if(t=t.trim(),Ar=t.length,t.indexOf("[")<0||t.lastIndexOf("]")<Ar-1)return(Cr=t.lastIndexOf("."))>-1?{exp:t.slice(0,Cr),key:'"'+t.slice(Cr+1)+'"'}:{exp:t,key:null};xr=t,Cr=Sr=Or=0;for(;!Wr();)Xr(Er=zr())?Jr(Er):91===Er&&Kr(Er);return{exp:t.slice(0,Sr),key:t.slice(Sr+1,Or)}}(t);return null===n.key?t+"="+e:"$set("+n.exp+", "+n.key+", "+e+")"}function zr(){return xr.charCodeAt(++Cr)}function Wr(){return Cr>=Ar}function Xr(t){return 34===t||39===t}function Kr(t){var e=1;for(Sr=Cr;!Wr();)if(Xr(t=zr()))Jr(t);else if(91===t&&e++,93===t&&e--,0===e){Or=Cr;break}}function Jr(t){for(var e=t;!Wr()&&(t=zr())!==e;);}var Yr;function Zr(t,e,n){var r=Yr;return function i(){var o=e.apply(null,arguments);null!==o&&ei(t,i,n,r)}}var Qr=Yt&&!(nt&&Number(nt[1])<=53);function ti(t,e,n,r){if(Qr){var i=fn,o=e;e=o._wrapper=function(t){if(t.target===t.currentTarget||t.timeStamp>=i||t.timeStamp<=0||t.target.ownerDocument!==document)return o.apply(this,arguments)}}Yr.addEventListener(t,e,it?{capture:n,passive:r}:n)}function ei(t,e,n,r){(r||Yr).removeEventListener(t,e._wrapper||e,n)}function ni(t,e){if(!o(t.data.on)||!o(e.data.on)){var n=e.data.on||{},r=t.data.on||{};Yr=e.elm,function(t){if(a(t.__r)){var e=Z?"change":"input";t[e]=[].concat(t.__r,t[e]||[]),delete t.__r}a(t.__c)&&(t.change=[].concat(t.__c,t.change||[]),delete t.__c)}(n),le(n,r,ti,ei,Zr,e.context),Yr=void 0}}var ri,ii={create:ni,update:ni};function oi(t,e){if(!o(t.data.domProps)||!o(e.data.domProps)){var n,r,i=e.elm,s=t.data.domProps||{},c=e.data.domProps||{};for(n in a(c.__ob__)&&(c=e.data.domProps=$({},c)),s)n in c||(i[n]="");for(n in c){if(r=c[n],"textContent"===n||"innerHTML"===n){if(e.children&&(e.children.length=0),r===s[n])continue;1===i.childNodes.length&&i.removeChild(i.childNodes[0])}if("value"===n&&"PROGRESS"!==i.tagName){i._value=r;var u=o(r)?"":String(r);ai(i,u)&&(i.value=u)}else if("innerHTML"===n&&Yn(i.tagName)&&o(i.innerHTML)){(ri=ri||document.createElement("div")).innerHTML="<svg>"+r+"</svg>";for(var l=ri.firstChild;i.firstChild;)i.removeChild(i.firstChild);for(;l.firstChild;)i.appendChild(l.firstChild)}else if(r!==s[n])try{i[n]=r}catch(t){}}}}function ai(t,e){return!t.composing&&("OPTION"===t.tagName||function(t,e){var n=!0;try{n=document.activeElement!==t}catch(t){}return n&&t.value!==e}(t,e)||function(t,e){var n=t.value,r=t._vModifiers;if(a(r)){if(r.number)return m(n)!==m(e);if(r.trim)return n.trim()!==e.trim()}return n!==e}(t,e))}var si={create:oi,update:oi},ci=x((function(t){var e={},n=/:(.+)/;return t.split(/;(?![^(]*\))/g).forEach((function(t){if(t){var r=t.split(n);r.length>1&&(e[r[0].trim()]=r[1].trim())}})),e}));function ui(t){var e=li(t.style);return t.staticStyle?$(t.staticStyle,e):e}function li(t){return Array.isArray(t)?R(t):"string"==typeof t?ci(t):t}var fi,di=/^--/,pi=/\s*!important$/,hi=function(t,e,n){if(di.test(e))t.style.setProperty(e,n);else if(pi.test(n))t.style.setProperty(k(e),n.replace(pi,""),"important");else{var r=mi(e);if(Array.isArray(n))for(var i=0,o=n.length;i<o;i++)t.style[r]=n[i];else t.style[r]=n}},vi=["Webkit","Moz","ms"],mi=x((function(t){if(fi=fi||document.createElement("div").style,"filter"!==(t=C(t))&&t in fi)return t;for(var e=t.charAt(0).toUpperCase()+t.slice(1),n=0;n<vi.length;n++){var r=vi[n]+e;if(r in fi)return r}}));function gi(t,e){var n=e.data,r=t.data;if(!(o(n.staticStyle)&&o(n.style)&&o(r.staticStyle)&&o(r.style))){var i,s,c=e.elm,u=r.staticStyle,l=r.normalizedStyle||r.style||{},f=u||l,d=li(e.data.style)||{};e.data.normalizedStyle=a(d.__ob__)?$({},d):d;var p=function(t,e){var n,r={};if(e)for(var i=t;i.componentInstance;)(i=i.componentInstance._vnode)&&i.data&&(n=ui(i.data))&&$(r,n);(n=ui(t.data))&&$(r,n);for(var o=t;o=o.parent;)o.data&&(n=ui(o.data))&&$(r,n);return r}(e,!0);for(s in f)o(p[s])&&hi(c,s,"");for(s in p)(i=p[s])!==f[s]&&hi(c,s,null==i?"":i)}}var yi={create:gi,update:gi},bi=/\s+/;function _i(t,e){if(e&&(e=e.trim()))if(t.classList)e.indexOf(" ")>-1?e.split(bi).forEach((function(e){return t.classList.add(e)})):t.classList.add(e);else{var n=" "+(t.getAttribute("class")||"")+" ";n.indexOf(" "+e+" ")<0&&t.setAttribute("class",(n+e).trim())}}function wi(t,e){if(e&&(e=e.trim()))if(t.classList)e.indexOf(" ")>-1?e.split(bi).forEach((function(e){return t.classList.remove(e)})):t.classList.remove(e),t.classList.length||t.removeAttribute("class");else{for(var n=" "+(t.getAttribute("class")||"")+" ",r=" "+e+" ";n.indexOf(r)>=0;)n=n.replace(r," ");(n=n.trim())?t.setAttribute("class",n):t.removeAttribute("class")}}function Ai(t){if(t){if("object"===r(t)){var e={};return!1!==t.css&&$(e,xi(t.name||"v")),$(e,t),e}return"string"==typeof t?xi(t):void 0}}var xi=x((function(t){return{enterClass:t+"-enter",enterToClass:t+"-enter-to",enterActiveClass:t+"-enter-active",leaveClass:t+"-leave",leaveToClass:t+"-leave-to",leaveActiveClass:t+"-leave-active"}})),Ei=X&&!Q,Ci="transition",Si="transitionend",Oi="animation",ki="animationend";Ei&&(void 0===window.ontransitionend&&void 0!==window.onwebkittransitionend&&(Ci="WebkitTransition",Si="webkitTransitionEnd"),void 0===window.onanimationend&&void 0!==window.onwebkitanimationend&&(Oi="WebkitAnimation",ki="webkitAnimationEnd"));var Ti=X?window.requestAnimationFrame?window.requestAnimationFrame.bind(window):setTimeout:function(t){return t()};function Ii(t){Ti((function(){Ti(t)}))}function $i(t,e){var n=t._transitionClasses||(t._transitionClasses=[]);n.indexOf(e)<0&&(n.push(e),_i(t,e))}function Ri(t,e){t._transitionClasses&&_(t._transitionClasses,e),wi(t,e)}function Ni(t,e,n){var r=ji(t,e),i=r.type,o=r.timeout,a=r.propCount;if(!i)return n();var s="transition"===i?Si:ki,c=0,u=function(){t.removeEventListener(s,l),n()},l=function(e){e.target===t&&++c>=a&&u()};setTimeout((function(){c<a&&u()}),o+1),t.addEventListener(s,l)}var Li=/\b(transform|all)(,|$)/;function ji(t,e){var n,r=window.getComputedStyle(t),i=(r[Ci+"Delay"]||"").split(", "),o=(r[Ci+"Duration"]||"").split(", "),a=Pi(i,o),s=(r[Oi+"Delay"]||"").split(", "),c=(r[Oi+"Duration"]||"").split(", "),u=Pi(s,c),l=0,f=0;return"transition"===e?a>0&&(n="transition",l=a,f=o.length):"animation"===e?u>0&&(n="animation",l=u,f=c.length):f=(n=(l=Math.max(a,u))>0?a>u?"transition":"animation":null)?"transition"===n?o.length:c.length:0,{type:n,timeout:l,propCount:f,hasTransform:"transition"===n&&Li.test(r[Ci+"Property"])}}function Pi(t,e){for(;t.length<e.length;)t=t.concat(t);return Math.max.apply(null,e.map((function(e,n){return Mi(e)+Mi(t[n])})))}function Mi(t){return 1e3*Number(t.slice(0,-1).replace(",","."))}function Bi(t,e){var n=t.elm;a(n._leaveCb)&&(n._leaveCb.cancelled=!0,n._leaveCb());var r=Ai(t.data.transition);if(!o(r)&&!a(n._enterCb)&&1===n.nodeType){for(var i=r.css,s=r.type,c=r.enterClass,l=r.enterToClass,f=r.enterActiveClass,d=r.appearClass,p=r.appearToClass,h=r.appearActiveClass,v=r.beforeEnter,g=r.enter,y=r.afterEnter,b=r.enterCancelled,_=r.beforeAppear,w=r.appear,A=r.afterAppear,x=r.appearCancelled,E=r.duration,C=Qe,S=Qe.$vnode;S&&S.parent;)C=S.context,S=S.parent;var O=!C._isMounted||!t.isRootInsert;if(!O||w||""===w){var k=O&&d?d:c,T=O&&h?h:f,I=O&&p?p:l,$=O&&_||v,R=O&&"function"==typeof w?w:g,N=O&&A||y,L=O&&x||b,j=m(u(E)?E.enter:E);0;var P=!1!==i&&!Q,M=Ui(R),D=n._enterCb=B((function(){P&&(Ri(n,I),Ri(n,T)),D.cancelled?(P&&Ri(n,k),L&&L(n)):N&&N(n),n._enterCb=null}));t.data.show||fe(t,"insert",(function(){var e=n.parentNode,r=e&&e._pending&&e._pending[t.key];r&&r.tag===t.tag&&r.elm._leaveCb&&r.elm._leaveCb(),R&&R(n,D)})),$&&$(n),P&&($i(n,k),$i(n,T),Ii((function(){Ri(n,k),D.cancelled||($i(n,I),M||(Fi(j)?setTimeout(D,j):Ni(n,s,D)))}))),t.data.show&&(e&&e(),R&&R(n,D)),P||M||D()}}}function Di(t,e){var n=t.elm;a(n._enterCb)&&(n._enterCb.cancelled=!0,n._enterCb());var r=Ai(t.data.transition);if(o(r)||1!==n.nodeType)return e();if(!a(n._leaveCb)){var i=r.css,s=r.type,c=r.leaveClass,l=r.leaveToClass,f=r.leaveActiveClass,d=r.beforeLeave,p=r.leave,h=r.afterLeave,v=r.leaveCancelled,g=r.delayLeave,y=r.duration,b=!1!==i&&!Q,_=Ui(p),w=m(u(y)?y.leave:y);0;var A=n._leaveCb=B((function(){n.parentNode&&n.parentNode._pending&&(n.parentNode._pending[t.key]=null),b&&(Ri(n,l),Ri(n,f)),A.cancelled?(b&&Ri(n,c),v&&v(n)):(e(),h&&h(n)),n._leaveCb=null}));g?g(x):x()}function x(){A.cancelled||(!t.data.show&&n.parentNode&&((n.parentNode._pending||(n.parentNode._pending={}))[t.key]=t),d&&d(n),b&&($i(n,c),$i(n,f),Ii((function(){Ri(n,c),A.cancelled||($i(n,l),_||(Fi(w)?setTimeout(A,w):Ni(n,s,A)))}))),p&&p(n,A),b||_||A())}}function Fi(t){return"number"==typeof t&&!isNaN(t)}function Ui(t){if(o(t))return!1;var e=t.fns;return a(e)?Ui(Array.isArray(e)?e[0]:e):(t._length||t.length)>1}function Gi(t,e){!0!==e.data.show&&Bi(e)}var Hi=function(t){var e,n,r={},i=t.modules,u=t.nodeOps;for(e=0;e<sr.length;++e)for(r[sr[e]]=[],n=0;n<i.length;++n)a(i[n][sr[e]])&&r[sr[e]].push(i[n][sr[e]]);function l(t){var e=u.parentNode(t);a(e)&&u.removeChild(e,t)}function f(t,e,n,i,o,c,l){if(a(t.elm)&&a(c)&&(t=c[l]=wt(t)),t.isRootInsert=!o,!function(t,e,n,i){var o=t.data;if(a(o)){var c=a(t.componentInstance)&&o.keepAlive;if(a(o=o.hook)&&a(o=o.init)&&o(t,!1),a(t.componentInstance))return d(t,e),p(n,t.elm,i),s(c)&&function(t,e,n,i){var o,s=t;for(;s.componentInstance;)if(s=s.componentInstance._vnode,a(o=s.data)&&a(o=o.transition)){for(o=0;o<r.activate.length;++o)r.activate[o](ar,s);e.push(s);break}p(n,t.elm,i)}(t,e,n,i),!0}}(t,e,n,i)){var f=t.data,v=t.children,g=t.tag;a(g)?(t.elm=t.ns?u.createElementNS(t.ns,g):u.createElement(g,t),y(t),h(t,v,e),a(f)&&m(t,e),p(n,t.elm,i)):s(t.isComment)?(t.elm=u.createComment(t.text),p(n,t.elm,i)):(t.elm=u.createTextNode(t.text),p(n,t.elm,i))}}function d(t,e){a(t.data.pendingInsert)&&(e.push.apply(e,t.data.pendingInsert),t.data.pendingInsert=null),t.elm=t.componentInstance.$el,v(t)?(m(t,e),y(t)):(or(t),e.push(t))}function p(t,e,n){a(t)&&(a(n)?u.parentNode(n)===t&&u.insertBefore(t,e,n):u.appendChild(t,e))}function h(t,e,n){if(Array.isArray(e)){0;for(var r=0;r<e.length;++r)f(e[r],n,t.elm,null,!0,e,r)}else c(t.text)&&u.appendChild(t.elm,u.createTextNode(String(t.text)))}function v(t){for(;t.componentInstance;)t=t.componentInstance._vnode;return a(t.tag)}function m(t,n){for(var i=0;i<r.create.length;++i)r.create[i](ar,t);a(e=t.data.hook)&&(a(e.create)&&e.create(ar,t),a(e.insert)&&n.push(t))}function y(t){var e;if(a(e=t.fnScopeId))u.setStyleScope(t.elm,e);else for(var n=t;n;)a(e=n.context)&&a(e=e.$options._scopeId)&&u.setStyleScope(t.elm,e),n=n.parent;a(e=Qe)&&e!==t.context&&e!==t.fnContext&&a(e=e.$options._scopeId)&&u.setStyleScope(t.elm,e)}function b(t,e,n,r,i,o){for(;r<=i;++r)f(n[r],o,t,e,!1,n,r)}function _(t){var e,n,i=t.data;if(a(i))for(a(e=i.hook)&&a(e=e.destroy)&&e(t),e=0;e<r.destroy.length;++e)r.destroy[e](t);if(a(e=t.children))for(n=0;n<t.children.length;++n)_(t.children[n])}function w(t,e,n){for(;e<=n;++e){var r=t[e];a(r)&&(a(r.tag)?(A(r),_(r)):l(r.elm))}}function A(t,e){if(a(e)||a(t.data)){var n,i=r.remove.length+1;for(a(e)?e.listeners+=i:e=function(t,e){function n(){0==--n.listeners&&l(t)}return n.listeners=e,n}(t.elm,i),a(n=t.componentInstance)&&a(n=n._vnode)&&a(n.data)&&A(n,e),n=0;n<r.remove.length;++n)r.remove[n](t,e);a(n=t.data.hook)&&a(n=n.remove)?n(t,e):e()}else l(t.elm)}function x(t,e,n,r){for(var i=n;i<r;i++){var o=e[i];if(a(o)&&cr(t,o))return i}}function E(t,e,n,i,c,l){if(t!==e){a(e.elm)&&a(i)&&(e=i[c]=wt(e));var d=e.elm=t.elm;if(s(t.isAsyncPlaceholder))a(e.asyncFactory.resolved)?O(t.elm,e,n):e.isAsyncPlaceholder=!0;else if(s(e.isStatic)&&s(t.isStatic)&&e.key===t.key&&(s(e.isCloned)||s(e.isOnce)))e.componentInstance=t.componentInstance;else{var p,h=e.data;a(h)&&a(p=h.hook)&&a(p=p.prepatch)&&p(t,e);var m=t.children,g=e.children;if(a(h)&&v(e)){for(p=0;p<r.update.length;++p)r.update[p](t,e);a(p=h.hook)&&a(p=p.update)&&p(t,e)}o(e.text)?a(m)&&a(g)?m!==g&&function(t,e,n,r,i){var s,c,l,d=0,p=0,h=e.length-1,v=e[0],m=e[h],g=n.length-1,y=n[0],_=n[g],A=!i;for(0;d<=h&&p<=g;)o(v)?v=e[++d]:o(m)?m=e[--h]:cr(v,y)?(E(v,y,r,n,p),v=e[++d],y=n[++p]):cr(m,_)?(E(m,_,r,n,g),m=e[--h],_=n[--g]):cr(v,_)?(E(v,_,r,n,g),A&&u.insertBefore(t,v.elm,u.nextSibling(m.elm)),v=e[++d],_=n[--g]):cr(m,y)?(E(m,y,r,n,p),A&&u.insertBefore(t,m.elm,v.elm),m=e[--h],y=n[++p]):(o(s)&&(s=ur(e,d,h)),o(c=a(y.key)?s[y.key]:x(y,e,d,h))?f(y,r,t,v.elm,!1,n,p):cr(l=e[c],y)?(E(l,y,r,n,p),e[c]=void 0,A&&u.insertBefore(t,l.elm,v.elm)):f(y,r,t,v.elm,!1,n,p),y=n[++p]);d>h?b(t,o(n[g+1])?null:n[g+1].elm,n,p,g,r):p>g&&w(e,d,h)}(d,m,g,n,l):a(g)?(a(t.text)&&u.setTextContent(d,""),b(d,null,g,0,g.length-1,n)):a(m)?w(m,0,m.length-1):a(t.text)&&u.setTextContent(d,""):t.text!==e.text&&u.setTextContent(d,e.text),a(h)&&a(p=h.hook)&&a(p=p.postpatch)&&p(t,e)}}}function C(t,e,n){if(s(n)&&a(t.parent))t.parent.data.pendingInsert=e;else for(var r=0;r<e.length;++r)e[r].data.hook.insert(e[r])}var S=g("attrs,class,staticClass,staticStyle,key");function O(t,e,n,r){var i,o=e.tag,c=e.data,u=e.children;if(r=r||c&&c.pre,e.elm=t,s(e.isComment)&&a(e.asyncFactory))return e.isAsyncPlaceholder=!0,!0;if(a(c)&&(a(i=c.hook)&&a(i=i.init)&&i(e,!0),a(i=e.componentInstance)))return d(e,n),!0;if(a(o)){if(a(u))if(t.hasChildNodes())if(a(i=c)&&a(i=i.domProps)&&a(i=i.innerHTML)){if(i!==t.innerHTML)return!1}else{for(var l=!0,f=t.firstChild,p=0;p<u.length;p++){if(!f||!O(f,u[p],n,r)){l=!1;break}f=f.nextSibling}if(!l||f)return!1}else h(e,u,n);if(a(c)){var v=!1;for(var g in c)if(!S(g)){v=!0,m(e,n);break}!v&&c.class&&se(c.class)}}else t.data!==e.text&&(t.data=e.text);return!0}return function(t,e,n,i){if(!o(e)){var c,l=!1,d=[];if(o(t))l=!0,f(e,d);else{var p=a(t.nodeType);if(!p&&cr(t,e))E(t,e,d,null,null,i);else{if(p){if(1===t.nodeType&&t.hasAttribute("data-server-rendered")&&(t.removeAttribute("data-server-rendered"),n=!0),s(n)&&O(t,e,d))return C(e,d,!0),t;c=t,t=new gt(u.tagName(c).toLowerCase(),{},[],void 0,c)}var h=t.elm,m=u.parentNode(h);if(f(e,d,h._leaveCb?null:m,u.nextSibling(h)),a(e.parent))for(var g=e.parent,y=v(e);g;){for(var b=0;b<r.destroy.length;++b)r.destroy[b](g);if(g.elm=e.elm,y){for(var A=0;A<r.create.length;++A)r.create[A](ar,g);var x=g.data.hook.insert;if(x.merged)for(var S=1;S<x.fns.length;S++)x.fns[S]()}else or(g);g=g.parent}a(m)?w([t],0,0):a(t.tag)&&_(t)}}return C(e,d,l),e.elm}a(t)&&_(t)}}({nodeOps:rr,modules:[_r,kr,ii,si,yi,X?{create:Gi,activate:Gi,remove:function(t,e){!0!==t.data.show?Di(t,e):e()}}:{}].concat(mr)});Q&&document.addEventListener("selectionchange",(function(){var t=document.activeElement;t&&t.vmodel&&Yi(t,"input")}));var Vi={inserted:function(t,e,n,r){"select"===n.tag?(r.elm&&!r.elm._vOptions?fe(n,"postpatch",(function(){Vi.componentUpdated(t,e,n)})):qi(t,e,n.context),t._vOptions=[].map.call(t.options,Xi)):("textarea"===n.tag||er(t.type))&&(t._vModifiers=e.modifiers,e.modifiers.lazy||(t.addEventListener("compositionstart",Ki),t.addEventListener("compositionend",Ji),t.addEventListener("change",Ji),Q&&(t.vmodel=!0)))},componentUpdated:function(t,e,n){if("select"===n.tag){qi(t,e,n.context);var r=t._vOptions,i=t._vOptions=[].map.call(t.options,Xi);if(i.some((function(t,e){return!P(t,r[e])})))(t.multiple?e.value.some((function(t){return Wi(t,i)})):e.value!==e.oldValue&&Wi(e.value,i))&&Yi(t,"change")}}};function qi(t,e,n){zi(t,e,n),(Z||tt)&&setTimeout((function(){zi(t,e,n)}),0)}function zi(t,e,n){var r=e.value,i=t.multiple;if(!i||Array.isArray(r)){for(var o,a,s=0,c=t.options.length;s<c;s++)if(a=t.options[s],i)o=M(r,Xi(a))>-1,a.selected!==o&&(a.selected=o);else if(P(Xi(a),r))return void(t.selectedIndex!==s&&(t.selectedIndex=s));i||(t.selectedIndex=-1)}}function Wi(t,e){return e.every((function(e){return!P(e,t)}))}function Xi(t){return"_value"in t?t._value:t.value}function Ki(t){t.target.composing=!0}function Ji(t){t.target.composing&&(t.target.composing=!1,Yi(t.target,"input"))}function Yi(t,e){var n=document.createEvent("HTMLEvents");n.initEvent(e,!0,!0),t.dispatchEvent(n)}function Zi(t){return!t.componentInstance||t.data&&t.data.transition?t:Zi(t.componentInstance._vnode)}var Qi={model:Vi,show:{bind:function(t,e,n){var r=e.value,i=(n=Zi(n)).data&&n.data.transition,o=t.__vOriginalDisplay="none"===t.style.display?"":t.style.display;r&&i?(n.data.show=!0,Bi(n,(function(){t.style.display=o}))):t.style.display=r?o:"none"},update:function(t,e,n){var r=e.value;!r!=!e.oldValue&&((n=Zi(n)).data&&n.data.transition?(n.data.show=!0,r?Bi(n,(function(){t.style.display=t.__vOriginalDisplay})):Di(n,(function(){t.style.display="none"}))):t.style.display=r?t.__vOriginalDisplay:"none")},unbind:function(t,e,n,r,i){i||(t.style.display=t.__vOriginalDisplay)}}},to={name:String,appear:Boolean,css:Boolean,mode:String,type:String,enterClass:String,leaveClass:String,enterToClass:String,leaveToClass:String,enterActiveClass:String,leaveActiveClass:String,appearClass:String,appearActiveClass:String,appearToClass:String,duration:[Number,String,Object]};function eo(t){var e=t&&t.componentOptions;return e&&e.Ctor.options.abstract?eo(Xe(e.children)):t}function no(t){var e={},n=t.$options;for(var r in n.propsData)e[r]=t[r];var i=n._parentListeners;for(var o in i)e[C(o)]=i[o];return e}function ro(t,e){if(/\d-keep-alive$/.test(e.tag))return t("keep-alive",{props:e.componentOptions.propsData})}var io=function(t){return t.tag||ye(t)},oo=function(t){return"show"===t.name},ao={name:"transition",props:to,abstract:!0,render:function(t){var e=this,n=this.$slots.default;if(n&&(n=n.filter(io)).length){0;var r=this.mode;0;var i=n[0];if(function(t){for(;t=t.parent;)if(t.data.transition)return!0}(this.$vnode))return i;var o=eo(i);if(!o)return i;if(this._leaving)return ro(t,i);var a="__transition-"+this._uid+"-";o.key=null==o.key?o.isComment?a+"comment":a+o.tag:c(o.key)?0===String(o.key).indexOf(a)?o.key:a+o.key:o.key;var s=(o.data||(o.data={})).transition=no(this),u=this._vnode,l=eo(u);if(o.data.directives&&o.data.directives.some(oo)&&(o.data.show=!0),l&&l.data&&!function(t,e){return e.key===t.key&&e.tag===t.tag}(o,l)&&!ye(l)&&(!l.componentInstance||!l.componentInstance._vnode.isComment)){var f=l.data.transition=$({},s);if("out-in"===r)return this._leaving=!0,fe(f,"afterLeave",(function(){e._leaving=!1,e.$forceUpdate()})),ro(t,i);if("in-out"===r){if(ye(o))return u;var d,p=function(){d()};fe(s,"afterEnter",p),fe(s,"enterCancelled",p),fe(f,"delayLeave",(function(t){d=t}))}}return i}}},so=$({tag:String,moveClass:String},to);function co(t){t.elm._moveCb&&t.elm._moveCb(),t.elm._enterCb&&t.elm._enterCb()}function uo(t){t.data.newPos=t.elm.getBoundingClientRect()}function lo(t){var e=t.data.pos,n=t.data.newPos,r=e.left-n.left,i=e.top-n.top;if(r||i){t.data.moved=!0;var o=t.elm.style;o.transform=o.WebkitTransform="translate("+r+"px,"+i+"px)",o.transitionDuration="0s"}}delete so.mode;var fo={Transition:ao,TransitionGroup:{props:so,beforeMount:function(){var t=this,e=this._update;this._update=function(n,r){var i=tn(t);t.__patch__(t._vnode,t.kept,!1,!0),t._vnode=t.kept,i(),e.call(t,n,r)}},render:function(t){for(var e=this.tag||this.$vnode.data.tag||"span",n=Object.create(null),r=this.prevChildren=this.children,i=this.$slots.default||[],o=this.children=[],a=no(this),s=0;s<i.length;s++){var c=i[s];if(c.tag)if(null!=c.key&&0!==String(c.key).indexOf("__vlist"))o.push(c),n[c.key]=c,(c.data||(c.data={})).transition=a;else;}if(r){for(var u=[],l=[],f=0;f<r.length;f++){var d=r[f];d.data.transition=a,d.data.pos=d.elm.getBoundingClientRect(),n[d.key]?u.push(d):l.push(d)}this.kept=t(e,null,u),this.removed=l}return t(e,null,o)},updated:function(){var t=this.prevChildren,e=this.moveClass||(this.name||"v")+"-move";t.length&&this.hasMove(t[0].elm,e)&&(t.forEach(co),t.forEach(uo),t.forEach(lo),this._reflow=document.body.offsetHeight,t.forEach((function(t){if(t.data.moved){var n=t.elm,r=n.style;$i(n,e),r.transform=r.WebkitTransform=r.transitionDuration="",n.addEventListener(Si,n._moveCb=function t(r){r&&r.target!==n||r&&!/transform$/.test(r.propertyName)||(n.removeEventListener(Si,t),n._moveCb=null,Ri(n,e))})}})))},methods:{hasMove:function(t,e){if(!Ei)return!1;if(this._hasMove)return this._hasMove;var n=t.cloneNode();t._transitionClasses&&t._transitionClasses.forEach((function(t){wi(n,t)})),_i(n,e),n.style.display="none",this.$el.appendChild(n);var r=ji(n);return this.$el.removeChild(n),this._hasMove=r.hasTransform}}}};On.config.mustUseProp=Mn,On.config.isReservedTag=Zn,On.config.isReservedAttr=jn,On.config.getTagNamespace=Qn,On.config.isUnknownElement=function(t){if(!X)return!0;if(Zn(t))return!1;if(t=t.toLowerCase(),null!=tr[t])return tr[t];var e=document.createElement(t);return t.indexOf("-")>-1?tr[t]=e.constructor===window.HTMLUnknownElement||e.constructor===window.HTMLElement:tr[t]=/HTMLUnknownElement/.test(e.toString())},$(On.options.directives,Qi),$(On.options.components,fo),On.prototype.__patch__=X?Hi:N,On.prototype.$mount=function(t,e){return function(t,e,n){var r;return t.$el=e,t.$options.render||(t.$options.render=bt),rn(t,"beforeMount"),r=function(){t._update(t._render(),n)},new mn(t,r,N,{before:function(){t._isMounted&&!t._isDestroyed&&rn(t,"beforeUpdate")}},!0),n=!1,null==t.$vnode&&(t._isMounted=!0,rn(t,"mounted")),t}(this,t=t&&X?nr(t):void 0,e)},X&&setTimeout((function(){U.devtools&&st&&st.emit("init",On)}),0);var po=/\{\{((?:.|\r?\n)+?)\}\}/g,ho=/[-.*+?^${}()|[\]\/\\]/g,vo=x((function(t){var e=t[0].replace(ho,"\\$&"),n=t[1].replace(ho,"\\$&");return new RegExp(e+"((?:.|\\n)+?)"+n,"g")}));var mo={staticKeys:["staticClass"],transformNode:function(t,e){e.warn;var n=Ur(t,"class");n&&(t.staticClass=JSON.stringify(n));var r=Fr(t,"class",!1);r&&(t.classBinding=r)},genData:function(t){var e="";return t.staticClass&&(e+="staticClass:"+t.staticClass+","),t.classBinding&&(e+="class:"+t.classBinding+","),e}};var go,yo={staticKeys:["staticStyle"],transformNode:function(t,e){e.warn;var n=Ur(t,"style");n&&(t.staticStyle=JSON.stringify(ci(n)));var r=Fr(t,"style",!1);r&&(t.styleBinding=r)},genData:function(t){var e="";return t.staticStyle&&(e+="staticStyle:"+t.staticStyle+","),t.styleBinding&&(e+="style:("+t.styleBinding+"),"),e}},bo=function(t){return(go=go||document.createElement("div")).innerHTML=t,go.textContent},_o=g("area,base,br,col,embed,frame,hr,img,input,isindex,keygen,link,meta,param,source,track,wbr"),wo=g("colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr,source"),Ao=g("address,article,aside,base,blockquote,body,caption,col,colgroup,dd,details,dialog,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,html,legend,li,menuitem,meta,optgroup,option,param,rp,rt,source,style,summary,tbody,td,tfoot,th,thead,title,tr,track"),xo=/^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/,Eo=/^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+?\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/,Co="[a-zA-Z_][\\-\\.0-9_a-zA-Z"+G.source+"]*",So="((?:"+Co+"\\:)?"+Co+")",Oo=new RegExp("^<"+So),ko=/^\s*(\/?)>/,To=new RegExp("^<\\/"+So+"[^>]*>"),Io=/^<!DOCTYPE [^>]+>/i,$o=/^<!\--/,Ro=/^<!\[/,No=g("script,style,textarea",!0),Lo={},jo={"&lt;":"<","&gt;":">","&quot;":'"',"&amp;":"&","&#10;":"\n","&#9;":"\t","&#39;":"'"},Po=/&(?:lt|gt|quot|amp|#39);/g,Mo=/&(?:lt|gt|quot|amp|#39|#10|#9);/g,Bo=g("pre,textarea",!0),Do=function(t,e){return t&&Bo(t)&&"\n"===e[0]};function Fo(t,e){var n=e?Mo:Po;return t.replace(n,(function(t){return jo[t]}))}var Uo,Go,Ho,Vo,qo,zo,Wo,Xo,Ko=/^@|^v-on:/,Jo=/^v-|^@|^:|^#/,Yo=/([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/,Zo=/,([^,\}\]]*)(?:,([^,\}\]]*))?$/,Qo=/^\(|\)$/g,ta=/^\[.*\]$/,ea=/:(.*)$/,na=/^:|^\.|^v-bind:/,ra=/\.[^.\]]+(?=[^\]]*$)/g,ia=/^v-slot(:|$)|^#/,oa=/[\r\n]/,aa=/[ \f\t\r\n]+/g,sa=x(bo);function ca(t,e,n){return{type:1,tag:t,attrsList:e,attrsMap:va(e),rawAttrsMap:{},parent:n,children:[]}}function ua(t,e){Uo=e.warn||Rr,zo=e.isPreTag||L,Wo=e.mustUseProp||L,Xo=e.getTagNamespace||L;var n=e.isReservedTag||L;(function(t){return!(!(t.component||t.attrsMap[":is"]||t.attrsMap["v-bind:is"])&&(t.attrsMap.is?n(t.attrsMap.is):n(t.tag)))}),Ho=Nr(e.modules,"transformNode"),Vo=Nr(e.modules,"preTransformNode"),qo=Nr(e.modules,"postTransformNode"),Go=e.delimiters;var r,i,o=[],a=!1!==e.preserveWhitespace,s=e.whitespace,c=!1,u=!1;function l(t){if(f(t),c||t.processed||(t=la(t,e)),o.length||t===r||r.if&&(t.elseif||t.else)&&da(r,{exp:t.elseif,block:t}),i&&!t.forbidden)if(t.elseif||t.else)a=t,(s=function(t){for(var e=t.length;e--;){if(1===t[e].type)return t[e];t.pop()}}(i.children))&&s.if&&da(s,{exp:a.elseif,block:a});else{if(t.slotScope){var n=t.slotTarget||'"default"';(i.scopedSlots||(i.scopedSlots={}))[n]=t}i.children.push(t),t.parent=i}var a,s;t.children=t.children.filter((function(t){return!t.slotScope})),f(t),t.pre&&(c=!1),zo(t.tag)&&(u=!1);for(var l=0;l<qo.length;l++)qo[l](t,e)}function f(t){if(!u)for(var e;(e=t.children[t.children.length-1])&&3===e.type&&" "===e.text;)t.children.pop()}return function(t,e){for(var n,r,i=[],o=e.expectHTML,a=e.isUnaryTag||L,s=e.canBeLeftOpenTag||L,c=0;t;){if(n=t,r&&No(r)){var u=0,l=r.toLowerCase(),f=Lo[l]||(Lo[l]=new RegExp("([\\s\\S]*?)(</"+l+"[^>]*>)","i")),d=t.replace(f,(function(t,n,r){return u=r.length,No(l)||"noscript"===l||(n=n.replace(/<!\--([\s\S]*?)-->/g,"$1").replace(/<!\[CDATA\[([\s\S]*?)]]>/g,"$1")),Do(l,n)&&(n=n.slice(1)),e.chars&&e.chars(n),""}));c+=t.length-d.length,t=d,S(l,c-u,c)}else{var p=t.indexOf("<");if(0===p){if($o.test(t)){var h=t.indexOf("--\x3e");if(h>=0){e.shouldKeepComment&&e.comment(t.substring(4,h),c,c+h+3),x(h+3);continue}}if(Ro.test(t)){var v=t.indexOf("]>");if(v>=0){x(v+2);continue}}var m=t.match(Io);if(m){x(m[0].length);continue}var g=t.match(To);if(g){var y=c;x(g[0].length),S(g[1],y,c);continue}var b=E();if(b){C(b),Do(b.tagName,t)&&x(1);continue}}var _=void 0,w=void 0,A=void 0;if(p>=0){for(w=t.slice(p);!(To.test(w)||Oo.test(w)||$o.test(w)||Ro.test(w)||(A=w.indexOf("<",1))<0);)p+=A,w=t.slice(p);_=t.substring(0,p)}p<0&&(_=t),_&&x(_.length),e.chars&&_&&e.chars(_,c-_.length,c)}if(t===n){e.chars&&e.chars(t);break}}function x(e){c+=e,t=t.substring(e)}function E(){var e=t.match(Oo);if(e){var n,r,i={tagName:e[1],attrs:[],start:c};for(x(e[0].length);!(n=t.match(ko))&&(r=t.match(Eo)||t.match(xo));)r.start=c,x(r[0].length),r.end=c,i.attrs.push(r);if(n)return i.unarySlash=n[1],x(n[0].length),i.end=c,i}}function C(t){var n=t.tagName,c=t.unarySlash;o&&("p"===r&&Ao(n)&&S(r),s(n)&&r===n&&S(n));for(var u=a(n)||!!c,l=t.attrs.length,f=new Array(l),d=0;d<l;d++){var p=t.attrs[d],h=p[3]||p[4]||p[5]||"",v="a"===n&&"href"===p[1]?e.shouldDecodeNewlinesForHref:e.shouldDecodeNewlines;f[d]={name:p[1],value:Fo(h,v)}}u||(i.push({tag:n,lowerCasedTag:n.toLowerCase(),attrs:f,start:t.start,end:t.end}),r=n),e.start&&e.start(n,f,u,t.start,t.end)}function S(t,n,o){var a,s;if(null==n&&(n=c),null==o&&(o=c),t)for(s=t.toLowerCase(),a=i.length-1;a>=0&&i[a].lowerCasedTag!==s;a--);else a=0;if(a>=0){for(var u=i.length-1;u>=a;u--)e.end&&e.end(i[u].tag,n,o);i.length=a,r=a&&i[a-1].tag}else"br"===s?e.start&&e.start(t,[],!0,n,o):"p"===s&&(e.start&&e.start(t,[],!1,n,o),e.end&&e.end(t,n,o))}S()}(t,{warn:Uo,expectHTML:e.expectHTML,isUnaryTag:e.isUnaryTag,canBeLeftOpenTag:e.canBeLeftOpenTag,shouldDecodeNewlines:e.shouldDecodeNewlines,shouldDecodeNewlinesForHref:e.shouldDecodeNewlinesForHref,shouldKeepComment:e.comments,outputSourceRange:e.outputSourceRange,start:function(t,n,a,s,f){var d=i&&i.ns||Xo(t);Z&&"svg"===d&&(n=function(t){for(var e=[],n=0;n<t.length;n++){var r=t[n];ma.test(r.name)||(r.name=r.name.replace(ga,""),e.push(r))}return e}(n));var p,h=ca(t,n,i);d&&(h.ns=d),"style"!==(p=h).tag&&("script"!==p.tag||p.attrsMap.type&&"text/javascript"!==p.attrsMap.type)||at()||(h.forbidden=!0);for(var v=0;v<Vo.length;v++)h=Vo[v](h,e)||h;c||(!function(t){null!=Ur(t,"v-pre")&&(t.pre=!0)}(h),h.pre&&(c=!0)),zo(h.tag)&&(u=!0),c?function(t){var e=t.attrsList,n=e.length;if(n)for(var r=t.attrs=new Array(n),i=0;i<n;i++)r[i]={name:e[i].name,value:JSON.stringify(e[i].value)},null!=e[i].start&&(r[i].start=e[i].start,r[i].end=e[i].end);else t.pre||(t.plain=!0)}(h):h.processed||(fa(h),function(t){var e=Ur(t,"v-if");if(e)t.if=e,da(t,{exp:e,block:t});else{null!=Ur(t,"v-else")&&(t.else=!0);var n=Ur(t,"v-else-if");n&&(t.elseif=n)}}(h),function(t){null!=Ur(t,"v-once")&&(t.once=!0)}(h)),r||(r=h),a?l(h):(i=h,o.push(h))},end:function(t,e,n){var r=o[o.length-1];o.length-=1,i=o[o.length-1],l(r)},chars:function(t,e,n){if(i&&(!Z||"textarea"!==i.tag||i.attrsMap.placeholder!==t)){var r,o,l,f=i.children;if(t=u||t.trim()?"script"===(r=i).tag||"style"===r.tag?t:sa(t):f.length?s?"condense"===s&&oa.test(t)?"":" ":a?" ":"":"")u||"condense"!==s||(t=t.replace(aa," ")),!c&&" "!==t&&(o=function(t,e){var n=e?vo(e):po;if(n.test(t)){for(var r,i,o,a=[],s=[],c=n.lastIndex=0;r=n.exec(t);){(i=r.index)>c&&(s.push(o=t.slice(c,i)),a.push(JSON.stringify(o)));var u=Ir(r[1].trim());a.push("_s("+u+")"),s.push({"@binding":u}),c=i+r[0].length}return c<t.length&&(s.push(o=t.slice(c)),a.push(JSON.stringify(o))),{expression:a.join("+"),tokens:s}}}(t,Go))?l={type:2,expression:o.expression,tokens:o.tokens,text:t}:" "===t&&f.length&&" "===f[f.length-1].text||(l={type:3,text:t}),l&&f.push(l)}},comment:function(t,e,n){if(i){var r={type:3,text:t,isComment:!0};0,i.children.push(r)}}}),r}function la(t,e){var n;!function(t){var e=Fr(t,"key");if(e){t.key=e}}(t),t.plain=!t.key&&!t.scopedSlots&&!t.attrsList.length,function(t){var e=Fr(t,"ref");e&&(t.ref=e,t.refInFor=function(t){var e=t;for(;e;){if(void 0!==e.for)return!0;e=e.parent}return!1}(t))}(t),function(t){var e;"template"===t.tag?(e=Ur(t,"scope"),t.slotScope=e||Ur(t,"slot-scope")):(e=Ur(t,"slot-scope"))&&(t.slotScope=e);var n=Fr(t,"slot");n&&(t.slotTarget='""'===n?'"default"':n,t.slotTargetDynamic=!(!t.attrsMap[":slot"]&&!t.attrsMap["v-bind:slot"]),"template"===t.tag||t.slotScope||jr(t,"slot",n,function(t,e){return t.rawAttrsMap[":"+e]||t.rawAttrsMap["v-bind:"+e]||t.rawAttrsMap[e]}(t,"slot")));if("template"===t.tag){var r=Gr(t,ia);if(r){0;var i=pa(r),o=i.name,a=i.dynamic;t.slotTarget=o,t.slotTargetDynamic=a,t.slotScope=r.value||"_empty_"}}else{var s=Gr(t,ia);if(s){0;var c=t.scopedSlots||(t.scopedSlots={}),u=pa(s),l=u.name,f=u.dynamic,d=c[l]=ca("template",[],t);d.slotTarget=l,d.slotTargetDynamic=f,d.children=t.children.filter((function(t){if(!t.slotScope)return t.parent=d,!0})),d.slotScope=s.value||"_empty_",t.children=[],t.plain=!1}}}(t),"slot"===(n=t).tag&&(n.slotName=Fr(n,"name")),function(t){var e;(e=Fr(t,"is"))&&(t.component=e);null!=Ur(t,"inline-template")&&(t.inlineTemplate=!0)}(t);for(var r=0;r<Ho.length;r++)t=Ho[r](t,e)||t;return function(t){var e,n,r,i,o,a,s,c,u=t.attrsList;for(e=0,n=u.length;e<n;e++){if(r=i=u[e].name,o=u[e].value,Jo.test(r))if(t.hasBindings=!0,(a=ha(r.replace(Jo,"")))&&(r=r.replace(ra,"")),na.test(r))r=r.replace(na,""),o=Ir(o),(c=ta.test(r))&&(r=r.slice(1,-1)),a&&(a.prop&&!c&&"innerHtml"===(r=C(r))&&(r="innerHTML"),a.camel&&!c&&(r=C(r)),a.sync&&(s=qr(o,"$event"),c?Dr(t,'"update:"+('+r+")",s,null,!1,0,u[e],!0):(Dr(t,"update:"+C(r),s,null,!1,0,u[e]),k(r)!==C(r)&&Dr(t,"update:"+k(r),s,null,!1,0,u[e])))),a&&a.prop||!t.component&&Wo(t.tag,t.attrsMap.type,r)?Lr(t,r,o,u[e],c):jr(t,r,o,u[e],c);else if(Ko.test(r))r=r.replace(Ko,""),(c=ta.test(r))&&(r=r.slice(1,-1)),Dr(t,r,o,a,!1,0,u[e],c);else{var l=(r=r.replace(Jo,"")).match(ea),f=l&&l[1];c=!1,f&&(r=r.slice(0,-(f.length+1)),ta.test(f)&&(f=f.slice(1,-1),c=!0)),Mr(t,r,i,o,f,c,a,u[e])}else jr(t,r,JSON.stringify(o),u[e]),!t.component&&"muted"===r&&Wo(t.tag,t.attrsMap.type,r)&&Lr(t,r,"true",u[e])}}(t),t}function fa(t){var e;if(e=Ur(t,"v-for")){var n=function(t){var e=t.match(Yo);if(!e)return;var n={};n.for=e[2].trim();var r=e[1].trim().replace(Qo,""),i=r.match(Zo);i?(n.alias=r.replace(Zo,"").trim(),n.iterator1=i[1].trim(),i[2]&&(n.iterator2=i[2].trim())):n.alias=r;return n}(e);n&&$(t,n)}}function da(t,e){t.ifConditions||(t.ifConditions=[]),t.ifConditions.push(e)}function pa(t){var e=t.name.replace(ia,"");return e||"#"!==t.name[0]&&(e="default"),ta.test(e)?{name:e.slice(1,-1),dynamic:!0}:{name:'"'+e+'"',dynamic:!1}}function ha(t){var e=t.match(ra);if(e){var n={};return e.forEach((function(t){n[t.slice(1)]=!0})),n}}function va(t){for(var e={},n=0,r=t.length;n<r;n++)e[t[n].name]=t[n].value;return e}var ma=/^xmlns:NS\d+/,ga=/^NS\d+:/;function ya(t){return ca(t.tag,t.attrsList.slice(),t.parent)}var ba=[mo,yo,{preTransformNode:function(t,e){if("input"===t.tag){var n,r=t.attrsMap;if(!r["v-model"])return;if((r[":type"]||r["v-bind:type"])&&(n=Fr(t,"type")),r.type||n||!r["v-bind"]||(n="("+r["v-bind"]+").type"),n){var i=Ur(t,"v-if",!0),o=i?"&&("+i+")":"",a=null!=Ur(t,"v-else",!0),s=Ur(t,"v-else-if",!0),c=ya(t);fa(c),Pr(c,"type","checkbox"),la(c,e),c.processed=!0,c.if="("+n+")==='checkbox'"+o,da(c,{exp:c.if,block:c});var u=ya(t);Ur(u,"v-for",!0),Pr(u,"type","radio"),la(u,e),da(c,{exp:"("+n+")==='radio'"+o,block:u});var l=ya(t);return Ur(l,"v-for",!0),Pr(l,":type",n),la(l,e),da(c,{exp:i,block:l}),a?c.else=!0:s&&(c.elseif=s),c}}}}];var _a,wa,Aa={expectHTML:!0,modules:ba,directives:{model:function(t,e,n){n;var r=e.value,i=e.modifiers,o=t.tag,a=t.attrsMap.type;if(t.component)return Vr(t,r,i),!1;if("select"===o)!function(t,e,n){var r='var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return '+(n&&n.number?"_n(val)":"val")+"});";r=r+" "+qr(e,"$event.target.multiple ? $$selectedVal : $$selectedVal[0]"),Dr(t,"change",r,null,!0)}(t,r,i);else if("input"===o&&"checkbox"===a)!function(t,e,n){var r=n&&n.number,i=Fr(t,"value")||"null",o=Fr(t,"true-value")||"true",a=Fr(t,"false-value")||"false";Lr(t,"checked","Array.isArray("+e+")?_i("+e+","+i+")>-1"+("true"===o?":("+e+")":":_q("+e+","+o+")")),Dr(t,"change","var $$a="+e+",$$el=$event.target,$$c=$$el.checked?("+o+"):("+a+");if(Array.isArray($$a)){var $$v="+(r?"_n("+i+")":i)+",$$i=_i($$a,$$v);if($$el.checked){$$i<0&&("+qr(e,"$$a.concat([$$v])")+")}else{$$i>-1&&("+qr(e,"$$a.slice(0,$$i).concat($$a.slice($$i+1))")+")}}else{"+qr(e,"$$c")+"}",null,!0)}(t,r,i);else if("input"===o&&"radio"===a)!function(t,e,n){var r=n&&n.number,i=Fr(t,"value")||"null";Lr(t,"checked","_q("+e+","+(i=r?"_n("+i+")":i)+")"),Dr(t,"change",qr(e,i),null,!0)}(t,r,i);else if("input"===o||"textarea"===o)!function(t,e,n){var r=t.attrsMap.type;0;var i=n||{},o=i.lazy,a=i.number,s=i.trim,c=!o&&"range"!==r,u=o?"change":"range"===r?"__r":"input",l="$event.target.value";s&&(l="$event.target.value.trim()");a&&(l="_n("+l+")");var f=qr(e,l);c&&(f="if($event.target.composing)return;"+f);Lr(t,"value","("+e+")"),Dr(t,u,f,null,!0),(s||a)&&Dr(t,"blur","$forceUpdate()")}(t,r,i);else{if(!U.isReservedTag(o))return Vr(t,r,i),!1}return!0},text:function(t,e){e.value&&Lr(t,"textContent","_s("+e.value+")",e)},html:function(t,e){e.value&&Lr(t,"innerHTML","_s("+e.value+")",e)}},isPreTag:function(t){return"pre"===t},isUnaryTag:_o,mustUseProp:Mn,canBeLeftOpenTag:wo,isReservedTag:Zn,getTagNamespace:Qn,staticKeys:function(t){return t.reduce((function(t,e){return t.concat(e.staticKeys||[])}),[]).join(",")}(ba)},xa=x((function(t){return g("type,tag,attrsList,attrsMap,plain,parent,children,attrs,start,end,rawAttrsMap"+(t?","+t:""))}));function Ea(t,e){t&&(_a=xa(e.staticKeys||""),wa=e.isReservedTag||L,function t(e){if(e.static=function(t){if(2===t.type)return!1;if(3===t.type)return!0;return!(!t.pre&&(t.hasBindings||t.if||t.for||y(t.tag)||!wa(t.tag)||function(t){for(;t.parent;){if("template"!==(t=t.parent).tag)return!1;if(t.for)return!0}return!1}(t)||!Object.keys(t).every(_a)))}(e),1===e.type){if(!wa(e.tag)&&"slot"!==e.tag&&null==e.attrsMap["inline-template"])return;for(var n=0,r=e.children.length;n<r;n++){var i=e.children[n];t(i),i.static||(e.static=!1)}if(e.ifConditions)for(var o=1,a=e.ifConditions.length;o<a;o++){var s=e.ifConditions[o].block;t(s),s.static||(e.static=!1)}}}(t),function t(e,n){if(1===e.type){if((e.static||e.once)&&(e.staticInFor=n),e.static&&e.children.length&&(1!==e.children.length||3!==e.children[0].type))return void(e.staticRoot=!0);if(e.staticRoot=!1,e.children)for(var r=0,i=e.children.length;r<i;r++)t(e.children[r],n||!!e.for);if(e.ifConditions)for(var o=1,a=e.ifConditions.length;o<a;o++)t(e.ifConditions[o].block,n)}}(t,!1))}var Ca=/^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/,Sa=/\([^)]*?\);*$/,Oa=/^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/,ka={esc:27,tab:9,enter:13,space:32,up:38,left:37,right:39,down:40,delete:[8,46]},Ta={esc:["Esc","Escape"],tab:"Tab",enter:"Enter",space:[" ","Spacebar"],up:["Up","ArrowUp"],left:["Left","ArrowLeft"],right:["Right","ArrowRight"],down:["Down","ArrowDown"],delete:["Backspace","Delete","Del"]},Ia=function(t){return"if("+t+")return null;"},$a={stop:"$event.stopPropagation();",prevent:"$event.preventDefault();",self:Ia("$event.target !== $event.currentTarget"),ctrl:Ia("!$event.ctrlKey"),shift:Ia("!$event.shiftKey"),alt:Ia("!$event.altKey"),meta:Ia("!$event.metaKey"),left:Ia("'button' in $event && $event.button !== 0"),middle:Ia("'button' in $event && $event.button !== 1"),right:Ia("'button' in $event && $event.button !== 2")};function Ra(t,e){var n=e?"nativeOn:":"on:",r="",i="";for(var o in t){var a=Na(t[o]);t[o]&&t[o].dynamic?i+=o+","+a+",":r+='"'+o+'":'+a+","}return r="{"+r.slice(0,-1)+"}",i?n+"_d("+r+",["+i.slice(0,-1)+"])":n+r}function Na(t){if(!t)return"function(){}";if(Array.isArray(t))return"["+t.map((function(t){return Na(t)})).join(",")+"]";var e=Oa.test(t.value),n=Ca.test(t.value),r=Oa.test(t.value.replace(Sa,""));if(t.modifiers){var i="",o="",a=[];for(var s in t.modifiers)if($a[s])o+=$a[s],ka[s]&&a.push(s);else if("exact"===s){var c=t.modifiers;o+=Ia(["ctrl","shift","alt","meta"].filter((function(t){return!c[t]})).map((function(t){return"$event."+t+"Key"})).join("||"))}else a.push(s);return a.length&&(i+=function(t){return"if(!$event.type.indexOf('key')&&"+t.map(La).join("&&")+")return null;"}(a)),o&&(i+=o),"function($event){"+i+(e?"return "+t.value+".apply(null, arguments)":n?"return ("+t.value+").apply(null, arguments)":r?"return "+t.value:t.value)+"}"}return e||n?t.value:"function($event){"+(r?"return "+t.value:t.value)+"}"}function La(t){var e=parseInt(t,10);if(e)return"$event.keyCode!=="+e;var n=ka[t],r=Ta[t];return"_k($event.keyCode,"+JSON.stringify(t)+","+JSON.stringify(n)+",$event.key,"+JSON.stringify(r)+")"}var ja={on:function(t,e){t.wrapListeners=function(t){return"_g("+t+","+e.value+")"}},bind:function(t,e){t.wrapData=function(n){return"_b("+n+",'"+t.tag+"',"+e.value+","+(e.modifiers&&e.modifiers.prop?"true":"false")+(e.modifiers&&e.modifiers.sync?",true":"")+")"}},cloak:N},Pa=function(t){this.options=t,this.warn=t.warn||Rr,this.transforms=Nr(t.modules,"transformCode"),this.dataGenFns=Nr(t.modules,"genData"),this.directives=$($({},ja),t.directives);var e=t.isReservedTag||L;this.maybeComponent=function(t){return!!t.component||!e(t.tag)},this.onceId=0,this.staticRenderFns=[],this.pre=!1};function Ma(t,e){var n=new Pa(e);return{render:"with(this){return "+(t?"script"===t.tag?"null":Ba(t,n):'_c("div")')+"}",staticRenderFns:n.staticRenderFns}}function Ba(t,e){if(t.parent&&(t.pre=t.pre||t.parent.pre),t.staticRoot&&!t.staticProcessed)return Da(t,e);if(t.once&&!t.onceProcessed)return Fa(t,e);if(t.for&&!t.forProcessed)return Ga(t,e);if(t.if&&!t.ifProcessed)return Ua(t,e);if("template"!==t.tag||t.slotTarget||e.pre){if("slot"===t.tag)return function(t,e){var n=t.slotName||'"default"',r=za(t,e),i="_t("+n+(r?",function(){return "+r+"}":""),o=t.attrs||t.dynamicAttrs?Ka((t.attrs||[]).concat(t.dynamicAttrs||[]).map((function(t){return{name:C(t.name),value:t.value,dynamic:t.dynamic}}))):null,a=t.attrsMap["v-bind"];!o&&!a||r||(i+=",null");o&&(i+=","+o);a&&(i+=(o?"":",null")+","+a);return i+")"}(t,e);var n;if(t.component)n=function(t,e,n){var r=e.inlineTemplate?null:za(e,n,!0);return"_c("+t+","+Ha(e,n)+(r?","+r:"")+")"}(t.component,t,e);else{var r;(!t.plain||t.pre&&e.maybeComponent(t))&&(r=Ha(t,e));var i=t.inlineTemplate?null:za(t,e,!0);n="_c('"+t.tag+"'"+(r?","+r:"")+(i?","+i:"")+")"}for(var o=0;o<e.transforms.length;o++)n=e.transforms[o](t,n);return n}return za(t,e)||"void 0"}function Da(t,e){t.staticProcessed=!0;var n=e.pre;return t.pre&&(e.pre=t.pre),e.staticRenderFns.push("with(this){return "+Ba(t,e)+"}"),e.pre=n,"_m("+(e.staticRenderFns.length-1)+(t.staticInFor?",true":"")+")"}function Fa(t,e){if(t.onceProcessed=!0,t.if&&!t.ifProcessed)return Ua(t,e);if(t.staticInFor){for(var n="",r=t.parent;r;){if(r.for){n=r.key;break}r=r.parent}return n?"_o("+Ba(t,e)+","+e.onceId+++","+n+")":Ba(t,e)}return Da(t,e)}function Ua(t,e,n,r){return t.ifProcessed=!0,function t(e,n,r,i){if(!e.length)return i||"_e()";var o=e.shift();return o.exp?"("+o.exp+")?"+a(o.block)+":"+t(e,n,r,i):""+a(o.block);function a(t){return r?r(t,n):t.once?Fa(t,n):Ba(t,n)}}(t.ifConditions.slice(),e,n,r)}function Ga(t,e,n,r){var i=t.for,o=t.alias,a=t.iterator1?","+t.iterator1:"",s=t.iterator2?","+t.iterator2:"";return t.forProcessed=!0,(r||"_l")+"(("+i+"),function("+o+a+s+"){return "+(n||Ba)(t,e)+"})"}function Ha(t,e){var n="{",r=function(t,e){var n=t.directives;if(!n)return;var r,i,o,a,s="directives:[",c=!1;for(r=0,i=n.length;r<i;r++){o=n[r],a=!0;var u=e.directives[o.name];u&&(a=!!u(t,o,e.warn)),a&&(c=!0,s+='{name:"'+o.name+'",rawName:"'+o.rawName+'"'+(o.value?",value:("+o.value+"),expression:"+JSON.stringify(o.value):"")+(o.arg?",arg:"+(o.isDynamicArg?o.arg:'"'+o.arg+'"'):"")+(o.modifiers?",modifiers:"+JSON.stringify(o.modifiers):"")+"},")}if(c)return s.slice(0,-1)+"]"}(t,e);r&&(n+=r+","),t.key&&(n+="key:"+t.key+","),t.ref&&(n+="ref:"+t.ref+","),t.refInFor&&(n+="refInFor:true,"),t.pre&&(n+="pre:true,"),t.component&&(n+='tag:"'+t.tag+'",');for(var i=0;i<e.dataGenFns.length;i++)n+=e.dataGenFns[i](t);if(t.attrs&&(n+="attrs:"+Ka(t.attrs)+","),t.props&&(n+="domProps:"+Ka(t.props)+","),t.events&&(n+=Ra(t.events,!1)+","),t.nativeEvents&&(n+=Ra(t.nativeEvents,!0)+","),t.slotTarget&&!t.slotScope&&(n+="slot:"+t.slotTarget+","),t.scopedSlots&&(n+=function(t,e,n){var r=t.for||Object.keys(e).some((function(t){var n=e[t];return n.slotTargetDynamic||n.if||n.for||Va(n)})),i=!!t.if;if(!r)for(var o=t.parent;o;){if(o.slotScope&&"_empty_"!==o.slotScope||o.for){r=!0;break}o.if&&(i=!0),o=o.parent}var a=Object.keys(e).map((function(t){return qa(e[t],n)})).join(",");return"scopedSlots:_u(["+a+"]"+(r?",null,true":"")+(!r&&i?",null,false,"+function(t){var e=5381,n=t.length;for(;n;)e=33*e^t.charCodeAt(--n);return e>>>0}(a):"")+")"}(t,t.scopedSlots,e)+","),t.model&&(n+="model:{value:"+t.model.value+",callback:"+t.model.callback+",expression:"+t.model.expression+"},"),t.inlineTemplate){var o=function(t,e){var n=t.children[0];0;if(n&&1===n.type){var r=Ma(n,e.options);return"inlineTemplate:{render:function(){"+r.render+"},staticRenderFns:["+r.staticRenderFns.map((function(t){return"function(){"+t+"}"})).join(",")+"]}"}}(t,e);o&&(n+=o+",")}return n=n.replace(/,$/,"")+"}",t.dynamicAttrs&&(n="_b("+n+',"'+t.tag+'",'+Ka(t.dynamicAttrs)+")"),t.wrapData&&(n=t.wrapData(n)),t.wrapListeners&&(n=t.wrapListeners(n)),n}function Va(t){return 1===t.type&&("slot"===t.tag||t.children.some(Va))}function qa(t,e){var n=t.attrsMap["slot-scope"];if(t.if&&!t.ifProcessed&&!n)return Ua(t,e,qa,"null");if(t.for&&!t.forProcessed)return Ga(t,e,qa);var r="_empty_"===t.slotScope?"":String(t.slotScope),i="function("+r+"){return "+("template"===t.tag?t.if&&n?"("+t.if+")?"+(za(t,e)||"undefined")+":undefined":za(t,e)||"undefined":Ba(t,e))+"}",o=r?"":",proxy:true";return"{key:"+(t.slotTarget||'"default"')+",fn:"+i+o+"}"}function za(t,e,n,r,i){var o=t.children;if(o.length){var a=o[0];if(1===o.length&&a.for&&"template"!==a.tag&&"slot"!==a.tag){var s=n?e.maybeComponent(a)?",1":",0":"";return""+(r||Ba)(a,e)+s}var c=n?function(t,e){for(var n=0,r=0;r<t.length;r++){var i=t[r];if(1===i.type){if(Wa(i)||i.ifConditions&&i.ifConditions.some((function(t){return Wa(t.block)}))){n=2;break}(e(i)||i.ifConditions&&i.ifConditions.some((function(t){return e(t.block)})))&&(n=1)}}return n}(o,e.maybeComponent):0,u=i||Xa;return"["+o.map((function(t){return u(t,e)})).join(",")+"]"+(c?","+c:"")}}function Wa(t){return void 0!==t.for||"template"===t.tag||"slot"===t.tag}function Xa(t,e){return 1===t.type?Ba(t,e):3===t.type&&t.isComment?function(t){return"_e("+JSON.stringify(t.text)+")"}(t):function(t){return"_v("+(2===t.type?t.expression:Ja(JSON.stringify(t.text)))+")"}(t)}function Ka(t){for(var e="",n="",r=0;r<t.length;r++){var i=t[r],o=Ja(i.value);i.dynamic?n+=i.name+","+o+",":e+='"'+i.name+'":'+o+","}return e="{"+e.slice(0,-1)+"}",n?"_d("+e+",["+n.slice(0,-1)+"])":e}function Ja(t){return t.replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029")}new RegExp("\\b"+"do,if,for,let,new,try,var,case,else,with,await,break,catch,class,const,super,throw,while,yield,delete,export,import,return,switch,default,extends,finally,continue,debugger,function,arguments".split(",").join("\\b|\\b")+"\\b"),new RegExp("\\b"+"delete,typeof,void".split(",").join("\\s*\\([^\\)]*\\)|\\b")+"\\s*\\([^\\)]*\\)");function Ya(t,e){try{return new Function(t)}catch(n){return e.push({err:n,code:t}),N}}function Za(t){var e=Object.create(null);return function(n,r,i){(r=$({},r)).warn;delete r.warn;var o=r.delimiters?String(r.delimiters)+n:n;if(e[o])return e[o];var a=t(n,r);var s={},c=[];return s.render=Ya(a.render,c),s.staticRenderFns=a.staticRenderFns.map((function(t){return Ya(t,c)})),e[o]=s}}var Qa,ts,es=(Qa=function(t,e){var n=ua(t.trim(),e);!1!==e.optimize&&Ea(n,e);var r=Ma(n,e);return{ast:n,render:r.render,staticRenderFns:r.staticRenderFns}},function(t){function e(e,n){var r=Object.create(t),i=[],o=[];if(n)for(var a in n.modules&&(r.modules=(t.modules||[]).concat(n.modules)),n.directives&&(r.directives=$(Object.create(t.directives||null),n.directives)),n)"modules"!==a&&"directives"!==a&&(r[a]=n[a]);r.warn=function(t,e,n){(n?o:i).push(t)};var s=Qa(e.trim(),r);return s.errors=i,s.tips=o,s}return{compile:e,compileToFunctions:Za(e)}})(Aa),ns=(es.compile,es.compileToFunctions);function rs(t){return(ts=ts||document.createElement("div")).innerHTML=t?'<a href="\n"/>':'<div a="\n"/>',ts.innerHTML.indexOf("&#10;")>0}var is=!!X&&rs(!1),os=!!X&&rs(!0),as=x((function(t){var e=nr(t);return e&&e.innerHTML})),ss=On.prototype.$mount;On.prototype.$mount=function(t,e){if((t=t&&nr(t))===document.body||t===document.documentElement)return this;var n=this.$options;if(!n.render){var r=n.template;if(r)if("string"==typeof r)"#"===r.charAt(0)&&(r=as(r));else{if(!r.nodeType)return this;r=r.innerHTML}else t&&(r=function(t){if(t.outerHTML)return t.outerHTML;var e=document.createElement("div");return e.appendChild(t.cloneNode(!0)),e.innerHTML}(t));if(r){0;var i=ns(r,{outputSourceRange:!1,shouldDecodeNewlines:is,shouldDecodeNewlinesForHref:os,delimiters:n.delimiters,comments:n.comments},this),o=i.render,a=i.staticRenderFns;n.render=o,n.staticRenderFns=a}}return ss.call(this,t,e)},On.compile=ns;var cs=On;e.default=cs}).call(this,n(14),n(113).setImmediate)},function(t,e,n){"use strict";t.exports=!1},function(t,e,n){"use strict";var r=n(95),i=n(1),o=function(t){return"function"==typeof t?t:void 0};t.exports=function(t,e){return arguments.length<2?o(r[t])||o(i[t]):r[t]&&r[t][e]||i[t]&&i[t][e]}},function(t,e,n){"use strict";var r=Math.ceil,i=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?i:r)(t)}},function(t,e,n){"use strict";t.exports={}},function(t,e,n){"use strict";var r=n(10),i=n(64),o=n(18),a=n(17),s=n(26),c=n(4),u=n(57),l=Object.getOwnPropertyDescriptor;e.f=r?l:function(t,e){if(t=a(t),e=s(e,!0),u)try{return l(t,e)}catch(t){}if(c(t,e))return o(!i.f.call(t,e),t[e])}},function(t,e,n){"use strict";var r,i,o,a=n(116),s=n(1),c=n(3),u=n(8),l=n(4),f=n(31),d=n(42),p=n(23),h=s.WeakMap;if(a||f.state){var v=f.state||(f.state=new h),m=v.get,g=v.has,y=v.set;r=function(t,e){if(g.call(v,t))throw new TypeError("Object already initialized");return e.facade=t,y.call(v,t,e),e},i=function(t){return m.call(v,t)||{}},o=function(t){return g.call(v,t)}}else{var b=d("state");p[b]=!0,r=function(t,e){if(l(t,b))throw new TypeError("Object already initialized");return e.facade=t,u(t,b,e),e},i=function(t){return l(t,b)?t[b]:{}},o=function(t){return l(t,b)}}t.exports={set:r,get:i,has:o,enforce:function(t){return o(t)?i(t):r(t,{})},getterFor:function(t){return function(e){var n;if(!c(e)||(n=i(e)).type!==t)throw TypeError("Incompatible receiver, "+t+" required");return n}}}},function(t,e,n){"use strict";var r=n(3);t.exports=function(t,e){if(!r(t))return t;var n,i;if(e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;if("function"==typeof(n=t.valueOf)&&!r(i=n.call(t)))return i;if(!e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;throw TypeError("Can't convert object to primitive value")}},function(t,e,n){"use strict";var r=n(0),i=n(2),o=n(29),a=i("species");t.exports=function(t){return o>=51||!r((function(){var e=[];return(e.constructor={})[a]=function(){return{foo:1}},1!==e[t](Boolean).foo}))}},function(t,e,n){"use strict";t.exports={}},function(t,e,n){"use strict";var r,i,o=n(1),a=n(86),s=o.process,c=s&&s.versions,u=c&&c.v8;u?i=(r=u.split("."))[0]<4?1:r[0]+r[1]:a&&(!(r=a.match(/Edge\/(\d+)/))||r[1]>=74)&&(r=a.match(/Chrome\/(\d+)/))&&(i=r[1]),t.exports=i&&+i},function(t,e,n){"use strict";var r=n(1),i=n(8);t.exports=function(t,e){try{i(r,t,e)}catch(n){r[t]=e}return e}},function(t,e,n){"use strict";var r=n(1),i=n(30),o=r["__core-js_shared__"]||i("__core-js_shared__",{});t.exports=o},function(t,e,n){"use strict";function r(t,e,n,r,i,o,a,s){var c,u="function"==typeof t?t.options:t;if(e&&(u.render=e,u.staticRenderFns=n,u._compiled=!0),r&&(u.functional=!0),o&&(u._scopeId="data-v-"+o),a?(c=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),i&&i.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(a)},u._ssrRegister=c):i&&(c=s?function(){i.call(this,(u.functional?this.parent:this).$root.$options.shadowRoot)}:i),c)if(u.functional){u._injectStyles=c;var l=u.render;u.render=function(t,e){return c.call(e),l(t,e)}}else{var f=u.beforeCreate;u.beforeCreate=f?[].concat(f,c):[c]}return{exports:t,options:u}}n.d(e,"a",(function(){return r}))},function(t,e,n){"use strict";var r=n(5),i=n(37).filter;r({target:"Array",proto:!0,forced:!n(27)("filter")},{filter:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0)}})},function(t,e,n){"use strict";var r=n(0),i=n(15),o="".split;t.exports=r((function(){return!Object("z").propertyIsEnumerable(0)}))?function(t){return"String"==i(t)?o.call(t,""):Object(t)}:Object},function(t,e,n){"use strict";var r=n(20),i=n(31);(t.exports=function(t,e){return i[t]||(i[t]=void 0!==e?e:{})})("versions",[]).push({version:"3.12.1",mode:r?"pure":"global",copyright:"© 2021 Denis Pushkarev (zloirock.ru)"})},function(t,e,n){"use strict";var r=0,i=Math.random();t.exports=function(t){return"Symbol("+String(void 0===t?"":t)+")_"+(++r+i).toString(36)}},function(t,e,n){"use strict";var r=n(39),i=n(34),o=n(11),a=n(12),s=n(50),c=[].push,u=function(t){var e=1==t,n=2==t,u=3==t,l=4==t,f=6==t,d=7==t,p=5==t||f;return function(h,v,m,g){for(var y,b,_=o(h),w=i(_),A=r(v,m,3),x=a(w.length),E=0,C=g||s,S=e?C(h,x):n||d?C(h,0):void 0;x>E;E++)if((p||E in w)&&(b=A(y=w[E],E,_),t))if(e)S[E]=b;else if(b)switch(t){case 3:return!0;case 5:return y;case 6:return E;case 2:c.call(S,y)}else switch(t){case 4:return!1;case 7:c.call(S,y)}return f?-1:u||l?l:S}};t.exports={forEach:u(0),map:u(1),filter:u(2),some:u(3),every:u(4),find:u(5),findIndex:u(6),filterOut:u(7)}},function(t,e,n){"use strict";t.exports=["constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"]},function(t,e,n){"use strict";var r=n(83);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 0:return function(){return t.call(e)};case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,i){return t.call(e,n,r,i)}}return function(){return t.apply(e,arguments)}}},function(t,e,n){"use strict";var r=n(5),i=n(0),o=n(51),a=n(3),s=n(11),c=n(12),u=n(79),l=n(50),f=n(27),d=n(2),p=n(29),h=d("isConcatSpreadable"),v=p>=51||!i((function(){var t=[];return t[h]=!1,t.concat()[0]!==t})),m=f("concat"),g=function(t){if(!a(t))return!1;var e=t[h];return void 0!==e?!!e:o(t)};r({target:"Array",proto:!0,forced:!v||!m},{concat:function(t){var e,n,r,i,o,a=s(this),f=l(a,0),d=0;for(e=-1,r=arguments.length;e<r;e++)if(g(o=-1===e?a:arguments[e])){if(d+(i=c(o.length))>9007199254740991)throw TypeError("Maximum allowed index exceeded");for(n=0;n<i;n++,d++)n in o&&u(f,d,o[n])}else{if(d>=9007199254740991)throw TypeError("Maximum allowed index exceeded");u(f,d++,o)}return f.length=d,f}})},function(t,e,n){"use strict";var r,i,o=t.exports={};function a(){throw new Error("setTimeout has not been defined")}function s(){throw new Error("clearTimeout has not been defined")}function c(t){if(r===setTimeout)return setTimeout(t,0);if((r===a||!r)&&setTimeout)return r=setTimeout,setTimeout(t,0);try{return r(t,0)}catch(e){try{return r.call(null,t,0)}catch(e){return r.call(this,t,0)}}}!function(){try{r="function"==typeof setTimeout?setTimeout:a}catch(t){r=a}try{i="function"==typeof clearTimeout?clearTimeout:s}catch(t){i=s}}();var u,l=[],f=!1,d=-1;function p(){f&&u&&(f=!1,u.length?l=u.concat(l):d=-1,l.length&&h())}function h(){if(!f){var t=c(p);f=!0;for(var e=l.length;e;){for(u=l,l=[];++d<e;)u&&u[d].run();d=-1,e=l.length}u=null,f=!1,function(t){if(i===clearTimeout)return clearTimeout(t);if((i===s||!i)&&clearTimeout)return i=clearTimeout,clearTimeout(t);try{i(t)}catch(e){try{return i.call(null,t)}catch(e){return i.call(this,t)}}}(t)}}function v(t,e){this.fun=t,this.array=e}function m(){}o.nextTick=function(t){var e=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)e[n-1]=arguments[n];l.push(new v(t,e)),1!==l.length||f||c(h)},v.prototype.run=function(){this.fun.apply(null,this.array)},o.title="browser",o.browser=!0,o.env={},o.argv=[],o.version="",o.versions={},o.on=m,o.addListener=m,o.once=m,o.off=m,o.removeListener=m,o.removeAllListeners=m,o.emit=m,o.prependListener=m,o.prependOnceListener=m,o.listeners=function(t){return[]},o.binding=function(t){throw new Error("process.binding is not supported")},o.cwd=function(){return"/"},o.chdir=function(t){throw new Error("process.chdir is not supported")},o.umask=function(){return 0}},function(t,e,n){"use strict";var r=n(35),i=n(36),o=r("keys");t.exports=function(t){return o[t]||(o[t]=i(t))}},function(t,e,n){"use strict";var r=n(58),i=n(38);t.exports=Object.keys||function(t){return r(t,i)}},function(t,e,n){"use strict";n.r(e);var r=n(45),i=n.n(r);for(var o in r)["default"].indexOf(o)<0&&function(t){n.d(e,t,(function(){return r[t]}))}(o);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r,i=(r=n(120))&&r.__esModule?r:{default:r},o=n(49),a=n(74);function s(t,e,n,r,i,o,a){try{var s=t[o](a),c=s.value}catch(t){return void n(t)}s.done?e(c):Promise.resolve(c).then(r,i)}var c=!!document.getElementById("isPublic"),u=(0,o.generateOcsUrl)("apps/text"+(c?"/public":""),2)+"workspace",l={name:"RichWorkspace",components:{EditorWrapper:function(){return Promise.all([n.e(193),n.e(202),n.e(194)]).then(n.bind(null,140))}},props:{path:{type:String,required:!0}},data:function(){return{focus:!1,folder:null,file:null,loaded:!1,ready:!1,autofocus:!1,darkTheme:OCA.Accessibility&&"dark"===OCA.Accessibility.theme,enabled:OCA.Text.RichWorkspaceEnabled}},computed:{shareToken:function(){return document.getElementById("sharingToken")?document.getElementById("sharingToken").value:null},canCreate:function(){return!!(this.folder&&this.folder.permissions&OC.PERMISSION_CREATE)},showEmptyWorkspace:function(){return(!this.file||this.autofocus&&!this.ready)&&this.canCreate}},watch:{path:function(){this.getFileInfo()},focus:function(t){t||document.querySelector("#editor").scrollTo(0,0)}},mounted:function(){var t,e=this;return(t=regeneratorRuntime.mark((function t(){return regeneratorRuntime.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:e.enabled&&e.getFileInfo(),(0,a.subscribe)("Text::showRichWorkspace",(function(){e.enabled=!0,e.getFileInfo()})),(0,a.subscribe)("Text::hideRichWorkspace",(function(){e.enabled=!1}));case 3:case"end":return t.stop()}}),t)})),function(){var e=this,n=arguments;return new Promise((function(r,i){var o=t.apply(e,n);function a(t){s(o,r,i,a,c,"next",t)}function c(t){s(o,r,i,a,c,"throw",t)}a(void 0)}))})()},methods:{unfocus:function(){},reset:function(){var t=this;this.file=null,this.focus=!1,this.$nextTick((function(){t.creating=!1,t.getFileInfo()}))},getFileInfo:function(){var t=this;this.loaded=!1,this.autofocus=!1,this.ready=!1;var e={path:this.path};return c&&(e.shareToken=this.shareToken),i.default.get(u,{params:e}).then((function(e){var n=e.data.ocs.data;return t.folder=n.folder||null,t.file=n.file,t.editing=!0,t.loaded=!0,!0})).catch((function(e){return e.response.data.ocs&&e.response.data.ocs.data.folder?t.folder=e.response.data.ocs.data.folder:t.folder=null,t.file=null,t.loaded=!0,t.ready=!0,t.creating=!1,!1}))},createNew:function(){var t=this;this.creating||(this.creating=!0,this.getFileInfo().then((function(e){t.autofocus=!0,e||window.FileList.createFile("Readme.md",{scrollTo:!1,animate:!1}).then((function(e,n){t.getFileInfo()}))})))}}};e.default=l},function(t,e,n){"use strict";var r,i=function(){return void 0===r&&(r=Boolean(window&&document&&document.all&&!window.atob)),r},o=function(){var t={};return function(e){if(void 0===t[e]){var n=document.querySelector(e);if(window.HTMLIFrameElement&&n instanceof window.HTMLIFrameElement)try{n=n.contentDocument.head}catch(t){n=null}t[e]=n}return t[e]}}(),a=[];function s(t){for(var e=-1,n=0;n<a.length;n++)if(a[n].identifier===t){e=n;break}return e}function c(t,e){for(var n={},r=[],i=0;i<t.length;i++){var o=t[i],c=e.base?o[0]+e.base:o[0],u=n[c]||0,l="".concat(c," ").concat(u);n[c]=u+1;var f=s(l),d={css:o[1],media:o[2],sourceMap:o[3]};-1!==f?(a[f].references++,a[f].updater(d)):a.push({identifier:l,updater:m(d,e),references:1}),r.push(l)}return r}function u(t){var e=document.createElement("style"),r=t.attributes||{};if(void 0===r.nonce){var i=n.nc;i&&(r.nonce=i)}if(Object.keys(r).forEach((function(t){e.setAttribute(t,r[t])})),"function"==typeof t.insert)t.insert(e);else{var a=o(t.insert||"head");if(!a)throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");a.appendChild(e)}return e}var l,f=(l=[],function(t,e){return l[t]=e,l.filter(Boolean).join("\n")});function d(t,e,n,r){var i=n?"":r.media?"@media ".concat(r.media," {").concat(r.css,"}"):r.css;if(t.styleSheet)t.styleSheet.cssText=f(e,i);else{var o=document.createTextNode(i),a=t.childNodes;a[e]&&t.removeChild(a[e]),a.length?t.insertBefore(o,a[e]):t.appendChild(o)}}function p(t,e,n){var r=n.css,i=n.media,o=n.sourceMap;if(i?t.setAttribute("media",i):t.removeAttribute("media"),o&&"undefined"!=typeof btoa&&(r+="\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(o))))," */")),t.styleSheet)t.styleSheet.cssText=r;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(r))}}var h=null,v=0;function m(t,e){var n,r,i;if(e.singleton){var o=v++;n=h||(h=u(e)),r=d.bind(null,n,o,!1),i=d.bind(null,n,o,!0)}else n=u(e),r=p.bind(null,n,e),i=function(){!function(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t)}(n)};return r(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;r(t=e)}else i()}}t.exports=function(t,e){(e=e||{}).singleton||"boolean"==typeof e.singleton||(e.singleton=i());var n=c(t=t||[],e);return function(t){if(t=t||[],"[object Array]"===Object.prototype.toString.call(t)){for(var r=0;r<n.length;r++){var i=s(n[r]);a[i].references--}for(var o=c(t,e),u=0;u<n.length;u++){var l=s(n[u]);0===a[l].references&&(a[l].updater(),a.splice(l,1))}n=o}}}},function(t,e,n){"use strict";function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){var n=t&&("undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"]);if(null==n)return;var r,i,o=[],a=!0,s=!1;try{for(n=n.call(t);!(a=(r=n.next()).done)&&(o.push(r.value),!e||o.length!==e);a=!0);}catch(t){s=!0,i=t}finally{try{a||null==n.return||n.return()}finally{if(s)throw i}}return o}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}t.exports=function(t){var e=r(t,4),n=e[1],i=e[3];if(!i)return n;if("function"==typeof btoa){var o=btoa(unescape(encodeURIComponent(JSON.stringify(i)))),a="sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(o),s="/*# ".concat(a," */"),c=i.sources.map((function(t){return"/*# sourceURL=".concat(i.sourceRoot||"").concat(t," */")}));return[n].concat(c).concat([s]).join("\n")}return[n].join("\n")}},function(t,e,n){"use strict";t.exports=function(t){var e=[];return e.toString=function(){return this.map((function(e){var n=t(e);return e[2]?"@media ".concat(e[2]," {").concat(n,"}"):n})).join("")},e.i=function(t,n,r){"string"==typeof t&&(t=[[null,t,""]]);var i={};if(r)for(var o=0;o<this.length;o++){var a=this[o][0];null!=a&&(i[a]=!0)}for(var s=0;s<t.length;s++){var c=[].concat(t[s]);r&&i[c[0]]||(n&&(c[2]?c[2]="".concat(n," and ").concat(c[2]):c[2]=n),e.push(c))}},e}},function(t,e,n){"use strict";n(184),n(97),n(76),n(78),n(126),n(127),Object.defineProperty(e,"__esModule",{value:!0}),e.getRootUrl=e.generateFilePath=e.imagePath=e.generateUrl=e.generateOcsUrl=e.generateRemoteUrl=e.linkTo=void 0;e.linkTo=function(t,e){return r(t,"",e)};e.generateRemoteUrl=function(t){return window.location.protocol+"//"+window.location.host+function(t){return i()+"/remote.php/"+t}(t)};e.generateOcsUrl=function(t,e){return e=2!==e?1:2,window.location.protocol+"//"+window.location.host+i()+"/ocs/v"+e+".php/"+t+"/"};e.generateUrl=function(t,e,n){var r=Object.assign({escape:!0,noRewrite:!1},n||{}),o=function(t,e){return e=e||{},t.replace(/{([^{}]*)}/g,(function(t,n){var i=e[n];return r.escape?"string"==typeof i||"number"==typeof i?encodeURIComponent(i.toString()):encodeURIComponent(t):"string"==typeof i||"number"==typeof i?i.toString():t}))};return"/"!==t.charAt(0)&&(t="/"+t),!0!==OC.config.modRewriteWorking||r.noRewrite?i()+"/index.php"+o(t,e||{}):i()+o(t,e||{})};e.imagePath=function(t,e){return-1===e.indexOf(".")?r(t,"img",e+".svg"):r(t,"img",e)};var r=function(t,e,n){var r=-1!==OC.coreApps.indexOf(t),o=i();return"php"!==n.substring(n.length-3)||r?"php"===n.substring(n.length-3)||r?(o+="settings"!==t&&"core"!==t&&"search"!==t||"ajax"!==e?"/":"/index.php/",r||(o+="apps/"),""!==t&&(o+=t+="/"),e&&(o+=e+"/"),o+=n):(o=OC.appswebroots[t],e&&(o+="/"+e+"/"),"/"!==o.substring(o.length-1)&&(o+="/"),o+=n):(o+="/index.php/apps/"+t,"index.php"!==n&&(o+="/",e&&(o+=encodeURI(e+"/")),o+=n)),o};e.generateFilePath=r;var i=function(){return OC.webroot};e.getRootUrl=i},function(t,e,n){"use strict";var r=n(3),i=n(51),o=n(2)("species");t.exports=function(t,e){var n;return i(t)&&("function"!=typeof(n=t.constructor)||n!==Array&&!i(n.prototype)?r(n)&&null===(n=n[o])&&(n=void 0):n=void 0),new(void 0===n?Array:n)(0===e?0:e)}},function(t,e,n){"use strict";var r=n(15);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,e,n){"use strict";var r=n(5),i=n(11),o=n(43);r({target:"Object",stat:!0,forced:n(0)((function(){o(1)}))},{keys:function(t){return o(i(t))}})},function(t,e,n){"use strict";var r=n(31),i=Function.toString;"function"!=typeof r.inspectSource&&(r.inspectSource=function(t){return i.call(t)}),t.exports=r.inspectSource},function(t,e,n){"use strict";var r=n(29),i=n(0);t.exports=!!Object.getOwnPropertySymbols&&!i((function(){return!String(Symbol())||!Symbol.sham&&r&&r<41}))},function(t,e,n){"use strict";var r=n(5),i=n(37).map;r({target:"Array",proto:!0,forced:!n(27)("map")},{map:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0)}})},function(t,e,n){"use strict";var r,i=n(5),o=n(24).f,a=n(12),s=n(117),c=n(16),u=n(118),l=n(20),f="".startsWith,d=Math.min,p=u("startsWith");i({target:"String",proto:!0,forced:!!(l||p||(r=o(String.prototype,"startsWith"),!r||r.writable))&&!p},{startsWith:function(t){var e=String(c(this));s(t);var n=a(d(arguments.length>1?arguments[1]:void 0,e.length)),r=String(t);return f?f.call(e,r,n):e.slice(n,n+r.length)===r}})},function(t,e,n){"use strict";var r=n(10),i=n(0),o=n(65);t.exports=!r&&!i((function(){return 7!=Object.defineProperty(o("div"),"a",{get:function(){return 7}}).a}))},function(t,e,n){"use strict";var r=n(4),i=n(17),o=n(66).indexOf,a=n(23);t.exports=function(t,e){var n,s=i(t),c=0,u=[];for(n in s)!r(a,n)&&r(s,n)&&u.push(n);for(;e.length>c;)r(s,n=e[c++])&&(~o(u,n)||u.push(n));return u}},function(t,e,n){"use strict";function r(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}n(40),n(33),n(55),n(52),n(56),Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var o=function(){function t(e,n,r){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),i(this,"scope",void 0),i(this,"wrapped",void 0),this.scope="".concat(r?t.GLOBAL_SCOPE_PERSISTENT:t.GLOBAL_SCOPE_VOLATILE,"_").concat(btoa(e),"_"),this.wrapped=n}var e,n,o;return e=t,(n=[{key:"scopeKey",value:function(t){return"".concat(this.scope).concat(t)}},{key:"setItem",value:function(t,e){this.wrapped.setItem(this.scopeKey(t),e)}},{key:"getItem",value:function(t){return this.wrapped.getItem(this.scopeKey(t))}},{key:"removeItem",value:function(t){this.wrapped.removeItem(this.scopeKey(t))}},{key:"clear",value:function(){var t=this;Object.keys(this.wrapped).filter((function(e){return e.startsWith(t.scope)})).map(this.wrapped.removeItem.bind(this.wrapped))}}])&&r(e.prototype,n),o&&r(e,o),t}();e.default=o,i(o,"GLOBAL_SCOPE_VOLATILE","nextcloud_vol"),i(o,"GLOBAL_SCOPE_PERSISTENT","nextcloud_per")},function(t,e,n){"use strict";var r,i=n(7),o=n(144),a=n(38),s=n(23),c=n(145),u=n(65),l=n(42),f=l("IE_PROTO"),d=function(){},p=function(t){return"<script>"+t+"<\/script>"},h=function(){try{r=document.domain&&new ActiveXObject("htmlfile")}catch(t){}var t,e;h=r?function(t){t.write(p("")),t.close();var e=t.parentWindow.Object;return t=null,e}(r):((e=u("iframe")).style.display="none",c.appendChild(e),e.src=String("javascript:"),(t=e.contentWindow.document).open(),t.write(p("document.F=Object")),t.close(),t.F);for(var n=a.length;n--;)delete h.prototype[a[n]];return h()};s[f]=!0,t.exports=Object.create||function(t,e){var n;return null!==t?(d.prototype=i(t),n=new d,d.prototype=null,n[f]=t):n=h(),void 0===e?n:o(n,e)}},function(t,e,n){"use strict";var r=n(9).f,i=n(4),o=n(2)("toStringTag");t.exports=function(t,e,n){t&&!i(t=n?t:t.prototype,o)&&r(t,o,{configurable:!0,value:e})}},function(t,e,n){"use strict";var r=n(0),i=/#|\.prototype\./,o=function(t,e){var n=s[a(t)];return n==u||n!=c&&("function"==typeof e?r(e):!!e)},a=o.normalize=function(t){return String(t).replace(i,".").toLowerCase()},s=o.data={},c=o.NATIVE="N",u=o.POLYFILL="P";t.exports=o},function(t,e,n){"use strict";var r,i,o=n(92),a=n(136),s=n(35),c=RegExp.prototype.exec,u=s("native-string-replace",String.prototype.replace),l=c,f=(r=/a/,i=/b*/g,c.call(r,"a"),c.call(i,"a"),0!==r.lastIndex||0!==i.lastIndex),d=a.UNSUPPORTED_Y||a.BROKEN_CARET,p=void 0!==/()??/.exec("")[1];(f||p||d)&&(l=function(t){var e,n,r,i,a=this,s=d&&a.sticky,l=o.call(a),h=a.source,v=0,m=t;return s&&(-1===(l=l.replace("y","")).indexOf("g")&&(l+="g"),m=String(t).slice(a.lastIndex),a.lastIndex>0&&(!a.multiline||a.multiline&&"\n"!==t[a.lastIndex-1])&&(h="(?: "+h+")",m=" "+m,v++),n=new RegExp("^(?:"+h+")",l)),p&&(n=new RegExp("^"+h+"$(?!\\s)",l)),f&&(e=a.lastIndex),r=c.call(s?n:a,m),s?r?(r.input=r.input.slice(v),r[0]=r[0].slice(v),r.index=a.lastIndex,a.lastIndex+=r[0].length):a.lastIndex=0:f&&r&&(a.lastIndex=a.global?r.index+r[0].length:e),p&&r&&r.length>1&&u.call(r[0],n,(function(){for(i=1;i<arguments.length-2;i++)void 0===arguments[i]&&(r[i]=void 0)})),r}),t.exports=l},function(t,e,n){"use strict";var r={}.propertyIsEnumerable,i=Object.getOwnPropertyDescriptor,o=i&&!r.call({1:2},1);e.f=o?function(t){var e=i(this,t);return!!e&&e.enumerable}:r},function(t,e,n){"use strict";var r=n(1),i=n(3),o=r.document,a=i(o)&&i(o.createElement);t.exports=function(t){return a?o.createElement(t):{}}},function(t,e,n){"use strict";var r=n(17),i=n(12),o=n(81),a=function(t){return function(e,n,a){var s,c=r(e),u=i(c.length),l=o(a,u);if(t&&n!=n){for(;u>l;)if((s=c[l++])!=s)return!0}else for(;u>l;l++)if((t||l in c)&&c[l]===n)return t||l||0;return!t&&-1}};t.exports={includes:a(!0),indexOf:a(!1)}},function(t,e,n){"use strict";e.f=Object.getOwnPropertySymbols},function(t,e,n){"use strict";var r=Number.MAX_SAFE_INTEGER||9007199254740991;t.exports={SEMVER_SPEC_VERSION:"2.0.0",MAX_LENGTH:256,MAX_SAFE_INTEGER:r,MAX_SAFE_COMPONENT_LENGTH:16}},function(t,e,n){"use strict";var r=n(5),i=n(146),o=n(110),a=n(88),s=n(61),c=n(8),u=n(13),l=n(2),f=n(20),d=n(28),p=n(109),h=p.IteratorPrototype,v=p.BUGGY_SAFARI_ITERATORS,m=l("iterator"),g=function(){return this};t.exports=function(t,e,n,l,p,y,b){i(n,e,l);var _,w,A,x=function(t){if(t===p&&k)return k;if(!v&&t in S)return S[t];switch(t){case"keys":case"values":case"entries":return function(){return new n(this,t)}}return function(){return new n(this)}},E=e+" Iterator",C=!1,S=t.prototype,O=S[m]||S["@@iterator"]||p&&S[p],k=!v&&O||x(p),T="Array"==e&&S.entries||O;if(T&&(_=o(T.call(new t)),h!==Object.prototype&&_.next&&(f||o(_)===h||(a?a(_,h):"function"!=typeof _[m]&&c(_,m,g)),s(_,E,!0,!0),f&&(d[E]=g))),"values"==p&&O&&"values"!==O.name&&(C=!0,k=function(){return O.call(this)}),f&&!b||S[m]===k||c(S,m,k),d[e]=k,p)if(w={values:x("values"),keys:y?k:x("keys"),entries:x("entries")},b)for(A in w)(v||C||!(A in S))&&u(S,A,w[A]);else r({target:e,proto:!0,forced:v||C},w);return w}},function(t,e,n){"use strict";var r={};r[n(2)("toStringTag")]="z",t.exports="[object z]"===String(r)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r=o(n(19)),i=o(n(115));function o(t){return t&&t.__esModule?t:{default:t}}
+ */
+
+/*  */
+var emptyObject = Object.freeze({}); // These helpers produce better VM code in JS engines due to their
+// explicitness and function inlining.
+
+function isUndef(v) {
+  return v === undefined || v === null;
+}
+
+function isDef(v) {
+  return v !== undefined && v !== null;
+}
+
+function isTrue(v) {
+  return v === true;
+}
+
+function isFalse(v) {
+  return v === false;
+}
+/**
+ * Check if value is primitive.
+ */
+
+
+function isPrimitive(value) {
+  return typeof value === 'string' || typeof value === 'number' || // $flow-disable-line
+  _typeof(value) === 'symbol' || typeof value === 'boolean';
+}
+/**
+ * Quick object check - this is primarily used to tell
+ * Objects from primitive values when we know the value
+ * is a JSON-compliant type.
+ */
+
+
+function isObject(obj) {
+  return obj !== null && _typeof(obj) === 'object';
+}
+/**
+ * Get the raw type string of a value, e.g., [object Object].
+ */
+
+
+var _toString = Object.prototype.toString;
+
+function toRawType(value) {
+  return _toString.call(value).slice(8, -1);
+}
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+
+
+function isPlainObject(obj) {
+  return _toString.call(obj) === '[object Object]';
+}
+
+function isRegExp(v) {
+  return _toString.call(v) === '[object RegExp]';
+}
+/**
+ * Check if val is a valid array index.
+ */
+
+
+function isValidArrayIndex(val) {
+  var n = parseFloat(String(val));
+  return n >= 0 && Math.floor(n) === n && isFinite(val);
+}
+
+function isPromise(val) {
+  return isDef(val) && typeof val.then === 'function' && typeof val.catch === 'function';
+}
+/**
+ * Convert a value to a string that is actually rendered.
+ */
+
+
+function toString(val) {
+  return val == null ? '' : Array.isArray(val) || isPlainObject(val) && val.toString === _toString ? JSON.stringify(val, null, 2) : String(val);
+}
+/**
+ * Convert an input value to a number for persistence.
+ * If the conversion fails, return original string.
+ */
+
+
+function toNumber(val) {
+  var n = parseFloat(val);
+  return isNaN(n) ? val : n;
+}
+/**
+ * Make a map and return a function for checking if a key
+ * is in that map.
+ */
+
+
+function makeMap(str, expectsLowerCase) {
+  var map = Object.create(null);
+  var list = str.split(',');
+
+  for (var i = 0; i < list.length; i++) {
+    map[list[i]] = true;
+  }
+
+  return expectsLowerCase ? function (val) {
+    return map[val.toLowerCase()];
+  } : function (val) {
+    return map[val];
+  };
+}
+/**
+ * Check if a tag is a built-in tag.
+ */
+
+
+var isBuiltInTag = makeMap('slot,component', true);
+/**
+ * Check if an attribute is a reserved attribute.
+ */
+
+var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
+/**
+ * Remove an item from an array.
+ */
+
+function remove(arr, item) {
+  if (arr.length) {
+    var index = arr.indexOf(item);
+
+    if (index > -1) {
+      return arr.splice(index, 1);
+    }
+  }
+}
+/**
+ * Check whether an object has the property.
+ */
+
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function hasOwn(obj, key) {
+  return hasOwnProperty.call(obj, key);
+}
+/**
+ * Create a cached version of a pure function.
+ */
+
+
+function cached(fn) {
+  var cache = Object.create(null);
+  return function cachedFn(str) {
+    var hit = cache[str];
+    return hit || (cache[str] = fn(str));
+  };
+}
+/**
+ * Camelize a hyphen-delimited string.
+ */
+
+
+var camelizeRE = /-(\w)/g;
+var camelize = cached(function (str) {
+  return str.replace(camelizeRE, function (_, c) {
+    return c ? c.toUpperCase() : '';
+  });
+});
+/**
+ * Capitalize a string.
+ */
+
+var capitalize = cached(function (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+});
+/**
+ * Hyphenate a camelCase string.
+ */
+
+var hyphenateRE = /\B([A-Z])/g;
+var hyphenate = cached(function (str) {
+  return str.replace(hyphenateRE, '-$1').toLowerCase();
+});
+/**
+ * Simple bind polyfill for environments that do not support it,
+ * e.g., PhantomJS 1.x. Technically, we don't need this anymore
+ * since native bind is now performant enough in most browsers.
+ * But removing it would mean breaking code that was able to run in
+ * PhantomJS 1.x, so this must be kept for backward compatibility.
+ */
+
+/* istanbul ignore next */
+
+function polyfillBind(fn, ctx) {
+  function boundFn(a) {
+    var l = arguments.length;
+    return l ? l > 1 ? fn.apply(ctx, arguments) : fn.call(ctx, a) : fn.call(ctx);
+  }
+
+  boundFn._length = fn.length;
+  return boundFn;
+}
+
+function nativeBind(fn, ctx) {
+  return fn.bind(ctx);
+}
+
+var bind = Function.prototype.bind ? nativeBind : polyfillBind;
+/**
+ * Convert an Array-like object to a real Array.
+ */
+
+function toArray(list, start) {
+  start = start || 0;
+  var i = list.length - start;
+  var ret = new Array(i);
+
+  while (i--) {
+    ret[i] = list[i + start];
+  }
+
+  return ret;
+}
+/**
+ * Mix properties into target object.
+ */
+
+
+function extend(to, _from) {
+  for (var key in _from) {
+    to[key] = _from[key];
+  }
+
+  return to;
+}
+/**
+ * Merge an Array of Objects into a single Object.
+ */
+
+
+function toObject(arr) {
+  var res = {};
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+      extend(res, arr[i]);
+    }
+  }
+
+  return res;
+}
+/* eslint-disable no-unused-vars */
+
+/**
+ * Perform no operation.
+ * Stubbing args to make Flow happy without leaving useless transpiled code
+ * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/).
+ */
+
+
+function noop(a, b, c) {}
+/**
+ * Always return false.
+ */
+
+
+var no = function no(a, b, c) {
+  return false;
+};
+/* eslint-enable no-unused-vars */
+
+/**
+ * Return the same value.
+ */
+
+
+var identity = function identity(_) {
+  return _;
+};
+/**
+ * Generate a string containing static keys from compiler modules.
+ */
+
+
+function genStaticKeys(modules) {
+  return modules.reduce(function (keys, m) {
+    return keys.concat(m.staticKeys || []);
+  }, []).join(',');
+}
+/**
+ * Check if two values are loosely equal - that is,
+ * if they are plain objects, do they have the same shape?
+ */
+
+
+function looseEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  var isObjectA = isObject(a);
+  var isObjectB = isObject(b);
+
+  if (isObjectA && isObjectB) {
+    try {
+      var isArrayA = Array.isArray(a);
+      var isArrayB = Array.isArray(b);
+
+      if (isArrayA && isArrayB) {
+        return a.length === b.length && a.every(function (e, i) {
+          return looseEqual(e, b[i]);
+        });
+      } else if (a instanceof Date && b instanceof Date) {
+        return a.getTime() === b.getTime();
+      } else if (!isArrayA && !isArrayB) {
+        var keysA = Object.keys(a);
+        var keysB = Object.keys(b);
+        return keysA.length === keysB.length && keysA.every(function (key) {
+          return looseEqual(a[key], b[key]);
+        });
+      } else {
+        /* istanbul ignore next */
+        return false;
+      }
+    } catch (e) {
+      /* istanbul ignore next */
+      return false;
+    }
+  } else if (!isObjectA && !isObjectB) {
+    return String(a) === String(b);
+  } else {
+    return false;
+  }
+}
+/**
+ * Return the first index at which a loosely equal value can be
+ * found in the array (if value is a plain object, the array must
+ * contain an object of the same shape), or -1 if it is not present.
+ */
+
+
+function looseIndexOf(arr, val) {
+  for (var i = 0; i < arr.length; i++) {
+    if (looseEqual(arr[i], val)) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+/**
+ * Ensure a function is called only once.
+ */
+
+
+function once(fn) {
+  var called = false;
+  return function () {
+    if (!called) {
+      called = true;
+      fn.apply(this, arguments);
+    }
+  };
+}
+
+var SSR_ATTR = 'data-server-rendered';
+var ASSET_TYPES = ['component', 'directive', 'filter'];
+var LIFECYCLE_HOOKS = ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeUpdate', 'updated', 'beforeDestroy', 'destroyed', 'activated', 'deactivated', 'errorCaptured', 'serverPrefetch'];
+/*  */
+
+var config = {
+  /**
+   * Option merge strategies (used in core/util/options)
+   */
+  // $flow-disable-line
+  optionMergeStrategies: Object.create(null),
+
+  /**
+   * Whether to suppress warnings.
+   */
+  silent: false,
+
+  /**
+   * Show production mode tip message on boot?
+   */
+  productionTip: "development" !== 'production',
+
+  /**
+   * Whether to enable devtools
+   */
+  devtools: "development" !== 'production',
+
+  /**
+   * Whether to record perf
+   */
+  performance: false,
+
+  /**
+   * Error handler for watcher errors
+   */
+  errorHandler: null,
+
+  /**
+   * Warn handler for watcher warns
+   */
+  warnHandler: null,
+
+  /**
+   * Ignore certain custom elements
+   */
+  ignoredElements: [],
+
+  /**
+   * Custom user key aliases for v-on
+   */
+  // $flow-disable-line
+  keyCodes: Object.create(null),
+
+  /**
+   * Check if a tag is reserved so that it cannot be registered as a
+   * component. This is platform-dependent and may be overwritten.
+   */
+  isReservedTag: no,
+
+  /**
+   * Check if an attribute is reserved so that it cannot be used as a component
+   * prop. This is platform-dependent and may be overwritten.
+   */
+  isReservedAttr: no,
+
+  /**
+   * Check if a tag is an unknown element.
+   * Platform-dependent.
+   */
+  isUnknownElement: no,
+
+  /**
+   * Get the namespace of an element
+   */
+  getTagNamespace: noop,
+
+  /**
+   * Parse the real tag name for the specific platform.
+   */
+  parsePlatformTagName: identity,
+
+  /**
+   * Check if an attribute must be bound using property, e.g. value
+   * Platform-dependent.
+   */
+  mustUseProp: no,
+
+  /**
+   * Perform updates asynchronously. Intended to be used by Vue Test Utils
+   * This will significantly reduce performance if set to false.
+   */
+  async: true,
+
+  /**
+   * Exposed for legacy reasons
+   */
+  _lifecycleHooks: LIFECYCLE_HOOKS
+};
+/*  */
+
+/**
+ * unicode letters used for parsing html tags, component names and property paths.
+ * using https://www.w3.org/TR/html53/semantics-scripting.html#potentialcustomelementname
+ * skipping \u10000-\uEFFFF due to it freezing up PhantomJS
+ */
+
+var unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/;
+/**
+ * Check if a string starts with $ or _
+ */
+
+function isReserved(str) {
+  var c = (str + '').charCodeAt(0);
+  return c === 0x24 || c === 0x5F;
+}
+/**
+ * Define a property.
+ */
+
+
+function def(obj, key, val, enumerable) {
+  Object.defineProperty(obj, key, {
+    value: val,
+    enumerable: !!enumerable,
+    writable: true,
+    configurable: true
+  });
+}
+/**
+ * Parse simple path.
+ */
+
+
+var bailRE = new RegExp("[^" + unicodeRegExp.source + ".$_\\d]");
+
+function parsePath(path) {
+  if (bailRE.test(path)) {
+    return;
+  }
+
+  var segments = path.split('.');
+  return function (obj) {
+    for (var i = 0; i < segments.length; i++) {
+      if (!obj) {
+        return;
+      }
+
+      obj = obj[segments[i]];
+    }
+
+    return obj;
+  };
+}
+/*  */
+// can we use __proto__?
+
+
+var hasProto = ('__proto__' in {}); // Browser environment sniffing
+
+var inBrowser = typeof window !== 'undefined';
+var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+var isIE = UA && /msie|trident/.test(UA);
+var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
+var isEdge = UA && UA.indexOf('edge/') > 0;
+var isAndroid = UA && UA.indexOf('android') > 0 || weexPlatform === 'android';
+var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA) || weexPlatform === 'ios';
+var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+var isPhantomJS = UA && /phantomjs/.test(UA);
+var isFF = UA && UA.match(/firefox\/(\d+)/); // Firefox has a "watch" function on Object.prototype...
+
+var nativeWatch = {}.watch;
+var supportsPassive = false;
+
+if (inBrowser) {
+  try {
+    var opts = {};
+    Object.defineProperty(opts, 'passive', {
+      get: function get() {
+        /* istanbul ignore next */
+        supportsPassive = true;
+      }
+    }); // https://github.com/facebook/flow/issues/285
+
+    window.addEventListener('test-passive', null, opts);
+  } catch (e) {}
+} // this needs to be lazy-evaled because vue may be required before
+// vue-server-renderer can set VUE_ENV
+
+
+var _isServer;
+
+var isServerRendering = function isServerRendering() {
+  if (_isServer === undefined) {
+    /* istanbul ignore if */
+    if (!inBrowser && !inWeex && typeof global !== 'undefined') {
+      // detect presence of vue-server-renderer and avoid
+      // Webpack shimming the process
+      _isServer = global['process'] && global['process'].env.VUE_ENV === 'server';
+    } else {
+      _isServer = false;
+    }
+  }
+
+  return _isServer;
+}; // detect devtools
+
+
+var devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+/* istanbul ignore next */
+
+function isNative(Ctor) {
+  return typeof Ctor === 'function' && /native code/.test(Ctor.toString());
+}
+
+var hasSymbol = typeof Symbol !== 'undefined' && isNative(Symbol) && typeof Reflect !== 'undefined' && isNative(Reflect.ownKeys);
+
+var _Set;
+/* istanbul ignore if */
+// $flow-disable-line
+
+
+if (typeof Set !== 'undefined' && isNative(Set)) {
+  // use native Set when available.
+  _Set = Set;
+} else {
+  // a non-standard Set polyfill that only works with primitive keys.
+  _Set = function () {
+    function Set() {
+      this.set = Object.create(null);
+    }
+
+    Set.prototype.has = function has(key) {
+      return this.set[key] === true;
+    };
+
+    Set.prototype.add = function add(key) {
+      this.set[key] = true;
+    };
+
+    Set.prototype.clear = function clear() {
+      this.set = Object.create(null);
+    };
+
+    return Set;
+  }();
+}
+/*  */
+
+
+var warn = noop;
+var tip = noop;
+var generateComponentTrace = noop; // work around flow check
+
+var formatComponentName = noop;
+
+if (true) {
+  var hasConsole = typeof console !== 'undefined';
+  var classifyRE = /(?:^|[-_])(\w)/g;
+
+  var classify = function classify(str) {
+    return str.replace(classifyRE, function (c) {
+      return c.toUpperCase();
+    }).replace(/[-_]/g, '');
+  };
+
+  warn = function warn(msg, vm) {
+    var trace = vm ? generateComponentTrace(vm) : '';
+
+    if (config.warnHandler) {
+      config.warnHandler.call(null, msg, vm, trace);
+    } else if (hasConsole && !config.silent) {
+      console.error("[Vue warn]: " + msg + trace);
+    }
+  };
+
+  tip = function tip(msg, vm) {
+    if (hasConsole && !config.silent) {
+      console.warn("[Vue tip]: " + msg + (vm ? generateComponentTrace(vm) : ''));
+    }
+  };
+
+  formatComponentName = function formatComponentName(vm, includeFile) {
+    if (vm.$root === vm) {
+      return '<Root>';
+    }
+
+    var options = typeof vm === 'function' && vm.cid != null ? vm.options : vm._isVue ? vm.$options || vm.constructor.options : vm;
+    var name = options.name || options._componentTag;
+    var file = options.__file;
+
+    if (!name && file) {
+      var match = file.match(/([^/\\]+)\.vue$/);
+      name = match && match[1];
+    }
+
+    return (name ? "<" + classify(name) + ">" : "<Anonymous>") + (file && includeFile !== false ? " at " + file : '');
+  };
+
+  var repeat = function repeat(str, n) {
+    var res = '';
+
+    while (n) {
+      if (n % 2 === 1) {
+        res += str;
+      }
+
+      if (n > 1) {
+        str += str;
+      }
+
+      n >>= 1;
+    }
+
+    return res;
+  };
+
+  generateComponentTrace = function generateComponentTrace(vm) {
+    if (vm._isVue && vm.$parent) {
+      var tree = [];
+      var currentRecursiveSequence = 0;
+
+      while (vm) {
+        if (tree.length > 0) {
+          var last = tree[tree.length - 1];
+
+          if (last.constructor === vm.constructor) {
+            currentRecursiveSequence++;
+            vm = vm.$parent;
+            continue;
+          } else if (currentRecursiveSequence > 0) {
+            tree[tree.length - 1] = [last, currentRecursiveSequence];
+            currentRecursiveSequence = 0;
+          }
+        }
+
+        tree.push(vm);
+        vm = vm.$parent;
+      }
+
+      return '\n\nfound in\n\n' + tree.map(function (vm, i) {
+        return "" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm) ? formatComponentName(vm[0]) + "... (" + vm[1] + " recursive calls)" : formatComponentName(vm));
+      }).join('\n');
+    } else {
+      return "\n\n(found in " + formatComponentName(vm) + ")";
+    }
+  };
+}
+/*  */
+
+
+var uid = 0;
+/**
+ * A dep is an observable that can have multiple
+ * directives subscribing to it.
+ */
+
+var Dep = function Dep() {
+  this.id = uid++;
+  this.subs = [];
+};
+
+Dep.prototype.addSub = function addSub(sub) {
+  this.subs.push(sub);
+};
+
+Dep.prototype.removeSub = function removeSub(sub) {
+  remove(this.subs, sub);
+};
+
+Dep.prototype.depend = function depend() {
+  if (Dep.target) {
+    Dep.target.addDep(this);
+  }
+};
+
+Dep.prototype.notify = function notify() {
+  // stabilize the subscriber list first
+  var subs = this.subs.slice();
+
+  if ( true && !config.async) {
+    // subs aren't sorted in scheduler if not running async
+    // we need to sort them now to make sure they fire in correct
+    // order
+    subs.sort(function (a, b) {
+      return a.id - b.id;
+    });
+  }
+
+  for (var i = 0, l = subs.length; i < l; i++) {
+    subs[i].update();
+  }
+}; // The current target watcher being evaluated.
+// This is globally unique because only one watcher
+// can be evaluated at a time.
+
+
+Dep.target = null;
+var targetStack = [];
+
+function pushTarget(target) {
+  targetStack.push(target);
+  Dep.target = target;
+}
+
+function popTarget() {
+  targetStack.pop();
+  Dep.target = targetStack[targetStack.length - 1];
+}
+/*  */
+
+
+var VNode = function VNode(tag, data, children, text, elm, context, componentOptions, asyncFactory) {
+  this.tag = tag;
+  this.data = data;
+  this.children = children;
+  this.text = text;
+  this.elm = elm;
+  this.ns = undefined;
+  this.context = context;
+  this.fnContext = undefined;
+  this.fnOptions = undefined;
+  this.fnScopeId = undefined;
+  this.key = data && data.key;
+  this.componentOptions = componentOptions;
+  this.componentInstance = undefined;
+  this.parent = undefined;
+  this.raw = false;
+  this.isStatic = false;
+  this.isRootInsert = true;
+  this.isComment = false;
+  this.isCloned = false;
+  this.isOnce = false;
+  this.asyncFactory = asyncFactory;
+  this.asyncMeta = undefined;
+  this.isAsyncPlaceholder = false;
+};
+
+var prototypeAccessors = {
+  child: {
+    configurable: true
+  }
+}; // DEPRECATED: alias for componentInstance for backwards compat.
+
+/* istanbul ignore next */
+
+prototypeAccessors.child.get = function () {
+  return this.componentInstance;
+};
+
+Object.defineProperties(VNode.prototype, prototypeAccessors);
+
+var createEmptyVNode = function createEmptyVNode(text) {
+  if (text === void 0) text = '';
+  var node = new VNode();
+  node.text = text;
+  node.isComment = true;
+  return node;
+};
+
+function createTextVNode(val) {
+  return new VNode(undefined, undefined, undefined, String(val));
+} // optimized shallow clone
+// used for static nodes and slot nodes because they may be reused across
+// multiple renders, cloning them avoids errors when DOM manipulations rely
+// on their elm reference.
+
+
+function cloneVNode(vnode) {
+  var cloned = new VNode(vnode.tag, vnode.data, // #7975
+  // clone children array to avoid mutating original in case of cloning
+  // a child.
+  vnode.children && vnode.children.slice(), vnode.text, vnode.elm, vnode.context, vnode.componentOptions, vnode.asyncFactory);
+  cloned.ns = vnode.ns;
+  cloned.isStatic = vnode.isStatic;
+  cloned.key = vnode.key;
+  cloned.isComment = vnode.isComment;
+  cloned.fnContext = vnode.fnContext;
+  cloned.fnOptions = vnode.fnOptions;
+  cloned.fnScopeId = vnode.fnScopeId;
+  cloned.asyncMeta = vnode.asyncMeta;
+  cloned.isCloned = true;
+  return cloned;
+}
 /*
- * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
+ * not type checking this file because flow doesn't play well with
+ * dynamically accessing methods on Array prototype
+ */
+
+
+var arrayProto = Array.prototype;
+var arrayMethods = Object.create(arrayProto);
+var methodsToPatch = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse'];
+/**
+ * Intercept mutating methods and emit events
+ */
+
+methodsToPatch.forEach(function (method) {
+  // cache original method
+  var original = arrayProto[method];
+  def(arrayMethods, method, function mutator() {
+    var args = [],
+        len = arguments.length;
+
+    while (len--) {
+      args[len] = arguments[len];
+    }
+
+    var result = original.apply(this, args);
+    var ob = this.__ob__;
+    var inserted;
+
+    switch (method) {
+      case 'push':
+      case 'unshift':
+        inserted = args;
+        break;
+
+      case 'splice':
+        inserted = args.slice(2);
+        break;
+    }
+
+    if (inserted) {
+      ob.observeArray(inserted);
+    } // notify change
+
+
+    ob.dep.notify();
+    return result;
+  });
+});
+/*  */
+
+var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
+/**
+ * In some cases we may want to disable observation inside a component's
+ * update computation.
+ */
+
+var shouldObserve = true;
+
+function toggleObserving(value) {
+  shouldObserve = value;
+}
+/**
+ * Observer class that is attached to each observed
+ * object. Once attached, the observer converts the target
+ * object's property keys into getter/setters that
+ * collect dependencies and dispatch updates.
+ */
+
+
+var Observer = function Observer(value) {
+  this.value = value;
+  this.dep = new Dep();
+  this.vmCount = 0;
+  def(value, '__ob__', this);
+
+  if (Array.isArray(value)) {
+    if (hasProto) {
+      protoAugment(value, arrayMethods);
+    } else {
+      copyAugment(value, arrayMethods, arrayKeys);
+    }
+
+    this.observeArray(value);
+  } else {
+    this.walk(value);
+  }
+};
+/**
+ * Walk through all properties and convert them into
+ * getter/setters. This method should only be called when
+ * value type is Object.
+ */
+
+
+Observer.prototype.walk = function walk(obj) {
+  var keys = Object.keys(obj);
+
+  for (var i = 0; i < keys.length; i++) {
+    defineReactive$$1(obj, keys[i]);
+  }
+};
+/**
+ * Observe a list of Array items.
+ */
+
+
+Observer.prototype.observeArray = function observeArray(items) {
+  for (var i = 0, l = items.length; i < l; i++) {
+    observe(items[i]);
+  }
+}; // helpers
+
+/**
+ * Augment a target Object or Array by intercepting
+ * the prototype chain using __proto__
+ */
+
+
+function protoAugment(target, src) {
+  /* eslint-disable no-proto */
+  target.__proto__ = src;
+  /* eslint-enable no-proto */
+}
+/**
+ * Augment a target Object or Array by defining
+ * hidden properties.
+ */
+
+/* istanbul ignore next */
+
+
+function copyAugment(target, src, keys) {
+  for (var i = 0, l = keys.length; i < l; i++) {
+    var key = keys[i];
+    def(target, key, src[key]);
+  }
+}
+/**
+ * Attempt to create an observer instance for a value,
+ * returns the new observer if successfully observed,
+ * or the existing observer if the value already has one.
+ */
+
+
+function observe(value, asRootData) {
+  if (!isObject(value) || value instanceof VNode) {
+    return;
+  }
+
+  var ob;
+
+  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+    ob = value.__ob__;
+  } else if (shouldObserve && !isServerRendering() && (Array.isArray(value) || isPlainObject(value)) && Object.isExtensible(value) && !value._isVue) {
+    ob = new Observer(value);
+  }
+
+  if (asRootData && ob) {
+    ob.vmCount++;
+  }
+
+  return ob;
+}
+/**
+ * Define a reactive property on an Object.
+ */
+
+
+function defineReactive$$1(obj, key, val, customSetter, shallow) {
+  var dep = new Dep();
+  var property = Object.getOwnPropertyDescriptor(obj, key);
+
+  if (property && property.configurable === false) {
+    return;
+  } // cater for pre-defined getter/setters
+
+
+  var getter = property && property.get;
+  var setter = property && property.set;
+
+  if ((!getter || setter) && arguments.length === 2) {
+    val = obj[key];
+  }
+
+  var childOb = !shallow && observe(val);
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: function reactiveGetter() {
+      var value = getter ? getter.call(obj) : val;
+
+      if (Dep.target) {
+        dep.depend();
+
+        if (childOb) {
+          childOb.dep.depend();
+
+          if (Array.isArray(value)) {
+            dependArray(value);
+          }
+        }
+      }
+
+      return value;
+    },
+    set: function reactiveSetter(newVal) {
+      var value = getter ? getter.call(obj) : val;
+      /* eslint-disable no-self-compare */
+
+      if (newVal === value || newVal !== newVal && value !== value) {
+        return;
+      }
+      /* eslint-enable no-self-compare */
+
+
+      if ( true && customSetter) {
+        customSetter();
+      } // #7981: for accessor properties without setter
+
+
+      if (getter && !setter) {
+        return;
+      }
+
+      if (setter) {
+        setter.call(obj, newVal);
+      } else {
+        val = newVal;
+      }
+
+      childOb = !shallow && observe(newVal);
+      dep.notify();
+    }
+  });
+}
+/**
+ * Set a property on an object. Adds the new property and
+ * triggers change notification if the property doesn't
+ * already exist.
+ */
+
+
+function set(target, key, val) {
+  if ( true && (isUndef(target) || isPrimitive(target))) {
+    warn("Cannot set reactive property on undefined, null, or primitive value: " + target);
+  }
+
+  if (Array.isArray(target) && isValidArrayIndex(key)) {
+    target.length = Math.max(target.length, key);
+    target.splice(key, 1, val);
+    return val;
+  }
+
+  if (key in target && !(key in Object.prototype)) {
+    target[key] = val;
+    return val;
+  }
+
+  var ob = target.__ob__;
+
+  if (target._isVue || ob && ob.vmCount) {
+     true && warn('Avoid adding reactive properties to a Vue instance or its root $data ' + 'at runtime - declare it upfront in the data option.');
+    return val;
+  }
+
+  if (!ob) {
+    target[key] = val;
+    return val;
+  }
+
+  defineReactive$$1(ob.value, key, val);
+  ob.dep.notify();
+  return val;
+}
+/**
+ * Delete a property and trigger change if necessary.
+ */
+
+
+function del(target, key) {
+  if ( true && (isUndef(target) || isPrimitive(target))) {
+    warn("Cannot delete reactive property on undefined, null, or primitive value: " + target);
+  }
+
+  if (Array.isArray(target) && isValidArrayIndex(key)) {
+    target.splice(key, 1);
+    return;
+  }
+
+  var ob = target.__ob__;
+
+  if (target._isVue || ob && ob.vmCount) {
+     true && warn('Avoid deleting properties on a Vue instance or its root $data ' + '- just set it to null.');
+    return;
+  }
+
+  if (!hasOwn(target, key)) {
+    return;
+  }
+
+  delete target[key];
+
+  if (!ob) {
+    return;
+  }
+
+  ob.dep.notify();
+}
+/**
+ * Collect dependencies on array elements when the array is touched, since
+ * we cannot intercept array element access like property getters.
+ */
+
+
+function dependArray(value) {
+  for (var e = void 0, i = 0, l = value.length; i < l; i++) {
+    e = value[i];
+    e && e.__ob__ && e.__ob__.dep.depend();
+
+    if (Array.isArray(e)) {
+      dependArray(e);
+    }
+  }
+}
+/*  */
+
+/**
+ * Option overwriting strategies are functions that handle
+ * how to merge a parent option value and a child option
+ * value into the final value.
+ */
+
+
+var strats = config.optionMergeStrategies;
+/**
+ * Options with restrictions
+ */
+
+if (true) {
+  strats.el = strats.propsData = function (parent, child, vm, key) {
+    if (!vm) {
+      warn("option \"" + key + "\" can only be used during instance " + 'creation with the `new` keyword.');
+    }
+
+    return defaultStrat(parent, child);
+  };
+}
+/**
+ * Helper that recursively merges two data objects together.
+ */
+
+
+function mergeData(to, from) {
+  if (!from) {
+    return to;
+  }
+
+  var key, toVal, fromVal;
+  var keys = hasSymbol ? Reflect.ownKeys(from) : Object.keys(from);
+
+  for (var i = 0; i < keys.length; i++) {
+    key = keys[i]; // in case the object is already observed...
+
+    if (key === '__ob__') {
+      continue;
+    }
+
+    toVal = to[key];
+    fromVal = from[key];
+
+    if (!hasOwn(to, key)) {
+      set(to, key, fromVal);
+    } else if (toVal !== fromVal && isPlainObject(toVal) && isPlainObject(fromVal)) {
+      mergeData(toVal, fromVal);
+    }
+  }
+
+  return to;
+}
+/**
+ * Data
+ */
+
+
+function mergeDataOrFn(parentVal, childVal, vm) {
+  if (!vm) {
+    // in a Vue.extend merge, both should be functions
+    if (!childVal) {
+      return parentVal;
+    }
+
+    if (!parentVal) {
+      return childVal;
+    } // when parentVal & childVal are both present,
+    // we need to return a function that returns the
+    // merged result of both functions... no need to
+    // check if parentVal is a function here because
+    // it has to be a function to pass previous merges.
+
+
+    return function mergedDataFn() {
+      return mergeData(typeof childVal === 'function' ? childVal.call(this, this) : childVal, typeof parentVal === 'function' ? parentVal.call(this, this) : parentVal);
+    };
+  } else {
+    return function mergedInstanceDataFn() {
+      // instance merge
+      var instanceData = typeof childVal === 'function' ? childVal.call(vm, vm) : childVal;
+      var defaultData = typeof parentVal === 'function' ? parentVal.call(vm, vm) : parentVal;
+
+      if (instanceData) {
+        return mergeData(instanceData, defaultData);
+      } else {
+        return defaultData;
+      }
+    };
+  }
+}
+
+strats.data = function (parentVal, childVal, vm) {
+  if (!vm) {
+    if (childVal && typeof childVal !== 'function') {
+       true && warn('The "data" option should be a function ' + 'that returns a per-instance value in component ' + 'definitions.', vm);
+      return parentVal;
+    }
+
+    return mergeDataOrFn(parentVal, childVal);
+  }
+
+  return mergeDataOrFn(parentVal, childVal, vm);
+};
+/**
+ * Hooks and props are merged as arrays.
+ */
+
+
+function mergeHook(parentVal, childVal) {
+  var res = childVal ? parentVal ? parentVal.concat(childVal) : Array.isArray(childVal) ? childVal : [childVal] : parentVal;
+  return res ? dedupeHooks(res) : res;
+}
+
+function dedupeHooks(hooks) {
+  var res = [];
+
+  for (var i = 0; i < hooks.length; i++) {
+    if (res.indexOf(hooks[i]) === -1) {
+      res.push(hooks[i]);
+    }
+  }
+
+  return res;
+}
+
+LIFECYCLE_HOOKS.forEach(function (hook) {
+  strats[hook] = mergeHook;
+});
+/**
+ * Assets
  *
- * @author Julius Härtl <jus@bitgrid.net>
+ * When a vm is present (instance creation), we need to do
+ * a three-way merge between constructor options, instance
+ * options and parent options.
+ */
+
+function mergeAssets(parentVal, childVal, vm, key) {
+  var res = Object.create(parentVal || null);
+
+  if (childVal) {
+     true && assertObjectType(key, childVal, vm);
+    return extend(res, childVal);
+  } else {
+    return res;
+  }
+}
+
+ASSET_TYPES.forEach(function (type) {
+  strats[type + 's'] = mergeAssets;
+});
+/**
+ * Watchers.
  *
- * @license GNU AGPL version 3 or any later version
+ * Watchers hashes should not overwrite one
+ * another, so we merge them as arrays.
+ */
+
+strats.watch = function (parentVal, childVal, vm, key) {
+  // work around Firefox's Object.prototype.watch...
+  if (parentVal === nativeWatch) {
+    parentVal = undefined;
+  }
+
+  if (childVal === nativeWatch) {
+    childVal = undefined;
+  }
+  /* istanbul ignore if */
+
+
+  if (!childVal) {
+    return Object.create(parentVal || null);
+  }
+
+  if (true) {
+    assertObjectType(key, childVal, vm);
+  }
+
+  if (!parentVal) {
+    return childVal;
+  }
+
+  var ret = {};
+  extend(ret, parentVal);
+
+  for (var key$1 in childVal) {
+    var parent = ret[key$1];
+    var child = childVal[key$1];
+
+    if (parent && !Array.isArray(parent)) {
+      parent = [parent];
+    }
+
+    ret[key$1] = parent ? parent.concat(child) : Array.isArray(child) ? child : [child];
+  }
+
+  return ret;
+};
+/**
+ * Other object hashes.
+ */
+
+
+strats.props = strats.methods = strats.inject = strats.computed = function (parentVal, childVal, vm, key) {
+  if (childVal && "development" !== 'production') {
+    assertObjectType(key, childVal, vm);
+  }
+
+  if (!parentVal) {
+    return childVal;
+  }
+
+  var ret = Object.create(null);
+  extend(ret, parentVal);
+
+  if (childVal) {
+    extend(ret, childVal);
+  }
+
+  return ret;
+};
+
+strats.provide = mergeDataOrFn;
+/**
+ * Default strategy.
+ */
+
+var defaultStrat = function defaultStrat(parentVal, childVal) {
+  return childVal === undefined ? parentVal : childVal;
+};
+/**
+ * Validate component names
+ */
+
+
+function checkComponents(options) {
+  for (var key in options.components) {
+    validateComponentName(key);
+  }
+}
+
+function validateComponentName(name) {
+  if (!new RegExp("^[a-zA-Z][\\-\\.0-9_" + unicodeRegExp.source + "]*$").test(name)) {
+    warn('Invalid component name: "' + name + '". Component names ' + 'should conform to valid custom element name in html5 specification.');
+  }
+
+  if (isBuiltInTag(name) || config.isReservedTag(name)) {
+    warn('Do not use built-in or reserved HTML elements as component ' + 'id: ' + name);
+  }
+}
+/**
+ * Ensure all props option syntax are normalized into the
+ * Object-based format.
+ */
+
+
+function normalizeProps(options, vm) {
+  var props = options.props;
+
+  if (!props) {
+    return;
+  }
+
+  var res = {};
+  var i, val, name;
+
+  if (Array.isArray(props)) {
+    i = props.length;
+
+    while (i--) {
+      val = props[i];
+
+      if (typeof val === 'string') {
+        name = camelize(val);
+        res[name] = {
+          type: null
+        };
+      } else if (true) {
+        warn('props must be strings when using array syntax.');
+      }
+    }
+  } else if (isPlainObject(props)) {
+    for (var key in props) {
+      val = props[key];
+      name = camelize(key);
+      res[name] = isPlainObject(val) ? val : {
+        type: val
+      };
+    }
+  } else if (true) {
+    warn("Invalid value for option \"props\": expected an Array or an Object, " + "but got " + toRawType(props) + ".", vm);
+  }
+
+  options.props = res;
+}
+/**
+ * Normalize all injections into Object-based format
+ */
+
+
+function normalizeInject(options, vm) {
+  var inject = options.inject;
+
+  if (!inject) {
+    return;
+  }
+
+  var normalized = options.inject = {};
+
+  if (Array.isArray(inject)) {
+    for (var i = 0; i < inject.length; i++) {
+      normalized[inject[i]] = {
+        from: inject[i]
+      };
+    }
+  } else if (isPlainObject(inject)) {
+    for (var key in inject) {
+      var val = inject[key];
+      normalized[key] = isPlainObject(val) ? extend({
+        from: key
+      }, val) : {
+        from: val
+      };
+    }
+  } else if (true) {
+    warn("Invalid value for option \"inject\": expected an Array or an Object, " + "but got " + toRawType(inject) + ".", vm);
+  }
+}
+/**
+ * Normalize raw function directives into object format.
+ */
+
+
+function normalizeDirectives(options) {
+  var dirs = options.directives;
+
+  if (dirs) {
+    for (var key in dirs) {
+      var def$$1 = dirs[key];
+
+      if (typeof def$$1 === 'function') {
+        dirs[key] = {
+          bind: def$$1,
+          update: def$$1
+        };
+      }
+    }
+  }
+}
+
+function assertObjectType(name, value, vm) {
+  if (!isPlainObject(value)) {
+    warn("Invalid value for option \"" + name + "\": expected an Object, " + "but got " + toRawType(value) + ".", vm);
+  }
+}
+/**
+ * Merge two option objects into a new one.
+ * Core utility used in both instantiation and inheritance.
+ */
+
+
+function mergeOptions(parent, child, vm) {
+  if (true) {
+    checkComponents(child);
+  }
+
+  if (typeof child === 'function') {
+    child = child.options;
+  }
+
+  normalizeProps(child, vm);
+  normalizeInject(child, vm);
+  normalizeDirectives(child); // Apply extends and mixins on the child options,
+  // but only if it is a raw options object that isn't
+  // the result of another mergeOptions call.
+  // Only merged options has the _base property.
+
+  if (!child._base) {
+    if (child.extends) {
+      parent = mergeOptions(parent, child.extends, vm);
+    }
+
+    if (child.mixins) {
+      for (var i = 0, l = child.mixins.length; i < l; i++) {
+        parent = mergeOptions(parent, child.mixins[i], vm);
+      }
+    }
+  }
+
+  var options = {};
+  var key;
+
+  for (key in parent) {
+    mergeField(key);
+  }
+
+  for (key in child) {
+    if (!hasOwn(parent, key)) {
+      mergeField(key);
+    }
+  }
+
+  function mergeField(key) {
+    var strat = strats[key] || defaultStrat;
+    options[key] = strat(parent[key], child[key], vm, key);
+  }
+
+  return options;
+}
+/**
+ * Resolve an asset.
+ * This function is used because child instances need access
+ * to assets defined in its ancestor chain.
+ */
+
+
+function resolveAsset(options, type, id, warnMissing) {
+  /* istanbul ignore if */
+  if (typeof id !== 'string') {
+    return;
+  }
+
+  var assets = options[type]; // check local registration variations first
+
+  if (hasOwn(assets, id)) {
+    return assets[id];
+  }
+
+  var camelizedId = camelize(id);
+
+  if (hasOwn(assets, camelizedId)) {
+    return assets[camelizedId];
+  }
+
+  var PascalCaseId = capitalize(camelizedId);
+
+  if (hasOwn(assets, PascalCaseId)) {
+    return assets[PascalCaseId];
+  } // fallback to prototype chain
+
+
+  var res = assets[id] || assets[camelizedId] || assets[PascalCaseId];
+
+  if ( true && warnMissing && !res) {
+    warn('Failed to resolve ' + type.slice(0, -1) + ': ' + id, options);
+  }
+
+  return res;
+}
+/*  */
+
+
+function validateProp(key, propOptions, propsData, vm) {
+  var prop = propOptions[key];
+  var absent = !hasOwn(propsData, key);
+  var value = propsData[key]; // boolean casting
+
+  var booleanIndex = getTypeIndex(Boolean, prop.type);
+
+  if (booleanIndex > -1) {
+    if (absent && !hasOwn(prop, 'default')) {
+      value = false;
+    } else if (value === '' || value === hyphenate(key)) {
+      // only cast empty string / same name to boolean if
+      // boolean has higher priority
+      var stringIndex = getTypeIndex(String, prop.type);
+
+      if (stringIndex < 0 || booleanIndex < stringIndex) {
+        value = true;
+      }
+    }
+  } // check default value
+
+
+  if (value === undefined) {
+    value = getPropDefaultValue(vm, prop, key); // since the default value is a fresh copy,
+    // make sure to observe it.
+
+    var prevShouldObserve = shouldObserve;
+    toggleObserving(true);
+    observe(value);
+    toggleObserving(prevShouldObserve);
+  }
+
+  if (true) {
+    assertProp(prop, key, value, vm, absent);
+  }
+
+  return value;
+}
+/**
+ * Get the default value of a prop.
+ */
+
+
+function getPropDefaultValue(vm, prop, key) {
+  // no default, return undefined
+  if (!hasOwn(prop, 'default')) {
+    return undefined;
+  }
+
+  var def = prop.default; // warn against non-factory defaults for Object & Array
+
+  if ( true && isObject(def)) {
+    warn('Invalid default value for prop "' + key + '": ' + 'Props with type Object/Array must use a factory function ' + 'to return the default value.', vm);
+  } // the raw prop value was also undefined from previous render,
+  // return previous default value to avoid unnecessary watcher trigger
+
+
+  if (vm && vm.$options.propsData && vm.$options.propsData[key] === undefined && vm._props[key] !== undefined) {
+    return vm._props[key];
+  } // call factory function for non-Function types
+  // a value is Function if its prototype is function even across different execution context
+
+
+  return typeof def === 'function' && getType(prop.type) !== 'Function' ? def.call(vm) : def;
+}
+/**
+ * Assert whether a prop is valid.
+ */
+
+
+function assertProp(prop, name, value, vm, absent) {
+  if (prop.required && absent) {
+    warn('Missing required prop: "' + name + '"', vm);
+    return;
+  }
+
+  if (value == null && !prop.required) {
+    return;
+  }
+
+  var type = prop.type;
+  var valid = !type || type === true;
+  var expectedTypes = [];
+
+  if (type) {
+    if (!Array.isArray(type)) {
+      type = [type];
+    }
+
+    for (var i = 0; i < type.length && !valid; i++) {
+      var assertedType = assertType(value, type[i], vm);
+      expectedTypes.push(assertedType.expectedType || '');
+      valid = assertedType.valid;
+    }
+  }
+
+  var haveExpectedTypes = expectedTypes.some(function (t) {
+    return t;
+  });
+
+  if (!valid && haveExpectedTypes) {
+    warn(getInvalidTypeMessage(name, value, expectedTypes), vm);
+    return;
+  }
+
+  var validator = prop.validator;
+
+  if (validator) {
+    if (!validator(value)) {
+      warn('Invalid prop: custom validator check failed for prop "' + name + '".', vm);
+    }
+  }
+}
+
+var simpleCheckRE = /^(String|Number|Boolean|Function|Symbol|BigInt)$/;
+
+function assertType(value, type, vm) {
+  var valid;
+  var expectedType = getType(type);
+
+  if (simpleCheckRE.test(expectedType)) {
+    var t = _typeof(value);
+
+    valid = t === expectedType.toLowerCase(); // for primitive wrapper objects
+
+    if (!valid && t === 'object') {
+      valid = value instanceof type;
+    }
+  } else if (expectedType === 'Object') {
+    valid = isPlainObject(value);
+  } else if (expectedType === 'Array') {
+    valid = Array.isArray(value);
+  } else {
+    try {
+      valid = value instanceof type;
+    } catch (e) {
+      warn('Invalid prop type: "' + String(type) + '" is not a constructor', vm);
+      valid = false;
+    }
+  }
+
+  return {
+    valid: valid,
+    expectedType: expectedType
+  };
+}
+
+var functionTypeCheckRE = /^\s*function (\w+)/;
+/**
+ * Use function string name to check built-in types,
+ * because a simple equality check will fail when running
+ * across different vms / iframes.
+ */
+
+function getType(fn) {
+  var match = fn && fn.toString().match(functionTypeCheckRE);
+  return match ? match[1] : '';
+}
+
+function isSameType(a, b) {
+  return getType(a) === getType(b);
+}
+
+function getTypeIndex(type, expectedTypes) {
+  if (!Array.isArray(expectedTypes)) {
+    return isSameType(expectedTypes, type) ? 0 : -1;
+  }
+
+  for (var i = 0, len = expectedTypes.length; i < len; i++) {
+    if (isSameType(expectedTypes[i], type)) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+function getInvalidTypeMessage(name, value, expectedTypes) {
+  var message = "Invalid prop: type check failed for prop \"" + name + "\"." + " Expected " + expectedTypes.map(capitalize).join(', ');
+  var expectedType = expectedTypes[0];
+  var receivedType = toRawType(value); // check if we need to specify expected value
+
+  if (expectedTypes.length === 1 && isExplicable(expectedType) && isExplicable(_typeof(value)) && !isBoolean(expectedType, receivedType)) {
+    message += " with value " + styleValue(value, expectedType);
+  }
+
+  message += ", got " + receivedType + " "; // check if we need to specify received value
+
+  if (isExplicable(receivedType)) {
+    message += "with value " + styleValue(value, receivedType) + ".";
+  }
+
+  return message;
+}
+
+function styleValue(value, type) {
+  if (type === 'String') {
+    return "\"" + value + "\"";
+  } else if (type === 'Number') {
+    return "" + Number(value);
+  } else {
+    return "" + value;
+  }
+}
+
+var EXPLICABLE_TYPES = ['string', 'number', 'boolean'];
+
+function isExplicable(value) {
+  return EXPLICABLE_TYPES.some(function (elem) {
+    return value.toLowerCase() === elem;
+  });
+}
+
+function isBoolean() {
+  var args = [],
+      len = arguments.length;
+
+  while (len--) {
+    args[len] = arguments[len];
+  }
+
+  return args.some(function (elem) {
+    return elem.toLowerCase() === 'boolean';
+  });
+}
+/*  */
+
+
+function handleError(err, vm, info) {
+  // Deactivate deps tracking while processing error handler to avoid possible infinite rendering.
+  // See: https://github.com/vuejs/vuex/issues/1505
+  pushTarget();
+
+  try {
+    if (vm) {
+      var cur = vm;
+
+      while (cur = cur.$parent) {
+        var hooks = cur.$options.errorCaptured;
+
+        if (hooks) {
+          for (var i = 0; i < hooks.length; i++) {
+            try {
+              var capture = hooks[i].call(cur, err, vm, info) === false;
+
+              if (capture) {
+                return;
+              }
+            } catch (e) {
+              globalHandleError(e, cur, 'errorCaptured hook');
+            }
+          }
+        }
+      }
+    }
+
+    globalHandleError(err, vm, info);
+  } finally {
+    popTarget();
+  }
+}
+
+function invokeWithErrorHandling(handler, context, args, vm, info) {
+  var res;
+
+  try {
+    res = args ? handler.apply(context, args) : handler.call(context);
+
+    if (res && !res._isVue && isPromise(res) && !res._handled) {
+      res.catch(function (e) {
+        return handleError(e, vm, info + " (Promise/async)");
+      }); // issue #9511
+      // avoid catch triggering multiple times when nested calls
+
+      res._handled = true;
+    }
+  } catch (e) {
+    handleError(e, vm, info);
+  }
+
+  return res;
+}
+
+function globalHandleError(err, vm, info) {
+  if (config.errorHandler) {
+    try {
+      return config.errorHandler.call(null, err, vm, info);
+    } catch (e) {
+      // if the user intentionally throws the original error in the handler,
+      // do not log it twice
+      if (e !== err) {
+        logError(e, null, 'config.errorHandler');
+      }
+    }
+  }
+
+  logError(err, vm, info);
+}
+
+function logError(err, vm, info) {
+  if (true) {
+    warn("Error in " + info + ": \"" + err.toString() + "\"", vm);
+  }
+  /* istanbul ignore else */
+
+
+  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
+    console.error(err);
+  } else {
+    throw err;
+  }
+}
+/*  */
+
+
+var isUsingMicroTask = false;
+var callbacks = [];
+var pending = false;
+
+function flushCallbacks() {
+  pending = false;
+  var copies = callbacks.slice(0);
+  callbacks.length = 0;
+
+  for (var i = 0; i < copies.length; i++) {
+    copies[i]();
+  }
+} // Here we have async deferring wrappers using microtasks.
+// In 2.5 we used (macro) tasks (in combination with microtasks).
+// However, it has subtle problems when state is changed right before repaint
+// (e.g. #6813, out-in transitions).
+// Also, using (macro) tasks in event handler would cause some weird behaviors
+// that cannot be circumvented (e.g. #7109, #7153, #7546, #7834, #8109).
+// So we now use microtasks everywhere, again.
+// A major drawback of this tradeoff is that there are some scenarios
+// where microtasks have too high a priority and fire in between supposedly
+// sequential events (e.g. #4521, #6690, which have workarounds)
+// or even between bubbling of the same event (#6566).
+
+
+var timerFunc; // The nextTick behavior leverages the microtask queue, which can be accessed
+// via either native Promise.then or MutationObserver.
+// MutationObserver has wider support, however it is seriously bugged in
+// UIWebView in iOS >= 9.3.3 when triggered in touch event handlers. It
+// completely stops working after triggering a few times... so, if native
+// Promise is available, we will use it:
+
+/* istanbul ignore next, $flow-disable-line */
+
+if (typeof Promise !== 'undefined' && isNative(Promise)) {
+  var p = Promise.resolve();
+
+  timerFunc = function timerFunc() {
+    p.then(flushCallbacks); // In problematic UIWebViews, Promise.then doesn't completely break, but
+    // it can get stuck in a weird state where callbacks are pushed into the
+    // microtask queue but the queue isn't being flushed, until the browser
+    // needs to do some other work, e.g. handle a timer. Therefore we can
+    // "force" the microtask queue to be flushed by adding an empty timer.
+
+    if (isIOS) {
+      setTimeout(noop);
+    }
+  };
+
+  isUsingMicroTask = true;
+} else if (!isIE && typeof MutationObserver !== 'undefined' && (isNative(MutationObserver) || // PhantomJS and iOS 7.x
+MutationObserver.toString() === '[object MutationObserverConstructor]')) {
+  // Use MutationObserver where native Promise is not available,
+  // e.g. PhantomJS, iOS7, Android 4.4
+  // (#6466 MutationObserver is unreliable in IE11)
+  var counter = 1;
+  var observer = new MutationObserver(flushCallbacks);
+  var textNode = document.createTextNode(String(counter));
+  observer.observe(textNode, {
+    characterData: true
+  });
+
+  timerFunc = function timerFunc() {
+    counter = (counter + 1) % 2;
+    textNode.data = String(counter);
+  };
+
+  isUsingMicroTask = true;
+} else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+  // Fallback to setImmediate.
+  // Technically it leverages the (macro) task queue,
+  // but it is still a better choice than setTimeout.
+  timerFunc = function timerFunc() {
+    setImmediate(flushCallbacks);
+  };
+} else {
+  // Fallback to setTimeout.
+  timerFunc = function timerFunc() {
+    setTimeout(flushCallbacks, 0);
+  };
+}
+
+function nextTick(cb, ctx) {
+  var _resolve;
+
+  callbacks.push(function () {
+    if (cb) {
+      try {
+        cb.call(ctx);
+      } catch (e) {
+        handleError(e, ctx, 'nextTick');
+      }
+    } else if (_resolve) {
+      _resolve(ctx);
+    }
+  });
+
+  if (!pending) {
+    pending = true;
+    timerFunc();
+  } // $flow-disable-line
+
+
+  if (!cb && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve) {
+      _resolve = resolve;
+    });
+  }
+}
+/*  */
+
+
+var mark;
+var measure;
+
+if (true) {
+  var perf = inBrowser && window.performance;
+  /* istanbul ignore if */
+
+  if (perf && perf.mark && perf.measure && perf.clearMarks && perf.clearMeasures) {
+    mark = function mark(tag) {
+      return perf.mark(tag);
+    };
+
+    measure = function measure(name, startTag, endTag) {
+      perf.measure(name, startTag, endTag);
+      perf.clearMarks(startTag);
+      perf.clearMarks(endTag); // perf.clearMeasures(name)
+    };
+  }
+}
+/* not type checking this file because flow doesn't play well with Proxy */
+
+
+var initProxy;
+
+if (true) {
+  var allowedGlobals = makeMap('Infinity,undefined,NaN,isFinite,isNaN,' + 'parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,' + 'Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt,' + 'require' // for Webpack/Browserify
+  );
+
+  var warnNonPresent = function warnNonPresent(target, key) {
+    warn("Property or method \"" + key + "\" is not defined on the instance but " + 'referenced during render. Make sure that this property is reactive, ' + 'either in the data option, or for class-based components, by ' + 'initializing the property. ' + 'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
+  };
+
+  var warnReservedPrefix = function warnReservedPrefix(target, key) {
+    warn("Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " + 'properties starting with "$" or "_" are not proxied in the Vue instance to ' + 'prevent conflicts with Vue internals. ' + 'See: https://vuejs.org/v2/api/#data', target);
+  };
+
+  var hasProxy = typeof Proxy !== 'undefined' && isNative(Proxy);
+
+  if (hasProxy) {
+    var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
+    config.keyCodes = new Proxy(config.keyCodes, {
+      set: function set(target, key, value) {
+        if (isBuiltInModifier(key)) {
+          warn("Avoid overwriting built-in modifier in config.keyCodes: ." + key);
+          return false;
+        } else {
+          target[key] = value;
+          return true;
+        }
+      }
+    });
+  }
+
+  var hasHandler = {
+    has: function has(target, key) {
+      var has = (key in target);
+      var isAllowed = allowedGlobals(key) || typeof key === 'string' && key.charAt(0) === '_' && !(key in target.$data);
+
+      if (!has && !isAllowed) {
+        if (key in target.$data) {
+          warnReservedPrefix(target, key);
+        } else {
+          warnNonPresent(target, key);
+        }
+      }
+
+      return has || !isAllowed;
+    }
+  };
+  var getHandler = {
+    get: function get(target, key) {
+      if (typeof key === 'string' && !(key in target)) {
+        if (key in target.$data) {
+          warnReservedPrefix(target, key);
+        } else {
+          warnNonPresent(target, key);
+        }
+      }
+
+      return target[key];
+    }
+  };
+
+  initProxy = function initProxy(vm) {
+    if (hasProxy) {
+      // determine which proxy handler to use
+      var options = vm.$options;
+      var handlers = options.render && options.render._withStripped ? getHandler : hasHandler;
+      vm._renderProxy = new Proxy(vm, handlers);
+    } else {
+      vm._renderProxy = vm;
+    }
+  };
+}
+/*  */
+
+
+var seenObjects = new _Set();
+/**
+ * Recursively traverse an object to evoke all converted
+ * getters, so that every nested property inside the object
+ * is collected as a "deep" dependency.
+ */
+
+function traverse(val) {
+  _traverse(val, seenObjects);
+
+  seenObjects.clear();
+}
+
+function _traverse(val, seen) {
+  var i, keys;
+  var isA = Array.isArray(val);
+
+  if (!isA && !isObject(val) || Object.isFrozen(val) || val instanceof VNode) {
+    return;
+  }
+
+  if (val.__ob__) {
+    var depId = val.__ob__.dep.id;
+
+    if (seen.has(depId)) {
+      return;
+    }
+
+    seen.add(depId);
+  }
+
+  if (isA) {
+    i = val.length;
+
+    while (i--) {
+      _traverse(val[i], seen);
+    }
+  } else {
+    keys = Object.keys(val);
+    i = keys.length;
+
+    while (i--) {
+      _traverse(val[keys[i]], seen);
+    }
+  }
+}
+/*  */
+
+
+var normalizeEvent = cached(function (name) {
+  var passive = name.charAt(0) === '&';
+  name = passive ? name.slice(1) : name;
+  var once$$1 = name.charAt(0) === '~'; // Prefixed last, checked first
+
+  name = once$$1 ? name.slice(1) : name;
+  var capture = name.charAt(0) === '!';
+  name = capture ? name.slice(1) : name;
+  return {
+    name: name,
+    once: once$$1,
+    capture: capture,
+    passive: passive
+  };
+});
+
+function createFnInvoker(fns, vm) {
+  function invoker() {
+    var arguments$1 = arguments;
+    var fns = invoker.fns;
+
+    if (Array.isArray(fns)) {
+      var cloned = fns.slice();
+
+      for (var i = 0; i < cloned.length; i++) {
+        invokeWithErrorHandling(cloned[i], null, arguments$1, vm, "v-on handler");
+      }
+    } else {
+      // return handler return value for single handlers
+      return invokeWithErrorHandling(fns, null, arguments, vm, "v-on handler");
+    }
+  }
+
+  invoker.fns = fns;
+  return invoker;
+}
+
+function updateListeners(on, oldOn, add, remove$$1, createOnceHandler, vm) {
+  var name, def$$1, cur, old, event;
+
+  for (name in on) {
+    def$$1 = cur = on[name];
+    old = oldOn[name];
+    event = normalizeEvent(name);
+
+    if (isUndef(cur)) {
+       true && warn("Invalid handler for event \"" + event.name + "\": got " + String(cur), vm);
+    } else if (isUndef(old)) {
+      if (isUndef(cur.fns)) {
+        cur = on[name] = createFnInvoker(cur, vm);
+      }
+
+      if (isTrue(event.once)) {
+        cur = on[name] = createOnceHandler(event.name, cur, event.capture);
+      }
+
+      add(event.name, cur, event.capture, event.passive, event.params);
+    } else if (cur !== old) {
+      old.fns = cur;
+      on[name] = old;
+    }
+  }
+
+  for (name in oldOn) {
+    if (isUndef(on[name])) {
+      event = normalizeEvent(name);
+      remove$$1(event.name, oldOn[name], event.capture);
+    }
+  }
+}
+/*  */
+
+
+function mergeVNodeHook(def, hookKey, hook) {
+  if (def instanceof VNode) {
+    def = def.data.hook || (def.data.hook = {});
+  }
+
+  var invoker;
+  var oldHook = def[hookKey];
+
+  function wrappedHook() {
+    hook.apply(this, arguments); // important: remove merged hook to ensure it's called only once
+    // and prevent memory leak
+
+    remove(invoker.fns, wrappedHook);
+  }
+
+  if (isUndef(oldHook)) {
+    // no existing hook
+    invoker = createFnInvoker([wrappedHook]);
+  } else {
+    /* istanbul ignore if */
+    if (isDef(oldHook.fns) && isTrue(oldHook.merged)) {
+      // already a merged invoker
+      invoker = oldHook;
+      invoker.fns.push(wrappedHook);
+    } else {
+      // existing plain hook
+      invoker = createFnInvoker([oldHook, wrappedHook]);
+    }
+  }
+
+  invoker.merged = true;
+  def[hookKey] = invoker;
+}
+/*  */
+
+
+function extractPropsFromVNodeData(data, Ctor, tag) {
+  // we are only extracting raw values here.
+  // validation and default values are handled in the child
+  // component itself.
+  var propOptions = Ctor.options.props;
+
+  if (isUndef(propOptions)) {
+    return;
+  }
+
+  var res = {};
+  var attrs = data.attrs;
+  var props = data.props;
+
+  if (isDef(attrs) || isDef(props)) {
+    for (var key in propOptions) {
+      var altKey = hyphenate(key);
+
+      if (true) {
+        var keyInLowerCase = key.toLowerCase();
+
+        if (key !== keyInLowerCase && attrs && hasOwn(attrs, keyInLowerCase)) {
+          tip("Prop \"" + keyInLowerCase + "\" is passed to component " + formatComponentName(tag || Ctor) + ", but the declared prop name is" + " \"" + key + "\". " + "Note that HTML attributes are case-insensitive and camelCased " + "props need to use their kebab-case equivalents when using in-DOM " + "templates. You should probably use \"" + altKey + "\" instead of \"" + key + "\".");
+        }
+      }
+
+      checkProp(res, props, key, altKey, true) || checkProp(res, attrs, key, altKey, false);
+    }
+  }
+
+  return res;
+}
+
+function checkProp(res, hash, key, altKey, preserve) {
+  if (isDef(hash)) {
+    if (hasOwn(hash, key)) {
+      res[key] = hash[key];
+
+      if (!preserve) {
+        delete hash[key];
+      }
+
+      return true;
+    } else if (hasOwn(hash, altKey)) {
+      res[key] = hash[altKey];
+
+      if (!preserve) {
+        delete hash[altKey];
+      }
+
+      return true;
+    }
+  }
+
+  return false;
+}
+/*  */
+// The template compiler attempts to minimize the need for normalization by
+// statically analyzing the template at compile time.
+//
+// For plain HTML markup, normalization can be completely skipped because the
+// generated render function is guaranteed to return Array<VNode>. There are
+// two cases where extra normalization is needed:
+// 1. When the children contains components - because a functional component
+// may return an Array instead of a single root. In this case, just a simple
+// normalization is needed - if any child is an Array, we flatten the whole
+// thing with Array.prototype.concat. It is guaranteed to be only 1-level deep
+// because functional components already normalize their own children.
+
+
+function simpleNormalizeChildren(children) {
+  for (var i = 0; i < children.length; i++) {
+    if (Array.isArray(children[i])) {
+      return Array.prototype.concat.apply([], children);
+    }
+  }
+
+  return children;
+} // 2. When the children contains constructs that always generated nested Arrays,
+// e.g. <template>, <slot>, v-for, or when the children is provided by user
+// with hand-written render functions / JSX. In such cases a full normalization
+// is needed to cater to all possible types of children values.
+
+
+function normalizeChildren(children) {
+  return isPrimitive(children) ? [createTextVNode(children)] : Array.isArray(children) ? normalizeArrayChildren(children) : undefined;
+}
+
+function isTextNode(node) {
+  return isDef(node) && isDef(node.text) && isFalse(node.isComment);
+}
+
+function normalizeArrayChildren(children, nestedIndex) {
+  var res = [];
+  var i, c, lastIndex, last;
+
+  for (i = 0; i < children.length; i++) {
+    c = children[i];
+
+    if (isUndef(c) || typeof c === 'boolean') {
+      continue;
+    }
+
+    lastIndex = res.length - 1;
+    last = res[lastIndex]; //  nested
+
+    if (Array.isArray(c)) {
+      if (c.length > 0) {
+        c = normalizeArrayChildren(c, (nestedIndex || '') + "_" + i); // merge adjacent text nodes
+
+        if (isTextNode(c[0]) && isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + c[0].text);
+          c.shift();
+        }
+
+        res.push.apply(res, c);
+      }
+    } else if (isPrimitive(c)) {
+      if (isTextNode(last)) {
+        // merge adjacent text nodes
+        // this is necessary for SSR hydration because text nodes are
+        // essentially merged when rendered to HTML strings
+        res[lastIndex] = createTextVNode(last.text + c);
+      } else if (c !== '') {
+        // convert primitive to vnode
+        res.push(createTextVNode(c));
+      }
+    } else {
+      if (isTextNode(c) && isTextNode(last)) {
+        // merge adjacent text nodes
+        res[lastIndex] = createTextVNode(last.text + c.text);
+      } else {
+        // default key for nested array children (likely generated by v-for)
+        if (isTrue(children._isVList) && isDef(c.tag) && isUndef(c.key) && isDef(nestedIndex)) {
+          c.key = "__vlist" + nestedIndex + "_" + i + "__";
+        }
+
+        res.push(c);
+      }
+    }
+  }
+
+  return res;
+}
+/*  */
+
+
+function initProvide(vm) {
+  var provide = vm.$options.provide;
+
+  if (provide) {
+    vm._provided = typeof provide === 'function' ? provide.call(vm) : provide;
+  }
+}
+
+function initInjections(vm) {
+  var result = resolveInject(vm.$options.inject, vm);
+
+  if (result) {
+    toggleObserving(false);
+    Object.keys(result).forEach(function (key) {
+      /* istanbul ignore else */
+      if (true) {
+        defineReactive$$1(vm, key, result[key], function () {
+          warn("Avoid mutating an injected value directly since the changes will be " + "overwritten whenever the provided component re-renders. " + "injection being mutated: \"" + key + "\"", vm);
+        });
+      } else {}
+    });
+    toggleObserving(true);
+  }
+}
+
+function resolveInject(inject, vm) {
+  if (inject) {
+    // inject is :any because flow is not smart enough to figure out cached
+    var result = Object.create(null);
+    var keys = hasSymbol ? Reflect.ownKeys(inject) : Object.keys(inject);
+
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i]; // #6574 in case the inject object is observed...
+
+      if (key === '__ob__') {
+        continue;
+      }
+
+      var provideKey = inject[key].from;
+      var source = vm;
+
+      while (source) {
+        if (source._provided && hasOwn(source._provided, provideKey)) {
+          result[key] = source._provided[provideKey];
+          break;
+        }
+
+        source = source.$parent;
+      }
+
+      if (!source) {
+        if ('default' in inject[key]) {
+          var provideDefault = inject[key].default;
+          result[key] = typeof provideDefault === 'function' ? provideDefault.call(vm) : provideDefault;
+        } else if (true) {
+          warn("Injection \"" + key + "\" not found", vm);
+        }
+      }
+    }
+
+    return result;
+  }
+}
+/*  */
+
+/**
+ * Runtime helper for resolving raw children VNodes into a slot object.
+ */
+
+
+function resolveSlots(children, context) {
+  if (!children || !children.length) {
+    return {};
+  }
+
+  var slots = {};
+
+  for (var i = 0, l = children.length; i < l; i++) {
+    var child = children[i];
+    var data = child.data; // remove slot attribute if the node is resolved as a Vue slot node
+
+    if (data && data.attrs && data.attrs.slot) {
+      delete data.attrs.slot;
+    } // named slots should only be respected if the vnode was rendered in the
+    // same context.
+
+
+    if ((child.context === context || child.fnContext === context) && data && data.slot != null) {
+      var name = data.slot;
+      var slot = slots[name] || (slots[name] = []);
+
+      if (child.tag === 'template') {
+        slot.push.apply(slot, child.children || []);
+      } else {
+        slot.push(child);
+      }
+    } else {
+      (slots.default || (slots.default = [])).push(child);
+    }
+  } // ignore slots that contains only whitespace
+
+
+  for (var name$1 in slots) {
+    if (slots[name$1].every(isWhitespace)) {
+      delete slots[name$1];
+    }
+  }
+
+  return slots;
+}
+
+function isWhitespace(node) {
+  return node.isComment && !node.asyncFactory || node.text === ' ';
+}
+/*  */
+
+
+function isAsyncPlaceholder(node) {
+  return node.isComment && node.asyncFactory;
+}
+/*  */
+
+
+function normalizeScopedSlots(slots, normalSlots, prevSlots) {
+  var res;
+  var hasNormalSlots = Object.keys(normalSlots).length > 0;
+  var isStable = slots ? !!slots.$stable : !hasNormalSlots;
+  var key = slots && slots.$key;
+
+  if (!slots) {
+    res = {};
+  } else if (slots._normalized) {
+    // fast path 1: child component re-render only, parent did not change
+    return slots._normalized;
+  } else if (isStable && prevSlots && prevSlots !== emptyObject && key === prevSlots.$key && !hasNormalSlots && !prevSlots.$hasNormal) {
+    // fast path 2: stable scoped slots w/ no normal slots to proxy,
+    // only need to normalize once
+    return prevSlots;
+  } else {
+    res = {};
+
+    for (var key$1 in slots) {
+      if (slots[key$1] && key$1[0] !== '$') {
+        res[key$1] = normalizeScopedSlot(normalSlots, key$1, slots[key$1]);
+      }
+    }
+  } // expose normal slots on scopedSlots
+
+
+  for (var key$2 in normalSlots) {
+    if (!(key$2 in res)) {
+      res[key$2] = proxyNormalSlot(normalSlots, key$2);
+    }
+  } // avoriaz seems to mock a non-extensible $scopedSlots object
+  // and when that is passed down this would cause an error
+
+
+  if (slots && Object.isExtensible(slots)) {
+    slots._normalized = res;
+  }
+
+  def(res, '$stable', isStable);
+  def(res, '$key', key);
+  def(res, '$hasNormal', hasNormalSlots);
+  return res;
+}
+
+function normalizeScopedSlot(normalSlots, key, fn) {
+  var normalized = function normalized() {
+    var res = arguments.length ? fn.apply(null, arguments) : fn({});
+    res = res && _typeof(res) === 'object' && !Array.isArray(res) ? [res] // single vnode
+    : normalizeChildren(res);
+    var vnode = res && res[0];
+    return res && (!vnode || res.length === 1 && vnode.isComment && !isAsyncPlaceholder(vnode) // #9658, #10391
+    ) ? undefined : res;
+  }; // this is a slot using the new v-slot syntax without scope. although it is
+  // compiled as a scoped slot, render fn users would expect it to be present
+  // on this.$slots because the usage is semantically a normal slot.
+
+
+  if (fn.proxy) {
+    Object.defineProperty(normalSlots, key, {
+      get: normalized,
+      enumerable: true,
+      configurable: true
+    });
+  }
+
+  return normalized;
+}
+
+function proxyNormalSlot(slots, key) {
+  return function () {
+    return slots[key];
+  };
+}
+/*  */
+
+/**
+ * Runtime helper for rendering v-for lists.
+ */
+
+
+function renderList(val, render) {
+  var ret, i, l, keys, key;
+
+  if (Array.isArray(val) || typeof val === 'string') {
+    ret = new Array(val.length);
+
+    for (i = 0, l = val.length; i < l; i++) {
+      ret[i] = render(val[i], i);
+    }
+  } else if (typeof val === 'number') {
+    ret = new Array(val);
+
+    for (i = 0; i < val; i++) {
+      ret[i] = render(i + 1, i);
+    }
+  } else if (isObject(val)) {
+    if (hasSymbol && val[Symbol.iterator]) {
+      ret = [];
+      var iterator = val[Symbol.iterator]();
+      var result = iterator.next();
+
+      while (!result.done) {
+        ret.push(render(result.value, ret.length));
+        result = iterator.next();
+      }
+    } else {
+      keys = Object.keys(val);
+      ret = new Array(keys.length);
+
+      for (i = 0, l = keys.length; i < l; i++) {
+        key = keys[i];
+        ret[i] = render(val[key], key, i);
+      }
+    }
+  }
+
+  if (!isDef(ret)) {
+    ret = [];
+  }
+
+  ret._isVList = true;
+  return ret;
+}
+/*  */
+
+/**
+ * Runtime helper for rendering <slot>
+ */
+
+
+function renderSlot(name, fallbackRender, props, bindObject) {
+  var scopedSlotFn = this.$scopedSlots[name];
+  var nodes;
+
+  if (scopedSlotFn) {
+    // scoped slot
+    props = props || {};
+
+    if (bindObject) {
+      if ( true && !isObject(bindObject)) {
+        warn('slot v-bind without argument expects an Object', this);
+      }
+
+      props = extend(extend({}, bindObject), props);
+    }
+
+    nodes = scopedSlotFn(props) || (typeof fallbackRender === 'function' ? fallbackRender() : fallbackRender);
+  } else {
+    nodes = this.$slots[name] || (typeof fallbackRender === 'function' ? fallbackRender() : fallbackRender);
+  }
+
+  var target = props && props.slot;
+
+  if (target) {
+    return this.$createElement('template', {
+      slot: target
+    }, nodes);
+  } else {
+    return nodes;
+  }
+}
+/*  */
+
+/**
+ * Runtime helper for resolving filters
+ */
+
+
+function resolveFilter(id) {
+  return resolveAsset(this.$options, 'filters', id, true) || identity;
+}
+/*  */
+
+
+function isKeyNotMatch(expect, actual) {
+  if (Array.isArray(expect)) {
+    return expect.indexOf(actual) === -1;
+  } else {
+    return expect !== actual;
+  }
+}
+/**
+ * Runtime helper for checking keyCodes from config.
+ * exposed as Vue.prototype._k
+ * passing in eventKeyName as last argument separately for backwards compat
+ */
+
+
+function checkKeyCodes(eventKeyCode, key, builtInKeyCode, eventKeyName, builtInKeyName) {
+  var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
+
+  if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
+    return isKeyNotMatch(builtInKeyName, eventKeyName);
+  } else if (mappedKeyCode) {
+    return isKeyNotMatch(mappedKeyCode, eventKeyCode);
+  } else if (eventKeyName) {
+    return hyphenate(eventKeyName) !== key;
+  }
+
+  return eventKeyCode === undefined;
+}
+/*  */
+
+/**
+ * Runtime helper for merging v-bind="object" into a VNode's data.
+ */
+
+
+function bindObjectProps(data, tag, value, asProp, isSync) {
+  if (value) {
+    if (!isObject(value)) {
+       true && warn('v-bind without argument expects an Object or Array value', this);
+    } else {
+      if (Array.isArray(value)) {
+        value = toObject(value);
+      }
+
+      var hash;
+
+      var loop = function loop(key) {
+        if (key === 'class' || key === 'style' || isReservedAttribute(key)) {
+          hash = data;
+        } else {
+          var type = data.attrs && data.attrs.type;
+          hash = asProp || config.mustUseProp(tag, type, key) ? data.domProps || (data.domProps = {}) : data.attrs || (data.attrs = {});
+        }
+
+        var camelizedKey = camelize(key);
+        var hyphenatedKey = hyphenate(key);
+
+        if (!(camelizedKey in hash) && !(hyphenatedKey in hash)) {
+          hash[key] = value[key];
+
+          if (isSync) {
+            var on = data.on || (data.on = {});
+
+            on["update:" + key] = function ($event) {
+              value[key] = $event;
+            };
+          }
+        }
+      };
+
+      for (var key in value) {
+        loop(key);
+      }
+    }
+  }
+
+  return data;
+}
+/*  */
+
+/**
+ * Runtime helper for rendering static trees.
+ */
+
+
+function renderStatic(index, isInFor) {
+  var cached = this._staticTrees || (this._staticTrees = []);
+  var tree = cached[index]; // if has already-rendered static tree and not inside v-for,
+  // we can reuse the same tree.
+
+  if (tree && !isInFor) {
+    return tree;
+  } // otherwise, render a fresh tree.
+
+
+  tree = cached[index] = this.$options.staticRenderFns[index].call(this._renderProxy, null, this // for render fns generated for functional component templates
+  );
+  markStatic(tree, "__static__" + index, false);
+  return tree;
+}
+/**
+ * Runtime helper for v-once.
+ * Effectively it means marking the node as static with a unique key.
+ */
+
+
+function markOnce(tree, index, key) {
+  markStatic(tree, "__once__" + index + (key ? "_" + key : ""), true);
+  return tree;
+}
+
+function markStatic(tree, key, isOnce) {
+  if (Array.isArray(tree)) {
+    for (var i = 0; i < tree.length; i++) {
+      if (tree[i] && typeof tree[i] !== 'string') {
+        markStaticNode(tree[i], key + "_" + i, isOnce);
+      }
+    }
+  } else {
+    markStaticNode(tree, key, isOnce);
+  }
+}
+
+function markStaticNode(node, key, isOnce) {
+  node.isStatic = true;
+  node.key = key;
+  node.isOnce = isOnce;
+}
+/*  */
+
+
+function bindObjectListeners(data, value) {
+  if (value) {
+    if (!isPlainObject(value)) {
+       true && warn('v-on without argument expects an Object value', this);
+    } else {
+      var on = data.on = data.on ? extend({}, data.on) : {};
+
+      for (var key in value) {
+        var existing = on[key];
+        var ours = value[key];
+        on[key] = existing ? [].concat(existing, ours) : ours;
+      }
+    }
+  }
+
+  return data;
+}
+/*  */
+
+
+function resolveScopedSlots(fns, // see flow/vnode
+res, // the following are added in 2.6
+hasDynamicKeys, contentHashKey) {
+  res = res || {
+    $stable: !hasDynamicKeys
+  };
+
+  for (var i = 0; i < fns.length; i++) {
+    var slot = fns[i];
+
+    if (Array.isArray(slot)) {
+      resolveScopedSlots(slot, res, hasDynamicKeys);
+    } else if (slot) {
+      // marker for reverse proxying v-slot without scope on this.$slots
+      if (slot.proxy) {
+        slot.fn.proxy = true;
+      }
+
+      res[slot.key] = slot.fn;
+    }
+  }
+
+  if (contentHashKey) {
+    res.$key = contentHashKey;
+  }
+
+  return res;
+}
+/*  */
+
+
+function bindDynamicKeys(baseObj, values) {
+  for (var i = 0; i < values.length; i += 2) {
+    var key = values[i];
+
+    if (typeof key === 'string' && key) {
+      baseObj[values[i]] = values[i + 1];
+    } else if ( true && key !== '' && key !== null) {
+      // null is a special value for explicitly removing a binding
+      warn("Invalid value for dynamic directive argument (expected string or null): " + key, this);
+    }
+  }
+
+  return baseObj;
+} // helper to dynamically append modifier runtime markers to event names.
+// ensure only append when value is already string, otherwise it will be cast
+// to string and cause the type check to miss.
+
+
+function prependModifier(value, symbol) {
+  return typeof value === 'string' ? symbol + value : value;
+}
+/*  */
+
+
+function installRenderHelpers(target) {
+  target._o = markOnce;
+  target._n = toNumber;
+  target._s = toString;
+  target._l = renderList;
+  target._t = renderSlot;
+  target._q = looseEqual;
+  target._i = looseIndexOf;
+  target._m = renderStatic;
+  target._f = resolveFilter;
+  target._k = checkKeyCodes;
+  target._b = bindObjectProps;
+  target._v = createTextVNode;
+  target._e = createEmptyVNode;
+  target._u = resolveScopedSlots;
+  target._g = bindObjectListeners;
+  target._d = bindDynamicKeys;
+  target._p = prependModifier;
+}
+/*  */
+
+
+function FunctionalRenderContext(data, props, children, parent, Ctor) {
+  var this$1 = this;
+  var options = Ctor.options; // ensure the createElement function in functional components
+  // gets a unique context - this is necessary for correct named slot check
+
+  var contextVm;
+
+  if (hasOwn(parent, '_uid')) {
+    contextVm = Object.create(parent); // $flow-disable-line
+
+    contextVm._original = parent;
+  } else {
+    // the context vm passed in is a functional context as well.
+    // in this case we want to make sure we are able to get a hold to the
+    // real context instance.
+    contextVm = parent; // $flow-disable-line
+
+    parent = parent._original;
+  }
+
+  var isCompiled = isTrue(options._compiled);
+  var needNormalization = !isCompiled;
+  this.data = data;
+  this.props = props;
+  this.children = children;
+  this.parent = parent;
+  this.listeners = data.on || emptyObject;
+  this.injections = resolveInject(options.inject, parent);
+
+  this.slots = function () {
+    if (!this$1.$slots) {
+      normalizeScopedSlots(data.scopedSlots, this$1.$slots = resolveSlots(children, parent));
+    }
+
+    return this$1.$slots;
+  };
+
+  Object.defineProperty(this, 'scopedSlots', {
+    enumerable: true,
+    get: function get() {
+      return normalizeScopedSlots(data.scopedSlots, this.slots());
+    }
+  }); // support for compiled functional template
+
+  if (isCompiled) {
+    // exposing $options for renderStatic()
+    this.$options = options; // pre-resolve slots for renderSlot()
+
+    this.$slots = this.slots();
+    this.$scopedSlots = normalizeScopedSlots(data.scopedSlots, this.$slots);
+  }
+
+  if (options._scopeId) {
+    this._c = function (a, b, c, d) {
+      var vnode = createElement(contextVm, a, b, c, d, needNormalization);
+
+      if (vnode && !Array.isArray(vnode)) {
+        vnode.fnScopeId = options._scopeId;
+        vnode.fnContext = parent;
+      }
+
+      return vnode;
+    };
+  } else {
+    this._c = function (a, b, c, d) {
+      return createElement(contextVm, a, b, c, d, needNormalization);
+    };
+  }
+}
+
+installRenderHelpers(FunctionalRenderContext.prototype);
+
+function createFunctionalComponent(Ctor, propsData, data, contextVm, children) {
+  var options = Ctor.options;
+  var props = {};
+  var propOptions = options.props;
+
+  if (isDef(propOptions)) {
+    for (var key in propOptions) {
+      props[key] = validateProp(key, propOptions, propsData || emptyObject);
+    }
+  } else {
+    if (isDef(data.attrs)) {
+      mergeProps(props, data.attrs);
+    }
+
+    if (isDef(data.props)) {
+      mergeProps(props, data.props);
+    }
+  }
+
+  var renderContext = new FunctionalRenderContext(data, props, children, contextVm, Ctor);
+  var vnode = options.render.call(null, renderContext._c, renderContext);
+
+  if (vnode instanceof VNode) {
+    return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options, renderContext);
+  } else if (Array.isArray(vnode)) {
+    var vnodes = normalizeChildren(vnode) || [];
+    var res = new Array(vnodes.length);
+
+    for (var i = 0; i < vnodes.length; i++) {
+      res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options, renderContext);
+    }
+
+    return res;
+  }
+}
+
+function cloneAndMarkFunctionalResult(vnode, data, contextVm, options, renderContext) {
+  // #7817 clone node before setting fnContext, otherwise if the node is reused
+  // (e.g. it was from a cached normal slot) the fnContext causes named slots
+  // that should not be matched to match.
+  var clone = cloneVNode(vnode);
+  clone.fnContext = contextVm;
+  clone.fnOptions = options;
+
+  if (true) {
+    (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
+  }
+
+  if (data.slot) {
+    (clone.data || (clone.data = {})).slot = data.slot;
+  }
+
+  return clone;
+}
+
+function mergeProps(to, from) {
+  for (var key in from) {
+    to[camelize(key)] = from[key];
+  }
+}
+/*  */
+
+/*  */
+
+/*  */
+
+/*  */
+// inline hooks to be invoked on component VNodes during patch
+
+
+var componentVNodeHooks = {
+  init: function init(vnode, hydrating) {
+    if (vnode.componentInstance && !vnode.componentInstance._isDestroyed && vnode.data.keepAlive) {
+      // kept-alive components, treat as a patch
+      var mountedNode = vnode; // work around flow
+
+      componentVNodeHooks.prepatch(mountedNode, mountedNode);
+    } else {
+      var child = vnode.componentInstance = createComponentInstanceForVnode(vnode, activeInstance);
+      child.$mount(hydrating ? vnode.elm : undefined, hydrating);
+    }
+  },
+  prepatch: function prepatch(oldVnode, vnode) {
+    var options = vnode.componentOptions;
+    var child = vnode.componentInstance = oldVnode.componentInstance;
+    updateChildComponent(child, options.propsData, // updated props
+    options.listeners, // updated listeners
+    vnode, // new parent vnode
+    options.children // new children
+    );
+  },
+  insert: function insert(vnode) {
+    var context = vnode.context;
+    var componentInstance = vnode.componentInstance;
+
+    if (!componentInstance._isMounted) {
+      componentInstance._isMounted = true;
+      callHook(componentInstance, 'mounted');
+    }
+
+    if (vnode.data.keepAlive) {
+      if (context._isMounted) {
+        // vue-router#1212
+        // During updates, a kept-alive component's child components may
+        // change, so directly walking the tree here may call activated hooks
+        // on incorrect children. Instead we push them into a queue which will
+        // be processed after the whole patch process ended.
+        queueActivatedComponent(componentInstance);
+      } else {
+        activateChildComponent(componentInstance, true
+        /* direct */
+        );
+      }
+    }
+  },
+  destroy: function destroy(vnode) {
+    var componentInstance = vnode.componentInstance;
+
+    if (!componentInstance._isDestroyed) {
+      if (!vnode.data.keepAlive) {
+        componentInstance.$destroy();
+      } else {
+        deactivateChildComponent(componentInstance, true
+        /* direct */
+        );
+      }
+    }
+  }
+};
+var hooksToMerge = Object.keys(componentVNodeHooks);
+
+function createComponent(Ctor, data, context, children, tag) {
+  if (isUndef(Ctor)) {
+    return;
+  }
+
+  var baseCtor = context.$options._base; // plain options object: turn it into a constructor
+
+  if (isObject(Ctor)) {
+    Ctor = baseCtor.extend(Ctor);
+  } // if at this stage it's not a constructor or an async component factory,
+  // reject.
+
+
+  if (typeof Ctor !== 'function') {
+    if (true) {
+      warn("Invalid Component definition: " + String(Ctor), context);
+    }
+
+    return;
+  } // async component
+
+
+  var asyncFactory;
+
+  if (isUndef(Ctor.cid)) {
+    asyncFactory = Ctor;
+    Ctor = resolveAsyncComponent(asyncFactory, baseCtor);
+
+    if (Ctor === undefined) {
+      // return a placeholder node for async component, which is rendered
+      // as a comment node but preserves all the raw information for the node.
+      // the information will be used for async server-rendering and hydration.
+      return createAsyncPlaceholder(asyncFactory, data, context, children, tag);
+    }
+  }
+
+  data = data || {}; // resolve constructor options in case global mixins are applied after
+  // component constructor creation
+
+  resolveConstructorOptions(Ctor); // transform component v-model data into props & events
+
+  if (isDef(data.model)) {
+    transformModel(Ctor.options, data);
+  } // extract props
+
+
+  var propsData = extractPropsFromVNodeData(data, Ctor, tag); // functional component
+
+  if (isTrue(Ctor.options.functional)) {
+    return createFunctionalComponent(Ctor, propsData, data, context, children);
+  } // extract listeners, since these needs to be treated as
+  // child component listeners instead of DOM listeners
+
+
+  var listeners = data.on; // replace with listeners with .native modifier
+  // so it gets processed during parent component patch.
+
+  data.on = data.nativeOn;
+
+  if (isTrue(Ctor.options.abstract)) {
+    // abstract components do not keep anything
+    // other than props & listeners & slot
+    // work around flow
+    var slot = data.slot;
+    data = {};
+
+    if (slot) {
+      data.slot = slot;
+    }
+  } // install component management hooks onto the placeholder node
+
+
+  installComponentHooks(data); // return a placeholder vnode
+
+  var name = Ctor.options.name || tag;
+  var vnode = new VNode("vue-component-" + Ctor.cid + (name ? "-" + name : ''), data, undefined, undefined, undefined, context, {
+    Ctor: Ctor,
+    propsData: propsData,
+    listeners: listeners,
+    tag: tag,
+    children: children
+  }, asyncFactory);
+  return vnode;
+}
+
+function createComponentInstanceForVnode( // we know it's MountedComponentVNode but flow doesn't
+vnode, // activeInstance in lifecycle state
+parent) {
+  var options = {
+    _isComponent: true,
+    _parentVnode: vnode,
+    parent: parent
+  }; // check inline-template render functions
+
+  var inlineTemplate = vnode.data.inlineTemplate;
+
+  if (isDef(inlineTemplate)) {
+    options.render = inlineTemplate.render;
+    options.staticRenderFns = inlineTemplate.staticRenderFns;
+  }
+
+  return new vnode.componentOptions.Ctor(options);
+}
+
+function installComponentHooks(data) {
+  var hooks = data.hook || (data.hook = {});
+
+  for (var i = 0; i < hooksToMerge.length; i++) {
+    var key = hooksToMerge[i];
+    var existing = hooks[key];
+    var toMerge = componentVNodeHooks[key];
+
+    if (existing !== toMerge && !(existing && existing._merged)) {
+      hooks[key] = existing ? mergeHook$1(toMerge, existing) : toMerge;
+    }
+  }
+}
+
+function mergeHook$1(f1, f2) {
+  var merged = function merged(a, b) {
+    // flow complains about extra args which is why we use any
+    f1(a, b);
+    f2(a, b);
+  };
+
+  merged._merged = true;
+  return merged;
+} // transform component v-model info (value and callback) into
+// prop and event handler respectively.
+
+
+function transformModel(options, data) {
+  var prop = options.model && options.model.prop || 'value';
+  var event = options.model && options.model.event || 'input';
+  (data.attrs || (data.attrs = {}))[prop] = data.model.value;
+  var on = data.on || (data.on = {});
+  var existing = on[event];
+  var callback = data.model.callback;
+
+  if (isDef(existing)) {
+    if (Array.isArray(existing) ? existing.indexOf(callback) === -1 : existing !== callback) {
+      on[event] = [callback].concat(existing);
+    }
+  } else {
+    on[event] = callback;
+  }
+}
+/*  */
+
+
+var SIMPLE_NORMALIZE = 1;
+var ALWAYS_NORMALIZE = 2; // wrapper function for providing a more flexible interface
+// without getting yelled at by flow
+
+function createElement(context, tag, data, children, normalizationType, alwaysNormalize) {
+  if (Array.isArray(data) || isPrimitive(data)) {
+    normalizationType = children;
+    children = data;
+    data = undefined;
+  }
+
+  if (isTrue(alwaysNormalize)) {
+    normalizationType = ALWAYS_NORMALIZE;
+  }
+
+  return _createElement(context, tag, data, children, normalizationType);
+}
+
+function _createElement(context, tag, data, children, normalizationType) {
+  if (isDef(data) && isDef(data.__ob__)) {
+     true && warn("Avoid using observed data object as vnode data: " + JSON.stringify(data) + "\n" + 'Always create fresh vnode data objects in each render!', context);
+    return createEmptyVNode();
+  } // object syntax in v-bind
+
+
+  if (isDef(data) && isDef(data.is)) {
+    tag = data.is;
+  }
+
+  if (!tag) {
+    // in case of component :is set to falsy value
+    return createEmptyVNode();
+  } // warn against non-primitive key
+
+
+  if ( true && isDef(data) && isDef(data.key) && !isPrimitive(data.key)) {
+    {
+      warn('Avoid using non-primitive value as key, ' + 'use string/number value instead.', context);
+    }
+  } // support single function children as default scoped slot
+
+
+  if (Array.isArray(children) && typeof children[0] === 'function') {
+    data = data || {};
+    data.scopedSlots = {
+      default: children[0]
+    };
+    children.length = 0;
+  }
+
+  if (normalizationType === ALWAYS_NORMALIZE) {
+    children = normalizeChildren(children);
+  } else if (normalizationType === SIMPLE_NORMALIZE) {
+    children = simpleNormalizeChildren(children);
+  }
+
+  var vnode, ns;
+
+  if (typeof tag === 'string') {
+    var Ctor;
+    ns = context.$vnode && context.$vnode.ns || config.getTagNamespace(tag);
+
+    if (config.isReservedTag(tag)) {
+      // platform built-in elements
+      if ( true && isDef(data) && isDef(data.nativeOn) && data.tag !== 'component') {
+        warn("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">.", context);
+      }
+
+      vnode = new VNode(config.parsePlatformTagName(tag), data, children, undefined, undefined, context);
+    } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+      // component
+      vnode = createComponent(Ctor, data, context, children, tag);
+    } else {
+      // unknown or unlisted namespaced elements
+      // check at runtime because it may get assigned a namespace when its
+      // parent normalizes children
+      vnode = new VNode(tag, data, children, undefined, undefined, context);
+    }
+  } else {
+    // direct component options / constructor
+    vnode = createComponent(tag, data, context, children);
+  }
+
+  if (Array.isArray(vnode)) {
+    return vnode;
+  } else if (isDef(vnode)) {
+    if (isDef(ns)) {
+      applyNS(vnode, ns);
+    }
+
+    if (isDef(data)) {
+      registerDeepBindings(data);
+    }
+
+    return vnode;
+  } else {
+    return createEmptyVNode();
+  }
+}
+
+function applyNS(vnode, ns, force) {
+  vnode.ns = ns;
+
+  if (vnode.tag === 'foreignObject') {
+    // use default namespace inside foreignObject
+    ns = undefined;
+    force = true;
+  }
+
+  if (isDef(vnode.children)) {
+    for (var i = 0, l = vnode.children.length; i < l; i++) {
+      var child = vnode.children[i];
+
+      if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force) && child.tag !== 'svg')) {
+        applyNS(child, ns, force);
+      }
+    }
+  }
+} // ref #5318
+// necessary to ensure parent re-render when deep bindings like :style and
+// :class are used on slot nodes
+
+
+function registerDeepBindings(data) {
+  if (isObject(data.style)) {
+    traverse(data.style);
+  }
+
+  if (isObject(data.class)) {
+    traverse(data.class);
+  }
+}
+/*  */
+
+
+function initRender(vm) {
+  vm._vnode = null; // the root of the child tree
+
+  vm._staticTrees = null; // v-once cached trees
+
+  var options = vm.$options;
+  var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
+
+  var renderContext = parentVnode && parentVnode.context;
+  vm.$slots = resolveSlots(options._renderChildren, renderContext);
+  vm.$scopedSlots = emptyObject; // bind the createElement fn to this instance
+  // so that we get proper render context inside it.
+  // args order: tag, data, children, normalizationType, alwaysNormalize
+  // internal version is used by render functions compiled from templates
+
+  vm._c = function (a, b, c, d) {
+    return createElement(vm, a, b, c, d, false);
+  }; // normalization is always applied for the public version, used in
+  // user-written render functions.
+
+
+  vm.$createElement = function (a, b, c, d) {
+    return createElement(vm, a, b, c, d, true);
+  }; // $attrs & $listeners are exposed for easier HOC creation.
+  // they need to be reactive so that HOCs using them are always updated
+
+
+  var parentData = parentVnode && parentVnode.data;
+  /* istanbul ignore else */
+
+  if (true) {
+    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
+      !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
+    }, true);
+    defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
+      !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
+    }, true);
+  } else {}
+}
+
+var currentRenderingInstance = null;
+
+function renderMixin(Vue) {
+  // install runtime convenience helpers
+  installRenderHelpers(Vue.prototype);
+
+  Vue.prototype.$nextTick = function (fn) {
+    return nextTick(fn, this);
+  };
+
+  Vue.prototype._render = function () {
+    var vm = this;
+    var ref = vm.$options;
+    var render = ref.render;
+    var _parentVnode = ref._parentVnode;
+
+    if (_parentVnode) {
+      vm.$scopedSlots = normalizeScopedSlots(_parentVnode.data.scopedSlots, vm.$slots, vm.$scopedSlots);
+    } // set parent vnode. this allows render functions to have access
+    // to the data on the placeholder node.
+
+
+    vm.$vnode = _parentVnode; // render self
+
+    var vnode;
+
+    try {
+      // There's no need to maintain a stack because all render fns are called
+      // separately from one another. Nested component's render fns are called
+      // when parent component is patched.
+      currentRenderingInstance = vm;
+      vnode = render.call(vm._renderProxy, vm.$createElement);
+    } catch (e) {
+      handleError(e, vm, "render"); // return error render result,
+      // or previous vnode to prevent render error causing blank component
+
+      /* istanbul ignore else */
+
+      if ( true && vm.$options.renderError) {
+        try {
+          vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+        } catch (e) {
+          handleError(e, vm, "renderError");
+          vnode = vm._vnode;
+        }
+      } else {
+        vnode = vm._vnode;
+      }
+    } finally {
+      currentRenderingInstance = null;
+    } // if the returned array contains only a single node, allow it
+
+
+    if (Array.isArray(vnode) && vnode.length === 1) {
+      vnode = vnode[0];
+    } // return empty vnode in case the render function errored out
+
+
+    if (!(vnode instanceof VNode)) {
+      if ( true && Array.isArray(vnode)) {
+        warn('Multiple root nodes returned from render function. Render function ' + 'should return a single root node.', vm);
+      }
+
+      vnode = createEmptyVNode();
+    } // set parent
+
+
+    vnode.parent = _parentVnode;
+    return vnode;
+  };
+}
+/*  */
+
+
+function ensureCtor(comp, base) {
+  if (comp.__esModule || hasSymbol && comp[Symbol.toStringTag] === 'Module') {
+    comp = comp.default;
+  }
+
+  return isObject(comp) ? base.extend(comp) : comp;
+}
+
+function createAsyncPlaceholder(factory, data, context, children, tag) {
+  var node = createEmptyVNode();
+  node.asyncFactory = factory;
+  node.asyncMeta = {
+    data: data,
+    context: context,
+    children: children,
+    tag: tag
+  };
+  return node;
+}
+
+function resolveAsyncComponent(factory, baseCtor) {
+  if (isTrue(factory.error) && isDef(factory.errorComp)) {
+    return factory.errorComp;
+  }
+
+  if (isDef(factory.resolved)) {
+    return factory.resolved;
+  }
+
+  var owner = currentRenderingInstance;
+
+  if (owner && isDef(factory.owners) && factory.owners.indexOf(owner) === -1) {
+    // already pending
+    factory.owners.push(owner);
+  }
+
+  if (isTrue(factory.loading) && isDef(factory.loadingComp)) {
+    return factory.loadingComp;
+  }
+
+  if (owner && !isDef(factory.owners)) {
+    var owners = factory.owners = [owner];
+    var sync = true;
+    var timerLoading = null;
+    var timerTimeout = null;
+    owner.$on('hook:destroyed', function () {
+      return remove(owners, owner);
+    });
+
+    var forceRender = function forceRender(renderCompleted) {
+      for (var i = 0, l = owners.length; i < l; i++) {
+        owners[i].$forceUpdate();
+      }
+
+      if (renderCompleted) {
+        owners.length = 0;
+
+        if (timerLoading !== null) {
+          clearTimeout(timerLoading);
+          timerLoading = null;
+        }
+
+        if (timerTimeout !== null) {
+          clearTimeout(timerTimeout);
+          timerTimeout = null;
+        }
+      }
+    };
+
+    var resolve = once(function (res) {
+      // cache resolved
+      factory.resolved = ensureCtor(res, baseCtor); // invoke callbacks only if this is not a synchronous resolve
+      // (async resolves are shimmed as synchronous during SSR)
+
+      if (!sync) {
+        forceRender(true);
+      } else {
+        owners.length = 0;
+      }
+    });
+    var reject = once(function (reason) {
+       true && warn("Failed to resolve async component: " + String(factory) + (reason ? "\nReason: " + reason : ''));
+
+      if (isDef(factory.errorComp)) {
+        factory.error = true;
+        forceRender(true);
+      }
+    });
+    var res = factory(resolve, reject);
+
+    if (isObject(res)) {
+      if (isPromise(res)) {
+        // () => Promise
+        if (isUndef(factory.resolved)) {
+          res.then(resolve, reject);
+        }
+      } else if (isPromise(res.component)) {
+        res.component.then(resolve, reject);
+
+        if (isDef(res.error)) {
+          factory.errorComp = ensureCtor(res.error, baseCtor);
+        }
+
+        if (isDef(res.loading)) {
+          factory.loadingComp = ensureCtor(res.loading, baseCtor);
+
+          if (res.delay === 0) {
+            factory.loading = true;
+          } else {
+            timerLoading = setTimeout(function () {
+              timerLoading = null;
+
+              if (isUndef(factory.resolved) && isUndef(factory.error)) {
+                factory.loading = true;
+                forceRender(false);
+              }
+            }, res.delay || 200);
+          }
+        }
+
+        if (isDef(res.timeout)) {
+          timerTimeout = setTimeout(function () {
+            timerTimeout = null;
+
+            if (isUndef(factory.resolved)) {
+              reject( true ? "timeout (" + res.timeout + "ms)" : undefined);
+            }
+          }, res.timeout);
+        }
+      }
+    }
+
+    sync = false; // return in case resolved synchronously
+
+    return factory.loading ? factory.loadingComp : factory.resolved;
+  }
+}
+/*  */
+
+
+function getFirstComponentChild(children) {
+  if (Array.isArray(children)) {
+    for (var i = 0; i < children.length; i++) {
+      var c = children[i];
+
+      if (isDef(c) && (isDef(c.componentOptions) || isAsyncPlaceholder(c))) {
+        return c;
+      }
+    }
+  }
+}
+/*  */
+
+/*  */
+
+
+function initEvents(vm) {
+  vm._events = Object.create(null);
+  vm._hasHookEvent = false; // init parent attached events
+
+  var listeners = vm.$options._parentListeners;
+
+  if (listeners) {
+    updateComponentListeners(vm, listeners);
+  }
+}
+
+var target;
+
+function add(event, fn) {
+  target.$on(event, fn);
+}
+
+function remove$1(event, fn) {
+  target.$off(event, fn);
+}
+
+function createOnceHandler(event, fn) {
+  var _target = target;
+  return function onceHandler() {
+    var res = fn.apply(null, arguments);
+
+    if (res !== null) {
+      _target.$off(event, onceHandler);
+    }
+  };
+}
+
+function updateComponentListeners(vm, listeners, oldListeners) {
+  target = vm;
+  updateListeners(listeners, oldListeners || {}, add, remove$1, createOnceHandler, vm);
+  target = undefined;
+}
+
+function eventsMixin(Vue) {
+  var hookRE = /^hook:/;
+
+  Vue.prototype.$on = function (event, fn) {
+    var vm = this;
+
+    if (Array.isArray(event)) {
+      for (var i = 0, l = event.length; i < l; i++) {
+        vm.$on(event[i], fn);
+      }
+    } else {
+      (vm._events[event] || (vm._events[event] = [])).push(fn); // optimize hook:event cost by using a boolean flag marked at registration
+      // instead of a hash lookup
+
+      if (hookRE.test(event)) {
+        vm._hasHookEvent = true;
+      }
+    }
+
+    return vm;
+  };
+
+  Vue.prototype.$once = function (event, fn) {
+    var vm = this;
+
+    function on() {
+      vm.$off(event, on);
+      fn.apply(vm, arguments);
+    }
+
+    on.fn = fn;
+    vm.$on(event, on);
+    return vm;
+  };
+
+  Vue.prototype.$off = function (event, fn) {
+    var vm = this; // all
+
+    if (!arguments.length) {
+      vm._events = Object.create(null);
+      return vm;
+    } // array of events
+
+
+    if (Array.isArray(event)) {
+      for (var i$1 = 0, l = event.length; i$1 < l; i$1++) {
+        vm.$off(event[i$1], fn);
+      }
+
+      return vm;
+    } // specific event
+
+
+    var cbs = vm._events[event];
+
+    if (!cbs) {
+      return vm;
+    }
+
+    if (!fn) {
+      vm._events[event] = null;
+      return vm;
+    } // specific handler
+
+
+    var cb;
+    var i = cbs.length;
+
+    while (i--) {
+      cb = cbs[i];
+
+      if (cb === fn || cb.fn === fn) {
+        cbs.splice(i, 1);
+        break;
+      }
+    }
+
+    return vm;
+  };
+
+  Vue.prototype.$emit = function (event) {
+    var vm = this;
+
+    if (true) {
+      var lowerCaseEvent = event.toLowerCase();
+
+      if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
+        tip("Event \"" + lowerCaseEvent + "\" is emitted in component " + formatComponentName(vm) + " but the handler is registered for \"" + event + "\". " + "Note that HTML attributes are case-insensitive and you cannot use " + "v-on to listen to camelCase events when using in-DOM templates. " + "You should probably use \"" + hyphenate(event) + "\" instead of \"" + event + "\".");
+      }
+    }
+
+    var cbs = vm._events[event];
+
+    if (cbs) {
+      cbs = cbs.length > 1 ? toArray(cbs) : cbs;
+      var args = toArray(arguments, 1);
+      var info = "event handler for \"" + event + "\"";
+
+      for (var i = 0, l = cbs.length; i < l; i++) {
+        invokeWithErrorHandling(cbs[i], vm, args, vm, info);
+      }
+    }
+
+    return vm;
+  };
+}
+/*  */
+
+
+var activeInstance = null;
+var isUpdatingChildComponent = false;
+
+function setActiveInstance(vm) {
+  var prevActiveInstance = activeInstance;
+  activeInstance = vm;
+  return function () {
+    activeInstance = prevActiveInstance;
+  };
+}
+
+function initLifecycle(vm) {
+  var options = vm.$options; // locate first non-abstract parent
+
+  var parent = options.parent;
+
+  if (parent && !options.abstract) {
+    while (parent.$options.abstract && parent.$parent) {
+      parent = parent.$parent;
+    }
+
+    parent.$children.push(vm);
+  }
+
+  vm.$parent = parent;
+  vm.$root = parent ? parent.$root : vm;
+  vm.$children = [];
+  vm.$refs = {};
+  vm._watcher = null;
+  vm._inactive = null;
+  vm._directInactive = false;
+  vm._isMounted = false;
+  vm._isDestroyed = false;
+  vm._isBeingDestroyed = false;
+}
+
+function lifecycleMixin(Vue) {
+  Vue.prototype._update = function (vnode, hydrating) {
+    var vm = this;
+    var prevEl = vm.$el;
+    var prevVnode = vm._vnode;
+    var restoreActiveInstance = setActiveInstance(vm);
+    vm._vnode = vnode; // Vue.prototype.__patch__ is injected in entry points
+    // based on the rendering backend used.
+
+    if (!prevVnode) {
+      // initial render
+      vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false
+      /* removeOnly */
+      );
+    } else {
+      // updates
+      vm.$el = vm.__patch__(prevVnode, vnode);
+    }
+
+    restoreActiveInstance(); // update __vue__ reference
+
+    if (prevEl) {
+      prevEl.__vue__ = null;
+    }
+
+    if (vm.$el) {
+      vm.$el.__vue__ = vm;
+    } // if parent is an HOC, update its $el as well
+
+
+    if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
+      vm.$parent.$el = vm.$el;
+    } // updated hook is called by the scheduler to ensure that children are
+    // updated in a parent's updated hook.
+
+  };
+
+  Vue.prototype.$forceUpdate = function () {
+    var vm = this;
+
+    if (vm._watcher) {
+      vm._watcher.update();
+    }
+  };
+
+  Vue.prototype.$destroy = function () {
+    var vm = this;
+
+    if (vm._isBeingDestroyed) {
+      return;
+    }
+
+    callHook(vm, 'beforeDestroy');
+    vm._isBeingDestroyed = true; // remove self from parent
+
+    var parent = vm.$parent;
+
+    if (parent && !parent._isBeingDestroyed && !vm.$options.abstract) {
+      remove(parent.$children, vm);
+    } // teardown watchers
+
+
+    if (vm._watcher) {
+      vm._watcher.teardown();
+    }
+
+    var i = vm._watchers.length;
+
+    while (i--) {
+      vm._watchers[i].teardown();
+    } // remove reference from data ob
+    // frozen object may not have observer.
+
+
+    if (vm._data.__ob__) {
+      vm._data.__ob__.vmCount--;
+    } // call the last hook...
+
+
+    vm._isDestroyed = true; // invoke destroy hooks on current rendered tree
+
+    vm.__patch__(vm._vnode, null); // fire destroyed hook
+
+
+    callHook(vm, 'destroyed'); // turn off all instance listeners.
+
+    vm.$off(); // remove __vue__ reference
+
+    if (vm.$el) {
+      vm.$el.__vue__ = null;
+    } // release circular reference (#6759)
+
+
+    if (vm.$vnode) {
+      vm.$vnode.parent = null;
+    }
+  };
+}
+
+function mountComponent(vm, el, hydrating) {
+  vm.$el = el;
+
+  if (!vm.$options.render) {
+    vm.$options.render = createEmptyVNode;
+
+    if (true) {
+      /* istanbul ignore if */
+      if (vm.$options.template && vm.$options.template.charAt(0) !== '#' || vm.$options.el || el) {
+        warn('You are using the runtime-only build of Vue where the template ' + 'compiler is not available. Either pre-compile the templates into ' + 'render functions, or use the compiler-included build.', vm);
+      } else {
+        warn('Failed to mount component: template or render function not defined.', vm);
+      }
+    }
+  }
+
+  callHook(vm, 'beforeMount');
+  var updateComponent;
+  /* istanbul ignore if */
+
+  if ( true && config.performance && mark) {
+    updateComponent = function updateComponent() {
+      var name = vm._name;
+      var id = vm._uid;
+      var startTag = "vue-perf-start:" + id;
+      var endTag = "vue-perf-end:" + id;
+      mark(startTag);
+
+      var vnode = vm._render();
+
+      mark(endTag);
+      measure("vue " + name + " render", startTag, endTag);
+      mark(startTag);
+
+      vm._update(vnode, hydrating);
+
+      mark(endTag);
+      measure("vue " + name + " patch", startTag, endTag);
+    };
+  } else {
+    updateComponent = function updateComponent() {
+      vm._update(vm._render(), hydrating);
+    };
+  } // we set this to vm._watcher inside the watcher's constructor
+  // since the watcher's initial patch may call $forceUpdate (e.g. inside child
+  // component's mounted hook), which relies on vm._watcher being already defined
+
+
+  new Watcher(vm, updateComponent, noop, {
+    before: function before() {
+      if (vm._isMounted && !vm._isDestroyed) {
+        callHook(vm, 'beforeUpdate');
+      }
+    }
+  }, true
+  /* isRenderWatcher */
+  );
+  hydrating = false; // manually mounted instance, call mounted on self
+  // mounted is called for render-created child components in its inserted hook
+
+  if (vm.$vnode == null) {
+    vm._isMounted = true;
+    callHook(vm, 'mounted');
+  }
+
+  return vm;
+}
+
+function updateChildComponent(vm, propsData, listeners, parentVnode, renderChildren) {
+  if (true) {
+    isUpdatingChildComponent = true;
+  } // determine whether component has slot children
+  // we need to do this before overwriting $options._renderChildren.
+  // check if there are dynamic scopedSlots (hand-written or compiled but with
+  // dynamic slot names). Static scoped slots compiled from template has the
+  // "$stable" marker.
+
+
+  var newScopedSlots = parentVnode.data.scopedSlots;
+  var oldScopedSlots = vm.$scopedSlots;
+  var hasDynamicScopedSlot = !!(newScopedSlots && !newScopedSlots.$stable || oldScopedSlots !== emptyObject && !oldScopedSlots.$stable || newScopedSlots && vm.$scopedSlots.$key !== newScopedSlots.$key || !newScopedSlots && vm.$scopedSlots.$key); // Any static slot children from the parent may have changed during parent's
+  // update. Dynamic scoped slots may also have changed. In such cases, a forced
+  // update is necessary to ensure correctness.
+
+  var needsForceUpdate = !!(renderChildren || // has new static slots
+  vm.$options._renderChildren || // has old static slots
+  hasDynamicScopedSlot);
+  vm.$options._parentVnode = parentVnode;
+  vm.$vnode = parentVnode; // update vm's placeholder node without re-render
+
+  if (vm._vnode) {
+    // update child tree's parent
+    vm._vnode.parent = parentVnode;
+  }
+
+  vm.$options._renderChildren = renderChildren; // update $attrs and $listeners hash
+  // these are also reactive so they may trigger child update if the child
+  // used them during render
+
+  vm.$attrs = parentVnode.data.attrs || emptyObject;
+  vm.$listeners = listeners || emptyObject; // update props
+
+  if (propsData && vm.$options.props) {
+    toggleObserving(false);
+    var props = vm._props;
+    var propKeys = vm.$options._propKeys || [];
+
+    for (var i = 0; i < propKeys.length; i++) {
+      var key = propKeys[i];
+      var propOptions = vm.$options.props; // wtf flow?
+
+      props[key] = validateProp(key, propOptions, propsData, vm);
+    }
+
+    toggleObserving(true); // keep a copy of raw propsData
+
+    vm.$options.propsData = propsData;
+  } // update listeners
+
+
+  listeners = listeners || emptyObject;
+  var oldListeners = vm.$options._parentListeners;
+  vm.$options._parentListeners = listeners;
+  updateComponentListeners(vm, listeners, oldListeners); // resolve slots + force update if has children
+
+  if (needsForceUpdate) {
+    vm.$slots = resolveSlots(renderChildren, parentVnode.context);
+    vm.$forceUpdate();
+  }
+
+  if (true) {
+    isUpdatingChildComponent = false;
+  }
+}
+
+function isInInactiveTree(vm) {
+  while (vm && (vm = vm.$parent)) {
+    if (vm._inactive) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function activateChildComponent(vm, direct) {
+  if (direct) {
+    vm._directInactive = false;
+
+    if (isInInactiveTree(vm)) {
+      return;
+    }
+  } else if (vm._directInactive) {
+    return;
+  }
+
+  if (vm._inactive || vm._inactive === null) {
+    vm._inactive = false;
+
+    for (var i = 0; i < vm.$children.length; i++) {
+      activateChildComponent(vm.$children[i]);
+    }
+
+    callHook(vm, 'activated');
+  }
+}
+
+function deactivateChildComponent(vm, direct) {
+  if (direct) {
+    vm._directInactive = true;
+
+    if (isInInactiveTree(vm)) {
+      return;
+    }
+  }
+
+  if (!vm._inactive) {
+    vm._inactive = true;
+
+    for (var i = 0; i < vm.$children.length; i++) {
+      deactivateChildComponent(vm.$children[i]);
+    }
+
+    callHook(vm, 'deactivated');
+  }
+}
+
+function callHook(vm, hook) {
+  // #7573 disable dep collection when invoking lifecycle hooks
+  pushTarget();
+  var handlers = vm.$options[hook];
+  var info = hook + " hook";
+
+  if (handlers) {
+    for (var i = 0, j = handlers.length; i < j; i++) {
+      invokeWithErrorHandling(handlers[i], vm, null, vm, info);
+    }
+  }
+
+  if (vm._hasHookEvent) {
+    vm.$emit('hook:' + hook);
+  }
+
+  popTarget();
+}
+/*  */
+
+
+var MAX_UPDATE_COUNT = 100;
+var queue = [];
+var activatedChildren = [];
+var has = {};
+var circular = {};
+var waiting = false;
+var flushing = false;
+var index = 0;
+/**
+ * Reset the scheduler's state.
+ */
+
+function resetSchedulerState() {
+  index = queue.length = activatedChildren.length = 0;
+  has = {};
+
+  if (true) {
+    circular = {};
+  }
+
+  waiting = flushing = false;
+} // Async edge case #6566 requires saving the timestamp when event listeners are
+// attached. However, calling performance.now() has a perf overhead especially
+// if the page has thousands of event listeners. Instead, we take a timestamp
+// every time the scheduler flushes and use that for all event listeners
+// attached during that flush.
+
+
+var currentFlushTimestamp = 0; // Async edge case fix requires storing an event listener's attach timestamp.
+
+var getNow = Date.now; // Determine what event timestamp the browser is using. Annoyingly, the
+// timestamp can either be hi-res (relative to page load) or low-res
+// (relative to UNIX epoch), so in order to compare time we have to use the
+// same timestamp type when saving the flush timestamp.
+// All IE versions use low-res event timestamps, and have problematic clock
+// implementations (#9632)
+
+if (inBrowser && !isIE) {
+  var performance = window.performance;
+
+  if (performance && typeof performance.now === 'function' && getNow() > document.createEvent('Event').timeStamp) {
+    // if the event timestamp, although evaluated AFTER the Date.now(), is
+    // smaller than it, it means the event is using a hi-res timestamp,
+    // and we need to use the hi-res version for event listener timestamps as
+    // well.
+    getNow = function getNow() {
+      return performance.now();
+    };
+  }
+}
+/**
+ * Flush both queues and run the watchers.
+ */
+
+
+function flushSchedulerQueue() {
+  currentFlushTimestamp = getNow();
+  flushing = true;
+  var watcher, id; // Sort queue before flush.
+  // This ensures that:
+  // 1. Components are updated from parent to child. (because parent is always
+  //    created before the child)
+  // 2. A component's user watchers are run before its render watcher (because
+  //    user watchers are created before the render watcher)
+  // 3. If a component is destroyed during a parent component's watcher run,
+  //    its watchers can be skipped.
+
+  queue.sort(function (a, b) {
+    return a.id - b.id;
+  }); // do not cache length because more watchers might be pushed
+  // as we run existing watchers
+
+  for (index = 0; index < queue.length; index++) {
+    watcher = queue[index];
+
+    if (watcher.before) {
+      watcher.before();
+    }
+
+    id = watcher.id;
+    has[id] = null;
+    watcher.run(); // in dev build, check and stop circular updates.
+
+    if ( true && has[id] != null) {
+      circular[id] = (circular[id] || 0) + 1;
+
+      if (circular[id] > MAX_UPDATE_COUNT) {
+        warn('You may have an infinite update loop ' + (watcher.user ? "in watcher with expression \"" + watcher.expression + "\"" : "in a component render function."), watcher.vm);
+        break;
+      }
+    }
+  } // keep copies of post queues before resetting state
+
+
+  var activatedQueue = activatedChildren.slice();
+  var updatedQueue = queue.slice();
+  resetSchedulerState(); // call component updated and activated hooks
+
+  callActivatedHooks(activatedQueue);
+  callUpdatedHooks(updatedQueue); // devtool hook
+
+  /* istanbul ignore if */
+
+  if (devtools && config.devtools) {
+    devtools.emit('flush');
+  }
+}
+
+function callUpdatedHooks(queue) {
+  var i = queue.length;
+
+  while (i--) {
+    var watcher = queue[i];
+    var vm = watcher.vm;
+
+    if (vm._watcher === watcher && vm._isMounted && !vm._isDestroyed) {
+      callHook(vm, 'updated');
+    }
+  }
+}
+/**
+ * Queue a kept-alive component that was activated during patch.
+ * The queue will be processed after the entire tree has been patched.
+ */
+
+
+function queueActivatedComponent(vm) {
+  // setting _inactive to false here so that a render function can
+  // rely on checking whether it's in an inactive tree (e.g. router-view)
+  vm._inactive = false;
+  activatedChildren.push(vm);
+}
+
+function callActivatedHooks(queue) {
+  for (var i = 0; i < queue.length; i++) {
+    queue[i]._inactive = true;
+    activateChildComponent(queue[i], true
+    /* true */
+    );
+  }
+}
+/**
+ * Push a watcher into the watcher queue.
+ * Jobs with duplicate IDs will be skipped unless it's
+ * pushed when the queue is being flushed.
+ */
+
+
+function queueWatcher(watcher) {
+  var id = watcher.id;
+
+  if (has[id] == null) {
+    has[id] = true;
+
+    if (!flushing) {
+      queue.push(watcher);
+    } else {
+      // if already flushing, splice the watcher based on its id
+      // if already past its id, it will be run next immediately.
+      var i = queue.length - 1;
+
+      while (i > index && queue[i].id > watcher.id) {
+        i--;
+      }
+
+      queue.splice(i + 1, 0, watcher);
+    } // queue the flush
+
+
+    if (!waiting) {
+      waiting = true;
+
+      if ( true && !config.async) {
+        flushSchedulerQueue();
+        return;
+      }
+
+      nextTick(flushSchedulerQueue);
+    }
+  }
+}
+/*  */
+
+
+var uid$2 = 0;
+/**
+ * A watcher parses an expression, collects dependencies,
+ * and fires callback when the expression value changes.
+ * This is used for both the $watch() api and directives.
+ */
+
+var Watcher = function Watcher(vm, expOrFn, cb, options, isRenderWatcher) {
+  this.vm = vm;
+
+  if (isRenderWatcher) {
+    vm._watcher = this;
+  }
+
+  vm._watchers.push(this); // options
+
+
+  if (options) {
+    this.deep = !!options.deep;
+    this.user = !!options.user;
+    this.lazy = !!options.lazy;
+    this.sync = !!options.sync;
+    this.before = options.before;
+  } else {
+    this.deep = this.user = this.lazy = this.sync = false;
+  }
+
+  this.cb = cb;
+  this.id = ++uid$2; // uid for batching
+
+  this.active = true;
+  this.dirty = this.lazy; // for lazy watchers
+
+  this.deps = [];
+  this.newDeps = [];
+  this.depIds = new _Set();
+  this.newDepIds = new _Set();
+  this.expression =  true ? expOrFn.toString() : undefined; // parse expression for getter
+
+  if (typeof expOrFn === 'function') {
+    this.getter = expOrFn;
+  } else {
+    this.getter = parsePath(expOrFn);
+
+    if (!this.getter) {
+      this.getter = noop;
+       true && warn("Failed watching path: \"" + expOrFn + "\" " + 'Watcher only accepts simple dot-delimited paths. ' + 'For full control, use a function instead.', vm);
+    }
+  }
+
+  this.value = this.lazy ? undefined : this.get();
+};
+/**
+ * Evaluate the getter, and re-collect dependencies.
+ */
+
+
+Watcher.prototype.get = function get() {
+  pushTarget(this);
+  var value;
+  var vm = this.vm;
+
+  try {
+    value = this.getter.call(vm, vm);
+  } catch (e) {
+    if (this.user) {
+      handleError(e, vm, "getter for watcher \"" + this.expression + "\"");
+    } else {
+      throw e;
+    }
+  } finally {
+    // "touch" every property so they are all tracked as
+    // dependencies for deep watching
+    if (this.deep) {
+      traverse(value);
+    }
+
+    popTarget();
+    this.cleanupDeps();
+  }
+
+  return value;
+};
+/**
+ * Add a dependency to this directive.
+ */
+
+
+Watcher.prototype.addDep = function addDep(dep) {
+  var id = dep.id;
+
+  if (!this.newDepIds.has(id)) {
+    this.newDepIds.add(id);
+    this.newDeps.push(dep);
+
+    if (!this.depIds.has(id)) {
+      dep.addSub(this);
+    }
+  }
+};
+/**
+ * Clean up for dependency collection.
+ */
+
+
+Watcher.prototype.cleanupDeps = function cleanupDeps() {
+  var i = this.deps.length;
+
+  while (i--) {
+    var dep = this.deps[i];
+
+    if (!this.newDepIds.has(dep.id)) {
+      dep.removeSub(this);
+    }
+  }
+
+  var tmp = this.depIds;
+  this.depIds = this.newDepIds;
+  this.newDepIds = tmp;
+  this.newDepIds.clear();
+  tmp = this.deps;
+  this.deps = this.newDeps;
+  this.newDeps = tmp;
+  this.newDeps.length = 0;
+};
+/**
+ * Subscriber interface.
+ * Will be called when a dependency changes.
+ */
+
+
+Watcher.prototype.update = function update() {
+  /* istanbul ignore else */
+  if (this.lazy) {
+    this.dirty = true;
+  } else if (this.sync) {
+    this.run();
+  } else {
+    queueWatcher(this);
+  }
+};
+/**
+ * Scheduler job interface.
+ * Will be called by the scheduler.
+ */
+
+
+Watcher.prototype.run = function run() {
+  if (this.active) {
+    var value = this.get();
+
+    if (value !== this.value || // Deep watchers and watchers on Object/Arrays should fire even
+    // when the value is the same, because the value may
+    // have mutated.
+    isObject(value) || this.deep) {
+      // set new value
+      var oldValue = this.value;
+      this.value = value;
+
+      if (this.user) {
+        var info = "callback for watcher \"" + this.expression + "\"";
+        invokeWithErrorHandling(this.cb, this.vm, [value, oldValue], this.vm, info);
+      } else {
+        this.cb.call(this.vm, value, oldValue);
+      }
+    }
+  }
+};
+/**
+ * Evaluate the value of the watcher.
+ * This only gets called for lazy watchers.
+ */
+
+
+Watcher.prototype.evaluate = function evaluate() {
+  this.value = this.get();
+  this.dirty = false;
+};
+/**
+ * Depend on all deps collected by this watcher.
+ */
+
+
+Watcher.prototype.depend = function depend() {
+  var i = this.deps.length;
+
+  while (i--) {
+    this.deps[i].depend();
+  }
+};
+/**
+ * Remove self from all dependencies' subscriber list.
+ */
+
+
+Watcher.prototype.teardown = function teardown() {
+  if (this.active) {
+    // remove self from vm's watcher list
+    // this is a somewhat expensive operation so we skip it
+    // if the vm is being destroyed.
+    if (!this.vm._isBeingDestroyed) {
+      remove(this.vm._watchers, this);
+    }
+
+    var i = this.deps.length;
+
+    while (i--) {
+      this.deps[i].removeSub(this);
+    }
+
+    this.active = false;
+  }
+};
+/*  */
+
+
+var sharedPropertyDefinition = {
+  enumerable: true,
+  configurable: true,
+  get: noop,
+  set: noop
+};
+
+function proxy(target, sourceKey, key) {
+  sharedPropertyDefinition.get = function proxyGetter() {
+    return this[sourceKey][key];
+  };
+
+  sharedPropertyDefinition.set = function proxySetter(val) {
+    this[sourceKey][key] = val;
+  };
+
+  Object.defineProperty(target, key, sharedPropertyDefinition);
+}
+
+function initState(vm) {
+  vm._watchers = [];
+  var opts = vm.$options;
+
+  if (opts.props) {
+    initProps(vm, opts.props);
+  }
+
+  if (opts.methods) {
+    initMethods(vm, opts.methods);
+  }
+
+  if (opts.data) {
+    initData(vm);
+  } else {
+    observe(vm._data = {}, true
+    /* asRootData */
+    );
+  }
+
+  if (opts.computed) {
+    initComputed(vm, opts.computed);
+  }
+
+  if (opts.watch && opts.watch !== nativeWatch) {
+    initWatch(vm, opts.watch);
+  }
+}
+
+function initProps(vm, propsOptions) {
+  var propsData = vm.$options.propsData || {};
+  var props = vm._props = {}; // cache prop keys so that future props updates can iterate using Array
+  // instead of dynamic object key enumeration.
+
+  var keys = vm.$options._propKeys = [];
+  var isRoot = !vm.$parent; // root instance props should be converted
+
+  if (!isRoot) {
+    toggleObserving(false);
+  }
+
+  var loop = function loop(key) {
+    keys.push(key);
+    var value = validateProp(key, propsOptions, propsData, vm);
+    /* istanbul ignore else */
+
+    if (true) {
+      var hyphenatedKey = hyphenate(key);
+
+      if (isReservedAttribute(hyphenatedKey) || config.isReservedAttr(hyphenatedKey)) {
+        warn("\"" + hyphenatedKey + "\" is a reserved attribute and cannot be used as component prop.", vm);
+      }
+
+      defineReactive$$1(props, key, value, function () {
+        if (!isRoot && !isUpdatingChildComponent) {
+          warn("Avoid mutating a prop directly since the value will be " + "overwritten whenever the parent component re-renders. " + "Instead, use a data or computed property based on the prop's " + "value. Prop being mutated: \"" + key + "\"", vm);
+        }
+      });
+    } else {} // static props are already proxied on the component's prototype
+    // during Vue.extend(). We only need to proxy props defined at
+    // instantiation here.
+
+
+    if (!(key in vm)) {
+      proxy(vm, "_props", key);
+    }
+  };
+
+  for (var key in propsOptions) {
+    loop(key);
+  }
+
+  toggleObserving(true);
+}
+
+function initData(vm) {
+  var data = vm.$options.data;
+  data = vm._data = typeof data === 'function' ? getData(data, vm) : data || {};
+
+  if (!isPlainObject(data)) {
+    data = {};
+     true && warn('data functions should return an object:\n' + 'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
+  } // proxy data on instance
+
+
+  var keys = Object.keys(data);
+  var props = vm.$options.props;
+  var methods = vm.$options.methods;
+  var i = keys.length;
+
+  while (i--) {
+    var key = keys[i];
+
+    if (true) {
+      if (methods && hasOwn(methods, key)) {
+        warn("Method \"" + key + "\" has already been defined as a data property.", vm);
+      }
+    }
+
+    if (props && hasOwn(props, key)) {
+       true && warn("The data property \"" + key + "\" is already declared as a prop. " + "Use prop default value instead.", vm);
+    } else if (!isReserved(key)) {
+      proxy(vm, "_data", key);
+    }
+  } // observe data
+
+
+  observe(data, true
+  /* asRootData */
+  );
+}
+
+function getData(data, vm) {
+  // #7573 disable dep collection when invoking data getters
+  pushTarget();
+
+  try {
+    return data.call(vm, vm);
+  } catch (e) {
+    handleError(e, vm, "data()");
+    return {};
+  } finally {
+    popTarget();
+  }
+}
+
+var computedWatcherOptions = {
+  lazy: true
+};
+
+function initComputed(vm, computed) {
+  // $flow-disable-line
+  var watchers = vm._computedWatchers = Object.create(null); // computed properties are just getters during SSR
+
+  var isSSR = isServerRendering();
+
+  for (var key in computed) {
+    var userDef = computed[key];
+    var getter = typeof userDef === 'function' ? userDef : userDef.get;
+
+    if ( true && getter == null) {
+      warn("Getter is missing for computed property \"" + key + "\".", vm);
+    }
+
+    if (!isSSR) {
+      // create internal watcher for the computed property.
+      watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions);
+    } // component-defined computed properties are already defined on the
+    // component prototype. We only need to define computed properties defined
+    // at instantiation here.
+
+
+    if (!(key in vm)) {
+      defineComputed(vm, key, userDef);
+    } else if (true) {
+      if (key in vm.$data) {
+        warn("The computed property \"" + key + "\" is already defined in data.", vm);
+      } else if (vm.$options.props && key in vm.$options.props) {
+        warn("The computed property \"" + key + "\" is already defined as a prop.", vm);
+      } else if (vm.$options.methods && key in vm.$options.methods) {
+        warn("The computed property \"" + key + "\" is already defined as a method.", vm);
+      }
+    }
+  }
+}
+
+function defineComputed(target, key, userDef) {
+  var shouldCache = !isServerRendering();
+
+  if (typeof userDef === 'function') {
+    sharedPropertyDefinition.get = shouldCache ? createComputedGetter(key) : createGetterInvoker(userDef);
+    sharedPropertyDefinition.set = noop;
+  } else {
+    sharedPropertyDefinition.get = userDef.get ? shouldCache && userDef.cache !== false ? createComputedGetter(key) : createGetterInvoker(userDef.get) : noop;
+    sharedPropertyDefinition.set = userDef.set || noop;
+  }
+
+  if ( true && sharedPropertyDefinition.set === noop) {
+    sharedPropertyDefinition.set = function () {
+      warn("Computed property \"" + key + "\" was assigned to but it has no setter.", this);
+    };
+  }
+
+  Object.defineProperty(target, key, sharedPropertyDefinition);
+}
+
+function createComputedGetter(key) {
+  return function computedGetter() {
+    var watcher = this._computedWatchers && this._computedWatchers[key];
+
+    if (watcher) {
+      if (watcher.dirty) {
+        watcher.evaluate();
+      }
+
+      if (Dep.target) {
+        watcher.depend();
+      }
+
+      return watcher.value;
+    }
+  };
+}
+
+function createGetterInvoker(fn) {
+  return function computedGetter() {
+    return fn.call(this, this);
+  };
+}
+
+function initMethods(vm, methods) {
+  var props = vm.$options.props;
+
+  for (var key in methods) {
+    if (true) {
+      if (typeof methods[key] !== 'function') {
+        warn("Method \"" + key + "\" has type \"" + _typeof(methods[key]) + "\" in the component definition. " + "Did you reference the function correctly?", vm);
+      }
+
+      if (props && hasOwn(props, key)) {
+        warn("Method \"" + key + "\" has already been defined as a prop.", vm);
+      }
+
+      if (key in vm && isReserved(key)) {
+        warn("Method \"" + key + "\" conflicts with an existing Vue instance method. " + "Avoid defining component methods that start with _ or $.");
+      }
+    }
+
+    vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm);
+  }
+}
+
+function initWatch(vm, watch) {
+  for (var key in watch) {
+    var handler = watch[key];
+
+    if (Array.isArray(handler)) {
+      for (var i = 0; i < handler.length; i++) {
+        createWatcher(vm, key, handler[i]);
+      }
+    } else {
+      createWatcher(vm, key, handler);
+    }
+  }
+}
+
+function createWatcher(vm, expOrFn, handler, options) {
+  if (isPlainObject(handler)) {
+    options = handler;
+    handler = handler.handler;
+  }
+
+  if (typeof handler === 'string') {
+    handler = vm[handler];
+  }
+
+  return vm.$watch(expOrFn, handler, options);
+}
+
+function stateMixin(Vue) {
+  // flow somehow has problems with directly declared definition object
+  // when using Object.defineProperty, so we have to procedurally build up
+  // the object here.
+  var dataDef = {};
+
+  dataDef.get = function () {
+    return this._data;
+  };
+
+  var propsDef = {};
+
+  propsDef.get = function () {
+    return this._props;
+  };
+
+  if (true) {
+    dataDef.set = function () {
+      warn('Avoid replacing instance root $data. ' + 'Use nested data properties instead.', this);
+    };
+
+    propsDef.set = function () {
+      warn("$props is readonly.", this);
+    };
+  }
+
+  Object.defineProperty(Vue.prototype, '$data', dataDef);
+  Object.defineProperty(Vue.prototype, '$props', propsDef);
+  Vue.prototype.$set = set;
+  Vue.prototype.$delete = del;
+
+  Vue.prototype.$watch = function (expOrFn, cb, options) {
+    var vm = this;
+
+    if (isPlainObject(cb)) {
+      return createWatcher(vm, expOrFn, cb, options);
+    }
+
+    options = options || {};
+    options.user = true;
+    var watcher = new Watcher(vm, expOrFn, cb, options);
+
+    if (options.immediate) {
+      var info = "callback for immediate watcher \"" + watcher.expression + "\"";
+      pushTarget();
+      invokeWithErrorHandling(cb, vm, [watcher.value], vm, info);
+      popTarget();
+    }
+
+    return function unwatchFn() {
+      watcher.teardown();
+    };
+  };
+}
+/*  */
+
+
+var uid$3 = 0;
+
+function initMixin(Vue) {
+  Vue.prototype._init = function (options) {
+    var vm = this; // a uid
+
+    vm._uid = uid$3++;
+    var startTag, endTag;
+    /* istanbul ignore if */
+
+    if ( true && config.performance && mark) {
+      startTag = "vue-perf-start:" + vm._uid;
+      endTag = "vue-perf-end:" + vm._uid;
+      mark(startTag);
+    } // a flag to avoid this being observed
+
+
+    vm._isVue = true; // merge options
+
+    if (options && options._isComponent) {
+      // optimize internal component instantiation
+      // since dynamic options merging is pretty slow, and none of the
+      // internal component options needs special treatment.
+      initInternalComponent(vm, options);
+    } else {
+      vm.$options = mergeOptions(resolveConstructorOptions(vm.constructor), options || {}, vm);
+    }
+    /* istanbul ignore else */
+
+
+    if (true) {
+      initProxy(vm);
+    } else {} // expose real self
+
+
+    vm._self = vm;
+    initLifecycle(vm);
+    initEvents(vm);
+    initRender(vm);
+    callHook(vm, 'beforeCreate');
+    initInjections(vm); // resolve injections before data/props
+
+    initState(vm);
+    initProvide(vm); // resolve provide after data/props
+
+    callHook(vm, 'created');
+    /* istanbul ignore if */
+
+    if ( true && config.performance && mark) {
+      vm._name = formatComponentName(vm, false);
+      mark(endTag);
+      measure("vue " + vm._name + " init", startTag, endTag);
+    }
+
+    if (vm.$options.el) {
+      vm.$mount(vm.$options.el);
+    }
+  };
+}
+
+function initInternalComponent(vm, options) {
+  var opts = vm.$options = Object.create(vm.constructor.options); // doing this because it's faster than dynamic enumeration.
+
+  var parentVnode = options._parentVnode;
+  opts.parent = options.parent;
+  opts._parentVnode = parentVnode;
+  var vnodeComponentOptions = parentVnode.componentOptions;
+  opts.propsData = vnodeComponentOptions.propsData;
+  opts._parentListeners = vnodeComponentOptions.listeners;
+  opts._renderChildren = vnodeComponentOptions.children;
+  opts._componentTag = vnodeComponentOptions.tag;
+
+  if (options.render) {
+    opts.render = options.render;
+    opts.staticRenderFns = options.staticRenderFns;
+  }
+}
+
+function resolveConstructorOptions(Ctor) {
+  var options = Ctor.options;
+
+  if (Ctor.super) {
+    var superOptions = resolveConstructorOptions(Ctor.super);
+    var cachedSuperOptions = Ctor.superOptions;
+
+    if (superOptions !== cachedSuperOptions) {
+      // super option changed,
+      // need to resolve new options.
+      Ctor.superOptions = superOptions; // check if there are any late-modified/attached options (#4976)
+
+      var modifiedOptions = resolveModifiedOptions(Ctor); // update base extend options
+
+      if (modifiedOptions) {
+        extend(Ctor.extendOptions, modifiedOptions);
+      }
+
+      options = Ctor.options = mergeOptions(superOptions, Ctor.extendOptions);
+
+      if (options.name) {
+        options.components[options.name] = Ctor;
+      }
+    }
+  }
+
+  return options;
+}
+
+function resolveModifiedOptions(Ctor) {
+  var modified;
+  var latest = Ctor.options;
+  var sealed = Ctor.sealedOptions;
+
+  for (var key in latest) {
+    if (latest[key] !== sealed[key]) {
+      if (!modified) {
+        modified = {};
+      }
+
+      modified[key] = latest[key];
+    }
+  }
+
+  return modified;
+}
+
+function Vue(options) {
+  if ( true && !(this instanceof Vue)) {
+    warn('Vue is a constructor and should be called with the `new` keyword');
+  }
+
+  this._init(options);
+}
+
+initMixin(Vue);
+stateMixin(Vue);
+eventsMixin(Vue);
+lifecycleMixin(Vue);
+renderMixin(Vue);
+/*  */
+
+function initUse(Vue) {
+  Vue.use = function (plugin) {
+    var installedPlugins = this._installedPlugins || (this._installedPlugins = []);
+
+    if (installedPlugins.indexOf(plugin) > -1) {
+      return this;
+    } // additional parameters
+
+
+    var args = toArray(arguments, 1);
+    args.unshift(this);
+
+    if (typeof plugin.install === 'function') {
+      plugin.install.apply(plugin, args);
+    } else if (typeof plugin === 'function') {
+      plugin.apply(null, args);
+    }
+
+    installedPlugins.push(plugin);
+    return this;
+  };
+}
+/*  */
+
+
+function initMixin$1(Vue) {
+  Vue.mixin = function (mixin) {
+    this.options = mergeOptions(this.options, mixin);
+    return this;
+  };
+}
+/*  */
+
+
+function initExtend(Vue) {
+  /**
+   * Each instance constructor, including Vue, has a unique
+   * cid. This enables us to create wrapped "child
+   * constructors" for prototypal inheritance and cache them.
+   */
+  Vue.cid = 0;
+  var cid = 1;
+  /**
+   * Class inheritance
+   */
+
+  Vue.extend = function (extendOptions) {
+    extendOptions = extendOptions || {};
+    var Super = this;
+    var SuperId = Super.cid;
+    var cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {});
+
+    if (cachedCtors[SuperId]) {
+      return cachedCtors[SuperId];
+    }
+
+    var name = extendOptions.name || Super.options.name;
+
+    if ( true && name) {
+      validateComponentName(name);
+    }
+
+    var Sub = function VueComponent(options) {
+      this._init(options);
+    };
+
+    Sub.prototype = Object.create(Super.prototype);
+    Sub.prototype.constructor = Sub;
+    Sub.cid = cid++;
+    Sub.options = mergeOptions(Super.options, extendOptions);
+    Sub['super'] = Super; // For props and computed properties, we define the proxy getters on
+    // the Vue instances at extension time, on the extended prototype. This
+    // avoids Object.defineProperty calls for each instance created.
+
+    if (Sub.options.props) {
+      initProps$1(Sub);
+    }
+
+    if (Sub.options.computed) {
+      initComputed$1(Sub);
+    } // allow further extension/mixin/plugin usage
+
+
+    Sub.extend = Super.extend;
+    Sub.mixin = Super.mixin;
+    Sub.use = Super.use; // create asset registers, so extended classes
+    // can have their private assets too.
+
+    ASSET_TYPES.forEach(function (type) {
+      Sub[type] = Super[type];
+    }); // enable recursive self-lookup
+
+    if (name) {
+      Sub.options.components[name] = Sub;
+    } // keep a reference to the super options at extension time.
+    // later at instantiation we can check if Super's options have
+    // been updated.
+
+
+    Sub.superOptions = Super.options;
+    Sub.extendOptions = extendOptions;
+    Sub.sealedOptions = extend({}, Sub.options); // cache constructor
+
+    cachedCtors[SuperId] = Sub;
+    return Sub;
+  };
+}
+
+function initProps$1(Comp) {
+  var props = Comp.options.props;
+
+  for (var key in props) {
+    proxy(Comp.prototype, "_props", key);
+  }
+}
+
+function initComputed$1(Comp) {
+  var computed = Comp.options.computed;
+
+  for (var key in computed) {
+    defineComputed(Comp.prototype, key, computed[key]);
+  }
+}
+/*  */
+
+
+function initAssetRegisters(Vue) {
+  /**
+   * Create asset registration methods.
+   */
+  ASSET_TYPES.forEach(function (type) {
+    Vue[type] = function (id, definition) {
+      if (!definition) {
+        return this.options[type + 's'][id];
+      } else {
+        /* istanbul ignore if */
+        if ( true && type === 'component') {
+          validateComponentName(id);
+        }
+
+        if (type === 'component' && isPlainObject(definition)) {
+          definition.name = definition.name || id;
+          definition = this.options._base.extend(definition);
+        }
+
+        if (type === 'directive' && typeof definition === 'function') {
+          definition = {
+            bind: definition,
+            update: definition
+          };
+        }
+
+        this.options[type + 's'][id] = definition;
+        return definition;
+      }
+    };
+  });
+}
+/*  */
+
+
+function getComponentName(opts) {
+  return opts && (opts.Ctor.options.name || opts.tag);
+}
+
+function matches(pattern, name) {
+  if (Array.isArray(pattern)) {
+    return pattern.indexOf(name) > -1;
+  } else if (typeof pattern === 'string') {
+    return pattern.split(',').indexOf(name) > -1;
+  } else if (isRegExp(pattern)) {
+    return pattern.test(name);
+  }
+  /* istanbul ignore next */
+
+
+  return false;
+}
+
+function pruneCache(keepAliveInstance, filter) {
+  var cache = keepAliveInstance.cache;
+  var keys = keepAliveInstance.keys;
+  var _vnode = keepAliveInstance._vnode;
+
+  for (var key in cache) {
+    var entry = cache[key];
+
+    if (entry) {
+      var name = entry.name;
+
+      if (name && !filter(name)) {
+        pruneCacheEntry(cache, key, keys, _vnode);
+      }
+    }
+  }
+}
+
+function pruneCacheEntry(cache, key, keys, current) {
+  var entry = cache[key];
+
+  if (entry && (!current || entry.tag !== current.tag)) {
+    entry.componentInstance.$destroy();
+  }
+
+  cache[key] = null;
+  remove(keys, key);
+}
+
+var patternTypes = [String, RegExp, Array];
+var KeepAlive = {
+  name: 'keep-alive',
+  abstract: true,
+  props: {
+    include: patternTypes,
+    exclude: patternTypes,
+    max: [String, Number]
+  },
+  methods: {
+    cacheVNode: function cacheVNode() {
+      var ref = this;
+      var cache = ref.cache;
+      var keys = ref.keys;
+      var vnodeToCache = ref.vnodeToCache;
+      var keyToCache = ref.keyToCache;
+
+      if (vnodeToCache) {
+        var tag = vnodeToCache.tag;
+        var componentInstance = vnodeToCache.componentInstance;
+        var componentOptions = vnodeToCache.componentOptions;
+        cache[keyToCache] = {
+          name: getComponentName(componentOptions),
+          tag: tag,
+          componentInstance: componentInstance
+        };
+        keys.push(keyToCache); // prune oldest entry
+
+        if (this.max && keys.length > parseInt(this.max)) {
+          pruneCacheEntry(cache, keys[0], keys, this._vnode);
+        }
+
+        this.vnodeToCache = null;
+      }
+    }
+  },
+  created: function created() {
+    this.cache = Object.create(null);
+    this.keys = [];
+  },
+  destroyed: function destroyed() {
+    for (var key in this.cache) {
+      pruneCacheEntry(this.cache, key, this.keys);
+    }
+  },
+  mounted: function mounted() {
+    var this$1 = this;
+    this.cacheVNode();
+    this.$watch('include', function (val) {
+      pruneCache(this$1, function (name) {
+        return matches(val, name);
+      });
+    });
+    this.$watch('exclude', function (val) {
+      pruneCache(this$1, function (name) {
+        return !matches(val, name);
+      });
+    });
+  },
+  updated: function updated() {
+    this.cacheVNode();
+  },
+  render: function render() {
+    var slot = this.$slots.default;
+    var vnode = getFirstComponentChild(slot);
+    var componentOptions = vnode && vnode.componentOptions;
+
+    if (componentOptions) {
+      // check pattern
+      var name = getComponentName(componentOptions);
+      var ref = this;
+      var include = ref.include;
+      var exclude = ref.exclude;
+
+      if ( // not included
+      include && (!name || !matches(include, name)) || exclude && name && matches(exclude, name)) {
+        return vnode;
+      }
+
+      var ref$1 = this;
+      var cache = ref$1.cache;
+      var keys = ref$1.keys;
+      var key = vnode.key == null // same constructor may get registered as different local components
+      // so cid alone is not enough (#3269)
+      ? componentOptions.Ctor.cid + (componentOptions.tag ? "::" + componentOptions.tag : '') : vnode.key;
+
+      if (cache[key]) {
+        vnode.componentInstance = cache[key].componentInstance; // make current key freshest
+
+        remove(keys, key);
+        keys.push(key);
+      } else {
+        // delay setting the cache until update
+        this.vnodeToCache = vnode;
+        this.keyToCache = key;
+      }
+
+      vnode.data.keepAlive = true;
+    }
+
+    return vnode || slot && slot[0];
+  }
+};
+var builtInComponents = {
+  KeepAlive: KeepAlive
+};
+/*  */
+
+function initGlobalAPI(Vue) {
+  // config
+  var configDef = {};
+
+  configDef.get = function () {
+    return config;
+  };
+
+  if (true) {
+    configDef.set = function () {
+      warn('Do not replace the Vue.config object, set individual fields instead.');
+    };
+  }
+
+  Object.defineProperty(Vue, 'config', configDef); // exposed util methods.
+  // NOTE: these are not considered part of the public API - avoid relying on
+  // them unless you are aware of the risk.
+
+  Vue.util = {
+    warn: warn,
+    extend: extend,
+    mergeOptions: mergeOptions,
+    defineReactive: defineReactive$$1
+  };
+  Vue.set = set;
+  Vue.delete = del;
+  Vue.nextTick = nextTick; // 2.6 explicit observable API
+
+  Vue.observable = function (obj) {
+    observe(obj);
+    return obj;
+  };
+
+  Vue.options = Object.create(null);
+  ASSET_TYPES.forEach(function (type) {
+    Vue.options[type + 's'] = Object.create(null);
+  }); // this is used to identify the "base" constructor to extend all plain-object
+  // components with in Weex's multi-instance scenarios.
+
+  Vue.options._base = Vue;
+  extend(Vue.options.components, builtInComponents);
+  initUse(Vue);
+  initMixin$1(Vue);
+  initExtend(Vue);
+  initAssetRegisters(Vue);
+}
+
+initGlobalAPI(Vue);
+Object.defineProperty(Vue.prototype, '$isServer', {
+  get: isServerRendering
+});
+Object.defineProperty(Vue.prototype, '$ssrContext', {
+  get: function get() {
+    /* istanbul ignore next */
+    return this.$vnode && this.$vnode.ssrContext;
+  }
+}); // expose FunctionalRenderContext for ssr runtime helper installation
+
+Object.defineProperty(Vue, 'FunctionalRenderContext', {
+  value: FunctionalRenderContext
+});
+Vue.version = '2.6.14';
+/*  */
+// these are reserved for web because they are directly compiled away
+// during template compilation
+
+var isReservedAttr = makeMap('style,class'); // attributes that should be using props for binding
+
+var acceptValue = makeMap('input,textarea,option,select,progress');
+
+var mustUseProp = function mustUseProp(tag, type, attr) {
+  return attr === 'value' && acceptValue(tag) && type !== 'button' || attr === 'selected' && tag === 'option' || attr === 'checked' && tag === 'input' || attr === 'muted' && tag === 'video';
+};
+
+var isEnumeratedAttr = makeMap('contenteditable,draggable,spellcheck');
+var isValidContentEditableValue = makeMap('events,caret,typing,plaintext-only');
+
+var convertEnumeratedValue = function convertEnumeratedValue(key, value) {
+  return isFalsyAttrValue(value) || value === 'false' ? 'false' // allow arbitrary string value for contenteditable
+  : key === 'contenteditable' && isValidContentEditableValue(value) ? value : 'true';
+};
+
+var isBooleanAttr = makeMap('allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,' + 'default,defaultchecked,defaultmuted,defaultselected,defer,disabled,' + 'enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,' + 'muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,' + 'required,reversed,scoped,seamless,selected,sortable,' + 'truespeed,typemustmatch,visible');
+var xlinkNS = 'http://www.w3.org/1999/xlink';
+
+var isXlink = function isXlink(name) {
+  return name.charAt(5) === ':' && name.slice(0, 5) === 'xlink';
+};
+
+var getXlinkProp = function getXlinkProp(name) {
+  return isXlink(name) ? name.slice(6, name.length) : '';
+};
+
+var isFalsyAttrValue = function isFalsyAttrValue(val) {
+  return val == null || val === false;
+};
+/*  */
+
+
+function genClassForVnode(vnode) {
+  var data = vnode.data;
+  var parentNode = vnode;
+  var childNode = vnode;
+
+  while (isDef(childNode.componentInstance)) {
+    childNode = childNode.componentInstance._vnode;
+
+    if (childNode && childNode.data) {
+      data = mergeClassData(childNode.data, data);
+    }
+  }
+
+  while (isDef(parentNode = parentNode.parent)) {
+    if (parentNode && parentNode.data) {
+      data = mergeClassData(data, parentNode.data);
+    }
+  }
+
+  return renderClass(data.staticClass, data.class);
+}
+
+function mergeClassData(child, parent) {
+  return {
+    staticClass: concat(child.staticClass, parent.staticClass),
+    class: isDef(child.class) ? [child.class, parent.class] : parent.class
+  };
+}
+
+function renderClass(staticClass, dynamicClass) {
+  if (isDef(staticClass) || isDef(dynamicClass)) {
+    return concat(staticClass, stringifyClass(dynamicClass));
+  }
+  /* istanbul ignore next */
+
+
+  return '';
+}
+
+function concat(a, b) {
+  return a ? b ? a + ' ' + b : a : b || '';
+}
+
+function stringifyClass(value) {
+  if (Array.isArray(value)) {
+    return stringifyArray(value);
+  }
+
+  if (isObject(value)) {
+    return stringifyObject(value);
+  }
+
+  if (typeof value === 'string') {
+    return value;
+  }
+  /* istanbul ignore next */
+
+
+  return '';
+}
+
+function stringifyArray(value) {
+  var res = '';
+  var stringified;
+
+  for (var i = 0, l = value.length; i < l; i++) {
+    if (isDef(stringified = stringifyClass(value[i])) && stringified !== '') {
+      if (res) {
+        res += ' ';
+      }
+
+      res += stringified;
+    }
+  }
+
+  return res;
+}
+
+function stringifyObject(value) {
+  var res = '';
+
+  for (var key in value) {
+    if (value[key]) {
+      if (res) {
+        res += ' ';
+      }
+
+      res += key;
+    }
+  }
+
+  return res;
+}
+/*  */
+
+
+var namespaceMap = {
+  svg: 'http://www.w3.org/2000/svg',
+  math: 'http://www.w3.org/1998/Math/MathML'
+};
+var isHTMLTag = makeMap('html,body,base,head,link,meta,style,title,' + 'address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,' + 'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' + 'a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' + 's,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,' + 'embed,object,param,source,canvas,script,noscript,del,ins,' + 'caption,col,colgroup,table,thead,tbody,td,th,tr,' + 'button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,' + 'output,progress,select,textarea,' + 'details,dialog,menu,menuitem,summary,' + 'content,element,shadow,template,blockquote,iframe,tfoot'); // this map is intentionally selective, only covering SVG elements that may
+// contain child elements.
+
+var isSVG = makeMap('svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,' + 'foreignobject,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,' + 'polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view', true);
+
+var isPreTag = function isPreTag(tag) {
+  return tag === 'pre';
+};
+
+var isReservedTag = function isReservedTag(tag) {
+  return isHTMLTag(tag) || isSVG(tag);
+};
+
+function getTagNamespace(tag) {
+  if (isSVG(tag)) {
+    return 'svg';
+  } // basic support for MathML
+  // note it doesn't support other MathML elements being component roots
+
+
+  if (tag === 'math') {
+    return 'math';
+  }
+}
+
+var unknownElementCache = Object.create(null);
+
+function isUnknownElement(tag) {
+  /* istanbul ignore if */
+  if (!inBrowser) {
+    return true;
+  }
+
+  if (isReservedTag(tag)) {
+    return false;
+  }
+
+  tag = tag.toLowerCase();
+  /* istanbul ignore if */
+
+  if (unknownElementCache[tag] != null) {
+    return unknownElementCache[tag];
+  }
+
+  var el = document.createElement(tag);
+
+  if (tag.indexOf('-') > -1) {
+    // http://stackoverflow.com/a/28210364/1070244
+    return unknownElementCache[tag] = el.constructor === window.HTMLUnknownElement || el.constructor === window.HTMLElement;
+  } else {
+    return unknownElementCache[tag] = /HTMLUnknownElement/.test(el.toString());
+  }
+}
+
+var isTextInputType = makeMap('text,number,password,search,email,tel,url');
+/*  */
+
+/**
+ * Query an element selector if it's not an element already.
+ */
+
+function query(el) {
+  if (typeof el === 'string') {
+    var selected = document.querySelector(el);
+
+    if (!selected) {
+       true && warn('Cannot find element: ' + el);
+      return document.createElement('div');
+    }
+
+    return selected;
+  } else {
+    return el;
+  }
+}
+/*  */
+
+
+function createElement$1(tagName, vnode) {
+  var elm = document.createElement(tagName);
+
+  if (tagName !== 'select') {
+    return elm;
+  } // false or null will remove the attribute but undefined will not
+
+
+  if (vnode.data && vnode.data.attrs && vnode.data.attrs.multiple !== undefined) {
+    elm.setAttribute('multiple', 'multiple');
+  }
+
+  return elm;
+}
+
+function createElementNS(namespace, tagName) {
+  return document.createElementNS(namespaceMap[namespace], tagName);
+}
+
+function createTextNode(text) {
+  return document.createTextNode(text);
+}
+
+function createComment(text) {
+  return document.createComment(text);
+}
+
+function insertBefore(parentNode, newNode, referenceNode) {
+  parentNode.insertBefore(newNode, referenceNode);
+}
+
+function removeChild(node, child) {
+  node.removeChild(child);
+}
+
+function appendChild(node, child) {
+  node.appendChild(child);
+}
+
+function parentNode(node) {
+  return node.parentNode;
+}
+
+function nextSibling(node) {
+  return node.nextSibling;
+}
+
+function tagName(node) {
+  return node.tagName;
+}
+
+function setTextContent(node, text) {
+  node.textContent = text;
+}
+
+function setStyleScope(node, scopeId) {
+  node.setAttribute(scopeId, '');
+}
+
+var nodeOps = /*#__PURE__*/Object.freeze({
+  createElement: createElement$1,
+  createElementNS: createElementNS,
+  createTextNode: createTextNode,
+  createComment: createComment,
+  insertBefore: insertBefore,
+  removeChild: removeChild,
+  appendChild: appendChild,
+  parentNode: parentNode,
+  nextSibling: nextSibling,
+  tagName: tagName,
+  setTextContent: setTextContent,
+  setStyleScope: setStyleScope
+});
+/*  */
+
+var ref = {
+  create: function create(_, vnode) {
+    registerRef(vnode);
+  },
+  update: function update(oldVnode, vnode) {
+    if (oldVnode.data.ref !== vnode.data.ref) {
+      registerRef(oldVnode, true);
+      registerRef(vnode);
+    }
+  },
+  destroy: function destroy(vnode) {
+    registerRef(vnode, true);
+  }
+};
+
+function registerRef(vnode, isRemoval) {
+  var key = vnode.data.ref;
+
+  if (!isDef(key)) {
+    return;
+  }
+
+  var vm = vnode.context;
+  var ref = vnode.componentInstance || vnode.elm;
+  var refs = vm.$refs;
+
+  if (isRemoval) {
+    if (Array.isArray(refs[key])) {
+      remove(refs[key], ref);
+    } else if (refs[key] === ref) {
+      refs[key] = undefined;
+    }
+  } else {
+    if (vnode.data.refInFor) {
+      if (!Array.isArray(refs[key])) {
+        refs[key] = [ref];
+      } else if (refs[key].indexOf(ref) < 0) {
+        // $flow-disable-line
+        refs[key].push(ref);
+      }
+    } else {
+      refs[key] = ref;
+    }
+  }
+}
+/**
+ * Virtual DOM patching algorithm based on Snabbdom by
+ * Simon Friis Vindum (@paldepind)
+ * Licensed under the MIT License
+ * https://github.com/paldepind/snabbdom/blob/master/LICENSE
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * modified by Evan You (@yyx990803)
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
+ * Not type-checking this because this file is perf-critical and the cost
+ * of making flow understand it is not worth it.
+ */
+
+
+var emptyNode = new VNode('', {}, []);
+var hooks = ['create', 'activate', 'update', 'remove', 'destroy'];
+
+function sameVnode(a, b) {
+  return a.key === b.key && a.asyncFactory === b.asyncFactory && (a.tag === b.tag && a.isComment === b.isComment && isDef(a.data) === isDef(b.data) && sameInputType(a, b) || isTrue(a.isAsyncPlaceholder) && isUndef(b.asyncFactory.error));
+}
+
+function sameInputType(a, b) {
+  if (a.tag !== 'input') {
+    return true;
+  }
+
+  var i;
+  var typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type;
+  var typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type;
+  return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB);
+}
+
+function createKeyToOldIdx(children, beginIdx, endIdx) {
+  var i, key;
+  var map = {};
+
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key;
+
+    if (isDef(key)) {
+      map[key] = i;
+    }
+  }
+
+  return map;
+}
+
+function createPatchFunction(backend) {
+  var i, j;
+  var cbs = {};
+  var modules = backend.modules;
+  var nodeOps = backend.nodeOps;
+
+  for (i = 0; i < hooks.length; ++i) {
+    cbs[hooks[i]] = [];
+
+    for (j = 0; j < modules.length; ++j) {
+      if (isDef(modules[j][hooks[i]])) {
+        cbs[hooks[i]].push(modules[j][hooks[i]]);
+      }
+    }
+  }
+
+  function emptyNodeAt(elm) {
+    return new VNode(nodeOps.tagName(elm).toLowerCase(), {}, [], undefined, elm);
+  }
+
+  function createRmCb(childElm, listeners) {
+    function remove$$1() {
+      if (--remove$$1.listeners === 0) {
+        removeNode(childElm);
+      }
+    }
+
+    remove$$1.listeners = listeners;
+    return remove$$1;
+  }
+
+  function removeNode(el) {
+    var parent = nodeOps.parentNode(el); // element may have already been removed due to v-html / v-text
+
+    if (isDef(parent)) {
+      nodeOps.removeChild(parent, el);
+    }
+  }
+
+  function isUnknownElement$$1(vnode, inVPre) {
+    return !inVPre && !vnode.ns && !(config.ignoredElements.length && config.ignoredElements.some(function (ignore) {
+      return isRegExp(ignore) ? ignore.test(vnode.tag) : ignore === vnode.tag;
+    })) && config.isUnknownElement(vnode.tag);
+  }
+
+  var creatingElmInVPre = 0;
+
+  function createElm(vnode, insertedVnodeQueue, parentElm, refElm, nested, ownerArray, index) {
+    if (isDef(vnode.elm) && isDef(ownerArray)) {
+      // This vnode was used in a previous render!
+      // now it's used as a new node, overwriting its elm would cause
+      // potential patch errors down the road when it's used as an insertion
+      // reference node. Instead, we clone the node on-demand before creating
+      // associated DOM element for it.
+      vnode = ownerArray[index] = cloneVNode(vnode);
+    }
+
+    vnode.isRootInsert = !nested; // for transition enter check
+
+    if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
+      return;
+    }
+
+    var data = vnode.data;
+    var children = vnode.children;
+    var tag = vnode.tag;
+
+    if (isDef(tag)) {
+      if (true) {
+        if (data && data.pre) {
+          creatingElmInVPre++;
+        }
+
+        if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
+          warn('Unknown custom element: <' + tag + '> - did you ' + 'register the component correctly? For recursive components, ' + 'make sure to provide the "name" option.', vnode.context);
+        }
+      }
+
+      vnode.elm = vnode.ns ? nodeOps.createElementNS(vnode.ns, tag) : nodeOps.createElement(tag, vnode);
+      setScope(vnode);
+      /* istanbul ignore if */
+
+      {
+        createChildren(vnode, children, insertedVnodeQueue);
+
+        if (isDef(data)) {
+          invokeCreateHooks(vnode, insertedVnodeQueue);
+        }
+
+        insert(parentElm, vnode.elm, refElm);
+      }
+
+      if ( true && data && data.pre) {
+        creatingElmInVPre--;
+      }
+    } else if (isTrue(vnode.isComment)) {
+      vnode.elm = nodeOps.createComment(vnode.text);
+      insert(parentElm, vnode.elm, refElm);
+    } else {
+      vnode.elm = nodeOps.createTextNode(vnode.text);
+      insert(parentElm, vnode.elm, refElm);
+    }
+  }
+
+  function createComponent(vnode, insertedVnodeQueue, parentElm, refElm) {
+    var i = vnode.data;
+
+    if (isDef(i)) {
+      var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
+
+      if (isDef(i = i.hook) && isDef(i = i.init)) {
+        i(vnode, false
+        /* hydrating */
+        );
+      } // after calling the init hook, if the vnode is a child component
+      // it should've created a child instance and mounted it. the child
+      // component also has set the placeholder vnode's elm.
+      // in that case we can just return the element and be done.
+
+
+      if (isDef(vnode.componentInstance)) {
+        initComponent(vnode, insertedVnodeQueue);
+        insert(parentElm, vnode.elm, refElm);
+
+        if (isTrue(isReactivated)) {
+          reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm);
+        }
+
+        return true;
+      }
+    }
+  }
+
+  function initComponent(vnode, insertedVnodeQueue) {
+    if (isDef(vnode.data.pendingInsert)) {
+      insertedVnodeQueue.push.apply(insertedVnodeQueue, vnode.data.pendingInsert);
+      vnode.data.pendingInsert = null;
+    }
+
+    vnode.elm = vnode.componentInstance.$el;
+
+    if (isPatchable(vnode)) {
+      invokeCreateHooks(vnode, insertedVnodeQueue);
+      setScope(vnode);
+    } else {
+      // empty component root.
+      // skip all element-related modules except for ref (#3455)
+      registerRef(vnode); // make sure to invoke the insert hook
+
+      insertedVnodeQueue.push(vnode);
+    }
+  }
+
+  function reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm) {
+    var i; // hack for #4339: a reactivated component with inner transition
+    // does not trigger because the inner node's created hooks are not called
+    // again. It's not ideal to involve module-specific logic in here but
+    // there doesn't seem to be a better way to do it.
+
+    var innerNode = vnode;
+
+    while (innerNode.componentInstance) {
+      innerNode = innerNode.componentInstance._vnode;
+
+      if (isDef(i = innerNode.data) && isDef(i = i.transition)) {
+        for (i = 0; i < cbs.activate.length; ++i) {
+          cbs.activate[i](emptyNode, innerNode);
+        }
+
+        insertedVnodeQueue.push(innerNode);
+        break;
+      }
+    } // unlike a newly created component,
+    // a reactivated keep-alive component doesn't insert itself
+
+
+    insert(parentElm, vnode.elm, refElm);
+  }
+
+  function insert(parent, elm, ref$$1) {
+    if (isDef(parent)) {
+      if (isDef(ref$$1)) {
+        if (nodeOps.parentNode(ref$$1) === parent) {
+          nodeOps.insertBefore(parent, elm, ref$$1);
+        }
+      } else {
+        nodeOps.appendChild(parent, elm);
+      }
+    }
+  }
+
+  function createChildren(vnode, children, insertedVnodeQueue) {
+    if (Array.isArray(children)) {
+      if (true) {
+        checkDuplicateKeys(children);
+      }
+
+      for (var i = 0; i < children.length; ++i) {
+        createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i);
+      }
+    } else if (isPrimitive(vnode.text)) {
+      nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)));
+    }
+  }
+
+  function isPatchable(vnode) {
+    while (vnode.componentInstance) {
+      vnode = vnode.componentInstance._vnode;
+    }
+
+    return isDef(vnode.tag);
+  }
+
+  function invokeCreateHooks(vnode, insertedVnodeQueue) {
+    for (var i$1 = 0; i$1 < cbs.create.length; ++i$1) {
+      cbs.create[i$1](emptyNode, vnode);
+    }
+
+    i = vnode.data.hook; // Reuse variable
+
+    if (isDef(i)) {
+      if (isDef(i.create)) {
+        i.create(emptyNode, vnode);
+      }
+
+      if (isDef(i.insert)) {
+        insertedVnodeQueue.push(vnode);
+      }
+    }
+  } // set scope id attribute for scoped CSS.
+  // this is implemented as a special case to avoid the overhead
+  // of going through the normal attribute patching process.
+
+
+  function setScope(vnode) {
+    var i;
+
+    if (isDef(i = vnode.fnScopeId)) {
+      nodeOps.setStyleScope(vnode.elm, i);
+    } else {
+      var ancestor = vnode;
+
+      while (ancestor) {
+        if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
+          nodeOps.setStyleScope(vnode.elm, i);
+        }
+
+        ancestor = ancestor.parent;
+      }
+    } // for slot content they should also get the scopeId from the host instance.
+
+
+    if (isDef(i = activeInstance) && i !== vnode.context && i !== vnode.fnContext && isDef(i = i.$options._scopeId)) {
+      nodeOps.setStyleScope(vnode.elm, i);
+    }
+  }
+
+  function addVnodes(parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
+    for (; startIdx <= endIdx; ++startIdx) {
+      createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx);
+    }
+  }
+
+  function invokeDestroyHook(vnode) {
+    var i, j;
+    var data = vnode.data;
+
+    if (isDef(data)) {
+      if (isDef(i = data.hook) && isDef(i = i.destroy)) {
+        i(vnode);
+      }
+
+      for (i = 0; i < cbs.destroy.length; ++i) {
+        cbs.destroy[i](vnode);
+      }
+    }
+
+    if (isDef(i = vnode.children)) {
+      for (j = 0; j < vnode.children.length; ++j) {
+        invokeDestroyHook(vnode.children[j]);
+      }
+    }
+  }
+
+  function removeVnodes(vnodes, startIdx, endIdx) {
+    for (; startIdx <= endIdx; ++startIdx) {
+      var ch = vnodes[startIdx];
+
+      if (isDef(ch)) {
+        if (isDef(ch.tag)) {
+          removeAndInvokeRemoveHook(ch);
+          invokeDestroyHook(ch);
+        } else {
+          // Text node
+          removeNode(ch.elm);
+        }
+      }
+    }
+  }
+
+  function removeAndInvokeRemoveHook(vnode, rm) {
+    if (isDef(rm) || isDef(vnode.data)) {
+      var i;
+      var listeners = cbs.remove.length + 1;
+
+      if (isDef(rm)) {
+        // we have a recursively passed down rm callback
+        // increase the listeners count
+        rm.listeners += listeners;
+      } else {
+        // directly removing
+        rm = createRmCb(vnode.elm, listeners);
+      } // recursively invoke hooks on child component root node
+
+
+      if (isDef(i = vnode.componentInstance) && isDef(i = i._vnode) && isDef(i.data)) {
+        removeAndInvokeRemoveHook(i, rm);
+      }
+
+      for (i = 0; i < cbs.remove.length; ++i) {
+        cbs.remove[i](vnode, rm);
+      }
+
+      if (isDef(i = vnode.data.hook) && isDef(i = i.remove)) {
+        i(vnode, rm);
+      } else {
+        rm();
+      }
+    } else {
+      removeNode(vnode.elm);
+    }
+  }
+
+  function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+    var oldStartIdx = 0;
+    var newStartIdx = 0;
+    var oldEndIdx = oldCh.length - 1;
+    var oldStartVnode = oldCh[0];
+    var oldEndVnode = oldCh[oldEndIdx];
+    var newEndIdx = newCh.length - 1;
+    var newStartVnode = newCh[0];
+    var newEndVnode = newCh[newEndIdx];
+    var oldKeyToIdx, idxInOld, vnodeToMove, refElm; // removeOnly is a special flag used only by <transition-group>
+    // to ensure removed elements stay in correct relative positions
+    // during leaving transitions
+
+    var canMove = !removeOnly;
+
+    if (true) {
+      checkDuplicateKeys(newCh);
+    }
+
+    while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+      if (isUndef(oldStartVnode)) {
+        oldStartVnode = oldCh[++oldStartIdx]; // Vnode has been moved left
+      } else if (isUndef(oldEndVnode)) {
+        oldEndVnode = oldCh[--oldEndIdx];
+      } else if (sameVnode(oldStartVnode, newStartVnode)) {
+        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+        oldStartVnode = oldCh[++oldStartIdx];
+        newStartVnode = newCh[++newStartIdx];
+      } else if (sameVnode(oldEndVnode, newEndVnode)) {
+        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
+        oldEndVnode = oldCh[--oldEndIdx];
+        newEndVnode = newCh[--newEndIdx];
+      } else if (sameVnode(oldStartVnode, newEndVnode)) {
+        // Vnode moved right
+        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
+        canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm));
+        oldStartVnode = oldCh[++oldStartIdx];
+        newEndVnode = newCh[--newEndIdx];
+      } else if (sameVnode(oldEndVnode, newStartVnode)) {
+        // Vnode moved left
+        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+        canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
+        oldEndVnode = oldCh[--oldEndIdx];
+        newStartVnode = newCh[++newStartIdx];
+      } else {
+        if (isUndef(oldKeyToIdx)) {
+          oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+        }
+
+        idxInOld = isDef(newStartVnode.key) ? oldKeyToIdx[newStartVnode.key] : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
+
+        if (isUndef(idxInOld)) {
+          // New element
+          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+        } else {
+          vnodeToMove = oldCh[idxInOld];
+
+          if (sameVnode(vnodeToMove, newStartVnode)) {
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+            oldCh[idxInOld] = undefined;
+            canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
+          } else {
+            // same key but different element. treat as new element
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+          }
+        }
+
+        newStartVnode = newCh[++newStartIdx];
+      }
+    }
+
+    if (oldStartIdx > oldEndIdx) {
+      refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+      addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
+    } else if (newStartIdx > newEndIdx) {
+      removeVnodes(oldCh, oldStartIdx, oldEndIdx);
+    }
+  }
+
+  function checkDuplicateKeys(children) {
+    var seenKeys = {};
+
+    for (var i = 0; i < children.length; i++) {
+      var vnode = children[i];
+      var key = vnode.key;
+
+      if (isDef(key)) {
+        if (seenKeys[key]) {
+          warn("Duplicate keys detected: '" + key + "'. This may cause an update error.", vnode.context);
+        } else {
+          seenKeys[key] = true;
+        }
+      }
+    }
+  }
+
+  function findIdxInOld(node, oldCh, start, end) {
+    for (var i = start; i < end; i++) {
+      var c = oldCh[i];
+
+      if (isDef(c) && sameVnode(node, c)) {
+        return i;
+      }
+    }
+  }
+
+  function patchVnode(oldVnode, vnode, insertedVnodeQueue, ownerArray, index, removeOnly) {
+    if (oldVnode === vnode) {
+      return;
+    }
+
+    if (isDef(vnode.elm) && isDef(ownerArray)) {
+      // clone reused vnode
+      vnode = ownerArray[index] = cloneVNode(vnode);
+    }
+
+    var elm = vnode.elm = oldVnode.elm;
+
+    if (isTrue(oldVnode.isAsyncPlaceholder)) {
+      if (isDef(vnode.asyncFactory.resolved)) {
+        hydrate(oldVnode.elm, vnode, insertedVnodeQueue);
+      } else {
+        vnode.isAsyncPlaceholder = true;
+      }
+
+      return;
+    } // reuse element for static trees.
+    // note we only do this if the vnode is cloned -
+    // if the new node is not cloned it means the render functions have been
+    // reset by the hot-reload-api and we need to do a proper re-render.
+
+
+    if (isTrue(vnode.isStatic) && isTrue(oldVnode.isStatic) && vnode.key === oldVnode.key && (isTrue(vnode.isCloned) || isTrue(vnode.isOnce))) {
+      vnode.componentInstance = oldVnode.componentInstance;
+      return;
+    }
+
+    var i;
+    var data = vnode.data;
+
+    if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
+      i(oldVnode, vnode);
+    }
+
+    var oldCh = oldVnode.children;
+    var ch = vnode.children;
+
+    if (isDef(data) && isPatchable(vnode)) {
+      for (i = 0; i < cbs.update.length; ++i) {
+        cbs.update[i](oldVnode, vnode);
+      }
+
+      if (isDef(i = data.hook) && isDef(i = i.update)) {
+        i(oldVnode, vnode);
+      }
+    }
+
+    if (isUndef(vnode.text)) {
+      if (isDef(oldCh) && isDef(ch)) {
+        if (oldCh !== ch) {
+          updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly);
+        }
+      } else if (isDef(ch)) {
+        if (true) {
+          checkDuplicateKeys(ch);
+        }
+
+        if (isDef(oldVnode.text)) {
+          nodeOps.setTextContent(elm, '');
+        }
+
+        addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
+      } else if (isDef(oldCh)) {
+        removeVnodes(oldCh, 0, oldCh.length - 1);
+      } else if (isDef(oldVnode.text)) {
+        nodeOps.setTextContent(elm, '');
+      }
+    } else if (oldVnode.text !== vnode.text) {
+      nodeOps.setTextContent(elm, vnode.text);
+    }
+
+    if (isDef(data)) {
+      if (isDef(i = data.hook) && isDef(i = i.postpatch)) {
+        i(oldVnode, vnode);
+      }
+    }
+  }
+
+  function invokeInsertHook(vnode, queue, initial) {
+    // delay insert hooks for component root nodes, invoke them after the
+    // element is really inserted
+    if (isTrue(initial) && isDef(vnode.parent)) {
+      vnode.parent.data.pendingInsert = queue;
+    } else {
+      for (var i = 0; i < queue.length; ++i) {
+        queue[i].data.hook.insert(queue[i]);
+      }
+    }
+  }
+
+  var hydrationBailed = false; // list of modules that can skip create hook during hydration because they
+  // are already rendered on the client or has no need for initialization
+  // Note: style is excluded because it relies on initial clone for future
+  // deep updates (#7063).
+
+  var isRenderedModule = makeMap('attrs,class,staticClass,staticStyle,key'); // Note: this is a browser-only function so we can assume elms are DOM nodes.
+
+  function hydrate(elm, vnode, insertedVnodeQueue, inVPre) {
+    var i;
+    var tag = vnode.tag;
+    var data = vnode.data;
+    var children = vnode.children;
+    inVPre = inVPre || data && data.pre;
+    vnode.elm = elm;
+
+    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
+      vnode.isAsyncPlaceholder = true;
+      return true;
+    } // assert node match
+
+
+    if (true) {
+      if (!assertNodeMatch(elm, vnode, inVPre)) {
+        return false;
+      }
+    }
+
+    if (isDef(data)) {
+      if (isDef(i = data.hook) && isDef(i = i.init)) {
+        i(vnode, true
+        /* hydrating */
+        );
+      }
+
+      if (isDef(i = vnode.componentInstance)) {
+        // child component. it should have hydrated its own tree.
+        initComponent(vnode, insertedVnodeQueue);
+        return true;
+      }
+    }
+
+    if (isDef(tag)) {
+      if (isDef(children)) {
+        // empty element, allow client to pick up and populate children
+        if (!elm.hasChildNodes()) {
+          createChildren(vnode, children, insertedVnodeQueue);
+        } else {
+          // v-html and domProps: innerHTML
+          if (isDef(i = data) && isDef(i = i.domProps) && isDef(i = i.innerHTML)) {
+            if (i !== elm.innerHTML) {
+              /* istanbul ignore if */
+              if ( true && typeof console !== 'undefined' && !hydrationBailed) {
+                hydrationBailed = true;
+                console.warn('Parent: ', elm);
+                console.warn('server innerHTML: ', i);
+                console.warn('client innerHTML: ', elm.innerHTML);
+              }
+
+              return false;
+            }
+          } else {
+            // iterate and compare children lists
+            var childrenMatch = true;
+            var childNode = elm.firstChild;
+
+            for (var i$1 = 0; i$1 < children.length; i$1++) {
+              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue, inVPre)) {
+                childrenMatch = false;
+                break;
+              }
+
+              childNode = childNode.nextSibling;
+            } // if childNode is not null, it means the actual childNodes list is
+            // longer than the virtual children list.
+
+
+            if (!childrenMatch || childNode) {
+              /* istanbul ignore if */
+              if ( true && typeof console !== 'undefined' && !hydrationBailed) {
+                hydrationBailed = true;
+                console.warn('Parent: ', elm);
+                console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
+              }
+
+              return false;
+            }
+          }
+        }
+      }
+
+      if (isDef(data)) {
+        var fullInvoke = false;
+
+        for (var key in data) {
+          if (!isRenderedModule(key)) {
+            fullInvoke = true;
+            invokeCreateHooks(vnode, insertedVnodeQueue);
+            break;
+          }
+        }
+
+        if (!fullInvoke && data['class']) {
+          // ensure collecting deps for deep class bindings for future updates
+          traverse(data['class']);
+        }
+      }
+    } else if (elm.data !== vnode.text) {
+      elm.data = vnode.text;
+    }
+
+    return true;
+  }
+
+  function assertNodeMatch(node, vnode, inVPre) {
+    if (isDef(vnode.tag)) {
+      return vnode.tag.indexOf('vue-component') === 0 || !isUnknownElement$$1(vnode, inVPre) && vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase());
+    } else {
+      return node.nodeType === (vnode.isComment ? 8 : 3);
+    }
+  }
+
+  return function patch(oldVnode, vnode, hydrating, removeOnly) {
+    if (isUndef(vnode)) {
+      if (isDef(oldVnode)) {
+        invokeDestroyHook(oldVnode);
+      }
+
+      return;
+    }
+
+    var isInitialPatch = false;
+    var insertedVnodeQueue = [];
+
+    if (isUndef(oldVnode)) {
+      // empty mount (likely as component), create new root element
+      isInitialPatch = true;
+      createElm(vnode, insertedVnodeQueue);
+    } else {
+      var isRealElement = isDef(oldVnode.nodeType);
+
+      if (!isRealElement && sameVnode(oldVnode, vnode)) {
+        // patch existing root node
+        patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly);
+      } else {
+        if (isRealElement) {
+          // mounting to a real element
+          // check if this is server-rendered content and if we can perform
+          // a successful hydration.
+          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
+            oldVnode.removeAttribute(SSR_ATTR);
+            hydrating = true;
+          }
+
+          if (isTrue(hydrating)) {
+            if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
+              invokeInsertHook(vnode, insertedVnodeQueue, true);
+              return oldVnode;
+            } else if (true) {
+              warn('The client-side rendered virtual DOM tree is not matching ' + 'server-rendered content. This is likely caused by incorrect ' + 'HTML markup, for example nesting block-level elements inside ' + '<p>, or missing <tbody>. Bailing hydration and performing ' + 'full client-side render.');
+            }
+          } // either not server-rendered, or hydration failed.
+          // create an empty node and replace it
+
+
+          oldVnode = emptyNodeAt(oldVnode);
+        } // replacing existing element
+
+
+        var oldElm = oldVnode.elm;
+        var parentElm = nodeOps.parentNode(oldElm); // create new node
+
+        createElm(vnode, insertedVnodeQueue, // extremely rare edge case: do not insert if old element is in a
+        // leaving transition. Only happens when combining transition +
+        // keep-alive + HOCs. (#4590)
+        oldElm._leaveCb ? null : parentElm, nodeOps.nextSibling(oldElm)); // update parent placeholder node element, recursively
+
+        if (isDef(vnode.parent)) {
+          var ancestor = vnode.parent;
+          var patchable = isPatchable(vnode);
+
+          while (ancestor) {
+            for (var i = 0; i < cbs.destroy.length; ++i) {
+              cbs.destroy[i](ancestor);
+            }
+
+            ancestor.elm = vnode.elm;
+
+            if (patchable) {
+              for (var i$1 = 0; i$1 < cbs.create.length; ++i$1) {
+                cbs.create[i$1](emptyNode, ancestor);
+              } // #6513
+              // invoke insert hooks that may have been merged by create hooks.
+              // e.g. for directives that uses the "inserted" hook.
+
+
+              var insert = ancestor.data.hook.insert;
+
+              if (insert.merged) {
+                // start at index 1 to avoid re-invoking component mounted hook
+                for (var i$2 = 1; i$2 < insert.fns.length; i$2++) {
+                  insert.fns[i$2]();
+                }
+              }
+            } else {
+              registerRef(ancestor);
+            }
+
+            ancestor = ancestor.parent;
+          }
+        } // destroy old node
+
+
+        if (isDef(parentElm)) {
+          removeVnodes([oldVnode], 0, 0);
+        } else if (isDef(oldVnode.tag)) {
+          invokeDestroyHook(oldVnode);
+        }
+      }
+    }
+
+    invokeInsertHook(vnode, insertedVnodeQueue, isInitialPatch);
+    return vnode.elm;
+  };
+}
+/*  */
+
+
+var directives = {
+  create: updateDirectives,
+  update: updateDirectives,
+  destroy: function unbindDirectives(vnode) {
+    updateDirectives(vnode, emptyNode);
+  }
+};
+
+function updateDirectives(oldVnode, vnode) {
+  if (oldVnode.data.directives || vnode.data.directives) {
+    _update(oldVnode, vnode);
+  }
+}
+
+function _update(oldVnode, vnode) {
+  var isCreate = oldVnode === emptyNode;
+  var isDestroy = vnode === emptyNode;
+  var oldDirs = normalizeDirectives$1(oldVnode.data.directives, oldVnode.context);
+  var newDirs = normalizeDirectives$1(vnode.data.directives, vnode.context);
+  var dirsWithInsert = [];
+  var dirsWithPostpatch = [];
+  var key, oldDir, dir;
+
+  for (key in newDirs) {
+    oldDir = oldDirs[key];
+    dir = newDirs[key];
+
+    if (!oldDir) {
+      // new directive, bind
+      callHook$1(dir, 'bind', vnode, oldVnode);
+
+      if (dir.def && dir.def.inserted) {
+        dirsWithInsert.push(dir);
+      }
+    } else {
+      // existing directive, update
+      dir.oldValue = oldDir.value;
+      dir.oldArg = oldDir.arg;
+      callHook$1(dir, 'update', vnode, oldVnode);
+
+      if (dir.def && dir.def.componentUpdated) {
+        dirsWithPostpatch.push(dir);
+      }
+    }
+  }
+
+  if (dirsWithInsert.length) {
+    var callInsert = function callInsert() {
+      for (var i = 0; i < dirsWithInsert.length; i++) {
+        callHook$1(dirsWithInsert[i], 'inserted', vnode, oldVnode);
+      }
+    };
+
+    if (isCreate) {
+      mergeVNodeHook(vnode, 'insert', callInsert);
+    } else {
+      callInsert();
+    }
+  }
+
+  if (dirsWithPostpatch.length) {
+    mergeVNodeHook(vnode, 'postpatch', function () {
+      for (var i = 0; i < dirsWithPostpatch.length; i++) {
+        callHook$1(dirsWithPostpatch[i], 'componentUpdated', vnode, oldVnode);
+      }
+    });
+  }
+
+  if (!isCreate) {
+    for (key in oldDirs) {
+      if (!newDirs[key]) {
+        // no longer present, unbind
+        callHook$1(oldDirs[key], 'unbind', oldVnode, oldVnode, isDestroy);
+      }
+    }
+  }
+}
+
+var emptyModifiers = Object.create(null);
+
+function normalizeDirectives$1(dirs, vm) {
+  var res = Object.create(null);
+
+  if (!dirs) {
+    // $flow-disable-line
+    return res;
+  }
+
+  var i, dir;
+
+  for (i = 0; i < dirs.length; i++) {
+    dir = dirs[i];
+
+    if (!dir.modifiers) {
+      // $flow-disable-line
+      dir.modifiers = emptyModifiers;
+    }
+
+    res[getRawDirName(dir)] = dir;
+    dir.def = resolveAsset(vm.$options, 'directives', dir.name, true);
+  } // $flow-disable-line
+
+
+  return res;
+}
+
+function getRawDirName(dir) {
+  return dir.rawName || dir.name + "." + Object.keys(dir.modifiers || {}).join('.');
+}
+
+function callHook$1(dir, hook, vnode, oldVnode, isDestroy) {
+  var fn = dir.def && dir.def[hook];
+
+  if (fn) {
+    try {
+      fn(vnode.elm, dir, vnode, oldVnode, isDestroy);
+    } catch (e) {
+      handleError(e, vnode.context, "directive " + dir.name + " " + hook + " hook");
+    }
+  }
+}
+
+var baseModules = [ref, directives];
+/*  */
+
+function updateAttrs(oldVnode, vnode) {
+  var opts = vnode.componentOptions;
+
+  if (isDef(opts) && opts.Ctor.options.inheritAttrs === false) {
+    return;
+  }
+
+  if (isUndef(oldVnode.data.attrs) && isUndef(vnode.data.attrs)) {
+    return;
+  }
+
+  var key, cur, old;
+  var elm = vnode.elm;
+  var oldAttrs = oldVnode.data.attrs || {};
+  var attrs = vnode.data.attrs || {}; // clone observed objects, as the user probably wants to mutate it
+
+  if (isDef(attrs.__ob__)) {
+    attrs = vnode.data.attrs = extend({}, attrs);
+  }
+
+  for (key in attrs) {
+    cur = attrs[key];
+    old = oldAttrs[key];
+
+    if (old !== cur) {
+      setAttr(elm, key, cur, vnode.data.pre);
+    }
+  } // #4391: in IE9, setting type can reset value for input[type=radio]
+  // #6666: IE/Edge forces progress value down to 1 before setting a max
+
+  /* istanbul ignore if */
+
+
+  if ((isIE || isEdge) && attrs.value !== oldAttrs.value) {
+    setAttr(elm, 'value', attrs.value);
+  }
+
+  for (key in oldAttrs) {
+    if (isUndef(attrs[key])) {
+      if (isXlink(key)) {
+        elm.removeAttributeNS(xlinkNS, getXlinkProp(key));
+      } else if (!isEnumeratedAttr(key)) {
+        elm.removeAttribute(key);
+      }
+    }
+  }
+}
+
+function setAttr(el, key, value, isInPre) {
+  if (isInPre || el.tagName.indexOf('-') > -1) {
+    baseSetAttr(el, key, value);
+  } else if (isBooleanAttr(key)) {
+    // set attribute for blank value
+    // e.g. <option disabled>Select one</option>
+    if (isFalsyAttrValue(value)) {
+      el.removeAttribute(key);
+    } else {
+      // technically allowfullscreen is a boolean attribute for <iframe>,
+      // but Flash expects a value of "true" when used on <embed> tag
+      value = key === 'allowfullscreen' && el.tagName === 'EMBED' ? 'true' : key;
+      el.setAttribute(key, value);
+    }
+  } else if (isEnumeratedAttr(key)) {
+    el.setAttribute(key, convertEnumeratedValue(key, value));
+  } else if (isXlink(key)) {
+    if (isFalsyAttrValue(value)) {
+      el.removeAttributeNS(xlinkNS, getXlinkProp(key));
+    } else {
+      el.setAttributeNS(xlinkNS, key, value);
+    }
+  } else {
+    baseSetAttr(el, key, value);
+  }
+}
+
+function baseSetAttr(el, key, value) {
+  if (isFalsyAttrValue(value)) {
+    el.removeAttribute(key);
+  } else {
+    // #7138: IE10 & 11 fires input event when setting placeholder on
+    // <textarea>... block the first input event and remove the blocker
+    // immediately.
+
+    /* istanbul ignore if */
+    if (isIE && !isIE9 && el.tagName === 'TEXTAREA' && key === 'placeholder' && value !== '' && !el.__ieph) {
+      var blocker = function blocker(e) {
+        e.stopImmediatePropagation();
+        el.removeEventListener('input', blocker);
+      };
+
+      el.addEventListener('input', blocker); // $flow-disable-line
+
+      el.__ieph = true;
+      /* IE placeholder patched */
+    }
+
+    el.setAttribute(key, value);
+  }
+}
+
+var attrs = {
+  create: updateAttrs,
+  update: updateAttrs
+};
+/*  */
+
+function updateClass(oldVnode, vnode) {
+  var el = vnode.elm;
+  var data = vnode.data;
+  var oldData = oldVnode.data;
+
+  if (isUndef(data.staticClass) && isUndef(data.class) && (isUndef(oldData) || isUndef(oldData.staticClass) && isUndef(oldData.class))) {
+    return;
+  }
+
+  var cls = genClassForVnode(vnode); // handle transition classes
+
+  var transitionClass = el._transitionClasses;
+
+  if (isDef(transitionClass)) {
+    cls = concat(cls, stringifyClass(transitionClass));
+  } // set the class
+
+
+  if (cls !== el._prevClass) {
+    el.setAttribute('class', cls);
+    el._prevClass = cls;
+  }
+}
+
+var klass = {
+  create: updateClass,
+  update: updateClass
+};
+/*  */
+
+var validDivisionCharRE = /[\w).+\-_$\]]/;
+
+function parseFilters(exp) {
+  var inSingle = false;
+  var inDouble = false;
+  var inTemplateString = false;
+  var inRegex = false;
+  var curly = 0;
+  var square = 0;
+  var paren = 0;
+  var lastFilterIndex = 0;
+  var c, prev, i, expression, filters;
+
+  for (i = 0; i < exp.length; i++) {
+    prev = c;
+    c = exp.charCodeAt(i);
+
+    if (inSingle) {
+      if (c === 0x27 && prev !== 0x5C) {
+        inSingle = false;
+      }
+    } else if (inDouble) {
+      if (c === 0x22 && prev !== 0x5C) {
+        inDouble = false;
+      }
+    } else if (inTemplateString) {
+      if (c === 0x60 && prev !== 0x5C) {
+        inTemplateString = false;
+      }
+    } else if (inRegex) {
+      if (c === 0x2f && prev !== 0x5C) {
+        inRegex = false;
+      }
+    } else if (c === 0x7C && // pipe
+    exp.charCodeAt(i + 1) !== 0x7C && exp.charCodeAt(i - 1) !== 0x7C && !curly && !square && !paren) {
+      if (expression === undefined) {
+        // first filter, end of expression
+        lastFilterIndex = i + 1;
+        expression = exp.slice(0, i).trim();
+      } else {
+        pushFilter();
+      }
+    } else {
+      switch (c) {
+        case 0x22:
+          inDouble = true;
+          break;
+        // "
+
+        case 0x27:
+          inSingle = true;
+          break;
+        // '
+
+        case 0x60:
+          inTemplateString = true;
+          break;
+        // `
+
+        case 0x28:
+          paren++;
+          break;
+        // (
+
+        case 0x29:
+          paren--;
+          break;
+        // )
+
+        case 0x5B:
+          square++;
+          break;
+        // [
+
+        case 0x5D:
+          square--;
+          break;
+        // ]
+
+        case 0x7B:
+          curly++;
+          break;
+        // {
+
+        case 0x7D:
+          curly--;
+          break;
+        // }
+      }
+
+      if (c === 0x2f) {
+        // /
+        var j = i - 1;
+        var p = void 0; // find first non-whitespace prev char
+
+        for (; j >= 0; j--) {
+          p = exp.charAt(j);
+
+          if (p !== ' ') {
+            break;
+          }
+        }
+
+        if (!p || !validDivisionCharRE.test(p)) {
+          inRegex = true;
+        }
+      }
+    }
+  }
+
+  if (expression === undefined) {
+    expression = exp.slice(0, i).trim();
+  } else if (lastFilterIndex !== 0) {
+    pushFilter();
+  }
+
+  function pushFilter() {
+    (filters || (filters = [])).push(exp.slice(lastFilterIndex, i).trim());
+    lastFilterIndex = i + 1;
+  }
+
+  if (filters) {
+    for (i = 0; i < filters.length; i++) {
+      expression = wrapFilter(expression, filters[i]);
+    }
+  }
+
+  return expression;
+}
+
+function wrapFilter(exp, filter) {
+  var i = filter.indexOf('(');
+
+  if (i < 0) {
+    // _f: resolveFilter
+    return "_f(\"" + filter + "\")(" + exp + ")";
+  } else {
+    var name = filter.slice(0, i);
+    var args = filter.slice(i + 1);
+    return "_f(\"" + name + "\")(" + exp + (args !== ')' ? ',' + args : args);
+  }
+}
+/*  */
+
+/* eslint-disable no-unused-vars */
+
+
+function baseWarn(msg, range) {
+  console.error("[Vue compiler]: " + msg);
+}
+/* eslint-enable no-unused-vars */
+
+
+function pluckModuleFunction(modules, key) {
+  return modules ? modules.map(function (m) {
+    return m[key];
+  }).filter(function (_) {
+    return _;
+  }) : [];
+}
+
+function addProp(el, name, value, range, dynamic) {
+  (el.props || (el.props = [])).push(rangeSetItem({
+    name: name,
+    value: value,
+    dynamic: dynamic
+  }, range));
+  el.plain = false;
+}
+
+function addAttr(el, name, value, range, dynamic) {
+  var attrs = dynamic ? el.dynamicAttrs || (el.dynamicAttrs = []) : el.attrs || (el.attrs = []);
+  attrs.push(rangeSetItem({
+    name: name,
+    value: value,
+    dynamic: dynamic
+  }, range));
+  el.plain = false;
+} // add a raw attr (use this in preTransforms)
+
+
+function addRawAttr(el, name, value, range) {
+  el.attrsMap[name] = value;
+  el.attrsList.push(rangeSetItem({
+    name: name,
+    value: value
+  }, range));
+}
+
+function addDirective(el, name, rawName, value, arg, isDynamicArg, modifiers, range) {
+  (el.directives || (el.directives = [])).push(rangeSetItem({
+    name: name,
+    rawName: rawName,
+    value: value,
+    arg: arg,
+    isDynamicArg: isDynamicArg,
+    modifiers: modifiers
+  }, range));
+  el.plain = false;
+}
+
+function prependModifierMarker(symbol, name, dynamic) {
+  return dynamic ? "_p(" + name + ",\"" + symbol + "\")" : symbol + name; // mark the event as captured
+}
+
+function addHandler(el, name, value, modifiers, important, warn, range, dynamic) {
+  modifiers = modifiers || emptyObject; // warn prevent and passive modifier
+
+  /* istanbul ignore if */
+
+  if ( true && warn && modifiers.prevent && modifiers.passive) {
+    warn('passive and prevent can\'t be used together. ' + 'Passive handler can\'t prevent default event.', range);
+  } // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+
+
+  if (modifiers.right) {
+    if (dynamic) {
+      name = "(" + name + ")==='click'?'contextmenu':(" + name + ")";
+    } else if (name === 'click') {
+      name = 'contextmenu';
+      delete modifiers.right;
+    }
+  } else if (modifiers.middle) {
+    if (dynamic) {
+      name = "(" + name + ")==='click'?'mouseup':(" + name + ")";
+    } else if (name === 'click') {
+      name = 'mouseup';
+    }
+  } // check capture modifier
+
+
+  if (modifiers.capture) {
+    delete modifiers.capture;
+    name = prependModifierMarker('!', name, dynamic);
+  }
+
+  if (modifiers.once) {
+    delete modifiers.once;
+    name = prependModifierMarker('~', name, dynamic);
+  }
+  /* istanbul ignore if */
+
+
+  if (modifiers.passive) {
+    delete modifiers.passive;
+    name = prependModifierMarker('&', name, dynamic);
+  }
+
+  var events;
+
+  if (modifiers.native) {
+    delete modifiers.native;
+    events = el.nativeEvents || (el.nativeEvents = {});
+  } else {
+    events = el.events || (el.events = {});
+  }
+
+  var newHandler = rangeSetItem({
+    value: value.trim(),
+    dynamic: dynamic
+  }, range);
+
+  if (modifiers !== emptyObject) {
+    newHandler.modifiers = modifiers;
+  }
+
+  var handlers = events[name];
+  /* istanbul ignore if */
+
+  if (Array.isArray(handlers)) {
+    important ? handlers.unshift(newHandler) : handlers.push(newHandler);
+  } else if (handlers) {
+    events[name] = important ? [newHandler, handlers] : [handlers, newHandler];
+  } else {
+    events[name] = newHandler;
+  }
+
+  el.plain = false;
+}
+
+function getRawBindingAttr(el, name) {
+  return el.rawAttrsMap[':' + name] || el.rawAttrsMap['v-bind:' + name] || el.rawAttrsMap[name];
+}
+
+function getBindingAttr(el, name, getStatic) {
+  var dynamicValue = getAndRemoveAttr(el, ':' + name) || getAndRemoveAttr(el, 'v-bind:' + name);
+
+  if (dynamicValue != null) {
+    return parseFilters(dynamicValue);
+  } else if (getStatic !== false) {
+    var staticValue = getAndRemoveAttr(el, name);
+
+    if (staticValue != null) {
+      return JSON.stringify(staticValue);
+    }
+  }
+} // note: this only removes the attr from the Array (attrsList) so that it
+// doesn't get processed by processAttrs.
+// By default it does NOT remove it from the map (attrsMap) because the map is
+// needed during codegen.
+
+
+function getAndRemoveAttr(el, name, removeFromMap) {
+  var val;
+
+  if ((val = el.attrsMap[name]) != null) {
+    var list = el.attrsList;
+
+    for (var i = 0, l = list.length; i < l; i++) {
+      if (list[i].name === name) {
+        list.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  if (removeFromMap) {
+    delete el.attrsMap[name];
+  }
+
+  return val;
+}
+
+function getAndRemoveAttrByRegex(el, name) {
+  var list = el.attrsList;
+
+  for (var i = 0, l = list.length; i < l; i++) {
+    var attr = list[i];
+
+    if (name.test(attr.name)) {
+      list.splice(i, 1);
+      return attr;
+    }
+  }
+}
+
+function rangeSetItem(item, range) {
+  if (range) {
+    if (range.start != null) {
+      item.start = range.start;
+    }
+
+    if (range.end != null) {
+      item.end = range.end;
+    }
+  }
+
+  return item;
+}
+/*  */
+
+/**
+ * Cross-platform code generation for component v-model
+ */
+
+
+function genComponentModel(el, value, modifiers) {
+  var ref = modifiers || {};
+  var number = ref.number;
+  var trim = ref.trim;
+  var baseValueExpression = '$$v';
+  var valueExpression = baseValueExpression;
+
+  if (trim) {
+    valueExpression = "(typeof " + baseValueExpression + " === 'string'" + "? " + baseValueExpression + ".trim()" + ": " + baseValueExpression + ")";
+  }
+
+  if (number) {
+    valueExpression = "_n(" + valueExpression + ")";
+  }
+
+  var assignment = genAssignmentCode(value, valueExpression);
+  el.model = {
+    value: "(" + value + ")",
+    expression: JSON.stringify(value),
+    callback: "function (" + baseValueExpression + ") {" + assignment + "}"
+  };
+}
+/**
+ * Cross-platform codegen helper for generating v-model value assignment code.
+ */
+
+
+function genAssignmentCode(value, assignment) {
+  var res = parseModel(value);
+
+  if (res.key === null) {
+    return value + "=" + assignment;
+  } else {
+    return "$set(" + res.exp + ", " + res.key + ", " + assignment + ")";
+  }
+}
+/**
+ * Parse a v-model expression into a base path and a final key segment.
+ * Handles both dot-path and possible square brackets.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Possible cases:
  *
- */var a=(0,n(93).getBuilder)("text").persist().build();r.default.use(i.default);var s=new i.default.Store({state:{showAuthorAnnotations:"true"===a.getItem("showAuthorAnnotations")},mutations:{SET_SHOW_AUTHOR_ANNOTATIONS:function(t,e){t.showAuthorAnnotations=e,a.setItem("showAuthorAnnotations",""+e)}},actions:{setShowAuthorAnnotations:function(t,e){t.commit;s.commit("SET_SHOW_AUTHOR_ANNOTATIONS",e)}}}),c=s;e.default=c},function(t,e,n){"use strict";var r=n(47),i=n.n(r),o=n(48),a=n.n(o)()(i.a);a.push([t.i,"#rich-workspace[data-v-374052d2]{padding:0 50px;margin-bottom:-24px;text-align:left;max-height:0;transition:max-height 0.5s cubic-bezier(0, 1, 0, 1)}#rich-workspace.creatable[data-v-374052d2]{min-height:90px}#rich-workspace[data-v-374052d2]:only-child{margin-bottom:0}.empty-workspace[data-v-374052d2]{padding-top:43px;color:var(--color-text-maxcontrast);height:0}#rich-workspace[data-v-374052d2] div[contenteditable=false]{width:100%;padding:0px;background-color:var(--color-main-background);opacity:1;border:none}#rich-workspace[data-v-374052d2] #editor-container{height:100%;position:unset !important;top:auto !important}#rich-workspace[data-v-374052d2] #editor-wrapper{position:unset !important;overflow:visible}#rich-workspace[data-v-374052d2] #editor{overflow:scroll !important;max-height:50vh;padding-left:10px}#rich-workspace[data-v-374052d2] #editor-wrapper .ProseMirror{padding:0px;margin:0}#rich-workspace[data-v-374052d2] .menubar{z-index:50;margin-bottom:-10px}#rich-workspace[data-v-374052d2] .menubar .menubar-icons{margin-left:0}#rich-workspace[data-v-374052d2] .editor__content{margin:0}#rich-workspace.focus[data-v-374052d2]{max-height:50vh}#rich-workspace[data-v-374052d2]:not(.focus){max-height:30vh;position:relative;overflow:hidden}#rich-workspace[data-v-374052d2]:not(.focus):not(.icon-loading):after{content:'';position:absolute;z-index:1;bottom:0;left:0;pointer-events:none;background-image:linear-gradient(to bottom, rgba(255,255,255,0), var(--color-main-background));width:100%;height:4em}#rich-workspace.dark[data-v-374052d2]:not(.focus):not(.icon-loading):after{background-image:linear-gradient(to bottom, rgba(0,0,0,0), var(--color-main-background))}@media only screen and (max-width: 1024px){#rich-workspace[data-v-374052d2]:not(.focus){max-height:30vh}}html.ie #rich-workspace[data-v-374052d2] #editor-container{position:initial}html.ie #rich-workspace[data-v-374052d2] #editor-wrapper{position:relative !important;top:auto !important}html.ie #rich-workspace[data-v-374052d2] #editor{display:flex;flex-direction:column;overflow:hidden !important}html.ie #rich-workspace[data-v-374052d2] .menubar{position:relative;overflow:hidden;flex-shrink:0;height:44px;top:auto}html.ie #rich-workspace[data-v-374052d2] #editor>div:nth-child(2){min-height:44px;overflow-x:hidden;overflow-y:auto;flex-shrink:1}\n","",{version:3,sources:["webpack://./src/views/RichWorkspace.vue"],names:[],mappings:"AA0KA,iCACC,cAAe,CAEf,mBAAoB,CACpB,eAAgB,CAChB,YAAa,CACb,mDAAoD,CANrD,2CAQE,eAAgB,CAChB,4CAKD,eAAgB,CAChB,kCAGA,gBAAiB,CACjB,mCAAoC,CACpC,QAAS,CACT,4DAGA,UAAW,CACX,WAAY,CACZ,6CAA8C,CAC9C,SAAU,CACV,WAAY,CACZ,mDAGA,WAAY,CACZ,yBAA0B,CAC1B,mBAAoB,CACpB,iDAGA,yBAA0B,CAC1B,gBAAiB,CACjB,yCAGA,0BAA2B,CAC3B,eAAgB,CAChB,iBAAkB,CAClB,8DAGA,WAAY,CACZ,QAAS,CACT,0CAGA,UAAW,CAEX,mBAAoB,CACpB,yDAGA,aAAc,CACd,kDAGA,QAAS,CACT,uCAGA,eAAgB,CAChB,6CAGA,eAAgB,CAChB,iBAAkB,CAClB,eAAgB,CAChB,sEAGA,UAAW,CACX,iBAAkB,CAClB,SAAU,CACV,QAAS,CACT,MAAO,CACP,mBAAoB,CACpB,8FAAkG,CAClG,UAAW,CACX,UAAW,CACX,2EAGA,wFAA4F,CAC5F,2CAGA,6CACC,eAAgB,CAChB,CAGF,2DAGG,gBAAiB,CAHpB,yDAOG,4BAA6B,CAC7B,mBAAoB,CARvB,iDAYG,YAAa,CACb,qBAAsB,CACtB,0BAA2B,CAd9B,kDAkBG,iBAAkB,CAClB,eAAgB,CAChB,aAAc,CACd,WAAY,CACZ,QAAS,CAtBZ,kEA0BG,eAAgB,CAChB,iBAAkB,CAClB,eAAgB,CAChB,aAAc",sourcesContent:["\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n#rich-workspace {\n\tpadding: 0 50px;\n\t/* Slightly reduce vertical space */\n\tmargin-bottom: -24px;\n\ttext-align: left;\n\tmax-height: 0;\n\ttransition: max-height 0.5s cubic-bezier(0, 1, 0, 1);\n\t&.creatable {\n\t\tmin-height: 90px;\n\t}\n}\n\n/* For subfolders, where there are no Recommendations */\n#rich-workspace:only-child {\n\tmargin-bottom: 0;\n}\n\n.empty-workspace {\n\tpadding-top: 43px;\n\tcolor: var(--color-text-maxcontrast);\n\theight: 0;\n}\n\n#rich-workspace::v-deep div[contenteditable=false] {\n\twidth: 100%;\n\tpadding: 0px;\n\tbackground-color: var(--color-main-background);\n\topacity: 1;\n\tborder: none;\n}\n\n#rich-workspace::v-deep #editor-container {\n\theight: 100%;\n\tposition: unset !important;\n\ttop: auto !important;\n}\n\n#rich-workspace::v-deep #editor-wrapper {\n\tposition: unset !important;\n\toverflow: visible;\n}\n\n#rich-workspace::v-deep #editor {\n\toverflow: scroll !important;\n\tmax-height: 50vh;\n\tpadding-left: 10px;\n}\n\n#rich-workspace::v-deep #editor-wrapper .ProseMirror {\n\tpadding: 0px;\n\tmargin: 0;\n}\n\n#rich-workspace::v-deep .menubar {\n\tz-index: 50;\n\t/* Slightly reduce vertical space */\n\tmargin-bottom: -10px;\n}\n\n#rich-workspace::v-deep .menubar .menubar-icons {\n\tmargin-left: 0;\n}\n\n#rich-workspace::v-deep .editor__content {\n\tmargin: 0;\n}\n\n#rich-workspace.focus {\n\tmax-height: 50vh;\n}\n\n#rich-workspace:not(.focus) {\n\tmax-height: 30vh;\n\tposition: relative;\n\toverflow: hidden;\n}\n\n#rich-workspace:not(.focus):not(.icon-loading):after {\n\tcontent: '';\n\tposition: absolute;\n\tz-index: 1;\n\tbottom: 0;\n\tleft: 0;\n\tpointer-events: none;\n\tbackground-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--color-main-background));\n\twidth: 100%;\n\theight: 4em;\n}\n\n#rich-workspace.dark:not(.focus):not(.icon-loading):after {\n\tbackground-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));\n}\n\n@media only screen and (max-width: 1024px) {\n\t#rich-workspace:not(.focus) {\n\t\tmax-height: 30vh;\n\t}\n}\n\nhtml.ie {\n\t#rich-workspace::v-deep {\n\t\t#editor-container {\n\t\t\tposition: initial;\n\t\t}\n\n\t\t#editor-wrapper {\n\t\t\tposition: relative !important;\n\t\t\ttop: auto !important;\n\t\t}\n\n\t\t#editor {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\toverflow: hidden !important;\n\t\t}\n\n\t\t.menubar {\n\t\t\tposition: relative;\n\t\t\toverflow: hidden;\n\t\t\tflex-shrink: 0;\n\t\t\theight: 44px;\n\t\t\ttop: auto;\n\t\t}\n\n\t\t#editor > div:nth-child(2) {\n\t\t\tmin-height: 44px;\n\t\t\toverflow-x: hidden;\n\t\t\toverflow-y: auto;\n\t\t\tflex-shrink: 1;\n\t\t}\n\t}\n}\n\n"],sourceRoot:""}]),e.a=a},function(t,e,n){"use strict";n.d(e,"a",(function(){return r})),n.d(e,"b",(function(){return i}));var r=function(){var t=this,e=t.$createElement,n=t._self._c||e;return t.enabled?n("div",{class:{"icon-loading":!t.loaded||!t.ready,focus:t.focus,dark:t.darkTheme,creatable:t.canCreate},attrs:{id:"rich-workspace"}},[t.showEmptyWorkspace?n("div",{staticClass:"empty-workspace",on:{click:t.createNew}},[n("p",{staticClass:"placeholder"},[t._v("\n\t\t\t"+t._s(t.t("text","Add notes, lists or links …"))+"\n\t\t")])]):t._e(),t._v(" "),t.file?n("EditorWrapper",{directives:[{name:"show",rawName:"v-show",value:t.ready,expression:"ready"}],key:t.file.id,attrs:{"file-id":t.file.id,"relative-path":t.file.path,"share-token":t.shareToken,active:!0,autohide:!0,mime:t.file.mimetype,autofocus:t.autofocus},on:{ready:function(e){t.ready=!0},focus:function(e){t.focus=!0},blur:t.unfocus,error:t.reset}}):t._e()],1):t._e()},i=[]},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.subscribe=function(t,e){o.subscribe(t,e)},e.unsubscribe=function(t,e){o.unsubscribe(t,e)},e.emit=function(t,e){o.emit(t,e)};var r=n(169),i=n(174);var o=(void 0!==window.OC&&window.OC._eventBus&&void 0===window._nc_event_bus&&(console.warn("found old event bus instance at OC._eventBus. Update your version!"),window._nc_event_bus=window.OC._eventBus),void 0!==window._nc_event_bus?new r.ProxyBus(window._nc_event_bus):window._nc_event_bus=new i.SimpleBus)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.openMimetypesPlainText=e.openMimetypesMarkdown=e.openMimetypes=void 0;
+ * - test
+ * - test[key]
+ * - test[test1[key]]
+ * - test["a"][key]
+ * - xxx.test[a[a].test1[key]]
+ * - test.xxx.a["asa"][test1[key]]
+ *
+ */
+
+
+var len, str, chr, index$1, expressionPos, expressionEndPos;
+
+function parseModel(val) {
+  // Fix https://github.com/vuejs/vue/pull/7730
+  // allow v-model="obj.val " (trailing whitespace)
+  val = val.trim();
+  len = val.length;
+
+  if (val.indexOf('[') < 0 || val.lastIndexOf(']') < len - 1) {
+    index$1 = val.lastIndexOf('.');
+
+    if (index$1 > -1) {
+      return {
+        exp: val.slice(0, index$1),
+        key: '"' + val.slice(index$1 + 1) + '"'
+      };
+    } else {
+      return {
+        exp: val,
+        key: null
+      };
+    }
+  }
+
+  str = val;
+  index$1 = expressionPos = expressionEndPos = 0;
+
+  while (!eof()) {
+    chr = next();
+    /* istanbul ignore if */
+
+    if (isStringStart(chr)) {
+      parseString(chr);
+    } else if (chr === 0x5B) {
+      parseBracket(chr);
+    }
+  }
+
+  return {
+    exp: val.slice(0, expressionPos),
+    key: val.slice(expressionPos + 1, expressionEndPos)
+  };
+}
+
+function next() {
+  return str.charCodeAt(++index$1);
+}
+
+function eof() {
+  return index$1 >= len;
+}
+
+function isStringStart(chr) {
+  return chr === 0x22 || chr === 0x27;
+}
+
+function parseBracket(chr) {
+  var inBracket = 1;
+  expressionPos = index$1;
+
+  while (!eof()) {
+    chr = next();
+
+    if (isStringStart(chr)) {
+      parseString(chr);
+      continue;
+    }
+
+    if (chr === 0x5B) {
+      inBracket++;
+    }
+
+    if (chr === 0x5D) {
+      inBracket--;
+    }
+
+    if (inBracket === 0) {
+      expressionEndPos = index$1;
+      break;
+    }
+  }
+}
+
+function parseString(chr) {
+  var stringQuote = chr;
+
+  while (!eof()) {
+    chr = next();
+
+    if (chr === stringQuote) {
+      break;
+    }
+  }
+}
+/*  */
+
+
+var warn$1; // in some cases, the event used has to be determined at runtime
+// so we used some reserved tokens during compile.
+
+var RANGE_TOKEN = '__r';
+var CHECKBOX_RADIO_TOKEN = '__c';
+
+function model(el, dir, _warn) {
+  warn$1 = _warn;
+  var value = dir.value;
+  var modifiers = dir.modifiers;
+  var tag = el.tag;
+  var type = el.attrsMap.type;
+
+  if (true) {
+    // inputs with type="file" are read only and setting the input's
+    // value will throw an error.
+    if (tag === 'input' && type === 'file') {
+      warn$1("<" + el.tag + " v-model=\"" + value + "\" type=\"file\">:\n" + "File inputs are read only. Use a v-on:change listener instead.", el.rawAttrsMap['v-model']);
+    }
+  }
+
+  if (el.component) {
+    genComponentModel(el, value, modifiers); // component v-model doesn't need extra runtime
+
+    return false;
+  } else if (tag === 'select') {
+    genSelect(el, value, modifiers);
+  } else if (tag === 'input' && type === 'checkbox') {
+    genCheckboxModel(el, value, modifiers);
+  } else if (tag === 'input' && type === 'radio') {
+    genRadioModel(el, value, modifiers);
+  } else if (tag === 'input' || tag === 'textarea') {
+    genDefaultModel(el, value, modifiers);
+  } else if (!config.isReservedTag(tag)) {
+    genComponentModel(el, value, modifiers); // component v-model doesn't need extra runtime
+
+    return false;
+  } else if (true) {
+    warn$1("<" + el.tag + " v-model=\"" + value + "\">: " + "v-model is not supported on this element type. " + 'If you are working with contenteditable, it\'s recommended to ' + 'wrap a library dedicated for that purpose inside a custom component.', el.rawAttrsMap['v-model']);
+  } // ensure runtime directive metadata
+
+
+  return true;
+}
+
+function genCheckboxModel(el, value, modifiers) {
+  var number = modifiers && modifiers.number;
+  var valueBinding = getBindingAttr(el, 'value') || 'null';
+  var trueValueBinding = getBindingAttr(el, 'true-value') || 'true';
+  var falseValueBinding = getBindingAttr(el, 'false-value') || 'false';
+  addProp(el, 'checked', "Array.isArray(" + value + ")" + "?_i(" + value + "," + valueBinding + ")>-1" + (trueValueBinding === 'true' ? ":(" + value + ")" : ":_q(" + value + "," + trueValueBinding + ")"));
+  addHandler(el, 'change', "var $$a=" + value + "," + '$$el=$event.target,' + "$$c=$$el.checked?(" + trueValueBinding + "):(" + falseValueBinding + ");" + 'if(Array.isArray($$a)){' + "var $$v=" + (number ? '_n(' + valueBinding + ')' : valueBinding) + "," + '$$i=_i($$a,$$v);' + "if($$el.checked){$$i<0&&(" + genAssignmentCode(value, '$$a.concat([$$v])') + ")}" + "else{$$i>-1&&(" + genAssignmentCode(value, '$$a.slice(0,$$i).concat($$a.slice($$i+1))') + ")}" + "}else{" + genAssignmentCode(value, '$$c') + "}", null, true);
+}
+
+function genRadioModel(el, value, modifiers) {
+  var number = modifiers && modifiers.number;
+  var valueBinding = getBindingAttr(el, 'value') || 'null';
+  valueBinding = number ? "_n(" + valueBinding + ")" : valueBinding;
+  addProp(el, 'checked', "_q(" + value + "," + valueBinding + ")");
+  addHandler(el, 'change', genAssignmentCode(value, valueBinding), null, true);
+}
+
+function genSelect(el, value, modifiers) {
+  var number = modifiers && modifiers.number;
+  var selectedVal = "Array.prototype.filter" + ".call($event.target.options,function(o){return o.selected})" + ".map(function(o){var val = \"_value\" in o ? o._value : o.value;" + "return " + (number ? '_n(val)' : 'val') + "})";
+  var assignment = '$event.target.multiple ? $$selectedVal : $$selectedVal[0]';
+  var code = "var $$selectedVal = " + selectedVal + ";";
+  code = code + " " + genAssignmentCode(value, assignment);
+  addHandler(el, 'change', code, null, true);
+}
+
+function genDefaultModel(el, value, modifiers) {
+  var type = el.attrsMap.type; // warn if v-bind:value conflicts with v-model
+  // except for inputs with v-bind:type
+
+  if (true) {
+    var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
+    var typeBinding = el.attrsMap['v-bind:type'] || el.attrsMap[':type'];
+
+    if (value$1 && !typeBinding) {
+      var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
+      warn$1(binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " + 'because the latter already expands to a value binding internally', el.rawAttrsMap[binding]);
+    }
+  }
+
+  var ref = modifiers || {};
+  var lazy = ref.lazy;
+  var number = ref.number;
+  var trim = ref.trim;
+  var needCompositionGuard = !lazy && type !== 'range';
+  var event = lazy ? 'change' : type === 'range' ? RANGE_TOKEN : 'input';
+  var valueExpression = '$event.target.value';
+
+  if (trim) {
+    valueExpression = "$event.target.value.trim()";
+  }
+
+  if (number) {
+    valueExpression = "_n(" + valueExpression + ")";
+  }
+
+  var code = genAssignmentCode(value, valueExpression);
+
+  if (needCompositionGuard) {
+    code = "if($event.target.composing)return;" + code;
+  }
+
+  addProp(el, 'value', "(" + value + ")");
+  addHandler(el, event, code, null, true);
+
+  if (trim || number) {
+    addHandler(el, 'blur', '$forceUpdate()');
+  }
+}
+/*  */
+// normalize v-model event tokens that can only be determined at runtime.
+// it's important to place the event as the first in the array because
+// the whole point is ensuring the v-model callback gets called before
+// user-attached handlers.
+
+
+function normalizeEvents(on) {
+  /* istanbul ignore if */
+  if (isDef(on[RANGE_TOKEN])) {
+    // IE input[type=range] only supports `change` event
+    var event = isIE ? 'change' : 'input';
+    on[event] = [].concat(on[RANGE_TOKEN], on[event] || []);
+    delete on[RANGE_TOKEN];
+  } // This was originally intended to fix #4521 but no longer necessary
+  // after 2.5. Keeping it for backwards compat with generated code from < 2.4
+
+  /* istanbul ignore if */
+
+
+  if (isDef(on[CHECKBOX_RADIO_TOKEN])) {
+    on.change = [].concat(on[CHECKBOX_RADIO_TOKEN], on.change || []);
+    delete on[CHECKBOX_RADIO_TOKEN];
+  }
+}
+
+var target$1;
+
+function createOnceHandler$1(event, handler, capture) {
+  var _target = target$1; // save current target element in closure
+
+  return function onceHandler() {
+    var res = handler.apply(null, arguments);
+
+    if (res !== null) {
+      remove$2(event, onceHandler, capture, _target);
+    }
+  };
+} // #9446: Firefox <= 53 (in particular, ESR 52) has incorrect Event.timeStamp
+// implementation and does not fire microtasks in between event propagation, so
+// safe to exclude.
+
+
+var useMicrotaskFix = isUsingMicroTask && !(isFF && Number(isFF[1]) <= 53);
+
+function add$1(name, handler, capture, passive) {
+  // async edge case #6566: inner click event triggers patch, event handler
+  // attached to outer element during patch, and triggered again. This
+  // happens because browsers fire microtask ticks between event propagation.
+  // the solution is simple: we save the timestamp when a handler is attached,
+  // and the handler would only fire if the event passed to it was fired
+  // AFTER it was attached.
+  if (useMicrotaskFix) {
+    var attachedTimestamp = currentFlushTimestamp;
+    var original = handler;
+
+    handler = original._wrapper = function (e) {
+      if ( // no bubbling, should always fire.
+      // this is just a safety net in case event.timeStamp is unreliable in
+      // certain weird environments...
+      e.target === e.currentTarget || // event is fired after handler attachment
+      e.timeStamp >= attachedTimestamp || // bail for environments that have buggy event.timeStamp implementations
+      // #9462 iOS 9 bug: event.timeStamp is 0 after history.pushState
+      // #9681 QtWebEngine event.timeStamp is negative value
+      e.timeStamp <= 0 || // #9448 bail if event is fired in another document in a multi-page
+      // electron/nw.js app, since event.timeStamp will be using a different
+      // starting reference
+      e.target.ownerDocument !== document) {
+        return original.apply(this, arguments);
+      }
+    };
+  }
+
+  target$1.addEventListener(name, handler, supportsPassive ? {
+    capture: capture,
+    passive: passive
+  } : capture);
+}
+
+function remove$2(name, handler, capture, _target) {
+  (_target || target$1).removeEventListener(name, handler._wrapper || handler, capture);
+}
+
+function updateDOMListeners(oldVnode, vnode) {
+  if (isUndef(oldVnode.data.on) && isUndef(vnode.data.on)) {
+    return;
+  }
+
+  var on = vnode.data.on || {};
+  var oldOn = oldVnode.data.on || {};
+  target$1 = vnode.elm;
+  normalizeEvents(on);
+  updateListeners(on, oldOn, add$1, remove$2, createOnceHandler$1, vnode.context);
+  target$1 = undefined;
+}
+
+var events = {
+  create: updateDOMListeners,
+  update: updateDOMListeners
+};
+/*  */
+
+var svgContainer;
+
+function updateDOMProps(oldVnode, vnode) {
+  if (isUndef(oldVnode.data.domProps) && isUndef(vnode.data.domProps)) {
+    return;
+  }
+
+  var key, cur;
+  var elm = vnode.elm;
+  var oldProps = oldVnode.data.domProps || {};
+  var props = vnode.data.domProps || {}; // clone observed objects, as the user probably wants to mutate it
+
+  if (isDef(props.__ob__)) {
+    props = vnode.data.domProps = extend({}, props);
+  }
+
+  for (key in oldProps) {
+    if (!(key in props)) {
+      elm[key] = '';
+    }
+  }
+
+  for (key in props) {
+    cur = props[key]; // ignore children if the node has textContent or innerHTML,
+    // as these will throw away existing DOM nodes and cause removal errors
+    // on subsequent patches (#3360)
+
+    if (key === 'textContent' || key === 'innerHTML') {
+      if (vnode.children) {
+        vnode.children.length = 0;
+      }
+
+      if (cur === oldProps[key]) {
+        continue;
+      } // #6601 work around Chrome version <= 55 bug where single textNode
+      // replaced by innerHTML/textContent retains its parentNode property
+
+
+      if (elm.childNodes.length === 1) {
+        elm.removeChild(elm.childNodes[0]);
+      }
+    }
+
+    if (key === 'value' && elm.tagName !== 'PROGRESS') {
+      // store value as _value as well since
+      // non-string values will be stringified
+      elm._value = cur; // avoid resetting cursor position when value is the same
+
+      var strCur = isUndef(cur) ? '' : String(cur);
+
+      if (shouldUpdateValue(elm, strCur)) {
+        elm.value = strCur;
+      }
+    } else if (key === 'innerHTML' && isSVG(elm.tagName) && isUndef(elm.innerHTML)) {
+      // IE doesn't support innerHTML for SVG elements
+      svgContainer = svgContainer || document.createElement('div');
+      svgContainer.innerHTML = "<svg>" + cur + "</svg>";
+      var svg = svgContainer.firstChild;
+
+      while (elm.firstChild) {
+        elm.removeChild(elm.firstChild);
+      }
+
+      while (svg.firstChild) {
+        elm.appendChild(svg.firstChild);
+      }
+    } else if ( // skip the update if old and new VDOM state is the same.
+    // `value` is handled separately because the DOM value may be temporarily
+    // out of sync with VDOM state due to focus, composition and modifiers.
+    // This  #4521 by skipping the unnecessary `checked` update.
+    cur !== oldProps[key]) {
+      // some property updates can throw
+      // e.g. `value` on <progress> w/ non-finite value
+      try {
+        elm[key] = cur;
+      } catch (e) {}
+    }
+  }
+} // check platforms/web/util/attrs.js acceptValue
+
+
+function shouldUpdateValue(elm, checkVal) {
+  return !elm.composing && (elm.tagName === 'OPTION' || isNotInFocusAndDirty(elm, checkVal) || isDirtyWithModifiers(elm, checkVal));
+}
+
+function isNotInFocusAndDirty(elm, checkVal) {
+  // return true when textbox (.number and .trim) loses focus and its value is
+  // not equal to the updated value
+  var notInFocus = true; // #6157
+  // work around IE bug when accessing document.activeElement in an iframe
+
+  try {
+    notInFocus = document.activeElement !== elm;
+  } catch (e) {}
+
+  return notInFocus && elm.value !== checkVal;
+}
+
+function isDirtyWithModifiers(elm, newVal) {
+  var value = elm.value;
+  var modifiers = elm._vModifiers; // injected by v-model runtime
+
+  if (isDef(modifiers)) {
+    if (modifiers.number) {
+      return toNumber(value) !== toNumber(newVal);
+    }
+
+    if (modifiers.trim) {
+      return value.trim() !== newVal.trim();
+    }
+  }
+
+  return value !== newVal;
+}
+
+var domProps = {
+  create: updateDOMProps,
+  update: updateDOMProps
+};
+/*  */
+
+var parseStyleText = cached(function (cssText) {
+  var res = {};
+  var listDelimiter = /;(?![^(]*\))/g;
+  var propertyDelimiter = /:(.+)/;
+  cssText.split(listDelimiter).forEach(function (item) {
+    if (item) {
+      var tmp = item.split(propertyDelimiter);
+      tmp.length > 1 && (res[tmp[0].trim()] = tmp[1].trim());
+    }
+  });
+  return res;
+}); // merge static and dynamic style data on the same vnode
+
+function normalizeStyleData(data) {
+  var style = normalizeStyleBinding(data.style); // static style is pre-processed into an object during compilation
+  // and is always a fresh object, so it's safe to merge into it
+
+  return data.staticStyle ? extend(data.staticStyle, style) : style;
+} // normalize possible array / string values into Object
+
+
+function normalizeStyleBinding(bindingStyle) {
+  if (Array.isArray(bindingStyle)) {
+    return toObject(bindingStyle);
+  }
+
+  if (typeof bindingStyle === 'string') {
+    return parseStyleText(bindingStyle);
+  }
+
+  return bindingStyle;
+}
+/**
+ * parent component style should be after child's
+ * so that parent component's style could override it
+ */
+
+
+function getStyle(vnode, checkChild) {
+  var res = {};
+  var styleData;
+
+  if (checkChild) {
+    var childNode = vnode;
+
+    while (childNode.componentInstance) {
+      childNode = childNode.componentInstance._vnode;
+
+      if (childNode && childNode.data && (styleData = normalizeStyleData(childNode.data))) {
+        extend(res, styleData);
+      }
+    }
+  }
+
+  if (styleData = normalizeStyleData(vnode.data)) {
+    extend(res, styleData);
+  }
+
+  var parentNode = vnode;
+
+  while (parentNode = parentNode.parent) {
+    if (parentNode.data && (styleData = normalizeStyleData(parentNode.data))) {
+      extend(res, styleData);
+    }
+  }
+
+  return res;
+}
+/*  */
+
+
+var cssVarRE = /^--/;
+var importantRE = /\s*!important$/;
+
+var setProp = function setProp(el, name, val) {
+  /* istanbul ignore if */
+  if (cssVarRE.test(name)) {
+    el.style.setProperty(name, val);
+  } else if (importantRE.test(val)) {
+    el.style.setProperty(hyphenate(name), val.replace(importantRE, ''), 'important');
+  } else {
+    var normalizedName = normalize(name);
+
+    if (Array.isArray(val)) {
+      // Support values array created by autoprefixer, e.g.
+      // {display: ["-webkit-box", "-ms-flexbox", "flex"]}
+      // Set them one by one, and the browser will only set those it can recognize
+      for (var i = 0, len = val.length; i < len; i++) {
+        el.style[normalizedName] = val[i];
+      }
+    } else {
+      el.style[normalizedName] = val;
+    }
+  }
+};
+
+var vendorNames = ['Webkit', 'Moz', 'ms'];
+var emptyStyle;
+var normalize = cached(function (prop) {
+  emptyStyle = emptyStyle || document.createElement('div').style;
+  prop = camelize(prop);
+
+  if (prop !== 'filter' && prop in emptyStyle) {
+    return prop;
+  }
+
+  var capName = prop.charAt(0).toUpperCase() + prop.slice(1);
+
+  for (var i = 0; i < vendorNames.length; i++) {
+    var name = vendorNames[i] + capName;
+
+    if (name in emptyStyle) {
+      return name;
+    }
+  }
+});
+
+function updateStyle(oldVnode, vnode) {
+  var data = vnode.data;
+  var oldData = oldVnode.data;
+
+  if (isUndef(data.staticStyle) && isUndef(data.style) && isUndef(oldData.staticStyle) && isUndef(oldData.style)) {
+    return;
+  }
+
+  var cur, name;
+  var el = vnode.elm;
+  var oldStaticStyle = oldData.staticStyle;
+  var oldStyleBinding = oldData.normalizedStyle || oldData.style || {}; // if static style exists, stylebinding already merged into it when doing normalizeStyleData
+
+  var oldStyle = oldStaticStyle || oldStyleBinding;
+  var style = normalizeStyleBinding(vnode.data.style) || {}; // store normalized style under a different key for next diff
+  // make sure to clone it if it's reactive, since the user likely wants
+  // to mutate it.
+
+  vnode.data.normalizedStyle = isDef(style.__ob__) ? extend({}, style) : style;
+  var newStyle = getStyle(vnode, true);
+
+  for (name in oldStyle) {
+    if (isUndef(newStyle[name])) {
+      setProp(el, name, '');
+    }
+  }
+
+  for (name in newStyle) {
+    cur = newStyle[name];
+
+    if (cur !== oldStyle[name]) {
+      // ie9 setting to null has no effect, must use empty string
+      setProp(el, name, cur == null ? '' : cur);
+    }
+  }
+}
+
+var style = {
+  create: updateStyle,
+  update: updateStyle
+};
+/*  */
+
+var whitespaceRE = /\s+/;
+/**
+ * Add class with compatibility for SVG since classList is not supported on
+ * SVG elements in IE
+ */
+
+function addClass(el, cls) {
+  /* istanbul ignore if */
+  if (!cls || !(cls = cls.trim())) {
+    return;
+  }
+  /* istanbul ignore else */
+
+
+  if (el.classList) {
+    if (cls.indexOf(' ') > -1) {
+      cls.split(whitespaceRE).forEach(function (c) {
+        return el.classList.add(c);
+      });
+    } else {
+      el.classList.add(cls);
+    }
+  } else {
+    var cur = " " + (el.getAttribute('class') || '') + " ";
+
+    if (cur.indexOf(' ' + cls + ' ') < 0) {
+      el.setAttribute('class', (cur + cls).trim());
+    }
+  }
+}
+/**
+ * Remove class with compatibility for SVG since classList is not supported on
+ * SVG elements in IE
+ */
+
+
+function removeClass(el, cls) {
+  /* istanbul ignore if */
+  if (!cls || !(cls = cls.trim())) {
+    return;
+  }
+  /* istanbul ignore else */
+
+
+  if (el.classList) {
+    if (cls.indexOf(' ') > -1) {
+      cls.split(whitespaceRE).forEach(function (c) {
+        return el.classList.remove(c);
+      });
+    } else {
+      el.classList.remove(cls);
+    }
+
+    if (!el.classList.length) {
+      el.removeAttribute('class');
+    }
+  } else {
+    var cur = " " + (el.getAttribute('class') || '') + " ";
+    var tar = ' ' + cls + ' ';
+
+    while (cur.indexOf(tar) >= 0) {
+      cur = cur.replace(tar, ' ');
+    }
+
+    cur = cur.trim();
+
+    if (cur) {
+      el.setAttribute('class', cur);
+    } else {
+      el.removeAttribute('class');
+    }
+  }
+}
+/*  */
+
+
+function resolveTransition(def$$1) {
+  if (!def$$1) {
+    return;
+  }
+  /* istanbul ignore else */
+
+
+  if (_typeof(def$$1) === 'object') {
+    var res = {};
+
+    if (def$$1.css !== false) {
+      extend(res, autoCssTransition(def$$1.name || 'v'));
+    }
+
+    extend(res, def$$1);
+    return res;
+  } else if (typeof def$$1 === 'string') {
+    return autoCssTransition(def$$1);
+  }
+}
+
+var autoCssTransition = cached(function (name) {
+  return {
+    enterClass: name + "-enter",
+    enterToClass: name + "-enter-to",
+    enterActiveClass: name + "-enter-active",
+    leaveClass: name + "-leave",
+    leaveToClass: name + "-leave-to",
+    leaveActiveClass: name + "-leave-active"
+  };
+});
+var hasTransition = inBrowser && !isIE9;
+var TRANSITION = 'transition';
+var ANIMATION = 'animation'; // Transition property/event sniffing
+
+var transitionProp = 'transition';
+var transitionEndEvent = 'transitionend';
+var animationProp = 'animation';
+var animationEndEvent = 'animationend';
+
+if (hasTransition) {
+  /* istanbul ignore if */
+  if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
+    transitionProp = 'WebkitTransition';
+    transitionEndEvent = 'webkitTransitionEnd';
+  }
+
+  if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
+    animationProp = 'WebkitAnimation';
+    animationEndEvent = 'webkitAnimationEnd';
+  }
+} // binding to window is necessary to make hot reload work in IE in strict mode
+
+
+var raf = inBrowser ? window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : setTimeout :
+/* istanbul ignore next */
+function (fn) {
+  return fn();
+};
+
+function nextFrame(fn) {
+  raf(function () {
+    raf(fn);
+  });
+}
+
+function addTransitionClass(el, cls) {
+  var transitionClasses = el._transitionClasses || (el._transitionClasses = []);
+
+  if (transitionClasses.indexOf(cls) < 0) {
+    transitionClasses.push(cls);
+    addClass(el, cls);
+  }
+}
+
+function removeTransitionClass(el, cls) {
+  if (el._transitionClasses) {
+    remove(el._transitionClasses, cls);
+  }
+
+  removeClass(el, cls);
+}
+
+function whenTransitionEnds(el, expectedType, cb) {
+  var ref = getTransitionInfo(el, expectedType);
+  var type = ref.type;
+  var timeout = ref.timeout;
+  var propCount = ref.propCount;
+
+  if (!type) {
+    return cb();
+  }
+
+  var event = type === TRANSITION ? transitionEndEvent : animationEndEvent;
+  var ended = 0;
+
+  var end = function end() {
+    el.removeEventListener(event, onEnd);
+    cb();
+  };
+
+  var onEnd = function onEnd(e) {
+    if (e.target === el) {
+      if (++ended >= propCount) {
+        end();
+      }
+    }
+  };
+
+  setTimeout(function () {
+    if (ended < propCount) {
+      end();
+    }
+  }, timeout + 1);
+  el.addEventListener(event, onEnd);
+}
+
+var transformRE = /\b(transform|all)(,|$)/;
+
+function getTransitionInfo(el, expectedType) {
+  var styles = window.getComputedStyle(el); // JSDOM may return undefined for transition properties
+
+  var transitionDelays = (styles[transitionProp + 'Delay'] || '').split(', ');
+  var transitionDurations = (styles[transitionProp + 'Duration'] || '').split(', ');
+  var transitionTimeout = getTimeout(transitionDelays, transitionDurations);
+  var animationDelays = (styles[animationProp + 'Delay'] || '').split(', ');
+  var animationDurations = (styles[animationProp + 'Duration'] || '').split(', ');
+  var animationTimeout = getTimeout(animationDelays, animationDurations);
+  var type;
+  var timeout = 0;
+  var propCount = 0;
+  /* istanbul ignore if */
+
+  if (expectedType === TRANSITION) {
+    if (transitionTimeout > 0) {
+      type = TRANSITION;
+      timeout = transitionTimeout;
+      propCount = transitionDurations.length;
+    }
+  } else if (expectedType === ANIMATION) {
+    if (animationTimeout > 0) {
+      type = ANIMATION;
+      timeout = animationTimeout;
+      propCount = animationDurations.length;
+    }
+  } else {
+    timeout = Math.max(transitionTimeout, animationTimeout);
+    type = timeout > 0 ? transitionTimeout > animationTimeout ? TRANSITION : ANIMATION : null;
+    propCount = type ? type === TRANSITION ? transitionDurations.length : animationDurations.length : 0;
+  }
+
+  var hasTransform = type === TRANSITION && transformRE.test(styles[transitionProp + 'Property']);
+  return {
+    type: type,
+    timeout: timeout,
+    propCount: propCount,
+    hasTransform: hasTransform
+  };
+}
+
+function getTimeout(delays, durations) {
+  /* istanbul ignore next */
+  while (delays.length < durations.length) {
+    delays = delays.concat(delays);
+  }
+
+  return Math.max.apply(null, durations.map(function (d, i) {
+    return toMs(d) + toMs(delays[i]);
+  }));
+} // Old versions of Chromium (below 61.0.3163.100) formats floating pointer numbers
+// in a locale-dependent way, using a comma instead of a dot.
+// If comma is not replaced with a dot, the input will be rounded down (i.e. acting
+// as a floor function) causing unexpected behaviors
+
+
+function toMs(s) {
+  return Number(s.slice(0, -1).replace(',', '.')) * 1000;
+}
+/*  */
+
+
+function enter(vnode, toggleDisplay) {
+  var el = vnode.elm; // call leave callback now
+
+  if (isDef(el._leaveCb)) {
+    el._leaveCb.cancelled = true;
+
+    el._leaveCb();
+  }
+
+  var data = resolveTransition(vnode.data.transition);
+
+  if (isUndef(data)) {
+    return;
+  }
+  /* istanbul ignore if */
+
+
+  if (isDef(el._enterCb) || el.nodeType !== 1) {
+    return;
+  }
+
+  var css = data.css;
+  var type = data.type;
+  var enterClass = data.enterClass;
+  var enterToClass = data.enterToClass;
+  var enterActiveClass = data.enterActiveClass;
+  var appearClass = data.appearClass;
+  var appearToClass = data.appearToClass;
+  var appearActiveClass = data.appearActiveClass;
+  var beforeEnter = data.beforeEnter;
+  var enter = data.enter;
+  var afterEnter = data.afterEnter;
+  var enterCancelled = data.enterCancelled;
+  var beforeAppear = data.beforeAppear;
+  var appear = data.appear;
+  var afterAppear = data.afterAppear;
+  var appearCancelled = data.appearCancelled;
+  var duration = data.duration; // activeInstance will always be the <transition> component managing this
+  // transition. One edge case to check is when the <transition> is placed
+  // as the root node of a child component. In that case we need to check
+  // <transition>'s parent for appear check.
+
+  var context = activeInstance;
+  var transitionNode = activeInstance.$vnode;
+
+  while (transitionNode && transitionNode.parent) {
+    context = transitionNode.context;
+    transitionNode = transitionNode.parent;
+  }
+
+  var isAppear = !context._isMounted || !vnode.isRootInsert;
+
+  if (isAppear && !appear && appear !== '') {
+    return;
+  }
+
+  var startClass = isAppear && appearClass ? appearClass : enterClass;
+  var activeClass = isAppear && appearActiveClass ? appearActiveClass : enterActiveClass;
+  var toClass = isAppear && appearToClass ? appearToClass : enterToClass;
+  var beforeEnterHook = isAppear ? beforeAppear || beforeEnter : beforeEnter;
+  var enterHook = isAppear ? typeof appear === 'function' ? appear : enter : enter;
+  var afterEnterHook = isAppear ? afterAppear || afterEnter : afterEnter;
+  var enterCancelledHook = isAppear ? appearCancelled || enterCancelled : enterCancelled;
+  var explicitEnterDuration = toNumber(isObject(duration) ? duration.enter : duration);
+
+  if ( true && explicitEnterDuration != null) {
+    checkDuration(explicitEnterDuration, 'enter', vnode);
+  }
+
+  var expectsCSS = css !== false && !isIE9;
+  var userWantsControl = getHookArgumentsLength(enterHook);
+  var cb = el._enterCb = once(function () {
+    if (expectsCSS) {
+      removeTransitionClass(el, toClass);
+      removeTransitionClass(el, activeClass);
+    }
+
+    if (cb.cancelled) {
+      if (expectsCSS) {
+        removeTransitionClass(el, startClass);
+      }
+
+      enterCancelledHook && enterCancelledHook(el);
+    } else {
+      afterEnterHook && afterEnterHook(el);
+    }
+
+    el._enterCb = null;
+  });
+
+  if (!vnode.data.show) {
+    // remove pending leave element on enter by injecting an insert hook
+    mergeVNodeHook(vnode, 'insert', function () {
+      var parent = el.parentNode;
+      var pendingNode = parent && parent._pending && parent._pending[vnode.key];
+
+      if (pendingNode && pendingNode.tag === vnode.tag && pendingNode.elm._leaveCb) {
+        pendingNode.elm._leaveCb();
+      }
+
+      enterHook && enterHook(el, cb);
+    });
+  } // start enter transition
+
+
+  beforeEnterHook && beforeEnterHook(el);
+
+  if (expectsCSS) {
+    addTransitionClass(el, startClass);
+    addTransitionClass(el, activeClass);
+    nextFrame(function () {
+      removeTransitionClass(el, startClass);
+
+      if (!cb.cancelled) {
+        addTransitionClass(el, toClass);
+
+        if (!userWantsControl) {
+          if (isValidDuration(explicitEnterDuration)) {
+            setTimeout(cb, explicitEnterDuration);
+          } else {
+            whenTransitionEnds(el, type, cb);
+          }
+        }
+      }
+    });
+  }
+
+  if (vnode.data.show) {
+    toggleDisplay && toggleDisplay();
+    enterHook && enterHook(el, cb);
+  }
+
+  if (!expectsCSS && !userWantsControl) {
+    cb();
+  }
+}
+
+function leave(vnode, rm) {
+  var el = vnode.elm; // call enter callback now
+
+  if (isDef(el._enterCb)) {
+    el._enterCb.cancelled = true;
+
+    el._enterCb();
+  }
+
+  var data = resolveTransition(vnode.data.transition);
+
+  if (isUndef(data) || el.nodeType !== 1) {
+    return rm();
+  }
+  /* istanbul ignore if */
+
+
+  if (isDef(el._leaveCb)) {
+    return;
+  }
+
+  var css = data.css;
+  var type = data.type;
+  var leaveClass = data.leaveClass;
+  var leaveToClass = data.leaveToClass;
+  var leaveActiveClass = data.leaveActiveClass;
+  var beforeLeave = data.beforeLeave;
+  var leave = data.leave;
+  var afterLeave = data.afterLeave;
+  var leaveCancelled = data.leaveCancelled;
+  var delayLeave = data.delayLeave;
+  var duration = data.duration;
+  var expectsCSS = css !== false && !isIE9;
+  var userWantsControl = getHookArgumentsLength(leave);
+  var explicitLeaveDuration = toNumber(isObject(duration) ? duration.leave : duration);
+
+  if ( true && isDef(explicitLeaveDuration)) {
+    checkDuration(explicitLeaveDuration, 'leave', vnode);
+  }
+
+  var cb = el._leaveCb = once(function () {
+    if (el.parentNode && el.parentNode._pending) {
+      el.parentNode._pending[vnode.key] = null;
+    }
+
+    if (expectsCSS) {
+      removeTransitionClass(el, leaveToClass);
+      removeTransitionClass(el, leaveActiveClass);
+    }
+
+    if (cb.cancelled) {
+      if (expectsCSS) {
+        removeTransitionClass(el, leaveClass);
+      }
+
+      leaveCancelled && leaveCancelled(el);
+    } else {
+      rm();
+      afterLeave && afterLeave(el);
+    }
+
+    el._leaveCb = null;
+  });
+
+  if (delayLeave) {
+    delayLeave(performLeave);
+  } else {
+    performLeave();
+  }
+
+  function performLeave() {
+    // the delayed leave may have already been cancelled
+    if (cb.cancelled) {
+      return;
+    } // record leaving element
+
+
+    if (!vnode.data.show && el.parentNode) {
+      (el.parentNode._pending || (el.parentNode._pending = {}))[vnode.key] = vnode;
+    }
+
+    beforeLeave && beforeLeave(el);
+
+    if (expectsCSS) {
+      addTransitionClass(el, leaveClass);
+      addTransitionClass(el, leaveActiveClass);
+      nextFrame(function () {
+        removeTransitionClass(el, leaveClass);
+
+        if (!cb.cancelled) {
+          addTransitionClass(el, leaveToClass);
+
+          if (!userWantsControl) {
+            if (isValidDuration(explicitLeaveDuration)) {
+              setTimeout(cb, explicitLeaveDuration);
+            } else {
+              whenTransitionEnds(el, type, cb);
+            }
+          }
+        }
+      });
+    }
+
+    leave && leave(el, cb);
+
+    if (!expectsCSS && !userWantsControl) {
+      cb();
+    }
+  }
+} // only used in dev mode
+
+
+function checkDuration(val, name, vnode) {
+  if (typeof val !== 'number') {
+    warn("<transition> explicit " + name + " duration is not a valid number - " + "got " + JSON.stringify(val) + ".", vnode.context);
+  } else if (isNaN(val)) {
+    warn("<transition> explicit " + name + " duration is NaN - " + 'the duration expression might be incorrect.', vnode.context);
+  }
+}
+
+function isValidDuration(val) {
+  return typeof val === 'number' && !isNaN(val);
+}
+/**
+ * Normalize a transition hook's argument length. The hook may be:
+ * - a merged hook (invoker) with the original in .fns
+ * - a wrapped component method (check ._length)
+ * - a plain function (.length)
+ */
+
+
+function getHookArgumentsLength(fn) {
+  if (isUndef(fn)) {
+    return false;
+  }
+
+  var invokerFns = fn.fns;
+
+  if (isDef(invokerFns)) {
+    // invoker
+    return getHookArgumentsLength(Array.isArray(invokerFns) ? invokerFns[0] : invokerFns);
+  } else {
+    return (fn._length || fn.length) > 1;
+  }
+}
+
+function _enter(_, vnode) {
+  if (vnode.data.show !== true) {
+    enter(vnode);
+  }
+}
+
+var transition = inBrowser ? {
+  create: _enter,
+  activate: _enter,
+  remove: function remove$$1(vnode, rm) {
+    /* istanbul ignore else */
+    if (vnode.data.show !== true) {
+      leave(vnode, rm);
+    } else {
+      rm();
+    }
+  }
+} : {};
+var platformModules = [attrs, klass, events, domProps, style, transition];
+/*  */
+// the directive module should be applied last, after all
+// built-in modules have been applied.
+
+var modules = platformModules.concat(baseModules);
+var patch = createPatchFunction({
+  nodeOps: nodeOps,
+  modules: modules
+});
+/**
+ * Not type checking this file because flow doesn't like attaching
+ * properties to Elements.
+ */
+
+/* istanbul ignore if */
+
+if (isIE9) {
+  // http://www.matts411.com/post/internet-explorer-9-oninput/
+  document.addEventListener('selectionchange', function () {
+    var el = document.activeElement;
+
+    if (el && el.vmodel) {
+      trigger(el, 'input');
+    }
+  });
+}
+
+var directive = {
+  inserted: function inserted(el, binding, vnode, oldVnode) {
+    if (vnode.tag === 'select') {
+      // #6903
+      if (oldVnode.elm && !oldVnode.elm._vOptions) {
+        mergeVNodeHook(vnode, 'postpatch', function () {
+          directive.componentUpdated(el, binding, vnode);
+        });
+      } else {
+        setSelected(el, binding, vnode.context);
+      }
+
+      el._vOptions = [].map.call(el.options, getValue);
+    } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
+      el._vModifiers = binding.modifiers;
+
+      if (!binding.modifiers.lazy) {
+        el.addEventListener('compositionstart', onCompositionStart);
+        el.addEventListener('compositionend', onCompositionEnd); // Safari < 10.2 & UIWebView doesn't fire compositionend when
+        // switching focus before confirming composition choice
+        // this also fixes the issue where some browsers e.g. iOS Chrome
+        // fires "change" instead of "input" on autocomplete.
+
+        el.addEventListener('change', onCompositionEnd);
+        /* istanbul ignore if */
+
+        if (isIE9) {
+          el.vmodel = true;
+        }
+      }
+    }
+  },
+  componentUpdated: function componentUpdated(el, binding, vnode) {
+    if (vnode.tag === 'select') {
+      setSelected(el, binding, vnode.context); // in case the options rendered by v-for have changed,
+      // it's possible that the value is out-of-sync with the rendered options.
+      // detect such cases and filter out values that no longer has a matching
+      // option in the DOM.
+
+      var prevOptions = el._vOptions;
+      var curOptions = el._vOptions = [].map.call(el.options, getValue);
+
+      if (curOptions.some(function (o, i) {
+        return !looseEqual(o, prevOptions[i]);
+      })) {
+        // trigger change event if
+        // no matching option found for at least one value
+        var needReset = el.multiple ? binding.value.some(function (v) {
+          return hasNoMatchingOption(v, curOptions);
+        }) : binding.value !== binding.oldValue && hasNoMatchingOption(binding.value, curOptions);
+
+        if (needReset) {
+          trigger(el, 'change');
+        }
+      }
+    }
+  }
+};
+
+function setSelected(el, binding, vm) {
+  actuallySetSelected(el, binding, vm);
+  /* istanbul ignore if */
+
+  if (isIE || isEdge) {
+    setTimeout(function () {
+      actuallySetSelected(el, binding, vm);
+    }, 0);
+  }
+}
+
+function actuallySetSelected(el, binding, vm) {
+  var value = binding.value;
+  var isMultiple = el.multiple;
+
+  if (isMultiple && !Array.isArray(value)) {
+     true && warn("<select multiple v-model=\"" + binding.expression + "\"> " + "expects an Array value for its binding, but got " + Object.prototype.toString.call(value).slice(8, -1), vm);
+    return;
+  }
+
+  var selected, option;
+
+  for (var i = 0, l = el.options.length; i < l; i++) {
+    option = el.options[i];
+
+    if (isMultiple) {
+      selected = looseIndexOf(value, getValue(option)) > -1;
+
+      if (option.selected !== selected) {
+        option.selected = selected;
+      }
+    } else {
+      if (looseEqual(getValue(option), value)) {
+        if (el.selectedIndex !== i) {
+          el.selectedIndex = i;
+        }
+
+        return;
+      }
+    }
+  }
+
+  if (!isMultiple) {
+    el.selectedIndex = -1;
+  }
+}
+
+function hasNoMatchingOption(value, options) {
+  return options.every(function (o) {
+    return !looseEqual(o, value);
+  });
+}
+
+function getValue(option) {
+  return '_value' in option ? option._value : option.value;
+}
+
+function onCompositionStart(e) {
+  e.target.composing = true;
+}
+
+function onCompositionEnd(e) {
+  // prevent triggering an input event for no reason
+  if (!e.target.composing) {
+    return;
+  }
+
+  e.target.composing = false;
+  trigger(e.target, 'input');
+}
+
+function trigger(el, type) {
+  var e = document.createEvent('HTMLEvents');
+  e.initEvent(type, true, true);
+  el.dispatchEvent(e);
+}
+/*  */
+// recursively search for possible transition defined inside the component root
+
+
+function locateNode(vnode) {
+  return vnode.componentInstance && (!vnode.data || !vnode.data.transition) ? locateNode(vnode.componentInstance._vnode) : vnode;
+}
+
+var show = {
+  bind: function bind(el, ref, vnode) {
+    var value = ref.value;
+    vnode = locateNode(vnode);
+    var transition$$1 = vnode.data && vnode.data.transition;
+    var originalDisplay = el.__vOriginalDisplay = el.style.display === 'none' ? '' : el.style.display;
+
+    if (value && transition$$1) {
+      vnode.data.show = true;
+      enter(vnode, function () {
+        el.style.display = originalDisplay;
+      });
+    } else {
+      el.style.display = value ? originalDisplay : 'none';
+    }
+  },
+  update: function update(el, ref, vnode) {
+    var value = ref.value;
+    var oldValue = ref.oldValue;
+    /* istanbul ignore if */
+
+    if (!value === !oldValue) {
+      return;
+    }
+
+    vnode = locateNode(vnode);
+    var transition$$1 = vnode.data && vnode.data.transition;
+
+    if (transition$$1) {
+      vnode.data.show = true;
+
+      if (value) {
+        enter(vnode, function () {
+          el.style.display = el.__vOriginalDisplay;
+        });
+      } else {
+        leave(vnode, function () {
+          el.style.display = 'none';
+        });
+      }
+    } else {
+      el.style.display = value ? el.__vOriginalDisplay : 'none';
+    }
+  },
+  unbind: function unbind(el, binding, vnode, oldVnode, isDestroy) {
+    if (!isDestroy) {
+      el.style.display = el.__vOriginalDisplay;
+    }
+  }
+};
+var platformDirectives = {
+  model: directive,
+  show: show
+};
+/*  */
+
+var transitionProps = {
+  name: String,
+  appear: Boolean,
+  css: Boolean,
+  mode: String,
+  type: String,
+  enterClass: String,
+  leaveClass: String,
+  enterToClass: String,
+  leaveToClass: String,
+  enterActiveClass: String,
+  leaveActiveClass: String,
+  appearClass: String,
+  appearActiveClass: String,
+  appearToClass: String,
+  duration: [Number, String, Object]
+}; // in case the child is also an abstract component, e.g. <keep-alive>
+// we want to recursively retrieve the real component to be rendered
+
+function getRealChild(vnode) {
+  var compOptions = vnode && vnode.componentOptions;
+
+  if (compOptions && compOptions.Ctor.options.abstract) {
+    return getRealChild(getFirstComponentChild(compOptions.children));
+  } else {
+    return vnode;
+  }
+}
+
+function extractTransitionData(comp) {
+  var data = {};
+  var options = comp.$options; // props
+
+  for (var key in options.propsData) {
+    data[key] = comp[key];
+  } // events.
+  // extract listeners and pass them directly to the transition methods
+
+
+  var listeners = options._parentListeners;
+
+  for (var key$1 in listeners) {
+    data[camelize(key$1)] = listeners[key$1];
+  }
+
+  return data;
+}
+
+function placeholder(h, rawChild) {
+  if (/\d-keep-alive$/.test(rawChild.tag)) {
+    return h('keep-alive', {
+      props: rawChild.componentOptions.propsData
+    });
+  }
+}
+
+function hasParentTransition(vnode) {
+  while (vnode = vnode.parent) {
+    if (vnode.data.transition) {
+      return true;
+    }
+  }
+}
+
+function isSameChild(child, oldChild) {
+  return oldChild.key === child.key && oldChild.tag === child.tag;
+}
+
+var isNotTextNode = function isNotTextNode(c) {
+  return c.tag || isAsyncPlaceholder(c);
+};
+
+var isVShowDirective = function isVShowDirective(d) {
+  return d.name === 'show';
+};
+
+var Transition = {
+  name: 'transition',
+  props: transitionProps,
+  abstract: true,
+  render: function render(h) {
+    var this$1 = this;
+    var children = this.$slots.default;
+
+    if (!children) {
+      return;
+    } // filter out text nodes (possible whitespaces)
+
+
+    children = children.filter(isNotTextNode);
+    /* istanbul ignore if */
+
+    if (!children.length) {
+      return;
+    } // warn multiple elements
+
+
+    if ( true && children.length > 1) {
+      warn('<transition> can only be used on a single element. Use ' + '<transition-group> for lists.', this.$parent);
+    }
+
+    var mode = this.mode; // warn invalid mode
+
+    if ( true && mode && mode !== 'in-out' && mode !== 'out-in') {
+      warn('invalid <transition> mode: ' + mode, this.$parent);
+    }
+
+    var rawChild = children[0]; // if this is a component root node and the component's
+    // parent container node also has transition, skip.
+
+    if (hasParentTransition(this.$vnode)) {
+      return rawChild;
+    } // apply transition data to child
+    // use getRealChild() to ignore abstract components e.g. keep-alive
+
+
+    var child = getRealChild(rawChild);
+    /* istanbul ignore if */
+
+    if (!child) {
+      return rawChild;
+    }
+
+    if (this._leaving) {
+      return placeholder(h, rawChild);
+    } // ensure a key that is unique to the vnode type and to this transition
+    // component instance. This key will be used to remove pending leaving nodes
+    // during entering.
+
+
+    var id = "__transition-" + this._uid + "-";
+    child.key = child.key == null ? child.isComment ? id + 'comment' : id + child.tag : isPrimitive(child.key) ? String(child.key).indexOf(id) === 0 ? child.key : id + child.key : child.key;
+    var data = (child.data || (child.data = {})).transition = extractTransitionData(this);
+    var oldRawChild = this._vnode;
+    var oldChild = getRealChild(oldRawChild); // mark v-show
+    // so that the transition module can hand over the control to the directive
+
+    if (child.data.directives && child.data.directives.some(isVShowDirective)) {
+      child.data.show = true;
+    }
+
+    if (oldChild && oldChild.data && !isSameChild(child, oldChild) && !isAsyncPlaceholder(oldChild) && // #6687 component root is a comment node
+    !(oldChild.componentInstance && oldChild.componentInstance._vnode.isComment)) {
+      // replace old child transition data with fresh one
+      // important for dynamic transitions!
+      var oldData = oldChild.data.transition = extend({}, data); // handle transition mode
+
+      if (mode === 'out-in') {
+        // return placeholder node and queue update when leave finishes
+        this._leaving = true;
+        mergeVNodeHook(oldData, 'afterLeave', function () {
+          this$1._leaving = false;
+          this$1.$forceUpdate();
+        });
+        return placeholder(h, rawChild);
+      } else if (mode === 'in-out') {
+        if (isAsyncPlaceholder(child)) {
+          return oldRawChild;
+        }
+
+        var delayedLeave;
+
+        var performLeave = function performLeave() {
+          delayedLeave();
+        };
+
+        mergeVNodeHook(data, 'afterEnter', performLeave);
+        mergeVNodeHook(data, 'enterCancelled', performLeave);
+        mergeVNodeHook(oldData, 'delayLeave', function (leave) {
+          delayedLeave = leave;
+        });
+      }
+    }
+
+    return rawChild;
+  }
+};
+/*  */
+
+var props = extend({
+  tag: String,
+  moveClass: String
+}, transitionProps);
+delete props.mode;
+var TransitionGroup = {
+  props: props,
+  beforeMount: function beforeMount() {
+    var this$1 = this;
+    var update = this._update;
+
+    this._update = function (vnode, hydrating) {
+      var restoreActiveInstance = setActiveInstance(this$1); // force removing pass
+
+      this$1.__patch__(this$1._vnode, this$1.kept, false, // hydrating
+      true // removeOnly (!important, avoids unnecessary moves)
+      );
+
+      this$1._vnode = this$1.kept;
+      restoreActiveInstance();
+      update.call(this$1, vnode, hydrating);
+    };
+  },
+  render: function render(h) {
+    var tag = this.tag || this.$vnode.data.tag || 'span';
+    var map = Object.create(null);
+    var prevChildren = this.prevChildren = this.children;
+    var rawChildren = this.$slots.default || [];
+    var children = this.children = [];
+    var transitionData = extractTransitionData(this);
+
+    for (var i = 0; i < rawChildren.length; i++) {
+      var c = rawChildren[i];
+
+      if (c.tag) {
+        if (c.key != null && String(c.key).indexOf('__vlist') !== 0) {
+          children.push(c);
+          map[c.key] = c;
+          (c.data || (c.data = {})).transition = transitionData;
+        } else if (true) {
+          var opts = c.componentOptions;
+          var name = opts ? opts.Ctor.options.name || opts.tag || '' : c.tag;
+          warn("<transition-group> children must be keyed: <" + name + ">");
+        }
+      }
+    }
+
+    if (prevChildren) {
+      var kept = [];
+      var removed = [];
+
+      for (var i$1 = 0; i$1 < prevChildren.length; i$1++) {
+        var c$1 = prevChildren[i$1];
+        c$1.data.transition = transitionData;
+        c$1.data.pos = c$1.elm.getBoundingClientRect();
+
+        if (map[c$1.key]) {
+          kept.push(c$1);
+        } else {
+          removed.push(c$1);
+        }
+      }
+
+      this.kept = h(tag, null, kept);
+      this.removed = removed;
+    }
+
+    return h(tag, null, children);
+  },
+  updated: function updated() {
+    var children = this.prevChildren;
+    var moveClass = this.moveClass || (this.name || 'v') + '-move';
+
+    if (!children.length || !this.hasMove(children[0].elm, moveClass)) {
+      return;
+    } // we divide the work into three loops to avoid mixing DOM reads and writes
+    // in each iteration - which helps prevent layout thrashing.
+
+
+    children.forEach(callPendingCbs);
+    children.forEach(recordPosition);
+    children.forEach(applyTranslation); // force reflow to put everything in position
+    // assign to this to avoid being removed in tree-shaking
+    // $flow-disable-line
+
+    this._reflow = document.body.offsetHeight;
+    children.forEach(function (c) {
+      if (c.data.moved) {
+        var el = c.elm;
+        var s = el.style;
+        addTransitionClass(el, moveClass);
+        s.transform = s.WebkitTransform = s.transitionDuration = '';
+        el.addEventListener(transitionEndEvent, el._moveCb = function cb(e) {
+          if (e && e.target !== el) {
+            return;
+          }
+
+          if (!e || /transform$/.test(e.propertyName)) {
+            el.removeEventListener(transitionEndEvent, cb);
+            el._moveCb = null;
+            removeTransitionClass(el, moveClass);
+          }
+        });
+      }
+    });
+  },
+  methods: {
+    hasMove: function hasMove(el, moveClass) {
+      /* istanbul ignore if */
+      if (!hasTransition) {
+        return false;
+      }
+      /* istanbul ignore if */
+
+
+      if (this._hasMove) {
+        return this._hasMove;
+      } // Detect whether an element with the move class applied has
+      // CSS transitions. Since the element may be inside an entering
+      // transition at this very moment, we make a clone of it and remove
+      // all other transition classes applied to ensure only the move class
+      // is applied.
+
+
+      var clone = el.cloneNode();
+
+      if (el._transitionClasses) {
+        el._transitionClasses.forEach(function (cls) {
+          removeClass(clone, cls);
+        });
+      }
+
+      addClass(clone, moveClass);
+      clone.style.display = 'none';
+      this.$el.appendChild(clone);
+      var info = getTransitionInfo(clone);
+      this.$el.removeChild(clone);
+      return this._hasMove = info.hasTransform;
+    }
+  }
+};
+
+function callPendingCbs(c) {
+  /* istanbul ignore if */
+  if (c.elm._moveCb) {
+    c.elm._moveCb();
+  }
+  /* istanbul ignore if */
+
+
+  if (c.elm._enterCb) {
+    c.elm._enterCb();
+  }
+}
+
+function recordPosition(c) {
+  c.data.newPos = c.elm.getBoundingClientRect();
+}
+
+function applyTranslation(c) {
+  var oldPos = c.data.pos;
+  var newPos = c.data.newPos;
+  var dx = oldPos.left - newPos.left;
+  var dy = oldPos.top - newPos.top;
+
+  if (dx || dy) {
+    c.data.moved = true;
+    var s = c.elm.style;
+    s.transform = s.WebkitTransform = "translate(" + dx + "px," + dy + "px)";
+    s.transitionDuration = '0s';
+  }
+}
+
+var platformComponents = {
+  Transition: Transition,
+  TransitionGroup: TransitionGroup
+};
+/*  */
+// install platform specific utils
+
+Vue.config.mustUseProp = mustUseProp;
+Vue.config.isReservedTag = isReservedTag;
+Vue.config.isReservedAttr = isReservedAttr;
+Vue.config.getTagNamespace = getTagNamespace;
+Vue.config.isUnknownElement = isUnknownElement; // install platform runtime directives & components
+
+extend(Vue.options.directives, platformDirectives);
+extend(Vue.options.components, platformComponents); // install platform patch function
+
+Vue.prototype.__patch__ = inBrowser ? patch : noop; // public mount method
+
+Vue.prototype.$mount = function (el, hydrating) {
+  el = el && inBrowser ? query(el) : undefined;
+  return mountComponent(this, el, hydrating);
+}; // devtools global hook
+
+/* istanbul ignore next */
+
+
+if (inBrowser) {
+  setTimeout(function () {
+    if (config.devtools) {
+      if (devtools) {
+        devtools.emit('init', Vue);
+      } else if (true) {
+        console[console.info ? 'info' : 'log']('Download the Vue Devtools extension for a better development experience:\n' + 'https://github.com/vuejs/vue-devtools');
+      }
+    }
+
+    if ( true && config.productionTip !== false && typeof console !== 'undefined') {
+      console[console.info ? 'info' : 'log']("You are running Vue in development mode.\n" + "Make sure to turn on production mode when deploying for production.\n" + "See more tips at https://vuejs.org/guide/deployment.html");
+    }
+  }, 0);
+}
+/*  */
+
+
+var defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
+var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g;
+var buildRegex = cached(function (delimiters) {
+  var open = delimiters[0].replace(regexEscapeRE, '\\$&');
+  var close = delimiters[1].replace(regexEscapeRE, '\\$&');
+  return new RegExp(open + '((?:.|\\n)+?)' + close, 'g');
+});
+
+function parseText(text, delimiters) {
+  var tagRE = delimiters ? buildRegex(delimiters) : defaultTagRE;
+
+  if (!tagRE.test(text)) {
+    return;
+  }
+
+  var tokens = [];
+  var rawTokens = [];
+  var lastIndex = tagRE.lastIndex = 0;
+  var match, index, tokenValue;
+
+  while (match = tagRE.exec(text)) {
+    index = match.index; // push text token
+
+    if (index > lastIndex) {
+      rawTokens.push(tokenValue = text.slice(lastIndex, index));
+      tokens.push(JSON.stringify(tokenValue));
+    } // tag token
+
+
+    var exp = parseFilters(match[1].trim());
+    tokens.push("_s(" + exp + ")");
+    rawTokens.push({
+      '@binding': exp
+    });
+    lastIndex = index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    rawTokens.push(tokenValue = text.slice(lastIndex));
+    tokens.push(JSON.stringify(tokenValue));
+  }
+
+  return {
+    expression: tokens.join('+'),
+    tokens: rawTokens
+  };
+}
+/*  */
+
+
+function transformNode(el, options) {
+  var warn = options.warn || baseWarn;
+  var staticClass = getAndRemoveAttr(el, 'class');
+
+  if ( true && staticClass) {
+    var res = parseText(staticClass, options.delimiters);
+
+    if (res) {
+      warn("class=\"" + staticClass + "\": " + 'Interpolation inside attributes has been removed. ' + 'Use v-bind or the colon shorthand instead. For example, ' + 'instead of <div class="{{ val }}">, use <div :class="val">.', el.rawAttrsMap['class']);
+    }
+  }
+
+  if (staticClass) {
+    el.staticClass = JSON.stringify(staticClass);
+  }
+
+  var classBinding = getBindingAttr(el, 'class', false
+  /* getStatic */
+  );
+
+  if (classBinding) {
+    el.classBinding = classBinding;
+  }
+}
+
+function genData(el) {
+  var data = '';
+
+  if (el.staticClass) {
+    data += "staticClass:" + el.staticClass + ",";
+  }
+
+  if (el.classBinding) {
+    data += "class:" + el.classBinding + ",";
+  }
+
+  return data;
+}
+
+var klass$1 = {
+  staticKeys: ['staticClass'],
+  transformNode: transformNode,
+  genData: genData
+};
+/*  */
+
+function transformNode$1(el, options) {
+  var warn = options.warn || baseWarn;
+  var staticStyle = getAndRemoveAttr(el, 'style');
+
+  if (staticStyle) {
+    /* istanbul ignore if */
+    if (true) {
+      var res = parseText(staticStyle, options.delimiters);
+
+      if (res) {
+        warn("style=\"" + staticStyle + "\": " + 'Interpolation inside attributes has been removed. ' + 'Use v-bind or the colon shorthand instead. For example, ' + 'instead of <div style="{{ val }}">, use <div :style="val">.', el.rawAttrsMap['style']);
+      }
+    }
+
+    el.staticStyle = JSON.stringify(parseStyleText(staticStyle));
+  }
+
+  var styleBinding = getBindingAttr(el, 'style', false
+  /* getStatic */
+  );
+
+  if (styleBinding) {
+    el.styleBinding = styleBinding;
+  }
+}
+
+function genData$1(el) {
+  var data = '';
+
+  if (el.staticStyle) {
+    data += "staticStyle:" + el.staticStyle + ",";
+  }
+
+  if (el.styleBinding) {
+    data += "style:(" + el.styleBinding + "),";
+  }
+
+  return data;
+}
+
+var style$1 = {
+  staticKeys: ['staticStyle'],
+  transformNode: transformNode$1,
+  genData: genData$1
+};
+/*  */
+
+var decoder;
+var he = {
+  decode: function decode(html) {
+    decoder = decoder || document.createElement('div');
+    decoder.innerHTML = html;
+    return decoder.textContent;
+  }
+};
+/*  */
+
+var isUnaryTag = makeMap('area,base,br,col,embed,frame,hr,img,input,isindex,keygen,' + 'link,meta,param,source,track,wbr'); // Elements that you can, intentionally, leave open
+// (and which close themselves)
+
+var canBeLeftOpenTag = makeMap('colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr,source'); // HTML5 tags https://html.spec.whatwg.org/multipage/indices.html#elements-3
+// Phrasing Content https://html.spec.whatwg.org/multipage/dom.html#phrasing-content
+
+var isNonPhrasingTag = makeMap('address,article,aside,base,blockquote,body,caption,col,colgroup,dd,' + 'details,dialog,div,dl,dt,fieldset,figcaption,figure,footer,form,' + 'h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,html,legend,li,menuitem,meta,' + 'optgroup,option,param,rp,rt,source,style,summary,tbody,td,tfoot,th,thead,' + 'title,tr,track');
+/**
+ * Not type-checking this file because it's mostly vendor code.
+ */
+// Regular Expressions for parsing tags and attributes
+
+var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+var dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+?\][^\s"'<>\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+var ncname = "[a-zA-Z_][\\-\\.0-9_a-zA-Z" + unicodeRegExp.source + "]*";
+var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
+var startTagOpen = new RegExp("^<" + qnameCapture);
+var startTagClose = /^\s*(\/?)>/;
+var endTag = new RegExp("^<\\/" + qnameCapture + "[^>]*>");
+var doctype = /^<!DOCTYPE [^>]+>/i; // #7298: escape - to avoid being passed as HTML comment when inlined in page
+
+var comment = /^<!\--/;
+var conditionalComment = /^<!\[/; // Special Elements (can contain anything)
+
+var isPlainTextElement = makeMap('script,style,textarea', true);
+var reCache = {};
+var decodingMap = {
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&amp;': '&',
+  '&#10;': '\n',
+  '&#9;': '\t',
+  '&#39;': "'"
+};
+var encodedAttr = /&(?:lt|gt|quot|amp|#39);/g;
+var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#39|#10|#9);/g; // #5992
+
+var isIgnoreNewlineTag = makeMap('pre,textarea', true);
+
+var shouldIgnoreFirstNewline = function shouldIgnoreFirstNewline(tag, html) {
+  return tag && isIgnoreNewlineTag(tag) && html[0] === '\n';
+};
+
+function decodeAttr(value, shouldDecodeNewlines) {
+  var re = shouldDecodeNewlines ? encodedAttrWithNewLines : encodedAttr;
+  return value.replace(re, function (match) {
+    return decodingMap[match];
+  });
+}
+
+function parseHTML(html, options) {
+  var stack = [];
+  var expectHTML = options.expectHTML;
+  var isUnaryTag$$1 = options.isUnaryTag || no;
+  var canBeLeftOpenTag$$1 = options.canBeLeftOpenTag || no;
+  var index = 0;
+  var last, lastTag;
+
+  while (html) {
+    last = html; // Make sure we're not in a plaintext content element like script/style
+
+    if (!lastTag || !isPlainTextElement(lastTag)) {
+      var textEnd = html.indexOf('<');
+
+      if (textEnd === 0) {
+        // Comment:
+        if (comment.test(html)) {
+          var commentEnd = html.indexOf('-->');
+
+          if (commentEnd >= 0) {
+            if (options.shouldKeepComment) {
+              options.comment(html.substring(4, commentEnd), index, index + commentEnd + 3);
+            }
+
+            advance(commentEnd + 3);
+            continue;
+          }
+        } // http://en.wikipedia.org/wiki/Conditional_comment#Downlevel-revealed_conditional_comment
+
+
+        if (conditionalComment.test(html)) {
+          var conditionalEnd = html.indexOf(']>');
+
+          if (conditionalEnd >= 0) {
+            advance(conditionalEnd + 2);
+            continue;
+          }
+        } // Doctype:
+
+
+        var doctypeMatch = html.match(doctype);
+
+        if (doctypeMatch) {
+          advance(doctypeMatch[0].length);
+          continue;
+        } // End tag:
+
+
+        var endTagMatch = html.match(endTag);
+
+        if (endTagMatch) {
+          var curIndex = index;
+          advance(endTagMatch[0].length);
+          parseEndTag(endTagMatch[1], curIndex, index);
+          continue;
+        } // Start tag:
+
+
+        var startTagMatch = parseStartTag();
+
+        if (startTagMatch) {
+          handleStartTag(startTagMatch);
+
+          if (shouldIgnoreFirstNewline(startTagMatch.tagName, html)) {
+            advance(1);
+          }
+
+          continue;
+        }
+      }
+
+      var text = void 0,
+          rest = void 0,
+          next = void 0;
+
+      if (textEnd >= 0) {
+        rest = html.slice(textEnd);
+
+        while (!endTag.test(rest) && !startTagOpen.test(rest) && !comment.test(rest) && !conditionalComment.test(rest)) {
+          // < in plain text, be forgiving and treat it as text
+          next = rest.indexOf('<', 1);
+
+          if (next < 0) {
+            break;
+          }
+
+          textEnd += next;
+          rest = html.slice(textEnd);
+        }
+
+        text = html.substring(0, textEnd);
+      }
+
+      if (textEnd < 0) {
+        text = html;
+      }
+
+      if (text) {
+        advance(text.length);
+      }
+
+      if (options.chars && text) {
+        options.chars(text, index - text.length, index);
+      }
+    } else {
+      var endTagLength = 0;
+      var stackedTag = lastTag.toLowerCase();
+      var reStackedTag = reCache[stackedTag] || (reCache[stackedTag] = new RegExp('([\\s\\S]*?)(</' + stackedTag + '[^>]*>)', 'i'));
+      var rest$1 = html.replace(reStackedTag, function (all, text, endTag) {
+        endTagLength = endTag.length;
+
+        if (!isPlainTextElement(stackedTag) && stackedTag !== 'noscript') {
+          text = text.replace(/<!\--([\s\S]*?)-->/g, '$1') // #7298
+          .replace(/<!\[CDATA\[([\s\S]*?)]]>/g, '$1');
+        }
+
+        if (shouldIgnoreFirstNewline(stackedTag, text)) {
+          text = text.slice(1);
+        }
+
+        if (options.chars) {
+          options.chars(text);
+        }
+
+        return '';
+      });
+      index += html.length - rest$1.length;
+      html = rest$1;
+      parseEndTag(stackedTag, index - endTagLength, index);
+    }
+
+    if (html === last) {
+      options.chars && options.chars(html);
+
+      if ( true && !stack.length && options.warn) {
+        options.warn("Mal-formatted tag at end of template: \"" + html + "\"", {
+          start: index + html.length
+        });
+      }
+
+      break;
+    }
+  } // Clean up any remaining tags
+
+
+  parseEndTag();
+
+  function advance(n) {
+    index += n;
+    html = html.substring(n);
+  }
+
+  function parseStartTag() {
+    var start = html.match(startTagOpen);
+
+    if (start) {
+      var match = {
+        tagName: start[1],
+        attrs: [],
+        start: index
+      };
+      advance(start[0].length);
+      var end, attr;
+
+      while (!(end = html.match(startTagClose)) && (attr = html.match(dynamicArgAttribute) || html.match(attribute))) {
+        attr.start = index;
+        advance(attr[0].length);
+        attr.end = index;
+        match.attrs.push(attr);
+      }
+
+      if (end) {
+        match.unarySlash = end[1];
+        advance(end[0].length);
+        match.end = index;
+        return match;
+      }
+    }
+  }
+
+  function handleStartTag(match) {
+    var tagName = match.tagName;
+    var unarySlash = match.unarySlash;
+
+    if (expectHTML) {
+      if (lastTag === 'p' && isNonPhrasingTag(tagName)) {
+        parseEndTag(lastTag);
+      }
+
+      if (canBeLeftOpenTag$$1(tagName) && lastTag === tagName) {
+        parseEndTag(tagName);
+      }
+    }
+
+    var unary = isUnaryTag$$1(tagName) || !!unarySlash;
+    var l = match.attrs.length;
+    var attrs = new Array(l);
+
+    for (var i = 0; i < l; i++) {
+      var args = match.attrs[i];
+      var value = args[3] || args[4] || args[5] || '';
+      var shouldDecodeNewlines = tagName === 'a' && args[1] === 'href' ? options.shouldDecodeNewlinesForHref : options.shouldDecodeNewlines;
+      attrs[i] = {
+        name: args[1],
+        value: decodeAttr(value, shouldDecodeNewlines)
+      };
+
+      if ( true && options.outputSourceRange) {
+        attrs[i].start = args.start + args[0].match(/^\s*/).length;
+        attrs[i].end = args.end;
+      }
+    }
+
+    if (!unary) {
+      stack.push({
+        tag: tagName,
+        lowerCasedTag: tagName.toLowerCase(),
+        attrs: attrs,
+        start: match.start,
+        end: match.end
+      });
+      lastTag = tagName;
+    }
+
+    if (options.start) {
+      options.start(tagName, attrs, unary, match.start, match.end);
+    }
+  }
+
+  function parseEndTag(tagName, start, end) {
+    var pos, lowerCasedTagName;
+
+    if (start == null) {
+      start = index;
+    }
+
+    if (end == null) {
+      end = index;
+    } // Find the closest opened tag of the same type
+
+
+    if (tagName) {
+      lowerCasedTagName = tagName.toLowerCase();
+
+      for (pos = stack.length - 1; pos >= 0; pos--) {
+        if (stack[pos].lowerCasedTag === lowerCasedTagName) {
+          break;
+        }
+      }
+    } else {
+      // If no tag name is provided, clean shop
+      pos = 0;
+    }
+
+    if (pos >= 0) {
+      // Close all the open elements, up the stack
+      for (var i = stack.length - 1; i >= pos; i--) {
+        if ( true && (i > pos || !tagName) && options.warn) {
+          options.warn("tag <" + stack[i].tag + "> has no matching end tag.", {
+            start: stack[i].start,
+            end: stack[i].end
+          });
+        }
+
+        if (options.end) {
+          options.end(stack[i].tag, start, end);
+        }
+      } // Remove the open elements from the stack
+
+
+      stack.length = pos;
+      lastTag = pos && stack[pos - 1].tag;
+    } else if (lowerCasedTagName === 'br') {
+      if (options.start) {
+        options.start(tagName, [], true, start, end);
+      }
+    } else if (lowerCasedTagName === 'p') {
+      if (options.start) {
+        options.start(tagName, [], false, start, end);
+      }
+
+      if (options.end) {
+        options.end(tagName, start, end);
+      }
+    }
+  }
+}
+/*  */
+
+
+var onRE = /^@|^v-on:/;
+var dirRE = /^v-|^@|^:|^#/;
+var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
+var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
+var stripParensRE = /^\(|\)$/g;
+var dynamicArgRE = /^\[.*\]$/;
+var argRE = /:(.*)$/;
+var bindRE = /^:|^\.|^v-bind:/;
+var modifierRE = /\.[^.\]]+(?=[^\]]*$)/g;
+var slotRE = /^v-slot(:|$)|^#/;
+var lineBreakRE = /[\r\n]/;
+var whitespaceRE$1 = /[ \f\t\r\n]+/g;
+var invalidAttributeRE = /[\s"'<>\/=]/;
+var decodeHTMLCached = cached(he.decode);
+var emptySlotScopeToken = "_empty_"; // configurable state
+
+var warn$2;
+var delimiters;
+var transforms;
+var preTransforms;
+var postTransforms;
+var platformIsPreTag;
+var platformMustUseProp;
+var platformGetTagNamespace;
+var maybeComponent;
+
+function createASTElement(tag, attrs, parent) {
+  return {
+    type: 1,
+    tag: tag,
+    attrsList: attrs,
+    attrsMap: makeAttrsMap(attrs),
+    rawAttrsMap: {},
+    parent: parent,
+    children: []
+  };
+}
+/**
+ * Convert HTML string to AST.
+ */
+
+
+function parse(template, options) {
+  warn$2 = options.warn || baseWarn;
+  platformIsPreTag = options.isPreTag || no;
+  platformMustUseProp = options.mustUseProp || no;
+  platformGetTagNamespace = options.getTagNamespace || no;
+  var isReservedTag = options.isReservedTag || no;
+
+  maybeComponent = function maybeComponent(el) {
+    return !!(el.component || el.attrsMap[':is'] || el.attrsMap['v-bind:is'] || !(el.attrsMap.is ? isReservedTag(el.attrsMap.is) : isReservedTag(el.tag)));
+  };
+
+  transforms = pluckModuleFunction(options.modules, 'transformNode');
+  preTransforms = pluckModuleFunction(options.modules, 'preTransformNode');
+  postTransforms = pluckModuleFunction(options.modules, 'postTransformNode');
+  delimiters = options.delimiters;
+  var stack = [];
+  var preserveWhitespace = options.preserveWhitespace !== false;
+  var whitespaceOption = options.whitespace;
+  var root;
+  var currentParent;
+  var inVPre = false;
+  var inPre = false;
+  var warned = false;
+
+  function warnOnce(msg, range) {
+    if (!warned) {
+      warned = true;
+      warn$2(msg, range);
+    }
+  }
+
+  function closeElement(element) {
+    trimEndingWhitespace(element);
+
+    if (!inVPre && !element.processed) {
+      element = processElement(element, options);
+    } // tree management
+
+
+    if (!stack.length && element !== root) {
+      // allow root elements with v-if, v-else-if and v-else
+      if (root.if && (element.elseif || element.else)) {
+        if (true) {
+          checkRootConstraints(element);
+        }
+
+        addIfCondition(root, {
+          exp: element.elseif,
+          block: element
+        });
+      } else if (true) {
+        warnOnce("Component template should contain exactly one root element. " + "If you are using v-if on multiple elements, " + "use v-else-if to chain them instead.", {
+          start: element.start
+        });
+      }
+    }
+
+    if (currentParent && !element.forbidden) {
+      if (element.elseif || element.else) {
+        processIfConditions(element, currentParent);
+      } else {
+        if (element.slotScope) {
+          // scoped slot
+          // keep it in the children list so that v-else(-if) conditions can
+          // find it as the prev node.
+          var name = element.slotTarget || '"default"';
+          (currentParent.scopedSlots || (currentParent.scopedSlots = {}))[name] = element;
+        }
+
+        currentParent.children.push(element);
+        element.parent = currentParent;
+      }
+    } // final children cleanup
+    // filter out scoped slots
+
+
+    element.children = element.children.filter(function (c) {
+      return !c.slotScope;
+    }); // remove trailing whitespace node again
+
+    trimEndingWhitespace(element); // check pre state
+
+    if (element.pre) {
+      inVPre = false;
+    }
+
+    if (platformIsPreTag(element.tag)) {
+      inPre = false;
+    } // apply post-transforms
+
+
+    for (var i = 0; i < postTransforms.length; i++) {
+      postTransforms[i](element, options);
+    }
+  }
+
+  function trimEndingWhitespace(el) {
+    // remove trailing whitespace node
+    if (!inPre) {
+      var lastNode;
+
+      while ((lastNode = el.children[el.children.length - 1]) && lastNode.type === 3 && lastNode.text === ' ') {
+        el.children.pop();
+      }
+    }
+  }
+
+  function checkRootConstraints(el) {
+    if (el.tag === 'slot' || el.tag === 'template') {
+      warnOnce("Cannot use <" + el.tag + "> as component root element because it may " + 'contain multiple nodes.', {
+        start: el.start
+      });
+    }
+
+    if (el.attrsMap.hasOwnProperty('v-for')) {
+      warnOnce('Cannot use v-for on stateful component root element because ' + 'it renders multiple elements.', el.rawAttrsMap['v-for']);
+    }
+  }
+
+  parseHTML(template, {
+    warn: warn$2,
+    expectHTML: options.expectHTML,
+    isUnaryTag: options.isUnaryTag,
+    canBeLeftOpenTag: options.canBeLeftOpenTag,
+    shouldDecodeNewlines: options.shouldDecodeNewlines,
+    shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
+    shouldKeepComment: options.comments,
+    outputSourceRange: options.outputSourceRange,
+    start: function start(tag, attrs, unary, start$1, end) {
+      // check namespace.
+      // inherit parent ns if there is one
+      var ns = currentParent && currentParent.ns || platformGetTagNamespace(tag); // handle IE svg bug
+
+      /* istanbul ignore if */
+
+      if (isIE && ns === 'svg') {
+        attrs = guardIESVGBug(attrs);
+      }
+
+      var element = createASTElement(tag, attrs, currentParent);
+
+      if (ns) {
+        element.ns = ns;
+      }
+
+      if (true) {
+        if (options.outputSourceRange) {
+          element.start = start$1;
+          element.end = end;
+          element.rawAttrsMap = element.attrsList.reduce(function (cumulated, attr) {
+            cumulated[attr.name] = attr;
+            return cumulated;
+          }, {});
+        }
+
+        attrs.forEach(function (attr) {
+          if (invalidAttributeRE.test(attr.name)) {
+            warn$2("Invalid dynamic argument expression: attribute names cannot contain " + "spaces, quotes, <, >, / or =.", {
+              start: attr.start + attr.name.indexOf("["),
+              end: attr.start + attr.name.length
+            });
+          }
+        });
+      }
+
+      if (isForbiddenTag(element) && !isServerRendering()) {
+        element.forbidden = true;
+         true && warn$2('Templates should only be responsible for mapping the state to the ' + 'UI. Avoid placing tags with side-effects in your templates, such as ' + "<" + tag + ">" + ', as they will not be parsed.', {
+          start: element.start
+        });
+      } // apply pre-transforms
+
+
+      for (var i = 0; i < preTransforms.length; i++) {
+        element = preTransforms[i](element, options) || element;
+      }
+
+      if (!inVPre) {
+        processPre(element);
+
+        if (element.pre) {
+          inVPre = true;
+        }
+      }
+
+      if (platformIsPreTag(element.tag)) {
+        inPre = true;
+      }
+
+      if (inVPre) {
+        processRawAttrs(element);
+      } else if (!element.processed) {
+        // structural directives
+        processFor(element);
+        processIf(element);
+        processOnce(element);
+      }
+
+      if (!root) {
+        root = element;
+
+        if (true) {
+          checkRootConstraints(root);
+        }
+      }
+
+      if (!unary) {
+        currentParent = element;
+        stack.push(element);
+      } else {
+        closeElement(element);
+      }
+    },
+    end: function end(tag, start, end$1) {
+      var element = stack[stack.length - 1]; // pop stack
+
+      stack.length -= 1;
+      currentParent = stack[stack.length - 1];
+
+      if ( true && options.outputSourceRange) {
+        element.end = end$1;
+      }
+
+      closeElement(element);
+    },
+    chars: function chars(text, start, end) {
+      if (!currentParent) {
+        if (true) {
+          if (text === template) {
+            warnOnce('Component template requires a root element, rather than just text.', {
+              start: start
+            });
+          } else if (text = text.trim()) {
+            warnOnce("text \"" + text + "\" outside root element will be ignored.", {
+              start: start
+            });
+          }
+        }
+
+        return;
+      } // IE textarea placeholder bug
+
+      /* istanbul ignore if */
+
+
+      if (isIE && currentParent.tag === 'textarea' && currentParent.attrsMap.placeholder === text) {
+        return;
+      }
+
+      var children = currentParent.children;
+
+      if (inPre || text.trim()) {
+        text = isTextTag(currentParent) ? text : decodeHTMLCached(text);
+      } else if (!children.length) {
+        // remove the whitespace-only node right after an opening tag
+        text = '';
+      } else if (whitespaceOption) {
+        if (whitespaceOption === 'condense') {
+          // in condense mode, remove the whitespace node if it contains
+          // line break, otherwise condense to a single space
+          text = lineBreakRE.test(text) ? '' : ' ';
+        } else {
+          text = ' ';
+        }
+      } else {
+        text = preserveWhitespace ? ' ' : '';
+      }
+
+      if (text) {
+        if (!inPre && whitespaceOption === 'condense') {
+          // condense consecutive whitespaces into single space
+          text = text.replace(whitespaceRE$1, ' ');
+        }
+
+        var res;
+        var child;
+
+        if (!inVPre && text !== ' ' && (res = parseText(text, delimiters))) {
+          child = {
+            type: 2,
+            expression: res.expression,
+            tokens: res.tokens,
+            text: text
+          };
+        } else if (text !== ' ' || !children.length || children[children.length - 1].text !== ' ') {
+          child = {
+            type: 3,
+            text: text
+          };
+        }
+
+        if (child) {
+          if ( true && options.outputSourceRange) {
+            child.start = start;
+            child.end = end;
+          }
+
+          children.push(child);
+        }
+      }
+    },
+    comment: function comment(text, start, end) {
+      // adding anything as a sibling to the root node is forbidden
+      // comments should still be allowed, but ignored
+      if (currentParent) {
+        var child = {
+          type: 3,
+          text: text,
+          isComment: true
+        };
+
+        if ( true && options.outputSourceRange) {
+          child.start = start;
+          child.end = end;
+        }
+
+        currentParent.children.push(child);
+      }
+    }
+  });
+  return root;
+}
+
+function processPre(el) {
+  if (getAndRemoveAttr(el, 'v-pre') != null) {
+    el.pre = true;
+  }
+}
+
+function processRawAttrs(el) {
+  var list = el.attrsList;
+  var len = list.length;
+
+  if (len) {
+    var attrs = el.attrs = new Array(len);
+
+    for (var i = 0; i < len; i++) {
+      attrs[i] = {
+        name: list[i].name,
+        value: JSON.stringify(list[i].value)
+      };
+
+      if (list[i].start != null) {
+        attrs[i].start = list[i].start;
+        attrs[i].end = list[i].end;
+      }
+    }
+  } else if (!el.pre) {
+    // non root node in pre blocks with no attributes
+    el.plain = true;
+  }
+}
+
+function processElement(element, options) {
+  processKey(element); // determine whether this is a plain element after
+  // removing structural attributes
+
+  element.plain = !element.key && !element.scopedSlots && !element.attrsList.length;
+  processRef(element);
+  processSlotContent(element);
+  processSlotOutlet(element);
+  processComponent(element);
+
+  for (var i = 0; i < transforms.length; i++) {
+    element = transforms[i](element, options) || element;
+  }
+
+  processAttrs(element);
+  return element;
+}
+
+function processKey(el) {
+  var exp = getBindingAttr(el, 'key');
+
+  if (exp) {
+    if (true) {
+      if (el.tag === 'template') {
+        warn$2("<template> cannot be keyed. Place the key on real elements instead.", getRawBindingAttr(el, 'key'));
+      }
+
+      if (el.for) {
+        var iterator = el.iterator2 || el.iterator1;
+        var parent = el.parent;
+
+        if (iterator && iterator === exp && parent && parent.tag === 'transition-group') {
+          warn$2("Do not use v-for index as key on <transition-group> children, " + "this is the same as not using keys.", getRawBindingAttr(el, 'key'), true
+          /* tip */
+          );
+        }
+      }
+    }
+
+    el.key = exp;
+  }
+}
+
+function processRef(el) {
+  var ref = getBindingAttr(el, 'ref');
+
+  if (ref) {
+    el.ref = ref;
+    el.refInFor = checkInFor(el);
+  }
+}
+
+function processFor(el) {
+  var exp;
+
+  if (exp = getAndRemoveAttr(el, 'v-for')) {
+    var res = parseFor(exp);
+
+    if (res) {
+      extend(el, res);
+    } else if (true) {
+      warn$2("Invalid v-for expression: " + exp, el.rawAttrsMap['v-for']);
+    }
+  }
+}
+
+function parseFor(exp) {
+  var inMatch = exp.match(forAliasRE);
+
+  if (!inMatch) {
+    return;
+  }
+
+  var res = {};
+  res.for = inMatch[2].trim();
+  var alias = inMatch[1].trim().replace(stripParensRE, '');
+  var iteratorMatch = alias.match(forIteratorRE);
+
+  if (iteratorMatch) {
+    res.alias = alias.replace(forIteratorRE, '').trim();
+    res.iterator1 = iteratorMatch[1].trim();
+
+    if (iteratorMatch[2]) {
+      res.iterator2 = iteratorMatch[2].trim();
+    }
+  } else {
+    res.alias = alias;
+  }
+
+  return res;
+}
+
+function processIf(el) {
+  var exp = getAndRemoveAttr(el, 'v-if');
+
+  if (exp) {
+    el.if = exp;
+    addIfCondition(el, {
+      exp: exp,
+      block: el
+    });
+  } else {
+    if (getAndRemoveAttr(el, 'v-else') != null) {
+      el.else = true;
+    }
+
+    var elseif = getAndRemoveAttr(el, 'v-else-if');
+
+    if (elseif) {
+      el.elseif = elseif;
+    }
+  }
+}
+
+function processIfConditions(el, parent) {
+  var prev = findPrevElement(parent.children);
+
+  if (prev && prev.if) {
+    addIfCondition(prev, {
+      exp: el.elseif,
+      block: el
+    });
+  } else if (true) {
+    warn$2("v-" + (el.elseif ? 'else-if="' + el.elseif + '"' : 'else') + " " + "used on element <" + el.tag + "> without corresponding v-if.", el.rawAttrsMap[el.elseif ? 'v-else-if' : 'v-else']);
+  }
+}
+
+function findPrevElement(children) {
+  var i = children.length;
+
+  while (i--) {
+    if (children[i].type === 1) {
+      return children[i];
+    } else {
+      if ( true && children[i].text !== ' ') {
+        warn$2("text \"" + children[i].text.trim() + "\" between v-if and v-else(-if) " + "will be ignored.", children[i]);
+      }
+
+      children.pop();
+    }
+  }
+}
+
+function addIfCondition(el, condition) {
+  if (!el.ifConditions) {
+    el.ifConditions = [];
+  }
+
+  el.ifConditions.push(condition);
+}
+
+function processOnce(el) {
+  var once$$1 = getAndRemoveAttr(el, 'v-once');
+
+  if (once$$1 != null) {
+    el.once = true;
+  }
+} // handle content being passed to a component as slot,
+// e.g. <template slot="xxx">, <div slot-scope="xxx">
+
+
+function processSlotContent(el) {
+  var slotScope;
+
+  if (el.tag === 'template') {
+    slotScope = getAndRemoveAttr(el, 'scope');
+    /* istanbul ignore if */
+
+    if ( true && slotScope) {
+      warn$2("the \"scope\" attribute for scoped slots have been deprecated and " + "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " + "can also be used on plain elements in addition to <template> to " + "denote scoped slots.", el.rawAttrsMap['scope'], true);
+    }
+
+    el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
+  } else if (slotScope = getAndRemoveAttr(el, 'slot-scope')) {
+    /* istanbul ignore if */
+    if ( true && el.attrsMap['v-for']) {
+      warn$2("Ambiguous combined usage of slot-scope and v-for on <" + el.tag + "> " + "(v-for takes higher priority). Use a wrapper <template> for the " + "scoped slot to make it clearer.", el.rawAttrsMap['slot-scope'], true);
+    }
+
+    el.slotScope = slotScope;
+  } // slot="xxx"
+
+
+  var slotTarget = getBindingAttr(el, 'slot');
+
+  if (slotTarget) {
+    el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget;
+    el.slotTargetDynamic = !!(el.attrsMap[':slot'] || el.attrsMap['v-bind:slot']); // preserve slot as an attribute for native shadow DOM compat
+    // only for non-scoped slots.
+
+    if (el.tag !== 'template' && !el.slotScope) {
+      addAttr(el, 'slot', slotTarget, getRawBindingAttr(el, 'slot'));
+    }
+  } // 2.6 v-slot syntax
+
+
+  {
+    if (el.tag === 'template') {
+      // v-slot on <template>
+      var slotBinding = getAndRemoveAttrByRegex(el, slotRE);
+
+      if (slotBinding) {
+        if (true) {
+          if (el.slotTarget || el.slotScope) {
+            warn$2("Unexpected mixed usage of different slot syntaxes.", el);
+          }
+
+          if (el.parent && !maybeComponent(el.parent)) {
+            warn$2("<template v-slot> can only appear at the root level inside " + "the receiving component", el);
+          }
+        }
+
+        var ref = getSlotName(slotBinding);
+        var name = ref.name;
+        var dynamic = ref.dynamic;
+        el.slotTarget = name;
+        el.slotTargetDynamic = dynamic;
+        el.slotScope = slotBinding.value || emptySlotScopeToken; // force it into a scoped slot for perf
+      }
+    } else {
+      // v-slot on component, denotes default slot
+      var slotBinding$1 = getAndRemoveAttrByRegex(el, slotRE);
+
+      if (slotBinding$1) {
+        if (true) {
+          if (!maybeComponent(el)) {
+            warn$2("v-slot can only be used on components or <template>.", slotBinding$1);
+          }
+
+          if (el.slotScope || el.slotTarget) {
+            warn$2("Unexpected mixed usage of different slot syntaxes.", el);
+          }
+
+          if (el.scopedSlots) {
+            warn$2("To avoid scope ambiguity, the default slot should also use " + "<template> syntax when there are other named slots.", slotBinding$1);
+          }
+        } // add the component's children to its default slot
+
+
+        var slots = el.scopedSlots || (el.scopedSlots = {});
+        var ref$1 = getSlotName(slotBinding$1);
+        var name$1 = ref$1.name;
+        var dynamic$1 = ref$1.dynamic;
+        var slotContainer = slots[name$1] = createASTElement('template', [], el);
+        slotContainer.slotTarget = name$1;
+        slotContainer.slotTargetDynamic = dynamic$1;
+        slotContainer.children = el.children.filter(function (c) {
+          if (!c.slotScope) {
+            c.parent = slotContainer;
+            return true;
+          }
+        });
+        slotContainer.slotScope = slotBinding$1.value || emptySlotScopeToken; // remove children as they are returned from scopedSlots now
+
+        el.children = []; // mark el non-plain so data gets generated
+
+        el.plain = false;
+      }
+    }
+  }
+}
+
+function getSlotName(binding) {
+  var name = binding.name.replace(slotRE, '');
+
+  if (!name) {
+    if (binding.name[0] !== '#') {
+      name = 'default';
+    } else if (true) {
+      warn$2("v-slot shorthand syntax requires a slot name.", binding);
+    }
+  }
+
+  return dynamicArgRE.test(name) // dynamic [name]
+  ? {
+    name: name.slice(1, -1),
+    dynamic: true
+  } // static name
+  : {
+    name: "\"" + name + "\"",
+    dynamic: false
+  };
+} // handle <slot/> outlets
+
+
+function processSlotOutlet(el) {
+  if (el.tag === 'slot') {
+    el.slotName = getBindingAttr(el, 'name');
+
+    if ( true && el.key) {
+      warn$2("`key` does not work on <slot> because slots are abstract outlets " + "and can possibly expand into multiple elements. " + "Use the key on a wrapping element instead.", getRawBindingAttr(el, 'key'));
+    }
+  }
+}
+
+function processComponent(el) {
+  var binding;
+
+  if (binding = getBindingAttr(el, 'is')) {
+    el.component = binding;
+  }
+
+  if (getAndRemoveAttr(el, 'inline-template') != null) {
+    el.inlineTemplate = true;
+  }
+}
+
+function processAttrs(el) {
+  var list = el.attrsList;
+  var i, l, name, rawName, value, modifiers, syncGen, isDynamic;
+
+  for (i = 0, l = list.length; i < l; i++) {
+    name = rawName = list[i].name;
+    value = list[i].value;
+
+    if (dirRE.test(name)) {
+      // mark element as dynamic
+      el.hasBindings = true; // modifiers
+
+      modifiers = parseModifiers(name.replace(dirRE, '')); // support .foo shorthand syntax for the .prop modifier
+
+      if (modifiers) {
+        name = name.replace(modifierRE, '');
+      }
+
+      if (bindRE.test(name)) {
+        // v-bind
+        name = name.replace(bindRE, '');
+        value = parseFilters(value);
+        isDynamic = dynamicArgRE.test(name);
+
+        if (isDynamic) {
+          name = name.slice(1, -1);
+        }
+
+        if ( true && value.trim().length === 0) {
+          warn$2("The value for a v-bind expression cannot be empty. Found in \"v-bind:" + name + "\"");
+        }
+
+        if (modifiers) {
+          if (modifiers.prop && !isDynamic) {
+            name = camelize(name);
+
+            if (name === 'innerHtml') {
+              name = 'innerHTML';
+            }
+          }
+
+          if (modifiers.camel && !isDynamic) {
+            name = camelize(name);
+          }
+
+          if (modifiers.sync) {
+            syncGen = genAssignmentCode(value, "$event");
+
+            if (!isDynamic) {
+              addHandler(el, "update:" + camelize(name), syncGen, null, false, warn$2, list[i]);
+
+              if (hyphenate(name) !== camelize(name)) {
+                addHandler(el, "update:" + hyphenate(name), syncGen, null, false, warn$2, list[i]);
+              }
+            } else {
+              // handler w/ dynamic event name
+              addHandler(el, "\"update:\"+(" + name + ")", syncGen, null, false, warn$2, list[i], true // dynamic
+              );
+            }
+          }
+        }
+
+        if (modifiers && modifiers.prop || !el.component && platformMustUseProp(el.tag, el.attrsMap.type, name)) {
+          addProp(el, name, value, list[i], isDynamic);
+        } else {
+          addAttr(el, name, value, list[i], isDynamic);
+        }
+      } else if (onRE.test(name)) {
+        // v-on
+        name = name.replace(onRE, '');
+        isDynamic = dynamicArgRE.test(name);
+
+        if (isDynamic) {
+          name = name.slice(1, -1);
+        }
+
+        addHandler(el, name, value, modifiers, false, warn$2, list[i], isDynamic);
+      } else {
+        // normal directives
+        name = name.replace(dirRE, ''); // parse arg
+
+        var argMatch = name.match(argRE);
+        var arg = argMatch && argMatch[1];
+        isDynamic = false;
+
+        if (arg) {
+          name = name.slice(0, -(arg.length + 1));
+
+          if (dynamicArgRE.test(arg)) {
+            arg = arg.slice(1, -1);
+            isDynamic = true;
+          }
+        }
+
+        addDirective(el, name, rawName, value, arg, isDynamic, modifiers, list[i]);
+
+        if ( true && name === 'model') {
+          checkForAliasModel(el, value);
+        }
+      }
+    } else {
+      // literal attribute
+      if (true) {
+        var res = parseText(value, delimiters);
+
+        if (res) {
+          warn$2(name + "=\"" + value + "\": " + 'Interpolation inside attributes has been removed. ' + 'Use v-bind or the colon shorthand instead. For example, ' + 'instead of <div id="{{ val }}">, use <div :id="val">.', list[i]);
+        }
+      }
+
+      addAttr(el, name, JSON.stringify(value), list[i]); // #6887 firefox doesn't update muted state if set via attribute
+      // even immediately after element creation
+
+      if (!el.component && name === 'muted' && platformMustUseProp(el.tag, el.attrsMap.type, name)) {
+        addProp(el, name, 'true', list[i]);
+      }
+    }
+  }
+}
+
+function checkInFor(el) {
+  var parent = el;
+
+  while (parent) {
+    if (parent.for !== undefined) {
+      return true;
+    }
+
+    parent = parent.parent;
+  }
+
+  return false;
+}
+
+function parseModifiers(name) {
+  var match = name.match(modifierRE);
+
+  if (match) {
+    var ret = {};
+    match.forEach(function (m) {
+      ret[m.slice(1)] = true;
+    });
+    return ret;
+  }
+}
+
+function makeAttrsMap(attrs) {
+  var map = {};
+
+  for (var i = 0, l = attrs.length; i < l; i++) {
+    if ( true && map[attrs[i].name] && !isIE && !isEdge) {
+      warn$2('duplicate attribute: ' + attrs[i].name, attrs[i]);
+    }
+
+    map[attrs[i].name] = attrs[i].value;
+  }
+
+  return map;
+} // for script (e.g. type="x/template") or style, do not decode content
+
+
+function isTextTag(el) {
+  return el.tag === 'script' || el.tag === 'style';
+}
+
+function isForbiddenTag(el) {
+  return el.tag === 'style' || el.tag === 'script' && (!el.attrsMap.type || el.attrsMap.type === 'text/javascript');
+}
+
+var ieNSBug = /^xmlns:NS\d+/;
+var ieNSPrefix = /^NS\d+:/;
+/* istanbul ignore next */
+
+function guardIESVGBug(attrs) {
+  var res = [];
+
+  for (var i = 0; i < attrs.length; i++) {
+    var attr = attrs[i];
+
+    if (!ieNSBug.test(attr.name)) {
+      attr.name = attr.name.replace(ieNSPrefix, '');
+      res.push(attr);
+    }
+  }
+
+  return res;
+}
+
+function checkForAliasModel(el, value) {
+  var _el = el;
+
+  while (_el) {
+    if (_el.for && _el.alias === value) {
+      warn$2("<" + el.tag + " v-model=\"" + value + "\">: " + "You are binding v-model directly to a v-for iteration alias. " + "This will not be able to modify the v-for source array because " + "writing to the alias is like modifying a function local variable. " + "Consider using an array of objects and use v-model on an object property instead.", el.rawAttrsMap['v-model']);
+    }
+
+    _el = _el.parent;
+  }
+}
+/*  */
+
+
+function preTransformNode(el, options) {
+  if (el.tag === 'input') {
+    var map = el.attrsMap;
+
+    if (!map['v-model']) {
+      return;
+    }
+
+    var typeBinding;
+
+    if (map[':type'] || map['v-bind:type']) {
+      typeBinding = getBindingAttr(el, 'type');
+    }
+
+    if (!map.type && !typeBinding && map['v-bind']) {
+      typeBinding = "(" + map['v-bind'] + ").type";
+    }
+
+    if (typeBinding) {
+      var ifCondition = getAndRemoveAttr(el, 'v-if', true);
+      var ifConditionExtra = ifCondition ? "&&(" + ifCondition + ")" : "";
+      var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
+      var elseIfCondition = getAndRemoveAttr(el, 'v-else-if', true); // 1. checkbox
+
+      var branch0 = cloneASTElement(el); // process for on the main node
+
+      processFor(branch0);
+      addRawAttr(branch0, 'type', 'checkbox');
+      processElement(branch0, options);
+      branch0.processed = true; // prevent it from double-processed
+
+      branch0.if = "(" + typeBinding + ")==='checkbox'" + ifConditionExtra;
+      addIfCondition(branch0, {
+        exp: branch0.if,
+        block: branch0
+      }); // 2. add radio else-if condition
+
+      var branch1 = cloneASTElement(el);
+      getAndRemoveAttr(branch1, 'v-for', true);
+      addRawAttr(branch1, 'type', 'radio');
+      processElement(branch1, options);
+      addIfCondition(branch0, {
+        exp: "(" + typeBinding + ")==='radio'" + ifConditionExtra,
+        block: branch1
+      }); // 3. other
+
+      var branch2 = cloneASTElement(el);
+      getAndRemoveAttr(branch2, 'v-for', true);
+      addRawAttr(branch2, ':type', typeBinding);
+      processElement(branch2, options);
+      addIfCondition(branch0, {
+        exp: ifCondition,
+        block: branch2
+      });
+
+      if (hasElse) {
+        branch0.else = true;
+      } else if (elseIfCondition) {
+        branch0.elseif = elseIfCondition;
+      }
+
+      return branch0;
+    }
+  }
+}
+
+function cloneASTElement(el) {
+  return createASTElement(el.tag, el.attrsList.slice(), el.parent);
+}
+
+var model$1 = {
+  preTransformNode: preTransformNode
+};
+var modules$1 = [klass$1, style$1, model$1];
+/*  */
+
+function text(el, dir) {
+  if (dir.value) {
+    addProp(el, 'textContent', "_s(" + dir.value + ")", dir);
+  }
+}
+/*  */
+
+
+function html(el, dir) {
+  if (dir.value) {
+    addProp(el, 'innerHTML', "_s(" + dir.value + ")", dir);
+  }
+}
+
+var directives$1 = {
+  model: model,
+  text: text,
+  html: html
+};
+/*  */
+
+var baseOptions = {
+  expectHTML: true,
+  modules: modules$1,
+  directives: directives$1,
+  isPreTag: isPreTag,
+  isUnaryTag: isUnaryTag,
+  mustUseProp: mustUseProp,
+  canBeLeftOpenTag: canBeLeftOpenTag,
+  isReservedTag: isReservedTag,
+  getTagNamespace: getTagNamespace,
+  staticKeys: genStaticKeys(modules$1)
+};
+/*  */
+
+var isStaticKey;
+var isPlatformReservedTag;
+var genStaticKeysCached = cached(genStaticKeys$1);
+/**
+ * Goal of the optimizer: walk the generated template AST tree
+ * and detect sub-trees that are purely static, i.e. parts of
+ * the DOM that never needs to change.
+ *
+ * Once we detect these sub-trees, we can:
+ *
+ * 1. Hoist them into constants, so that we no longer need to
+ *    create fresh nodes for them on each re-render;
+ * 2. Completely skip them in the patching process.
+ */
+
+function optimize(root, options) {
+  if (!root) {
+    return;
+  }
+
+  isStaticKey = genStaticKeysCached(options.staticKeys || '');
+  isPlatformReservedTag = options.isReservedTag || no; // first pass: mark all non-static nodes.
+
+  markStatic$1(root); // second pass: mark static roots.
+
+  markStaticRoots(root, false);
+}
+
+function genStaticKeys$1(keys) {
+  return makeMap('type,tag,attrsList,attrsMap,plain,parent,children,attrs,start,end,rawAttrsMap' + (keys ? ',' + keys : ''));
+}
+
+function markStatic$1(node) {
+  node.static = isStatic(node);
+
+  if (node.type === 1) {
+    // do not make component slot content static. this avoids
+    // 1. components not able to mutate slot nodes
+    // 2. static slot content fails for hot-reloading
+    if (!isPlatformReservedTag(node.tag) && node.tag !== 'slot' && node.attrsMap['inline-template'] == null) {
+      return;
+    }
+
+    for (var i = 0, l = node.children.length; i < l; i++) {
+      var child = node.children[i];
+      markStatic$1(child);
+
+      if (!child.static) {
+        node.static = false;
+      }
+    }
+
+    if (node.ifConditions) {
+      for (var i$1 = 1, l$1 = node.ifConditions.length; i$1 < l$1; i$1++) {
+        var block = node.ifConditions[i$1].block;
+        markStatic$1(block);
+
+        if (!block.static) {
+          node.static = false;
+        }
+      }
+    }
+  }
+}
+
+function markStaticRoots(node, isInFor) {
+  if (node.type === 1) {
+    if (node.static || node.once) {
+      node.staticInFor = isInFor;
+    } // For a node to qualify as a static root, it should have children that
+    // are not just static text. Otherwise the cost of hoisting out will
+    // outweigh the benefits and it's better off to just always render it fresh.
+
+
+    if (node.static && node.children.length && !(node.children.length === 1 && node.children[0].type === 3)) {
+      node.staticRoot = true;
+      return;
+    } else {
+      node.staticRoot = false;
+    }
+
+    if (node.children) {
+      for (var i = 0, l = node.children.length; i < l; i++) {
+        markStaticRoots(node.children[i], isInFor || !!node.for);
+      }
+    }
+
+    if (node.ifConditions) {
+      for (var i$1 = 1, l$1 = node.ifConditions.length; i$1 < l$1; i$1++) {
+        markStaticRoots(node.ifConditions[i$1].block, isInFor);
+      }
+    }
+  }
+}
+
+function isStatic(node) {
+  if (node.type === 2) {
+    // expression
+    return false;
+  }
+
+  if (node.type === 3) {
+    // text
+    return true;
+  }
+
+  return !!(node.pre || !node.hasBindings && // no dynamic bindings
+  !node.if && !node.for && // not v-if or v-for or v-else
+  !isBuiltInTag(node.tag) && // not a built-in
+  isPlatformReservedTag(node.tag) && // not a component
+  !isDirectChildOfTemplateFor(node) && Object.keys(node).every(isStaticKey));
+}
+
+function isDirectChildOfTemplateFor(node) {
+  while (node.parent) {
+    node = node.parent;
+
+    if (node.tag !== 'template') {
+      return false;
+    }
+
+    if (node.for) {
+      return true;
+    }
+  }
+
+  return false;
+}
+/*  */
+
+
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/;
+var fnInvokeRE = /\([^)]*?\);*$/;
+var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/; // KeyboardEvent.keyCode aliases
+
+var keyCodes = {
+  esc: 27,
+  tab: 9,
+  enter: 13,
+  space: 32,
+  up: 38,
+  left: 37,
+  right: 39,
+  down: 40,
+  'delete': [8, 46]
+}; // KeyboardEvent.key aliases
+
+var keyNames = {
+  // #7880: IE11 and Edge use `Esc` for Escape key name.
+  esc: ['Esc', 'Escape'],
+  tab: 'Tab',
+  enter: 'Enter',
+  // #9112: IE11 uses `Spacebar` for Space key name.
+  space: [' ', 'Spacebar'],
+  // #7806: IE11 uses key names without `Arrow` prefix for arrow keys.
+  up: ['Up', 'ArrowUp'],
+  left: ['Left', 'ArrowLeft'],
+  right: ['Right', 'ArrowRight'],
+  down: ['Down', 'ArrowDown'],
+  // #9112: IE11 uses `Del` for Delete key name.
+  'delete': ['Backspace', 'Delete', 'Del']
+}; // #4868: modifiers that prevent the execution of the listener
+// need to explicitly return null so that we can determine whether to remove
+// the listener for .once
+
+var genGuard = function genGuard(condition) {
+  return "if(" + condition + ")return null;";
+};
+
+var modifierCode = {
+  stop: '$event.stopPropagation();',
+  prevent: '$event.preventDefault();',
+  self: genGuard("$event.target !== $event.currentTarget"),
+  ctrl: genGuard("!$event.ctrlKey"),
+  shift: genGuard("!$event.shiftKey"),
+  alt: genGuard("!$event.altKey"),
+  meta: genGuard("!$event.metaKey"),
+  left: genGuard("'button' in $event && $event.button !== 0"),
+  middle: genGuard("'button' in $event && $event.button !== 1"),
+  right: genGuard("'button' in $event && $event.button !== 2")
+};
+
+function genHandlers(events, isNative) {
+  var prefix = isNative ? 'nativeOn:' : 'on:';
+  var staticHandlers = "";
+  var dynamicHandlers = "";
+
+  for (var name in events) {
+    var handlerCode = genHandler(events[name]);
+
+    if (events[name] && events[name].dynamic) {
+      dynamicHandlers += name + "," + handlerCode + ",";
+    } else {
+      staticHandlers += "\"" + name + "\":" + handlerCode + ",";
+    }
+  }
+
+  staticHandlers = "{" + staticHandlers.slice(0, -1) + "}";
+
+  if (dynamicHandlers) {
+    return prefix + "_d(" + staticHandlers + ",[" + dynamicHandlers.slice(0, -1) + "])";
+  } else {
+    return prefix + staticHandlers;
+  }
+}
+
+function genHandler(handler) {
+  if (!handler) {
+    return 'function(){}';
+  }
+
+  if (Array.isArray(handler)) {
+    return "[" + handler.map(function (handler) {
+      return genHandler(handler);
+    }).join(',') + "]";
+  }
+
+  var isMethodPath = simplePathRE.test(handler.value);
+  var isFunctionExpression = fnExpRE.test(handler.value);
+  var isFunctionInvocation = simplePathRE.test(handler.value.replace(fnInvokeRE, ''));
+
+  if (!handler.modifiers) {
+    if (isMethodPath || isFunctionExpression) {
+      return handler.value;
+    }
+
+    return "function($event){" + (isFunctionInvocation ? "return " + handler.value : handler.value) + "}"; // inline statement
+  } else {
+    var code = '';
+    var genModifierCode = '';
+    var keys = [];
+
+    for (var key in handler.modifiers) {
+      if (modifierCode[key]) {
+        genModifierCode += modifierCode[key]; // left/right
+
+        if (keyCodes[key]) {
+          keys.push(key);
+        }
+      } else if (key === 'exact') {
+        var modifiers = handler.modifiers;
+        genModifierCode += genGuard(['ctrl', 'shift', 'alt', 'meta'].filter(function (keyModifier) {
+          return !modifiers[keyModifier];
+        }).map(function (keyModifier) {
+          return "$event." + keyModifier + "Key";
+        }).join('||'));
+      } else {
+        keys.push(key);
+      }
+    }
+
+    if (keys.length) {
+      code += genKeyFilter(keys);
+    } // Make sure modifiers like prevent and stop get executed after key filtering
+
+
+    if (genModifierCode) {
+      code += genModifierCode;
+    }
+
+    var handlerCode = isMethodPath ? "return " + handler.value + ".apply(null, arguments)" : isFunctionExpression ? "return (" + handler.value + ").apply(null, arguments)" : isFunctionInvocation ? "return " + handler.value : handler.value;
+    return "function($event){" + code + handlerCode + "}";
+  }
+}
+
+function genKeyFilter(keys) {
+  return (// make sure the key filters only apply to KeyboardEvents
+    // #9441: can't use 'keyCode' in $event because Chrome autofill fires fake
+    // key events that do not have keyCode property...
+    "if(!$event.type.indexOf('key')&&" + keys.map(genFilterCode).join('&&') + ")return null;"
+  );
+}
+
+function genFilterCode(key) {
+  var keyVal = parseInt(key, 10);
+
+  if (keyVal) {
+    return "$event.keyCode!==" + keyVal;
+  }
+
+  var keyCode = keyCodes[key];
+  var keyName = keyNames[key];
+  return "_k($event.keyCode," + JSON.stringify(key) + "," + JSON.stringify(keyCode) + "," + "$event.key," + "" + JSON.stringify(keyName) + ")";
+}
+/*  */
+
+
+function on(el, dir) {
+  if ( true && dir.modifiers) {
+    warn("v-on without argument does not support modifiers.");
+  }
+
+  el.wrapListeners = function (code) {
+    return "_g(" + code + "," + dir.value + ")";
+  };
+}
+/*  */
+
+
+function bind$1(el, dir) {
+  el.wrapData = function (code) {
+    return "_b(" + code + ",'" + el.tag + "'," + dir.value + "," + (dir.modifiers && dir.modifiers.prop ? 'true' : 'false') + (dir.modifiers && dir.modifiers.sync ? ',true' : '') + ")";
+  };
+}
+/*  */
+
+
+var baseDirectives = {
+  on: on,
+  bind: bind$1,
+  cloak: noop
+};
+/*  */
+
+var CodegenState = function CodegenState(options) {
+  this.options = options;
+  this.warn = options.warn || baseWarn;
+  this.transforms = pluckModuleFunction(options.modules, 'transformCode');
+  this.dataGenFns = pluckModuleFunction(options.modules, 'genData');
+  this.directives = extend(extend({}, baseDirectives), options.directives);
+  var isReservedTag = options.isReservedTag || no;
+
+  this.maybeComponent = function (el) {
+    return !!el.component || !isReservedTag(el.tag);
+  };
+
+  this.onceId = 0;
+  this.staticRenderFns = [];
+  this.pre = false;
+};
+
+function generate(ast, options) {
+  var state = new CodegenState(options); // fix #11483, Root level <script> tags should not be rendered.
+
+  var code = ast ? ast.tag === 'script' ? 'null' : genElement(ast, state) : '_c("div")';
+  return {
+    render: "with(this){return " + code + "}",
+    staticRenderFns: state.staticRenderFns
+  };
+}
+
+function genElement(el, state) {
+  if (el.parent) {
+    el.pre = el.pre || el.parent.pre;
+  }
+
+  if (el.staticRoot && !el.staticProcessed) {
+    return genStatic(el, state);
+  } else if (el.once && !el.onceProcessed) {
+    return genOnce(el, state);
+  } else if (el.for && !el.forProcessed) {
+    return genFor(el, state);
+  } else if (el.if && !el.ifProcessed) {
+    return genIf(el, state);
+  } else if (el.tag === 'template' && !el.slotTarget && !state.pre) {
+    return genChildren(el, state) || 'void 0';
+  } else if (el.tag === 'slot') {
+    return genSlot(el, state);
+  } else {
+    // component or element
+    var code;
+
+    if (el.component) {
+      code = genComponent(el.component, el, state);
+    } else {
+      var data;
+
+      if (!el.plain || el.pre && state.maybeComponent(el)) {
+        data = genData$2(el, state);
+      }
+
+      var children = el.inlineTemplate ? null : genChildren(el, state, true);
+      code = "_c('" + el.tag + "'" + (data ? "," + data : '') + (children ? "," + children : '') + ")";
+    } // module transforms
+
+
+    for (var i = 0; i < state.transforms.length; i++) {
+      code = state.transforms[i](el, code);
+    }
+
+    return code;
+  }
+} // hoist static sub-trees out
+
+
+function genStatic(el, state) {
+  el.staticProcessed = true; // Some elements (templates) need to behave differently inside of a v-pre
+  // node.  All pre nodes are static roots, so we can use this as a location to
+  // wrap a state change and reset it upon exiting the pre node.
+
+  var originalPreState = state.pre;
+
+  if (el.pre) {
+    state.pre = el.pre;
+  }
+
+  state.staticRenderFns.push("with(this){return " + genElement(el, state) + "}");
+  state.pre = originalPreState;
+  return "_m(" + (state.staticRenderFns.length - 1) + (el.staticInFor ? ',true' : '') + ")";
+} // v-once
+
+
+function genOnce(el, state) {
+  el.onceProcessed = true;
+
+  if (el.if && !el.ifProcessed) {
+    return genIf(el, state);
+  } else if (el.staticInFor) {
+    var key = '';
+    var parent = el.parent;
+
+    while (parent) {
+      if (parent.for) {
+        key = parent.key;
+        break;
+      }
+
+      parent = parent.parent;
+    }
+
+    if (!key) {
+       true && state.warn("v-once can only be used inside v-for that is keyed. ", el.rawAttrsMap['v-once']);
+      return genElement(el, state);
+    }
+
+    return "_o(" + genElement(el, state) + "," + state.onceId++ + "," + key + ")";
+  } else {
+    return genStatic(el, state);
+  }
+}
+
+function genIf(el, state, altGen, altEmpty) {
+  el.ifProcessed = true; // avoid recursion
+
+  return genIfConditions(el.ifConditions.slice(), state, altGen, altEmpty);
+}
+
+function genIfConditions(conditions, state, altGen, altEmpty) {
+  if (!conditions.length) {
+    return altEmpty || '_e()';
+  }
+
+  var condition = conditions.shift();
+
+  if (condition.exp) {
+    return "(" + condition.exp + ")?" + genTernaryExp(condition.block) + ":" + genIfConditions(conditions, state, altGen, altEmpty);
+  } else {
+    return "" + genTernaryExp(condition.block);
+  } // v-if with v-once should generate code like (a)?_m(0):_m(1)
+
+
+  function genTernaryExp(el) {
+    return altGen ? altGen(el, state) : el.once ? genOnce(el, state) : genElement(el, state);
+  }
+}
+
+function genFor(el, state, altGen, altHelper) {
+  var exp = el.for;
+  var alias = el.alias;
+  var iterator1 = el.iterator1 ? "," + el.iterator1 : '';
+  var iterator2 = el.iterator2 ? "," + el.iterator2 : '';
+
+  if ( true && state.maybeComponent(el) && el.tag !== 'slot' && el.tag !== 'template' && !el.key) {
+    state.warn("<" + el.tag + " v-for=\"" + alias + " in " + exp + "\">: component lists rendered with " + "v-for should have explicit keys. " + "See https://vuejs.org/guide/list.html#key for more info.", el.rawAttrsMap['v-for'], true
+    /* tip */
+    );
+  }
+
+  el.forProcessed = true; // avoid recursion
+
+  return (altHelper || '_l') + "((" + exp + ")," + "function(" + alias + iterator1 + iterator2 + "){" + "return " + (altGen || genElement)(el, state) + '})';
+}
+
+function genData$2(el, state) {
+  var data = '{'; // directives first.
+  // directives may mutate the el's other properties before they are generated.
+
+  var dirs = genDirectives(el, state);
+
+  if (dirs) {
+    data += dirs + ',';
+  } // key
+
+
+  if (el.key) {
+    data += "key:" + el.key + ",";
+  } // ref
+
+
+  if (el.ref) {
+    data += "ref:" + el.ref + ",";
+  }
+
+  if (el.refInFor) {
+    data += "refInFor:true,";
+  } // pre
+
+
+  if (el.pre) {
+    data += "pre:true,";
+  } // record original tag name for components using "is" attribute
+
+
+  if (el.component) {
+    data += "tag:\"" + el.tag + "\",";
+  } // module data generation functions
+
+
+  for (var i = 0; i < state.dataGenFns.length; i++) {
+    data += state.dataGenFns[i](el);
+  } // attributes
+
+
+  if (el.attrs) {
+    data += "attrs:" + genProps(el.attrs) + ",";
+  } // DOM props
+
+
+  if (el.props) {
+    data += "domProps:" + genProps(el.props) + ",";
+  } // event handlers
+
+
+  if (el.events) {
+    data += genHandlers(el.events, false) + ",";
+  }
+
+  if (el.nativeEvents) {
+    data += genHandlers(el.nativeEvents, true) + ",";
+  } // slot target
+  // only for non-scoped slots
+
+
+  if (el.slotTarget && !el.slotScope) {
+    data += "slot:" + el.slotTarget + ",";
+  } // scoped slots
+
+
+  if (el.scopedSlots) {
+    data += genScopedSlots(el, el.scopedSlots, state) + ",";
+  } // component v-model
+
+
+  if (el.model) {
+    data += "model:{value:" + el.model.value + ",callback:" + el.model.callback + ",expression:" + el.model.expression + "},";
+  } // inline-template
+
+
+  if (el.inlineTemplate) {
+    var inlineTemplate = genInlineTemplate(el, state);
+
+    if (inlineTemplate) {
+      data += inlineTemplate + ",";
+    }
+  }
+
+  data = data.replace(/,$/, '') + '}'; // v-bind dynamic argument wrap
+  // v-bind with dynamic arguments must be applied using the same v-bind object
+  // merge helper so that class/style/mustUseProp attrs are handled correctly.
+
+  if (el.dynamicAttrs) {
+    data = "_b(" + data + ",\"" + el.tag + "\"," + genProps(el.dynamicAttrs) + ")";
+  } // v-bind data wrap
+
+
+  if (el.wrapData) {
+    data = el.wrapData(data);
+  } // v-on data wrap
+
+
+  if (el.wrapListeners) {
+    data = el.wrapListeners(data);
+  }
+
+  return data;
+}
+
+function genDirectives(el, state) {
+  var dirs = el.directives;
+
+  if (!dirs) {
+    return;
+  }
+
+  var res = 'directives:[';
+  var hasRuntime = false;
+  var i, l, dir, needRuntime;
+
+  for (i = 0, l = dirs.length; i < l; i++) {
+    dir = dirs[i];
+    needRuntime = true;
+    var gen = state.directives[dir.name];
+
+    if (gen) {
+      // compile-time directive that manipulates AST.
+      // returns true if it also needs a runtime counterpart.
+      needRuntime = !!gen(el, dir, state.warn);
+    }
+
+    if (needRuntime) {
+      hasRuntime = true;
+      res += "{name:\"" + dir.name + "\",rawName:\"" + dir.rawName + "\"" + (dir.value ? ",value:(" + dir.value + "),expression:" + JSON.stringify(dir.value) : '') + (dir.arg ? ",arg:" + (dir.isDynamicArg ? dir.arg : "\"" + dir.arg + "\"") : '') + (dir.modifiers ? ",modifiers:" + JSON.stringify(dir.modifiers) : '') + "},";
+    }
+  }
+
+  if (hasRuntime) {
+    return res.slice(0, -1) + ']';
+  }
+}
+
+function genInlineTemplate(el, state) {
+  var ast = el.children[0];
+
+  if ( true && (el.children.length !== 1 || ast.type !== 1)) {
+    state.warn('Inline-template components must have exactly one child element.', {
+      start: el.start
+    });
+  }
+
+  if (ast && ast.type === 1) {
+    var inlineRenderFns = generate(ast, state.options);
+    return "inlineTemplate:{render:function(){" + inlineRenderFns.render + "},staticRenderFns:[" + inlineRenderFns.staticRenderFns.map(function (code) {
+      return "function(){" + code + "}";
+    }).join(',') + "]}";
+  }
+}
+
+function genScopedSlots(el, slots, state) {
+  // by default scoped slots are considered "stable", this allows child
+  // components with only scoped slots to skip forced updates from parent.
+  // but in some cases we have to bail-out of this optimization
+  // for example if the slot contains dynamic names, has v-if or v-for on them...
+  var needsForceUpdate = el.for || Object.keys(slots).some(function (key) {
+    var slot = slots[key];
+    return slot.slotTargetDynamic || slot.if || slot.for || containsSlotChild(slot) // is passing down slot from parent which may be dynamic
+    ;
+  }); // #9534: if a component with scoped slots is inside a conditional branch,
+  // it's possible for the same component to be reused but with different
+  // compiled slot content. To avoid that, we generate a unique key based on
+  // the generated code of all the slot contents.
+
+  var needsKey = !!el.if; // OR when it is inside another scoped slot or v-for (the reactivity may be
+  // disconnected due to the intermediate scope variable)
+  // #9438, #9506
+  // TODO: this can be further optimized by properly analyzing in-scope bindings
+  // and skip force updating ones that do not actually use scope variables.
+
+  if (!needsForceUpdate) {
+    var parent = el.parent;
+
+    while (parent) {
+      if (parent.slotScope && parent.slotScope !== emptySlotScopeToken || parent.for) {
+        needsForceUpdate = true;
+        break;
+      }
+
+      if (parent.if) {
+        needsKey = true;
+      }
+
+      parent = parent.parent;
+    }
+  }
+
+  var generatedSlots = Object.keys(slots).map(function (key) {
+    return genScopedSlot(slots[key], state);
+  }).join(',');
+  return "scopedSlots:_u([" + generatedSlots + "]" + (needsForceUpdate ? ",null,true" : "") + (!needsForceUpdate && needsKey ? ",null,false," + hash(generatedSlots) : "") + ")";
+}
+
+function hash(str) {
+  var hash = 5381;
+  var i = str.length;
+
+  while (i) {
+    hash = hash * 33 ^ str.charCodeAt(--i);
+  }
+
+  return hash >>> 0;
+}
+
+function containsSlotChild(el) {
+  if (el.type === 1) {
+    if (el.tag === 'slot') {
+      return true;
+    }
+
+    return el.children.some(containsSlotChild);
+  }
+
+  return false;
+}
+
+function genScopedSlot(el, state) {
+  var isLegacySyntax = el.attrsMap['slot-scope'];
+
+  if (el.if && !el.ifProcessed && !isLegacySyntax) {
+    return genIf(el, state, genScopedSlot, "null");
+  }
+
+  if (el.for && !el.forProcessed) {
+    return genFor(el, state, genScopedSlot);
+  }
+
+  var slotScope = el.slotScope === emptySlotScopeToken ? "" : String(el.slotScope);
+  var fn = "function(" + slotScope + "){" + "return " + (el.tag === 'template' ? el.if && isLegacySyntax ? "(" + el.if + ")?" + (genChildren(el, state) || 'undefined') + ":undefined" : genChildren(el, state) || 'undefined' : genElement(el, state)) + "}"; // reverse proxy v-slot without scope on this.$slots
+
+  var reverseProxy = slotScope ? "" : ",proxy:true";
+  return "{key:" + (el.slotTarget || "\"default\"") + ",fn:" + fn + reverseProxy + "}";
+}
+
+function genChildren(el, state, checkSkip, altGenElement, altGenNode) {
+  var children = el.children;
+
+  if (children.length) {
+    var el$1 = children[0]; // optimize single v-for
+
+    if (children.length === 1 && el$1.for && el$1.tag !== 'template' && el$1.tag !== 'slot') {
+      var normalizationType = checkSkip ? state.maybeComponent(el$1) ? ",1" : ",0" : "";
+      return "" + (altGenElement || genElement)(el$1, state) + normalizationType;
+    }
+
+    var normalizationType$1 = checkSkip ? getNormalizationType(children, state.maybeComponent) : 0;
+    var gen = altGenNode || genNode;
+    return "[" + children.map(function (c) {
+      return gen(c, state);
+    }).join(',') + "]" + (normalizationType$1 ? "," + normalizationType$1 : '');
+  }
+} // determine the normalization needed for the children array.
+// 0: no normalization needed
+// 1: simple normalization needed (possible 1-level deep nested array)
+// 2: full normalization needed
+
+
+function getNormalizationType(children, maybeComponent) {
+  var res = 0;
+
+  for (var i = 0; i < children.length; i++) {
+    var el = children[i];
+
+    if (el.type !== 1) {
+      continue;
+    }
+
+    if (needsNormalization(el) || el.ifConditions && el.ifConditions.some(function (c) {
+      return needsNormalization(c.block);
+    })) {
+      res = 2;
+      break;
+    }
+
+    if (maybeComponent(el) || el.ifConditions && el.ifConditions.some(function (c) {
+      return maybeComponent(c.block);
+    })) {
+      res = 1;
+    }
+  }
+
+  return res;
+}
+
+function needsNormalization(el) {
+  return el.for !== undefined || el.tag === 'template' || el.tag === 'slot';
+}
+
+function genNode(node, state) {
+  if (node.type === 1) {
+    return genElement(node, state);
+  } else if (node.type === 3 && node.isComment) {
+    return genComment(node);
+  } else {
+    return genText(node);
+  }
+}
+
+function genText(text) {
+  return "_v(" + (text.type === 2 ? text.expression // no need for () because already wrapped in _s()
+  : transformSpecialNewlines(JSON.stringify(text.text))) + ")";
+}
+
+function genComment(comment) {
+  return "_e(" + JSON.stringify(comment.text) + ")";
+}
+
+function genSlot(el, state) {
+  var slotName = el.slotName || '"default"';
+  var children = genChildren(el, state);
+  var res = "_t(" + slotName + (children ? ",function(){return " + children + "}" : '');
+  var attrs = el.attrs || el.dynamicAttrs ? genProps((el.attrs || []).concat(el.dynamicAttrs || []).map(function (attr) {
+    return {
+      // slot props are camelized
+      name: camelize(attr.name),
+      value: attr.value,
+      dynamic: attr.dynamic
+    };
+  })) : null;
+  var bind$$1 = el.attrsMap['v-bind'];
+
+  if ((attrs || bind$$1) && !children) {
+    res += ",null";
+  }
+
+  if (attrs) {
+    res += "," + attrs;
+  }
+
+  if (bind$$1) {
+    res += (attrs ? '' : ',null') + "," + bind$$1;
+  }
+
+  return res + ')';
+} // componentName is el.component, take it as argument to shun flow's pessimistic refinement
+
+
+function genComponent(componentName, el, state) {
+  var children = el.inlineTemplate ? null : genChildren(el, state, true);
+  return "_c(" + componentName + "," + genData$2(el, state) + (children ? "," + children : '') + ")";
+}
+
+function genProps(props) {
+  var staticProps = "";
+  var dynamicProps = "";
+
+  for (var i = 0; i < props.length; i++) {
+    var prop = props[i];
+    var value = transformSpecialNewlines(prop.value);
+
+    if (prop.dynamic) {
+      dynamicProps += prop.name + "," + value + ",";
+    } else {
+      staticProps += "\"" + prop.name + "\":" + value + ",";
+    }
+  }
+
+  staticProps = "{" + staticProps.slice(0, -1) + "}";
+
+  if (dynamicProps) {
+    return "_d(" + staticProps + ",[" + dynamicProps.slice(0, -1) + "])";
+  } else {
+    return staticProps;
+  }
+} // #3895, #4268
+
+
+function transformSpecialNewlines(text) {
+  return text.replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+}
+/*  */
+// these keywords should not appear inside expressions, but operators like
+// typeof, instanceof and in are allowed
+
+
+var prohibitedKeywordRE = new RegExp('\\b' + ('do,if,for,let,new,try,var,case,else,with,await,break,catch,class,const,' + 'super,throw,while,yield,delete,export,import,return,switch,default,' + 'extends,finally,continue,debugger,function,arguments').split(',').join('\\b|\\b') + '\\b'); // these unary operators should not be used as property/method names
+
+var unaryOperatorsRE = new RegExp('\\b' + 'delete,typeof,void'.split(',').join('\\s*\\([^\\)]*\\)|\\b') + '\\s*\\([^\\)]*\\)'); // strip strings in expressions
+
+var stripStringRE = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\]|\\.)*`|`(?:[^`\\]|\\.)*`/g; // detect problematic expressions in a template
+
+function detectErrors(ast, warn) {
+  if (ast) {
+    checkNode(ast, warn);
+  }
+}
+
+function checkNode(node, warn) {
+  if (node.type === 1) {
+    for (var name in node.attrsMap) {
+      if (dirRE.test(name)) {
+        var value = node.attrsMap[name];
+
+        if (value) {
+          var range = node.rawAttrsMap[name];
+
+          if (name === 'v-for') {
+            checkFor(node, "v-for=\"" + value + "\"", warn, range);
+          } else if (name === 'v-slot' || name[0] === '#') {
+            checkFunctionParameterExpression(value, name + "=\"" + value + "\"", warn, range);
+          } else if (onRE.test(name)) {
+            checkEvent(value, name + "=\"" + value + "\"", warn, range);
+          } else {
+            checkExpression(value, name + "=\"" + value + "\"", warn, range);
+          }
+        }
+      }
+    }
+
+    if (node.children) {
+      for (var i = 0; i < node.children.length; i++) {
+        checkNode(node.children[i], warn);
+      }
+    }
+  } else if (node.type === 2) {
+    checkExpression(node.expression, node.text, warn, node);
+  }
+}
+
+function checkEvent(exp, text, warn, range) {
+  var stripped = exp.replace(stripStringRE, '');
+  var keywordMatch = stripped.match(unaryOperatorsRE);
+
+  if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
+    warn("avoid using JavaScript unary operator as property name: " + "\"" + keywordMatch[0] + "\" in expression " + text.trim(), range);
+  }
+
+  checkExpression(exp, text, warn, range);
+}
+
+function checkFor(node, text, warn, range) {
+  checkExpression(node.for || '', text, warn, range);
+  checkIdentifier(node.alias, 'v-for alias', text, warn, range);
+  checkIdentifier(node.iterator1, 'v-for iterator', text, warn, range);
+  checkIdentifier(node.iterator2, 'v-for iterator', text, warn, range);
+}
+
+function checkIdentifier(ident, type, text, warn, range) {
+  if (typeof ident === 'string') {
+    try {
+      new Function("var " + ident + "=_");
+    } catch (e) {
+      warn("invalid " + type + " \"" + ident + "\" in expression: " + text.trim(), range);
+    }
+  }
+}
+
+function checkExpression(exp, text, warn, range) {
+  try {
+    new Function("return " + exp);
+  } catch (e) {
+    var keywordMatch = exp.replace(stripStringRE, '').match(prohibitedKeywordRE);
+
+    if (keywordMatch) {
+      warn("avoid using JavaScript keyword as property name: " + "\"" + keywordMatch[0] + "\"\n  Raw expression: " + text.trim(), range);
+    } else {
+      warn("invalid expression: " + e.message + " in\n\n" + "    " + exp + "\n\n" + "  Raw expression: " + text.trim() + "\n", range);
+    }
+  }
+}
+
+function checkFunctionParameterExpression(exp, text, warn, range) {
+  try {
+    new Function(exp, '');
+  } catch (e) {
+    warn("invalid function parameter expression: " + e.message + " in\n\n" + "    " + exp + "\n\n" + "  Raw expression: " + text.trim() + "\n", range);
+  }
+}
+/*  */
+
+
+var range = 2;
+
+function generateCodeFrame(source, start, end) {
+  if (start === void 0) start = 0;
+  if (end === void 0) end = source.length;
+  var lines = source.split(/\r?\n/);
+  var count = 0;
+  var res = [];
+
+  for (var i = 0; i < lines.length; i++) {
+    count += lines[i].length + 1;
+
+    if (count >= start) {
+      for (var j = i - range; j <= i + range || end > count; j++) {
+        if (j < 0 || j >= lines.length) {
+          continue;
+        }
+
+        res.push("" + (j + 1) + repeat$1(" ", 3 - String(j + 1).length) + "|  " + lines[j]);
+        var lineLength = lines[j].length;
+
+        if (j === i) {
+          // push underline
+          var pad = start - (count - lineLength) + 1;
+          var length = end > count ? lineLength - pad : end - start;
+          res.push("   |  " + repeat$1(" ", pad) + repeat$1("^", length));
+        } else if (j > i) {
+          if (end > count) {
+            var length$1 = Math.min(end - count, lineLength);
+            res.push("   |  " + repeat$1("^", length$1));
+          }
+
+          count += lineLength + 1;
+        }
+      }
+
+      break;
+    }
+  }
+
+  return res.join('\n');
+}
+
+function repeat$1(str, n) {
+  var result = '';
+
+  if (n > 0) {
+    while (true) {
+      // eslint-disable-line
+      if (n & 1) {
+        result += str;
+      }
+
+      n >>>= 1;
+
+      if (n <= 0) {
+        break;
+      }
+
+      str += str;
+    }
+  }
+
+  return result;
+}
+/*  */
+
+
+function createFunction(code, errors) {
+  try {
+    return new Function(code);
+  } catch (err) {
+    errors.push({
+      err: err,
+      code: code
+    });
+    return noop;
+  }
+}
+
+function createCompileToFunctionFn(compile) {
+  var cache = Object.create(null);
+  return function compileToFunctions(template, options, vm) {
+    options = extend({}, options);
+    var warn$$1 = options.warn || warn;
+    delete options.warn;
+    /* istanbul ignore if */
+
+    if (true) {
+      // detect possible CSP restriction
+      try {
+        new Function('return 1');
+      } catch (e) {
+        if (e.toString().match(/unsafe-eval|CSP/)) {
+          warn$$1('It seems you are using the standalone build of Vue.js in an ' + 'environment with Content Security Policy that prohibits unsafe-eval. ' + 'The template compiler cannot work in this environment. Consider ' + 'relaxing the policy to allow unsafe-eval or pre-compiling your ' + 'templates into render functions.');
+        }
+      }
+    } // check cache
+
+
+    var key = options.delimiters ? String(options.delimiters) + template : template;
+
+    if (cache[key]) {
+      return cache[key];
+    } // compile
+
+
+    var compiled = compile(template, options); // check compilation errors/tips
+
+    if (true) {
+      if (compiled.errors && compiled.errors.length) {
+        if (options.outputSourceRange) {
+          compiled.errors.forEach(function (e) {
+            warn$$1("Error compiling template:\n\n" + e.msg + "\n\n" + generateCodeFrame(template, e.start, e.end), vm);
+          });
+        } else {
+          warn$$1("Error compiling template:\n\n" + template + "\n\n" + compiled.errors.map(function (e) {
+            return "- " + e;
+          }).join('\n') + '\n', vm);
+        }
+      }
+
+      if (compiled.tips && compiled.tips.length) {
+        if (options.outputSourceRange) {
+          compiled.tips.forEach(function (e) {
+            return tip(e.msg, vm);
+          });
+        } else {
+          compiled.tips.forEach(function (msg) {
+            return tip(msg, vm);
+          });
+        }
+      }
+    } // turn code into functions
+
+
+    var res = {};
+    var fnGenErrors = [];
+    res.render = createFunction(compiled.render, fnGenErrors);
+    res.staticRenderFns = compiled.staticRenderFns.map(function (code) {
+      return createFunction(code, fnGenErrors);
+    }); // check function generation errors.
+    // this should only happen if there is a bug in the compiler itself.
+    // mostly for codegen development use
+
+    /* istanbul ignore if */
+
+    if (true) {
+      if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
+        warn$$1("Failed to generate render function:\n\n" + fnGenErrors.map(function (ref) {
+          var err = ref.err;
+          var code = ref.code;
+          return err.toString() + " in\n\n" + code + "\n";
+        }).join('\n'), vm);
+      }
+    }
+
+    return cache[key] = res;
+  };
+}
+/*  */
+
+
+function createCompilerCreator(baseCompile) {
+  return function createCompiler(baseOptions) {
+    function compile(template, options) {
+      var finalOptions = Object.create(baseOptions);
+      var errors = [];
+      var tips = [];
+
+      var warn = function warn(msg, range, tip) {
+        (tip ? tips : errors).push(msg);
+      };
+
+      if (options) {
+        if ( true && options.outputSourceRange) {
+          // $flow-disable-line
+          var leadingSpaceLength = template.match(/^\s*/)[0].length;
+
+          warn = function warn(msg, range, tip) {
+            var data = {
+              msg: msg
+            };
+
+            if (range) {
+              if (range.start != null) {
+                data.start = range.start + leadingSpaceLength;
+              }
+
+              if (range.end != null) {
+                data.end = range.end + leadingSpaceLength;
+              }
+            }
+
+            (tip ? tips : errors).push(data);
+          };
+        } // merge custom modules
+
+
+        if (options.modules) {
+          finalOptions.modules = (baseOptions.modules || []).concat(options.modules);
+        } // merge custom directives
+
+
+        if (options.directives) {
+          finalOptions.directives = extend(Object.create(baseOptions.directives || null), options.directives);
+        } // copy other options
+
+
+        for (var key in options) {
+          if (key !== 'modules' && key !== 'directives') {
+            finalOptions[key] = options[key];
+          }
+        }
+      }
+
+      finalOptions.warn = warn;
+      var compiled = baseCompile(template.trim(), finalOptions);
+
+      if (true) {
+        detectErrors(compiled.ast, warn);
+      }
+
+      compiled.errors = errors;
+      compiled.tips = tips;
+      return compiled;
+    }
+
+    return {
+      compile: compile,
+      compileToFunctions: createCompileToFunctionFn(compile)
+    };
+  };
+}
+/*  */
+// `createCompilerCreator` allows creating compilers that use alternative
+// parser/optimizer/codegen, e.g the SSR optimizing compiler.
+// Here we just export a default compiler using the default parts.
+
+
+var createCompiler = createCompilerCreator(function baseCompile(template, options) {
+  var ast = parse(template.trim(), options);
+
+  if (options.optimize !== false) {
+    optimize(ast, options);
+  }
+
+  var code = generate(ast, options);
+  return {
+    ast: ast,
+    render: code.render,
+    staticRenderFns: code.staticRenderFns
+  };
+});
+/*  */
+
+var ref$1 = createCompiler(baseOptions);
+var compile = ref$1.compile;
+var compileToFunctions = ref$1.compileToFunctions;
+/*  */
+// check whether current browser encodes a char inside attribute values
+
+var div;
+
+function getShouldDecode(href) {
+  div = div || document.createElement('div');
+  div.innerHTML = href ? "<a href=\"\n\"/>" : "<div a=\"\n\"/>";
+  return div.innerHTML.indexOf('&#10;') > 0;
+} // #3663: IE encodes newlines inside attribute values while other browsers don't
+
+
+var shouldDecodeNewlines = inBrowser ? getShouldDecode(false) : false; // #6828: chrome encodes content in a[href]
+
+var shouldDecodeNewlinesForHref = inBrowser ? getShouldDecode(true) : false;
+/*  */
+
+var idToTemplate = cached(function (id) {
+  var el = query(id);
+  return el && el.innerHTML;
+});
+var mount = Vue.prototype.$mount;
+
+Vue.prototype.$mount = function (el, hydrating) {
+  el = el && query(el);
+  /* istanbul ignore if */
+
+  if (el === document.body || el === document.documentElement) {
+     true && warn("Do not mount Vue to <html> or <body> - mount to normal elements instead.");
+    return this;
+  }
+
+  var options = this.$options; // resolve template/el and convert to render function
+
+  if (!options.render) {
+    var template = options.template;
+
+    if (template) {
+      if (typeof template === 'string') {
+        if (template.charAt(0) === '#') {
+          template = idToTemplate(template);
+          /* istanbul ignore if */
+
+          if ( true && !template) {
+            warn("Template element not found or is empty: " + options.template, this);
+          }
+        }
+      } else if (template.nodeType) {
+        template = template.innerHTML;
+      } else {
+        if (true) {
+          warn('invalid template option:' + template, this);
+        }
+
+        return this;
+      }
+    } else if (el) {
+      template = getOuterHTML(el);
+    }
+
+    if (template) {
+      /* istanbul ignore if */
+      if ( true && config.performance && mark) {
+        mark('compile');
+      }
+
+      var ref = compileToFunctions(template, {
+        outputSourceRange: "development" !== 'production',
+        shouldDecodeNewlines: shouldDecodeNewlines,
+        shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
+        delimiters: options.delimiters,
+        comments: options.comments
+      }, this);
+      var render = ref.render;
+      var staticRenderFns = ref.staticRenderFns;
+      options.render = render;
+      options.staticRenderFns = staticRenderFns;
+      /* istanbul ignore if */
+
+      if ( true && config.performance && mark) {
+        mark('compile end');
+        measure("vue " + this._name + " compile", 'compile', 'compile end');
+      }
+    }
+  }
+
+  return mount.call(this, el, hydrating);
+};
+/**
+ * Get outerHTML of elements, taking care
+ * of SVG elements in IE as well.
+ */
+
+
+function getOuterHTML(el) {
+  if (el.outerHTML) {
+    return el.outerHTML;
+  } else {
+    var container = document.createElement('div');
+    container.appendChild(el.cloneNode(true));
+    return container.innerHTML;
+  }
+}
+
+Vue.compile = compileToFunctions;
+var _default = Vue;
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../node-libs-browser/node_modules/timers-browserify/main.js */ "./node_modules/node-libs-browser/node_modules/timers-browserify/main.js").setImmediate))
+
+/***/ }),
+
+/***/ "./node_modules/vuex/dist/vuex.esm.js":
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createLogger = createLogger;
+exports.install = install;
+exports.mapState = exports.mapMutations = exports.mapGetters = exports.mapActions = exports.createNamespacedHelpers = exports.Store = exports.default = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
+function applyMixin(Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({
+      beforeCreate: vuexInit
+    });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+
+    Vue.prototype._init = function (options) {
+      if (options === void 0) options = {};
+      options.init = options.init ? [vuexInit].concat(options.init) : vuexInit;
+
+      _init.call(this, options);
+    };
+  }
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+
+  function vuexInit() {
+    var options = this.$options; // store injection
+
+    if (options.store) {
+      this.$store = typeof options.store === 'function' ? options.store() : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin(store) {
+  if (!devtoolHook) {
+    return;
+  }
+
+  store._devtoolHook = devtoolHook;
+  devtoolHook.emit('vuex:init', store);
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, {
+    prepend: true
+  });
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, {
+    prepend: true
+  });
+}
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+
+
+function find(list, f) {
+  return list.filter(f)[0];
+}
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+
+
+function deepCopy(obj, cache) {
+  if (cache === void 0) cache = []; // just return if obj is immutable value
+
+  if (obj === null || _typeof(obj) !== 'object') {
+    return obj;
+  } // if obj is hit, it is in circular structure
+
+
+  var hit = find(cache, function (c) {
+    return c.original === obj;
+  });
+
+  if (hit) {
+    return hit.copy;
+  }
+
+  var copy = Array.isArray(obj) ? [] : {}; // put the copy into cache at first
+  // because we want to refer it in recursive deepCopy
+
+  cache.push({
+    original: obj,
+    copy: copy
+  });
+  Object.keys(obj).forEach(function (key) {
+    copy[key] = deepCopy(obj[key], cache);
+  });
+  return copy;
+}
+/**
+ * forEach for object
+ */
+
+
+function forEachValue(obj, fn) {
+  Object.keys(obj).forEach(function (key) {
+    return fn(obj[key], key);
+  });
+}
+
+function isObject(obj) {
+  return obj !== null && _typeof(obj) === 'object';
+}
+
+function isPromise(val) {
+  return val && typeof val.then === 'function';
+}
+
+function assert(condition, msg) {
+  if (!condition) {
+    throw new Error("[vuex] " + msg);
+  }
+}
+
+function partial(fn, arg) {
+  return function () {
+    return fn(arg);
+  };
+} // Base data struct for store's module, package with some attribute and method
+
+
+var Module = function Module(rawModule, runtime) {
+  this.runtime = runtime; // Store some children item
+
+  this._children = Object.create(null); // Store the origin module object which passed by programmer
+
+  this._rawModule = rawModule;
+  var rawState = rawModule.state; // Store the origin module's state
+
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors = {
+  namespaced: {
+    configurable: true
+  }
+};
+
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced;
+};
+
+Module.prototype.addChild = function addChild(key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild(key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild(key) {
+  return this._children[key];
+};
+
+Module.prototype.hasChild = function hasChild(key) {
+  return key in this._children;
+};
+
+Module.prototype.update = function update(rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild(fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter(fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction(fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation(fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties(Module.prototype, prototypeAccessors);
+
+var ModuleCollection = function ModuleCollection(rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get(path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key);
+  }, this.root);
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace(path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '');
+  }, '');
+};
+
+ModuleCollection.prototype.update = function update$1(rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register(path, rawModule, runtime) {
+  var this$1 = this;
+  if (runtime === void 0) runtime = true;
+
+  if (true) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  } // register nested modules
+
+
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister(path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  var child = parent.getChild(key);
+
+  if (!child) {
+    if (true) {
+      console.warn("[vuex] trying to unregister module '" + key + "', which is " + "not registered");
+    }
+
+    return;
+  }
+
+  if (!child.runtime) {
+    return;
+  }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered(path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  if (parent) {
+    return parent.hasChild(key);
+  }
+
+  return false;
+};
+
+function update(path, targetModule, newModule) {
+  if (true) {
+    assertRawModule(path, newModule);
+  } // update target module
+
+
+  targetModule.update(newModule); // update nested modules
+
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if (true) {
+          console.warn("[vuex] trying to add a new module '" + key + "' on hot reloading, " + 'manual reload is needed');
+        }
+
+        return;
+      }
+
+      update(path.concat(key), targetModule.getChild(key), newModule.modules[key]);
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function assert(value) {
+    return typeof value === 'function';
+  },
+  expected: 'function'
+};
+var objectAssert = {
+  assert: function assert(value) {
+    return typeof value === 'function' || _typeof(value) === 'object' && typeof value.handler === 'function';
+  },
+  expected: 'function or object with "handler" function'
+};
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule(path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) {
+      return;
+    }
+
+    var assertOptions = assertTypes[key];
+    forEachValue(rawModule[key], function (value, type) {
+      assert(assertOptions.assert(value), makeAssertionMessage(path, key, type, value, assertOptions.expected));
+    });
+  });
+}
+
+function makeAssertionMessage(path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+
+  if (path.length > 0) {
+    buf += " in module \"" + path.join('.') + "\"";
+  }
+
+  buf += " is " + JSON.stringify(value) + ".";
+  return buf;
+}
+
+var Vue; // bind on install
+
+var Store = function Store(options) {
+  var this$1 = this;
+  if (options === void 0) options = {}; // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if (true) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins;
+  if (plugins === void 0) plugins = [];
+  var strict = options.strict;
+  if (strict === void 0) strict = false; // store internal state
+
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null); // bind commit and dispatch to self
+
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+
+  this.dispatch = function boundDispatch(type, payload) {
+    return dispatch.call(store, type, payload);
+  };
+
+  this.commit = function boundCommit(type, payload, options) {
+    return commit.call(store, type, payload, options);
+  }; // strict mode
+
+
+  this.strict = strict;
+  var state = this._modules.root.state; // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+
+  installModule(this, state, [], this._modules.root); // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+
+  resetStoreVM(this, state); // apply plugins
+
+  plugins.forEach(function (plugin) {
+    return plugin(this$1);
+  });
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+exports.Store = Store;
+var prototypeAccessors$1 = {
+  state: {
+    configurable: true
+  }
+};
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state;
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if (true) {
+    assert(false, "use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit(_type, _payload, _options) {
+  var this$1 = this; // check object-style commit
+
+  var ref = unifyObjectStyle(_type, _payload, _options);
+  var type = ref.type;
+  var payload = ref.payload;
+  var options = ref.options;
+  var mutation = {
+    type: type,
+    payload: payload
+  };
+  var entry = this._mutations[type];
+
+  if (!entry) {
+    if (true) {
+      console.error("[vuex] unknown mutation type: " + type);
+    }
+
+    return;
+  }
+
+  this._withCommit(function () {
+    entry.forEach(function commitIterator(handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers.slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+  .forEach(function (sub) {
+    return sub(mutation, this$1.state);
+  });
+
+  if ( true && options && options.silent) {
+    console.warn("[vuex] mutation type: " + type + ". Silent option has been removed. " + 'Use the filter functionality in the vue-devtools');
+  }
+};
+
+Store.prototype.dispatch = function dispatch(_type, _payload) {
+  var this$1 = this; // check object-style dispatch
+
+  var ref = unifyObjectStyle(_type, _payload);
+  var type = ref.type;
+  var payload = ref.payload;
+  var action = {
+    type: type,
+    payload: payload
+  };
+  var entry = this._actions[type];
+
+  if (!entry) {
+    if (true) {
+      console.error("[vuex] unknown action type: " + type);
+    }
+
+    return;
+  }
+
+  try {
+    this._actionSubscribers.slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .filter(function (sub) {
+      return sub.before;
+    }).forEach(function (sub) {
+      return sub.before(action, this$1.state);
+    });
+  } catch (e) {
+    if (true) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
+
+  var result = entry.length > 1 ? Promise.all(entry.map(function (handler) {
+    return handler(payload);
+  })) : entry[0](payload);
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers.filter(function (sub) {
+          return sub.after;
+        }).forEach(function (sub) {
+          return sub.after(action, this$1.state);
+        });
+      } catch (e) {
+        if (true) {
+          console.warn("[vuex] error in after action subscribers: ");
+          console.error(e);
+        }
+      }
+
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers.filter(function (sub) {
+          return sub.error;
+        }).forEach(function (sub) {
+          return sub.error(action, this$1.state, error);
+        });
+      } catch (e) {
+        if (true) {
+          console.warn("[vuex] error in error action subscribers: ");
+          console.error(e);
+        }
+      }
+
+      reject(error);
+    });
+  });
+};
+
+Store.prototype.subscribe = function subscribe(fn, options) {
+  return genericSubscribe(fn, this._subscribers, options);
+};
+
+Store.prototype.subscribeAction = function subscribeAction(fn, options) {
+  var subs = typeof fn === 'function' ? {
+    before: fn
+  } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options);
+};
+
+Store.prototype.watch = function watch(getter, cb, options) {
+  var this$1 = this;
+
+  if (true) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+
+  return this._watcherVM.$watch(function () {
+    return getter(this$1.state, this$1.getters);
+  }, cb, options);
+};
+
+Store.prototype.replaceState = function replaceState(state) {
+  var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule(path, rawModule, options) {
+  if (options === void 0) options = {};
+
+  if (typeof path === 'string') {
+    path = [path];
+  }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState); // reset store to update getters...
+
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule(path) {
+  var this$1 = this;
+
+  if (typeof path === 'string') {
+    path = [path];
+  }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule(path) {
+  if (typeof path === 'string') {
+    path = [path];
+  }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path);
+};
+
+Store.prototype.hotUpdate = function hotUpdate(newOptions) {
+  this._modules.update(newOptions);
+
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit(fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties(Store.prototype, prototypeAccessors$1);
+
+function genericSubscribe(fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend ? subs.unshift(fn) : subs.push(fn);
+  }
+
+  return function () {
+    var i = subs.indexOf(fn);
+
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  };
+}
+
+function resetStore(store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state; // init all modules
+
+  installModule(store, state, [], store._modules.root, true); // reset vm
+
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM(store, state, hot) {
+  var oldVm = store._vm; // bind store public getters
+
+  store.getters = {}; // reset local getters cache
+
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function get() {
+        return store._vm[key];
+      },
+      enumerable: true // for local getters
+
+    });
+  }); // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent; // enable strict mode for new vm
+
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+
+    Vue.nextTick(function () {
+      return oldVm.$destroy();
+    });
+  }
+}
+
+function installModule(store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+
+  var namespace = store._modules.getNamespace(path); // register in namespace map
+
+
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && "development" !== 'production') {
+      console.error("[vuex] duplicate namespace " + namespace + " for the namespaced module " + path.join('/'));
+    }
+
+    store._modulesNamespaceMap[namespace] = module;
+  } // set state
+
+
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+
+    store._withCommit(function () {
+      if (true) {
+        if (moduleName in parentState) {
+          console.warn("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + path.join('.') + "\"");
+        }
+      }
+
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+
+
+function makeLocalContext(store, namespace, path) {
+  var noNamespace = namespace === '';
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+
+        if ( true && !store._actions[type]) {
+          console.error("[vuex] unknown local action type: " + args.type + ", global type: " + type);
+          return;
+        }
+      }
+
+      return store.dispatch(type, payload);
+    },
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+
+        if ( true && !store._mutations[type]) {
+          console.error("[vuex] unknown local mutation type: " + args.type + ", global type: " + type);
+          return;
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  }; // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace ? function () {
+        return store.getters;
+      } : function () {
+        return makeLocalGetters(store, namespace);
+      }
+    },
+    state: {
+      get: function get() {
+        return getNestedState(store.state, path);
+      }
+    }
+  });
+  return local;
+}
+
+function makeLocalGetters(store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) {
+        return;
+      } // extract local getter type
+
+
+      var localType = type.slice(splitPos); // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+
+      Object.defineProperty(gettersProxy, localType, {
+        get: function get() {
+          return store.getters[type];
+        },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace];
+}
+
+function registerMutation(store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler(payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction(store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler(payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+
+        throw err;
+      });
+    } else {
+      return res;
+    }
+  });
+}
+
+function registerGetter(store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if (true) {
+      console.error("[vuex] duplicate getter key: " + type);
+    }
+
+    return;
+  }
+
+  store._wrappedGetters[type] = function wrappedGetter(store) {
+    return rawGetter(local.state, // local state
+    local.getters, // local getters
+    store.state, // root state
+    store.getters // root getters
+    );
+  };
+}
+
+function enableStrictMode(store) {
+  store._vm.$watch(function () {
+    return this._data.$$state;
+  }, function () {
+    if (true) {
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
+    }
+  }, {
+    deep: true,
+    sync: true
+  });
+}
+
+function getNestedState(state, path) {
+  return path.reduce(function (state, key) {
+    return state[key];
+  }, state);
+}
+
+function unifyObjectStyle(type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if (true) {
+    assert(typeof type === 'string', "expects string as the type, but found " + _typeof(type) + ".");
+  }
+
+  return {
+    type: type,
+    payload: payload,
+    options: options
+  };
+}
+
+function install(_Vue) {
+  if (Vue && _Vue === Vue) {
+    if (true) {
+      console.error('[vuex] already installed. Vue.use(Vuex) should be called only once.');
+    }
+
+    return;
+  }
+
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+
+
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+
+  if ( true && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState() {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+
+        if (!module) {
+          return;
+        }
+
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+
+      return typeof val === 'function' ? val.call(this, state, getters) : state[val];
+    }; // mark vuex getter for devtools
+
+
+    res[key].vuex = true;
+  });
+  return res;
+});
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept another params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+
+exports.mapState = mapState;
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+
+  if ( true && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation() {
+      var args = [],
+          len = arguments.length;
+
+      while (len--) {
+        args[len] = arguments[len];
+      } // Get the commit method from store
+
+
+      var commit = this.$store.commit;
+
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+
+        if (!module) {
+          return;
+        }
+
+        commit = module.context.commit;
+      }
+
+      return typeof val === 'function' ? val.apply(this, [commit].concat(args)) : commit.apply(this.$store, [val].concat(args));
+    };
+  });
+  return res;
+});
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+
+exports.mapMutations = mapMutations;
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+
+  if ( true && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val; // The namespace has been mutated by normalizeNamespace
+
+    val = namespace + val;
+
+    res[key] = function mappedGetter() {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return;
+      }
+
+      if ( true && !(val in this.$store.getters)) {
+        console.error("[vuex] unknown getter: " + val);
+        return;
+      }
+
+      return this.$store.getters[val];
+    }; // mark vuex getter for devtools
+
+
+    res[key].vuex = true;
+  });
+  return res;
+});
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+
+exports.mapGetters = mapGetters;
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+
+  if ( true && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction() {
+      var args = [],
+          len = arguments.length;
+
+      while (len--) {
+        args[len] = arguments[len];
+      } // get dispatch function from store
+
+
+      var dispatch = this.$store.dispatch;
+
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+
+        if (!module) {
+          return;
+        }
+
+        dispatch = module.context.dispatch;
+      }
+
+      return typeof val === 'function' ? val.apply(this, [dispatch].concat(args)) : dispatch.apply(this.$store, [val].concat(args));
+    };
+  });
+  return res;
+});
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+
+exports.mapActions = mapActions;
+
+var createNamespacedHelpers = function createNamespacedHelpers(namespace) {
+  return {
+    mapState: mapState.bind(null, namespace),
+    mapGetters: mapGetters.bind(null, namespace),
+    mapMutations: mapMutations.bind(null, namespace),
+    mapActions: mapActions.bind(null, namespace)
+  };
+};
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+
+
+exports.createNamespacedHelpers = createNamespacedHelpers;
+
+function normalizeMap(map) {
+  if (!isValidMap(map)) {
+    return [];
+  }
+
+  return Array.isArray(map) ? map.map(function (key) {
+    return {
+      key: key,
+      val: key
+    };
+  }) : Object.keys(map).map(function (key) {
+    return {
+      key: key,
+      val: map[key]
+    };
+  });
+}
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+
+
+function isValidMap(map) {
+  return Array.isArray(map) || isObject(map);
+}
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+
+
+function normalizeNamespace(fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+
+    return fn(namespace, map);
+  };
+}
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+
+
+function getModuleByNamespace(store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+
+  if ( true && !module) {
+    console.error("[vuex] module namespace not found in " + helper + "(): " + namespace);
+  }
+
+  return module;
+} // Credits: borrowed code from fcomb/redux-logger
+
+
+function createLogger(ref) {
+  if (ref === void 0) ref = {};
+  var collapsed = ref.collapsed;
+  if (collapsed === void 0) collapsed = true;
+  var filter = ref.filter;
+  if (filter === void 0) filter = function filter(mutation, stateBefore, stateAfter) {
+    return true;
+  };
+  var transformer = ref.transformer;
+  if (transformer === void 0) transformer = function transformer(state) {
+    return state;
+  };
+  var mutationTransformer = ref.mutationTransformer;
+  if (mutationTransformer === void 0) mutationTransformer = function mutationTransformer(mut) {
+    return mut;
+  };
+  var actionFilter = ref.actionFilter;
+  if (actionFilter === void 0) actionFilter = function actionFilter(action, state) {
+    return true;
+  };
+  var actionTransformer = ref.actionTransformer;
+  if (actionTransformer === void 0) actionTransformer = function actionTransformer(act) {
+    return act;
+  };
+  var logMutations = ref.logMutations;
+  if (logMutations === void 0) logMutations = true;
+  var logActions = ref.logActions;
+  if (logActions === void 0) logActions = true;
+  var logger = ref.logger;
+  if (logger === void 0) logger = console;
+  return function (store) {
+    var prevState = deepCopy(store.state);
+
+    if (typeof logger === 'undefined') {
+      return;
+    }
+
+    if (logMutations) {
+      store.subscribe(function (mutation, state) {
+        var nextState = deepCopy(state);
+
+        if (filter(mutation, prevState, nextState)) {
+          var formattedTime = getFormattedTime();
+          var formattedMutation = mutationTransformer(mutation);
+          var message = "mutation " + mutation.type + formattedTime;
+          startMessage(logger, message, collapsed);
+          logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
+          logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+          logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
+          endMessage(logger);
+        }
+
+        prevState = nextState;
+      });
+    }
+
+    if (logActions) {
+      store.subscribeAction(function (action, state) {
+        if (actionFilter(action, state)) {
+          var formattedTime = getFormattedTime();
+          var formattedAction = actionTransformer(action);
+          var message = "action " + action.type + formattedTime;
+          startMessage(logger, message, collapsed);
+          logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
+          endMessage(logger);
+        }
+      });
+    }
+  };
+}
+
+function startMessage(logger, message, collapsed) {
+  var startMessage = collapsed ? logger.groupCollapsed : logger.group; // render
+
+  try {
+    startMessage.call(logger, message);
+  } catch (e) {
+    logger.log(message);
+  }
+}
+
+function endMessage(logger) {
+  try {
+    logger.groupEnd();
+  } catch (e) {
+    logger.log('—— log end ——');
+  }
+}
+
+function getFormattedTime() {
+  var time = new Date();
+  return " @ " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
+}
+
+function repeat(str, times) {
+  return new Array(times + 1).join(str);
+}
+
+function pad(num, maxLength) {
+  return repeat('0', maxLength - num.toString().length) + num;
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  version: '3.6.2',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers,
+  createLogger: createLogger
+};
+var _default = index;
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var g; // This works in non-strict mode
+
+g = function () {
+  return this;
+}();
+
+try {
+  // This works if eval is allowed (see CSP)
+  g = g || new Function("return this")();
+} catch (e) {
+  // This works if the window reference is available
+  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+} // g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+
+module.exports = g;
+
+/***/ }),
+
+/***/ "./src/helpers/files.js":
+/*!******************************!*\
+  !*** ./src/helpers/files.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FILE_ACTION_IDENTIFIER = exports.FilesWorkspacePlugin = exports.registerFileCreate = exports.registerFileActionFallback = exports.optimalPath = void 0;
+
+var _mime = __webpack_require__(/*! ./mime */ "./src/helpers/mime.js");
+
+var _RichWorkspace = _interopRequireDefault(__webpack_require__(/*! ../views/RichWorkspace */ "./src/views/RichWorkspace.vue"));
+
+var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+
+var _store = _interopRequireDefault(__webpack_require__(/*! ../store */ "./src/store.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -46,12 +23166,171 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-var r=["text/markdown"];e.openMimetypesMarkdown=r;var i=["text/plain","application/cmd","application/x-empty","application/x-msdos-program","application/javascript","application/json","application/x-perl","application/x-php","application/x-tex","application/xml","application/yaml","text/css","text/csv","text/html","text/org","text/x-c","text/x-c++src","text/x-h","text/x-java-source","text/x-ldif","text/x-python","text/x-shellscript"];e.openMimetypesPlainText=i;var o=[].concat(r,i);e.openMimetypes=o},function(t,e,n){"use strict";var r=n(70),i=n(13),o=n(181);r||i(Object.prototype,"toString",o,{unsafe:!0})},function(t,e,n){"use strict";var r=n(17),i=n(143),o=n(28),a=n(25),s=n(69),c=a.set,u=a.getterFor("Array Iterator");t.exports=s(Array,"Array",(function(t,e){c(this,{type:"Array Iterator",target:r(t),index:0,kind:e})}),(function(){var t=u(this),e=t.target,n=t.kind,r=t.index++;return!e||r>=e.length?(t.target=void 0,{value:void 0,done:!0}):"keys"==n?{value:r,done:!1}:"values"==n?{value:e[r],done:!1}:{value:[r,e[r]],done:!1}}),"values"),o.Arguments=o.Array,i("keys"),i("values"),i("entries")},function(t,e,n){"use strict";var r=n(5),i=n(63);r({target:"RegExp",proto:!0,forced:/./.exec!==i},{exec:i})},function(t,e,n){"use strict";var r=n(26),i=n(9),o=n(18);t.exports=function(t,e,n){var a=r(e);a in t?i.f(t,a,o(0,n)):t[a]=n}},function(t,e,n){"use strict";var r=n(58),i=n(38).concat("length","prototype");e.f=Object.getOwnPropertyNames||function(t){return r(t,i)}},function(t,e,n){"use strict";var r=n(22),i=Math.max,o=Math.min;t.exports=function(t,e){var n=r(t);return n<0?i(n+e,0):o(n,e)}},function(t,e,n){"use strict";t.exports=function(t,e,n){if(!(t instanceof e))throw TypeError("Incorrect "+(n?n+" ":"")+"invocation");return t}},function(t,e,n){"use strict";t.exports=function(t){if("function"!=typeof t)throw TypeError(String(t)+" is not a function");return t}},function(t,e,n){"use strict";var r=n(22),i=n(16),o=function(t){return function(e,n){var o,a,s=String(i(e)),c=r(n),u=s.length;return c<0||c>=u?t?"":void 0:(o=s.charCodeAt(c))<55296||o>56319||c+1===u||(a=s.charCodeAt(c+1))<56320||a>57343?t?s.charAt(c):o:t?s.slice(c,c+2):a-56320+(o-55296<<10)+65536}};t.exports={codeAt:o(!1),charAt:o(!0)}},function(t,e,n){"use strict";var r=n(21),i=n(80),o=n(67),a=n(7);t.exports=r("Reflect","ownKeys")||function(t){var e=i.f(a(t)),n=o.f;return n?e.concat(n(t)):e}},function(t,e,n){"use strict";var r=n(21);t.exports=r("navigator","userAgent")||""},function(t,e,n){"use strict";var r=n(3),i=n(15),o=n(2)("match");t.exports=function(t){var e;return r(t)&&(void 0!==(e=t[o])?!!e:"RegExp"==i(t))}},function(t,e,n){"use strict";var r=n(7),i=n(176);t.exports=Object.setPrototypeOf||("__proto__"in{}?function(){var t,e=!1,n={};try{(t=Object.getOwnPropertyDescriptor(Object.prototype,"__proto__").set).call(n,[]),e=n instanceof Array}catch(t){}return function(n,o){return r(n),i(o),e?t.call(n,o):n.__proto__=o,n}}():void 0)},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(7),o=n(147),a=n(12),s=n(39),c=n(129),u=n(148),l=function(t,e){this.stopped=t,this.result=e};t.exports=function(t,e,n){var f,d,p,h,v,m,g,y=n&&n.that,b=!(!n||!n.AS_ENTRIES),_=!(!n||!n.IS_ITERATOR),w=!(!n||!n.INTERRUPTED),A=s(e,y,1+b+w),x=function(t){return f&&u(f),new l(!0,t)},E=function(t){return b?(i(t),w?A(t[0],t[1],x):A(t[0],t[1])):w?A(t,x):A(t)};if(_)f=t;else{if("function"!=typeof(d=c(t)))throw TypeError("Target is not iterable");if(o(d)){for(p=0,h=a(t.length);h>p;p++)if((v=E(t[p]))&&v instanceof l)return v;return new l(!1)}f=d.call(t)}for(m=f.next;!(g=m.call(f)).done;){try{v=E(g.value)}catch(t){throw u(f),t}if("object"==r(v)&&v&&v instanceof l)return v}return new l(!1)}},function(t,e,n){"use strict";var r=n(70),i=n(15),o=n(2)("toStringTag"),a="Arguments"==i(function(){return arguments}());t.exports=r?i:function(t){var e,n,r;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(n=function(t,e){try{return t[e]}catch(t){}}(e=Object(t),o))?n:a?i(e):"Object"==(r=i(e))&&"function"==typeof e.callee?"Arguments":r}},function(t,e,n){"use strict";var r=n(0);t.exports=function(t,e){var n=[][t];return!!n&&r((function(){n.call(null,e||function(){throw 1},1)}))}},function(t,e,n){"use strict";var r=n(7);t.exports=function(){var t=r(this),e="";return t.global&&(e+="g"),t.ignoreCase&&(e+="i"),t.multiline&&(e+="m"),t.dotAll&&(e+="s"),t.unicode&&(e+="u"),t.sticky&&(e+="y"),e}},function(t,e,n){"use strict";n(33),n(55),n(52),n(56),Object.defineProperty(e,"__esModule",{value:!0}),e.getBuilder=function(t){return new r.default(t)},e.clearAll=function(){[window.sessionStorage,window.localStorage].map((function(t){return a(t)}))},e.clearNonPersistent=function(){[window.sessionStorage,window.localStorage].map((function(t){return a(t,(function(t){return!t.startsWith(i.default.GLOBAL_SCOPE_PERSISTENT)}))}))};var r=o(n(119)),i=o(n(59));function o(t){return t&&t.__esModule?t:{default:t}}function a(t,e){Object.keys(t).filter((function(t){return!e||e(t)})).map(t.removeItem.bind(t))}},function(t,e,n){"use strict";var r=n(4),i=n(85),o=n(24),a=n(9);t.exports=function(t,e){for(var n=i(e),s=a.f,c=o.f,u=0;u<n.length;u++){var l=n[u];r(t,l)||s(t,l,c(e,l))}}},function(t,e,n){"use strict";var r=n(1);t.exports=r},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(54);t.exports=i&&!Symbol.sham&&"symbol"==r(Symbol.iterator)},function(t,e,n){"use strict";var r=n(5),i=n(142);r({target:"Object",stat:!0,forced:Object.assign!==i},{assign:i})},function(t,e,n){"use strict";t.exports=function(t,e){return function(){for(var n=new Array(arguments.length),r=0;r<n.length;r++)n[r]=arguments[r];return t.apply(e,n)}}},function(t,e,n){"use strict";var r=n(6);function i(t){return encodeURIComponent(t).replace(/%3A/gi,":").replace(/%24/g,"$").replace(/%2C/gi,",").replace(/%20/g,"+").replace(/%5B/gi,"[").replace(/%5D/gi,"]")}t.exports=function(t,e,n){if(!e)return t;var o;if(n)o=n(e);else if(r.isURLSearchParams(e))o=e.toString();else{var a=[];r.forEach(e,(function(t,e){null!=t&&(r.isArray(t)?e+="[]":t=[t],r.forEach(t,(function(t){r.isDate(t)?t=t.toISOString():r.isObject(t)&&(t=JSON.stringify(t)),a.push(i(e)+"="+i(t))})))})),o=a.join("&")}if(o){var s=t.indexOf("#");-1!==s&&(t=t.slice(0,s)),t+=(-1===t.indexOf("?")?"?":"&")+o}return t}},function(t,e,n){"use strict";t.exports=function(t){return!(!t||!t.__CANCEL__)}},function(t,e,n){"use strict";(function(e){var r=n(6),i=n(156),o={"Content-Type":"application/x-www-form-urlencoded"};function a(t,e){!r.isUndefined(t)&&r.isUndefined(t["Content-Type"])&&(t["Content-Type"]=e)}var s,c={adapter:(("undefined"!=typeof XMLHttpRequest||void 0!==e&&"[object process]"===Object.prototype.toString.call(e))&&(s=n(102)),s),transformRequest:[function(t,e){return i(e,"Accept"),i(e,"Content-Type"),r.isFormData(t)||r.isArrayBuffer(t)||r.isBuffer(t)||r.isStream(t)||r.isFile(t)||r.isBlob(t)?t:r.isArrayBufferView(t)?t.buffer:r.isURLSearchParams(t)?(a(e,"application/x-www-form-urlencoded;charset=utf-8"),t.toString()):r.isObject(t)?(a(e,"application/json;charset=utf-8"),JSON.stringify(t)):t}],transformResponse:[function(t){if("string"==typeof t)try{t=JSON.parse(t)}catch(t){}return t}],timeout:0,xsrfCookieName:"XSRF-TOKEN",xsrfHeaderName:"X-XSRF-TOKEN",maxContentLength:-1,maxBodyLength:-1,validateStatus:function(t){return t>=200&&t<300}};c.headers={common:{Accept:"application/json, text/plain, */*"}},r.forEach(["delete","get","head"],(function(t){c.headers[t]={}})),r.forEach(["post","put","patch"],(function(t){c.headers[t]=r.merge(o)})),t.exports=c}).call(this,n(41))},function(t,e,n){"use strict";var r=n(6),i=n(157),o=n(159),a=n(99),s=n(160),c=n(163),u=n(164),l=n(103);t.exports=function(t){return new Promise((function(e,n){var f=t.data,d=t.headers;r.isFormData(f)&&delete d["Content-Type"];var p=new XMLHttpRequest;if(t.auth){var h=t.auth.username||"",v=t.auth.password?unescape(encodeURIComponent(t.auth.password)):"";d.Authorization="Basic "+btoa(h+":"+v)}var m=s(t.baseURL,t.url);if(p.open(t.method.toUpperCase(),a(m,t.params,t.paramsSerializer),!0),p.timeout=t.timeout,p.onreadystatechange=function(){if(p&&4===p.readyState&&(0!==p.status||p.responseURL&&0===p.responseURL.indexOf("file:"))){var r="getAllResponseHeaders"in p?c(p.getAllResponseHeaders()):null,o={data:t.responseType&&"text"!==t.responseType?p.response:p.responseText,status:p.status,statusText:p.statusText,headers:r,config:t,request:p};i(e,n,o),p=null}},p.onabort=function(){p&&(n(l("Request aborted",t,"ECONNABORTED",p)),p=null)},p.onerror=function(){n(l("Network Error",t,null,p)),p=null},p.ontimeout=function(){var e="timeout of "+t.timeout+"ms exceeded";t.timeoutErrorMessage&&(e=t.timeoutErrorMessage),n(l(e,t,"ECONNABORTED",p)),p=null},r.isStandardBrowserEnv()){var g=(t.withCredentials||u(m))&&t.xsrfCookieName?o.read(t.xsrfCookieName):void 0;g&&(d[t.xsrfHeaderName]=g)}if("setRequestHeader"in p&&r.forEach(d,(function(t,e){void 0===f&&"content-type"===e.toLowerCase()?delete d[e]:p.setRequestHeader(e,t)})),r.isUndefined(t.withCredentials)||(p.withCredentials=!!t.withCredentials),t.responseType)try{p.responseType=t.responseType}catch(e){if("json"!==t.responseType)throw e}"function"==typeof t.onDownloadProgress&&p.addEventListener("progress",t.onDownloadProgress),"function"==typeof t.onUploadProgress&&p.upload&&p.upload.addEventListener("progress",t.onUploadProgress),t.cancelToken&&t.cancelToken.promise.then((function(t){p&&(p.abort(),n(t),p=null)})),f||(f=null),p.send(f)}))}},function(t,e,n){"use strict";var r=n(158);t.exports=function(t,e,n,i,o){var a=new Error(t);return r(a,e,n,i,o)}},function(t,e,n){"use strict";var r=n(6);t.exports=function(t,e){e=e||{};var n={},i=["url","method","data"],o=["headers","auth","proxy","params"],a=["baseURL","transformRequest","transformResponse","paramsSerializer","timeout","timeoutMessage","withCredentials","adapter","responseType","xsrfCookieName","xsrfHeaderName","onUploadProgress","onDownloadProgress","decompress","maxContentLength","maxBodyLength","maxRedirects","transport","httpAgent","httpsAgent","cancelToken","socketPath","responseEncoding"],s=["validateStatus"];function c(t,e){return r.isPlainObject(t)&&r.isPlainObject(e)?r.merge(t,e):r.isPlainObject(e)?r.merge({},e):r.isArray(e)?e.slice():e}function u(i){r.isUndefined(e[i])?r.isUndefined(t[i])||(n[i]=c(void 0,t[i])):n[i]=c(t[i],e[i])}r.forEach(i,(function(t){r.isUndefined(e[t])||(n[t]=c(void 0,e[t]))})),r.forEach(o,u),r.forEach(a,(function(i){r.isUndefined(e[i])?r.isUndefined(t[i])||(n[i]=c(void 0,t[i])):n[i]=c(void 0,e[i])})),r.forEach(s,(function(r){r in e?n[r]=c(t[r],e[r]):r in t&&(n[r]=c(void 0,t[r]))}));var l=i.concat(o).concat(a).concat(s),f=Object.keys(t).concat(Object.keys(e)).filter((function(t){return-1===l.indexOf(t)}));return r.forEach(f,u),n}},function(t,e,n){"use strict";function r(t){this.message=t}r.prototype.toString=function(){return"Cancel"+(this.message?": "+this.message:"")},r.prototype.__CANCEL__=!0,t.exports=r},function(t,e,n){"use strict";var r=n(68).MAX_SAFE_COMPONENT_LENGTH,i=n(107),o=(e=t.exports={}).re=[],a=e.src=[],s=e.t={},c=0,u=function(t,e,n){var r=c++;i(r,e),s[t]=r,a[r]=e,o[r]=new RegExp(e,n?"g":void 0)};u("NUMERICIDENTIFIER","0|[1-9]\\d*"),u("NUMERICIDENTIFIERLOOSE","[0-9]+"),u("NONNUMERICIDENTIFIER","\\d*[a-zA-Z-][a-zA-Z0-9-]*"),u("MAINVERSION","(".concat(a[s.NUMERICIDENTIFIER],")\\.")+"(".concat(a[s.NUMERICIDENTIFIER],")\\.")+"(".concat(a[s.NUMERICIDENTIFIER],")")),u("MAINVERSIONLOOSE","(".concat(a[s.NUMERICIDENTIFIERLOOSE],")\\.")+"(".concat(a[s.NUMERICIDENTIFIERLOOSE],")\\.")+"(".concat(a[s.NUMERICIDENTIFIERLOOSE],")")),u("PRERELEASEIDENTIFIER","(?:".concat(a[s.NUMERICIDENTIFIER],"|").concat(a[s.NONNUMERICIDENTIFIER],")")),u("PRERELEASEIDENTIFIERLOOSE","(?:".concat(a[s.NUMERICIDENTIFIERLOOSE],"|").concat(a[s.NONNUMERICIDENTIFIER],")")),u("PRERELEASE","(?:-(".concat(a[s.PRERELEASEIDENTIFIER],"(?:\\.").concat(a[s.PRERELEASEIDENTIFIER],")*))")),u("PRERELEASELOOSE","(?:-?(".concat(a[s.PRERELEASEIDENTIFIERLOOSE],"(?:\\.").concat(a[s.PRERELEASEIDENTIFIERLOOSE],")*))")),u("BUILDIDENTIFIER","[0-9A-Za-z-]+"),u("BUILD","(?:\\+(".concat(a[s.BUILDIDENTIFIER],"(?:\\.").concat(a[s.BUILDIDENTIFIER],")*))")),u("FULLPLAIN","v?".concat(a[s.MAINVERSION]).concat(a[s.PRERELEASE],"?").concat(a[s.BUILD],"?")),u("FULL","^".concat(a[s.FULLPLAIN],"$")),u("LOOSEPLAIN","[v=\\s]*".concat(a[s.MAINVERSIONLOOSE]).concat(a[s.PRERELEASELOOSE],"?").concat(a[s.BUILD],"?")),u("LOOSE","^".concat(a[s.LOOSEPLAIN],"$")),u("GTLT","((?:<|>)?=?)"),u("XRANGEIDENTIFIERLOOSE","".concat(a[s.NUMERICIDENTIFIERLOOSE],"|x|X|\\*")),u("XRANGEIDENTIFIER","".concat(a[s.NUMERICIDENTIFIER],"|x|X|\\*")),u("XRANGEPLAIN","[v=\\s]*(".concat(a[s.XRANGEIDENTIFIER],")")+"(?:\\.(".concat(a[s.XRANGEIDENTIFIER],")")+"(?:\\.(".concat(a[s.XRANGEIDENTIFIER],")")+"(?:".concat(a[s.PRERELEASE],")?").concat(a[s.BUILD],"?")+")?)?"),u("XRANGEPLAINLOOSE","[v=\\s]*(".concat(a[s.XRANGEIDENTIFIERLOOSE],")")+"(?:\\.(".concat(a[s.XRANGEIDENTIFIERLOOSE],")")+"(?:\\.(".concat(a[s.XRANGEIDENTIFIERLOOSE],")")+"(?:".concat(a[s.PRERELEASELOOSE],")?").concat(a[s.BUILD],"?")+")?)?"),u("XRANGE","^".concat(a[s.GTLT],"\\s*").concat(a[s.XRANGEPLAIN],"$")),u("XRANGELOOSE","^".concat(a[s.GTLT],"\\s*").concat(a[s.XRANGEPLAINLOOSE],"$")),u("COERCE","".concat("(^|[^\\d])(\\d{1,").concat(r,"})")+"(?:\\.(\\d{1,".concat(r,"}))?")+"(?:\\.(\\d{1,".concat(r,"}))?")+"(?:$|[^\\d])"),u("COERCERTL",a[s.COERCE],!0),u("LONETILDE","(?:~>?)"),u("TILDETRIM","(\\s*)".concat(a[s.LONETILDE],"\\s+"),!0),e.tildeTrimReplace="$1~",u("TILDE","^".concat(a[s.LONETILDE]).concat(a[s.XRANGEPLAIN],"$")),u("TILDELOOSE","^".concat(a[s.LONETILDE]).concat(a[s.XRANGEPLAINLOOSE],"$")),u("LONECARET","(?:\\^)"),u("CARETTRIM","(\\s*)".concat(a[s.LONECARET],"\\s+"),!0),e.caretTrimReplace="$1^",u("CARET","^".concat(a[s.LONECARET]).concat(a[s.XRANGEPLAIN],"$")),u("CARETLOOSE","^".concat(a[s.LONECARET]).concat(a[s.XRANGEPLAINLOOSE],"$")),u("COMPARATORLOOSE","^".concat(a[s.GTLT],"\\s*(").concat(a[s.LOOSEPLAIN],")$|^$")),u("COMPARATOR","^".concat(a[s.GTLT],"\\s*(").concat(a[s.FULLPLAIN],")$|^$")),u("COMPARATORTRIM","(\\s*)".concat(a[s.GTLT],"\\s*(").concat(a[s.LOOSEPLAIN],"|").concat(a[s.XRANGEPLAIN],")"),!0),e.comparatorTrimReplace="$1$2$3",u("HYPHENRANGE","^\\s*(".concat(a[s.XRANGEPLAIN],")")+"\\s+-\\s+"+"(".concat(a[s.XRANGEPLAIN],")")+"\\s*$"),u("HYPHENRANGELOOSE","^\\s*(".concat(a[s.XRANGEPLAINLOOSE],")")+"\\s+-\\s+"+"(".concat(a[s.XRANGEPLAINLOOSE],")")+"\\s*$"),u("STAR","(<|>)?=?\\s*\\*"),u("GTE0","^\\s*>=\\s*0.0.0\\s*$"),u("GTE0PRE","^\\s*>=\\s*0.0.0-0\\s*$")},function(t,e,n){"use strict";(function(e){function n(t){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var r="object"===(void 0===e?"undefined":n(e))&&e.env&&e.env.NODE_DEBUG&&/\bsemver\b/i.test(e.env.NODE_DEBUG)?function(){for(var t,e=arguments.length,n=new Array(e),r=0;r<e;r++)n[r]=arguments[r];return(t=console).error.apply(t,["SEMVER"].concat(n))}:function(){};t.exports=r}).call(this,n(41))},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}var o=n(107),a=n(68),s=a.MAX_LENGTH,c=a.MAX_SAFE_INTEGER,u=n(106),l=u.re,f=u.t,d=n(172).compareIdentifiers,p=function(){function t(e,n){if(function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),n&&"object"===r(n)||(n={loose:!!n,includePrerelease:!1}),e instanceof t){if(e.loose===!!n.loose&&e.includePrerelease===!!n.includePrerelease)return e;e=e.version}else if("string"!=typeof e)throw new TypeError("Invalid Version: ".concat(e));if(e.length>s)throw new TypeError("version is longer than ".concat(s," characters"));o("SemVer",e,n),this.options=n,this.loose=!!n.loose,this.includePrerelease=!!n.includePrerelease;var i=e.trim().match(n.loose?l[f.LOOSE]:l[f.FULL]);if(!i)throw new TypeError("Invalid Version: ".concat(e));if(this.raw=e,this.major=+i[1],this.minor=+i[2],this.patch=+i[3],this.major>c||this.major<0)throw new TypeError("Invalid major version");if(this.minor>c||this.minor<0)throw new TypeError("Invalid minor version");if(this.patch>c||this.patch<0)throw new TypeError("Invalid patch version");i[4]?this.prerelease=i[4].split(".").map((function(t){if(/^[0-9]+$/.test(t)){var e=+t;if(e>=0&&e<c)return e}return t})):this.prerelease=[],this.build=i[5]?i[5].split("."):[],this.format()}var e,n,a;return e=t,(n=[{key:"format",value:function(){return this.version="".concat(this.major,".").concat(this.minor,".").concat(this.patch),this.prerelease.length&&(this.version+="-".concat(this.prerelease.join("."))),this.version}},{key:"toString",value:function(){return this.version}},{key:"compare",value:function(e){if(o("SemVer.compare",this.version,this.options,e),!(e instanceof t)){if("string"==typeof e&&e===this.version)return 0;e=new t(e,this.options)}return e.version===this.version?0:this.compareMain(e)||this.comparePre(e)}},{key:"compareMain",value:function(e){return e instanceof t||(e=new t(e,this.options)),d(this.major,e.major)||d(this.minor,e.minor)||d(this.patch,e.patch)}},{key:"comparePre",value:function(e){if(e instanceof t||(e=new t(e,this.options)),this.prerelease.length&&!e.prerelease.length)return-1;if(!this.prerelease.length&&e.prerelease.length)return 1;if(!this.prerelease.length&&!e.prerelease.length)return 0;var n=0;do{var r=this.prerelease[n],i=e.prerelease[n];if(o("prerelease compare",n,r,i),void 0===r&&void 0===i)return 0;if(void 0===i)return 1;if(void 0===r)return-1;if(r!==i)return d(r,i)}while(++n)}},{key:"compareBuild",value:function(e){e instanceof t||(e=new t(e,this.options));var n=0;do{var r=this.build[n],i=e.build[n];if(o("prerelease compare",n,r,i),void 0===r&&void 0===i)return 0;if(void 0===i)return 1;if(void 0===r)return-1;if(r!==i)return d(r,i)}while(++n)}},{key:"inc",value:function(t,e){switch(t){case"premajor":this.prerelease.length=0,this.patch=0,this.minor=0,this.major++,this.inc("pre",e);break;case"preminor":this.prerelease.length=0,this.patch=0,this.minor++,this.inc("pre",e);break;case"prepatch":this.prerelease.length=0,this.inc("patch",e),this.inc("pre",e);break;case"prerelease":0===this.prerelease.length&&this.inc("patch",e),this.inc("pre",e);break;case"major":0===this.minor&&0===this.patch&&0!==this.prerelease.length||this.major++,this.minor=0,this.patch=0,this.prerelease=[];break;case"minor":0===this.patch&&0!==this.prerelease.length||this.minor++,this.patch=0,this.prerelease=[];break;case"patch":0===this.prerelease.length&&this.patch++,this.prerelease=[];break;case"pre":if(0===this.prerelease.length)this.prerelease=[0];else{for(var n=this.prerelease.length;--n>=0;)"number"==typeof this.prerelease[n]&&(this.prerelease[n]++,n=-2);-1===n&&this.prerelease.push(0)}e&&(this.prerelease[0]===e?isNaN(this.prerelease[1])&&(this.prerelease=[e,0]):this.prerelease=[e,0]);break;default:throw new Error("invalid increment argument: ".concat(t))}return this.format(),this.raw=this.version,this}}])&&i(e.prototype,n),a&&i(e,a),t}();t.exports=p},function(t,e,n){"use strict";var r,i,o,a=n(0),s=n(110),c=n(8),u=n(4),l=n(2),f=n(20),d=l("iterator"),p=!1;[].keys&&("next"in(o=[].keys())?(i=s(s(o)))!==Object.prototype&&(r=i):p=!0);var h=null==r||a((function(){var t={};return r[d].call(t)!==t}));h&&(r={}),f&&!h||u(r,d)||c(r,d,(function(){return this})),t.exports={IteratorPrototype:r,BUGGY_SAFARI_ITERATORS:p}},function(t,e,n){"use strict";var r=n(4),i=n(11),o=n(42),a=n(175),s=o("IE_PROTO"),c=Object.prototype;t.exports=a?Object.getPrototypeOf:function(t){return t=i(t),r(t,s)?t[s]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?c:null}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(23),o=n(3),a=n(4),s=n(9).f,c=n(36),u=n(179),l=c("meta"),f=0,d=Object.isExtensible||function(){return!0},p=function(t){s(t,l,{value:{objectID:"O"+ ++f,weakData:{}}})},h=t.exports={REQUIRED:!1,fastKey:function(t,e){if(!o(t))return"symbol"==r(t)?t:("string"==typeof t?"S":"P")+t;if(!a(t,l)){if(!d(t))return"F";if(!e)return"E";p(t)}return t[l].objectID},getWeakData:function(t,e){if(!a(t,l)){if(!d(t))return!0;if(!e)return!1;p(t)}return t[l].weakData},onFreeze:function(t){return u&&h.REQUIRED&&d(t)&&!a(t,l)&&p(t),t}};i[l]=!0},function(t,e,n){"use strict";t.exports={CSSRuleList:0,CSSStyleDeclaration:0,CSSValueList:0,ClientRectList:0,DOMRectList:0,DOMStringList:0,DOMTokenList:1,DataTransferItemList:0,FileList:0,HTMLAllCollection:0,HTMLCollection:0,HTMLFormElement:0,HTMLSelectElement:0,MediaList:0,MimeTypeArray:0,NamedNodeMap:0,NodeList:1,PaintRequestList:0,Plugin:0,PluginArray:0,SVGLengthList:0,SVGNumberList:0,SVGPathSegList:0,SVGPointList:0,SVGStringList:0,SVGTransformList:0,SourceBufferList:0,StyleSheetList:0,TextTrackCueList:0,TextTrackList:0,TouchList:0}},function(t,e,n){"use strict";(function(t){var r=void 0!==t&&t||"undefined"!=typeof self&&self||window,i=Function.prototype.apply;function o(t,e){this._id=t,this._clearFn=e}e.setTimeout=function(){return new o(i.call(setTimeout,r,arguments),clearTimeout)},e.setInterval=function(){return new o(i.call(setInterval,r,arguments),clearInterval)},e.clearTimeout=e.clearInterval=function(t){t&&t.close()},o.prototype.unref=o.prototype.ref=function(){},o.prototype.close=function(){this._clearFn.call(r,this._id)},e.enroll=function(t,e){clearTimeout(t._idleTimeoutId),t._idleTimeout=e},e.unenroll=function(t){clearTimeout(t._idleTimeoutId),t._idleTimeout=-1},e._unrefActive=e.active=function(t){clearTimeout(t._idleTimeoutId);var e=t._idleTimeout;e>=0&&(t._idleTimeoutId=setTimeout((function(){t._onTimeout&&t._onTimeout()}),e))},n(114),e.setImmediate="undefined"!=typeof self&&self.setImmediate||void 0!==t&&t.setImmediate||void 0,e.clearImmediate="undefined"!=typeof self&&self.clearImmediate||void 0!==t&&t.clearImmediate||void 0}).call(this,n(14))},function(t,e,n){"use strict";(function(t,e){!function(t,n){if(!t.setImmediate){var r,i,o,a,s,c=1,u={},l=!1,f=t.document,d=Object.getPrototypeOf&&Object.getPrototypeOf(t);d=d&&d.setTimeout?d:t,"[object process]"==={}.toString.call(t.process)?r=function(t){e.nextTick((function(){h(t)}))}:!function(){if(t.postMessage&&!t.importScripts){var e=!0,n=t.onmessage;return t.onmessage=function(){e=!1},t.postMessage("","*"),t.onmessage=n,e}}()?t.MessageChannel?((o=new MessageChannel).port1.onmessage=function(t){h(t.data)},r=function(t){o.port2.postMessage(t)}):f&&"onreadystatechange"in f.createElement("script")?(i=f.documentElement,r=function(t){var e=f.createElement("script");e.onreadystatechange=function(){h(t),e.onreadystatechange=null,i.removeChild(e),e=null},i.appendChild(e)}):r=function(t){setTimeout(h,0,t)}:(a="setImmediate$"+Math.random()+"$",s=function(e){e.source===t&&"string"==typeof e.data&&0===e.data.indexOf(a)&&h(+e.data.slice(a.length))},t.addEventListener?t.addEventListener("message",s,!1):t.attachEvent("onmessage",s),r=function(e){t.postMessage(a+e,"*")}),d.setImmediate=function(t){"function"!=typeof t&&(t=new Function(""+t));for(var e=new Array(arguments.length-1),n=0;n<e.length;n++)e[n]=arguments[n+1];var i={callback:t,args:e};return u[c]=i,r(c),c++},d.clearImmediate=p}function p(t){delete u[t]}function h(t){if(l)setTimeout(h,0,t);else{var e=u[t];if(e){l=!0;try{!function(t){var e=t.callback,n=t.args;switch(n.length){case 0:e();break;case 1:e(n[0]);break;case 2:e(n[0],n[1]);break;case 3:e(n[0],n[1],n[2]);break;default:e.apply(void 0,n)}}(e)}finally{p(t),l=!1}}}}}("undefined"==typeof self?void 0===t?void 0:t:self)}).call(this,n(14),n(41))},function(t,e,n){"use strict";(function(t){function n(t){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}
-/*!
- * vuex v3.6.2
- * (c) 2021 Evan You
- * @license MIT
- */Object.defineProperty(e,"__esModule",{value:!0}),e.createLogger=k,e.install=b,e.mapState=e.mapMutations=e.mapGetters=e.mapActions=e.createNamespacedHelpers=e.Store=e.default=void 0;var r=("undefined"!=typeof window?window:void 0!==t?t:{}).__VUE_DEVTOOLS_GLOBAL_HOOK__;function i(t,e){if(void 0===e&&(e=[]),null===t||"object"!==n(t))return t;var r,o=(r=function(e){return e.original===t},e.filter(r)[0]);if(o)return o.copy;var a=Array.isArray(t)?[]:{};return e.push({original:t,copy:a}),Object.keys(t).forEach((function(n){a[n]=i(t[n],e)})),a}function o(t,e){Object.keys(t).forEach((function(n){return e(t[n],n)}))}function a(t){return null!==t&&"object"===n(t)}var s=function(t,e){this.runtime=e,this._children=Object.create(null),this._rawModule=t;var n=t.state;this.state=("function"==typeof n?n():n)||{}},c={namespaced:{configurable:!0}};c.namespaced.get=function(){return!!this._rawModule.namespaced},s.prototype.addChild=function(t,e){this._children[t]=e},s.prototype.removeChild=function(t){delete this._children[t]},s.prototype.getChild=function(t){return this._children[t]},s.prototype.hasChild=function(t){return t in this._children},s.prototype.update=function(t){this._rawModule.namespaced=t.namespaced,t.actions&&(this._rawModule.actions=t.actions),t.mutations&&(this._rawModule.mutations=t.mutations),t.getters&&(this._rawModule.getters=t.getters)},s.prototype.forEachChild=function(t){o(this._children,t)},s.prototype.forEachGetter=function(t){this._rawModule.getters&&o(this._rawModule.getters,t)},s.prototype.forEachAction=function(t){this._rawModule.actions&&o(this._rawModule.actions,t)},s.prototype.forEachMutation=function(t){this._rawModule.mutations&&o(this._rawModule.mutations,t)},Object.defineProperties(s.prototype,c);var u=function(t){this.register([],t,!1)};u.prototype.get=function(t){return t.reduce((function(t,e){return t.getChild(e)}),this.root)},u.prototype.getNamespace=function(t){var e=this.root;return t.reduce((function(t,n){return t+((e=e.getChild(n)).namespaced?n+"/":"")}),"")},u.prototype.update=function(t){!function t(e,n,r){0;if(n.update(r),r.modules)for(var i in r.modules){if(!n.getChild(i))return void 0;t(e.concat(i),n.getChild(i),r.modules[i])}}([],this.root,t)},u.prototype.register=function(t,e,n){var r=this;void 0===n&&(n=!0);var i=new s(e,n);0===t.length?this.root=i:this.get(t.slice(0,-1)).addChild(t[t.length-1],i);e.modules&&o(e.modules,(function(e,i){r.register(t.concat(i),e,n)}))},u.prototype.unregister=function(t){var e=this.get(t.slice(0,-1)),n=t[t.length-1],r=e.getChild(n);r&&r.runtime&&e.removeChild(n)},u.prototype.isRegistered=function(t){var e=this.get(t.slice(0,-1)),n=t[t.length-1];return!!e&&e.hasChild(n)};var l;var f=function(t){var e=this;void 0===t&&(t={}),!l&&"undefined"!=typeof window&&window.Vue&&b(window.Vue);var n=t.plugins;void 0===n&&(n=[]);var i=t.strict;void 0===i&&(i=!1),this._committing=!1,this._actions=Object.create(null),this._actionSubscribers=[],this._mutations=Object.create(null),this._wrappedGetters=Object.create(null),this._modules=new u(t),this._modulesNamespaceMap=Object.create(null),this._subscribers=[],this._watcherVM=new l,this._makeLocalGettersCache=Object.create(null);var o=this,a=this.dispatch,s=this.commit;this.dispatch=function(t,e){return a.call(o,t,e)},this.commit=function(t,e,n){return s.call(o,t,e,n)},this.strict=i;var c=this._modules.root.state;m(this,c,[],this._modules.root),v(this,c),n.forEach((function(t){return t(e)})),(void 0!==t.devtools?t.devtools:l.config.devtools)&&function(t){r&&(t._devtoolHook=r,r.emit("vuex:init",t),r.on("vuex:travel-to-state",(function(e){t.replaceState(e)})),t.subscribe((function(t,e){r.emit("vuex:mutation",t,e)}),{prepend:!0}),t.subscribeAction((function(t,e){r.emit("vuex:action",t,e)}),{prepend:!0}))}(this)};e.Store=f;var d={state:{configurable:!0}};function p(t,e,n){return e.indexOf(t)<0&&(n&&n.prepend?e.unshift(t):e.push(t)),function(){var n=e.indexOf(t);n>-1&&e.splice(n,1)}}function h(t,e){t._actions=Object.create(null),t._mutations=Object.create(null),t._wrappedGetters=Object.create(null),t._modulesNamespaceMap=Object.create(null);var n=t.state;m(t,n,[],t._modules.root,!0),v(t,n,e)}function v(t,e,n){var r=t._vm;t.getters={},t._makeLocalGettersCache=Object.create(null);var i=t._wrappedGetters,a={};o(i,(function(e,n){a[n]=function(t,e){return function(){return t(e)}}(e,t),Object.defineProperty(t.getters,n,{get:function(){return t._vm[n]},enumerable:!0})}));var s=l.config.silent;l.config.silent=!0,t._vm=new l({data:{$$state:e},computed:a}),l.config.silent=s,t.strict&&function(t){t._vm.$watch((function(){return this._data.$$state}),(function(){0}),{deep:!0,sync:!0})}(t),r&&(n&&t._withCommit((function(){r._data.$$state=null})),l.nextTick((function(){return r.$destroy()})))}function m(t,e,n,r,i){var o=!n.length,a=t._modules.getNamespace(n);if(r.namespaced&&(t._modulesNamespaceMap[a],t._modulesNamespaceMap[a]=r),!o&&!i){var s=g(e,n.slice(0,-1)),c=n[n.length-1];t._withCommit((function(){l.set(s,c,r.state)}))}var u=r.context=function(t,e,n){var r=""===e,i={dispatch:r?t.dispatch:function(n,r,i){var o=y(n,r,i),a=o.payload,s=o.options,c=o.type;return s&&s.root||(c=e+c),t.dispatch(c,a)},commit:r?t.commit:function(n,r,i){var o=y(n,r,i),a=o.payload,s=o.options,c=o.type;s&&s.root||(c=e+c),t.commit(c,a,s)}};return Object.defineProperties(i,{getters:{get:r?function(){return t.getters}:function(){return function(t,e){if(!t._makeLocalGettersCache[e]){var n={},r=e.length;Object.keys(t.getters).forEach((function(i){if(i.slice(0,r)===e){var o=i.slice(r);Object.defineProperty(n,o,{get:function(){return t.getters[i]},enumerable:!0})}})),t._makeLocalGettersCache[e]=n}return t._makeLocalGettersCache[e]}(t,e)}},state:{get:function(){return g(t.state,n)}}}),i}(t,a,n);r.forEachMutation((function(e,n){!function(t,e,n,r){(t._mutations[e]||(t._mutations[e]=[])).push((function(e){n.call(t,r.state,e)}))}(t,a+n,e,u)})),r.forEachAction((function(e,n){var r=e.root?n:a+n,i=e.handler||e;!function(t,e,n,r){(t._actions[e]||(t._actions[e]=[])).push((function(e){var i,o=n.call(t,{dispatch:r.dispatch,commit:r.commit,getters:r.getters,state:r.state,rootGetters:t.getters,rootState:t.state},e);return(i=o)&&"function"==typeof i.then||(o=Promise.resolve(o)),t._devtoolHook?o.catch((function(e){throw t._devtoolHook.emit("vuex:error",e),e})):o}))}(t,r,i,u)})),r.forEachGetter((function(e,n){!function(t,e,n,r){if(t._wrappedGetters[e])return void 0;t._wrappedGetters[e]=function(t){return n(r.state,r.getters,t.state,t.getters)}}(t,a+n,e,u)})),r.forEachChild((function(r,o){m(t,e,n.concat(o),r,i)}))}function g(t,e){return e.reduce((function(t,e){return t[e]}),t)}function y(t,e,n){return a(t)&&t.type&&(n=e,e=t,t=t.type),{type:t,payload:e,options:n}}function b(t){l&&t===l||function(t){if(Number(t.version.split(".")[0])>=2)t.mixin({beforeCreate:n});else{var e=t.prototype._init;t.prototype._init=function(t){void 0===t&&(t={}),t.init=t.init?[n].concat(t.init):n,e.call(this,t)}}function n(){var t=this.$options;t.store?this.$store="function"==typeof t.store?t.store():t.store:t.parent&&t.parent.$store&&(this.$store=t.parent.$store)}}(l=t)}d.state.get=function(){return this._vm._data.$$state},d.state.set=function(t){0},f.prototype.commit=function(t,e,n){var r=this,i=y(t,e,n),o=i.type,a=i.payload,s=(i.options,{type:o,payload:a}),c=this._mutations[o];c&&(this._withCommit((function(){c.forEach((function(t){t(a)}))})),this._subscribers.slice().forEach((function(t){return t(s,r.state)})))},f.prototype.dispatch=function(t,e){var n=this,r=y(t,e),i=r.type,o=r.payload,a={type:i,payload:o},s=this._actions[i];if(s){try{this._actionSubscribers.slice().filter((function(t){return t.before})).forEach((function(t){return t.before(a,n.state)}))}catch(t){0}var c=s.length>1?Promise.all(s.map((function(t){return t(o)}))):s[0](o);return new Promise((function(t,e){c.then((function(e){try{n._actionSubscribers.filter((function(t){return t.after})).forEach((function(t){return t.after(a,n.state)}))}catch(t){0}t(e)}),(function(t){try{n._actionSubscribers.filter((function(t){return t.error})).forEach((function(e){return e.error(a,n.state,t)}))}catch(t){0}e(t)}))}))}},f.prototype.subscribe=function(t,e){return p(t,this._subscribers,e)},f.prototype.subscribeAction=function(t,e){return p("function"==typeof t?{before:t}:t,this._actionSubscribers,e)},f.prototype.watch=function(t,e,n){var r=this;return this._watcherVM.$watch((function(){return t(r.state,r.getters)}),e,n)},f.prototype.replaceState=function(t){var e=this;this._withCommit((function(){e._vm._data.$$state=t}))},f.prototype.registerModule=function(t,e,n){void 0===n&&(n={}),"string"==typeof t&&(t=[t]),this._modules.register(t,e),m(this,this.state,t,this._modules.get(t),n.preserveState),v(this,this.state)},f.prototype.unregisterModule=function(t){var e=this;"string"==typeof t&&(t=[t]),this._modules.unregister(t),this._withCommit((function(){var n=g(e.state,t.slice(0,-1));l.delete(n,t[t.length-1])})),h(this)},f.prototype.hasModule=function(t){return"string"==typeof t&&(t=[t]),this._modules.isRegistered(t)},f.prototype.hotUpdate=function(t){this._modules.update(t),h(this,!0)},f.prototype._withCommit=function(t){var e=this._committing;this._committing=!0,t(),this._committing=e},Object.defineProperties(f.prototype,d);var _=S((function(t,e){var n={};return C(e).forEach((function(e){var r=e.key,i=e.val;n[r]=function(){var e=this.$store.state,n=this.$store.getters;if(t){var r=O(this.$store,"mapState",t);if(!r)return;e=r.context.state,n=r.context.getters}return"function"==typeof i?i.call(this,e,n):e[i]},n[r].vuex=!0})),n}));e.mapState=_;var w=S((function(t,e){var n={};return C(e).forEach((function(e){var r=e.key,i=e.val;n[r]=function(){for(var e=[],n=arguments.length;n--;)e[n]=arguments[n];var r=this.$store.commit;if(t){var o=O(this.$store,"mapMutations",t);if(!o)return;r=o.context.commit}return"function"==typeof i?i.apply(this,[r].concat(e)):r.apply(this.$store,[i].concat(e))}})),n}));e.mapMutations=w;var A=S((function(t,e){var n={};return C(e).forEach((function(e){var r=e.key,i=e.val;i=t+i,n[r]=function(){if(!t||O(this.$store,"mapGetters",t))return this.$store.getters[i]},n[r].vuex=!0})),n}));e.mapGetters=A;var x=S((function(t,e){var n={};return C(e).forEach((function(e){var r=e.key,i=e.val;n[r]=function(){for(var e=[],n=arguments.length;n--;)e[n]=arguments[n];var r=this.$store.dispatch;if(t){var o=O(this.$store,"mapActions",t);if(!o)return;r=o.context.dispatch}return"function"==typeof i?i.apply(this,[r].concat(e)):r.apply(this.$store,[i].concat(e))}})),n}));e.mapActions=x;var E=function(t){return{mapState:_.bind(null,t),mapGetters:A.bind(null,t),mapMutations:w.bind(null,t),mapActions:x.bind(null,t)}};function C(t){return function(t){return Array.isArray(t)||a(t)}(t)?Array.isArray(t)?t.map((function(t){return{key:t,val:t}})):Object.keys(t).map((function(e){return{key:e,val:t[e]}})):[]}function S(t){return function(e,n){return"string"!=typeof e?(n=e,e=""):"/"!==e.charAt(e.length-1)&&(e+="/"),t(e,n)}}function O(t,e,n){return t._modulesNamespaceMap[n]}function k(t){void 0===t&&(t={});var e=t.collapsed;void 0===e&&(e=!0);var n=t.filter;void 0===n&&(n=function(t,e,n){return!0});var r=t.transformer;void 0===r&&(r=function(t){return t});var o=t.mutationTransformer;void 0===o&&(o=function(t){return t});var a=t.actionFilter;void 0===a&&(a=function(t,e){return!0});var s=t.actionTransformer;void 0===s&&(s=function(t){return t});var c=t.logMutations;void 0===c&&(c=!0);var u=t.logActions;void 0===u&&(u=!0);var l=t.logger;return void 0===l&&(l=console),function(t){var f=i(t.state);void 0!==l&&(c&&t.subscribe((function(t,a){var s=i(a);if(n(t,f,s)){var c=$(),u=o(t),d="mutation "+t.type+c;T(l,d,e),l.log("%c prev state","color: #9E9E9E; font-weight: bold",r(f)),l.log("%c mutation","color: #03A9F4; font-weight: bold",u),l.log("%c next state","color: #4CAF50; font-weight: bold",r(s)),I(l)}f=s})),u&&t.subscribeAction((function(t,n){if(a(t,n)){var r=$(),i=s(t),o="action "+t.type+r;T(l,o,e),l.log("%c action","color: #03A9F4; font-weight: bold",i),I(l)}})))}}function T(t,e,n){var r=n?t.groupCollapsed:t.group;try{r.call(t,e)}catch(n){t.log(e)}}function I(t){try{t.groupEnd()}catch(e){t.log("—— log end ——")}}function $(){var t=new Date;return" @ "+R(t.getHours(),2)+":"+R(t.getMinutes(),2)+":"+R(t.getSeconds(),2)+"."+R(t.getMilliseconds(),3)}function R(t,e){return n="0",r=e-t.toString().length,new Array(r+1).join(n)+t;var n,r}e.createNamespacedHelpers=E;var N={Store:f,install:b,version:"3.6.2",mapState:_,mapMutations:w,mapGetters:A,mapActions:x,createNamespacedHelpers:E,createLogger:k};e.default=N}).call(this,n(14))},function(t,e,n){"use strict";var r=n(1),i=n(53),o=r.WeakMap;t.exports="function"==typeof o&&/native code/.test(i(o))},function(t,e,n){"use strict";var r=n(87);t.exports=function(t){if(r(t))throw TypeError("The method doesn't accept regular expressions");return t}},function(t,e,n){"use strict";var r=n(2)("match");t.exports=function(t){var e=/./;try{"/./"[t](e)}catch(n){try{return e[r]=!1,"/./"[t](e)}catch(t){}}return!1}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r,i=(r=n(59))&&r.__esModule?r:{default:r};function o(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function a(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}var s=function(){function t(e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),a(this,"appId",void 0),a(this,"persisted",!1),a(this,"clearedOnLogout",!1),this.appId=e}var e,n,r;return e=t,(n=[{key:"persist",value:function(){var t=!(arguments.length>0&&void 0!==arguments[0])||arguments[0];return this.persisted=t,this}},{key:"clearOnLogout",value:function(){var t=!(arguments.length>0&&void 0!==arguments[0])||arguments[0];return this.clearedOnLogout=t,this}},{key:"build",value:function(){return new i.default(this.appId,this.persisted?window.localStorage:window.sessionStorage,!this.clearedOnLogout)}}])&&o(e.prototype,n),r&&o(e,r),t}();e.default=s},function(t,e,n){"use strict";n(97),Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r,i=(r=n(150))&&r.__esModule?r:{default:r},o=n(131);var a=i.default.create({headers:{requesttoken:(0,o.getRequestToken)()}}),s=Object.assign(a,{CancelToken:i.default.CancelToken,isCancel:i.default.isCancel});(0,o.onRequestTokenUpdate)((function(t){return a.defaults.headers.requesttoken=t}));var c=s;e.default=c},,,,,function(t,e,n){"use strict";var r=n(84).charAt,i=n(25),o=n(69),a=i.set,s=i.getterFor("String Iterator");o(String,"String",(function(t){a(this,{type:"String Iterator",string:String(t),index:0})}),(function(){var t,e=s(this),n=e.string,i=e.index;return i>=n.length?{value:void 0,done:!0}:(t=r(n,i),e.index+=t.length,{value:t,done:!1})}))},function(t,e,n){"use strict";var r=n(13),i=n(7),o=n(0),a=n(92),s=RegExp.prototype,c=s.toString,u=o((function(){return"/a/b"!=c.call({source:"a",flags:"b"})})),l="toString"!=c.name;(u||l)&&r(RegExp.prototype,"toString",(function(){var t=i(this),e=String(t.source),n=t.flags;return"/"+e+"/"+String(void 0===n&&t instanceof RegExp&&!("flags"in s)?a.call(t):n)}),{unsafe:!0})},function(t,e,n){"use strict";var r=n(137),i=n(7),o=n(12),a=n(22),s=n(16),c=n(138),u=n(185),l=n(139),f=Math.max,d=Math.min;r("replace",2,(function(t,e,n,r){var p=r.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE,h=r.REPLACE_KEEPS_$0,v=p?"$":"$0";return[function(n,r){var i=s(this),o=null==n?void 0:n[t];return void 0!==o?o.call(n,i,r):e.call(String(i),n,r)},function(t,r){if(!p&&h||"string"==typeof r&&-1===r.indexOf(v)){var s=n(e,t,this,r);if(s.done)return s.value}var m=i(t),g=String(this),y="function"==typeof r;y||(r=String(r));var b=m.global;if(b){var _=m.unicode;m.lastIndex=0}for(var w=[];;){var A=l(m,g);if(null===A)break;if(w.push(A),!b)break;""===String(A[0])&&(m.lastIndex=c(g,o(m.lastIndex),_))}for(var x,E="",C=0,S=0;S<w.length;S++){A=w[S];for(var O=String(A[0]),k=f(d(a(A.index),g.length),0),T=[],I=1;I<A.length;I++)T.push(void 0===(x=A[I])?x:String(x));var $=A.groups;if(y){var R=[O].concat(T,k,g);void 0!==$&&R.push($);var N=String(r.apply(void 0,R))}else N=u(O,g,k,T,$,r);k>=C&&(E+=g.slice(C,k)+N,C=k+O.length)}return E+g.slice(C)}]}))},function(t,e,n){"use strict";var r=n(1),i=n(112),o=n(77),a=n(8),s=n(2),c=s("iterator"),u=s("toStringTag"),l=o.values;for(var f in i){var d=r[f],p=d&&d.prototype;if(p){if(p[c]!==l)try{a(p,c,l)}catch(t){p[c]=l}if(p[u]||a(p,u,f),i[f])for(var h in o)if(p[h]!==o[h])try{a(p,h,o[h])}catch(t){p[h]=o[h]}}}},function(t,e,n){"use strict";var r=n(90),i=n(28),o=n(2)("iterator");t.exports=function(t){if(null!=t)return t[o]||t["@@iterator"]||i[r(t)]}},function(t,e,n){"use strict";var r=n(3),i=n(88);t.exports=function(t,e,n){var o,a;return i&&"function"==typeof(o=e.constructor)&&o!==n&&r(a=o.prototype)&&a!==n.prototype&&i(t,a),t}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),Object.defineProperty(e,"getRequestToken",{enumerable:!0,get:function(){return r.getRequestToken}}),Object.defineProperty(e,"onRequestTokenUpdate",{enumerable:!0,get:function(){return r.onRequestTokenUpdate}}),Object.defineProperty(e,"getCurrentUser",{enumerable:!0,get:function(){return i.getCurrentUser}});var r=n(168),i=n(183)},function(t,e,n){"use strict";var r=n(2)("iterator"),i=!1;try{var o=0,a={next:function(){return{done:!!o++}},return:function(){i=!0}};a[r]=function(){return this},Array.from(a,(function(){throw 2}))}catch(t){}t.exports=function(t,e){if(!e&&!i)return!1;var n=!1;try{var o={};o[r]=function(){return{next:function(){return{done:n=!0}}}},t(o)}catch(t){}return n}},function(t,e,n){"use strict";var r=n(13);t.exports=function(t,e,n){for(var i in e)r(t,i,e[i],n);return t}},function(t,e,n){"use strict";var r=n(21),i=n(9),o=n(2),a=n(10),s=o("species");t.exports=function(t){var e=r(t),n=i.f;a&&e&&!e[s]&&n(e,s,{configurable:!0,get:function(){return this}})}},function(t,e,n){"use strict";var r=n(1),i=n(112),o=n(182),a=n(8);for(var s in i){var c=r[s],u=c&&c.prototype;if(u&&u.forEach!==o)try{a(u,"forEach",o)}catch(t){u.forEach=o}}},function(t,e,n){"use strict";var r=n(0);function i(t,e){return RegExp(t,e)}e.UNSUPPORTED_Y=r((function(){var t=i("a","y");return t.lastIndex=2,null!=t.exec("abcd")})),e.BROKEN_CARET=r((function(){var t=i("^r","gy");return t.lastIndex=2,null!=t.exec("str")}))},function(t,e,n){"use strict";n(78);var r=n(13),i=n(63),o=n(0),a=n(2),s=n(8),c=a("species"),u=RegExp.prototype,l=!o((function(){var t=/./;return t.exec=function(){var t=[];return t.groups={a:"7"},t},"7"!=="".replace(t,"$<a>")})),f="$0"==="a".replace(/./,"$0"),d=a("replace"),p=!!/./[d]&&""===/./[d]("a","$0"),h=!o((function(){var t=/(?:)/,e=t.exec;t.exec=function(){return e.apply(this,arguments)};var n="ab".split(t);return 2!==n.length||"a"!==n[0]||"b"!==n[1]}));t.exports=function(t,e,n,d){var v=a(t),m=!o((function(){var e={};return e[v]=function(){return 7},7!=""[t](e)})),g=m&&!o((function(){var e=!1,n=/a/;return"split"===t&&((n={}).constructor={},n.constructor[c]=function(){return n},n.flags="",n[v]=/./[v]),n.exec=function(){return e=!0,null},n[v](""),!e}));if(!m||!g||"replace"===t&&(!l||!f||p)||"split"===t&&!h){var y=/./[v],b=n(v,""[t],(function(t,e,n,r,o){var a=e.exec;return a===i||a===u.exec?m&&!o?{done:!0,value:y.call(e,n,r)}:{done:!0,value:t.call(n,e,r)}:{done:!1}}),{REPLACE_KEEPS_$0:f,REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE:p}),_=b[0],w=b[1];r(String.prototype,t,_),r(u,v,2==e?function(t,e){return w.call(t,this,e)}:function(t){return w.call(t,this)})}d&&s(u[v],"sham",!0)}},function(t,e,n){"use strict";var r=n(84).charAt;t.exports=function(t,e,n){return e+(n?r(t,e).length:1)}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(15),o=n(63);t.exports=function(t,e){var n=t.exec;if("function"==typeof n){var a=n.call(t,e);if("object"!==r(a))throw TypeError("RegExp exec method returned something other than an Object or null");return a}if("RegExp"!==i(t))throw TypeError("RegExp#exec called on incompatible receiver");return o.call(t,e)}},,function(e,n,r){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.FILE_ACTION_IDENTIFIER=n.FilesWorkspacePlugin=n.registerFileCreate=n.registerFileActionFallback=n.optimalPath=void 0;var i=r(75),o=c(r(149)),a=r(49),s=c(r(71));function c(t){return t&&t.__esModule?t:{default:t}}
+var FILE_ACTION_IDENTIFIER = 'Edit with text app';
+exports.FILE_ACTION_IDENTIFIER = FILE_ACTION_IDENTIFIER;
+
+var optimalPath = function optimalPath(from, to) {
+  var current = from.split('/');
+  var target = to.split('/');
+  current.pop(); // ignore filename
+
+  while (current[0] === target[0]) {
+    current.shift();
+    target.shift();
+  }
+
+  var relativePath = current.fill('..').concat(target);
+  var absolutePath = to.split('/');
+  return relativePath.length < absolutePath.length ? relativePath.join('/') : to;
+};
+
+exports.optimalPath = optimalPath;
+
+var registerFileCreate = function registerFileCreate() {
+  var newFileMenuPlugin = {
+    attach: function attach(menu) {
+      var fileList = menu.fileList; // only attach to main file list, public view is not supported yet
+
+      if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+        return;
+      } // register the new menu entry
+
+
+      menu.addMenuEntry({
+        id: 'file',
+        displayName: t('text', 'New text document'),
+        templateName: t('text', 'New text document') + '.md',
+        iconClass: 'icon-filetype-text',
+        fileType: 'file',
+        actionHandler: function actionHandler(name) {
+          fileList.createFile(name).then(function (status, data) {
+            var fileInfoModel = new OCA.Files.FileInfoModel(data);
+
+            if (typeof OCA.Viewer !== 'undefined') {
+              OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList);
+            } else if (typeof OCA.Viewer === 'undefined') {
+              OCA.Files.fileActions.triggerAction(FILE_ACTION_IDENTIFIER, fileInfoModel, fileList);
+            }
+          });
+        }
+      });
+    }
+  };
+  OC.Plugins.register('OCA.Files.NewFileMenu', newFileMenuPlugin);
+};
+
+exports.registerFileCreate = registerFileCreate;
+
+var registerFileActionFallback = function registerFileActionFallback() {
+  var sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null;
+  var dir = document.getElementById('dir').value;
+
+  if (!sharingToken || dir !== '') {
+    var ViewerRoot = document.createElement('div');
+    ViewerRoot.id = 'text-viewer-fallback';
+    document.body.appendChild(ViewerRoot);
+
+    var registerAction = function registerAction(mime) {
+      return OCA.Files.fileActions.register(mime, FILE_ACTION_IDENTIFIER, OC.PERMISSION_UPDATE | OC.PERMISSION_READ, (0, _router.imagePath)('core', 'actions/rename'), function (filename) {
+        var file = window.FileList.findFile(filename);
+        Promise.all([Promise.resolve(/*! import() */).then(__webpack_require__.t.bind(null, /*! vue */ "./node_modules/vue/dist/vue.esm.js", 7)), Promise.all(/*! import() | files-modal */[__webpack_require__.e("vendors~editor-collab~editor-guest~editor-rich~files-modal"), __webpack_require__.e("vendors~editor~files-modal"), __webpack_require__.e("vendors~files-modal"), __webpack_require__.e("files-modal")]).then(__webpack_require__.bind(null, /*! ./../components/PublicFilesEditor */ "./src/components/PublicFilesEditor.vue"))]).then(function (imports) {
+          var path = window.FileList.getCurrentDirectory() + '/' + filename;
+          var Vue = imports[0].default;
+          Vue.prototype.t = window.t;
+          Vue.prototype.n = window.n;
+          Vue.prototype.OCA = window.OCA;
+          var Editor = imports[1].default;
+          var vm = new Vue({
+            render: function render(h) {
+              return h(Editor, {
+                props: {
+                  fileId: file ? file.id : null,
+                  active: true,
+                  shareToken: sharingToken,
+                  relativePath: path,
+                  mimeType: file.mimetype
+                }
+              });
+            }
+          });
+          vm.$mount(ViewerRoot);
+        });
+      }, t('text', 'Edit'));
+    };
+
+    for (var i = 0; i < _mime.openMimetypes.length; i++) {
+      registerAction(_mime.openMimetypes[i]);
+      OCA.Files.fileActions.setDefault(_mime.openMimetypes[i], FILE_ACTION_IDENTIFIER);
+    }
+  }
+};
+
+exports.registerFileActionFallback = registerFileActionFallback;
+var FilesWorkspacePlugin = {
+  el: null,
+  attach: function attach(fileList) {
+    if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+      return;
+    }
+
+    this.el = document.createElement('div');
+    fileList.registerHeader({
+      id: 'workspace',
+      el: this.el,
+      render: this.render.bind(this),
+      priority: 10
+    });
+  },
+  render: function render(fileList) {
+    var _this = this;
+
+    if (fileList.id !== 'files' && fileList.id !== 'files.public') {
+      return;
+    }
+
+    Promise.resolve(/*! import() */).then(__webpack_require__.t.bind(null, /*! vue */ "./node_modules/vue/dist/vue.esm.js", 7)).then(function (module) {
+      var Vue = module.default;
+      _this.el.id = 'files-workspace-wrapper';
+      Vue.prototype.t = window.t;
+      Vue.prototype.n = window.n;
+      Vue.prototype.OCA = window.OCA;
+      var View = Vue.extend(_RichWorkspace.default);
+      var vm = new View({
+        propsData: {
+          path: fileList.getCurrentDirectory()
+        },
+        store: _store.default
+      }).$mount(_this.el);
+      fileList.$el.on('urlChanged', function (data) {
+        vm.path = data.dir.toString();
+      });
+      fileList.$el.on('changeDirectory', function (data) {
+        vm.path = data.dir.toString();
+      });
+    });
+  }
+};
+exports.FilesWorkspacePlugin = FilesWorkspacePlugin;
+
+/***/ }),
+
+/***/ "./src/helpers/index.js":
+/*!******************************!*\
+  !*** ./src/helpers/index.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRandomGuestName = exports.endpointUrl = exports.documentReady = void 0;
+
+var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
+
 /*
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -72,7 +23351,64 @@ var r=["text/markdown"];e.openMimetypesMarkdown=r;var i=["text/plain","applicati
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- */n.FILE_ACTION_IDENTIFIER="Edit with text app";n.optimalPath=function(t,e){var n=t.split("/"),r=e.split("/");for(n.pop();n[0]===r[0];)n.shift(),r.shift();var i=n.fill("..").concat(r),o=e.split("/");return i.length<o.length?i.join("/"):e};n.registerFileCreate=function(){var e={attach:function(e){var n=e.fileList;"files"!==n.id&&"files.public"!==n.id||e.addMenuEntry({id:"file",displayName:t("text","New text document"),templateName:t("text","New text document")+".md",iconClass:"icon-filetype-text",fileType:"file",actionHandler:function(t){n.createFile(t).then((function(t,e){var r=new OCA.Files.FileInfoModel(e);void 0!==OCA.Viewer?OCA.Files.fileActions.triggerAction("view",r,n):void 0===OCA.Viewer&&OCA.Files.fileActions.triggerAction("Edit with text app",r,n)}))}})}};OC.Plugins.register("OCA.Files.NewFileMenu",e)};n.registerFileActionFallback=function(){var e,n=document.getElementById("sharingToken")?document.getElementById("sharingToken").value:null,o=document.getElementById("dir").value;if(!n||""!==o){var s=document.createElement("div");s.id="text-viewer-fallback",document.body.appendChild(s);for(var c=0;c<i.openMimetypes.length;c++)e=i.openMimetypes[c],OCA.Files.fileActions.register(e,"Edit with text app",OC.PERMISSION_UPDATE|OC.PERMISSION_READ,(0,a.imagePath)("core","actions/rename"),(function(t){var e=window.FileList.findFile(t);Promise.all([Promise.resolve().then(r.t.bind(null,19,7)),Promise.all([r.e(0),r.e(193),r.e(204),r.e(199)]).then(r.bind(null,192))]).then((function(r){var i=window.FileList.getCurrentDirectory()+"/"+t,o=r[0].default;o.prototype.t=window.t,o.prototype.n=window.n,o.prototype.OCA=window.OCA;var a=r[1].default;new o({render:function(t){return t(a,{props:{fileId:e?e.id:null,active:!0,shareToken:n,relativePath:i,mimeType:e.mimetype}})}}).$mount(s)}))}),t("text","Edit")),OCA.Files.fileActions.setDefault(i.openMimetypes[c],"Edit with text app")}};var u={el:null,attach:function(t){"files"!==t.id&&"files.public"!==t.id||(this.el=document.createElement("div"),t.registerHeader({id:"workspace",el:this.el,render:this.render.bind(this),priority:10}))},render:function(t){var e=this;"files"!==t.id&&"files.public"!==t.id||Promise.resolve().then(r.t.bind(null,19,7)).then((function(n){var r=n.default;e.el.id="files-workspace-wrapper",r.prototype.t=window.t,r.prototype.n=window.n,r.prototype.OCA=window.OCA;var i=new(r.extend(o.default))({propsData:{path:t.getCurrentDirectory()},store:s.default}).$mount(e.el);t.$el.on("urlChanged",(function(t){i.path=t.dir.toString()})),t.$el.on("changeDirectory",(function(t){i.path=t.dir.toString()}))}))}};n.FilesWorkspacePlugin=u},function(t,e,n){"use strict";var r=n(10),i=n(0),o=n(43),a=n(67),s=n(64),c=n(11),u=n(34),l=Object.assign,f=Object.defineProperty;t.exports=!l||i((function(){if(r&&1!==l({b:1},l(f({},"a",{enumerable:!0,get:function(){f(this,"b",{value:3,enumerable:!1})}}),{b:2})).b)return!0;var t={},e={},n=Symbol();return t[n]=7,"abcdefghijklmnopqrst".split("").forEach((function(t){e[t]=t})),7!=l({},t)[n]||"abcdefghijklmnopqrst"!=o(l({},e)).join("")}))?function(t,e){for(var n=c(t),i=arguments.length,l=1,f=a.f,d=s.f;i>l;)for(var p,h=u(arguments[l++]),v=f?o(h).concat(f(h)):o(h),m=v.length,g=0;m>g;)p=v[g++],r&&!d.call(h,p)||(n[p]=h[p]);return n}:l},function(t,e,n){"use strict";var r=n(2),i=n(60),o=n(9),a=r("unscopables"),s=Array.prototype;null==s[a]&&o.f(s,a,{configurable:!0,value:i(null)}),t.exports=function(t){s[a][t]=!0}},function(t,e,n){"use strict";var r=n(10),i=n(9),o=n(7),a=n(43);t.exports=r?Object.defineProperties:function(t,e){o(t);for(var n,r=a(e),s=r.length,c=0;s>c;)i.f(t,n=r[c++],e[n]);return t}},function(t,e,n){"use strict";var r=n(21);t.exports=r("document","documentElement")},function(t,e,n){"use strict";var r=n(109).IteratorPrototype,i=n(60),o=n(18),a=n(61),s=n(28),c=function(){return this};t.exports=function(t,e,n){var u=e+" Iterator";return t.prototype=i(r,{next:o(1,n)}),a(t,u,!1,!0),s[u]=c,t}},function(t,e,n){"use strict";var r=n(2),i=n(28),o=r("iterator"),a=Array.prototype;t.exports=function(t){return void 0!==t&&(i.Array===t||a[o]===t)}},function(t,e,n){"use strict";var r=n(7);t.exports=function(t){var e=t.return;if(void 0!==e)return r(e.call(t)).value}},function(t,e,n){"use strict";n.r(e);var r=n(73),i=n(44);for(var o in i)["default"].indexOf(o)<0&&function(t){n.d(e,t,(function(){return i[t]}))}(o);n(187);var a=n(32),s=Object(a.a)(i.default,r.a,r.b,!1,null,"374052d2",null);e.default=s.exports},function(t,e,n){"use strict";t.exports=n(151)},function(t,e,n){"use strict";var r=n(6),i=n(98),o=n(152),a=n(104);function s(t){var e=new o(t),n=i(o.prototype.request,e);return r.extend(n,o.prototype,e),r.extend(n,e),n}var c=s(n(101));c.Axios=o,c.create=function(t){return s(a(c.defaults,t))},c.Cancel=n(105),c.CancelToken=n(165),c.isCancel=n(100),c.all=function(t){return Promise.all(t)},c.spread=n(166),c.isAxiosError=n(167),t.exports=c,t.exports.default=c},function(t,e,n){"use strict";var r=n(6),i=n(99),o=n(153),a=n(154),s=n(104);function c(t){this.defaults=t,this.interceptors={request:new o,response:new o}}c.prototype.request=function(t){"string"==typeof t?(t=arguments[1]||{}).url=arguments[0]:t=t||{},(t=s(this.defaults,t)).method?t.method=t.method.toLowerCase():this.defaults.method?t.method=this.defaults.method.toLowerCase():t.method="get";var e=[a,void 0],n=Promise.resolve(t);for(this.interceptors.request.forEach((function(t){e.unshift(t.fulfilled,t.rejected)})),this.interceptors.response.forEach((function(t){e.push(t.fulfilled,t.rejected)}));e.length;)n=n.then(e.shift(),e.shift());return n},c.prototype.getUri=function(t){return t=s(this.defaults,t),i(t.url,t.params,t.paramsSerializer).replace(/^\?/,"")},r.forEach(["delete","get","head","options"],(function(t){c.prototype[t]=function(e,n){return this.request(s(n||{},{method:t,url:e,data:(n||{}).data}))}})),r.forEach(["post","put","patch"],(function(t){c.prototype[t]=function(e,n,r){return this.request(s(r||{},{method:t,url:e,data:n}))}})),t.exports=c},function(t,e,n){"use strict";var r=n(6);function i(){this.handlers=[]}i.prototype.use=function(t,e){return this.handlers.push({fulfilled:t,rejected:e}),this.handlers.length-1},i.prototype.eject=function(t){this.handlers[t]&&(this.handlers[t]=null)},i.prototype.forEach=function(t){r.forEach(this.handlers,(function(e){null!==e&&t(e)}))},t.exports=i},function(t,e,n){"use strict";var r=n(6),i=n(155),o=n(100),a=n(101);function s(t){t.cancelToken&&t.cancelToken.throwIfRequested()}t.exports=function(t){return s(t),t.headers=t.headers||{},t.data=i(t.data,t.headers,t.transformRequest),t.headers=r.merge(t.headers.common||{},t.headers[t.method]||{},t.headers),r.forEach(["delete","get","head","post","put","patch","common"],(function(e){delete t.headers[e]})),(t.adapter||a.adapter)(t).then((function(e){return s(t),e.data=i(e.data,e.headers,t.transformResponse),e}),(function(e){return o(e)||(s(t),e&&e.response&&(e.response.data=i(e.response.data,e.response.headers,t.transformResponse))),Promise.reject(e)}))}},function(t,e,n){"use strict";var r=n(6);t.exports=function(t,e,n){return r.forEach(n,(function(n){t=n(t,e)})),t}},function(t,e,n){"use strict";var r=n(6);t.exports=function(t,e){r.forEach(t,(function(n,r){r!==e&&r.toUpperCase()===e.toUpperCase()&&(t[e]=n,delete t[r])}))}},function(t,e,n){"use strict";var r=n(103);t.exports=function(t,e,n){var i=n.config.validateStatus;n.status&&i&&!i(n.status)?e(r("Request failed with status code "+n.status,n.config,null,n.request,n)):t(n)}},function(t,e,n){"use strict";t.exports=function(t,e,n,r,i){return t.config=e,n&&(t.code=n),t.request=r,t.response=i,t.isAxiosError=!0,t.toJSON=function(){return{message:this.message,name:this.name,description:this.description,number:this.number,fileName:this.fileName,lineNumber:this.lineNumber,columnNumber:this.columnNumber,stack:this.stack,config:this.config,code:this.code}},t}},function(t,e,n){"use strict";var r=n(6);t.exports=r.isStandardBrowserEnv()?{write:function(t,e,n,i,o,a){var s=[];s.push(t+"="+encodeURIComponent(e)),r.isNumber(n)&&s.push("expires="+new Date(n).toGMTString()),r.isString(i)&&s.push("path="+i),r.isString(o)&&s.push("domain="+o),!0===a&&s.push("secure"),document.cookie=s.join("; ")},read:function(t){var e=document.cookie.match(new RegExp("(^|;\\s*)("+t+")=([^;]*)"));return e?decodeURIComponent(e[3]):null},remove:function(t){this.write(t,"",Date.now()-864e5)}}:{write:function(){},read:function(){return null},remove:function(){}}},function(t,e,n){"use strict";var r=n(161),i=n(162);t.exports=function(t,e){return t&&!r(e)?i(t,e):e}},function(t,e,n){"use strict";t.exports=function(t){return/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(t)}},function(t,e,n){"use strict";t.exports=function(t,e){return e?t.replace(/\/+$/,"")+"/"+e.replace(/^\/+/,""):t}},function(t,e,n){"use strict";var r=n(6),i=["age","authorization","content-length","content-type","etag","expires","from","host","if-modified-since","if-unmodified-since","last-modified","location","max-forwards","proxy-authorization","referer","retry-after","user-agent"];t.exports=function(t){var e,n,o,a={};return t?(r.forEach(t.split("\n"),(function(t){if(o=t.indexOf(":"),e=r.trim(t.substr(0,o)).toLowerCase(),n=r.trim(t.substr(o+1)),e){if(a[e]&&i.indexOf(e)>=0)return;a[e]="set-cookie"===e?(a[e]?a[e]:[]).concat([n]):a[e]?a[e]+", "+n:n}})),a):a}},function(t,e,n){"use strict";var r=n(6);t.exports=r.isStandardBrowserEnv()?function(){var t,e=/(msie|trident)/i.test(navigator.userAgent),n=document.createElement("a");function i(t){var r=t;return e&&(n.setAttribute("href",r),r=n.href),n.setAttribute("href",r),{href:n.href,protocol:n.protocol?n.protocol.replace(/:$/,""):"",host:n.host,search:n.search?n.search.replace(/^\?/,""):"",hash:n.hash?n.hash.replace(/^#/,""):"",hostname:n.hostname,port:n.port,pathname:"/"===n.pathname.charAt(0)?n.pathname:"/"+n.pathname}}return t=i(window.location.href),function(e){var n=r.isString(e)?i(e):e;return n.protocol===t.protocol&&n.host===t.host}}():function(){return!0}},function(t,e,n){"use strict";var r=n(105);function i(t){if("function"!=typeof t)throw new TypeError("executor must be a function.");var e;this.promise=new Promise((function(t){e=t}));var n=this;t((function(t){n.reason||(n.reason=new r(t),e(n.reason))}))}i.prototype.throwIfRequested=function(){if(this.reason)throw this.reason},i.source=function(){var t;return{token:new i((function(e){t=e})),cancel:t}},t.exports=i},function(t,e,n){"use strict";t.exports=function(t){return function(e){return t.apply(null,e)}}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}t.exports=function(t){return"object"===r(t)&&!0===t.isAxiosError}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getRequestToken=function(){return o},e.onRequestTokenUpdate=function(t){a.push(t)};var r=n(74),i=document.getElementsByTagName("head")[0],o=i?i.getAttribute("data-requesttoken"):null,a=[];(0,r.subscribe)("csrf-token-update",(function(t){o=t.token,a.forEach((function(e){try{e(t.token)}catch(t){console.error("error updating CSRF token observer",t)}}))}))},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.ProxyBus=void 0;var r=o(n(170)),i=o(n(173));function o(t){return t&&t.__esModule?t:{default:t}}function a(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}var s="1.2.0",c=function(){function t(e){var n,o,a;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),a=void 0,(o="bus")in(n=this)?Object.defineProperty(n,o,{value:a,enumerable:!0,configurable:!0,writable:!0}):n[o]=a,"function"==typeof e.getVersion&&(0,r.default)(e.getVersion())?(0,i.default)(e.getVersion())!==(0,i.default)(this.getVersion())&&console.warn("Proxying an event bus of version "+e.getVersion()+" with "+this.getVersion()):console.warn("Proxying an event bus with an unknown or invalid version"),this.bus=e}var e,n,o;return e=t,(n=[{key:"getVersion",value:function(){return s}},{key:"subscribe",value:function(t,e){this.bus.subscribe(t,e)}},{key:"unsubscribe",value:function(t,e){this.bus.unsubscribe(t,e)}},{key:"emit",value:function(t,e){this.bus.emit(t,e)}}])&&a(e.prototype,n),o&&a(e,o),t}();e.ProxyBus=c},function(t,e,n){"use strict";var r=n(171);t.exports=function(t,e){var n=r(t,e);return n?n.version:null}},function(t,e,n){"use strict";function r(t){return(r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var i=n(68).MAX_LENGTH,o=n(106),a=o.re,s=o.t,c=n(108);t.exports=function(t,e){if(e&&"object"===r(e)||(e={loose:!!e,includePrerelease:!1}),t instanceof c)return t;if("string"!=typeof t)return null;if(t.length>i)return null;if(!(e.loose?a[s.LOOSE]:a[s.FULL]).test(t))return null;try{return new c(t,e)}catch(t){return null}}},function(t,e,n){"use strict";var r=/^[0-9]+$/,i=function(t,e){var n=r.test(t),i=r.test(e);return n&&i&&(t=+t,e=+e),t===e?0:n&&!i?-1:i&&!n?1:t<e?-1:1};t.exports={compareIdentifiers:i,rcompareIdentifiers:function(t,e){return i(e,t)}}},function(t,e,n){"use strict";var r=n(108);t.exports=function(t,e){return new r(t,e).major}},function(t,e,n){"use strict";function r(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}n(40),n(33),n(77),n(177),n(76),n(125),n(135),n(128),Object.defineProperty(e,"__esModule",{value:!0}),e.SimpleBus=void 0;var i="1.2.0",o=function(){function t(){var e,n,r;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),e=this,n="handlers",r=new Map,n in e?Object.defineProperty(e,n,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[n]=r}var e,n,o;return e=t,(n=[{key:"getVersion",value:function(){return i}},{key:"subscribe",value:function(t,e){this.handlers.set(t,(this.handlers.get(t)||[]).concat(e))}},{key:"unsubscribe",value:function(t,e){this.handlers.set(t,(this.handlers.get(t)||[]).filter((function(t){return t!=e})))}},{key:"emit",value:function(t,e){(this.handlers.get(t)||[]).forEach((function(t){try{t(e)}catch(t){console.error("could not invoke event listener",t)}}))}}])&&r(e.prototype,n),o&&r(e,o),t}();e.SimpleBus=o},function(t,e,n){"use strict";var r=n(0);t.exports=!r((function(){function t(){}return t.prototype.constructor=null,Object.getPrototypeOf(new t)!==t.prototype}))},function(t,e,n){"use strict";var r=n(3);t.exports=function(t){if(!r(t)&&null!==t)throw TypeError("Can't set "+String(t)+" as a prototype");return t}},function(t,e,n){"use strict";var r=n(178),i=n(180);t.exports=r("Map",(function(t){return function(){return t(this,arguments.length?arguments[0]:void 0)}}),i)},function(t,e,n){"use strict";var r=n(5),i=n(1),o=n(62),a=n(13),s=n(111),c=n(89),u=n(82),l=n(3),f=n(0),d=n(132),p=n(61),h=n(130);t.exports=function(t,e,n){var v=-1!==t.indexOf("Map"),m=-1!==t.indexOf("Weak"),g=v?"set":"add",y=i[t],b=y&&y.prototype,_=y,w={},A=function(t){var e=b[t];a(b,t,"add"==t?function(t){return e.call(this,0===t?0:t),this}:"delete"==t?function(t){return!(m&&!l(t))&&e.call(this,0===t?0:t)}:"get"==t?function(t){return m&&!l(t)?void 0:e.call(this,0===t?0:t)}:"has"==t?function(t){return!(m&&!l(t))&&e.call(this,0===t?0:t)}:function(t,n){return e.call(this,0===t?0:t,n),this})};if(o(t,"function"!=typeof y||!(m||b.forEach&&!f((function(){(new y).entries().next()})))))_=n.getConstructor(e,t,v,g),s.REQUIRED=!0;else if(o(t,!0)){var x=new _,E=x[g](m?{}:-0,1)!=x,C=f((function(){x.has(1)})),S=d((function(t){new y(t)})),O=!m&&f((function(){for(var t=new y,e=5;e--;)t[g](e,e);return!t.has(-0)}));S||((_=e((function(e,n){u(e,_,t);var r=h(new y,e,_);return null!=n&&c(n,r[g],{that:r,AS_ENTRIES:v}),r}))).prototype=b,b.constructor=_),(C||O)&&(A("delete"),A("has"),v&&A("get")),(O||E)&&A(g),m&&b.clear&&delete b.clear}return w[t]=_,r({global:!0,forced:_!=y},w),p(_,t),m||n.setStrong(_,t,v),_}},function(t,e,n){"use strict";var r=n(0);t.exports=!r((function(){return Object.isExtensible(Object.preventExtensions({}))}))},function(t,e,n){"use strict";var r=n(9).f,i=n(60),o=n(133),a=n(39),s=n(82),c=n(89),u=n(69),l=n(134),f=n(10),d=n(111).fastKey,p=n(25),h=p.set,v=p.getterFor;t.exports={getConstructor:function(t,e,n,u){var l=t((function(t,r){s(t,l,e),h(t,{type:e,index:i(null),first:void 0,last:void 0,size:0}),f||(t.size=0),null!=r&&c(r,t[u],{that:t,AS_ENTRIES:n})})),p=v(e),m=function(t,e,n){var r,i,o=p(t),a=g(t,e);return a?a.value=n:(o.last=a={index:i=d(e,!0),key:e,value:n,previous:r=o.last,next:void 0,removed:!1},o.first||(o.first=a),r&&(r.next=a),f?o.size++:t.size++,"F"!==i&&(o.index[i]=a)),t},g=function(t,e){var n,r=p(t),i=d(e);if("F"!==i)return r.index[i];for(n=r.first;n;n=n.next)if(n.key==e)return n};return o(l.prototype,{clear:function(){for(var t=p(this),e=t.index,n=t.first;n;)n.removed=!0,n.previous&&(n.previous=n.previous.next=void 0),delete e[n.index],n=n.next;t.first=t.last=void 0,f?t.size=0:this.size=0},delete:function(t){var e=p(this),n=g(this,t);if(n){var r=n.next,i=n.previous;delete e.index[n.index],n.removed=!0,i&&(i.next=r),r&&(r.previous=i),e.first==n&&(e.first=r),e.last==n&&(e.last=i),f?e.size--:this.size--}return!!n},forEach:function(t){for(var e,n=p(this),r=a(t,arguments.length>1?arguments[1]:void 0,3);e=e?e.next:n.first;)for(r(e.value,e.key,this);e&&e.removed;)e=e.previous},has:function(t){return!!g(this,t)}}),o(l.prototype,n?{get:function(t){var e=g(this,t);return e&&e.value},set:function(t,e){return m(this,0===t?0:t,e)}}:{add:function(t){return m(this,t=0===t?0:t,t)}}),f&&r(l.prototype,"size",{get:function(){return p(this).size}}),l},setStrong:function(t,e,n){var r=e+" Iterator",i=v(e),o=v(r);u(t,e,(function(t,e){h(this,{type:r,target:t,state:i(t),kind:e,last:void 0})}),(function(){for(var t=o(this),e=t.kind,n=t.last;n&&n.removed;)n=n.previous;return t.target&&(t.last=n=n?n.next:t.state.first)?"keys"==e?{value:n.key,done:!1}:"values"==e?{value:n.value,done:!1}:{value:[n.key,n.value],done:!1}:(t.target=void 0,{value:void 0,done:!0})}),n?"entries":"values",!n,!0),l(e)}}},function(t,e,n){"use strict";var r=n(70),i=n(90);t.exports=r?{}.toString:function(){return"[object "+i(this)+"]"}},function(t,e,n){"use strict";var r=n(37).forEach,i=n(91)("forEach");t.exports=i?[].forEach:function(t){return r(this,t,arguments.length>1?arguments[1]:void 0)}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getCurrentUser=function(){if(null===i)return null;return{uid:i,displayName:a,isAdmin:s}};var r=document.getElementsByTagName("head")[0],i=r?r.getAttribute("data-user"):null,o=document.getElementsByTagName("head")[0],a=o?o.getAttribute("data-user-displayname"):null,s="undefined"!=typeof OC&&OC.isUserAdmin()},function(t,e,n){"use strict";var r=n(5),i=n(66).indexOf,o=n(91),a=[].indexOf,s=!!a&&1/[1].indexOf(1,-0)<0,c=o("indexOf");r({target:"Array",proto:!0,forced:s||!c},{indexOf:function(t){return s?a.apply(this,arguments)||0:i(this,t,arguments.length>1?arguments[1]:void 0)}})},function(t,e,n){"use strict";var r=n(11),i=Math.floor,o="".replace,a=/\$([$&'`]|\d{1,2}|<[^>]*>)/g,s=/\$([$&'`]|\d{1,2})/g;t.exports=function(t,e,n,c,u,l){var f=n+t.length,d=c.length,p=s;return void 0!==u&&(u=r(u),p=a),o.call(l,p,(function(r,o){var a;switch(o.charAt(0)){case"$":return"$";case"&":return t;case"`":return e.slice(0,n);case"'":return e.slice(f);case"<":a=u[o.slice(1,-1)];break;default:var s=+o;if(0===s)return r;if(s>d){var l=i(s/10);return 0===l?r:l<=d?void 0===c[l-1]?o.charAt(1):c[l-1]+o.charAt(1):r}a=c[s-1]}return void 0===a?"":a}))}},function(t,e,n){"use strict";n(40),Object.defineProperty(e,"__esModule",{value:!0}),e.loadState=function(t,e,n){var r=document.querySelector("#initial-state-".concat(t,"-").concat(e));if(null===r){if(void 0!==n)return n;throw new Error("Could not find initial state ".concat(e," of ").concat(t))}try{return JSON.parse(atob(r.value))}catch(n){throw new Error("Could not parse initial state ".concat(e," of ").concat(t))}}},function(t,e,n){"use strict";var r=n(46),i=n.n(r),o=n(72),a={insert:"head",singleton:!1};i()(o.a,a),o.a.locals},,,,function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getRandomGuestName=e.endpointUrl=e.documentReady=void 0;var r=n(49);
+ */
+
+/**
+ * Callback that should be executed after the document is ready
+ * @param callback
+ */
+var documentReady = function documentReady(callback) {
+  var fn = function fn() {
+    return setTimeout(callback, 0);
+  };
+
+  if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', callback);
+  }
+};
+
+exports.documentReady = documentReady;
+
+var _baseUrl = (0, _router.generateUrl)('/apps/text');
+
+var endpointUrl = function endpointUrl(endpoint) {
+  var isPublic = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  if (isPublic) {
+    return "".concat(_baseUrl, "/public/").concat(endpoint);
+  }
+
+  return "".concat(_baseUrl, "/").concat(endpoint);
+};
+
+exports.endpointUrl = endpointUrl;
+var randomGuestNames = ['Artichoke', 'Arugula', 'Asparagus', 'Avocado', 'Bamboo Shoot', 'Bean Sprout', 'Bean', 'Beet', 'Belgian Endive', 'Bell Pepper', 'Bitter Melon', 'Bitter Gourd', 'Bok Choy', 'Broccoli', 'Brussels Sprout', 'Burdock Root', 'Cabbage', 'Calabash', 'Caper', 'Carrot', 'Cassava', 'Cauliflower', 'Celery', 'Celery Root', 'Celtuce', 'Chayote', 'Chinese Broccoli', 'Corn', 'Baby Corn', 'Cucumber', 'English Cucumber', 'Gherkin', 'Pickling Cucumber', 'Daikon Radish', 'Edamame', 'Eggplant', 'Elephant Garlic', 'Endive', 'Curly', 'Escarole', 'Fennel', 'Fiddlehead', 'Galangal', 'Garlic', 'Ginger', 'Grape Leave', 'Green Bean', 'Wax Bean', 'Green', 'Amaranth Leave', 'Beet Green', 'Collard Green', 'Dandelion Green', 'Kale', 'Kohlrabi Green', 'Mustard Green', 'Rapini', 'Spinach', 'Swiss Chard', 'Turnip Green', 'Hearts of Palm', 'Horseradish', 'Jerusalem Artichoke', 'Jícama', 'Kale', 'Curly', 'Lacinato', 'Ornamental', 'Kohlrabi', 'Leeks', 'Lemongrass', 'Lettuce', 'Butterhead', 'Iceberg', 'Leaf', 'Romaine', 'Lotus Root', 'Lotus Seed', 'Mushroom', 'Napa Cabbage', 'Nopales', 'Okra', 'Olive', 'Onion', 'Green Onion', 'Parsley', 'Parsley Root', 'Parsnip', 'Pepper', 'Plantain', 'Potato', 'Pumpkin', 'Purslane', 'Radicchio', 'Radish', 'Rutabaga', 'Shallots', 'Spinach', 'Squash', 'Sweet Potato', 'Swiss Chard', 'Taro', 'Tomatillo', 'Tomato', 'Turnip', 'Water Chestnut', 'Water Spinach', 'Watercress', 'Winter Melon', 'Yams', 'Zucchini'];
+
+var getRandomGuestName = function getRandomGuestName() {
+  return randomGuestNames[Math.floor(Math.random() * randomGuestNames.length)];
+};
+
+exports.getRandomGuestName = getRandomGuestName;
+
+/***/ }),
+
+/***/ "./src/helpers/mime.js":
+/*!*****************************!*\
+  !*** ./src/helpers/mime.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.openMimetypesPlainText = exports.openMimetypesMarkdown = exports.openMimetypes = void 0;
+
 /*
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -93,5 +23429,248 @@ var r=["text/markdown"];e.openMimetypesMarkdown=r;var i=["text/plain","applicati
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- */e.documentReady=function(t){(document.attachEvent?"complete"===document.readyState:"loading"!==document.readyState)?setTimeout(t,0):document.addEventListener("DOMContentLoaded",t)};var i=(0,r.generateUrl)("/apps/text");e.endpointUrl=function(t){var e=arguments.length>1&&void 0!==arguments[1]&&arguments[1];return e?"".concat(i,"/public/").concat(t):"".concat(i,"/").concat(t)};var o=["Artichoke","Arugula","Asparagus","Avocado","Bamboo Shoot","Bean Sprout","Bean","Beet","Belgian Endive","Bell Pepper","Bitter Melon","Bitter Gourd","Bok Choy","Broccoli","Brussels Sprout","Burdock Root","Cabbage","Calabash","Caper","Carrot","Cassava","Cauliflower","Celery","Celery Root","Celtuce","Chayote","Chinese Broccoli","Corn","Baby Corn","Cucumber","English Cucumber","Gherkin","Pickling Cucumber","Daikon Radish","Edamame","Eggplant","Elephant Garlic","Endive","Curly","Escarole","Fennel","Fiddlehead","Galangal","Garlic","Ginger","Grape Leave","Green Bean","Wax Bean","Green","Amaranth Leave","Beet Green","Collard Green","Dandelion Green","Kale","Kohlrabi Green","Mustard Green","Rapini","Spinach","Swiss Chard","Turnip Green","Hearts of Palm","Horseradish","Jerusalem Artichoke","Jícama","Kale","Curly","Lacinato","Ornamental","Kohlrabi","Leeks","Lemongrass","Lettuce","Butterhead","Iceberg","Leaf","Romaine","Lotus Root","Lotus Seed","Mushroom","Napa Cabbage","Nopales","Okra","Olive","Onion","Green Onion","Parsley","Parsley Root","Parsnip","Pepper","Plantain","Potato","Pumpkin","Purslane","Radicchio","Radish","Rutabaga","Shallots","Spinach","Squash","Sweet Potato","Swiss Chard","Taro","Tomatillo","Tomato","Turnip","Water Chestnut","Water Spinach","Watercress","Winter Melon","Yams","Zucchini"];e.getRandomGuestName=function(){return o[Math.floor(Math.random()*o.length)]}},,,,,function(t,e,n){"use strict";var r,i=n(191),o=n(141),a=n(75),s=n(186),c=(r=n(71))&&r.__esModule?r:{default:r};n.nc=btoa(OC.requestToken),n.p=OC.linkTo("text","js/"),(0,i.documentReady)((function(){var t=document.getElementById("dir").value,e=document.getElementById("mimetype").value,r=document.getElementById("sharingToken")?document.getElementById("sharingToken").value:null;if(r)if(""!==t)OC.Plugins.register("OCA.Files.FileList",o.FilesWorkspacePlugin),(0,o.registerFileActionFallback)(),(0,o.registerFileCreate)();else{var i=document.createElement("div");i.id="texteditor",document.getElementById("app-content").appendChild(i),-1!==a.openMimetypes.indexOf(e)&&Promise.all([Promise.resolve().then(n.t.bind(null,19,7)),Promise.all([n.e(193),n.e(202),n.e(194)]).then(n.bind(null,140))]).then((function(t){var n=t[0].default;n.prototype.t=window.t,n.prototype.OCA=window.OCA;var i=t[1].default;new n({render:function(t){return t(i,{props:{active:!0,shareToken:r,mime:e}})},store:c.default}).$mount(document.getElementById("preview"))}))}})),OCA.Text={RichWorkspaceEnabled:(0,s.loadState)("text","workspace_available")}}]);
+ */
+var openMimetypesMarkdown = ['text/markdown'];
+exports.openMimetypesMarkdown = openMimetypesMarkdown;
+var openMimetypesPlainText = ['text/plain', 'application/cmd', 'application/x-empty', 'application/x-msdos-program', 'application/javascript', 'application/json', 'application/x-perl', 'application/x-php', 'application/x-tex', 'application/xml', 'application/yaml', 'text/css', 'text/csv', 'text/html', 'text/org', 'text/x-c', 'text/x-c++src', 'text/x-h', 'text/x-java-source', 'text/x-ldif', 'text/x-python', 'text/x-shellscript'];
+exports.openMimetypesPlainText = openMimetypesPlainText;
+var openMimetypes = [].concat(openMimetypesMarkdown, openMimetypesPlainText);
+exports.openMimetypes = openMimetypes;
+
+/***/ }),
+
+/***/ "./src/public.js":
+/*!***********************!*\
+  !*** ./src/public.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _helpers = __webpack_require__(/*! ./helpers */ "./src/helpers/index.js");
+
+var _files = __webpack_require__(/*! ./helpers/files */ "./src/helpers/files.js");
+
+var _mime = __webpack_require__(/*! ./helpers/mime */ "./src/helpers/mime.js");
+
+var _initialState = __webpack_require__(/*! @nextcloud/initial-state */ "./node_modules/@nextcloud/initial-state/dist/index.js");
+
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "./src/store.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+__webpack_require__.nc = btoa(OC.requestToken); // eslint-disable-line
+
+__webpack_require__.p = OC.linkTo('text', 'js/'); // eslint-disable-line
+
+(0, _helpers.documentReady)(function () {
+  var dir = document.getElementById('dir').value;
+  var mimetype = document.getElementById('mimetype').value;
+  var sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null;
+
+  if (!sharingToken) {
+    return;
+  }
+
+  if (dir !== '') {
+    OC.Plugins.register('OCA.Files.FileList', _files.FilesWorkspacePlugin);
+    (0, _files.registerFileActionFallback)();
+    (0, _files.registerFileCreate)();
+  } else {
+    // single file share
+    var container = document.createElement('div');
+    container.id = 'texteditor';
+    var body = document.getElementById('app-content');
+    body.appendChild(container);
+
+    if (_mime.openMimetypes.indexOf(mimetype) !== -1) {
+      Promise.all([Promise.resolve(/*! import() */).then(__webpack_require__.t.bind(null, /*! vue */ "./node_modules/vue/dist/vue.esm.js", 7)), Promise.all(/*! import() | editor */[__webpack_require__.e("vendors~editor~files-modal"), __webpack_require__.e("vendors~editor"), __webpack_require__.e("editor")]).then(__webpack_require__.bind(null, /*! ./components/EditorWrapper */ "./src/components/EditorWrapper.vue"))]).then(function (imports) {
+        var Vue = imports[0].default;
+        Vue.prototype.t = window.t;
+        Vue.prototype.OCA = window.OCA;
+        var Editor = imports[1].default;
+        var vm = new Vue({
+          render: function render(h) {
+            return h(Editor, {
+              props: {
+                active: true,
+                shareToken: sharingToken,
+                mime: mimetype
+              }
+            });
+          },
+          store: _store.default
+        });
+        vm.$mount(document.getElementById('preview'));
+      });
+    }
+  }
+});
+OCA.Text = {
+  RichWorkspaceEnabled: (0, _initialState.loadState)('text', 'workspace_available')
+};
+
+/***/ }),
+
+/***/ "./src/store.js":
+/*!**********************!*\
+  !*** ./src/store.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"));
+
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js"));
+
+var _browserStorage = __webpack_require__(/*! @nextcloud/browser-storage */ "./node_modules/@nextcloud/browser-storage/dist/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+ * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
+ *
+ * @author Julius Härtl <jus@bitgrid.net>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+var persistentStorage = (0, _browserStorage.getBuilder)('text').persist().build();
+
+_vue.default.use(_vuex.default);
+
+var store = new _vuex.default.Store({
+  state: {
+    showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true'
+  },
+  mutations: {
+    SET_SHOW_AUTHOR_ANNOTATIONS: function SET_SHOW_AUTHOR_ANNOTATIONS(state, value) {
+      state.showAuthorAnnotations = value;
+      persistentStorage.setItem('showAuthorAnnotations', '' + value);
+    }
+  },
+  actions: {
+    setShowAuthorAnnotations: function setShowAuthorAnnotations(_ref, value) {
+      var commit = _ref.commit;
+      store.commit('SET_SHOW_AUTHOR_ANNOTATIONS', value);
+    }
+  }
+});
+var _default = store;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./src/views/RichWorkspace.vue":
+/*!*************************************!*\
+  !*** ./src/views/RichWorkspace.vue ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true& */ "./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true&");
+/* harmony import */ var _RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RichWorkspace.vue?vue&type=script&lang=js& */ "./src/views/RichWorkspace.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _RichWorkspace_vue_vue_type_style_index_0_id_0cce2262_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& */ "./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0cce2262",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/views/RichWorkspace.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/views/RichWorkspace.vue?vue&type=script&lang=js&":
+/*!**************************************************************!*\
+  !*** ./src/views/RichWorkspace.vue?vue&type=script&lang=js& ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib!../../node_modules/vue-loader/lib??vue-loader-options!./RichWorkspace.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&":
+/*!***********************************************************************************************!*\
+  !*** ./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& ***!
+  \***********************************************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_dist_cjs_js_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_style_index_0_id_0cce2262_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/style-loader/dist/cjs.js!../../node_modules/css-loader/dist/cjs.js!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/dist/cjs.js!../../node_modules/vue-loader/lib??vue-loader-options!./RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=style&index=0&id=0cce2262&lang=scss&scoped=true&");
+/* empty/unused harmony star reexport */
+
+/***/ }),
+
+/***/ "./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true&":
+/*!********************************************************************************!*\
+  !*** ./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/views/RichWorkspace.vue?vue&type=template&id=0cce2262&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RichWorkspace_vue_vue_type_template_id_0cce2262_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=public.js.map

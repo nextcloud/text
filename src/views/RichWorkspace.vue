@@ -211,8 +211,12 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor {
+		overflow: visible !important;
+	}
+	#rich-workspace::v-deep .content-wrapper {
 		overflow: scroll !important;
 		max-height: 50vh;
+		max-height: calc(40vh - 50px);
 		padding-left: 10px;
 	}
 
@@ -222,7 +226,7 @@ export default {
 	}
 
 	#rich-workspace::v-deep .menubar {
-		z-index: 50;
+		z-index: 61;
 		/* Slightly reduce vertical space */
 		margin-bottom: -10px;
 	}
