@@ -29,6 +29,7 @@ OC.L10N.register(
     "Show author colors" : "Vis forfatterens farver",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Currently active users:" : "Aktuelle brugere:",
+    "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
     "Show rich workspaces" : "Vis rige arbejdsområder",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
