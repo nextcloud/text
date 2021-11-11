@@ -104,8 +104,8 @@ export default {
 		davUrl() {
 			if (getCurrentUser()) {
 				const uid = getCurrentUser().uid
-				const encoded = encodeURI(path.normalize(this.filePath))
-				return generateRemoteUrl(`dav/files/${uid}/${encoded}`)
+				const encoded = encodeURI(this.filePath)
+				return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 			} else {
 				return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
 					{
@@ -116,13 +116,21 @@ export default {
 			}
 		},
 		imageUrl() {
-			if (this.src.startsWith('http://') || this.src.startsWith('https://')) {
+			if (this.isRemoteUrl || this.isPreviewUrl) {
 				return this.src
 			}
 			if (this.hasPreview && this.mime !== 'image/gif') {
 				return this.previewUrl
 			}
 			return this.davUrl
+		},
+		isRemoteUrl() {
+			return this.src.startsWith('http://')
+				|| this.src.startsWith('https://')
+		},
+		isPreviewUrl() {
+			return this.src.match(/^(\/index.php)?\/core\/preview/)
+				|| this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
 		},
 		basename() {
 			return decodeURI(this.src.split('?')[0])
@@ -141,11 +149,6 @@ export default {
 			return getQueryVariable(this.src, 'hasPreview') === 'true'
 		},
 		previewUrl() {
-			if (this.src.match(/^(\/index.php)?\/core\/preview/)
-				|| this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
-			) {
-				return this.src
-			}
 			const fileQuery = (this.fileId)
 				? `?fileId=${this.fileId}&file=${encodeURIComponent(this.filePath)}`
 				: `?file=${encodeURIComponent(this.filePath)}`
