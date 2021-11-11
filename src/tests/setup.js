@@ -20,9 +20,54 @@
  *
  */
 import '@babel/polyfill';
+import 'regenerator-runtime/runtime';
+import Vue from 'vue'
 
-export default async function () {
-  global.OC = {
-    requestToken: '123'
-  }
-};
+global.t = jest.fn().mockImplementation((app, text) => text)
+global.n = jest.fn().mockImplementation((app, text) => text)
+
+jest.mock('@nextcloud/auth', () => ({
+	getCurrentUser: jest.fn().mockImplementation(() => ({
+		uid: 'user1',
+		displayName: 'User 1',
+		isAdmin: false,
+	}))
+}))
+
+
+global.OC = {
+	requestToken: '123',
+	webroot: '/nc-webroot',
+	coreApps: [
+		'core',
+	],
+	config: {
+		modRewriteWorking: true,
+	},
+	dialogs: {
+	},
+	isUserAdmin() {
+		return true
+	},
+	getLanguage() {
+		return 'en-GB'
+	},
+	getLocale() {
+		return 'en_GB'
+	},
+
+	MimeType: {
+		getIconUrl: jest.fn(),
+	},
+	L10N: {
+		translate: global.t,
+	}
+}
+
+global.OCA = {}
+
+
+Vue.prototype.t = global.t
+Vue.prototype.n = global.n
+Vue.prototype.OC = OC
+Vue.prototype.OCA = OCA
