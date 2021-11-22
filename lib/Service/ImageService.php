@@ -215,6 +215,64 @@ class ImageService {
 	}
 
 	/**
+	 * Copy a file from a user's storage in the attachment folder
+	 *
+	 * @param int $textFileId
+	 * @param string $path
+	 * @param string $userId
+	 * @return array
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function insertImageFile(int $textFileId, string $path, string $userId): array {
+		$textFile = $this->getTextFile($textFileId, $userId);
+		if (!$textFile->isUpdateable()) {
+			throw new Exception('No write permissions');
+		}
+		$imageFile = $this->getFileFromPath($path, $userId);
+		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		if ($saveDir !== null) {
+			return $this->copyImageFile($imageFile, $saveDir, $textFile);
+		} else {
+			return [
+				'error' => 'Impossible to get attachment directory',
+			];
+		}
+	}
+
+	/**
+	 * @param File $imageFile
+	 * @param Folder $saveDir
+	 * @param File $textFile
+	 * @return array|string[]
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 */
+	private function copyImageFile(File $imageFile, Folder $saveDir, File $textFile): array {
+		$mimeType = $imageFile->getMimeType();
+		if (in_array($mimeType, ImageController::IMAGE_MIME_TYPES)) {
+			$fileName = (string) time() . '-' . $imageFile->getName();
+			$targetPath = $saveDir->getPath() . '/' . $fileName;
+			$targetFile = $imageFile->copy($targetPath);
+			$path = preg_replace('/^files/', '', $targetFile->getInternalPath());
+			// get file type and name
+			return [
+				'name' => $fileName,
+				'path' => $path,
+				'id' => $targetFile->getId(),
+				'textFileId' => $textFile->getId(),
+			];
+		} else {
+			return [
+				'error' => 'Unsupported file type',
+			];
+		}
+	}
+
+	/**
 	 * Download and save an image from a link in the attachment folder
 	 *
 	 * @param int $textFileId
@@ -389,6 +447,26 @@ class ImageService {
 				}
 			} else {
 				return $ownerParentFolder->newFolder($attachmentFolderName);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get a user file from file ID
+	 *
+	 * @param int $filePath
+	 * @param string $userId
+	 * @return Folder|null
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getFileFromPath(string $filePath, string $userId): ?File {
+		$userFolder = $this->rootFolder->getUserFolder($userId);
+		if ($userFolder->nodeExists($filePath)) {
+			$file = $userFolder->get($filePath);
+			if ($file instanceof File) {
+				return $file;
 			}
 		}
 		return null;

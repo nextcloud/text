@@ -78,6 +78,26 @@ class ImageController extends Controller {
 	 * @NoAdminRequired
 	 *
 	 * @param int $textFileId
+	 * @param string $imagePath
+	 * @return DataResponse
+	 */
+	public function insertImageFile(int $textFileId, string $imagePath): DataResponse {
+		try {
+			$insertResult = $this->imageService->insertImageFile($textFileId, $imagePath, $this->userId);
+			if (isset($insertResult['error'])) {
+				return new DataResponse($insertResult, Http::STATUS_BAD_REQUEST);
+			} else {
+				return new DataResponse($insertResult);
+			}
+		} catch (Exception $e) {
+			return new DataResponse(['error' => 'File insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param int $textFileId
 	 * @param string $link
 	 * @return DataResponse
 	 */

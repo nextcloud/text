@@ -391,7 +391,6 @@ export default {
 					'Content-Type': 'multipart/form-data',
 				},
 			}).then((response) => {
-				// this.insertImage(response.data?.path, this.imageCommand)
 				this.insertAttachmentImage(response.data?.name, this.imageCommand, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
@@ -421,7 +420,6 @@ export default {
 				? generateUrl('/apps/text/public/image/link')
 				: generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
-				// this.insertImage(response.data?.path, command)
 				this.insertAttachmentImage(response.data?.name, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
@@ -431,13 +429,31 @@ export default {
 				this.imageLink = ''
 			})
 		},
+		onImagePathSubmit(imagePath, command) {
+			this.uploadingImage = true
+			this.$refs.imageActions[0].closeMenu()
+
+			const params = {
+				textFileId: this.fileId,
+				imagePath,
+			}
+			const url = generateUrl('/apps/text/image/filepath')
+			axios.post(url, params).then((response) => {
+				this.insertAttachmentImage(response.data?.name, command, response.data?.textFileId)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			}).then(() => {
+				this.uploadingImage = false
+			})
+		},
 		showImagePrompt(command) {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
 			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
-				this.insertImage(file, command)
+				this.onImagePathSubmit(file, command)
 			}, false, [], true, undefined, this.imagePath)
 		},
 		insertAttachmentImage(name, command, textFileId) {
@@ -445,27 +461,6 @@ export default {
 			command({
 				src,
 				alt: name,
-			})
-		},
-		insertImage(path, command) {
-			const client = OC.Files.getClient()
-			client.getFileInfo(path).then((_status, fileInfo) => {
-				this.lastImagePath = fileInfo.path
-
-				// dirty but works so we have the information stored in markdown
-				const appendMeta = {
-					mimetype: fileInfo.mimetype,
-					hasPreview: fileInfo.hasPreview,
-				}
-				const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
-				const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-				const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-				const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
-
-				command({
-					src,
-					alt: fileInfo.name,
-				})
 			})
 		},
 		showLinkPrompt(command) {
