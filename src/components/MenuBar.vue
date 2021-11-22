@@ -44,7 +44,8 @@
 					<Actions v-else-if="icon.class === 'icon-image'"
 						:key="icon.label"
 						ref="imageActions"
-						:default-icon="'icon-image'">
+						:default-icon="'icon-image'"
+						@close="onImageActionClose">
 						<button slot="icon"
 							:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
 							:title="icon.label"
@@ -353,6 +354,9 @@ export default {
 		toggleChildMenu(icon) {
 			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
+		},
+		onImageActionClose() {
+			this.showImageLinkPrompt = false
 		},
 		onUploadImage(command) {
 			this.imageCommand = command
