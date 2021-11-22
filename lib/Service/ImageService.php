@@ -381,7 +381,7 @@ class ImageService {
 		if (count($ownerTextFile) > 0) {
 			$ownerTextFile = $ownerTextFile[0];
 			$ownerParentFolder = $ownerTextFile->getParent();
-			$attachmentFolderName = '.' . $textFile->getId();
+			$attachmentFolderName = '.attachments.' . $textFile->getId();
 			if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
 				$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
 				if ($attachmentFolder instanceof Folder) {
