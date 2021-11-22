@@ -51,30 +51,30 @@
 							:title="icon.label"
 							:aria-label="icon.label"
 							:aria-haspopup="true" />
-						<ActionButton v-if="!isPublic"
-							icon="icon-folder"
-							:close-after-click="true"
-							@click="showImagePrompt(commands.image)">
-							{{ t('text', 'From files') }}
-						</ActionButton>
 						<ActionButton
 							icon="icon-upload"
 							:close-after-click="true"
 							@click="onUploadImage(commands.image)">
-							{{ t('text', 'Upload file') }}
+							{{ t('text', 'Upload from computer') }}
+						</ActionButton>
+						<ActionButton v-if="!isPublic"
+							icon="icon-folder"
+							:close-after-click="true"
+							@click="showImagePrompt(commands.image)">
+							{{ t('text', 'Insert from Files') }}
 						</ActionButton>
 						<ActionButton v-show="!showImageLinkPrompt"
 							icon="icon-link"
 							:close-after-click="false"
 							@click="showImageLinkPrompt = true">
-							{{ t('text', 'From link') }}
+							{{ t('text', 'Insert from link') }}
 						</ActionButton>
 						<ActionInput v-show="showImageLinkPrompt"
 							icon="icon-link"
 							:value="imageLink"
 							@update:value="onImageLinkUpdateValue"
 							@submit="onImageLinkSubmit(commands.image)">
-							{{ t('text', 'Image link') }}
+							{{ t('text', 'Image link to insert') }}
 						</ActionInput>
 					</Actions>
 					<button v-else-if="icon.class"
