@@ -73,7 +73,7 @@
 							icon="icon-link"
 							:value="imageLink"
 							@update:value="onImageLinkUpdateValue"
-							@submit="onImageLinksubmit(commands.image)">
+							@submit="onImageLinkSubmit(commands.image)">
 							{{ t('text', 'Image link') }}
 						</ActionInput>
 					</Actions>
@@ -405,7 +405,7 @@ export default {
 			// this avoids the input being reset on each file polling
 			this.imageLink = newImageLink
 		},
-		onImageLinksubmit(command) {
+		onImageLinkSubmit(command) {
 			this.uploadingImage = true
 			this.showImageLinkPrompt = false
 			this.$refs.imageActions[0].closeMenu()
