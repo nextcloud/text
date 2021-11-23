@@ -213,7 +213,6 @@ class ImageController extends Controller {
 	 * @throws \OCP\Files\NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
 		$imageFile = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
@@ -237,7 +236,6 @@ class ImageController extends Controller {
 	 * @throws \OCP\Files\NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): DataDisplayResponse {
 		$imageFile = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);

@@ -92,11 +92,10 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName, string $userId) {
 		$textFile = $this->getTextFile($textFileId, $userId);
-		return $this->getImagePreview($imageFileName, $textFile);
+		return $textFile === null ? $textFile : $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -108,11 +107,10 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
-		return $this->getImagePreview($imageFileName, $textFile);
+		return $textFile === null ? $textFile : $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -122,7 +120,6 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	private function getImagePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
@@ -154,7 +151,6 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImage(int $textFileId, string $newFileName, string $newFileContent, string $userId): array {
 		$textFile = $this->getTextFile($textFileId, $userId);
@@ -187,7 +183,6 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImagePublic(?int $textFileId, string $newFileName, string $newFileContent, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
@@ -221,7 +216,6 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageFile(int $textFileId, string $path, string $userId): array {
 		$textFile = $this->getTextFile($textFileId, $userId);
@@ -275,7 +269,6 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageLink(int $textFileId, string $link, string $userId): array {
 		$textFile = $this->getTextFile($textFileId, $userId);
@@ -395,7 +388,6 @@ class ImageService {
 	 * @return Folder|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	private function getOrCreateTextDirectory(string $userId): ?Folder {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
@@ -419,7 +411,6 @@ class ImageService {
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	private function getOrCreateAttachmentDirectoryForFile(File $textFile): ?Folder {
 		$owner = $textFile->getOwner();
@@ -449,7 +440,6 @@ class ImageService {
 	 * @return File|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	private function getFileFromPath(string $filePath, string $userId): ?File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
@@ -467,11 +457,8 @@ class ImageService {
 	 *
 	 * @param int $textFileId
 	 * @param string $userId
-	 * @return Folder|null
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotFoundException
+	 * @return File|null
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OC\User\NoUserException
 	 */
 	private function getTextFile(int $textFileId, string $userId): ?File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
