@@ -90,7 +90,8 @@ class ImageController extends Controller {
 				return new DataResponse($insertResult);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'File insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			$this->logger->error('File insertion error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return new DataResponse(['error' => 'File insertion error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -110,7 +111,8 @@ class ImageController extends Controller {
 				return new DataResponse($downloadResult);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Link insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			$this->logger->error('Link insertion error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return new DataResponse(['error' => 'Link insertion error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -132,7 +134,8 @@ class ImageController extends Controller {
 				return new DataResponse($downloadResult);
 			}
 		} catch (Exception $e) {
-			return new DataResponse(['error' => 'Link insertion error: ' . $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			$this->logger->error('Link insertion error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			return new DataResponse(['error' => 'Link insertion error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
