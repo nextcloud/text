@@ -259,11 +259,10 @@ class ImageService {
 				'id' => $targetFile->getId(),
 				'textFileId' => $textFile->getId(),
 			];
-		} else {
-			return [
-				'error' => 'Unsupported file type',
-			];
 		}
+		return [
+			'error' => 'Unsupported file type',
+		];
 	}
 
 	/**
@@ -346,7 +345,7 @@ class ImageService {
 	private function downloadLink(Folder $saveDir, string $link, File $textFile): array {
 		$fileName = (string) time();
 		$savedFile = $saveDir->newFile($fileName);
-		$resource = $savedFile->fopen('w');
+		$resource = $savedFile->fopen('wb');
 		$res = $this->simpleDownload($link, $resource);
 		if (is_resource($resource)) {
 			fclose($resource);
@@ -520,14 +519,12 @@ class ImageService {
 
 	/**
 	 * Download a file and write it to a resource
-	 *
 	 * @param string $url
 	 * @param $resource
 	 * @param array $params
-	 * @param string $method
-	 * @return array|string[]
+	 * @return array
 	 */
-	private function simpleDownload(string $url, $resource, array $params = [], string $method = 'GET'): array {
+	private function simpleDownload(string $url, $resource, array $params = []): array {
 		$client = $this->clientService->newClient();
 		try {
 			$options = [
@@ -542,27 +539,11 @@ class ImageService {
 			];
 
 			if (count($params) > 0) {
-				if ($method === 'GET') {
-					$paramsContent = http_build_query($params);
-					$url .= '?' . $paramsContent;
-				} else {
-					$options['body'] = json_encode($params);
-				}
+				$paramsContent = http_build_query($params);
+				$url .= '?' . $paramsContent;
 			}
 
-			if ($method === 'GET') {
-				$response = $client->get($url, $options);
-			} elseif ($method === 'POST') {
-				$response = $client->post($url, $options);
-			} elseif ($method === 'PUT') {
-				$response = $client->put($url, $options);
-			} elseif ($method === 'DELETE') {
-				$response = $client->delete($url, $options);
-			} else {
-				return ['error' => 'Bad HTTP method'];
-			}
-			$respCode = $response->getStatusCode();
-
+			$response = $client->get($url, $options);
 			$body = $response->getBody();
 			while (!feof($body)) {
 				// write ~5 MB chunks
@@ -574,14 +555,14 @@ class ImageService {
 		} catch (ServerException | ClientException $e) {
 			//$response = $e->getResponse();
 			//if ($response->getStatusCode() === 401) {
-			$this->logger->warning('Impossible to download image: '.$e->getMessage(), ['app' => Application::APP_NAME]);
+			$this->logger->warning('Impossible to download image', ['exception' => $e]);
 			return ['error' => 'Impossible to download image'];
 		} catch (ConnectException $e) {
-			$this->logger->error('Connection error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
+			$this->logger->error('Connection error', ['exception' => $e]);
 			return ['error' => 'Connection error'];
 		} catch (Throwable | Exception $e) {
-			$this->logger->error('Unknown error: ' . $e->getMessage(), ['app' => Application::APP_NAME]);
-			return ['error' => 'Unknown error'];
+			$this->logger->error('Unknown download error', ['exception' => $e]);
+			return ['error' => 'Unknown download error'];
 		}
 	}
 }

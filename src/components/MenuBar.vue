@@ -311,7 +311,7 @@ export default {
 			return this.lastImagePath
 				|| this.filePath.split('/').slice(0, -1).join('/')
 		},
-		token() {
+		sharingToken() {
 			return document.getElementById('sharingToken')
 				&& document.getElementById('sharingToken').value
 		},
@@ -381,7 +381,7 @@ export default {
 			formData.append('image', image)
 			formData.append('textFileId', this.fileId)
 			if (this.isPublic) {
-				formData.append('shareToken', this.token)
+				formData.append('shareToken', this.sharingToken)
 			}
 			const url = this.isPublic
 				? generateUrl('/apps/text/public/image/upload')
@@ -414,7 +414,7 @@ export default {
 				link: this.imageLink,
 			}
 			if (this.isPublic) {
-				params.shareToken = this.token
+				params.shareToken = this.sharingToken
 			}
 			const url = this.isPublic
 				? generateUrl('/apps/text/public/image/link')
