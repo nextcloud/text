@@ -457,10 +457,10 @@ class ImageService {
 
 	/**
 	 * Get a user file from file ID
-	 *
-	 * @param int $filePath
+	 * @param string $filePath
 	 * @param string $userId
-	 * @return Folder|null
+	 * @return File|null
+	 * @throws NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OC\User\NoUserException
 	 */
