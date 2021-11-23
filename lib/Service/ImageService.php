@@ -89,28 +89,15 @@ class ImageService {
 	 * @param int $textFileId
 	 * @param string $imageFileName
 	 * @param string $userId
-	 * @return File|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImage(int $textFileId, string $imageFileName, string $userId): ?ISimpleFile {
+	public function getImage(int $textFileId, string $imageFileName, string $userId) {
 		$textFile = $this->getTextFile($textFileId, $userId);
-		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
-		if ($attachmentFolder !== null) {
-			try {
-				$imageFile = $attachmentFolder->get($imageFileName);
-			} catch (NotFoundException $e) {
-				return null;
-			}
-			if ($imageFile instanceof File) {
-//				return $imageFile;
-				return $this->previewManager->getPreview($imageFile, 1024, 1024);
-			}
-		}
-		return null;
+		return $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -128,6 +115,19 @@ class ImageService {
 	 */
 	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?ISimpleFile {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
+		return $this->getImagePreview($imageFileName, $textFile);
+	}
+
+	/**
+	 * @param string $imageFileName
+	 * @param File $textFile
+	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getImagePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
 			try {
@@ -136,8 +136,11 @@ class ImageService {
 				return null;
 			}
 			if ($imageFile instanceof File) {
-//				return $imageFile;
-				return $this->previewManager->getPreview($imageFile, 1024, 1024);
+				if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
+					return $this->previewManager->getPreview($imageFile, 1024, 1024);
+				} else {
+					return $imageFile;
+				}
 			}
 		}
 		return null;
