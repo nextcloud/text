@@ -154,8 +154,8 @@ class ImageService {
 	 * @param string $newFileContent
 	 * @param string $userId
 	 * @return array
+	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OC\User\NoUserException
 	 */
@@ -168,10 +168,8 @@ class ImageService {
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
-			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 			return [
 				'name' => $fileName,
-				'path' => $path,
 				'id' => $savedFile->getId(),
 				'textFileId' => $textFile->getId(),
 			];
@@ -184,15 +182,15 @@ class ImageService {
 
 	/**
 	 * Save an uploaded image in the attachment folder in a public context
-	 *
 	 * @param int|null $textFileId
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $shareToken
-	 * @return array|string[]
+	 * @return array
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImagePublic(?int $textFileId, string $newFileName, string $newFileContent, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
@@ -203,10 +201,8 @@ class ImageService {
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
-			$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 			return [
 				'name' => $fileName,
-				'path' => $path,
 				'id' => $savedFile->getId(),
 				'textFileId' => $textFile->getId(),
 			];
@@ -250,7 +246,7 @@ class ImageService {
 	 * @param File $imageFile
 	 * @param Folder $saveDir
 	 * @param File $textFile
-	 * @return array|string[]
+	 * @return array
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 */
@@ -260,11 +256,9 @@ class ImageService {
 			$fileName = (string) time() . '-' . $imageFile->getName();
 			$targetPath = $saveDir->getPath() . '/' . $fileName;
 			$targetFile = $imageFile->copy($targetPath);
-			$path = preg_replace('/^files/', '', $targetFile->getInternalPath());
 			// get file type and name
 			return [
 				'name' => $fileName,
-				'path' => $path,
 				'id' => $targetFile->getId(),
 				'textFileId' => $textFile->getId(),
 			];
@@ -343,11 +337,10 @@ class ImageService {
 
 	/**
 	 * Download an image from a link and place it in a given folder
-	 *
 	 * @param Folder $saveDir
 	 * @param string $link
 	 * @param File $textFile
-	 * @return array|string[]
+	 * @return array
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
@@ -376,11 +369,9 @@ class ImageService {
 				}
 				$targetPath = $saveDir->getPath() . '/' . $fileName;
 				$savedFile->move($targetPath);
-				$path = preg_replace('/^files/', '', $savedFile->getInternalPath());
 				// get file type and name
 				return [
 					'name' => $fileName,
-					'path' => $path,
 					'id' => $savedFile->getId(),
 					'textFileId' => $textFile->getId(),
 				];
