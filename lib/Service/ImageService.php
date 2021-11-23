@@ -85,14 +85,13 @@ class ImageService {
 
 	/**
 	 * Get image content from file name
-	 *
 	 * @param int $textFileId
 	 * @param string $imageFileName
 	 * @param string $userId
+	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
 	public function getImage(int $textFileId, string $imageFileName, string $userId) {
@@ -102,18 +101,16 @@ class ImageService {
 
 	/**
 	 * Get image content from file name in public context
-	 *
 	 * @param int $textFileId
 	 * @param string $imageFileName
 	 * @param string $shareToken
-	 * @return File|null
+	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): ?ISimpleFile {
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
 		return $this->getImagePreview($imageFileName, $textFile);
 	}
