@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Edit guest name" : "Ändra gästnamn",
     "Save guest name" : "Spara gästnamn",
+    "Insert emoji" : "Infoga emoji",
     "Insert image" : "Infoga bild",
     "Insert an image" : "Infoga en bild",
     "Link file" : "Länka fil",
@@ -49,6 +50,7 @@ OC.L10N.register(
     "ToDo list" : "Att göra lista",
     "Blockquote" : "Blockcitat",
     "Code block" : "Kodblock",
+    "Emoji picker" : "Emojiväljare",
     "Retry" : "Försök igen",
     "Unpushed changes" : "Inte slutförda ändringar"
 },
