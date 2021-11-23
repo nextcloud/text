@@ -26,7 +26,6 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
-use OCA\Text\AppInfo\Application;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
@@ -36,7 +35,6 @@ use OCP\IRequest;
 use Psr\Log\LoggerInterface;
 
 class ImageController extends Controller {
-
 	public const IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',

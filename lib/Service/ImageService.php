@@ -40,12 +40,10 @@ use Throwable;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
-use OCA\Text\AppInfo\Application;
 use OCP\Http\Client\IClientService;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\Share\IManager as ShareManager;
-use function json_encode;
 use function preg_replace;
 
 class ImageService {
