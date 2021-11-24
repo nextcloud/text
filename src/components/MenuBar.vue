@@ -391,7 +391,7 @@ export default {
 					'Content-Type': 'multipart/form-data',
 				},
 			}).then((response) => {
-				this.insertAttachmentImage(response.data?.name, this.imageCommand, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -420,7 +420,7 @@ export default {
 				? generateUrl('/apps/text/public/image/link')
 				: generateUrl('/apps/text/image/link')
 			axios.post(url, params).then((response) => {
-				this.insertAttachmentImage(response.data?.name, command, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -439,7 +439,7 @@ export default {
 			}
 			const url = generateUrl('/apps/text/image/filepath')
 			axios.post(url, params).then((response) => {
-				this.insertAttachmentImage(response.data?.name, command, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -456,8 +456,8 @@ export default {
 				this.onImagePathSubmit(file, command)
 			}, false, [], true, undefined, this.imagePath)
 		},
-		insertAttachmentImage(name, command, textFileId) {
-			const src = 'text://image?imageFileName=' + encodeURI(name) + '&textFileId=' + textFileId
+		insertAttachmentImage(name, fileId, command, textFileId) {
+			const src = 'text://image?textFileId=' + textFileId + '&imageFileId=' + fileId
 			command({
 				src,
 				alt: name,

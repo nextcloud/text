@@ -47,12 +47,18 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 	protected $logger;
+	private ImageService $imageService;
 
-	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(IRequest $request,
+								SessionService $sessionService,
+								DocumentService $documentService,
+								ImageService $imageService,
+								ILogger $logger) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
+		$this->imageService = $imageService;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
@@ -127,6 +133,7 @@ class ApiService {
 		if (count($activeSessions) === 0) {
 			try {
 				$this->documentService->resetDocument($documentId);
+				$this->imageService->cleanupAttachments($documentId);
 			} catch (DocumentHasUnsavedChangesException $e) {
 			}
 		}

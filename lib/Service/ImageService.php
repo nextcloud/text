@@ -31,6 +31,7 @@ use OCA\Text\Controller\ImageController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
@@ -82,51 +83,51 @@ class ImageService {
 	}
 
 	/**
-	 * Get image content from file name
+	 * Get image content or preview from file id
 	 * @param int $textFileId
-	 * @param string $imageFileName
+	 * @param int $imageFileId
 	 * @param string $userId
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImage(int $textFileId, string $imageFileName, string $userId) {
+	public function getImage(int $textFileId, int $imageFileId, string $userId) {
 		$textFile = $this->getTextFile($textFileId, $userId);
-		return $textFile === null ? $textFile : $this->getImagePreview($imageFileName, $textFile);
+		return $textFile === null ? null : $this->getImagePreview($imageFileId, $textFile);
 	}
 
 	/**
-	 * Get image content from file name in public context
+	 * Get image content or preview from file id in public context
 	 * @param int $textFileId
-	 * @param string $imageFileName
+	 * @param int $imageFileId
 	 * @param string $shareToken
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken) {
+	public function getImagePublic(int $textFileId, int $imageFileId, string $shareToken) {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
-		return $textFile === null ? $textFile : $this->getImagePreview($imageFileName, $textFile);
+		return $textFile === null ? null : $this->getImagePreview($imageFileId, $textFile);
 	}
 
 	/**
-	 * @param string $imageFileName
+	 * @param int $imageFileId
 	 * @param File $textFile
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	private function getImagePreview(string $imageFileName, File $textFile) {
+	private function getImagePreview(int $imageFileId, File $textFile) {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
-			try {
-				$imageFile = $attachmentFolder->get($imageFileName);
-			} catch (NotFoundException $e) {
+			$imageFiles = $attachmentFolder->getById($imageFileId);
+			if (count($imageFiles) === 0) {
 				return null;
 			}
+			$imageFile = $imageFiles[0];
 			if ($imageFile instanceof File) {
 				if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 					return $this->previewManager->getPreview($imageFile, 1024, 1024);
@@ -549,5 +550,49 @@ class ImageService {
 			$this->logger->error('Unknown download error', ['exception' => $e]);
 			return ['error' => 'Unknown download error'];
 		}
+	}
+
+	/**
+	 * Actually delete attachment files which are not pointed in the markdown content
+	 *
+	 * @param int $fileId
+	 * @return int The number of deleted files
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 */
+	public function cleanupAttachments(int $fileId): int {
+		$textFile = $this->rootFolder->getById($fileId);
+		if (count($textFile) > 0 && $textFile[0] instanceof File) {
+			$textFile = $textFile[0];
+			if ($textFile->getMimeType() === 'text/markdown') {
+				// get IDs of the files inside the attachment dir
+				$attachmentDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+				$attachmentsById = [];
+				foreach ($attachmentDir->getDirectoryListing() as $attNode) {
+					$attachmentsById[$attNode->getId()] = $attNode;
+				}
+
+				// get IDs of attachment listed in the markdown file content
+				$matches = [];
+				preg_match_all(
+					'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileId=([\d]+)[^)]*\)/',
+					$textFile->getContent(),
+					$matches,
+					PREG_SET_ORDER
+				);
+				$contentAttachmentIds = array_map(function (array $match) {
+					return $match[1] ?? null;
+				}, $matches);
+
+				$toDelete = array_diff(array_keys($attachmentsById), $contentAttachmentIds);
+				foreach ($toDelete as $id) {
+					$attachmentsById[$id]->delete();
+				}
+				return count($toDelete);
+			}
+		}
+		return 0;
 	}
 }

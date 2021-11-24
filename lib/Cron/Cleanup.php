@@ -31,6 +31,7 @@ namespace OCA\Text\Cron;
 use OCA\Text\Db\Session;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
+use OCA\Text\Service\ImageService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
@@ -45,12 +46,18 @@ class Cleanup extends TimedJob {
 	private $sessionService;
 	private $documentService;
 	private $logger;
+	private ImageService $imageService;
 
 
-	public function __construct(ITimeFactory $time, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(ITimeFactory $time,
+								SessionService $sessionService,
+								DocumentService $documentService,
+								ImageService $imageService,
+								ILogger $logger) {
 		parent::__construct($time);
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
+		$this->imageService = $imageService;
 		$this->logger = $logger;
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
 	}
@@ -68,6 +75,7 @@ class Cleanup extends TimedJob {
 			try {
 				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
 				$this->documentService->resetDocument($session->getDocumentId());
+				$this->imageService->cleanupAttachments($session->getDocumentId());
 				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
 			} catch (DocumentHasUnsavedChangesException $e) {
 				$this->logger->info('Document ' . $session->getDocumentId() . ' has not been reset, as it has unsaved changes');
