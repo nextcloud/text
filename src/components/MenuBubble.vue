@@ -58,6 +58,16 @@
 					<span class="icon-file" />
 					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
+				<button
+					v-if="isActive.link()"
+					class="menububble__button"
+					:class="{ 'is-active': isActive.link() }"
+					@click="removeLinkUrl(commands.link, linkUrl)">
+					<span class="icon-delete" />
+					<span class="menububble__buttontext">
+						{{ t('text', 'Remove Link') }}
+					</span>
+				</button>
 			</template>
 		</div>
 	</EditorMenuBubble>
@@ -141,6 +151,9 @@ export default {
 
 			command({ href: url })
 			this.hideLinkMenu()
+		},
+		removeLinkUrl(command, url) {
+			command({ href: null })
 		},
 		bubblePosition(menu) {
 			// below the first line, above all others
