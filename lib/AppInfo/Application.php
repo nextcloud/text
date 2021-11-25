@@ -27,6 +27,9 @@ namespace OCA\Text\AppInfo;
 
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
+use OCA\Text\Listeners\BeforeNodeDeletedListener;
+use OCA\Text\Listeners\BeforeNodeRenamedListener;
+use OCA\Text\Listeners\NodeCopiedListener;
 use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadViewerListener;
@@ -37,6 +40,9 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
+use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
+use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
+use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\Template\ITemplateManager;
 use OCP\Files\Template\TemplateFileCreator;
 use OCP\IL10N;
@@ -53,6 +59,10 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
 		$context->registerEventListener(BeforeTemplateRenderedEvent::class, FilesSharingLoadAdditionalScriptsListener::class);
+		// for image attachments
+		$context->registerEventListener(NodeCopiedEvent::class, NodeCopiedListener::class);
+		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
+		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
 	}
 
 	public function boot(IBootContext $context): void {

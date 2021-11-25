@@ -432,6 +432,25 @@ class ImageService {
 		return null;
 	}
 
+	private function getAttachmentDirectoryForFile(File $textFile): ?Folder {
+		$owner = $textFile->getOwner();
+		$ownerId = $owner->getUID();
+		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
+		$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
+		if (count($ownerTextFile) > 0) {
+			$ownerTextFile = $ownerTextFile[0];
+			$ownerParentFolder = $ownerTextFile->getParent();
+			$attachmentFolderName = '.attachments.' . $textFile->getId();
+			if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
+				$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
+				if ($attachmentFolder instanceof Folder) {
+					return $attachmentFolder;
+				}
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Get a user file from file ID
 	 * @param string $filePath
@@ -574,17 +593,7 @@ class ImageService {
 					$attachmentsById[$attNode->getId()] = $attNode;
 				}
 
-				// get IDs of attachment listed in the markdown file content
-				$matches = [];
-				preg_match_all(
-					'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileId=([\d]+)[^)]*\)/',
-					$textFile->getContent(),
-					$matches,
-					PREG_SET_ORDER
-				);
-				$contentAttachmentIds = array_map(function (array $match) {
-					return $match[1] ?? null;
-				}, $matches);
+				$contentAttachmentIds = $this->getAttachmentIdsFromContent($textFile->getContent());
 
 				$toDelete = array_diff(array_keys($attachmentsById), $contentAttachmentIds);
 				foreach ($toDelete as $id) {
@@ -594,5 +603,90 @@ class ImageService {
 			}
 		}
 		return 0;
+	}
+
+
+	/**
+	 * Get IDs of attachment listed in the markdown file content
+	 *
+	 * @param string $content
+	 * @return array
+	 */
+	private function getAttachmentIdsFromContent(string $content): array {
+		$matches = [];
+		preg_match_all(
+			'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileId=([\d]+)[^)]*\)/',
+			$content,
+			$matches,
+			PREG_SET_ORDER
+		);
+		return array_map(function (array $match) {
+			return $match[1] ?? null;
+		}, $matches);
+	}
+
+	/**
+	 * @param File $source
+	 * @param File $target
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 */
+	public function moveAttachments(File $source, File $target): void {
+		// if the parent directory has changed
+		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
+			// if there is an attachment dir for this file
+			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+			if ($sourceAttachmentDir !== null) {
+				$sourceAttachmentDir->move($target->getParent()->getPath() . '/' . $sourceAttachmentDir->getName());
+			}
+		}
+	}
+
+	/**
+	 * @param File $source
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 */
+	public function deleteAttachments(File $source): void {
+		// if there is an attachment dir for this file
+		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+		if ($sourceAttachmentDir !== null) {
+			$sourceAttachmentDir->delete();
+		}
+	}
+
+	public function copyAttachments(File $source, File $target): void {
+		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+		if ($sourceAttachmentDir !== null) {
+			// create a new attachment dir next to the new file
+			$targetAttachmentDir = $this->getOrCreateAttachmentDirectoryForFile($target);
+			$markdownContent = $source->getContent();
+			$sourceAttachmentIds = $this->getAttachmentIdsFromContent($markdownContent);
+			// replace the text file ID in each attachment link in the markdown content
+			$markdownContent = preg_replace(
+				'/\!\[([^\[\]]+)\]\(text:\/\/image\?textFileId=' . $source->getId() . '&imageFileId=([\d]+[^)]*)\)/',
+				'![$1](text://image?textFileId=' . $target->getId() . '&imageFileId=$2)',
+				$markdownContent
+			);
+			// copy the attachments and replace attachment file IDs in the markdown content
+			foreach ($sourceAttachmentIds as $sourceAttachmentId) {
+				$sourceAttachment = $sourceAttachmentDir->getById($sourceAttachmentId);
+				if (count($sourceAttachment) > 0 && $sourceAttachment[0] instanceof File) {
+					$sourceAttachment = $sourceAttachment[0];
+					$copied = $targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
+					$copiedId = $copied->getId();
+					$markdownContent = preg_replace(
+						'/\!\[([^\[\]]+)\]\(text:\/\/image\?([^)]*)imageFileId=' . $sourceAttachmentId . '([^)]*)\)/',
+						'![$1](text://image?$2imageFileId=' . $copiedId . '$3)',
+						$markdownContent
+					);
+				}
+			}
+			// FIXME this is not possible because the target file is locked at this point
+			$target->putContent($markdownContent);
+		}
 	}
 }
