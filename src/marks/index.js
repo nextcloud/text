@@ -23,6 +23,7 @@
 import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
+import { markInputRule, markPasteRule } from 'tiptap-commands'
 import { domHref, parseHref } from './../helpers/links'
 import { markdownit } from './../EditorFactory'
 
@@ -37,12 +38,44 @@ class Strong extends Bold {
 		return 'strong'
 	}
 
+	// TODO: remove once we upgraded to tiptap v2
+	inputRules({ type }) {
+		return [
+			markInputRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))$/, type),
+			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
+		]
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	pasteRules({ type }) {
+		return [
+			markPasteRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))/g, type),
+			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
+		]
+	}
+
 }
 
 class Italic extends TipTapItalic {
 
 	get name() {
 		return 'em'
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	inputRules({ type }) {
+		return [
+			markInputRule(/(?:^|\s)((?:\*)((?:[^*]+))(?:\*))$/, type),
+			markInputRule(/(?:^|\s)((?:_)((?:[^_]+))(?:_))$/, type),
+		]
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	pasteRules({ type }) {
+		return [
+			markPasteRule(/(?:^|\s)((?:\*)((?:[^*]+))(?:\*))/g, type),
+			markPasteRule(/(?:^|\s)((?:_)((?:[^_]+))(?:_))/g, type),
+		]
 	}
 
 }
@@ -74,6 +107,20 @@ class Strike extends TipTapStrike {
 				expelEnclosingWhitespace: true,
 			},
 		}
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	inputRules({ type }) {
+		return [
+			markInputRule(/(?:^|\s)((?:~~)((?:[^~]+))(?:~~))$/, type),
+		]
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	pasteRules({ type }) {
+		return [
+			markPasteRule(/(?:^|\s)((?:~~)((?:[^~]+))(?:~~))/g, type),
+		]
 	}
 
 }
