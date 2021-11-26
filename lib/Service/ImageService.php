@@ -635,9 +635,12 @@ class ImageService {
 	public function moveAttachments(File $source, File $target): void {
 		// if the parent directory has changed
 		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
-			// if there is an attachment dir for this file
 			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-			if ($sourceAttachmentDir !== null) {
+			// if there is an attachment dir for this file
+			// and it is in the same directory as the source file
+			if ($sourceAttachmentDir !== null
+				&& $source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
+			) {
 				$sourceAttachmentDir->move($target->getParent()->getPath() . '/' . $sourceAttachmentDir->getName());
 			}
 		}
