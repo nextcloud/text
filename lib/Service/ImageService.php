@@ -31,7 +31,6 @@ use OCA\Text\Controller\ImageController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
-use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;

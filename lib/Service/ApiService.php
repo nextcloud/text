@@ -47,7 +47,7 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 	protected $logger;
-	private ImageService $imageService;
+	private $imageService;
 
 	public function __construct(IRequest $request,
 								SessionService $sessionService,
