@@ -46,7 +46,7 @@ class Cleanup extends TimedJob {
 	private $sessionService;
 	private $documentService;
 	private $logger;
-	private ImageService $imageService;
+	private $imageService;
 
 
 	public function __construct(ITimeFactory $time,

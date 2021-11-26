@@ -32,8 +32,7 @@ use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
 use OCP\Files\File;
 
 class BeforeNodeDeletedListener implements IEventListener {
-
-	private ImageService $imageService;
+	private $imageService;
 
 	public function __construct(ImageService $imageService) {
 		$this->imageService = $imageService;

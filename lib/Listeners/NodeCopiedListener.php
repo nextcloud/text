@@ -32,8 +32,7 @@ use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\File;
 
 class NodeCopiedListener implements IEventListener {
-
-	private ImageService $imageService;
+	private $imageService;
 
 	public function __construct(ImageService $imageService) {
 		$this->imageService = $imageService;

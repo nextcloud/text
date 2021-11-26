@@ -32,8 +32,7 @@ use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
 use OCP\Files\File;
 
 class BeforeNodeRenamedListener implements IEventListener {
-
-	private ImageService $imageService;
+	private $imageService;
 
 	public function __construct(ImageService $imageService) {
 		$this->imageService = $imageService;
