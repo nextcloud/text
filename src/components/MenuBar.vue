@@ -44,6 +44,7 @@
 					<Actions v-else-if="icon.class === 'icon-image'"
 						:key="icon.label"
 						ref="imageActions"
+						class="submenu"
 						:default-icon="'icon-image'"
 						@close="onImageActionClose">
 						<button slot="icon"
