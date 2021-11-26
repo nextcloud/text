@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert image" : "Invoegen afbeelding",
     "Insert an image" : "Voeg een afbeelding in",
     "Link file" : "Link bestand",
+    "Remove Link" : "Verwijder Link",
     "Select file to link to" : "Selecteer een bestand om naar te linken",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",

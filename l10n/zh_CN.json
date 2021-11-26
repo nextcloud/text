@@ -23,6 +23,7 @@
     "Insert image" : "插入图片",
     "Insert an image" : "插入一张图片",
     "Link file" : "链接文件",
+    "Remove Link" : "删除链接",
     "Select file to link to" : "选择文件链接至",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
