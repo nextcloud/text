@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",
     "Link file" : "Dosya bağla",
+    "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
