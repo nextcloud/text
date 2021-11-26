@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert image" : "Įterpti paveikslą",
     "Insert an image" : "Įterpti paveikslą",
     "Link file" : "Susieti failą",
+    "Remove Link" : "Šalinti nuorodą",
     "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",

@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert image" : "Txertatu irudia",
     "Insert an image" : "Txertatu irudi bat",
     "Link file" : "Estekatu fitxategia",
+    "Remove Link" : "Kendu esteka",
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
