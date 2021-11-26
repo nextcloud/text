@@ -34,6 +34,8 @@ use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
+use OCP\Lock\ILockingProvider;
+use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
 use Throwable;
@@ -687,8 +689,13 @@ class ImageService {
 					);
 				}
 			}
-			// FIXME this is not possible because the target file is locked at this point
-			$target->putContent($markdownContent);
+			try {
+				$target->putContent($markdownContent);
+			} catch (LockedException $e) {
+				$target->unlock(ILockingProvider::LOCK_SHARED);
+				$target->putContent($markdownContent);
+				$target->lock(ILockingProvider::LOCK_SHARED);
+			}
 		}
 	}
 }
