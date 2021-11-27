@@ -25,6 +25,7 @@ OC.L10N.register(
     "Insert image" : "Vložiť obrázok",
     "Insert an image" : "Vložiť obrázok",
     "Link file" : "Súbor pre odkaz",
+    "Remove Link" : "Odstrániť odkaz",
     "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
