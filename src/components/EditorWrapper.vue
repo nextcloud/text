@@ -50,6 +50,9 @@
 							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
 						</SessionList>
 					</div>
+					<button v-tooltip="t('text', 'Show formatting help')"
+						class="icon-info"
+						@click.prevent.stop="showHelp" />
 					<slot name="header" />
 				</MenuBar>
 				<div class="content-wrapper">
@@ -67,6 +70,7 @@
 		</div>
 
 		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolve-use-this-version="resolveUseThisVersion" @resolve-use-server-version="resolveUseServerVersion" />
+		<HelpModal v-if="displayHelp" @close="hideHelp" />
 	</div>
 </template>
 
@@ -101,6 +105,7 @@ export default {
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList'),
+		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal'),
 	},
 	directives: {
 		Tooltip,
@@ -171,6 +176,7 @@ export default {
 			forceRecreate: false,
 
 			saveStatusPolling: null,
+			displayHelp: false,
 		}
 	},
 	computed: {
@@ -511,6 +517,14 @@ export default {
 				}
 			}
 		},
+
+		showHelp() {
+			this.displayHelp = true
+		},
+
+		hideHelp() {
+			this.displayHelp = false
+		},
 	},
 }
 </script>
@@ -664,6 +678,17 @@ export default {
 		}
 	}
 
+	.icon-info {
+		border: none;
+		background-color: var(--color-background-dark);
+		width: 36px;
+		height: 36px;
+		margin: 6px 6px 6px 0px;
+
+		&:hover, &:focus, &:active {
+			// background-color: var(--color-background-dark);
+		}
+	}
 </style>
 <style lang="scss">
 	@import './../../css/style';

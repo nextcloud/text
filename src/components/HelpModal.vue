@@ -1,0 +1,284 @@
+<template>
+	<Modal
+		size="large"
+		:title="t('text', 'Text editor formatting help')"
+		@close="$emit('close')">
+		<h2>{{ t('text', 'Text editor formatting help') }}</h2>
+		<p>{{ t('text', 'Speed up your writing experience with simple shortcuts.') }}</p>
+		<p>{{ t('text', 'Use the markdown syntax or keyboard shortcuts from below.') }}</p>
+
+		<h3>{{ t('text', 'Formatting') }}</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>{{ t('text', 'Style') }}</th>
+					<th>{{ t('text', 'Syntax') }}</th>
+					<th v-if="!isMobile">
+						{{ t('text', 'Keyboard shortcuts') }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ t('text', 'Bold') }}</td>
+					<td><code>**{{ t('text', 'Bold text') }}**</code></td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>B</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Italic') }}</td>
+					<td><code>*{{ t('text', 'Italicized text') }}*</code></td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>I</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Strikethrough') }}</td>
+					<td><code>~~{{ t('text', 'Some mistaken text') }}~~</code></td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>D</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td class="ellipsis_top">
+						{{ t('text', 'Heading 1') }}
+					</td>
+					<td class="ellipsis_top">
+						<code># {{ t('text', 'Heading level 1') }}</code>
+					</td>
+					<td v-if="!isMobile" class="ellipsis_top">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>1</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td class="noborder ellipsis">
+						…
+					</td>
+					<td class="noborder ellipsis">
+						…
+					</td>
+					<td v-if="!isMobile" class="ellipsis noborder">
+						…
+					</td>
+				</tr>
+				<tr>
+					<td class="noborder ellipsis_bottom">
+						{{ t('text', 'Heading 6') }}
+					</td>
+					<td class="noborder ellipsis_bottom">
+						<code>###### {{ t('text', 'Heading level 6') }}</code>
+					</td>
+					<td v-if="!isMobile" class="noborder ellipsis_bottom">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>6</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Unordered list') }}</td>
+					<td>
+						<code>* {{ t('text', 'Some item in a list') }}</code>
+					</td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>8</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Ordered list') }}</td>
+					<td>
+						<code>1. {{ t('text', 'First item') }}</code>
+					</td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>9</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Checklist') }}</td>
+					<td>
+						<code>* [] {{ t('text', 'Some todo item') }}</code>
+					</td>
+					<td />
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Blockquote') }}</td>
+					<td>
+						<code>> {{ t('text', 'Quoted text') }}</code>
+					</td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>></kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Code block') }}</td>
+					<td>
+						<code>``` {{ t('text', 'Some code') }}</code>
+					</td>
+					<td />
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Emoji') }}</td>
+					<td>
+						<code>:{{ t('text', 'Emoji_Search') }}</code>
+					</td>
+					<td />
+				</tr>
+			</tbody>
+		</table>
+	</Modal>
+</template>
+
+<script>
+import Modal from '@nextcloud/vue/dist/Components/Modal'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import isMobile from './../mixins/isMobile'
+
+export default {
+	name: 'HelpModal',
+	components: {
+		Modal,
+	},
+	directives: {
+		Tooltip,
+	},
+	mixins: [
+		isMobile,
+	],
+	data() {
+		return {
+			formatted: {
+				bold: true,
+				italic: true,
+				strikethrough: true,
+				heading1: true,
+				heading6: true,
+				unorderdList: true,
+				orderedList: true,
+				checkList: true,
+				blockQuote: true,
+				codeBlock: true,
+			},
+		}
+	},
+	computed: {
+		isFormatted() {
+			return (style) => this.formatted[style]
+		},
+	},
+	methods: {
+		toggleFormatted(style) {
+			this.formatted[style] = !this.formatted[style]
+		},
+	},
+}
+</script>
+
+<style lang="scss" scoped>
+	// Enforce `overflow: scroll` for modal
+	::v-deep .modal-wrapper .modal-container {
+		display: block;
+		overflow: scroll;
+		transition: transform 300ms ease;
+		border-radius: var(--border-radius-large);
+		box-shadow: 0 0 40px rgba(0,0,0,0.2);
+		padding: 30px 40px 20px;
+		user-select: text;
+	}
+
+	h3 {
+		font-weight: bold;
+		padding-top: 1rem;
+		padding-bottom: .3em;
+	}
+
+	table {
+		border-collapse: collapse;
+
+		tbody tr {
+			&:hover, &:focus, &:active {
+				background-color: transparent !important;
+			}
+		}
+
+		thead tr {
+			border: none;
+		}
+
+		th {
+			font-weight: bold;
+			padding: .75rem .5rem;
+			border-bottom: 2px solid var(--color-background-darker);
+		}
+
+		td {
+			padding: .75rem .5rem;
+			border-top: 1px solid var(--color-background-dark);
+			border-bottom: unset;
+
+			&.noborder {
+				border-top: unset;
+			}
+
+			&.ellipsis_top {
+				padding-bottom: 0;
+			}
+
+			&.ellipsis {
+				padding: 0 .5rem;
+			}
+
+			&.ellipsis_bottom {
+				padding-top: 0;
+			}
+		}
+
+		kbd {
+			font-size: smaller;
+		}
+
+		code {
+			padding: .2em .4em;
+			font-size: 90%;
+			background-color: var(--color-background-dark);
+			border-radius: 6px;
+		}
+	}
+
+	@import '../../css/prosemirror.scss';
+
+	div.ProseMirror {
+		display: inline;
+		margin-top: unset;
+		position: unset;
+		padding: unset;
+		line-height: unset;
+
+		h1, h6 {
+			display: inline;
+			padding: 0;
+			margin: 0;
+		}
+	}
+</style>
