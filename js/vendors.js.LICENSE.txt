@@ -20,30 +20,6 @@
  */
 
 /*!
-    * tiptap v1.32.1
-    * (c) 2021 überdosis GbR (limited liability)
-    * @license MIT
-    */
-
-/*!
-    * tiptap-commands v1.17.0
-    * (c) 2021 überdosis GbR (limited liability)
-    * @license MIT
-    */
-
-/*!
-    * tiptap-extensions v1.35.1
-    * (c) 2021 überdosis GbR (limited liability)
-    * @license MIT
-    */
-
-/*!
-    * tiptap-utils v1.13.0
-    * (c) 2021 überdosis GbR (limited liability)
-    * @license MIT
-    */
-
-/*!
  * Determine if an object is a Buffer
  *
  * @author   Feross Aboukhadijeh <https://feross.org>

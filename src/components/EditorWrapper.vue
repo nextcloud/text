@@ -35,7 +35,7 @@
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
 			<div id="editor">
-				<MenuBar v-if="!syncError && !readOnly"
+				<MenuBar v-if="tiptap && !syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
 					:sync-service="syncService"
@@ -56,7 +56,7 @@
 					<slot name="header" />
 				</MenuBar>
 				<div ref="contentWrapper" class="content-wrapper">
-					<MenuBubble v-if="!readOnly && isRichEditor"
+					<MenuBubble v-if="tiptap && !readOnly && isRichEditor"
 						:editor="tiptap"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
@@ -83,12 +83,12 @@ import moment from '@nextcloud/moment'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
 import { extensionHighlight } from '../helpers/mappings'
-import { createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
+import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
+import { createMarkdownSerializer } from './../extensions/Markdown'
 import markdownit from './../markdownit'
 
-import { EditorContent } from 'tiptap'
-import { Collaboration } from 'tiptap-extensions'
-import { Emoji, Keymap, UserColor } from './../extensions'
+import { EditorContent } from '@tiptap/vue-2'
+import { Collaboration, Keymap, UserColor } from './../extensions'
 import isMobile from './../mixins/isMobile'
 import store from './../mixins/store'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
@@ -299,7 +299,7 @@ export default {
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
-						return (createMarkdownSerializer(this.tiptap.nodes, this.tiptap.marks)).serialize(document)
+						return (createMarkdownSerializer(this.tiptap.schema)).serialize(document)
 					}
 					return serializePlainText(this.tiptap)
 
@@ -331,17 +331,17 @@ export default {
 					loadSyntaxHighlight(extensionHighlight[this.fileExtension] || this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
 							content,
-							onInit: ({ state }) => {
-								this.syncService.state = state
+							onCreate: ({ editor }) => {
+								this.syncService.state = editor.state
 								this.syncService.startSync()
 							},
-							onUpdate: ({ state }) => {
-								this.syncService.state = state
+							onUpdate: ({ editor }) => {
+								this.syncService.state = editor.state
 							},
 							extensions: [
-								new Collaboration({
-								// the initial version we start with
-								// version is an integer which is incremented with every change
+								Collaboration.configure({
+									// the initial version we start with
+									// version is an integer which is incremented with every change
 									version: this.document.initialVersion,
 									clientID: this.currentSession.id,
 									// debounce changes so we can save some bandwidth
@@ -353,11 +353,9 @@ export default {
 									},
 									update: ({ steps, version, editor }) => {
 										const { state, view, schema } = editor
-
 										if (getVersion(state) > version) {
 											return
 										}
-
 										const tr = receiveTransaction(
 											state,
 											steps.map(item => Step.fromJSON(schema, item.step)),
@@ -367,7 +365,13 @@ export default {
 										view.dispatch(tr)
 									},
 								}),
-								new UserColor({
+								Keymap.configure({
+									'Mod-s': () => {
+										this.syncService.save()
+										return true
+									},
+								}),
+								UserColor.configure({
 									clientID: this.currentSession.id,
 									color: (clientID) => {
 										const session = this.sessions.find(item => '' + item.id === '' + clientID)
@@ -378,13 +382,6 @@ export default {
 										return session?.userId ? session.userId : session?.guestName
 									},
 								}),
-								new Keymap({
-									'Mod-s': () => {
-										this.syncService.save()
-										return true
-									},
-								}),
-								new Emoji(),
 							],
 							enableRichEditing: this.isRichEditor,
 							languages,
@@ -402,7 +399,8 @@ export default {
 				.on('sync', ({ steps, document }) => {
 					this.hasConnectionIssue = false
 					try {
-						this.tiptap.extensions.options.collaboration.update({
+						const collaboration = this.tiptap.extensionManager.extensions.find(e => e.name === 'collaboration')
+						collaboration.options.update({
 							version: document.currentVersion,
 							steps,
 							editor: this.tiptap,

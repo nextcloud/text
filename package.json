@@ -36,6 +36,26 @@
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^4.3.0",
+		"@tiptap/core": "^2.0.0-beta.143",
+		"@tiptap/extension-blockquote": "^2.0.0-beta.26",
+		"@tiptap/extension-bold": "^2.0.0-beta.25",
+		"@tiptap/extension-bullet-list": "^2.0.0-beta.24",
+		"@tiptap/extension-code-block": "^2.0.0-beta.31",
+		"@tiptap/extension-document": "^2.0.0-beta.15",
+		"@tiptap/extension-heading": "^2.0.0-beta.24",
+		"@tiptap/extension-history": "^2.0.0-beta.21",
+		"@tiptap/extension-image": "^2.0.0-beta.24",
+		"@tiptap/extension-italic": "^2.0.0-beta.25",
+		"@tiptap/extension-link": "^2.0.0-beta.28",
+		"@tiptap/extension-list-item": "^2.0.0-beta.20",
+		"@tiptap/extension-ordered-list": "^2.0.0-beta.25",
+		"@tiptap/extension-paragraph": "^2.0.0-beta.22",
+		"@tiptap/extension-placeholder": "^2.0.0-beta.44",
+		"@tiptap/extension-strike": "^2.0.0-beta.26",
+		"@tiptap/extension-text": "^2.0.0-beta.15",
+		"@tiptap/extension-underline": "^2.0.0-beta.22",
+		"@tiptap/starter-kit": "^2.0.0-beta.145",
+		"@tiptap/vue-2": "^2.0.0-beta.69",
 		"core-js": "^3.20.3",
 		"entities": "^3.0.1",
 		"escape-html": "^1.0.3",
@@ -52,10 +72,6 @@
 		"prosemirror-utils": "^1.0.0-0",
 		"prosemirror-view": "^1.23.6",
 		"proxy-polyfill": "^0.3.2",
-		"tiptap": "^1.32.2",
-		"tiptap-commands": "^1.17.1",
-		"tiptap-extensions": "^1.35.2",
-		"tiptap-utils": "^1.13.1",
 		"vue": "^2.6.14",
 		"vue-click-outside": "^1.0.7",
 		"vue-material-design-icons": "^5.0.0",
@@ -107,7 +123,7 @@
 			"<rootDir>/src/tests/setup.js"
 		],
 		"transformIgnorePatterns": [
-			  "/node_modules/(?!vue-material-design-icons)"
+			"/node_modules/(?!vue-material-design-icons)"
 		]
 	}
 }

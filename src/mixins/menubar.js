@@ -26,8 +26,6 @@ export default [
 		keyChar: 'z',
 		keyModifiers: ['ctrl'],
 		class: 'icon-undo',
-		isActive: (isActive) => false,
-		isDisabled: (command) => command.undoDepth() === 0,
 		action: (command) => command.undo(),
 	},
 	{
@@ -35,8 +33,6 @@ export default [
 		keyChar: 'y',
 		keyModifiers: ['ctrl'],
 		class: 'icon-redo',
-		isActive: (isActive) => false,
-		isDisabled: (command) => command.redoDepth() === 0,
 		action: (command) => command.redo(),
 	},
 	{
@@ -44,9 +40,9 @@ export default [
 		keyChar: 'b',
 		keyModifiers: ['ctrl'],
 		class: 'icon-bold',
-		isActive: (isActive) => isActive.strong(),
+		isActive: 'strong',
 		action: (command) => {
-			return command.strong()
+			return command.toggleBold()
 		},
 	},
 	{
@@ -54,9 +50,9 @@ export default [
 		keyChar: 'i',
 		keyModifiers: ['ctrl'],
 		class: 'icon-italic',
-		isActive: (isActive) => isActive.em(),
+		isActive: 'em',
 		action: (command) => {
-			return command.em()
+			return command.toggleItalic()
 		},
 	},
 	{
@@ -64,9 +60,9 @@ export default [
 		keyChar: 'u',
 		keyModifiers: ['ctrl'],
 		class: 'icon-underline',
-		isActive: (isActive) => isActive.underline(),
+		isActive: 'underline',
 		action: (command) => {
-			return command.underline()
+			return command.toggleUnderline()
 		},
 	},
 	{
@@ -74,9 +70,9 @@ export default [
 		keyChar: 'd',
 		keyModifiers: ['ctrl'],
 		class: 'icon-strike',
-		isActive: (isActive) => isActive.strike(),
+		isActive: 'strike',
 		action: (command) => {
-			return command.strike()
+			return command.toggleStrike()
 		},
 	},
 	{
@@ -88,49 +84,49 @@ export default [
 			{
 				label: t('text', 'Heading 1'),
 				class: 'icon-h1',
-				isActive: (isActive) => isActive.heading({ level: 1 }),
+				isActive: ['heading', { level: 1 }],
 				action: (command) => {
-					return command.heading({ level: 1 })
+					return command.toggleHeading({ level: 1 })
 				},
 			},
 			{
 				label: t('text', 'Heading 2'),
 				class: 'icon-h2',
-				isActive: (isActive) => isActive.heading({ level: 2 }),
+				isActive: ['heading', { level: 2 }],
 				action: (command) => {
-					return command.heading({ level: 2 })
+					return command.toggleHeading({ level: 2 })
 				},
 			},
 			{
 				label: t('text', 'Heading 3'),
 				class: 'icon-h3',
-				isActive: (isActive) => isActive.heading({ level: 3 }),
+				isActive: ['heading', { level: 3 }],
 				action: (command) => {
-					return command.heading({ level: 3 })
+					return command.toggleHeading({ level: 3 })
 				},
 			},
 			{
 				label: t('text', 'Heading 4'),
 				class: 'icon-h4',
-				isActive: (isActive) => isActive.heading({ level: 4 }),
+				isActive: ['heading', { level: 4 }],
 				action: (command) => {
-					return command.heading({ level: 4 })
+					return command.toggleHeading({ level: 4 })
 				},
 			},
 			{
 				label: t('text', 'Heading 5'),
 				class: 'icon-h5',
-				isActive: (isActive) => isActive.heading({ level: 5 }),
+				isActive: ['heading', { level: 5 }],
 				action: (command) => {
-					return command.heading({ level: 5 })
+					return command.toggleHeading({ level: 5 })
 				},
 			},
 			{
 				label: t('text', 'Heading 6'),
 				class: 'icon-h6',
-				isActive: (isActive) => isActive.heading({ level: 6 }),
+				isActive: ['heading', { level: 6 }],
 				action: (command) => {
-					return command.heading({ level: 6 })
+					return command.toggleHeading({ level: 6 })
 				},
 			},
 		],
@@ -140,9 +136,9 @@ export default [
 		keyChar: '8',
 		keyModifiers: ['ctrl', 'shift'],
 		class: 'icon-ul',
-		isActive: (isActive) => isActive.bullet_list(),
+		isActive: 'bulletList',
 		action: (command) => {
-			return command.bullet_list_item()
+			return command.bulletListItem()
 		},
 	},
 	{
@@ -150,15 +146,16 @@ export default [
 		keyChar: '9',
 		keyModifiers: ['ctrl', 'shift'],
 		class: 'icon-ol',
-		isActive: (isActive) => isActive.ordered_list(),
+		isActive: 'orderedList',
 		action: (command) => {
-			return command.ordered_list()
+			return command.toggleOrderedList()
 		},
 	},
 	{
 		label: t('text', 'ToDo list'),
 		class: 'icon-checkmark',
-		isActive: (isActive) => false,
+		// Do we want to indicate that the current item is a todo item?
+		// isActive: ['listItem', { type: 1 }],
 		action: (command) => command.todo_item(),
 	},
 	{
@@ -166,23 +163,22 @@ export default [
 		keyChar: '>',
 		keyModifiers: ['ctrl'],
 		class: 'icon-quote',
-		isActive: (isActive) => isActive.blockquote(),
+		isActive: 'blockquote',
 		action: (command) => {
-			return command.blockquote()
+			return command.toggleBlockquote()
 		},
 	},
 	{
 		label: t('text', 'Code block'),
 		class: 'icon-code',
-		isActive: (isActive) => isActive.code_block(),
+		isActive: 'codeBlock',
 		action: (command) => {
-			return command.code_block()
+			return command.toggleCodeBlock()
 		},
 	},
 	{
 		label: t('text', 'Emoji picker'),
 		class: 'icon-emoji',
-		isActive: (isActive) => false,
 		action: (command, emojiObject) => {
 			return command.emoji(emojiObject)
 		},

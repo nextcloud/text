@@ -20,22 +20,23 @@
  *
  */
 
-import { InputRule, wrappingInputRule } from 'prosemirror-inputrules'
+import { InputRule, wrappingInputRule } from '@tiptap/core'
 
 /**
- * @param {RegExp} regexp Input rule regular expression
- * @param {object} nodeType Node Type object
- * @param {undefined} getAttrs Attributes for the node
+ * Wrapping input handler that will append the content of the last match
+ *
+ * @param {RegExp} find find param for the wrapping input rule
+ * @param {object} type Node Type object
+ * @param {*} getAttributes handler to get the attributes
  */
-export default function(regexp, nodeType, getAttrs) {
-	return new InputRule(regexp, (state, match, start, end) => {
-		const tr = wrappingInputRule(regexp, nodeType).handler(state, match, start, end)
-
-		// Insert the first character after bullet
+export default function(find, type, getAttributes) {
+	const handler = ({ state, range, match }) => {
+		const wrap = wrappingInputRule({ find, type, getAttributes })
+		wrap.handler({ state, range, match })
+		// Insert the first character after bullet if there is one
 		if (match.length >= 3) {
-			tr.insertText(match[2])
+			state.tr.insertText(match[2])
 		}
-
-		return tr
-	})
+	}
+	return new InputRule({ find, handler })
 }

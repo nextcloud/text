@@ -21,59 +21,62 @@
   -->
 
 <template>
-	<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
-		<div v-if="imageLoaded && isSupportedImage"
-			v-click-outside="() => showIcons = false"
-			class="image__view"
-			@click="showIcons = true"
-			@mouseover="showIcons = true"
-			@mouseleave="showIcons = false">
-			<transition name="fade">
-				<img v-show="loaded"
-					:src="imageUrl"
-					class="image__main"
-					@load="onLoaded">
-			</transition>
-			<transition name="fade">
-				<div v-show="loaded" class="image__caption">
-					<input ref="altInput"
-						type="text"
-						:value="alt"
-						@keyup.enter="updateAlt()">
-					<div
-						v-if="showIcons"
-						class="trash-icon"
-						title="Delete this image"
-						@click="deleteImage">
-						<TrashCanIcon />
+	<NodeViewWrapper>
+		<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
+			<div v-if="imageLoaded && isSupportedImage"
+				v-click-outside="() => showIcons = false"
+				class="image__view"
+				@click="showIcons = true"
+				@mouseover="showIcons = true"
+				@mouseleave="showIcons = false">
+				<transition name="fade">
+					<img v-show="loaded"
+						:src="imageUrl"
+						class="image__main"
+						@load="onLoaded">
+				</transition>
+				<transition name="fade">
+					<div v-show="loaded" class="image__caption">
+						<input ref="altInput"
+							type="text"
+							:value="alt"
+							@keyup.enter="updateAlt()">
+						<div
+							v-if="showIcons"
+							class="trash-icon"
+							title="Delete this image"
+							@click="deleteImage">
+							<TrashCanIcon />
+						</div>
 					</div>
-				</div>
-			</transition>
+				</transition>
+			</div>
+			<div v-else>
+				<transition name="fade">
+					<div v-show="loaded">
+						<a :href="internalLinkOrImage" target="_blank">
+							<span v-if="!isSupportedImage">{{ alt }}</span>
+						</a>
+					</div>
+				</transition>
+				<transition v-if="isSupportedImage" name="fade">
+					<div v-show="loaded" class="image__caption">
+						<input ref="altInput"
+							type="text"
+							:value="alt"
+							@keyup.enter="updateAlt()">
+					</div>
+				</transition>
+			</div>
 		</div>
-		<div v-else>
-			<transition name="fade">
-				<div v-show="loaded">
-					<a :href="internalLinkOrImage" target="_blank">
-						<span v-if="!isSupportedImage">{{ alt }}</span>
-					</a>
-				</div>
-			</transition>
-			<transition v-if="isSupportedImage" name="fade">
-				<div v-show="loaded" class="image__caption">
-					<input ref="altInput"
-						type="text"
-						:value="alt"
-						@keyup.enter="updateAlt()">
-				</div>
-			</transition>
-		</div>
-	</div>
+	</NodeViewWrapper>
 </template>
 
 <script>
 import path from 'path'
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import { getCurrentUser } from '@nextcloud/auth'
+import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
 import store from './../mixins/store'
@@ -111,6 +114,7 @@ export default {
 	name: 'ImageView',
 	components: {
 		TrashCanIcon,
+		NodeViewWrapper,
 	},
 	directives: {
 		ClickOutside,
@@ -118,7 +122,7 @@ export default {
 	mixins: [
 		store,
 	],
-	props: ['node', 'options', 'updateAttrs', 'view', 'getPos'], // eslint-disable-line
+	props: ['node', 'extension', 'updateAttributes', 'getPos'], // eslint-disable-line
 	data() {
 		return {
 			imageLoaded: false,
@@ -140,7 +144,7 @@ export default {
 				return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
 					{
 						token: this.token,
-						dirname: this.options.currentDirectory,
+						dirname: this.extension.options.currentDirectory,
 						basename: this.basename,
 					})
 			}
@@ -194,7 +198,7 @@ export default {
 		},
 		filePath() {
 			const f = [
-				this.options.currentDirectory,
+				this.extension.options.currentDirectory,
 				this.basename,
 			].join('/')
 			return path.normalize(f)
@@ -240,7 +244,7 @@ export default {
 				return this.node.attrs.src || ''
 			},
 			set(src) {
-				this.updateAttrs({
+				this.updateAttributes({
 					src,
 				})
 			},
@@ -250,7 +254,7 @@ export default {
 				return this.node.attrs.alt ? this.node.attrs.alt : ''
 			},
 			set(alt) {
-				this.updateAttrs({
+				this.updateAttributes({
 					alt,
 				})
 			},

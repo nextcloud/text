@@ -20,28 +20,15 @@
  *
  */
 
-import { Node } from 'tiptap'
-import { insertText } from 'tiptap-commands'
+import { Node } from '@tiptap/core'
 
-export default class PlainTextDocument extends Node {
-
-	get name() {
-		return 'doc'
-	}
-
-	get schema() {
+export default Node.create({
+	name: 'doc',
+	content: 'block',
+	addKeyboardShortcuts() {
 		return {
-			content: 'block',
+			Tab: () => this.editor.commands.insertContent('\t'),
 		}
-	}
+	},
 
-	keys() {
-		return {
-			Tab: (state) => {
-				insertText('\t')(state, this.editor.view.dispatch, this.editor.view)
-				return true
-			},
-		}
-	}
-
-}
+})

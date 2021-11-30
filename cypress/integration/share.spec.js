@@ -38,9 +38,6 @@ describe('Open test.md in viewer', function() {
 			return false
 		})
 
-		cy.get('#fileList tr[data-file="welcome.txt"]', {timeout: 10000})
-			.should('contain', 'welcome.txt')
-
 		// Upload test files
 		cy.createFolder('folder')
 		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
