@@ -29,15 +29,15 @@
 						:key="icon.label"
 						class="menuitem-emoji"
 						@select="emojiObject => addEmoji(commands, allIcons.find(i => i.class === 'icon-emoji'), emojiObject)">
-						<button class="icon-emoji"
-							:title="t('text', 'Insert emoji')"
+						<button v-tooltip="t('text', 'Insert emoji')"
+							class="icon-emoji"
 							:aria-label="t('text', 'Insert emoji')"
 							:aria-haspopup="true" />
 					</EmojiPicker>
 					<button v-else-if="icon.class"
 						v-show="$index < iconCount"
 						:key="icon.label"
-						:title="icon.label"
+						v-tooltip="getLabelAndKeys(icon)"
 						:class="getIconClasses(isActive, icon)"
 						:disabled="disabled(commands, icon)"
 						@click="clickIcon(commands, icon)" />
@@ -46,8 +46,8 @@
 							:key="icon.label"
 							v-click-outside="() => hideChildMenu(icon)"
 							class="submenu">
-							<button :class="childIconClasses(isActive, icon.children, )"
-								:title="icon.label"
+							<button v-tooltip="getLabelAndKeys(icon)"
+								:class="childIconClasses(isActive, icon.children, )"
 								@click.prevent="toggleChildMenu(icon)" />
 							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
 								<PopoverMenu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
@@ -59,6 +59,7 @@
 					<template v-for="(icon, $index) in allIcons">
 						<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
 							:key="icon.class"
+							v-tooltip="getKeys(icon)"
 							:icon="icon.class"
 							@click="clickIcon(commands, icon)"
 							:close-after-click="true">
@@ -69,6 +70,7 @@
 								:key="childIcon.class"
 								:icon="childIcon.class"
 								@click="clickIcon(commands, childIcon)">
+								v-tooltip="getKeys(childIcon)"
 								{{ childIcon.label }}
 							</ActionButton>
 						</template>-->
@@ -87,6 +89,7 @@ import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
 import { optimalPath } from './../helpers/files'
+import isMobile from './../mixins/isMobile'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -108,6 +111,9 @@ export default {
 		Tooltip,
 		ClickOutside,
 	},
+	mixins: [
+		isMobile,
+	],
 	props: {
 		editor: {
 			type: Object,
@@ -186,6 +192,7 @@ export default {
 				const popoverMenuItems = []
 				for (const index in icons) {
 					popoverMenuItems.push({
+						// text: this.getLabelAndKeys(icons[index]),
 						text: icons[index].label,
 						icon: icons[index].class,
 						action: () => {
@@ -333,6 +340,26 @@ export default {
 		},
 		addEmoji(commands, icon, emojiObject) {
 			return icon.action(commands, emojiObject)
+		},
+		keysString(keyChar, modifiers = []) {
+			const translations = {
+				ctrl: t('text', 'Ctrl'),
+				alt: t('text', 'Alt'),
+				shift: t('text', 'Shift'),
+			}
+			return Object.entries(translations)
+				.filter(([k, v]) => modifiers.includes(k))
+				.map(([k, v]) => v)
+				.concat(keyChar.toUpperCase())
+				.join('+')
+		},
+		getKeys(icon) {
+			return (icon.keyChar && !this.isMobile)
+				? `(${this.keysString(icon.keyChar, icon.keyModifiers)})`
+				: ''
+		},
+		getLabelAndKeys(icon) {
+			return [icon.label, this.getKeys(icon)].join(' ')
 		},
 	},
 }

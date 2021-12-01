@@ -23,6 +23,8 @@
 export default [
 	{
 		label: t('text', 'Undo'),
+		keyChar: 'z',
+		keyModifiers: ['ctrl'],
 		class: 'icon-undo',
 		isActive: (isActive) => false,
 		isDisabled: (command) => command.undoDepth() === 0,
@@ -30,6 +32,8 @@ export default [
 	},
 	{
 		label: t('text', 'Redo'),
+		keyChar: 'y',
+		keyModifiers: ['ctrl'],
 		class: 'icon-redo',
 		isActive: (isActive) => false,
 		isDisabled: (command) => command.redoDepth() === 0,
@@ -37,6 +41,8 @@ export default [
 	},
 	{
 		label: t('text', 'Bold'),
+		keyChar: 'b',
+		keyModifiers: ['ctrl'],
 		class: 'icon-bold',
 		isActive: (isActive) => isActive.strong(),
 		action: (command) => {
@@ -45,6 +51,8 @@ export default [
 	},
 	{
 		label: t('text', 'Italic'),
+		keyChar: 'i',
+		keyModifiers: ['ctrl'],
 		class: 'icon-italic',
 		isActive: (isActive) => isActive.em(),
 		action: (command) => {
@@ -53,6 +61,8 @@ export default [
 	},
 	{
 		label: t('text', 'Strikethrough'),
+		keyChar: 'd',
+		keyModifiers: ['ctrl'],
 		class: 'icon-strike',
 		isActive: (isActive) => isActive.strike(),
 		action: (command) => {
@@ -61,6 +71,8 @@ export default [
 	},
 	{
 		label: t('text', 'Headings'),
+		keyChar: '1…6',
+		keyModifiers: ['ctrl', 'shift'],
 		visible: false,
 		children: [
 			{
@@ -115,6 +127,8 @@ export default [
 	},
 	{
 		label: t('text', 'Unordered list'),
+		keyChar: '8',
+		keyModifiers: ['ctrl', 'shift'],
 		class: 'icon-ul',
 		isActive: (isActive) => isActive.bullet_list(),
 		action: (command) => {
@@ -123,6 +137,8 @@ export default [
 	},
 	{
 		label: t('text', 'Ordered list'),
+		keyChar: '9',
+		keyModifiers: ['ctrl', 'shift'],
 		class: 'icon-ol',
 		isActive: (isActive) => isActive.ordered_list(),
 		action: (command) => {
@@ -137,6 +153,8 @@ export default [
 	},
 	{
 		label: t('text', 'Blockquote'),
+		keyChar: '>',
+		keyModifiers: ['ctrl'],
 		class: 'icon-quote',
 		isActive: (isActive) => isActive.blockquote(),
 		action: (command) => {
