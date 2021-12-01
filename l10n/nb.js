@@ -39,10 +39,6 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
     "Retry" : "Prøv igjen",
-    "Unpushed changes" : "Ulagrede endringer",
-    "Add link" : "Legg ved lenke",
-    "Show image" : "Vis bilde",
-    "Show file" : "Vis fil",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Ulagrede endringer"
 },
 "nplurals=2; plural=(n != 1);");

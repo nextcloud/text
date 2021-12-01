@@ -21,9 +21,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
     "Edit guest name" : "Bewerk gast naam",
     "Save guest name" : "Bewaar gast naam",
+    "Insert emoji" : "Invoegen emoji",
     "Insert image" : "Invoegen afbeelding",
     "Insert an image" : "Voeg een afbeelding in",
     "Link file" : "Link bestand",
+    "Remove Link" : "Verwijder Link",
     "Select file to link to" : "Selecteer een bestand om naar te linken",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
@@ -49,11 +51,8 @@ OC.L10N.register(
     "ToDo list" : "ToDo overzicht",
     "Blockquote" : "Tekstblok",
     "Code block" : "Code blok",
+    "Emoji picker" : "Emoji kiezer",
     "Retry" : "Opnieuw proberen",
-    "Unpushed changes" : "Niet verwerkte veranderingen",
-    "Add link" : "Voeg link toe",
-    "Show image" : "Toon afbeelding",
-    "Show file" : "Toon bestand",
-    "Paragraph" : "Paragraaf"
+    "Unpushed changes" : "Niet verwerkte veranderingen"
 },
 "nplurals=2; plural=(n != 1);");

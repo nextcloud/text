@@ -17,8 +17,11 @@
     "Last saved {lastSaved}" : "Ùrtimu sarvatàgiu {lastSaved}",
     "Unsaved changes" : "Mudas non sarvadas",
     "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
-    "Insert image" : "Inserta·nche immàgine",
-    "Insert an image" : "Inserta·nche un'immàgine",
+    "Edit guest name" : "Modìfica nùmene de sa persone invitada",
+    "Save guest name" : "Sarva nùmene de sa persone invitada",
+    "Insert emoji" : "Inserta·nche una carighedda",
+    "Insert image" : "Inserta·nche imàgine",
+    "Insert an image" : "Inserta·nche un'imàgine",
     "Link file" : "Ligòngiu a archìviu",
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
     "Show author colors" : "Mustra is colores de sa persone autora",
@@ -45,11 +48,8 @@
     "ToDo list" : "Cosas de fàghere",
     "Blockquote" : "Mentovu",
     "Code block" : "Blocu de còdighe",
+    "Emoji picker" : "Sèberu de carigheddas",
     "Retry" : "Torra a proare",
-    "Unpushed changes" : "Modìficas non depositadas",
-    "Add link" : "Agiunghe ligòngiu",
-    "Show image" : "Mustra immàgine",
-    "Show file" : "Mustra archìviu",
-    "Paragraph" : "Paràgrafu"
+    "Unpushed changes" : "Modìficas non depositadas"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

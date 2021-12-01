@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
     "Edit guest name" : "Uredi ime gosta",
     "Save guest name" : "Spremi ime gosta",
+    "Insert emoji" : "Umetni emoji",
     "Insert image" : "Umetni sliku",
     "Insert an image" : "Umetni sliku",
     "Link file" : "Poveznica datoteke",
@@ -49,11 +50,8 @@ OC.L10N.register(
     "ToDo list" : "Popis zadataka",
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
+    "Emoji picker" : "Birač emojija",
     "Retry" : "Pokušaj ponovno",
-    "Unpushed changes" : "Neprimijenjene promjene",
-    "Add link" : "Dodaj poveznicu",
-    "Show image" : "Prikaži sliku",
-    "Show file" : "Prikaži datoteku",
-    "Paragraph" : "Odjeljak"
+    "Unpushed changes" : "Neprimijenjene promjene"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

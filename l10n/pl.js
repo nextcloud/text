@@ -21,9 +21,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Wprowadź swoje imię, aby inni użytkownicy mogli zobaczyć, kto edytuje",
     "Edit guest name" : "Edytuj nazwę gościa",
     "Save guest name" : "Zapisz nazwę gościa",
+    "Insert emoji" : "Wstaw emoji",
     "Insert image" : "Wstaw obraz",
     "Insert an image" : "Wstaw obraz",
     "Link file" : "Link pliku",
+    "Remove Link" : "Usuń link",
     "Select file to link to" : "Wybierz plik dla linku",
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
@@ -49,11 +51,8 @@ OC.L10N.register(
     "ToDo list" : "Lista rzeczy do zrobienia",
     "Blockquote" : "Cytat",
     "Code block" : "Blok kodu",
+    "Emoji picker" : "Selektor emoji",
     "Retry" : "Powtórz",
-    "Unpushed changes" : "Niewysłane zmiany",
-    "Add link" : "Dodaj link",
-    "Show image" : "Pokaż obraz",
-    "Show file" : "Pokaż plik",
-    "Paragraph" : "Ustęp"
+    "Unpushed changes" : "Niewysłane zmiany"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

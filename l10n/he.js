@@ -46,10 +46,6 @@ OC.L10N.register(
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
     "Retry" : "ניסיון חוזר",
-    "Unpushed changes" : "שינויים שלא נדחפו",
-    "Add link" : "הוספת קישור",
-    "Show image" : "הצגת תמונה",
-    "Show file" : "הצגת קובץ",
-    "Paragraph" : "פסקה"
+    "Unpushed changes" : "שינויים שלא נדחפו"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

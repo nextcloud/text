@@ -21,9 +21,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
+    "Insert emoji" : "Emoji ekle",
     "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",
     "Link file" : "Dosya bağla",
+    "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
@@ -49,11 +51,8 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Blockquote" : "Alıntı",
     "Code block" : "Kod bloğu",
+    "Emoji picker" : "Emoji seçici",
     "Retry" : "Yeniden dene",
-    "Unpushed changes" : "Gönderilmemiş değişiklikler",
-    "Add link" : "Bağlantı ekle",
-    "Show image" : "Görseli görüntüle",
-    "Show file" : "Dosyayı görüntüle",
-    "Paragraph" : "Paragraf"
+    "Unpushed changes" : "Gönderilmemiş değişiklikler"
 },
 "nplurals=2; plural=(n > 1);");

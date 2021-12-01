@@ -21,9 +21,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
     "Edit guest name" : "编辑访客姓名",
     "Save guest name" : "保存访客姓名",
+    "Insert emoji" : "插入 emoji",
     "Insert image" : "插入图片",
     "Insert an image" : "插入一张图片",
     "Link file" : "链接文件",
+    "Remove Link" : "删除链接",
     "Select file to link to" : "选择文件链接至",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
@@ -49,11 +51,8 @@ OC.L10N.register(
     "ToDo list" : "待办事项清单",
     "Blockquote" : "块引用",
     "Code block" : "代码块",
+    "Emoji picker" : "emoji 选择器",
     "Retry" : "重试",
-    "Unpushed changes" : "未推送的更改",
-    "Add link" : "添加链接",
-    "Show image" : "显示图片",
-    "Show file" : "显示文件",
-    "Paragraph" : "段落"
+    "Unpushed changes" : "未推送的更改"
 },
 "nplurals=1; plural=0;");

@@ -43,10 +43,6 @@ OC.L10N.register(
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
     "Retry" : "Reyna aftur",
-    "Unpushed changes" : "Breytingar sem ekki er búið að senda inn",
-    "Add link" : "Bæta við tengli",
-    "Show image" : "Birta mynd",
-    "Show file" : "Sýna skrá",
-    "Paragraph" : "Málsgrein"
+    "Unpushed changes" : "Breytingar sem ekki er búið að senda inn"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

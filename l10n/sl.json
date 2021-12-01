@@ -19,6 +19,7 @@
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Edit guest name" : "Uredi ime gosta",
     "Save guest name" : "Shrani ime gosta",
+    "Insert emoji" : "Vstavi izrazno ikono",
     "Insert image" : "Vstavi sliko",
     "Insert an image" : "Vstavi sliko",
     "Link file" : "Datoteka povezave",
@@ -47,11 +48,8 @@
     "ToDo list" : "Seznam opravil",
     "Blockquote" : "Bločni navedek",
     "Code block" : "Navedek s kodo",
+    "Emoji picker" : "Izbirnik izraznih ikon",
     "Retry" : "Poskusi  znova",
-    "Unpushed changes" : "Neposlane spremembe",
-    "Add link" : "Dodaj povezavo",
-    "Show image" : "Pokaži sliko",
-    "Show file" : "Pokaži datoteko",
-    "Paragraph" : "Odstavek"
+    "Unpushed changes" : "Neposlane spremembe"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

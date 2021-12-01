@@ -19,9 +19,11 @@
     "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Edit guest name" : "Modifica nome ospite",
     "Save guest name" : "Salva nome ospite",
+    "Insert emoji" : "Inserisci emoji",
     "Insert image" : "Inserisci immagine",
     "Insert an image" : "Inserisci un'immagine",
     "Link file" : "Collegamento a file",
+    "Remove Link" : "Rimuovi collegamento",
     "Select file to link to" : "Seleziona il file da collegare",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
@@ -47,11 +49,8 @@
     "ToDo list" : "Elenco Cose da fare",
     "Blockquote" : "Citazione",
     "Code block" : "Blocco di codice",
+    "Emoji picker" : "Selettore di emoji",
     "Retry" : "Riprova",
-    "Unpushed changes" : "Modifiche non depositate",
-    "Add link" : "Aggiungi collegamento",
-    "Show image" : "Mostra immagine",
-    "Show file" : "Mostra file",
-    "Paragraph" : "Paragrafo"
+    "Unpushed changes" : "Modifiche non depositate"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -43,10 +43,6 @@ OC.L10N.register(
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
     "Retry" : "Покушај поново",
-    "Unpushed changes" : "Негурнуте измене",
-    "Add link" : "Додај везу",
-    "Show image" : "Прикажи слику",
-    "Show file" : "Прикажи фајл",
-    "Paragraph" : "Пасус"
+    "Unpushed changes" : "Негурнуте измене"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

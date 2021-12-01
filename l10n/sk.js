@@ -21,9 +21,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Edit guest name" : "Upraviť meno hosťa",
     "Save guest name" : "Uložiť meno hosťa",
+    "Insert emoji" : "Vložiť emotikon",
     "Insert image" : "Vložiť obrázok",
     "Insert an image" : "Vložiť obrázok",
     "Link file" : "Súbor pre odkaz",
+    "Remove Link" : "Odstrániť odkaz",
     "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
@@ -49,11 +51,8 @@ OC.L10N.register(
     "ToDo list" : "Zoznam úloh",
     "Blockquote" : "Cítácia",
     "Code block" : "Blok kódu",
+    "Emoji picker" : "Výber emotikonov",
     "Retry" : "Skúsiť znova",
-    "Unpushed changes" : "Neodoslané zmeny",
-    "Add link" : "Pridať odkaz",
-    "Show image" : "Zobraziť obrázok",
-    "Show file" : "Zobraziť súbor",
-    "Paragraph" : "Odstavec"
+    "Unpushed changes" : "Neodoslané zmeny"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

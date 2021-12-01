@@ -11,14 +11,12 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
+    "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Undo" : "Врати",
     "Bold" : "Болд",
     "Italic" : "Италик",
     "Retry" : "Обидете се повторно",
-    "Unpushed changes" : "Необјавени промени",
-    "Add link" : "Додади линк",
-    "Show image" : "Прикаши слика",
-    "Show file" : "Прикажи датотека"
+    "Unpushed changes" : "Необјавени промени"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

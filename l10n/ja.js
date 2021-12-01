@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Edit guest name" : "ゲスト名を編集",
     "Save guest name" : "ゲスト名を保存",
+    "Insert emoji" : "絵文字を挿入",
     "Insert image" : "画像の挿入",
     "Insert an image" : "画像を追加",
     "Link file" : "ファイルをリンク",
@@ -49,11 +50,8 @@ OC.L10N.register(
     "ToDo list" : "ToDo リスト",
     "Blockquote" : "引用",
     "Code block" : "コードブロック",
+    "Emoji picker" : "絵文字選択",
     "Retry" : "再試行",
-    "Unpushed changes" : "プッシュされていない変更",
-    "Add link" : "リンクを追加",
-    "Show image" : "画像を表示する",
-    "Show file" : "ファイルを表示する",
-    "Paragraph" : "段落"
+    "Unpushed changes" : "プッシュされていない変更"
 },
 "nplurals=1; plural=0;");

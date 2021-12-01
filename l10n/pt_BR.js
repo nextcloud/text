@@ -21,6 +21,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
     "Edit guest name" : "Editar nome de convidado",
     "Save guest name" : "Salvar nome de convidado",
+    "Insert emoji" : "Inserir emoji ",
     "Insert image" : "Inserir imagem",
     "Insert an image" : "Inserir uma imagem",
     "Link file" : "Linkar um arquivo",
@@ -49,11 +50,8 @@ OC.L10N.register(
     "ToDo list" : "Lista ToDo",
     "Blockquote" : "Bloco de citação",
     "Code block" : "Bloco de código",
+    "Emoji picker" : "Selecionador de emoji ",
     "Retry" : "Tentar novamente",
-    "Unpushed changes" : "Alterações não gravadas",
-    "Add link" : "Adicionar link",
-    "Show image" : "Mostrar imagem",
-    "Show file" : "Mostrar arquivo",
-    "Paragraph" : "Parágrafo"
+    "Unpushed changes" : "Alterações não gravadas"
 },
 "nplurals=2; plural=(n > 1);");
