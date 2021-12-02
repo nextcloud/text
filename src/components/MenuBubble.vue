@@ -51,7 +51,7 @@
 						{{ t('text', isActive.link() ? 'Update Link' : 'Add Link') }}
 					</span>
 				</button>
-				<button
+				<button v-if="!isUsingDirectEditing"
 					class="menububble__button"
 					:class="{ 'is-active': isActive.link() }"
 					@click="selectFile(commands.link)">
@@ -67,6 +67,7 @@
 import { EditorMenuBubble } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { optimalPath } from './../helpers/files'
+import { loadState } from '@nextcloud/initial-state'
 
 export default {
 	name: 'MenuBubble',
@@ -92,6 +93,7 @@ export default {
 		return {
 			linkUrl: null,
 			linkMenuIsActive: false,
+			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
 	methods: {
