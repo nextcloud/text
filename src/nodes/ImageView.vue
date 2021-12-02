@@ -38,15 +38,14 @@
 				</div>
 			</transition>
 		</div>
-		<div v-else class="image__placeholder">
+		<div v-else>
 			<transition name="fade">
-				<div v-show="loaded" class="image__main">
+				<div v-show="loaded">
 					<a :href="internalLinkOrImage" target="_blank">
-						<div class="icon-image" :style="mimeIcon" />
-						<p v-if="!isSupportedImage">{{ alt }}</p>
+						<span v-if="!isSupportedImage">{{ alt }}</span>
 					</a>
 				</div>
-			</transition><transition name="fade">
+			</transition><transition name="fade" v-if="isSupportedImage">
 				<div v-show="loaded" class="image__caption">
 					<input ref="altInput"
 						type="text"
@@ -255,13 +254,6 @@ export default {
 		}
 	}
 
-	.icon-image {
-		margin-top: 10px;
-		height: 32px;
-		padding: 20px;
-		background-size: contain;
-	}
-
 	.image__loading {
 		height: 100px;
 	}
@@ -271,26 +263,6 @@ export default {
 
 		.image__main {
 			max-height: 40vh;
-		}
-	}
-
-	.image__placeholder {
-		a {
-			display: flex;
-		}
-		.image__main {
-			background-color: var(--color-background-dark);
-			text-align: center;
-			padding: 5px;
-			border-radius: var(--border-radius);
-
-			.icon-image {
-				margin: 0;
-			}
-
-			p {
-				padding: 10px;
-			}
 		}
 	}
 
