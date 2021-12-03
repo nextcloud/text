@@ -45,7 +45,7 @@
 						<span v-if="!isSupportedImage">{{ alt }}</span>
 					</a>
 				</div>
-			</transition><transition name="fade" v-if="isSupportedImage">
+			</transition><transition v-if="isSupportedImage" name="fade">
 				<div v-show="loaded" class="image__caption">
 					<input ref="altInput"
 						type="text"

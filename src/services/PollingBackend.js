@@ -21,7 +21,7 @@
  */
 import axios from '@nextcloud/axios'
 import { endpointUrl } from '../helpers'
-import { ERROR_TYPE } from './SyncService'
+import { SyncService, ERROR_TYPE } from './SyncService'
 import { sendableSteps } from 'prosemirror-collab'
 
 /**
@@ -71,7 +71,7 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 class PollingBackend {
 
 	constructor(authority) {
-		/** @type SyncService */
+		/** @type {SyncService} */
 		this._authority = authority
 		this.fetchInterval = FETCH_INTERVAL
 		this.retryTime = MIN_PUSH_RETRY

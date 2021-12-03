@@ -61,8 +61,8 @@
 							:key="icon.class"
 							v-tooltip="getKeys(icon)"
 							:icon="icon.class"
-							@click="clickIcon(commands, icon)"
-							:close-after-click="true">
+							:close-after-click="true"
+							@click="clickIcon(commands, icon)">
 							{{ icon.label }}
 						</ActionButton>
 						<!--<template v-else-if="!icon.class && isHiddenInMenu($index)">
@@ -302,7 +302,7 @@ export default {
 			}, false, [], true, undefined, this.imagePath)
 		},
 		showLinkPrompt(command) {
-			const currentUser = OC.getCurrentUser()
+			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
