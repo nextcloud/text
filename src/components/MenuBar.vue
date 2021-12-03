@@ -132,7 +132,6 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
-import { optimalPath } from './../helpers/files'
 import isMobile from './../mixins/isMobile'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
