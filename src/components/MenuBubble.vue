@@ -48,7 +48,7 @@
 					@click="showLinkMenu(getMarkAttrs('link'))">
 					<span class="icon-link" />
 					<span class="menububble__buttontext">
-						{{ t('text', isActive.link() ? 'Update Link' : 'Add Link') }}
+						{{ isActive.link() ? t('text', 'Update Link') : t('text', 'Add Link') }}
 					</span>
 				</button>
 				<button v-if="!isUsingDirectEditing"
