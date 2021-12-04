@@ -152,7 +152,7 @@ export default {
 			IDLE_TIMEOUT,
 
 			tiptap: null,
-			/** @type SyncService */
+			/** @type {SyncService} */
 			syncService: null,
 
 			document: null,

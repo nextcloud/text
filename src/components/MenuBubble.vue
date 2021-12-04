@@ -76,6 +76,7 @@
 <script>
 import { EditorMenuBubble } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { getCurrentUser } from '@nextcloud/auth'
 import { optimalPath } from './../helpers/files'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -119,7 +120,7 @@ export default {
 			this.linkMenuIsActive = false
 		},
 		selectFile(command) {
-			const currentUser = OC.getCurrentUser()
+			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}

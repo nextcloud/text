@@ -23,9 +23,9 @@
 import { InputRule, wrappingInputRule } from 'prosemirror-inputrules'
 
 /**
- * @param regexp
- * @param nodeType
- * @param getAttrs
+ * @param {RegExp} regexp Input rule regular expression
+ * @param {object} nodeType Node Type object
+ * @param {undefined} getAttrs Attributes for the node
  */
 export default function(regexp, nodeType, getAttrs) {
 	return new InputRule(regexp, (state, match, start, end) => {

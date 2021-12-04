@@ -28,9 +28,9 @@ import { Span } from './models'
  */
 
 /**
- * @param map
- * @param transform
- * @param clientIDs
+ * @param {Array} map List of document ranges and corresponding authors
+ * @param {object} transform ProseMirror transform object
+ * @param {Array} clientIDs List of client IDs
  */
 function updateBlameMap(map, transform, clientIDs) {
 	const result = []
@@ -53,10 +53,10 @@ function updateBlameMap(map, transform, clientIDs) {
 }
 
 /**
- * @param map
- * @param from
- * @param to
- * @param author
+ * @param {Array} map List of document ranges and corresponding authors
+ * @param {number} from The lower bound of the selection's main range
+ * @param {number} to The upper bound of the selection's main range
+ * @param {number} author ClientID of the author
  */
 function insertIntoBlameMap(map, from, to, author) {
 	if (from >= to) {
