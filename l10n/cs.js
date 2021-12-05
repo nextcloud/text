@@ -27,6 +27,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Alt" : "Alt",
     "Shift" : "Shift",
+    "Update Link" : "Aktualizovat odkaz",
+    "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",
     "Remove Link" : "Odebrat odkaz",
     "Select file to link to" : "Vyberte soubor na který odkázat",

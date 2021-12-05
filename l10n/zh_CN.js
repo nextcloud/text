@@ -27,6 +27,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Alt" : "Alt",
     "Shift" : "Shift",
+    "Update Link" : "更新链接",
+    "Add Link" : "添加链接",
     "Link file" : "链接文件",
     "Remove Link" : "删除链接",
     "Select file to link to" : "选择文件链接至",

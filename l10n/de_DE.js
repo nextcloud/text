@@ -27,6 +27,8 @@ OC.L10N.register(
     "Ctrl" : "Strg",
     "Alt" : "Alt",
     "Shift" : "Verschieben",
+    "Update Link" : "Link aktualisieren",
+    "Add Link" : "Link hinzufügen",
     "Link file" : "Datei verknüpfen",
     "Remove Link" : "Link entfernen",
     "Select file to link to" : "Wählen Sie die zu verknüpfende Datei aus",
