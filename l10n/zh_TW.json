@@ -25,6 +25,8 @@
     "Ctrl" : "Ctrl",
     "Alt" : "Alt",
     "Shift" : "Shift",
+    "Update Link" : "更新連結",
+    "Add Link" : "新增連結",
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
