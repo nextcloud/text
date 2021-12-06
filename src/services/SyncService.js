@@ -287,6 +287,44 @@ class SyncService {
 			})
 	}
 
+	uploadImage(image) {
+		const formData = new FormData()
+		formData.append('image', image)
+		formData.append('documentId', this.document.id)
+		formData.append('sessionId', this.session.id)
+		formData.append('sessionToken', this.session.token)
+		formData.append('shareToken', this.options.shareToken || '')
+		const url = endpointUrl('image/upload')
+		return axios.post(url, formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		})
+	}
+
+	insertImageLink(imageLink) {
+		const params = {
+			documentId: this.document.id,
+			sessionId: this.session.id,
+			sessionToken: this.session.token,
+			shareToken: this.options.shareToken || '',
+			link: imageLink,
+		}
+		const url = endpointUrl('image/link')
+		return axios.post(url, params)
+	}
+
+	insertImageFile(imagePath) {
+		const params = {
+			documentId: this.document.id,
+			sessionId: this.session.id,
+			sessionToken: this.session.token,
+			imagePath,
+		}
+		const url = endpointUrl('image/filepath')
+		return axios.post(url, params)
+	}
+
 	on(event, callback, _this) {
 		this.eventHandlers[event].push(callback.bind(_this))
 		return this

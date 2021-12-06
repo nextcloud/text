@@ -38,6 +38,7 @@
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
+					:sync-service="syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
 					:is-rich-editor="isRichEditor"

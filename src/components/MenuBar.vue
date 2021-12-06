@@ -141,8 +141,6 @@ import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 
 const imageMimes = [
@@ -176,6 +174,11 @@ export default {
 	],
 	props: {
 		editor: {
+			type: Object,
+			required: false,
+			default: null,
+		},
+		syncService: {
 			type: Object,
 			required: false,
 			default: null,
@@ -377,20 +380,7 @@ export default {
 			// the same file is picked again.
 			event.target.value = ''
 
-			const formData = new FormData()
-			formData.append('image', image)
-			formData.append('textFileId', this.fileId)
-			if (this.isPublic) {
-				formData.append('shareToken', this.sharingToken)
-			}
-			const url = this.isPublic
-				? generateUrl('/apps/text/public/image/upload')
-				: generateUrl('/apps/text/image/upload')
-			axios.post(url, formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-			}).then((response) => {
+			this.syncService.uploadImage(image).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
@@ -409,17 +399,7 @@ export default {
 			this.showImageLinkPrompt = false
 			this.$refs.imageActions[0].closeMenu()
 
-			const params = {
-				textFileId: this.fileId,
-				link: this.imageLink,
-			}
-			if (this.isPublic) {
-				params.shareToken = this.sharingToken
-			}
-			const url = this.isPublic
-				? generateUrl('/apps/text/public/image/link')
-				: generateUrl('/apps/text/image/link')
-			axios.post(url, params).then((response) => {
+			this.syncService.insertImageLink(this.imageLink).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)
@@ -433,12 +413,7 @@ export default {
 			this.uploadingImage = true
 			this.$refs.imageActions[0].closeMenu()
 
-			const params = {
-				textFileId: this.fileId,
-				imagePath,
-			}
-			const url = generateUrl('/apps/text/image/filepath')
-			axios.post(url, params).then((response) => {
+			this.syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
 			}).catch((error) => {
 				console.error(error)

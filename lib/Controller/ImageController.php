@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
+use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
@@ -59,29 +60,44 @@ class ImageController extends Controller {
 	 * @var LoggerInterface
 	 */
 	private $logger;
+	/**
+	 * @var SessionService
+	 */
+	private $sessionService;
 
 	public function __construct(string $appName,
 								IRequest $request,
 								LoggerInterface $logger,
 								ImageService $imageService,
+								SessionService $sessionService,
 								?string $userId) {
 		parent::__construct($appName, $request);
 		$this->userId = $userId;
 		$this->imageService = $imageService;
 		$this->request = $request;
 		$this->logger = $logger;
+		$this->sessionService = $sessionService;
 	}
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 *
-	 * @param int $textFileId
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
 	 * @param string $imagePath
 	 * @return DataResponse
 	 */
-	public function insertImageFile(int $textFileId, string $imagePath): DataResponse {
+	public function insertImageFile(int $documentId, int $sessionId, string $sessionToken, string $imagePath): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 500);
+		}
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$userId = $session->getUserId();
+
 		try {
-			$insertResult = $this->imageService->insertImageFile($textFileId, $imagePath, $this->userId);
+			$insertResult = $this->imageService->insertImageFile($documentId, $imagePath, $userId);
 			if (isset($insertResult['error'])) {
 				return new DataResponse($insertResult, Http::STATUS_BAD_REQUEST);
 			} else {
@@ -95,14 +111,28 @@ class ImageController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @PublicPage
 	 *
-	 * @param int $textFileId
 	 * @param string $link
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string|null $shareToken
 	 * @return DataResponse
 	 */
-	public function insertImageLink(int $textFileId, string $link): DataResponse {
+	public function insertImageLink(string $link, int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 500);
+		}
+
 		try {
-			$downloadResult = $this->imageService->insertImageLink($textFileId, $link, $this->userId);
+			if ($shareToken) {
+				$downloadResult = $this->imageService->insertImageLinkPublic($documentId, $link, $shareToken);
+			} else {
+				$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+				$userId = $session->getUserId();
+				$downloadResult = $this->imageService->insertImageLink($documentId, $link, $userId);
+			}
 			if (isset($downloadResult['error'])) {
 				return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
 			} else {
@@ -118,32 +148,17 @@ class ImageController extends Controller {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 *
-	 * @param int|null $textFileId can be null with public file share
-	 * @param string $link
-	 * @param string $shareToken
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string|null $shareToken
 	 * @return DataResponse
 	 */
-	public function insertImageLinkPublic(?int $textFileId, string $link, string $shareToken): DataResponse {
-		try {
-			$downloadResult = $this->imageService->insertImageLinkPublic($textFileId, $link, $shareToken);
-			if (isset($downloadResult['error'])) {
-				return new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST);
-			} else {
-				return new DataResponse($downloadResult);
-			}
-		} catch (Exception $e) {
-			$this->logger->error('Link insertion error', ['exception' => $e]);
-			return new DataResponse(['error' => 'Link insertion error'], Http::STATUS_BAD_REQUEST);
+	public function uploadImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 500);
 		}
-	}
 
-	/**
-	 * @NoAdminRequired
-	 *
-	 * @param int $textFileId
-	 * @return DataResponse
-	 */
-	public function uploadImage(int $textFileId): DataResponse {
 		try {
 			$file = $this->request->getUploadedFile('image');
 			if ($file !== null && isset($file['tmp_name'], $file['name'], $file['type'])) {
@@ -152,39 +167,13 @@ class ImageController extends Controller {
 				}
 				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileName = $file['name'];
-				$uploadResult = $this->imageService->uploadImage($textFileId, $newFileName, $newFileContent, $this->userId);
-				if (isset($uploadResult['error'])) {
-					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
+				if ($shareToken) {
+					$uploadResult = $this->imageService->uploadImagePublic($documentId, $newFileName, $newFileContent, $shareToken);
 				} else {
-					return new DataResponse($uploadResult);
+					$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+					$userId = $session->getUserId();
+					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileContent, $userId);
 				}
-			} else {
-				return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
-			}
-		} catch (Exception $e) {
-			$this->logger->error('Upload error', ['exception' => $e]);
-			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 *
-	 * @param int|null $textFileId can be null with public file share
-	 * @param string $shareToken
-	 * @return DataResponse
-	 */
-	public function uploadImagePublic(?int $textFileId, string $shareToken): DataResponse {
-		try {
-			$file = $this->request->getUploadedFile('image');
-			if ($file !== null && isset($file['tmp_name'], $file['name'], $file['type'])) {
-				if (!in_array($file['type'], self::IMAGE_MIME_TYPES)) {
-					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
-				}
-				$newFileContent = file_get_contents($file['tmp_name']);
-				$newFileName = $file['name'];
-				$uploadResult = $this->imageService->uploadImagePublic($textFileId, $newFileName, $newFileContent, $shareToken);
 				if (isset($uploadResult['error'])) {
 					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
 				} else {
