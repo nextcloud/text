@@ -94,7 +94,7 @@ export default {
 		display: flex;
 		padding: 6px;
 
-		& /deep/ img {
+		&::v-deep img {
 			margin: 0 !important;
 		}
 
