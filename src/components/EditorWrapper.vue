@@ -52,7 +52,7 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
-				<div>
+				<div class="content-wrapper">
 					<MenuBubble v-if="!readOnly && isRichEditor"
 						:editor="tiptap"
 						:file-path="relativePath" />
