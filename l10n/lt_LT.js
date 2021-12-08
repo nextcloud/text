@@ -24,6 +24,8 @@ OC.L10N.register(
     "Insert emoji" : "Įterpti šypsenėlę",
     "Insert image" : "Įterpti paveikslą",
     "Insert an image" : "Įterpti paveikslą",
+    "Update Link" : "Atnaujinti nuorodą",
+    "Add Link" : "Pridėti nuorodą",
     "Link file" : "Susieti failą",
     "Remove Link" : "Šalinti nuorodą",
     "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
