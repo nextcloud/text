@@ -51,6 +51,7 @@
 						<ActionButton v-if="icon.class && isHiddenInMenu($index)"
 							:key="icon.class"
 							:icon="icon.class"
+							:close-after-click="true"
 							@click="clickIcon(commands, icon)">
 							{{ icon.label }}
 						</ActionButton>
@@ -238,6 +239,7 @@ export default {
 			})
 		},
 		clickIcon(commands, icon) {
+			this.editor.focus()
 			return icon.action(commands)
 		},
 		getWindowWidth(event) {
