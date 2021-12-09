@@ -128,13 +128,20 @@ export default class ListItem extends TiptapListItem {
 						return false
 					}
 
-					tr.setNodeMarkup(parentList.pos, schema.nodes.list_item, { type: parentList.node.attrs.type === TYPES.CHECKBOX ? TYPES.BULLET : TYPES.CHECKBOX })
+					if (parentList.node.attrs.type === TYPES.CHECKBOX) {
+						return toggleList(schema.nodes.bullet_list, type)(state, dispatch, view)
+					}
+
+					tr.doc.nodesBetween(tr.selection.from, tr.selection.to, (node, pos) => {
+						if (node.type === schema.nodes.list_item) {
+							tr.setNodeMarkup(pos, node.type, { type: parentList.node.attrs.type === TYPES.CHECKBOX ? TYPES.BULLET : TYPES.CHECKBOX })
+						}
+					})
 					tr.scrollIntoView()
 
 					if (dispatch) {
 						dispatch(tr)
 					}
-
 				}
 			},
 		}
