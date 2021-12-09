@@ -24,6 +24,8 @@ OC.L10N.register(
     "Insert emoji" : "Txertatu emojia",
     "Insert image" : "Txertatu irudia",
     "Insert an image" : "Txertatu irudi bat",
+    "Update Link" : "Eguneratu esteka",
+    "Add Link" : "Gehitu esteka",
     "Link file" : "Estekatu fitxategia",
     "Remove Link" : "Kendu esteka",
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
