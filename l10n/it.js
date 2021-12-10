@@ -27,6 +27,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Alt" : "Alt",
     "Shift" : "Shift",
+    "Update Link" : "Aggiorna collegamento",
+    "Add Link" : "Aggiungi collegamento",
     "Link file" : "Collegamento a file",
     "Remove Link" : "Rimuovi collegamento",
     "Select file to link to" : "Seleziona il file da collegare",
