@@ -118,7 +118,7 @@
 					<td>
 						<code>* [] {{ t('text', 'Some todo item') }}</code>
 					</td>
-					<td />
+					<td v-if="!isMobile" />
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Blockquote') }}</td>
@@ -136,14 +136,14 @@
 					<td>
 						<code>``` {{ t('text', 'Some code') }}</code>
 					</td>
-					<td />
+					<td v-if="!isMobile" />
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Emoji') }}</td>
 					<td>
 						<code>:{{ t('text', 'Emoji_Search') }}</code>
 					</td>
-					<td />
+					<td v-if="!isMobile" />
 				</tr>
 			</tbody>
 		</table>

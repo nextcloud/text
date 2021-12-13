@@ -41,7 +41,8 @@
 					:file-path="relativePath"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
-					:autohide="autohide">
+					:autohide="autohide"
+					@show-help="showHelp">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -50,9 +51,6 @@
 							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
 						</SessionList>
 					</div>
-					<button v-tooltip="t('text', 'Show formatting help')"
-						class="icon-info"
-						@click.prevent.stop="showHelp" />
 					<slot name="header" />
 				</MenuBar>
 				<div class="content-wrapper">
@@ -675,18 +673,6 @@ export default {
 		}
 		.editor__content::v-deep .ProseMirror {
 			padding-top: 50px;
-		}
-	}
-
-	.icon-info {
-		border: none;
-		background-color: var(--color-background-dark);
-		width: 36px;
-		height: 36px;
-		margin: 6px 6px 6px 0px;
-
-		&:hover, &:focus, &:active {
-			// background-color: var(--color-background-dark);
 		}
 	}
 </style>
