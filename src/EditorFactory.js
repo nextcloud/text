@@ -28,6 +28,7 @@ import Blockquote from '@tiptap/extension-blockquote'
 import Codeblock from '@tiptap/extension-code-block'
 import Placeholder from '@tiptap/extension-placeholder'
 import OrderedList from '@tiptap/extension-ordered-list'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Editor } from '@tiptap/core'
 import { Strong, Italic, Strike, Link, Underline } from './marks'
 import {
@@ -39,25 +40,23 @@ import {
 } from './nodes'
 import { Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
+import { lowlight } from 'lowlight/lib/core'
 
 import 'proxy-polyfill'
 
 const loadSyntaxHighlight = async (language) => {
-	const languages = [language]
-	const modules = {}
-	for (let i = 0; i < languages.length; i++) {
+	const list = lowlight.listLanguages()
+	console.info(list)
+	if (!lowlight.listLanguages().includes(language)) {
 		try {
-			const lang = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + languages[i])
-			modules[languages[i]] = lang.default
+			const syntax = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + language)
+			lowlight.registerLanguage(language, syntax.default)
 		} catch (e) {
 			// No matching highlighing found, fallback to none
-			return undefined
+			console.debug(e)
 		}
 	}
-	if (Object.keys(modules).length === 0 && modules.constructor === Object) {
-		return undefined
-	}
-	return { languages: modules }
+	return lowlight
 }
 
 const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, languages, currentDirectory }) => {
@@ -91,8 +90,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		richEditingExtensions = [
 			PlainTextDocument,
 			Codeblock,
-			// FIXME: Do we want to use CodeBlockLowlight instead?
-			// new CodeBlockHighlight({ ...languages, }),
+			CodeBlockLowlight.configure({ lowlight }),
 		]
 	}
 	extensions = extensions || []

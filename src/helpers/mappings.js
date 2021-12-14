@@ -77,6 +77,7 @@ const extensionHighlight = {
 	'sublime-project': 'json',
 	'sublime-settings': 'json',
 	'sublime-workspace': 'json',
+	js: 'javascript',
 	mk: 'makefile',
 	mak: 'makefile',
 	md: 'markdown',

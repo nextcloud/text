@@ -328,7 +328,8 @@ export default {
 					const content = this.isRichEditor
 						? markdownit.render(documentSource)
 						: '<pre>' + escapeHtml(documentSource) + '</pre>'
-					loadSyntaxHighlight(extensionHighlight[this.fileExtension] || this.fileExtension).then((languages) => {
+					const language = extensionHighlight[this.fileExtension] || this.fileExtension
+					loadSyntaxHighlight(language).then(lowlight => {
 						this.tiptap = createEditor({
 							content,
 							onCreate: ({ editor }) => {
@@ -384,7 +385,7 @@ export default {
 								}),
 							],
 							enableRichEditing: this.isRichEditor,
-							languages,
+							lowlight,
 							currentDirectory: this.currentDirectory,
 						})
 						this.tiptap.on('focus', () => {
