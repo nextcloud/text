@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Strikethrough') }}</td>
-					<td><code>~~{{ t('text', 'Some mistaken text') }}~~</code></td>
+					<td><code>~~{{ t('text', 'Mistaken text') }}~~</code></td>
 					<td v-if="!isMobile">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
@@ -90,7 +90,7 @@
 				<tr>
 					<td>{{ t('text', 'Unordered list') }}</td>
 					<td>
-						<code>* {{ t('text', 'Some item in a list') }}</code>
+						<code>* {{ t('text', 'An item') }}</code>
 					</td>
 					<td v-if="!isMobile">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
@@ -116,7 +116,7 @@
 				<tr>
 					<td>{{ t('text', 'Checklist') }}</td>
 					<td>
-						<code>* [] {{ t('text', 'Some todo item') }}</code>
+						<code>* [] {{ t('text', 'Todo item') }}</code>
 					</td>
 					<td v-if="!isMobile" />
 				</tr>
@@ -135,13 +135,6 @@
 					<td>{{ t('text', 'Code block') }}</td>
 					<td>
 						<code>``` {{ t('text', 'Some code') }}</code>
-					</td>
-					<td v-if="!isMobile" />
-				</tr>
-				<tr>
-					<td>{{ t('text', 'Emoji') }}</td>
-					<td>
-						<code>:{{ t('text', 'Emoji_Search') }}</code>
 					</td>
 					<td v-if="!isMobile" />
 				</tr>
