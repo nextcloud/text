@@ -196,15 +196,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	// Enforce `overflow: scroll` for modal
-	::v-deep .modal-wrapper .modal-container {
-		display: block;
-		overflow: scroll;
-		transition: transform 300ms ease;
-		border-radius: var(--border-radius-large);
-		box-shadow: 0 0 40px rgba(0,0,0,0.2);
-		padding: 30px 40px 20px;
-		user-select: text;
+	::v-deep .modal-wrapper {
+		// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
+		.prev, .next {
+			display: none !important;
+		}
+
+		.modal-container {
+			// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
+			overflow: auto;
+			// Diverge from upstream modal styling
+			padding: 30px 40px 20px;
+			user-select: text;
+		}
+
+		// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
+		// Make modal full screen on mobile
+		@media only screen and (max-width: 512px) {
+			.modal-container {
+				position: absolute;
+				top: 50px;
+			}
+		}
 	}
 
 	h3 {
