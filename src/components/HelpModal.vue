@@ -4,8 +4,13 @@
 		:title="t('text', 'Text editor formatting help')"
 		@close="$emit('close')">
 		<h2>{{ t('text', 'Text editor formatting help') }}</h2>
-		<p>{{ t('text', 'Speed up your writing experience with simple shortcuts.') }}</p>
-		<p>{{ t('text', 'Use the markdown syntax or keyboard shortcuts from below.') }}</p>
+		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
+		<p v-if="!isMobile">
+			{{ t('text', 'Use the markdown syntax or keyboard shortcuts from below.') }}
+		</p>
+		<p v-else>
+			{{ t('text', 'Use the markdown syntax from below.') }}
+		</p>
 
 		<h3>{{ t('text', 'Formatting') }}</h3>
 		<table>
@@ -208,7 +213,8 @@ export default {
 		@media only screen and (max-width: 512px) {
 			.modal-container {
 				position: absolute;
-				top: 50px;
+				top: var(--header-height);
+				height: calc(100% - var(--header-height));
 			}
 		}
 	}
