@@ -188,7 +188,7 @@ export default {
 			}
 
 			return [...icons, {
-				label: t('text', 'Show formatting help'),
+				label: t('text', 'Formatting help'),
 				class: 'icon-info',
 				isActive: () => {
 				},

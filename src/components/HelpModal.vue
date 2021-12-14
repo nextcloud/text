@@ -1,18 +1,17 @@
 <template>
 	<Modal
 		size="large"
-		:title="t('text', 'Text editor formatting help')"
+		:title="t('text', 'Formatting help')"
 		@close="$emit('close')">
-		<h2>{{ t('text', 'Text editor formatting help') }}</h2>
+		<h2>{{ t('text', 'Formatting help') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
 		<p v-if="!isMobile">
-			{{ t('text', 'Use the markdown syntax or keyboard shortcuts from below.') }}
+			{{ t('text', 'Just type the markdown syntax or use keyboard shortcuts from below.') }}
 		</p>
 		<p v-else>
-			{{ t('text', 'Use the markdown syntax from below.') }}
+			{{ t('text', 'Just type the markdown syntax from below.') }}
 		</p>
 
-		<h3>{{ t('text', 'Formatting') }}</h3>
 		<table>
 			<thead>
 				<tr>
@@ -219,13 +218,8 @@ export default {
 		}
 	}
 
-	h3 {
-		font-weight: bold;
-		padding-top: 1rem;
-		padding-bottom: .3em;
-	}
-
 	table {
+		margin-top: 24px;
 		border-collapse: collapse;
 
 		tbody tr {
@@ -240,12 +234,12 @@ export default {
 
 		th {
 			font-weight: bold;
-			padding: .75rem .5rem;
+			padding: .75rem 1rem .75rem 0;
 			border-bottom: 2px solid var(--color-background-darker);
 		}
 
 		td {
-			padding: .75rem .5rem;
+			padding: .75rem 1rem .75rem 0;
 			border-top: 1px solid var(--color-background-dark);
 			border-bottom: unset;
 
@@ -258,7 +252,8 @@ export default {
 			}
 
 			&.ellipsis {
-				padding: 0 .5rem;
+				padding-top: 0;
+				padding-bottom: 0;
 			}
 
 			&.ellipsis_bottom {
