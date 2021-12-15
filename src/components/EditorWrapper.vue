@@ -41,7 +41,8 @@
 					:file-path="relativePath"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
-					:autohide="autohide">
+					:autohide="autohide"
+					@show-help="showHelp">
 					<div v-if="currentSession && active" id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -67,6 +68,7 @@
 		</div>
 
 		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolve-use-this-version="resolveUseThisVersion" @resolve-use-server-version="resolveUseServerVersion" />
+		<HelpModal v-if="displayHelp" @close="hideHelp" />
 	</div>
 </template>
 
@@ -101,6 +103,7 @@ export default {
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList'),
+		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal'),
 	},
 	directives: {
 		Tooltip,
@@ -171,6 +174,7 @@ export default {
 			forceRecreate: false,
 
 			saveStatusPolling: null,
+			displayHelp: false,
 		}
 	},
 	computed: {
@@ -511,6 +515,14 @@ export default {
 				}
 			}
 		},
+
+		showHelp() {
+			this.displayHelp = true
+		},
+
+		hideHelp() {
+			this.displayHelp = false
+		},
 	},
 }
 </script>
@@ -663,7 +675,6 @@ export default {
 			padding-top: 50px;
 		}
 	}
-
 </style>
 <style lang="scss">
 	@import './../../css/style';

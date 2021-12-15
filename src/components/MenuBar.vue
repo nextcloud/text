@@ -174,16 +174,26 @@ export default {
 			}
 		},
 		allIcons() {
-			if (this.isPublic) {
-				return this.icons
+			let icons = this.icons
+			if (!this.isPublic) {
+				icons = [...icons, {
+					label: t('text', 'Insert image'),
+					class: 'icon-image',
+					isActive: () => {
+					},
+					action: (commands) => {
+						this.showImagePrompt(commands.image)
+					},
+				}]
 			}
-			return [...this.icons, {
-				label: t('text', 'Insert image'),
-				class: 'icon-image',
+
+			return [...icons, {
+				label: t('text', 'Formatting help'),
+				class: 'icon-info',
 				isActive: () => {
 				},
 				action: (commands) => {
-					this.showImagePrompt(commands.image)
+					this.$emit('show-help')
 				},
 			}]
 		},
