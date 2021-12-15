@@ -26,12 +26,9 @@ import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
-document.addEventListener('DOMContentLoaded', () => {
-	if (typeof OCA.Viewer === 'undefined') {
-		console.error('Viewer app is not installed')
-		return
-	}
-
+if (typeof OCA.Viewer === 'undefined') {
+	console.error('Viewer app is not installed')
+} else {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
@@ -39,4 +36,4 @@ document.addEventListener('DOMContentLoaded', () => {
 		group: null,
 		theme: 'default',
 	})
-})
+}
