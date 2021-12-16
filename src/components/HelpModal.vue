@@ -6,10 +6,10 @@
 		<h2>{{ t('text', 'Formatting help') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
 		<p v-if="!isMobile">
-			{{ t('text', 'Just type the markdown syntax or use keyboard shortcuts from below.') }}
+			{{ t('text', 'Just type the Markdown syntax or use keyboard shortcuts from below.') }}
 		</p>
 		<p v-else>
-			{{ t('text', 'Just type the markdown syntax from below.') }}
+			{{ t('text', 'Just type the Markdown syntax from below.') }}
 		</p>
 
 		<table>
