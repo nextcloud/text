@@ -23,6 +23,8 @@ OC.L10N.register(
     "Save guest name" : "Gast-Namen speichern",
     "Formatting help" : "Formatierungshilfe",
     "Speed up your writing with simple shortcuts." : "Beschleunigen Sie Ihr Schreiben mit einfachen Tastaturkürzeln.",
+    "Just type the Markdown syntax or use keyboard shortcuts from below." : "Geben Sie einfach die Markdown-Syntax ein oder verwenden Sie die untenstehenden Tastaturkürzel.",
+    "Just type the Markdown syntax from below." : "Geben Sie einfach die untenstehende Markdown-Syntax ein.",
     "Style" : "Stil",
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Tastaturkürzel",
