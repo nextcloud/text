@@ -23,6 +23,8 @@ OC.L10N.register(
     "Save guest name" : "保存访客姓名",
     "Formatting help" : "排版帮助",
     "Speed up your writing with simple shortcuts." : "利用简单快捷键加速写作",
+    "Just type the Markdown syntax or use keyboard shortcuts from below." : "只需输入 markdown 语法或从下面使用键盘快捷键。",
+    "Just type the Markdown syntax from below." : "只需从下面输入 markdown 语法",
     "Style" : "样式",
     "Syntax" : "语法",
     "Keyboard shortcuts" : "键盘快捷键",
