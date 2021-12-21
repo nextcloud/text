@@ -95,5 +95,14 @@ jobs:
           parallel: false
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
+          config: video=false
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Upload test failure screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Upload screenshots
+          path: apps/${{ env.APP_NAME }}/cypress/screenshots/
+          retention-days: 5
