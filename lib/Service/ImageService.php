@@ -86,49 +86,49 @@ class ImageService {
 	/**
 	 * Get image content or preview from file id
 	 * @param int $textFileId
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @param string $userId
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImage(int $textFileId, int $imageFileId, string $userId) {
+	public function getImage(int $textFileId, string $imageFileName, string $userId) {
 		$textFile = $this->getTextFile($textFileId, $userId);
-		return $textFile === null ? null : $this->getImagePreview($imageFileId, $textFile);
+		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
 	 * Get image content or preview from file id in public context
 	 * @param int $textFileId
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @param string $shareToken
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImagePublic(int $textFileId, int $imageFileId, string $shareToken) {
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
-		return $textFile === null ? null : $this->getImagePreview($imageFileId, $textFile);
+		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @param File $textFile
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	private function getImagePreview(int $imageFileId, File $textFile) {
+	private function getImagePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($attachmentFolder !== null) {
-			$imageFiles = $attachmentFolder->getById($imageFileId);
-			if (count($imageFiles) === 0) {
+			try {
+				$imageFile = $attachmentFolder->get($imageFileName);
+			} catch (NotFoundException $e) {
 				return null;
 			}
-			$imageFile = $imageFiles[0];
 			if ($imageFile instanceof File) {
 				if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 					return $this->previewManager->getPreview($imageFile, 1024, 1024);
@@ -589,16 +589,16 @@ class ImageService {
 			if ($textFile->getMimeType() === 'text/markdown') {
 				// get IDs of the files inside the attachment dir
 				$attachmentDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
-				$attachmentsById = [];
+				$attachmentsByName = [];
 				foreach ($attachmentDir->getDirectoryListing() as $attNode) {
-					$attachmentsById[$attNode->getId()] = $attNode;
+					$attachmentsByName[$attNode->getName()] = $attNode;
 				}
 
-				$contentAttachmentIds = $this->getAttachmentIdsFromContent($textFile->getContent());
+				$contentAttachmentNames = $this->getAttachmentNamesFromContent($textFile->getContent());
 
-				$toDelete = array_diff(array_keys($attachmentsById), $contentAttachmentIds);
-				foreach ($toDelete as $id) {
-					$attachmentsById[$id]->delete();
+				$toDelete = array_diff(array_keys($attachmentsByName), $contentAttachmentNames);
+				foreach ($toDelete as $name) {
+					$attachmentsByName[$name]->delete();
 				}
 				return count($toDelete);
 			}
@@ -608,15 +608,15 @@ class ImageService {
 
 
 	/**
-	 * Get IDs of attachment listed in the markdown file content
+	 * Get attachment file names listed in the markdown file content
 	 *
 	 * @param string $content
 	 * @return array
 	 */
-	private function getAttachmentIdsFromContent(string $content): array {
+	private function getAttachmentNamesFromContent(string $content): array {
 		$matches = [];
 		preg_match_all(
-			'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileId=([\d]+)[^)]*\)/',
+			'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
 			$content,
 			$matches,
 			PREG_SET_ORDER
@@ -668,25 +668,16 @@ class ImageService {
 			// create a new attachment dir next to the new file
 			$targetAttachmentDir = $this->getOrCreateAttachmentDirectoryForFile($target);
 			$markdownContent = $source->getContent();
-			$sourceAttachmentIds = $this->getAttachmentIdsFromContent($markdownContent);
 			// replace the text file ID in each attachment link in the markdown content
 			$markdownContent = preg_replace(
-				'/\!\[([^\[\]]+)\]\(text:\/\/image\?textFileId=' . $source->getId() . '&imageFileId=([\d]+[^)]*)\)/',
-				'![$1](text://image?textFileId=' . $target->getId() . '&imageFileId=$2)',
+				'/\!\[([^\[\]]+)\]\(text:\/\/image\?textFileId=' . $source->getId() . '&imageFileName=([^)&]+)\)/',
+				'![$1](text://image?textFileId=' . $target->getId() . '&imageFileName=$2)',
 				$markdownContent
 			);
-			// copy the attachments and replace attachment file IDs in the markdown content
-			foreach ($sourceAttachmentIds as $sourceAttachmentId) {
-				$sourceAttachment = $sourceAttachmentDir->getById($sourceAttachmentId);
-				if (count($sourceAttachment) > 0 && $sourceAttachment[0] instanceof File) {
-					$sourceAttachment = $sourceAttachment[0];
+			// copy the attachment files
+			foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
+				if ($sourceAttachment instanceof File) {
 					$copied = $targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
-					$copiedId = $copied->getId();
-					$markdownContent = preg_replace(
-						'/\!\[([^\[\]]+)\]\(text:\/\/image\?([^)]*)imageFileId=' . $sourceAttachmentId . '([^)]*)\)/',
-						'![$1](text://image?$2imageFileId=' . $copiedId . '$3)',
-						$markdownContent
-					);
 				}
 			}
 			try {

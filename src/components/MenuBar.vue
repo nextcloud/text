@@ -432,7 +432,7 @@ export default {
 			}, false, [], true, undefined, this.imagePath)
 		},
 		insertAttachmentImage(name, fileId, command, textFileId) {
-			const src = 'text://image?textFileId=' + textFileId + '&imageFileId=' + fileId
+			const src = 'text://image?textFileId=' + textFileId + '&imageFileName=' + encodeURIComponent(name)
 			command({
 				src,
 				alt: name,

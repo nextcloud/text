@@ -194,15 +194,15 @@ class ImageController extends Controller {
 	 *
 	 * Serve the images in the editor
 	 * @param int $textFileId
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @return DataDisplayResponse
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 */
-	public function getImage(int $textFileId, int $imageFileId): DataDisplayResponse {
-		$imageFile = $this->imageService->getImage($textFileId, $imageFileId, $this->userId);
+	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
+		$imageFile = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
 		if ($imageFile !== null) {
 			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
 		} else {
@@ -216,7 +216,7 @@ class ImageController extends Controller {
 	 * @PublicPage
 	 *
 	 * @param int $textFileId
-	 * @param int $imageFileId
+	 * @param string $imageFileName
 	 * @param string $shareToken
 	 * @return DataDisplayResponse
 	 * @throws \OCP\Files\InvalidPathException
@@ -224,8 +224,8 @@ class ImageController extends Controller {
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 */
-	public function getImagePublic(int $textFileId, int $imageFileId, string $shareToken): DataDisplayResponse {
-		$imageFile = $this->imageService->getImagePublic($textFileId, $imageFileId, $shareToken);
+	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): DataDisplayResponse {
+		$imageFile = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);
 		if ($imageFile !== null) {
 			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
 		} else {

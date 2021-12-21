@@ -118,19 +118,19 @@ export default {
 		},
 		imageUrl() {
 			if (this.src.startsWith('text://')) {
-				const imageFileId = getQueryVariable(this.src, 'imageFileId')
+				const imageFileName = getQueryVariable(this.src, 'imageFileName')
 				const textFileId = getQueryVariable(this.src, 'textFileId')
 				if (getCurrentUser()) {
-					return generateUrl('/apps/text/image?textFileId={textFileId}&imageFileId={imageFileId}',
+					return generateUrl('/apps/text/image?textFileId={textFileId}&imageFileName={imageFileName}',
 						{
 							textFileId,
-							imageFileId,
+							imageFileName,
 						})
 				} else {
-					return generateUrl('/apps/text/public/image?textFileId={textFileId}&imageFileId={imageFileId}&shareToken={token}',
+					return generateUrl('/apps/text/public/image?textFileId={textFileId}&imageFileName={imageFileName}&shareToken={token}',
 						{
 							textFileId,
-							imageFileId,
+							imageFileName,
 							token: this.token,
 						})
 				}
