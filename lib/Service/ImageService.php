@@ -34,8 +34,6 @@ use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
-use OCP\Lock\ILockingProvider;
-use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
 use Throwable;

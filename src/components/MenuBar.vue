@@ -245,20 +245,10 @@ export default {
 			}
 		},
 		allIcons() {
-			let icons = this.icons
-			if (!this.isPublic) {
-				icons = [...icons, {
-					label: t('text', 'Insert image'),
-					class: 'icon-image',
-					isActive: () => {
-					},
-					action: (commands) => {
-						this.showImagePrompt(commands.image)
-					},
-				}]
-			}
-
-			return [...icons, {
+			return [...this.icons, {
+				label: t('text', 'Insert image'),
+				class: 'icon-image',
+			}, {
 				label: t('text', 'Formatting help'),
 				class: 'icon-info',
 				isActive: () => {
@@ -313,10 +303,6 @@ export default {
 		imagePath() {
 			return this.lastImagePath
 				|| this.filePath.split('/').slice(0, -1).join('/')
-		},
-		sharingToken() {
-			return document.getElementById('sharingToken')
-				&& document.getElementById('sharingToken').value
 		},
 	},
 	mounted() {
