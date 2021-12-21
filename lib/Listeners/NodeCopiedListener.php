@@ -42,7 +42,6 @@ class NodeCopiedListener implements IEventListener {
 		if (!$event instanceof NodeCopiedEvent) {
 			return;
 		}
-		error_log('COPIED source ' . $event->getSource()->getId() . ' target '. $event->getTarget()->getId());
 		if ($event->getSource() instanceof File
 			&& $event->getSource()->getMimeType() === 'text/markdown'
 			&& $event->getTarget() instanceof File

@@ -381,7 +381,7 @@ export default {
 			event.target.value = ''
 
 			this.syncService.uploadImage(image).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -400,7 +400,7 @@ export default {
 			this.$refs.imageActions[0].closeMenu()
 
 			this.syncService.insertImageLink(this.imageLink).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -414,7 +414,7 @@ export default {
 			this.$refs.imageActions[0].closeMenu()
 
 			this.syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, command, response.data?.textFileId)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -431,8 +431,8 @@ export default {
 				this.onImagePathSubmit(file, command)
 			}, false, [], true, undefined, this.imagePath)
 		},
-		insertAttachmentImage(name, fileId, command, textFileId) {
-			const src = 'text://image?textFileId=' + textFileId + '&imageFileName=' + encodeURIComponent(name)
+		insertAttachmentImage(name, fileId, command) {
+			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
 			command({
 				src,
 				alt: name,

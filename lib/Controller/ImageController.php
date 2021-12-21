@@ -91,7 +91,7 @@ class ImageController extends Controller {
 	 */
 	public function insertImageFile(int $documentId, int $sessionId, string $sessionToken, string $imagePath): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 500);
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		$userId = $session->getUserId();
@@ -122,7 +122,7 @@ class ImageController extends Controller {
 	 */
 	public function insertImageLink(string $link, int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 500);
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
 		try {
@@ -156,7 +156,7 @@ class ImageController extends Controller {
 	 */
 	public function uploadImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 500);
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
 		try {
@@ -191,41 +191,30 @@ class ImageController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 *
-	 * Serve the images in the editor
-	 * @param int $textFileId
-	 * @param string $imageFileName
-	 * @return DataDisplayResponse
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotFoundException
-	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
-	 */
-	public function getImage(int $textFileId, string $imageFileName): DataDisplayResponse {
-		$imageFile = $this->imageService->getImage($textFileId, $imageFileName, $this->userId);
-		if ($imageFile !== null) {
-			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
-		} else {
-			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @PublicPage
 	 *
-	 * @param int $textFileId
+	 * Serve the images in the editor
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string|null $shareToken
 	 * @param string $imageFileName
-	 * @param string $shareToken
 	 * @return DataDisplayResponse
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotFoundException
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken): DataDisplayResponse {
-		$imageFile = $this->imageService->getImagePublic($textFileId, $imageFileName, $shareToken);
+	public function getImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null, string $imageFileName): DataDisplayResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+		}
+
+		if ($shareToken) {
+			$imageFile = $this->imageService->getImagePublic($documentId, $imageFileName, $shareToken);
+		} else {
+			$imageFile = $this->imageService->getImage($documentId, $imageFileName, $this->userId);
+		}
 		if ($imageFile !== null) {
 			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
 		} else {

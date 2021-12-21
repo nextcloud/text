@@ -31,9 +31,6 @@ return [
 		['name' => 'Image#insertImageLink', 'url' => '/image/link', 'verb' => 'POST'],
 		['name' => 'Image#uploadImage', 'url' => '/image/upload', 'verb' => 'POST'],
 		['name' => 'Image#getImage', 'url' => '/image', 'verb' => 'GET'],
-		['name' => 'Image#insertImageLinkPublic', 'url' => '/public/image/link', 'verb' => 'POST'],
-		['name' => 'Image#uploadImagePublic', 'url' => '/public/image/upload', 'verb' => 'POST'],
-		['name' => 'Image#getImagePublic', 'url' => '/public/image', 'verb' => 'GET'],
 
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
 		['name' => 'Session#fetch', 'url' => '/session/fetch', 'verb' => 'POST'],

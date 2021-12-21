@@ -61,6 +61,7 @@
 import path from 'path'
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import { getCurrentUser } from '@nextcloud/auth'
+import store from './../mixins/store'
 
 const imageMimes = [
 	'image/png',
@@ -93,6 +94,9 @@ const getQueryVariable = (src, variable) => {
 
 export default {
 	name: 'ImageView',
+	mixins: [
+		store,
+	],
 	props: ['node', 'options', 'updateAttrs', 'view'], // eslint-disable-line
 	data() {
 		return {
@@ -102,6 +106,9 @@ export default {
 		}
 	},
 	computed: {
+		currentSession() {
+			return this.$store.state.currentSession
+		},
 		davUrl() {
 			if (getCurrentUser()) {
 				const uid = getCurrentUser().uid
@@ -118,20 +125,26 @@ export default {
 		},
 		imageUrl() {
 			if (this.src.startsWith('text://')) {
+				const documentId = this.currentSession?.documentId
+				const sessionId = this.currentSession?.id
+				const sessionToken = this.currentSession?.token
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				const textFileId = getQueryVariable(this.src, 'textFileId')
 				if (getCurrentUser()) {
-					return generateUrl('/apps/text/image?textFileId={textFileId}&imageFileName={imageFileName}',
+					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
 						{
-							textFileId,
+							documentId,
+							sessionId,
+							sessionToken,
 							imageFileName,
 						})
 				} else {
-					return generateUrl('/apps/text/public/image?textFileId={textFileId}&imageFileName={imageFileName}&shareToken={token}',
+					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
 						{
-							textFileId,
+							documentId,
+							sessionId,
+							sessionToken,
 							imageFileName,
-							token: this.token,
+							shareToken: this.token,
 						})
 				}
 			}

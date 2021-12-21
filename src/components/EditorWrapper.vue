@@ -296,6 +296,7 @@ export default {
 					this.document = document
 					this.readOnly = document.readOnly
 					localStorage.setItem('nick', this.currentSession.guestName)
+					this.$store.dispatch('setCurrentSession', this.currentSession)
 				})
 				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {

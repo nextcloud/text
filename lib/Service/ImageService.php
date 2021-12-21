@@ -85,7 +85,7 @@ class ImageService {
 
 	/**
 	 * Get image content or preview from file id
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $imageFileName
 	 * @param string $userId
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
@@ -93,14 +93,14 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImage(int $textFileId, string $imageFileName, string $userId) {
-		$textFile = $this->getTextFile($textFileId, $userId);
+	public function getImage(int $documentId, string $imageFileName, string $userId) {
+		$textFile = $this->getTextFile($documentId, $userId);
 		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
 	 * Get image content or preview from file id in public context
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $imageFileName
 	 * @param string $shareToken
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
@@ -108,8 +108,8 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImagePublic(int $textFileId, string $imageFileName, string $shareToken) {
-		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
+	public function getImagePublic(int $documentId, string $imageFileName, string $shareToken) {
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
 	}
 
@@ -143,7 +143,7 @@ class ImageService {
 	/**
 	 * Save an uploaded image in the attachment folder
 	 *
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $userId
@@ -152,8 +152,8 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function uploadImage(int $textFileId, string $newFileName, string $newFileContent, string $userId): array {
-		$textFile = $this->getTextFile($textFileId, $userId);
+	public function uploadImage(int $documentId, string $newFileName, string $newFileContent, string $userId): array {
+		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new Exception('No write permissions');
 		}
@@ -164,7 +164,7 @@ class ImageService {
 			return [
 				'name' => $fileName,
 				'id' => $savedFile->getId(),
-				'textFileId' => $textFile->getId(),
+				'documentId' => $textFile->getId(),
 			];
 		} else {
 			return [
@@ -175,7 +175,7 @@ class ImageService {
 
 	/**
 	 * Save an uploaded image in the attachment folder in a public context
-	 * @param int|null $textFileId
+	 * @param int|null $documentId
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $shareToken
@@ -184,11 +184,11 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function uploadImagePublic(?int $textFileId, string $newFileName, string $newFileContent, string $shareToken): array {
+	public function uploadImagePublic(?int $documentId, string $newFileName, string $newFileContent, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
 			throw new Exception('No write permissions');
 		}
-		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
@@ -196,7 +196,7 @@ class ImageService {
 			return [
 				'name' => $fileName,
 				'id' => $savedFile->getId(),
-				'textFileId' => $textFile->getId(),
+				'documentId' => $textFile->getId(),
 			];
 		} else {
 			return [
@@ -208,7 +208,7 @@ class ImageService {
 	/**
 	 * Copy a file from a user's storage in the attachment folder
 	 *
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $path
 	 * @param string $userId
 	 * @return array
@@ -217,8 +217,8 @@ class ImageService {
 	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 */
-	public function insertImageFile(int $textFileId, string $path, string $userId): array {
-		$textFile = $this->getTextFile($textFileId, $userId);
+	public function insertImageFile(int $documentId, string $path, string $userId): array {
+		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new Exception('No write permissions');
 		}
@@ -251,7 +251,7 @@ class ImageService {
 			return [
 				'name' => $fileName,
 				'id' => $targetFile->getId(),
-				'textFileId' => $textFile->getId(),
+				'documentId' => $textFile->getId(),
 			];
 		}
 		return [
@@ -262,7 +262,7 @@ class ImageService {
 	/**
 	 * Download and save an image from a link in the attachment folder
 	 *
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $link
 	 * @param string $userId
 	 * @return array
@@ -270,8 +270,8 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function insertImageLink(int $textFileId, string $link, string $userId): array {
-		$textFile = $this->getTextFile($textFileId, $userId);
+	public function insertImageLink(int $documentId, string $link, string $userId): array {
+		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new Exception('No write permissions');
 		}
@@ -288,17 +288,17 @@ class ImageService {
 	/**
 	 * Download and save an image from a link in the attachment folder in a public context
 	 *
-	 * @param int|null $textFileId
+	 * @param int|null $documentId
 	 * @param string $link
 	 * @param string $shareToken
 	 * @return array|string[]
 	 * @throws Exception
 	 */
-	public function insertImageLinkPublic(?int $textFileId, string $link, string $shareToken): array {
+	public function insertImageLinkPublic(?int $documentId, string $link, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
 			throw new Exception('No write permissions');
 		}
-		$textFile = $this->getTextFilePublic($textFileId, $shareToken);
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
@@ -362,7 +362,7 @@ class ImageService {
 				return [
 					'name' => $fileName,
 					'id' => $savedFile->getId(),
-					'textFileId' => $textFile->getId(),
+					'documentId' => $textFile->getId(),
 				];
 			} else {
 				$savedFile->delete();
@@ -474,14 +474,14 @@ class ImageService {
 	/**
 	 * Get a user file from file ID
 	 *
-	 * @param int $textFileId
+	 * @param int $documentId
 	 * @param string $userId
 	 * @return File|null
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	private function getTextFile(int $textFileId, string $userId): ?File {
+	private function getTextFile(int $documentId, string $userId): ?File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
-		$textFile = $userFolder->getById($textFileId);
+		$textFile = $userFolder->getById($documentId);
 		if (count($textFile) > 0 && $textFile[0] instanceof File) {
 			return $textFile[0];
 		}
@@ -491,12 +491,12 @@ class ImageService {
 	/**
 	 * Get file from share token
 	 *
-	 * @param int|null $textFileId
+	 * @param int|null $documentId
 	 * @param string $shareToken
 	 * @return File|null
 	 * @throws NotFoundException
 	 */
-	private function getTextFilePublic(?int $textFileId, string $shareToken): ?File {
+	private function getTextFilePublic(?int $documentId, string $shareToken): ?File {
 		// is the file shared with this token?
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
@@ -507,10 +507,10 @@ class ImageService {
 					if ($textFile instanceof File) {
 						return $textFile;
 					}
-				} elseif ($share->getNodeType() === 'folder' && $textFileId !== null) {
+				} elseif ($share->getNodeType() === 'folder' && $documentId !== null) {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
-						$textFile = $folder->getById($textFileId);
+						$textFile = $folder->getById($documentId);
 						if (count($textFile) > 0 && $textFile[0] instanceof File) {
 							return $textFile[0];
 						}
@@ -667,25 +667,11 @@ class ImageService {
 		if ($sourceAttachmentDir !== null) {
 			// create a new attachment dir next to the new file
 			$targetAttachmentDir = $this->getOrCreateAttachmentDirectoryForFile($target);
-			$markdownContent = $source->getContent();
-			// replace the text file ID in each attachment link in the markdown content
-			$markdownContent = preg_replace(
-				'/\!\[([^\[\]]+)\]\(text:\/\/image\?textFileId=' . $source->getId() . '&imageFileName=([^)&]+)\)/',
-				'![$1](text://image?textFileId=' . $target->getId() . '&imageFileName=$2)',
-				$markdownContent
-			);
 			// copy the attachment files
 			foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
 				if ($sourceAttachment instanceof File) {
-					$copied = $targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
+					$targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
 				}
-			}
-			try {
-				$target->putContent($markdownContent);
-			} catch (LockedException $e) {
-				$target->unlock(ILockingProvider::LOCK_SHARED);
-				$target->putContent($markdownContent);
-				$target->lock(ILockingProvider::LOCK_SHARED);
 			}
 		}
 	}
