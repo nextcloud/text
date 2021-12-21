@@ -175,6 +175,7 @@ export default {
 		text-align: left;
 		max-height: 0;
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+		position: relative;
 		&.creatable {
 			min-height: 90px;
 		}
@@ -211,13 +212,11 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor {
-		overflow: visible !important;
+		overflow: scroll !important;
+		max-height: calc(40vh - 40px);
 	}
 
 	#rich-workspace::v-deep .content-wrapper {
-		overflow: scroll !important;
-		max-height: 50vh;
-		max-height: calc(40vh - 50px);
 		padding-left: 10px;
 	}
 
