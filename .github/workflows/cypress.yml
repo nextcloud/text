@@ -91,7 +91,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          record: false # disabled for now as we have no way to savely use the token in our org
+          record: true
           parallel: false
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
