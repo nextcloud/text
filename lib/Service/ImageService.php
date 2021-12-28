@@ -553,16 +553,19 @@ class ImageService {
 	 * @param string $content
 	 * @return array
 	 */
-	private function getAttachmentNamesFromContent(string $content): array {
+	public static function getAttachmentNamesFromContent(string $content): array {
 		$matches = [];
 		preg_match_all(
-			'/\!\[[^\[\]]+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
+			// simple version with .+ between the brackets
+			// '/\!\[.+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
+			// complex version of php-markdown
+			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
 			$content,
 			$matches,
 			PREG_SET_ORDER
 		);
 		return array_map(static function (array $match) {
-			return $match[1] ?? null;
+			return urldecode($match[1]) ?? null;
 		}, $matches);
 	}
 

@@ -424,7 +424,9 @@ export default {
 			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
 			command({
 				src,
-				alt: name,
+				// simply get rid of brackets to make sure link text is valid
+				// as it does not need to be unique and matching the real file name
+				alt: name.replaceAll(/[[\]]/g, ''),
 			})
 		},
 		showLinkPrompt(command) {
