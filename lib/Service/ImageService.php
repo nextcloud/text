@@ -132,9 +132,8 @@ class ImageService {
 			if ($imageFile instanceof File) {
 				if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 					return $this->previewManager->getPreview($imageFile, 1024, 1024);
-				} else {
-					return $imageFile;
 				}
+				return $imageFile;
 			}
 		}
 		return null;
@@ -167,11 +166,10 @@ class ImageService {
 				'id' => $savedFile->getId(),
 				'documentId' => $textFile->getId(),
 			];
-		} else {
-			return [
-				'error' => 'Impossible to get attachment directory',
-			];
 		}
+		return [
+			'error' => 'Impossible to get attachment directory',
+		];
 	}
 
 	/**
@@ -199,11 +197,10 @@ class ImageService {
 				'id' => $savedFile->getId(),
 				'documentId' => $textFile->getId(),
 			];
-		} else {
-			return [
-				'error' => 'Impossible to get attachment directory',
-			];
 		}
+		return [
+			'error' => 'Impossible to get attachment directory',
+		];
 	}
 
 	/**
@@ -227,11 +224,10 @@ class ImageService {
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->copyImageFile($imageFile, $saveDir, $textFile);
-		} else {
-			return [
-				'error' => 'Impossible to get attachment directory',
-			];
 		}
+		return [
+			'error' => 'Impossible to get attachment directory',
+		];
 	}
 
 	/**
@@ -281,11 +277,10 @@ class ImageService {
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
-		} else {
-			return [
-				'error' => 'Impossible to get attachment directory',
-			];
 		}
+		return [
+			'error' => 'Impossible to get attachment directory',
+		];
 	}
 
 	/**
@@ -305,11 +300,10 @@ class ImageService {
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
-		} else {
-			return [
-				'error' => 'Impossible to get attachment directory',
-			];
 		}
+		return [
+			'error' => 'Impossible to get attachment directory',
+		];
 	}
 
 	/**
@@ -367,12 +361,11 @@ class ImageService {
 					'id' => $savedFile->getId(),
 					'documentId' => $textFile->getId(),
 				];
-			} else {
-				$savedFile->delete();
-				return [
-					'error' => 'Unsupported file type',
-				];
 			}
+			$savedFile->delete();
+			return [
+				'error' => 'Unsupported file type',
+			];
 		} elseif (isset($res['error'])) {
 			$savedFile->delete();
 			return $res;
@@ -450,9 +443,8 @@ class ImageService {
 		$textFile = $userFolder->getById($documentId);
 		if (count($textFile) > 0 && $textFile[0] instanceof File) {
 			return $textFile[0];
-		} else {
-			throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
 		}
+		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
 	}
 
 	/**
