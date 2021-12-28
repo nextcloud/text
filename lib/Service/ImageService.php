@@ -104,8 +104,9 @@ class ImageService {
 	 * @param string $shareToken
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function getImagePublic(int $documentId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
@@ -123,18 +124,12 @@ class ImageService {
 	 */
 	private function getImagePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($attachmentFolder !== null) {
-			try {
-				$imageFile = $attachmentFolder->get($imageFileName);
-			} catch (NotFoundException $e) {
-				return null;
+		$imageFile = $attachmentFolder->get($imageFileName);
+		if ($imageFile instanceof File) {
+			if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
+				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}
-			if ($imageFile instanceof File) {
-				if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
-					return $this->previewManager->getPreview($imageFile, 1024, 1024);
-				}
-				return $imageFile;
-			}
+			return $imageFile;
 		}
 		return null;
 	}
@@ -158,17 +153,12 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($saveDir !== null) {
-			$fileName = (string) time() . '-' . $newFileName;
-			$savedFile = $saveDir->newFile($fileName, $newFileContent);
-			return [
-				'name' => $fileName,
-				'id' => $savedFile->getId(),
-				'documentId' => $textFile->getId(),
-			];
-		}
+		$fileName = (string) time() . '-' . $newFileName;
+		$savedFile = $saveDir->newFile($fileName, $newFileContent);
 		return [
-			'error' => 'Impossible to get attachment directory',
+			'name' => $fileName,
+			'id' => $savedFile->getId(),
+			'documentId' => $textFile->getId(),
 		];
 	}
 
@@ -180,8 +170,9 @@ class ImageService {
 	 * @param string $shareToken
 	 * @return array
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImagePublic(?int $documentId, string $newFileName, string $newFileContent, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
@@ -189,17 +180,12 @@ class ImageService {
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($saveDir !== null) {
-			$fileName = (string) time() . '-' . $newFileName;
-			$savedFile = $saveDir->newFile($fileName, $newFileContent);
-			return [
-				'name' => $fileName,
-				'id' => $savedFile->getId(),
-				'documentId' => $textFile->getId(),
-			];
-		}
+		$fileName = (string) time() . '-' . $newFileName;
+		$savedFile = $saveDir->newFile($fileName, $newFileContent);
 		return [
-			'error' => 'Impossible to get attachment directory',
+			'name' => $fileName,
+			'id' => $savedFile->getId(),
+			'documentId' => $textFile->getId(),
 		];
 	}
 
@@ -222,12 +208,7 @@ class ImageService {
 		}
 		$imageFile = $this->getFileFromPath($path, $userId);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($saveDir !== null) {
-			return $this->copyImageFile($imageFile, $saveDir, $textFile);
-		}
-		return [
-			'error' => 'Impossible to get attachment directory',
-		];
+		return $this->copyImageFile($imageFile, $saveDir, $textFile);
 	}
 
 	/**
@@ -275,12 +256,7 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($saveDir !== null) {
-			return $this->downloadLink($saveDir, $link, $textFile);
-		}
-		return [
-			'error' => 'Impossible to get attachment directory',
-		];
+		return $this->downloadLink($saveDir, $link, $textFile);
 	}
 
 	/**
@@ -290,7 +266,11 @@ class ImageService {
 	 * @param string $link
 	 * @param string $shareToken
 	 * @return array|string[]
-	 * @throws Exception
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageLinkPublic(?int $documentId, string $link, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
@@ -298,12 +278,7 @@ class ImageService {
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		if ($saveDir !== null) {
-			return $this->downloadLink($saveDir, $link, $textFile);
-		}
-		return [
-			'error' => 'Impossible to get attachment directory',
-		];
+		return $this->downloadLink($saveDir, $link, $textFile);
 	}
 
 	/**
@@ -382,13 +357,13 @@ class ImageService {
 	 *
 	 * @param File $textFile
 	 * @param bool $create
-	 * @return Folder|null
+	 * @return Folder
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): ?Folder {
+	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): Folder {
 		$owner = $textFile->getOwner();
 		$ownerId = $owner->getUID();
 		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
@@ -406,7 +381,7 @@ class ImageService {
 				return $ownerParentFolder->newFolder($attachmentFolderName);
 			}
 		}
-		return null;
+		throw new NotFoundException('Attachment dir for document ' . $textFile->getId() . ' was not found or could not be created.');
 	}
 
 	/**
@@ -537,9 +512,10 @@ class ImageService {
 	 * @param int $fileId
 	 * @return int The number of deleted files
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function cleanupAttachments(int $fileId): int {
 		$textFile = $this->rootFolder->getById($fileId);
@@ -547,8 +523,10 @@ class ImageService {
 			$textFile = $textFile[0];
 			if ($textFile->getMimeType() === 'text/markdown') {
 				// get IDs of the files inside the attachment dir
-				$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
-				if ($attachmentDir === null) {
+				try {
+					$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
+				} catch (NotFoundException $e) {
+					// this only happens if the attachment dir was deleted by the user while editing the document
 					return 0;
 				}
 				$attachmentsByName = [];
@@ -599,12 +577,15 @@ class ImageService {
 	public function moveAttachments(File $source, File $target): void {
 		// if the parent directory has changed
 		if ($source->getParent()->getPath() !== $target->getParent()->getPath()) {
-			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-			// if there is an attachment dir for this file
-			// and it is in the same directory as the source file
+			try {
+				$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+			} catch (NotFoundException $e) {
+				// silently return if no attachment dir was found for source file
+				return;
+			}
+			// it is in the same directory as the source file in its owner's storage
 			// in other words, we move the attachment dir only if the .md file is moved by its owner
-			if ($sourceAttachmentDir !== null
-				&& $source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
+			if ($source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
 			) {
 				$sourceAttachmentDir->move($target->getParent()->getPath() . '/' . $sourceAttachmentDir->getName());
 			}
@@ -619,10 +600,13 @@ class ImageService {
 	 */
 	public function deleteAttachments(File $source): void {
 		// if there is an attachment dir for this file
-		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-		if ($sourceAttachmentDir !== null) {
-			$sourceAttachmentDir->delete();
+		try {
+			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+		} catch (NotFoundException $e) {
+			// silently return if no attachment dir was found
+			return;
 		}
+		$sourceAttachmentDir->delete();
 	}
 
 	/**
@@ -635,15 +619,18 @@ class ImageService {
 	 * @throws \OCP\Lock\LockedException
 	 */
 	public function copyAttachments(File $source, File $target): void {
-		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
-		if ($sourceAttachmentDir !== null) {
-			// create a new attachment dir next to the new file
-			$targetAttachmentDir = $this->getAttachmentDirectoryForFile($target, true);
-			// copy the attachment files
-			foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
-				if ($sourceAttachment instanceof File) {
-					$targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
-				}
+		try {
+			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
+		} catch (NotFoundException $e) {
+			// silently return if no attachment dir was found for source file
+			return;
+		}
+		// create a new attachment dir next to the new file
+		$targetAttachmentDir = $this->getAttachmentDirectoryForFile($target, true);
+		// copy the attachment files
+		foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
+			if ($sourceAttachment instanceof File) {
+				$targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
 			}
 		}
 	}

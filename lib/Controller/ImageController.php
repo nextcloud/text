@@ -98,9 +98,7 @@ class ImageController extends Controller {
 
 		try {
 			$insertResult = $this->imageService->insertImageFile($documentId, $imagePath, $userId);
-			return isset($insertResult['error'])
-				? new DataResponse($insertResult, Http::STATUS_BAD_REQUEST)
-				: new DataResponse($insertResult);
+			return new DataResponse($insertResult);
 		} catch (Exception $e) {
 			$this->logger->error('File insertion error', ['exception' => $e]);
 			return new DataResponse(['error' => 'File insertion error'], Http::STATUS_BAD_REQUEST);
@@ -131,9 +129,7 @@ class ImageController extends Controller {
 				$userId = $session->getUserId();
 				$downloadResult = $this->imageService->insertImageLink($documentId, $link, $userId);
 			}
-			return isset($downloadResult['error'])
-				? new DataResponse($downloadResult, Http::STATUS_BAD_REQUEST)
-				: new DataResponse($downloadResult);
+			return new DataResponse($downloadResult);
 		} catch (Exception $e) {
 			$this->logger->error('Link insertion error', ['exception' => $e]);
 			return new DataResponse(['error' => 'Link insertion error'], Http::STATUS_BAD_REQUEST);
@@ -170,11 +166,7 @@ class ImageController extends Controller {
 					$userId = $session->getUserId();
 					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileContent, $userId);
 				}
-				if (isset($uploadResult['error'])) {
-					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
-				} else {
-					return new DataResponse($uploadResult);
-				}
+				return new DataResponse($uploadResult);
 			}
 			return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 		} catch (Exception $e) {
