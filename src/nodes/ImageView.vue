@@ -260,10 +260,13 @@ export default {
 
 	.image__view {
 		text-align: center;
-
-		.image__main {
-			max-height: 40vh;
+		img {
+			max-width: 100%;
 		}
+	}
+
+	.image__main {
+		max-height: calc(100vh - 50px - 50px);
 	}
 
 	.fade-enter-active {
