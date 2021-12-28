@@ -166,13 +166,17 @@ class ImageController extends Controller {
 					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
 				}
 				$newFileContent = file_get_contents($file['tmp_name']);
+				$newFileResource = fopen($file['tmp_name'], 'rb');
+				if ($newFileResource === false) {
+					throw new Exception('Could not read file');
+				}
 				$newFileName = $file['name'];
 				if ($shareToken) {
-					$uploadResult = $this->imageService->uploadImagePublic($documentId, $newFileName, $newFileContent, $shareToken);
+					$uploadResult = $this->imageService->uploadImagePublic($documentId, $newFileName, $newFileResource, $shareToken);
 				} else {
 					$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 					$userId = $session->getUserId();
-					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileContent, $userId);
+					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileResource, $userId);
 				}
 				return new DataResponse($uploadResult);
 			}

@@ -147,14 +147,14 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImage(int $documentId, string $newFileName, string $newFileContent, string $userId): array {
+	public function uploadImage(int $documentId, string $newFileName, $newFileResource, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = (string) time() . '-' . $newFileName;
-		$savedFile = $saveDir->newFile($fileName, $newFileContent);
+		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
 			'id' => $savedFile->getId(),
@@ -174,14 +174,14 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImagePublic(?int $documentId, string $newFileName, string $newFileContent, string $shareToken): array {
+	public function uploadImagePublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
 			throw new NotPermittedException('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = (string) time() . '-' . $newFileName;
-		$savedFile = $saveDir->newFile($fileName, $newFileContent);
+		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
 			'id' => $savedFile->getId(),
