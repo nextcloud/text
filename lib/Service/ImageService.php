@@ -117,11 +117,12 @@ class ImageService {
 	 * @param File $textFile
 	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
 	private function getImagePreview(string $imageFileName, File $textFile) {
-		$attachmentFolder = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($attachmentFolder !== null) {
 			try {
 				$imageFile = $attachmentFolder->get($imageFileName);
@@ -148,15 +149,16 @@ class ImageService {
 	 * @param string $userId
 	 * @return array
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function uploadImage(int $documentId, string $newFileName, string $newFileContent, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
-		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
@@ -188,7 +190,7 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			$fileName = (string) time() . '-' . $newFileName;
 			$savedFile = $saveDir->newFile($fileName, $newFileContent);
@@ -212,9 +214,9 @@ class ImageService {
 	 * @param string $userId
 	 * @return array
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageFile(int $documentId, string $path, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
@@ -222,7 +224,7 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$imageFile = $this->getFileFromPath($path, $userId);
-		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->copyImageFile($imageFile, $saveDir, $textFile);
 		} else {
@@ -266,15 +268,17 @@ class ImageService {
 	 * @param string $userId
 	 * @return array
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws \OCP\Lock\LockedException
+	 * @throws \OC\User\NoUserException
 	 */
 	public function insertImageLink(int $documentId, string $link, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
-		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
 		} else {
@@ -298,7 +302,7 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		if ($saveDir !== null) {
 			return $this->downloadLink($saveDir, $link, $textFile);
 		} else {
@@ -384,41 +388,14 @@ class ImageService {
 	 * Get or create file-specific attachment folder
 	 *
 	 * @param File $textFile
-	 * @return Folder|null
-	 * @throws NotFoundException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
-	 */
-	private function getOrCreateAttachmentDirectoryForFile(File $textFile): ?Folder {
-		$owner = $textFile->getOwner();
-		$ownerId = $owner->getUID();
-		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
-		$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
-		if (count($ownerTextFile) > 0) {
-			$ownerTextFile = $ownerTextFile[0];
-			$ownerParentFolder = $ownerTextFile->getParent();
-			$attachmentFolderName = '.attachments.' . $textFile->getId();
-			if ($ownerParentFolder->nodeExists($attachmentFolderName)) {
-				$attachmentFolder = $ownerParentFolder->get($attachmentFolderName);
-				if ($attachmentFolder instanceof Folder) {
-					return $attachmentFolder;
-				}
-			} else {
-				return $ownerParentFolder->newFolder($attachmentFolderName);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @param File $textFile
+	 * @param bool $create
 	 * @return Folder|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	private function getAttachmentDirectoryForFile(File $textFile): ?Folder {
+	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): ?Folder {
 		$owner = $textFile->getOwner();
 		$ownerId = $owner->getUID();
 		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
@@ -432,6 +409,8 @@ class ImageService {
 				if ($attachmentFolder instanceof Folder) {
 					return $attachmentFolder;
 				}
+			} elseif ($create) {
+				return $ownerParentFolder->newFolder($attachmentFolderName);
 			}
 		}
 		return null;
@@ -667,7 +646,7 @@ class ImageService {
 		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
 		if ($sourceAttachmentDir !== null) {
 			// create a new attachment dir next to the new file
-			$targetAttachmentDir = $this->getOrCreateAttachmentDirectoryForFile($target);
+			$targetAttachmentDir = $this->getAttachmentDirectoryForFile($target, true);
 			// copy the attachment files
 			foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
 				if ($sourceAttachment instanceof File) {
