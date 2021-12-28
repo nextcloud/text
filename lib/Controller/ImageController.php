@@ -91,7 +91,7 @@ class ImageController extends Controller {
 	 */
 	public function insertImageFile(int $documentId, int $sessionId, string $sessionToken, string $imagePath): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		$userId = $session->getUserId();
@@ -118,7 +118,7 @@ class ImageController extends Controller {
 	 */
 	public function insertImageLink(string $link, int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -148,7 +148,7 @@ class ImageController extends Controller {
 	 */
 	public function uploadImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -190,7 +190,7 @@ class ImageController extends Controller {
 	 */
 	public function getImage(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null): DataDisplayResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+			return new DataDisplayResponse('', Http::STATUS_FORBIDDEN);
 		}
 
 		try {
