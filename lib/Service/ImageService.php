@@ -461,10 +461,9 @@ class ImageService {
 	 * Download a file and write it to a resource
 	 * @param string $url
 	 * @param $resource
-	 * @param array $params
 	 * @return array
 	 */
-	private function simpleDownload(string $url, $resource, array $params = []): array {
+	private function simpleDownload(string $url, $resource): array {
 		$client = $this->clientService->newClient();
 		try {
 			$options = [
@@ -477,11 +476,6 @@ class ImageService {
 					'User-Agent' => 'Nextcloud Text',
 				],
 			];
-
-			if (count($params) > 0) {
-				$paramsContent = http_build_query($params);
-				$url .= '?' . $paramsContent;
-			}
 
 			$response = $client->get($url, $options);
 			$body = $response->getBody();
