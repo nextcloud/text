@@ -32,6 +32,7 @@ use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -153,7 +154,7 @@ class ImageService {
 	public function uploadImage(int $documentId, string $newFileName, string $newFileContent, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
-			throw new Exception('No write permissions');
+			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
@@ -184,7 +185,7 @@ class ImageService {
 	 */
 	public function uploadImagePublic(?int $documentId, string $newFileName, string $newFileContent, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
-			throw new Exception('No write permissions');
+			throw new NotPermittedException('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
@@ -218,7 +219,7 @@ class ImageService {
 	public function insertImageFile(int $documentId, string $path, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
-			throw new Exception('No write permissions');
+			throw new NotPermittedException('No write permissions');
 		}
 		$imageFile = $this->getFileFromPath($path, $userId);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
@@ -271,7 +272,7 @@ class ImageService {
 	public function insertImageLink(int $documentId, string $link, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
-			throw new Exception('No write permissions');
+			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
 		if ($saveDir !== null) {
@@ -294,7 +295,7 @@ class ImageService {
 	 */
 	public function insertImageLinkPublic(?int $documentId, string $link, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
-			throw new Exception('No write permissions');
+			throw new NotPermittedException('No write permissions');
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);

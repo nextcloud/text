@@ -55,22 +55,25 @@
 						<ActionButton
 							icon="icon-upload"
 							:close-after-click="true"
+							:disabled="uploadingImage"
 							@click="onUploadImage(commands.image)">
 							{{ t('text', 'Upload from computer') }}
 						</ActionButton>
 						<ActionButton v-if="!isPublic"
 							icon="icon-folder"
 							:close-after-click="true"
+							:disabled="uploadingImage"
 							@click="showImagePrompt(commands.image)">
 							{{ t('text', 'Insert from Files') }}
 						</ActionButton>
-						<ActionButton v-show="!showImageLinkPrompt"
+						<ActionButton v-if="!showImageLinkPrompt"
 							icon="icon-link"
 							:close-after-click="false"
+							:disabled="uploadingImage"
 							@click="showImageLinkPrompt = true">
 							{{ t('text', 'Insert from link') }}
 						</ActionButton>
-						<ActionInput v-show="showImageLinkPrompt"
+						<ActionInput v-else
 							icon="icon-link"
 							:value="imageLink"
 							@update:value="onImageLinkUpdateValue"
