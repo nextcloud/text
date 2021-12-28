@@ -200,24 +200,25 @@ class ImageController extends Controller {
 	 * @param string|null $shareToken
 	 * @param string $imageFileName
 	 * @return DataDisplayResponse
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotFoundException
-	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
 	 */
 	public function getImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null, string $imageFileName): DataDisplayResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 
-		if ($shareToken) {
-			$imageFile = $this->imageService->getImagePublic($documentId, $imageFileName, $shareToken);
-		} else {
-			$imageFile = $this->imageService->getImage($documentId, $imageFileName, $this->userId);
-		}
-		if ($imageFile !== null) {
-			return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
-		} else {
+		try {
+			if ($shareToken) {
+				$imageFile = $this->imageService->getImagePublic($documentId, $imageFileName, $shareToken);
+			} else {
+				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $this->userId);
+			}
+			if ($imageFile !== null) {
+				return new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()]);
+			} else {
+				return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+			}
+		} catch (Exception $e) {
+			$this->logger->error('getImage error', ['exception' => $e]);
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}

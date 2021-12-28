@@ -94,7 +94,7 @@ class ImageService {
 	 */
 	public function getImage(int $documentId, string $imageFileName, string $userId) {
 		$textFile = $this->getTextFile($documentId, $userId);
-		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
+		return $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class ImageService {
 	 */
 	public function getImagePublic(int $documentId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		return $textFile === null ? null : $this->getImagePreview($imageFileName, $textFile);
+		return $this->getImagePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -381,28 +381,6 @@ class ImageService {
 	}
 
 	/**
-	 * Get or create the user-specific attachment folder
-	 *
-	 * @param string $userId
-	 * @return Folder|null
-	 * @throws NotFoundException
-	 * @throws \OCP\Files\NotPermittedException
-	 */
-	private function getOrCreateTextDirectory(string $userId): ?Folder {
-		$userFolder = $this->rootFolder->getUserFolder($userId);
-		if ($userFolder->nodeExists('/Text')) {
-			$node = $userFolder->get('Text');
-			if ($node instanceof Folder) {
-				return $node;
-			} else {
-				return null;
-			}
-		} else {
-			return $userFolder->newFolder('/Text');
-		}
-	}
-
-	/**
 	 * Get or create file-specific attachment folder
 	 *
 	 * @param File $textFile
@@ -474,17 +452,20 @@ class ImageService {
 	 * Get a user file from file ID
 	 *
 	 * @param int $documentId
-	 * @param string $userId
-	 * @return File|null
-	 * @throws \OCP\Files\NotPermittedException
+	 * @param string $userIdd
+	 * @return File
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OC\User\NoUserException
 	 */
-	private function getTextFile(int $documentId, string $userId): ?File {
+	private function getTextFile(int $documentId, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		$textFile = $userFolder->getById($documentId);
 		if (count($textFile) > 0 && $textFile[0] instanceof File) {
 			return $textFile[0];
+		} else {
+			throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
 		}
-		return null;
 	}
 
 	/**
@@ -492,10 +473,10 @@ class ImageService {
 	 *
 	 * @param int|null $documentId
 	 * @param string $shareToken
-	 * @return File|null
+	 * @return File
 	 * @throws NotFoundException
 	 */
-	private function getTextFilePublic(?int $documentId, string $shareToken): ?File {
+	private function getTextFilePublic(?int $documentId, string $shareToken): File {
 		// is the file shared with this token?
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
@@ -517,9 +498,9 @@ class ImageService {
 				}
 			}
 		} catch (ShareNotFound $e) {
-			return null;
+			// same as below
 		}
-		return null;
+		throw new NotFoundException('Text file with id=' . $documentId . ' and shareToken ' . $shareToken . ' was not found.');
 	}
 
 	/**
