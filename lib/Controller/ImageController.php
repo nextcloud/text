@@ -32,6 +32,7 @@ use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\Files\IMimeTypeDetector;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Util;
@@ -70,11 +71,16 @@ class ImageController extends Controller {
 	 * @var IL10N
 	 */
 	private $l10n;
+	/**
+	 * @var IMimeTypeDetector
+	 */
+	private $mimeTypeDetector;
 
 	public function __construct(string $appName,
 								IRequest $request,
 								IL10N $l10n,
 								LoggerInterface $logger,
+								IMimeTypeDetector $mimeTypeDetector,
 								ImageService $imageService,
 								SessionService $sessionService,
 								?string $userId) {
@@ -85,6 +91,7 @@ class ImageController extends Controller {
 		$this->logger = $logger;
 		$this->sessionService = $sessionService;
 		$this->l10n = $l10n;
+		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
 	/**
@@ -241,7 +248,11 @@ class ImageController extends Controller {
 				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $this->userId);
 			}
 			return $imageFile !== null
-				? new DataDisplayResponse($imageFile->getContent(), Http::STATUS_OK, ['Content-Type' => $imageFile->getMimeType()])
+				? new DataDisplayResponse(
+					$imageFile->getContent(),
+					Http::STATUS_OK,
+					['Content-Type' =>  $this->mimeTypeDetector->getSecureMimeType($imageFile->getMimeType())]
+				)
 				: new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
 			$this->logger->error('getImage error', ['exception' => $e]);
