@@ -410,7 +410,7 @@ export default {
 					if (state.initialLoading && !this.initialLoading) {
 						this.initialLoading = true
 						if (this.autofocus) {
-							this.tiptap.focus('start')
+							this.tiptap.focus(1, 1)
 						}
 						this.$emit('ready')
 						this.$parent.$emit('ready', true)
