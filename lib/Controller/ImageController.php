@@ -27,6 +27,7 @@ namespace OCA\Text\Controller;
 
 use Exception;
 use OCA\Text\Service\SessionService;
+use OCA\Text\UploadException;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
@@ -218,7 +219,7 @@ class ImageController extends Controller {
 			$error = $phpFileUploadErrors[$file['error']];
 		}
 		if ($error !== null) {
-			throw new Exception($error);
+			throw new UploadException($error);
 		}
 		return $file;
 	}
