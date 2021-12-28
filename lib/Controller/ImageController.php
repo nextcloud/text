@@ -252,7 +252,7 @@ class ImageController extends Controller {
 				? new DataDisplayResponse(
 					$imageFile->getContent(),
 					Http::STATUS_OK,
-					['Content-Type' =>  $this->mimeTypeDetector->getSecureMimeType($imageFile->getMimeType())]
+					['Content-Type' => $this->mimeTypeDetector->getSecureMimeType($imageFile->getMimeType())]
 				)
 				: new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {

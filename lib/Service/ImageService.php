@@ -565,7 +565,7 @@ class ImageService {
 			PREG_SET_ORDER
 		);
 		return array_map(static function (array $match) {
-			return urldecode($match[1]) ?? null;
+			return urldecode($match[1]);
 		}, $matches);
 	}
 
