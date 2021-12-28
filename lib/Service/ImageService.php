@@ -240,7 +240,7 @@ class ImageService {
 	 */
 	private function copyImageFile(File $imageFile, Folder $saveDir, File $textFile): array {
 		$mimeType = $imageFile->getMimeType();
-		if (in_array($mimeType, ImageController::IMAGE_MIME_TYPES)) {
+		if (in_array($mimeType, ImageController::IMAGE_MIME_TYPES, true)) {
 			$fileName = (string) time() . '-' . $imageFile->getName();
 			$targetPath = $saveDir->getPath() . '/' . $fileName;
 			$targetFile = $imageFile->copy($targetPath);
@@ -342,16 +342,16 @@ class ImageService {
 		}
 		$savedFile->touch();
 		if (isset($res['Content-Type'])) {
-			if (in_array($res['Content-Type'], ImageController::IMAGE_MIME_TYPES)) {
+			if (in_array($res['Content-Type'], ImageController::IMAGE_MIME_TYPES, true)) {
 				if ($res['Content-Type'] === 'image/jpeg') {
-					$fileName = $fileName . '.jpg';
+					$fileName .= '.jpg';
 				} elseif ($res['Content-Type'] === 'image/x-xbitmap' || $res['Content-Type'] === 'image/x-ms-bmp') {
-					$fileName = $fileName . '.bmp';
+					$fileName .= '.bmp';
 				} elseif ($res['Content-Type'] === 'image/svg+xml') {
-					$fileName = $fileName . '.svg';
+					$fileName .= '.svg';
 				} else {
 					$ext = preg_replace('/^image\//i', '', $res['Content-Type']);
-					$fileName = $fileName . '.' . $ext;
+					$fileName .= '.' . $ext;
 				}
 				$targetPath = $saveDir->getPath() . '/' . $fileName;
 				$savedFile->move($targetPath);
