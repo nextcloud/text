@@ -410,6 +410,14 @@ class ImageService {
 		return null;
 	}
 
+	/**
+	 * @param File $textFile
+	 * @return Folder|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
 	private function getAttachmentDirectoryForFile(File $textFile): ?Folder {
 		$owner = $textFile->getOwner();
 		$ownerId = $owner->getUID();
@@ -487,7 +495,7 @@ class ImageService {
 					if ($textFile instanceof File) {
 						return $textFile;
 					}
-				} elseif ($share->getNodeType() === 'folder' && $documentId !== null) {
+				} elseif ($documentId !== null && $share->getNodeType() === 'folder') {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
 						$textFile = $folder->getById($documentId);
@@ -568,7 +576,10 @@ class ImageService {
 			$textFile = $textFile[0];
 			if ($textFile->getMimeType() === 'text/markdown') {
 				// get IDs of the files inside the attachment dir
-				$attachmentDir = $this->getOrCreateAttachmentDirectoryForFile($textFile);
+				$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
+				if ($attachmentDir === null) {
+					return 0;
+				}
 				$attachmentsByName = [];
 				foreach ($attachmentDir->getDirectoryListing() as $attNode) {
 					$attachmentsByName[$attNode->getName()] = $attNode;
@@ -601,7 +612,7 @@ class ImageService {
 			$matches,
 			PREG_SET_ORDER
 		);
-		return array_map(function (array $match) {
+		return array_map(static function (array $match) {
 			return $match[1] ?? null;
 		}, $matches);
 	}
@@ -610,8 +621,8 @@ class ImageService {
 	 * @param File $source
 	 * @param File $target
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
 	 * @throws \OCP\Lock\LockedException
 	 */
 	public function moveAttachments(File $source, File $target): void {
@@ -620,6 +631,7 @@ class ImageService {
 			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
 			// if there is an attachment dir for this file
 			// and it is in the same directory as the source file
+			// in other words, we move the attachment dir only if the .md file is moved by its owner
 			if ($sourceAttachmentDir !== null
 				&& $source->getParent()->getId() === $sourceAttachmentDir->getParent()->getId()
 			) {
@@ -631,8 +643,8 @@ class ImageService {
 	/**
 	 * @param File $source
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
 	 */
 	public function deleteAttachments(File $source): void {
 		// if there is an attachment dir for this file
@@ -642,6 +654,15 @@ class ImageService {
 		}
 	}
 
+	/**
+	 * @param File $source
+	 * @param File $target
+	 * @return void
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Lock\LockedException
+	 */
 	public function copyAttachments(File $source, File $target): void {
 		$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
 		if ($sourceAttachmentDir !== null) {

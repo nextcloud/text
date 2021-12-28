@@ -197,11 +197,11 @@ class ImageController extends Controller {
 	 * @param int $documentId
 	 * @param int $sessionId
 	 * @param string $sessionToken
-	 * @param string|null $shareToken
 	 * @param string $imageFileName
+	 * @param string|null $shareToken
 	 * @return DataDisplayResponse
 	 */
-	public function getImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null, string $imageFileName): DataDisplayResponse {
+	public function getImage(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null): DataDisplayResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
