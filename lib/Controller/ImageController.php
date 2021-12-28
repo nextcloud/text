@@ -32,7 +32,9 @@ use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IL10N;
 use OCP\IRequest;
+use OCP\Util;
 use Psr\Log\LoggerInterface;
 
 class ImageController extends Controller {
@@ -64,9 +66,14 @@ class ImageController extends Controller {
 	 * @var SessionService
 	 */
 	private $sessionService;
+	/**
+	 * @var IL10N
+	 */
+	private $l10n;
 
 	public function __construct(string $appName,
 								IRequest $request,
+								IL10N $l10n,
 								LoggerInterface $logger,
 								ImageService $imageService,
 								SessionService $sessionService,
@@ -77,6 +84,7 @@ class ImageController extends Controller {
 		$this->request = $request;
 		$this->logger = $logger;
 		$this->sessionService = $sessionService;
+		$this->l10n = $l10n;
 	}
 
 	/**
@@ -152,8 +160,8 @@ class ImageController extends Controller {
 		}
 
 		try {
-			$file = $this->request->getUploadedFile('image');
-			if ($file !== null && isset($file['tmp_name'], $file['name'], $file['type'])) {
+			$file = $this->getUploadedFile('image');
+			if (isset($file['tmp_name'], $file['name'], $file['type'])) {
 				if (!in_array($file['type'], self::IMAGE_MIME_TYPES, true)) {
 					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
 				}
@@ -173,6 +181,35 @@ class ImageController extends Controller {
 			$this->logger->error('Upload error', ['exception' => $e]);
 			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getUploadedFile(string $key): array {
+		$file = $this->request->getUploadedFile($key);
+		$error = null;
+		$phpFileUploadErrors = [
+			UPLOAD_ERR_OK => $this->l10n->t('The file was uploaded'),
+			UPLOAD_ERR_INI_SIZE => $this->l10n->t('The uploaded file exceeds the upload_max_filesize directive in php.ini'),
+			UPLOAD_ERR_FORM_SIZE => $this->l10n->t('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form'),
+			UPLOAD_ERR_PARTIAL => $this->l10n->t('The file was only partially uploaded'),
+			UPLOAD_ERR_NO_FILE => $this->l10n->t('No file was uploaded'),
+			UPLOAD_ERR_NO_TMP_DIR => $this->l10n->t('Missing a temporary folder'),
+			UPLOAD_ERR_CANT_WRITE => $this->l10n->t('Could not write file to disk'),
+			UPLOAD_ERR_EXTENSION => $this->l10n->t('A PHP extension stopped the file upload'),
+		];
+
+		if (empty($file)) {
+			$error = $this->l10n->t('No file uploaded or file size exceeds maximum of %s', [Util::humanFileSize(Util::uploadLimit())]);
+		}
+		if (!empty($file) && array_key_exists('error', $file) && $file['error'] !== UPLOAD_ERR_OK) {
+			$error = $phpFileUploadErrors[$file['error']];
+		}
+		if ($error !== null) {
+			throw new Exception($error);
+		}
+		return $file;
 	}
 
 	/**
