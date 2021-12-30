@@ -45,39 +45,32 @@ describe('Open test.md in viewer', function() {
 
 	it('Open the viewer on file click', function() {
 		cy.openFile('test.md')
-		cy.get('#viewer').should('be.visible')
-		cy.get('#viewer .modal-title').should('contain', 'test.md')
-		cy.get('#viewer .modal-header button.action-item__menutoggle').should('be.visible')
-		cy.get('#viewer .modal-header button.header-close').should('be.visible')
 
-		cy.wait(2000)
-		cy.get('#viewer', { timeout: 4000 })
-			.should('be.visible')
+		cy.log('Inspect viewer')
+		const viewer = cy.get('#viewer')
+		viewer.should('be.visible')
 			.and('have.class', 'modal-mask')
 			.and('not.have.class', 'icon-loading')
-	})
+		viewer.get('.modal-title').should('contain', 'test.md')
+		viewer.get('.modal-header button.action-item__menutoggle')
+			.should('be.visible')
 
-	it('Has opened the file', function() {
-		cy.get('#viewer #editor .ProseMirror').should('contain', 'Hello world')
-		cy.get('#viewer #editor .ProseMirror h2').should('contain', 'Hello world')
-	})
+		cy.log('Inspect editor')
+		const editor = viewer.get('#editor .ProseMirror')
+		editor.should('contain', 'Hello world')
+		editor.get('h2').should('contain', 'Hello world')
 
-	it('Shows the menu bar icons', function() {
-		// FIXME those checks are failing since the parent container is currently at 0x0 size
-		// due to the way we make the text app be a full screen viewer
-		// cy.get('#viewer-content #editor .menubar .menubar-icons .icon-undo').should('be.visible')
-		// cy.get('#viewer-content #editor .menubar .menubar-icons .icon-redo').should('be.visible')
-		// cy.get('#viewer-content #editor .menubar .menubar-icons .icon-bold').should('be.visible')
+		cy.log('Inspect menubar')
+		const menubar = editor.get('.menubar .menubar-icons')
+		menubar.get('.icon-undo').should('be.visible')
+		menubar.get('.icon-bold').should('be.visible')
+
+		cy.screenshot()
 	})
 
 	it('Closes the editor', function() {
-		cy.get('.modal-header button.header-close').click()
+		cy.openFile('test.md')
+		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
-	})
-
-	it('Take screenshot', function() {
-		// gif is impossible to match with existing screenshot
-		// just taking a screenshot to manually compare if needed
-		cy.screenshot()
 	})
 })
