@@ -273,7 +273,7 @@ export default {
 		}
 	}
 
-	@import '../../css/prosemirror.scss';
+	@import '../../css/prosemirror';
 
 	div.ProseMirror {
 		display: inline;
