@@ -51,9 +51,8 @@ describe('Open test.md in viewer', function() {
 		cy.get('#fileList tr[data-file="test.md"]', {timeout: 10000})
 			.should('contain', 'test.md')
 	})
-	after(function () {
-		cy.visit('/apps/files')
-		cy.logout()
+	beforeEach(function () {
+		cy.login(randUser, 'password')
 	})
 
 	it('Shares the file as a public read only link', function () {
