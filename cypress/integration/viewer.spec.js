@@ -32,13 +32,10 @@ describe('Open test.md in viewer', function() {
 
 		// Upload test files
 		cy.uploadFile('test.md', 'text/markdown')
-		cy.visit('/apps/files')
-
-		// wait a bit for things to be settled
-		cy.wait(1000)
 	})
-	after(function() {
-		cy.logout()
+
+	beforeEach(function() {
+		cy.login(randUser, 'password')
 	})
 
 	it('See test.md in the list', function() {
@@ -47,7 +44,6 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Open the viewer on file click', function() {
-		cy.visit('/apps/files')
 		cy.openFile('test.md')
 		cy.get('#viewer').should('be.visible')
 		cy.get('#viewer .modal-title').should('contain', 'test.md')

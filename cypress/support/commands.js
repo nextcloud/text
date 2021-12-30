@@ -26,27 +26,19 @@ const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 
 Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
-	cy.clearCookies()
-	Cypress.Cookies.defaults({
-		preserve: /^(oc|nc)/
+	cy.session(user, function () {
+		cy.visit(route)
+		cy.get('input[name=user]').type(user)
+		cy.get('input[name=password]').type(password)
+		cy.get('#submit-wrapper input[type=submit]').click()
+		cy.url().should('include', route)
 	})
+	// in case the session already existed but we are on a different route...
 	cy.visit(route)
-	cy.get('input[name=user]').type(user)
-	cy.get('input[name=password]').type(password)
-	cy.get('#submit-wrapper input[type=submit]').click()
-	cy.url().should('include', route)
 })
 
-Cypress.Commands.add('logout', () => {
-	Cypress.Cookies.defaults({
-		preserve: []
-	})
-
-	cy.clearLocalStorage()
-	cy.clearCookies()
-
-	Cypress.Cookies.defaults({
-		preserve: /^(oc|nc)/
+Cypress.Commands.add('logout', (route = '/') => {
+	cy.session('_guest', function () {
 	})
 })
 
