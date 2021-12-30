@@ -21,11 +21,8 @@
  */
 
 describe('Files default view', function() {
-	before(function() {
+	beforeEach(function() {
 		cy.login('admin', 'admin')
-	})
-	after(function() {
-		cy.logout()
 	})
 
 	it('See the default files list', function() {
