@@ -156,6 +156,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.avatardiv {
+		width: 44px !important;
+		height: 44px !important;
+		line-height: 44px;
+	}
+
 	.avatar-list {
 		border: none;
 		background-color: var(--color-main-background);
@@ -177,19 +183,18 @@ export default {
 
 		.icon-more, .icon-group, .icon-settings-dark {
 			background-color: var(--color-background-dark);
-			width: 36px;
-			height: 36px;
+			width: 44px;
+			height: 44px;
 			margin: 6px 6px 6px 0px;
 		}
 	}
 
 	.avatar-wrapper {
-		width: 32px;
-		height: 32px;
+		width: 42px;
+		height: 42px;
 		z-index: 1;
 		border-radius: 50%;
 		overflow: hidden;
-		border: 2px solid var(--color-main-background);
 		box-sizing: content-box !important;
 	}
 
