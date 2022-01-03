@@ -23,6 +23,13 @@
 <template>
 	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
 		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
+			<input
+				ref="imageFileInput"
+				type="file"
+				accept="image/*"
+				aria-hidden="true"
+				class="hidden-visually"
+				@change="onImageUploadFilePicked">
 			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 				<template v-for="(icon, $index) in allIcons">
 					<EmojiPicker v-if="icon.class === 'icon-emoji'"
@@ -34,6 +41,46 @@
 							:aria-label="t('text', 'Insert emoji')"
 							:aria-haspopup="true" />
 					</EmojiPicker>
+					<Actions v-else-if="icon.class === 'icon-image'"
+						:key="icon.label"
+						ref="imageActions"
+						class="submenu"
+						:default-icon="'icon-image'"
+						@close="onImageActionClose">
+						<button slot="icon"
+							:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
+							:title="icon.label"
+							:aria-label="icon.label"
+							:aria-haspopup="true" />
+						<ActionButton
+							icon="icon-upload"
+							:close-after-click="true"
+							:disabled="uploadingImage"
+							@click="onUploadImage(commands.image)">
+							{{ t('text', 'Upload from computer') }}
+						</ActionButton>
+						<ActionButton v-if="!isPublic"
+							icon="icon-folder"
+							:close-after-click="true"
+							:disabled="uploadingImage"
+							@click="showImagePrompt(commands.image)">
+							{{ t('text', 'Insert from Files') }}
+						</ActionButton>
+						<ActionButton v-if="!showImageLinkPrompt"
+							icon="icon-link"
+							:close-after-click="false"
+							:disabled="uploadingImage"
+							@click="showImageLinkPrompt = true">
+							{{ t('text', 'Insert from link') }}
+						</ActionButton>
+						<ActionInput v-else
+							icon="icon-link"
+							:value="imageLink"
+							@update:value="onImageLinkUpdateValue"
+							@submit="onImageLinkSubmit(commands.image)">
+							{{ t('text', 'Image link to insert') }}
+						</ActionInput>
+					</Actions>
 					<button v-else-if="icon.class"
 						v-show="$index < iconCount"
 						:key="icon.label"
@@ -88,21 +135,35 @@
 import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
-import { optimalPath } from './../helpers/files'
 import isMobile from './../mixins/isMobile'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
+import { showError } from '@nextcloud/dialogs'
+
+const imageMimes = [
+	'image/png',
+	'image/jpeg',
+	'image/jpg',
+	'image/gif',
+	'image/x-xbitmap',
+	'image/x-ms-bmp',
+	'image/bmp',
+	'image/svg+xml',
+	'image/webp',
+]
 
 export default {
 	name: 'MenuBar',
 	components: {
 		EditorMenuBar,
 		ActionButton,
+		ActionInput,
 		PopoverMenu,
 		Actions,
 		EmojiPicker,
@@ -116,6 +177,11 @@ export default {
 	],
 	props: {
 		editor: {
+			type: Object,
+			required: false,
+			default: null,
+		},
+		syncService: {
 			type: Object,
 			required: false,
 			default: null,
@@ -137,6 +203,11 @@ export default {
 			required: false,
 			default: '',
 		},
+		fileId: {
+			type: Number,
+			required: false,
+			default: 0,
+		},
 	},
 	data: () => {
 		return {
@@ -145,6 +216,9 @@ export default {
 			forceRecompute: 0,
 			submenuVisibility: {},
 			lastImagePath: null,
+			showImageLinkPrompt: false,
+			uploadingImage: false,
+			imageLink: '',
 			icons: [...menuBarIcons],
 		}
 	},
@@ -174,20 +248,10 @@ export default {
 			}
 		},
 		allIcons() {
-			let icons = this.icons
-			if (!this.isPublic) {
-				icons = [...icons, {
-					label: t('text', 'Insert image'),
-					class: 'icon-image',
-					isActive: () => {
-					},
-					action: (commands) => {
-						this.showImagePrompt(commands.image)
-					},
-				}]
-			}
-
-			return [...icons, {
+			return [...this.icons, {
+				label: t('text', 'Insert image'),
+				class: 'icon-image',
+			}, {
 				label: t('text', 'Formatting help'),
 				class: 'icon-info',
 				isActive: () => {
@@ -283,33 +347,87 @@ export default {
 			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			this.$set(this.submenuVisibility, icon.label, !lastValue)
 		},
+		onImageActionClose() {
+			this.showImageLinkPrompt = false
+		},
+		onUploadImage(command) {
+			this.imageCommand = command
+			this.$refs.imageFileInput.click()
+		},
+		onImageUploadFilePicked(event) {
+			this.uploadingImage = true
+			const files = event.target.files
+			const image = files[0]
+			if (!imageMimes.includes(image.type)) {
+				showError(t('text', 'Image format not supported'))
+				this.imageCommand = null
+				this.uploadingImage = false
+				return
+			}
+
+			// Clear input to ensure that the change event will be emitted if
+			// the same file is picked again.
+			event.target.value = ''
+
+			this.syncService.uploadImage(image).then((response) => {
+				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			}).then(() => {
+				this.imageCommand = null
+				this.uploadingImage = false
+			})
+		},
+		onImageLinkUpdateValue(newImageLink) {
+			// this avoids the input being reset on each file polling
+			this.imageLink = newImageLink
+		},
+		onImageLinkSubmit(command) {
+			this.uploadingImage = true
+			this.showImageLinkPrompt = false
+			this.$refs.imageActions[0].closeMenu()
+
+			this.syncService.insertImageLink(this.imageLink).then((response) => {
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			}).then(() => {
+				this.uploadingImage = false
+				this.imageLink = ''
+			})
+		},
+		onImagePathSubmit(imagePath, command) {
+			this.uploadingImage = true
+			this.$refs.imageActions[0].closeMenu()
+
+			this.syncService.insertImageFile(imagePath).then((response) => {
+				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			}).then(() => {
+				this.uploadingImage = false
+			})
+		},
 		showImagePrompt(command) {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
-			const _command = command
 			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
-				const client = OC.Files.getClient()
-				client.getFileInfo(file).then((_status, fileInfo) => {
-					this.lastImagePath = fileInfo.path
-
-					// dirty but works so we have the information stored in markdown
-					const appendMeta = {
-						mimetype: fileInfo.mimetype,
-						hasPreview: fileInfo.hasPreview,
-					}
-					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
-					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-					const meta = Object.entries(appendMeta).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-					const src = `${encodedPath}?fileId=${fileInfo.id}#${meta}`
-
-					_command({
-						src,
-						alt: fileInfo.name,
-					})
-				})
+				this.onImagePathSubmit(file, command)
 			}, false, [], true, undefined, this.imagePath)
+		},
+		insertAttachmentImage(name, fileId, command) {
+			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
+			command({
+				src,
+				// simply get rid of brackets to make sure link text is valid
+				// as it does not need to be unique and matching the real file name
+				alt: name.replaceAll(/[[\]]/g, ''),
+			})
 		},
 		showLinkPrompt(command) {
 			const currentUser = getCurrentUser()

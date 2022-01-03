@@ -6,6 +6,9 @@
       <code>LoadAdditionalScriptsEvent</code>
       <code>LoadViewer</code>
     </UndefinedClass>
+    <InvalidArgument occurrences="3">
+      <code>registerEventListener</code>
+    </InvalidArgument>
   </file>
   <file src="lib/Command/ResetDocument.php">
     <ImplementedReturnTypeMismatch occurrences="1">
@@ -38,7 +41,7 @@
       <code>DataResponse</code>
       <code>DataResponse</code>
     </InvalidReturnType>
-    <MissingDependency occurrences="9">
+    <MissingDependency occurrences="10">
       <code>$e</code>
       <code>$e</code>
       <code>$this-&gt;rootFolder</code>
@@ -173,6 +176,20 @@
     <NullableReturnStatement occurrences="1">
       <code>null</code>
     </NullableReturnStatement>
+  </file>
+  <file src="lib/Service/ImageService.php">
+    <InvalidCatch occurrences="2"/>
+    <MissingDependency occurrences="8">
+      <code>$this-&gt;rootFolder</code>
+      <code>IRootFolder</code>
+      <code>ShareNotFound</code>
+    </MissingDependency>
+    <UndefinedClass occurrences="3">
+      <code>\OC\User\NoUserException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="10">
+      <code>\OC\User\NoUserException</code>
+    </UndefinedDocblockClass>
   </file>
   <file src="vendor/christophwurst/nextcloud/OCP/BackgroundJob/TimedJob.php">
     <ImplementedParamTypeMismatch occurrences="1">

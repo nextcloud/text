@@ -38,7 +38,9 @@
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
+					:sync-service="syncService"
 					:file-path="relativePath"
+					:file-id="fileId"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
 					:autohide="autohide"
@@ -294,6 +296,7 @@ export default {
 					this.document = document
 					this.readOnly = document.readOnly
 					localStorage.setItem('nick', this.currentSession.guestName)
+					this.$store.dispatch('setCurrentSession', this.currentSession)
 				})
 				.on('change', ({ document, sessions }) => {
 					if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {

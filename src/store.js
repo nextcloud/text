@@ -31,16 +31,24 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
+		currentSession: persistentStorage.getItem('currentSession'),
 	},
 	mutations: {
 		SET_SHOW_AUTHOR_ANNOTATIONS(state, value) {
 			state.showAuthorAnnotations = value
 			persistentStorage.setItem('showAuthorAnnotations', '' + value)
 		},
+		SET_CURRENT_SESSION(state, value) {
+			state.currentSession = value
+			persistentStorage.setItem('currentSession', value)
+		},
 	},
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
 			store.commit('SET_SHOW_AUTHOR_ANNOTATIONS', value)
+		},
+		setCurrentSession({ commit }, value) {
+			store.commit('SET_CURRENT_SESSION', value)
 		},
 	},
 })

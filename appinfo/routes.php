@@ -27,6 +27,11 @@ namespace OCA\Text\AppInfo;
 
 return [
 	'routes' => [
+		['name' => 'Image#insertImageFile', 'url' => '/image/filepath', 'verb' => 'POST'],
+		['name' => 'Image#insertImageLink', 'url' => '/image/link', 'verb' => 'POST'],
+		['name' => 'Image#uploadImage', 'url' => '/image/upload', 'verb' => 'POST'],
+		['name' => 'Image#getImage', 'url' => '/image', 'verb' => 'GET'],
+
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
 		['name' => 'Session#fetch', 'url' => '/session/fetch', 'verb' => 'POST'],
 		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'POST'],
