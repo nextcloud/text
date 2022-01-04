@@ -96,6 +96,21 @@ export default {
 			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
+	computed: {
+
+		// Minimum left value for the bubble so that it stays inside the editor.
+		// the width of the menububble changes depending on its state
+		// during the bubblePosition calculation it has not been rendered yet.
+		// so we have to hard code the minimum.
+		minLeft() {
+			if (this.linkMenuIsActive || !this.editor.isActive.link()) {
+				return 150
+			} else {
+				return 225
+			}
+		},
+
+	},
 	methods: {
 		showLinkMenu(attrs) {
 			this.linkUrl = attrs.href
@@ -145,15 +160,14 @@ export default {
 			this.hideLinkMenu()
 		},
 		bubblePosition(menu) {
-			// below the first line, above all others
-			const vertical = menu.top < 45
-				? { top: `${menu.top}px` }
-				: { bottom: `${menu.bottom}px` }
+			const wrapper = this.$parent.$refs.wrapper
+			const left = Math.max(this.minLeft, menu.left)
 			return {
-				...vertical,
-				left: `${menu.left}px`,
+				top: `${menu.top + wrapper.scrollTop + 5}px`,
+				left: `${left}px`,
 			}
 		},
+
 	},
 }
 </script>
@@ -217,7 +231,7 @@ export default {
 			font: inherit;
 			border: none;
 			background: transparent;
-			min-width: 150px;
+			min-width: 250px;
 		}
 	}
 </style>
