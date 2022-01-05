@@ -2,6 +2,8 @@ OC.L10N.register(
     "text",
     {
     "New text document" : "Naujas tekstinis dokumentas",
+    "Missing a temporary folder" : "Trūksta laikinojo aplanko",
+    "Could not write file to disk" : "Nepavyko rašyti į diską",
     "Nextcloud Text" : "Nextcloud tekstas",
     "text document" : "tekstinis dokumentas",
     "Readme" : "Perskaityti",
@@ -33,7 +35,9 @@ OC.L10N.register(
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
     "Insert emoji" : "Įterpti šypsenėlę",
+    "Insert from link" : "Įterpti iš nuorodos",
     "Insert image" : "Įterpti paveikslą",
+    "Image format not supported" : "Nepalaikomas paveikslo formatas",
     "Insert an image" : "Įterpti paveikslą",
     "Update Link" : "Atnaujinti nuorodą",
     "Add Link" : "Pridėti nuorodą",
