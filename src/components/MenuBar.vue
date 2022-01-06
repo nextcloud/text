@@ -384,6 +384,9 @@ export default {
 			this.imageLink = newImageLink
 		},
 		onImageLinkSubmit(command) {
+			if (!this.imageLink) {
+				return
+			}
 			this.uploadingImage = true
 			this.showImageLinkPrompt = false
 			this.$refs.imageActions[0].closeMenu()

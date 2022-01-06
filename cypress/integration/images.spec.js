@@ -39,14 +39,14 @@ describe('Open test.md in viewer', function() {
 		cy.login(randUser, 'password')
 	})
 
-	it('See test.md in the list', function() {
+	it('See test.md in the list and open it', function() {
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
+
 	})
 
 	it('Insert an image from files', function() {
 		cy.openFile('test.md')
-
 		cy.log('Open submenu')
 		const viewer = cy.get('#viewer')
 		const submenu = viewer.get('.action-item.submenu')
@@ -72,8 +72,6 @@ describe('Open test.md in viewer', function() {
 
 			cy.log('Check the image is visible and well formed')
 			const editor = cy.get('#editor .ProseMirror')
-			editor.should('contain', 'Hello world')
-			editor.get('h2').should('contain', 'Hello world')
 			editor.get('div.image')
 				.should('be.visible')
 				.invoke('attr', 'data-src')
@@ -82,6 +80,49 @@ describe('Open test.md in viewer', function() {
 				.should('contain', 'apps/text/image?documentId=')
 				.should('contain', 'imageFileName')
 				.should('contain', 'github.png')
+		})
+
+
+		cy.screenshot()
+	})
+
+	it('Insert an image from a link', function() {
+		cy.openFile('test.md')
+		cy.log('Open submenu')
+		const viewer = cy.get('#viewer')
+		const submenu = viewer.get('.action-item.submenu')
+		submenu.click()
+		submenu.should('have.class', 'action-item--open')
+
+		const trigger = submenu.get('.action-item.submenu > div.v-popover > .trigger')
+		trigger
+			.should('have.class', 'trigger')
+			.invoke('attr','aria-describedby')
+			.should('contain', 'popover_')
+			.as('popoverId')
+
+		cy.get('@popoverId').then(popoverId => {
+			cy.log('Click on action entry')
+			const popover = cy.get('div#' + popoverId)
+			popover.should('have.class', 'open')
+			cy.get('div#' + popoverId + ' li:nth-child(3)').click()
+			cy.log('Type and validate')
+			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
+				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg')
+				.type('{enter}')
+			//cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
+
+			cy.wait(4000)
+			cy.log('Check the image is visible and well formed')
+			const editor = cy.get('#editor .ProseMirror')
+			editor.get('div.image:nth-child(1)')
+				.should('be.visible')
+				.invoke('attr', 'data-src')
+				.should('contain', '.jpg')
+			editor.get('div.image:nth-child(1) img').invoke('attr', 'src')
+				.should('contain', 'apps/text/image?documentId=')
+				.should('contain', 'imageFileName')
+				.should('contain', '.jpg')
 		})
 
 
