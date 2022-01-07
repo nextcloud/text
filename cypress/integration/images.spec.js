@@ -133,6 +133,7 @@ describe('Open test.md in viewer', function() {
 		cy.openFile('test.md')
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
+		cy.nextcloudDeleteUser(randUser, 'password')
 	})
 
 })

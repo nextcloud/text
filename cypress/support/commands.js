@@ -62,6 +62,22 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 	})
 })
 
+Cypress.Commands.add('nextcloudDeleteUser', (user) => {
+	cy.clearCookies()
+	cy.request({
+		method: 'DELETE',
+		url: `${Cypress.env('baseUrl')}/ocs/v1.php/cloud/users/${user}`,
+		form: true,
+		auth: { user: 'admin', pass: 'admin' },
+		headers: {
+			'OCS-ApiRequest': 'true',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	}).then(response => {
+		cy.log(`Deleted user ${user}`, response.status)
+	})
+})
+
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	cy.fixture(fileName, 'base64')
 		.then(Cypress.Blob.base64StringToBlob)
