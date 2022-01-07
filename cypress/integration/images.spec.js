@@ -25,88 +25,97 @@ import { randHash } from '../utils/'
 import 'cypress-file-upload'
 const randUser = randHash()
 
-describe('Open test.md in viewer', function() {
-	before(function() {
+const ACTION_UPLOAD_LOCAL_FILE = 1
+const ACTION_INSERT_FROM_FILES = 2
+const ACTION_INSERT_FROM_LINK = 3
+
+/**
+ * Open the image action menu and click one action
+ *
+ * @param actionIndex position of the action to be clicked
+ * @param callback what happens once it's been clicked
+ */
+const clickOnImageAction = (actionIndex, callback) => {
+	cy.get('#viewer .action-item.submenu')
+		.click()
+		.should('have.class', 'action-item--open')
+
+	// get the popover ID to be able to find the related DOM element
+	cy.get('#viewer .action-item.submenu > div.v-popover > .trigger')
+		.should('have.attr', 'aria-describedby')
+			.should('contain', 'popover_')
+			.then((popoverId) => {
+				cy.log('Click on the action entry')
+				const popover = cy.get('div#' + popoverId)
+				popover.should('have.class', 'open')
+				cy.get('div#' + popoverId + ' li:nth-child(' + actionIndex + ')').click()
+				// our job here is done
+				callback(popoverId)
+			})
+}
+
+/**
+ * Check the image is visible in the document after it has been added by the user
+ *
+ * @param imageIndex index of the image in the document content
+ * @param imageName file name (or sub part) to be checked
+ */
+const checkImage = (imageIndex, imageName) => {
+	cy.log('Check the image is visible and well formed')
+	const imageDivSelector = '#editor .ProseMirror div.image:nth-child(' + imageIndex + ')'
+
+	cy.get(imageDivSelector)
+		.should('be.visible')
+		.should('have.attr', 'data-src')
+			.should('contain', imageName)
+
+	cy.get(imageDivSelector).find('img')
+		.should('have.attr', 'src')
+			.should('contain', 'apps/text/image?documentId=')
+			.should('contain', 'imageFileName')
+			.should('contain', imageName)
+}
+
+describe('Test all image insertion methods', () => {
+	before(() => {
 		// Init user
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
 
-		// Upload test files
+		// Upload test files to user's storage
 		cy.uploadFile('test.md', 'text/markdown')
 		cy.uploadFile('github.png', 'image/png')
 	})
 
-	beforeEach(function() {
+	beforeEach(() => {
 		cy.login(randUser, 'password')
 	})
 
-	it('See test.md in the list and open it', function() {
+	it('See test files in the list', () => {
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
-
+		cy.get('#fileList tr[data-file="github.png"]', { timeout: 10000 })
+			.should('contain', 'github.png')
 	})
 
-	it('Insert an image from files', function() {
+	it('Insert an image from files', () => {
 		cy.openFile('test.md')
-		cy.log('Open submenu')
-		const viewer = cy.get('#viewer')
-		const submenu = viewer.get('.action-item.submenu')
-		submenu.click()
-		submenu.should('have.class', 'action-item--open')
-
-		const trigger = submenu.get('.action-item.submenu > div.v-popover > .trigger')
-		trigger
-			.should('have.class', 'trigger')
-			.invoke('attr','aria-describedby')
-			.should('contain', 'popover_')
-			.as('popoverId')
-
-		cy.get('@popoverId').then(popoverId => {
-			cy.log('Click on action entry')
-			const popover = cy.get('div#' + popoverId)
-			popover.should('have.class', 'open')
-			cy.get('div#' + popoverId + ' li:nth-child(2)').click()
-			cy.log('Select the file')
+		clickOnImageAction(ACTION_INSERT_FROM_FILES, () => {
+			cy.log('Select the file in the filepicker')
 			cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
-			cy.log('Press OK')
+			cy.log('Click OK in the filepicker')
 			cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-			cy.log('Check the image is visible and well formed')
-			const editor = cy.get('#editor .ProseMirror')
-			editor.get('div.image')
-				.should('be.visible')
-				.invoke('attr', 'data-src')
-				.should('contain', 'github.png')
-			editor.get('div.image img').invoke('attr', 'src')
-				.should('contain', 'apps/text/image?documentId=')
-				.should('contain', 'imageFileName')
-				.should('contain', 'github.png')
+			cy.wait(2000)
+			checkImage(1, 'github.png')
+			cy.wait(2000)
+			cy.screenshot()
 		})
-
-
-		cy.screenshot()
 	})
 
-	it('Insert an image from a link', function() {
+	it('Insert an image from a link', () => {
 		cy.openFile('test.md')
-		cy.log('Open submenu')
-		const viewer = cy.get('#viewer')
-		const submenu = viewer.get('.action-item.submenu')
-		submenu.click()
-		submenu.should('have.class', 'action-item--open')
-
-		const trigger = submenu.get('.action-item.submenu > div.v-popover > .trigger')
-		trigger
-			.should('have.class', 'trigger')
-			.invoke('attr','aria-describedby')
-			.should('contain', 'popover_')
-			.as('popoverId')
-
-		cy.get('@popoverId').then(popoverId => {
-			cy.log('Click on action entry')
-			const popover = cy.get('div#' + popoverId)
-			popover.should('have.class', 'open')
-			cy.get('div#' + popoverId + ' li:nth-child(3)').click()
+		clickOnImageAction(ACTION_INSERT_FROM_LINK, (popoverId) => {
 			cy.wait(2000)
 			cy.log('Type and validate')
 			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
@@ -117,62 +126,31 @@ describe('Open test.md in viewer', function() {
 			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
 
 			cy.wait(2000)
-			cy.log('Check the image is visible and well formed')
-			const editor = cy.get('#editor .ProseMirror')
-			editor.get('div.image:nth-child(1)')
-				.should('be.visible')
-				.invoke('attr', 'data-src')
-				.should('contain', '.jpg')
-			editor.get('div.image:nth-child(1) img').invoke('attr', 'src')
-				.should('contain', 'apps/text/image?documentId=')
-				.should('contain', 'imageFileName')
-				.should('contain', '.jpg')
+			checkImage(1, '.jpg')
+			cy.wait(2000)
+			cy.screenshot()
 		})
-
-		cy.screenshot()
 	})
 
-	it('Upload a local imagee', function() {
+	it('Upload a local image', () => {
 		cy.openFile('test.md')
-		const viewer = cy.get('#viewer')
-		const submenu = viewer.get('.action-item.submenu')
-		submenu.click()
-		submenu.should('have.class', 'action-item--open')
-
-		const trigger = submenu.get('.action-item.submenu > div.v-popover > .trigger')
-		trigger
-			.should('have.class', 'trigger')
-			.invoke('attr','aria-describedby')
-			.should('contain', 'popover_')
-			.as('popoverId')
-
-		cy.get('@popoverId').then(popoverId => {
-			cy.log('Click on action entry')
-			const popover = cy.get('div#' + popoverId)
-			popover.should('have.class', 'open')
-			cy.get('div#' + popoverId + ' li:nth-child(1)').click()
-
-			cy.wait(4000)
+		// in this case we almost could just attach the file to the input
+		// BUT we still need to click on the action because otherwise the command
+		// is not passed correctly when the upload has been done
+		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
+			cy.wait(2000)
+			cy.log('Upload the file through the input')
 			cy.get('.menubar input[type="file"]')
 				.attachFile('table.png')
 
-			cy.wait(4000)
-			cy.log('Check the image is visible and well formed')
-			const editor = cy.get('#editor .ProseMirror')
-			editor.get('div.image:nth-child(1)')
-				.should('be.visible')
-				.invoke('attr', 'data-src')
-				.should('contain', 'table.png')
-			editor.get('div.image:nth-child(1) img').invoke('attr', 'src')
-				.should('contain', 'apps/text/image?documentId=')
-				.should('contain', 'imageFileName')
-				.should('contain', 'table.png')
+			cy.wait(2000)
+			checkImage(1, 'table.png')
+			cy.wait(2000)
+			cy.screenshot()
 		})
-
-		cy.screenshot()
 	})
 
-	it('Closes the editor', function() {
+	it('Close the editor and delete the user', () => {
 		cy.openFile('test.md')
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
