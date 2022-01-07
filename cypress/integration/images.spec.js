@@ -37,6 +37,7 @@ const ACTION_INSERT_FROM_LINK = 3
  */
 const clickOnImageAction = (actionIndex, callback) => {
 	cy.get('#viewer .action-item.submenu')
+		.should('not.have.class', 'action-item--open')
 		.click()
 		.should('have.class', 'action-item--open')
 
@@ -46,34 +47,28 @@ const clickOnImageAction = (actionIndex, callback) => {
 			.should('contain', 'popover_')
 			.then((popoverId) => {
 				cy.log('Click on the action entry')
-				const popover = cy.get('div#' + popoverId)
-				popover.should('have.class', 'open')
-				cy.get('div#' + popoverId + ' li:nth-child(' + actionIndex + ')').click()
+				cy.get('div#' + popoverId)
+					.should('have.class', 'open')
+					.find('li:nth-child(' + actionIndex + ')').click()
 				// our job here is done
 				callback(popoverId)
 			})
 }
 
 /**
- * Check the image is visible in the document after it has been added by the user
+ * Check if an image is visible in the document
  *
- * @param imageIndex index of the image in the document content
- * @param imageName file name (or sub part) to be checked
+ * @param documentId file ID of the current document
+ * @param imageName file name to be checked
  */
-const checkImage = (imageIndex, imageName) => {
+const checkImage = (documentId, imageName) => {
 	cy.log('Check the image is visible and well formed')
-	const imageDivSelector = '#editor .ProseMirror div.image:nth-child(' + imageIndex + ')'
-
-	cy.get(imageDivSelector)
+	cy.get('#editor .ProseMirror div.image[data-src="text://image?imageFileName=' + imageName + '"]')
 		.should('be.visible')
-		.should('have.attr', 'data-src')
-			.should('contain', imageName)
-
-	cy.get(imageDivSelector).find('img')
-		.should('have.attr', 'src')
-			.should('contain', 'apps/text/image?documentId=')
-			.should('contain', 'imageFileName')
-			.should('contain', imageName)
+		.find('img')
+			.should('have.attr', 'src')
+				.should('contain', 'apps/text/image?documentId=' + documentId)
+				.should('contain', 'imageFileName=' + imageName)
 }
 
 describe('Test all image insertion methods', () => {
@@ -101,34 +96,48 @@ describe('Test all image insertion methods', () => {
 	it('Insert an image from files', () => {
 		cy.openFile('test.md')
 		clickOnImageAction(ACTION_INSERT_FROM_FILES, () => {
+			cy.intercept({ method: 'POST', url: '**/filepath' }).as('insertPathRequest')
+
 			cy.log('Select the file in the filepicker')
 			cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
 			cy.log('Click OK in the filepicker')
 			cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-			cy.wait(2000)
-			checkImage(1, 'github.png')
-			cy.wait(2000)
-			cy.screenshot()
+			cy.wait('@insertPathRequest').then((req) => {
+				// the name of the created file on NC side is returned in the response
+				const fileName = req.response.body.name
+				const documentId = req.response.body.documentId
+				cy.wait(2000)
+				checkImage(documentId, fileName)
+				cy.wait(1000)
+				cy.screenshot()
+			})
 		})
 	})
 
 	it('Insert an image from a link', () => {
 		cy.openFile('test.md')
 		clickOnImageAction(ACTION_INSERT_FROM_LINK, (popoverId) => {
+			cy.intercept({ method: 'POST', url: '**/link' }).as('insertLinkRequest')
+
 			cy.wait(2000)
 			cy.log('Type and validate')
 			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
 				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg')
 				.wait(2000)
 				.type('{enter}')
-			// click on the validation button is an alternative to typing {enter}
+			// Clicking on the validation button is an alternative to typing {enter}
 			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
 
-			cy.wait(2000)
-			checkImage(1, '.jpg')
-			cy.wait(2000)
-			cy.screenshot()
+			cy.wait('@insertLinkRequest').then((req) => {
+				// the name of the created file on NC side is returned in the response
+				const fileName = req.response.body.name
+				const documentId = req.response.body.documentId
+				cy.wait(2000)
+				checkImage(documentId, fileName)
+				cy.wait(2000)
+				cy.screenshot()
+			})
 		})
 	})
 
@@ -136,17 +145,23 @@ describe('Test all image insertion methods', () => {
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
-		// is not passed correctly when the upload has been done
+		// is not handled correctly when the upload has been done in <MenuBar>
 		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
-			cy.wait(2000)
-			cy.log('Upload the file through the input')
-			cy.get('.menubar input[type="file"]')
-				.attachFile('table.png')
+			cy.intercept({ method: 'POST', url: '**/upload' }).as('uploadRequest')
 
 			cy.wait(2000)
-			checkImage(1, 'table.png')
-			cy.wait(2000)
-			cy.screenshot()
+			cy.log('Upload the file through the input')
+			cy.get('.menubar input[type="file"]').attachFile('table.png')
+
+			cy.wait('@uploadRequest').then((req) => {
+				// the name of the created file on NC side is returned in the response
+				const fileName = req.response.body.name
+				const documentId = req.response.body.documentId
+				cy.wait(2000)
+				checkImage(documentId, fileName)
+				cy.wait(2000)
+				cy.screenshot()
+			})
 		})
 	})
 
