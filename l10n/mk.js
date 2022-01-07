@@ -11,11 +11,11 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
+    "Bold" : "Болд",
+    "Italic" : "Италик",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Undo" : "Врати",
-    "Bold" : "Болд",
-    "Italic" : "Италик",
     "Retry" : "Обидете се повторно",
     "Unpushed changes" : "Необјавени промени"
 },
