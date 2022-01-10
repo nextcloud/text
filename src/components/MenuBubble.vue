@@ -83,6 +83,12 @@ export default {
 			required: false,
 			default: null,
 		},
+		// used to calculate the position based on the scrollOffset
+		contentWrapper: {
+			type: Object,
+			required: false,
+			default: null,
+		},
 		filePath: {
 			type: String,
 			required: false,
@@ -160,10 +166,10 @@ export default {
 			this.hideLinkMenu()
 		},
 		bubblePosition(menu) {
-			const wrapper = this.$parent.$refs.wrapper
 			const left = Math.max(this.minLeft, menu.left)
+			const offset = this.contentWrapper?.scrollTop || 0
 			return {
-				top: `${menu.top + wrapper.scrollTop + 5}px`,
+				top: `${menu.top + offset + 5}px`,
 				left: `${left}px`,
 			}
 		},
