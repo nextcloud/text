@@ -71,6 +71,23 @@ const checkImage = (documentId, imageName) => {
 				.should('contain', 'imageFileName=' + imageName)
 }
 
+/**
+ * Wait for the image insertion request to finish and check if the image is visible
+ *
+ * @param requestAlias Alias of the request we are waiting for
+ */
+const waitForRequestAndCheckImage = (requestAlias) => {
+	cy.wait('@' + requestAlias).then((req) => {
+		// the name of the created file on NC side is returned in the response
+		const fileName = req.response.body.name
+		const documentId = req.response.body.documentId
+		cy.wait(2000)
+		checkImage(documentId, fileName)
+		cy.wait(1000)
+		cy.screenshot()
+	})
+}
+
 describe('Test all image insertion methods', () => {
 	before(() => {
 		// Init user
@@ -96,29 +113,23 @@ describe('Test all image insertion methods', () => {
 	it('Insert an image from files', () => {
 		cy.openFile('test.md')
 		clickOnImageAction(ACTION_INSERT_FROM_FILES, () => {
-			cy.intercept({ method: 'POST', url: '**/filepath' }).as('insertPathRequest')
+			const requestAlias = 'insertPathRequest'
+			cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 			cy.log('Select the file in the filepicker')
 			cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
 			cy.log('Click OK in the filepicker')
 			cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-			cy.wait('@insertPathRequest').then((req) => {
-				// the name of the created file on NC side is returned in the response
-				const fileName = req.response.body.name
-				const documentId = req.response.body.documentId
-				cy.wait(2000)
-				checkImage(documentId, fileName)
-				cy.wait(1000)
-				cy.screenshot()
-			})
+			waitForRequestAndCheckImage(requestAlias)
 		})
 	})
 
 	it('Insert an image from a link', () => {
 		cy.openFile('test.md')
 		clickOnImageAction(ACTION_INSERT_FROM_LINK, (popoverId) => {
-			cy.intercept({ method: 'POST', url: '**/link' }).as('insertLinkRequest')
+			const requestAlias = 'insertLinkRequest'
+			cy.intercept({ method: 'POST', url: '**/link' }).as(requestAlias)
 
 			cy.wait(2000)
 			cy.log('Type and validate')
@@ -129,15 +140,7 @@ describe('Test all image insertion methods', () => {
 			// Clicking on the validation button is an alternative to typing {enter}
 			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
 
-			cy.wait('@insertLinkRequest').then((req) => {
-				// the name of the created file on NC side is returned in the response
-				const fileName = req.response.body.name
-				const documentId = req.response.body.documentId
-				cy.wait(2000)
-				checkImage(documentId, fileName)
-				cy.wait(2000)
-				cy.screenshot()
-			})
+			waitForRequestAndCheckImage(requestAlias)
 		})
 	})
 
@@ -147,21 +150,14 @@ describe('Test all image insertion methods', () => {
 		// BUT we still need to click on the action because otherwise the command
 		// is not handled correctly when the upload has been done in <MenuBar>
 		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
-			cy.intercept({ method: 'POST', url: '**/upload' }).as('uploadRequest')
+			const requestAlias = 'uploadRequest'
+			cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
 
 			cy.wait(2000)
 			cy.log('Upload the file through the input')
 			cy.get('.menubar input[type="file"]').attachFile('table.png')
 
-			cy.wait('@uploadRequest').then((req) => {
-				// the name of the created file on NC side is returned in the response
-				const fileName = req.response.body.name
-				const documentId = req.response.body.documentId
-				cy.wait(2000)
-				checkImage(documentId, fileName)
-				cy.wait(2000)
-				cy.screenshot()
-			})
+			waitForRequestAndCheckImage(requestAlias)
 		})
 	})
 
