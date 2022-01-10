@@ -5,3 +5,4 @@ vendor/
 img/twemoji/
 cypress/screenshots/
 cypress/videos/
+cypress/downloads/
