@@ -22,7 +22,7 @@
 
 <template>
 	<div id="editor-container">
-		<div v-if="currentSession && active" class="document-status">
+		<div v-if="displayed" class="document-status">
 			<p v-if="idle" class="msg">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
@@ -33,7 +33,7 @@
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
-		<div v-if="currentSession && active" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
+		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
 			<div id="editor">
 				<MenuBar v-if="!syncError && !readOnly"
 					ref="menubar"
@@ -45,7 +45,7 @@
 					:is-public="isPublic"
 					:autohide="autohide"
 					@show-help="showHelp">
-					<div v-if="currentSession && active" id="editor-session-list">
+					<div id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
@@ -55,9 +55,10 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
-				<div ref="wrapper" class="content-wrapper">
+				<div ref="contentWrapper" class="content-wrapper">
 					<MenuBubble v-if="!readOnly && isRichEditor"
 						:editor="tiptap"
+						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
@@ -177,6 +178,7 @@ export default {
 
 			saveStatusPolling: null,
 			displayHelp: false,
+			contentWrapper: null,
 		}
 	},
 	computed: {
@@ -236,10 +238,18 @@ export default {
 				? this.relativePath.split('/').slice(0, -1).join('/')
 				: '/'
 		},
+		displayed() {
+			return this.currentSession && this.active
+		},
 	},
 	watch: {
 		lastSavedStatus() {
 			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
+		},
+		displayed() {
+			this.$nextTick(() => {
+				this.contentWrapper = this.$refs.contentWrapper
+			})
 		},
 	},
 	mounted() {
