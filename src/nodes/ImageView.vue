@@ -129,7 +129,7 @@ export default {
 				const sessionId = this.currentSession?.id
 				const sessionToken = this.currentSession?.token
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				if (getCurrentUser()) {
+				if (getCurrentUser() || !this.token) {
 					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
 						{
 							documentId,

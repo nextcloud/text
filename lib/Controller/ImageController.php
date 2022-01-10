@@ -53,10 +53,6 @@ class ImageController extends Controller {
 	];
 
 	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
 	 * @var ImageService
 	 */
 	private $imageService;
@@ -83,10 +79,8 @@ class ImageController extends Controller {
 								LoggerInterface $logger,
 								IMimeTypeDetector $mimeTypeDetector,
 								ImageService $imageService,
-								SessionService $sessionService,
-								?string $userId) {
+								SessionService $sessionService) {
 		parent::__construct($appName, $request);
-		$this->userId = $userId;
 		$this->imageService = $imageService;
 		$this->request = $request;
 		$this->logger = $logger;
@@ -109,8 +103,7 @@ class ImageController extends Controller {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
-		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		$userId = $session->getUserId();
+		$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 
 		try {
 			$insertResult = $this->imageService->insertImageFile($documentId, $imagePath, $userId);
@@ -141,8 +134,7 @@ class ImageController extends Controller {
 			if ($shareToken) {
 				$downloadResult = $this->imageService->insertImageLinkPublic($documentId, $link, $shareToken);
 			} else {
-				$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-				$userId = $session->getUserId();
+				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 				$downloadResult = $this->imageService->insertImageLink($documentId, $link, $userId);
 			}
 			return new DataResponse($downloadResult);
@@ -173,7 +165,6 @@ class ImageController extends Controller {
 				if (!in_array($file['type'], self::IMAGE_MIME_TYPES, true)) {
 					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
 				}
-				$newFileContent = file_get_contents($file['tmp_name']);
 				$newFileResource = fopen($file['tmp_name'], 'rb');
 				if ($newFileResource === false) {
 					throw new Exception('Could not read file');
@@ -182,8 +173,7 @@ class ImageController extends Controller {
 				if ($shareToken) {
 					$uploadResult = $this->imageService->uploadImagePublic($documentId, $newFileName, $newFileResource, $shareToken);
 				} else {
-					$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-					$userId = $session->getUserId();
+					$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileResource, $userId);
 				}
 				return new DataResponse($uploadResult);
@@ -246,7 +236,8 @@ class ImageController extends Controller {
 			if ($shareToken) {
 				$imageFile = $this->imageService->getImagePublic($documentId, $imageFileName, $shareToken);
 			} else {
-				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $this->userId);
+				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
+				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $userId);
 			}
 			return $imageFile !== null
 				? new DataDisplayResponse(
@@ -259,5 +250,18 @@ class ImageController extends Controller {
 			$this->logger->error('getImage error', ['exception' => $e]);
 			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		}
+	}
+
+	/**
+	 * Extract the user ID from the edition session
+	 *
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @return string
+	 */
+	private function getUserIdFromSession(int $documentId, int $sessionId, string $sessionToken): string {
+		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		return $session->getUserId();
 	}
 }
