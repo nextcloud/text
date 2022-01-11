@@ -88,8 +88,6 @@ OC.L10N.register(
     "Heading 4" : "4. Başlık",
     "Heading 5" : "5. Başlık",
     "ToDo list" : "Yapılacaklar listesi",
-    "Emoji picker" : "Emoji seçici",
-    "Retry" : "Yeniden dene",
-    "Unpushed changes" : "Gönderilmemiş değişiklikler"
+    "Emoji picker" : "Emoji seçici"
 },
 "nplurals=2; plural=(n > 1);");

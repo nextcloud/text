@@ -86,8 +86,6 @@
     "Heading 4" : "Überschrift 4",
     "Heading 5" : "Überschrift 5",
     "ToDo list" : "To-do-Liste",
-    "Emoji picker" : "Emoji-Auswahl",
-    "Retry" : "Wiederholen",
-    "Unpushed changes" : "Nicht synchronisiert Änderungen"
+    "Emoji picker" : "Emoji-Auswahl"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

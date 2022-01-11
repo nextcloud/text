@@ -41,8 +41,6 @@ OC.L10N.register(
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
-    "ToDo list" : "Llista tasques pendents",
-    "Retry" : "Torna a intentar",
-    "Unpushed changes" : "Canvis sense aplicar"
+    "ToDo list" : "Llista tasques pendents"
 },
 "nplurals=2; plural=(n != 1);");

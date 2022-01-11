@@ -2,7 +2,6 @@
     "Text" : "Texto",
     "Unsaved changes" : "Cambios no guardados",
     "Edit" : "Editar",
-    "Undo" : "Deshacer",
-    "Retry" : "Reintentar"
+    "Undo" : "Deshacer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

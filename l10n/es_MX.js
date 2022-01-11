@@ -34,8 +34,6 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista de penditentes",
-    "Retry" : "Reintentar",
-    "Unpushed changes" : "Cambios no enviados"
+    "ToDo list" : "Lista de penditentes"
 },
 "nplurals=2; plural=(n != 1);");

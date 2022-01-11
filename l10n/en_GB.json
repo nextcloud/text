@@ -4,7 +4,6 @@
     "Bold" : "Bold",
     "Italic" : "Italic",
     "Edit" : "Edit",
-    "Undo" : "Undo",
-    "Retry" : "Retry"
+    "Undo" : "Undo"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

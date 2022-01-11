@@ -6,7 +6,6 @@ OC.L10N.register(
     "Bold" : "Bold",
     "Italic" : "Italic",
     "Edit" : "Edit",
-    "Undo" : "Undo",
-    "Retry" : "Retry"
+    "Undo" : "Undo"
 },
 "nplurals=2; plural=(n != 1);");

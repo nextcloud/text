@@ -12,7 +12,6 @@ OC.L10N.register(
     "Edit guest name" : "게스트 이름 편집하기",
     "Save guest name" : "게스트 이름 저장하기",
     "Edit" : "편집",
-    "Undo" : "실행 취소",
-    "Retry" : "다시 시도"
+    "Undo" : "실행 취소"
 },
 "nplurals=1; plural=0;");

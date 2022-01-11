@@ -7,7 +7,6 @@ OC.L10N.register(
     "Bold" : "درشت",
     "Italic" : "Italic",
     "Edit" : "ویرایش",
-    "Undo" : "برگرداندن",
-    "Retry" : "تلاش دوباره"
+    "Undo" : "برگرداندن"
 },
 "nplurals=2; plural=(n > 1);");

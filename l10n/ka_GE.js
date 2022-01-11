@@ -4,7 +4,6 @@ OC.L10N.register(
     "Text" : "ტექსტი",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
     "Edit" : "ცვლილება",
-    "Undo" : "დაბრუნება",
-    "Retry" : "ვცადოთ ახლიდან"
+    "Undo" : "დაბრუნება"
 },
 "nplurals=2; plural=(n!=1);");

@@ -43,8 +43,6 @@ OC.L10N.register(
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
     "ToDo list" : "Lista a far",
-    "Emoji picker" : "Selector emoji",
-    "Retry" : "Tornar ensajar",
-    "Unpushed changes" : "Modificacions pas enviadas"
+    "Emoji picker" : "Selector emoji"
 },
 "nplurals=2; plural=(n > 1);");

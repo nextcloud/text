@@ -88,8 +88,6 @@ OC.L10N.register(
     "Heading 4" : "Nagłówek 4",
     "Heading 5" : "Nagłówek 5",
     "ToDo list" : "Lista rzeczy do zrobienia",
-    "Emoji picker" : "Selektor emoji",
-    "Retry" : "Powtórz",
-    "Unpushed changes" : "Niewysłane zmiany"
+    "Emoji picker" : "Selektor emoji"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
