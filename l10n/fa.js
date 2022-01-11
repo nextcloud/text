@@ -4,10 +4,9 @@ OC.L10N.register(
     "Text" : "متن",
     "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
-    "Edit" : "ویرایش",
-    "Undo" : "برگرداندن",
     "Bold" : "درشت",
     "Italic" : "Italic",
-    "Retry" : "تلاش دوباره"
+    "Edit" : "ویرایش",
+    "Undo" : "برگرداندن"
 },
 "nplurals=2; plural=(n > 1);");

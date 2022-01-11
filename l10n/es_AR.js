@@ -2,10 +2,9 @@ OC.L10N.register(
     "text",
     {
     "Text" : "Texto",
-    "Edit" : "Editar",
-    "Undo" : "Deshacer",
     "Bold" : "Negrita",
     "Italic" : "Itálico",
-    "Retry" : "Reintentar"
+    "Edit" : "Editar",
+    "Undo" : "Deshacer"
 },
 "nplurals=2; plural=(n != 1);");

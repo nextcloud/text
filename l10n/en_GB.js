@@ -3,10 +3,9 @@ OC.L10N.register(
     {
     "Text" : "Text",
     "Unsaved changes" : "Unsaved changes",
-    "Edit" : "Edit",
-    "Undo" : "Undo",
     "Bold" : "Bold",
     "Italic" : "Italic",
-    "Retry" : "Retry"
+    "Edit" : "Edit",
+    "Undo" : "Undo"
 },
 "nplurals=2; plural=(n != 1);");
