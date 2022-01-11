@@ -2,7 +2,7 @@
 # later. See the COPYING file.
 app_name=$(notdir $(CURDIR))
 
-all: dev-setup lint build-js-production test
+all: dev-setup lint build-js-production
 
 # Dev env management
 dev-setup: clean clean-dev npm-init
