@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
     "ToDo list" : "Lista de Tareas",
-    "Emoji picker" : "Selector de emoji",
-    "Retry" : "Reintentar",
-    "Unpushed changes" : "Cambios sin subir"
+    "Emoji picker" : "Selector de emoji"
 },
 "nplurals=2; plural=(n != 1);");

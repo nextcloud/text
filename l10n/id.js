@@ -7,7 +7,6 @@ OC.L10N.register(
     "Edit guest name" : "Edit nama tamu",
     "Save guest name" : "Simpan nama tamu",
     "Edit" : "Sunting",
-    "Undo" : "Undo",
-    "Retry" : "Ulangi"
+    "Undo" : "Undo"
 },
 "nplurals=1; plural=0;");

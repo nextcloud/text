@@ -51,8 +51,6 @@ OC.L10N.register(
     "Heading 4" : "Заглавие 4",
     "Heading 5" : "Заглавие 5",
     "ToDo list" : "Списък със задачи",
-    "Emoji picker" : "Инструмент за избор на емотикони",
-    "Retry" : "Опитай отново",
-    "Unpushed changes" : "Неналожени промени "
+    "Emoji picker" : "Инструмент за избор на емотикони"
 },
 "nplurals=2; plural=(n != 1);");

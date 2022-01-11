@@ -55,8 +55,6 @@ OC.L10N.register(
     "Heading 3" : "Titre 3",
     "Heading 4" : "Titre 4",
     "Heading 5" : "Titre 5",
-    "ToDo list" : "Liste des tâches",
-    "Retry" : "Réessayer",
-    "Unpushed changes" : "Modifications non poussées"
+    "ToDo list" : "Liste des tâches"
 },
 "nplurals=2; plural=(n > 1);");

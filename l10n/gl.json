@@ -46,8 +46,6 @@
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista «para facer»",
-    "Retry" : "Volver tentar",
-    "Unpushed changes" : "Cambios sen enviar"
+    "ToDo list" : "Lista «para facer»"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

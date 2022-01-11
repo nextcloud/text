@@ -7,7 +7,6 @@ OC.L10N.register(
     "Strikethrough" : "Pārsvītrojums",
     "Edit" : "Rediģēt",
     "Undo" : "Atsaukt",
-    "Redo" : "Atcelt atsaukšanu",
-    "Retry" : "Mēģināt vēlreiz"
+    "Redo" : "Atcelt atsaukšanu"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

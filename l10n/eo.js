@@ -31,8 +31,6 @@ OC.L10N.register(
     "Heading 2" : "Titolo 2",
     "Heading 3" : "Titolo 3",
     "Heading 4" : "Titolo 4",
-    "Heading 5" : "Titolo 5",
-    "Retry" : "Reprovi",
-    "Unpushed changes" : "Nesenditaj ŝanĝoj"
+    "Heading 5" : "Titolo 5"
 },
 "nplurals=2; plural=(n != 1);");

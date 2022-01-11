@@ -5,7 +5,6 @@ OC.L10N.register(
     "Use the saved version" : "Kasuta salvestatud versiooni",
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
-    "Edit" : "Redigeeri",
-    "Retry" : "Proovi uuesti"
+    "Edit" : "Redigeeri"
 },
 "nplurals=2; plural=(n != 1);");

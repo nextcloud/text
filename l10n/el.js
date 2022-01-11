@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Επικεφαλίδα 4",
     "Heading 5" : "Επικεφαλίδα 5",
     "ToDo list" : "ToDo λίστα",
-    "Emoji picker" : "Επιλογέας emoji",
-    "Retry" : "Δοκιμή ξανά",
-    "Unpushed changes" : "Παλιές ανενεργές αλλαγές"
+    "Emoji picker" : "Επιλογέας emoji"
 },
 "nplurals=2; plural=(n != 1);");

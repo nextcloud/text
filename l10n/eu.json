@@ -29,6 +29,7 @@
     "Edit guest name" : "Editatu gonbidatuaren izena",
     "Save guest name" : "Gorde gonbidatuaren izena",
     "Formatting help" : "Formatua emateko laguntza",
+    "Style" : "Estiloa",
     "Syntax" : "Sintaxia",
     "Keyboard shortcuts" : "Teklatuaren lasterbideak",
     "Bold" : "Lodia",
@@ -38,8 +39,10 @@
     "Italicized text" : "Testu etzana",
     "Strikethrough" : "Marratua",
     "Heading 1" : "1. goiburua",
+    "Heading level 1" : "1. mailako goiburua",
     "Shift" : "Shift",
     "Heading 6" : "6. goiburua",
+    "Heading level 6" : "6. mailako goiburua",
     "Unordered list" : "Ordenatu gabeko zerrenda",
     "An item" : "Elementu bat",
     "Ordered list" : "Ordenatutako zerrenda",
@@ -51,7 +54,12 @@
     "Code block" : "Kode blokea",
     "Some code" : "Kode zatia",
     "Insert emoji" : "Txertatu emojia",
+    "Upload from computer" : "Kargatu ordenagailutik",
+    "Insert from Files" : "Txertatu Fitxategi-tik",
+    "Insert from link" : "Txertatu estekatik",
+    "Image link to insert" : "Txertatzeko irudiaren esteka",
     "Insert image" : "Txertatu irudia",
+    "Image format not supported" : "Irudiaren formatua ez da bateragarria",
     "Insert an image" : "Txertatu irudi bat",
     "Alt" : "Alt",
     "Update Link" : "Eguneratu esteka",
@@ -74,8 +82,6 @@
     "Heading 4" : "4. goiburua",
     "Heading 5" : "5. goiburua",
     "ToDo list" : "Egitekoen zerrenda",
-    "Emoji picker" : " Emotikono-hautatzailea",
-    "Retry" : "Saiatu berriro",
-    "Unpushed changes" : "Bidali gabeko aldaketak"
+    "Emoji picker" : " Emotikono-hautatzailea"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

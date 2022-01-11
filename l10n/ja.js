@@ -60,8 +60,6 @@ OC.L10N.register(
     "Heading 4" : "見出し4",
     "Heading 5" : "見出し5",
     "ToDo list" : "ToDo リスト",
-    "Emoji picker" : "絵文字選択",
-    "Retry" : "再試行",
-    "Unpushed changes" : "プッシュされていない変更"
+    "Emoji picker" : "絵文字選択"
 },
 "nplurals=1; plural=0;");

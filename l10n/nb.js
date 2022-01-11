@@ -37,8 +37,6 @@ OC.L10N.register(
     "Heading 3" : "Overskrift 3",
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
-    "ToDo list" : "Gjøreliste",
-    "Retry" : "Prøv igjen",
-    "Unpushed changes" : "Ulagrede endringer"
+    "ToDo list" : "Gjøreliste"
 },
 "nplurals=2; plural=(n != 1);");

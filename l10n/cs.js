@@ -88,8 +88,6 @@ OC.L10N.register(
     "Heading 4" : "Nadpis 4",
     "Heading 5" : "Nadpis 5",
     "ToDo list" : "Seznam úkolů",
-    "Emoji picker" : "Volba emotikony",
-    "Retry" : "Zkusit znovu",
-    "Unpushed changes" : "Neodeslané změny"
+    "Emoji picker" : "Volba emotikony"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

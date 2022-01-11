@@ -47,7 +47,6 @@ OC.L10N.register(
     "Heading 4" : "Otsikko 4",
     "Heading 5" : "Otsikko 5",
     "ToDo list" : "Tehtävälista",
-    "Emoji picker" : "Emoji-valitsin",
-    "Retry" : "Yritä uudelleen"
+    "Emoji picker" : "Emoji-valitsin"
 },
 "nplurals=2; plural=(n != 1);");

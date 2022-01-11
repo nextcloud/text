@@ -42,8 +42,6 @@
     "Heading 3" : "כותרת 3",
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
-    "ToDo list" : "רשימת מטלות",
-    "Retry" : "ניסיון חוזר",
-    "Unpushed changes" : "שינויים שלא נדחפו"
+    "ToDo list" : "רשימת מטלות"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

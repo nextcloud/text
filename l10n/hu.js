@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Címsor 4",
     "Heading 5" : "Címsor 5",
     "ToDo list" : "Teendők",
-    "Emoji picker" : "Hangulatjel kiválasztása",
-    "Retry" : "Újra",
-    "Unpushed changes" : "El nem küldött változtatások"
+    "Emoji picker" : "Hangulatjel kiválasztása"
 },
 "nplurals=2; plural=(n != 1);");
