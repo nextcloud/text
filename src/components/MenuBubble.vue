@@ -137,6 +137,10 @@ export default {
 			if (url && !noPrefixes.find(regex => url.match(regex))) {
 				url = 'https://' + url
 			}
+
+			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
+			url.replaceAll(' ', '%20')
+
 			command({ href: url })
 			this.hideLinkMenu()
 		},
