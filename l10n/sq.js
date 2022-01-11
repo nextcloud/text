@@ -17,8 +17,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"],
     "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
-    "Redo" : "Ribëj",
-    "Retry" : "Riprovoni",
-    "Unpushed changes" : "Ndryshime të pavendosura"
+    "Redo" : "Ribëj"
 },
 "nplurals=2; plural=(n != 1);");

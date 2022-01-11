@@ -56,8 +56,6 @@ OC.L10N.register(
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
     "ToDo list" : "To-Do liste",
-    "Emoji picker" : "Emoji vælger",
-    "Retry" : "Prøv igen",
-    "Unpushed changes" : "Upushede ændringer"
+    "Emoji picker" : "Emoji vælger"
 },
 "nplurals=2; plural=(n != 1);");

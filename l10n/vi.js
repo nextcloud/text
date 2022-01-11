@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
     "ToDo list" : "Cần làm",
-    "Emoji picker" : "Trình chọn emoji",
-    "Retry" : "Thử lại",
-    "Unpushed changes" : "Các thay đổi chưa được đưa lên"
+    "Emoji picker" : "Trình chọn emoji"
 },
 "nplurals=1; plural=0;");

@@ -86,8 +86,6 @@
     "Heading 4" : "Intestazione 4",
     "Heading 5" : "Intestazione 5",
     "ToDo list" : "Elenco Cose da fare",
-    "Emoji picker" : "Selettore di emoji",
-    "Retry" : "Riprova",
-    "Unpushed changes" : "Modifiche non depositate"
+    "Emoji picker" : "Selettore di emoji"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Rubrik 4",
     "Heading 5" : "Rubrik 5",
     "ToDo list" : "Att göra lista",
-    "Emoji picker" : "Emojiväljare",
-    "Retry" : "Försök igen",
-    "Unpushed changes" : "Inte slutförda ändringar"
+    "Emoji picker" : "Emojiväljare"
 },
 "nplurals=2; plural=(n != 1);");

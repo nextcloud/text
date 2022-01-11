@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
     "ToDo list" : "Popis zadataka",
-    "Emoji picker" : "Birač emojija",
-    "Retry" : "Pokušaj ponovno",
-    "Unpushed changes" : "Neprimijenjene promjene"
+    "Emoji picker" : "Birač emojija"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

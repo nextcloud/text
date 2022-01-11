@@ -74,8 +74,6 @@ OC.L10N.register(
     "Heading 4" : "标题 4",
     "Heading 5" : "标题 5",
     "ToDo list" : "待办事项清单",
-    "Emoji picker" : "emoji 选择器",
-    "Retry" : "重试",
-    "Unpushed changes" : "未推送的更改"
+    "Emoji picker" : "emoji 选择器"
 },
 "nplurals=1; plural=0;");

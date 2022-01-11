@@ -59,8 +59,6 @@ OC.L10N.register(
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
     "ToDo list" : "Užduočių sąrašas",
-    "Emoji picker" : "Šypsenėlių parinkiklis",
-    "Retry" : "Bandyti dar kartą",
-    "Unpushed changes" : "Nepatvirtinti pakeitimai"
+    "Emoji picker" : "Šypsenėlių parinkiklis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

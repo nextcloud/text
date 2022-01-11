@@ -4,7 +4,6 @@ OC.L10N.register(
     "Text" : "Texto",
     "Unsaved changes" : "Cambios no guardados",
     "Edit" : "Editar",
-    "Undo" : "Deshacer",
-    "Retry" : "Reintentar"
+    "Undo" : "Deshacer"
 },
 "nplurals=2; plural=(n != 1);");

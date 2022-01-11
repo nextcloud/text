@@ -50,8 +50,6 @@ OC.L10N.register(
     "Heading 4" : "Intestatzione 4",
     "Heading 5" : "Intestatzione 5",
     "ToDo list" : "Cosas de fàghere",
-    "Emoji picker" : "Sèberu de carigheddas",
-    "Retry" : "Torra a proare",
-    "Unpushed changes" : "Modìficas non depositadas"
+    "Emoji picker" : "Sèberu de carigheddas"
 },
 "nplurals=2; plural=(n != 1);");

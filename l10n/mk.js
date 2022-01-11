@@ -15,8 +15,6 @@ OC.L10N.register(
     "Italic" : "Италик",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
-    "Undo" : "Врати",
-    "Retry" : "Обидете се повторно",
-    "Unpushed changes" : "Необјавени промени"
+    "Undo" : "Врати"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -14,8 +14,6 @@ OC.L10N.register(
     "Save guest name" : "Guardar o nome do convidado",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"],
     "Edit" : "Editar",
-    "Undo" : "Desfazer",
-    "Retry" : "Repetir",
-    "Unpushed changes" : "Modificações não enviadas"
+    "Undo" : "Desfazer"
 },
 "nplurals=2; plural=(n != 1);");

@@ -41,8 +41,6 @@ OC.L10N.register(
     "Heading 3" : "Fyrirsögn 3",
     "Heading 4" : "Fyrirsögn 4",
     "Heading 5" : "Fyrirsögn 5",
-    "ToDo list" : "Verkefnalisti",
-    "Retry" : "Reyna aftur",
-    "Unpushed changes" : "Breytingar sem ekki er búið að senda inn"
+    "ToDo list" : "Verkefnalisti"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
