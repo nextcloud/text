@@ -118,7 +118,7 @@ export default {
 	mixins: [
 		store,
 	],
-	props: ['node', 'options', 'updateAttrs', 'view'], // eslint-disable-line
+	props: ['node', 'options', 'updateAttrs', 'view', 'getPos'], // eslint-disable-line
 	data() {
 		return {
 			imageLoaded: false,
