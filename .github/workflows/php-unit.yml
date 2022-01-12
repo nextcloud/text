@@ -1,0 +1,123 @@
+name: Cypress
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - stable*
+
+env:
+  APP_NAME: text
+  CYPRESS_baseUrl: http://localhost:8081/index.php
+
+jobs:
+  cypress:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [14.x]
+        # containers: [1, 2, 3]
+        php-versions: [ '7.4' ]
+        databases: [ 'sqlite' ]
+        server-versions: [ 'master' ]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set up npm7
+        run: npm i -g npm@7
+
+      - name: Checkout server
+        uses: actions/checkout@v2
+        with:
+          repository: nextcloud/server
+          ref: ${{ matrix.server-versions }}
+
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+          git submodule sync --recursive
+          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
+      - name: Checkout viewer
+        uses: actions/checkout@v2
+        with:
+          repository: nextcloud/viewer
+          ref: ${{ matrix.server-versions }}
+          path: apps/viewer
+
+      - name: npm install, build viewer in testing mode
+        working-directory: apps/viewer
+        run: |
+          npm ci
+          TESTING=true npm run build --if-present
+
+      - name: Checkout ${{ env.APP_NAME }}
+        uses: actions/checkout@v2
+        with:
+          path: apps/${{ env.APP_NAME }}
+
+      - name: Set up php ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, zip, gd, apcu
+          ini-values:
+            apc.enable_cli=on
+          coverage: none
+
+      - name: Set up Nextcloud
+        env:
+          DB_PORT: 4444
+          PHP_CLI_SERVER_WORKERS: 10
+        run: |
+          mkdir data
+          php occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
+          php occ config:system:set memcache.local --value="\\OC\\Memcache\\APCu"
+          php -f index.php
+          php -S 0.0.0.0:8081 &
+          export OC_PASS=1234561
+          php occ user:add --password-from-env user1
+          php occ user:add --password-from-env user2
+          php occ config:system:set force_language --value en
+          php occ app:enable viewer
+          php occ app:enable text
+          php occ app:list
+          curl -v http://localhost:8081/index.php/login
+          cat data/nextcloud.log
+
+      - name: Validate composer.json and composer.lock
+        working-directory: apps/${{ env.APP_NAME }}
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        working-directory: apps/${{ env.APP_NAME }}
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        working-directory: apps/${{ env.APP_NAME }}
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run php unit tests
+        working-directory: apps/${{ env.APP_NAME }}
+        run: phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
+
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: Upload Coverage
+          path: apps/${{ env.APP_NAME }}/build/php-unit.coverage.xml
+          retention-days: 5
