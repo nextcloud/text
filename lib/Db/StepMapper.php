@@ -27,6 +27,7 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
+/** @extends QBMapper<Step> */
 class StepMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'text_steps', Step::class);
