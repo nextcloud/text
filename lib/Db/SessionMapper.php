@@ -29,10 +29,7 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
-/**
- * @method Session update(Session $session)
- * @method Session insert(Session $session)
- */
+/** @extends QBMapper<Session> */
 class SessionMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'text_sessions', Session::class);
