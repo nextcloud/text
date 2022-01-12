@@ -1,0 +1,48 @@
+name: PHP Composer
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - stable*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      # do not stop on another job's failure
+      fail-fast: false
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0']
+
+    name: php${{ matrix.php-versions }}-composer
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up php ${{ matrix.php-versions }}
+      uses: "shivammathur/setup-php@v2"
+      with:
+        php-version: "${{ matrix.php-versions }}"
+        extensions: mbstring, iconv, fileinfo, intl, oci8
+        coverage: none
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate # --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    # tests are already run as part of the oci workflow

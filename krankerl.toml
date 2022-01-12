@@ -8,8 +8,6 @@ exclude = [
 	"composer.json",
 	"composer.lock",
 	"_config.yml",
-	".drone.yml",
-	".travis.yml",
 	".eslintignore",
 	".eslintrc.yml",
 	".gitignore",
