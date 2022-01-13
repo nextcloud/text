@@ -184,6 +184,9 @@ export default {
 			return this.$store.state.showAuthorAnnotations
 		},
 		lastSavedStatus() {
+			if (this.hasConnectionIssue) {
+				return t('text', this.isMobile ? 'Offline' : 'Offline, changes will be saved when online')
+			}
 			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
 		lastSavedStatusClass() {
