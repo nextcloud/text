@@ -15,7 +15,9 @@
             "email": "jus@bitgrid.net"
         }
     ],
-    "require": {},
+    "require": {
+      "php": "^7.3|^8.0"
+    },
     "scripts": {
       "lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
       "cs:check": "php-cs-fixer fix --dry-run --diff",
