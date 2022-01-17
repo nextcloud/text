@@ -101,15 +101,23 @@ const registerFileActionFallback = () => {
 					Vue.prototype.OCA = window.OCA
 					const Editor = imports[1].default
 					const vm = new Vue({
-						render: h => h(Editor, {
-							props: {
-								fileId: file ? file.id : null,
-								active: true,
-								shareToken: sharingToken,
-								relativePath: path,
-								mimeType: file.mimetype,
-							},
-						}),
+						render: function(h) { // eslint-disable-line
+							const self = this
+							return h(Editor, {
+								props: {
+									fileId: file ? file.id : null,
+									active: true,
+									shareToken: sharingToken,
+									relativePath: path,
+									mimeType: file.mimetype,
+								},
+								on: {
+									close: function() { // eslint-disable-line
+										self.$destroy()
+									},
+								},
+							})
+						},
 					})
 					vm.$mount(ViewerRoot)
 				})
