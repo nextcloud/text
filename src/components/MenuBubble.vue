@@ -85,7 +85,7 @@ export default {
 		},
 		// used to calculate the position based on the scrollOffset
 		contentWrapper: {
-			type: Object,
+			type: HTMLDivElement,
 			required: false,
 			default: null,
 		},
