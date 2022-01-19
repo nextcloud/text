@@ -211,12 +211,14 @@ export default {
 	}
 
 	#rich-workspace::v-deep #editor {
-		overflow: scroll !important;
-		max-height: calc(40vh - 40px);
+		overflow: visible !important;
 	}
 
 	#rich-workspace::v-deep .content-wrapper {
+		overflow: scroll !important;
+		max-height: calc(40vh - 50px);
 		padding-left: 10px;
+		padding-bottom: 60px; /* ensure menububble fits below */
 	}
 
 	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
