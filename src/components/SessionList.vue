@@ -176,8 +176,7 @@ export default {
 		}
 
 		.avatar-wrapper {
-			margin: 6px;
-			margin-right: -8px;
+			margin: 0 -8px 0 0;
 			margin-left: 0;
 		}
 
@@ -185,13 +184,13 @@ export default {
 			background-color: var(--color-background-dark);
 			width: 44px;
 			height: 44px;
-			margin: 6px 6px 6px 0px;
+			margin: 0 6px 0 0;
 		}
 	}
 
 	.avatar-wrapper {
-		width: 42px;
-		height: 42px;
+		width: 44px;
+		height: 44px;
 		z-index: 1;
 		border-radius: 50%;
 		overflow: hidden;

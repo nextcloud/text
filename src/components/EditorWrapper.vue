@@ -621,7 +621,7 @@ export default {
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
 		position: relative;
-		top: 15px;
+		top: 9px;
 		min-width: 85px;
 		max-height: 36px;
 
