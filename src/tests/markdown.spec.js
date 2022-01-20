@@ -3,124 +3,127 @@ import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
 
 const markdownThroughEditor = (markdown) => {
-  const tiptap = createEditor({
-    content: markdownit.render(markdown),
-    enableRichEditing: true
-  })
-  const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
-  return serializer.serialize(tiptap.state.doc)
+	const tiptap = createEditor({
+		content: markdownit.render(markdown),
+		enableRichEditing: true
+	})
+	const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
+	return serializer.serialize(tiptap.state.doc)
 }
 
 const markdownThroughEditorHtml = (html) => {
-  const tiptap = createEditor({
-    content: html,
-    enableRichEditing: true
-  })
-  const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
-  return serializer.serialize(tiptap.state.doc)
+	const tiptap = createEditor({
+		content: html,
+		enableRichEditing: true
+	})
+	const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
+	return serializer.serialize(tiptap.state.doc)
 }
 
 describe('Commonmark', () => {
-  beforeAll(() => {
-    // Make sure html tests pass
-    // entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
-    markdownit.set({ html: true})
-  })
-  afterAll(() => {
-    markdownit.set({ html: false})
-  })
+	beforeAll(() => {
+		// Make sure html tests pass
+		// entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
+		markdownit.set({ html: true})
+	})
+	afterAll(() => {
+		markdownit.set({ html: false})
+	})
 
-  // failures because of some additional newline in markdownit
-  const skippedMarkdownTests = [
-    187, 209, 210
-  ];
+	// failures because of some additional newline in markdownit
+	const skippedMarkdownTests = [
+		187, 209, 210
+	];
 
-  spec.forEach((entry) => {
-    if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
-      return
-    }
-    test('commonmark ' + entry.example, () => {
-      expect(markdownit.render(entry.markdown)).toBe(entry.html, entry)
-    })
-  })
+	spec.forEach((entry) => {
+		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
+			return
+		}
+		test('commonmark ' + entry.example, () => {
+			const expected = entry.markdown.includes('__')
+				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
+				: entry.html
+			expect(markdownit.render(entry.markdown)).toBe(expected)
+		})
+	})
 })
 
 describe('Markdown though editor', () => {
-  test('headlines', () => {
-    expect(markdownThroughEditor('# Test')).toBe('# Test')
-    expect(markdownThroughEditor('## Test')).toBe('## Test')
-    expect(markdownThroughEditor('### Test')).toBe('### Test')
-    expect(markdownThroughEditor('#### Test')).toBe('#### Test')
-    expect(markdownThroughEditor('##### Test')).toBe('##### Test')
-  })
-  test('inline format', () => {
-    expect(markdownThroughEditor('**Test**')).toBe('**Test**')
-    expect(markdownThroughEditor('__Test__')).toBe('**Test**')
-    expect(markdownThroughEditor('_Test_')).toBe('*Test*')
-    expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
-  })
-  test('ul', () => {
-    expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n* bar')
-    expect(markdownThroughEditor('- foo\n\n- bar')).toBe('* foo\n* bar')
-    expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('* foo\n* bar')
-  })
-  test('ol', () => {
-    expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
-  })
-  test('paragraph', () => {
-    expect(markdownThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo bar\n\nfoobar foobar')
-  })
-  test('links', () => {
-    expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
-  })
-  test('images', () => {
-    expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
-  })
-  test('special characters', () => {
-    expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
-  })
-  test('checkboxes', () => {
-    expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
-    expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
-    expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
-	expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
-	expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('* [ ] foo\n* [x] bar')
-	expect(markdownThroughEditor('- [x] foo\n' +
-		  '  - [ ] bar\n' +
-		  '  - [x] baz\n' +
-		  '- [ ] bim')).toBe('* [x] foo\n' +
-		  '  * [ ] bar\n' +
-		  '  * [x] baz\n' +
-		  '* [ ] bim')
-	expect(markdownThroughEditor('- [X] asd')).toBe('* [x] asd')
-	expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
-	expect(markdownThroughEditor('- [  ] asd')).toBe('* [ ] asd')
-	expect(markdownThroughEditor('-   [X] asd')).toBe('* [x] asd')
-	expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
-  })
+	test('headlines', () => {
+		expect(markdownThroughEditor('# Test')).toBe('# Test')
+		expect(markdownThroughEditor('## Test')).toBe('## Test')
+		expect(markdownThroughEditor('### Test')).toBe('### Test')
+		expect(markdownThroughEditor('#### Test')).toBe('#### Test')
+		expect(markdownThroughEditor('##### Test')).toBe('##### Test')
+	})
+	test('inline format', () => {
+		expect(markdownThroughEditor('**Test**')).toBe('**Test**')
+		expect(markdownThroughEditor('__Test__')).toBe('__Test__')
+		expect(markdownThroughEditor('_Test_')).toBe('*Test*')
+		expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
+	})
+	test('ul', () => {
+		expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n* bar')
+		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('* foo\n* bar')
+		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('* foo\n* bar')
+	})
+	test('ol', () => {
+		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
+	})
+	test('paragraph', () => {
+		expect(markdownThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo bar\n\nfoobar foobar')
+	})
+	test('links', () => {
+		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
+	})
+	test('images', () => {
+		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
+	})
+	test('special characters', () => {
+		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
+	})
+	test('checkboxes', () => {
+		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
+		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
+		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
+		expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
+		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('* [ ] foo\n* [x] bar')
+		expect(markdownThroughEditor('- [x] foo\n' +
+			'  - [ ] bar\n' +
+			'  - [x] baz\n' +
+			'- [ ] bim')).toBe('* [x] foo\n' +
+				'  * [ ] bar\n' +
+				'  * [x] baz\n' +
+				'* [ ] bim')
+		expect(markdownThroughEditor('- [X] asd')).toBe('* [x] asd')
+		expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
+		expect(markdownThroughEditor('- [  ] asd')).toBe('* [ ] asd')
+		expect(markdownThroughEditor('-   [X] asd')).toBe('* [x] asd')
+		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
+	})
 
-  test('escaping', () => {
-    const test = '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n' +
-        '\n' +
-        '* [asdf asdf asdf/asdf](Asdf Asdf)\n' +
-        '* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n' +
-        '* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
-    expect(markdownThroughEditor(test)).toBe(test)
-    expect(markdownThroughEditor('This is a [test] for escaping')).toBe('This is a [test] for escaping')
-    expect(markdownThroughEditor('This is a [test for escaping')).toBe('This is a [test for escaping')
-  })
+	test('escaping', () => {
+		const test = '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n' +
+			'\n' +
+			'* [asdf asdf asdf/asdf](Asdf Asdf)\n' +
+			'* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n' +
+			'* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
+		expect(markdownThroughEditor(test)).toBe(test)
+		expect(markdownThroughEditor('This is a [test] for escaping')).toBe('This is a [test] for escaping')
+		expect(markdownThroughEditor('This is a [test for escaping')).toBe('This is a [test for escaping')
+	})
 })
 
 describe('Markdown serializer from html', () => {
-  test('paragraph', () => {
-    expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe('hello\n\nworld')
-  })
-  test('links', () => {
-    expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe('[test](foo)')
-  })
-  test('images', () => {
-    expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
-  })
+	test('paragraph', () => {
+		expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe('hello\n\nworld')
+	})
+	test('links', () => {
+		expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe('[test](foo)')
+	})
+	test('images', () => {
+		expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
+	})
 	test('checkboxes', () => {
 		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
 		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')

@@ -48,7 +48,6 @@ class Strong extends Bold {
 	inputRules({ type }) {
 		return [
 			markInputRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))$/, type),
-			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
 		]
 	}
 
@@ -56,7 +55,6 @@ class Strong extends Bold {
 	pasteRules({ type }) {
 		return [
 			markPasteRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))/g, type),
-			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
 		]
 	}
 
@@ -222,12 +220,26 @@ class Underline extends TipTapUnderline {
 			],
 			toDOM: () => ['u', 0],
 			toMarkdown: {
-				open: '____',
-				close: '____',
+				open: '__',
+				close: '__',
 				mixable: true,
 				expelEnclosingWhitespace: true,
 			},
 		}
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	inputRules({ type }) {
+		return [
+			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
+		]
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	pasteRules({ type }) {
+		return [
+			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
+		]
 	}
 
 }

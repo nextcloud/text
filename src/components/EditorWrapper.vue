@@ -325,9 +325,12 @@ export default {
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
-					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
+					const content = this.isRichEditor
+						? markdownit.render(documentSource)
+						: '<pre>' + escapeHtml(documentSource) + '</pre>'
+					loadSyntaxHighlight(extensionHighlight[this.fileExtension] || this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
-							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + escapeHtml(documentSource) + '</pre>',
+							content,
 							onInit: ({ state }) => {
 								this.syncService.state = state
 								this.syncService.startSync()
