@@ -1,5 +1,6 @@
-import { markdownit, createEditor, createMarkdownSerializer } from './../EditorFactory';
+import { createEditor, createMarkdownSerializer } from './../EditorFactory';
 import spec from "./fixtures/spec"
+import markdownit from './../markdownit'
 
 const markdownThroughEditor = (markdown) => {
   const tiptap = createEditor({

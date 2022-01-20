@@ -31,7 +31,7 @@ import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
 import { markInputRule, markPasteRule } from 'tiptap-commands'
 import { domHref, parseHref } from './../helpers/links'
-import { markdownit } from './../EditorFactory'
+import markdownit from './../markdownit'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
