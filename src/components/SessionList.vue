@@ -37,7 +37,7 @@
 					:disable-menu="true"
 					:show-user-status="false"
 					:disable-tooltip="true"
-					:size="32" />
+					:size="44" />
 			</div>
 		</button>
 		<template #default>
@@ -55,7 +55,7 @@
 								:disable-menu="true"
 								:show-user-status="false"
 								:disable-tooltip="true"
-								:size="32" />
+								:size="44" />
 						</div>
 						{{ session.guestName ? session.guestName : session.displayName }}
 					</li>
@@ -156,6 +156,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.avatardiv {
+		width: 44px !important;
+		height: 44px !important;
+		line-height: 44px;
+	}
+
 	.avatar-list {
 		border: none;
 		background-color: var(--color-main-background);
@@ -170,26 +176,24 @@ export default {
 		}
 
 		.avatar-wrapper {
-			margin: 6px;
-			margin-right: -8px;
+			margin: 0 -8px 0 0;
 			margin-left: 0;
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
 			background-color: var(--color-background-dark);
-			width: 36px;
-			height: 36px;
-			margin: 6px 6px 6px 0px;
+			width: 44px;
+			height: 44px;
+			margin: 0 6px 0 0;
 		}
 	}
 
 	.avatar-wrapper {
-		width: 32px;
-		height: 32px;
+		width: 44px;
+		height: 44px;
 		z-index: 1;
 		border-radius: 50%;
 		overflow: hidden;
-		border: 2px solid var(--color-main-background);
 		box-sizing: content-box !important;
 	}
 

@@ -509,7 +509,7 @@ export default {
 		background-color: var(--color-main-background-translucent);
 		-webkit-backdrop-filter: var(--background-blur);
 		backdrop-filter: var(--background-blur);
-		min-height: 50px; // important for mobile so that the buttons are always inside the container
+		max-height: 44px; // important for mobile so that the buttons are always inside the container
 		padding-top:3px;
 		padding-bottom: 3px;
 
