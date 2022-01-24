@@ -37,7 +37,7 @@
 					:disable-menu="true"
 					:show-user-status="false"
 					:disable-tooltip="true"
-					:size="32" />
+					:size="44" />
 			</div>
 		</button>
 		<template #default>
@@ -55,7 +55,7 @@
 								:disable-menu="true"
 								:show-user-status="false"
 								:disable-tooltip="true"
-								:size="32" />
+								:size="44" />
 						</div>
 						{{ session.guestName ? session.guestName : session.displayName }}
 					</li>
