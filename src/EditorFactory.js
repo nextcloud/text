@@ -33,10 +33,8 @@ import {
 	TrailingNode,
 	Placeholder,
 } from 'tiptap-extensions'
-import { Strong, Italic, Strike, Link } from './marks'
+import { Strong, Italic, Strike, Link, Underline } from './marks'
 import { Image, PlainTextDocument, ListItem, BulletList } from './nodes'
-import MarkdownIt from 'markdown-it'
-import taskLists from 'markdown-it-task-lists'
 import { translate as t } from '@nextcloud/l10n'
 
 import 'proxy-polyfill'
@@ -80,6 +78,7 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 			new Link({
 				openOnClick: true,
 			}),
+			new Underline(),
 			new Image({ currentDirectory }),
 			new Placeholder({
 				emptyNodeClass: 'is-empty',
@@ -112,10 +111,6 @@ const createEditor = ({ content, onInit, onUpdate, extensions, enableRichEditing
 		useBuiltInExtensions: enableRichEditing,
 	})
 }
-
-const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
-	.enable('strikethrough')
-	.use(taskLists, { enable: true, labelAfter: true })
 
 const SerializeException = function(message) {
 	this.message = message
@@ -166,4 +161,4 @@ const serializePlainText = (tiptap) => {
 }
 
 export default createEditor
-export { markdownit, createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight }
+export { createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight }

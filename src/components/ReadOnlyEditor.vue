@@ -27,7 +27,8 @@
 <script>
 import { EditorContent } from 'tiptap'
 import escapeHtml from 'escape-html'
-import { createEditor, markdownit } from '../EditorFactory'
+import { createEditor } from '../EditorFactory'
+import markdownit from './../markdownit'
 
 export default {
 	name: 'ReadOnlyEditor',

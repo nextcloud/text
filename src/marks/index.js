@@ -20,12 +20,18 @@
  *
  */
 
-import { Bold, Italic as TipTapItalic, Strike as TipTapStrike, Link as TipTapLink } from 'tiptap-extensions'
+import {
+	Bold,
+	Italic as TipTapItalic,
+	Strike as TipTapStrike,
+	Link as TipTapLink,
+	Underline as TipTapUnderline,
+} from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
 import { markInputRule, markPasteRule } from 'tiptap-commands'
 import { domHref, parseHref } from './../helpers/links'
-import { markdownit } from './../EditorFactory'
+import markdownit from './../markdownit'
 
 /**
  * This file maps prosemirror mark names to tiptap classes,
@@ -42,7 +48,6 @@ class Strong extends Bold {
 	inputRules({ type }) {
 		return [
 			markInputRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))$/, type),
-			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
 		]
 	}
 
@@ -50,7 +55,6 @@ class Strong extends Bold {
 	pasteRules({ type }) {
 		return [
 			markPasteRule(/(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))/g, type),
-			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
 		]
 	}
 
@@ -201,11 +205,50 @@ class Link extends TipTapLink {
 
 }
 
-/** Strike is currently unsupported by prosemirror-markdown */
+class Underline extends TipTapUnderline {
 
+	get schema() {
+		return {
+			parseDOM: [
+				{
+					tag: 'u',
+				},
+				{
+					style: 'text-decoration',
+					getAttrs: value => value === 'underline',
+				},
+			],
+			toDOM: () => ['u', 0],
+			toMarkdown: {
+				open: '__',
+				close: '__',
+				mixable: true,
+				expelEnclosingWhitespace: true,
+			},
+		}
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	inputRules({ type }) {
+		return [
+			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
+		]
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	pasteRules({ type }) {
+		return [
+			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
+		]
+	}
+
+}
+
+/** Strike is currently unsupported by prosemirror-markdown */
 export {
 	Strong,
 	Italic,
 	Strike,
 	Link,
+	Underline,
 }

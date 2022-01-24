@@ -83,7 +83,8 @@ import moment from '@nextcloud/moment'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
 import { extensionHighlight } from '../helpers/mappings'
-import { createEditor, markdownit, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
+import { createEditor, createMarkdownSerializer, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
+import markdownit from './../markdownit'
 
 import { EditorContent } from 'tiptap'
 import { Collaboration } from 'tiptap-extensions'
@@ -324,9 +325,12 @@ export default {
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
-					loadSyntaxHighlight(extensionHighlight[this.fileExtension] ? extensionHighlight[this.fileExtension] : this.fileExtension).then((languages) => {
+					const content = this.isRichEditor
+						? markdownit.render(documentSource)
+						: '<pre>' + escapeHtml(documentSource) + '</pre>'
+					loadSyntaxHighlight(extensionHighlight[this.fileExtension] || this.fileExtension).then((languages) => {
 						this.tiptap = createEditor({
-							content: this.isRichEditor ? markdownit.render(documentSource) : '<pre>' + escapeHtml(documentSource) + '</pre>',
+							content,
 							onInit: ({ state }) => {
 								this.syncService.state = state
 								this.syncService.startSync()

@@ -50,16 +50,20 @@ describe('Workspace', function() {
 		openWorkspace()
 			.type('Format me')
 			.type('{selectall}')
-		;[['bold', 'strong'], ['italic', 'em'], ['strike', 's']]
-			.forEach(([button, tag]) => {
-				menuButton(button)
-					.click()
-					.should('have.class', 'is-active')
-				cy.get(`.ProseMirror ${tag}`).should('contain', 'Format me')
-				menuButton(button)
-					.click()
-					.should('not.have.class', 'is-active')
-			})
+		;[
+			['bold', 'strong'], 
+			['italic', 'em'], 
+			['underline', 'u'], 
+			['strike', 's']
+		].forEach(([button, tag]) => {
+			menuButton(button)
+				.click()
+				.should('have.class', 'is-active')
+			cy.get(`.ProseMirror ${tag}`).should('contain', 'Format me')
+			menuButton(button)
+				.click()
+				.should('not.have.class', 'is-active')
+		})
 	})
 
 	it('links via menububble', function() {

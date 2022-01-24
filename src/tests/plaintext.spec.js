@@ -1,4 +1,4 @@
-import { markdownit, createEditor, createMarkdownSerializer, serializePlainText } from './../EditorFactory';
+import { createEditor, serializePlainText } from './../EditorFactory';
 import spec from "./fixtures/spec"
 import xssFuzzVectors from './fixtures/xssFuzzVectors';
 

@@ -51,6 +51,15 @@
 					</td>
 				</tr>
 				<tr>
+					<td>{{ t('text', 'Underline') }}</td>
+					<td><code>__{{ t('text', 'Underlined text') }}__</code></td>
+					<td v-if="!isMobile">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>U</kbd>
+					</td>
+				</tr>
+				<tr>
 					<td class="ellipsis_top">
 						{{ t('text', 'Heading 1') }}
 					</td>
