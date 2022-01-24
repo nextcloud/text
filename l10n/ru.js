@@ -54,6 +54,7 @@ OC.L10N.register(
     "Ordered list" : "Упорядоченный список",
     "First item" : "Первый элемент",
     "Checklist" : "Список",
+    "Todo item" : "Элемент списка задач",
     "Blockquote" : "Блок цитаты",
     "Quoted text" : "Цитируемый текст",
     "Code block" : "Блок кода",
