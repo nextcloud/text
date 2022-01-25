@@ -49,7 +49,7 @@ OC.L10N.register(
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
-    "Show rich workspaces" : "Readme.mdを表示",
+    "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Edit" : "編集",
     "Undo" : "元に戻す",
