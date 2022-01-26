@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "Tekst pisany kursywą",
     "Strikethrough" : "Tekst przekreślony",
     "Mistaken text" : "Przekreślony tekst",
+    "Underline" : "Podkreślenie",
+    "Underlined text" : "Podkreślony tekst",
     "Heading 1" : "Nagłówek 1",
     "Heading level 1" : "Nagłówek poziom 1",
     "Shift" : "Shift",

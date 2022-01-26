@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "斜體文字",
     "Strikethrough" : "刪除線",
     "Mistaken text" : "錯誤的文字",
+    "Underline" : "下面畫線",
+    "Underlined text" : "下面畫線的文字",
     "Heading 1" : "標題 1",
     "Heading level 1" : "標題級別 1",
     "Shift" : "轉移",
