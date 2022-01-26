@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "Skloněný text",
     "Strikethrough" : "Přeškrtnuté",
     "Mistaken text" : "Už neplatící text",
+    "Underline" : "Podtrhnout",
+    "Underlined text" : "Podtržený text",
     "Heading 1" : "Nadpis 1",
     "Heading level 1" : "Nadpis první úrovně",
     "Shift" : "Shift",
