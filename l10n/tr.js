@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "Yatık metin",
     "Strikethrough" : "Üzeri çizili",
     "Mistaken text" : "Hatalı metin",
+    "Underline" : "Altı çizili",
+    "Underlined text" : "Altı çizili metin",
     "Heading 1" : "1. Başlık",
     "Heading level 1" : "1. başlık düzeyi",
     "Shift" : "Shift",
