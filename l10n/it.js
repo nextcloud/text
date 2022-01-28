@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "Corsivo",
     "Strikethrough" : "Sbarrato",
     "Mistaken text" : "Barrato",
+    "Underline" : "Sottolinea",
+    "Underlined text" : "Testo sottolineato",
     "Heading 1" : "Intestazione 1",
     "Heading level 1" : "Livello di intestazione 1",
     "Shift" : "Shift",
