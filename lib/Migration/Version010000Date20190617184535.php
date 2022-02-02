@@ -101,6 +101,7 @@ class Version010000Date20190617184535 extends SimpleMigrationStep {
 			]);
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['token'], 'rd_session_token_idx');
+			$table->addIndex(['last_contact'], 'ts_lastcontact');
 		}
 
 		if (!$schema->hasTable('text_steps')) {
