@@ -30,7 +30,7 @@
 
 		<EditorWrapper v-if="file"
 			v-show="ready"
-			:key="file.id"
+			:key="file.path"
 			:file-id="file.id"
 			:relative-path="file.path"
 			:share-token="shareToken"
