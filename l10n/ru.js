@@ -44,6 +44,8 @@ OC.L10N.register(
     "Italicized text" : "Текст, выделенный курсивом",
     "Strikethrough" : "Зачеркнутый",
     "Mistaken text" : "Ошибочный текст",
+    "Underline" : "Подчеркнуть",
+    "Underlined text" : "Подчеркнутый текст",
     "Heading 1" : "Заголовок 1",
     "Heading level 1" : "Заголовок 1 уровня",
     "Shift" : "Shift",
