@@ -1,3 +1,6 @@
+/**
+ * @param {object} md Markdown object
+ */
 export default function markdownUnderlines(md) {
 	md.inline.ruler2.after('emphasis', 'underline', state => {
 		const tokens = state.tokens
