@@ -29,7 +29,7 @@ import {
 } from 'tiptap-extensions'
 import { Plugin } from 'tiptap'
 import { getMarkAttrs } from 'tiptap-utils'
-import { markInputRule, markPasteRule } from 'tiptap-commands'
+import { markInputRule, markPasteRule, toggleMark } from 'tiptap-commands'
 import { domHref, parseHref } from './../helpers/links'
 import markdownit from './../markdownit'
 
@@ -42,6 +42,14 @@ class Strong extends Bold {
 
 	get name() {
 		return 'strong'
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	keys({ type }) {
+		return {
+			'Mod-b': toggleMark(type),
+			'Mod-B': toggleMark(type),
+		}
 	}
 
 	// TODO: remove once we upgraded to tiptap v2
@@ -64,6 +72,14 @@ class Italic extends TipTapItalic {
 
 	get name() {
 		return 'em'
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	keys({ type }) {
+		return {
+			'Mod-i': toggleMark(type),
+			'Mod-I': toggleMark(type),
+		}
 	}
 
 	// TODO: remove once we upgraded to tiptap v2
@@ -110,6 +126,14 @@ class Strike extends TipTapStrike {
 				mixable: true,
 				expelEnclosingWhitespace: true,
 			},
+		}
+	}
+
+	// TODO: remove once we upgraded to tiptap v2
+	keys({ type }) {
+		return {
+			'Mod-d': toggleMark(type),
+			'Mod-D': toggleMark(type),
 		}
 	}
 
@@ -229,13 +253,19 @@ class Underline extends TipTapUnderline {
 	}
 
 	// TODO: remove once we upgraded to tiptap v2
+	keys({ type }) {
+		return {
+			'Mod-u': toggleMark(type),
+			'Mod-U': toggleMark(type),
+		}
+	}
+
 	inputRules({ type }) {
 		return [
 			markInputRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))$/, type),
 		]
 	}
 
-	// TODO: remove once we upgraded to tiptap v2
 	pasteRules({ type }) {
 		return [
 			markPasteRule(/(?:^|\s)((?:__)((?:[^__]+))(?:__))/g, type),
