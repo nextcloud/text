@@ -65,6 +65,12 @@ describe('Image View src attribute based on markdown', () => {
 			.toBe('https://nextcloud/index.php/apps/files_sharing/publicpreview/CSYoWifBzrsMWeA?file=/deck11-calendar.png&x=1760&y=990&a=true')
 	})
 
+	test('data urls are used as is', () => {
+		const src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='
+		const wrapper = factory({src})
+		expect(wrapper.find('.image__main').attributes('src')).toBe(src)
+	})
+
 	test('image served by the Text app API', () => {
 		const wrapper = factory({src: 'text://image?imageFileName=1640709467-a%60a%60a.png'})
 		expect(wrapper.vm.isSupportedImage).toBe(true)
