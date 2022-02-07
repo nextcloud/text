@@ -59,8 +59,13 @@ const domHref = function(node) {
 	if (match) {
 		const [, relPath, id] = match
 		const currentDir = basedir(OCA.Viewer.file)
-		const dir = absolutePath(currentDir, basedir(relPath))
-		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
+		if (relPath.slice(-1) === '/') {
+			const dir = absolutePath(currentDir, relPath)
+			return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}`)
+		} else {
+			const dir = absolutePath(currentDir, basedir(relPath))
+			return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
+		}
 	}
 }
 
