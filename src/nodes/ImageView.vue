@@ -45,7 +45,7 @@
 							v-if="showIcons"
 							class="trash-icon"
 							title="Delete this image"
-							@click="deleteImage">
+							@click="deleteNode">
 							<TrashCanIcon />
 						</div>
 					</div>
@@ -122,7 +122,7 @@ export default {
 	mixins: [
 		store,
 	],
-	props: ['editor', 'node', 'extension', 'updateAttributes', 'getPos'], // eslint-disable-line
+	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
 		return {
 			imageLoaded: false,
@@ -295,12 +295,6 @@ export default {
 			this.$nextTick(() => {
 				this.editor.commands.scrollIntoView()
 			})
-		},
-		deleteImage() {
-			const tr = this.view.state.tr
-			const pos = this.getPos()
-			tr.delete(pos, pos + this.node.nodeSize)
-			this.view.dispatch(tr)
 		},
 	},
 }
