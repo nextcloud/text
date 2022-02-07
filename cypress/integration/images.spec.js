@@ -161,10 +161,7 @@ describe('Test all image insertion methods', () => {
 		})
 	})
 
-	it('Close the editor and delete the user', () => {
-		cy.openFile('test.md')
-		cy.get('#viewer .modal-header button.header-close').click()
-		cy.get('#viewer').should('not.exist')
+	it('Delete the user', () => {
 		cy.nextcloudDeleteUser(randUser, 'password')
 	})
 
