@@ -291,6 +291,7 @@ export default {
 				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
+			OCA.Text.RichWorkspaceFilePath = this.relativePath
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
 			this.syncService = new SyncService({
 				shareToken: this.shareToken,

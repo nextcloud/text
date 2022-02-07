@@ -58,4 +58,5 @@ documentReady(() => {
 
 OCA.Text = {
 	RichWorkspaceEnabled: loadState('text', 'workspace_available'),
+	RichWorkspaceFilePath: '',
 }

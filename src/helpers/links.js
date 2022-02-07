@@ -55,10 +55,10 @@ const domHref = function(node) {
 	if (ref.match(/^[a-zA-Z]*:/)) {
 		return ref
 	}
-	const match = ref.match(/^([^?]*)\?fileId=(\d+)(&context=([^&]*))?/)
+	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
-		const file = match[4] || OCA.Viewer.file
+		const file = OCA.Viewer.file || OCA.Text.RichWorkspaceFilePath
 		const currentDir = basedir(file)
 		const dir = absolutePath(currentDir, basedir(relPath))
 		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)

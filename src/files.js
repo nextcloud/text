@@ -60,4 +60,5 @@ if (workspaceAvailable) {
 
 OCA.Text = {
 	RichWorkspaceEnabled: workspaceEnabled,
+	RichWorkspaceFilePath: '',
 }

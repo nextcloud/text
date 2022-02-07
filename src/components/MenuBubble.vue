@@ -153,7 +153,9 @@ export default {
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 					// add context to hack around unset OCA.Viewer.file being unset
 					// when editing Readme.md in "Richworkspace"-mode,
-					command({ href: `${encodedPath}?fileId=${fileInfo.id}&context=${this.filePath}` })
+					OCA.Text.RichWorkspaceFilePath = this.filePath
+					command({ href: `${encodedPath}?fileId=${fileInfo.id}` })
+					OCA.Text.RichWorkspaceFilePath = ''
 					this.hideLinkMenu()
 				})
 			}, false, [], true, undefined, startPath)
