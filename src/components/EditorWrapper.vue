@@ -329,7 +329,7 @@ export default {
 						? markdownit.render(documentSource)
 						: '<pre>' + escapeHtml(documentSource) + '</pre>'
 					const language = extensionHighlight[this.fileExtension] || this.fileExtension
-					loadSyntaxHighlight(language).then(lowlight => {
+					loadSyntaxHighlight(language).then(() => {
 						this.tiptap = createEditor({
 							content,
 							onCreate: ({ editor }) => {
@@ -385,7 +385,6 @@ export default {
 								}),
 							],
 							enableRichEditing: this.isRichEditor,
-							lowlight,
 							currentDirectory: this.currentDirectory,
 						})
 						this.tiptap.on('focus', () => {

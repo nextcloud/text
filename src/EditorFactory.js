@@ -25,9 +25,9 @@ import Text from '@tiptap/extension-text'
 import Heading from '@tiptap/extension-heading'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
-import Codeblock from '@tiptap/extension-code-block'
 import Placeholder from '@tiptap/extension-placeholder'
 import OrderedList from '@tiptap/extension-ordered-list'
+import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { Editor } from '@tiptap/core'
 import { Strong, Italic, Strike, Link, Underline } from './marks'
@@ -40,26 +40,25 @@ import {
 } from './nodes'
 import { Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
-import { lowlight } from 'lowlight/lib/core'
+import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 
 import 'proxy-polyfill'
 
 const loadSyntaxHighlight = async (language) => {
-	const list = lowlight.listLanguages()
+	const list = listLanguages()
 	console.info(list)
-	if (!lowlight.listLanguages().includes(language)) {
+	if (!listLanguages().includes(language)) {
 		try {
 			const syntax = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + language)
-			lowlight.registerLanguage(language, syntax.default)
+			registerLanguage(language, syntax.default)
 		} catch (e) {
 			// No matching highlighing found, fallback to none
 			console.debug(e)
 		}
 	}
-	return lowlight
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, languages, currentDirectory }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -72,7 +71,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Strike,
 			Link.configure({ openOnClick: true }),
 			Blockquote,
-			Codeblock,
+			CodeBlock,
 			BulletList,
 			OrderedList,
 			ListItem,
@@ -89,8 +88,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 	} else {
 		richEditingExtensions = [
 			PlainTextDocument,
-			Codeblock,
-			CodeBlockLowlight.configure({ lowlight }),
+			CodeBlockLowlight,
 		]
 	}
 	extensions = extensions || []
