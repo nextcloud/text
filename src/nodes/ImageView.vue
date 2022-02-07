@@ -122,7 +122,7 @@ export default {
 	mixins: [
 		store,
 	],
-	props: ['node', 'extension', 'updateAttributes', 'getPos'], // eslint-disable-line
+	props: ['editor', 'node', 'extension', 'updateAttributes', 'getPos'], // eslint-disable-line
 	data() {
 		return {
 			imageLoaded: false,
@@ -292,6 +292,9 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
+			this.$nextTick(() => {
+				this.editor.commands.scrollIntoView()
+			})
 		},
 		deleteImage() {
 			const tr = this.view.state.tr
