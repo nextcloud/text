@@ -47,7 +47,9 @@
 					<td v-if="!isMobile">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
-						<kbd>D</kbd>
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>X</kbd>
 					</td>
 				</tr>
 				<tr>
@@ -123,7 +125,7 @@
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
-						<kbd>9</kbd>
+						<kbd>7</kbd>
 					</td>
 				</tr>
 				<tr>

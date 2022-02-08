@@ -25,6 +25,7 @@ import PlainTextDocument from './PlainTextDocument'
 import ListItem from './ListItem'
 import BulletList from './BulletList'
 import TrailingNode from './TrailingNode'
+import Heading from './Heading'
 
 export {
 	Image,
@@ -32,4 +33,5 @@ export {
 	ListItem,
 	BulletList,
 	TrailingNode,
+	Heading,
 }

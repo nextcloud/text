@@ -22,7 +22,6 @@
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
-import Heading from '@tiptap/extension-heading'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -37,6 +36,7 @@ import {
 	ListItem,
 	BulletList,
 	TrailingNode,
+	Heading,
 } from './nodes'
 import { Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
