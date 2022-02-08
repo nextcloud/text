@@ -2,10 +2,6 @@ name: PHPUnit
 
 on:
   pull_request:
-    paths:
-      - 'appinfo/**'
-      - 'lib/**'
-      - 'tests/**'
   push:
     branches:
       - master
@@ -15,6 +11,43 @@ env:
   APP_NAME: text
 
 jobs:
+  php:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # do not stop on another job's failure
+      fail-fast: false
+      matrix:
+        php-versions: ['7.4', '8.0']
+        databases: ['sqlite']
+        server-versions: ['master']
+
+    name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
+
+    steps:
+      - name: Checkout server
+        uses: actions/checkout@v2
+        with:
+          repository: nextcloud/server
+          ref: ${{ matrix.server-versions }}
+          submodules: true
+
+      - name: Checkout app
+        uses: actions/checkout@v2
+        with:
+          path: apps/${{ env.APP_NAME }}
+
+      - name: Set up php ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: phpunit
+          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, gd, zip
+
+      - name: Set up PHPUnit
+        working-directory: apps/${{ env.APP_NAME }}
+        run: composer i
+
   oci:
     runs-on: ubuntu-latest
 
@@ -22,7 +55,7 @@ jobs:
       # do not stop on another job's failure
       fail-fast: false
       matrix:
-        php-versions: ['7.4']
+        php-versions: ['7.4', '8.0']
         databases: ['oci']
         server-versions: ['master']
 
@@ -40,13 +73,7 @@ jobs:
         with:
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
-
-      - name: Checkout submodules
-        shell: bash
-        run: |
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-          git submodule sync --recursive
-          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+          submodules: true
 
       - name: Checkout app
         uses: actions/checkout@v2
@@ -54,11 +81,11 @@ jobs:
           path: apps/${{ env.APP_NAME }}
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: "${{ matrix.php-versions }}"
+          php-version: ${{ matrix.php-versions }}
+          tools: phpunit
           extensions: mbstring, iconv, fileinfo, intl, oci8
-          tools: phpunit:8.5.2
           coverage: none
 
       - name: Set up PHPUnit
@@ -69,10 +96,8 @@ jobs:
         run: |
           mkdir data
           ./occ maintenance:install --verbose --database=oci --database-name=XE --database-host=127.0.0.1 --database-port=1521 --database-user=autotest --database-pass=owncloud --admin-user admin --admin-pass admin
-          php -f index.php
           ./occ app:enable --force ${{ env.APP_NAME }}
 
       - name: PHPUnit
-        working-directory: apps/${{ env.APP_NAME }}/tests
-        run: phpunit -c phpunit.xml
-
+        working-directory: apps/${{ env.APP_NAME }}
+        run: phpunit -c tests/phpunit.xml

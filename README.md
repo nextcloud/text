@@ -1,6 +1,6 @@
 # Nextcloud Text
 
-[![Drone (self-hosted) with branch](https://img.shields.io/drone/build/nextcloud/text/master?server=https%3A%2F%2Fdrone.nextcloud.com)](https://drone.nextcloud.com/nextcloud/text) 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/nextcloud/text/Node)
 [![Start contributing](https://img.shields.io/github/issues/nextcloud/text/good%20first%20issue?color=7057ff&label=Contribute)](https://github.com/nextcloud/text/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22)
 
 
