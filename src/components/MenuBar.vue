@@ -21,118 +21,119 @@
   -->
 
 <template>
-	<EditorMenuBar v-slot="{ commands, isActive, focused }" :editor="editor">
-		<div class="menubar" :class="{ 'is-focused': focused, 'autohide': autohide }">
-			<input
-				ref="imageFileInput"
-				type="file"
-				accept="image/*"
-				aria-hidden="true"
-				class="hidden-visually"
-				@change="onImageUploadFilePicked">
-			<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
-				<template v-for="(icon, $index) in allIcons">
-					<EmojiPicker v-if="icon.class === 'icon-emoji'"
-						:key="icon.label"
-						class="menuitem-emoji"
-						@select="emojiObject => addEmoji(commands, allIcons.find(i => i.class === 'icon-emoji'), emojiObject)">
-						<button v-tooltip="t('text', 'Insert emoji')"
-							class="icon-emoji"
-							:aria-label="t('text', 'Insert emoji')"
-							:aria-haspopup="true" />
-					</EmojiPicker>
-					<Actions v-else-if="icon.class === 'icon-image'"
-						:key="icon.label"
-						ref="imageActions"
-						class="submenu"
-						:default-icon="'icon-image'"
-						@close="onImageActionClose">
-						<button slot="icon"
-							:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
-							:title="icon.label"
-							:aria-label="icon.label"
-							:aria-haspopup="true" />
-						<ActionButton
-							icon="icon-upload"
-							:close-after-click="true"
-							:disabled="uploadingImage"
-							@click="onUploadImage(commands.image)">
-							{{ t('text', 'Upload from computer') }}
-						</ActionButton>
-						<ActionButton v-if="!isPublic"
-							icon="icon-folder"
-							:close-after-click="true"
-							:disabled="uploadingImage"
-							@click="showImagePrompt(commands.image)">
-							{{ t('text', 'Insert from Files') }}
-						</ActionButton>
-						<ActionButton v-if="!showImageLinkPrompt"
-							icon="icon-link"
-							:close-after-click="false"
-							:disabled="uploadingImage"
-							@click="showImageLinkPrompt = true">
-							{{ t('text', 'Insert from link') }}
-						</ActionButton>
-						<ActionInput v-else
-							icon="icon-link"
-							:value="imageLink"
-							@update:value="onImageLinkUpdateValue"
-							@submit="onImageLinkSubmit(commands.image)">
-							{{ t('text', 'Image link to insert') }}
-						</ActionInput>
-					</Actions>
-					<button v-else-if="icon.class"
-						v-show="$index < iconCount"
-						:key="icon.label"
-						v-tooltip="getLabelAndKeys(icon)"
-						:class="getIconClasses(isActive, icon)"
-						:disabled="disabled(commands, icon)"
-						@click="clickIcon(commands, icon)" />
-					<template v-else>
-						<div v-show="$index < iconCount || !icon.class"
-							:key="icon.label"
-							v-click-outside="() => hideChildMenu(icon)"
-							class="submenu">
-							<button v-tooltip="getLabelAndKeys(icon)"
-								:class="childIconClasses(isActive, icon.children, )"
-								@click.prevent="toggleChildMenu(icon)" />
-							<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
-								<PopoverMenu :menu="childPopoverMenu(isActive, commands, icon.children, icon)" />
-							</div>
-						</div>
-					</template>
-				</template>
-				<Actions>
-					<template v-for="(icon, $index) in allIcons">
-						<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
-							:key="icon.class"
-							v-tooltip="getKeys(icon)"
-							:icon="icon.class"
-							:close-after-click="true"
-							@click="clickIcon(commands, icon)">
-							{{ icon.label }}
-						</ActionButton>
-						<!--<template v-else-if="!icon.class && isHiddenInMenu($index)">
-							<ActionButton v-for="childIcon in icon.children"
-								:key="childIcon.class"
-								:icon="childIcon.class"
-								@click="clickIcon(commands, childIcon)">
-								v-tooltip="getKeys(childIcon)"
-								{{ childIcon.label }}
-							</ActionButton>
-						</template>-->
-					</template>
+	<div class="menubar" :class="{ 'show': isVisible, 'autohide': autohide }">
+		<input
+			ref="imageFileInput"
+			type="file"
+			accept="image/*"
+			aria-hidden="true"
+			class="hidden-visually"
+			@change="onImageUploadFilePicked">
+		<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
+			<template v-for="(icon, $index) in allIcons">
+				<EmojiPicker v-if="icon.class === 'icon-emoji'"
+					:key="icon.label"
+					class="menuitem-emoji"
+					@select="emojiObject => addEmoji(icon, emojiObject)">
+					<button v-tooltip="t('text', 'Insert emoji')"
+						class="icon-emoji"
+						:aria-label="t('text', 'Insert emoji')"
+						:aria-haspopup="true"
+						@click="toggleChildMenu(icon)" />
+				</EmojiPicker>
+				<Actions v-else-if="icon.class === 'icon-image'"
+					:key="icon.label"
+					ref="imageActions"
+					class="submenu"
+					:default-icon="'icon-image'"
+					@open="toggleChildMenu(icon)"
+					@close="onImageActionClose; toggleChildMenu(icon)">
+					<button slot="icon"
+						:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
+						:title="icon.label"
+						:aria-label="icon.label"
+						:aria-haspopup="true" />
+					<ActionButton
+						icon="icon-upload"
+						:close-after-click="true"
+						:disabled="uploadingImage"
+						@click="onUploadImage()">
+						{{ t('text', 'Upload from computer') }}
+					</ActionButton>
+					<ActionButton v-if="!isPublic"
+						icon="icon-folder"
+						:close-after-click="true"
+						:disabled="uploadingImage"
+						@click="showImagePrompt()">
+						{{ t('text', 'Insert from Files') }}
+					</ActionButton>
+					<ActionButton v-if="!showImageLinkPrompt"
+						icon="icon-link"
+						:close-after-click="false"
+						:disabled="uploadingImage"
+						@click="showImageLinkPrompt = true">
+						{{ t('text', 'Insert from link') }}
+					</ActionButton>
+					<ActionInput v-else
+						icon="icon-link"
+						:value="imageLink"
+						@update:value="onImageLinkUpdateValue"
+						@submit="onImageLinkSubmit()">
+						{{ t('text', 'Image link to insert') }}
+					</ActionInput>
 				</Actions>
-			</div>
-			<slot>
-				Left side
-			</slot>
+				<button v-else-if="icon.class"
+					v-show="$index < iconCount"
+					:key="icon.label"
+					v-tooltip="getLabelAndKeys(icon)"
+					:class="getIconClasses(icon)"
+					:disabled="disabled(icon)"
+					@click="clickIcon(icon)" />
+				<template v-else>
+					<div v-show="$index < iconCount || !icon.class"
+						:key="icon.label"
+						v-click-outside="() => hideChildMenu(icon)"
+						class="submenu">
+						<button v-tooltip="getLabelAndKeys(icon)"
+							:class="childIconClasses(icon.children, )"
+							@click.prevent="toggleChildMenu(icon)" />
+						<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
+							<PopoverMenu :menu="childPopoverMenu(icon.children, icon)" />
+						</div>
+					</div>
+				</template>
+			</template>
+			<Actions
+				@open="toggleChildMenu({ label: 'Remaining Actions' })"
+				@close="toggleChildMenu({ label: 'Remaining Actions' })">
+				<template v-for="(icon, $index) in allIcons">
+					<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
+						:key="icon.class"
+						v-tooltip="getKeys(icon)"
+						:icon="icon.class"
+						:close-after-click="true"
+						@click="clickIcon(icon)">
+						{{ icon.label }}
+					</ActionButton>
+					<!--<template v-else-if="!icon.class && isHiddenInMenu($index)">
+						<ActionButton v-for="childIcon in icon.children"
+							:key="childIcon.class"
+							:icon="childIcon.class"
+							@click="clickIcon(childIcon)">
+							v-tooltip="getKeys(childIcon)"
+							{{ childIcon.label }}
+						</ActionButton>
+					</template>-->
+				</template>
+			</Actions>
 		</div>
-	</EditorMenuBar>
+		<slot>
+			Left side
+		</slot>
+	</div>
 </template>
 
 <script>
-import { EditorMenuBar } from 'tiptap'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
 import isMobile from './../mixins/isMobile'
@@ -161,7 +162,6 @@ const imageMimes = [
 export default {
 	name: 'MenuBar',
 	components: {
-		EditorMenuBar,
 		ActionButton,
 		ActionInput,
 		PopoverMenu,
@@ -178,8 +178,7 @@ export default {
 	props: {
 		editor: {
 			type: Object,
-			required: false,
-			default: null,
+			required: true,
 		},
 		syncService: {
 			type: Object,
@@ -227,19 +226,29 @@ export default {
 			return ($index) => $index - this.iconCount >= 0
 		},
 		getIconClasses() {
-			return (isActive, icon) => {
-				const classes = {
-					'is-active': typeof icon.isActive === 'function' ? icon.isActive(isActive) : false,
-				}
+			return (icon) => {
+				const classes = {}
 				classes[icon.class] = true
+				classes['is-active'] = this.isActive(icon)
 				return classes
 			}
 		},
+		isActive() {
+			return ({ isActive }) => {
+				if (!isActive) {
+					return false
+				}
+				const args = Array.isArray(isActive) ? isActive : [isActive]
+				return this.editor.isActive(...args)
+			}
+		},
+		isVisible() {
+			return this.editor.isFocused
+				|| Object.values(this.submenuVisibility).find((v) => v)
+		},
 		disabled() {
-			return (commands, menuItem) => {
-				return false
-				// FIXME with this we seem to be running into an endless rerender loop, so this needs more investigation at some later point
-				// typeof menuItem.isDisabled === 'function' ? menuItem.isDisabled()(commands) : false
+			return (menuItem) => {
+				return menuItem.action && !menuItem.action(this.editor.can())
 			}
 		},
 		isChildMenuVisible() {
@@ -254,47 +263,35 @@ export default {
 			}, {
 				label: t('text', 'Formatting help'),
 				class: 'icon-info',
-				isActive: () => {
-				},
-				action: (commands) => {
+				click: () => {
 					this.$emit('show-help')
 				},
 			}]
 		},
 		childPopoverMenu() {
-			return (isActive, commands, icons, parent) => {
-				const popoverMenuItems = []
-				for (const index in icons) {
-					popoverMenuItems.push({
+			return (icons, parent) => {
+				return icons.map(icon => {
+					return {
 						// text: this.getLabelAndKeys(icons[index]),
-						text: icons[index].label,
-						icon: icons[index].class,
+						text: icon.label,
+						icon: icon.class,
+						active: this.isActive(icon),
 						action: () => {
-							icons[index].action(commands)
+							this.clickIcon(icon)
 							this.hideChildMenu(parent)
 						},
-						active: icons[index].isActive(isActive),
-					})
-				}
-				return popoverMenuItems
+					}
+				})
 			}
 		},
 		childIconClasses() {
-			return (isActive, icons) => {
-				const icon = this.childIcon(isActive, icons)
-				return this.getIconClasses(isActive, icon)
+			return (icons) => {
+				const icon = this.childIcon(icons)
+				return this.getIconClasses(icon)
 			}
 		},
 		childIcon() {
-			return (isActive, icons) => {
-				for (const index in icons) {
-					const icon = icons[index]
-					if (icon.isActive(isActive)) {
-						return icon
-					}
-				}
-				return icons[0]
-			}
+			return (icons) => icons.find(icon => this.isActive(icon)) || icons[0]
 		},
 		iconCount() {
 			this.forceRecompute // eslint-disable-line
@@ -330,9 +327,17 @@ export default {
 				this.forceRecompute++
 			})
 		},
-		clickIcon(commands, icon) {
-			this.editor.focus()
-			return icon.action(commands)
+		refocus() {
+			this.editor.chain().focus().run()
+		},
+		clickIcon(icon) {
+			if (icon.click) {
+				return icon.click()
+			}
+			// Some actions run themselves.
+			// others still need to have .run() called upon them.
+			const action = icon.action(this.editor.chain().focus())
+			action && action.run()
 		},
 		getWindowWidth(event) {
 			this.windowWidth = document.documentElement.clientWidth
@@ -340,18 +345,20 @@ export default {
 		getWindowHeight(event) {
 			this.windowHeight = document.documentElement.clientHeight
 		},
-		hideChildMenu(icon) {
-			this.$set(this.submenuVisibility, icon.label, false)
+		hideChildMenu({ label }) {
+			this.$set(this.submenuVisibility, label, false)
 		},
-		toggleChildMenu(icon) {
-			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
-			this.$set(this.submenuVisibility, icon.label, !lastValue)
+		toggleChildMenu({ label }) {
+			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, label) ? this.submenuVisibility[label] : false
+			this.$set(this.submenuVisibility, label, !lastValue)
+			if (lastValue) {
+				this.refocus()
+			}
 		},
 		onImageActionClose() {
 			this.showImageLinkPrompt = false
 		},
-		onUploadImage(command) {
-			this.imageCommand = command
+		onUploadImage() {
 			this.$refs.imageFileInput.click()
 		},
 		onImageUploadFilePicked(event) {
@@ -360,7 +367,6 @@ export default {
 			const image = files[0]
 			if (!imageMimes.includes(image.type)) {
 				showError(t('text', 'Image format not supported'))
-				this.imageCommand = null
 				this.uploadingImage = false
 				return
 			}
@@ -370,12 +376,11 @@ export default {
 			event.target.value = ''
 
 			this.syncService.uploadImage(image).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, this.imageCommand)
+				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
 			}).then(() => {
-				this.imageCommand = null
 				this.uploadingImage = false
 			})
 		},
@@ -383,7 +388,7 @@ export default {
 			// this avoids the input being reset on each file polling
 			this.imageLink = newImageLink
 		},
-		onImageLinkSubmit(command) {
+		onImageLinkSubmit() {
 			if (!this.imageLink) {
 				return
 			}
@@ -392,7 +397,7 @@ export default {
 			this.$refs.imageActions[0].closeMenu()
 
 			this.syncService.insertImageLink(this.imageLink).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
+				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -401,12 +406,12 @@ export default {
 				this.imageLink = ''
 			})
 		},
-		onImagePathSubmit(imagePath, command) {
+		onImagePathSubmit(imagePath) {
 			this.uploadingImage = true
 			this.$refs.imageActions[0].closeMenu()
 
 			this.syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, command)
+				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -414,43 +419,21 @@ export default {
 				this.uploadingImage = false
 			})
 		},
-		showImagePrompt(command) {
+		showImagePrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
 			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
-				this.onImagePathSubmit(file, command)
+				this.onImagePathSubmit(file)
 			}, false, [], true, undefined, this.imagePath)
 		},
-		insertAttachmentImage(name, fileId, command) {
+		insertAttachmentImage(name, fileId) {
 			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
-			command({
-				src,
-				// simply get rid of brackets to make sure link text is valid
-				// as it does not need to be unique and matching the real file name
-				alt: name.replaceAll(/[[\]]/g, ''),
-			})
-		},
-		showLinkPrompt(command) {
-			const currentUser = getCurrentUser()
-			if (!currentUser) {
-				return
-			}
-			const _command = command
-			OC.dialogs.filepicker('Insert a link', (file) => {
-				const client = OC.Files.getClient()
-				client.getFileInfo(file).then((_status, fileInfo) => {
-					this.lastLinkPath = fileInfo.path
-					const path = this.optimalPathTo(`${fileInfo.path}/${fileInfo.name}`)
-					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
-					const href = `${encodedPath}?fileId=${fileInfo.id}`
-
-					_command({
-						href,
-					})
-				})
-			}, false, [], true, undefined, this.linkPath)
+			// simply get rid of brackets to make sure link text is valid
+			// as it does not need to be unique and matching the real file name
+			const alt = name.replaceAll(/[[\]]/g, '')
+			this.editor.chain().setImage({ src, alt }).focus().run()
 		},
 		optimalPathTo(targetFile) {
 			const absolutePath = targetFile.split('/')
@@ -469,8 +452,10 @@ export default {
 			}
 			return current.fill('..').concat(target).join('/')
 		},
-		addEmoji(commands, icon, emojiObject) {
-			return icon.action(commands, emojiObject)
+		addEmoji(icon, emojiObject) {
+			return icon.action(this.editor.chain(), emojiObject)
+				.focus()
+				.run()
 		},
 		keysString(keyChar, modifiers = []) {
 			const translations = {
@@ -517,7 +502,7 @@ export default {
 			visibility: hidden;
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
-			&.is-focused {
+			&.show {
 				visibility: visible;
 				opacity: 1;
 			}

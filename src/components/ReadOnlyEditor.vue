@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { EditorContent } from 'tiptap'
+import { EditorContent } from '@tiptap/vue-2'
 import escapeHtml from 'escape-html'
 import { createEditor } from '../EditorFactory'
 import markdownit from './../markdownit'

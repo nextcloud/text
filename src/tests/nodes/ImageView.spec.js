@@ -12,7 +12,7 @@ describe('Image View src attribute based on markdown', () => {
 
 	const factory = attrs => {
 		const propsData = {
-			options: {currentDirectory: '/current'},
+			extension: { options: {currentDirectory: '/current'} },
 			node: {attrs}
 		}
 		const data = () => ({
@@ -46,7 +46,7 @@ describe('Image View src attribute based on markdown', () => {
 	test('use dav paths for gifs so they are animated', () => {
 		const src = '/Media/giffy.gif?fileId=7#mimetype=image%2Fgif&hasPreview=true'
 		const wrapper = factory({src})
-		expect(wrapper.vm.options.currentDirectory).toBe('/current')
+		expect(wrapper.vm.extension.options.currentDirectory).toBe('/current')
 		expect(wrapper.find('.image__main').attributes('src'))
 			.toContain("remote.php/dav/files/user1/current/Media/giffy.gif")
 	})

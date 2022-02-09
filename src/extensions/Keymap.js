@@ -20,33 +20,36 @@
  *
  */
 
-import { Extension, Plugin } from 'tiptap'
+import { Extension } from '@tiptap/core'
+import { Plugin } from 'prosemirror-state'
 
-export default class Keymap extends Extension {
+const Keymap = Extension.create({
 
-	get name() {
-		return 'customkeymap'
-	}
+	name: 'customkeymap',
 
-	keys({ schema }) {
+	addKeyboardShortcuts() {
 		return this.options
-	}
+	},
 
-	get plugins() {
-		return [new Plugin({
-			props: {
-				handleKeyDown(view, event) {
-					const key = event.key || event.keyCode
-					if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
-						// We need to stop propagation and dispatch the event on the window
-						// in order to force triggering the browser native search in the text editor
-						event.stopPropagation()
-						window.dispatchEvent(event)
-						return true
-					}
+	addProseMirrorPlugins() {
+		return [
+			new Plugin({
+				props: {
+					handleKeyDown(view, event) {
+						const key = event.key || event.keyCode
+						if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
+							// We need to stop propagation and dispatch the event on the window
+							// in order to force triggering the browser native search in the text editor
+							event.stopPropagation()
+							window.dispatchEvent(event)
+							return true
+						}
+					},
 				},
-			},
-		})]
-	}
+			}),
+		]
+	},
 
-}
+})
+
+export default Keymap

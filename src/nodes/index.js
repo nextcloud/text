@@ -24,10 +24,14 @@ import Image from './Image'
 import PlainTextDocument from './PlainTextDocument'
 import ListItem from './ListItem'
 import BulletList from './BulletList'
+import TrailingNode from './TrailingNode'
+import Heading from './Heading'
 
 export {
 	Image,
 	PlainTextDocument,
 	ListItem,
 	BulletList,
+	TrailingNode,
+	Heading,
 }

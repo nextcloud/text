@@ -197,13 +197,13 @@ div.ProseMirror {
 }
 
 .editor__content p.is-empty:first-child::before {
-	content: attr(data-empty-text);
+	content: attr(data-placeholder);
 	float: left;
 	color: var(--color-text-maxcontrast);
 	pointer-events: none;
 	height: 0;
 }
 
-.editor__content { 
-	tab-size: 4; 
+.editor__content {
+	tab-size: 4;
 }

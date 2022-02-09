@@ -20,13 +20,19 @@
  *
  */
 
-import { BulletList as TiptapBulletList } from 'tiptap-extensions'
+import TiptapBulletList from '@tiptap/extension-bullet-list'
 
-export default class BulletList extends TiptapBulletList {
+/* We want to allow for mixed lists with todo items and bullet points.
+ * Therefore the list input rules are handled in the ListItem node.
+ * This way we can make sure that "- [ ]" can still trigger todo list items
+ * even inside a list with bullet points.
+ */
+const BulletList = TiptapBulletList.extend({
 
-	/* The bullet list input rules are handled in the ListItem node so we can make sure that "- [ ]" can still trigger todo list items */
-	inputRules() {
+	addInputRules() {
 		return []
-	}
+	},
 
-}
+})
+
+export default BulletList

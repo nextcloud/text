@@ -51,9 +51,9 @@ describe('Workspace', function() {
 			.type('Format me')
 			.type('{selectall}')
 		;[
-			['bold', 'strong'], 
-			['italic', 'em'], 
-			['underline', 'u'], 
+			['bold', 'strong'],
+			['italic', 'em'],
+			['underline', 'u'],
 			['strike', 's']
 		].forEach(([button, tag]) => {
 			menuButton(button)

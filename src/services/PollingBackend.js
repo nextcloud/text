@@ -128,76 +128,81 @@ class PollingBackend {
 			manualSave: !!this._manualSave,
 			token: this._authority.options.shareToken,
 			filePath: this._authority.options.filePath,
-		}).then((response) => {
-			this.fetchRetryCounter = 0
-
-			if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
-				console.debug('Saved document', response.data.document)
-				this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
-			}
-
-			this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
-			this._authority.document = response.data.document
-			this._authority.sessions = response.data.sessions
-
-			if (response.data.steps.length === 0) {
-				if (!this.initialLoadingFinished) {
-					this.initialLoadingFinished = true
-				}
-				if (this._authority.checkIdle()) {
-					return
-				}
-				this.lock = false
-				if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
-					this.maximumRefetchTimer()
-				} else {
-					this.increaseRefetchTimer()
-				}
-				this._authority.emit('stateChange', { dirty: false })
-				this._authority.emit('stateChange', { initialLoading: true })
-				return
-			}
-
-			this._authority._receiveSteps(response.data)
-			this.lock = false
-			this._forcedSave = false
-			if (this.initialLoadingFinished) {
-				this.resetRefetchTimer()
-			}
-		}).catch((e) => {
-			this.lock = false
-			if (!e.response || e.code === 'ECONNABORTED') {
-				if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
-					console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-					this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
-
-				} else {
-					console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
-				}
-			} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
-				// Only emit conflict event if we have synced until the latest version
-				console.error('Conflict during file save, please resolve')
-				this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
-					outsideChange: e.response.data.outsideChange,
-				})
-			} else if (e.response.status === 403) {
-				this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
-				this.disconnect()
-			} else if (e.response.status === 404) {
-				this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
-				this.disconnect()
-			} else if (e.response.status === 503) {
-				this.increaseRefetchTimer()
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
-				console.error('Failed to fetch steps due to unavailable service', e)
-			} else {
-				this.disconnect()
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
-				console.error('Failed to fetch steps due to other reason', e)
-			}
-		})
+		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this._manualSave = false
 		this._forcedSave = false
+	}
+
+	_handleResponse(response) {
+		this.fetchRetryCounter = 0
+
+		if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
+			console.debug('Saved document', response.data.document)
+			this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
+		}
+
+		this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
+		this._authority.document = response.data.document
+		this._authority.sessions = response.data.sessions
+
+		if (response.data.steps.length === 0) {
+			if (!this.initialLoadingFinished) {
+				this.initialLoadingFinished = true
+			}
+			if (this._authority.checkIdle()) {
+				return
+			}
+			this.lock = false
+			if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
+				this.maximumRefetchTimer()
+			} else {
+				this.increaseRefetchTimer()
+			}
+			this._authority.emit('stateChange', { dirty: false })
+			this._authority.emit('stateChange', { initialLoading: true })
+			return
+		}
+
+		this._authority._receiveSteps(response.data)
+		this.lock = false
+		this._forcedSave = false
+		if (this.initialLoadingFinished) {
+			this.resetRefetchTimer()
+		}
+	}
+
+	_handleError(e) {
+		this.lock = false
+		if (!e.response || e.code === 'ECONNABORTED') {
+			if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+				console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
+				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+
+			} else {
+				console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+			}
+		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+			// Only emit conflict event if we have synced until the latest version
+			console.error('Conflict during file save, please resolve')
+			this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
+				outsideChange: e.response.data.outsideChange,
+			})
+		} else if (e.response.status === 403) {
+			this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
+			this.disconnect()
+		} else if (e.response.status === 404) {
+			this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
+			this.disconnect()
+		} else if (e.response.status === 503) {
+			this.increaseRefetchTimer()
+			this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+			console.error('Failed to fetch steps due to unavailable service', e)
+		} else {
+			this.disconnect()
+			this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+			console.error('Failed to fetch steps due to other reason', e)
+		}
+
 	}
 
 	sendSteps(_sendable) {

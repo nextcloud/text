@@ -1,4 +1,5 @@
-import { createEditor, createMarkdownSerializer } from './../EditorFactory';
+import { createEditor } from './../EditorFactory';
+import { createMarkdownSerializer } from './../extensions/Markdown'
 import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
 
@@ -7,7 +8,7 @@ const markdownThroughEditor = (markdown) => {
 		content: markdownit.render(markdown),
 		enableRichEditing: true
 	})
-	const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
+	const serializer = createMarkdownSerializer(tiptap.schema)
 	return serializer.serialize(tiptap.state.doc)
 }
 
@@ -16,7 +17,7 @@ const markdownThroughEditorHtml = (html) => {
 		content: html,
 		enableRichEditing: true
 	})
-	const serializer = createMarkdownSerializer(tiptap.nodes, tiptap.marks)
+	const serializer = createMarkdownSerializer(tiptap.schema)
 	return serializer.serialize(tiptap.state.doc)
 }
 
@@ -123,6 +124,7 @@ describe('Markdown serializer from html', () => {
 	})
 	test('images', () => {
 		expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
+		expect(markdownThroughEditorHtml('<p><img src="image" alt="description" /></p>')).toBe('![description](image)')
 	})
 	test('checkboxes', () => {
 		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')

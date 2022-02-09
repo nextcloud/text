@@ -20,20 +20,25 @@
  *
  */
 
-import { Image as TiptapImage } from 'tiptap-extensions'
+import TiptapImage from '@tiptap/extension-image'
 import ImageView from './ImageView'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
-export default class Image extends TiptapImage {
+const Image = TiptapImage.extend({
 
-	get view() {
-		return ImageView
-	}
+	selectable: false,
 
-	get schema() {
+	addOptions() {
 		return {
-			...super.schema,
-			selectable: false,
+			...this.parent?.(),
+			currentDirectory: undefined,
 		}
-	}
+	},
 
-}
+	addNodeView() {
+		return VueNodeViewRenderer(ImageView)
+	},
+
+})
+
+export default Image
