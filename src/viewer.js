@@ -37,3 +37,7 @@ if (typeof OCA.Viewer === 'undefined') {
 		theme: 'default',
 	})
 }
+
+OCA.Text = {
+	RichWorkspaceFilePath: '',
+}
