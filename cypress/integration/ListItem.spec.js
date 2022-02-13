@@ -1,6 +1,7 @@
 import BulletList from './../../src/nodes/BulletList'
 import ListItem from './../../src/nodes/ListItem'
 import Markdown from './../../src/extensions/Markdown'
+import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
 import { findChildren, findChildrenByType } from 'prosemirror-utils'
 import createEditor from './../../src/tests/createEditor'
@@ -13,15 +14,14 @@ describe('ListItem extension integrated in the editor', () => {
 	})
 
 	it('has attrs', () => {
-		editor.commands.setContent('<p><ul><li>Test</li></ul></p>')
+		loadMarkdown(`* Test`)
 		const li = findListItem()
-		expect(li.attrs).to.deep.eq({done: null, type: 0})
-		expectMarkdown(`
-			* Test`)
+		expect(li.attrs).to.deep.eq({done: null, type: 0},)
+		expectMarkdown(`* Test`)
 	})
 
 	it('creates todo lists', () => {
-		editor.commands.setContent('Test')
+		loadMarkdown(`Test`)
 		editor.commands.todo_item()
 		const li = findListItem()
 		expect(li.attrs).to.deep.eq({done: false, type: 1})
@@ -29,7 +29,7 @@ describe('ListItem extension integrated in the editor', () => {
 	})
 
 	it('removes the list when toggling todo off', () => {
-		editor.commands.setContent('Test')
+		loadMarkdown(`Test`)
 		editor.commands.todo_item()
 		editor.commands.todo_item()
 		expect(findListItem()).to.eq(undefined)
@@ -37,40 +37,39 @@ describe('ListItem extension integrated in the editor', () => {
 	})
 
 	it('creates a bullet list', () => {
-		editor.commands.setContent('<p>Test</p>')
+		loadMarkdown(`Test`)
 		editor.commands.bulletListItem()
 		expectMarkdown(`* Test`)
 	})
 
-	it('turns a bullet list into a todo list', () => {
-		editor.commands.setContent('<p>Test</p>')
-		editor.commands.bulletListItem()
-		editor.commands.todo_item()
-		expectMarkdown(`* [ ] Test`)
-	})
-
 	it('only toggles one list item', () => {
-		editor.commands.setContent('<p><ul><li>Todo</li><li>Not to do</li></ul></p>')
+		loadMarkdown(`* Todo
+			* Not to do`)
 		for (const { pos } of findTexts('Todo')) {
 			editor.commands.setTextSelection(pos)
 			editor.commands.todo_item()
 		}
-		expectMarkdown(`
-			* [ ] Todo
+		expectMarkdown(`* [ ] Todo
 			* Not to do`)
 	})
 
 	it('toggles two separate list item', () => {
-		editor.commands.setContent('<p><ul><li>Todo</li><li>Not to do</li><li>Todo</li></ul></p>')
+		loadMarkdown(`* Todo
+			* Not to do
+			* Todo`)
 		for (const { pos } of findTexts('Todo')) {
 			editor.commands.setTextSelection(pos)
 			editor.commands.todo_item()
 		}
-		expectMarkdown(`
-			* [ ] Todo
+		expectMarkdown(`* [ ] Todo
 			* Not to do
 			* [ ] Todo`)
 	})
+
+	function loadMarkdown(markdown) {
+		const stripped = markdown.replace(/\t*/g, '')
+		editor.commands.setContent(markdownit.render(stripped))
+	}
 
 	function findListItem(index = 0) {
 		const doc = editor.state.doc
@@ -86,7 +85,8 @@ describe('ListItem extension integrated in the editor', () => {
 	}
 
 	function expectMarkdown(markdown) {
-		expect(getMarkdown()).to.equal(markdown.replace(/\t*/g, ''))
+		const stripped = markdown.replace(/\t*/g, '')
+		expect(getMarkdown()).to.equal(stripped)
 	}
 
 	function getMarkdown() {
