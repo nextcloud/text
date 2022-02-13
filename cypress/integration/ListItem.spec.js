@@ -12,14 +12,14 @@ describe('ListItem extension integrated in the editor', () => {
 
 	it('has attrs', () => {
 		editor.commands.setContent('<p><ul><li>Test</li></ul></p>')
-		const li = findListItem(editor)
+		const li = findListItem()
 		expect(li.attrs).to.deep.eq({done: null, type: 0})
 	})
 
 	it('creates todo lists', () => {
 		editor.commands.setContent('Test')
 		editor.commands.todo_item()
-		const li = findListItem(editor)
+		const li = findListItem()
 		expect(li.attrs).to.deep.eq({done: false, type: 1})
 	})
 
@@ -27,39 +27,55 @@ describe('ListItem extension integrated in the editor', () => {
 		editor.commands.setContent('Test')
 		editor.commands.todo_item()
 		editor.commands.todo_item()
-		expect(findListItem(editor)).to.eq(undefined)
+		expect(findListItem()).to.eq(undefined)
 	})
 
 	it('turns a bullet list into a todo list', () => {
 		editor.commands.setContent('Test')
 		editor.commands.bulletListItem()
 		editor.commands.todo_item()
-		const li = findListItem(editor)
+		const li = findListItem()
 		expect(li.attrs).to.deep.eq({done: false, type: 1})
 	})
 
 	it('only toggles one list item', () => {
 		editor.commands.setContent('<p><ul><li>Todo</li><li>Not to do</li></ul></p>')
-		const { pos } = findTexts(editor, 'Todo')[0]
-		editor.commands.setTextSelection(pos)
-		editor.commands.todo_item()
-		const todo = findListItem(editor, 0)
-		const li = findListItem(editor, 1)
+		for (const { pos } of findTexts('Todo')) {
+			editor.commands.setTextSelection(pos)
+			editor.commands.todo_item()
+		}
+		const todo = findListItem(0)
+		const li = findListItem(1)
 		expect(todo.attrs).to.deep.eq({done: false, type: 1}, editor.getHTML())
 		expect(li.attrs).to.deep.eq({done: null, type: 0}, editor.getHTML())
 	})
 
+	it('toggles two separate list item', () => {
+		editor.commands.setContent('<p><ul><li>Todo</li><li>Not to do</li><li>Todo</li></ul></p>')
+		for (const { pos } of findTexts('Todo')) {
+			editor.commands.setTextSelection(pos)
+			editor.commands.todo_item()
+		}
+		const todo = findListItem(0)
+		const li = findListItem(1)
+		const other_todo = findListItem(2)
+		expect(todo.attrs).to.deep.eq({done: false, type: 1}, editor.getHTML())
+		expect(li.attrs).to.deep.eq({done: null, type: 0}, editor.getHTML())
+		expect(other_todo.attrs).to.deep.eq({done: false, type: 1}, editor.getHTML())
+	})
+
+	function findListItem(index = 0) {
+			const doc = editor.state.doc
+			const type = editor.schema.nodes.listItem
+			return findChildrenByType(doc, type)[index]?.node;
+	}
+
+	function findTexts(text) {
+			const doc = editor.state.doc
+			return findChildren(doc, child => {
+				return child.isText && child.text === text
+			})
+	}
+
 })
 
-function findListItem(editor, index = 0) {
-		const doc = editor.state.doc
-		const type = editor.schema.nodes.listItem
-		return findChildrenByType(doc, type)[index]?.node;
-}
-
-function findTexts(editor, text) {
-		const doc = editor.state.doc
-		return findChildren(doc, child => {
-			return child.isText && child.text === text
-		})
-}
