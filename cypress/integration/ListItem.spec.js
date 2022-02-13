@@ -21,49 +21,42 @@ describe('ListItem extension integrated in the editor', () => {
 	})
 
 	it('creates todo lists', () => {
-		loadMarkdown(`Test`)
-		editor.commands.todo_item()
+		loadMarkdown(`* todo\\_item`)
+		runCommands()
 		const li = findListItem()
 		expect(li.attrs).to.deep.eq({done: false, type: 1})
-		expectMarkdown(`* [ ] Test`)
+		expectMarkdown(`* [ ] todo\\_item`)
 	})
 
 	it('removes the list when toggling todo off', () => {
-		loadMarkdown(`Test`)
-		editor.commands.todo_item()
-		editor.commands.todo_item()
+		loadMarkdown(`* [ ] todo\\_item`)
+		runCommands()
 		expect(findListItem()).to.eq(undefined)
-		expectMarkdown(`Test`)
+		expectMarkdown(`todo\\_item`)
 	})
 
 	it('creates a bullet list', () => {
-		loadMarkdown(`Test`)
-		editor.commands.bulletListItem()
-		expectMarkdown(`* Test`)
+		loadMarkdown(`bulletListItem`)
+		runCommands()
+		expectMarkdown(`* bulletListItem`)
 	})
 
 	it('only toggles one list item', () => {
-		loadMarkdown(`* Todo
+		loadMarkdown(`* todo\\_item
 			* Not to do`)
-		for (const { pos } of findTexts('Todo')) {
-			editor.commands.setTextSelection(pos)
-			editor.commands.todo_item()
-		}
-		expectMarkdown(`* [ ] Todo
+		runCommands()
+		expectMarkdown(`* [ ] todo\\_item
 			* Not to do`)
 	})
 
 	it('toggles two separate list item', () => {
-		loadMarkdown(`* Todo
+		loadMarkdown(`* todo\\_item
 			* Not to do
-			* Todo`)
-		for (const { pos } of findTexts('Todo')) {
-			editor.commands.setTextSelection(pos)
-			editor.commands.todo_item()
-		}
-		expectMarkdown(`* [ ] Todo
+			* todo\\_item`)
+		runCommands()
+		expectMarkdown(`* [ ] todo\\_item
 			* Not to do
-			* [ ] Todo`)
+			* [ ] todo\\_item`)
 	})
 
 	function loadMarkdown(markdown) {
@@ -71,17 +64,25 @@ describe('ListItem extension integrated in the editor', () => {
 		editor.commands.setContent(markdownit.render(stripped))
 	}
 
+	function runCommands() {
+		for (const { node, pos } of findCommands()) {
+			const command = node.text
+			editor.commands.setTextSelection(pos)
+			editor.commands[command]()
+		}
+	}
+
+	function findCommands() {
+		const doc = editor.state.doc
+		return findChildren(doc, child => {
+			return child.isText && editor.commands.hasOwnProperty(child.text)
+		})
+	}
+
 	function findListItem(index = 0) {
 		const doc = editor.state.doc
 		const type = editor.schema.nodes.listItem
 		return findChildrenByType(doc, type)[index]?.node;
-	}
-
-	function findTexts(text) {
-		const doc = editor.state.doc
-		return findChildren(doc, child => {
-			return child.isText && child.text === text
-		})
 	}
 
 	function expectMarkdown(markdown) {
@@ -94,4 +95,3 @@ describe('ListItem extension integrated in the editor', () => {
 		return serializer.serialize(editor.state.doc)
 	}
 })
-
