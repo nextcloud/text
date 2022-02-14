@@ -5,6 +5,7 @@ import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
 import { findChildren, findChildrenByType } from 'prosemirror-utils'
 import createEditor from './../../src/tests/createEditor'
+import testData from '../fixtures/ListItem.md'
 
 describe('ListItem extension integrated in the editor', () => {
 
@@ -13,51 +14,21 @@ describe('ListItem extension integrated in the editor', () => {
 		extensions: [Markdown, BulletList, ListItem],
 	})
 
-	it('has attrs', () => {
-		loadMarkdown(`* Test`)
-		const li = findListItem()
-		expect(li.attrs).to.deep.eq({done: null, type: 0},)
-		expectMarkdown(`* Test`)
-	})
-
-	it('creates todo lists', () => {
-		loadMarkdown(`* todo\\_item`)
-		runCommands()
-		const li = findListItem()
-		expect(li.attrs).to.deep.eq({done: false, type: 1})
-		expectMarkdown(`* [ ] todo\\_item`)
-	})
-
-	it('removes the list when toggling todo off', () => {
-		loadMarkdown(`* [ ] todo\\_item`)
-		runCommands()
-		expect(findListItem()).to.eq(undefined)
-		expectMarkdown(`todo\\_item`)
-	})
-
-	it('creates a bullet list', () => {
-		loadMarkdown(`bulletListItem`)
-		runCommands()
-		expectMarkdown(`* bulletListItem`)
-	})
-
-	it('only toggles one list item', () => {
-		loadMarkdown(`* todo\\_item
-			* Not to do`)
-		runCommands()
-		expectMarkdown(`* [ ] todo\\_item
-			* Not to do`)
-	})
-
-	it('toggles two separate list item', () => {
-		loadMarkdown(`* todo\\_item
-			* Not to do
-			* todo\\_item`)
-		runCommands()
-		expectMarkdown(`* [ ] todo\\_item
-			* Not to do
-			* [ ] todo\\_item`)
-	})
+	for (const spec of testData.split(/#+\s+/)){
+		const [description, ...rest] = spec.split(/\n/)
+		const [input, output] = rest.join('\n').split(/\n\n---\n\n/)
+		if (!description) {
+			continue
+		}
+		it(description, () => {
+			expect(spec).to.include('\n')
+			expect(input).to.be.ok
+			expect(output).to.be.ok
+			loadMarkdown(input)
+			runCommands()
+			expectMarkdown(output.replace(/\n*$/, ''))
+		})
+	}
 
 	function loadMarkdown(markdown) {
 		const stripped = markdown.replace(/\t*/g, '')
@@ -77,12 +48,6 @@ describe('ListItem extension integrated in the editor', () => {
 		return findChildren(doc, child => {
 			return child.isText && editor.commands.hasOwnProperty(child.text)
 		})
-	}
-
-	function findListItem(index = 0) {
-		const doc = editor.state.doc
-		const type = editor.schema.nodes.listItem
-		return findChildrenByType(doc, type)[index]?.node;
 	}
 
 	function expectMarkdown(markdown) {

@@ -12,9 +12,14 @@
 // the project's config changing)
 
 const browserify = require('@cypress/browserify-preprocessor')
+const webpack = require('@cypress/webpack-preprocessor')
+const defaults = webpack.defaultOptions
 
 module.exports = (on, config) => {
-
 	on('file:preprocessor', browserify())
-
+	defaults.webpackOptions.module.rules.push({
+		test: /\.md/,
+		type: 'asset/source',
+	})
+	on('file:preprocessor', webpack(defaults))
 }
