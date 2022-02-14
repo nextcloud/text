@@ -103,6 +103,10 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
 	})
 
+	test('horizontal rule', () => {
+		expect(markdownThroughEditor('foo\n\n---\n\nfoobar')).toBe('foo\n\n---\n\nfoobar')
+	})
+
 	test('escaping', () => {
 		const test = '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n' +
 			'\n' +
