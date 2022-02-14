@@ -28,6 +28,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import OrderedList from '@tiptap/extension-ordered-list'
 import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import { Editor } from '@tiptap/core'
 import { Strong, Italic, Strike, Link, Underline } from './marks'
 import {
@@ -73,6 +74,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Blockquote,
 			CodeBlock,
 			BulletList,
+			HorizontalRule,
 			OrderedList,
 			ListItem,
 			Underline,
