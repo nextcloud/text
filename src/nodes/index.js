@@ -22,16 +22,18 @@
 
 import Image from './Image'
 import PlainTextDocument from './PlainTextDocument'
-import ListItem from './ListItem'
 import BulletList from './BulletList'
+import TaskItem from './TaskItem'
+import TaskList from './TaskList'
 import TrailingNode from './TrailingNode'
 import Heading from './Heading'
 
 export {
 	Image,
 	PlainTextDocument,
-	ListItem,
 	BulletList,
+	TaskItem,
+	TaskList,
 	TrailingNode,
 	Heading,
 }

@@ -1,62 +1,121 @@
-## creates todo lists
+## Keeps homogeneous lists together 
 
-* todo\_item
+* foo
+* bar
+
+1. one
+2. two
+
+* [ ] todo
+* [x] done
 
 ---
 
-* [ ] todo\_item
+* foo
+* bar
 
-## removes the list when toggling todo off
+1. one
+2. two
 
-* [ ] todo\_item
+* [ ] todo
+* [x] done
+
+## Splits mixed lists with empty lines
+
+* foo
+* bar
+* [ ] todo
+* [x] done
+1. one
+2. two
 
 ---
 
-todo\_item
+* foo
+* bar
+
+* [ ] todo
+* [x] done
+
+1. one
+2. two
+
+## bullet list to task list
+
+* toggleTaskList
+* keep
+
+---
+
+* [ ] did toggleTaskList
+
+* keep
+
+## bullet list to ordered list
+
+* toggleOrderedList
+* keep
+
+---
+
+1. did toggleOrderedList
+2. keep
+
+
+## removes the list when toggling task off
+
+* [ ] toggleTaskList
+
+---
+
+did toggleTaskList
 
 ## creates a bullet list
 
-bulletListItem
+toggleBulletList
 
 ---
 
-* bulletListItem
+* did toggleBulletList
 
-## only toggles one list item
+## Splits bullet list when turning one item into task
 
-* todo\_item
+* toggleTaskList
 * not todo
 
 ---
 
-* [ ] todo\_item
+* [ ] did toggleTaskList
+
 * not todo
 
 ## toggles two list items separately
 
-* todo\_item
+* toggleTaskList
 * not todo
-* todo\_item
+* toggleTaskList
 
 ---
 
-* [ ] todo\_item
-* not todo
-* [ ] todo\_item
-
-## toggle off todo list item should turn it into normal list item
-
-* not todo
-* [ ] todo\_item
-
----
+* [ ] did toggleTaskList
 
 * not todo
 
-todo\_item
+* [ ] did toggleTaskList
+
+## toggle off task list item should turn it into normal list item
+
+* not todo
+* [ ] toggleTaskList
 
 ---
 
 * not todo
-* todo\_item
+
+did toggleTaskList
+
+---
+
+* not todo
+* toggleTaskList
 

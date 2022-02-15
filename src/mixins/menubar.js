@@ -138,7 +138,7 @@ export default [
 		class: 'icon-ul',
 		isActive: 'bulletList',
 		action: (command) => {
-			return command.bulletListItem()
+			return command.toggleBulletList()
 		},
 	},
 	{
@@ -154,9 +154,8 @@ export default [
 	{
 		label: t('text', 'ToDo list'),
 		class: 'icon-checkmark',
-		// Do we want to indicate that the current item is a todo item?
-		// isActive: ['listItem', { type: 1 }],
-		action: (command) => command.todo_item(),
+		isActive: 'taskList',
+		action: (command) => command.toggleTaskList(),
 	},
 	{
 		label: t('text', 'Blockquote'),

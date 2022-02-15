@@ -1,5 +1,8 @@
+import OrderedList from '@tiptap/extension-ordered-list'
+import ListItem from '@tiptap/extension-list-item'
+import TaskList from './../../src/nodes/TaskList'
+import TaskItem from './../../src/nodes/TaskItem'
 import BulletList from './../../src/nodes/BulletList'
-import ListItem from './../../src/nodes/ListItem'
 import Markdown from './../../src/extensions/Markdown'
 import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
@@ -11,7 +14,14 @@ describe('ListItem extension integrated in the editor', () => {
 
 	const editor = createEditor({
 		content: '',
-		extensions: [Markdown, BulletList, ListItem],
+		extensions: [
+			Markdown,
+			BulletList,
+			OrderedList,
+			ListItem,
+			TaskList,
+			TaskItem,
+		],
 	})
 
 	for (const spec of testData.split(/#+\s+/)){
@@ -36,18 +46,21 @@ describe('ListItem extension integrated in the editor', () => {
 	}
 
 	function runCommands() {
-		for (const { node, pos } of findCommands()) {
-			const command = node.text
+		let found
+		while (found = findCommand()) {
+			const { node, pos } = found
+			const name = node.text
 			editor.commands.setTextSelection(pos)
-			editor.commands[command]()
+			editor.commands[name]()
+			editor.commands.insertContent('did ')
 		}
 	}
 
-	function findCommands() {
+	function findCommand() {
 		const doc = editor.state.doc
 		return findChildren(doc, child => {
 			return child.isText && editor.commands.hasOwnProperty(child.text)
-		})
+		})[0]
 	}
 
 	function expectMarkdown(markdown) {

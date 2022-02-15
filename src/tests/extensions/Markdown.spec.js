@@ -1,7 +1,7 @@
 import { Markdown } from './../../extensions';
 import { createMarkdownSerializer } from './../../extensions/Markdown';
 import Underline from './../../marks/Underline';
-import { BulletList, ListItem } from './../../nodes'
+import { TaskList, TaskItem } from './../../nodes'
 import Image from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'
@@ -40,11 +40,11 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('serializes nodes according to their spec', () => {
 		const editor = createEditor({
-			content: '<p><ul><li>Hello</li></ul></p>',
-			extensions: [Markdown, BulletList, ListItem],
+			content: '<p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></p>',
+			extensions: [Markdown, TaskList, TaskItem],
 		})
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('\n* Hello')
+		expect(serializer.serialize(editor.state.doc)).toBe('\n* [ ] Hello')
 	})
 
 	it('serializes nodes with the default prosemirror way', () => {

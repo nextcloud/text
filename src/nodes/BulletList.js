@@ -21,16 +21,22 @@
  */
 
 import TiptapBulletList from '@tiptap/extension-bullet-list'
+import { listInputRule } from '../commands'
 
-/* We want to allow for mixed lists with todo items and bullet points.
- * Therefore the list input rules are handled in the ListItem node.
- * This way we can make sure that "- [ ]" can still trigger todo list items
- * even inside a list with bullet points.
+/* We want to allow for `* [ ]` as an input rule for bullet lists.
+ * Therefore the list input rules need to check the input
+ * until the first char after the space.
+ * Only there we know the user is not trying to create a task list.
  */
 const BulletList = TiptapBulletList.extend({
 
 	addInputRules() {
-		return []
+		return [
+			listInputRule(
+				/^\s*([-+*])\s([^\s[])$/,
+				this.type
+			),
+		]
 	},
 
 })
