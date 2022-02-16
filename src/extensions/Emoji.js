@@ -1,7 +1,7 @@
 /*
- * @copyright Copyright (c) 2021 Jonas Meurer <jonas@freesources.org>
+ * @copyright Copyright (c) 2021 Jonas <jonas@freesources.org>
  *
- * @author Jonas Meurer <jonas@freesources.org>
+ * @author Jonas <jonas@freesources.org>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -20,22 +20,50 @@
  *
  */
 
-import { Extension } from '@tiptap/core'
+import { Node } from '@tiptap/core'
+import { PluginKey } from 'prosemirror-state'
+import Suggestion from '@tiptap/suggestion'
 
-const Emoji = Extension.create({
+export const EmojiPluginKey = new PluginKey('emoji')
 
-	get name() {
-		return 'emoji'
-	},
+const Emoji = Node.create({
+	name: 'emoji',
 
-	addCommands() {
+	addOptions() {
 		return {
-			emoji: (emoji) => ({ commands }) => {
-				return commands.insertContent(emoji)
+			HTMLAttributes: {},
+			suggestion: {
+				char: ':',
+				pluginKey: EmojiPluginKey,
+				command: ({ editor, range, props }) => {
+					editor
+						.chain()
+						.focus()
+						.insertContentAt(range, props.native)
+						.run()
+				},
 			},
 		}
 	},
 
+	content: 'text*',
+
+	addCommands() {
+		return {
+			emoji: (emojiObject) => ({ commands }) => {
+				return commands.insertContent(emojiObject.native)
+			},
+		}
+	},
+
+	addProseMirrorPlugins() {
+		return [
+			Suggestion({
+				editor: this.editor,
+				...this.options.suggestion,
+			}),
+		]
+	},
 })
 
 export default Emoji
