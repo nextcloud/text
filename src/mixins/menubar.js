@@ -153,7 +153,7 @@ export default [
 	},
 	{
 		label: t('text', 'ToDo list'),
-		class: 'icon-checkmark',
+		class: 'icon-tasklist',
 		isActive: 'taskList',
 		action: (command) => command.toggleTaskList(),
 	},

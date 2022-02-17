@@ -111,7 +111,7 @@ describe('Workspace', function() {
 		;[
 			['ul', 'ul'],
 			['ol', 'ol'],
-			['checkmark', 'ul[data-type="taskList"]'],
+			['tasklist', 'ul[data-type="taskList"]'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
 				.click()
