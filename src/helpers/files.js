@@ -136,6 +136,7 @@ const registerFileActionFallback = () => {
 const FilesWorkspacePlugin = {
 
 	el: null,
+	vm: null,
 
 	attach(fileList) {
 		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
@@ -148,6 +149,21 @@ const FilesWorkspacePlugin = {
 			el: this.el,
 			render: this.render.bind(this),
 			priority: 10,
+		})
+
+		fileList.filesClient.addFileInfoParser((_response, data) => {
+			const dir = (data.mimetype === 'httpd/unix-directory')
+				? data.path + (data.path.endsWith('/') ? '' : '/') + data.name
+				: data.path
+			if (dir !== fileList.getCurrentDirectory()) {
+				return
+			}
+			if (data.mimetype === 'httpd/unix-directory') {
+				this.vm.folder = { ...data }
+			}
+			if (data.mimetype === 'text/markdown' && data.name === 'Readme.md') {
+				this.vm.file = { ...data }
+			}
 		})
 	},
 
@@ -163,21 +179,25 @@ const FilesWorkspacePlugin = {
 			Vue.prototype.n = window.n
 			Vue.prototype.OCA = window.OCA
 			const View = Vue.extend(RichWorkspace)
-			const vm = new View({
+			this.vm = new View({
 				propsData: {
-					path: fileList.getCurrentDirectory(),
+					file: null,
+					folder: null,
 				},
 				store,
 			}).$mount(this.el)
 
 			fileList.$el.on('urlChanged', data => {
-				vm.path = data.dir.toString()
+				this.vm.file = null
+				this.vm.folder = null
 			})
 			fileList.$el.on('changeDirectory', data => {
-				vm.path = data.dir.toString()
+				this.vm.file = null
+				this.vm.folder = null
 			})
 		})
 	},
+
 }
 
 export {

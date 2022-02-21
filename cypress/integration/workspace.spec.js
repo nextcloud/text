@@ -118,7 +118,7 @@ const submenuButton = (name) => {
 const menuBubbleButton = submenuButton
 
 const openWorkspace = () => {
-	cy.get('#rich-workspace').click()
+	cy.get('#rich-workspace .empty-workspace').click()
 	cy.get('#editor .content-wrapper').click()
 	return cy.get('#rich-workspace .ProseMirror')
 }
