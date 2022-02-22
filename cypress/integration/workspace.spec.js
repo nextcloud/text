@@ -32,10 +32,9 @@ describe('Workspace', function() {
 
 	beforeEach(function() {
 		cy.login(randUser, 'password')
-		cy.visit('/apps/files')
 		// isolate tests - each happens in it's own folder
 		cy.createFolder(Cypress.currentTest.title)
-		cy.openFile(Cypress.currentTest.title)
+		cy.visit(`apps/files?dir=/${encodeURIComponent(Cypress.currentTest.title)}`)
 	})
 
 	it('adds a Readme.md', function() {
@@ -103,6 +102,31 @@ describe('Workspace', function() {
 			submenuButton(heading).click()
 			menuButton('h1').should('not.have.class', 'is-active')
 		})
+	})
+
+	it('takes README.md into account', function() {
+		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
+		cy.reload()
+		cy.get('#fileList').should('contain', 'README.md')
+		cy.get('#rich-workspace .ProseMirror')
+			.should('contain', 'Hello world')
+	})
+
+	it('takes localized file name into account', function() {
+		cy.nextcloudUpdateUser(randUser, 'password', 'language', 'de_DE')
+		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
+		cy.reload()
+		cy.get('#fileList').should('contain', 'Anleitung.md')
+		cy.get('#rich-workspace .ProseMirror')
+			.should('contain', 'Hello world')
+	})
+
+	it('ignores localized file name in other language', function() {
+		cy.nextcloudUpdateUser(randUser, 'password', 'language', 'fr')
+		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
+		cy.reload()
+		cy.get('#fileList').should('contain', 'Anleitung.md')
+		cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
 	})
 
 })

@@ -151,20 +151,42 @@ const FilesWorkspacePlugin = {
 			priority: 10,
 		})
 
-		fileList.filesClient.addFileInfoParser((_response, data) => {
-			const dir = (data.mimetype === 'httpd/unix-directory')
-				? data.path + (data.path.endsWith('/') ? '' : '/') + data.name
-				: data.path
-			if (dir !== fileList.getCurrentDirectory()) {
-				return
-			}
+		const PROPERTY_WORKSPACE_FILE = `{${OC.Files.Client.NS_NEXTCLOUD}}rich-workspace-file`
+
+		const oldGetWebdavProperties = fileList._getWebdavProperties
+		fileList._getWebdavProperties = function() {
+			return [
+				...oldGetWebdavProperties.apply(this, arguments),
+				PROPERTY_WORKSPACE_FILE,
+			]
+		}
+
+		let filename = null
+
+		fileList.filesClient.addFileInfoParser((response, data) => {
 			if (data.mimetype === 'httpd/unix-directory') {
-				this.vm.folder = { ...data }
+				const props = response.propStat[0].properties
+				filename = props[PROPERTY_WORKSPACE_FILE]
+				const dir = (data.mimetype === 'httpd/unix-directory')
+					? data.path + (data.path.endsWith('/') ? '' : '/') + data.name
+					: data.path
+				if (dir === fileList.getCurrentDirectory()) {
+					this.vm.folder = {
+						...data,
+					}
+				}
 			}
-			if (data.mimetype === 'text/markdown' && data.name === 'Readme.md') {
-				this.vm.file = { ...data }
+			if (data.mimetype === 'text/markdown') {
+				const name = filename || 'Readme.md'
+				if (data.name === name) {
+					this.vm.file = {
+						...data,
+						id: parseInt(data.id),
+					}
+				}
 			}
 		})
+
 	},
 
 	render(fileList) {
