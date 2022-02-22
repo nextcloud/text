@@ -39,7 +39,7 @@ const Emoji = Node.create({
 					editor
 						.chain()
 						.focus()
-						.insertContentAt(range, props.native)
+						.insertContentAt(range, props.native + ' ')
 						.run()
 				},
 			},
@@ -51,7 +51,7 @@ const Emoji = Node.create({
 	addCommands() {
 		return {
 			emoji: (emojiObject) => ({ commands }) => {
-				return commands.insertContent(emojiObject.native)
+				return commands.insertContent(emojiObject.native + ' ')
 			},
 		}
 	},
