@@ -65,10 +65,20 @@ export default {
 		hasResults() {
 			return this.items.length > 0
 		},
+		itemHeight() {
+			return this.$el.scrollHeight / this.items.length
+		},
+		itemInsideScrollView() {
+			// If upper border of item is bigger or equal than scroll top
+			// and lower end of item is smaller or equal than scroll bottom
+			return this.selectedIndex * this.itemHeight >= this.$el.scrollTop
+				&& (this.selectedIndex + 1) * this.itemHeight <= this.$el.scrollTop + this.$el.clientHeight
+		},
 	},
 	watch: {
 		items() {
 			this.selectedIndex = 0
+			this.$el.scrollTop = 0
 		},
 	},
 	methods: {
@@ -76,11 +86,17 @@ export default {
 		onKeyDown({ event }) {
 			if (event.key === 'ArrowUp') {
 				this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
+				if (!this.itemInsideScrollView) {
+					this.$el.scrollTop = this.selectedIndex * this.itemHeight
+				}
 				return true
 			}
 
 			if (event.key === 'ArrowDown') {
 				this.selectedIndex = (this.selectedIndex + 1) % this.items.length
+				if (!this.itemInsideScrollView) {
+					this.$el.scrollTop = (this.selectedIndex + 1) * this.itemHeight - this.$el.clientHeight
+				}
 				return true
 			}
 
