@@ -25,6 +25,12 @@ The rich workspaces in the file list can be disabled either by the users in the 
 occ config:app:set text workspace_available --value=0
 ```
 
+The default availability of the rich workspace feature can be adjusted through the following option, which would make the feature disabled by default, but users could still enable it individually:
+
+```bash
+occ config:app:set text workspace_default_enable --value=0
+```
+
 
 ## 🏗 Development setup
 

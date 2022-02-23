@@ -63,10 +63,12 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 			'workspace_available',
 			$this->config->getAppValue(Application::APP_NAME, 'workspace_available', '1') === '1'
 		);
+
+		$workspaceDefault = $this->config->getAppValue(Application::APP_NAME, 'workspace_default_enable', '1') === '1';
 		$this->initialStateService->provideInitialState(
 			Application::APP_NAME,
 			'workspace_enabled',
-			$this->config->getUserValue($this->userSession->getUser()->getUID(), Application::APP_NAME, 'workspace_enabled', '1') === '1'
+			$this->config->getUserValue($this->userSession->getUser()->getUID(), Application::APP_NAME, 'workspace_enabled', $workspaceDefault) === '1'
 		);
 	}
 }
