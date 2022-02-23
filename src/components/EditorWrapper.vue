@@ -34,14 +34,15 @@
 			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div id="editor">
-				<MenuBar v-if="!syncError && !readOnly"
+			<div v-if="tiptap" id="editor">
+				<MenuBar v-if="initialLoading && !syncError && !readOnly"
 					ref="menubar"
 					:editor="tiptap"
 					:file-path="relativePath"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
-					:autohide="autohide">
+					:autohide="autohide"
+					:loaded.sync="menubarLoaded">
 					<div id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -52,8 +53,9 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
+				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
-					<MenuBubble v-if="!readOnly && isRichEditor"
+					<MenuBubble v-if="initialLoading && !readOnly && isRichEditor"
 						:editor="tiptap"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
@@ -170,6 +172,7 @@ export default {
 			hasConnectionIssue: false,
 			readOnly: true,
 			forceRecreate: false,
+			menubarLoaded: false,
 
 			saveStatusPolling: null,
 			contentWrapper: null,
@@ -673,6 +676,19 @@ export default {
 			padding-top: 50px;
 		}
 	}
+
+	.menubar.placeholder {
+		position: fixed;
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		opacity: 0;
+		visibility: hidden;
+		height: 44px; // important for mobile so that the buttons are always inside the container
+		padding-top:3px;
+		padding-bottom: 3px;
+	}
+
 </style>
 <style lang="scss">
 	@import './../../css/style';
