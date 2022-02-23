@@ -168,17 +168,17 @@ div.ProseMirror {
 		margin-bottom: 1em;
 	}
 
-	ul li {
+	ul > li {
 		list-style-type: disc;
 	}
 
 	// Second-level list entries
-	ul > li > ul > li {
+	li ul > li {
 		list-style-type: circle;
 	}
 
 	// Third-level and further down list entries
-	ul > li > ul > li ul li {
+	li li ul > li {
 		list-style-type: square;
 	}
 
