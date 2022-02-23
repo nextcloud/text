@@ -86,7 +86,6 @@ jobs:
           export OC_PASS=1234561
           php occ user:add --password-from-env user1
           php occ user:add --password-from-env user2
-          php occ config:system:set force_language --value en
           php occ app:enable viewer
           php occ app:enable text
           php occ app:list
