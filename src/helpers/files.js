@@ -161,29 +161,37 @@ const FilesWorkspacePlugin = {
 			]
 		}
 
-		let filename = null
+		let readmeId = null
 
 		fileList.filesClient.addFileInfoParser((response, data) => {
 			if (data.mimetype === 'httpd/unix-directory') {
 				const props = response.propStat[0].properties
-				filename = props[PROPERTY_WORKSPACE_FILE]
-				const dir = (data.mimetype === 'httpd/unix-directory')
-					? data.path + (data.path.endsWith('/') ? '' : '/') + data.name
-					: data.path
+				const dir = data.path + (data.path.endsWith('/') ? '' : '/') + data.name
 				if (dir === fileList.getCurrentDirectory()) {
+					readmeId = props[PROPERTY_WORKSPACE_FILE]
 					this.vm.folder = {
-						...data,
+						permissions: data.permissions,
 					}
+					this.vm.loaded = true
+					// in case no file is found we are done
+					this.vm.ready = true
 				}
 			}
-			if (data.mimetype === 'text/markdown') {
-				const name = filename || 'Readme.md'
-				if (data.name === name) {
-					this.vm.file = {
-						...data,
-						id: parseInt(data.id),
-					}
+			if (readmeId && data.id === readmeId) {
+				if (data.mimetype !== 'text/markdown') {
+					console.warn('Expected workspace file to be markdown:', data)
 				}
+				this.open(data)
+				return
+			}
+			/*
+			 * Handle the creation of 'Readme.md'.
+			 * The PROPFIND after the creation does not include the parent dir.
+			 */
+			if (data.name === 'Readme.md'
+				&& data.mimetype === 'text/markdown'
+				&& data.path === fileList.getCurrentDirectory()) {
+				this.open(data)
 			}
 		})
 
@@ -220,6 +228,14 @@ const FilesWorkspacePlugin = {
 		})
 	},
 
+	open(data) {
+		this.vm.file = {
+			...data,
+			id: parseInt(data.id),
+		}
+		// waiting for the editor to be ready
+		this.vm.ready = false
+	},
 }
 
 export {
