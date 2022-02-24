@@ -438,7 +438,7 @@ export default {
 				.on('stateChange', (state) => {
 					if (state.initialLoading && !this.initialLoading) {
 						this.initialLoading = true
-						if (this.autofocus) {
+						if (this.autofocus && !this.readOnly) {
 							this.tiptap.commands.focus()
 						}
 						this.$emit('ready')

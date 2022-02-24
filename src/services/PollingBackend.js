@@ -228,16 +228,24 @@ class PollingBackend {
 			this.carefulRetryReset()
 			this.lock = false
 			this.fetchSteps()
-		}).catch((e) => {
+		}).catch(({ response, code }) => {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
-			if (!e.response || e.code === 'ECONNABORTED') {
+			if (!response || code === 'ECONNABORTED') {
 				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
 				return
-			} else if (e.response.status === 403 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+			}
+			const { status, data } = response
+			if (status === 403) {
+				if (!data.document) {
+					// either the session is invalid or the document is read only.
+					console.error('failed to write to document - not allowed')
+				}
 				// Only emit conflict event if we have synced until the latest version
-				this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
-				OC.Notification.showTemporary('Changes could not be sent yet')
+				if (data.document?.currentVersion === this._authority.document.currentVersion) {
+					this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
+					OC.Notification.showTemporary('Changes could not be sent yet')
+				}
 			}
 
 			this.fetchSteps()

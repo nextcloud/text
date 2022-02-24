@@ -59,7 +59,6 @@ describe('Open test.md in viewer', function() {
 				cy.visit(href)
 				cy.window().then(win => {
 					win.OC.appswebroots['files_texteditor'] = true
-					cy.wait(1000)
 					cy.get('#editor').should('be.visible')
 					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
 					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')

@@ -24,7 +24,7 @@ const Collaboration = Extension.create({
 		this.getSendableSteps = debounce(state => {
 			const sendable = sendableSteps(state)
 
-			if (sendable) {
+			if (sendable && this.editor.options.editable) {
 				this.options.onSendable({
 					editor: this.editor,
 					sendable: {
