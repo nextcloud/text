@@ -32,7 +32,7 @@
 			v-show="ready"
 			:key="file.path"
 			:file-id="file.id"
-			:relative-path="file.path"
+			:relative-path="filepath"
 			:share-token="shareToken"
 			:active="true"
 			:autohide="true"
@@ -75,13 +75,17 @@ export default {
 	},
 	computed: {
 		shareToken() {
-			return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+			return document.getElementById('sharingToken')?.value
 		},
 		canCreate() {
 			return !!(this.folder && (this.folder.permissions & OC.PERMISSION_CREATE))
 		},
 		showEmptyWorkspace() {
 			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
+		},
+		filepath() {
+			const { path, name } = this.file
+			return path + (path.endsWith('/') ? '' : '/') + name
 		},
 	},
 	watch: {
