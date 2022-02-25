@@ -6,6 +6,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit",
     "Edit guest name" : "Edit nama tamu",
     "Save guest name" : "Simpan nama tamu",
+    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
     "Undo" : "Undo"
 },
