@@ -34,7 +34,7 @@
 				<EmojiPicker v-if="icon.class === 'icon-emoji'"
 					:key="icon.label"
 					class="menuitem-emoji"
-					@select="emojiObject => addEmoji(icon, emojiObject)">
+					@selectData="emojiObject => addEmoji(icon, emojiObject)">
 					<button v-tooltip="t('text', 'Insert emoji')"
 						class="icon-emoji"
 						:aria-label="t('text', 'Insert emoji')"
@@ -453,7 +453,7 @@ export default {
 			return current.fill('..').concat(target).join('/')
 		},
 		addEmoji(icon, emojiObject) {
-			return icon.action(this.editor.chain(), emojiObject)
+			return icon.action(this.editor.chain(), { id: emojiObject.id, native: emojiObject.native })
 				.focus()
 				.run()
 		},
