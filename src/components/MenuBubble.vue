@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<BubbleMenu
-		:editor="editor"
+	<BubbleMenu :editor="editor"
 		:tippy-options="{ onHide: hideLinkMenu, duration: 200, placement: 'bottom' }"
 		class="menububble">
 		<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl()">
@@ -39,8 +38,7 @@
 		</form>
 
 		<template v-else>
-			<button
-				class="menububble__button"
+			<button class="menububble__button"
 				:class="{ 'is-active': isActive('link') }"
 				@click="showLinkMenu()">
 				<span class="icon-link" />
@@ -55,8 +53,7 @@
 				<span class="icon-file" />
 				<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 			</button>
-			<button
-				v-if="isActive('link')"
+			<button v-if="isActive('link')"
 				class="menububble__button"
 				:class="{ 'is-active': isActive('link') }"
 				@click="removeLinkUrl()">

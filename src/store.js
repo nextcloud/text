@@ -21,14 +21,14 @@
  */
 
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import { getBuilder } from '@nextcloud/browser-storage'
 
 const persistentStorage = getBuilder('text').persist().build()
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+const store = new Store({
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
