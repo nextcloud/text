@@ -30,8 +30,7 @@
 				:key="session.id"
 				class="avatar-wrapper"
 				:style="sessionStyle(session)">
-				<Avatar
-					:style="avatarStyle(session)"
+				<Avatar :style="avatarStyle(session)"
 					:user="session.userId ? session.userId : session.guestName"
 					:is-guest="session.userId === null"
 					:disable-menu="true"
@@ -49,8 +48,7 @@
 						:style="avatarStyle(session)">
 						<div class="avatar-wrapper"
 							:style="sessionStyle(session)">
-							<Avatar
-								:user="session.userId ? session.userId : session.guestName"
+							<Avatar :user="session.userId ? session.userId : session.guestName"
 								:is-guest="session.userId === null"
 								:disable-menu="true"
 								:show-user-status="false"

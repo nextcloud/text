@@ -22,8 +22,7 @@
 
 <template>
 	<div class="menubar" :class="{ 'show': isVisible, 'autohide': autohide }">
-		<input
-			ref="imageFileInput"
+		<input ref="imageFileInput"
 			type="file"
 			accept="image/*"
 			aria-hidden="true"
@@ -53,8 +52,7 @@
 						:title="icon.label"
 						:aria-label="icon.label"
 						:aria-haspopup="true" />
-					<ActionButton
-						icon="icon-upload"
+					<ActionButton icon="icon-upload"
 						:close-after-click="true"
 						:disabled="uploadingImage"
 						@click="onUploadImage()">
@@ -103,8 +101,7 @@
 					</div>
 				</template>
 			</template>
-			<Actions
-				@open="toggleChildMenu({ label: 'Remaining Actions' })"
+			<Actions @open="toggleChildMenu({ label: 'Remaining Actions' })"
 				@close="toggleChildMenu({ label: 'Remaining Actions' })">
 				<template v-for="(icon, $index) in allIcons">
 					<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
