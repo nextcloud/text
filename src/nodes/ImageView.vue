@@ -173,7 +173,7 @@ export default {
 						})
 				}
 			}
-			if (this.isRemoteUrl || this.isPreviewUrl) {
+			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
 				return this.src
 			}
 			if (this.hasPreview && this.mime !== 'image/gif') {
@@ -188,6 +188,9 @@ export default {
 		isPreviewUrl() {
 			return this.src.match(/^(\/index.php)?\/core\/preview/)
 				|| this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
+		},
+		isDataUrl() {
+			return this.src.startsWith('data:')
 		},
 		basename() {
 			return decodeURI(this.src.split('?')[0])
@@ -275,7 +278,6 @@ export default {
 			return
 		}
 		const img = new Image()
-		img.src = this.imageUrl
 		img.onload = () => {
 			this.imageLoaded = true
 		}
@@ -284,6 +286,7 @@ export default {
 			this.imageLoaded = false
 			this.loaded = true
 		}
+		img.src = this.imageUrl
 	},
 	methods: {
 		updateAlt() {
