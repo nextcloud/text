@@ -138,6 +138,8 @@ describe('Open test.md in viewer', function() {
 					cy.get('#editor-container').should('be.visible')
 					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
 					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
+					cy.get('.modal-header button.header-close').click()
+					cy.get('.modal-mask').should('not.exist')
 				})
 			})
 	})
