@@ -131,9 +131,9 @@ describe('Markdown serializer from html', () => {
 		expect(markdownThroughEditorHtml('<p><img src="image" alt="description" /></p>')).toBe('![description](image)')
 	})
 	test('checkboxes', () => {
-		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
-		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
-		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
-		expect(markdownThroughEditorHtml('<ul><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
 	})
 })

@@ -1,67 +1,75 @@
+import OrderedList from '@tiptap/extension-ordered-list'
+import ListItem from '@tiptap/extension-list-item'
+import TaskList from './../../src/nodes/TaskList'
+import TaskItem from './../../src/nodes/TaskItem'
 import BulletList from './../../src/nodes/BulletList'
-import ListItem from './../../src/nodes/ListItem'
-import Markdown from './../../src/extensions/Markdown';
-import { findChildrenByType } from 'prosemirror-utils'
+import Markdown from './../../src/extensions/Markdown'
+import markdownit from './../../src/markdownit'
+import { createMarkdownSerializer } from './../../src/extensions/Markdown';
+import { findChildren, findChildrenByType } from 'prosemirror-utils'
 import createEditor from './../../src/tests/createEditor'
+import testData from '../fixtures/ListItem.md'
 
 describe('ListItem extension integrated in the editor', () => {
 
-	it('has attrs', () => {
-		const editor = createEditor({
-			content: '<p><ul><li>Test</li></ul></p>',
-			extensions: [Markdown, BulletList, ListItem]
-		})
-		const li = findListItem(editor)
-		expect(li.attrs).to.deep.eq({done: null, type: 0})
+	const editor = createEditor({
+		content: '',
+		extensions: [
+			Markdown,
+			BulletList,
+			OrderedList,
+			ListItem,
+			TaskList,
+			TaskItem,
+		],
 	})
 
-	it('creates todo lists', () => {
-		const editor = createEditor({
-			content: '<p>Test</p>',
-			extensions: [Markdown, BulletList, ListItem]
+	for (const spec of testData.split(/#+\s+/)){
+		const [description, ...rest] = spec.split(/\n/)
+		const [input, output] = rest.join('\n').split(/\n\n---\n\n/)
+		if (!description) {
+			continue
+		}
+		it(description, () => {
+			expect(spec).to.include('\n')
+			expect(input).to.be.ok
+			expect(output).to.be.ok
+			loadMarkdown(input)
+			runCommands()
+			expectMarkdown(output.replace(/\n*$/, ''))
 		})
-		editor.chain().todo_item().run()
-		const li = findListItem(editor)
-		expect(li.attrs).to.deep.eq({done: false, type: 1})
-	})
+	}
 
-	it('removes the list when toggling todo off', () => {
-		const editor = createEditor({
-			content: '<p>Test</p>',
-			extensions: [Markdown, BulletList, ListItem]
-		})
-		editor.chain().todo_item().run()
-		editor.chain().todo_item().run()
-		expect(findListItem(editor)).to.eq(undefined)
-	})
+	function loadMarkdown(markdown) {
+		const stripped = markdown.replace(/\t*/g, '')
+		editor.commands.setContent(markdownit.render(stripped))
+	}
 
-	it('turns a bullet list into a todo list', () => {
-		const editor = createEditor({
-			content: '<p>Test</p>',
-			extensions: [Markdown, BulletList, ListItem]
-		})
-		editor.chain().bulletListItem().run()
-		editor.chain().todo_item().run()
-		const li = findListItem(editor)
-		expect(li.attrs).to.deep.eq({done: false, type: 1})
-	})
+	function runCommands() {
+		let found
+		while (found = findCommand()) {
+			const { node, pos } = found
+			const name = node.text
+			editor.commands.setTextSelection(pos)
+			editor.commands[name]()
+			editor.commands.insertContent('did ')
+		}
+	}
 
-	it('only toggles one list item', () => {
-		const editor = createEditor({
-			content: '<p><ul><li>Todo</li><li>Not to do</li></ul></p>',
-			extensions: [Markdown, BulletList, ListItem]
-		})
-		editor.chain().todo_item().run()
-		const todo = findListItem(editor, 0)
-		const li = findListItem(editor, 1)
-		expect(todo.attrs).to.deep.eq({done: false, type: 1})
-		expect(li.attrs).to.deep.eq({done: null, type: 0})
-	})
-
-})
-
-function findListItem(editor, index = 0) {
+	function findCommand() {
 		const doc = editor.state.doc
-		const type = editor.schema.nodes.listItem
-		return findChildrenByType(doc, type)[index]?.node;
-}
+		return findChildren(doc, child => {
+			return child.isText && editor.commands.hasOwnProperty(child.text)
+		})[0]
+	}
+
+	function expectMarkdown(markdown) {
+		const stripped = markdown.replace(/\t*/g, '')
+		expect(getMarkdown()).to.equal(stripped)
+	}
+
+	function getMarkdown() {
+		const serializer = createMarkdownSerializer(editor.schema)
+		return serializer.serialize(editor.state.doc)
+	}
+})

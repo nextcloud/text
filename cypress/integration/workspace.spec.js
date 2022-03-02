@@ -104,6 +104,25 @@ describe('Workspace', function() {
 		})
 	})
 
+	it('creates lists', function() {
+		openWorkspace()
+			.type('List me')
+			.type('{selectall}')
+		;[
+			['ul', 'ul'],
+			['ol', 'ol'],
+			['tasklist', 'ul[data-type="taskList"]'],
+		].forEach(([button, tag]) => {
+			menuButton(button)
+				.click()
+				.should('have.class', 'is-active')
+			cy.get(`.ProseMirror ${tag}`).should('contain', 'List me')
+			menuButton(button)
+				.click()
+				.should('not.have.class', 'is-active')
+		})
+	})
+
 	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
 		cy.reload()

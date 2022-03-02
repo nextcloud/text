@@ -28,6 +28,7 @@ import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
 import OrderedList from '@tiptap/extension-ordered-list'
+import ListItem from '@tiptap/extension-list-item'
 import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
@@ -38,10 +39,11 @@ import { Strong, Italic, Strike, Link, Underline } from './marks'
 import {
 	Image,
 	PlainTextDocument,
-	ListItem,
-	BulletList,
 	TrailingNode,
 	Heading,
+	BulletList,
+	TaskList,
+	TaskItem,
 } from './nodes'
 import { Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
@@ -85,6 +87,8 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			HorizontalRule,
 			OrderedList,
 			ListItem,
+			TaskList,
+			TaskItem,
 			Underline,
 			Image.configure({ currentDirectory, inline: true }),
 			Emoji.configure({
