@@ -32,13 +32,13 @@
 			v-show="ready"
 			:key="file.path"
 			:file-id="file.id"
-			:relative-path="file.path"
+			:relative-path="filepath"
 			:share-token="shareToken"
 			:active="true"
 			:autohide="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
-			@ready="ready=true"
+			@ready="ready=true; loaded=true"
 			@focus="focus=true"
 			@blur="unfocus"
 			@error="reset" />
@@ -46,12 +46,7 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
-import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe } from '@nextcloud/event-bus'
-
-const IS_PUBLIC = !!(document.getElementById('isPublic'))
-const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
 
 export default {
 	name: 'RichWorkspace',
@@ -59,16 +54,18 @@ export default {
 		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper'),
 	},
 	props: {
-		path: {
-			type: String,
-			required: true,
+		file: {
+			type: Object,
+			default: null,
+		},
+		folder: {
+			type: Object,
+			default: null,
 		},
 	},
 	data() {
 		return {
 			focus: false,
-			folder: null,
-			file: null,
 			loaded: false,
 			ready: false,
 			autofocus: false,
@@ -78,7 +75,7 @@ export default {
 	},
 	computed: {
 		shareToken() {
-			return document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+			return document.getElementById('sharingToken')?.value
 		},
 		canCreate() {
 			return !!(this.folder && (this.folder.permissions & OC.PERMISSION_CREATE))
@@ -86,11 +83,12 @@ export default {
 		showEmptyWorkspace() {
 			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
 		},
+		filepath() {
+			const { path, name } = this.file
+			return path + (path.endsWith('/') ? '' : '/') + name
+		},
 	},
 	watch: {
-		path() {
-			this.getFileInfo()
-		},
 		focus(newValue) {
 			if (!newValue) {
 				document.querySelector('#editor').scrollTo(0, 0)
@@ -98,12 +96,8 @@ export default {
 		},
 	},
 	async mounted() {
-		if (this.enabled) {
-			this.getFileInfo()
-		}
 		subscribe('Text::showRichWorkspace', () => {
 			this.enabled = true
-			this.getFileInfo()
 		})
 		subscribe('Text::hideRichWorkspace', () => {
 			this.enabled = false
@@ -114,39 +108,9 @@ export default {
 			// setTimeout(() => this.focus = false, 2000)
 		},
 		reset() {
-			this.file = null
 			this.focus = false
 			this.$nextTick(() => {
 				this.creating = false
-				this.getFileInfo()
-			})
-		},
-		getFileInfo() {
-			this.loaded = false
-			this.autofocus = false
-			this.ready = false
-			const params = { path: this.path }
-			if (IS_PUBLIC) {
-				params.shareToken = this.shareToken
-			}
-			return axios.get(WORKSPACE_URL, { params }).then((response) => {
-				const data = response.data.ocs.data
-				this.folder = data.folder || null
-				this.file = data.file
-				this.editing = true
-				this.loaded = true
-				return true
-			}).catch((error) => {
-				if (error.response.data.ocs && error.response.data.ocs.data.folder) {
-					this.folder = error.response.data.ocs.data.folder
-				} else {
-					this.folder = null
-				}
-				this.file = null
-				this.loaded = true
-				this.ready = true
-				this.creating = false
-				return false
 			})
 		},
 		createNew() {
@@ -154,14 +118,10 @@ export default {
 				return
 			}
 			this.creating = true
-			this.getFileInfo().then((workspaceFileExists) => {
-				this.autofocus = true
-				if (!workspaceFileExists) {
-					window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
-						this.getFileInfo()
-					})
-				}
-			})
+			this.autofocus = true
+			if (!this.file) {
+				window.FileList.createFile('Readme.md', { scrollTo: false, animate: false })
+			}
 		},
 	},
 }

@@ -62,6 +62,22 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 	})
 })
 
+Cypress.Commands.add('nextcloudUpdateUser', (user, password, key, value) => {
+	cy.request({
+		method: 'PUT',
+		url: `${Cypress.env('baseUrl')}/ocs/v2.php/cloud/users/${user}`,
+		form: true,
+		body: { key, value },
+		auth: { user, pass: password },
+		headers: {
+			'OCS-ApiRequest': 'true',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	}).then(response => {
+		cy.log(`Updated user ${user} ${key} to ${value}`, response.status)
+	})
+})
+
 Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 	cy.clearCookies()
 	cy.request({
@@ -100,11 +116,9 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 })
 
 Cypress.Commands.add('createFolder', dirName => {
-	cy.get('#controls .actions > .button.new').click()
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"]').click()
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"] input[type="text"]').type(dirName)
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"] input.icon-confirm').click()
-	cy.log('Created folder', dirName)
+	cy.window().then( win => {
+		win.OC.Files.getClient().createDirectory(dirName)
+	})
 })
 
 Cypress.Commands.add('openFile', fileName => {
