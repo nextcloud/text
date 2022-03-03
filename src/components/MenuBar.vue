@@ -259,7 +259,7 @@ export default {
 				class: 'icon-image',
 			}, {
 				label: t('text', 'Formatting help'),
-				class: 'icon-info',
+				class: 'icon-help',
 				click: () => {
 					this.$emit('show-help')
 				},
