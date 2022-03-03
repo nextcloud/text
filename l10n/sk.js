@@ -27,6 +27,7 @@ OC.L10N.register(
     "Saved" : "Uložené",
     "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
     "Unsaved changes" : "Neuložené zmeny",
+    "No emoji found" : "Nenašli sa žiadne emotikony",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Edit guest name" : "Upraviť meno hosťa",
     "Save guest name" : "Uložiť meno hosťa",
