@@ -168,6 +168,16 @@ export default [
 		},
 	},
 	{
+		label: t('text', 'Custom Container'),
+		// keyChar: '>',
+		// keyModifiers: ['ctrl'],
+		class: 'icon-info',
+		isActive: 'customContainer',
+		action: (command) => {
+			return command.toggleCustomContainer()
+		},
+	},
+	{
 		label: t('text', 'Code block'),
 		class: 'icon-code',
 		isActive: 'codeBlock',

@@ -27,6 +27,7 @@ import TaskItem from './TaskItem'
 import TaskList from './TaskList'
 import TrailingNode from './TrailingNode'
 import Heading from './Heading'
+import CustomContainer from './CustomContainer'
 
 export {
 	Image,
@@ -36,4 +37,5 @@ export {
 	TaskList,
 	TrailingNode,
 	Heading,
+	CustomContainer,
 }
