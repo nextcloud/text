@@ -66,6 +66,7 @@
 		"highlight.js": "^10.7.2",
 		"lowlight": "^1.20.0",
 		"markdown-it": "^12.3.2",
+		"markdown-it-container": "^3.0.0",
 		"markdown-it-task-lists": "^2.1.1",
 		"prosemirror-collab": "^1.2.2",
 		"prosemirror-inputrules": "^1.1.3",

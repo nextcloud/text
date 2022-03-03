@@ -1,6 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core'
-
-export const inputRegex = /^\s*>\s$/
+import { typesAvailable } from '../markdownit/containers'
 
 export default Node.create({
 
@@ -14,7 +13,7 @@ export default Node.create({
 
 	addOptions() {
 		return {
-			types: ['info', 'warn', 'error', 'success'],
+			types: typesAvailable,
 			HTMLAttributes: {
 				class: 'custom-container',
 			},
@@ -26,10 +25,10 @@ export default Node.create({
 			type: {
 				default: 'info',
 				rendered: false,
-				parseHTML: element => element.getAttribute('data-type'),
+				parseHTML: element => element.getAttribute('data-container'),
 				renderHTML: attributes => {
 					return {
-						'data-type': attributes.type,
+						'data-container': attributes.type,
 						class: attributes.type,
 					}
 				},
