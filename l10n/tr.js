@@ -27,6 +27,7 @@ OC.L10N.register(
     "Saved" : "Kaydedildi",
     "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
+    "No emoji found" : "Herhangi bir emoji bulunamadı",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Konuk adını düzenle",
     "Save guest name" : "Konuk adını kaydet",
