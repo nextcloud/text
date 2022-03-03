@@ -229,12 +229,16 @@ const FilesWorkspacePlugin = {
 	},
 
 	open(data) {
+		const previous = this.vm.file
+		const id = parseInt(data.id)
 		this.vm.file = {
 			...data,
-			id: parseInt(data.id),
+			id,
 		}
-		// waiting for the editor to be ready
-		this.vm.ready = false
+		if (previous?.id !== id) {
+			// Editor loads new file. Wait for it to be ready.
+			this.vm.ready = false
+		}
 	},
 }
 

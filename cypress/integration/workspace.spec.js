@@ -42,7 +42,11 @@ describe('Workspace', function() {
 		openWorkspace()
 			.type('Hello')
 			.should('contain', 'Hello')
-		cy.get('#fileList').should('contain', 'Readme.md')
+		openSidebar('Readme.md')
+		cy.log('Regression test for #2215')
+		cy.get('#rich-workspace .ProseMirror')
+			.should('be.visible')
+			.should('contain', 'Hello')
 	})
 
 	it('formats text', function() {
@@ -164,4 +168,12 @@ const openWorkspace = () => {
 	cy.get('#rich-workspace .empty-workspace').click()
 	cy.get('#editor .content-wrapper').click()
 	return cy.get('#rich-workspace .ProseMirror')
+}
+
+const openSidebar = filename => {
+	cy.get(`#fileList tr[data-file="${filename}"]`)
+		.should('contain', filename)
+	cy.get(`#fileList tr[data-file="${filename}"] .icon-more`).click()
+	cy.get(`#fileList tr[data-file="${filename}"] .icon-details`).click()
+	cy.get('.app-sidebar-header').should('contain', filename)
 }
