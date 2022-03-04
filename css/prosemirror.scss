@@ -191,9 +191,38 @@ div.ProseMirror {
 	}
 
 	.custom-container {
-		padding: 2em;
-		background-color: var(--color-primary-light);
-		border-left: 4px solid var(--color-primary-element);
+		padding: 1em;
+		border-left-width: 0.5em;
+		border-left-style: solid;
+
+		> p {
+			margin-bottom: 0.4em;
+			line-height: initial;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		&, &-info {
+			background-color: var(--color-primary-light);
+			border-left-color: var(--color-primary-element);
+		}
+
+		&-warn {
+			background-color: var(--color-warning-hover);
+			border-left-color: var(--color-warning);
+		}
+
+		&-error {
+			background-color: var(--color-error-hover);
+			border-left-color: var(--color-error);
+		}
+
+		&-success {
+			background-color: var(--color-success-hover);
+			border-left-color: var(--color-success);
+		}
 	}
 
 }

@@ -169,13 +169,41 @@ export default [
 	},
 	{
 		label: t('text', 'Custom Container'),
-		// keyChar: '>',
-		// keyModifiers: ['ctrl'],
-		class: 'icon-info',
-		isActive: 'customContainer',
-		action: (command) => {
-			return command.toggleCustomContainer()
-		},
+		visible: false,
+		children: [
+			{
+				label: t('text', 'Info'),
+				class: 'icon-info',
+				isActive: ['customContainer', { type: 'info' }],
+				action: (command) => {
+					return command.toggleCustomContainer({ type: 'info' })
+				},
+			},
+			{
+				label: t('text', 'Success'),
+				class: 'icon-success',
+				isActive: ['customContainer', { type: 'success' }],
+				action: (command) => {
+					return command.toggleCustomContainer({ type: 'success' })
+				},
+			},
+			{
+				label: t('text', 'Warning'),
+				class: 'icon-warn',
+				isActive: ['customContainer', { type: 'warn' }],
+				action: (command) => {
+					return command.toggleCustomContainer({ type: 'warn' })
+				},
+			},
+			{
+				label: t('text', 'Error'),
+				class: 'icon-error',
+				isActive: ['customContainer', { type: 'error' }],
+				action: (command) => {
+					return command.toggleCustomContainer({ type: 'error' })
+				},
+			},
+		],
 	},
 	{
 		label: t('text', 'Code block'),
