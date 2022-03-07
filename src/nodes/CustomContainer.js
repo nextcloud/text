@@ -20,14 +20,14 @@
  *
  */
 
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node, mergeAttributes, isNodeActive } from '@tiptap/core'
 import { typesAvailable } from '../markdownit/containers'
 
 export default Node.create({
 
 	name: 'customContainer',
 
-	content: 'block+',
+	content: 'paragraph+',
 
 	group: 'block',
 
@@ -90,8 +90,16 @@ export default Node.create({
 			setCustomContainer: attributes => ({ commands }) => {
 				return commands.wrapIn(this.name, attributes)
 			},
-			toggleCustomContainer: attributes => ({ commands }) => {
-				return commands.toggleWrap(this.name, attributes)
+			toggleCustomContainer: attributes => ({ commands, state }) => {
+				if (!isNodeActive(state, this.name)) {
+					return commands.setCustomContainer(attributes)
+				}
+
+				if (!isNodeActive(state, this.name, attributes)) {
+					return commands.updateAttributes(this.name, attributes)
+				}
+
+				return commands.unsetCustomContainer()
 			},
 			unsetCustomContainer: () => ({ commands }) => {
 				return commands.lift(this.name)
