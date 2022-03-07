@@ -190,10 +190,32 @@ div.ProseMirror {
 		margin-right: 0;
 	}
 
+	// Custom Containers Block
 	.custom-container {
+		background-color: var(--custom-container-background, var(--color-background-hover));
+		border-left-color: var(--custom-container-border, var(--color-primary-element));
 		padding: 1em;
-		border-left-width: 0.5em;
+		padding-left: 2em;
+		border-left-width: 0.3em;
 		border-left-style: solid;
+		position: relative;
+		width: 100%;
+		margin-bottom: 0.5em;
+		+ & {
+			margin-top: 0.5em;
+		}
+
+		// Block icon
+		&::before {
+			content: '';
+			background-image: var(--custom-container-icon, var(--icon-info-000));
+			background-size: contain;
+			position: absolute;
+			top: calc(50% - 8px);
+			left: 0.4em;
+			height: 16px;
+			width: 16px;
+		}
 
 		> p {
 			margin-bottom: 0.4em;
@@ -204,24 +226,32 @@ div.ProseMirror {
 			}
 		}
 
+		// Info (default) variables
 		&, &-info {
-			background-color: var(--color-primary-light);
-			border-left-color: var(--color-primary-element);
+			// --custom-container-background: var(--color-primary-light);
+			--custom-container-border: var(--color-primary-element);
+			--custom-container-icon: var(--icon-info-000);
 		}
 
+		// Warn variables
 		&-warn {
-			background-color: var(--color-warning-hover);
-			border-left-color: var(--color-warning);
+			// --custom-container-background: var(--color-warning-hover);
+			--custom-container-border: var(--color-warning);
+			--custom-container-icon: var(--icon-text-warn-000);
 		}
 
+		// Warn error
 		&-error {
-			background-color: var(--color-error-hover);
-			border-left-color: var(--color-error);
+			// --custom-container-background: var(--color-error-hover);
+			--custom-container-border: var(--color-error);
+			--custom-container-icon: var(--icon-error-000);
 		}
 
+		// Success variables
 		&-success {
-			background-color: var(--color-success-hover);
-			border-left-color: var(--color-success);
+			// --custom-container-background: var(--color-success-hover);
+			--custom-container-border: var(--color-success);
+			--custom-container-icon: var(--icon-text-success-000);
 		}
 	}
 
