@@ -463,20 +463,13 @@ export default {
 					this.readOnly = true
 					this.tiptap.setOptions({ editable: !this.readOnly })
 				})
-			if (this.initialSession === null) {
-				this.syncService.open({
-					fileId: this.fileId,
-					filePath: this.relativePath,
-				}).catch((e) => {
-					this.hasConnectionIssue = true
-				})
-			} else {
-				this.syncService.open({
-					initialSession: this.initialSession,
-				}).catch((e) => {
-					this.hasConnectionIssue = true
-				})
-			}
+			this.syncService.open({
+				fileId: this.fileId,
+				filePath: this.relativePath,
+				initialSession: this.initialSession,
+			}).catch((e) => {
+				this.hasConnectionIssue = true
+			})
 			this.forceRecreate = false
 		},
 
