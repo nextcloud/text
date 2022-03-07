@@ -106,11 +106,12 @@ class SyncService {
 			document: this.document,
 			session: this.session,
 		})
-		const fetched = await this._fetchDocument()
+		const content = connectionData.content
+			|| await this._fetchDocument()
 		this.emit('loaded', {
 			document: this.document,
 			session: this.session,
-			documentSource: '' + fetched.data,
+			documentSource: '' + content,
 		})
 	}
 
@@ -133,7 +134,7 @@ class SyncService {
 					this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
 				}
 				throw error
-		})
+			})
 	}
 
 	_fetchDocument() {
@@ -144,9 +145,11 @@ class SyncService {
 				sessionToken: this.session.token,
 				token: this.options.shareToken,
 			}, {
+				// Axios normally tries to parse string responses as json.
+				// Just return the plain content here.
 				transformResponse: [(data) => data],
 			}
-		)
+		).then(response => response.data)
 	}
 
 	updateSession(guestName) {
