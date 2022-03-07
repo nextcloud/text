@@ -79,7 +79,7 @@ export default Node.create({
 
 	toMarkdown: (state, node) => {
 		state.write('::: ' + (node.attrs.type || 'info') + '\n')
-		state.text(node.textContent, false)
+		state.renderContent(node)
 		state.ensureNewLine()
 		state.write(':::')
 		state.closeBlock(node)
