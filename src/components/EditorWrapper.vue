@@ -33,9 +33,9 @@
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
 		</div>
-		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !initialLoading && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div id="editor">
-				<MenuBar v-if="tiptap && !syncError && !readOnly"
+		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
+			<div v-if="tiptap" id="editor">
+				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:editor="tiptap"
 					:sync-service="syncService"
@@ -44,6 +44,7 @@
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
 					:autohide="autohide"
+					:loaded.sync="menubarLoaded"
 					@show-help="showHelp">
 					<div id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
@@ -55,12 +56,13 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
+				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
-					<MenuBubble v-if="tiptap && !readOnly && isRichEditor"
+					<MenuBubble v-if="renderMenus"
 						:editor="tiptap"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
-					<EditorContent v-show="initialLoading"
+					<EditorContent v-show="contentLoaded"
 						class="editor__content"
 						:editor="tiptap" />
 				</div>
@@ -170,12 +172,13 @@ export default {
 
 			idle: false,
 			dirty: false,
-			initialLoading: false,
+			contentLoaded: false,
 			lastSavedString: '',
 			syncError: null,
 			hasConnectionIssue: false,
 			readOnly: true,
 			forceRecreate: false,
+			menubarLoaded: false,
 
 			saveStatusPolling: null,
 			displayHelp: false,
@@ -241,6 +244,12 @@ export default {
 		},
 		displayed() {
 			return this.currentSession && this.active
+		},
+		renderMenus() {
+			return this.contentLoaded
+				&& this.isRichEditor
+				&& !this.syncError
+				&& !this.readOnly
 		},
 	},
 	watch: {
@@ -416,7 +425,7 @@ export default {
 				.on('error', (error, data) => {
 					this.tiptap.setOptions({ editable: false })
 					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
-						this.initialLoading = true
+						this.contentLoaded = true
 						this.syncError = {
 							type: error,
 							data,
@@ -436,8 +445,8 @@ export default {
 					this.$emit('ready')
 				})
 				.on('stateChange', (state) => {
-					if (state.initialLoading && !this.initialLoading) {
-						this.initialLoading = true
+					if (state.initialLoading && !this.contentLoaded) {
+						this.contentLoaded = true
 						if (this.autofocus && !this.readOnly) {
 							this.tiptap.commands.focus()
 						}
@@ -482,7 +491,7 @@ export default {
 		},
 
 		reconnect() {
-			this.initialLoading = false
+			this.contentLoaded = false
 			this.hasConnectionIssue = false
 			if (this.syncService) {
 				this.syncService.close().then(() => {
@@ -694,6 +703,19 @@ export default {
 			padding-top: 50px;
 		}
 	}
+
+	.menubar.placeholder {
+		position: fixed;
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		opacity: 0;
+		visibility: hidden;
+		height: 44px; // important for mobile so that the buttons are always inside the container
+		padding-top:3px;
+		padding-bottom: 3px;
+	}
+
 </style>
 <style lang="scss">
 	@import './../../css/style';
