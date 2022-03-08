@@ -191,9 +191,9 @@ div.ProseMirror {
 	}
 
 	// Custom Containers Block
-	.custom-container {
-		background-color: var(--custom-container-background, var(--color-background-hover));
-		border-left-color: var(--custom-container-border, var(--color-primary-element));
+	.callout-container {
+		background-color: var(--callout-container-background, var(--color-background-hover));
+		border-left-color: var(--callout-container-border, var(--color-primary-element));
 		padding: 1em;
 		padding-left: 2em;
 		border-left-width: 0.3em;
@@ -208,7 +208,7 @@ div.ProseMirror {
 		// Block icon
 		&::before {
 			content: '';
-			background-image: var(--custom-container-icon, var(--icon-info-000));
+			background-image: var(--callout-container-icon, var(--icon-info-000));
 			background-size: contain;
 			position: absolute;
 			top: calc(50% - 8px);
@@ -228,30 +228,30 @@ div.ProseMirror {
 
 		// Info (default) variables
 		&, &-info {
-			// --custom-container-background: var(--color-primary-light);
-			--custom-container-border: var(--color-primary-element);
-			--custom-container-icon: var(--icon-info-000);
+			// --callout-container-background: var(--color-primary-light);
+			--callout-container-border: var(--color-primary-element);
+			--callout-container-icon: var(--icon-info-000);
 		}
 
 		// Warn variables
 		&-warn {
-			// --custom-container-background: var(--color-warning-hover);
-			--custom-container-border: var(--color-warning);
-			--custom-container-icon: var(--icon-text-warn-000);
+			// --callout-container-background: var(--color-warning-hover);
+			--callout-container-border: var(--color-warning);
+			--callout-container-icon: var(--icon-text-warn-000);
 		}
 
 		// Warn error
 		&-error {
-			// --custom-container-background: var(--color-error-hover);
-			--custom-container-border: var(--color-error);
-			--custom-container-icon: var(--icon-error-000);
+			// --callout-container-background: var(--color-error-hover);
+			--callout-container-border: var(--color-error);
+			--callout-container-icon: var(--icon-error-000);
 		}
 
 		// Success variables
 		&-success {
-			// --custom-container-background: var(--color-success-hover);
-			--custom-container-border: var(--color-success);
-			--custom-container-icon: var(--icon-text-success-000);
+			// --callout-container-background: var(--color-success-hover);
+			--callout-container-border: var(--color-success);
+			--callout-container-icon: var(--icon-text-success-000);
 		}
 	}
 

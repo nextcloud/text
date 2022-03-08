@@ -29,8 +29,8 @@ const buildRender = type => (tokens, idx, options, env, slf) => {
 
 	// add attributes to the opening tag
 	if (tag.nesting === 1) {
-		tag.attrSet('data-container', type)
-		tag.attrJoin('class', `custom-container custom-container-${type}`)
+		tag.attrSet('data-callout', type)
+		tag.attrJoin('class', `callout-container callout-container-${type}`)
 	}
 
 	return slf.renderToken(tokens, idx, options, env, slf)

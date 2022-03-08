@@ -168,39 +168,39 @@ export default [
 		},
 	},
 	{
-		label: t('text', 'Custom Container'),
+		label: t('text', 'Callouts'),
 		visible: false,
 		children: [
 			{
 				label: t('text', 'Info'),
 				class: 'icon-info',
-				isActive: ['customContainer', { type: 'info' }],
+				isActive: ['calloutContainer', { type: 'info' }],
 				action: (command) => {
-					return command.toggleCustomContainer({ type: 'info' })
+					return command.toggleCalloutCustomContainer({ type: 'info' })
 				},
 			},
 			{
 				label: t('text', 'Success'),
 				class: 'icon-success',
-				isActive: ['customContainer', { type: 'success' }],
+				isActive: ['calloutContainer', { type: 'success' }],
 				action: (command) => {
-					return command.toggleCustomContainer({ type: 'success' })
+					return command.toggleCalloutCustomContainer({ type: 'success' })
 				},
 			},
 			{
 				label: t('text', 'Warning'),
 				class: 'icon-warn',
-				isActive: ['customContainer', { type: 'warn' }],
+				isActive: ['calloutContainer', { type: 'warn' }],
 				action: (command) => {
-					return command.toggleCustomContainer({ type: 'warn' })
+					return command.toggleCalloutCustomContainer({ type: 'warn' })
 				},
 			},
 			{
 				label: t('text', 'Error'),
 				class: 'icon-error',
-				isActive: ['customContainer', { type: 'error' }],
+				isActive: ['calloutContainer', { type: 'error' }],
 				action: (command) => {
-					return command.toggleCustomContainer({ type: 'error' })
+					return command.toggleCalloutCustomContainer({ type: 'error' })
 				},
 			},
 		],

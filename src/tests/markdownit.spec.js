@@ -27,12 +27,12 @@ describe('markdownit', () => {
 `))
 	})
 
-	describe('custom containers', () => {
+	describe('callout containers', () => {
 		typesAvailable.forEach((type) => {
 			it(`render ${type}`, () => {
 				const rendered = markdownit.render(`::: ${type}\nHey there!\n:::`)
 				expect(stripIndent(rendered)).toBe(stripIndent(
-					`<div data-container="${type}" class="custom-container custom-container-${type}">
+					`<div data-callout="${type}" class="callout-container callout-container-${type}">
 						<p>Hey there!</p>
 					</div>`
 				))

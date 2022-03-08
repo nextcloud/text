@@ -25,7 +25,7 @@ import { typesAvailable } from '../markdownit/containers'
 
 export default Node.create({
 
-	name: 'customContainer',
+	name: 'calloutContainer',
 
 	content: 'paragraph+',
 
@@ -37,7 +37,7 @@ export default Node.create({
 		return {
 			types: typesAvailable,
 			HTMLAttributes: {
-				class: 'custom-container',
+				class: 'callout-container',
 			},
 		}
 	},
@@ -47,11 +47,11 @@ export default Node.create({
 			type: {
 				default: 'info',
 				rendered: false,
-				parseHTML: element => element.getAttribute('data-container'),
+				parseHTML: element => element.getAttribute('data-callout'),
 				renderHTML: attributes => {
 					return {
-						'data-container': attributes.type,
-						class: attributes.type,
+						'data-callout': attributes.type,
+						class: `callout-container-${attributes.type}`,
 					}
 				},
 			},
@@ -87,21 +87,21 @@ export default Node.create({
 
 	addCommands() {
 		return {
-			setCustomContainer: attributes => ({ commands }) => {
+			setCalloutCustomContainer: attributes => ({ commands }) => {
 				return commands.wrapIn(this.name, attributes)
 			},
-			toggleCustomContainer: attributes => ({ commands, state }) => {
+			toggleCalloutCustomContainer: attributes => ({ commands, state }) => {
 				if (!isNodeActive(state, this.name)) {
-					return commands.setCustomContainer(attributes)
+					return commands.setCalloutCustomContainer(attributes)
 				}
 
 				if (!isNodeActive(state, this.name, attributes)) {
 					return commands.updateAttributes(this.name, attributes)
 				}
 
-				return commands.unsetCustomContainer()
+				return commands.unsetCalloutCustomContainer()
 			},
-			unsetCustomContainer: () => ({ commands }) => {
+			unsetCalloutCustomContainer: () => ({ commands }) => {
 				return commands.lift(this.name)
 			},
 		}
