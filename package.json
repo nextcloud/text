@@ -101,6 +101,7 @@
 		"babel-core": "^7.0.0-bridge.0",
 		"cypress": "^9.5.1",
 		"cypress-file-upload": "^5.0.8",
+		"eslint-plugin-cypress": "^2.12.1",
 		"jest": "^27.5.1",
 		"jest-environment-jsdom": "^27.5.1",
 		"jest-serializer-vue": "^2.0.2",
