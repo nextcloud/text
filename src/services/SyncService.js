@@ -97,37 +97,21 @@ class SyncService {
 	}
 
 	async open({ fileId, filePath, initialSession }) {
-		let connectionData = null
-		if (typeof initialSession === 'undefined') {
-			try {
-				const response = await this._openDocument({ fileId, filePath })
-				connectionData = response.data
-			} catch (error) {
-				if (!error.response || error.code === 'ECONNABORTED') {
-					this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
-				} else {
-					this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
-				}
-				throw error
-			}
-		} else {
-			connectionData = initialSession
-		}
-
+		const connectionData = initialSession
+			|| await this._openDocument({ fileId, filePath })
 		this.document = connectionData.document
 		this.document.readOnly = connectionData.readOnly
 		this.session = connectionData.session
-
 		this.emit('opened', {
 			document: this.document,
 			session: this.session,
 		})
-		return this._fetchDocument().then(({ data }) => {
-			this.emit('loaded', {
-				document: this.document,
-				session: this.session,
-				documentSource: '' + data,
-			})
+		const content = connectionData.content
+			|| await this._fetchDocument()
+		this.emit('loaded', {
+			document: this.document,
+			session: this.session,
+			documentSource: '' + content,
 		})
 	}
 
@@ -143,6 +127,14 @@ class SyncService {
 			guestName: this.options.guestName,
 			forceRecreate: this.options.forceRecreate,
 		})
+			.then(response => response.data, error => {
+				if (!error.response || error.code === 'ECONNABORTED') {
+					this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				} else {
+					this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
+				}
+				throw error
+			})
 	}
 
 	_fetchDocument() {
@@ -153,9 +145,11 @@ class SyncService {
 				sessionToken: this.session.token,
 				token: this.options.shareToken,
 			}, {
+				// Axios normally tries to parse string responses as json.
+				// Just return the plain content here.
 				transformResponse: [(data) => data],
 			}
-		)
+		).then(response => response.data)
 	}
 
 	updateSession(guestName) {

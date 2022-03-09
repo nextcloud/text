@@ -106,10 +106,18 @@ class ApiService {
 		}
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
+		try {
+			$baseFile = $this->documentService->getBaseFile($document->getId());
+			$content = $baseFile->getContent();
+		} catch (NotFoundException $e) {
+			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			$content = null;
+		}
 		return new DataResponse([
 			'document' => $document,
 			'session' => $session,
-			'readOnly' => $readOnly
+			'readOnly' => $readOnly,
+			'content' => $content
 		]);
 	}
 
