@@ -6,6 +6,7 @@ import callouts from './callouts'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
+	.enable('table')
 	.use(taskLists, { enable: true, labelAfter: true })
 	.use(splitMixedLists)
 	.use(underline)
