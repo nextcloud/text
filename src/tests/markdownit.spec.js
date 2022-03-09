@@ -1,5 +1,5 @@
 import markdownit from './../markdownit'
-import { typesAvailable } from './../markdownit/containers'
+import { typesAvailable } from '../markdownit/callouts'
 
 describe('markdownit', () => {
 
@@ -27,12 +27,12 @@ describe('markdownit', () => {
 `))
 	})
 
-	describe('callout containers', () => {
+	describe('callouts', () => {
 		typesAvailable.forEach((type) => {
 			it(`render ${type}`, () => {
 				const rendered = markdownit.render(`::: ${type}\nHey there!\n:::`)
 				expect(stripIndent(rendered)).toBe(stripIndent(
-					`<div data-callout="${type}" class="callout-container callout-container-${type}">
+					`<div data-callout="${type}" class="callout callout-${type}">
 						<p>Hey there!</p>
 					</div>`
 				))

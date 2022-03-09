@@ -190,10 +190,10 @@ div.ProseMirror {
 		margin-right: 0;
 	}
 
-	// Custom Containers Block
-	.callout-container {
-		background-color: var(--callout-container-background, var(--color-background-hover));
-		border-left-color: var(--callout-container-border, var(--color-primary-element));
+	// Callout Block
+	.callout {
+		background-color: var(--callout-background, var(--color-background-hover));
+		border-left-color: var(--callout-border, var(--color-primary-element));
 		border-radius: var(--border-radius);
 		padding: 1em;
 		padding-left: 2em;
@@ -208,7 +208,7 @@ div.ProseMirror {
 		// Block icon
 		&::before {
 			content: '';
-			background-image: var(--callout-container-icon, var(--icon-info-000));
+			background-image: var(--callout-icon, var(--icon-info-000));
 			background-size: contain;
 			position: absolute;
 			top: calc(50% - 8px);
@@ -228,30 +228,30 @@ div.ProseMirror {
 
 		// Info (default) variables
 		&, &-info {
-			// --callout-container-background: var(--color-primary-light);
-			--callout-container-border: var(--color-primary-element);
-			--callout-container-icon: var(--icon-info-000);
+			// --callout-background: var(--color-primary-light);
+			--callout-border: var(--color-primary-element);
+			--callout-icon: var(--icon-info-000);
 		}
 
 		// Warn variables
 		&-warn {
-			// --callout-container-background: var(--color-warning-hover);
-			--callout-container-border: var(--color-warning);
-			--callout-container-icon: var(--icon-text-warn-000);
+			// --callout-background: var(--color-warning-hover);
+			--callout-border: var(--color-warning);
+			--callout-icon: var(--icon-text-warn-000);
 		}
 
 		// Error variables
 		&-error {
-			// --callout-container-background: var(--color-error-hover);
-			--callout-container-border: var(--color-error);
-			--callout-container-icon: var(--icon-error-000);
+			// --callout-background: var(--color-error-hover);
+			--callout-border: var(--color-error);
+			--callout-icon: var(--icon-error-000);
 		}
 
 		// Success variables
 		&-success {
-			// --callout-container-background: var(--color-success-hover);
-			--callout-container-border: var(--color-success);
-			--callout-container-icon: var(--icon-text-success-000);
+			// --callout-background: var(--color-success-hover);
+			--callout-border: var(--color-success);
+			--callout-icon: var(--icon-text-success-000);
 		}
 	}
 

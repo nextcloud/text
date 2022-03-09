@@ -30,7 +30,7 @@ const buildRender = type => (tokens, idx, options, env, slf) => {
 	// add attributes to the opening tag
 	if (tag.nesting === 1) {
 		tag.attrSet('data-callout', type)
-		tag.attrJoin('class', `callout-container callout-container-${type}`)
+		tag.attrJoin('class', `callout callout-${type}`)
 	}
 
 	return slf.renderToken(tokens, idx, options, env, slf)
@@ -40,7 +40,7 @@ const buildRender = type => (tokens, idx, options, env, slf) => {
  * @param {object} md Markdown object
  */
 export default (md) => {
-	// create a custom container to each type
+	// create a custom container to each callout type
 	typesAvailable.forEach(type => {
 		md.use(container, type, {
 			render: buildRender(type),

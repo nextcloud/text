@@ -27,7 +27,7 @@ import TaskItem from './TaskItem'
 import TaskList from './TaskList'
 import TrailingNode from './TrailingNode'
 import Heading from './Heading'
-import CalloutContainer from './CalloutsContainer'
+import Callout from './Callouts'
 
 export {
 	Image,
@@ -37,5 +37,5 @@ export {
 	TaskList,
 	TrailingNode,
 	Heading,
-	CalloutContainer,
+	Callout,
 }

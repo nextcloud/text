@@ -44,7 +44,7 @@ import {
 	BulletList,
 	TaskList,
 	TaskItem,
-	CalloutContainer,
+	Callout,
 } from './nodes'
 import { Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
@@ -90,7 +90,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			ListItem,
 			TaskList,
 			TaskItem,
-			CalloutContainer,
+			Callout,
 			Underline,
 			Image.configure({ currentDirectory, inline: true }),
 			Emoji.configure({

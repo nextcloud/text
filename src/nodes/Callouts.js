@@ -21,11 +21,11 @@
  */
 
 import { Node, mergeAttributes, isNodeActive } from '@tiptap/core'
-import { typesAvailable } from '../markdownit/containers'
+import { typesAvailable } from '../markdownit/callouts'
 
 export default Node.create({
 
-	name: 'calloutContainer',
+	name: 'callout',
 
 	content: 'paragraph+',
 
@@ -37,7 +37,7 @@ export default Node.create({
 		return {
 			types: typesAvailable,
 			HTMLAttributes: {
-				class: 'callout-container',
+				class: 'callout',
 			},
 		}
 	},
@@ -51,7 +51,7 @@ export default Node.create({
 				renderHTML: attributes => {
 					return {
 						'data-callout': attributes.type,
-						class: `callout-container-${attributes.type}`,
+						class: `callout-${attributes.type}`,
 					}
 				},
 			},
@@ -87,21 +87,21 @@ export default Node.create({
 
 	addCommands() {
 		return {
-			setCalloutCustomContainer: attributes => ({ commands }) => {
+			setCallout: attributes => ({ commands }) => {
 				return commands.wrapIn(this.name, attributes)
 			},
-			toggleCalloutCustomContainer: attributes => ({ commands, state }) => {
+			toggleCallout: attributes => ({ commands, state }) => {
 				if (!isNodeActive(state, this.name)) {
-					return commands.setCalloutCustomContainer(attributes)
+					return commands.setCallout(attributes)
 				}
 
 				if (!isNodeActive(state, this.name, attributes)) {
 					return commands.updateAttributes(this.name, attributes)
 				}
 
-				return commands.unsetCalloutCustomContainer()
+				return commands.unsetCallout()
 			},
-			unsetCalloutCustomContainer: () => ({ commands }) => {
+			unsetCallout: () => ({ commands }) => {
 				return commands.lift(this.name)
 			},
 		}
