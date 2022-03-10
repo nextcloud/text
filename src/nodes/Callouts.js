@@ -71,6 +71,7 @@ export default Node.create({
 
 		const attributes = {
 			...this.options.HTMLAttributes,
+			'data-callout': node.attrs.type,
 			class: `${classy} ${classy}-${node.attrs.type}`,
 		}
 
