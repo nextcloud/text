@@ -24,6 +24,7 @@
 import { randHash } from '../utils/'
 import 'cypress-file-upload'
 const randUser = randHash()
+const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 1
 const ACTION_INSERT_FROM_FILES = 2
@@ -61,7 +62,7 @@ const clickOnImageAction = (actionIndex, callback) => {
  * @param documentId file ID of the current document
  * @param imageName file name to be checked
  */
-const checkImage = (documentId, imageName) => {
+const checkImage = (documentId, imageName, imageId) => {
 	cy.log('Check the image is visible and well formed')
 	cy.get('#editor .ProseMirror div.image[data-src="text://image?imageFileName=' + imageName + '"]')
 		.should('be.visible')
@@ -69,6 +70,8 @@ const checkImage = (documentId, imageName) => {
 			.should('have.attr', 'src')
 				.should('contain', 'apps/text/image?documentId=' + documentId)
 				.should('contain', 'imageFileName=' + imageName)
+	// keep track that we have created this image in the attachment dir
+	attachmentFileNameToId[imageName] = imageId
 }
 
 /**
@@ -79,10 +82,11 @@ const checkImage = (documentId, imageName) => {
 const waitForRequestAndCheckImage = (requestAlias) => {
 	cy.wait('@' + requestAlias).then((req) => {
 		// the name of the created file on NC side is returned in the response
+		const fileId = req.response.body.id
 		const fileName = req.response.body.name
 		const documentId = req.response.body.documentId
 		cy.wait(2000)
-		checkImage(documentId, fileName)
+		checkImage(documentId, fileName, fileId)
 		cy.wait(1000)
 		cy.screenshot()
 	})
@@ -103,11 +107,18 @@ describe('Test all image insertion methods', () => {
 		cy.login(randUser, 'password')
 	})
 
-	it('See test files in the list', () => {
+	it('See test files in the list and display hidden files', () => {
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
 		cy.get('#fileList tr[data-file="github.png"]', { timeout: 10000 })
 			.should('contain', 'github.png')
+
+		cy.get('#app-settings-header', { timeout: 10000 })
+			.click()
+		cy.wait(2000)
+		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
+			.click()
+		cy.wait(2000)
 	})
 
 	it('Insert an image from files', () => {
@@ -159,6 +170,86 @@ describe('Test all image insertion methods', () => {
 
 			waitForRequestAndCheckImage(requestAlias)
 		})
+	})
+
+	it('test if image files are in the attachment folder', () => {
+		// check we stored the image names/ids
+		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(3)
+
+		cy.get(`#fileList tr[data-file="test.md"]`)
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.openFile('.attachments.' + documentId)
+				cy.wait(1000)
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`)
+						.should('exist')
+						.should('have.attr', 'data-id')
+						.should('eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is moved with the markdown file', () => {
+		cy.createFolder('subFolder')
+		cy.wait(2000)
+		cy.moveFile('test.md', 'subFolder/test.md')
+		cy.wait(2000)
+		cy.openFile('subFolder')
+		cy.wait(2000)
+
+		cy.get(`#fileList tr[data-file="test.md"]`)
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.openFile('.attachments.' + documentId)
+				cy.wait(2000)
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`)
+						.should('exist')
+						.should('have.attr', 'data-id')
+						.should('eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is copied when copying a markdown file', () => {
+		cy.copyFile('subFolder/test.md', 'testCopied.md')
+		cy.wait(2000)
+		cy.reloadFileList()
+		cy.wait(2000)
+
+		cy.get(`#fileList tr[data-file="testCopied.md"]`)
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.openFile('.attachments.' + documentId)
+				cy.wait(2000)
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`)
+						.should('exist')
+						.should('have.attr', 'data-id')
+						// these are new copied attachment files
+						// so they should not have the same IDs than the ones created when uploading the images
+						.should('not.eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is deleted after having deleted a markdown file', () => {
+		cy.get(`#fileList tr[data-file="testCopied.md"]`)
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.deleteFile('testCopied.md')
+				cy.reloadFileList()
+				cy.wait(2000)
+				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`)
+					.should('not.exist')
+			})
 	})
 
 	it('Delete the user', () => {

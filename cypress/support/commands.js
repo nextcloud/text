@@ -122,6 +122,24 @@ Cypress.Commands.add('createFolder', dirName => {
 	})
 })
 
+Cypress.Commands.add('moveFile', (path, destinationPath) => {
+	cy.window().then( win => {
+		win.OC.Files.getClient().move(path, destinationPath)
+	})
+})
+
+Cypress.Commands.add('copyFile', (path, destinationPath) => {
+	cy.window().then( win => {
+		win.OC.Files.getClient().copy(path, destinationPath)
+	})
+})
+
+Cypress.Commands.add('reloadFileList', () => {
+	cy.window().then( win => {
+		win.OCA?.Files?.App?.fileList?.reload()
+	})
+})
+
 Cypress.Commands.add('openFile', fileName => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click()
 	cy.wait(250)
