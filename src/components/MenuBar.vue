@@ -238,6 +238,7 @@ export default {
 				clearInterval(this.checkInterval)
 			}
 		}, 100)
+		this.$emit('update:loaded', true)
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)
