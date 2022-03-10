@@ -20,4 +20,8 @@ export default Node.create({
 		return ['tbody', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
 	},
 
+	toMarkdown(state, node) {
+		state.renderContent(node)
+	},
+
 })

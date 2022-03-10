@@ -20,6 +20,12 @@ const tableHeadRow = Node.create({
 		return ['tr', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
 	},
 
+	toMarkdown(state, node) {
+		state.write('|')
+		state.renderInline(node)
+		state.ensureNewLine()
+	},
+
 })
 
 export default Node.create({
@@ -44,6 +50,17 @@ export default Node.create({
 
 	renderHTML({ HTMLAttributes }) {
 		return ['thead', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+	},
+
+	toMarkdown(state, node) {
+		state.renderContent(node)
+		const row = node.child(0)
+		state.write('|')
+		row.forEach(cell => {
+			state.write(state.repeat('-', cell.textContent.length + 2))
+			state.write('|')
+		})
+		state.ensureNewLine()
 	},
 
 })

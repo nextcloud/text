@@ -5,4 +5,10 @@ export default TableRow.extend({
 	addAttributes() {
 		return {}
 	},
+
+	toMarkdown(state, node) {
+		state.write('|')
+		state.renderInline(node)
+	},
+
 })

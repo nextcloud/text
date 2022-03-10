@@ -1,3 +1,3 @@
-|heading|other heading|
-|-------|-------------|
-|cell   |other cell   |
+| heading | other heading |
+|---------|---------------|
+| cell | other cell |
