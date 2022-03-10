@@ -196,7 +196,7 @@ export default [
 				},
 			},
 			{
-				label: t('text', 'Error'),
+				label: t('text', 'Danger'),
 				class: 'icon-error',
 				isActive: ['callout', { type: 'error' }],
 				action: (command) => {
