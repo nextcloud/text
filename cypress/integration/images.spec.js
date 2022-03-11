@@ -24,6 +24,9 @@
 import { randHash } from '../utils/'
 import 'cypress-file-upload'
 const randUser = randHash()
+const randUser2 = randHash()
+let currentUser = randUser
+const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 1
 const ACTION_INSERT_FROM_FILES = 2
@@ -61,7 +64,7 @@ const clickOnImageAction = (actionIndex, callback) => {
  * @param documentId file ID of the current document
  * @param imageName file name to be checked
  */
-const checkImage = (documentId, imageName) => {
+const checkImage = (documentId, imageName, imageId) => {
 	cy.log('Check the image is visible and well formed')
 	cy.get('#editor .ProseMirror div.image[data-src="text://image?imageFileName=' + imageName + '"]')
 		.should('be.visible')
@@ -69,6 +72,8 @@ const checkImage = (documentId, imageName) => {
 			.should('have.attr', 'src')
 				.should('contain', 'apps/text/image?documentId=' + documentId)
 				.should('contain', 'imageFileName=' + imageName)
+	// keep track that we have created this image in the attachment dir
+	attachmentFileNameToId[imageName] = imageId
 }
 
 /**
@@ -79,11 +84,10 @@ const checkImage = (documentId, imageName) => {
 const waitForRequestAndCheckImage = (requestAlias) => {
 	cy.wait('@' + requestAlias).then((req) => {
 		// the name of the created file on NC side is returned in the response
+		const fileId = req.response.body.id
 		const fileName = req.response.body.name
 		const documentId = req.response.body.documentId
-		cy.wait(2000)
-		checkImage(documentId, fileName)
-		cy.wait(1000)
+		checkImage(documentId, fileName, fileId)
 		cy.screenshot()
 	})
 }
@@ -97,17 +101,27 @@ describe('Test all image insertion methods', () => {
 		// Upload test files to user's storage
 		cy.uploadFile('test.md', 'text/markdown')
 		cy.uploadFile('github.png', 'image/png')
+
+		cy.nextcloudCreateUser(randUser2, 'password')
+		cy.shareFileToUser(randUser, 'password', 'test.md', randUser2)
 	})
 
 	beforeEach(() => {
-		cy.login(randUser, 'password')
+		cy.login(currentUser, 'password')
 	})
 
-	it('See test files in the list', () => {
+	it('See test files in the list and display hidden files', () => {
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
 		cy.get('#fileList tr[data-file="github.png"]', { timeout: 10000 })
 			.should('contain', 'github.png')
+
+		cy.get('#app-settings-header', { timeout: 10000 })
+			.click()
+		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
+		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
+			.click()
+		cy.wait('@showHidden')
 	})
 
 	it('Insert an image from files', () => {
@@ -131,12 +145,10 @@ describe('Test all image insertion methods', () => {
 			const requestAlias = 'insertLinkRequest'
 			cy.intercept({ method: 'POST', url: '**/link' }).as(requestAlias)
 
-			cy.wait(2000)
 			cy.log('Type and validate')
 			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
-				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg')
-				.wait(2000)
-				.type('{enter}')
+				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg', { waitForAnimations: true })
+				.type('{enter}', { waitForAnimations: true })
 			// Clicking on the validation button is an alternative to typing {enter}
 			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
 
@@ -153,7 +165,6 @@ describe('Test all image insertion methods', () => {
 			const requestAlias = 'uploadRequest'
 			cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
 
-			cy.wait(2000)
 			cy.log('Upload the file through the input')
 			cy.get('.menubar input[type="file"]').attachFile('table.png')
 
@@ -161,8 +172,177 @@ describe('Test all image insertion methods', () => {
 		})
 	})
 
+	it('test if image files are in the attachment folder', () => {
+		// check we stored the image names/ids
+		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(3)
+
+		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
+				cy.openFile('.attachments.' + documentId)
+				cy.wait('@chdir')
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+						.should('exist')
+						.should('have.attr', 'data-id')
+						.should('eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is moved with the markdown file', () => {
+		cy.intercept({ method: 'MKCOL', url: '**/subFolder' }).as('mkdir')
+		cy.createFolder('subFolder')
+		cy.wait('@mkdir')
+
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload')
+		cy.reloadFileList()
+		cy.wait('@reload')
+
+		cy.intercept({ method: 'MOVE', url: '**/test.md' }).as('move')
+		cy.moveFile('test.md', 'subFolder/test.md')
+		cy.wait('@move')
+		cy.intercept({ method: 'PROPFIND', url: '**/subFolder' }).as('chdir')
+		cy.openFile('subFolder')
+		cy.wait('@chdir')
+
+		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
+				cy.openFile('.attachments.' + documentId)
+				cy.wait('@chdir')
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+						.should('exist')
+						.should('have.attr', 'data-id')
+						.should('eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is copied when copying a markdown file', () => {
+		cy.intercept({ method: 'COPY', url: '**/subFolder/test.md' }).as('copyFile')
+		cy.copyFile('subFolder/test.md', 'testCopied.md')
+		cy.wait('@copyFile')
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload2')
+		cy.reloadFileList()
+		cy.wait('@reload2')
+
+		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
+				cy.openFile('.attachments.' + documentId)
+				cy.wait('@chdir')
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+						.should('exist')
+						.should('have.attr', 'data-id')
+						// these are new copied attachment files
+						// so they should not have the same IDs than the ones created when uploading the images
+						.should('not.eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
+	it('test if attachment folder is deleted after having deleted a markdown file', () => {
+		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.intercept({ method: 'DELETE', url: '**/testCopied.md' }).as('deleteFile')
+				cy.deleteFile('testCopied.md')
+				cy.wait('@deleteFile')
+
+				cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload3')
+				cy.reloadFileList()
+				cy.wait('@reload3')
+
+				// cy.wait(2000)
+				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+					.should('not.exist')
+			})
+		// change the current user for next tests
+		currentUser = randUser2
+	})
+
+	it('[share] check everything behaves correctly on the share target user side', () => {
+		// check the file list
+		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+			.should('contain', 'test.md')
+		cy.get('#fileList tr[data-file="github.png"]').should('not.exist')
+
+		// show hidden files
+		cy.get('#app-settings-header', { timeout: 10000 })
+			.click()
+		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
+		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
+			.click()
+		cy.wait('@showHidden')
+
+		// check the attachment folder is not there
+		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+					.should('not.exist')
+			})
+
+		// move the file and check the attachment folder is still not there
+		cy.intercept({ method: 'MOVE', url: '**/test.md' }).as('move')
+		cy.moveFile('test.md', 'testMoved.md')
+		cy.wait('@move')
+
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload')
+		cy.reloadFileList()
+		cy.wait('@reload')
+
+		cy.get(`#fileList tr[data-file="testMoved.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+					.should('not.exist')
+			})
+
+		// copy the file and check the attachment folder was copied
+		cy.intercept({ method: 'COPY', url: '**/testMoved.md' }).as('copyFile')
+		cy.copyFile('testMoved.md', 'testCopied.md')
+		cy.wait('@copyFile')
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload2')
+		cy.reloadFileList()
+		cy.wait('@reload2')
+
+		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+			.should('exist')
+			.should('have.attr', 'data-id')
+			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
+				cy.openFile('.attachments.' + documentId)
+				cy.wait('@chdir')
+				cy.screenshot()
+				for (const name in attachmentFileNameToId) {
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+						.should('exist')
+						.should('have.attr', 'data-id')
+						// these are new copied attachment files
+						// so they should not have the same IDs than the ones created when uploading the images
+						.should('not.eq', String(attachmentFileNameToId[name]))
+				}
+			})
+	})
+
 	it('Delete the user', () => {
 		cy.nextcloudDeleteUser(randUser, 'password')
+		cy.nextcloudDeleteUser(randUser2, 'password')
 	})
 
 })
