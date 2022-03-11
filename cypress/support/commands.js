@@ -116,6 +116,27 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 		})
 })
 
+Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) => {
+	cy.clearCookies()
+	cy.request({
+		method: 'POST',
+		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
+		form: true,
+		body: {
+			path,
+			shareType: 0,
+			shareWith: targetUserId,
+		},
+		auth: { user: userId, pass: password },
+		headers: {
+			'OCS-ApiRequest': 'true',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	}).then(response => {
+		cy.log(`${userId} shared ${path} with ${targetUserId}`, response.status)
+	})
+})
+
 Cypress.Commands.add('createFolder', dirName => {
 	cy.window().then( win => {
 		win.OC.Files.getClient().createDirectory(dirName)
