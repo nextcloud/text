@@ -85,9 +85,7 @@ const waitForRequestAndCheckImage = (requestAlias) => {
 		const fileId = req.response.body.id
 		const fileName = req.response.body.name
 		const documentId = req.response.body.documentId
-		cy.wait(2000)
 		checkImage(documentId, fileName, fileId)
-		cy.wait(1000)
 		cy.screenshot()
 	})
 }
@@ -115,10 +113,10 @@ describe('Test all image insertion methods', () => {
 
 		cy.get('#app-settings-header', { timeout: 10000 })
 			.click()
-		cy.wait(2000)
+		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
 		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
 			.click()
-		cy.wait(2000)
+		cy.wait('@showHidden')
 	})
 
 	it('Insert an image from files', () => {
@@ -142,12 +140,10 @@ describe('Test all image insertion methods', () => {
 			const requestAlias = 'insertLinkRequest'
 			cy.intercept({ method: 'POST', url: '**/link' }).as(requestAlias)
 
-			cy.wait(2000)
 			cy.log('Type and validate')
 			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
-				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg')
-				.wait(2000)
-				.type('{enter}')
+				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg', { waitForAnimations: true })
+				.type('{enter}', { waitForAnimations: true })
 			// Clicking on the validation button is an alternative to typing {enter}
 			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
 
@@ -164,7 +160,6 @@ describe('Test all image insertion methods', () => {
 			const requestAlias = 'uploadRequest'
 			cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
 
-			cy.wait(2000)
 			cy.log('Upload the file through the input')
 			cy.get('.menubar input[type="file"]').attachFile('table.png')
 
@@ -176,14 +171,15 @@ describe('Test all image insertion methods', () => {
 		// check we stored the image names/ids
 		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(3)
 
-		cy.get(`#fileList tr[data-file="test.md"]`)
+		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
-				cy.wait(1000)
+				cy.wait('@chdir')
 				cy.screenshot()
 				for (const name in attachmentFileNameToId) {
-					cy.get(`#fileList tr[data-file="${name}"]`)
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						.should('eq', String(attachmentFileNameToId[name]))
@@ -192,22 +188,31 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is moved with the markdown file', () => {
+		cy.intercept({ method: 'MKCOL', url: '**/subFolder' }).as('mkdir')
 		cy.createFolder('subFolder')
-		cy.wait(2000)
-		cy.moveFile('test.md', 'subFolder/test.md')
-		cy.wait(2000)
-		cy.openFile('subFolder')
-		cy.wait(2000)
+		cy.wait('@mkdir')
 
-		cy.get(`#fileList tr[data-file="test.md"]`)
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload')
+		cy.reloadFileList()
+		cy.wait('@reload')
+
+		cy.intercept({ method: 'MOVE', url: '**/test.md' }).as('move')
+		cy.moveFile('test.md', 'subFolder/test.md')
+		cy.wait('@move')
+		cy.intercept({ method: 'PROPFIND', url: '**/subFolder' }).as('chdir')
+		cy.openFile('subFolder')
+		cy.wait('@chdir')
+
+		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
-				cy.wait(2000)
+				cy.wait('@chdir')
 				cy.screenshot()
 				for (const name in attachmentFileNameToId) {
-					cy.get(`#fileList tr[data-file="${name}"]`)
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						.should('eq', String(attachmentFileNameToId[name]))
@@ -216,20 +221,23 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
+		cy.intercept({ method: 'COPY', url: '**/subFolder/test.md' }).as('copyFile')
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
-		cy.wait(2000)
+		cy.wait('@copyFile')
+		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload2')
 		cy.reloadFileList()
-		cy.wait(2000)
+		cy.wait('@reload2')
 
-		cy.get(`#fileList tr[data-file="testCopied.md"]`)
+		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
-				cy.wait(2000)
+				cy.wait('@chdir')
 				cy.screenshot()
 				for (const name in attachmentFileNameToId) {
-					cy.get(`#fileList tr[data-file="${name}"]`)
+					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
@@ -240,14 +248,20 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
-		cy.get(`#fileList tr[data-file="testCopied.md"]`)
+		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				cy.intercept({ method: 'DELETE', url: '**/testCopied.md' }).as('deleteFile')
 				cy.deleteFile('testCopied.md')
+				cy.wait('@deleteFile')
+
+				cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload3')
 				cy.reloadFileList()
-				cy.wait(2000)
-				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`)
+				cy.wait('@reload3')
+
+				// cy.wait(2000)
+				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
 					.should('not.exist')
 			})
 	})
