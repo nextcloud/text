@@ -75,7 +75,7 @@
 		"prosemirror-state": "^1.3.4",
 		"prosemirror-transform": "^1.3.4",
 		"prosemirror-utils": "^1.0.0-0",
-		"prosemirror-view": "^1.23.7",
+		"prosemirror-view": "^1.23.9",
 		"proxy-polyfill": "^0.3.2",
 		"tippy.js": "^6.3.7",
 		"vue": "^2.6.14",
