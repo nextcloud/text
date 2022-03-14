@@ -11,4 +11,9 @@ export default TableRow.extend({
 		state.renderInline(node)
 	},
 
+	parseHTML() {
+		return [
+			{ tag: 'tr', priority: 80 },
+		]
+	},
 })

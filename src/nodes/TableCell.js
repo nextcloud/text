@@ -13,4 +13,12 @@ export default TableCell.extend({
 		state.write(' |')
 	},
 
+	parseHTML() {
+		return [
+			{ tag: 'td' },
+			{ tag: 'th' },
+			{ tag: 'table thead ~ tbody th', priority: 70 },
+			{ tag: 'table thead ~ tbody td', priority: 70 },
+		]
+	},
 })

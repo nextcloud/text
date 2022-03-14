@@ -39,12 +39,8 @@ export default Node.create({
 	},
 
 	addExtensions() {
-		return [tableHeadRow]
-	},
-
-	parseHTML() {
 		return [
-			{ tag: 'thead' },
+			tableHeadRow,
 		]
 	},
 

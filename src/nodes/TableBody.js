@@ -2,18 +2,12 @@ import { Node, mergeAttributes } from '@tiptap/core'
 
 export default Node.create({
 	name: 'tableBody',
-	content: 'tableRow',
+	content: 'tableRow*',
 
 	addOptions() {
 		return {
 			HTMLAttributes: {},
 		}
-	},
-
-	parseHTML() {
-		return [
-			{ tag: 'tbody' },
-		]
 	},
 
 	renderHTML({ HTMLAttributes }) {
