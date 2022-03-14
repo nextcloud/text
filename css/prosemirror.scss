@@ -252,6 +252,35 @@ div.ProseMirror {
 		}
 	}
 
+	// TODO: create new css variables to improve the theming capability.
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+		width: 100%;
+		table-layout: fixed;
+		white-space: normal; // force text to wrapping
+
+		td, th {
+			border: 1px solid var(--color-border);
+			color: var(--color-main-text);
+			padding: 0.5em 0.75em;
+			vertical-align: top;
+			max-width: 100%;
+		}
+		thead tr {
+			background-color: var(--color-background-darker);
+			th {
+				font-weight: bold;
+				border-color: var(--color-border-dark);
+			}
+		}
+		tbody tr {
+			background-color: var(--color-main-background);
+			&:hover, &:active, &:focus {
+				background-color: var(--color-background-dark);
+			}
+		}
+	}
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
