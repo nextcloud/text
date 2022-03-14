@@ -3,6 +3,7 @@ import { Node, mergeAttributes } from '@tiptap/core'
 const tableHeadRow = Node.create({
 	name: 'tableHeadRow',
 	content: 'tableHeader*',
+	tableRole: 'headRow',
 
 	addOptions() {
 		return {
@@ -31,6 +32,7 @@ const tableHeadRow = Node.create({
 export default Node.create({
 	name: 'tableHead',
 	content: 'tableHeadRow',
+	tableRole: 'head',
 
 	addOptions() {
 		return {
