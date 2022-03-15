@@ -42,7 +42,7 @@ class Document extends Entity implements \JsonSerializable {
 		$this->addType('initialVersion', 'integer');
 	}
 
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
 			'currentVersion' => $this->currentVersion,
