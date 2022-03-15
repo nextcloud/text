@@ -17,7 +17,7 @@ describe('Table', () => {
 	test('serialize from editor', () => {
 		const tiptap = editorWithContent(markdownit.render(input))
 		const serializer = createMarkdownSerializer(tiptap.schema)
-		expect(serializer.serialize(tiptap.state.doc)).toBe(input.replace(/\n$/, ''))
+		expect(serializer.serialize(tiptap.state.doc)).toBe(input)
 	})
 
 	test('handle html table with other structure', () => {

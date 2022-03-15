@@ -9,6 +9,7 @@ export default TableRow.extend({
 	toMarkdown(state, node) {
 		state.write('|')
 		state.renderInline(node)
+		state.ensureNewLine()
 	},
 
 	parseHTML() {

@@ -105,6 +105,7 @@ export default Table.extend({
 
 	toMarkdown(state, node) {
 		state.renderContent(node)
+		state.closeBlock(node)
 	},
 
 })
