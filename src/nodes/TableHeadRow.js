@@ -3,7 +3,7 @@ import { Node, mergeAttributes } from '@tiptap/core'
 export default Node.create({
 	name: 'tableHeadRow',
 	content: 'tableHeader*',
-	tableRole: 'headRow',
+	tableRole: 'row',
 
 	addOptions() {
 		return {

@@ -30,48 +30,27 @@ const tableCaption = Node.create({
 
 })
 
-function getTableNodeTypes(schema) {
-	if (schema.cached.tableNodeTypes) {
-		return schema.cached.tableNodeTypes
-	}
-
-	const roles = {}
-
-	Object.keys(schema.nodes).forEach(type => {
-		const nodeType = schema.nodes[type]
-
-		if (nodeType.spec.tableRole) {
-			roles[nodeType.spec.tableRole] = nodeType
-		}
-	})
-
-	schema.cached.tableNodeTypes = roles
-
-	return roles
-}
-
 function createTable(schema, rowsCount, colsCount, cellContent) {
-	const types = getTableNodeTypes(schema)
 	const headerCells = []
 	const cells = []
 	for (let index = 0; index < colsCount; index += 1) {
-		const cell = types.cell.createAndFill()
+		const cell = schema.nodes.tableCell.createAndFill()
 		if (cell) {
 			cells.push(cell)
 		}
-		const headerCell = types.header_cell.createAndFill()
+		const headerCell = schema.nodes.tableHeader.createAndFill()
 		if (headerCell) {
 			headerCells.push(headerCell)
 		}
 	}
-	const headRow = types.headRow.createChecked(null, headerCells)
+	const headRow = schema.nodes.tableHeadRow.createChecked(null, headerCells)
 	const rows = []
 	for (let index = 1; index < rowsCount; index += 1) {
-		rows.push(types.row.createChecked(null, cells))
+		rows.push(schema.nodes.tableRow.createChecked(null, cells))
 	}
-	const head = types.head.createChecked(null, headRow)
-	const body = types.body.createChecked(null, rows)
-	return types.table.createChecked(null, [head, body])
+	const head = schema.nodes.tableHead.createChecked(null, headRow)
+	const body = schema.nodes.tableBody.createChecked(null, rows)
+	return schema.nodes.table.createChecked(null, [head, body])
 }
 
 export default Table.extend({
