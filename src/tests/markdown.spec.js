@@ -2,6 +2,7 @@ import { createEditor } from './../EditorFactory';
 import { createMarkdownSerializer } from './../extensions/Markdown'
 import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
+import { typesAvailable } from './../markdownit/callouts'
 
 const markdownThroughEditor = (markdown) => {
 	const tiptap = createEditor({
@@ -117,6 +118,13 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('This is a [test] for escaping')).toBe('This is a [test] for escaping')
 		expect(markdownThroughEditor('This is a [test for escaping')).toBe('This is a [test for escaping')
 	})
+
+	test('callouts', () => {
+		typesAvailable.forEach(type => {
+			const entry = `::: ${type}\n!${type}!\n\njust do it\n\n:::`
+			expect(markdownThroughEditor(entry)).toBe(entry)
+		})
+	})
 })
 
 describe('Markdown serializer from html', () => {
@@ -135,5 +143,13 @@ describe('Markdown serializer from html', () => {
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
+	})
+
+	test('callouts', () => {
+		typesAvailable.forEach(type => {
+			expect(markdownThroughEditorHtml(
+				`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`
+			)).toBe(`::: ${type}\n!${type}!\n\njust do it\n\n:::`)
+		})
 	})
 })

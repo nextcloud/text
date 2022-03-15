@@ -20,7 +20,6 @@
  *
  */
 
-
 import { randHash } from '../utils/'
 const randUser = randHash()
 
@@ -57,7 +56,7 @@ describe('Workspace', function() {
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
-			['strike', 's']
+			['strike', 's'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
 				.click()
@@ -152,6 +151,68 @@ describe('Workspace', function() {
 		cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
 	})
 
+	describe('callouts', () => {
+		const types = ['info', 'warn', 'error', 'success']
+		it('create callouts', () => {
+			const workspace = openWorkspace()
+			workspace.type('Callout')
+
+			types.forEach(type => {
+				// enable callout
+				menuButton('info').click()
+				submenuButton(type).click()
+
+				// check if is active
+				menuButton(type).should('have.class', 'is-active')
+
+				// check content
+				cy.get(`.ProseMirror .callout.callout-${type}`)
+					.should('contain', 'Callout')
+
+				// disable
+				menuButton(type).click()
+				submenuButton(type).click()
+
+				// check if is inactive
+				menuButton('info').should('not.have.class', 'is-active')
+			})
+		})
+
+		it('toggle callouts', () => {
+			const workspace = openWorkspace()
+			workspace.type('Callout')
+
+			const [first, ...rest] = types
+
+			let last = first
+
+			// enable callout
+			menuButton('info').click()
+			submenuButton(first).click()
+
+			rest.forEach(type => {
+				// enable callout
+				menuButton(last).click()
+				submenuButton(type).click()
+
+				last = type
+
+				// check if is active
+				menuButton(type).should('have.class', 'is-active')
+
+				// check content
+				cy.get(`.ProseMirror .callout.callout-${type}`)
+					.should('contain', 'Callout')
+			})
+
+			// disable
+			menuButton(last).click()
+			submenuButton(last).click()
+
+			// check if is inactive
+			menuButton('info').should('not.have.class', 'is-active')
+		})
+	})
 })
 
 const menuButton = (name) => {

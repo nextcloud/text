@@ -168,6 +168,44 @@ export default [
 		},
 	},
 	{
+		label: t('text', 'Callouts'),
+		visible: false,
+		children: [
+			{
+				label: t('text', 'Info'),
+				class: 'icon-info',
+				isActive: ['callout', { type: 'info' }],
+				action: (command) => {
+					return command.toggleCallout({ type: 'info' })
+				},
+			},
+			{
+				label: t('text', 'Success'),
+				class: 'icon-success',
+				isActive: ['callout', { type: 'success' }],
+				action: (command) => {
+					return command.toggleCallout({ type: 'success' })
+				},
+			},
+			{
+				label: t('text', 'Warning'),
+				class: 'icon-warn',
+				isActive: ['callout', { type: 'warn' }],
+				action: (command) => {
+					return command.toggleCallout({ type: 'warn' })
+				},
+			},
+			{
+				label: t('text', 'Danger'),
+				class: 'icon-error',
+				isActive: ['callout', { type: 'error' }],
+				action: (command) => {
+					return command.toggleCallout({ type: 'error' })
+				},
+			},
+		],
+	},
+	{
 		label: t('text', 'Code block'),
 		class: 'icon-code',
 		isActive: 'codeBlock',
