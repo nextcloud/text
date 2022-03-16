@@ -31,7 +31,7 @@
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<img v-show="loaded"
-						:src="imageUrl"
+						:src="imgSrc"
 						class="image__main"
 						@load="onLoaded">
 				</transition>
@@ -75,6 +75,7 @@
 import path from 'path'
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import { getCurrentUser } from '@nextcloud/auth'
+import axios from '@nextcloud/axios'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
@@ -128,6 +129,7 @@ export default {
 			loaded: false,
 			failed: false,
 			showIcons: false,
+			imgSrc: null,
 		}
 	},
 	computed: {
@@ -149,6 +151,10 @@ export default {
 			}
 		},
 		imageUrl() {
+			this.setImageSrc(this.imageUrl2)
+			return this.imageUrl2
+		},
+		imageUrl2() {
 			if (this.src.startsWith('text://')) {
 				const documentId = this.currentSession?.documentId
 				const sessionId = this.currentSession?.id
@@ -297,6 +303,15 @@ export default {
 			this.$nextTick(() => {
 				this.editor.commands.scrollIntoView()
 			})
+		},
+		async setImageSrc(imageUrl) {
+			const file = await axios.get(imageUrl)
+			const mime = file.headers['content-type']
+			if (mime === 'image/svg+xml') {
+				this.imgSrc = `data:${mime};base64,${btoa(file.data)}`
+			} else {
+				this.imgSrc = imageUrl
+			}
 		},
 	},
 }

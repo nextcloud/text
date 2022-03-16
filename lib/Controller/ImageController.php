@@ -243,7 +243,7 @@ class ImageController extends Controller {
 				? new DataDisplayResponse(
 					$imageFile->getContent(),
 					Http::STATUS_OK,
-					['Content-Type' => $this->mimeTypeDetector->getSecureMimeType($imageFile->getMimeType())]
+					['Content-Type' => $this->getSecureMimeType($imageFile->getMimeType())]
 				)
 				: new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
@@ -263,5 +263,19 @@ class ImageController extends Controller {
 	private function getUserIdFromSession(int $documentId, int $sessionId, string $sessionToken): string {
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		return $session->getUserId();
+	}
+
+	/**
+	 * Allow all supported mimetypes
+	 * Use mimetype detector for the other ones
+	 *
+	 * @param string $mimetype
+	 * @return string
+	 */
+	private function getSecureMimeType(string $mimetype): string {
+		if (in_array($mimetype, self::IMAGE_MIME_TYPES)) {
+			return $mimetype;
+		}
+		return $this->mimeTypeDetector->getSecureMimeType($mimetype);
 	}
 }
