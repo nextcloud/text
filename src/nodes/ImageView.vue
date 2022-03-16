@@ -305,12 +305,15 @@ export default {
 			})
 		},
 		async setImageSrc(imageUrl) {
-			const file = await axios.get(imageUrl)
-			const mime = file.headers['content-type']
-			if (mime === 'image/svg+xml') {
-				this.imgSrc = `data:${mime};base64,${btoa(file.data)}`
-			} else {
-				this.imgSrc = imageUrl
+			const fileHead = await axios.head(imageUrl)
+			const mime = fileHead.headers['content-type']
+			if (imageMimes.includes(mime)) {
+				if (mime === 'image/svg+xml') {
+					const file = await axios.get(imageUrl)
+					this.imgSrc = `data:${mime};base64,${btoa(file.data)}`
+				} else {
+					this.imgSrc = imageUrl
+				}
 			}
 		},
 	},
