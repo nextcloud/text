@@ -151,10 +151,6 @@ export default {
 			}
 		},
 		imageUrl() {
-			this.setImageSrc(this.imageUrl2)
-			return this.imageUrl2
-		},
-		imageUrl2() {
 			if (this.src.startsWith('text://')) {
 				const documentId = this.currentSession?.documentId
 				const sessionId = this.currentSession?.id
@@ -283,16 +279,12 @@ export default {
 			this.loaded = true
 			return
 		}
-		const img = new Image()
-		img.onload = () => {
-			this.imageLoaded = true
+
+		if (this.isDataUrl) {
+			this.loadImage(this.imageUrl)
+		} else {
+			this.setImageSrc()
 		}
-		img.onerror = () => {
-			this.failed = true
-			this.imageLoaded = false
-			this.loaded = true
-		}
-		img.src = this.imageUrl
 	},
 	methods: {
 		updateAlt() {
@@ -304,17 +296,37 @@ export default {
 				this.editor.commands.scrollIntoView()
 			})
 		},
-		async setImageSrc(imageUrl) {
-			const fileHead = await axios.head(imageUrl)
-			const mime = fileHead.headers['content-type']
-			if (imageMimes.includes(mime)) {
-				if (mime === 'image/svg+xml') {
-					const file = await axios.get(imageUrl)
-					this.imgSrc = `data:${mime};base64,${btoa(file.data)}`
-				} else {
-					this.imgSrc = imageUrl
+		async setImageSrc() {
+			try {
+				const fileHead = await axios.head(this.imageUrl)
+				const mime = fileHead.headers['content-type']
+				if (imageMimes.includes(mime)) {
+					if (mime === 'image/svg+xml') {
+						const file = await axios.get(this.imageUrl)
+						this.loadImage(`data:${mime};base64,${btoa(file.data)}`)
+					} else {
+						this.loadImage(this.imageUrl)
+					}
 				}
+			} catch (error) {
+				console.error(error)
+				this.failed = true
+				this.imageLoaded = false
+				this.loaded = true
 			}
+		},
+		loadImage(src) {
+			const img = new Image()
+			img.onload = () => {
+				this.imgSrc = src
+				this.imageLoaded = true
+			}
+			img.onerror = () => {
+				this.failed = true
+				this.imageLoaded = false
+				this.loaded = true
+			}
+			img.src = src
 		},
 	},
 }
