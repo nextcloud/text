@@ -254,7 +254,6 @@ div.ProseMirror {
 
 	// TODO: create new css variables to improve the theming capability.
 	table {
-		border-collapse: collapse;
 		border-spacing: 0;
 		width: 100%;
 		table-layout: fixed;
@@ -262,14 +261,21 @@ div.ProseMirror {
 
 		td, th {
 			border: 1px solid var(--color-border);
+			border-left: 0;
 			color: var(--color-main-text);
 			padding: 0.5em 0.75em;
 			vertical-align: top;
 			max-width: 100%;
+			&:first-child {
+				border-left: 1px solid var(--color-border);
+			}
+		}
+		td {
+			border-top: 0;
 		}
 		th {
 				font-weight: bold;
-				border-color: var(--color-border-dark);
+				border-bottom-color: var(--color-border-dark);
 		}
 		tr {
 			background-color: var(--color-main-background);
@@ -277,7 +283,19 @@ div.ProseMirror {
 				background-color: var(--color-background-dark);
 			}
 		}
+
+		tr:first-child {
+			th:first-child { border-top-left-radius: var(--border-radius); }
+			th:last-child { border-top-right-radius: var(--border-radius); }
+		}
+
+		tr:last-child {
+			td:first-child { border-bottom-left-radius: var(--border-radius); }
+			td:last-child { border-bottom-right-radius: var(--border-radius); }
+		}
+
 	}
+
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
