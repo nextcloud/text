@@ -1,25 +1,8 @@
-import { Node, mergeAttributes } from '@tiptap/core'
+import TableRow from './TableRow'
 
-export default Node.create({
+export default TableRow.extend({
 	name: 'tableHeadRow',
 	content: 'tableHeader*',
-	tableRole: 'row',
-
-	addOptions() {
-		return {
-			HTMLAttributes: {},
-		}
-	},
-
-	parseHTML() {
-		return [
-			{ tag: 'tr' },
-		]
-	},
-
-	renderHTML({ HTMLAttributes }) {
-		return ['tr', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
-	},
 
 	toMarkdown(state, node) {
 		state.write('|')
@@ -33,4 +16,9 @@ export default Node.create({
 		state.ensureNewLine()
 	},
 
+	parseHTML() {
+		return [
+			{ tag: 'tr', priority: 70 },
+		]
+	},
 })

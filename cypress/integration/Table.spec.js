@@ -1,9 +1,8 @@
 import Table from './../../src/nodes/Table'
-import TableBody from './../../src/nodes/TableBody'
 import TableCell from './../../src/nodes/TableCell'
-import TableHead from './../../src/nodes/TableHead'
 import TableHeader from './../../src/nodes/TableHeader'
 import TableRow from './../../src/nodes/TableRow'
+import TableHeadRow from './../../src/nodes/TableHeadRow'
 import Markdown from './../../src/extensions/Markdown'
 import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
@@ -18,10 +17,9 @@ describe('ListItem extension integrated in the editor', () => {
 		extensions: [
 			Markdown,
 			Table,
-			TableBody,
 			TableCell,
-			TableHead,
 			TableHeader,
+			TableHeadRow,
 			TableRow,
 		],
 	})
@@ -53,8 +51,10 @@ describe('ListItem extension integrated in the editor', () => {
 			editor.commands.setTextSelection(found.pos)
 			editor.commands[name]()
 			const updated = findCommand()
-			editor.commands.setTextSelection(updated.pos)
-			editor.commands.insertContent('did ')
+			if (updated) {
+				editor.commands.setTextSelection(updated.pos)
+				editor.commands.insertContent('did ')
+			}
 		}
 	}
 
