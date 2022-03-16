@@ -1,6 +1,7 @@
 import { Table } from '@tiptap/extension-table'
 import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
+import { isInTable } from 'prosemirror-tables'
 
 /*
  * Markdown tables do not include captions.
@@ -73,6 +74,19 @@ export default Table.extend({
 				}
 				return true
 			},
+			// move to the next node after the table from the last cell
+			leaveTable: () => ({ tr, dispatch, editor }) => {
+				if (!isInTable(tr)) return false
+				const { $head, empty } = tr.selection
+				if (!empty) return false
+				// the selection can temporarily be inside the table but outside of cells.
+				const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
+				const next = tr.doc.resolve($head.after(tableDepth) + 1)
+				const selection = TextSelection.near(next)
+				const transaction = tr.setSelection(selection)
+				if (dispatch) dispatch(transaction.scrollIntoView())
+				return true
+			},
 		}
 	},
 
@@ -83,6 +97,13 @@ export default Table.extend({
 	toMarkdown(state, node) {
 		state.renderContent(node)
 		state.closeBlock(node)
+	},
+
+	addKeyboardShortcuts() {
+		return {
+			...this.parent(),
+			Tab: () => this.editor.commands.goToNextCell() || this.editor.commands.leaveTable(),
+		}
 	},
 
 })
