@@ -48,13 +48,11 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 	for (let index = 1; index < rowsCount; index += 1) {
 		rows.push(schema.nodes.tableRow.createChecked(null, cells))
 	}
-	const head = schema.nodes.tableHead.createChecked(null, headRow)
-	const body = schema.nodes.tableBody.createChecked(null, rows)
-	return schema.nodes.table.createChecked(null, [head, body])
+	return schema.nodes.table.createChecked(null, [headRow, ...rows])
 }
 
 export default Table.extend({
-	content: 'tableCaption? tableHead tableBody',
+	content: 'tableCaption? tableHeadRow tableRow*',
 
 	addExtensions() {
 		return [

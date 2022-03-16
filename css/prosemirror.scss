@@ -267,14 +267,11 @@ div.ProseMirror {
 			vertical-align: top;
 			max-width: 100%;
 		}
-		thead tr {
-			background-color: var(--color-background-darker);
-			th {
+		th {
 				font-weight: bold;
 				border-color: var(--color-border-dark);
-			}
 		}
-		tbody tr {
+		tr {
 			background-color: var(--color-main-background);
 			&:hover, &:active, &:focus {
 				background-color: var(--color-background-dark);
