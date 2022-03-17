@@ -31,7 +31,7 @@ use OCA\Text\UploadException;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\IMimeTypeDetector;
 use OCP\IL10N;
@@ -225,11 +225,11 @@ class ImageController extends Controller {
 	 * @param string $sessionToken
 	 * @param string $imageFileName
 	 * @param string|null $shareToken
-	 * @return DataDisplayResponse
+	 * @return DataDownloadResponse|DataResponse
 	 */
-	public function getImage(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null): DataDisplayResponse {
+	public function getImage(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null) {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataDisplayResponse('', Http::STATUS_FORBIDDEN);
+			return new DataResponse('', Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -240,15 +240,15 @@ class ImageController extends Controller {
 				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $userId);
 			}
 			return $imageFile !== null
-				? new DataDisplayResponse(
+				? new DataDownloadResponse(
 					$imageFile->getContent(),
 					Http::STATUS_OK,
-					['Content-Type' => $this->mimeTypeDetector->getSecureMimeType($imageFile->getMimeType())]
+					$this->getSecureMimeType($imageFile->getMimeType())
 				)
-				: new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+				: new DataResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
 			$this->logger->error('getImage error', ['exception' => $e]);
-			return new DataDisplayResponse('', Http::STATUS_NOT_FOUND);
+			return new DataResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}
 
@@ -263,5 +263,19 @@ class ImageController extends Controller {
 	private function getUserIdFromSession(int $documentId, int $sessionId, string $sessionToken): string {
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		return $session->getUserId();
+	}
+
+	/**
+	 * Allow all supported mimetypes
+	 * Use mimetype detector for the other ones
+	 *
+	 * @param string $mimetype
+	 * @return string
+	 */
+	private function getSecureMimeType(string $mimetype): string {
+		if (in_array($mimetype, self::IMAGE_MIME_TYPES)) {
+			return $mimetype;
+		}
+		return $this->mimeTypeDetector->getSecureMimeType($mimetype);
 	}
 }
