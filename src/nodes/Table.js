@@ -1,7 +1,7 @@
 import { Table } from '@tiptap/extension-table'
 import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
-import { isInTable } from 'prosemirror-tables'
+import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables'
 
 /*
  * Markdown tables do not include captions.
@@ -52,6 +52,25 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 	return schema.nodes.table.createChecked(null, [headRow, ...rows])
 }
 
+function findSameCellInNextRow($cell) {
+	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
+		return null
+	}
+	let cellStart = $cell.after()
+	const table = $cell.node(-1)
+	for (let row = $cell.indexAfter(-1); row < table.childCount; row++) {
+		const rowNode = table.child(row)
+		if (rowNode.childCount >= $cell.index()) {
+			for (let cell = 0; cell < $cell.index(); cell++) {
+				const cellNode = rowNode.child(cell)
+				cellStart += cellNode.nodeSize
+			}
+			return cellStart + 1
+		}
+		cellStart += rowNode.nodeSize
+	}
+}
+
 export default Table.extend({
 	content: 'tableCaption? tableHeadRow tableRow*',
 
@@ -81,10 +100,22 @@ export default Table.extend({
 				if (!empty) return false
 				// the selection can temporarily be inside the table but outside of cells.
 				const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
-				const next = tr.doc.resolve($head.after(tableDepth) + 1)
-				const selection = TextSelection.near(next)
-				const transaction = tr.setSelection(selection)
-				if (dispatch) dispatch(transaction.scrollIntoView())
+				if (dispatch) {
+					const $next = tr.doc.resolve($head.after(tableDepth) + 1)
+					const selection = TextSelection.near($next)
+					dispatch(tr.setSelection(selection).scrollIntoView())
+				}
+				return true
+			},
+			goToNextRow: () => ({ tr, dispatch, editor }) => {
+				if (!isInTable(tr)) return false
+				const cell = findSameCellInNextRow(selectionCell(tr))
+				if (cell == null) return
+				if (dispatch) {
+					const $cell = tr.doc.resolve(cell)
+					const selection = TextSelection.between($cell, moveCellForward($cell))
+					dispatch(tr.setSelection(selection).scrollIntoView())
+				}
 				return true
 			},
 		}
@@ -103,6 +134,21 @@ export default Table.extend({
 		return {
 			...this.parent(),
 			Tab: () => this.editor.commands.goToNextCell() || this.editor.commands.leaveTable(),
+			Enter: () => {
+				if (this.editor.commands.goToNextRow()) {
+					return true
+				}
+
+				if (!this.editor.can().addRowAfter()) {
+					return false
+				}
+
+				return this.editor
+					.chain()
+					.addRowAfter()
+					.goToNextRow()
+					.run()
+			},
 		}
 	},
 
