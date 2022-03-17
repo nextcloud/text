@@ -91,6 +91,11 @@ OC.L10N.register(
     "Heading 4" : "4. Başlık",
     "Heading 5" : "5. Başlık",
     "ToDo list" : "Yapılacaklar listesi",
+    "Callouts" : "Metin notları",
+    "Info" : "Bilgiler",
+    "Success" : "Başarılı",
+    "Warning" : "Uyarı",
+    "Danger" : "Tehlikeli",
     "Emoji picker" : "Emoji seçici"
 },
 "nplurals=2; plural=(n > 1);");
