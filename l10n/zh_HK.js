@@ -91,6 +91,11 @@ OC.L10N.register(
     "Heading 4" : "標題 4",
     "Heading 5" : "標題 5",
     "ToDo list" : "待辦清單",
+    "Callouts" : "標記",
+    "Info" : "資訊",
+    "Success" : "成功",
+    "Warning" : "警告",
+    "Danger" : "危險",
     "Emoji picker" : "Emoji 選擇器"
 },
 "nplurals=1; plural=0;");
