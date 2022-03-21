@@ -21,24 +21,24 @@
   -->
 
 <template>
-	<NodeViewWrapper as="th">
-		<div>
+	<NodeViewWrapper as="td">
+		<div class="container">
 			<NodeViewContent class="content" />
 			<Actions>
-				<ActionButton icon="icon-add_col_before"
+				<ActionButton icon="icon-add_row_before"
 					:close-after-click="true"
-					@click="addColumnBefore">
-					Add new column before this
+					@click="addRowBefore">
+					Add new row before this
 				</ActionButton>
-				<ActionButton icon="icon-add_col_after"
+				<ActionButton icon="icon-add_row_after"
 					:close-after-click="true"
-					@click="addColumnAfter">
-					Add new column after this
+					@click="addRowAfter">
+					Add new row after this
 				</ActionButton>
 				<ActionButton icon="icon-delete"
 					:close-after-click="true"
-					@click="deleteColumn">
-					Remove this column
+					@click="deleteRow">
+					Remove this row
 				</ActionButton>
 			</Actions>
 		</div>
@@ -51,7 +51,7 @@ import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 
 export default {
-	name: 'TableHeaderView',
+	name: 'TableCellView',
 	components: {
 		ActionButton,
 		Actions,
@@ -69,25 +69,25 @@ export default {
 		},
 	},
 	methods: {
-		deleteColumn() {
+		deleteRow() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.deleteColumn()
+				.deleteRow()
 				.run()
 		},
-		addColumnBefore() {
+		addRowBefore() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.addColumnBefore()
+				.addRowBefore()
 				.run()
 		},
-		addColumnAfter() {
+		addRowAfter() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.addColumnAfter()
+				.addRowAfter()
 				.run()
 		},
 	},
@@ -95,25 +95,41 @@ export default {
 </script>
 
 <style scoped lang="scss">
-th {
+td {
+	position: relative;
+
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		min-height: 36px;
+	}
 
 	.content {
-		float: left;
+		flex: 1 1 0;
 		margin: 0;
-		min-height: 44px;
-		padding-top: 0.75em;
 	}
 
 	.action-item {
-		float: right;
-		opacity: 50%;
+		position: absolute;
+		right: -48px;
+		flex: 0 1 auto;
+		display: none;
+		top: 2px;
 	}
 
-	&:hover, &:active, &:focus, &:focus-within {
+	&:last-child {
 		.action-item {
-			opacity: 100%;
+			display: block;
+			opacity: 50%;
+		}
+
+		&:hover, &:active, &:focus, &:focus-within {
+			.action-item {
+				opacity: 100%;
+			}
 		}
 	}
+
 }
 
 </style>

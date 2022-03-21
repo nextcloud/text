@@ -267,8 +267,6 @@ div.ProseMirror {
 		td, th {
 			border: 1px solid var(--color-border);
 			border-left: 0;
-			color: var(--color-main-text);
-			padding: 0.5em 0.75em;
 			vertical-align: top;
 			max-width: 100%;
 			&:first-child {
@@ -276,11 +274,15 @@ div.ProseMirror {
 			}
 		}
 		td {
+			padding: 0.5em 0.75em;
 			border-top: 0;
+			color: var(--color-main-text);
 		}
 		th {
-				font-weight: bold;
+				padding: 0 0 0.5em 0.75em;
+				font-weight: normal;
 				border-bottom-color: var(--color-border-dark);
+				color: var(--color-text-maxcontrast);
 		}
 		tr {
 			background-color: var(--color-main-background);
