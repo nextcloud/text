@@ -84,6 +84,7 @@ export default Table.extend({
 		return {
 			...this.parent(),
 			insertTable: () => ({ tr, dispatch, editor }) => {
+				if (isInTable(tr)) return false
 				const node = createTable(editor.schema, 3, 3, true)
 				if (dispatch) {
 					const offset = tr.selection.anchor + 1
