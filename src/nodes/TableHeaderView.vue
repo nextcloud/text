@@ -103,7 +103,6 @@ th {
 	.content {
 		float: left;
 		margin: 0;
-		min-height: 44px;
 		padding-top: 0.75em;
 	}
 
