@@ -150,6 +150,14 @@ describe('Markdown serializer from html', () => {
 			expect(markdownThroughEditorHtml(
 				`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`
 			)).toBe(`::: ${type}\n!${type}!\n\njust do it\n\n:::`)
+			expect(markdownThroughEditorHtml(
+				`<p class="callout ${type}">!${type}!</p>`
+			)).toBe(`::: ${type}\n!${type}!\n\n:::`)
 		})
+	})
+	test('callouts with handbook classes', () => {
+		expect(markdownThroughEditorHtml(
+			`<p class="callout warning">!warning!</p>`
+		)).toBe(`::: warn\n!warning!\n\n:::`)
 	})
 })

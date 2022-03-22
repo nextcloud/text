@@ -47,7 +47,11 @@ export default Node.create({
 			type: {
 				default: 'info',
 				rendered: false,
-				parseHTML: element => element.getAttribute('data-callout'),
+				parseHTML: element => {
+					return element.getAttribute('data-callout')
+						|| typesAvailable.find((type) => element.classList.contains(type))
+						|| (element.classList.contains('warning') && 'warn')
+				},
 				renderHTML: attributes => {
 					return {
 						'data-callout': attributes.type,
@@ -61,7 +65,11 @@ export default Node.create({
 	parseHTML() {
 		return [
 			{
-				tag: 'div',
+				tag: 'div.callout',
+			},
+			{
+				tag: 'p.callout',
+				priority: 1001,
 			},
 		]
 	},
