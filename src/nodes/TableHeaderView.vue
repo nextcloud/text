@@ -28,17 +28,17 @@
 				<ActionButton icon="icon-add_col_before"
 					:close-after-click="true"
 					@click="addColumnBefore">
-					Add new column before this
+					{{ t('text', 'Add column before') }}
 				</ActionButton>
 				<ActionButton icon="icon-add_col_after"
 					:close-after-click="true"
 					@click="addColumnAfter">
-					Add new column after this
+					{{ t('text', 'Add column after') }}
 				</ActionButton>
-				<ActionButton icon="icon-delete"
+				<ActionButton icon="icon-delete_col"
 					:close-after-click="true"
 					@click="deleteColumn">
-					Remove this column
+					{{ t('text', 'Delete this column') }}
 				</ActionButton>
 			</Actions>
 		</div>
@@ -67,6 +67,9 @@ export default {
 			type: Function,
 			required: true,
 		},
+	},
+	computed: {
+		t: () => window.t,
 	},
 	methods: {
 		deleteColumn() {

@@ -649,7 +649,6 @@ export default {
 		&:not(.show-color-annotations)::v-deep .author-annotation,
 		&:not(.show-color-annotations)::v-deep .image {
 			background-color: transparent !important;
-			color: var(--color-main-text) !important;
 		}
 
 		.ProseMirror {

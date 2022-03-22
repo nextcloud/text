@@ -28,17 +28,17 @@
 				<ActionButton icon="icon-add_row_before"
 					:close-after-click="true"
 					@click="addRowBefore">
-					Add new row before this
+					{{ t('text', 'Add row before') }}
 				</ActionButton>
 				<ActionButton icon="icon-add_row_after"
 					:close-after-click="true"
 					@click="addRowAfter">
-					Add new row after this
+					{{ t('text', 'Add row after') }}
 				</ActionButton>
-				<ActionButton icon="icon-delete"
+				<ActionButton icon="icon-delete_row"
 					:close-after-click="true"
 					@click="deleteRow">
-					Remove this row
+					{{ t('text', 'Delete this row') }}
 				</ActionButton>
 			</Actions>
 		</div>
@@ -67,6 +67,9 @@ export default {
 			type: Function,
 			required: true,
 		},
+	},
+	computed: {
+		t: () => window.t,
 	},
 	methods: {
 		deleteRow() {
