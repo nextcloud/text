@@ -35,7 +35,7 @@
 					@click="addRowAfter">
 					{{ t('text', 'Add row after') }}
 				</ActionButton>
-				<ActionButton icon="icon-delete_row"
+				<ActionButton icon="icon-delete"
 					:close-after-click="true"
 					@click="deleteRow">
 					{{ t('text', 'Delete this row') }}
@@ -110,6 +110,7 @@ td {
 	.content {
 		flex: 1 1 0;
 		margin: 0;
+		padding-top: 0.6em;
 	}
 
 	.action-item {

@@ -35,7 +35,7 @@
 					@click="addColumnAfter">
 					{{ t('text', 'Add column after') }}
 				</ActionButton>
-				<ActionButton icon="icon-delete_col"
+				<ActionButton icon="icon-delete"
 					:close-after-click="true"
 					@click="deleteColumn">
 					{{ t('text', 'Delete this column') }}
