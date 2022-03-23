@@ -113,6 +113,12 @@ class ApiService {
 			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			$content = null;
 		}
+
+		$isLocked = $this->documentService->lock($fileId);
+		if (!$isLocked) {
+			$readOnly = true;
+		}
+
 		return new DataResponse([
 			'document' => $document,
 			'session' => $session,
