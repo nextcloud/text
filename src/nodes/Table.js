@@ -2,6 +2,8 @@ import { Table } from '@tiptap/extension-table'
 import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
 import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import TableView from './TableView'
 
 /*
  * Markdown tables do not include captions.
@@ -151,6 +153,10 @@ export default Table.extend({
 					.run()
 			},
 		}
+	},
+
+	addNodeView() {
+		return VueNodeViewRenderer(TableView)
 	},
 
 })
