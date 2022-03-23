@@ -255,7 +255,7 @@ div.ProseMirror {
 	// TODO: create new css variables to improve the theming capability.
 	table {
 		border-spacing: 0;
-		width: 100%;
+		width: calc(100% - 50px);
 		table-layout: fixed;
 		white-space: normal; // force text to wrapping
 		margin-bottom: 1em;
@@ -287,7 +287,7 @@ div.ProseMirror {
 		tr {
 			background-color: var(--color-main-background);
 			&:hover, &:active, &:focus {
-				background-color: var(--color-background-dark);
+				background-color: var(--color-primary-light);
 			}
 		}
 
