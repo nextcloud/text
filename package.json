@@ -19,8 +19,8 @@
 		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
 		"stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css --fix",
-		"test": "NODE_ENV=test jest --passWithNoTests src/",
-		"test:coverage": "NODE_ENV=test jest --coverage src/"
+		"test": "NODE_ENV=test jest",
+		"test:coverage": "NODE_ENV=test jest --coverage"
 	},
 	"browserslist": [
 		"extends @nextcloud/browserslist-config"
@@ -119,7 +119,8 @@
 		},
 		"testPathIgnorePatterns": [
 			"<rootDir>/src/tests/fixtures/",
-			"<rootDir>/build"
+			"<rootDir>/build",
+			"<rootDir>/cypress"
 		],
 		"transform": {
 			"^.+\\.js$": "<rootDir>/node_modules/babel-jest",
