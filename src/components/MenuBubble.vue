@@ -69,6 +69,10 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { optimalPath } from './../helpers/files'
 import { loadState } from '@nextcloud/initial-state'
 
+// This is a rough estimate used for positioning the bubble.
+// The actual width depends on the language and the state of the bubble.
+const MAX_BUBBLE_WIDTH = 325
+
 export default {
 	name: 'MenuBubble',
 	components: {
@@ -102,21 +106,7 @@ export default {
 			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
-	computed: {
 
-		// Minimum left value for the bubble so that it stays inside the editor.
-		// the width of the menububble changes depending on its state
-		// during the bubblePosition calculation it has not been rendered yet.
-		// so we have to hard code the minimum.
-		minLeft() {
-			if (this.linkMenuIsActive || !this.editor.isActive.link()) {
-				return 150
-			} else {
-				return 225
-			}
-		},
-
-	},
 	methods: {
 		showLinkMenu(attrs) {
 			this.linkUrl = attrs.href
@@ -166,7 +156,8 @@ export default {
 			this.hideLinkMenu()
 		},
 		bubblePosition(menu) {
-			const left = Math.max(this.minLeft, menu.left)
+			const maxLeft = document.getElementById('editor').offsetWidth - MAX_BUBBLE_WIDTH
+			const left = Math.min(maxLeft, menu.left - (MAX_BUBBLE_WIDTH / 2))
 			const offset = this.contentWrapper?.scrollTop || 0
 			return {
 				top: `${menu.top + offset + 5}px`,
@@ -191,7 +182,6 @@ export default {
 		margin-left: 10px;
 		visibility: hidden;
 		opacity: 0;
-		transform: translateX(-50%);
 		transition: opacity 0.2s, visibility 0.2s;
 		height: 44px;
 
