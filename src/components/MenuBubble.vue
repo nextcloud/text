@@ -25,9 +25,8 @@
 		class="menububble"
 		:editor="editor"
 		@hide="hideLinkMenu">
-		<div class="menububble"
-			:class="{ 'is-active': menu.isActive }"
-			:style="bubblePosition(menu)">
+		<MenuBubbleContainer :menu="menu"
+			:class="{ 'is-active': menu.isActive }">
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
 				<input ref="linkInput"
 					v-model="linkUrl"
@@ -59,24 +58,22 @@
 					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
 			</template>
-		</div>
+		</MenuBubbleContainer>
 	</EditorMenuBubble>
 </template>
 
 <script>
 import { EditorMenuBubble } from 'tiptap'
+import MenuBubbleContainer from './MenuBubbleContainer'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { optimalPath } from './../helpers/files'
 import { loadState } from '@nextcloud/initial-state'
-
-// This is a rough estimate used for positioning the bubble.
-// The actual width depends on the language and the state of the bubble.
-const MAX_BUBBLE_WIDTH = 325
 
 export default {
 	name: 'MenuBubble',
 	components: {
 		EditorMenuBubble,
+		MenuBubbleContainer,
 	},
 	directives: {
 		tooltip: Tooltip,
@@ -99,6 +96,7 @@ export default {
 			default: '',
 		},
 	},
+
 	data: () => {
 		return {
 			linkUrl: null,
@@ -155,18 +153,10 @@ export default {
 			command({ href: url })
 			this.hideLinkMenu()
 		},
-		bubblePosition(menu) {
-			const maxLeft = document.getElementById('editor').offsetWidth - MAX_BUBBLE_WIDTH
-			const left = Math.min(maxLeft, menu.left - (MAX_BUBBLE_WIDTH / 2))
-			const offset = this.contentWrapper?.scrollTop || 0
-			return {
-				top: `${menu.top + offset + 5}px`,
-				left: `${left}px`,
-			}
-		},
 
 	},
 }
+
 </script>
 
 <style scoped lang="scss">
@@ -180,7 +170,6 @@ export default {
 		overflow: hidden;
 		padding: 0;
 		margin-bottom: -3px;
-		margin-left: 10px;
 		visibility: hidden;
 		opacity: 0;
 		transition: opacity 0.2s, visibility 0.2s;
