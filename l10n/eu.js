@@ -84,6 +84,9 @@ OC.L10N.register(
     "Heading 4" : "4. goiburua",
     "Heading 5" : "5. goiburua",
     "ToDo list" : "Egitekoen zerrenda",
+    "Info" : "Informazioa",
+    "Success" : "Arrakasta",
+    "Warning" : "Oharra",
     "Emoji picker" : " Emotikono-hautatzailea"
 },
 "nplurals=2; plural=(n != 1);");
