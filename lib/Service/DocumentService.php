@@ -412,7 +412,7 @@ class DocumentService {
 		// Workaround to always open files with edit permissions if multiple occurences of
 		// the same file id are in the user home, ideally we should also track the path of the file when opening
 		usort($files, function (Node $a, Node $b) {
-			return ($a->getPermissions() & Constants::PERMISSION_UPDATE) < ($b->getPermissions() & Constants::PERMISSION_UPDATE);
+			return ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE);
 		});
 
 		return array_shift($files);
