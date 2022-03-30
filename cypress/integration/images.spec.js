@@ -139,23 +139,6 @@ describe('Test all image insertion methods', () => {
 		})
 	})
 
-	it('Insert an image from a link', () => {
-		cy.openFile('test.md')
-		clickOnImageAction(ACTION_INSERT_FROM_LINK, (popoverId) => {
-			const requestAlias = 'insertLinkRequest'
-			cy.intercept({ method: 'POST', url: '**/link' }).as(requestAlias)
-
-			cy.log('Type and validate')
-			cy.get('div#' + popoverId + ' li:nth-child(3) input[type=text]')
-				.type('https://nextcloud.com/wp-content/themes/next/assets/img/headers/engineering-small.jpg', { waitForAnimations: true })
-				.type('{enter}', { waitForAnimations: true })
-			// Clicking on the validation button is an alternative to typing {enter}
-			// cy.get('div#' + popoverId + ' li:nth-child(3) form > label').click()
-
-			waitForRequestAndCheckImage(requestAlias)
-		})
-	})
-
 	it('Upload a local image', () => {
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
@@ -174,7 +157,7 @@ describe('Test all image insertion methods', () => {
 
 	it('test if image files are in the attachment folder', () => {
 		// check we stored the image names/ids
-		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(3)
+		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(2)
 
 		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
 			.should('have.attr', 'data-id')
