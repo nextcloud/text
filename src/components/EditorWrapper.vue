@@ -50,7 +50,7 @@
 					:is-public="isPublic"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded"
-					:uploading-image="nbUploadingImages > 0"
+					:uploading-image="uploadingImages"
 					@show-help="showHelp"
 					@image-insert="insertImagePath"
 					@image-upload="uploadImageFiles">
@@ -108,7 +108,7 @@ import { Step } from 'prosemirror-transform'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
-const imageMimes = [
+const IMAGE_MIMES = [
 	'image/png',
 	'image/jpeg',
 	'image/jpg',
@@ -200,7 +200,7 @@ export default {
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
-			nbUploadingImages: 0,
+			uploadingImages: false,
 			draggedOver: false,
 
 			saveStatusPolling: null,
@@ -571,37 +571,38 @@ export default {
 			this.draggedOver = false
 		},
 		uploadImageFiles(files) {
-			if (files) {
-				files.forEach((file) => {
-					this.uploadImageFile(file)
-				})
-			}
-		},
-		uploadImageFile(file) {
-			if (!imageMimes.includes(file.type)) {
-				showError(t('text', 'Image file format not supported'))
+			if (!files) {
 				return
 			}
+			this.uploadingImages = true
+			const uploadPromises = [...files].map((file) => {
+				return this.uploadImageFile(file)
+			})
+			Promise.all(uploadPromises).then((values) => {
+				this.uploadingImages = false
+			})
+		},
+		async uploadImageFile(file) {
+			if (!IMAGE_MIMES.includes(file.type)) {
+				showError(t('text', 'Image file format not supported'))
+			}
 
-			this.nbUploadingImages++
-			this.syncService.uploadImage(file).then((response) => {
+			return this.syncService.uploadImage(file).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.nbUploadingImages--
 			})
 		},
 		insertImagePath(imagePath) {
-			this.nbUploadingImages++
+			this.uploadingImages = true
 			this.syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
 			}).then(() => {
-				this.nbUploadingImages--
+				this.uploadingImages = false
 			})
 		},
 		insertAttachmentImage(name, fileId) {
