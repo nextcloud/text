@@ -1,3 +1,5 @@
+@use "sass:selector";
+
 /* Document rendering styles */
 div.ProseMirror {
 	margin-top: 44px;
@@ -252,7 +254,16 @@ div.ProseMirror {
 		}
 	}
 
-	// TODO: create new css variables to improve the theming capability.
+	// table variables
+	@at-root :root {
+		--table-color-border: var(--color-border);
+		--table-color-heading: var(--color-text-maxcontrast);
+		--table-color-heading-border: var(--color-border-dark);
+		--table-color-background: var(--color-main-background);
+		--table-color-background-hover: var(--color-primary-light);
+		--table-border-radius: var(--border-radius);
+	}
+
 	table {
 		border-spacing: 0;
 		width: calc(100% - 50px);
@@ -265,12 +276,12 @@ div.ProseMirror {
 
 
 		td, th {
-			border: 1px solid var(--color-border);
+			border: 1px solid var(--table-color-border);
 			border-left: 0;
 			vertical-align: top;
 			max-width: 100%;
 			&:first-child {
-				border-left: 1px solid var(--color-border);
+				border-left: 1px solid var(--table-color-border);
 			}
 		}
 		td {
@@ -281,24 +292,24 @@ div.ProseMirror {
 		th {
 				padding: 0 0 0 0.75em;
 				font-weight: normal;
-				border-bottom-color: var(--color-border-dark);
-				color: var(--color-text-maxcontrast);
+				border-bottom-color: var(--table-color-heading-border);
+				color: var(--table-color-heading);
 		}
 		tr {
-			background-color: var(--color-main-background);
+			background-color: var(--table-color-background);
 			&:hover, &:active, &:focus {
-				background-color: var(--color-primary-light);
+				background-color: var(--table-color-background-hover);
 			}
 		}
 
 		tr:first-child {
-			th:first-child { border-top-left-radius: var(--border-radius); }
-			th:last-child { border-top-right-radius: var(--border-radius); }
+			th:first-child { border-top-left-radius: var(--table-border-radius); }
+			th:last-child { border-top-right-radius: var(--table-border-radius); }
 		}
 
 		tr:last-child {
-			td:first-child { border-bottom-left-radius: var(--border-radius); }
-			td:last-child { border-bottom-right-radius: var(--border-radius); }
+			td:first-child { border-bottom-left-radius: var(--table-border-radius); }
+			td:last-child { border-bottom-right-radius: var(--table-border-radius); }
 		}
 
 	}
