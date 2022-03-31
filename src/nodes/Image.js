@@ -21,6 +21,7 @@
  */
 
 import TiptapImage from '@tiptap/extension-image'
+import { Plugin } from 'prosemirror-state'
 import ImageView from './ImageView'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
@@ -37,6 +38,29 @@ const Image = TiptapImage.extend({
 
 	addNodeView() {
 		return VueNodeViewRenderer(ImageView)
+	},
+
+	addProseMirrorPlugins() {
+		return [
+			new Plugin({
+				props: {
+					handlePaste: (view, event, slice) => {
+						// only prevent the paste if it contains files
+						if (event.clipboardData.files && event.clipboardData.files.length > 0) {
+							// let the editor wrapper catch this custom event
+							const customEvent = new CustomEvent('image-paste', {
+								bubbles: true,
+								detail: {
+									files: event.clipboardData.files,
+								},
+							})
+							event.target.dispatchEvent(customEvent)
+							return true
+						}
+					},
+				},
+			}),
+		]
 	},
 
 })

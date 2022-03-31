@@ -37,6 +37,7 @@
 			<div v-if="tiptap"
 				id="editor"
 				:class="{ draggedOver }"
+				@image-paste="onPaste"
 				@dragover.prevent.stop="draggedOver = true"
 				@dragleave.prevent.stop="draggedOver = false"
 				@drop.prevent.stop="onEditorDrop">
@@ -565,6 +566,9 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+		onPaste(e) {
+			this.uploadImageFiles(e.detail.files)
 		},
 		onEditorDrop(e) {
 			this.uploadImageFiles(e.dataTransfer.files)
