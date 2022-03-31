@@ -585,6 +585,7 @@ export default {
 		async uploadImageFile(file) {
 			if (!IMAGE_MIMES.includes(file.type)) {
 				showError(t('text', 'Image file format not supported'))
+				return
 			}
 
 			return this.syncService.uploadImage(file).then((response) => {

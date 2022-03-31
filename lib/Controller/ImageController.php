@@ -107,40 +107,14 @@ class ImageController extends Controller {
 
 		try {
 			$insertResult = $this->imageService->insertImageFile($documentId, $imagePath, $userId);
-			return new DataResponse($insertResult);
+			if (isset($insertResult['error'])) {
+				return new DataResponse($insertResult, Http::STATUS_BAD_REQUEST);
+			} else {
+				return new DataResponse($insertResult);
+			}
 		} catch (Exception $e) {
 			$this->logger->error('File insertion error', ['exception' => $e]);
 			return new DataResponse(['error' => 'File insertion error'], Http::STATUS_BAD_REQUEST);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 *
-	 * @param string $link
-	 * @param int $documentId
-	 * @param int $sessionId
-	 * @param string $sessionToken
-	 * @param string|null $shareToken
-	 * @return DataResponse
-	 */
-	public function insertImageLink(string $link, int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], Http::STATUS_FORBIDDEN);
-		}
-
-		try {
-			if ($shareToken) {
-				$downloadResult = $this->imageService->insertImageLinkPublic($documentId, $link, $shareToken);
-			} else {
-				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$downloadResult = $this->imageService->insertImageLink($documentId, $link, $userId);
-			}
-			return new DataResponse($downloadResult);
-		} catch (Exception $e) {
-			$this->logger->error('Link insertion error', ['exception' => $e]);
-			return new DataResponse(['error' => 'Link insertion error'], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -176,7 +150,11 @@ class ImageController extends Controller {
 					$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileResource, $userId);
 				}
-				return new DataResponse($uploadResult);
+				if (isset($insertResult['error'])) {
+					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
+				} else {
+					return new DataResponse($uploadResult);
+				}
 			}
 			return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
 		} catch (Exception $e) {
