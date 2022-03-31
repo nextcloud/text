@@ -2,6 +2,6 @@
   "baseUrl": "https://localhost:8081/index.php/",
   "projectId": "hx9gqy",
   "viewportWidth": 1280,
-  "viewportHeight": 720,
+  "viewportHeight": 900,
   "experimentalSessionSupport": true
 }

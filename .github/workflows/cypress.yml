@@ -81,6 +81,7 @@ jobs:
           mkdir data
           php occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
           php occ config:system:set memcache.local --value="\\OC\\Memcache\\APCu"
+          php occ config:system:set debug --value=true --type=boolean
           php -f index.php
           php -S 0.0.0.0:8081 &
           export OC_PASS=1234561
@@ -110,4 +111,12 @@ jobs:
         with:
           name: Upload screenshots
           path: apps/${{ env.APP_NAME }}/cypress/screenshots/
+          retention-days: 5
+
+      - name: Upload nextcloud logs
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: Upload nextcloud log
+          path: data/nextcloud.log
           retention-days: 5
