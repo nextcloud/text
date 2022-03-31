@@ -1,3 +1,5 @@
+@use "sass:selector";
+
 /* Document rendering styles */
 div.ProseMirror {
 	margin-top: 44px;
@@ -250,6 +252,66 @@ div.ProseMirror {
 			--callout-border: var(--color-success);
 			--callout-icon: var(--icon-text-success-000);
 		}
+	}
+
+	// table variables
+	@at-root :root {
+		--table-color-border: var(--color-border);
+		--table-color-heading: var(--color-text-maxcontrast);
+		--table-color-heading-border: var(--color-border-dark);
+		--table-color-background: var(--color-main-background);
+		--table-color-background-hover: var(--color-primary-light);
+		--table-border-radius: var(--border-radius);
+	}
+
+	table {
+		border-spacing: 0;
+		width: calc(100% - 50px);
+		table-layout: fixed;
+		white-space: normal; // force text to wrapping
+		margin-bottom: 1em;
+		+ & {
+			margin-top: 1em;
+		}
+
+
+		td, th {
+			border: 1px solid var(--table-color-border);
+			border-left: 0;
+			vertical-align: top;
+			max-width: 100%;
+			&:first-child {
+				border-left: 1px solid var(--table-color-border);
+			}
+		}
+		td {
+			padding: 0.5em 0.75em;
+			border-top: 0;
+			color: var(--color-main-text);
+		}
+		th {
+				padding: 0 0 0 0.75em;
+				font-weight: normal;
+				border-bottom-color: var(--table-color-heading-border);
+				color: var(--table-color-heading);
+		}
+		tr {
+			background-color: var(--table-color-background);
+			&:hover, &:active, &:focus {
+				background-color: var(--table-color-background-hover);
+			}
+		}
+
+		tr:first-child {
+			th:first-child { border-top-left-radius: var(--table-border-radius); }
+			th:last-child { border-top-right-radius: var(--table-border-radius); }
+		}
+
+		tr:last-child {
+			td:first-child { border-bottom-left-radius: var(--table-border-radius); }
+			td:last-child { border-bottom-right-radius: var(--table-border-radius); }
+		}
+
 	}
 
 }

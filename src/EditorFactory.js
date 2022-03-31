@@ -32,6 +32,11 @@ import ListItem from '@tiptap/extension-list-item'
 import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import Table from './nodes/Table'
+import TableCell from './nodes/TableCell'
+import TableHeader from './nodes/TableHeader'
+import TableHeadRow from './nodes/TableHeadRow'
+import TableRow from './nodes/TableRow'
 /* eslint-enable import/no-named-as-default */
 
 import { Editor } from '@tiptap/core'
@@ -88,6 +93,11 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			HorizontalRule,
 			OrderedList,
 			ListItem,
+			Table,
+			TableCell,
+			TableHeader,
+			TableHeadRow,
+			TableRow,
 			TaskList,
 			TaskItem,
 			Callout,

@@ -213,6 +213,22 @@ describe('Workspace', function() {
 			menuButton('info').should('not.have.class', 'is-active')
 		})
 	})
+
+	it('inserts and removes a table', function() {
+		openWorkspace()
+			.type('Let\'s insert a Table')
+		toggleMoreActions()
+		popoverButton('table')
+			.click()
+		cy.get(`.ProseMirror`).type('content')
+		cy.get(`.ProseMirror table tr:first-child th:first-child`)
+			.should('contain', 'content')
+		cy.get(`.ProseMirror .table-settings`).click()
+		popoverButton('delete').click()
+		cy.get(`.ProseMirror`)
+			.should('not.contain', 'content')
+	})
+
 })
 
 const menuButton = (name) => {
@@ -221,6 +237,14 @@ const menuButton = (name) => {
 
 const submenuButton = (name) => {
 	return cy.get(`#editor button .icon-${name}`)
+}
+
+const popoverButton = (name) => {
+	return cy.get(`.popover button .icon-${name}`)
+}
+
+const toggleMoreActions = () => {
+	cy.get('.menubar .action-item__menutoggle--default-icon').click()
 }
 
 const menuBubbleButton = submenuButton

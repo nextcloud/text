@@ -214,6 +214,14 @@ export default [
 		},
 	},
 	{
+		label: t('text', 'Table'),
+		class: 'icon-table',
+		isActive: 'table',
+		action: (command) => {
+			return command.insertTable()
+		},
+	},
+	{
 		label: t('text', 'Emoji picker'),
 		class: 'icon-emoji',
 		action: (command, emojiObject) => {
