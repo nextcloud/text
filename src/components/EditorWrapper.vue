@@ -52,11 +52,11 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
+				<MenuBubble v-if="!readOnly && isRichEditor"
+					:editor="tiptap"
+					:content-wrapper="contentWrapper"
+					:file-path="relativePath" />
 				<div ref="contentWrapper" class="content-wrapper">
-					<MenuBubble v-if="!readOnly && isRichEditor"
-						:editor="tiptap"
-						:content-wrapper="contentWrapper"
-						:file-path="relativePath" />
 					<EditorContent v-show="initialLoading"
 						class="editor__content"
 						:editor="tiptap" />
@@ -110,6 +110,11 @@ export default {
 		isMobile,
 		store,
 	],
+	provide() {
+		return {
+			editorInfo: this.editorInfo,
+		}
+	},
 	props: {
 		initialSession: {
 			type: Object,
@@ -173,6 +178,7 @@ export default {
 
 			saveStatusPolling: null,
 			contentWrapper: null,
+			editorInfo: { width: 640 },
 		}
 	},
 	computed: {
@@ -237,7 +243,11 @@ export default {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
 		},
+		initialLoading() {
+			this.updateEditorWidth()
+		},
 	},
+
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
@@ -248,9 +258,11 @@ export default {
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
+		window.addEventListener('resize', this.updateEditorWidth)
 	},
 	beforeDestroy() {
 		this.close()
+		window.removeEventListener('resize', this.updateEditorWidth)
 	},
 	methods: {
 		async close() {
@@ -514,7 +526,14 @@ export default {
 				}
 			}
 		},
+
+		updateEditorWidth() {
+			if (this.$el) {
+				this.editorInfo.width = this.$el.offsetWidth
+			}
+		},
 	},
+
 }
 </script>
 
