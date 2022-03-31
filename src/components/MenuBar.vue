@@ -49,20 +49,20 @@
 					@open="toggleChildMenu(icon)"
 					@close="toggleChildMenu(icon)">
 					<button slot="icon"
-						:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
+						:class="{ 'icon-image': true, 'loading-small': uploadingImages }"
 						:title="icon.label"
 						:aria-label="icon.label"
 						:aria-haspopup="true" />
 					<ActionButton icon="icon-upload"
 						:close-after-click="true"
-						:disabled="uploadingImage"
+						:disabled="uploadingImages"
 						@click="onUploadImage()">
 						{{ t('text', 'Upload from computer') }}
 					</ActionButton>
 					<ActionButton v-if="!isPublic"
 						icon="icon-folder"
 						:close-after-click="true"
-						:disabled="uploadingImage"
+						:disabled="uploadingImages"
 						@click="showImagePrompt()">
 						{{ t('text', 'Insert from Files') }}
 					</ActionButton>
@@ -176,7 +176,7 @@ export default {
 			required: false,
 			default: 0,
 		},
-		uploadingImage: {
+		uploadingImages: {
 			type: Boolean,
 			default: false,
 		},

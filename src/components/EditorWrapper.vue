@@ -51,7 +51,7 @@
 					:is-public="isPublic"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded"
-					:uploading-image="uploadingImages"
+					:uploading-images="uploadingImages"
 					@show-help="showHelp"
 					@image-insert="insertImagePath"
 					@image-upload="uploadImageFiles">

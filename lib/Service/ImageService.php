@@ -45,7 +45,6 @@ use OCP\Http\Client\IClientService;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\Share\IManager as ShareManager;
-use function preg_replace;
 
 class ImageService {
 
