@@ -34,7 +34,13 @@
 			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div v-if="tiptap" id="editor">
+			<div v-if="tiptap"
+				id="editor"
+				:class="{ draggedOver }"
+				@image-paste="onPaste"
+				@dragover.prevent.stop="draggedOver = true"
+				@dragleave.prevent.stop="draggedOver = false"
+				@drop.prevent.stop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:editor="tiptap"
@@ -45,7 +51,10 @@
 					:is-public="isPublic"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded"
-					@show-help="showHelp">
+					:uploading-images="uploadingImages"
+					@show-help="showHelp"
+					@image-insert="insertImagePath"
+					@image-upload="uploadImageFiles">
 					<div id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -81,6 +90,7 @@
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
+import { showError } from '@nextcloud/dialogs'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -98,6 +108,18 @@ import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 
 const EDITOR_PUSH_DEBOUNCE = 200
+
+const IMAGE_MIMES = [
+	'image/png',
+	'image/jpeg',
+	'image/jpg',
+	'image/gif',
+	'image/x-xbitmap',
+	'image/x-ms-bmp',
+	'image/bmp',
+	'image/svg+xml',
+	'image/webp',
+]
 
 export default {
 	name: 'EditorWrapper',
@@ -179,6 +201,8 @@ export default {
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
+			uploadingImages: false,
+			draggedOver: false,
 
 			saveStatusPolling: null,
 			displayHelp: false,
@@ -543,6 +567,56 @@ export default {
 		hideHelp() {
 			this.displayHelp = false
 		},
+		onPaste(e) {
+			this.uploadImageFiles(e.detail.files)
+		},
+		onEditorDrop(e) {
+			this.uploadImageFiles(e.dataTransfer.files)
+			this.draggedOver = false
+		},
+		uploadImageFiles(files) {
+			if (!files) {
+				return
+			}
+			this.uploadingImages = true
+			const uploadPromises = [...files].map((file) => {
+				return this.uploadImageFile(file)
+			})
+			Promise.all(uploadPromises).then((values) => {
+				this.uploadingImages = false
+			})
+		},
+		async uploadImageFile(file) {
+			if (!IMAGE_MIMES.includes(file.type)) {
+				showError(t('text', 'Image file format not supported'))
+				return
+			}
+
+			return this.syncService.uploadImage(file).then((response) => {
+				this.insertAttachmentImage(response.data?.name, response.data?.id)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			})
+		},
+		insertImagePath(imagePath) {
+			this.uploadingImages = true
+			this.syncService.insertImageFile(imagePath).then((response) => {
+				this.insertAttachmentImage(response.data?.name, response.data?.id)
+			}).catch((error) => {
+				console.error(error)
+				showError(error?.response?.data?.error)
+			}).then(() => {
+				this.uploadingImages = false
+			})
+		},
+		insertAttachmentImage(name, fileId) {
+			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
+			// simply get rid of brackets to make sure link text is valid
+			// as it does not need to be unique and matching the real file name
+			const alt = name.replaceAll(/[[\]]/g, '')
+			this.tiptap.chain().setImage({ src, alt }).focus().run()
+		},
 	},
 }
 </script>
@@ -778,6 +852,9 @@ export default {
 
 		// relative position for the alignment of the menububble
 		#editor {
+			&.draggedOver {
+				background-color: var(--color-primary-light);
+			}
 			.content-wrapper {
 				position: relative;
 			}

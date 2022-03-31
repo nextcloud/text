@@ -45,7 +45,6 @@ use OCP\Http\Client\IClientService;
 use OCP\Files\IRootFolder;
 use Psr\Log\LoggerInterface;
 use OCP\Share\IManager as ShareManager;
-use function preg_replace;
 
 class ImageService {
 
@@ -238,50 +237,6 @@ class ImageService {
 	}
 
 	/**
-	 * Download and save an image from a link in the attachment folder
-	 *
-	 * @param int $documentId
-	 * @param string $link
-	 * @param string $userId
-	 * @return array
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Lock\LockedException
-	 * @throws \OC\User\NoUserException
-	 */
-	public function insertImageLink(int $documentId, string $link, string $userId): array {
-		$textFile = $this->getTextFile($documentId, $userId);
-		if (!$textFile->isUpdateable()) {
-			throw new NotPermittedException('No write permissions');
-		}
-		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		return $this->downloadLink($saveDir, $link, $textFile);
-	}
-
-	/**
-	 * Download and save an image from a link in the attachment folder in a public context
-	 *
-	 * @param int|null $documentId
-	 * @param string $link
-	 * @param string $shareToken
-	 * @return array|string[]
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Lock\LockedException
-	 * @throws \OC\User\NoUserException
-	 */
-	public function insertImageLinkPublic(?int $documentId, string $link, string $shareToken): array {
-		if (!$this->hasUpdatePermissions($shareToken)) {
-			throw new NotPermittedException('No write permissions');
-		}
-		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		return $this->downloadLink($saveDir, $link, $textFile);
-	}
-
-	/**
 	 * Check if the shared access has write permissions
 	 *
 	 * @param string $shareToken
@@ -299,62 +254,6 @@ class ImageService {
 				&& $share->getPermissions() & Constants::PERMISSION_UPDATE);
 		} catch (ShareNotFound $e) {
 			return false;
-		}
-	}
-
-	/**
-	 * Download an image from a link and place it in a given folder
-	 * @param Folder $saveDir
-	 * @param string $link
-	 * @param File $textFile
-	 * @return array
-	 * @throws NotFoundException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
-	 * @throws \OCP\Lock\LockedException
-	 */
-	private function downloadLink(Folder $saveDir, string $link, File $textFile): array {
-		$fileName = (string) time();
-		$savedFile = $saveDir->newFile($fileName);
-		$resource = $savedFile->fopen('wb');
-		$res = $this->simpleDownload($link, $resource);
-		if (is_resource($resource)) {
-			fclose($resource);
-		}
-		$savedFile->touch();
-		if (isset($res['Content-Type'])) {
-			if (in_array($res['Content-Type'], ImageController::IMAGE_MIME_TYPES, true)) {
-				if ($res['Content-Type'] === 'image/jpeg') {
-					$fileName .= '.jpg';
-				} elseif ($res['Content-Type'] === 'image/x-xbitmap' || $res['Content-Type'] === 'image/x-ms-bmp') {
-					$fileName .= '.bmp';
-				} elseif ($res['Content-Type'] === 'image/svg+xml') {
-					$fileName .= '.svg';
-				} else {
-					$ext = preg_replace('/^image\//i', '', $res['Content-Type']);
-					$fileName .= '.' . $ext;
-				}
-				$targetPath = $saveDir->getPath() . '/' . $fileName;
-				$savedFile->move($targetPath);
-				// get file type and name
-				return [
-					'name' => $fileName,
-					'id' => $savedFile->getId(),
-					'documentId' => $textFile->getId(),
-				];
-			}
-			$savedFile->delete();
-			return [
-				'error' => 'Unsupported file type',
-			];
-		} elseif (isset($res['error'])) {
-			$savedFile->delete();
-			return $res;
-		} else {
-			$savedFile->delete();
-			return [
-				'error' => 'Link download error',
-			];
 		}
 	}
 

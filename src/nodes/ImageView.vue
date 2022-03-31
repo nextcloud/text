@@ -318,6 +318,7 @@ export default {
 			max-width: 80%;
 			border: none;
 			text-align: center;
+			background-color: transparent;
 		}
 	}
 

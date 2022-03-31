@@ -27,6 +27,7 @@
 			accept="image/*"
 			aria-hidden="true"
 			class="hidden-visually"
+			:multiple="true"
 			@change="onImageUploadFilePicked">
 		<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 			<template v-for="(icon, $index) in allIcons">
@@ -46,39 +47,25 @@
 					class="submenu"
 					:default-icon="'icon-image'"
 					@open="toggleChildMenu(icon)"
-					@close="onImageActionClose; toggleChildMenu(icon)">
+					@close="toggleChildMenu(icon)">
 					<button slot="icon"
-						:class="{ 'icon-image': true, 'loading-small': uploadingImage }"
+						:class="{ 'icon-image': true, 'loading-small': uploadingImages }"
 						:title="icon.label"
 						:aria-label="icon.label"
 						:aria-haspopup="true" />
 					<ActionButton icon="icon-upload"
 						:close-after-click="true"
-						:disabled="uploadingImage"
+						:disabled="uploadingImages"
 						@click="onUploadImage()">
 						{{ t('text', 'Upload from computer') }}
 					</ActionButton>
 					<ActionButton v-if="!isPublic"
 						icon="icon-folder"
 						:close-after-click="true"
-						:disabled="uploadingImage"
+						:disabled="uploadingImages"
 						@click="showImagePrompt()">
 						{{ t('text', 'Insert from Files') }}
 					</ActionButton>
-					<ActionButton v-if="!showImageLinkPrompt"
-						icon="icon-link"
-						:close-after-click="false"
-						:disabled="uploadingImage"
-						@click="showImageLinkPrompt = true">
-						{{ t('text', 'Insert from link') }}
-					</ActionButton>
-					<ActionInput v-else
-						icon="icon-link"
-						:value="imageLink"
-						@update:value="onImageLinkUpdateValue"
-						@submit="onImageLinkSubmit()">
-						{{ t('text', 'Image link to insert') }}
-					</ActionInput>
 				</Actions>
 				<button v-else-if="icon.class"
 					v-show="$index < iconCount"
@@ -137,30 +124,15 @@ import isMobile from './../mixins/isMobile'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
-import { showError } from '@nextcloud/dialogs'
-
-const imageMimes = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-	'image/x-xbitmap',
-	'image/x-ms-bmp',
-	'image/bmp',
-	'image/svg+xml',
-	'image/webp',
-]
 
 export default {
 	name: 'MenuBar',
 	components: {
 		ActionButton,
-		ActionInput,
 		PopoverMenu,
 		Actions,
 		EmojiPicker,
@@ -204,6 +176,10 @@ export default {
 			required: false,
 			default: 0,
 		},
+		uploadingImages: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data: () => {
 		return {
@@ -212,9 +188,6 @@ export default {
 			forceRecompute: 0,
 			submenuVisibility: {},
 			lastImagePath: null,
-			showImageLinkPrompt: false,
-			uploadingImage: false,
-			imageLink: '',
 			icons: [...menuBarIcons],
 		}
 	},
@@ -353,85 +326,23 @@ export default {
 				this.refocus()
 			}
 		},
-		onImageActionClose() {
-			this.showImageLinkPrompt = false
-		},
 		onUploadImage() {
 			this.$refs.imageFileInput.click()
 		},
 		onImageUploadFilePicked(event) {
-			this.uploadingImage = true
-			const files = event.target.files
-			const image = files[0]
-			if (!imageMimes.includes(image.type)) {
-				showError(t('text', 'Image format not supported'))
-				this.uploadingImage = false
-				return
-			}
-
+			this.$emit('image-upload', event.target.files)
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
 			event.target.value = ''
-
-			this.syncService.uploadImage(image).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.uploadingImage = false
-			})
-		},
-		onImageLinkUpdateValue(newImageLink) {
-			// this avoids the input being reset on each file polling
-			this.imageLink = newImageLink
-		},
-		onImageLinkSubmit() {
-			if (!this.imageLink) {
-				return
-			}
-			this.uploadingImage = true
-			this.showImageLinkPrompt = false
-			this.$refs.imageActions[0].closeMenu()
-
-			this.syncService.insertImageLink(this.imageLink).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.uploadingImage = false
-				this.imageLink = ''
-			})
-		},
-		onImagePathSubmit(imagePath) {
-			this.uploadingImage = true
-			this.$refs.imageActions[0].closeMenu()
-
-			this.syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.uploadingImage = false
-			})
 		},
 		showImagePrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
-			OC.dialogs.filepicker(t('text', 'Insert an image'), (file) => {
-				this.onImagePathSubmit(file)
+			OC.dialogs.filepicker(t('text', 'Insert an image'), (filePath) => {
+				this.$emit('image-insert', filePath)
 			}, false, [], true, undefined, this.imagePath)
-		},
-		insertAttachmentImage(name, fileId) {
-			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
-			// simply get rid of brackets to make sure link text is valid
-			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
-			this.editor.chain().setImage({ src, alt }).focus().run()
 		},
 		optimalPathTo(targetFile) {
 			const absolutePath = targetFile.split('/')
