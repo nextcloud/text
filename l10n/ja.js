@@ -38,7 +38,6 @@ OC.L10N.register(
     "Insert emoji" : "絵文字を挿入",
     "Upload from computer" : "コンピュータからアップロード",
     "Insert image" : "画像の挿入",
-    "Image format not supported" : "画像の形式に対応していません",
     "Insert an image" : "画像を追加",
     "Alt" : "Alt",
     "Add Link" : "リンクを追加",
