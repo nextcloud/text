@@ -25,6 +25,7 @@
     "Saved" : "Uloženo",
     "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
     "Unsaved changes" : "Neuložené změny",
+    "Image file format not supported" : "Nepodporovaný souborový formát obrázku",
     "No emoji found" : "Nenalezena žádná emotikona",
     "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Edit guest name" : "Upravit jméno hosta",
@@ -75,6 +76,13 @@
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
+    "Add row before" : "Přidat řádek před",
+    "Add row after" : "Předat řádek za",
+    "Delete this row" : "Smazat tento řádek",
+    "Add column before" : "Přidat sloupec před",
+    "Add column after" : "Přidat sloupec za",
+    "Delete this column" : "Smazat tento sloupec",
+    "Delete this table" : "Smazat tuto tabulku",
     "Show rich workspaces" : "Zobrazit rich workspaces",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Edit" : "Upravit",
@@ -91,6 +99,7 @@
     "Success" : "Úspěch",
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
+    "Table" : "Tabulka",
     "Emoji picker" : "Volba emotikony"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
