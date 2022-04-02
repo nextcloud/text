@@ -25,6 +25,7 @@
     "Saved" : "Zapisano",
     "Last saved {lastSaved}" : "Ostatnio zapisane {lastSaved}",
     "Unsaved changes" : "Niezapisane zmiany",
+    "Image file format not supported" : "Format pliku obrazu nie jest obsługiwany",
     "No emoji found" : "Nie znaleziono emoji",
     "Enter your name so other users can see who is editing" : "Wprowadź swoje imię, aby inni użytkownicy mogli zobaczyć, kto edytuje",
     "Edit guest name" : "Edytuj nazwę gościa",
@@ -75,6 +76,13 @@
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Currently active users:" : "Aktualnie aktywni użytkownicy:",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
+    "Add row before" : "Dodaj wiersz przed",
+    "Add row after" : "Dodaj wiersz po",
+    "Delete this row" : "Usuń ten wiersz",
+    "Add column before" : "Dodaj kolumnę przed",
+    "Add column after" : "Dodaj kolumnę po",
+    "Delete this column" : "Usuń tę kolumnę",
+    "Delete this table" : "Usuń tę tabelę",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
     "Edit" : "Edytuj",
@@ -91,6 +99,7 @@
     "Success" : "Powiodło się",
     "Warning" : "Ostrzeżenie",
     "Danger" : "Zagrożenie",
+    "Table" : "Tabela",
     "Emoji picker" : "Selektor emoji"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }
