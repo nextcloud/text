@@ -20,20 +20,21 @@
  *
  */
 
-/**
- * Callback that should be executed after the document is ready
- *
- * @param callback
- */
-const documentReady = function(callback) {
-	const fn = () => setTimeout(callback, 0)
-	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
-		fn()
-	} else {
-		document.addEventListener('DOMContentLoaded', callback)
+const optimalPath = function(from, to) {
+	const current = from.split('/')
+	const target = to.split('/')
+	current.pop() // ignore filename
+	while (current[0] === target[0]) {
+		current.shift()
+		target.shift()
 	}
+	const relativePath = current.fill('..').concat(target)
+	const absolutePath = to.split('/')
+	return relativePath.length < absolutePath.length
+		? relativePath.join('/')
+		: to
 }
 
 export {
-	documentReady,
+	optimalPath,
 }

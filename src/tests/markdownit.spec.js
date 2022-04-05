@@ -1,5 +1,5 @@
-import markdownit from './../markdownit'
-import { typesAvailable } from '../markdownit/callouts'
+import markdownit from '@nextcloud/text-editor/markdownit'
+import { typesAvailable } from '@nextcloud/text-editor/markdownit/callouts'
 import tableMarkdown from './fixtures/table.md'
 import tableHtml from './fixtures/table.html'
 

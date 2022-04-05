@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import ImageView from '../../nodes/ImageView.vue'
+import ImageView from '@nextcloud/text-editor/nodes/ImageView.vue'
 
 global.OC = {
 	requestToken: '123',

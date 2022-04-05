@@ -1,4 +1,4 @@
-import Underline from './../../marks/Underline';
+import Underline from '@nextcloud/text-editor/marks/Underline';
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'
 

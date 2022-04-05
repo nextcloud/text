@@ -27,4 +27,8 @@ webpackConfig.resolve.modules = [
 	'node_modules'
 ]
 
+webpackConfig.resolve.alias = {
+	'@nextcloud/text-editor': path.resolve(__dirname, "package/"),
+}
+
 module.exports = webpackConfig

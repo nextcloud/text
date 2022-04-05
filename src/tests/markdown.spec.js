@@ -1,8 +1,8 @@
-import { createEditor } from './../EditorFactory';
-import { createMarkdownSerializer } from './../extensions/Markdown'
+import { createEditor } from '@nextcloud/text-editor/EditorFactory';
+import { createMarkdownSerializer } from '@nextcloud/text-editor/extensions/Markdown'
 import spec from "./fixtures/spec"
-import markdownit from './../markdownit'
-import { typesAvailable } from './../markdownit/callouts'
+import markdownit from '@nextcloud/text-editor/markdownit'
+import { typesAvailable } from '@nextcloud/text-editor/markdownit/callouts'
 
 const markdownThroughEditor = (markdown) => {
 	const tiptap = createEditor({
