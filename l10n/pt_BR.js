@@ -27,6 +27,7 @@ OC.L10N.register(
     "Saved" : "Salvo",
     "Last saved {lastSaved}" : "Salvo por último {lastSaved}",
     "Unsaved changes" : "Alterações não salvas",
+    "No emoji found" : "Nenhum emoji encontrado",
     "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
     "Edit guest name" : "Editar nome de convidado",
     "Save guest name" : "Salvar nome de convidado",
