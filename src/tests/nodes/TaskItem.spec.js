@@ -1,5 +1,5 @@
-import { TaskList, TaskItem } from './../../nodes'
-import Markdown from './../../extensions/Markdown'
+import { TaskList, TaskItem } from '@nextcloud/text-editor/nodes'
+import Markdown from '@nextcloud/text-editor/extensions/Markdown'
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'
 

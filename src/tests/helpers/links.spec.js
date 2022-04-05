@@ -1,4 +1,4 @@
-import { domHref, parseHref } from '../../helpers/links'
+import { domHref, parseHref } from '@nextcloud/text-editor/helpers/links'
 
 global.OCA = {
 	Viewer: {

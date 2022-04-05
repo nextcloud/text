@@ -1,7 +1,7 @@
-import { Markdown } from './../../extensions';
-import { createMarkdownSerializer } from './../../extensions/Markdown';
-import Underline from './../../marks/Underline';
-import { TaskList, TaskItem } from './../../nodes'
+import { Markdown } from '@nextcloud/text-editor/extensions';
+import { createMarkdownSerializer } from '@nextcloud/text-editor/extensions/Markdown';
+import Underline from '@nextcloud/text-editor/marks/Underline';
+import { TaskList, TaskItem } from '@nextcloud/text-editor/nodes'
 import Image from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'

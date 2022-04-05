@@ -1,11 +1,11 @@
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
-import TaskList from './../../src/nodes/TaskList'
-import TaskItem from './../../src/nodes/TaskItem'
-import BulletList from './../../src/nodes/BulletList'
-import Markdown from './../../src/extensions/Markdown'
-import markdownit from './../../src/markdownit'
-import { createMarkdownSerializer } from './../../src/extensions/Markdown';
+import TaskList from '@nextcloud/text-editor/nodes/TaskList'
+import TaskItem from '@nextcloud/text-editor/nodes/TaskItem'
+import BulletList from '@nextcloud/text-editor/nodes/BulletList'
+import Markdown from '@nextcloud/text-editor/extensions/Markdown'
+import markdownit from '@nextcloud/text-editor/markdownit'
+import { createMarkdownSerializer } from '@nextcloud/text-editor/extensions/Markdown';
 import { findChildren, findChildrenByType } from 'prosemirror-utils'
 import createEditor from './../../src/tests/createEditor'
 import testData from '../fixtures/ListItem.md'

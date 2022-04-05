@@ -1,4 +1,4 @@
-import { createEditor, serializePlainText } from './../EditorFactory';
+import { createEditor, serializePlainText } from '@nextcloud/text-editor/EditorFactory';
 import spec from "./fixtures/spec"
 import xssFuzzVectors from './fixtures/xssFuzzVectors';
 

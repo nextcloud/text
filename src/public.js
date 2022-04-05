@@ -6,7 +6,7 @@ import {
 } from './helpers/files'
 import { openMimetypes } from './helpers/mime'
 import { loadState } from '@nextcloud/initial-state'
-import store from './store'
+import store from '@nextcloud/text-editor/store'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -34,7 +34,7 @@ documentReady(() => {
 		if (openMimetypes.indexOf(mimetype) !== -1) {
 			Promise.all([
 				import(/* webpackChunkName: "vendor" */'vue'),
-				import(/* webpackChunkName: "editor" */'./components/EditorWrapper'),
+				import(/* webpackChunkName: "editor" */'@nextcloud/text-editor/components/EditorWrapper'),
 			]).then((imports) => {
 				const Vue = imports[0].default
 				Vue.prototype.t = window.t

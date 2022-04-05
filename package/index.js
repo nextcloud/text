@@ -1,7 +1,7 @@
 /*
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
- * @author Julius Härtl <jus@bitgrid.net>
+ * @author Max <max@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -20,20 +20,8 @@
  *
  */
 
-/**
- * Callback that should be executed after the document is ready
- *
- * @param callback
- */
-const documentReady = function(callback) {
-	const fn = () => setTimeout(callback, 0)
-	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
-		fn()
-	} else {
-		document.addEventListener('DOMContentLoaded', callback)
-	}
-}
+import store from './store'
 
 export {
-	documentReady,
+	store
 }
