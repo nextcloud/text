@@ -23,7 +23,7 @@
 /**
  * Callback that should be executed after the document is ready
  *
- * @param callback
+ * @param {Function} callback - to execute when doc is ready.
  */
 const documentReady = function(callback) {
 	const fn = () => setTimeout(callback, 0)

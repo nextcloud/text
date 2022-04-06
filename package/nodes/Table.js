@@ -33,6 +33,12 @@ const tableCaption = Node.create({
 
 })
 
+/**
+ * @param {object} schema - the editor schema
+ * @param {number} rowsCount - number of rows
+ * @param {number} colsCount - number of columns
+ * @param {string} cellContent - cell content to start with
+ */
 function createTable(schema, rowsCount, colsCount, cellContent) {
 	const headerCells = []
 	const cells = []
@@ -54,6 +60,9 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 	return schema.nodes.table.createChecked(null, [headRow, ...rows])
 }
 
+/**
+ * @param {object} $cell - cell to start from (resolved position)
+ */
 function findSameCellInNextRow($cell) {
 	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
 		return null
