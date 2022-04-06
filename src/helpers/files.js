@@ -77,7 +77,7 @@ const registerFileActionFallback = () => {
 				const file = window.FileList.findFile(filename)
 				Promise.all([
 					import('vue'),
-					import(/* webpackChunkName: "files-modal" */'@nextcloud/text-editor/components/PublicFilesEditor'),
+					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor'),
 				]).then((imports) => {
 					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default
