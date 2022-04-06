@@ -23,7 +23,7 @@
 <template>
 	<Popover class="session-list" placement="top">
 		<button slot="trigger"
-			v-tooltip.bottom="editorsTooltip"
+			v-tooltip.bottom="t('text', 'Participants')"
 			class="avatar-list">
 			<div class="avatardiv icon-group" />
 			<div v-for="session in sessionsVisible"
@@ -43,7 +43,7 @@
 			<div class="session-menu">
 				<ul>
 					<slot />
-					<li v-for="session in sessionPopoverList"
+					<li v-for="session in participantsPopover"
 						:key="session.id"
 						:style="avatarStyle(session)">
 						<div class="avatar-wrapper"
@@ -53,7 +53,7 @@
 								:disable-menu="true"
 								:show-user-status="false"
 								:disable-tooltip="true"
-								:size="44" />
+								:size="32" />
 						</div>
 						{{ session.guestName ? session.guestName : session.displayName }}
 					</li>
@@ -110,18 +110,18 @@ export default {
 				this.$store.dispatch('setShowAuthorAnnotations', value)
 			},
 		},
-		editorsTooltip() {
-			const tooltipPrefix = t('text', 'Currently active users:') + ' '
-			if (this.sessionPopoverList.length > 0) {
-				const first = this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
-				const others = this.activeSessions.slice(3).length
-				return tooltipPrefix + first + ' ' + n('text', 'and %n other editor', 'and %n other editors', others)
+		participantsPopover() {
+			if (this.currentSession.guestName) {
+				return this.participantsWithoutCurrent
 			}
-			return tooltipPrefix + this.activeSessions.slice(0, 3).map((session) => session.guestName ? session.guestName : session.displayName).join(', ')
+			return this.participants
 		},
-		activeSessions() {
+		participantsWithoutCurrent() {
+			return this.participants.filter((session) => !session.isCurrent)
+		},
+		participants() {
 			return Object.values(this.sessions).filter((session) =>
-				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME && !session.isCurrent
+				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
 					&& (session.userId !== null || session.guestName !== null)
 			).sort((a, b) => a.lastContact < b.lastContact)
 		},
@@ -144,22 +144,13 @@ export default {
 			}
 		},
 		sessionsVisible() {
-			return this.activeSessions.slice(0, 3)
-		},
-		sessionPopoverList() {
-			return this.activeSessions.slice(3)
+			return this.participantsWithoutCurrent.slice(0, 3)
 		},
 	},
 }
 </script>
 
 <style scoped lang="scss">
-	.avatardiv {
-		width: 44px !important;
-		height: 44px !important;
-		line-height: 44px;
-	}
-
 	.avatar-list {
 		border: none;
 		background-color: var(--color-main-background);
@@ -175,7 +166,8 @@ export default {
 
 		.avatar-wrapper {
 			margin: 0 -8px 0 0;
-			margin-left: 0;
+			height: 44px;
+			width: 44px;
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
@@ -187,8 +179,6 @@ export default {
 	}
 
 	.avatar-wrapper {
-		width: 44px;
-		height: 44px;
 		z-index: 1;
 		border-radius: 50%;
 		overflow: hidden;
@@ -206,6 +196,8 @@ export default {
 			padding: 6px;
 
 			.avatar-wrapper {
+				height: 32px;
+				width: 32px;
 				margin-right: 6px;
 			}
 		}

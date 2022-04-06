@@ -92,6 +92,7 @@ export default {
 <style scoped lang="scss">
 	form.guest-name-dialog {
 		display: flex;
+		align-items: center;
 		padding: 6px;
 
 		&::v-deep img {
@@ -102,7 +103,7 @@ export default {
 			flex-grow: 1;
 		}
 		label {
-			padding: 3px;
+			padding-right: 3px;
 			height: 32px;
 		}
 	}
