@@ -20,7 +20,7 @@
  *
  */
 
-import ViewerComponent from '@nextcloud/text-editor/components/ViewerComponent'
+import ViewerComponent from './components/ViewerComponent'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
