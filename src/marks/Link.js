@@ -20,6 +20,7 @@
  *
  */
 
+import { generateUrl } from '@nextcloud/router'
 import TipTapLink from '@tiptap/extension-link'
 import { Plugin } from 'prosemirror-state'
 import { domHref, parseHref } from './../helpers/links'
@@ -79,6 +80,11 @@ const Link = TipTapLink.extend({
 										// OC.Util.History.pushState('', htmlHref)
 									}
 									OCA.Viewer.open({ path })
+									return
+								}
+								if (query.fileId) {
+									// open the direct file link
+									window.open(generateUrl(`/f/${query.fileId}`))
 									return
 								}
 							}
