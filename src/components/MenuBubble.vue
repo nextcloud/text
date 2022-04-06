@@ -25,9 +25,8 @@
 		class="menububble"
 		:editor="editor"
 		@hide="hideLinkMenu">
-		<div class="menububble"
-			:class="{ 'is-active': menu.isActive }"
-			:style="bubblePosition(menu)">
+		<MenuBubbleContainer :menu="menu"
+			:class="{ 'is-active': menu.isActive }">
 			<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
 				<input ref="linkInput"
 					v-model="linkUrl"
@@ -59,12 +58,13 @@
 					<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 				</button>
 			</template>
-		</div>
+		</MenuBubbleContainer>
 	</EditorMenuBubble>
 </template>
 
 <script>
 import { EditorMenuBubble } from 'tiptap'
+import MenuBubbleContainer from './MenuBubbleContainer'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { optimalPath } from './../helpers/files'
 import { loadState } from '@nextcloud/initial-state'
@@ -73,6 +73,7 @@ export default {
 	name: 'MenuBubble',
 	components: {
 		EditorMenuBubble,
+		MenuBubbleContainer,
 	},
 	directives: {
 		tooltip: Tooltip,
@@ -102,21 +103,7 @@ export default {
 			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
-	computed: {
 
-		// Minimum left value for the bubble so that it stays inside the editor.
-		// the width of the menububble changes depending on its state
-		// during the bubblePosition calculation it has not been rendered yet.
-		// so we have to hard code the minimum.
-		minLeft() {
-			if (this.linkMenuIsActive || !this.editor.isActive.link()) {
-				return 150
-			} else {
-				return 225
-			}
-		},
-
-	},
 	methods: {
 		showLinkMenu(attrs) {
 			this.linkUrl = attrs.href
@@ -165,14 +152,6 @@ export default {
 			command({ href: url })
 			this.hideLinkMenu()
 		},
-		bubblePosition(menu) {
-			const left = Math.max(this.minLeft, menu.left)
-			const offset = this.contentWrapper?.scrollTop || 0
-			return {
-				top: `${menu.top + offset + 5}px`,
-				left: `${left}px`,
-			}
-		},
 
 	},
 }
@@ -188,10 +167,8 @@ export default {
 		border-radius: var(--border-radius-large);
 		overflow: hidden;
 		padding: 0;
-		margin-left: 10px;
 		visibility: hidden;
 		opacity: 0;
-		transform: translateX(-50%);
 		transition: opacity 0.2s, visibility 0.2s;
 		height: 44px;
 

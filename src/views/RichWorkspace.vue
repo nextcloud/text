@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
+	<div v-if="enabled" id="rich-workspace" :class="workspaceClasses">
 		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -49,6 +49,7 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe } from '@nextcloud/event-bus'
+import isMobile from './../mixins/isMobile'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -58,6 +59,7 @@ export default {
 	components: {
 		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper'),
 	},
+	mixins: [isMobile],
 	props: {
 		path: {
 			type: String,
@@ -85,6 +87,15 @@ export default {
 		},
 		showEmptyWorkspace() {
 			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
+		},
+		workspaceClasses() {
+			return {
+				'icon-loading': !this.loaded || !this.ready,
+				'is-mobile': this.isMobile,
+				focus: this.focus,
+				dark: this.darkTheme,
+				creatable: this.canCreate,
+			}
 		},
 	},
 	watch: {
@@ -179,6 +190,9 @@ export default {
 		position: relative;
 		&.creatable {
 			min-height: 90px;
+		}
+		&.is-mobile {
+			padding: 0 5px;
 		}
 	}
 
