@@ -37,8 +37,6 @@ OC.L10N.register(
     "Select file to link to" : "Válasszon ki a hivatkozni kívánt fájlt",
     "Show author colors" : "Szerzők színének mutatása",
     "Author colors are only shown until everyone has closed the document." : "A szerzői színek csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot. ",
-    "Currently active users:" : "Jelenleg aktív felhasználók:",
-    "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"],
     "Show rich workspaces" : "Gazdag munkaterület mutatása",
     "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…",
     "Edit" : "Szerkesztés",
@@ -50,6 +48,8 @@ OC.L10N.register(
     "Heading 4" : "Címsor 4",
     "Heading 5" : "Címsor 5",
     "ToDo list" : "Teendők",
-    "Emoji picker" : "Hangulatjel kiválasztása"
+    "Emoji picker" : "Hangulatjel kiválasztása",
+    "Currently active users:" : "Jelenleg aktív felhasználók:",
+    "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"]
 },
 "nplurals=2; plural=(n != 1);");

@@ -37,8 +37,6 @@ OC.L10N.register(
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
     "Show author colors" : "Mustra is colores de sa persone autora",
     "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
-    "Currently active users:" : "Utèntzias ativas in custu momentu:",
-    "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
@@ -50,6 +48,8 @@ OC.L10N.register(
     "Heading 4" : "Intestatzione 4",
     "Heading 5" : "Intestatzione 5",
     "ToDo list" : "Cosas de fàghere",
-    "Emoji picker" : "Sèberu de carigheddas"
+    "Emoji picker" : "Sèberu de carigheddas",
+    "Currently active users:" : "Utèntzias ativas in custu momentu:",
+    "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"]
 },
 "nplurals=2; plural=(n != 1);");

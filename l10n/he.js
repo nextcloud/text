@@ -32,8 +32,6 @@ OC.L10N.register(
     "Insert an image" : "הוספת תמונה",
     "Link file" : "קישור לקובץ",
     "Select file to link to" : "לבחור קובץ לקשר אליו",
-    "Currently active users:" : "משתמשים פעילים עכשיו:",
-    "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Edit" : "עריכה",
@@ -44,6 +42,8 @@ OC.L10N.register(
     "Heading 3" : "כותרת 3",
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
-    "ToDo list" : "רשימת מטלות"
+    "ToDo list" : "רשימת מטלות",
+    "Currently active users:" : "משתמשים פעילים עכשיו:",
+    "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"]
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

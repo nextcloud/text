@@ -72,8 +72,6 @@ OC.L10N.register(
     "Select file to link to" : "选择文件链接至",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
-    "Currently active users:" : "当前活跃用户：",
-    "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Edit" : "编辑",
@@ -85,6 +83,8 @@ OC.L10N.register(
     "Heading 4" : "标题 4",
     "Heading 5" : "标题 5",
     "ToDo list" : "待办事项清单",
-    "Emoji picker" : "Emoji 选择器"
+    "Emoji picker" : "Emoji 选择器",
+    "Currently active users:" : "当前活跃用户：",
+    "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"]
 },
 "nplurals=1; plural=0;");

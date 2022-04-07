@@ -36,8 +36,6 @@
     "Select file to link to" : "Избор на файл за връзка с",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
-    "Currently active users:" : "Потребители, които са активни в момента:",
-    "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"],
     "Show rich workspaces" : "Показване  на обогатени работни пространства",
     "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
     "Edit" : "Променяне",
@@ -49,6 +47,8 @@
     "Heading 4" : "Заглавие 4",
     "Heading 5" : "Заглавие 5",
     "ToDo list" : "Списък със задачи",
-    "Emoji picker" : "Инструмент за избор на емотикони"
+    "Emoji picker" : "Инструмент за избор на емотикони",
+    "Currently active users:" : "Потребители, които са активни в момента:",
+    "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
