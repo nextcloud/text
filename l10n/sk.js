@@ -75,8 +75,6 @@ OC.L10N.register(
     "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
-    "Currently active users:" : "Aktuálne aktívny užívatelia",
-    "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
@@ -93,6 +91,8 @@ OC.L10N.register(
     "Success" : "Úspešné",
     "Warning" : "Varovanie",
     "Danger" : "Nebezpečenstvo",
-    "Emoji picker" : "Výber emotikonov"
+    "Emoji picker" : "Výber emotikonov",
+    "Currently active users:" : "Aktuálne aktívny užívatelia",
+    "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"]
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

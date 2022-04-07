@@ -68,8 +68,6 @@ OC.L10N.register(
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
-    "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
-    "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "Add row before" : "Gehitu errenkada aurrerago",
     "Add row after" : "Gehitu errenkada ostean",
     "Delete this row" : "Ezabatu errenkada hau",
@@ -92,6 +90,8 @@ OC.L10N.register(
     "Success" : "Arrakasta",
     "Warning" : "Oharra",
     "Table" : "Taula",
-    "Emoji picker" : " Emotikono-hautatzailea"
+    "Emoji picker" : " Emotikono-hautatzailea",
+    "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
+    "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"]
 },
 "nplurals=2; plural=(n != 1);");

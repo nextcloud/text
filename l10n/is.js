@@ -30,7 +30,6 @@ OC.L10N.register(
     "Insert an image" : "Setja inn mynd",
     "Link file" : "Tengja skrá",
     "Select file to link to" : "Veldu skrá til að tengja í",
-    "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Edit" : "Breyta",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Heading 3" : "Fyrirsögn 3",
     "Heading 4" : "Fyrirsögn 4",
     "Heading 5" : "Fyrirsögn 5",
-    "ToDo list" : "Verkefnalisti"
+    "ToDo list" : "Verkefnalisti",
+    "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"]
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

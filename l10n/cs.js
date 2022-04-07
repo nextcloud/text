@@ -76,8 +76,6 @@ OC.L10N.register(
     "Select file to link to" : "Vyberte soubor na který odkázat",
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
-    "Currently active users:" : "Nyní aktivních uživatelů:",
-    "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
     "Add row before" : "Přidat řádek před",
     "Add row after" : "Předat řádek za",
     "Delete this row" : "Smazat tento řádek",
@@ -102,6 +100,8 @@ OC.L10N.register(
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
     "Table" : "Tabulka",
-    "Emoji picker" : "Volba emotikony"
+    "Emoji picker" : "Volba emotikony",
+    "Currently active users:" : "Nyní aktivních uživatelů:",
+    "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"]
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
