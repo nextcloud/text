@@ -1,7 +1,7 @@
 {
-	"name": "text",
+	"name": "@nextcloud/text",
 	"description": "Collaborative document editing",
-	"version": "3.5.0",
+	"version": "0.1.0",
 	"authors": [
 		{
 			"name": "Julius Härtl",
@@ -11,6 +11,11 @@
 	],
 	"license": "agpl",
 	"private": true,
+	"files": [
+		"package/",
+		"css/",
+		"img/"
+	],
 	"scripts": {
 		"dev": "NODE_ENV=development webpack --config webpack.js",
 		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
