@@ -37,8 +37,6 @@ OC.L10N.register(
     "Select file to link to" : "Chọn tệp để liên kết đến",
     "Show author colors" : "Hiển thị màu sắc của tác giả",
     "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
-    "Currently active users:" : "Người dùng hiện đang hoạt động:",
-    "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"],
     "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
@@ -50,6 +48,8 @@ OC.L10N.register(
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
     "ToDo list" : "Cần làm",
-    "Emoji picker" : "Trình chọn emoji"
+    "Emoji picker" : "Trình chọn emoji",
+    "Currently active users:" : "Người dùng hiện đang hoạt động:",
+    "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"]
 },
 "nplurals=1; plural=0;");

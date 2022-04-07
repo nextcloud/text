@@ -32,7 +32,6 @@ OC.L10N.register(
     "Link file" : "Ligam fichièr",
     "Remove Link" : "Suprimir ligam",
     "Show author colors" : "Afichar las colors dels utilizaires",
-    "Currently active users:" : "Utilizaires actius :",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligamas…",
     "Edit" : "Modificar",
     "Undo" : "Anullar",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
     "ToDo list" : "Lista a far",
-    "Emoji picker" : "Selector emoji"
+    "Emoji picker" : "Selector emoji",
+    "Currently active users:" : "Utilizaires actius :"
 },
 "nplurals=2; plural=(n > 1);");

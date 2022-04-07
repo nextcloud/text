@@ -74,8 +74,6 @@
     "Select file to link to" : "選擇要連結的檔案",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
-    "Currently active users:" : "目前活動中的使用者：",
-    "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
     "Add row before" : "在前面新增列",
     "Add row after" : "在後面新增列",
     "Delete this row" : "刪除此列",
@@ -100,6 +98,8 @@
     "Warning" : "警告",
     "Danger" : "危險",
     "Table" : "表格",
-    "Emoji picker" : "表情符號挑選器"
+    "Emoji picker" : "表情符號挑選器",
+    "Currently active users:" : "目前活動中的使用者：",
+    "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"]
 },"pluralForm" :"nplurals=1; plural=0;"
 }

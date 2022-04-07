@@ -76,8 +76,6 @@ OC.L10N.register(
     "Select file to link to" : "Bağlanacak dosyayı seçin",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
-    "Currently active users:" : "Etkin kullanıcı sayısı:",
-    "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "Add row before" : "Üste satır ekle",
     "Add row after" : "Alta satır ekle",
     "Delete this row" : "Bu satırı sil",
@@ -102,6 +100,8 @@ OC.L10N.register(
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
     "Table" : "Tablo",
-    "Emoji picker" : "Emoji seçici"
+    "Emoji picker" : "Emoji seçici",
+    "Currently active users:" : "Etkin kullanıcı sayısı:",
+    "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"]
 },
 "nplurals=2; plural=(n > 1);");

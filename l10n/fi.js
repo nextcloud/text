@@ -35,8 +35,6 @@ OC.L10N.register(
     "Link file" : "Linkitä tiedosto",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
     "Show author colors" : "Näytä tekijän värit",
-    "Currently active users:" : "Aktiiviset käyttäjät nyt:",
-    "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Edit" : "Muokkaa",
     "Undo" : "Kumoa",
@@ -47,6 +45,8 @@ OC.L10N.register(
     "Heading 4" : "Otsikko 4",
     "Heading 5" : "Otsikko 5",
     "ToDo list" : "Tehtävälista",
-    "Emoji picker" : "Emoji-valitsin"
+    "Emoji picker" : "Emoji-valitsin",
+    "Currently active users:" : "Aktiiviset käyttäjät nyt:",
+    "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"]
 },
 "nplurals=2; plural=(n != 1);");

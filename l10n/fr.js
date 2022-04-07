@@ -71,8 +71,6 @@ OC.L10N.register(
     "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien",
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
-    "Currently active users:" : "Utilisateurs actuellement actifs :",
-    "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"],
     "Show rich workspaces" : "Afficher les espaces de travail riches",
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
     "Edit" : "Modifier",
@@ -84,6 +82,8 @@ OC.L10N.register(
     "Heading 4" : "Titre 4",
     "Heading 5" : "Titre 5",
     "ToDo list" : "Liste des tâches",
-    "Emoji picker" : "Sélecteur d'émoticônes"
+    "Emoji picker" : "Sélecteur d'émoticônes",
+    "Currently active users:" : "Utilisateurs actuellement actifs :",
+    "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"]
 },
 "nplurals=2; plural=(n > 1);");

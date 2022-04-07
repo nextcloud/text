@@ -24,7 +24,6 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Insert image" : "Añadir imagen",
-    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores"],
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
     "Edit" : "Editar",
     "Undo" : "Deshacer",
@@ -34,6 +33,7 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista de penditentes"
+    "ToDo list" : "Lista de penditentes",
+    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores"]
 },
 "nplurals=2; plural=(n != 1);");

@@ -65,8 +65,6 @@ OC.L10N.register(
     "Select file to link to" : "Välj fil att länka till",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
-    "Currently active users:" : "Aktiva användare just nu:",
-    "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Edit" : "Redigera",
@@ -78,6 +76,8 @@ OC.L10N.register(
     "Heading 4" : "Rubrik 4",
     "Heading 5" : "Rubrik 5",
     "ToDo list" : "Att göra lista",
-    "Emoji picker" : "Emojiväljare"
+    "Emoji picker" : "Emojiväljare",
+    "Currently active users:" : "Aktiva användare just nu:",
+    "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"]
 },
 "nplurals=2; plural=(n != 1);");

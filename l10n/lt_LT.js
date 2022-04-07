@@ -44,8 +44,6 @@ OC.L10N.register(
     "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
-    "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
-    "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Edit" : "Taisyti",
@@ -57,6 +55,8 @@ OC.L10N.register(
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
     "ToDo list" : "Užduočių sąrašas",
-    "Emoji picker" : "Šypsenėlių parinkiklis"
+    "Emoji picker" : "Šypsenėlių parinkiklis",
+    "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
+    "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"]
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

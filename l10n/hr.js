@@ -37,8 +37,6 @@ OC.L10N.register(
     "Select file to link to" : "Odaberi datoteku za povezivanje",
     "Show author colors" : "Prikaži boje autora",
     "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
-    "Currently active users:" : "Trenutno aktivni korisnici:",
-    "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
@@ -50,6 +48,8 @@ OC.L10N.register(
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
     "ToDo list" : "Popis zadataka",
-    "Emoji picker" : "Birač emojija"
+    "Emoji picker" : "Birač emojija",
+    "Currently active users:" : "Trenutno aktivni korisnici:",
+    "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"]
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

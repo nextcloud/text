@@ -14,9 +14,9 @@ OC.L10N.register(
     "Save guest name" : "Ruaj emrin e të ftuarit",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
-    "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"],
     "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
-    "Redo" : "Ribëj"
+    "Redo" : "Ribëj",
+    "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"]
 },
 "nplurals=2; plural=(n != 1);");
