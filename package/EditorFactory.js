@@ -21,38 +21,19 @@
 */
 
 /* eslint-disable import/no-named-as-default */
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import CodeBlock from '@tiptap/extension-code-block'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import Dropcursor from '@tiptap/extension-dropcursor'
-import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import Table from './nodes/Table'
-import TableCell from './nodes/TableCell'
-import TableHeader from './nodes/TableHeader'
-import TableHeadRow from './nodes/TableHeadRow'
-import TableRow from './nodes/TableRow'
+import Text from '@tiptap/extension-text'
 /* eslint-enable import/no-named-as-default */
 
-import { Editor } from '@tiptap/core'
-import { Strong, Italic, Strike, Link, Underline } from './marks'
 import {
-	Image,
 	PlainTextDocument,
 	TrailingNode,
-	Heading,
-	BulletList,
-	TaskList,
-	TaskItem,
-	Callout,
 } from './nodes'
-import { Markdown, Emoji } from './extensions'
+import { Editor } from '@tiptap/core'
+import { Emoji, Markdown, RichText } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
@@ -81,29 +62,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 	if (enableRichEditing) {
 		richEditingExtensions = [
 			Markdown,
-			Document,
-			Paragraph,
-			Heading,
-			Strong,
-			Italic,
-			Strike,
-			Link.configure({ openOnClick: true }),
-			Blockquote,
-			CodeBlock,
-			BulletList,
-			HorizontalRule,
-			OrderedList,
-			ListItem,
-			Table,
-			TableCell,
-			TableHeader,
-			TableHeadRow,
-			TableRow,
-			TaskList,
-			TaskItem,
-			Callout,
-			Underline,
-			Image.configure({ currentDirectory, inline: true }),
+			RichText.configure({ currentDirectory }),
 			Emoji.configure({
 				suggestion: {
 					items: ({ query }) => {
@@ -159,12 +118,12 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 				placeholder: t('text', 'Add notes, lists or links …'),
 				showOnlyWhenEditable: true,
 			}),
-			Dropcursor,
 			TrailingNode,
 		]
 	} else {
 		richEditingExtensions = [
 			PlainTextDocument,
+			Text,
 			CodeBlockLowlight,
 		]
 	}
@@ -174,7 +133,6 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		onCreate,
 		onUpdate,
 		extensions: [
-			Text,
 			History,
 			...richEditingExtensions,
 		].concat(extensions),
