@@ -72,8 +72,6 @@ OC.L10N.register(
     "Select file to link to" : "Selecteer een bestand om naar te linken",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
-    "Currently active users:" : "Momenteel actieve gebruikers:",
-    "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "Show rich workspaces" : "Toon rijke werkplekken",
     "Add notes, lists or links …" : "Toevoegen notities, lijsten of links...",
     "Edit" : "Bewerken",
@@ -85,6 +83,8 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "ToDo list" : "ToDo overzicht",
-    "Emoji picker" : "Emoji kiezer"
+    "Emoji picker" : "Emoji kiezer",
+    "Currently active users:" : "Momenteel actieve gebruikers:",
+    "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"]
 },
 "nplurals=2; plural=(n != 1);");

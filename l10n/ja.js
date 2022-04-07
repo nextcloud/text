@@ -46,8 +46,6 @@ OC.L10N.register(
     "Select file to link to" : "リンク先のファイルを選択",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
-    "Currently active users:" : "現在のアクティブユーザー:",
-    "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Edit" : "編集",
@@ -59,6 +57,8 @@ OC.L10N.register(
     "Heading 4" : "見出し4",
     "Heading 5" : "見出し5",
     "ToDo list" : "ToDo リスト",
-    "Emoji picker" : "絵文字選択"
+    "Emoji picker" : "絵文字選択",
+    "Currently active users:" : "現在のアクティブユーザー:",
+    "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"]
 },
 "nplurals=1; plural=0;");

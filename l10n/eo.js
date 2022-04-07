@@ -22,7 +22,6 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Insert image" : "Enmeti bildon",
-    "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"],
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "Edit" : "Modifi",
     "Undo" : "Malfari",
@@ -31,6 +30,7 @@ OC.L10N.register(
     "Heading 2" : "Titolo 2",
     "Heading 3" : "Titolo 3",
     "Heading 4" : "Titolo 4",
-    "Heading 5" : "Titolo 5"
+    "Heading 5" : "Titolo 5",
+    "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"]
 },
 "nplurals=2; plural=(n != 1);");

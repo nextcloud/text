@@ -30,7 +30,6 @@ OC.L10N.register(
     "Insert an image" : "Insereix una imatge",
     "Link file" : "Fitxer d'enllaç",
     "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
-    "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços …",
     "Edit" : "Edita",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
-    "ToDo list" : "Llista tasques pendents"
+    "ToDo list" : "Llista tasques pendents",
+    "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"]
 },
 "nplurals=2; plural=(n != 1);");

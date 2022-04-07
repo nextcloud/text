@@ -75,8 +75,6 @@ OC.L10N.register(
     "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
-    "Currently active users:" : "Aktuell aktive Benutzer:",
-    "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "],
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
@@ -93,6 +91,8 @@ OC.L10N.register(
     "Success" : "Erfolgreich",
     "Warning" : "Warnung",
     "Danger" : "Achtung",
-    "Emoji picker" : "Emoji-Auswahl"
+    "Emoji picker" : "Emoji-Auswahl",
+    "Currently active users:" : "Aktuell aktive Benutzer:",
+    "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "]
 },
 "nplurals=2; plural=(n != 1);");

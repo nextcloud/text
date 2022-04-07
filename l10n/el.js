@@ -75,8 +75,6 @@ OC.L10N.register(
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
-    "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
-    "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
@@ -93,6 +91,8 @@ OC.L10N.register(
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
-    "Emoji picker" : "Επιλογέας emoji"
+    "Emoji picker" : "Επιλογέας emoji",
+    "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
+    "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"]
 },
 "nplurals=2; plural=(n != 1);");
