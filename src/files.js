@@ -23,7 +23,7 @@
 import Vue from 'vue'
 import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
-import { store } from '@nextcloud/text-editor'
+import store from '@nextcloud/text-editor/store'
 import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files'
 import FilesSettings from './views/FilesSettings'
 
