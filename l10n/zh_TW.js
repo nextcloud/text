@@ -74,6 +74,7 @@ OC.L10N.register(
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
+    "Participants" : "參與者",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
     "Add row before" : "在前面新增列",

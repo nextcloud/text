@@ -74,6 +74,7 @@ OC.L10N.register(
     "Link file" : "Link pliku",
     "Remove Link" : "Usuń link",
     "Select file to link to" : "Wybierz plik dla linku",
+    "Participants" : "Uczestnicy",
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Add row before" : "Dodaj wiersz przed",

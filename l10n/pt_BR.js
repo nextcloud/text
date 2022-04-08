@@ -86,6 +86,11 @@ OC.L10N.register(
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
     "ToDo list" : "Lista ToDo",
+    "Callouts" : "Frases de destaque",
+    "Info" : "Info",
+    "Success" : "Sucesso",
+    "Warning" : "Aviso",
+    "Danger" : "Perigo",
     "Emoji picker" : "Selecionador de emoji ",
     "Currently active users:" : "Usuários ativos no momento:",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"]
