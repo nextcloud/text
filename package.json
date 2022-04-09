@@ -81,7 +81,7 @@
 		"prosemirror-tables": "^1.1.1",
 		"prosemirror-transform": "^1.4.1",
 		"prosemirror-utils": "^1.0.0-0",
-		"prosemirror-view": "^1.23.11",
+		"prosemirror-view": "^1.23.12",
 		"proxy-polyfill": "^0.3.2",
 		"tippy.js": "^6.3.7",
 		"vue": "^2.6.14",
