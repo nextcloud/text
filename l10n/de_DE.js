@@ -74,6 +74,7 @@ OC.L10N.register(
     "Link file" : "Datei verknüpfen",
     "Remove Link" : "Link entfernen",
     "Select file to link to" : "Wählen Sie die zu verknüpfende Datei aus",
+    "Participants" : "Teilnehmer",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
     "Add row before" : "Zeile davor hinzufügen",
