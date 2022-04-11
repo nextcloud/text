@@ -21,9 +21,10 @@
   -->
 
 <template>
-	<NodeViewWrapper>
+	<NodeViewWrapper class="table-wrapper">
 		<NodeViewContent class="content" as="table" />
-		<Actions :force-menu="true"
+		<Actions v-if="editor.isEditable"
+			:force-menu="true"
 			class="table-settings"
 			default-icon="icon-table_settings">
 			<ActionButton icon="icon-delete"
@@ -32,6 +33,7 @@
 				{{ t('text', 'Delete this table') }}
 			</ActionButton>
 		</Actions>
+		<div class="clearfix" />
 	</NodeViewWrapper>
 </template>
 
@@ -66,6 +68,10 @@ export default {
 
 <style scoped lang="scss">
 
+.clearfix {
+	clear: both;
+}
+
 table {
 	float: left;
 }
@@ -78,4 +84,5 @@ table {
 		opacity: 1;
 	}
 }
+
 </style>
