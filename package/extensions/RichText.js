@@ -59,7 +59,7 @@ export default Extension.create({
 	},
 
 	addExtensions() {
-		return [
+		const extensions = [
 			Document,
 			Text,
 			Paragraph,
@@ -67,7 +67,6 @@ export default Extension.create({
 			Strong,
 			Italic,
 			Strike,
-			Link.configure({ openOnClick: true }),
 			Blockquote,
 			CodeBlock,
 			BulletList,
@@ -89,6 +88,10 @@ export default Extension.create({
 			}),
 			Dropcursor,
 		]
+		if (this.options.link !== false) {
+			extensions.push(Link.configure({ openOnClick: true }))
+		}
+		return extensions
 	},
 
 })
