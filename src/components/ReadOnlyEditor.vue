@@ -80,11 +80,17 @@ export default {
 		this.editor.destroy()
 	},
 	methods: {
+
 		createRichEditor() {
 			return new Editor({
 				content: this.htmlContent,
 				extensions: [
-					RichText.configure(this.richTextOptions),
+					RichText.configure({
+						...this.richTextOptions,
+						link: {
+							onClick: (event, attrs) => this.$emit('click-link', event, attrs),
+						},
+					}),
 					...this.extensions,
 				],
 			})
@@ -94,6 +100,17 @@ export default {
 			return new Editor({
 				content: this.htmlContent,
 				extensions: [PlainText],
+			})
+		},
+
+		/* Stop the browser from opening links.
+		 * Clicks are handled inside the Link mark just like in edit mode.
+		 */
+		preventOpeningLinks() {
+			this.$el.addEventListener('click', event => {
+				if (event.target.closest('a')) {
+					event.preventDefault()
+				}
 			})
 		},
 
