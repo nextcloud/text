@@ -28,15 +28,24 @@ import markdownit from './../markdownit'
 
 const Link = TipTapLink.extend({
 
-	attrs: {
-		href: {
-			default: null,
-		},
+	addOptions() {
+		return {
+			...this.parent?.(),
+			onClick: undefined,
+		}
+	},
+
+	addAttributes() {
+		return {
+			href: {
+				default: null,
+			},
+		}
 	},
 
 	inclusive: false,
 
-	parseDOM: [
+	parseHTML: [
 		{
 			tag: 'a[href]',
 			getAttrs: dom => ({
@@ -45,10 +54,10 @@ const Link = TipTapLink.extend({
 		},
 	],
 
-	toDOM: node => ['a', {
-		...node.attrs,
-		href: domHref(node),
-		title: node.attrs.href,
+	renderHTML: ({ mark, HTMLAttributes }) => ['a', {
+		...mark.attrs,
+		href: domHref(mark),
+		title: mark.attrs.href,
 		rel: 'noopener noreferrer nofollow',
 	}, 0],
 
@@ -59,12 +68,18 @@ const Link = TipTapLink.extend({
 		return [
 			new Plugin({
 				props: {
-					handleClick: (view, pos, event) => {
+					handleClick: (_view, _pos, event) => {
 						const attrs = this.editor.getAttributes('link')
-
-						const isLink = event.target instanceof HTMLAnchorElement || event.target.parentElement instanceof HTMLAnchorElement
+						if (this.options.onClick) {
+							this.options.onClick(event, attrs)
+							return
+						}
+						const isLink = event.target instanceof HTMLAnchorElement
+							|| event.target.parentElement instanceof HTMLAnchorElement
 						if (attrs.href && isLink) {
-							const linkElement = event.target.parentElement instanceof HTMLAnchorElement ? event.target.parentElement : event.target
+							const linkElement = event.target.parentElement instanceof HTMLAnchorElement
+								? event.target.parentElement
+								: event.target
 							event.stopPropagation()
 							const htmlHref = linkElement.href
 							if (event.button === 0 && !event.ctrlKey && htmlHref.startsWith(window.location.origin)) {

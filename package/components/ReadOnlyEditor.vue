@@ -72,7 +72,12 @@ export default {
 			return new Editor({
 				content,
 				extensions: [
-					RichText.configure(this.richTextOptions),
+					RichText.configure({
+						...this.richTextOptions,
+						link: {
+							onClick: (event, attrs) => this.$emit('click-link', event, attrs),
+						},
+					}),
 					...this.extensions,
 				],
 			})
