@@ -55,6 +55,7 @@ export default Extension.create({
 	addOptions() {
 		return {
 			currentDirectory: undefined,
+			link: {},
 		}
 	},
 
@@ -89,7 +90,10 @@ export default Extension.create({
 			Dropcursor,
 		]
 		if (this.options.link !== false) {
-			extensions.push(Link.configure({ openOnClick: true }))
+			extensions.push(Link.configure({
+				...this.options.link,
+				openOnClick: true,
+			}))
 		}
 		return extensions
 	},
