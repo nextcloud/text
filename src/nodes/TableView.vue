@@ -23,7 +23,8 @@
 <template>
 	<NodeViewWrapper class="table-wrapper">
 		<NodeViewContent class="content" as="table" />
-		<Actions :force-menu="true"
+		<Actions v-if="editor.isEditable"
+			:force-menu="true"
 			class="table-settings"
 			default-icon="icon-table_settings">
 			<ActionButton icon="icon-delete"

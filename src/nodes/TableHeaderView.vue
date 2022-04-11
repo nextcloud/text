@@ -24,7 +24,7 @@
 	<NodeViewWrapper as="th">
 		<div>
 			<NodeViewContent class="content" />
-			<Actions>
+			<Actions v-if="editor.isEditable">
 				<ActionButton icon="icon-add_col_before"
 					:close-after-click="true"
 					@click="addColumnBefore">
