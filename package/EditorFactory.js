@@ -21,18 +21,13 @@
 */
 
 /* eslint-disable import/no-named-as-default */
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import History from '@tiptap/extension-history'
 import Placeholder from '@tiptap/extension-placeholder'
-import Text from '@tiptap/extension-text'
 /* eslint-enable import/no-named-as-default */
 
-import {
-	PlainTextDocument,
-	TrailingNode,
-} from './nodes'
+import { TrailingNode } from './nodes'
 import { Editor } from '@tiptap/core'
-import { Emoji, Markdown, RichText } from './extensions'
+import { Emoji, Markdown, PlainText, RichText } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
@@ -120,11 +115,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			TrailingNode,
 		]
 	} else {
-		richEditingExtensions = [
-			PlainTextDocument,
-			Text,
-			CodeBlockLowlight,
-		]
+		richEditingExtensions = [PlainText]
 	}
 	extensions = extensions || []
 	return new Editor({
