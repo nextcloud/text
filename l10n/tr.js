@@ -74,6 +74,7 @@ OC.L10N.register(
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
+    "Participants" : "Katılımcılar",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
     "Add row before" : "Üste satır ekle",
