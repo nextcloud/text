@@ -25,14 +25,18 @@
 </template>
 
 <script>
+import { Editor } from '@tiptap/core'
+import { PlainText, RichText } from './../extensions/index.js'
 import { EditorContent } from '@tiptap/vue-2'
 import escapeHtml from 'escape-html'
-import { createEditor } from '../EditorFactory.js'
 import markdownit from './../markdownit/index.js'
 
 export default {
 	name: 'ReadOnlyEditor',
 	components: { EditorContent },
+	inject: {
+		extensions: { default: [] },
+	},
 	props: {
 		content: {
 			type: String,
@@ -42,6 +46,10 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		richTextOptions: {
+			type: Object,
+			default: () => {},
+		},
 	},
 	data: () => {
 		return {
@@ -49,14 +57,34 @@ export default {
 		}
 	},
 	mounted() {
-		this.editor = createEditor({
-			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + escapeHtml(this.content) + '</pre>',
-			enableRichEditing: this.isRichEditor,
-		})
+		this.editor = this.isRichEditor
+			? this.createRichEditor()
+			: this.createPlainEditor()
 		this.editor.setOptions({ editable: false })
 	},
 	beforeDestroy() {
 		this.editor.destroy()
+	},
+	methods: {
+
+		createRichEditor() {
+			const content = markdownit.render(this.content)
+			return new Editor({
+				content,
+				extensions: [
+					RichText.configure(this.richTextOptions),
+					...this.extensions,
+				],
+			})
+		},
+
+		createPlainEditor() {
+			const content = '<pre>' + escapeHtml(this.content) + '</pre>'
+			return new Editor({
+				content,
+				extensions: [PlainText],
+			})
+		},
 	},
 }
 </script>
