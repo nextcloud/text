@@ -22,7 +22,7 @@
 
 import { generateUrl } from '@nextcloud/router'
 import TipTapLink from '@tiptap/extension-link'
-import { Plugin } from 'prosemirror-state'
+import { Plugin, PluginKey } from 'prosemirror-state'
 import { domHref, parseHref } from './../helpers/links'
 import markdownit from './../markdownit'
 
@@ -68,6 +68,7 @@ const Link = TipTapLink.extend({
 		return [
 			new Plugin({
 				props: {
+					key: new PluginKey('textLink'),
 					handleClick: (_view, _pos, event) => {
 						const attrs = this.editor.getAttributes('link')
 						if (this.options.onClick) {
