@@ -61,6 +61,9 @@ export default {
 			? this.createRichEditor()
 			: this.createPlainEditor()
 		this.editor.setOptions({ editable: false })
+		this.$nextTick(() => {
+			this.preventOpeningLinks()
+		})
 	},
 	beforeDestroy() {
 		this.editor.destroy()
@@ -88,6 +91,17 @@ export default {
 			return new Editor({
 				content,
 				extensions: [PlainText],
+			})
+		},
+
+		/* Stop the browser from opening links.
+		 * Clicks are handled inside the Link mark just like in edit mode.
+		 */
+		preventOpeningLinks() {
+			this.$el.addEventListener('click', event => {
+				if (event.target.closest('a')) {
+					event.preventDefault()
+				}
 			})
 		},
 	},

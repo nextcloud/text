@@ -20,18 +20,16 @@
  *
  */
 
-import { generateUrl } from '@nextcloud/router'
 import TipTapLink from '@tiptap/extension-link'
 import { Plugin, PluginKey } from 'prosemirror-state'
-import { domHref, parseHref } from './../helpers/links'
-import markdownit from './../markdownit'
+import { domHref, parseHref, openLink } from './../helpers/links'
 
 const Link = TipTapLink.extend({
 
 	addOptions() {
 		return {
 			...this.parent?.(),
-			onClick: undefined,
+			onClick: openLink,
 		}
 	},
 
@@ -71,47 +69,11 @@ const Link = TipTapLink.extend({
 					key: new PluginKey('textLink'),
 					handleClick: (_view, _pos, event) => {
 						const attrs = this.editor.getAttributes('link')
-						if (this.options.onClick) {
-							this.options.onClick(event, attrs)
-							return
+						const link = event.target.closest('a')
+						if (link && attrs.href && this.options.onClick) {
+							return this.options.onClick(event, attrs)
 						}
-						const isLink = event.target instanceof HTMLAnchorElement
-							|| event.target.parentElement instanceof HTMLAnchorElement
-						if (attrs.href && isLink) {
-							const linkElement = event.target.parentElement instanceof HTMLAnchorElement
-								? event.target.parentElement
-								: event.target
-							event.stopPropagation()
-							const htmlHref = linkElement.href
-							if (event.button === 0 && !event.ctrlKey && htmlHref.startsWith(window.location.origin)) {
-								const query = OC.parseQueryString(htmlHref)
-								const fragment = OC.parseQueryString(htmlHref.split('#').pop())
-								if (query.dir && fragment.relPath) {
-									const filename = fragment.relPath.split('/').pop()
-									const path = `${query.dir}/${filename}`
-									document.title = `${filename} - ${OC.theme.title}`
-									if (window.location.pathname.match(/apps\/files\/$/)) {
-										// The files app still lacks a popState handler
-										// to allow for using the back button
-										// OC.Util.History.pushState('', htmlHref)
-									}
-									OCA.Viewer.open({ path })
-									return
-								}
-								if (query.fileId) {
-									// open the direct file link
-									window.open(generateUrl(`/f/${query.fileId}`))
-									return
-								}
-							}
-
-							if (!markdownit.validateLink(htmlHref)) {
-								console.error('Invalid link', htmlHref)
-								return
-							}
-
-							window.open(htmlHref)
-						}
+						return false
 					},
 				},
 			}),
