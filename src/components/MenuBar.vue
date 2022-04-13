@@ -30,8 +30,9 @@
 			:multiple="true"
 			@change="onImageUploadFilePicked">
 		<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
-			<template v-for="(icon, $index) in allIcons">
+			<template v-for="(icon) in icons">
 				<EmojiPicker v-if="icon.class === 'icon-emoji'"
+					v-show="icon.priority <= iconCount"
 					:key="icon.label"
 					class="menuitem-emoji"
 					@selectData="emojiObject => addEmoji(icon, emojiObject)">
@@ -68,14 +69,14 @@
 					</ActionButton>
 				</Actions>
 				<button v-else-if="icon.class"
-					v-show="$index < iconCount"
+					v-show="icon.priority <= iconCount"
 					:key="icon.label"
 					v-tooltip="getLabelAndKeys(icon)"
 					:class="getIconClasses(icon)"
 					:disabled="disabled(icon)"
 					@click="clickIcon(icon)" />
 				<template v-else>
-					<div v-show="$index < iconCount || !icon.class"
+					<div v-show="icon.priority <= iconCount"
 						:key="icon.label"
 						v-click-outside="() => hideChildMenu(icon)"
 						class="submenu">
@@ -90,8 +91,8 @@
 			</template>
 			<Actions @open="toggleChildMenu({ label: 'Remaining Actions' })"
 				@close="toggleChildMenu({ label: 'Remaining Actions' })">
-				<template v-for="(icon, $index) in allIcons">
-					<ActionButton v-if="icon.class && isHiddenInMenu($index) && !(icon.class === 'icon-emoji')"
+				<template v-for="(icon) in icons">
+					<ActionButton v-if="icon.class && isHiddenInMenu(icon) && !hasSubmenu(icon)"
 						:key="icon.class"
 						v-tooltip="getKeys(icon)"
 						:icon="icon.class"
@@ -99,7 +100,7 @@
 						@click="clickIcon(icon)">
 						{{ icon.label }}
 					</ActionButton>
-					<!--<template v-else-if="!icon.class && isHiddenInMenu($index)">
+					<!--<template v-else-if="!icon.class && isHiddenInMenu(icon)">
 						<ActionButton v-for="childIcon in icon.children"
 							:key="childIcon.class"
 							:icon="childIcon.class"
@@ -193,7 +194,7 @@ export default {
 	},
 	computed: {
 		isHiddenInMenu() {
-			return ($index) => $index - this.iconCount >= 0
+			return (icon) => icon.priority > this.iconCount
 		},
 		getIconClasses() {
 			return (icon) => {
@@ -226,18 +227,6 @@ export default {
 				return Object.prototype.hasOwnProperty.call(this.submenuVisibility, icon.label) ? this.submenuVisibility[icon.label] : false
 			}
 		},
-		allIcons() {
-			return [...this.icons, {
-				label: t('text', 'Insert image'),
-				class: 'icon-image',
-			}, {
-				label: t('text', 'Formatting help'),
-				class: 'icon-help',
-				click: () => {
-					this.$emit('show-help')
-				},
-			}]
-		},
 		childPopoverMenu() {
 			return (icons, parent) => {
 				return icons.map(icon => {
@@ -267,8 +256,7 @@ export default {
 			this.forceRecompute // eslint-disable-line
 			this.windowWidth // eslint-disable-line
 			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 200 ? this.$refs.menubar.clientWidth : 200
-			const iconCount = Math.max((Math.floor(menuBarWidth / 44) - 2), 0)
-			return iconCount - 1
+			return Math.max((Math.floor(menuBarWidth / 44) - 1), 0)
 		},
 		imagePath() {
 			return this.lastImagePath
@@ -303,7 +291,7 @@ export default {
 		},
 		clickIcon(icon) {
 			if (icon.click) {
-				return icon.click()
+				return icon.click(this)
 			}
 			// Some actions run themselves.
 			// others still need to have .run() called upon them.
@@ -318,6 +306,10 @@ export default {
 		},
 		hideChildMenu({ label }) {
 			this.$set(this.submenuVisibility, label, false)
+		},
+		hasSubmenu(icon) {
+			return icon.class === 'icon-emoji'
+				|| icon.children
 		},
 		toggleChildMenu({ label }) {
 			const lastValue = Object.prototype.hasOwnProperty.call(this.submenuVisibility, label) ? this.submenuVisibility[label] : false
