@@ -27,7 +27,7 @@ export default [
 		keyModifiers: ['ctrl'],
 		class: 'icon-undo',
 		action: (command) => command.undo(),
-		priority: 3,
+		priority: 5,
 	},
 	{
 		label: t('text', 'Redo'),
@@ -46,7 +46,7 @@ export default [
 		action: (command) => {
 			return command.toggleBold()
 		},
-		priority: 4,
+		priority: 6,
 	},
 	{
 		label: t('text', 'Italic'),
@@ -215,7 +215,7 @@ export default [
 				},
 			},
 		],
-		priority: 5,
+		priority: 3,
 	},
 	{
 		label: t('text', 'Code block'),
@@ -241,7 +241,7 @@ export default [
 		action: (command, emojiObject) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 6,
+		priority: 4,
 	},
 	{
 		label: t('text', 'Insert image'),
