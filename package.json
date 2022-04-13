@@ -10,7 +10,6 @@
 		}
 	],
 	"license": "agpl",
-	"private": true,
 	"files": [
 		"package/",
 		"css/",
