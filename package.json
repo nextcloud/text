@@ -1,7 +1,7 @@
 {
 	"name": "@nextcloud/text",
 	"description": "Collaborative document editing",
-	"version": "0.1.0-beta.1",
+	"version": "0.1.0-beta.2",
 	"authors": [
 		{
 			"name": "Julius Härtl",
@@ -13,7 +13,7 @@
 	"files": [
 		"package/",
 		"css/",
-		"img/"
+		"img/*.*"
 	],
 	"scripts": {
 		"dev": "NODE_ENV=development webpack --config webpack.js",
