@@ -27,6 +27,7 @@ export default [
 		keyModifiers: ['ctrl'],
 		class: 'icon-undo',
 		action: (command) => command.undo(),
+		priority: 3,
 	},
 	{
 		label: t('text', 'Redo'),
@@ -34,6 +35,7 @@ export default [
 		keyModifiers: ['ctrl'],
 		class: 'icon-redo',
 		action: (command) => command.redo(),
+		priority: 11,
 	},
 	{
 		label: t('text', 'Bold'),
@@ -44,6 +46,7 @@ export default [
 		action: (command) => {
 			return command.toggleBold()
 		},
+		priority: 4,
 	},
 	{
 		label: t('text', 'Italic'),
@@ -54,6 +57,7 @@ export default [
 		action: (command) => {
 			return command.toggleItalic()
 		},
+		priority: 7,
 	},
 	{
 		label: t('text', 'Underline'),
@@ -64,6 +68,7 @@ export default [
 		action: (command) => {
 			return command.toggleUnderline()
 		},
+		priority: 14,
 	},
 	{
 		label: t('text', 'Strikethrough'),
@@ -74,6 +79,7 @@ export default [
 		action: (command) => {
 			return command.toggleStrike()
 		},
+		priority: 15,
 	},
 	{
 		label: t('text', 'Headings'),
@@ -130,6 +136,7 @@ export default [
 				},
 			},
 		],
+		priority: 1,
 	},
 	{
 		label: t('text', 'Unordered list'),
@@ -140,6 +147,7 @@ export default [
 		action: (command) => {
 			return command.toggleBulletList()
 		},
+		priority: 8,
 	},
 	{
 		label: t('text', 'Ordered list'),
@@ -150,12 +158,14 @@ export default [
 		action: (command) => {
 			return command.toggleOrderedList()
 		},
+		priority: 9,
 	},
 	{
 		label: t('text', 'ToDo list'),
 		class: 'icon-tasklist',
 		isActive: 'taskList',
 		action: (command) => command.toggleTaskList(),
+		priority: 10,
 	},
 	{
 		label: t('text', 'Blockquote'),
@@ -166,6 +176,7 @@ export default [
 		action: (command) => {
 			return command.toggleBlockquote()
 		},
+		priority: 12,
 	},
 	{
 		label: t('text', 'Callouts'),
@@ -204,6 +215,7 @@ export default [
 				},
 			},
 		],
+		priority: 5,
 	},
 	{
 		label: t('text', 'Code block'),
@@ -212,6 +224,7 @@ export default [
 		action: (command) => {
 			return command.toggleCodeBlock()
 		},
+		priority: 13,
 	},
 	{
 		label: t('text', 'Table'),
@@ -220,6 +233,7 @@ export default [
 		action: (command) => {
 			return command.insertTable()
 		},
+		priority: 16,
 	},
 	{
 		label: t('text', 'Emoji picker'),
@@ -227,5 +241,17 @@ export default [
 		action: (command, emojiObject) => {
 			return command.emoji(emojiObject)
 		},
+		priority: 6,
+	},
+	{
+		label: t('text', 'Insert image'),
+		class: 'icon-image',
+		priority: 2,
+	},
+	{
+		label: t('text', 'Formatting help'),
+		class: 'icon-help',
+		click: (view) => view.$emit('show-help'),
+		priority: 17,
 	},
 ]
