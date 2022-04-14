@@ -90,7 +90,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Úspešné",
     "Warning" : "Varovanie",
-    "Danger" : "Nebezpečenstvo",
+    "Danger" : "Nebezpečie",
     "Emoji picker" : "Výber emotikonov",
     "Currently active users:" : "Aktuálne aktívny užívatelia",
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"]
