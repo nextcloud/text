@@ -255,8 +255,14 @@ export default {
 		iconCount() {
 			this.forceRecompute // eslint-disable-line
 			this.windowWidth // eslint-disable-line
-			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 200 ? this.$refs.menubar.clientWidth : 200
-			return Math.max((Math.floor(menuBarWidth / 44) - 1), 0)
+			const menuBarWidth = this.$refs.menubar && this.$refs.menubar.clientWidth > 200
+				? this.$refs.menubar.clientWidth
+				: 200
+			// leave some buffer - this is necessary so the bar does not wrap during resizing
+			const spaceToFill = menuBarWidth - 4
+			const slots = Math.floor(spaceToFill / 44)
+			// Leave one slot empty for the three dot menu
+			return slots - 1
 		},
 		imagePath() {
 			return this.lastImagePath
