@@ -44,6 +44,18 @@ const Image = TiptapImage.extend({
 		return [
 			new Plugin({
 				props: {
+					handleDrop: (view, event, slice) => {
+						const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+						const customEvent = new CustomEvent('image-drop', {
+							bubbles: true,
+							detail: {
+								files: event.dataTransfer.files,
+								position: coordinates.pos,
+							},
+						})
+						event.target.dispatchEvent(customEvent)
+						return true
+					},
 					handlePaste: (view, event, slice) => {
 						// only prevent the paste if it contains files
 						if (event.clipboardData.files && event.clipboardData.files.length > 0) {
