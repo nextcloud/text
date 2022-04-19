@@ -150,7 +150,7 @@ class ImageController extends Controller {
 					$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileResource, $userId);
 				}
-				if (isset($insertResult['error'])) {
+				if (isset($uploadResult['error'])) {
 					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
 				} else {
 					return new DataResponse($uploadResult);
@@ -220,7 +220,7 @@ class ImageController extends Controller {
 			return $imageFile !== null
 				? new DataDownloadResponse(
 					$imageFile->getContent(),
-					Http::STATUS_OK,
+					(string) Http::STATUS_OK,
 					$this->getSecureMimeType($imageFile->getMimeType())
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
