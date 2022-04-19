@@ -31,6 +31,7 @@ import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Dropcursor from '@tiptap/extension-dropcursor'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Table from './nodes/Table'
 import TableCell from './nodes/TableCell'
@@ -158,6 +159,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 				placeholder: t('text', 'Add notes, lists or links …'),
 				showOnlyWhenEditable: true,
 			}),
+			Dropcursor,
 			TrailingNode,
 		]
 	} else {
