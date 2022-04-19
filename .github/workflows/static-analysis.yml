@@ -16,7 +16,7 @@ jobs:
           - name: Set up php
             uses: shivammathur/setup-php@master
             with:
-                php-version: {{ matrix.php-version }}
+                php-version: ${{ matrix.php-version }}
                 tools: composer:v1
                 coverage: none
           - name: Install dependencies
