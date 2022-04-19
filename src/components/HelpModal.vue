@@ -1,5 +1,5 @@
 <template>
-	<Modal size="large"
+	<Modal size="normal"
 		:title="t('text', 'Formatting help')"
 		@close="$emit('close')">
 		<h2>{{ t('text', 'Formatting help') }}</h2>
@@ -204,26 +204,15 @@ export default {
 
 <style lang="scss" scoped>
 	::v-deep .modal-wrapper {
-		// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
-		.prev, .next {
-			display: none !important;
-		}
-
 		.modal-container {
-			// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
-			overflow: auto;
-			// Diverge from upstream modal styling
 			padding: 30px 40px 20px;
 			user-select: text;
 		}
 
-		// TODO: can be removed once migrated to @nextcloud-vue >= 5.0
-		// Make modal full screen on mobile
+		// Remove padding-right on mobile, screen might not be wide enough
 		@media only screen and (max-width: 512px) {
 			.modal-container {
-				position: absolute;
-				top: var(--header-height);
-				height: calc(100% - var(--header-height));
+				padding: 30px 0px 20px 40px;
 			}
 		}
 	}
