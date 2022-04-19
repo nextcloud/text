@@ -129,6 +129,7 @@ import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 import ClickOutside from 'vue-click-outside'
 import { getCurrentUser } from '@nextcloud/auth'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {
 	name: 'MenuBar',
@@ -271,6 +272,8 @@ export default {
 	},
 	mounted() {
 		window.addEventListener('resize', this.getWindowWidth)
+		subscribe('files:sidebar:opened', this.redrawAfterTransition)
+		subscribe('files:sidebar:closed', this.redrawAfterTransition)
 		this.checkInterval = setInterval(() => {
 			const isWidthAvailable = (this.$refs.menubar && this.$refs.menubar.clientWidth > 0)
 			if (this.isRichEditor && isWidthAvailable) {
@@ -284,8 +287,14 @@ export default {
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)
+		unsubscribe('files:sidebar:opened', this.redrawAfterTransition)
+		unsubscribe('files:sidebar:closed', this.redrawAfterTransition)
 	},
 	methods: {
+		redrawAfterTransition() {
+			// wait for transition to complete (100ms)
+			setTimeout(this.redrawMenuBar, 110)
+		},
 		redrawMenuBar() {
 			this.$nextTick(() => {
 				this.getWindowWidth()
