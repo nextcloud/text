@@ -40,7 +40,7 @@
 				@image-paste="onPaste"
 				@dragover.prevent.stop="draggedOver = true"
 				@dragleave.prevent.stop="draggedOver = false"
-				@drop.prevent.stop="onEditorDrop">
+				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:editor="tiptap"
@@ -571,29 +571,29 @@ export default {
 			this.uploadImageFiles(e.detail.files)
 		},
 		onEditorDrop(e) {
-			this.uploadImageFiles(e.dataTransfer.files)
+			this.uploadImageFiles(e.detail.files, e.detail.position)
 			this.draggedOver = false
 		},
-		uploadImageFiles(files) {
+		uploadImageFiles(files, position = null) {
 			if (!files) {
 				return
 			}
 			this.uploadingImages = true
 			const uploadPromises = [...files].map((file) => {
-				return this.uploadImageFile(file)
+				return this.uploadImageFile(file, position)
 			})
 			Promise.all(uploadPromises).then((values) => {
 				this.uploadingImages = false
 			})
 		},
-		async uploadImageFile(file) {
+		async uploadImageFile(file, position = null) {
 			if (!IMAGE_MIMES.includes(file.type)) {
 				showError(t('text', 'Image file format not supported'))
 				return
 			}
 
 			return this.syncService.uploadImage(file).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, position)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -610,12 +610,16 @@ export default {
 				this.uploadingImages = false
 			})
 		},
-		insertAttachmentImage(name, fileId) {
+		insertAttachmentImage(name, fileId, position = null) {
 			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
-			this.tiptap.chain().setImage({ src, alt }).focus().run()
+			if (position) {
+				this.tiptap.chain().focus(position).setImage({ src, alt }).focus().run()
+			} else {
+				this.tiptap.chain().setImage({ src, alt }).focus().run()
+			}
 		},
 	},
 }
