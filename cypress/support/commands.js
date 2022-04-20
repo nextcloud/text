@@ -26,7 +26,9 @@ import regeneratorRuntime from "regenerator-runtime";
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 
-Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
+Cypress.Commands.add('login', (user, password, { route, onBeforeLoad } = {}) => {
+	route = route || '/apps/files'
+
 	cy.session(user, function () {
 		cy.visit(route)
 		cy.get('input[name=user]').type(user)
@@ -35,7 +37,7 @@ Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
 		cy.url().should('include', route)
 	})
 	// in case the session already existed but we are on a different route...
-	cy.visit(route)
+	cy.visit(route, { onBeforeLoad })
 })
 
 Cypress.Commands.add('logout', (route = '/') => {
@@ -138,25 +140,25 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 })
 
 Cypress.Commands.add('createFolder', dirName => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().createDirectory(dirName)
 	})
 })
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().move(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().copy(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OCA?.Files?.App?.fileList?.reload()
 	})
 })
@@ -164,6 +166,10 @@ Cypress.Commands.add('reloadFileList', () => {
 Cypress.Commands.add('openFile', fileName => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click()
 	cy.wait(250)
+})
+
+Cypress.Commands.add('getFile', fileName => {
+	return cy.get(`#fileList tr[data-file="${fileName}"]`)
 })
 
 Cypress.Commands.add('deleteFile', fileName => {
