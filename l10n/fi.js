@@ -30,7 +30,6 @@ OC.L10N.register(
     "Blockquote" : "Lohkolainaus",
     "Code block" : "Koodilohko",
     "Insert emoji" : "Lisää emoji",
-    "Insert image" : "Lisää kuva",
     "Insert an image" : "Lisää kuva",
     "Link file" : "Linkitä tiedosto",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Heading 5" : "Otsikko 5",
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
+    "Insert image" : "Lisää kuva",
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"]
 },

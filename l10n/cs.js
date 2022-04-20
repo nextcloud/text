@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Vložit emotikonu",
     "Upload from computer" : "Nahrát z počítače",
     "Insert from Files" : "Vložit ze Souborů",
-    "Insert image" : "Vložit obrázek",
     "Insert an image" : "Vložit obrázek",
     "Alt" : "Alt",
     "Update Link" : "Aktualizovat odkaz",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Danger" : "Nebezpečí",
     "Table" : "Tabulka",
     "Emoji picker" : "Volba emotikony",
+    "Insert image" : "Vložit obrázek",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"]
 },

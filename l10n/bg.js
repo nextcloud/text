@@ -31,7 +31,6 @@ OC.L10N.register(
     "Blockquote" : "Блоков цитат",
     "Code block" : "Кодов блок",
     "Insert emoji" : "Вмъкване на емотикон",
-    "Insert image" : "Вмъкване на изображение",
     "Insert an image" : "Вмъкване на изображение",
     "Link file" : "Файл с връзка",
     "Remove Link" : "Премахване на връзка",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Heading 5" : "Заглавие 5",
     "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
+    "Insert image" : "Вмъкване на изображение",
     "Currently active users:" : "Потребители, които са активни в момента:",
     "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"]
 },

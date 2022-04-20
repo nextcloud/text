@@ -37,7 +37,6 @@ OC.L10N.register(
     "Code block" : "コードブロック",
     "Insert emoji" : "絵文字を挿入",
     "Upload from computer" : "コンピュータからアップロード",
-    "Insert image" : "画像の挿入",
     "Insert an image" : "画像を追加",
     "Alt" : "Alt",
     "Add Link" : "リンクを追加",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Heading 5" : "見出し5",
     "ToDo list" : "ToDo リスト",
     "Emoji picker" : "絵文字選択",
+    "Insert image" : "画像の挿入",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"]
 },

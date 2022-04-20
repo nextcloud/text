@@ -58,7 +58,6 @@ OC.L10N.register(
     "Insert emoji" : "Txertatu emojia",
     "Upload from computer" : "Kargatu ordenagailutik",
     "Insert from Files" : "Txertatu Fitxategi-tik",
-    "Insert image" : "Txertatu irudia",
     "Insert an image" : "Txertatu irudi bat",
     "Alt" : "Alt",
     "Update Link" : "Eguneratu esteka",
@@ -91,6 +90,7 @@ OC.L10N.register(
     "Warning" : "Oharra",
     "Table" : "Taula",
     "Emoji picker" : " Emotikono-hautatzailea",
+    "Insert image" : "Txertatu irudia",
     "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"]
 },

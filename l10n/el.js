@@ -65,7 +65,6 @@ OC.L10N.register(
     "Insert emoji" : "Εισαγωγή emoji",
     "Upload from computer" : "Μεταφόρτωση από υπολογιστή",
     "Insert from Files" : "Εισαγωγή από Αρχεία",
-    "Insert image" : "Εισαγωγή εικόνας",
     "Insert an image" : "Εισαγωγή εικόνας",
     "Alt" : "Alt",
     "Update Link" : "Ενημέρωση συνδέσμου",
@@ -92,6 +91,7 @@ OC.L10N.register(
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
     "Emoji picker" : "Επιλογέας emoji",
+    "Insert image" : "Εισαγωγή εικόνας",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"]
 },

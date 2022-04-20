@@ -28,7 +28,6 @@ OC.L10N.register(
     "Ordered list" : "רשימה ממוינת",
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
-    "Insert image" : "הוספת תמונה",
     "Insert an image" : "הוספת תמונה",
     "Link file" : "קישור לקובץ",
     "Select file to link to" : "לבחור קובץ לקשר אליו",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
     "ToDo list" : "רשימת מטלות",
+    "Insert image" : "הוספת תמונה",
     "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"]
 },
