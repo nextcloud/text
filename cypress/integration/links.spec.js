@@ -49,7 +49,7 @@ describe('test link marks', function() {
 
 					cy.get('@winOpen')
 						.should('have.been.calledOnce')
-						.should('have.been.calledWith', `/index.php/f/${id}`)
+						.should('have.been.calledWithMatch', new RegExp(`/f/${id}$`))
 				})
 		})
 
