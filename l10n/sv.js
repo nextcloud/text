@@ -55,7 +55,6 @@ OC.L10N.register(
     "Insert emoji" : "Infoga emoji",
     "Upload from computer" : "Ladda upp från dator",
     "Insert from Files" : "Infoga från Filer",
-    "Insert image" : "Infoga bild",
     "Insert an image" : "Infoga en bild",
     "Alt" : "Alt",
     "Update Link" : "Uppdatera länk",
@@ -77,6 +76,7 @@ OC.L10N.register(
     "Heading 5" : "Rubrik 5",
     "ToDo list" : "Att göra lista",
     "Emoji picker" : "Emojiväljare",
+    "Insert image" : "Infoga bild",
     "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"]
 },

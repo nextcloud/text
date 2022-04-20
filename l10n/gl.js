@@ -30,7 +30,6 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
-    "Insert image" : "Inserir unha imaxe",
     "Insert an image" : "Inserir unha imaxe",
     "Link file" : "Ligar un ficheiro",
     "Select file to link to" : "Seleccione o ficheiro ao que ligar",
@@ -47,6 +46,7 @@ OC.L10N.register(
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
     "ToDo list" : "Lista «para facer»",
+    "Insert image" : "Inserir unha imaxe",
     "Currently active users:" : "Usuarios activos actualmente:",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"]
 },
