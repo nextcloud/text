@@ -35,7 +35,6 @@ OC.L10N.register(
     "Blockquote" : "Citata",
     "Code block" : "Kodo blokas",
     "Insert emoji" : "Įterpti šypsenėlę",
-    "Insert image" : "Įterpti paveikslą",
     "Insert an image" : "Įterpti paveikslą",
     "Update Link" : "Atnaujinti nuorodą",
     "Add Link" : "Pridėti nuorodą",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Heading 5" : "Antraštė 5",
     "ToDo list" : "Užduočių sąrašas",
     "Emoji picker" : "Šypsenėlių parinkiklis",
+    "Insert image" : "Įterpti paveikslą",
     "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"]
 },

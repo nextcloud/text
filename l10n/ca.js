@@ -26,7 +26,6 @@ OC.L10N.register(
     "Ordered list" : "Llista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloc de codi",
-    "Insert image" : "Inserir imatge",
     "Insert an image" : "Insereix una imatge",
     "Link file" : "Fitxer d'enllaç",
     "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
     "ToDo list" : "Llista tasques pendents",
+    "Insert image" : "Inserir imatge",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"]
 },
 "nplurals=2; plural=(n != 1);");

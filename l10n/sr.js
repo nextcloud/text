@@ -26,7 +26,6 @@ OC.L10N.register(
     "Ordered list" : "Уређена листа",
     "Blockquote" : "Издвојени цитат",
     "Code block" : "Блок са изворним кôдом",
-    "Insert image" : "Убаци слику",
     "Insert an image" : "Убаци слику",
     "Link file" : "Увежи фајл",
     "Select file to link to" : "Одаберите фајл на који да направите везу",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Heading 4" : "Наслов 4",
     "Heading 5" : "Наслов 5",
     "ToDo list" : "ToDo листа",
+    "Insert image" : "Убаци слику",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"]
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

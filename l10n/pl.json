@@ -64,7 +64,6 @@
     "Insert emoji" : "Wstaw emoji",
     "Upload from computer" : "Wyślij z komputera",
     "Insert from Files" : "Wstaw z Plików",
-    "Insert image" : "Wstaw obraz",
     "Insert an image" : "Wstaw obraz",
     "Alt" : "Alt",
     "Update Link" : "Aktualizuj link",
@@ -100,6 +99,7 @@
     "Danger" : "Zagrożenie",
     "Table" : "Tabela",
     "Emoji picker" : "Selektor emoji",
+    "Insert image" : "Wstaw obraz",
     "Currently active users:" : "Aktualnie aktywni użytkownicy:",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"]
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"

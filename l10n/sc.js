@@ -31,7 +31,6 @@ OC.L10N.register(
     "Blockquote" : "Mentovu",
     "Code block" : "Blocu de còdighe",
     "Insert emoji" : "Inserta·nche una carighedda",
-    "Insert image" : "Inserta·nche imàgine",
     "Insert an image" : "Inserta·nche un'imàgine",
     "Link file" : "Ligòngiu a archìviu",
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Heading 5" : "Intestatzione 5",
     "ToDo list" : "Cosas de fàghere",
     "Emoji picker" : "Sèberu de carigheddas",
+    "Insert image" : "Inserta·nche imàgine",
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"]
 },

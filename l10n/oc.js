@@ -27,7 +27,6 @@ OC.L10N.register(
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
     "Insert emoji" : "Inserir emoji",
-    "Insert image" : "Inserir imatge",
     "Insert an image" : "Inserir un imatge",
     "Link file" : "Ligam fichièr",
     "Remove Link" : "Suprimir ligam",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Heading 5" : "Títol 5",
     "ToDo list" : "Lista a far",
     "Emoji picker" : "Selector emoji",
+    "Insert image" : "Inserir imatge",
     "Currently active users:" : "Utilizaires actius :"
 },
 "nplurals=2; plural=(n > 1);");
