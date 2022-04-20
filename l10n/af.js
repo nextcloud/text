@@ -22,7 +22,6 @@ OC.L10N.register(
     "Unordered list" : "Ongesorteerde lys",
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
-    "Insert image" : "Voer beeld in",
     "Insert an image" : "Voer ’n beeld in",
     "Link file" : "Koppel lêer",
     "Select file to link to" : "Kies lêer om na te koppel",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "ToDo list" : "Moet-doen-lys",
+    "Insert image" : "Voer beeld in",
     "Currently active users:" : "Gebruikers wat tans aktief is:"
 },
 "nplurals=2; plural=(n != 1);");

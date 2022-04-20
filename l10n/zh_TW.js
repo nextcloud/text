@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "插入表情符號",
     "Upload from computer" : "從電腦上傳",
     "Insert from Files" : "從檔案插入",
-    "Insert image" : "插入影像",
     "Insert an image" : "插入圖片",
     "Alt" : "Alt",
     "Update Link" : "更新連結",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Danger" : "危險",
     "Table" : "表格",
     "Emoji picker" : "表情符號挑選器",
+    "Insert image" : "插入影像",
     "Currently active users:" : "目前活動中的使用者：",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"]
 },

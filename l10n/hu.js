@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Emodzsi beszúrása",
     "Upload from computer" : "Feltöltés a számítógépről",
     "Insert from Files" : "Beillesztés a Fájlokból",
-    "Insert image" : "Kép beszúrása",
     "Insert an image" : "Egy kép beszúrása",
     "Alt" : "Alt",
     "Update Link" : "Hivatkozás frissítése",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Danger" : "Veszély",
     "Table" : "Táblázat",
     "Emoji picker" : "Emodzsiválasztó",
+    "Insert image" : "Kép beszúrása",
     "Currently active users:" : "Jelenleg aktív felhasználók:",
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"]
 },

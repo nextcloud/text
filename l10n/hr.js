@@ -31,7 +31,6 @@ OC.L10N.register(
     "Blockquote" : "Oblikovano navođenje",
     "Code block" : "Odjeljak s kodom",
     "Insert emoji" : "Umetni emoji",
-    "Insert image" : "Umetni sliku",
     "Insert an image" : "Umetni sliku",
     "Link file" : "Poveznica datoteke",
     "Select file to link to" : "Odaberi datoteku za povezivanje",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Heading 5" : "Naslov 5",
     "ToDo list" : "Popis zadataka",
     "Emoji picker" : "Birač emojija",
+    "Insert image" : "Umetni sliku",
     "Currently active users:" : "Trenutno aktivni korisnici:",
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"]
 },

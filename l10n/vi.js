@@ -31,7 +31,6 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Code block" : "Khối mã",
     "Insert emoji" : "Chèn emoji",
-    "Insert image" : "Chèn ảnh",
     "Insert an image" : "Chèn ảnh",
     "Link file" : "Liên kết tệp tin",
     "Select file to link to" : "Chọn tệp để liên kết đến",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Heading 5" : "Đầu đề 5",
     "ToDo list" : "Cần làm",
     "Emoji picker" : "Trình chọn emoji",
+    "Insert image" : "Chèn ảnh",
     "Currently active users:" : "Người dùng hiện đang hoạt động:",
     "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"]
 },

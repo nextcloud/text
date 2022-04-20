@@ -26,7 +26,6 @@ OC.L10N.register(
     "Ordered list" : "Raðaður listi",
     "Blockquote" : "Tilvitnun",
     "Code block" : "Kóðablokk",
-    "Insert image" : "Setja inn mynd",
     "Insert an image" : "Setja inn mynd",
     "Link file" : "Tengja skrá",
     "Select file to link to" : "Veldu skrá til að tengja í",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Heading 4" : "Fyrirsögn 4",
     "Heading 5" : "Fyrirsögn 5",
     "ToDo list" : "Verkefnalisti",
+    "Insert image" : "Setja inn mynd",
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"]
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

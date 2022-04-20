@@ -64,7 +64,6 @@ OC.L10N.register(
     "Insert emoji" : "Вставить emoji",
     "Upload from computer" : "Загрузить с компьютера",
     "Insert from Files" : "Вставить из файлов",
-    "Insert image" : "Вставить изображение",
     "Insert an image" : "Вставить изображение",
     "Alt" : "Alt",
     "Update Link" : "Обновить ссылку",
@@ -86,6 +85,7 @@ OC.L10N.register(
     "Heading 5" : "Заголовок 5",
     "ToDo list" : "Список задач",
     "Emoji picker" : "Выбор эмодзи",
+    "Insert image" : "Вставить изображение",
     "Currently active users:" : "Текущие активные пользователи:",
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"]
 },
