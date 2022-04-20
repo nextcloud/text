@@ -166,6 +166,10 @@ Cypress.Commands.add('openFile', fileName => {
 	cy.wait(250)
 })
 
+Cypress.Commands.add('getFile', fileName => {
+	return cy.get(`#fileList tr[data-file="${fileName}"]`)
+})
+
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
