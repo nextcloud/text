@@ -23,7 +23,6 @@
     "Ordered list" : "Ordnet liste",
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
-    "Insert image" : "Sett inn bilde",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
@@ -35,6 +34,7 @@
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
     "ToDo list" : "Gjøreliste",
+    "Insert image" : "Sett inn bilde",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

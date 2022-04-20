@@ -62,7 +62,6 @@ OC.L10N.register(
     "Insert emoji" : "插入 emoji",
     "Upload from computer" : "从电脑上传",
     "Insert from Files" : "从文件插入",
-    "Insert image" : "插入图片",
     "Insert an image" : "插入一张图片",
     "Alt" : "Alt",
     "Update Link" : "更新链接",
@@ -84,6 +83,7 @@ OC.L10N.register(
     "Heading 5" : "标题 5",
     "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
+    "Insert image" : "插入图片",
     "Currently active users:" : "当前活跃用户：",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"]
 },

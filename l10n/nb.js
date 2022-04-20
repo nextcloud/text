@@ -25,7 +25,6 @@ OC.L10N.register(
     "Ordered list" : "Ordnet liste",
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
-    "Insert image" : "Sett inn bilde",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
@@ -37,6 +36,7 @@ OC.L10N.register(
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
     "ToDo list" : "Gjøreliste",
+    "Insert image" : "Sett inn bilde",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"]
 },
 "nplurals=2; plural=(n != 1);");

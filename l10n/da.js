@@ -33,7 +33,6 @@ OC.L10N.register(
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
     "Insert emoji" : "Indsæt emoji",
-    "Insert image" : "Indsæt billede",
     "Insert an image" : "Indsæt et billede",
     "Alt" : "Alt",
     "Update Link" : "Opdater link",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "Heading 5" : "Overskrift 5",
     "ToDo list" : "To-Do liste",
     "Emoji picker" : "Emoji vælger",
+    "Insert image" : "Indsæt billede",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"]
 },

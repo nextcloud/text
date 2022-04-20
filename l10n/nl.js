@@ -62,7 +62,6 @@ OC.L10N.register(
     "Insert emoji" : "Invoegen emoji",
     "Upload from computer" : "Uploaden vanaf computer",
     "Insert from Files" : "Invoegen vanuit Bestanden",
-    "Insert image" : "Invoegen afbeelding",
     "Insert an image" : "Voeg een afbeelding in",
     "Alt" : "Alt",
     "Update Link" : "Link bijwerken",
@@ -84,6 +83,7 @@ OC.L10N.register(
     "Heading 5" : "Kop 5",
     "ToDo list" : "ToDo overzicht",
     "Emoji picker" : "Emoji kiezer",
+    "Insert image" : "Invoegen afbeelding",
     "Currently active users:" : "Momenteel actieve gebruikers:",
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"]
 },

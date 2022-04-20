@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Emoji ekle",
     "Upload from computer" : "Bilgisayardan yükle",
     "Insert from Files" : "Dosyalar uygulamasından ekle",
-    "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",
     "Alt" : "Alt",
     "Update Link" : "Bağlantıyı güncelle",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Danger" : "Tehlikeli",
     "Table" : "Tablo",
     "Emoji picker" : "Emoji seçici",
+    "Insert image" : "Görsel ekle",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"]
 },

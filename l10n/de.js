@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Emoji einfügen",
     "Upload from computer" : "Vom Computer hochladen",
     "Insert from Files" : "Aus Dateien einfügen",
-    "Insert image" : "Bild einfügen",
     "Insert an image" : "Ein Bild einfügen",
     "Alt" : "Alt",
     "Update Link" : "Link aktualisieren",
@@ -102,6 +101,7 @@ OC.L10N.register(
     "Danger" : "Achtung",
     "Table" : "Tabelle",
     "Emoji picker" : "Emoji-Auswahl",
+    "Insert image" : "Bild einfügen",
     "Currently active users:" : "Aktuell aktive Benutzer:",
     "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "]
 },
