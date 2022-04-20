@@ -21,15 +21,13 @@ describe('test link marks', function() {
 	})
 
 	beforeEach(function() {
-		cy.login(randUser, 'password')
-
-		cy.visit('/apps/files', {
+		cy.login(randUser, 'password', {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
 
 			},
-		}).as('page')
+		})
 
 		cy.openFile(fileName)
 	})
