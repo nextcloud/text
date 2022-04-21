@@ -30,8 +30,6 @@ use \InvalidArgumentException;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\DirectEditing\IManager;
 use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
@@ -42,7 +40,6 @@ use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
 use OCP\PreConditionNotMetException;
 use function json_encode;
-use OC\Files\Node\File;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Step;
@@ -54,11 +51,11 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\Constants;
 use OCP\Files\Folder;
-use OCP\Files\GenericFileException;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
+use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -258,7 +255,7 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $file
+	 * @param File $file
 	 * @param $documentId
 	 * @param $version
 	 * @param $autoaveDocument
@@ -463,7 +460,6 @@ class DocumentService {
 			return null;
 		}
 		return array_shift($locks);
-
 	}
 
 	/**
