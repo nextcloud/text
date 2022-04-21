@@ -86,11 +86,20 @@ describe('Image resolver', () => {
 		expect(url).toContain('/core/preview?fileId=7')
 	})
 
-	it('uses fileId for public preview', () => {
-		const src = '/Media/photo.jpeg?fileId=7#mimetype=image%2Fjpeg&hasPreview=true'
-		const resolver = new ImageResolver({ shareToken: 'SHARE_TOKEN' })
+	it('uses .png endpoint if no fileId is given', () => {
+		const src = '/Media/photo.jpeg?mimetype=image%2Fjpeg&hasPreview=true'
+		const resolver = new ImageResolver({ user })
 		const [url] = resolver.resolve(src)
-		expect(url).toContain('/apps/files_sharing/publicpreview/SHARE_TOKEN?fileId=7')
+		expect(url).toBe('/nc-webroot/core/preview.png?file=%2FMedia%2Fphoto.jpeg&x=1024&y=1024&a=true')
+	})
+
+	it('retrieves public preview by path', () => {
+		const src = '/Media/photo.jpeg?fileId=7#mimetype=image%2Fjpeg&hasPreview=true'
+		const resolver = new ImageResolver({
+			shareToken: 'SHARE_TOKEN'
+		})
+		const [url] = resolver.resolve(src)
+		expect(url).toBe('/nc-webroot/apps/files_sharing/publicpreview/SHARE_TOKEN?file=%2FMedia%2Fphoto.jpeg&x=1024&y=1024&a=true')
 	})
 
 	it('handles old .attachments urls via webdav with text API fallback', () => {

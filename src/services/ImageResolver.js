@@ -106,15 +106,19 @@ export default class ImageResolver {
 	#previewUrl(src) {
 		const imageFileId = getQueryVariable(src, 'fileId')
 		const path = this.#filePath(src)
-		const fileQuery = (imageFileId)
-			? `?fileId=${imageFileId}&file=${encodeURIComponent(path)}`
-			: `?file=${encodeURIComponent(path)}`
+		const fileQuery = `file=${encodeURIComponent(path)}`
 		const query = fileQuery + '&x=1024&y=1024&a=true'
-		if (this.#user) {
-			return generateUrl('/core/preview') + query
-		} else {
-			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}${query}`)
+		if (this.#user && imageFileId) {
+			return generateUrl(`/core/preview?fileId=${imageFileId}&${query}`)
 		}
+		if (this.#user) {
+			return generateUrl(`/core/preview.png?${query}`)
+		}
+		if (this.#shareToken) {
+			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}?${query}`)
+		}
+		console.error('No way to authenticate image retrival - need to be logged in or provide a token')
+		return src
 	}
 
 	#davUrl(src) {
