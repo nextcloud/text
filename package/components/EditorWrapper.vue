@@ -78,6 +78,7 @@
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
+				:rich-text-options="richTextOptions"
 				:is-rich-editor="isRichEditor" />
 		</div>
 
@@ -279,6 +280,11 @@ export default {
 		isRichEditor() {
 			return this.mime === 'text/markdown'
 		},
+		richTextOptions() {
+			return {
+				currentDirectory: this.currentDirectory,
+			}
+		},
 		fileExtension() {
 			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
 		},
@@ -442,7 +448,7 @@ export default {
 								}),
 							],
 							enableRichEditing: this.isRichEditor,
-							currentDirectory: this.currentDirectory,
+							...this.richTextOptions,
 						})
 						this.$editor.on('focus', () => {
 							this.$emit('focus')
