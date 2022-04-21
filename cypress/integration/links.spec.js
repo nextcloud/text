@@ -21,15 +21,13 @@ describe('test link marks', function() {
 	})
 
 	beforeEach(function() {
-		cy.login(randUser, 'password')
-
-		cy.visit('/apps/files', {
+		cy.login(randUser, 'password', {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
 
 			},
-		}).as('page')
+		})
 
 		cy.openFile(fileName)
 	})
@@ -51,7 +49,7 @@ describe('test link marks', function() {
 
 					cy.get('@winOpen')
 						.should('have.been.calledOnce')
-						.should('have.been.calledWith', `/index.php/f/${id}`)
+						.should('have.been.calledWithMatch', new RegExp(`/f/${id}$`))
 				})
 		})
 
