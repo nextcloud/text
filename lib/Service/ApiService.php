@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OC\Files\Node\File;
+use OCA\Text\AppInfo\Application;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
 use OCA\Text\VersionMismatchException;
@@ -37,6 +38,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
+use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\ILogger;
 use OCP\IRequest;
@@ -63,7 +65,6 @@ class ApiService {
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
 		try {
-			$readOnly = true;
 			/** @var File $file */
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
@@ -77,18 +78,13 @@ class ApiService {
 				} catch (NotFoundException $e) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				}
-
-				try {
-					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_UPDATE);
-					$readOnly = false;
-				} catch (NotFoundException $e) {
-				}
 			} elseif ($fileId) {
 				$file = $this->documentService->getFileById($fileId);
-				$readOnly = !$file->isUpdateable();
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
+
+			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessions($file->getId());
 			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
@@ -113,11 +109,23 @@ class ApiService {
 			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			$content = null;
 		}
+
+		$lockInfo = $this->documentService->getLockInfo($file);
+		if ($lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME) {
+			$lockInfo = null;
+		}
+
+		$isLocked = $this->documentService->lock($file->getId());
+		if (!$isLocked) {
+			$readOnly = true;
+		}
+
 		return new DataResponse([
 			'document' => $document,
 			'session' => $session,
 			'readOnly' => $readOnly,
-			'content' => $content
+			'content' => $content,
+			'lock' => $lockInfo,
 		]);
 	}
 
