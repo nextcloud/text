@@ -215,16 +215,19 @@ export default {
 				|| this.src.startsWith('text://')
 		},
 		previewUrl() {
-			const fileQuery = (this.imageFileId)
-				? `?fileId=${this.imageFileId}&file=${encodeURIComponent(this.imagePath)}`
-				: `.png?file=${encodeURIComponent(this.imagePath)}`
+			const fileQuery = `file=${encodeURIComponent(this.imagePath)}`
 			const query = fileQuery + '&x=1024&y=1024&a=true'
-
-			if (getCurrentUser()) {
-				return generateUrl('/core/preview') + query
-			} else {
-				return generateUrl(`/apps/files_sharing/publicpreview/${this.token}${query}`)
+			if (getCurrentUser() && this.imageFileId) {
+				return generateUrl(`/core/preview?fileId=${this.imageFileId}&${query}`)
 			}
+			if (getCurrentUser()) {
+				return generateUrl(`/core/preview.png?${query}`)
+			}
+			if (this.token) {
+				return generateUrl(`/apps/files_sharing/publicpreview/${this.token}?${query}`)
+			}
+			console.error('No way to authenticate image retrival - need to be logged in or provide a token')
+			return ''
 		},
 		mime() {
 			return getQueryVariable(this.src, 'mimetype')
