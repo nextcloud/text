@@ -32,6 +32,9 @@
 			<p v-else-if="hasConnectionIssue" class="msg">
 				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 			</p>
+			<p v-if="lock" class="msg msg-locked">
+				<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
+			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
 			<div v-if="tiptap"
@@ -106,7 +109,7 @@ import store from './../mixins/store'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
-
+import Lock from 'vue-material-design-icons/Lock'
 const EDITOR_PUSH_DEBOUNCE = 200
 
 const IMAGE_MIMES = [
@@ -132,6 +135,7 @@ export default {
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList'),
 		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal'),
+		Lock,
 	},
 	directives: {
 		Tooltip,
@@ -342,6 +346,7 @@ export default {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
+					this.lock = this.syncService.lock
 					localStorage.setItem('nick', this.currentSession.guestName)
 					this.$store.dispatch('setCurrentSession', this.currentSession)
 				})
@@ -691,6 +696,11 @@ export default {
 
 			.button {
 				margin-left: 8px;
+			}
+
+			&.msg-locked .lock-icon {
+				padding: 0 10px;
+				float: left;
 			}
 		}
 	}
