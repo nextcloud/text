@@ -30,6 +30,8 @@ use \InvalidArgumentException;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\DirectEditing\IManager;
 use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
@@ -256,20 +258,19 @@ class DocumentService {
 	}
 
 	/**
+	 * @param $file
 	 * @param $documentId
 	 * @param $version
 	 * @param $autoaveDocument
 	 * @param bool $force
 	 * @param bool $manualSave
 	 * @param null $shareToken
+	 * @param null $filePath
 	 * @return Document
 	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
-	 * @throws GenericFileException
-	 * @throws InvalidPathException
 	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws ShareNotFound
+	 * @throws \OCP\DB\Exception
 	 */
 	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
 		/** @var Document $document */
@@ -442,7 +443,27 @@ class DocumentService {
 		} else {
 			$readOnly = !$file->isUpdateable();
 		}
-		return $readOnly;
+
+		$lockInfo = $this->getLockInfo($file);
+		$isTextLock = (
+			$lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME
+		);
+
+		if ($isTextLock) {
+			return $readOnly;
+		}
+
+		return $readOnly || $lockInfo !== null;
+	}
+
+	public function getLockInfo($file): ?ILock {
+		try {
+			$locks = $this->lockManager->getLocks($file->getId());
+		} catch (NoLockProviderException|PreConditionNotMetException $e) {
+			return null;
+		}
+		return array_shift($locks);
+
 	}
 
 	/**

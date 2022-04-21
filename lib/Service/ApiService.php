@@ -110,6 +110,11 @@ class ApiService {
 			$content = null;
 		}
 
+		$lockInfo = $this->documentService->getLockInfo($file);
+		if ($lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME) {
+			$lockInfo = null;
+		}
+
 		$isLocked = $this->documentService->lock($fileId);
 		if (!$isLocked) {
 			$readOnly = true;
@@ -119,7 +124,8 @@ class ApiService {
 			'document' => $document,
 			'session' => $session,
 			'readOnly' => $readOnly,
-			'content' => $content
+			'content' => $content,
+			'lock' => $lockInfo,
 		]);
 	}
 
