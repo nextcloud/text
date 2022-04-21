@@ -93,6 +93,8 @@ class SyncService {
 
 		this.lastStepPush = Date.now()
 
+		this.lock = null
+
 		return this
 	}
 
@@ -102,6 +104,7 @@ class SyncService {
 		this.document = connectionData.document
 		this.document.readOnly = connectionData.readOnly
 		this.session = connectionData.session
+		this.lock = connectionData.lock
 		this.emit('opened', {
 			document: this.document,
 			session: this.session,

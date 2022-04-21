@@ -27,13 +27,19 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use \InvalidArgumentException;
+use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCP\DirectEditing\IManager;
+use OCP\Files\Lock\ILock;
+use OCP\Files\Lock\ILockManager;
+use OCP\Files\Lock\LockContext;
+use OCP\Files\Lock\NoLockProviderException;
+use OCP\Files\Lock\OwnerLockedException;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
+use OCP\PreConditionNotMetException;
 use function json_encode;
-use OC\Files\Node\File;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Step;
@@ -45,11 +51,11 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\Constants;
 use OCP\Files\Folder;
-use OCP\Files\GenericFileException;
 use OCP\Files\IAppData;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
+use OCP\Files\File;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -67,44 +73,18 @@ class DocumentService {
 	 */
 	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
-	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
-	 * @var DocumentMapper
-	 */
-	private $documentMapper;
-	/**
-	 * @var SessionMapper
-	 */
-	private $sessionMapper;
-	/**
-	 * @var ILogger
-	 */
-	private $logger;
-	/**
-	 * @var ShareManager
-	 */
-	private $shareManager;
-	/**
-	 * @var StepMapper
-	 */
-	private $stepMapper;
-	/**
-	 * @var IRootFolder
-	 */
-	private $rootFolder;
-	/**
-	 * @var ICache
-	 */
-	private $cache;
-	/**
-	 * @var IAppData
-	 */
-	private $appData;
+	private ?string $userId;
+	private DocumentMapper $documentMapper;
+	private SessionMapper $sessionMapper;
+	private ILogger $logger;
+	private ShareManager $shareManager;
+	private StepMapper $stepMapper;
+	private IRootFolder $rootFolder;
+	private ICache $cache;
+	private IAppData $appData;
+	private ILockManager $lockManager;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -115,7 +95,7 @@ class DocumentService {
 		$this->logger = $logger;
 		$this->shareManager = $shareManager;
 		$this->lockingProvider = $lockingProvider;
-
+		$this->lockManager = $lockManager;
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -275,20 +255,19 @@ class DocumentService {
 	}
 
 	/**
+	 * @param File $file
 	 * @param $documentId
 	 * @param $version
 	 * @param $autoaveDocument
 	 * @param bool $force
 	 * @param bool $manualSave
 	 * @param null $shareToken
+	 * @param null $filePath
 	 * @return Document
 	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
-	 * @throws GenericFileException
-	 * @throws InvalidPathException
 	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws ShareNotFound
+	 * @throws \OCP\DB\Exception
 	 */
 	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
 		/** @var Document $document */
@@ -305,7 +284,7 @@ class DocumentService {
 		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
 
-		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $force === false) {
+		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $lastMTime !== $file->getMtime() && $force === false) {
 			if (!$this->cache->get('document-save-lock-' . $documentId)) {
 				throw new DocumentSaveConflictException('File changed in the meantime from outside');
 			} else {
@@ -328,7 +307,13 @@ class DocumentService {
 		}
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
-			$file->putContent($autoaveDocument);
+			$this->lockManager->runInScope(new LockContext(
+				$file,
+				ILock::TYPE_APP,
+				Application::APP_NAME
+			), function () use ($file, $autoaveDocument) {
+				$file->putContent($autoaveDocument);
+			});
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
@@ -348,6 +333,8 @@ class DocumentService {
 	 */
 	public function resetDocument($documentId, $force = false): void {
 		try {
+			$this->unlock($documentId);
+
 			$document = $this->documentMapper->find($documentId);
 
 			if ($force || !$this->hasUnsavedChanges($document)) {
@@ -453,7 +440,26 @@ class DocumentService {
 		} else {
 			$readOnly = !$file->isUpdateable();
 		}
-		return $readOnly;
+
+		$lockInfo = $this->getLockInfo($file);
+		$isTextLock = (
+			$lockInfo && $lockInfo->getType() === ILock::TYPE_APP && $lockInfo->getOwner() === Application::APP_NAME
+		);
+
+		if ($isTextLock) {
+			return $readOnly;
+		}
+
+		return $readOnly || $lockInfo !== null;
+	}
+
+	public function getLockInfo($file): ?ILock {
+		try {
+			$locks = $this->lockManager->getLocks($file->getId());
+		} catch (NoLockProviderException|PreConditionNotMetException $e) {
+			return null;
+		}
+		return array_shift($locks);
 	}
 
 	/**
@@ -489,5 +495,42 @@ class DocumentService {
 		}
 
 		return true;
+	}
+
+	public function lock(int $fileId): bool {
+		if (!$this->lockManager->isLockProviderAvailable()) {
+			return true;
+		}
+
+		$file = $this->getFileById($fileId);
+		try {
+			$this->lockManager->lock(new LockContext(
+				$file,
+				ILock::TYPE_APP,
+				Application::APP_NAME
+			));
+		} catch (NoLockProviderException $e) {
+		} catch (OwnerLockedException $e) {
+			return false;
+		} catch (PreConditionNotMetException $e) {
+		}
+		return true;
+	}
+
+	public function unlock(int $fileId): void {
+		if (!$this->lockManager->isLockProviderAvailable()) {
+			return;
+		}
+
+		$file = $this->getFileById($fileId);
+		try {
+			$this->lockManager->unlock(new LockContext(
+				$file,
+				ILock::TYPE_APP,
+				Application::APP_NAME
+			));
+		} catch (NoLockProviderException $e) {
+		} catch (PreConditionNotMetException $e) {
+		}
 	}
 }
