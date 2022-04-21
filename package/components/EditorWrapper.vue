@@ -161,6 +161,7 @@ export default {
 				return this.$syncService
 			},
 		})
+		val.fileId = this.fileId
 
 		return val
 	},

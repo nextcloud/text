@@ -121,6 +121,7 @@ export default {
 	mixins: [
 		store,
 	],
+	inject: ['fileId'],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
 		return {
@@ -137,7 +138,7 @@ export default {
 		davUrl() {
 			if (getCurrentUser()) {
 				const uid = getCurrentUser().uid
-				const encoded = encodeURI(this.filePath)
+				const encoded = encodeURI(this.imagePath)
 				return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 			} else {
 				return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
@@ -149,10 +150,10 @@ export default {
 			}
 		},
 		imageUrl() {
-			if (this.src.startsWith('text://')) {
-				const documentId = this.currentSession?.documentId
-				const sessionId = this.currentSession?.id
-				const sessionToken = this.currentSession?.token
+			if (this.src.startsWith('text://') && this.currentSession) {
+				const documentId = this.currentSession.documentId
+				const sessionId = this.currentSession.id
+				const sessionToken = this.currentSession.token
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
 				if (getCurrentUser() || !this.token) {
 					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
@@ -193,12 +194,16 @@ export default {
 			return this.src.startsWith('data:')
 		},
 		basename() {
+			if (this.src.startsWith('text://')) {
+				const imageFileName = getQueryVariable(this.src, 'imageFileName')
+				return `.attachments.${this.fileId}/${imageFileName}`
+			}
 			return decodeURI(this.src.split('?')[0])
 		},
-		fileId() {
+		imageFileId() {
 			return getQueryVariable(this.src, 'fileId')
 		},
-		filePath() {
+		imagePath() {
 			const f = [
 				this.extension.options.currentDirectory,
 				this.basename,
@@ -207,11 +212,12 @@ export default {
 		},
 		hasPreview() {
 			return getQueryVariable(this.src, 'hasPreview') === 'true'
+				|| this.src.startsWith('text://')
 		},
 		previewUrl() {
-			const fileQuery = (this.fileId)
-				? `?fileId=${this.fileId}&file=${encodeURIComponent(this.filePath)}`
-				: `?file=${encodeURIComponent(this.filePath)}`
+			const fileQuery = (this.imageFileId)
+				? `?fileId=${this.imageFileId}&file=${encodeURIComponent(this.imagePath)}`
+				: `.png?file=${encodeURIComponent(this.imagePath)}`
 			const query = fileQuery + '&x=1024&y=1024&a=true'
 
 			if (getCurrentUser()) {
@@ -235,9 +241,8 @@ export default {
 				|| imageMimes.indexOf(this.mime) !== -1
 		},
 		internalLinkOrImage() {
-			const fileId = getQueryVariable(this.src, 'fileId')
-			if (fileId) {
-				return generateUrl('/f/' + fileId)
+			if (this.imageFileId) {
+				return generateUrl('/f/' + this.imageFileId)
 			}
 			return this.src
 		},
