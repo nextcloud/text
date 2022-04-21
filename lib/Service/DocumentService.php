@@ -287,7 +287,7 @@ class DocumentService {
 		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
 
-		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $force === false) {
+		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $lastMTime !== $file->getMtime() && $force === false) {
 			if (!$this->cache->get('document-save-lock-' . $documentId)) {
 				throw new DocumentSaveConflictException('File changed in the meantime from outside');
 			} else {
