@@ -72,6 +72,8 @@ class Cleanup extends TimedJob {
 				continue;
 			}
 
+			$this->documentService->unlock($session->getDocumentId());
+
 			try {
 				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
 				$this->documentService->resetDocument($session->getDocumentId());
