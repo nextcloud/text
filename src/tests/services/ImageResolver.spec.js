@@ -2,14 +2,17 @@ import ImageResolver from './../../services/ImageResolver.js'
 
 describe('Image resolver', () => {
 
+	const fileId = 4173
 	const session = {
-		documentId: 123,
+		documentId: fileId,
 		id: 456,
 		token: 'mySessionToken',
 	}
 	const user = {
 		uid: 'user-uid',
 	}
+	const currentDirectory = '/parentDir'
+	const shareToken = 'myShareToken'
 
 	it('is a class with one constructor argument', () => {
 		const resolver = new ImageResolver({})
@@ -20,7 +23,7 @@ describe('Image resolver', () => {
 		const src = 'text://image?imageFileName=group%20pic.jpg'
 		const resolver = new ImageResolver({ session })
 		const [url] = resolver.resolve(src)
-		expect(url).toBe('/nc-webroot/apps/text/image?documentId=123&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
 	})
 
 	it('handles text:// urls with token via Text API', () => {
@@ -30,7 +33,7 @@ describe('Image resolver', () => {
 			shareToken: 'myShareToken',
 		})
 		const [url] = resolver.resolve(src)
-		expect(url).toBe('/nc-webroot/apps/text/image?documentId=123&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
+		expect(url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
 	})
 
 	it('uses user auth over token auth', () => {
@@ -48,24 +51,24 @@ describe('Image resolver', () => {
 		const src = `.attachments.${session.documentId}/group%20pic.jpg`
 		const resolver = new ImageResolver({ session })
 		const [url] = resolver.resolve(src)
-		expect(url).toBe('/nc-webroot/apps/text/image?documentId=123&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
 	})
 
 	it('handles .attachments urls with token via Text API', () => {
 		const src = `.attachments.${session.documentId}/group%20pic.jpg`
 		const resolver = new ImageResolver({
 			session,
-			shareToken: 'myShareToken',
+			shareToken,
 		})
 		const [url] = resolver.resolve(src)
-		expect(url).toBe('/nc-webroot/apps/text/image?documentId=123&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
+		expect(url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
 	})
 
 	it('leaves urls unchanged if they can be loaded directly', () => {
 		const sources = [
 			'http://nextcloud.com/pic.jpg',
 			'https://nextcloud.com/pic.jpg',
-			'data:123456789ASDF',
+			'data:4173456789ASDF',
 			'/core/preview.png?file=pic.jpg&x=1024&y=1024&a=true',
 			'/apps/files_sharing/publicpreview/ASDFWERASDF?x=1024&y=1024&a=true',
 		]
@@ -92,18 +95,44 @@ describe('Image resolver', () => {
 
 	it('handles old .attachments urls via webdav with text API fallback', () => {
 		const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
-		const resolver = new ImageResolver({ session, user })
+		const resolver = new ImageResolver({ session, user, currentDirectory })
 		const [url, fallback] = resolver.resolve(src)
-		expect(url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/.attachments.124/group%20pic.jpg')
-		expect(fallback).toBe('/nc-webroot/apps/text/image?documentId=123&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4174/group%20pic.jpg')
+		expect(fallback).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
 	})
 
-	it.skip('handles text:// urls as a preview when missing session', () => {
-		const src = 'text://image?imageFileName=group%20pic.jpg'
-		const resolver = new ImageResolver({
+	describe('missing session', () => {
+
+		it('resolves text:// urls as authenticated dav', () => {
+			const src = 'text://image?imageFileName=group%20pic.jpg'
+			const resolver = new ImageResolver({
+				fileId: 4173,
+				user,
+				currentDirectory,
+			})
+			const [url] = resolver.resolve(src)
+			expect(url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4173/group%20pic.jpg')
 		})
-		const [url] = resolver.resolve(src)
-		expect(url).toBe('https://cloud.nextcloud.com/core/preview.png?file=Kollektive%2Ftest%20new%20collective%2F.attachments.5934333%2FFOSDEM%20group%20pic.jpg&x=1024&y=1024&a=true')
+
+		it('resolves text:// urls as share token download', () => {
+			const src = 'text://image?imageFileName=group%20pic.jpg'
+			const resolver = new ImageResolver({
+				fileId,
+				shareToken,
+				currentDirectory,
+			})
+			const [url] = resolver.resolve(src)
+			expect(url).toBe('/nc-webroot/s/myShareToken/download?path=%2FparentDir%2F.attachments.4173&files=group%20pic.jpg')
+		})
+
+		it('handles .attachments urls for other fileIds via webdav with webdav fallback', () => {
+			const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
+			const resolver = new ImageResolver({ user, currentDirectory, fileId })
+			const [url, fallback] = resolver.resolve(src)
+			expect(url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4174/group%20pic.jpg')
+			expect(fallback).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4173/group%20pic.jpg')
+		})
+
 	})
 
 })

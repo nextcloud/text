@@ -29,12 +29,15 @@ export default class ImageResolver {
 	#user
 	#shareToken
 	#currentDirectory
+	#attachmentDirectory
 
-	constructor({ session, user, shareToken, currentDirectory }) {
+	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
 		this.#user = user
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
+		fileId ||= session?.documentId
+		this.#attachmentDirectory = `.attachments.${fileId}`
 	}
 
 	/*
@@ -45,11 +48,11 @@ export default class ImageResolver {
 	 * Currently returns either one or two urls.
 	 */
 	resolve(src) {
-		if (src.startsWith('text://')) {
+		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
 			return [this.#getAttachmentUrl(imageFileName)]
 		}
-		if (src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
+		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
 			return [this.#getAttachmentUrl(imageFileName)]
 		}
@@ -62,7 +65,8 @@ export default class ImageResolver {
 
 		// if it starts with '.attachments.1234/'
 		if (src.match(/^\.attachments\.\d+\//)) {
-			const imageFileName = decodeURIComponent(src.replace(/\.attachments\.\d+\//, '').split('?')[0])
+			const imageFileName = this.#relativePath(src)
+				.replace(/\.attachments\.\d+\//, '')
 			const attachmentUrl = this.#getAttachmentUrl(imageFileName)
 			// try the webdav url and attachment API if the fails
 			return [this.#davUrl(src), attachmentUrl]
@@ -71,6 +75,11 @@ export default class ImageResolver {
 	}
 
 	#getAttachmentUrl(imageFileName) {
+		if (!this.#session) {
+			return this.#davUrl(
+				`${this.#attachmentDirectory}/${imageFileName}`
+			)
+		}
 		if (this.#user || !this.#shareToken) {
 			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}', {
 				...this.#textApiParams(),
@@ -108,26 +117,44 @@ export default class ImageResolver {
 		}
 	}
 
-	#filePath(src) {
-		const f = [
-			this.#currentDirectory,
-			basename(src),
-		].join('/')
-		return path.normalize(f)
-	}
-
 	#davUrl(src) {
 		if (this.#user) {
 			const uid = this.#user.uid
 			const encoded = encodeURI(this.#filePath(src))
 			return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 		} else {
+			const path = this.#filePath(src).split('/')
+			const basename = path.pop()
+			const dirname = path.join('/')
 			return generateUrl('/s/{token}/download?path={dirname}&files={basename}', {
 				token: this.#shareToken,
-				dirname: this.#currentDirectory,
-				basename: basename(src),
+				basename,
+				dirname,
 			})
 		}
+	}
+
+	/**
+	 * Return the relativePath to a file specified in the url
+	 *
+	 * @param {string} src - url to extract path from
+	 */
+	#relativePath(src) {
+		if (src.startsWith('text://')) {
+			return [
+				this.#attachmentDirectory,
+				getQueryVariable(src, 'imageFileName')
+			].join('/')
+		}
+		return decodeURI(src.split('?')[0])
+	}
+
+	#filePath(src) {
+		const f = [
+			this.#currentDirectory,
+			this.#relativePath(src),
+		].join('/')
+		return path.normalize(f)
 	}
 
 }
@@ -155,15 +182,6 @@ function isDirectUrl(src) {
  */
 function hasPreview(src) {
 	return getQueryVariable(src, 'hasPreview') === 'true'
-}
-
-/**
- * Return the relative path as specified in the url
- *
- * @param {string} src - the url to extract path from
- */
-function basename(src) {
-	return decodeURI(src.split('?')[0])
 }
 
 /**
