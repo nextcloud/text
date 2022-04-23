@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Újrakapcsolódás",
     "The document has been changed outside of the editor. The changes cannot be applied." : "A dokumentum a szerkesztőn kívül változott meg. A módosítások nem alkalmazhatók.",
     "File could not be loaded. Please check your internet connection." : "A fájl betöltése sikertelen. Ellenőrizze az internetkapcsolatot.",
+    "This file is opened read-only as it is currently locked by {user}." : "A fájl írásvédetten lett megnyitva, mert jelenleg {user} zárolja.",
     "Saving …" : "Mentés…",
     "Saved" : "Elmentve",
     "Last saved {lastSaved}" : "Legutóbb mentve: {lastSaved}",
