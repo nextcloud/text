@@ -72,6 +72,7 @@ OC.L10N.register(
     "Link file" : "Σύνδεσμος αρχείου",
     "Remove Link" : "Αφαίρεση Συνδέσμου",
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
+    "Participants" : "Συμμετέχοντες",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
