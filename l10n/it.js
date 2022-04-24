@@ -95,6 +95,8 @@ OC.L10N.register(
     "Heading 5" : "Intestazione 5",
     "ToDo list" : "Elenco Cose da fare",
     "Info" : "Info",
+    "Success" : "Successo",
+    "Warning" : "Attenzione",
     "Table" : "Tabella",
     "Emoji picker" : "Selettore di emoji",
     "Insert image" : "Inserisci immagine",
