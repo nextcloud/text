@@ -59,11 +59,11 @@ describe('Workspace', function() {
 			['strike', 's'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
-				.click()
+				.click({ force: true })
 				.should('have.class', 'is-active')
 			cy.get(`.ProseMirror ${tag}`).should('contain', 'Format me')
 			menuButton(button)
-				.click()
+				.click({ force: true })
 				.should('not.have.class', 'is-active')
 		})
 	})
