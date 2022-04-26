@@ -149,11 +149,6 @@ export default {
 		useEditorMixin,
 	],
 	props: {
-		syncService: {
-			type: Object,
-			required: false,
-			default: null,
-		},
 		isRichEditor: {
 			type: Boolean,
 			default: true,
