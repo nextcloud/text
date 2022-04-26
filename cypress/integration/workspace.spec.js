@@ -96,13 +96,15 @@ describe('Workspace', function() {
 			.type('Heading')
 			.type('{selectall}')
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
-			menuButton('h1').click()
-			submenuButton(heading).click()
+			menuButton('h1').click({ force: true })
+			submenuButton(heading).click({ force: true })
+
 			menuButton(heading).should('have.class', 'is-active')
+
 			cy.get(`.ProseMirror ${heading}`)
 				.should('contain', 'Heading')
-			menuButton(heading).click()
-			submenuButton(heading).click()
+			menuButton(heading).click({ force: true })
+			submenuButton(heading).click({ force: true })
 			menuButton('h1').should('not.have.class', 'is-active')
 		})
 	})
@@ -117,11 +119,11 @@ describe('Workspace', function() {
 			['tasklist', 'ul[data-type="taskList"]'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
-				.click()
+				.click({ force: true })
 				.should('have.class', 'is-active')
 			cy.get(`.ProseMirror ${tag}`).should('contain', 'List me')
 			menuButton(button)
-				.click()
+				.click({ force: true })
 				.should('not.have.class', 'is-active')
 		})
 	})
@@ -159,8 +161,8 @@ describe('Workspace', function() {
 
 			types.forEach(type => {
 				// enable callout
-				menuButton('info').click()
-				submenuButton(type).click()
+				menuButton('info').click({ force: true })
+				submenuButton(type).click({ force: true })
 
 				// check if is active
 				menuButton(type).should('have.class', 'is-active')
@@ -170,8 +172,8 @@ describe('Workspace', function() {
 					.should('contain', 'Callout')
 
 				// disable
-				menuButton(type).click()
-				submenuButton(type).click()
+				menuButton(type).click({ force: true })
+				submenuButton(type).click({ force: true })
 
 				// check if is inactive
 				menuButton('info').should('not.have.class', 'is-active')
