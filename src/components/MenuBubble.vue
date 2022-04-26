@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<BubbleMenu :editor="editor"
+	<BubbleMenu :editor="$editor"
 		:tippy-options="{ onHide: hideLinkMenu, duration: 200, placement: 'bottom' }"
 		class="menububble">
 		<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl()">
@@ -74,6 +74,8 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { optimalPath } from './../helpers/files'
 import { loadState } from '@nextcloud/initial-state'
 
+import { useEditorMixin } from './EditorWrapper.provider'
+
 export default {
 	name: 'MenuBubble',
 	components: {
@@ -82,11 +84,8 @@ export default {
 	directives: {
 		tooltip: Tooltip,
 	},
+	mixins: [useEditorMixin],
 	props: {
-		editor: {
-			type: Object,
-			required: true,
-		},
 		// used to calculate the position based on the scrollOffset
 		contentWrapper: {
 			type: HTMLDivElement,
@@ -108,7 +107,7 @@ export default {
 	},
 	methods: {
 		showLinkMenu() {
-			const attrs = getMarkAttributes(this.editor.state, 'link')
+			const attrs = getMarkAttributes(this.$editor.state, 'link')
 			this.linkUrl = attrs.href
 			this.linkMenuIsActive = true
 			this.$nextTick(() => {
@@ -131,7 +130,7 @@ export default {
 					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/')
 					const href = `${encodedPath}?fileId=${fileInfo.id}`
-					this.editor.chain().setLink({ href }).focus().run()
+					this.$editor.chain().setLink({ href }).focus().run()
 					this.hideLinkMenu()
 				})
 			}, false, [], true, undefined, startPath)
@@ -153,14 +152,14 @@ export default {
 
 			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
 			const href = url.replaceAll(' ', '%20')
-			this.editor.chain().setLink({ href }).focus().run()
+			this.$editor.chain().setLink({ href }).focus().run()
 			this.hideLinkMenu()
 		},
 		removeLinkUrl() {
-			this.editor.chain().unsetLink().focus().run()
+			this.$editor.chain().unsetLink().focus().run()
 		},
 		isActive(selector, args = {}) {
-			return this.editor.isActive(selector, args)
+			return this.$editor.isActive(selector, args)
 		},
 	},
 }
