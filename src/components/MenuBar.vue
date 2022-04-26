@@ -123,6 +123,8 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import menuBarIcons from './../mixins/menubar'
 import isMobile from './../mixins/isMobile'
 
+import { useEditorMixin } from './EditorWrapper.provider'
+
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import PopoverMenu from '@nextcloud/vue/dist/Components/PopoverMenu'
@@ -144,12 +146,9 @@ export default {
 	},
 	mixins: [
 		isMobile,
+		useEditorMixin,
 	],
 	props: {
-		editor: {
-			type: Object,
-			required: true,
-		},
 		syncService: {
 			type: Object,
 			required: false,
@@ -210,16 +209,16 @@ export default {
 					return false
 				}
 				const args = Array.isArray(isActive) ? isActive : [isActive]
-				return this.editor.isActive(...args)
+				return this.$editor.isActive(...args)
 			}
 		},
 		isVisible() {
-			return this.editor.isFocused
+			return this.$editor.isFocused
 				|| Object.values(this.submenuVisibility).find((v) => v)
 		},
 		disabled() {
 			return (menuItem) => {
-				return menuItem.action && !menuItem.action(this.editor.can())
+				return menuItem.action && !menuItem.action(this.$editor.can())
 			}
 		},
 		isChildMenuVisible() {
@@ -293,7 +292,7 @@ export default {
 			})
 		},
 		refocus() {
-			this.editor.chain().focus().run()
+			this.$editor.chain().focus().run()
 		},
 		clickIcon(icon) {
 			if (icon.click) {
@@ -301,7 +300,7 @@ export default {
 			}
 			// Some actions run themselves.
 			// others still need to have .run() called upon them.
-			const action = icon.action(this.editor.chain().focus())
+			const action = icon.action(this.$editor.chain().focus())
 			action && action.run()
 		},
 		getWindowWidth(event) {
@@ -360,7 +359,7 @@ export default {
 			return current.fill('..').concat(target).join('/')
 		},
 		addEmoji(icon, emojiObject) {
-			return icon.action(this.editor.chain(), { id: emojiObject.id, native: emojiObject.native })
+			return icon.action(this.$editor.chain(), { id: emojiObject.id, native: emojiObject.native })
 				.focus()
 				.run()
 		},

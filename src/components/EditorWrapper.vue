@@ -46,7 +46,6 @@
 				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:editor="$editor"
 					:sync-service="syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
@@ -94,6 +93,8 @@ import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
+
+import { EDITOR } from './EditorWrapper.provider'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -144,6 +145,21 @@ export default {
 		isMobile,
 		store,
 	],
+	provide() {
+		const val = {}
+
+		// providers aren't naturally reactive
+		// and $editor will start as null
+		// using getters we can always provide the
+		// actual $editor without being reactive
+		Object.defineProperty(val, EDITOR, {
+			get: () => {
+				return this.$editor
+			},
+		})
+
+		return val
+	},
 	props: {
 		initialSession: {
 			type: Object,
