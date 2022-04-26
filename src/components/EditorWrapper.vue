@@ -46,7 +46,6 @@
 				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:sync-service="$syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
 					:is-rich-editor="isRichEditor"
@@ -62,7 +61,7 @@
 							{{ lastSavedStatus }}
 						</div>
 						<SessionList :sessions="filteredSessions">
-							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="$syncService" />
+							<GuestNameDialog v-if="isPublic && currentSession.guestName" />
 						</SessionList>
 					</div>
 					<slot name="header" />
@@ -93,7 +92,7 @@ import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
 
-import { EDITOR } from './EditorWrapper.provider'
+import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -157,6 +156,12 @@ export default {
 			},
 		})
 
+		Object.defineProperty(val, SYNC_SERVICE, {
+			get: () => {
+				return this.$syncService
+			},
+		})
+
 		return val
 	},
 	props: {
@@ -200,8 +205,6 @@ export default {
 	data() {
 		return {
 			IDLE_TIMEOUT,
-			/** @type {SyncService} */
-			syncService: null,
 
 			document: null,
 			sessions: [],
