@@ -46,7 +46,7 @@
 				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:sync-service="syncService"
+					:sync-service="$syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
 					:is-rich-editor="isRichEditor"
@@ -62,7 +62,7 @@
 							{{ lastSavedStatus }}
 						</div>
 						<SessionList :sessions="filteredSessions">
-							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
+							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="$syncService" />
 						</SessionList>
 					</div>
 					<slot name="header" />
@@ -311,6 +311,7 @@ export default {
 	},
 	created() {
 		this.$editor = null
+		this.$syncService = null
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
@@ -321,11 +322,11 @@ export default {
 	methods: {
 		async close() {
 			clearInterval(this.saveStatusPolling)
-			if (this.currentSession && this.syncService) {
+			if (this.currentSession && this.$syncService) {
 				try {
-					await this.syncService.close()
+					await this.$syncService.close()
 					this.currentSession = null
-					this.syncService = null
+					this.$syncService = null
 				} catch (e) {
 					// Ignore issues closing the session since those might happen due to network issues
 				}
@@ -343,7 +344,7 @@ export default {
 				return
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
-			this.syncService = new SyncService({
+			this.$syncService = new SyncService({
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
 				guestName,
@@ -360,7 +361,7 @@ export default {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
-					this.lock = this.syncService.lock
+					this.lock = this.$syncService.lock
 					localStorage.setItem('nick', this.currentSession.guestName)
 					this.$store.dispatch('setCurrentSession', this.currentSession)
 				})
@@ -385,11 +386,11 @@ export default {
 						this.$editor = createEditor({
 							content,
 							onCreate: ({ editor }) => {
-								this.syncService.state = editor.state
-								this.syncService.startSync()
+								this.$syncService.state = editor.state
+								this.$syncService.startSync()
 							},
 							onUpdate: ({ editor }) => {
-								this.syncService.state = editor.state
+								this.$syncService.state = editor.state
 							},
 							extensions: [
 								Collaboration.configure({
@@ -400,8 +401,8 @@ export default {
 									// debounce changes so we can save some bandwidth
 									debounce: EDITOR_PUSH_DEBOUNCE,
 									onSendable: ({ sendable }) => {
-										if (this.syncService) {
-											this.syncService.sendSteps()
+										if (this.$syncService) {
+											this.$syncService.sendSteps()
 										}
 									},
 									update: ({ steps, version, editor }) => {
@@ -420,7 +421,7 @@ export default {
 								}),
 								Keymap.configure({
 									'Mod-s': () => {
-										this.syncService.save()
+										this.$syncService.save()
 										return true
 									},
 								}),
@@ -445,7 +446,7 @@ export default {
 						this.$editor.on('blur', () => {
 							this.$emit('blur')
 						})
-						this.syncService.state = this.$editor.state
+						this.$syncService.state = this.$editor.state
 					})
 				})
 				.on('sync', ({ steps, document }) => {
@@ -457,7 +458,7 @@ export default {
 							steps,
 							editor: this.$editor,
 						})
-						this.syncService.state = this.$editor.state
+						this.$syncService.state = this.$editor.state
 						this.updateLastSavedStatus()
 					} catch (e) {
 						console.error('Failed to update steps in collaboration plugin', e)
@@ -501,12 +502,12 @@ export default {
 					}
 				})
 				.on('idle', () => {
-					this.syncService.close()
+					this.$syncService.close()
 					this.idle = true
 					this.readOnly = true
 					this.$editor.setOptions({ editable: !this.readOnly })
 				})
-			this.syncService.open({
+			this.$syncService.open({
 				fileId: this.fileId,
 				filePath: this.relativePath,
 				initialSession: this.initialSession,
@@ -517,7 +518,7 @@ export default {
 		},
 
 		resolveUseThisVersion() {
-			this.syncService.forceSave()
+			this.$syncService.forceSave()
 			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 
@@ -529,16 +530,16 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			if (this.syncService) {
-				this.syncService.close().then(() => {
-					this.syncService = null
+			if (this.$syncService) {
+				this.$syncService.close().then(() => {
+					this.$syncService = null
 					this.$editor.destroy()
 					this.initSession()
 				}).catch((e) => {
 					// Ignore issues closing the session since those might happen due to network issues
 				})
 			} else {
-				this.syncService = null
+				this.$syncService = null
 				this.$editor.destroy()
 				this.initSession()
 			}
@@ -611,7 +612,7 @@ export default {
 				return
 			}
 
-			return this.syncService.uploadImage(file).then((response) => {
+			return this.$syncService.uploadImage(file).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, position)
 			}).catch((error) => {
 				console.error(error)
@@ -620,7 +621,7 @@ export default {
 		},
 		insertImagePath(imagePath) {
 			this.uploadingImages = true
-			this.syncService.insertImageFile(imagePath).then((response) => {
+			this.$syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
