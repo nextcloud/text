@@ -37,7 +37,7 @@
 			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div v-if="tiptap"
+			<div v-if="$editor"
 				id="editor"
 				:class="{ draggedOver }"
 				@image-paste="onPaste"
@@ -46,7 +46,7 @@
 				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:editor="tiptap"
+					:editor="$editor"
 					:sync-service="syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
@@ -71,12 +71,12 @@
 				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
 					<MenuBubble v-if="renderMenus"
-						:editor="tiptap"
+						:editor="$editor"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
 						class="editor__content"
-						:editor="tiptap" />
+						:editor="$editor" />
 				</div>
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"
@@ -185,8 +185,6 @@ export default {
 	data() {
 		return {
 			IDLE_TIMEOUT,
-
-			tiptap: null,
 			/** @type {SyncService} */
 			syncService: null,
 
@@ -297,6 +295,7 @@ export default {
 		this.$parent.$emit('update:loaded', true)
 	},
 	created() {
+		this.$editor = null
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
@@ -336,9 +335,9 @@ export default {
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
-						return (createMarkdownSerializer(this.tiptap.schema)).serialize(document)
+						return (createMarkdownSerializer(this.$editor.schema)).serialize(document)
 					}
-					return serializePlainText(this.tiptap)
+					return serializePlainText(this.$editor)
 
 				},
 			})
@@ -359,7 +358,7 @@ export default {
 					this.document = document
 
 					this.syncError = null
-					this.tiptap.setOptions({ editable: !this.readOnly })
+					this.$editor.setOptions({ editable: !this.readOnly })
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
@@ -368,7 +367,7 @@ export default {
 						: '<pre>' + escapeHtml(documentSource) + '</pre>'
 					const language = extensionHighlight[this.fileExtension] || this.fileExtension
 					loadSyntaxHighlight(language).then(() => {
-						this.tiptap = createEditor({
+						this.$editor = createEditor({
 							content,
 							onCreate: ({ editor }) => {
 								this.syncService.state = editor.state
@@ -425,25 +424,25 @@ export default {
 							enableRichEditing: this.isRichEditor,
 							currentDirectory: this.currentDirectory,
 						})
-						this.tiptap.on('focus', () => {
+						this.$editor.on('focus', () => {
 							this.$emit('focus')
 						})
-						this.tiptap.on('blur', () => {
+						this.$editor.on('blur', () => {
 							this.$emit('blur')
 						})
-						this.syncService.state = this.tiptap.state
+						this.syncService.state = this.$editor.state
 					})
 				})
 				.on('sync', ({ steps, document }) => {
 					this.hasConnectionIssue = false
 					try {
-						const collaboration = this.tiptap.extensionManager.extensions.find(e => e.name === 'collaboration')
+						const collaboration = this.$editor.extensionManager.extensions.find(e => e.name === 'collaboration')
 						collaboration.options.update({
 							version: document.currentVersion,
 							steps,
-							editor: this.tiptap,
+							editor: this.$editor,
 						})
-						this.syncService.state = this.tiptap.state
+						this.syncService.state = this.$editor.state
 						this.updateLastSavedStatus()
 					} catch (e) {
 						console.error('Failed to update steps in collaboration plugin', e)
@@ -452,7 +451,7 @@ export default {
 					this.document = document
 				})
 				.on('error', (error, data) => {
-					this.tiptap.setOptions({ editable: false })
+					this.$editor.setOptions({ editable: false })
 					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 						this.contentLoaded = true
 						this.syncError = {
@@ -477,7 +476,7 @@ export default {
 					if (state.initialLoading && !this.contentLoaded) {
 						this.contentLoaded = true
 						if (this.autofocus && !this.readOnly) {
-							this.tiptap.commands.focus()
+							this.$editor.commands.focus()
 						}
 						this.$emit('ready')
 						this.$parent.$emit('ready', true)
@@ -490,7 +489,7 @@ export default {
 					this.syncService.close()
 					this.idle = true
 					this.readOnly = true
-					this.tiptap.setOptions({ editable: !this.readOnly })
+					this.$editor.setOptions({ editable: !this.readOnly })
 				})
 			this.syncService.open({
 				fileId: this.fileId,
@@ -504,7 +503,7 @@ export default {
 
 		resolveUseThisVersion() {
 			this.syncService.forceSave()
-			this.tiptap.setOptions({ editable: !this.readOnly })
+			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 
 		resolveUseServerVersion() {
@@ -518,14 +517,14 @@ export default {
 			if (this.syncService) {
 				this.syncService.close().then(() => {
 					this.syncService = null
-					this.tiptap.destroy()
+					this.$editor.destroy()
 					this.initSession()
 				}).catch((e) => {
 					// Ignore issues closing the session since those might happen due to network issues
 				})
 			} else {
 				this.syncService = null
-				this.tiptap.destroy()
+				this.$editor.destroy()
 				this.initSession()
 			}
 			this.idle = false
@@ -621,9 +620,9 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 			if (position) {
-				this.tiptap.chain().focus(position).setImage({ src, alt }).focus().run()
+				this.$editor.chain().focus(position).setImage({ src, alt }).focus().run()
 			} else {
-				this.tiptap.chain().setImage({ src, alt }).focus().run()
+				this.$editor.chain().setImage({ src, alt }).focus().run()
 			}
 		},
 	},
