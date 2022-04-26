@@ -70,7 +70,6 @@
 				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
 					<MenuBubble v-if="renderMenus"
-						:editor="$editor"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
