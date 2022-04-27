@@ -37,7 +37,7 @@
 			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div v-if="tiptap"
+			<div v-if="$editor"
 				id="editor"
 				:class="{ draggedOver }"
 				@image-paste="onPaste"
@@ -46,8 +46,6 @@
 				@image-drop="onEditorDrop">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:editor="tiptap"
-					:sync-service="syncService"
 					:file-path="relativePath"
 					:file-id="fileId"
 					:is-rich-editor="isRichEditor"
@@ -63,7 +61,7 @@
 							{{ lastSavedStatus }}
 						</div>
 						<SessionList :sessions="filteredSessions">
-							<GuestNameDialog v-if="isPublic && currentSession.guestName" :sync-service="syncService" />
+							<GuestNameDialog v-if="isPublic && currentSession.guestName" />
 						</SessionList>
 					</div>
 					<slot name="header" />
@@ -71,12 +69,11 @@
 				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
 					<MenuBubble v-if="renderMenus"
-						:editor="tiptap"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
 						class="editor__content"
-						:editor="tiptap" />
+						:editor="$editor" />
 				</div>
 			</div>
 			<ReadOnlyEditor v-if="hasSyncCollission"
@@ -94,6 +91,8 @@ import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
+
+import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
 import { endpointUrl, getRandomGuestName } from './../helpers'
@@ -144,6 +143,27 @@ export default {
 		isMobile,
 		store,
 	],
+	provide() {
+		const val = {}
+
+		// providers aren't naturally reactive
+		// and $editor will start as null
+		// using getters we can always provide the
+		// actual $editor without being reactive
+		Object.defineProperty(val, EDITOR, {
+			get: () => {
+				return this.$editor
+			},
+		})
+
+		Object.defineProperty(val, SYNC_SERVICE, {
+			get: () => {
+				return this.$syncService
+			},
+		})
+
+		return val
+	},
 	props: {
 		initialSession: {
 			type: Object,
@@ -185,10 +205,6 @@ export default {
 	data() {
 		return {
 			IDLE_TIMEOUT,
-
-			tiptap: null,
-			/** @type {SyncService} */
-			syncService: null,
 
 			document: null,
 			sessions: [],
@@ -297,6 +313,8 @@ export default {
 		this.$parent.$emit('update:loaded', true)
 	},
 	created() {
+		this.$editor = null
+		this.$syncService = null
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
@@ -307,11 +325,11 @@ export default {
 	methods: {
 		async close() {
 			clearInterval(this.saveStatusPolling)
-			if (this.currentSession && this.syncService) {
+			if (this.currentSession && this.$syncService) {
 				try {
-					await this.syncService.close()
+					await this.$syncService.close()
 					this.currentSession = null
-					this.syncService = null
+					this.$syncService = null
 				} catch (e) {
 					// Ignore issues closing the session since those might happen due to network issues
 				}
@@ -329,16 +347,16 @@ export default {
 				return
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
-			this.syncService = new SyncService({
+			this.$syncService = new SyncService({
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
 				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
-						return (createMarkdownSerializer(this.tiptap.schema)).serialize(document)
+						return (createMarkdownSerializer(this.$editor.schema)).serialize(document)
 					}
-					return serializePlainText(this.tiptap)
+					return serializePlainText(this.$editor)
 
 				},
 			})
@@ -346,7 +364,7 @@ export default {
 					this.currentSession = session
 					this.document = document
 					this.readOnly = document.readOnly
-					this.lock = this.syncService.lock
+					this.lock = this.$syncService.lock
 					localStorage.setItem('nick', this.currentSession.guestName)
 					this.$store.dispatch('setCurrentSession', this.currentSession)
 				})
@@ -359,7 +377,7 @@ export default {
 					this.document = document
 
 					this.syncError = null
-					this.tiptap.setOptions({ editable: !this.readOnly })
+					this.$editor.setOptions({ editable: !this.readOnly })
 				})
 				.on('loaded', ({ documentSource }) => {
 					this.hasConnectionIssue = false
@@ -368,14 +386,14 @@ export default {
 						: '<pre>' + escapeHtml(documentSource) + '</pre>'
 					const language = extensionHighlight[this.fileExtension] || this.fileExtension
 					loadSyntaxHighlight(language).then(() => {
-						this.tiptap = createEditor({
+						this.$editor = createEditor({
 							content,
 							onCreate: ({ editor }) => {
-								this.syncService.state = editor.state
-								this.syncService.startSync()
+								this.$syncService.state = editor.state
+								this.$syncService.startSync()
 							},
 							onUpdate: ({ editor }) => {
-								this.syncService.state = editor.state
+								this.$syncService.state = editor.state
 							},
 							extensions: [
 								Collaboration.configure({
@@ -386,8 +404,8 @@ export default {
 									// debounce changes so we can save some bandwidth
 									debounce: EDITOR_PUSH_DEBOUNCE,
 									onSendable: ({ sendable }) => {
-										if (this.syncService) {
-											this.syncService.sendSteps()
+										if (this.$syncService) {
+											this.$syncService.sendSteps()
 										}
 									},
 									update: ({ steps, version, editor }) => {
@@ -406,7 +424,7 @@ export default {
 								}),
 								Keymap.configure({
 									'Mod-s': () => {
-										this.syncService.save()
+										this.$syncService.save()
 										return true
 									},
 								}),
@@ -425,25 +443,25 @@ export default {
 							enableRichEditing: this.isRichEditor,
 							currentDirectory: this.currentDirectory,
 						})
-						this.tiptap.on('focus', () => {
+						this.$editor.on('focus', () => {
 							this.$emit('focus')
 						})
-						this.tiptap.on('blur', () => {
+						this.$editor.on('blur', () => {
 							this.$emit('blur')
 						})
-						this.syncService.state = this.tiptap.state
+						this.$syncService.state = this.$editor.state
 					})
 				})
 				.on('sync', ({ steps, document }) => {
 					this.hasConnectionIssue = false
 					try {
-						const collaboration = this.tiptap.extensionManager.extensions.find(e => e.name === 'collaboration')
+						const collaboration = this.$editor.extensionManager.extensions.find(e => e.name === 'collaboration')
 						collaboration.options.update({
 							version: document.currentVersion,
 							steps,
-							editor: this.tiptap,
+							editor: this.$editor,
 						})
-						this.syncService.state = this.tiptap.state
+						this.$syncService.state = this.$editor.state
 						this.updateLastSavedStatus()
 					} catch (e) {
 						console.error('Failed to update steps in collaboration plugin', e)
@@ -452,7 +470,7 @@ export default {
 					this.document = document
 				})
 				.on('error', (error, data) => {
-					this.tiptap.setOptions({ editable: false })
+					this.$editor.setOptions({ editable: false })
 					if (error === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 						this.contentLoaded = true
 						this.syncError = {
@@ -477,7 +495,7 @@ export default {
 					if (state.initialLoading && !this.contentLoaded) {
 						this.contentLoaded = true
 						if (this.autofocus && !this.readOnly) {
-							this.tiptap.commands.focus()
+							this.$editor.commands.focus()
 						}
 						this.$emit('ready')
 						this.$parent.$emit('ready', true)
@@ -487,12 +505,12 @@ export default {
 					}
 				})
 				.on('idle', () => {
-					this.syncService.close()
+					this.$syncService.close()
 					this.idle = true
 					this.readOnly = true
-					this.tiptap.setOptions({ editable: !this.readOnly })
+					this.$editor.setOptions({ editable: !this.readOnly })
 				})
-			this.syncService.open({
+			this.$syncService.open({
 				fileId: this.fileId,
 				filePath: this.relativePath,
 				initialSession: this.initialSession,
@@ -503,8 +521,8 @@ export default {
 		},
 
 		resolveUseThisVersion() {
-			this.syncService.forceSave()
-			this.tiptap.setOptions({ editable: !this.readOnly })
+			this.$syncService.forceSave()
+			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 
 		resolveUseServerVersion() {
@@ -515,17 +533,17 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			if (this.syncService) {
-				this.syncService.close().then(() => {
-					this.syncService = null
-					this.tiptap.destroy()
+			if (this.$syncService) {
+				this.$syncService.close().then(() => {
+					this.$syncService = null
+					this.$editor.destroy()
 					this.initSession()
 				}).catch((e) => {
 					// Ignore issues closing the session since those might happen due to network issues
 				})
 			} else {
-				this.syncService = null
-				this.tiptap.destroy()
+				this.$syncService = null
+				this.$editor.destroy()
 				this.initSession()
 			}
 			this.idle = false
@@ -597,7 +615,7 @@ export default {
 				return
 			}
 
-			return this.syncService.uploadImage(file).then((response) => {
+			return this.$syncService.uploadImage(file).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, position)
 			}).catch((error) => {
 				console.error(error)
@@ -606,7 +624,7 @@ export default {
 		},
 		insertImagePath(imagePath) {
 			this.uploadingImages = true
-			this.syncService.insertImageFile(imagePath).then((response) => {
+			this.$syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
@@ -621,9 +639,9 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 			if (position) {
-				this.tiptap.chain().focus(position).setImage({ src, alt }).focus().run()
+				this.$editor.chain().focus(position).setImage({ src, alt }).focus().run()
 			} else {
-				this.tiptap.chain().setImage({ src, alt }).focus().run()
+				this.$editor.chain().setImage({ src, alt }).focus().run()
 			}
 		},
 	},

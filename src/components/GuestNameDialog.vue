@@ -35,6 +35,7 @@
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import { generateUrl } from '@nextcloud/router'
+import { useSyncServiceMixin } from './EditorWrapper.provider'
 
 export default {
 	name: 'GuestNameDialog',
@@ -44,12 +45,7 @@ export default {
 	directives: {
 		tooltip: Tooltip,
 	},
-	props: {
-		syncService: {
-			type: Object,
-			default: null,
-		},
-	},
+	mixins: [useSyncServiceMixin],
 	data() {
 		return {
 			guestName: '',
@@ -69,13 +65,13 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.guestName = this.syncService.session.guestName
+		this.guestName = this.$syncService.session.guestName
 		this.updateBufferedGuestName()
 	},
 	methods: {
 		setGuestName() {
-			const previousGuestName = this.syncService.session.guestName
-			this.syncService.updateSession(this.guestName).then(() => {
+			const previousGuestName = this.$syncService.session.guestName
+			this.$syncService.updateSession(this.guestName).then(() => {
 				localStorage.setItem('nick', this.guestName)
 				this.updateBufferedGuestName()
 			}).catch((e) => {
