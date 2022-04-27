@@ -91,6 +91,7 @@ OC.L10N.register(
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
+    "Table" : "Πίνακας",
     "Emoji picker" : "Επιλογέας emoji",
     "Insert image" : "Εισαγωγή εικόνας",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
