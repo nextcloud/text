@@ -1,4 +1,5 @@
 { "translations": {
+    "New text file" : "ახალი ტექსტ ფაილი",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "ატვირთული ფაილი აჭარბებს php.ini-ში დაყენებულ upload_max_filesize დირექტივას",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "ატვირთული ფაილი აჭარბებს HTML ფორამაში მითითებულ MAX_FILE_SIZE დირექტივას",
     "No file was uploaded" : "ფაილი არ აიტვირთა",

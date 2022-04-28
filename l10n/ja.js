@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "新しいテキストドキュメント",
+    "New text file" : "新規のテキストファイル",
     "The file was uploaded" : "ファイルがアップロードされました",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "アップロードされたファイルがphp.iniのupload_max_filesizeディレクティブのサイズを超えています",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "アップロードされたファイルは、HTMLフォームで指定されたMAX_FILE_SIZEディレクティブ制限を超えています",
@@ -72,6 +72,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Emoji picker" : "絵文字選択",
     "Insert image" : "画像の挿入",
+    "New text document" : "新しいテキストドキュメント",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"]
 },

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Novèl fichièr tèxte",
     "The file was uploaded" : "Lo fichièr es estat enviat",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Lo fichièr enviat despassa la directiva upload_max_filesize de php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Lo fichièr enviat despassa la directiva MAX_FILE_SIZE especificada dins lo formulari HTML",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Warning" : "Avertiment",
     "Emoji picker" : "Selector emoji",
     "Insert image" : "Inserir imatge",
+    "New text document" : "Novèl fichièr tèxte",
     "Currently active users:" : "Utilizaires actius :"
 },
 "nplurals=2; plural=(n > 1);");

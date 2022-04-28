@@ -1,5 +1,5 @@
 { "translations": {
-    "New text document" : "Novo documento de texto",
+    "New text file" : "Novo ficheiro de texto",
     "The file was uploaded" : "O ficheiro foi enviado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O ficheiro enviado excede a directiva indicada por upload_max_filesize de php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O ficheiro enviado excede da directiva MAX_FILE_SIZE especificada no formulario HTML",
@@ -62,6 +62,7 @@
     "Success" : "Correcto",
     "Warning" : "Aviso",
     "Insert image" : "Inserir unha imaxe",
+    "New text document" : "Novo documento de texto",
     "Currently active users:" : "Usuarios activos actualmente:",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

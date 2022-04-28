@@ -1,5 +1,5 @@
 { "translations": {
-    "New text document" : "Νέο έγγραφο κειμένου",
+    "New text file" : "Νέο αρχείο κειμένου",
     "The file was uploaded" : "Το αρχείο μεταφορτώθηκε",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Το αρχείο που εστάλη υπερβαίνει την οδηγία μέγιστου επιτρεπτού μεγέθους \"upload_max_filesize\" του php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Το ανεβασμένο αρχείο υπερβαίνει το MAX_FILE_SIZE που ορίζεται στην HTML φόρμα",
@@ -92,6 +92,7 @@
     "Table" : "Πίνακας",
     "Emoji picker" : "Επιλογέας emoji",
     "Insert image" : "Εισαγωγή εικόνας",
+    "New text document" : "Νέο έγγραφο κειμένου",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

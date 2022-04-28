@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Новий текстовий документ",
     "The file was uploaded" : "Файл завантажено",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Файл для завантаження перевищує параметр upload_max_filesize у php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Розмір завантаженого файлу перевищує директиву MAX_FILE_SIZE, зазначену у HTML-формі",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Увага",
     "Insert image" : "Додати зображення",
+    "New text document" : "Новий текстовий документ",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"]
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text file" : "Нова текстуална датотека",
     "The file was uploaded" : "Датотеката е прикачена",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Подигнатата датотека ја надминува upload_max_filesize директивата во php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Големината на датотеката ја надминува MAX_FILE_SIZE директивата која е одредена во HTML формата",

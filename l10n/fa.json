@@ -1,4 +1,5 @@
 { "translations": {
+    "New text file" : "فایل متنی جدید",
     "The file was uploaded" : "پرونده، بارگذاری شد",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "حجم پرونده بارگذاری شده بیشتر از تنظیمات upload_max_filesize در پرونده php.ini است",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "حجم پرونده بازگذاری شده بیشتر از تنظیمات MAX_FILE_SIZE مشخص شده در فرم HTML است",
