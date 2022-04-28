@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Naujas tekstinis dokumentas",
+    "New text file" : "Naujas tekstinis failas",
     "The file was uploaded" : "Failas buvo įkeltas",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Įkeliamas failas viršija upload_max_filesize direktyvą, esančią faile php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Įkeltas failas viršija MAX_FILE_SIZE direktyvą, kuri buvo nurodyta HTML formoje",
@@ -70,6 +70,7 @@ OC.L10N.register(
     "Warning" : "Įspėjimas",
     "Emoji picker" : "Šypsenėlių parinkiklis",
     "Insert image" : "Įterpti paveikslą",
+    "New text document" : "Naujas tekstinis dokumentas",
     "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"]
 },

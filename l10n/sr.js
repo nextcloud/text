@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Нови текстуални документ",
+    "New text file" : "Нови текстуални фајл",
     "The file was uploaded" : "Фајл је отпремљен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Фајл за отпремање премашује upload_max_filesize директиву у php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Отпремани фајл превазилази смерницу MAX_FILE_SIZE наведену у ХТМЛ обрасцу",
@@ -60,6 +60,7 @@ OC.L10N.register(
     "Success" : "Успешно",
     "Warning" : "Упозорење",
     "Insert image" : "Убаци слику",
+    "New text document" : "Нови текстуални документ",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"]
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

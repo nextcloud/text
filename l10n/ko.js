@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text file" : "새 텍스트 파일",
     "The file was uploaded" : "파일을 업로드함",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "업로드한 파일의 크기가 php.ini의 upload_max_filesize를 초과함",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "업로드한 파일의 크기가 HTML 폼에 지정한 MAX_FILE_SIZE를 초과함",

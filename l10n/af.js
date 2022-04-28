@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nuwe teksdokument",
     "The file was uploaded" : "Die lêer is opgelaai",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Die opgelaaide lêer oorskry die upload_max_filesize riglyn in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Die opgelaaide lêer oorskry die MAX_FILE_SIZE riglyn wat in die HTML vorm gespesifiseer is",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
     "Insert image" : "Voer beeld in",
+    "New text document" : "Nuwe teksdokument",
     "Currently active users:" : "Gebruikers wat tans aktief is:"
 },
 "nplurals=2; plural=(n != 1);");

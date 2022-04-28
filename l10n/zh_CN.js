@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "新建文本文档",
+    "New text file" : "新建文本文件",
     "The file was uploaded" : "文件已上传",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "上传文件超出了php.ini中upload_max_filesize的限制",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "上传文件超出了HTML表单中MAX_FILE_SIZE的限制",
@@ -89,6 +89,7 @@ OC.L10N.register(
     "Table" : "表格",
     "Emoji picker" : "Emoji 选择器",
     "Insert image" : "插入图片",
+    "New text document" : "新建文本文档",
     "Currently active users:" : "当前活跃用户：",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"]
 },

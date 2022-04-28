@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Yeni metin belgesi",
+    "New text file" : "Yeni metin dosyası",
     "The file was uploaded" : "Dosya yüklendi",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Yüklenen dosya php.ini dosyasındaki yüklenebilecek dosya boyutunu belirten upload_max_filesize değişkeninin değerini aşıyor",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Yüklenen dosya HTML formundaki yüklenebilecek dosya boyutunu belirten MAX_FILE_SIZE değişkeninin değerini aşıyor",
@@ -103,6 +103,7 @@ OC.L10N.register(
     "Table" : "Tablo",
     "Emoji picker" : "Emoji seçici",
     "Insert image" : "Görsel ekle",
+    "New text document" : "Yeni metin belgesi",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"]
 },

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Archìviu de testu nou",
+    "New text file" : "Archìviu de testu nou",
     "The file was uploaded" : "S'archìviu est istadu carrigadu",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "S'archìviu carrigadu passat sa diretiva upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "S'archìviu carrigadu passat sa diretiva MAX_FILE_SIZE ispetzificada in su mòdulu HTML",
@@ -65,6 +65,7 @@ OC.L10N.register(
     "Warning" : "Avisu",
     "Emoji picker" : "Sèberu de carigheddas",
     "Insert image" : "Inserta·nche imàgine",
+    "New text document" : "Archìviu de testu nou",
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"]
 },

@@ -1,5 +1,5 @@
 { "translations": {
-    "New text document" : "Nouveau document texte",
+    "New text file" : "Nouveau fichier texte",
     "The file was uploaded" : "Le fichier a été envoyé",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Le fichier envoyé dépasse la valeur upload_max_filesize spécifiée dans php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Le fichier envoyé dépasse la valeur MAX_FILE_SIZE spécifiée dans le formulaire HTML",
@@ -86,6 +86,7 @@
     "Table" : "Tableau",
     "Emoji picker" : "Sélecteur d'émoticônes",
     "Insert image" : "Ajouter image",
+    "New text document" : "Nouveau document texte",
     "Currently active users:" : "Utilisateurs actuellement actifs :",
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes"]
 },"pluralForm" :"nplurals=2; plural=(n > 1);"

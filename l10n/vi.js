@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Tài liệu văn bản mới",
     "The file was uploaded" : "Tập tin đã được tải lên",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Tập tin tải lên đã vượt quá upload_max_filesize giới hạn trong hệ thống",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Tập được tải lên vượt quá MAX_FILE_SIZE đã được giới hạn trong biểu mẫu HTML",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "Warning" : "Cảnh báo",
     "Emoji picker" : "Trình chọn emoji",
     "Insert image" : "Chèn ảnh",
+    "New text document" : "Tài liệu văn bản mới",
     "Currently active users:" : "Người dùng hiện đang hoạt động:",
     "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"]
 },
