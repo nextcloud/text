@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Новый текстовый документ",
+    "New text file" : "Новый текстовый файл",
     "The file was uploaded" : "Файл загружен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Загруженный файл превышает размер параметра upload_max_filesize в php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Загруженный файл превышает размер параметра MAX_FILE_SIZE, который был указан в HTML-форме",
@@ -91,6 +91,7 @@ OC.L10N.register(
     "Table" : "Таблица",
     "Emoji picker" : "Выбор эмодзи",
     "Insert image" : "Вставить изображение",
+    "New text document" : "Новый текстовый документ",
     "Currently active users:" : "Текущие активные пользователи:",
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"]
 },

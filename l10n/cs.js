@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nový textový dokument",
+    "New text file" : "Nový textový soubor",
     "The file was uploaded" : "Soubor byl nahrán",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Velikost nahrávaného souboru překračuje limit nastavení direktivou upload_max_filesize v php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Nahraný soubor překračuje nastavení MAX_FILE_SIZE, které bylo zadáno v HTML formuláři",
@@ -103,6 +103,7 @@ OC.L10N.register(
     "Table" : "Tabulka",
     "Emoji picker" : "Volba emotikony",
     "Insert image" : "Vložit obrázek",
+    "New text document" : "Nový textový dokument",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"]
 },

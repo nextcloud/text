@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text file" : "Berkas teks baru",
     "The file was uploaded" : "Berkas terunggah",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Berkas terunggah melampau parameter upload_max_filesize pada php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Berkas yang diunggah melampaui direktif MAX_FILE_SIZE yang ditentukan dalam formulir HTML.",

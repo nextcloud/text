@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nyt tekstdokument",
+    "New text file" : "Ny tekst fil",
     "The file was uploaded" : "Filen blev uploadet",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Den uploadede fil overstiger upload_max_filesize-direktivet i php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Den uploadede fil overskrider MAX_FILE_SIZE-direktivet, der blev angivet i HTML-formularen",
@@ -70,6 +70,7 @@ OC.L10N.register(
     "Warning" : "Advarsler",
     "Emoji picker" : "Emoji vælger",
     "Insert image" : "Indsæt billede",
+    "New text document" : "Nyt tekstdokument",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"]
 },

@@ -1,5 +1,5 @@
 { "translations": {
-    "New text document" : "新文字文件",
+    "New text file" : "新文字檔",
     "The file was uploaded" : "檔案已上傳",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "上傳的檔案大小超過 php.ini 當中 upload_max_filesize 選項的限制",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "上傳的檔案大小超過 HTML 表單中 MAX_FILE_SIZE 的限制",
@@ -100,6 +100,7 @@
     "Table" : "表格",
     "Emoji picker" : "表情符號挑選器",
     "Insert image" : "插入影像",
+    "New text document" : "新文字文件",
     "Currently active users:" : "目前活動中的使用者：",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"]
 },"pluralForm" :"nplurals=1; plural=0;"

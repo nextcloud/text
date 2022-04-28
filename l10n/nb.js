@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nytt tekstdokument",
+    "New text file" : "Ny tekstfil",
     "The file was uploaded" : "Filen ble lastet opp",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Filen er større enn definert grense i upload_max_filesize satt i php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Filen er større enn definert grense i MAX_FILE_SIZE  satt i HTML-formen.",
@@ -54,6 +54,7 @@ OC.L10N.register(
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
     "Insert image" : "Sett inn bilde",
+    "New text document" : "Nytt tekstdokument",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"]
 },
 "nplurals=2; plural=(n != 1);");

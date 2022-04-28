@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nova tekstdokumento",
+    "New text file" : "Nova tekstodosiero",
     "The file was uploaded" : "La dosiero alŝutiĝis",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "La dosiero alŝutita superas la regulon „upload_max_filesize“ el „php.ini“",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "La dosiero alŝutita superas la regulon MAX_FILE_SIZE, kiu estas difinita en la HTML-formularo",
@@ -46,6 +46,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Averto",
     "Insert image" : "Enmeti bildon",
+    "New text document" : "Nova tekstdokumento",
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"]
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nowy dokument tekstowy",
+    "New text file" : "Nowy plik tekstowy",
     "The file was uploaded" : "Plik został wysłany",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Wysłany plik przekracza wartość upload_max_filesize zdefiniowaną w php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Wysłany plik przekracza wartość MAX_FILE_SIZE określoną w formularzu HTML",
@@ -103,6 +103,7 @@ OC.L10N.register(
     "Table" : "Tabela",
     "Emoji picker" : "Selektor emoji",
     "Insert image" : "Wstaw obraz",
+    "New text document" : "Nowy dokument tekstowy",
     "Currently active users:" : "Aktualnie aktywni użytkownicy:",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"]
 },

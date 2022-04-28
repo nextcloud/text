@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Uusi tekstiasiakirja",
+    "New text file" : "Uusi tekstitiedosto",
     "The file was uploaded" : "Tiedosto lähetettiin",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Ladattu tiedosto on suurempi kuin php.ini-tiedostossa määritelty upload_max_filesize",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Ladattu tiedosto on suurempi kuin HTML-lomakkeessa määritelty MAX_FILE_SIZE",
@@ -82,6 +82,7 @@ OC.L10N.register(
     "Table" : "Taulukko",
     "Emoji picker" : "Emoji-valitsin",
     "Insert image" : "Lisää kuva",
+    "New text document" : "Uusi tekstiasiakirja",
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"]
 },
