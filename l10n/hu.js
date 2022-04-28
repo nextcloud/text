@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Új szöveges dokumentum",
+    "New text file" : "Új szöveges fájl",
     "The file was uploaded" : "A fájl feltöltve",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "A feltöltött fájl meghaladja a php.ini-ben szereplő upload_max_filesize direktívában megadott méretet",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "A feltöltött fájl meghaladja a HTML űrlapon megadott MAX_FILE_SIZE direktívájában meghatározott méretet.",
@@ -103,6 +103,7 @@ OC.L10N.register(
     "Table" : "Táblázat",
     "Emoji picker" : "Emodzsiválasztó",
     "Insert image" : "Kép beszúrása",
+    "New text document" : "Új szöveges dokumentum",
     "Currently active users:" : "Jelenleg aktív felhasználók:",
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"]
 },

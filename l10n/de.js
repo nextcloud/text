@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Neues Textdokument",
+    "New text file" : "Benötigt keine Übersetzung. Für iOS wird nur die formelle Übersetzung verwendet (de_DE).",
     "The file was uploaded" : "Die Datei wurde hochgeladen",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Die hochgeladene Datei übersteigt das Limit upload_max_filesize in der Datei php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Die hochgeladene Datei übersteigt das Limit MAX_FILE_SIZE im HTML-Formular",
@@ -103,6 +103,7 @@ OC.L10N.register(
     "Table" : "Tabelle",
     "Emoji picker" : "Emoji-Auswahl",
     "Insert image" : "Bild einfügen",
+    "New text document" : "Neues Textdokument",
     "Currently active users:" : "Aktuell aktive Benutzer:",
     "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "]
 },

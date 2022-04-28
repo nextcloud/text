@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Dokument tekst i ri",
+    "New text file" : "Skedar teksti i ri ",
     "The file was uploaded" : "Skedari u ngarkua",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Kartela e ngarkuar tejkalon udhëzimin MAX_FILE_SIZE që qe përcaktuar te formulari HTML",
     "No file was uploaded" : "S’u ngarkua kartelë",
@@ -27,6 +27,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
+    "New text document" : "Dokument tekst i ri",
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"]
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text file" : "Nuevo archivo de texto",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El archivo subido sobrepasa el valor MAX_FILE_SIZE especificada en el formulario HTML",
     "No file was uploaded" : "No se subió ningún archivo ",
     "Missing a temporary folder" : "Falta un directorio temporal",

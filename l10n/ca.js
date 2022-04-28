@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nou document de text",
+    "New text file" : "Fitxer de text nou",
     "The file was uploaded" : "S'ha pujat el fitxer",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "El fitxer pujat excedeix la directiva upload_max_filesize  a php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El fitxer pujat excedeix la directiva MAX_FILE_SIZE que s'ha especificat en el formulari HTML",
@@ -60,6 +60,7 @@ OC.L10N.register(
     "Success" : "Èxit",
     "Warning" : "Avís",
     "Insert image" : "Inserir imatge",
+    "New text document" : "Nou document de text",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"]
 },
 "nplurals=2; plural=(n != 1);");

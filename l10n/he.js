@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "מסמך טקסט חדש",
+    "New text file" : "קובץ טקסט חדש",
     "The file was uploaded" : "הקובץ הועלה",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "הקובץ שהועלה חורג מההנחיה upload_max_filesize ב־php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "הקובץ שהועלה חורג מההנחיה MAX_FILE_SIZE שצוינה בטופס ה־HTML",
@@ -61,6 +61,7 @@ OC.L10N.register(
     "Success" : "הצלחה",
     "Warning" : "אזהרה",
     "Insert image" : "הוספת תמונה",
+    "New text document" : "מסמך טקסט חדש",
     "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"]
 },

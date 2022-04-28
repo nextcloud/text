@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nov besedilni dokument",
+    "New text file" : "Nova besedilna datoteka",
     "The file was uploaded" : "Datoteka je bila poslana.",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Poslana datoteka presega največjo dovoljeno velikosti, kot je zabeležena v datoteki php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Poslana datoteka presega velikost, ki je določena kot omejitev MAX_FILE_SIZE v zapisu HTML.",
@@ -67,6 +67,7 @@ OC.L10N.register(
     "Table" : "Razpredelnica",
     "Emoji picker" : "Izbirnik izraznih ikon",
     "Insert image" : "Vstavi sliko",
+    "New text document" : "Nov besedilni dokument",
     "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"]
 },
