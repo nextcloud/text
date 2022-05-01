@@ -63,7 +63,7 @@
 		"@tiptap/extension-task-list": "^2.0.0-beta.26",
 		"@tiptap/extension-text": "^2.0.0-beta.15",
 		"@tiptap/extension-underline": "^2.0.0-beta.23",
-		"@tiptap/suggestion": "^2.0.0-beta.90",
+		"@tiptap/suggestion": "^2.0.0-beta.91",
 		"@tiptap/vue-2": "^2.0.0-beta.78",
 		"core-js": "^3.22.3",
 		"escape-html": "^1.0.3",
