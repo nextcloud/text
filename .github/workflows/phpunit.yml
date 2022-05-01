@@ -2,10 +2,26 @@ name: PHPUnit
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/phpunit.yml
+      - appinfo/**
+      - composer.*
+      - lib/**
+      - psalm.xml
+      - templates/**
+      - tests/**
   push:
     branches:
       - master
       - stable*
+    paths:
+      - .github/workflows/phpunit.yml
+      - appinfo/**
+      - composer.*
+      - lib/**
+      - psalm.xml
+      - templates/**
+      - tests/**
 
 env:
   APP_NAME: text
