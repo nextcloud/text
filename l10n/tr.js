@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Yeni metin belgesi",
+    "New text file" : "Yeni metin dosyası",
     "The file was uploaded" : "Dosya yüklendi",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Yüklenen dosya php.ini dosyasındaki yüklenebilecek dosya boyutunu belirten upload_max_filesize değişkeninin değerini aşıyor",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Yüklenen dosya HTML formundaki yüklenebilecek dosya boyutunu belirten MAX_FILE_SIZE değişkeninin değerini aşıyor",
@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Yeniden bağlantı kur",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
+    "This file is opened read-only as it is currently locked by {user}." : "Bu dosya {user} tarafından kilitlenmiş olduğundan salt okunur olarak açıldı.",
     "Saving …" : "Kaydediliyor …",
     "Saved" : "Kaydedildi",
     "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Insert emoji" : "Emoji ekle",
     "Upload from computer" : "Bilgisayardan yükle",
     "Insert from Files" : "Dosyalar uygulamasından ekle",
-    "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",
     "Alt" : "Alt",
     "Update Link" : "Bağlantıyı güncelle",
@@ -102,6 +102,8 @@ OC.L10N.register(
     "Danger" : "Tehlikeli",
     "Table" : "Tablo",
     "Emoji picker" : "Emoji seçici",
+    "Insert image" : "Görsel ekle",
+    "New text document" : "Yeni metin belgesi",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"]
 },

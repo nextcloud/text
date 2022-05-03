@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nowy dokument tekstowy",
+    "New text file" : "Nowy plik tekstowy",
     "The file was uploaded" : "Plik został wysłany",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Wysłany plik przekracza wartość upload_max_filesize zdefiniowaną w php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Wysłany plik przekracza wartość MAX_FILE_SIZE określoną w formularzu HTML",
@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Połącz ponownie",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument został zmieniony poza edytorem. Nie można zastosować zmian.",
     "File could not be loaded. Please check your internet connection." : "Nie można załadować pliku. Sprawdź połączenie z internetem.",
+    "This file is opened read-only as it is currently locked by {user}." : "Ten plik jest otwierany tylko do odczytu, ponieważ jest obecnie zablokowany przez {user}.",
     "Saving …" : "Zapisywanie…",
     "Saved" : "Zapisano",
     "Last saved {lastSaved}" : "Ostatnio zapisane {lastSaved}",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Insert emoji" : "Wstaw emoji",
     "Upload from computer" : "Wyślij z komputera",
     "Insert from Files" : "Wstaw z Plików",
-    "Insert image" : "Wstaw obraz",
     "Insert an image" : "Wstaw obraz",
     "Alt" : "Alt",
     "Update Link" : "Aktualizuj link",
@@ -102,6 +102,8 @@ OC.L10N.register(
     "Danger" : "Zagrożenie",
     "Table" : "Tabela",
     "Emoji picker" : "Selektor emoji",
+    "Insert image" : "Wstaw obraz",
+    "New text document" : "Nowy dokument tekstowy",
     "Currently active users:" : "Aktualnie aktywni użytkownicy:",
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"]
 },

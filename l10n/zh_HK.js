@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "新文字文件",
+    "New text file" : "新文字檔",
     "The file was uploaded" : "檔案已上傳",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "上傳的檔案大小超過 php.ini 當中 upload_max_filesize 選項的限制",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "上傳的檔案大小超過 HTML 表單中 MAX_FILE_SIZE 的限制",
@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "重新連接",
     "The document has been changed outside of the editor. The changes cannot be applied." : "文件已在編輯器外變更。變更無法套用。",
     "File could not be loaded. Please check your internet connection." : "無法載入檔案。請檢查您的網路連線。",
+    "This file is opened read-only as it is currently locked by {user}." : "此檔案以唯讀模式打開，因為它當前被 {user} 鎖上。",
     "Saving …" : "正在儲存……",
     "Saved" : "已儲存",
     "Last saved {lastSaved}" : "上次儲存於 {lastSaved}",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Insert emoji" : "插入 emoji",
     "Upload from computer" : "從電腦上傳",
     "Insert from Files" : "從檔案插入",
-    "Insert image" : "插入圖像",
     "Insert an image" : "插入圖像",
     "Alt" : "Alt",
     "Update Link" : "更新連結",
@@ -102,6 +102,8 @@ OC.L10N.register(
     "Danger" : "危險",
     "Table" : "表",
     "Emoji picker" : "Emoji 選擇器",
+    "Insert image" : "插入圖像",
+    "New text document" : "新文字文件",
     "Currently active users:" : "目前活躍用戶：",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯"]
 },

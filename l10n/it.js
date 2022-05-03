@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nuovo documento di testo",
+    "New text file" : "Nuovo file di testo",
     "The file was uploaded" : "Il file è stato caricato",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Il file caricato supera la direttiva upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Il file caricato supera la direttiva MAX_FILE_SIZE specificata nel modulo HTML",
@@ -66,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Inserisci emoji",
     "Upload from computer" : "Carica dal computer",
     "Insert from Files" : "Inserisci dai file",
-    "Insert image" : "Inserisci immagine",
     "Insert an image" : "Inserisci un'immagine",
     "Alt" : "Alt",
     "Update Link" : "Aggiorna collegamento",
@@ -96,8 +95,12 @@ OC.L10N.register(
     "Heading 5" : "Intestazione 5",
     "ToDo list" : "Elenco Cose da fare",
     "Info" : "Info",
+    "Success" : "Successo",
+    "Warning" : "Attenzione",
     "Table" : "Tabella",
     "Emoji picker" : "Selettore di emoji",
+    "Insert image" : "Inserisci immagine",
+    "New text document" : "Nuovo documento di testo",
     "Currently active users:" : "Utenti attualmente attivi:",
     "_and %n other editor_::_and %n other editors_" : ["e %n altro redattore","e %n altri redattori"]
 },

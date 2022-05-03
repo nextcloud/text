@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nový textový dokument",
+    "New text file" : "Nový textový súbor",
     "The file was uploaded" : "Súbor bol nahraný",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Nahraný súbor prekročil limit nastavený v upload_max_filesize v súbore php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Ukladaný súbor prekračuje nastavenie MAX_FILE_SIZE špecifikované vo formulári HTML.",
@@ -65,7 +65,6 @@ OC.L10N.register(
     "Insert emoji" : "Vložiť emotikon",
     "Upload from computer" : "Nahrať z počítača",
     "Insert from Files" : "Vložiť zo Súborov",
-    "Insert image" : "Vložiť obrázok",
     "Insert an image" : "Vložiť obrázok",
     "Alt" : "Alt",
     "Update Link" : "Aktualizovať odkaz",
@@ -73,6 +72,7 @@ OC.L10N.register(
     "Link file" : "Súbor pre odkaz",
     "Remove Link" : "Odstrániť odkaz",
     "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
+    "Participants" : "Účastníci",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
@@ -91,7 +91,10 @@ OC.L10N.register(
     "Success" : "Úspešné",
     "Warning" : "Varovanie",
     "Danger" : "Nebezpečie",
+    "Table" : "Tabuľka",
     "Emoji picker" : "Výber emotikonov",
+    "Insert image" : "Vložiť obrázok",
+    "New text document" : "Nový textový dokument",
     "Currently active users:" : "Aktuálne aktívny užívatelia",
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"]
 },

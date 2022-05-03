@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Новый текстовый документ",
+    "New text file" : "Новый текстовый файл",
     "The file was uploaded" : "Файл загружен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Загруженный файл превышает размер параметра upload_max_filesize в php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Загруженный файл превышает размер параметра MAX_FILE_SIZE, который был указан в HTML-форме",
@@ -64,7 +64,6 @@ OC.L10N.register(
     "Insert emoji" : "Вставить emoji",
     "Upload from computer" : "Загрузить с компьютера",
     "Insert from Files" : "Вставить из файлов",
-    "Insert image" : "Вставить изображение",
     "Insert an image" : "Вставить изображение",
     "Alt" : "Alt",
     "Update Link" : "Обновить ссылку",
@@ -72,6 +71,7 @@ OC.L10N.register(
     "Link file" : "Добавить ссылку на файл",
     "Remove Link" : "Удалить ссылку",
     "Select file to link to" : "Выберете файл для создания ссылки",
+    "Participants" : "Участники",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
     "Show rich workspaces" : "Показывать дополнительные сведения",
@@ -85,7 +85,13 @@ OC.L10N.register(
     "Heading 4" : "Заголовок 4",
     "Heading 5" : "Заголовок 5",
     "ToDo list" : "Список задач",
+    "Info" : "Информация",
+    "Success" : "Выполнено",
+    "Warning" : "Предупреждение",
+    "Table" : "Таблица",
     "Emoji picker" : "Выбор эмодзи",
+    "Insert image" : "Вставить изображение",
+    "New text document" : "Новый текстовый документ",
     "Currently active users:" : "Текущие активные пользователи:",
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"]
 },

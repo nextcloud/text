@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nový textový dokument",
+    "New text file" : "Nový textový soubor",
     "The file was uploaded" : "Soubor byl nahrán",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Velikost nahrávaného souboru překračuje limit nastavení direktivou upload_max_filesize v php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Nahraný soubor překračuje nastavení MAX_FILE_SIZE, které bylo zadáno v HTML formuláři",
@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Obnovit připojení",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument byl mezitím změněn mimo editor. Změny provedené v editoru proto nelze uplatnit.",
     "File could not be loaded. Please check your internet connection." : "Soubor se nepodařilo načíst. Zkontrolujte své připojení k Internetu.",
+    "This file is opened read-only as it is currently locked by {user}." : "Tento soubor je otevřen pouze pro čtení, protože je nyní uzamčen uživatelem {user}.",
     "Saving …" : "Ukládání…",
     "Saved" : "Uloženo",
     "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Insert emoji" : "Vložit emotikonu",
     "Upload from computer" : "Nahrát z počítače",
     "Insert from Files" : "Vložit ze Souborů",
-    "Insert image" : "Vložit obrázek",
     "Insert an image" : "Vložit obrázek",
     "Alt" : "Alt",
     "Update Link" : "Aktualizovat odkaz",
@@ -102,6 +102,8 @@ OC.L10N.register(
     "Danger" : "Nebezpečí",
     "Table" : "Tabulka",
     "Emoji picker" : "Volba emotikony",
+    "Insert image" : "Vložit obrázek",
+    "New text document" : "Nový textový dokument",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"]
 },

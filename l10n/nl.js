@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Nieuw tekstdocument",
+    "New text file" : "Nieuw tekstbestand",
     "The file was uploaded" : "Het bestand werd geüpload",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Het geüploade bestand overschrijdt de upload_max_filesize optie in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Het geüploade bestand overschrijdt de MAX_FILE_SIZE waarde die is opgegeven in het HTML formulier",
@@ -62,7 +62,6 @@ OC.L10N.register(
     "Insert emoji" : "Invoegen emoji",
     "Upload from computer" : "Uploaden vanaf computer",
     "Insert from Files" : "Invoegen vanuit Bestanden",
-    "Insert image" : "Invoegen afbeelding",
     "Insert an image" : "Voeg een afbeelding in",
     "Alt" : "Alt",
     "Update Link" : "Link bijwerken",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "Link file" : "Link bestand",
     "Remove Link" : "Verwijder Link",
     "Select file to link to" : "Selecteer een bestand om naar te linken",
+    "Participants" : "Deelnemers",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
     "Show rich workspaces" : "Toon rijke werkplekken",
@@ -83,7 +83,13 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "ToDo list" : "ToDo overzicht",
+    "Info" : "Info",
+    "Success" : "Geslaagd",
+    "Warning" : "Waarschuwing",
+    "Table" : "Tabel",
     "Emoji picker" : "Emoji kiezer",
+    "Insert image" : "Invoegen afbeelding",
+    "New text document" : "Nieuw tekstdocument",
     "Currently active users:" : "Momenteel actieve gebruikers:",
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"]
 },

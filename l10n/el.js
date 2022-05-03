@@ -1,7 +1,7 @@
 OC.L10N.register(
     "text",
     {
-    "New text document" : "Νέο έγγραφο κειμένου",
+    "New text file" : "Νέο αρχείο κειμένου",
     "The file was uploaded" : "Το αρχείο μεταφορτώθηκε",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Το αρχείο που εστάλη υπερβαίνει την οδηγία μέγιστου επιτρεπτού μεγέθους \"upload_max_filesize\" του php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Το ανεβασμένο αρχείο υπερβαίνει το MAX_FILE_SIZE που ορίζεται στην HTML φόρμα",
@@ -65,7 +65,6 @@ OC.L10N.register(
     "Insert emoji" : "Εισαγωγή emoji",
     "Upload from computer" : "Μεταφόρτωση από υπολογιστή",
     "Insert from Files" : "Εισαγωγή από Αρχεία",
-    "Insert image" : "Εισαγωγή εικόνας",
     "Insert an image" : "Εισαγωγή εικόνας",
     "Alt" : "Alt",
     "Update Link" : "Ενημέρωση συνδέσμου",
@@ -73,6 +72,7 @@ OC.L10N.register(
     "Link file" : "Σύνδεσμος αρχείου",
     "Remove Link" : "Αφαίρεση Συνδέσμου",
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
+    "Participants" : "Συμμετέχοντες",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
@@ -91,7 +91,10 @@ OC.L10N.register(
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
+    "Table" : "Πίνακας",
     "Emoji picker" : "Επιλογέας emoji",
+    "Insert image" : "Εισαγωγή εικόνας",
+    "New text document" : "Νέο έγγραφο κειμένου",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"]
 },
