@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Set up npm7
+        run: npm i -g npm@7
+
       - name: Checkout server
         uses: actions/checkout@v3
         with:
