@@ -20,8 +20,8 @@
  *
  */
 import axios from '@nextcloud/axios'
-import { endpointUrl } from '../helpers'
-import { SyncService, ERROR_TYPE } from './SyncService'
+import { endpointUrl } from '../helpers/index.js'
+import { SyncService, ERROR_TYPE } from './SyncService.js'
 import { sendableSteps } from 'prosemirror-collab'
 
 /**

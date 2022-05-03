@@ -120,10 +120,10 @@
 
 <script>
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import menuBarIcons from './../mixins/menubar'
-import isMobile from './../mixins/isMobile'
+import menuBarIcons from './../mixins/menubar.js'
+import isMobile from './../mixins/isMobile.js'
 
-import { useEditorMixin } from './EditorWrapper.provider'
+import { useEditorMixin } from './EditorWrapper.provider.js'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'

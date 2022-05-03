@@ -1,5 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core'
-import TableHeadRow from './TableHeadRow'
+import TableHeadRow from './TableHeadRow.js'
 
 export default Node.create({
 	name: 'tableHead',

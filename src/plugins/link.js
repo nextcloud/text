@@ -1,6 +1,6 @@
 import { generateUrl } from '@nextcloud/router'
 import { Plugin } from 'prosemirror-state'
-import markdownit from './../markdownit'
+import markdownit from './../markdownit/index.js'
 
 const clickHandler = ({ editor }) => {
 	return new Plugin({

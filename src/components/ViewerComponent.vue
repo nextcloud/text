@@ -33,7 +33,7 @@
 export default {
 	name: 'ViewerComponent',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper.vue'),
 	},
 	props: {
 		filename: {
