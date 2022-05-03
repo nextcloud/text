@@ -37,7 +37,7 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		Modal,
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper'),
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper.vue'),
 	},
 	props: {
 		fileId: {

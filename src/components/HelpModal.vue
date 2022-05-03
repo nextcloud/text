@@ -160,7 +160,7 @@
 <script>
 import Modal from '@nextcloud/vue/dist/Components/Modal'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import isMobile from './../mixins/isMobile'
+import isMobile from './../mixins/isMobile.js'
 
 export default {
 	name: 'HelpModal',

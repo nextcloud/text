@@ -71,10 +71,10 @@ import { BubbleMenu } from '@tiptap/vue-2'
 import { getMarkAttributes } from '@tiptap/core'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getCurrentUser } from '@nextcloud/auth'
-import { optimalPath } from './../helpers/files'
+import { optimalPath } from './../helpers/files.js'
 import { loadState } from '@nextcloud/initial-state'
 
-import { useEditorMixin } from './EditorWrapper.provider'
+import { useEditorMixin } from './EditorWrapper.provider.js'
 
 export default {
 	name: 'MenuBubble',

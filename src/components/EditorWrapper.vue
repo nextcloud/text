@@ -92,19 +92,19 @@ import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { showError } from '@nextcloud/dialogs'
 
-import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider'
+import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider.js'
 
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService'
-import { endpointUrl, getRandomGuestName } from './../helpers'
-import { extensionHighlight } from '../helpers/mappings'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory'
-import { createMarkdownSerializer } from './../extensions/Markdown'
-import markdownit from './../markdownit'
+import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import { endpointUrl, getRandomGuestName } from './../helpers/index.js'
+import { extensionHighlight } from '../helpers/mappings.js'
+import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
+import { createMarkdownSerializer } from './../extensions/Markdown.js'
+import markdownit from './../markdownit/index.js'
 
 import { EditorContent } from '@tiptap/vue-2'
-import { Collaboration, Keymap, UserColor } from './../extensions'
-import isMobile from './../mixins/isMobile'
-import store from './../mixins/store'
+import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
+import isMobile from './../mixins/isMobile.js'
+import store from './../mixins/store.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
@@ -127,13 +127,13 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./MenuBar'),
-		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble'),
-		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor'),
-		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog'),
-		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog'),
-		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList'),
-		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal'),
+		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./MenuBar.vue'),
+		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
+		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
+		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
+		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
+		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
+		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal.vue'),
 		Lock,
 	},
 	directives: {

@@ -21,7 +21,7 @@
  */
 
 import { Node, mergeAttributes, isNodeActive } from '@tiptap/core'
-import { typesAvailable } from '../markdownit/callouts'
+import { typesAvailable } from './../markdownit/callouts.js'
 
 export default Node.create({
 

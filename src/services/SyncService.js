@@ -21,8 +21,8 @@
  */
 import axios from '@nextcloud/axios'
 
-import PollingBackend from './PollingBackend'
-import { endpointUrl } from './../helpers'
+import PollingBackend from './PollingBackend.js'
+import { endpointUrl } from './../helpers/index.js'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 const defaultOptions = {

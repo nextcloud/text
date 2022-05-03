@@ -34,15 +34,15 @@ import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import Table from './nodes/Table'
-import TableCell from './nodes/TableCell'
-import TableHeader from './nodes/TableHeader'
-import TableHeadRow from './nodes/TableHeadRow'
-import TableRow from './nodes/TableRow'
+import Table from './nodes/Table.js'
+import TableCell from './nodes/TableCell.js'
+import TableHeader from './nodes/TableHeader.js'
+import TableHeadRow from './nodes/TableHeadRow.js'
+import TableRow from './nodes/TableRow.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Editor } from '@tiptap/core'
-import { Strong, Italic, Strike, Link, Underline } from './marks'
+import { Strong, Italic, Strike, Link, Underline } from './marks/index.js'
 import {
 	Image,
 	PlainTextDocument,
@@ -52,13 +52,13 @@ import {
 	TaskList,
 	TaskItem,
 	Callout,
-} from './nodes'
-import { HardBreak, Markdown, Emoji } from './extensions'
+} from './nodes/index.js'
+import { HardBreak, Markdown, Emoji } from './extensions/index.js'
 import { translate as t } from '@nextcloud/l10n'
 import lowlight, { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
 import { VueRenderer } from '@tiptap/vue-2'
-import EmojiList from './components/EmojiList'
+import EmojiList from './components/EmojiList.vue'
 import tippy from 'tippy.js'
 
 import 'proxy-polyfill'

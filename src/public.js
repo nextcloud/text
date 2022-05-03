@@ -1,12 +1,12 @@
-import { documentReady } from './helpers'
+import { documentReady } from './helpers/index.js'
 import {
 	FilesWorkspacePlugin,
 	registerFileActionFallback,
 	registerFileCreate,
-} from './helpers/files'
-import { openMimetypes } from './helpers/mime'
+} from './helpers/files.js'
+import { openMimetypes } from './helpers/mime.js'
 import { loadState } from '@nextcloud/initial-state'
-import store from './store'
+import store from './store.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
@@ -34,7 +34,7 @@ documentReady(() => {
 		if (openMimetypes.indexOf(mimetype) !== -1) {
 			Promise.all([
 				import(/* webpackChunkName: "vendor" */'vue'),
-				import(/* webpackChunkName: "editor" */'./components/EditorWrapper'),
+				import(/* webpackChunkName: "editor" */'./components/EditorWrapper.vue'),
 			]).then((imports) => {
 				const Vue = imports[0].default
 				Vue.prototype.t = window.t

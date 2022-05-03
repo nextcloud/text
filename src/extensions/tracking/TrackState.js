@@ -20,7 +20,7 @@
  *
  */
 
-import { Span } from './models'
+import { Span } from './models.js'
 
 /*
  * This code is heavily inspired by the change tracking example of prosemirror

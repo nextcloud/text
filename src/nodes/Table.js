@@ -56,7 +56,8 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 }
 
 /**
- * @param {object} $cell table cell
+ *
+ * @param {object} $cell - resolved position of the current cell
  */
 function findSameCellInNextRow($cell) {
 	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
