@@ -30,7 +30,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
       - name: Set up npm7
         run: npm i -g npm@7
@@ -65,6 +64,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: apps/${{ env.APP_NAME }}
+
+      - name: setup npm cache
+        uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          cache-dependency-path: apps/${{ env.APP_NAME }}/package-lock.json
+          # cypress will install dependencies
 
       - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v2
