@@ -111,7 +111,8 @@
 		"jest-environment-jsdom": "^27.5.1",
 		"jest-raw-loader": "^1.0.1",
 		"jest-serializer-vue": "^2.0.2",
-		"regenerator-runtime": "^0.13.9"
+		"regenerator-runtime": "^0.13.9",
+		"regextras": "^0.8.0"
 	},
 	"jest": {
 		"verbose": true,
