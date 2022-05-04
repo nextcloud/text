@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14.x]
+        node-version: [14]
         # containers: [1, 2, 3]
         php-versions: [ '7.4' ]
         databases: [ 'sqlite' ]
@@ -27,14 +27,15 @@ jobs:
 
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Set up npm7
         run: npm i -g npm@7
 
       - name: Checkout server
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
@@ -47,7 +48,7 @@ jobs:
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
       - name: Checkout viewer
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: nextcloud/viewer
           ref: ${{ matrix.server-versions }}
@@ -57,12 +58,19 @@ jobs:
         working-directory: apps/viewer
         run: |
           npm ci
-          TESTING=true npm run build --if-present
+          TESTING=true npm run build
 
       - name: Checkout ${{ env.APP_NAME }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: apps/${{ env.APP_NAME }}
+
+      - name: setup npm cache
+        uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          cache-dependency-path: apps/${{ env.APP_NAME }}/package-lock.json
+          # cypress will install dependencies
 
       - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v2
@@ -94,7 +102,7 @@ jobs:
           cat data/nextcloud.log
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v3
         with:
           record: true
           parallel: false

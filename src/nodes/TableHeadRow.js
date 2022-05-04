@@ -1,4 +1,4 @@
-import TableRow from './TableRow'
+import TableRow from './TableRow.js'
 
 export default TableRow.extend({
 	name: 'tableHeadRow',

@@ -23,8 +23,8 @@
 import { Extension } from '@tiptap/core'
 import { Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet } from 'prosemirror-view'
-import TrackState from './tracking/TrackState'
-import { Span } from './tracking/models'
+import TrackState from './tracking/TrackState.js'
+import { Span } from './tracking/models.js'
 
 const UserColor = Extension.create({
 

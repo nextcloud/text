@@ -21,8 +21,8 @@
  */
 
 import TipTapLink from '@tiptap/extension-link'
-import { domHref, parseHref } from './../helpers/links'
-import { clickHandler } from '../plugins/link'
+import { domHref, parseHref } from './../helpers/links.js'
+import { clickHandler } from '../plugins/link.js'
 
 const Link = TipTapLink.extend({
 

@@ -21,11 +21,11 @@
  */
 
 import Vue from 'vue'
-import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files'
-import FilesSettings from './views/FilesSettings'
+import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files.js'
+import FilesSettings from './views/FilesSettings.vue'
 import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
-import store from './store'
+import store from './store.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line

@@ -3,7 +3,7 @@ import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
 import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableView from './TableView'
+import TableView from './TableView.vue'
 
 /*
  * Markdown tables do not include captions.
@@ -33,6 +33,13 @@ const tableCaption = Node.create({
 
 })
 
+/**
+ *
+ * @param {object} schema - schema of the editor
+ * @param {number} rowsCount - number of rows in the table
+ * @param {number} colsCount - number of cols in the table
+ * @param {object} cellContent - currently unused
+ */
 function createTable(schema, rowsCount, colsCount, cellContent) {
 	const headerCells = []
 	const cells = []
@@ -54,6 +61,10 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 	return schema.nodes.table.createChecked(null, [headRow, ...rows])
 }
 
+/**
+ *
+ * @param {object} $cell - resolved position of the current cell
+ */
 function findSameCellInNextRow($cell) {
 	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
 		return null

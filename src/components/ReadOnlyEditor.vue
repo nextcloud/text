@@ -27,8 +27,8 @@
 <script>
 import { EditorContent } from '@tiptap/vue-2'
 import escapeHtml from 'escape-html'
-import { createEditor } from '../EditorFactory'
-import markdownit from './../markdownit'
+import { createEditor } from '../EditorFactory.js'
+import markdownit from './../markdownit/index.js'
 
 export default {
 	name: 'ReadOnlyEditor',

@@ -20,14 +20,14 @@
  *
  */
 
-import Image from './Image'
-import PlainTextDocument from './PlainTextDocument'
-import BulletList from './BulletList'
-import TaskItem from './TaskItem'
-import TaskList from './TaskList'
-import TrailingNode from './TrailingNode'
-import Heading from './Heading'
-import Callout from './Callouts'
+import Image from './Image.js'
+import PlainTextDocument from './PlainTextDocument.js'
+import BulletList from './BulletList.js'
+import TaskItem from './TaskItem.js'
+import TaskList from './TaskList.js'
+import TrailingNode from './TrailingNode.js'
+import Heading from './Heading.js'
+import Callout from './Callouts.js'
 
 export {
 	Image,
