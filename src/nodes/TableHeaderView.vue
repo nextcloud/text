@@ -101,13 +101,12 @@ export default {
 th {
 
 	.content {
-		float: left;
 		margin: 0;
 		padding-top: 0.75em;
+		flex-grow: 1;
 	}
 
 	.action-item {
-		float: right;
 		opacity: 50%;
 	}
 
