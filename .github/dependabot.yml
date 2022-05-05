@@ -23,6 +23,22 @@ updates:
   - 3. to review
   - dependencies
 - package-ecosystem: npm
+  target-branch: stable24
+  versioning-strategy: lockfile-only
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "03:00"
+    timezone: Europe/Paris
+  ignore:
+    - dependency-name: "*"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  open-pull-requests-limit: 30
+  labels:
+  - 3. to review
+  - dependencies
+- package-ecosystem: npm
   target-branch: stable23
   versioning-strategy: lockfile-only
   directory: "/"
@@ -40,22 +56,6 @@ updates:
   - dependencies
 - package-ecosystem: npm
   target-branch: stable22
-  versioning-strategy: lockfile-only
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: saturday
-    time: "03:00"
-    timezone: Europe/Paris
-  ignore:
-    - dependency-name: "*"
-      update-types: ["version-update:semver-major", "version-update:semver-minor"]
-  open-pull-requests-limit: 30
-  labels:
-  - 3. to review
-  - dependencies
-- package-ecosystem: npm
-  target-branch: stable21
   versioning-strategy: lockfile-only
   directory: "/"
   schedule:
