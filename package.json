@@ -109,7 +109,6 @@
 		"eslint-plugin-cypress": "^2.12.1",
 		"jest": "^27.5.1",
 		"jest-environment-jsdom": "^28.0.2",
-		"jest-raw-loader": "^1.0.1",
 		"jest-serializer-vue": "^2.0.2",
 		"regenerator-runtime": "^0.13.9"
 	},
@@ -133,8 +132,8 @@
 		"transform": {
 			"^.+\\.js$": "<rootDir>/node_modules/babel-jest",
 			".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-			".*\\.md$": "jest-raw-loader",
-			".*\\.html$": "jest-raw-loader"
+			".*\\.md$": "<rootDir>/src/tests/jest-raw-loader.js",
+			".*\\.html$": "<rootDir>/src/tests/jest-raw-loader.js"
 		},
 		"snapshotSerializers": [
 			"<rootDir>/node_modules/jest-serializer-vue"
