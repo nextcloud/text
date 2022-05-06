@@ -31,6 +31,7 @@ use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
 use OCP\DirectEditing\IManager;
+use OCP\Files\Config\IUserMountCache;
 use OCP\Files\Lock\ILock;
 use OCP\Files\Lock\ILockManager;
 use OCP\Files\Lock\LockContext;
@@ -82,9 +83,11 @@ class DocumentService {
 	private IRootFolder $rootFolder;
 	private ICache $cache;
 	private IAppData $appData;
+	private ILockingProvider $lockingProvider;
 	private ILockManager $lockManager;
+	private $userMountCache;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -96,6 +99,7 @@ class DocumentService {
 		$this->shareManager = $shareManager;
 		$this->lockingProvider = $lockingProvider;
 		$this->lockManager = $lockManager;
+		$this->userMountCache = $userMountCache;
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -384,8 +388,21 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getFileById($fileId, $userId = null): Node {
+		$userId = $userId ?? $this->userId;
+
+		// If no user is provided we need to get any file from existing mounts for cleanup jobs
+		if ($userId === null) {
+			$mounts = $this->userMountCache->getMountsForFileId($fileId);
+			$anyMount = array_shift($mounts);
+			if ($anyMount === null) {
+				throw new NotFoundException('Could not fallback to file from mounts');
+			}
+
+			$userId = $anyMount->getUser()->getUID();
+		}
+
 		try {
-			$userFolder = $this->rootFolder->getUserFolder($this->userId ?? $userId);
+			$userFolder = $this->rootFolder->getUserFolder($userId);
 		} catch (\OC\User\NoUserException $e) {
 			// It is a bit hacky to depend on internal exceptions here. But it is the best we can do for now
 			throw new NotFoundException();
@@ -502,17 +519,16 @@ class DocumentService {
 			return true;
 		}
 
-		$file = $this->getFileById($fileId);
 		try {
+			$file = $this->getFileById($fileId);
 			$this->lockManager->lock(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException $e) {
+		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
 		} catch (OwnerLockedException $e) {
 			return false;
-		} catch (PreConditionNotMetException $e) {
 		}
 		return true;
 	}
@@ -522,15 +538,14 @@ class DocumentService {
 			return;
 		}
 
-		$file = $this->getFileById($fileId);
 		try {
+			$file = $this->getFileById($fileId);
 			$this->lockManager->unlock(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException $e) {
-		} catch (PreConditionNotMetException $e) {
+		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
 		}
 	}
 }
