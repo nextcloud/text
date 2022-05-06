@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Reconectar",
     "The document has been changed outside of the editor. The changes cannot be applied." : "O documento foi alterado fora do editor. As alterações não podem ser aplicadas.",
     "File could not be loaded. Please check your internet connection." : "Não foi possível carregar o arquivo. Verifique sua conexão à internet.",
+    "This file is opened read-only as it is currently locked by {user}." : "Este arquivo está aberto para somente leitura, pois está atualmente bloqueado por {user}.",
     "Saving …" : "Salvando ...",
     "Saved" : "Salvo",
     "Last saved {lastSaved}" : "Salvo por último {lastSaved}",
