@@ -71,7 +71,8 @@ export default {
 </script>
 <style lang="scss">
 #editor-container {
-	top: var(--header-height);
+	top: 0;
+	height: calc(100vh - var(--header-height));
 }
 
 @media only screen and (max-width: 512px) {
