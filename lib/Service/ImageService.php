@@ -152,7 +152,7 @@ class ImageService {
 			throw new NotPermittedException('No write permissions');
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		$fileName = (string) time() . '-' . $newFileName;
+		$fileName = $this->getUniqueFileName($saveDir, $newFileName);
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
@@ -179,7 +179,7 @@ class ImageService {
 		}
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		$fileName = (string) time() . '-' . $newFileName;
+		$fileName = $this->getUniqueFileName($saveDir, $newFileName);
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
@@ -221,7 +221,7 @@ class ImageService {
 	private function copyImageFile(File $imageFile, Folder $saveDir, File $textFile): array {
 		$mimeType = $imageFile->getMimeType();
 		if (in_array($mimeType, ImageController::IMAGE_MIME_TYPES, true)) {
-			$fileName = (string) time() . '-' . $imageFile->getName();
+			$fileName = $this->getUniqueFileName($saveDir, $imageFile->getName());
 			$targetPath = $saveDir->getPath() . '/' . $fileName;
 			$targetFile = $imageFile->copy($targetPath);
 			// get file type and name
@@ -234,6 +234,23 @@ class ImageService {
 		return [
 			'error' => 'Unsupported file type',
 		];
+	}
+
+	/**
+	 * Get unique file name in a directory. Add '(n)' suffix.
+	 * @param Folder $dir
+	 * @param string $fileName
+	 * @return string
+	 */
+	private function getUniqueFileName(Folder $dir, string $fileName): string {
+		$extension = pathinfo($fileName, PATHINFO_EXTENSION);
+		$counter = 1;
+		$uniqueFileName = $fileName;
+		while ($dir->nodeExists($uniqueFileName)) {
+			$counter++;
+			$uniqueFileName = preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
+		}
+		return $uniqueFileName;
 	}
 
 	/**
