@@ -242,13 +242,20 @@ class ImageService {
 	 * @param string $fileName
 	 * @return string
 	 */
-	private function getUniqueFileName(Folder $dir, string $fileName): string {
+	public static function getUniqueFileName(Folder $dir, string $fileName): string {
 		$extension = pathinfo($fileName, PATHINFO_EXTENSION);
 		$counter = 1;
 		$uniqueFileName = $fileName;
-		while ($dir->nodeExists($uniqueFileName)) {
-			$counter++;
-			$uniqueFileName = preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
+		if ($extension !== '') {
+			while ($dir->nodeExists($uniqueFileName)) {
+				$counter++;
+				$uniqueFileName = preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
+			}
+		} else {
+			while ($dir->nodeExists($uniqueFileName)) {
+				$counter++;
+				$uniqueFileName = preg_replace('/$/', ' (' . $counter . ')', $fileName);
+			}
 		}
 		return $uniqueFileName;
 	}
