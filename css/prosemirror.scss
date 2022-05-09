@@ -267,7 +267,7 @@ div.ProseMirror {
 	table {
 		border-spacing: 0;
 		width: calc(100% - 50px);
-		table-layout: fixed;
+		table-layout: auto;
 		white-space: normal; // force text to wrapping
 		margin-bottom: 1em;
 		+ & {
@@ -290,10 +290,14 @@ div.ProseMirror {
 			color: var(--color-main-text);
 		}
 		th {
-				padding: 0 0 0 0.75em;
-				font-weight: normal;
-				border-bottom-color: var(--table-color-heading-border);
-				color: var(--table-color-heading);
+			padding: 0 0 0 0.75em;
+			font-weight: normal;
+			border-bottom-color: var(--table-color-heading-border);
+			color: var(--table-color-heading);
+
+			& > div {
+				display: flex;
+			}
 		}
 		tr {
 			background-color: var(--table-color-background);
