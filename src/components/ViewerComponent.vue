@@ -70,10 +70,6 @@ export default {
 }
 </script>
 <style lang="scss">
-#editor-container {
-	top: var(--header-height);
-}
-
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
 	#editor-container {
