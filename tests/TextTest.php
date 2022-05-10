@@ -20,6 +20,7 @@ class TextTest extends \PHPUnit\Framework\TestCase {
 			'a](a.png',
 			',;:!?.§-_a_',
 			'a`a`.png',
+			'aaa (2).png',
 		];
 		$content = "some content\n";
 		foreach ($contentNames as $name) {

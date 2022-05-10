@@ -478,18 +478,29 @@ class ImageService {
 	 */
 	public static function getAttachmentNamesFromContent(string $content): array {
 		$matches = [];
+		// get first level of parenthesis after ![.*]
+		$regex = '/!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\](\(((?>[^()]+)|(?-2))*\))/';
+
 		preg_match_all(
-			// simple version with .+ between the brackets
-			// '/\!\[.+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
-			// complex version of php-markdown
-			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
+			$regex,
 			$content,
 			$matches,
 			PREG_SET_ORDER
 		);
-		return array_map(static function (array $match) {
-			return urldecode($match[1]);
+
+		$linkTargets = array_map(static function (array $match) {
+			return trim(urldecode($match[1]), '()');
 		}, $matches);
+
+		$attachmentNames = array_map(static function (string $target) {
+			preg_match('/^text:\/\/image\?imageFileName=(.*)$/', $target, $targetMatches);
+			return $targetMatches[1] ?? '';
+		}, $linkTargets);
+
+		// remove empty values
+		$nonEmptyAttachmentNames = array_filter($attachmentNames);
+
+		return $nonEmptyAttachmentNames;
 	}
 
 	/**
