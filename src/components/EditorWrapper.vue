@@ -654,6 +654,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.modal-container #editor-container {
+		top: 0;
+		height: calc(100vh - var(--header-height));
+	}
+
 	#editor-container {
 		display: block;
 		width: 100%;
