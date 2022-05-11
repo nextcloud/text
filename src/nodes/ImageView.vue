@@ -41,7 +41,7 @@
 							type="text"
 							:value="alt"
 							@keyup.enter="updateAlt()">
-						<div v-if="showIcons"
+						<div v-if="editor.isEditable && showIcons"
 							class="trash-icon"
 							title="Delete this image"
 							@click="deleteNode">
