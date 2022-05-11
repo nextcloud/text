@@ -55,10 +55,6 @@ import {
 import { Markdown, Emoji } from './extensions/index.js'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
-import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
-import { VueRenderer } from '@tiptap/vue-2'
-import EmojiList from './components/EmojiList.vue'
-import tippy from 'tippy.js'
 
 import 'proxy-polyfill'
 
@@ -104,56 +100,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Callout,
 			Underline,
 			Image.configure({ currentDirectory, inline: true }),
-			Emoji.configure({
-				suggestion: {
-					items: ({ query }) => {
-						return emojiSearch(query)
-					},
-					render: () => {
-						let component
-						let popup
-
-						return {
-							onStart: props => {
-								component = new VueRenderer(EmojiList, {
-									parent: this,
-									propsData: props,
-								})
-
-								popup = tippy('body', {
-									getReferenceClientRect: props.clientRect,
-									appendTo: () => document.body,
-									content: component.element,
-									showOnCreate: true,
-									interactive: true,
-									trigger: 'manual',
-									placement: 'bottom-start',
-								})
-							},
-
-							onUpdate(props) {
-								component.updateProps(props)
-								popup[0].setProps({
-									getReferenceClientRect: props.clientRect,
-								})
-							},
-
-							onKeyDown(props) {
-								if (props.event.key === 'Escape') {
-									popup[0].hide()
-									return true
-								}
-								return component.ref?.onKeyDown(props)
-							},
-
-							onExit() {
-								popup[0].destroy()
-								component.destroy()
-							},
-						}
-					},
-				},
-			}),
+			Emoji,
 			Placeholder.configure({
 				emptyNodeClass: 'is-empty',
 				placeholder: t('text', 'Add notes, lists or links …'),
