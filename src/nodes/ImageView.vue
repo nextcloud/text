@@ -22,7 +22,10 @@
 
 <template>
 	<NodeViewWrapper>
-		<div class="image" :class="{'icon-loading': !loaded}" :data-src="src">
+		<div class="image"
+			data-component="image-view"
+			:class="{'icon-loading': !loaded}"
+			:data-src="src">
 			<div v-if="imageLoaded && isSupportedImage"
 				v-click-outside="() => showIcons = false"
 				class="image__view"
