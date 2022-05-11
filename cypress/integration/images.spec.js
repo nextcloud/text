@@ -20,9 +20,9 @@
  *
  */
 
-
 import { randHash } from '../utils/'
 import 'cypress-file-upload'
+
 const randUser = randHash()
 const randUser2 = randHash()
 let currentUser = randUser
@@ -31,6 +31,16 @@ const attachmentFileNameToId = {}
 const ACTION_UPLOAD_LOCAL_FILE = 1
 const ACTION_INSERT_FROM_FILES = 2
 const ACTION_INSERT_FROM_LINK = 3
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+ * @param str string
+ */
+function fixedEncodeURIComponent(str) {
+	return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
+		return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+	})
+}
 
 /**
  * Open the image action menu and click one action
@@ -45,50 +55,81 @@ const clickOnImageAction = (actionIndex, callback) => {
 		.should('have.class', 'action-item--open')
 
 	// get the popover ID to be able to find the related DOM element
-	cy.get('#viewer .action-item.submenu > div.v-popover > .trigger')
+	return cy.get('#viewer .action-item.submenu > div.v-popover > .trigger')
 		.should('have.attr', 'aria-describedby')
-			.should('contain', 'popover_')
-			.then((popoverId) => {
-				cy.log('Click on the action entry')
-				cy.get('div#' + popoverId)
-					.should('have.class', 'open')
-					.find('li:nth-child(' + actionIndex + ')').click()
+		.should('contain', 'popover_')
+		.then((popoverId) => {
+			cy.log('Click on the action entry')
+			cy.get('div#' + popoverId)
+				.should('have.class', 'open')
+				.find('li:nth-child(' + actionIndex + ')').click()
 				// our job here is done
-				callback(popoverId)
-			})
+			callback(popoverId)
+		})
 }
 
 /**
  * Check if an image is visible in the document
  *
- * @param documentId file ID of the current document
- * @param imageName file name to be checked
+ * @param {number} documentId file ID of the current document
+ * @param {string} imageName file name to be checked
+ * @param {number} imageId file id
+ * @param {number|undefined} index index of image in the document
  */
-const checkImage = (documentId, imageName, imageId) => {
-	cy.log('Check the image is visible and well formed')
-	cy.get('#editor .ProseMirror div.image[data-src="text://image?imageFileName=' + imageName + '"]')
-		.should('be.visible')
-		.find('img')
-			.should('have.attr', 'src')
-				.should('contain', 'apps/text/image?documentId=' + documentId)
-				.should('contain', 'imageFileName=' + imageName)
-	// keep track that we have created this image in the attachment dir
-	attachmentFileNameToId[imageName] = imageId
+const checkImage = (documentId, imageName, imageId, index) => {
+	const encodedName = fixedEncodeURIComponent(imageName)
+
+	cy.log('Check the image is visible and well formed', { documentId, imageName, imageId, index, encodedName })
+	return new Cypress.Promise((resolve, reject) => {
+		cy.get('#editor [data-component="image-view"]')
+			.filter('[data-src="text://image?imageFileName=' + encodedName + '"]')
+			.find('.image__view') // wait for load finish
+			.within(($el) => {
+				// keep track that we have created this image in the attachment dir
+				if (!attachmentFileNameToId[documentId]) {
+					attachmentFileNameToId[documentId] = {}
+				}
+
+				attachmentFileNameToId[documentId][imageName] = imageId
+
+				if (index > 0) {
+					expect(imageName).include(`(${index + 1})`)
+				}
+
+				cy.wrap($el)
+					.should('be.visible')
+					.find('img')
+					.should('have.attr', 'src')
+					.should('contain', 'apps/text/image?documentId=' + documentId)
+					.should('contain', 'imageFileName=' + encodeURIComponent(imageName))
+
+				return cy.wrap($el)
+					.find('.image__caption input')
+					.should('be.visible')
+					.should('have.value', imageName)
+
+			})
+			.then(resolve, reject)
+	})
 }
 
 /**
  * Wait for the image insertion request to finish and check if the image is visible
  *
- * @param requestAlias Alias of the request we are waiting for
+ * @param {string} requestAlias Alias of the request we are waiting for
+ * @param {number|undefined} index of image
  */
-const waitForRequestAndCheckImage = (requestAlias) => {
-	cy.wait('@' + requestAlias).then((req) => {
-		// the name of the created file on NC side is returned in the response
-		const fileId = req.response.body.id
-		const fileName = req.response.body.name
-		const documentId = req.response.body.documentId
-		checkImage(documentId, fileName, fileId)
-		cy.screenshot()
+const waitForRequestAndCheckImage = (requestAlias, index) => {
+	return new Cypress.Promise((resolve, reject) => {
+		return cy.wait('@' + requestAlias).then((req) => {
+			// the name of the created file on NC side is returned in the response
+			const fileId = req.response.body.id
+			const fileName = req.response.body.name
+			const documentId = req.response.body.documentId
+
+			checkImage(documentId, fileName, fileId, index)
+				.then(resolve, reject)
+		})
 	})
 }
 
@@ -100,6 +141,7 @@ describe('Test all image insertion methods', () => {
 
 		// Upload test files to user's storage
 		cy.uploadFile('test.md', 'text/markdown')
+		cy.uploadFile('empty.md', 'text/markdown')
 		cy.uploadFile('github.png', 'image/png')
 
 		cy.nextcloudCreateUser(randUser2, 'password')
@@ -155,22 +197,52 @@ describe('Test all image insertion methods', () => {
 		})
 	})
 
+	it('Upload images with the same name', () => {
+		cy.uploadFile('empty.md', 'text/markdown')
+		cy.openFile('empty.md')
+
+		const assertImage = index => {
+			return clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
+				const requestAlias = `uploadRequest${index}`
+				cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
+
+				cy.log('Upload the file through the input', { index })
+				cy.get('.menubar input[type="file"]').attachFile('github.png')
+
+				return waitForRequestAndCheckImage(requestAlias, index)
+			})
+		}
+
+		cy.wrap([0, 1, 2])
+			.each((index) => {
+				return new Cypress.Promise((resolve, reject) => {
+					assertImage(index).then(resolve, reject)
+				})
+			})
+			.then(() => {
+				return cy.get('#editor [data-component="image-view"]')
+					.should('have.length', 3)
+			})
+	})
+
 	it('test if image files are in the attachment folder', () => {
 		// check we stored the image names/ids
-		cy.expect(Object.keys(attachmentFileNameToId)).to.have.lengthOf(2)
 
-		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				const files = attachmentFileNameToId[documentId]
+
+				cy.expect(Object.keys(files)).to.have.lengthOf(2)
 				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
 				cy.wait('@chdir')
 				cy.screenshot()
-				for (const name in attachmentFileNameToId) {
+				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
-						.should('eq', String(attachmentFileNameToId[name]))
+						.should('eq', String(files[name]))
 				}
 			})
 	})
@@ -191,19 +263,20 @@ describe('Test all image insertion methods', () => {
 		cy.openFile('subFolder')
 		cy.wait('@chdir')
 
-		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				const files = attachmentFileNameToId[documentId]
 				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
 				cy.wait('@chdir')
 				cy.screenshot()
-				for (const name in attachmentFileNameToId) {
+				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
-						.should('eq', String(attachmentFileNameToId[name]))
+						.should('eq', String(files[name]))
 				}
 			})
 	})
@@ -216,27 +289,29 @@ describe('Test all image insertion methods', () => {
 		cy.reloadFileList()
 		cy.wait('@reload2')
 
-		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				const files = attachmentFileNameToId[documentId]
+
 				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
 				cy.wait('@chdir')
 				cy.screenshot()
-				for (const name in attachmentFileNameToId) {
+				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
 						// so they should not have the same IDs than the ones created when uploading the images
-						.should('not.eq', String(attachmentFileNameToId[name]))
+						.should('not.eq', String(files[name]))
 				}
 			})
 	})
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
-		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -271,7 +346,7 @@ describe('Test all image insertion methods', () => {
 		cy.wait('@showHidden')
 
 		// check the attachment folder is not there
-		cy.get(`#fileList tr[data-file="test.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -288,7 +363,7 @@ describe('Test all image insertion methods', () => {
 		cy.reloadFileList()
 		cy.wait('@reload')
 
-		cy.get(`#fileList tr[data-file="testMoved.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="testMoved.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -304,21 +379,23 @@ describe('Test all image insertion methods', () => {
 		cy.reloadFileList()
 		cy.wait('@reload2')
 
-		cy.get(`#fileList tr[data-file="testCopied.md"]`, { timeout: 10000 })
+		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
+				const files = attachmentFileNameToId[documentId]
+
 				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
 				cy.openFile('.attachments.' + documentId)
 				cy.wait('@chdir')
 				cy.screenshot()
-				for (const name in attachmentFileNameToId) {
+				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
 						// so they should not have the same IDs than the ones created when uploading the images
-						.should('not.eq', String(attachmentFileNameToId[name]))
+						.should('not.eq', String(files[name]))
 				}
 			})
 	})
