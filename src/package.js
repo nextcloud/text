@@ -20,6 +20,6 @@
  *
 */
 
-import Reader from './components/Reader.vue'
+import RichtextReader from './components/RichtextReader.vue'
 
-export { Reader }
+export { RichtextReader }

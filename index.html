@@ -10,7 +10,7 @@
   <body>
     <div id="app"></div>
     <script type="module">
-	    import { ReadOnlyEditor } from './src/package.js'
+	    import { RichtextReader } from './src/package.js'
 		import Vue from 'vue'
 		const app = new Vue({
 			data() {
@@ -19,7 +19,7 @@
 				}
 			},
 			render: (h) => h('div', [
-				h(ReadOnlyEditor, {
+				h(RichtextReader, {
 					props: { content: app.content }
 				}),
 				h('textarea', {
