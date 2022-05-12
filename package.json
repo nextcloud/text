@@ -13,8 +13,10 @@
 	"private": true,
 	"scripts": {
 		"dev": "NODE_ENV=development webpack --config webpack.js",
+		"dev:package": "vite",
 		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
 		"build": "NODE_ENV=production webpack --progress --config webpack.js",
+		"build:package": "vite build",
 		"lint": "eslint --ext .js,.vue src",
 		"lint:fix": "eslint --ext .js,.vue src --fix",
 		"stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
@@ -88,6 +90,7 @@
 		"prosemirror-view": "^1.23.13",
 		"proxy-polyfill": "^0.3.2",
 		"tippy.js": "^6.3.7",
+		"vite-plugin-vue2": "^2.0.0",
 		"vue": "^2.6.14",
 		"vue-click-outside": "^1.1.0",
 		"vue-material-design-icons": "^5.0.0",
@@ -123,6 +126,7 @@
 		"jest-raw-loader": "^1.0.1",
 		"jest-serializer-vue": "^2.0.2",
 		"regenerator-runtime": "^0.13.9",
+		"vite": "^2.9.9",
 		"webpack": "^5.73.0"
 	},
 	"jest": {

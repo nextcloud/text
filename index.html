@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/dist/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test the package</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module">
+	    import { ReadOnlyEditor } from './src/package.js'
+		import Vue from 'vue'
+		const app = new Vue({
+			data() {
+				return {
+					content: '**Hello There**',
+				}
+			},
+			render: (h) => h('div', [
+				h(ReadOnlyEditor, {
+					props: { content: app.content }
+				}),
+				h('textarea', {
+					attrs: { rows: 20, cols: 80 },
+					on: {
+						input: function (event) {
+							app.content = event.target.value
+						},
+					},
+				}, [app.content]),
+			]),
+		})
+	    app.$mount('#app')
+    </script>
+  </body>
+</html>
