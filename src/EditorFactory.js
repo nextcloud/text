@@ -52,12 +52,12 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
 			Markdown,
-			RichText.configure({ currentDirectory }),
+			RichText,
 			Emoji.configure({
 				suggestion: {
 					items: ({ query }) => {

@@ -296,11 +296,6 @@ export default {
 		isRichEditor() {
 			return this.mime === 'text/markdown'
 		},
-		richTextOptions() {
-			return {
-				currentDirectory: this.currentDirectory,
-			}
-		},
 		fileExtension() {
 			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
 		},

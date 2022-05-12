@@ -57,7 +57,6 @@ export default Extension.create({
 
 	addOptions() {
 		return {
-			currentDirectory: undefined,
 			link: {},
 		}
 	},
@@ -89,7 +88,6 @@ export default Extension.create({
 			Callout,
 			Underline,
 			Image.configure({
-				currentDirectory: this.options.currentDirectory,
 				inline: true,
 			}),
 			Dropcursor,

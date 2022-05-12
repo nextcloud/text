@@ -38,10 +38,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		richTextOptions: {
-			type: Object,
-			default: () => {},
-		},
 	},
 	data: () => {
 		return {
@@ -76,7 +72,6 @@ export default {
 				content: this.htmlContent,
 				extensions: [
 					RichText.configure({
-						...this.richTextOptions,
 						link: {
 							onClick: (event, attrs) => this.$emit('click-link', event, attrs),
 						},

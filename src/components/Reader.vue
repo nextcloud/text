@@ -22,7 +22,6 @@
 
 <template>
 	<RichtextReader v-if="isRichText"
-		:rich-text-options="richTextOptions"
 		:content="content" />
 	<PlaintextReader v-else
 		:content="content" />

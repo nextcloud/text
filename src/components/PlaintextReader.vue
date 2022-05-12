@@ -38,10 +38,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		richTextOptions: {
-			type: Object,
-			default: () => {},
-		},
 	},
 	data: () => {
 		return {

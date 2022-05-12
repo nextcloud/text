@@ -147,7 +147,7 @@ export default class ImageResolver {
 		if (src.startsWith('text://')) {
 			return [
 				this.#attachmentDirectory,
-				getQueryVariable(src, 'imageFileName')
+				getQueryVariable(src, 'imageFileName'),
 			].join('/')
 		}
 		return decodeURI(src.split('?')[0])
