@@ -32,7 +32,7 @@ import escapeHtml from 'escape-html'
 import markdownit from './../markdownit/index.js'
 
 export default {
-	name: 'ReadOnlyEditor',
+	name: 'Reader',
 	components: { EditorContent },
 	inject: {
 		extensions: { default: [] },

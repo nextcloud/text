@@ -20,6 +20,6 @@
  *
 */
 
-import ReadOnlyEditor from './components/ReadOnlyEditor.vue'
+import Reader from './components/Reader.vue'
 
-export { ReadOnlyEditor }
+export { Reader }

@@ -75,7 +75,7 @@
 						:editor="$editor" />
 				</div>
 			</EditorMidiaHandler>
-			<ReadOnlyEditor v-if="hasSyncCollission"
+			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:rich-text-options="richTextOptions"
 				:is-rich-editor="isRichEditor" />
@@ -132,7 +132,7 @@ export default {
 		EditorMidiaHandler,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
-		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
+		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
