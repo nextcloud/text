@@ -21,51 +21,69 @@
   -->
 
 <template>
-	<RichtextReader v-if="isRichText"
-		:rich-text-options="richTextOptions"
-		:content="content" />
-	<PlaintextReader v-else
-		:content="content" />
+	<EditorContent v-if="editor" id="read-only-editor" :editor="editor" />
 </template>
 
 <script>
-import PlaintextReader from './PlaintextReader.vue'
-import RichtextReader from './RichtextReader.vue'
+import { Editor } from '@tiptap/core'
+import { PlainText } from './../extensions/index.js'
+import { EditorContent } from '@tiptap/vue-2'
+import escapeHtml from 'escape-html'
 
 export default {
-	name: 'Reader',
-	components: { PlaintextReader, RichtextReader },
+	name: 'PlaintextReader',
+	components: { EditorContent },
+	inject: {
+		extensions: { default: [] },
+	},
 	props: {
 		content: {
 			type: String,
 			required: true,
 		},
-		isRichEditor: {
-			type: Boolean,
-			default: true,
+		richTextOptions: {
+			type: Object,
+			default: () => {},
+		},
+	},
+	data: () => {
+		return {
+			editor: null,
+		}
+	},
+
+	computed: {
+		htmlContent() {
+			return '<pre>' + escapeHtml(this.content) + '</pre>'
+		},
+	},
+
+	watch: {
+		content() {
+			this.updateContent()
+		},
+	},
+
+	mounted() {
+		this.editor = this.createEditor()
+		this.editor.setOptions({ editable: false })
+	},
+
+	beforeDestroy() {
+		this.editor.destroy()
+	},
+
+	methods: {
+		createEditor() {
+			return new Editor({
+				content: this.htmlContent,
+				extensions: [PlainText],
+			})
+		},
+
+		updateContent() {
+			this.editor.commands.setContent(this.htmlContent)
 		},
 	},
 }
 </script>
-
-<style lang="scss">
-
-	#read-only-editor {
-		@import './../../css/prosemirror';
-		overflow: scroll;
-	}
-
-	.thumbnailContainer #read-only-editor  {
-		width: 100%;
-
-		.ProseMirror {
-			height: auto;
-			margin: 0 0 0 0;
-			padding: 0;
-		}
-	}
-
-</style>
-<style lang="scss">
-	@import './../../css/prosemirror';
-</style>
