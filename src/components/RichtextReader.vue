@@ -33,9 +33,6 @@ import markdownit from './../markdownit/index.js'
 export default {
 	name: 'RichtextReader',
 	components: { EditorContent },
-	inject: {
-		extensions: { default: [] },
-	},
 	props: {
 		content: {
 			type: String,
@@ -84,7 +81,6 @@ export default {
 							onClick: (event, attrs) => this.$emit('click-link', event, attrs),
 						},
 					}),
-					...this.extensions,
 				],
 			})
 		},

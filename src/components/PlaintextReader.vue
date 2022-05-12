@@ -33,9 +33,6 @@ import escapeHtml from 'escape-html'
 export default {
 	name: 'PlaintextReader',
 	components: { EditorContent },
-	inject: {
-		extensions: { default: [] },
-	},
 	props: {
 		content: {
 			type: String,
