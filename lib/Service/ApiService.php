@@ -50,17 +50,20 @@ class ApiService {
 	protected $documentService;
 	protected $logger;
 	private $imageService;
+	private $encodingService;
 
 	public function __construct(IRequest $request,
 								SessionService $sessionService,
 								DocumentService $documentService,
 								ImageService $imageService,
+								EncodingService $encodingService,
 								ILogger $logger) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
 		$this->imageService = $imageService;
+		$this->encodingService = $encodingService;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
@@ -105,6 +108,11 @@ class ApiService {
 		try {
 			$baseFile = $this->documentService->getBaseFile($document->getId());
 			$content = $baseFile->getContent();
+
+			$content = $this->encodingService->encodeToUtf8($content);
+			if (!$content) {
+				$this->logger->log(ILogger::WARN, 'Failed to encode file to UTF8. File ID: ' . $file->getId());
+			}
 		} catch (NotFoundException $e) {
 			$this->logger->logException($e, ['level' => ILogger::INFO]);
 			$content = null;
