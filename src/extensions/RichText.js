@@ -33,13 +33,7 @@ import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import HardBreak from './HardBreak.js'
-/*
 import Table from './../nodes/Table.js'
-import TableCell from './../nodes/TableCell.js'
-import TableHeader from './../nodes/TableHeader.js'
-import TableHeadRow from './../nodes/TableHeadRow.js'
-import TableRow from './../nodes/TableRow.js'
-*/
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -77,12 +71,7 @@ export default Extension.create({
 			HorizontalRule,
 			OrderedList,
 			ListItem,
-/*			Table,
-			TableCell,
-			TableHeader,
-			TableHeadRow,
-			TableRow,
-*/
+			Table,
 			TaskList,
 			TaskItem,
 			Callout,

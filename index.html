@@ -18,6 +18,9 @@
 					content: '**Hello There**',
 				}
 			},
+			provide: {
+				currentDirectory: '/'
+			},
 			render: (h) => h('div', [
 				h(RichtextReader, {
 					props: { content: app.content }

@@ -1,6 +1,4 @@
 import { TableHeader } from '@tiptap/extension-table-header'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableHeaderView from './TableHeaderView.vue'
 
 export default TableHeader.extend({
 	content: 'inline*',
@@ -22,10 +20,6 @@ export default TableHeader.extend({
 			{ tag: 'table > :first-child > th', priority: 60 },
 			{ tag: 'table > :first-child > td', priority: 60 },
 		]
-	},
-
-	addNodeView() {
-		return VueNodeViewRenderer(TableHeaderView)
 	},
 
 })

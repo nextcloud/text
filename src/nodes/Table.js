@@ -1,37 +1,12 @@
+import { mergeAttributes } from '@tiptap/core'
 import { Table } from '@tiptap/extension-table'
-import { Node, mergeAttributes } from '@tiptap/core'
+import TableCaption from './TableCaption.js'
+import TableCell from './TableCell.js'
+import TableHeader from './TableHeader.js'
+import TableHeadRow from './TableHeadRow.js'
+import TableRow from './TableRow.js'
 import { TextSelection } from 'prosemirror-state'
 import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableView from './TableView.vue'
-
-/*
- * Markdown tables do not include captions.
- * We still need to parse them though
- * because otherwise tiptap will try to insert their text content
- * and put it in the top row of the table.
- */
-const tableCaption = Node.create({
-	name: 'tableCaption',
-	content: 'inline*',
-	addAttributes() {
-		return {}
-	},
-
-	renderHTML() {
-		return ['caption']
-	},
-
-	toMarkdown(state, node) {
-	},
-
-	parseHTML() {
-		return [
-			{ tag: 'table caption', priority: 90 },
-		]
-	},
-
-})
 
 /**
  *
@@ -89,7 +64,11 @@ export default Table.extend({
 
 	addExtensions() {
 		return [
-			tableCaption,
+			TableCaption,
+			TableCell,
+			TableHeader,
+			TableHeadRow,
+			TableRow,
 		]
 	},
 
@@ -164,10 +143,6 @@ export default Table.extend({
 					.run()
 			},
 		}
-	},
-
-	addNodeView() {
-		return VueNodeViewRenderer(TableView)
 	},
 
 })
