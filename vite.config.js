@@ -10,7 +10,7 @@ export default defineConfig({
 		lib: {
 			entry: resolve(__dirname, 'src/package.js'),
 			name: '@nextcloud/text',
-			fileName: 'index.js',
+			fileName: (_format) => 'index.js',
 			formats: ['es'],
 		},
 		rollupOptions: {
