@@ -56,6 +56,20 @@ export default {
 			editor: null,
 		}
 	},
+
+	computed: {
+		htmlContent() {
+			return this.isRichEditor
+				? markdownit.render(this.content)
+				: '<pre>' + escapeHtml(this.content) + '</pre>'
+		},
+	},
+
+	watch: {
+		content() {
+			this.updateContent()
+		},
+	},
 	mounted() {
 		this.editor = this.isRichEditor
 			? this.createRichEditor()
@@ -66,11 +80,9 @@ export default {
 		this.editor.destroy()
 	},
 	methods: {
-
 		createRichEditor() {
-			const content = markdownit.render(this.content)
 			return new Editor({
-				content,
+				content: this.htmlContent,
 				extensions: [
 					RichText.configure(this.richTextOptions),
 					...this.extensions,
@@ -79,11 +91,14 @@ export default {
 		},
 
 		createPlainEditor() {
-			const content = '<pre>' + escapeHtml(this.content) + '</pre>'
 			return new Editor({
-				content,
+				content: this.htmlContent,
 				extensions: [PlainText],
 			})
+		},
+
+		updateContent() {
+			this.editor.commands.setContent(this.htmlContent)
 		},
 	},
 }
