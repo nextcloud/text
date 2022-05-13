@@ -127,7 +127,7 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./MenuBar.vue'),
+		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./Menu/Bar.vue'),
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),

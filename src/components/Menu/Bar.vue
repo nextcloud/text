@@ -27,103 +27,111 @@
 			accept="image/*"
 			aria-hidden="true"
 			class="hidden-visually"
-			:multiple="true"
+			multiple
 			@change="onImageUploadFilePicked">
 		<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
 			<template v-for="(icon) in icons">
 				<EmojiPicker v-if="icon.class === 'icon-emoji'"
 					v-show="icon.priority <= iconCount"
 					:key="icon.label"
-					class="menuitem-emoji"
+					class="menuitem-emoji action-menu-emoji"
 					@selectData="emojiObject => addEmoji(icon, emojiObject)">
 					<button v-tooltip="t('text', 'Insert emoji')"
-						class="icon-emoji"
 						:aria-label="t('text', 'Insert emoji')"
 						:aria-haspopup="true"
-						@click="toggleChildMenu(icon)" />
+						@click="toggleChildMenu(icon)">
+						<component :is="icon.icon" />
+					</button>
 				</EmojiPicker>
 				<Actions v-else-if="icon.class === 'icon-image'"
-					:key="icon.label"
+					:key="`action-images-${icon.label}`"
 					ref="imageActions"
-					class="submenu"
-					:default-icon="'icon-image'"
+					class="submenu action-menu-image"
+					:title="icon.label"
+					:aria-label="icon.label"
+					:aria-haspopup="true"
 					@open="toggleChildMenu(icon)"
 					@close="toggleChildMenu(icon)">
-					<button slot="icon"
-						:class="{ 'icon-image': true, 'loading-small': uploadingImages }"
-						:title="icon.label"
-						:aria-label="icon.label"
-						:aria-haspopup="true" />
-					<ActionButton icon="icon-upload"
-						:close-after-click="true"
+					<template #icon>
+						<component :is="uploadingImages ? 'Loading' : icon.icon"
+							:title="icon.label"
+							:aria-label="icon.label"
+							:aria-haspopup="true" />
+					</template>
+					<ActionButton :close-after-click="true"
 						:disabled="uploadingImages"
 						@click="onUploadImage()">
+						<template #icon>
+							<Upload />
+						</template>
 						{{ t('text', 'Upload from computer') }}
 					</ActionButton>
 					<ActionButton v-if="!isPublic"
-						icon="icon-folder"
 						:close-after-click="true"
 						:disabled="uploadingImages"
 						@click="showImagePrompt()">
+						<template #icon>
+							<Folder />
+						</template>
 						{{ t('text', 'Insert from Files') }}
 					</ActionButton>
 				</Actions>
 				<button v-else-if="icon.class"
 					v-show="icon.priority <= iconCount"
-					:key="icon.label"
+					:key="`action-${icon.label}`"
 					v-tooltip="getLabelAndKeys(icon)"
+					class="action-menu-icon"
 					:class="getIconClasses(icon)"
 					:disabled="disabled(icon)"
-					@click="clickIcon(icon)" />
+					@click="clickIcon(icon)">
+					<component :is="icon.icon" />
+				</button>
 				<template v-else>
-					<div v-show="icon.priority <= iconCount"
+					<Actions v-show="icon.priority <= iconCount"
 						:key="icon.label"
-						v-click-outside="() => hideChildMenu(icon)"
-						class="submenu">
-						<button v-tooltip="getLabelAndKeys(icon)"
-							:class="childIconClasses(icon.children, )"
-							@click.prevent="toggleChildMenu(icon)" />
-						<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
-							<PopoverMenu :menu="childPopoverMenu(icon.children, icon)" />
-						</div>
-					</div>
+						:title="icon.label"
+						class="action-menu-sub">
+						<template #icon>
+							<component :is="icon.icon" />
+						</template>
+						<ActionButton v-for="child in childPopoverMenu(icon.children, icon)"
+							:key="child.label"
+							@click="child.action">
+							<template #icon>
+								<component :is="child.icon" />
+							</template>
+							{{ child.label }}
+						</ActionButton>
+					</Actions>
 				</template>
 			</template>
-			<Actions @open="toggleChildMenu({ label: 'Remaining Actions' })"
+			<Actions class="remaining-actions"
+				@open="toggleChildMenu({ label: 'Remaining Actions' })"
 				@close="toggleChildMenu({ label: 'Remaining Actions' })">
 				<template v-for="(icon) in icons">
 					<ActionButton v-if="icon.class && isHiddenInMenu(icon) && !hasSubmenu(icon)"
-						:key="icon.class"
+						:key="`remaining-action-${icon.class}`"
 						v-tooltip="getKeys(icon)"
-						:icon="icon.class"
 						:close-after-click="true"
 						@click="clickIcon(icon)">
+						<template #icon>
+							<component :is="icon.icon" />
+						</template>
 						{{ icon.label }}
 					</ActionButton>
-					<!--<template v-else-if="!icon.class && isHiddenInMenu(icon)">
-						<ActionButton v-for="childIcon in icon.children"
-							:key="childIcon.class"
-							:icon="childIcon.class"
-							@click="clickIcon(childIcon)">
-							v-tooltip="getKeys(childIcon)"
-							{{ childIcon.label }}
-						</ActionButton>
-					</template>-->
 				</template>
 			</Actions>
 		</div>
-		<slot>
-			Left side
-		</slot>
+		<slot />
 	</div>
 </template>
 
 <script>
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import menuBarIcons from './../mixins/menubar.js'
-import isMobile from './../mixins/isMobile.js'
-
-import { useEditorMixin } from './EditorWrapper.provider.js'
+import menuBarIcons from './../../mixins/menubar.js'
+import isMobile from './../../mixins/isMobile.js'
+import { Loading, Folder, Upload } from '../../components/icons.js'
+import { useEditorMixin } from '../EditorWrapper.provider.js'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -134,12 +142,16 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default {
+	// eslint-disable-next-line vue/match-component-file-name
 	name: 'MenuBar',
 	components: {
 		ActionButton,
 		PopoverMenu,
 		Actions,
 		EmojiPicker,
+		Loading,
+		Folder,
+		Upload,
 	},
 	directives: {
 		Tooltip,
@@ -184,10 +196,14 @@ export default {
 			forceRecompute: 0,
 			submenuVisibility: {},
 			lastImagePath: null,
+			// @deprecated
 			icons: [...menuBarIcons],
 		}
 	},
 	computed: {
+		menuEntries() {
+			return [...menuBarIcons]
+		},
 		isHiddenInMenu() {
 			return (icon) => icon.priority > this.iconCount
 		},
@@ -226,9 +242,9 @@ export default {
 			return (icons, parent) => {
 				return icons.map(icon => {
 					return {
-						// text: this.getLabelAndKeys(icons[index]),
-						text: icon.label,
-						icon: icon.class,
+						label: icon.label,
+						class: icon.class,
+						icon: icon.icon,
 						active: this.isActive(icon),
 						action: () => {
 							this.clickIcon(icon)
@@ -430,6 +446,11 @@ export default {
 			max-height: calc(100vh - 88px);
 			overflow: scroll;
 		}
+
+		.remaining-actions ::v-deep .material-design-icon {
+			height: auto;
+			width: auto;
+		}
 	}
 
 	.menubar button {
@@ -444,6 +465,7 @@ export default {
 		color: var(--color-main-text);
 		background-position: center center;
 		vertical-align: top;
+		padding: 0.7em;
 		&:hover, &:focus, &:active {
 			background-color: var(--color-background-dark);
 		}
