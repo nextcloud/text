@@ -634,7 +634,12 @@ export default {
 			})
 		},
 		insertAttachmentImage(name, fileId, position = null) {
-			const src = 'text://image?imageFileName=' + encodeURIComponent(name)
+			// inspired by the fixedEncodeURIComponent function suggested in
+			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+			const src = 'text://image?imageFileName='
+				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
+					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+				})
 			// simply get rid of brackets to make sure link text is valid
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')

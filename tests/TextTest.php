@@ -15,6 +15,11 @@ class TextTest extends \PHPUnit\Framework\TestCase {
 	public function testGetAttachmentNamesFromContent() {
 		$contentNames = [
 			'aaa.png',
+			'aaa (2).png',
+			'aaa 2).png',
+			'aaa (2.png',
+			'aaa ((2.png',
+			'aaa 2)).png',
 			'a[a]a.png',
 			'a(a)a.png',
 			'a](a.png',
