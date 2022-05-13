@@ -7,3 +7,5 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 .php-cs-fixer.cache
+/tests/clover.xml
+/tests/.phpunit.result.cache
