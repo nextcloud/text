@@ -72,7 +72,7 @@ describe('Workspace', function() {
 		openWorkspace()
 			.type('Nextcloud')
 			.type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('link').click({ force: true })
 		cy.get('.menububble input').type('https://nextcloud.com{enter}')
 		cy.get('.ProseMirror a')
 			.should('contain', 'Nextcloud')
@@ -85,7 +85,7 @@ describe('Workspace', function() {
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/')
 		cy.get('.ProseMirror').type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('link').click({ force: true })
 		cy.get('.menububble input').type('/team{enter}')
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/team')
@@ -260,7 +260,7 @@ const openWorkspace = () => {
 const openSidebar = filename => {
 	cy.get(`#fileList tr[data-file="${filename}"]`)
 		.should('contain', filename)
-	cy.get(`#fileList tr[data-file="${filename}"] .icon-more`).click()
-	cy.get(`#fileList tr[data-file="${filename}"] .icon-details`).click()
+	cy.get(`#fileList tr[data-file="${filename}"] .icon-more`).click({ force: true })
+	cy.get(`#fileList tr[data-file="${filename}"] .icon-details`).click({ force: true })
 	cy.get('.app-sidebar-header').should('contain', filename)
 }

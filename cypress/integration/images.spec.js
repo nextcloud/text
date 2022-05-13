@@ -162,7 +162,7 @@ describe('Test all image insertion methods', () => {
 			.click()
 		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
 		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
-			.click()
+			.click({ force: true })
 		cy.wait('@showHidden')
 	})
 
@@ -342,7 +342,7 @@ describe('Test all image insertion methods', () => {
 			.click()
 		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
 		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
-			.click()
+			.click({ force: true })
 		cy.wait('@showHidden')
 
 		// check the attachment folder is not there
