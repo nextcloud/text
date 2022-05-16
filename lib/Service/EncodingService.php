@@ -26,16 +26,15 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 class EncodingService {
-	public const COMMON_ENCODINGS = ['UTF-8', 'GB2312', 'GBK', 'BIG-5', 'SJIS-win', 'EUC-JP', 'Windows-1252', 'ISO-8859-15', 'ISO-8859-1', 'ASCII'];
+	public const COMMON_ENCODINGS = [ 'UTF-8', 'GB2312', 'GBK', 'BIG-5', 'SJIS-win', 'EUC-JP', 'Windows-1252', 'ISO-8859-15', 'ISO-8859-1', 'ASCII'];
 
-    public const UTF_BOMs = [
-        'UTF-32BE' => "\x00\x00\xfe\xff",
-        'UTF-32LE' => "\xff\xfe\x00\x00",
-        'UTF-16BE' => "\xfe\xff",
-        'UTF-16LE' => "\xff\xfe",
-        'UTF-8' => "\xef\xbb\xbf"
-    ];
-
+	public const UTF_BOMs = [
+		'UTF-32BE' => "\x00\x00\xfe\xff",
+		'UTF-32LE' => "\xff\xfe\x00\x00",
+		'UTF-16BE' => "\xfe\xff",
+		'UTF-16LE' => "\xff\xfe",
+		'UTF-8' => "\xef\xbb\xbf"
+	];
 
 	public function encodeToUtf8(string $string): ?string {
 		$encoding = $this->detectEncoding($string);
@@ -47,14 +46,24 @@ class EncodingService {
 	}
 
 	public function detectEncoding(string $string): ?string {
-        $bom_detect = $this->detectUtfBom($string);
-        if ($bom_detect) {
-            return $bom_detect;
-        }
+		$bomDetect = $this->detectUtfBom($string);
+		if ($bomDetect) {
+			return $bomDetect;
+		}
 
-		$encodings = $this->getEncodings();
-		foreach ($encodings as $encoding) {
+		foreach ($this->getEncodings() as $encoding) {
 			if (mb_check_encoding($string, $encoding)) {
+				return $encoding;
+			}
+		}
+
+		return mb_detect_encoding($string, $this->getEncodings(), true) ?: null;
+	}
+
+	private function detectUtfBom(string $string): ?string {
+		foreach (self::UTF_BOMs as $encoding => $utfBom) {
+			$bom = substr($string, 0, strlen($utfBom));
+			if ($bom === $utfBom) {
 				return $encoding;
 			}
 		}
@@ -62,22 +71,11 @@ class EncodingService {
 		return null;
 	}
 
-    public function detectUtfBom(string $string): ?string {
-        foreach (self::UTF_BOMs as $encoding => $utf_bom) {
-            $bom = substr($string, 0, strlen($utf_bom));
-            if ($bom === $utf_bom) {
-                return $encoding;
-            }
-        }
-
-        return null;
-    }
-
 	/**
 	 * @return string[]
 	 */
 	private function getEncodings(): array {
-		$mb_order = mb_detect_order() ?: [];
-		return array_merge($mb_order, self::COMMON_ENCODINGS);
+		$mbOrder = mb_detect_order() ?: [];
+		return array_merge($mbOrder, self::COMMON_ENCODINGS);
 	}
 }
