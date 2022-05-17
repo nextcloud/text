@@ -36,19 +36,20 @@
 				<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
 			</p>
 		</div>
-		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
+		<div v-if="displayed"
+			id="editor-wrapper"
+			:class="{
+				'has-conflicts': hasSyncCollission,
+				'icon-loading': !contentLoaded && !hasConnectionIssue,
+				'richEditor': isRichEditor,
+				'show-color-annotations': showAuthorAnnotations
+			}">
 			<EditorDraggable v-if="$editor"
 				id="editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:file-path="relativePath"
-					:file-id="fileId"
 					:autohide="autohide"
-					:loaded.sync="menubarLoaded"
-					:uploading-images="uploadingImages"
-					@show-help="showHelp"
-					@image-insert="insertImagePath"
-					@image-upload="uploadImageFiles">
+					:loaded.sync="menubarLoaded">
 					<div id="editor-session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
@@ -84,9 +85,9 @@ import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import { showError } from '@nextcloud/dialogs'
+// import { showError } from '@nextcloud/dialogs'
 import { EditorContent } from '@tiptap/vue-2'
-import { getCurrentUser } from '@nextcloud/auth'
+// import { getCurrentUser } from '@nextcloud/auth'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 
 import {
@@ -99,7 +100,7 @@ import {
 } from './EditorWrapper.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import { endpointUrl, getRandomGuestName } from './../helpers/index.js'
+import { getRandomGuestName } from './../helpers/index.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
@@ -110,29 +111,17 @@ import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import { Step } from 'prosemirror-transform'
 import Lock from 'vue-material-design-icons/Lock'
-// import MenuBar from './Menu/Bar.vue'
+import MenuBar from './Menu/Bar.vue'
 import EditorDraggable from './EditorDraggable.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
-
-const IMAGE_MIMES = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-	'image/x-xbitmap',
-	'image/x-ms-bmp',
-	'image/bmp',
-	'image/svg+xml',
-	'image/webp',
-]
 
 export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
 		EditorDraggable,
-		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./Menu/Bar.vue'),
+		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
@@ -235,7 +224,6 @@ export default {
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
-			uploadingImages: false,
 			draggedOver: false,
 
 			saveStatusPolling: null,
@@ -278,11 +266,6 @@ export default {
 		hasUnsavedChanges() {
 			return this.document && this.document.lastSavedVersion < this.document.currentVersion
 		},
-		backendUrl() {
-			return (endpoint) => {
-				return endpointUrl(endpoint, !!this.shareToken)
-			}
-		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
 		},
@@ -323,9 +306,6 @@ export default {
 		},
 	},
 	watch: {
-		lastSavedStatus() {
-			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
-		},
 		displayed() {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
@@ -374,9 +354,9 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
 			this.$syncService = new SyncService({
+				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
@@ -615,77 +595,6 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
-		},
-		onPaste(e) {
-			// emit('files:past-files', e)
-			this.uploadImageFiles(e.detail.files)
-		},
-		onEditorDrop(e) {
-			this.uploadImageFiles(e.detail.files, e.detail.position)
-			this.draggedOver = false
-		},
-		uploadImageFiles(files, position = null) {
-			if (!files) {
-				return
-			}
-			this.uploadingImages = true
-			const uploadPromises = [...files].map((file) => {
-				return this.uploadImageFile(file, position)
-			})
-			Promise.all(uploadPromises).then((values) => {
-				this.uploadingImages = false
-			})
-		},
-		async uploadImageFile(file, position = null) {
-			if (!IMAGE_MIMES.includes(file.type)) {
-				showError(t('text', 'Image file format not supported'))
-				return
-			}
-
-			return this.$syncService.uploadImage(file).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, position)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			})
-		},
-		showImagePrompt() {
-			const currentUser = getCurrentUser()
-			if (!currentUser) {
-				return
-			}
-
-			OC.dialogs.filepicker(t('text', 'Insert an image'), (filePath) => {
-				this.insertImagePath(filePath)
-			}, false, [], true, undefined, this.imagePath)
-		},
-		insertImagePath(imagePath) {
-			this.uploadingImages = true
-
-			return this.$syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.uploadingImages = false
-			})
-		},
-		insertAttachmentImage(name, fileId, position = null) {
-			// inspired by the fixedEncodeURIComponent function suggested in
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src = 'text://image?imageFileName='
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
-			// simply get rid of brackets to make sure link text is valid
-			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
-			if (position) {
-				this.$editor.chain().focus(position).setImage({ src, alt }).focus().run()
-			} else {
-				this.$editor.chain().setImage({ src, alt }).focus().run()
-			}
 		},
 	},
 }

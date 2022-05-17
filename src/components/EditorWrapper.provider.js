@@ -22,7 +22,6 @@
 
 export const EDITOR = Symbol('tiptap:editor')
 export const SYNC_SERVICE = Symbol('sync:service')
-export const DOCUMENT = Symbol('editor:document')
 export const IS_PUBLIC = Symbol('editor:is-public')
 export const FILE = Symbol('editor:file')
 export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
@@ -43,7 +42,7 @@ export const useSyncServiceMixin = {
 	},
 }
 
-export const useIsPublic = {
+export const useIsPublicMixin = {
 	inject: {
 		$isPublic: { from: IS_PUBLIC, default: false },
 	},
@@ -58,24 +57,6 @@ export const useIsRichEditorMixin = {
 export const useIsMobileMixin = {
 	inject: {
 		$isMobile: { from: IS_MOBILE, default: false },
-	},
-}
-
-export const useDocumentMixin = {
-	inject: {
-		$document: { from: DOCUMENT, default: null },
-	},
-}
-
-export const useIsUploadingImagesMixin = {
-	inject: {
-		$isUploadingImages: { from: IS_UPLOADING_IMAGES, default: false },
-	},
-}
-
-export const useRelativePathMixin = {
-	inject: {
-		$relativePath: { from: RELATIVE_PATH, default: null },
 	},
 }
 

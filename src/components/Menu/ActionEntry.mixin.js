@@ -25,7 +25,7 @@
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import debounce from 'debounce'
 
-import { useDocumentMixin, useEditorMixin, useIsMobileMixin } from '../EditorWrapper.provider.js'
+import { useEditorMixin, useIsMobileMixin } from '../EditorWrapper.provider.js'
 import { getActionState, getKeys } from './utils.js'
 
 /**
@@ -35,7 +35,7 @@ const BaseActionEntry = {
 	directives: {
 		Tooltip,
 	},
-	mixins: [useEditorMixin, useIsMobileMixin, useDocumentMixin],
+	mixins: [useEditorMixin, useIsMobileMixin],
 	props: {
 		actionEntry: {
 			type: Object,
@@ -52,7 +52,7 @@ const BaseActionEntry = {
 			return this.actionEntry.icon
 		},
 		tooltip() {
-			return [this.actionEntry.label, getKeys(this.isMobile, this.actionEntry)].join(' ')
+			return [this.actionEntry.label, getKeys(this.$isMobile, this.actionEntry)].join(' ')
 		},
 	},
 	mounted() {
