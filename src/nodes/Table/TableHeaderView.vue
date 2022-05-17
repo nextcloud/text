@@ -21,34 +21,34 @@
   -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-cell" as="td">
-		<div class="container">
+	<NodeViewWrapper data-text-el="table-header" as="th">
+		<div>
 			<NodeViewContent class="content" />
 			<Actions v-if="editor.isEditable"
-				data-text-table-actions="row">
-				<ActionButton data-text-table-action="add-row-before"
+				data-text-table-actions="header">
+				<ActionButton data-text-table-action="add-column-before"
 					close-after-click
-					@click="addRowBefore">
+					@click="addColumnBefore">
 					<template #icon>
-						<TableAddRowBefore />
+						<TableAddColumnBefore />
 					</template>
-					{{ t('text', 'Add row before') }}
+					{{ t('text', 'Add column before') }}
 				</ActionButton>
-				<ActionButton data-text-table-action="add-row-after"
+				<ActionButton data-text-table-action="add-column-after"
 					close-after-click
-					@click="addRowAfter">
+					@click="addColumnAfter">
 					<template #icon>
-						<TableAddRowAfter />
+						<TableAddColumnAfter />
 					</template>
-					{{ t('text', 'Add row after') }}
+					{{ t('text', 'Add column after') }}
 				</ActionButton>
-				<ActionButton data-text-table-action="remove-row"
+				<ActionButton data-text-table-action="remove-column"
 					close-after-click
-					@click="deleteRow">
+					@click="deleteColumn">
 					<template #icon>
 						<Delete />
 					</template>
-					{{ t('text', 'Delete this row') }}
+					{{ t('text', 'Delete this column') }}
 				</ActionButton>
 			</Actions>
 		</div>
@@ -59,18 +59,18 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import { TableAddRowBefore, TableAddRowAfter, Delete } from '../components/icons.js'
+import { Delete, TableAddColumnBefore, TableAddColumnAfter } from '../../components/icons.js'
 
 export default {
-	name: 'TableCellView',
+	name: 'TableHeaderView',
 	components: {
 		ActionButton,
 		Actions,
 		NodeViewWrapper,
 		NodeViewContent,
-		TableAddRowBefore,
-		TableAddRowAfter,
 		Delete,
+		TableAddColumnBefore,
+		TableAddColumnAfter,
 	},
 	props: {
 		editor: {
@@ -86,25 +86,25 @@ export default {
 		t: () => window.t,
 	},
 	methods: {
-		deleteRow() {
+		deleteColumn() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.deleteRow()
+				.deleteColumn()
 				.run()
 		},
-		addRowBefore() {
+		addColumnBefore() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.addRowBefore()
+				.addColumnBefore()
 				.run()
 		},
-		addRowAfter() {
+		addColumnAfter() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.addRowAfter()
+				.addColumnAfter()
 				.run()
 		},
 	},
@@ -112,42 +112,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-td {
-	position: relative;
-
-	.container {
-		display: flex;
-		flex-wrap: wrap;
-		min-height: 36px;
-	}
+th {
 
 	.content {
-		flex: 1 1 0;
 		margin: 0;
-		padding-top: 0.6em;
+		padding-top: 0.75em;
+		flex-grow: 1;
 	}
 
 	.action-item {
-		position: absolute;
-		right: -48px;
-		flex: 0 1 auto;
-		display: none;
-		top: 2px;
+		opacity: 50%;
 	}
 
-	&:last-child {
+	&:hover, &:active, &:focus, &:focus-within {
 		.action-item {
-			display: block;
-			opacity: 50%;
-		}
-
-		&:hover, &:active, &:focus, &:focus-within {
-			.action-item {
-				opacity: 100%;
-			}
+			opacity: 100%;
 		}
 	}
-
 }
 
 </style>

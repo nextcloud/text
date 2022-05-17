@@ -33,7 +33,7 @@ import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import HardBreak from './HardBreak.js'
-import Table from './../nodes/Table.js'
+import { Table } from './../nodes/Table/index.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -52,11 +52,12 @@ export default Extension.create({
 	addOptions() {
 		return {
 			link: {},
+			extensions: [],
 		}
 	},
 
 	addExtensions() {
-		const extensions = [
+		const defaultExtensions = [
 			Document,
 			Text,
 			Paragraph,
@@ -82,12 +83,16 @@ export default Extension.create({
 			Dropcursor,
 		]
 		if (this.options.link !== false) {
-			extensions.push(Link.configure({
+			defaultExtensions.push(Link.configure({
 				...this.options.link,
 				openOnClick: true,
 			}))
 		}
-		return extensions
+		const additionalExtensionNames = this.options.extensions.map(e => e.name)
+		return [
+			...this.options.extensions,
+			...defaultExtensions.filter(e => !additionalExtensionNames.includes(e.name)),
+		]
 	},
 
 })

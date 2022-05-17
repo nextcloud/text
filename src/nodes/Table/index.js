@@ -24,7 +24,7 @@ function extendNodeWithView(node, view) {
 	})
 }
 
-export default Table.extend({
+const EditableTable = Table.extend({
 
 	addNodeView() {
 		return VueNodeViewRenderer(TableView)
@@ -40,3 +40,5 @@ export default Table.extend({
 		]
 	},
 })
+
+export { Table, EditableTable }

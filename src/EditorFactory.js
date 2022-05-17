@@ -26,7 +26,7 @@ import History from '@tiptap/extension-history'
 import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
-import { TrailingNode } from './nodes/index.js'
+import { TrailingNode, EditableTable } from './nodes/index.js'
 import { Editor } from '@tiptap/core'
 import { Emoji, Markdown, PlainText, RichText } from './extensions/index.js'
 import { translate as t } from '@nextcloud/l10n'
@@ -57,7 +57,9 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 	if (enableRichEditing) {
 		richEditingExtensions = [
 			Markdown,
-			RichText,
+			RichText.configure({
+				extensions: [EditableTable],
+			}),
 			Emoji.configure({
 				suggestion: {
 					items: ({ query }) => {
