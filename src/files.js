@@ -27,7 +27,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
 import store from './store.js'
 
-__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 
 const workspaceAvailable = loadState('text', 'workspace_available')
