@@ -1,7 +1,7 @@
 {
-	"name": "text",
+	"name": "@nextcloud/text",
 	"description": "Collaborative document editing",
-	"version": "3.6.0",
+	"version": "0.2.0-beta.1",
 	"authors": [
 		{
 			"name": "Julius Härtl",
@@ -10,7 +10,9 @@
 		}
 	],
 	"license": "agpl",
-	"private": true,
+	"files": ["dist"],
+	"module": "dist/index.js",
+	"main": "dist/index.js",
 	"scripts": {
 		"dev": "NODE_ENV=development webpack --config webpack.js",
 		"dev:package": "vite",
