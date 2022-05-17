@@ -1,0 +1,40 @@
+button.entry-action,
+.entry-action > button,
+.entry-action > div > button {
+	position: relative;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	background-size: 16px;
+	border: 0;
+	background-color: transparent;
+	opacity: .5;
+	color: var(--color-main-text);
+	background-position: center center;
+	vertical-align: top;
+	padding: 0.7em;
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: var(--color-background-dark);
+	}
+
+	&.is-active::before {
+		transform: translateX(-50%);
+		border-radius: 100%;
+		position: absolute;
+		background: var(--color-primary-element);
+		bottom: 3px;
+		height: 6px;
+		width: 6px;
+		content: '';
+		left: 50%;
+
+	}
+
+	&.is-active,
+	&:hover,
+	&:focus {
+		opacity: 1;
+	}
+}

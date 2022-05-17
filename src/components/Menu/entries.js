@@ -46,10 +46,13 @@ import {
 	Emoticon,
 	Help,
 	Images,
-} from '../components/icons.js'
+} from '../icons.js'
+import EmojiPickerAction from './EmojiPickerAction.vue'
+import ImageUploadAction from './ImageUploadAction.vue'
 
 export default [
 	{
+		_key: 'undo',
 		label: t('text', 'Undo'),
 		keyChar: 'z',
 		keyModifiers: ['ctrl'],
@@ -59,6 +62,7 @@ export default [
 		priority: 5,
 	},
 	{
+		_key: 'redo',
 		label: t('text', 'Redo'),
 		keyChar: 'y',
 		keyModifiers: ['ctrl'],
@@ -68,6 +72,7 @@ export default [
 		priority: 11,
 	},
 	{
+		_key: 'bold',
 		label: t('text', 'Bold'),
 		keyChar: 'b',
 		keyModifiers: ['ctrl'],
@@ -80,6 +85,7 @@ export default [
 		priority: 6,
 	},
 	{
+		_key: 'italic',
 		label: t('text', 'Italic'),
 		keyChar: 'i',
 		keyModifiers: ['ctrl'],
@@ -92,6 +98,7 @@ export default [
 		priority: 7,
 	},
 	{
+		_key: 'underline',
 		label: t('text', 'Underline'),
 		keyChar: 'u',
 		keyModifiers: ['ctrl'],
@@ -104,6 +111,7 @@ export default [
 		priority: 14,
 	},
 	{
+		_key: 'strikethrough',
 		label: t('text', 'Strikethrough'),
 		keyChar: 'd',
 		keyModifiers: ['ctrl'],
@@ -116,6 +124,7 @@ export default [
 		priority: 15,
 	},
 	{
+		_key: 'headings',
 		label: t('text', 'Headings'),
 		keyChar: '1…6',
 		keyModifiers: ['ctrl', 'shift'],
@@ -123,6 +132,7 @@ export default [
 		icon: FormatHeader1,
 		children: [
 			{
+				_key: 'headings-01',
 				label: t('text', 'Heading 1'),
 				class: 'icon-h1',
 				icon: FormatHeader1,
@@ -132,6 +142,7 @@ export default [
 				},
 			},
 			{
+				_key: 'headings-02',
 				label: t('text', 'Heading 2'),
 				class: 'icon-h2',
 				icon: FormatHeader2,
@@ -141,6 +152,7 @@ export default [
 				},
 			},
 			{
+				_key: 'headings-03',
 				label: t('text', 'Heading 3'),
 				class: 'icon-h3',
 				icon: FormatHeader3,
@@ -150,6 +162,7 @@ export default [
 				},
 			},
 			{
+				_key: 'headings-04',
 				label: t('text', 'Heading 4'),
 				class: 'icon-h4',
 				isActive: ['heading', { level: 4 }],
@@ -159,6 +172,7 @@ export default [
 				},
 			},
 			{
+				_key: 'headings-05',
 				label: t('text', 'Heading 5'),
 				class: 'icon-h5',
 				isActive: ['heading', { level: 5 }],
@@ -168,6 +182,7 @@ export default [
 				},
 			},
 			{
+				_key: 'headings-06',
 				label: t('text', 'Heading 6'),
 				class: 'icon-h6',
 				isActive: ['heading', { level: 6 }],
@@ -180,6 +195,7 @@ export default [
 		priority: 1,
 	},
 	{
+		_key: 'unordered-list',
 		label: t('text', 'Unordered list'),
 		keyChar: '8',
 		keyModifiers: ['ctrl', 'shift'],
@@ -192,6 +208,7 @@ export default [
 		priority: 8,
 	},
 	{
+		_key: 'ordered-list',
 		label: t('text', 'Ordered list'),
 		keyChar: '9',
 		keyModifiers: ['ctrl', 'shift'],
@@ -204,6 +221,7 @@ export default [
 		priority: 9,
 	},
 	{
+		_key: 'todo-list',
 		label: t('text', 'ToDo list'),
 		class: 'icon-tasklist',
 		isActive: 'taskList',
@@ -212,6 +230,7 @@ export default [
 		priority: 10,
 	},
 	{
+		_key: 'blockquote',
 		label: t('text', 'Blockquote'),
 		keyChar: '>',
 		keyModifiers: ['ctrl'],
@@ -224,11 +243,13 @@ export default [
 		priority: 12,
 	},
 	{
+		_key: 'callouts',
 		label: t('text', 'Callouts'),
 		visible: false,
 		icon: Info,
 		children: [
 			{
+				_key: 'info',
 				label: t('text', 'Info'),
 				class: 'icon-info',
 				isActive: ['callout', { type: 'info' }],
@@ -238,6 +259,7 @@ export default [
 				},
 			},
 			{
+				_key: 'success',
 				label: t('text', 'Success'),
 				class: 'icon-success',
 				isActive: ['callout', { type: 'success' }],
@@ -247,6 +269,7 @@ export default [
 				},
 			},
 			{
+				_key: 'warning',
 				label: t('text', 'Warning'),
 				class: 'icon-warn',
 				isActive: ['callout', { type: 'warn' }],
@@ -256,6 +279,7 @@ export default [
 				},
 			},
 			{
+				_key: 'danger',
 				label: t('text', 'Danger'),
 				class: 'icon-error',
 				isActive: ['callout', { type: 'error' }],
@@ -268,6 +292,7 @@ export default [
 		priority: 3,
 	},
 	{
+		_key: 'code-block',
 		label: t('text', 'Code block'),
 		class: 'icon-code',
 		isActive: 'codeBlock',
@@ -278,6 +303,7 @@ export default [
 		priority: 13,
 	},
 	{
+		_key: 'table',
 		label: t('text', 'Table'),
 		class: 'icon-table',
 		isActive: 'table',
@@ -288,21 +314,26 @@ export default [
 		priority: 16,
 	},
 	{
-		label: t('text', 'Emoji picker'),
+		_key: 'emoji-picker',
+		label: t('text', 'Insert emoji'),
 		class: 'icon-emoji',
 		icon: Emoticon,
-		action: (command, emojiObject) => {
+		component: EmojiPickerAction,
+		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
 		priority: 4,
 	},
 	{
+		_key: 'insert-image',
 		label: t('text', 'Insert image'),
 		class: 'icon-image',
 		icon: Images,
+		component: ImageUploadAction,
 		priority: 2,
 	},
 	{
+		_key: 'formatting-help',
 		label: t('text', 'Formatting help'),
 		class: 'icon-help',
 		icon: Help,

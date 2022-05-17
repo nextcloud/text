@@ -1,0 +1,59 @@
+<!--
+  - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
+  -
+  - @author Vinicius Reis <vinicius@nextcloud.com>
+  -
+  - @license GNU AGPL version 3 or any later version
+  -
+  - This program is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU Affero General Public License as
+  - published by the Free Software Foundation, either version 3 of the
+  - License, or (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  - GNU Affero General Public License for more details.
+  -
+  - You should have received a copy of the GNU Affero General Public License
+  - along with this program. If not, see <http://www.gnu.org/licenses/>.
+  -
+  -->
+<template>
+	<EmojiPicker class="entry-emoji-action entry-action"
+		:data-action-entry="actionEntry._key"
+		@selectData="addEmoji">
+		<button v-tooltip="actionEntry.label"
+			:title="actionEntry.label"
+			:aria-label="actionEntry.label"
+			:aria-haspopup="true">
+			<component :is="icon" />
+		</button>
+	</EmojiPicker>
+</template>
+
+<script>
+import { BaseActionEntry } from './ActionEntry.mixin.js'
+import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
+
+export default {
+	name: 'EmojiPickerAction',
+	components: {
+		EmojiPicker,
+	},
+	extends: BaseActionEntry,
+	methods: {
+		toggleChildMenu() {
+
+		},
+		addEmoji({ id, native }) {
+			this.actionEntry
+				.action(this.$editor.chain(), { id, native })
+				.focus()
+				.run()
+		},
+	},
+}
+</script>
+
+<style scoped lang="scss" src="./ActionEntry.scss" />

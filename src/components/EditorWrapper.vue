@@ -37,19 +37,12 @@
 			</p>
 		</div>
 		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div v-if="$editor"
-				id="editor"
-				:class="{ draggedOver }"
-				@image-paste="onPaste"
-				@dragover.prevent.stop="draggedOver = true"
-				@dragleave.prevent.stop="draggedOver = false"
-				@image-drop="onEditorDrop">
+			<EditorDraggable v-if="$editor"
+				id="editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:file-path="relativePath"
 					:file-id="fileId"
-					:is-rich-editor="isRichEditor"
-					:is-public="isPublic"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded"
 					:uploading-images="uploadingImages"
@@ -75,7 +68,7 @@
 						class="editor__content"
 						:editor="$editor" />
 				</div>
-			</div>
+			</EditorDraggable>
 			<ReadOnlyEditor v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
@@ -90,9 +83,20 @@
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { showError } from '@nextcloud/dialogs'
+import { EditorContent } from '@tiptap/vue-2'
+import { getCurrentUser } from '@nextcloud/auth'
+import { getVersion, receiveTransaction } from 'prosemirror-collab'
 
-import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider.js'
+import {
+	EDITOR,
+	SYNC_SERVICE,
+	IS_PUBLIC,
+	IS_RICH_EDITOR,
+	IS_MOBILE,
+	FILE,
+} from './EditorWrapper.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import { endpointUrl, getRandomGuestName } from './../helpers/index.js'
@@ -101,14 +105,14 @@ import { createEditor, serializePlainText, loadSyntaxHighlight } from './../Edit
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
-import { EditorContent } from '@tiptap/vue-2'
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import Lock from 'vue-material-design-icons/Lock'
+// import MenuBar from './Menu/Bar.vue'
+import EditorDraggable from './EditorDraggable.vue'
+
 const EDITOR_PUSH_DEBOUNCE = 200
 
 const IMAGE_MIMES = [
@@ -127,6 +131,7 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
+		EditorDraggable,
 		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./Menu/Bar.vue'),
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
@@ -149,16 +154,25 @@ export default {
 		// providers aren't naturally reactive
 		// and $editor will start as null
 		// using getters we can always provide the
-		// actual $editor without being reactive
-		Object.defineProperty(val, EDITOR, {
-			get: () => {
-				return this.$editor
+		// actual $editor, and other values without being reactive
+		Object.defineProperties(val, {
+			[EDITOR]: {
+				get: () => this.$editor,
 			},
-		})
-
-		Object.defineProperty(val, SYNC_SERVICE, {
-			get: () => {
-				return this.$syncService
+			[SYNC_SERVICE]: {
+				get: () => this.$syncService,
+			},
+			[FILE]: {
+				get: () => this.fileData,
+			},
+			[IS_PUBLIC]: {
+				get: () => this.isPublic,
+			},
+			[IS_RICH_EDITOR]: {
+				get: () => this.isRichEditor,
+			},
+			[IS_MOBILE]: {
+				get: () => this.isMobile,
 			},
 		})
 
@@ -294,6 +308,18 @@ export default {
 				&& this.isRichEditor
 				&& !this.syncError
 				&& !this.readOnly
+		},
+		imagePath() {
+			return this.relativePath.split('/').slice(0, -1).join('/')
+		},
+		fileData() {
+			return {
+				fileId: this.fileId,
+				relativePath: this.relativePath,
+				document: {
+					...this.document,
+				},
+			}
 		},
 	},
 	watch: {
@@ -591,6 +617,7 @@ export default {
 			this.displayHelp = false
 		},
 		onPaste(e) {
+			// emit('files:past-files', e)
 			this.uploadImageFiles(e.detail.files)
 		},
 		onEditorDrop(e) {
@@ -622,9 +649,20 @@ export default {
 				showError(error?.response?.data?.error)
 			})
 		},
+		showImagePrompt() {
+			const currentUser = getCurrentUser()
+			if (!currentUser) {
+				return
+			}
+
+			OC.dialogs.filepicker(t('text', 'Insert an image'), (filePath) => {
+				this.insertImagePath(filePath)
+			}, false, [], true, undefined, this.imagePath)
+		},
 		insertImagePath(imagePath) {
 			this.uploadingImages = true
-			this.$syncService.insertImageFile(imagePath).then((response) => {
+
+			return this.$syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id)
 			}).catch((error) => {
 				console.error(error)
