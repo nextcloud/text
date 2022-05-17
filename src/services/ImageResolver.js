@@ -21,7 +21,7 @@
  */
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
-import path from 'path'
+import pathNormalize from 'path-normalize'
 
 export default class ImageResolver {
 
@@ -158,7 +158,7 @@ export default class ImageResolver {
 			this.#currentDirectory,
 			this.#relativePath(src),
 		].join('/')
-		return path.normalize(f)
+		return pathNormalize(f)
 	}
 
 }

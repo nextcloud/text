@@ -10,7 +10,9 @@
 		}
 	],
 	"license": "agpl",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"module": "dist/index.js",
 	"main": "dist/index.js",
 	"scripts": {
@@ -80,6 +82,7 @@
 		"markdown-it-container": "^3.0.0",
 		"markdown-it-task-lists": "^2.1.1",
 		"mitt": "^3.0.0",
+		"path-normalize": "^6.0.2",
 		"prosemirror-collab": "^1.2.2",
 		"prosemirror-inputrules": "^1.2.0",
 		"prosemirror-markdown": "^1.8.0",
