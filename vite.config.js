@@ -19,5 +19,6 @@ export default defineConfig({
 				globals: { vue: 'Vue' }
 			},
 		},
+		minify: false,
 	},
 })

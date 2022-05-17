@@ -22,17 +22,21 @@
 				currentDirectory: '/'
 			},
 			render: (h) => h('div', [
-				h(RichtextReader, {
-					props: { content: app.content }
-				}),
 				h('textarea', {
-					attrs: { rows: 20, cols: 80 },
+					style: {
+						width: '100%',
+						height: '20vh',
+						padding: '0px',
+					},
 					on: {
 						input: function (event) {
 							app.content = event.target.value
 						},
 					},
 				}, [app.content]),
+				h(RichtextReader, {
+					props: { content: app.content }
+				}),
 			]),
 		})
 	    app.$mount('#app')
