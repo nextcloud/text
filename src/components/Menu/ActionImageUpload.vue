@@ -55,7 +55,7 @@
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 
-import { Loading, Folder, Upload } from '../../components/icons.js'
+import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../EditorWrapper.provider.js'
 import { BaseActionEntry } from './ActionEntry.mixin.js'
 import {
@@ -65,7 +65,7 @@ import {
 } from '../EditorDraggable.provider.js'
 
 export default {
-	name: 'ImageUploadAction',
+	name: 'ActionImageUpload',
 	components: {
 		Actions,
 		ActionButton,

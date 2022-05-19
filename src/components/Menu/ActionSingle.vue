@@ -36,7 +36,7 @@
 import { BaseActionEntry } from './ActionEntry.mixin.js'
 
 export default {
-	name: 'SingleAction',
+	name: 'ActionSingle',
 	extends: BaseActionEntry,
 	methods: {
 		runAction() {

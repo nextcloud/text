@@ -20,7 +20,7 @@
  *
  */
 
-import SingleAction from './SingleAction.vue'
+import SingleAction from './ActionSingle.vue'
 
 export default {
 	name: 'ActionEntry',

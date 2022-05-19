@@ -48,7 +48,7 @@ import {
 	Images,
 } from '../icons.js'
 import EmojiPickerAction from './EmojiPickerAction.vue'
-import ImageUploadAction from './ImageUploadAction.vue'
+import ActionImageUpload from './ActionImageUpload.vue'
 
 export default [
 	{
@@ -329,7 +329,7 @@ export default [
 		label: t('text', 'Insert image'),
 		class: 'icon-image',
 		icon: Images,
-		component: ImageUploadAction,
+		component: ActionImageUpload,
 		priority: 2,
 	},
 	{
