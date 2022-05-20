@@ -131,6 +131,7 @@ export default {
 			loaded: false,
 			failed: false,
 			showIcons: false,
+			imageUrl: null,
 		}
 	},
 	computed: {
@@ -150,23 +151,6 @@ export default {
 						basename: this.basename,
 					})
 			}
-		},
-		imageUrl() {
-			if (this.src.startsWith('text://')) {
-				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				return this.getTextApiUrl(imageFileName)
-			}
-			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
-				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
-				return this.getTextApiUrl(imageFileName)
-			}
-			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
-				return this.src
-			}
-			if (this.hasPreview && this.mime !== 'image/gif') {
-				return this.previewUrl
-			}
-			return this.davUrl
 		},
 		isRemoteUrl() {
 			return this.src.startsWith('http://')
@@ -264,18 +248,59 @@ export default {
 			this.loaded = true
 			return
 		}
-		const img = new Image()
-		img.onload = () => {
-			this.imageLoaded = true
-		}
-		img.onerror = () => {
-			this.failed = true
-			this.imageLoaded = false
-			this.loaded = true
-		}
-		img.src = this.imageUrl
+		this.init()
 	},
 	methods: {
+		init() {
+			if (this.src.startsWith('text://')) {
+				const imageFileName = getQueryVariable(this.src, 'imageFileName')
+				this.loadImage(this.getTextApiUrl(imageFileName))
+				return
+			}
+			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
+				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
+				this.loadImage(this.getTextApiUrl(imageFileName))
+				return
+			}
+			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
+				this.loadImage(this.src)
+				return
+			}
+			if (this.hasPreview && this.mime !== 'image/gif') {
+				this.loadImage(this.previewUrl)
+				return
+			}
+			// if it starts with '.attachments.1234/'
+			if (this.src.match(/^\.attachments\.\d+\//)) {
+				// try the webdav url
+				this.loadImage(this.davUrl, () => {
+					// try the attachment API
+					const imageFileName = decodeURIComponent(this.src.replace(/\.attachments\.\d+\//, '').split('?')[0])
+					const textApiUrl = this.getTextApiUrl(imageFileName)
+					this.loadImage(textApiUrl)
+					// TODO if attachment works, rewrite the url with correct document ID
+				})
+				return
+			}
+			this.loadImage(this.davUrl)
+		},
+		loadImage(imageUrl, failureCallback = null) {
+			const img = new Image()
+			img.onload = () => {
+				this.imageUrl = imageUrl
+				this.imageLoaded = true
+			}
+			img.onerror = () => {
+				if (failureCallback !== null) {
+					failureCallback()
+				} else {
+					this.failed = true
+					this.imageLoaded = false
+					this.loaded = true
+				}
+			}
+			img.src = imageUrl
+		},
 		updateAlt() {
 			this.alt = this.$refs.altInput.value
 		},
