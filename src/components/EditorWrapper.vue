@@ -636,12 +636,6 @@ export default {
 		insertAttachmentImage(name, fileId, position = null, dirname = '') {
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			/*
-			const src = 'text://image?imageFileName='
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
-			*/
 			const src = dirname + '/'
 				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
 					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
