@@ -153,28 +153,12 @@ export default {
 		},
 		imageUrl() {
 			if (this.src.startsWith('text://')) {
-				const documentId = this.currentSession?.documentId
-				const sessionId = this.currentSession?.id
-				const sessionToken = this.currentSession?.token
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				if (getCurrentUser() || !this.token) {
-					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
-						{
-							documentId,
-							sessionId,
-							sessionToken,
-							imageFileName,
-						})
-				} else {
-					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
-						{
-							documentId,
-							sessionId,
-							sessionToken,
-							imageFileName,
-							shareToken: this.token,
-						})
-				}
+				return this.getTextApiUrl(imageFileName)
+			}
+			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
+				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
+				return this.getTextApiUrl(imageFileName)
 			}
 			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
 				return this.src
@@ -300,6 +284,29 @@ export default {
 			this.$nextTick(() => {
 				this.editor.commands.scrollIntoView()
 			})
+		},
+		getTextApiUrl(imageFileName) {
+			const documentId = this.currentSession?.documentId
+			const sessionId = this.currentSession?.id
+			const sessionToken = this.currentSession?.token
+			if (getCurrentUser() || !this.token) {
+				return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
+					{
+						documentId,
+						sessionId,
+						sessionToken,
+						imageFileName,
+					})
+			} else {
+				return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
+					{
+						documentId,
+						sessionId,
+						sessionToken,
+						imageFileName,
+						shareToken: this.token,
+					})
+			}
 		},
 	},
 }

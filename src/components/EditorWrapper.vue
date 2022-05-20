@@ -616,7 +616,7 @@ export default {
 			}
 
 			return this.$syncService.uploadImage(file).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, position)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, position, response.data?.dirname)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -625,7 +625,7 @@ export default {
 		insertImagePath(imagePath) {
 			this.uploadingImages = true
 			this.$syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id)
+				this.insertAttachmentImage(response.data?.name, response.data?.id, null, response.data?.dirname)
 			}).catch((error) => {
 				console.error(error)
 				showError(error?.response?.data?.error)
@@ -633,10 +633,16 @@ export default {
 				this.uploadingImages = false
 			})
 		},
-		insertAttachmentImage(name, fileId, position = null) {
+		insertAttachmentImage(name, fileId, position = null, dirname = '') {
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+			/*
 			const src = 'text://image?imageFileName='
+				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
+					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
+				})
+			*/
+			const src = dirname + '/'
 				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
 					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
 				})
