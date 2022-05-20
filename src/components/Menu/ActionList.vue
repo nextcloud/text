@@ -19,39 +19,65 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
+
 <template>
-	<EmojiPicker class="entry-action entry-action__emoji"
+	<Actions v-tooltip="tooltip"
+		class="entry-list-action entry-action"
+		v-bind="state"
+		:title="actionEntry.label"
 		:data-action-entry="actionEntry._key"
-		@selectData="addEmoji">
-		<button v-tooltip="actionEntry.label"
-			class="entry-action__button"
-			:title="actionEntry.label"
-			:aria-label="actionEntry.label"
-			:aria-haspopup="true">
+		v-on="$listeners">
+		<template #icon>
 			<component :is="icon" />
-		</button>
-	</EmojiPicker>
+		</template>
+		<ActionSingle v-for="child in actionEntry.children"
+			:key="`child-${child._key}`"
+			is-item
+			:action-entry="child" />
+	</Actions>
 </template>
 
 <script>
+import Actions from '@nextcloud/vue/dist/Components/Actions'
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import { BaseActionEntry } from './ActionEntry.mixin.js'
-import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
+import ActionSingle from './ActionSingle.vue'
+import { getIsActive } from './utils.js'
 
 export default {
-	name: 'EmojiPickerAction',
-	components: {
-		EmojiPicker,
-	},
+	name: 'ActionList',
+	components: { Actions, ActionButton, ActionSingle },
 	extends: BaseActionEntry,
-	methods: {
-		toggleChildMenu() {
+	data: () => ({
+		activeChild: null,
+	}),
+	computed: {
+		currentChind() {
+			const {
+				state,
+				$editor,
+				actionEntry: { children },
+			} = this
 
+			if (!state.active) {
+				return null
+			}
+
+			return children.find(child => {
+				return getIsActive(child, $editor)
+			})
 		},
-		addEmoji({ id, native }) {
-			this.actionEntry
-				.action(this.$editor.chain(), { id, native })
-				.focus()
-				.run()
+		icon() {
+			if (this.currentChind) {
+				return this.currentChind.icon
+			}
+
+			return this.actionEntry.icon
+		},
+	},
+	methods: {
+		runAction() {
+
 		},
 	},
 }

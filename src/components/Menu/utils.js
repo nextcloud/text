@@ -67,13 +67,16 @@ const getActionState = (actionEntry, $editor) => {
 	const active = getIsActive(actionEntry, $editor)
 
 	return {
+		ariaLabel: actionEntry.label,
 		disabled: isDisabled(actionEntry, $editor),
 		class: getEntryClasses(actionEntry, active),
+		active,
 	}
 }
 
 export {
 	isDisabled,
+	getIsActive,
 	getKeys,
 	getEntryClasses,
 	getActionState,

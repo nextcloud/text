@@ -20,18 +20,27 @@
  *
  */
 
-import SingleAction from './ActionSingle.vue'
+import ActionSingle from './ActionSingle.vue'
+import ActionList from './ActionList.vue'
 
 export default {
 	name: 'ActionEntry',
 	functional: true,
 	render(h, ctx) {
 		const { actionEntry } = ctx.props
+		const { key } = ctx.data
 
-		if (actionEntry.component) {
-			return h(actionEntry.component, ctx)
+		const params = {
+			...ctx,
+			key,
 		}
 
-		return h(SingleAction, ctx)
+		if (actionEntry.component) {
+			return h(actionEntry.component, params)
+		}
+
+		return actionEntry.children
+			? h(ActionList, params)
+			: h(ActionSingle, params)
 	},
 }

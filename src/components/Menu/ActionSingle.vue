@@ -20,24 +20,47 @@
   -
   -->
 
-<template>
-	<button v-tooltip="tooltip"
-		class="entry-single-action entry-action"
-		v-bind="state"
-		:title="actionEntry.label"
-		:data-action-entry="actionEntry._key"
-		v-on="$listeners"
-		@click="runAction">
-		<component :is="icon" />
-	</button>
-</template>
-
 <script>
+import Button from '@nextcloud/vue/dist/Components/Button'
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import { BaseActionEntry } from './ActionEntry.mixin.js'
 
 export default {
 	name: 'ActionSingle',
 	extends: BaseActionEntry,
+	props: {
+		isItem: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	computed: {
+		component() {
+			// Button and ActionButton shares styles and behaviours
+			// to keep it simple, this component handle the small differences
+			return this.isItem
+				? ActionButton
+				: Button
+		},
+		bindState() {
+			const state = {
+				...this.state,
+			}
+
+			state.class = {
+				...state.class,
+				// inject a extra class
+				'entry-action-item': this.isItem,
+			}
+
+			// item list bejaviour
+			if (this.isItem) {
+				state.closeAfterClick = true
+			}
+
+			return state
+		},
+	},
 	methods: {
 		runAction() {
 			const { actionEntry } = this
@@ -50,7 +73,54 @@ export default {
 			actionEntry.action(this.$editor.chain().focus())?.run()
 		},
 	},
+
+	render(h) {
+		const {
+			$listeners,
+			actionEntry,
+			bindState,
+			component,
+			icon,
+			isItem,
+			runAction,
+			tooltip,
+		} = this
+
+		const { class: classes, ...attrs } = bindState
+
+		// do not use tooltip if is a item of action list
+		const directives = isItem
+			? []
+			: [{
+				name: 'tooltip',
+				value: tooltip,
+			}]
+
+		const children = [h(icon, { slot: 'icon' })]
+
+		// do not use title if is a item of action list
+		const title = isItem ? undefined : actionEntry.label
+
+		if (isItem) {
+			// add label
+			children.push(actionEntry.label)
+		}
+
+		return h(component, {
+			directives,
+			staticClass: 'entry-single-action entry-action',
+			class: classes,
+			attrs: {
+				title,
+				type: 'tertiary',
+				'data-action-entry': actionEntry._key,
+				...attrs,
+			},
+			on: {
+				...$listeners,
+				click: runAction,
+			},
+		}, children)
+	},
 }
 </script>
-
-<style scoped lang="scss" src="./ActionEntry.scss" />

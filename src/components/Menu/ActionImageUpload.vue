@@ -20,7 +20,7 @@
   -
   -->
 <template>
-	<Actions class="entry-image-upload-action entry-action"
+	<Actions class="entry-action entry-action__image-upload"
 		:data-action-entry="actionEntry._key"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
@@ -33,6 +33,7 @@
 		</template>
 		<ActionButton close-after-click
 			:disabled="$isUploadingImages"
+			:data-action-entry="`${actionEntry._key}-upload`"
 			@click="$callChooseLocalImage">
 			<template #icon>
 				<Upload />
@@ -42,6 +43,7 @@
 		<ActionButton v-if="!$isPublic"
 			close-after-click
 			:disabled="$isUploadingImages"
+			:data-action-entry="`${actionEntry._key}-insert`"
 			@click="$callImagePrompt">
 			<template #icon>
 				<Folder />

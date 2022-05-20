@@ -130,6 +130,7 @@ export default [
 		keyModifiers: ['ctrl', 'shift'],
 		visible: false,
 		icon: FormatHeader1,
+		isActive: 'heading',
 		children: [
 			{
 				_key: 'headings-01',
@@ -247,6 +248,7 @@ export default [
 		label: t('text', 'Callouts'),
 		visible: false,
 		icon: Info,
+		isActive: 'callout',
 		children: [
 			{
 				_key: 'info',

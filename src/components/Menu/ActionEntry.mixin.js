@@ -28,6 +28,8 @@ import debounce from 'debounce'
 import { useEditorMixin, useIsMobileMixin } from '../EditorWrapper.provider.js'
 import { getActionState, getKeys } from './utils.js'
 
+import './ActionEntry.scss'
+
 /**
  * @type {import("vue").ComponentOptions} BaseActionEntry
  */

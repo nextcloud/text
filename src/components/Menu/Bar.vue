@@ -22,11 +22,11 @@
   -->
 
 <template>
-	<div class="menubar" :class="{ 'show': isVisible, 'autohide': autohide }">
-		<div v-if="$isRichEditor" ref="menubar" class="menubar-entries">
+	<div class="text-menubar" :class="{ 'show': isVisible, 'text-menubar--autohide': autohide }">
+		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`single-action-${actionEntry._key}`" />
+				:key="`text-action--${actionEntry._key}`" />
 		</div>
 	</div>
 </template>
@@ -137,7 +137,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.menubar {
+	.text-menubar {
 		--background-blur: blur(10px);
 		position: sticky;
 		top: 0;
@@ -148,7 +148,7 @@ export default {
 		padding-top:3px;
 		padding-bottom: 3px;
 
-		&.autohide {
+		&.text-menubar--autohide {
 			visibility: hidden;
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
@@ -157,12 +157,12 @@ export default {
 				opacity: 1;
 			}
 		}
-		.menubar-entries {
+		.text-menubar__entries {
 			display: flex;
 			justify-content: flex-start;
 		}
 		@media (max-width: 660px) {
-			.menubar-entries {
+			.text-menubar__entries {
 				margin-left: 0;
 			}
 		}
