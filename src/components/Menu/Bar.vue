@@ -37,6 +37,7 @@ import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { useIsRichEditorMixin, useEditorMixin } from '../EditorWrapper.provider.js'
+import { DotsHorizontal } from '../icons.js'
 
 export default {
 	// eslint-disable-next-line vue/match-component-file-name
@@ -77,9 +78,39 @@ export default {
 			return slots - 1
 		},
 		visibleEntries() {
-			return [...actionsFullEntries].filter(entry => {
-				return entry.priority <= this.iconsLimit
+			const { hiddenEntries, remainAction } = this
+			const list = [...actionsFullEntries].filter(({ priority }) => {
+				// if entry do not have priority, we assume it aways will be visible
+				return priority === undefined || priority <= this.iconsLimit
 			})
+
+			if (hiddenEntries.length === 0) {
+				return list
+			}
+
+			if (hiddenEntries.length === 1) {
+				// put only one entry
+				list.push(hiddenEntries[0])
+			} else {
+				// add all hidden entries as list of actions
+				list.push(remainAction)
+			}
+
+			return list
+		},
+		hiddenEntries() {
+			return [...actionsFullEntries].filter(({ priority }) => {
+				// reverse logic from visibleEntries
+				return priority !== undefined && priority >= this.iconsLimit
+			})
+		},
+		remainAction() {
+			return {
+				_key: 'remain',
+				label: this.t('text', 'Remaining Actions'),
+				icon: DotsHorizontal,
+				children: this.hiddenEntries,
+			}
 		},
 	},
 	mounted() {

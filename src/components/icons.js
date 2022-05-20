@@ -36,6 +36,7 @@ export { default as Images } from 'vue-material-design-icons/ImageMultipleOutlin
 export { default as Help } from 'vue-material-design-icons/HelpCircle'
 export { default as Upload } from 'vue-material-design-icons/Upload'
 export { default as Folder } from 'vue-material-design-icons/Folder'
+export { default as DotsHorizontal } from 'vue-material-design-icons/DotsHorizontal'
 export { default as FormatBold } from 'vue-material-design-icons/FormatBold'
 export { default as FormatItalic } from 'vue-material-design-icons/FormatItalic'
 export { default as FormatUnderline } from 'vue-material-design-icons/FormatUnderline'
