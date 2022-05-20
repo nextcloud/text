@@ -163,6 +163,9 @@ export default {
 		isDataUrl() {
 			return this.src.startsWith('data:')
 		},
+		isDirectUrl() {
+			return (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl)
+		},
 		basename() {
 			return decodeURI(this.src.split('?')[0])
 		},
@@ -248,58 +251,59 @@ export default {
 			this.loaded = true
 			return
 		}
-		this.init()
+		this.init().catch((e) => {
+			this.onImageLoadFailure()
+		})
 	},
 	methods: {
-		init() {
+		async init() {
 			if (this.src.startsWith('text://')) {
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				this.loadImage(this.getTextApiUrl(imageFileName))
-				return
+				return this.loadImage(this.getTextApiUrl(imageFileName))
 			}
 			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
 				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
-				this.loadImage(this.getTextApiUrl(imageFileName))
-				return
+				return this.loadImage(this.getTextApiUrl(imageFileName))
 			}
-			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
-				this.loadImage(this.src)
-				return
+			if (this.isDirectUrl) {
+				return this.loadImage(this.src)
 			}
 			if (this.hasPreview && this.mime !== 'image/gif') {
-				this.loadImage(this.previewUrl)
-				return
+				return this.loadImage(this.previewUrl)
 			}
 			// if it starts with '.attachments.1234/'
 			if (this.src.match(/^\.attachments\.\d+\//)) {
 				// try the webdav url
-				this.loadImage(this.davUrl, () => {
+				return this.loadImage(this.davUrl).catch((e) => {
 					// try the attachment API
 					const imageFileName = decodeURIComponent(this.src.replace(/\.attachments\.\d+\//, '').split('?')[0])
 					const textApiUrl = this.getTextApiUrl(imageFileName)
-					this.loadImage(textApiUrl)
-					// TODO if attachment works, rewrite the url with correct document ID
+					return this.loadImage(textApiUrl).then(() => {
+						// TODO if attachment works, rewrite the url with correct document ID
+					})
 				})
 				return
 			}
 			this.loadImage(this.davUrl)
 		},
-		loadImage(imageUrl, failureCallback = null) {
-			const img = new Image()
-			img.onload = () => {
-				this.imageUrl = imageUrl
-				this.imageLoaded = true
-			}
-			img.onerror = () => {
-				if (failureCallback !== null) {
-					failureCallback()
-				} else {
-					this.failed = true
-					this.imageLoaded = false
-					this.loaded = true
+		async loadImage(imageUrl) {
+			return new Promise((resolve, reject) => {
+				const img = new Image()
+				img.onload = () => {
+					this.imageUrl = imageUrl
+					this.imageLoaded = true
+					resolve()
 				}
-			}
-			img.src = imageUrl
+				img.onerror = (e) => {
+					reject(e)
+				}
+				img.src = imageUrl
+			})
+		},
+		onImageLoadFailure() {
+			this.failed = true
+			this.imageLoaded = false
+			this.loaded = true
 		},
 		updateAlt() {
 			this.alt = this.$refs.altInput.value
@@ -322,16 +326,15 @@ export default {
 						sessionToken,
 						imageFileName,
 					})
-			} else {
-				return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
-					{
-						documentId,
-						sessionId,
-						sessionToken,
-						imageFileName,
-						shareToken: this.token,
-					})
 			}
+			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
+				{
+					documentId,
+					sessionId,
+					sessionToken,
+					imageFileName,
+					shareToken: this.token,
+				})
 		},
 	},
 }
