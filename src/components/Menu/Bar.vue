@@ -22,12 +22,18 @@
   -->
 
 <template>
-	<div class="text-menubar" :class="{ 'show': isVisible, 'text-menubar--autohide': autohide }">
+	<div class="text-menubar"
+		:class="{
+			'text-menubar--show': isVisible,
+			'text-menubar--autohide': autohide,
+			'text-menubar--is-workspace': $isRichWorkspace
+		}">
 		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry._key}`" />
 		</div>
+		<slot />
 	</div>
 </template>
 
@@ -36,14 +42,22 @@ import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
-import { useIsRichEditorMixin, useEditorMixin } from '../EditorWrapper.provider.js'
 import { DotsHorizontal } from '../icons.js'
+import {
+	useEditorMixin,
+	useIsRichEditorMixin,
+	useIsRichWorkspaceMixin,
+} from '../EditorWrapper.provider.js'
 
 export default {
 	// eslint-disable-next-line vue/match-component-file-name
 	name: 'MenuBar',
 	components: { ActionEntry },
-	mixins: [useIsRichEditorMixin, useEditorMixin],
+	mixins: [
+		useEditorMixin,
+		useIsRichEditorMixin,
+		useIsRichWorkspaceMixin,
+	],
 	props: {
 		autohide: {
 			type: Boolean,
@@ -53,8 +67,8 @@ export default {
 	data() {
 		return {
 			forceRecompute: 0,
-			windowWidth: 0,
 			isVisible: this.$editor.isFocused,
+			windowWidth: 0,
 		}
 	},
 	computed: {
@@ -179,19 +193,30 @@ export default {
 		padding-top:3px;
 		padding-bottom: 3px;
 
+		display: flex;
+		justify-content: flex-end;
+
 		&.text-menubar--autohide {
 			visibility: hidden;
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
-			&.show {
+			&.text-menubar--show {
 				visibility: visible;
 				opacity: 1;
 			}
 		}
 		.text-menubar__entries {
 			display: flex;
-			justify-content: flex-start;
+			flex-grow: 1;
+			margin-left: calc((100% - 660px) / 2);
 		}
+
+		&.text-menubar--is-workspace {
+			.text-menubar__entries {
+				margin-left: 0;
+			}
+		}
+
 		@media (max-width: 660px) {
 			.text-menubar__entries {
 				margin-left: 0;

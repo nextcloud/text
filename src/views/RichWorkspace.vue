@@ -34,10 +34,11 @@
 			:file-id="file.id"
 			:relative-path="filepath"
 			:share-token="shareToken"
-			:active="true"
-			:autohide="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
+			active
+			autohide
+			rich-workspace
 			@ready="ready=true; loaded=true"
 			@focus="focus=true"
 			@blur="unfocus"

@@ -21,14 +21,12 @@
  */
 
 export const EDITOR = Symbol('tiptap:editor')
-export const SYNC_SERVICE = Symbol('sync:service')
-export const IS_PUBLIC = Symbol('editor:is-public')
 export const FILE = Symbol('editor:file')
-export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
 export const IS_MOBILE = Symbol('editor:is-mobile')
-export const RELATIVE_PATH = Symbol('editor:relative-path')
-export const IS_UPLOADING_IMAGES = Symbol('editor:is-uploading-images')
-export const ACTION_IMAGE_PROMPT = Symbol('action:image-prompt')
+export const IS_PUBLIC = Symbol('editor:is-public')
+export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
+export const IS_RICH_WORKSPACE = Symbol('editor:is-rich-woskapace')
+export const SYNC_SERVICE = Symbol('sync:service')
 
 export const useEditorMixin = {
 	inject: {
@@ -45,6 +43,12 @@ export const useSyncServiceMixin = {
 export const useIsPublicMixin = {
 	inject: {
 		$isPublic: { from: IS_PUBLIC, default: false },
+	},
+}
+
+export const useIsRichWorkspaceMixin = {
+	inject: {
+		$isRichWorkspace: { from: IS_RICH_WORKSPACE, default: false },
 	},
 }
 

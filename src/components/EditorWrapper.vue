@@ -85,18 +85,17 @@ import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-// import { showError } from '@nextcloud/dialogs'
 import { EditorContent } from '@tiptap/vue-2'
-// import { getCurrentUser } from '@nextcloud/auth'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 
 import {
 	EDITOR,
-	SYNC_SERVICE,
+	FILE,
+	IS_MOBILE,
 	IS_PUBLIC,
 	IS_RICH_EDITOR,
-	IS_MOBILE,
-	FILE,
+	IS_RICH_WORKSPACE,
+	SYNC_SERVICE,
 } from './EditorWrapper.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
@@ -160,6 +159,9 @@ export default {
 			[IS_RICH_EDITOR]: {
 				get: () => this.isRichEditor,
 			},
+			[IS_RICH_WORKSPACE]: {
+				get: () => this.isRichWorkspace,
+			},
 			[IS_MOBILE]: {
 				get: () => this.isMobile,
 			},
@@ -168,6 +170,11 @@ export default {
 		return val
 	},
 	props: {
+		richWorkspace: {
+			type: Boolean,
+			require: false,
+			default: false,
+		},
 		initialSession: {
 			type: Object,
 			default: null,
@@ -232,6 +239,9 @@ export default {
 		}
 	},
 	computed: {
+		isRichWorkspace() {
+			return this.richWorkspace
+		},
 		showAuthorAnnotations() {
 			return this.$store.state.showAuthorAnnotations
 		},
