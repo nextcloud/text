@@ -21,7 +21,7 @@
   -->
 <template>
 	<EmojiPicker class="entry-action entry-action__emoji"
-		:data-action-entry="actionEntry._key"
+		:data-text-action-entry="actionEntry._key"
 		@selectData="addEmoji">
 		<button v-tooltip="actionEntry.label"
 			class="entry-action__button"

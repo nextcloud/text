@@ -49,6 +49,7 @@ import {
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../EditorWrapper.provider.js'
+import debounce from 'debounce'
 
 export default {
 	// eslint-disable-next-line vue/match-component-file-name
@@ -136,9 +137,12 @@ export default {
 		this.$onFocusChange = () => {
 			this.isVisible = this.$editor.isFocused
 		}
+		this.$onBlurChange = debounce(() => {
+			this.isVisible = this.$editor.isFocused
+		}, 3000) // 3s
 
 		this.$editor.on('focus', this.$onFocusChange)
-		this.$editor.on('blur', this.$onFocusChange)
+		this.$editor.on('blur', this.$onBlurChange)
 
 		this.$checkInterval = setInterval(() => {
 			const { menubar } = this.$refs
@@ -162,7 +166,7 @@ export default {
 		unsubscribe('files:sidebar:closed', this.redrawAfterTransition)
 
 		this.$editor.off('focus', this.$onFocusChange)
-		this.$editor.off('blur', this.$onFocusChange)
+		this.$editor.off('blur', this.$onBlurChange)
 	},
 	methods: {
 		getWindowWidth() {

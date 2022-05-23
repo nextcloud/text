@@ -127,7 +127,7 @@ export default [
 		isActive: 'heading',
 		children: [
 			{
-				_key: 'headings-01',
+				_key: 'headings-h1',
 				label: t('text', 'Heading 1'),
 				icon: FormatHeader1,
 				isActive: ['heading', { level: 1 }],
@@ -136,7 +136,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-02',
+				_key: 'headings-h2',
 				label: t('text', 'Heading 2'),
 				icon: FormatHeader2,
 				isActive: ['heading', { level: 2 }],
@@ -145,7 +145,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-03',
+				_key: 'headings-h3',
 				label: t('text', 'Heading 3'),
 				icon: FormatHeader3,
 				isActive: ['heading', { level: 3 }],
@@ -154,7 +154,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-04',
+				_key: 'headings-h4',
 				label: t('text', 'Heading 4'),
 				isActive: ['heading', { level: 4 }],
 				icon: FormatHeader4,
@@ -163,7 +163,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-05',
+				_key: 'headings-h5',
 				label: t('text', 'Heading 5'),
 				isActive: ['heading', { level: 5 }],
 				icon: FormatHeader5,
@@ -172,7 +172,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-06',
+				_key: 'headings-h6',
 				label: t('text', 'Heading 6'),
 				isActive: ['heading', { level: 6 }],
 				icon: FormatHeader6,

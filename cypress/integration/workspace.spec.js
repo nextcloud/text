@@ -56,7 +56,7 @@ describe('Workspace', function() {
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
-			['strike', 's'],
+			['strikethrough', 's'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
 				.click({ force: true })
@@ -72,7 +72,7 @@ describe('Workspace', function() {
 		openWorkspace()
 			.type('Nextcloud')
 			.type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('https://nextcloud.com{enter}')
 		cy.get('.ProseMirror a')
 			.should('contain', 'Nextcloud')
@@ -85,27 +85,34 @@ describe('Workspace', function() {
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/')
 		cy.get('.ProseMirror').type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('/team{enter}')
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/team')
 	})
 
 	it('creates headings via submenu', function() {
+		const getSubmenuItem = (parent, item) => {
+			menuButton(parent).click()
+			return submenuButton(item)
+		}
+
 		openWorkspace()
 			.type('Heading')
 			.type('{selectall}')
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
-			menuButton('h1').click({ force: true })
-			submenuButton(heading).click({ force: true })
+			const actionName = `headings-${heading}`
 
-			menuButton(heading).should('have.class', 'is-active')
+			getSubmenuItem('headings', actionName).click()
 
 			cy.get(`.ProseMirror ${heading}`)
 				.should('contain', 'Heading')
-			menuButton(heading).click({ force: true })
-			submenuButton(heading).click({ force: true })
-			menuButton('h1').should('not.have.class', 'is-active')
+
+			getSubmenuItem('headings', actionName)
+				.should('have.class', 'is-active')
+				.click()
+
+			menuButton('headings').should('not.have.class', 'is-active')
 		})
 	})
 
@@ -121,7 +128,9 @@ describe('Workspace', function() {
 			menuButton(button)
 				.click({ force: true })
 				.should('have.class', 'is-active')
+
 			cy.get(`.ProseMirror ${tag}`).should('contain', 'List me')
+
 			menuButton(button)
 				.click({ force: true })
 				.should('not.have.class', 'is-active')
@@ -222,23 +231,23 @@ describe('Workspace', function() {
 		toggleMoreActions()
 		popoverButton('table')
 			.click()
-		cy.get(`.ProseMirror`).type('content')
-		cy.get(`.ProseMirror table tr:first-child th:first-child`)
+		cy.get('.ProseMirror').type('content')
+		cy.get('.ProseMirror table tr:first-child th:first-child')
 			.should('contain', 'content')
-		cy.get(`.ProseMirror .table-settings`).click()
+		cy.get('.ProseMirror .table-settings').click()
 		popoverButton('delete').click()
-		cy.get(`.ProseMirror`)
+		cy.get('.ProseMirror')
 			.should('not.contain', 'content')
 	})
 
 })
 
 const menuButton = (name) => {
-	return cy.get(`#editor button.icon-${name}`)
+	return cy.getActionEntry(name)
 }
 
 const submenuButton = (name) => {
-	return cy.get(`#editor button .icon-${name}`)
+	return cy.get('.popover.open').getActionEntry(name)
 }
 
 const popoverButton = (name) => {
@@ -249,12 +258,15 @@ const toggleMoreActions = () => {
 	cy.get('.menubar .action-item__menutoggle--default-icon').click()
 }
 
-const menuBubbleButton = submenuButton
+const menuBubbleButton = (name) => {
+	return cy.get('[data-text-el="menu-bubble"]').find(`[data-text-bubble-action="${name}"]`)
+}
 
 const openWorkspace = () => {
 	cy.get('#rich-workspace .empty-workspace').click()
-	cy.get('#editor .content-wrapper').click()
-	return cy.get('#rich-workspace .ProseMirror')
+	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
+
+	return cy.getEditor().find('.ProseMirror')
 }
 
 const openSidebar = filename => {

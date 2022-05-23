@@ -23,6 +23,7 @@
 <template>
 	<BubbleMenu :editor="$editor"
 		:tippy-options="{ onHide: hideLinkMenu, duration: 200, placement: 'bottom' }"
+		data-text-el="menu-bubble"
 		class="menububble">
 		<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl()">
 			<input ref="linkInput"
@@ -32,6 +33,7 @@
 				placeholder="https://"
 				@keydown.esc="hideLinkMenu">
 			<button class="menububble__button icon-confirm"
+				data-text-bubble-action="confirm"
 				type="button"
 				tabindex="0"
 				@click="setLinkUrl()" />
@@ -39,6 +41,7 @@
 
 		<template v-else>
 			<button class="menububble__button"
+				data-text-bubble-action="add-link"
 				:class="{ 'is-active': isActive('link') }"
 				@click="showLinkMenu()">
 				<span class="icon-link" />
@@ -47,6 +50,7 @@
 				</span>
 			</button>
 			<button v-if="!isUsingDirectEditing"
+				data-text-bubble-action="add-file"
 				class="menububble__button"
 				:class="{ 'is-active': isActive('link') }"
 				@click="selectFile()">
@@ -55,6 +59,7 @@
 			</button>
 			<button v-if="isActive('link')"
 				class="menububble__button"
+				data-text-bubble-action="remove-link"
 				:class="{ 'is-active': isActive('link') }"
 				@click="removeLinkUrl()">
 				<span class="icon-delete" />

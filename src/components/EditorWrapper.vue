@@ -64,7 +64,9 @@
 					<slot name="header" />
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar-placeholder" />
-				<div ref="contentWrapper" class="content-wrapper text-editor__content-wrapper">
+				<div ref="contentWrapper"
+					data-text-el="editor-content-wrapper"
+					class="content-wrapper text-editor__content-wrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />

@@ -25,7 +25,7 @@
 		class="entry-list-action entry-action"
 		v-bind="state"
 		:title="actionEntry.label"
-		:data-action-entry="actionEntry._key"
+		:data-text-action-entry="actionEntry._key"
 		v-on="$listeners">
 		<template #icon>
 			<component :is="icon" />
