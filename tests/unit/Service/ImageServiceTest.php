@@ -6,7 +6,7 @@ use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\ImageService;
 use OCP\Files\Folder;
 
-class TextTest extends \PHPUnit\Framework\TestCase {
+class ImageServiceTest extends \PHPUnit\Framework\TestCase {
 	private static $attachmentNames = [
 		'aaa.png',
 		'aaa (2).png',

@@ -485,6 +485,7 @@ class ImageService {
 			// simple version with .+ between the brackets
 			// '/\!\[.+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
 			// complex version of php-markdown
+			// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](text://image?ANYTHING&imageFileName=FILE_NAME) and captures FILE_NAME
 			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
 			$content,
 			$oldMatches,
@@ -495,6 +496,7 @@ class ImageService {
 		}, $oldMatches);
 
 		$matches = [];
+		// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](.attachments.DOCUMENT_ID/ANY_FILE_NAME) and captures FILE_NAME
 		preg_match_all(
 			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\.attachments\.'.$fileId.'\/([^)&]+)\)/',
 			$content,
