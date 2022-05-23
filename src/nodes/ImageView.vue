@@ -131,6 +131,7 @@ export default {
 			loaded: false,
 			failed: false,
 			showIcons: false,
+			imageUrl: null,
 		}
 	},
 	computed: {
@@ -151,39 +152,6 @@ export default {
 					})
 			}
 		},
-		imageUrl() {
-			if (this.src.startsWith('text://')) {
-				const documentId = this.currentSession?.documentId
-				const sessionId = this.currentSession?.id
-				const sessionToken = this.currentSession?.token
-				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				if (getCurrentUser() || !this.token) {
-					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
-						{
-							documentId,
-							sessionId,
-							sessionToken,
-							imageFileName,
-						})
-				} else {
-					return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
-						{
-							documentId,
-							sessionId,
-							sessionToken,
-							imageFileName,
-							shareToken: this.token,
-						})
-				}
-			}
-			if (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl) {
-				return this.src
-			}
-			if (this.hasPreview && this.mime !== 'image/gif') {
-				return this.previewUrl
-			}
-			return this.davUrl
-		},
 		isRemoteUrl() {
 			return this.src.startsWith('http://')
 				|| this.src.startsWith('https://')
@@ -194,6 +162,9 @@ export default {
 		},
 		isDataUrl() {
 			return this.src.startsWith('data:')
+		},
+		isDirectUrl() {
+			return (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl)
 		},
 		basename() {
 			return decodeURI(this.src.split('?')[0])
@@ -280,18 +251,59 @@ export default {
 			this.loaded = true
 			return
 		}
-		const img = new Image()
-		img.onload = () => {
-			this.imageLoaded = true
-		}
-		img.onerror = () => {
+		this.init().catch((e) => {
+			this.onImageLoadFailure()
+		})
+	},
+	methods: {
+		async init() {
+			if (this.src.startsWith('text://')) {
+				const imageFileName = getQueryVariable(this.src, 'imageFileName')
+				return this.loadImage(this.getTextApiUrl(imageFileName))
+			}
+			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
+				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
+				return this.loadImage(this.getTextApiUrl(imageFileName))
+			}
+			if (this.isDirectUrl) {
+				return this.loadImage(this.src)
+			}
+			if (this.hasPreview && this.mime !== 'image/gif') {
+				return this.loadImage(this.previewUrl)
+			}
+			// if it starts with '.attachments.1234/'
+			if (this.src.match(/^\.attachments\.\d+\//)) {
+				// try the webdav url
+				return this.loadImage(this.davUrl).catch((e) => {
+					// try the attachment API
+					const imageFileName = decodeURIComponent(this.src.replace(/\.attachments\.\d+\//, '').split('?')[0])
+					const textApiUrl = this.getTextApiUrl(imageFileName)
+					return this.loadImage(textApiUrl).then(() => {
+						// TODO if attachment works, rewrite the url with correct document ID
+					})
+				})
+			}
+			this.loadImage(this.davUrl)
+		},
+		async loadImage(imageUrl) {
+			return new Promise((resolve, reject) => {
+				const img = new Image()
+				img.onload = () => {
+					this.imageUrl = imageUrl
+					this.imageLoaded = true
+					resolve()
+				}
+				img.onerror = (e) => {
+					reject(e)
+				}
+				img.src = imageUrl
+			})
+		},
+		onImageLoadFailure() {
 			this.failed = true
 			this.imageLoaded = false
 			this.loaded = true
-		}
-		img.src = this.imageUrl
-	},
-	methods: {
+		},
 		updateAlt() {
 			this.alt = this.$refs.altInput.value
 		},
@@ -300,6 +312,28 @@ export default {
 			this.$nextTick(() => {
 				this.editor.commands.scrollIntoView()
 			})
+		},
+		getTextApiUrl(imageFileName) {
+			const documentId = this.currentSession?.documentId
+			const sessionId = this.currentSession?.id
+			const sessionToken = this.currentSession?.token
+			if (getCurrentUser() || !this.token) {
+				return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
+					{
+						documentId,
+						sessionId,
+						sessionToken,
+						imageFileName,
+					})
+			}
+			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
+				{
+					documentId,
+					sessionId,
+					sessionToken,
+					imageFileName,
+					shareToken: this.token,
+				})
 		},
 	},
 }

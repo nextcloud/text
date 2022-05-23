@@ -156,6 +156,7 @@ class ImageService {
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
+			'dirname' => $saveDir->getName(),
 			'id' => $savedFile->getId(),
 			'documentId' => $textFile->getId(),
 		];
@@ -183,6 +184,7 @@ class ImageService {
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
+			'dirname' => $saveDir->getName(),
 			'id' => $savedFile->getId(),
 			'documentId' => $textFile->getId(),
 		];
@@ -227,6 +229,7 @@ class ImageService {
 			// get file type and name
 			return [
 				'name' => $fileName,
+				'dirname' => $saveDir->getName(),
 				'id' => $targetFile->getId(),
 				'documentId' => $textFile->getId(),
 			];
@@ -457,7 +460,7 @@ class ImageService {
 					$attachmentsByName[$attNode->getName()] = $attNode;
 				}
 
-				$contentAttachmentNames = $this->getAttachmentNamesFromContent($textFile->getContent());
+				$contentAttachmentNames = $this->getAttachmentNamesFromContent($textFile->getContent(), $fileId);
 
 				$toDelete = array_diff(array_keys($attachmentsByName), $contentAttachmentNames);
 				foreach ($toDelete as $name) {
@@ -476,20 +479,35 @@ class ImageService {
 	 * @param string $content
 	 * @return array
 	 */
-	public static function getAttachmentNamesFromContent(string $content): array {
-		$matches = [];
+	public static function getAttachmentNamesFromContent(string $content, int $fileId): array {
+		$oldMatches = [];
 		preg_match_all(
 			// simple version with .+ between the brackets
 			// '/\!\[.+\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
 			// complex version of php-markdown
+			// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](text://image?ANYTHING&imageFileName=FILE_NAME) and captures FILE_NAME
 			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(text:\/\/image\?[^)]*imageFileName=([^)&]+)\)/',
+			$content,
+			$oldMatches,
+			PREG_SET_ORDER
+		);
+		$oldNames = array_map(static function (array $match) {
+			return urldecode($match[1]);
+		}, $oldMatches);
+
+		$matches = [];
+		// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](.attachments.DOCUMENT_ID/ANY_FILE_NAME) and captures FILE_NAME
+		preg_match_all(
+			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\.attachments\.'.$fileId.'\/([^)&]+)\)/',
 			$content,
 			$matches,
 			PREG_SET_ORDER
 		);
-		return array_map(static function (array $match) {
+		$names = array_map(static function (array $match) {
 			return urldecode($match[1]);
 		}, $matches);
+
+		return array_merge($names, $oldNames);
 	}
 
 	/**
