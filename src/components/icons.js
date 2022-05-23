@@ -23,6 +23,7 @@
 import MdiLoading from 'vue-material-design-icons/Loading'
 
 export { default as Lock } from 'vue-material-design-icons/Lock'
+export { default as Delete } from 'vue-material-design-icons/Delete'
 export { default as Undo } from 'vue-material-design-icons/ArrowULeftTop'
 export { default as Redo } from 'vue-material-design-icons/ArrowURightTop'
 export { default as Info } from 'vue-material-design-icons/Information'
@@ -51,6 +52,11 @@ export { default as FormatListNumbered } from 'vue-material-design-icons/FormatL
 export { default as FormatListBulleted } from 'vue-material-design-icons/FormatListBulleted'
 export { default as FormatListCheckbox } from 'vue-material-design-icons/FormatListCheckbox'
 export { default as FormatQuote } from 'vue-material-design-icons/FormatQuoteClose'
+export { default as TableSettings } from 'vue-material-design-icons/TableCog'
+export { default as TableAddRowAfter } from 'vue-material-design-icons/TableRowPlusAfter'
+export { default as TableAddRowBefore } from 'vue-material-design-icons/TableRowPlusBefore'
+export { default as TableAddColumnAfter } from 'vue-material-design-icons/TableColumnPlusAfter'
+export { default as TableAddColumnBefore } from 'vue-material-design-icons/TableColumnPlusBefore'
 
 export const Loading = {
 	functional: true,

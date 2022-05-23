@@ -25,19 +25,25 @@
 		<div>
 			<NodeViewContent class="content" />
 			<Actions v-if="editor.isEditable">
-				<ActionButton icon="icon-add_col_before"
-					:close-after-click="true"
+				<ActionButton close-after-click
 					@click="addColumnBefore">
+					<template #icon>
+						<TableAddColumnBefore />
+					</template>
 					{{ t('text', 'Add column before') }}
 				</ActionButton>
-				<ActionButton icon="icon-add_col_after"
-					:close-after-click="true"
+				<ActionButton close-after-click
 					@click="addColumnAfter">
+					<template #icon>
+						<TableAddColumnAfter />
+					</template>
 					{{ t('text', 'Add column after') }}
 				</ActionButton>
-				<ActionButton icon="icon-delete"
-					:close-after-click="true"
+				<ActionButton close-after-click
 					@click="deleteColumn">
+					<template #icon>
+						<Delete />
+					</template>
 					{{ t('text', 'Delete this column') }}
 				</ActionButton>
 			</Actions>
@@ -49,6 +55,7 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import { Delete, TableAddColumnBefore, TableAddColumnAfter } from '../components/icons.js'
 
 export default {
 	name: 'TableHeaderView',
@@ -57,6 +64,9 @@ export default {
 		Actions,
 		NodeViewWrapper,
 		NodeViewContent,
+		Delete,
+		TableAddColumnBefore,
+		TableAddColumnAfter,
 	},
 	props: {
 		editor: {
