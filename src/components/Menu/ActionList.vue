@@ -33,7 +33,8 @@
 		<ActionSingle v-for="child in actionEntry.children"
 			:key="`child-${child._key}`"
 			is-item
-			:action-entry="child" />
+			:action-entry="child"
+			@trigged="refocus" />
 	</Actions>
 </template>
 
@@ -77,7 +78,10 @@ export default {
 	},
 	methods: {
 		runAction() {
-
+			// nothing todo
+		},
+		refocus() {
+			this.$editor.chain().focus().run()
 		},
 	},
 }

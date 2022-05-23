@@ -71,6 +71,10 @@ export default {
 			// Some actions run themselves.
 			// others still need to have .run() called upon them.
 			actionEntry.action(this.$editor.chain().focus())?.run()
+
+			this.$nextTick(() => {
+				this.$emit('trigged', { ...actionEntry })
+			})
 		},
 	},
 
