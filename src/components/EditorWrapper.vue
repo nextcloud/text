@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container">
+	<div id="editor-container" data-text-app="editor-container" class="text-editor">
 		<div v-if="displayed" class="document-status">
 			<p v-if="idle" class="msg">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
@@ -38,19 +38,22 @@
 		</div>
 		<div v-if="displayed"
 			id="editor-wrapper"
+			class="text-editor__wrapper"
 			:class="{
 				'has-conflicts': hasSyncCollission,
 				'icon-loading': !contentLoaded && !hasConnectionIssue,
-				'richEditor': isRichEditor,
+				'is-rich-workspace': isRichWorkspace,
+				'is-rich-editor': isRichEditor,
 				'show-color-annotations': showAuthorAnnotations
 			}">
 			<EditorDraggable v-if="$editor"
-				id="editor">
+				id="editor"
+				class="text-editor__main">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded">
-					<div id="editor-session-list">
+					<div class="text-editor__session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
@@ -60,13 +63,13 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
-				<div v-if="!menubarLoaded" class="menubar placeholder" />
-				<div ref="contentWrapper" class="content-wrapper">
+				<div v-if="!menubarLoaded" class="menubar-placeholder" />
+				<div ref="contentWrapper" class="content-wrapper text-editor__content-wrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
-						class="editor__content"
+						class="editor__content text-editor__content"
 						:editor="$editor" />
 				</div>
 			</EditorDraggable>
@@ -611,12 +614,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.modal-container #editor-container {
+	.modal-container .text-editor {
 		top: 0;
 		height: calc(100vh - var(--header-height));
 	}
 
-	#editor-container {
+	.text-editor {
 		display: block;
 		width: 100%;
 		max-width: 100%;
@@ -627,7 +630,7 @@ export default {
 		background-color: var(--color-main-background);
 	}
 
-	#editor-wrapper {
+	.text-editor__wrapper {
 		display: flex;
 		width: 100%;
 		height: 100%;
@@ -648,13 +651,13 @@ export default {
 			margin-top: 0 !important;
 		}
 		&.icon-loading {
-			#editor {
+			.text-editor__main {
 				opacity: 0.3;
 			}
 		}
 	}
 
-	#editor, .editor {
+	.text-editor__main, .editor {
 		background: var(--color-main-background);
 		color: var(--color-main-text);
 		background-clip: padding-box;
@@ -707,16 +710,16 @@ export default {
 		}
 	}
 
-	#editor-container #editor-wrapper.has-conflicts {
+	.text-editor .text-editor__wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
-		#editor, #read-only-editor {
+		.text-editor__main, #read-only-editor {
 			width: 50%;
 			height: 100%;
 		}
 	}
 
-	#editor-session-list {
+	.text-editor__session-list {
 		display: flex;
 
 		input, div {
@@ -736,39 +739,27 @@ export default {
 	}
 
 	#files-public-content {
-		#editor-container {
+		.text-editor {
 			top: 0;
 			width: 100%;
 
-			#editor::v-deep .menubar {
-				position: sticky;
-				top: 0px;
-				width: 100%;
-			}
-
-			#editor {
+			.text-editor__main {
 				overflow: auto;
 				z-index: 20;
 			}
-			.has-conflicts #editor {
+			.has-conflicts .text-editor__main {
 				padding-top: 0;
 			}
 		}
 	}
 
 	.ie {
-		#editor::v-deep .menubar {
-			// sticky position is not working as body is our scroll container
-			position: fixed;
-			top: 50px;
-			width: 100%;
-		}
 		.editor__content::v-deep .ProseMirror {
 			padding-top: 50px;
 		}
 	}
 
-	.menubar.placeholder {
+	.menubar-placeholder {
 		position: fixed;
 		position: -webkit-sticky;
 		position: sticky;
@@ -784,10 +775,10 @@ export default {
 <style lang="scss">
 	@import './../../css/style';
 
-	#editor-wrapper {
+	.text-editor__wrapper {
 		@import './../../css/prosemirror';
 
-		&:not(.richEditor) .ProseMirror {
+		&:not(.is-rich-editor) .ProseMirror {
 			pre {
 				background-color: var(--color-main-background);
 
@@ -848,11 +839,11 @@ export default {
 		}
 
 		// relative position for the alignment of the menububble
-		#editor {
+		.text-editor__main {
 			&.draggedOver {
 				background-color: var(--color-primary-light);
 			}
-			.content-wrapper {
+			.text-editor__content-wrapper {
 				position: relative;
 			}
 		}
