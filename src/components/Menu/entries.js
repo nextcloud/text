@@ -56,7 +56,6 @@ export default [
 		label: t('text', 'Undo'),
 		keyChar: 'z',
 		keyModifiers: ['ctrl'],
-		class: 'icon-undo',
 		icon: Undo,
 		action: (command) => command.undo(),
 		priority: 5,
@@ -66,7 +65,6 @@ export default [
 		label: t('text', 'Redo'),
 		keyChar: 'y',
 		keyModifiers: ['ctrl'],
-		class: 'icon-redo',
 		icon: Redo,
 		action: (command) => command.redo(),
 		priority: 11,
@@ -76,7 +74,6 @@ export default [
 		label: t('text', 'Bold'),
 		keyChar: 'b',
 		keyModifiers: ['ctrl'],
-		class: 'icon-bold',
 		icon: FormatBold,
 		isActive: 'strong',
 		action: (command) => {
@@ -89,7 +86,6 @@ export default [
 		label: t('text', 'Italic'),
 		keyChar: 'i',
 		keyModifiers: ['ctrl'],
-		class: 'icon-italic',
 		icon: FormatItalic,
 		isActive: 'em',
 		action: (command) => {
@@ -102,7 +98,6 @@ export default [
 		label: t('text', 'Underline'),
 		keyChar: 'u',
 		keyModifiers: ['ctrl'],
-		class: 'icon-underline',
 		icon: FormatUnderline,
 		isActive: 'underline',
 		action: (command) => {
@@ -115,7 +110,6 @@ export default [
 		label: t('text', 'Strikethrough'),
 		keyChar: 'd',
 		keyModifiers: ['ctrl'],
-		class: 'icon-strike',
 		icon: FormatStrikethrough,
 		isActive: 'strike',
 		action: (command) => {
@@ -135,7 +129,6 @@ export default [
 			{
 				_key: 'headings-01',
 				label: t('text', 'Heading 1'),
-				class: 'icon-h1',
 				icon: FormatHeader1,
 				isActive: ['heading', { level: 1 }],
 				action: (command) => {
@@ -145,7 +138,6 @@ export default [
 			{
 				_key: 'headings-02',
 				label: t('text', 'Heading 2'),
-				class: 'icon-h2',
 				icon: FormatHeader2,
 				isActive: ['heading', { level: 2 }],
 				action: (command) => {
@@ -155,7 +147,6 @@ export default [
 			{
 				_key: 'headings-03',
 				label: t('text', 'Heading 3'),
-				class: 'icon-h3',
 				icon: FormatHeader3,
 				isActive: ['heading', { level: 3 }],
 				action: (command) => {
@@ -165,7 +156,6 @@ export default [
 			{
 				_key: 'headings-04',
 				label: t('text', 'Heading 4'),
-				class: 'icon-h4',
 				isActive: ['heading', { level: 4 }],
 				icon: FormatHeader4,
 				action: (command) => {
@@ -175,7 +165,6 @@ export default [
 			{
 				_key: 'headings-05',
 				label: t('text', 'Heading 5'),
-				class: 'icon-h5',
 				isActive: ['heading', { level: 5 }],
 				icon: FormatHeader5,
 				action: (command) => {
@@ -185,7 +174,6 @@ export default [
 			{
 				_key: 'headings-06',
 				label: t('text', 'Heading 6'),
-				class: 'icon-h6',
 				isActive: ['heading', { level: 6 }],
 				icon: FormatHeader6,
 				action: (command) => {
@@ -200,7 +188,6 @@ export default [
 		label: t('text', 'Unordered list'),
 		keyChar: '8',
 		keyModifiers: ['ctrl', 'shift'],
-		class: 'icon-ul',
 		isActive: 'bulletList',
 		icon: FormatListBulleted,
 		action: (command) => {
@@ -213,7 +200,6 @@ export default [
 		label: t('text', 'Ordered list'),
 		keyChar: '9',
 		keyModifiers: ['ctrl', 'shift'],
-		class: 'icon-ol',
 		isActive: 'orderedList',
 		icon: FormatListNumbered,
 		action: (command) => {
@@ -224,7 +210,6 @@ export default [
 	{
 		_key: 'todo-list',
 		label: t('text', 'ToDo list'),
-		class: 'icon-tasklist',
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
 		action: (command) => command.toggleTaskList(),
@@ -235,7 +220,6 @@ export default [
 		label: t('text', 'Blockquote'),
 		keyChar: '>',
 		keyModifiers: ['ctrl'],
-		class: 'icon-quote',
 		isActive: 'blockquote',
 		icon: FormatQuote,
 		action: (command) => {
@@ -253,7 +237,6 @@ export default [
 			{
 				_key: 'info',
 				label: t('text', 'Info'),
-				class: 'icon-info',
 				isActive: ['callout', { type: 'info' }],
 				icon: Info,
 				action: (command) => {
@@ -263,7 +246,6 @@ export default [
 			{
 				_key: 'success',
 				label: t('text', 'Success'),
-				class: 'icon-success',
 				isActive: ['callout', { type: 'success' }],
 				icon: Positive,
 				action: (command) => {
@@ -273,7 +255,6 @@ export default [
 			{
 				_key: 'warning',
 				label: t('text', 'Warning'),
-				class: 'icon-warn',
 				isActive: ['callout', { type: 'warn' }],
 				icon: Warn,
 				action: (command) => {
@@ -283,7 +264,6 @@ export default [
 			{
 				_key: 'danger',
 				label: t('text', 'Danger'),
-				class: 'icon-error',
 				isActive: ['callout', { type: 'error' }],
 				icon: Danger,
 				action: (command) => {
@@ -296,7 +276,6 @@ export default [
 	{
 		_key: 'code-block',
 		label: t('text', 'Code block'),
-		class: 'icon-code',
 		isActive: 'codeBlock',
 		icon: CodeTags,
 		action: (command) => {
@@ -307,7 +286,6 @@ export default [
 	{
 		_key: 'table',
 		label: t('text', 'Table'),
-		class: 'icon-table',
 		isActive: 'table',
 		icon: Table,
 		action: (command) => {
@@ -318,7 +296,6 @@ export default [
 	{
 		_key: 'emoji-picker',
 		label: t('text', 'Insert emoji'),
-		class: 'icon-emoji',
 		icon: Emoticon,
 		component: EmojiPickerAction,
 		action: (command, emojiObject = {}) => {
@@ -329,7 +306,6 @@ export default [
 	{
 		_key: 'insert-image',
 		label: t('text', 'Insert image'),
-		class: 'icon-image',
 		icon: Images,
 		component: ActionImageUpload,
 		priority: 2,
@@ -337,7 +313,6 @@ export default [
 	{
 		_key: 'formatting-help',
 		label: t('text', 'Formatting help'),
-		class: 'icon-help',
 		icon: Help,
 		click: (view) => view.$emit('show-help'),
 		priority: 17,
