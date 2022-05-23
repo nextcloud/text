@@ -115,7 +115,7 @@ export default {
 		hiddenEntries() {
 			return [...actionsFullEntries].filter(({ priority }) => {
 				// reverse logic from visibleEntries
-				return priority !== undefined && priority >= this.iconsLimit
+				return priority !== undefined && priority > this.iconsLimit
 			})
 		},
 		remainAction() {
