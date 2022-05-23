@@ -282,7 +282,6 @@ export default {
 						// TODO if attachment works, rewrite the url with correct document ID
 					})
 				})
-				return
 			}
 			this.loadImage(this.davUrl)
 		},
