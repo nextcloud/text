@@ -181,8 +181,9 @@ Cypress.Commands.add('getEditor', () => {
 	return cy.get('[data-text-el="editor-container"]')
 })
 
-Cypress.Commands.add('getMenu', () => {
-	return cy.getEditor().find('[data-text-el="menubar"]')
+Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
+	return (subject ? cy.wrap(subject) : cy.getEditor())
+		.find('[data-text-el="menubar"]')
 })
 
 Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, name) => {

@@ -20,7 +20,6 @@
  *
  */
 
-
 import { randHash } from '../utils/'
 const randUser = randHash()
 
@@ -61,9 +60,8 @@ describe('Open test.md in viewer', function() {
 		editor.get('h2').should('contain', 'Hello world')
 
 		cy.log('Inspect menubar')
-		const menubar = editor.get('.menubar .menubar-icons')
-		menubar.get('.icon-undo').should('be.visible')
-		menubar.get('.icon-bold').should('be.visible')
+		cy.getActionEntry('undo').should('be.visible')
+		cy.getActionEntry('bold').should('be.visible')
 
 		cy.screenshot()
 	})
