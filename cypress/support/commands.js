@@ -21,7 +21,7 @@
  */
 
 import axios from '@nextcloud/axios'
-import regeneratorRuntime from "regenerator-runtime";
+import regeneratorRuntime from 'regenerator-runtime'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
@@ -29,7 +29,7 @@ Cypress.env('baseUrl', url)
 Cypress.Commands.add('login', (user, password, { route, onBeforeLoad } = {}) => {
 	route = route || '/apps/files'
 
-	cy.session(user, function () {
+	cy.session(user, function() {
 		cy.visit(route)
 		cy.get('input[name=user]').type(user)
 		cy.get('input[name=password]').type(password)
@@ -41,7 +41,7 @@ Cypress.Commands.add('login', (user, password, { route, onBeforeLoad } = {}) => 
 })
 
 Cypress.Commands.add('logout', (route = '/') => {
-	cy.session('_guest', function () {
+	cy.session('_guest', function() {
 	})
 })
 
@@ -53,13 +53,13 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 		form: true,
 		body: {
 			userid: user,
-			password: password
+			password,
 		},
 		auth: { user: 'admin', pass: 'admin' },
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
-		}
+		},
 	}).then(response => {
 		cy.log(`Created user ${user}`, response.status)
 	})
@@ -75,7 +75,7 @@ Cypress.Commands.add('nextcloudUpdateUser', (user, password, key, value) => {
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
-		}
+		},
 	}).then(response => {
 		cy.log(`Updated user ${user} ${key} to ${value}`, response.status)
 	})
@@ -91,7 +91,7 @@ Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
-		}
+		},
 	}).then(response => {
 		cy.log(`Deleted user ${user}`, response.status)
 	})
@@ -109,8 +109,8 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 				await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
 					headers: {
 						requesttoken: window.OC.requestToken,
-						'Content-Type': mimeType
-					}
+						'Content-Type': mimeType,
+					},
 				}).then(response => {
 					cy.log(`Uploaded ${fileName}`, response.status)
 				})
@@ -133,32 +133,32 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
-		}
+		},
 	}).then(response => {
 		cy.log(`${userId} shared ${path} with ${targetUserId}`, response.status)
 	})
 })
 
 Cypress.Commands.add('createFolder', dirName => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().createDirectory(dirName)
 	})
 })
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().move(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OC.Files.getClient().copy(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	cy.window().then( win => {
+	cy.window().then(win => {
 		win.OCA?.Files?.App?.fileList?.reload()
 	})
 })
@@ -175,4 +175,17 @@ Cypress.Commands.add('getFile', fileName => {
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
+})
+
+Cypress.Commands.add('getEditor', () => {
+	return cy.get('[data-text-el="editor-container"]')
+})
+
+Cypress.Commands.add('getMenu', () => {
+	return cy.getEditor().find('[data-text-el="menubar"]')
+})
+
+Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, name) => {
+	return (subject ? cy.wrap(subject) : cy.getMenu())
+		.find(`[data-text-action-entry="${name}"]`)
 })

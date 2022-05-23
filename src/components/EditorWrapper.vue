@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container" data-text-app="editor-container" class="text-editor">
+	<div id="editor-container" data-text-el="editor-container" class="text-editor">
 		<div v-if="displayed" class="document-status">
 			<p v-if="idle" class="msg">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>

@@ -117,7 +117,7 @@ export default {
 			attrs: {
 				title,
 				type: 'tertiary',
-				'data-action-entry': actionEntry._key,
+				'data-text-action-entry': actionEntry._key,
 				...attrs,
 			},
 			on: {

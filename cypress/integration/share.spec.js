@@ -1,5 +1,4 @@
 
-
 /*
  * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
  *
@@ -26,7 +25,7 @@ import { randHash } from '../utils/'
 const randUser = randHash()
 
 describe('Open test.md in viewer', function() {
-	before(function () {
+	before(function() {
 		// Init user
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
@@ -45,10 +44,10 @@ describe('Open test.md in viewer', function() {
 		cy.login(randUser, 'password')
 	})
 
-	it('Shares the file as a public read only link', function () {
+	it('Shares the file as a public read only link', function() {
 		cy.visit('/apps/files')
 		cy.get('#fileList tr[data-file="test.md"] a.action-share')
-			.click({force: true})
+			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -58,18 +57,18 @@ describe('Open test.md in viewer', function() {
 			.then((href) => {
 				cy.visit(href)
 				cy.window().then(win => {
-					win.OC.appswebroots['files_texteditor'] = true
-					cy.get('#editor').should('be.visible')
-					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
-					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
+					win.OC.appswebroots.files_texteditor = true
+					cy.getEditor().should('be.visible')
+						.find('.ProseMirror').should('contain', 'Hello world')
+						.find('h2').should('contain', 'Hello world')
 				})
 			})
 	})
 
-	it('Shares the file as a public link with write permissions', function () {
+	it('Shares the file as a public link with write permissions', function() {
 		cy.visit('/apps/files')
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share')
-			.click({force: true})
+			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -83,46 +82,53 @@ describe('Open test.md in viewer', function() {
 			.then((href) => {
 				cy.visit(href)
 				cy.window().then(win => {
-					win.OC.appswebroots['files_texteditor'] = true
-					cy.get('#editor').should('be.visible')
-					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
-					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
-					cy.get('#editor .menubar .menubar-icons .icon-undo').should('be.visible')
-					cy.get('#editor .menubar .menubar-icons .icon-redo').should('be.visible')
-					cy.get('#editor .menubar .menubar-icons .icon-bold').should('be.visible')
+					win.OC.appswebroots.files_texteditor = true
+					cy.getEditor()
+						.should('be.visible')
+						.find('.ProseMirror').should('contain', 'Hello world')
+						.find('h2').should('contain', 'Hello world')
+
+					cy.getMenu().should('be.visible')
+					cy.getActionEntry('undo').should('be.visible')
+					cy.getActionEntry('redo').should('be.visible')
+					cy.getActionEntry('bold').should('be.visible')
 				})
 			})
 	})
 
-	it('Opens the editor as guest', function () {
+	it('Opens the editor as guest', function() {
 		cy.visit('/apps/files')
 		cy.get('#fileList tr[data-file="test2.md"] a.action-share')
-			.click({force: true})
+			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
+		// cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
 			.then((href) => {
 				cy.logout()
 				cy.visit(href)
 				cy.window().then(win => {
-					win.OC.appswebroots['files_texteditor'] = true
+					win.OC.appswebroots.files_texteditor = true
 					cy.wait(1000)
-					cy.get('#editor').should('be.visible')
-					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
-					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
-					cy.get('#editor .menubar .menubar-icons .icon-undo').should('be.visible')
-					cy.get('#editor .menubar .menubar-icons .icon-redo').should('be.visible')
-					cy.get('#editor .menubar .menubar-icons .icon-bold').should('be.visible')
+					cy.getEditor()
+						.should('be.visible')
+						.find('.ProseMirror').should('contain', 'Hello world')
+						.find('h2').should('contain', 'Hello world')
+
+					cy.getMenu().should('be.visible')
+					cy.getActionEntry('undo').should('be.visible')
+					cy.getActionEntry('redo').should('be.visible')
+					cy.getActionEntry('bold').should('be.visible')
 				})
 			})
 	})
 
-	it('Shares a folder as a public read only link', function () {
+	it('Shares a folder as a public read only link', function() {
 		cy.visit('/apps/files')
 		cy.get('#fileList tr[data-file="folder"] a.action-share')
-			.click({force: true})
+			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
@@ -132,7 +138,7 @@ describe('Open test.md in viewer', function() {
 			.then((href) => {
 				cy.visit(href)
 				cy.window().then(win => {
-					win.OC.appswebroots['files_texteditor'] = true
+					win.OC.appswebroots.files_texteditor = true
 					cy.get('#rich-workspace').should('contain', 'Hello world')
 					cy.openFile('test.md')
 					cy.get('#editor-container').should('be.visible')
@@ -143,6 +149,5 @@ describe('Open test.md in viewer', function() {
 				})
 			})
 	})
-
 
 })

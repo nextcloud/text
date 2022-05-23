@@ -23,6 +23,7 @@
 
 <template>
 	<div class="text-menubar"
+		data-text-el="menubar"
 		:class="{
 			'text-menubar--show': isVisible,
 			'text-menubar--autohide': autohide,
