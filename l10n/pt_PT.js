@@ -54,6 +54,6 @@ OC.L10N.register(
     "Emoji picker" : "Selecionador de emoji ",
     "New text document" : "Novo documento de texto",
     "Currently active users:" : "Utilizadores ativos no momento:",
-    "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores"]
+    "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores","e %n outros editores"]
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
