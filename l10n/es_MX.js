@@ -50,6 +50,6 @@ OC.L10N.register(
     "Warning" : "Advertencia",
     "Insert image" : "Añadir imagen",
     "New text document" : "Nuevo documento de texto",
-    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores"]
+    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"]
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
