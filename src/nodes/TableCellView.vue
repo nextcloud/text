@@ -21,11 +21,12 @@
   -->
 
 <template>
-	<NodeViewWrapper as="td">
+	<NodeViewWrapper data-text-el="table-cell" as="td">
 		<div class="container">
 			<NodeViewContent class="content" />
-			<Actions v-if="editor.isEditable">
-				<ActionButton icon="icon-add_row_before"
+			<Actions v-if="editor.isEditable"
+				data-text-table-actions="row">
+				<ActionButton data-text-table-action="add-row-before"
 					close-after-click
 					@click="addRowBefore">
 					<template #icon>
@@ -33,14 +34,16 @@
 					</template>
 					{{ t('text', 'Add row before') }}
 				</ActionButton>
-				<ActionButton close-after-click
+				<ActionButton data-text-table-action="add-row-after"
+					close-after-click
 					@click="addRowAfter">
 					<template #icon>
 						<TableAddRowAfter />
 					</template>
 					{{ t('text', 'Add row after') }}
 				</ActionButton>
-				<ActionButton close-after-click
+				<ActionButton data-text-table-action="remove-row"
+					close-after-click
 					@click="deleteRow">
 					<template #icon>
 						<Delete />

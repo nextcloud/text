@@ -21,25 +21,29 @@
   -->
 
 <template>
-	<NodeViewWrapper as="th">
+	<NodeViewWrapper data-text-el="table-header" as="th">
 		<div>
 			<NodeViewContent class="content" />
-			<Actions v-if="editor.isEditable">
-				<ActionButton close-after-click
+			<Actions v-if="editor.isEditable"
+				data-text-table-actions="header">
+				<ActionButton data-text-table-action="add-column-before"
+					close-after-click
 					@click="addColumnBefore">
 					<template #icon>
 						<TableAddColumnBefore />
 					</template>
 					{{ t('text', 'Add column before') }}
 				</ActionButton>
-				<ActionButton close-after-click
+				<ActionButton data-text-table-action="add-column-after"
+					close-after-click
 					@click="addColumnAfter">
 					<template #icon>
 						<TableAddColumnAfter />
 					</template>
 					{{ t('text', 'Add column after') }}
 				</ActionButton>
-				<ActionButton close-after-click
+				<ActionButton data-text-table-action="remove-column"
+					close-after-click
 					@click="deleteColumn">
 					<template #icon>
 						<Delete />

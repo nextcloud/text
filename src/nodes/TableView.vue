@@ -21,15 +21,17 @@
   -->
 
 <template>
-	<NodeViewWrapper class="table-wrapper">
+	<NodeViewWrapper data-text-el="table-view" class="table-wrapper">
 		<NodeViewContent class="content" as="table" />
 		<Actions v-if="editor.isEditable"
 			force-menu
+			data-text-table-actions="settings"
 			class="table-settings">
 			<template #icon>
 				<TableSettings />
 			</template>
-			<ActionButton close-after-click
+			<ActionButton data-text-table-action="delete"
+				close-after-click
 				@click="deleteNode">
 				<template #icon>
 					<Delete />
