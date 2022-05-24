@@ -104,6 +104,6 @@ OC.L10N.register(
     "Insert image" : "Insertar imagen",
     "New text document" : "Nuevo documento de texto",
     "Currently active users:" : "Usuarios activos ahora:",
-    "_and %n other editor_::_and %n other editors_" : ["y %n otro editor","y %n otros editores"]
+    "_and %n other editor_::_and %n other editors_" : ["y %n otro editor","y %n otros editores","y %n otros editores"]
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
