@@ -1,67 +1,67 @@
-.text__is-active-item-btn {
-  opacity: 1;
+%text__is-active-item-btn {
+	opacity: 1;
 
-  &::before {
-    transform: translateX(-50%);
-    border-radius: 100%;
-    position: absolute;
-    background: var(--color-primary-element);
-    bottom: 3px;
-    height: 6px;
-    width: 6px;
-    content: "";
-    left: 50%;
-  }
+	&::before {
+		transform: translateX(-50%);
+		border-radius: 100%;
+		position: absolute;
+		background: var(--color-primary-element);
+		bottom: 3px;
+		height: 6px;
+		width: 6px;
+		content: '';
+		left: 50%;
+	}
 }
 
 .text-menubar, .popover {
-  button.entry-action__button {
-	height: 44px;
-	margin: 0;
-	border: 0;
-	opacity: 0.5;
-	position: relative;
-    color: var(--color-main-text);
-    background-color: transparent;
-    vertical-align: top;
-    padding: 0;
-
-	p {
+	button.entry-action__button {
+		height: 44px;
+		margin: 0;
+		border: 0;
+		opacity: 0.5;
+		position: relative;
+		color: var(--color-main-text);
+		background-color: transparent;
+		vertical-align: top;
 		padding: 0;
+
+		p {
+			padding: 0;
+		}
+
+		&:is(li.entry-action-item button) {
+			padding: 0 0.5em 0 0;
+		}
+
+		&:not(li.entry-action-item button) {
+			width: 44px;
+		}
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: var(--color-background-dark);
+		}
+
+		&:hover,
+		&:focus {
+			opacity: 1;
+		}
+
+		&.is-active {
+			@extend %text__is-active-item-btn;
+		}
 	}
 
-	&:is(li.entry-action-item button) {
-		padding: 0 0.5em 0 0;
+	.entry-action.is-active:not(.entry-action-item) {
+		@extend %text__is-active-item-btn;
 	}
 
-	&:not(li.entry-action-item button) {
-		width: 44px;
+	.entry-action.entry-action-item {
+		&.is-active {
+			background-color: var(--color-primary-light);
+			box-shadow: inset 2px 0 var(--color-primary);
+		}
 	}
-
-    &:hover,
-    &:focus,
-    &:active {
-      background-color: var(--color-background-dark);
-    }
-
-    &:hover,
-    &:focus {
-      opacity: 1;
-    }
-
-    &.is-active {
-      @extend .text__is-active-item-btn;
-    }
-  }
-
-  .entry-action.is-active:not(.entry-action-item) {
-    @extend .text__is-active-item-btn;
-  }
-
-  .entry-action.entry-action-item {
-    &.is-active {
-      background-color: var(--color-primary-light);
-      box-shadow: inset 2px 0 var(--color-primary);
-    }
-  }
 }
