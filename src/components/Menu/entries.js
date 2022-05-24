@@ -208,7 +208,7 @@ export default [
 		priority: 9,
 	},
 	{
-		_key: 'todo-list',
+		_key: 'task-list',
 		label: t('text', 'ToDo list'),
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
@@ -235,7 +235,7 @@ export default [
 		isActive: 'callout',
 		children: [
 			{
-				_key: 'info',
+				_key: 'callout-info',
 				label: t('text', 'Info'),
 				isActive: ['callout', { type: 'info' }],
 				icon: Info,
@@ -244,7 +244,7 @@ export default [
 				},
 			},
 			{
-				_key: 'success',
+				_key: 'callout-success',
 				label: t('text', 'Success'),
 				isActive: ['callout', { type: 'success' }],
 				icon: Positive,
@@ -253,7 +253,7 @@ export default [
 				},
 			},
 			{
-				_key: 'warning',
+				_key: 'callout-warn',
 				label: t('text', 'Warning'),
 				isActive: ['callout', { type: 'warn' }],
 				icon: Warn,
@@ -262,7 +262,7 @@ export default [
 				},
 			},
 			{
-				_key: 'danger',
+				_key: 'callout-error',
 				label: t('text', 'Danger'),
 				isActive: ['callout', { type: 'error' }],
 				icon: Danger,
