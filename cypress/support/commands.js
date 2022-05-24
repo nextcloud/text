@@ -190,3 +190,10 @@ Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, na
 	return (subject ? cy.wrap(subject) : cy.getMenu())
 		.find(`[data-text-action-entry="${name}"]`)
 })
+
+Cypress.Commands.add('openWorkspace', (subject, name) => {
+	cy.get('#rich-workspace .empty-workspace').click()
+	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
+
+	return cy.getEditor().find('.ProseMirror')
+})
