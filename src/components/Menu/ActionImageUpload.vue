@@ -26,7 +26,7 @@
 		:aria-label="actionEntry.label"
 		aria-haspopup>
 		<template #icon>
-			<component :is="isUploadingImages ? 'Loading' : actionEntry.icon"
+			<component :is="icon"
 				:title="actionEntry.label"
 				:aria-label="actionEntry.label"
 				aria-haspopup />
@@ -83,6 +83,11 @@ export default {
 		useActionChooseLocalImageMixin,
 	],
 	computed: {
+		icon() {
+			return this.isUploadingImages
+				? Loading
+				: this.actionEntry.icon
+		},
 		isUploadingImages() {
 			return this.$uploadingState.isUploadingImages
 		},
