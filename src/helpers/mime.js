@@ -37,7 +37,6 @@ const openMimetypesPlainText = [
 	'application/xml',
 	'application/yaml',
 	'text/css',
-	'text/csv',
 	'text/html',
 	'text/org',
 	'text/x-c',
@@ -48,6 +47,10 @@ const openMimetypesPlainText = [
 	'text/x-python',
 	'text/x-shellscript',
 ]
+
+if (!window.oc_appswebroots?.richdocuments && !window.oc_appswebroots?.onlyoffice) {
+	openMimetypesPlainText.push('text/csv')
+}
 
 const openMimetypes = [...openMimetypesMarkdown, ...openMimetypesPlainText]
 
