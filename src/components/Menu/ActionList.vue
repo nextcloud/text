@@ -40,14 +40,13 @@
 
 <script>
 import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import { BaseActionEntry } from './ActionEntry.mixin.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
 
 export default {
 	name: 'ActionList',
-	components: { Actions, ActionButton, ActionSingle },
+	components: { Actions, ActionSingle },
 	extends: BaseActionEntry,
 	data: () => ({
 		activeChild: null,
