@@ -26,13 +26,13 @@
 		:aria-label="actionEntry.label"
 		aria-haspopup>
 		<template #icon>
-			<component :is="$isUploadingImages ? 'Loading' : actionEntry.icon"
+			<component :is="isUploadingImages ? 'Loading' : actionEntry.icon"
 				:title="actionEntry.label"
 				:aria-label="actionEntry.label"
 				aria-haspopup />
 		</template>
 		<ActionButton close-after-click
-			:disabled="$isUploadingImages"
+			:disabled="isUploadingImages"
 			:data-text-action-entry="`${actionEntry._key}-upload`"
 			@click="$callChooseLocalImage">
 			<template #icon>
@@ -42,7 +42,7 @@
 		</ActionButton>
 		<ActionButton v-if="!$isPublic"
 			close-after-click
-			:disabled="$isUploadingImages"
+			:disabled="isUploadingImages"
 			:data-text-action-entry="`${actionEntry._key}-insert`"
 			@click="$callImagePrompt">
 			<template #icon>
@@ -62,7 +62,7 @@ import { useIsPublicMixin } from '../EditorWrapper.provider.js'
 import { BaseActionEntry } from './ActionEntry.mixin.js'
 import {
 	useActionImagePromptMixin,
-	useIsUploadingImagesMixin,
+	useUploadingStateMixin,
 	useActionChooseLocalImageMixin,
 } from '../EditorDraggable.provider.js'
 
@@ -79,8 +79,13 @@ export default {
 	mixins: [
 		useIsPublicMixin,
 		useActionImagePromptMixin,
-		useIsUploadingImagesMixin,
+		useUploadingStateMixin,
 		useActionChooseLocalImageMixin,
 	],
+	computed: {
+		isUploadingImages() {
+			return this.$uploadingState.isUploadingImages
+		},
+	},
 }
 </script>

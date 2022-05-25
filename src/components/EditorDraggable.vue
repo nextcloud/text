@@ -53,7 +53,7 @@ import {
 import {
 	ACTION_IMAGE_PROMPT,
 	ACTION_CHOOSE_LOCAL_IMAGE,
-	IS_UPLOADING_IMAGES,
+	STATE_UPLOADING,
 } from './EditorDraggable.provider.js'
 
 const IMAGE_MIMES = [
@@ -81,17 +81,22 @@ export default {
 			[ACTION_CHOOSE_LOCAL_IMAGE]: {
 				get: () => this.chooseLocalImage,
 			},
-			[IS_UPLOADING_IMAGES]: {
-				get: () => this.isUploadingImages,
+			[STATE_UPLOADING]: {
+				get: () => this.state,
 			},
 		})
 
 		return val
 	},
-	data: () => ({
-		draggedOver: false,
-		isUploadingImages: false,
-	}),
+	data() {
+		return {
+			draggedOver: false,
+			// make it reactive to be used inject/provide
+			state: {
+				isUploadingImages: false,
+			},
+		}
+	},
 	computed: {
 		imagePath() {
 			return this.$file.relativePath.split('/').slice(0, -1).join('/')
@@ -143,12 +148,19 @@ export default {
 				return
 			}
 
-			return this.$syncService.uploadImage(file).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, position, response.data?.dirname)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			})
+			this.state.isUploadingImages = true
+
+			return this.$syncService.uploadImage(file)
+				.then((response) => {
+					this.insertAttachmentImage(response.data?.name, response.data?.id, position, response.data?.dirname)
+				})
+				.catch((error) => {
+					console.error(error)
+					showError(error?.response?.data?.error)
+				})
+				.then(() => {
+					this.state.isUploadingImages = false
+				})
 		},
 		showImagePrompt() {
 			const currentUser = getCurrentUser()
@@ -161,7 +173,7 @@ export default {
 			}, false, [], true, undefined, this.imagePath)
 		},
 		insertImagePath(imagePath) {
-			this.isUploadingImages = true
+			this.state.isUploadingImages = true
 
 			return this.$syncService.insertImageFile(imagePath).then((response) => {
 				this.insertAttachmentImage(response.data?.name, response.data?.id, null, response.data?.dirname)
@@ -169,7 +181,7 @@ export default {
 				console.error(error)
 				showError(error?.response?.data?.error || error.message)
 			}).then(() => {
-				this.isUploadingImages = false
+				this.state.isUploadingImages = false
 			})
 		},
 		insertAttachmentImage(name, fileId, position = null, dirname = '') {
