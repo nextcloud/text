@@ -94,9 +94,7 @@ class SessionService {
 		$userName = $this->userId ? $this->userId : $guestName;
 		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
-		$color = $this->avatarManager->getGuestAvatar($userName)->avatarBackgroundColor($userName);
-		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
-		$session->setColor($color);
+		$session->setColor($this->getColorForGuestName($guestName));
 		if ($this->userId === null) {
 			$session->setGuestName($guestName);
 		}
@@ -222,9 +220,14 @@ class SessionService {
 		}
 		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
 		$session->setGuestName($guestName);
-		$color = $this->avatarManager->getGuestAvatar($guestName)->avatarBackgroundColor($guestName);
-		$color = sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
-		$session->setColor($color);
+		$session->setColor($this->getColorForGuestName($guestName));
 		return $this->sessionMapper->update($session);
+	}
+
+	private function getColorForGuestName(string $guestName = null): string {
+		$guestName = $this->userId ?? $guestName;
+		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
+		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
+		return sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
 	}
 }
