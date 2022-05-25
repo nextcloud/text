@@ -58,7 +58,7 @@
 							{{ lastSavedStatus }}
 						</div>
 						<SessionList :sessions="filteredSessions">
-							<GuestNameDialog v-if="isPublic && currentSession.guestName" />
+							<GuestNameDialog v-if="isPublic && !currentSession.userId" :session="currentSession" />
 						</SessionList>
 					</div>
 					<slot name="header" />

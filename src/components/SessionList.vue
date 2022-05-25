@@ -21,23 +21,15 @@
   -->
 
 <template>
-	<Popover class="session-list" placement="top">
+	<Popover class="session-list" placement="bottom">
 		<button slot="trigger"
 			v-tooltip.bottom="t('text', 'Participants')"
 			class="avatar-list">
 			<div class="avatardiv icon-group" />
-			<div v-for="session in sessionsVisible"
+			<AvatarWrapper v-for="session in sessionsVisible"
 				:key="session.id"
-				class="avatar-wrapper"
-				:style="sessionStyle(session)">
-				<Avatar :style="avatarStyle(session)"
-					:user="session.userId ? session.userId : session.guestName"
-					:is-guest="session.userId === null"
-					:disable-menu="true"
-					:show-user-status="false"
-					:disable-tooltip="true"
-					:size="44" />
-			</div>
+				:session="session"
+				:size="40" />
 		</button>
 		<template #default>
 			<div class="session-menu">
@@ -46,15 +38,7 @@
 					<li v-for="session in participantsPopover"
 						:key="session.id"
 						:style="avatarStyle(session)">
-						<div class="avatar-wrapper"
-							:style="sessionStyle(session)">
-							<Avatar :user="session.userId ? session.userId : session.guestName"
-								:is-guest="session.userId === null"
-								:disable-menu="true"
-								:show-user-status="false"
-								:disable-tooltip="true"
-								:size="32" />
-						</div>
+						<AvatarWrapper :session="session" :size="32" />
 						<span class="session-label">
 							{{ session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest')) }}
 						</span>
@@ -75,9 +59,9 @@
 </template>
 
 <script>
-import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import AvatarWrapper from './AvatarWrapper.vue'
 import store from '../mixins/store.js'
 
 const COLLABORATOR_IDLE_TIME = 60
@@ -86,7 +70,7 @@ const COLLABORATOR_DISCONNECT_TIME = 90
 export default {
 	name: 'SessionList',
 	components: {
-		Avatar,
+		AvatarWrapper,
 		Popover,
 	},
 	directives: {
@@ -131,14 +115,6 @@ export default {
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
-		sessionStyle() {
-			return (session) => {
-				return {
-					'border-color': session.color,
-					'background-color': session.color + ' !important',
-				}
-			}
-		},
 		avatarStyle() {
 			return (session) => {
 				return {
@@ -169,8 +145,10 @@ export default {
 
 		.avatar-wrapper {
 			margin: 0 -8px 0 0;
-			height: 44px;
-			width: 44px;
+			z-index: 1;
+			border-radius: 50%;
+			overflow: hidden;
+			box-sizing: content-box !important;
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
@@ -179,13 +157,6 @@ export default {
 			height: 44px;
 			margin: 0 6px 0 0;
 		}
-	}
-
-	.avatar-wrapper {
-		z-index: 1;
-		border-radius: 50%;
-		overflow: hidden;
-		box-sizing: content-box !important;
 	}
 
 	.session-menu {

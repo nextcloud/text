@@ -49,7 +49,7 @@ class SessionService {
 	/** @var IAvatarManager */
 	private $avatarManager;
 
-	/** @var string */
+	/** @var string|null */
 	private $userId;
 
 	/** @var Session cache current session in the request */

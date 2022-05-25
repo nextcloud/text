@@ -22,8 +22,11 @@
 
 <template>
 	<form v-tooltip="t('text', 'Enter your name so other users can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
-		<label><Avatar :url="avatarUrl" :disable-tooltip="true" :size="32" /></label>
-		<input v-model="guestName" type="text" :aria-label="t('text', 'Edit guest name')">
+		<label><AvatarWrapper :session="session" :size="32" /></label>
+		<input v-model="guestName"
+			type="text"
+			:aria-label="t('text', 'Edit guest name')"
+			:placeholder="t('text', 'Guest')">
 		<input type="submit"
 			class="icon-confirm"
 			:aria-label="t('text', 'Save guest name')"
@@ -33,19 +36,27 @@
 
 <script>
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import { generateUrl } from '@nextcloud/router'
+import AvatarWrapper from './AvatarWrapper.vue'
 import { useSyncServiceMixin } from './EditorWrapper.provider.js'
 
 export default {
 	name: 'GuestNameDialog',
 	components: {
-		Avatar,
+		AvatarWrapper,
 	},
 	directives: {
 		tooltip: Tooltip,
 	},
-	mixins: [useSyncServiceMixin],
+	mixins: [
+		useSyncServiceMixin,
+	],
+	props: {
+		session: {
+			type: Object,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			guestName: '',
