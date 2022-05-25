@@ -144,9 +144,16 @@ describe('Workspace', function() {
 		cy.openWorkspace()
 			.type('Let\'s insert a Table')
 
-		toggleMoreActions()
-		submenuButton('table')
-			.click()
+		cy.getMenu()
+			.then($el => {
+				// sometimes actions can be hide
+				if ($el.find('[data-text-action-entry="remain"]').length) {
+					toggleMoreActions()
+					return submenuButton('table').click()
+				}
+
+				return menuButton('table').click()
+			})
 
 		cy.get('.ProseMirror').type('content')
 		cy.get('.ProseMirror table tr:first-child th:first-child')
