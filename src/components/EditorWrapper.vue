@@ -109,7 +109,6 @@ import {
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import ImageResolver from './../services/ImageResolver.js'
-import { getRandomGuestName } from './../helpers/index.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
@@ -361,8 +360,7 @@ export default {
 				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
-
-			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
+			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 
 			this.$syncService = new SyncService({
 				guestName,

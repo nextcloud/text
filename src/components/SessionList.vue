@@ -55,7 +55,10 @@
 								:disable-tooltip="true"
 								:size="32" />
 						</div>
-						{{ session.guestName ? session.guestName : session.displayName }}
+						<span class="session-label">
+							{{ session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest')) }}
+						</span>
+						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
 					</li>
 				</ul>
 				<input id="toggle-color-annotations"
@@ -199,6 +202,14 @@ export default {
 				height: 32px;
 				width: 32px;
 				margin-right: 6px;
+			}
+
+			.session-label {
+				padding-right: 3px;
+			}
+			.guest-label {
+				padding-left: 3px;
+				color: var(--color-text-maxcontrast);
 			}
 		}
 	}
