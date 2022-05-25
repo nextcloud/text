@@ -22,13 +22,14 @@
 
 <template>
 	<div class="editor editor-draggable"
+		data-text-el="editor-draggable"
 		:class="{ draggedOver }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
 		@image-drop="onEditorDrop">
 		<input ref="imageFileInput"
-			data-ref="image-file-input"
+			data-text-el="image-file-input"
 			type="file"
 			accept="image/*"
 			aria-hidden="true"
