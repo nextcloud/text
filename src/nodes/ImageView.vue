@@ -169,7 +169,7 @@ export default {
 		basename() {
 			return decodeURI(this.src.split('?')[0])
 		},
-		fileId() {
+		imageFileId() {
 			return getQueryVariable(this.src, 'fileId')
 		},
 		filePath() {
@@ -183,8 +183,8 @@ export default {
 			return getQueryVariable(this.src, 'hasPreview') === 'true'
 		},
 		previewUrl() {
-			const fileQuery = (this.fileId)
-				? `?fileId=${this.fileId}&file=${encodeURIComponent(this.filePath)}`
+			const fileQuery = (this.imageFileId)
+				? `?fileId=${this.imageFileId}&file=${encodeURIComponent(this.filePath)}`
 				: `?file=${encodeURIComponent(this.filePath)}`
 			const query = fileQuery + '&x=1024&y=1024&a=true'
 
@@ -209,9 +209,8 @@ export default {
 				|| imageMimes.indexOf(this.mime) !== -1
 		},
 		internalLinkOrImage() {
-			const fileId = getQueryVariable(this.src, 'fileId')
-			if (fileId) {
-				return generateUrl('/f/' + fileId)
+			if (this.imageFileId) {
+				return generateUrl('/f/' + this.imageFileId)
 			}
 			return this.src
 		},
@@ -259,11 +258,11 @@ export default {
 		async init() {
 			if (this.src.startsWith('text://')) {
 				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				return this.loadImage(this.getTextApiUrl(imageFileName))
+				return this.loadImage(this.getAttachmentUrl(imageFileName))
 			}
 			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
 				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
-				return this.loadImage(this.getTextApiUrl(imageFileName))
+				return this.loadImage(this.getAttachmentUrl(imageFileName))
 			}
 			if (this.isDirectUrl) {
 				return this.loadImage(this.src)
@@ -277,8 +276,8 @@ export default {
 				return this.loadImage(this.davUrl).catch((e) => {
 					// try the attachment API
 					const imageFileName = decodeURIComponent(this.src.replace(/\.attachments\.\d+\//, '').split('?')[0])
-					const textApiUrl = this.getTextApiUrl(imageFileName)
-					return this.loadImage(textApiUrl).then(() => {
+					const attachmentUrl = this.getAttachmentUrl(imageFileName)
+					return this.loadImage(attachmentUrl).then(() => {
 						// TODO if attachment works, rewrite the url with correct document ID
 					})
 				})
@@ -313,7 +312,7 @@ export default {
 				this.editor.commands.scrollIntoView()
 			})
 		},
-		getTextApiUrl(imageFileName) {
+		getAttachmentUrl(imageFileName) {
 			const documentId = this.currentSession?.documentId
 			const sessionId = this.currentSession?.id
 			const sessionToken = this.currentSession?.token
