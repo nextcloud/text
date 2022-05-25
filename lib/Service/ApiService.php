@@ -30,6 +30,7 @@ use Exception;
 use OC\Files\Node\File;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
+use OCA\Text\TextFile;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -111,7 +112,7 @@ class ApiService {
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			$this->sessionService->removeInactiveSessions($documentId);
 			try {
-				$file = $this->documentService->getBaseFile($documentId);
+				$file = new TextFile($this->documentService->getBaseFile($documentId), $this->encodingService);
 			} catch (NotFoundException $e) {
 				return new NotFoundResponse();
 			}
