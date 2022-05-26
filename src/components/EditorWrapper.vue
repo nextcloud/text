@@ -46,7 +46,7 @@
 				'is-rich-editor': isRichEditor,
 				'show-color-annotations': showAuthorAnnotations
 			}">
-			<EditorDraggable v-if="$editor"
+			<EditorMidiaHandler v-if="$editor"
 				id="editor"
 				class="text-editor__main">
 				<MenuBar v-if="renderMenus"
@@ -74,7 +74,7 @@
 						class="editor__content text-editor__content"
 						:editor="$editor" />
 				</div>
-			</EditorDraggable>
+			</EditorMidiaHandler>
 			<ReadOnlyEditor v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
@@ -118,7 +118,7 @@ import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import Lock from 'vue-material-design-icons/Lock'
 import MenuBar from './Menu/MenuBar.vue'
-import EditorDraggable from './EditorDraggable.vue'
+import EditorMidiaHandler from './EditorMidiaHandler.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
@@ -126,7 +126,7 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		EditorDraggable,
+		EditorMidiaHandler,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),

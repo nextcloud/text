@@ -64,7 +64,7 @@ import {
 	useActionImagePromptMixin,
 	useUploadingStateMixin,
 	useActionChooseLocalImageMixin,
-} from '../EditorDraggable.provider.js'
+} from '../EditorMidiaHandler.provider.js'
 
 export default {
 	name: 'ActionImageUpload',

@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<div class="editor editor-draggable"
-		data-text-el="editor-draggable"
+	<div class="editor editor-midia-handler"
+		data-text-el="editor-midia-handler"
 		:class="{ draggedOver }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
@@ -54,7 +54,7 @@ import {
 	ACTION_IMAGE_PROMPT,
 	ACTION_CHOOSE_LOCAL_IMAGE,
 	STATE_UPLOADING,
-} from './EditorDraggable.provider.js'
+} from './EditorMidiaHandler.provider.js'
 
 const IMAGE_MIMES = [
 	'image/png',
@@ -69,7 +69,7 @@ const IMAGE_MIMES = [
 ]
 
 export default {
-	name: 'EditorDraggable',
+	name: 'EditorMidiaHandler',
 	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
 	provide() {
 		const val = {}
