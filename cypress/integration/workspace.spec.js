@@ -191,7 +191,7 @@ describe('Workspace', function() {
 					.click()
 					.then(() => {
 						// check content
-						cy.get(`.ProseMirror .callout.callout-${type}`)
+						cy.get(`.ProseMirror .callout.callout--${type}`)
 							.should('contain', 'Callout')
 
 						// disable
@@ -216,7 +216,7 @@ describe('Workspace', function() {
 					const actionName = `callout-${type}`
 					return getSubmenuItem('callouts', actionName)
 						.click()
-						.then(() => cy.get(`.ProseMirror .callout.callout-${type}`))
+						.then(() => cy.get(`.ProseMirror .callout.callout--${type}`))
 						.should('contain', 'Callout')
 						.then(() => {
 							last = type
