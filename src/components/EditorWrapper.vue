@@ -83,7 +83,6 @@
 		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly"
 			@resolve-use-this-version="resolveUseThisVersion"
 			@resolve-use-server-version="resolveUseServerVersion" />
-		<HelpModal v-if="displayHelp" @close="hideHelp" />
 	</div>
 </template>
 
@@ -133,7 +132,6 @@ export default {
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
-		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal.vue'),
 		Lock,
 	},
 	directives: {
@@ -241,7 +239,6 @@ export default {
 			draggedOver: false,
 
 			saveStatusPolling: null,
-			displayHelp: false,
 			contentWrapper: null,
 		}
 	},
@@ -604,14 +601,6 @@ export default {
 					Vue.set(this.filteredSessions[sessionKey], 'isCurrent', true)
 				}
 			}
-		},
-
-		showHelp() {
-			this.displayHelp = true
-		},
-
-		hideHelp() {
-			this.displayHelp = false
 		},
 	},
 }

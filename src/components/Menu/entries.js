@@ -314,7 +314,7 @@ export default [
 		key: 'formatting-help',
 		label: t('text', 'Formatting help'),
 		icon: Help,
-		click: (view) => view.$emit('show-help'),
+		click: (view) => view.$emit('call:help'),
 		priority: 17,
 	},
 ]

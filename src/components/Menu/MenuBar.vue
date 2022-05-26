@@ -30,10 +30,13 @@
 			'text-menubar--autohide': autohide,
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
+		<HelpModal v-if="displayHelp" @close="hideHelp" />
+
 		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`" />
+				:key="`text-action--${actionEntry.key}`"
+				@call:help="showHelp" />
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -43,7 +46,9 @@
 
 <script>
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import debounce from 'debounce'
 
+import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { DotsHorizontal } from '../icons.js'
@@ -52,11 +57,10 @@ import {
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../EditorWrapper.provider.js'
-import debounce from 'debounce'
 
 export default {
 	name: 'MenuBar',
-	components: { ActionEntry },
+	components: { ActionEntry, HelpModal },
 	mixins: [
 		useEditorMixin,
 		useIsRichEditorMixin,
@@ -70,8 +74,9 @@ export default {
 	},
 	data() {
 		return {
-			isReady: false,
+			displayHelp: false,
 			forceRecompute: 0,
+			isReady: false,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
 		}
@@ -192,6 +197,13 @@ export default {
 				this.getWindowWidth()
 				this.forceRecompute++
 			})
+		},
+		showHelp() {
+			this.displayHelp = true
+		},
+
+		hideHelp() {
+			this.displayHelp = false
 		},
 	},
 }
