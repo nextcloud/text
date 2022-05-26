@@ -60,3 +60,16 @@ li.ProseMirror-selectednode:after {
 .animation-rotate {
 	animation: rotate var(--animation-duration, 0.8s) linear infinite;
 }
+
+// from https://github.com/animate-css/animate.css/blob/main/source/fading_entrances/fadeInDown.css
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

@@ -25,6 +25,7 @@
 	<div class="text-menubar"
 		data-text-el="menubar"
 		:class="{
+			'text-menubar--ready': isReady,
 			'text-menubar--show': isVisible,
 			'text-menubar--autohide': autohide,
 			'text-menubar--is-workspace': $isRichWorkspace
@@ -69,6 +70,7 @@ export default {
 	},
 	data() {
 		return {
+			isReady: false,
 			forceRecompute: 0,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
@@ -156,9 +158,17 @@ export default {
 			if (!this.$isRichEditor || isWidthAvailable) {
 				clearInterval(this.$checkInterval)
 			}
+
+			if (isWidthAvailable) {
+				this.$nextTick(() => {
+					this.isReady = true
+				})
+			}
 		}, 100)
 
-		this.$emit('update:loaded', true)
+		this.$nextTick(() => {
+			this.$emit('update:loaded', true)
+		})
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)
@@ -199,11 +209,18 @@ export default {
 		padding-top:3px;
 		padding-bottom: 3px;
 
+		visibility: hidden;
+
 		display: flex;
 		justify-content: flex-end;
 
+		&.text-menubar--ready:not(.text-menubar--autohide) {
+			visibility: visible;
+			animation-name: fadeInDown;
+			animation-duration: 0.3s;
+		}
+
 		&.text-menubar--autohide {
-			visibility: hidden;
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
 			&.text-menubar--show {
