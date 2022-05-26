@@ -54,7 +54,6 @@ import {
 import debounce from 'debounce'
 
 export default {
-	// eslint-disable-next-line vue/match-component-file-name
 	name: 'MenuBar',
 	components: { ActionEntry },
 	mixins: [

@@ -117,7 +117,7 @@ import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import Lock from 'vue-material-design-icons/Lock'
-import MenuBar from './Menu/Bar.vue'
+import MenuBar from './Menu/MenuBar.vue'
 import EditorDraggable from './EditorDraggable.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
