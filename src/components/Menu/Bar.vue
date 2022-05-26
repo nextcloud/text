@@ -34,7 +34,9 @@
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry._key}`" />
 		</div>
-		<slot />
+		<div class="text-menubar__slot">
+			<slot />
+		</div>
 	</div>
 </template>
 
@@ -213,7 +215,13 @@ export default {
 		.text-menubar__entries {
 			display: flex;
 			flex-grow: 1;
-			margin-left: calc((100% - 660px) / 2);
+			margin-left: calc((100% - var(--text-editor-max-width)) / 2);
+		}
+
+		.text-menubar__slot {
+			// width: 100%;
+			justify-content: flex-end;
+			display: flex;
 		}
 
 		&.text-menubar--is-workspace {

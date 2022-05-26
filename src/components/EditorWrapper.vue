@@ -80,7 +80,9 @@
 				:is-rich-editor="isRichEditor" />
 		</div>
 
-		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolve-use-this-version="resolveUseThisVersion" @resolve-use-server-version="resolveUseServerVersion" />
+		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly"
+			@resolve-use-this-version="resolveUseThisVersion"
+			@resolve-use-server-version="resolveUseServerVersion" />
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 	</div>
 </template>
@@ -92,6 +94,7 @@ import moment from '@nextcloud/moment'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { EditorContent } from '@tiptap/vue-2'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
+import { Step } from 'prosemirror-transform'
 
 import {
 	EDITOR,
@@ -113,7 +116,6 @@ import markdownit from './../markdownit/index.js'
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
-import { Step } from 'prosemirror-transform'
 import Lock from 'vue-material-design-icons/Lock'
 import MenuBar from './Menu/Bar.vue'
 import EditorDraggable from './EditorDraggable.vue'
@@ -731,7 +733,7 @@ export default {
 	}
 
 	.editor__content {
-		max-width: 670px;
+		max-width: var(--text-editor-max-width);
 		margin: auto;
 		position: relative;
 	}
@@ -774,6 +776,7 @@ export default {
 	}
 
 </style>
+
 <style lang="scss">
 	@import './../../css/style';
 
