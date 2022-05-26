@@ -23,7 +23,7 @@
 <script>
 import Button from '@nextcloud/vue/dist/Components/Button'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import { BaseActionEntry } from './ActionEntry.mixin.js'
+import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {
 	name: 'ActionSingle',

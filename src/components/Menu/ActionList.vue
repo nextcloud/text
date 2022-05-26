@@ -40,7 +40,7 @@
 
 <script>
 import Actions from '@nextcloud/vue/dist/Components/Actions'
-import { BaseActionEntry } from './ActionEntry.mixin.js'
+import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
 

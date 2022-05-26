@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { BaseActionEntry } from './ActionEntry.mixin.js'
+import { BaseActionEntry } from './BaseActionEntry.js'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
 
 export default {
