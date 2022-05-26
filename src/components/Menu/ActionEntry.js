@@ -28,11 +28,14 @@ export default {
 	functional: true,
 	render(h, ctx) {
 		const { actionEntry } = ctx.props
-		const { key } = ctx.data
+		const { data, props, listeners } = ctx
+		const { key } = data
 
 		const params = {
-			...ctx,
+			data,
 			key,
+			props,
+			on: listeners,
 		}
 
 		if (actionEntry.component) {
