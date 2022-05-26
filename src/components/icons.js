@@ -66,6 +66,7 @@ const makeIcon = (original) => ({
 	render(h, { data, props }) {
 		return h(original, {
 			data,
+			staticClass: data.staticClass,
 			props: { size: DEFAULT_ICON_SIZE, ...props },
 		})
 	},
