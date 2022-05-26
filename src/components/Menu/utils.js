@@ -29,7 +29,7 @@ const translations = {
 const getEntryClasses = (actionEntry, isActive) => {
 	return {
 		'is-active': isActive,
-		[`action-menu-${actionEntry._key}`]: true,
+		[`action-menu-${actionEntry.key}`]: true,
 	}
 }
 

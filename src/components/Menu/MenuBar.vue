@@ -32,7 +32,7 @@
 		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry._key}`" />
+				:key="`text-action--${actionEntry.key}`" />
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -123,7 +123,7 @@ export default {
 		},
 		remainAction() {
 			return {
-				_key: 'remain',
+				key: 'remain',
 				label: this.t('text', 'Remaining Actions'),
 				icon: DotsHorizontal,
 				children: this.hiddenEntries,

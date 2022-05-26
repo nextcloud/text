@@ -25,13 +25,13 @@
 		class="entry-list-action entry-action"
 		v-bind="state"
 		:title="actionEntry.label"
-		:data-text-action-entry="actionEntry._key"
+		:data-text-action-entry="actionEntry.key"
 		v-on="$listeners">
 		<template #icon>
 			<component :is="icon" />
 		</template>
 		<ActionSingle v-for="child in actionEntry.children"
-			:key="`child-${child._key}`"
+			:key="`child-${child.key}`"
 			is-item
 			:action-entry="child"
 			@trigged="refocus" />

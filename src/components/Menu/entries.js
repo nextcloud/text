@@ -52,7 +52,7 @@ import ActionImageUpload from './ActionImageUpload.vue'
 
 export default [
 	{
-		_key: 'undo',
+		key: 'undo',
 		label: t('text', 'Undo'),
 		keyChar: 'z',
 		keyModifiers: ['ctrl'],
@@ -61,7 +61,7 @@ export default [
 		priority: 5,
 	},
 	{
-		_key: 'redo',
+		key: 'redo',
 		label: t('text', 'Redo'),
 		keyChar: 'y',
 		keyModifiers: ['ctrl'],
@@ -70,7 +70,7 @@ export default [
 		priority: 11,
 	},
 	{
-		_key: 'bold',
+		key: 'bold',
 		label: t('text', 'Bold'),
 		keyChar: 'b',
 		keyModifiers: ['ctrl'],
@@ -82,7 +82,7 @@ export default [
 		priority: 6,
 	},
 	{
-		_key: 'italic',
+		key: 'italic',
 		label: t('text', 'Italic'),
 		keyChar: 'i',
 		keyModifiers: ['ctrl'],
@@ -94,7 +94,7 @@ export default [
 		priority: 7,
 	},
 	{
-		_key: 'underline',
+		key: 'underline',
 		label: t('text', 'Underline'),
 		keyChar: 'u',
 		keyModifiers: ['ctrl'],
@@ -106,7 +106,7 @@ export default [
 		priority: 14,
 	},
 	{
-		_key: 'strikethrough',
+		key: 'strikethrough',
 		label: t('text', 'Strikethrough'),
 		keyChar: 'd',
 		keyModifiers: ['ctrl'],
@@ -118,7 +118,7 @@ export default [
 		priority: 15,
 	},
 	{
-		_key: 'headings',
+		key: 'headings',
 		label: t('text', 'Headings'),
 		keyChar: '1…6',
 		keyModifiers: ['ctrl', 'shift'],
@@ -127,7 +127,7 @@ export default [
 		isActive: 'heading',
 		children: [
 			{
-				_key: 'headings-h1',
+				key: 'headings-h1',
 				label: t('text', 'Heading 1'),
 				icon: FormatHeader1,
 				isActive: ['heading', { level: 1 }],
@@ -136,7 +136,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-h2',
+				key: 'headings-h2',
 				label: t('text', 'Heading 2'),
 				icon: FormatHeader2,
 				isActive: ['heading', { level: 2 }],
@@ -145,7 +145,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-h3',
+				key: 'headings-h3',
 				label: t('text', 'Heading 3'),
 				icon: FormatHeader3,
 				isActive: ['heading', { level: 3 }],
@@ -154,7 +154,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-h4',
+				key: 'headings-h4',
 				label: t('text', 'Heading 4'),
 				isActive: ['heading', { level: 4 }],
 				icon: FormatHeader4,
@@ -163,7 +163,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-h5',
+				key: 'headings-h5',
 				label: t('text', 'Heading 5'),
 				isActive: ['heading', { level: 5 }],
 				icon: FormatHeader5,
@@ -172,7 +172,7 @@ export default [
 				},
 			},
 			{
-				_key: 'headings-h6',
+				key: 'headings-h6',
 				label: t('text', 'Heading 6'),
 				isActive: ['heading', { level: 6 }],
 				icon: FormatHeader6,
@@ -184,7 +184,7 @@ export default [
 		priority: 1,
 	},
 	{
-		_key: 'unordered-list',
+		key: 'unordered-list',
 		label: t('text', 'Unordered list'),
 		keyChar: '8',
 		keyModifiers: ['ctrl', 'shift'],
@@ -196,7 +196,7 @@ export default [
 		priority: 8,
 	},
 	{
-		_key: 'ordered-list',
+		key: 'ordered-list',
 		label: t('text', 'Ordered list'),
 		keyChar: '9',
 		keyModifiers: ['ctrl', 'shift'],
@@ -208,7 +208,7 @@ export default [
 		priority: 9,
 	},
 	{
-		_key: 'task-list',
+		key: 'task-list',
 		label: t('text', 'ToDo list'),
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
@@ -216,7 +216,7 @@ export default [
 		priority: 10,
 	},
 	{
-		_key: 'blockquote',
+		key: 'blockquote',
 		label: t('text', 'Blockquote'),
 		keyChar: '>',
 		keyModifiers: ['ctrl'],
@@ -228,14 +228,14 @@ export default [
 		priority: 12,
 	},
 	{
-		_key: 'callouts',
+		key: 'callouts',
 		label: t('text', 'Callouts'),
 		visible: false,
 		icon: Info,
 		isActive: 'callout',
 		children: [
 			{
-				_key: 'callout-info',
+				key: 'callout-info',
 				label: t('text', 'Info'),
 				isActive: ['callout', { type: 'info' }],
 				icon: Info,
@@ -244,7 +244,7 @@ export default [
 				},
 			},
 			{
-				_key: 'callout-success',
+				key: 'callout-success',
 				label: t('text', 'Success'),
 				isActive: ['callout', { type: 'success' }],
 				icon: Positive,
@@ -253,7 +253,7 @@ export default [
 				},
 			},
 			{
-				_key: 'callout-warn',
+				key: 'callout-warn',
 				label: t('text', 'Warning'),
 				isActive: ['callout', { type: 'warn' }],
 				icon: Warn,
@@ -262,7 +262,7 @@ export default [
 				},
 			},
 			{
-				_key: 'callout-error',
+				key: 'callout-error',
 				label: t('text', 'Danger'),
 				isActive: ['callout', { type: 'error' }],
 				icon: Danger,
@@ -274,7 +274,7 @@ export default [
 		priority: 3,
 	},
 	{
-		_key: 'code-block',
+		key: 'code-block',
 		label: t('text', 'Code block'),
 		isActive: 'codeBlock',
 		icon: CodeTags,
@@ -284,7 +284,7 @@ export default [
 		priority: 13,
 	},
 	{
-		_key: 'table',
+		key: 'table',
 		label: t('text', 'Table'),
 		isActive: 'table',
 		icon: Table,
@@ -294,7 +294,7 @@ export default [
 		priority: 16,
 	},
 	{
-		_key: 'emoji-picker',
+		key: 'emoji-picker',
 		label: t('text', 'Insert emoji'),
 		icon: Emoticon,
 		component: EmojiPickerAction,
@@ -304,14 +304,14 @@ export default [
 		priority: 4,
 	},
 	{
-		_key: 'insert-image',
+		key: 'insert-image',
 		label: t('text', 'Insert image'),
 		icon: Images,
 		component: ActionImageUpload,
 		priority: 2,
 	},
 	{
-		_key: 'formatting-help',
+		key: 'formatting-help',
 		label: t('text', 'Formatting help'),
 		icon: Help,
 		click: (view) => view.$emit('show-help'),
