@@ -64,13 +64,14 @@ export default {
 	methods: {
 		runAction() {
 			const { actionEntry } = this
-			if (actionEntry.click) {
-				return actionEntry.click(this)
-			}
 
-			// Some actions run themselves.
-			// others still need to have .run() called upon them.
-			actionEntry.action(this.$editor.chain().focus())?.run()
+			if (actionEntry.click) {
+				actionEntry.click(this)
+			} else {
+				// Some actions run themselves.
+				// others still need to have .run() called upon them.
+				actionEntry.action(this.$editor.chain().focus())?.run()
+			}
 
 			this.$nextTick(() => {
 				this.$emit('trigged', { ...actionEntry })
