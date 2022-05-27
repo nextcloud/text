@@ -124,7 +124,7 @@ export default {
 				return
 			}
 			const startPath = this.filePath.split('/').slice(0, -1).join('/')
-			OC.dialogs.filepicker(t('text', 'Select file to link to'), (file) => {
+			OC.dialogs.filepicker(t('text', 'Select file or directory to link to'), (file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
 					const path = optimalPath(this.filePath, `${fileInfo.path}/${fileInfo.name}`)
@@ -133,7 +133,7 @@ export default {
 					this.$editor.chain().setLink({ href }).focus().run()
 					this.hideLinkMenu()
 				})
-			}, false, [], true, undefined, startPath)
+			}, false, [], true, 1, startPath, { allowDirectoryChooser: true })
 		},
 		setLinkUrl() {
 			let url = this.linkUrl
