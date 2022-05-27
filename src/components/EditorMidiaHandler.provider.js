@@ -7,7 +7,6 @@ export const useUploadingStateMixin = {
 		$uploadingState: {
 			from: STATE_UPLOADING,
 			default: {
-				x: true,
 				isUploadingImages: false,
 			},
 		},
