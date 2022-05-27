@@ -36,6 +36,5 @@ class LoadViewerListener implements IEventListener {
 			return;
 		}
 		\OCP\Util::addScript('text', 'text-viewer', 'viewer');
-		\OCP\Util::addStyle('text', 'icons');
 	}
 }
