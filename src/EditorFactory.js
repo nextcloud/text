@@ -24,6 +24,7 @@
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
+import HardBreak from '@tiptap/extension-hard-break'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -83,6 +84,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Markdown,
 			Document,
 			Paragraph,
+			HardBreak,
 			Heading,
 			Strong,
 			Italic,
