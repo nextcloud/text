@@ -95,6 +95,7 @@ OC.L10N.register(
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
     "ToDo list" : "Lista de Tareas",
+    "Callouts" : "Callouts",
     "Info" : "Información",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
