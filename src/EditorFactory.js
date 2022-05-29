@@ -23,7 +23,6 @@
 /* eslint-disable import/no-named-as-default */
 import Dropcursor from '@tiptap/extension-dropcursor'
 import History from '@tiptap/extension-history'
-import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
