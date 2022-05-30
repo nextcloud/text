@@ -24,12 +24,15 @@
 import MDI_Loading from 'vue-material-design-icons/Loading'
 
 import MDI_Lock from 'vue-material-design-icons/Lock'
+import MDI_Document from 'vue-material-design-icons/FileDocument'
+import MDI_Link from 'vue-material-design-icons/Link'
+import MDI_Check from 'vue-material-design-icons/Check'
 import MDI_Delete from 'vue-material-design-icons/Delete'
 import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop'
 import MDI_Info from 'vue-material-design-icons/Information'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle'
-import MDI_Warn from 'vue-material-design-icons/AlertCircle'
+import MDI_Warn from 'vue-material-design-icons/Alert'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags'
 import MDI_Table from 'vue-material-design-icons/Table'
@@ -66,6 +69,7 @@ const makeIcon = (original) => ({
 	render(h, { data, props }) {
 		return h(original, {
 			data,
+			key: data.key,
 			staticClass: data.staticClass,
 			props: { size: DEFAULT_ICON_SIZE, ...props },
 		})
@@ -85,6 +89,9 @@ export const Loading = {
 
 export const Lock = makeIcon(MDI_Lock)
 export const Delete = makeIcon(MDI_Delete)
+export const Document = makeIcon(MDI_Document)
+export const Link = makeIcon(MDI_Link)
+export const Check = makeIcon(MDI_Check)
 export const Undo = makeIcon(MDI_Undo)
 export const Redo = makeIcon(MDI_Redo)
 export const Info = makeIcon(MDI_Info)
