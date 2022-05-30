@@ -19,6 +19,12 @@ const clickHandler = ({ editor }) => {
 					event.stopPropagation()
 
 					if (event.button === 0 && !event.ctrlKey && htmlHref.startsWith(window.location.origin)) {
+						if (window.location.href.split('#')[0] === htmlHref.split('#')[0]) {
+							// Inter-page link, so move to location
+							window.open(htmlHref, '_self')
+							return
+						}
+
 						const query = OC.parseQueryString(htmlHref)
 						const fragment = OC.parseQueryString(htmlHref.split('#').pop())
 						if (query.dir && fragment.relPath) {
