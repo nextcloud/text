@@ -3,6 +3,13 @@ import debounce from 'debounce'
 import { setHeadings, extractHeadings } from './extractor.js'
 
 const Heading = TipTapHeading.extend({
+	addOptions() {
+		return {
+			...this.parent?.(),
+			linkSymbol: '#',
+		}
+	},
+
 	addAttributes() {
 		return {
 			...this.parent(),
@@ -16,6 +23,7 @@ const Heading = TipTapHeading.extend({
 			},
 		}
 	},
+
 	addKeyboardShortcuts() {
 		return this.options.levels.reduce((items, level) => ({
 			...items,
