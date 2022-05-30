@@ -58,6 +58,11 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('#### Test')).toBe('#### Test')
 		expect(markdownThroughEditor('##### Test')).toBe('##### Test')
 	})
+	test('hard breaks', () => {
+		expect(markdownThroughEditor('hard  \nbreak')).toBe('hard  \nbreak')
+		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard  \nbreak')
+		expect(markdownThroughEditor('no\nbreak')).toBe('no break')
+	})
 	test('inline format', () => {
 		expect(markdownThroughEditor('**Test**')).toBe('**Test**')
 		expect(markdownThroughEditor('__Test__')).toBe('__Test__')
@@ -130,6 +135,11 @@ describe('Markdown though editor', () => {
 describe('Markdown serializer from html', () => {
 	test('paragraph', () => {
 		expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe('hello\n\nworld')
+	})
+	test('hard line breaks', () => {
+		expect(markdownThroughEditorHtml('<p>hard<br />break</p>')).toBe('hard  \nbreak')
+		expect(markdownThroughEditorHtml('<p>hard<br>break</p>')).toBe('hard  \nbreak')
+		expect(markdownThroughEditorHtml('<p>no\nbreak</p>')).toBe('no break')
 	})
 	test('links', () => {
 		expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe('[test](foo)')
