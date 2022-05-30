@@ -26,15 +26,15 @@
 		v-bind="state"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
-		v-on="$listeners">
+		:data-text-action-active="activeKey">
 		<template #icon>
-			<component :is="icon" />
+			<component :is="icon" :key="iconKey" />
 		</template>
 		<ActionSingle v-for="child in actionEntry.children"
 			:key="`child-${child.key}`"
 			is-item
 			:action-entry="child"
-			@trigged="refocus" />
+			@trigged="onTrigger" />
 	</Actions>
 </template>
 
@@ -48,11 +48,8 @@ export default {
 	name: 'ActionList',
 	components: { Actions, ActionSingle },
 	extends: BaseActionEntry,
-	data: () => ({
-		activeChild: null,
-	}),
 	computed: {
-		currentChind() {
+		currentChild() {
 			const {
 				state,
 				$editor,
@@ -68,19 +65,26 @@ export default {
 			})
 		},
 		icon() {
-			if (this.currentChind) {
-				return this.currentChind.icon
+			if (this.currentChild) {
+				return this.currentChild.icon
 			}
 
 			return this.actionEntry.icon
+		},
+		iconKey() {
+			return `${this.actionEntry.key}/${this.activeKey}`
+		},
+		activeKey() {
+			return this.currentChild?.key
 		},
 	},
 	methods: {
 		runAction() {
 			// nothing todo
 		},
-		refocus() {
+		onTrigger(entry) {
 			this.$editor.chain().focus().run()
+			this.$emit('trigged', entry)
 		},
 	},
 }
