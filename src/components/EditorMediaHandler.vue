@@ -69,7 +69,7 @@ const IMAGE_MIMES = [
 ]
 
 export default {
-	name: 'EditorMidiaHandler',
+	name: 'EditorMediaHandler',
 	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
 	provide() {
 		const val = {}
