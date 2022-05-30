@@ -40,6 +40,10 @@ import TableHeadRow from './nodes/TableHeadRow.js'
 import TableRow from './nodes/TableRow.js'
 /* eslint-enable import/no-named-as-default */
 
+// fixing "The type 'EditorState' is undefined"
+import { EditorState } from 'prosemirror-state'
+import { Decoration, DecorationSet } from 'prosemirror-view'
+
 import { Editor } from '@tiptap/core'
 import { Strong, Italic, Strike, Link, Underline } from './marks/index.js'
 import {
@@ -74,6 +78,31 @@ const loadSyntaxHighlight = async (language) => {
 			console.debug(e)
 		}
 	}
+}
+
+const editorDecorations = (/** @param {EditorState} state */ state) => {
+	const decorations = []
+	state.doc.descendants((node, pos) => {
+		if (node.type.name === Heading.name && node.attrs?.id) {
+			decorations.push(
+				Decoration.widget(pos + 1, () => {
+					const link = document.createElement('a')
+					link.ariaHidden = true
+					link.href = `#${node.attrs.id}`
+					link.classList.add('anchor-link')
+					link.title = t('text', 'Permalink')
+					link.appendChild(document.createTextNode('#'))
+					return link
+				}, {
+					side: -1,
+					key: `${pos}#${node.attrs.id}`, // Prevent decoration rendering loops
+				})
+			)
+			return false
+		}
+		return true
+	})
+	return decorations.length > 0 ? DecorationSet.create(state.doc, decorations) : null
 }
 
 const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory }) => {
@@ -169,7 +198,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		]
 	}
 	extensions = extensions || []
-	return new Editor({
+	const editor = new Editor({
 		content,
 		onCreate,
 		onUpdate,
@@ -179,6 +208,8 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			...richEditingExtensions,
 		].concat(extensions),
 	})
+	editor.view.props.decorations = editorDecorations
+	return editor
 }
 
 const SerializeException = function(message) {

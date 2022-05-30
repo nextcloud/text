@@ -318,6 +318,33 @@ div.ProseMirror {
 
 	}
 
+	/* Anchor links */
+	h1, h2, h3, h4, h5, h6 {
+		.anchor-link {
+			opacity: 0;
+			padding: 0;
+			left: -18px;
+			font-size: max(1em, 16px);
+			position: absolute;
+			text-decoration: none;
+			transition-duration: .15s;
+			transition-property: opacity;
+			transition-timing-function: cubic-bezier(.4,0,.2,1);
+		}
+
+		&:hover .anchor-link {
+			opacity: 0.25;
+		}
+	}
+	// Shrink clickable area of anchor permalinks while editing
+	&.ProseMirror-focused[contenteditable="true"] {
+		h1,h2,h3,h4,h5,h6 {
+			.anchor-link {
+				width: fit-content;
+			}
+		}
+	}
+
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {
