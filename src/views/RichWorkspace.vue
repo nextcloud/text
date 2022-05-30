@@ -85,7 +85,11 @@ export default {
 			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
 		},
 		filepath() {
-			const { path, name } = this.file
+			const { path, name } = this.file || {}
+			if (!path) {
+				return undefined
+			}
+
 			return path + (path.endsWith('/') ? '' : '/') + name
 		},
 	},
