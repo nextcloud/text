@@ -117,7 +117,7 @@ import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import Lock from 'vue-material-design-icons/Lock'
 import MenuBar from './Menu/MenuBar.vue'
-import EditorMidiaHandler from './EditorMidiaHandler.vue'
+import EditorMidiaHandler from './EditorMediaHandler.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 

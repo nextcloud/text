@@ -54,7 +54,7 @@ import {
 	ACTION_IMAGE_PROMPT,
 	ACTION_CHOOSE_LOCAL_IMAGE,
 	STATE_UPLOADING,
-} from './EditorMidiaHandler.provider.js'
+} from './EditorMediaHandler.provider.js'
 
 const IMAGE_MIMES = [
 	'image/png',
