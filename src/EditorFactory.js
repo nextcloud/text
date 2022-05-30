@@ -24,7 +24,6 @@
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
-import HardBreak from '@tiptap/extension-hard-break'
 import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -53,7 +52,7 @@ import {
 	TaskItem,
 	Callout,
 } from './nodes'
-import { Markdown, Emoji } from './extensions'
+import { HardBreak, Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
