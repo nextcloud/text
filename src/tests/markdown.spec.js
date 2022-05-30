@@ -45,8 +45,13 @@ describe('Commonmark', () => {
 			const expected = entry.markdown.includes('__')
 				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
 				: entry.html
-			// Ignore special markup for untouched markdown
-			expect(markdownit.render(entry.markdown).replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')).toBe(expected)
+			try {
+				// Ignore special markup for untouched markdown
+				expect(markdownit.render(entry.markdown).replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')).toBe(expected)
+			} catch {
+				// Header anchors
+				expect(markdownit.render(entry.markdown).replace(/ id=\"[^\"]*\" tabindex=\"-1\"/g, '')).toBe(expected)
+			}
 		})
 	})
 })

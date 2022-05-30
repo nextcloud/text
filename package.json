@@ -78,6 +78,7 @@
     "@tiptap/suggestion": "^2.0.0-beta.97",
     "@tiptap/vue-2": "^2.0.0-beta.84",
     "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.4",
     "markdown-it-container": "^3.0.0",
     "markdown-it-front-matter": "^0.2.3",
     "path-normalize": "^6.0.6",
