@@ -196,8 +196,8 @@ export default {
 			const alt = name.replaceAll(/[[\]]/g, '')
 
 			const chain = position
-				? this.$editor.chain()
-				: this.$editor.chain().focus(position)
+				? this.$editor.chain().focus(position)
+				: this.$editor.chain()
 
 			chain.setImage({ src, alt }).focus().run()
 		},
