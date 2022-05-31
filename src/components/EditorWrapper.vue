@@ -392,6 +392,7 @@ export default {
 				.on('error', this.onError)
 				.on('stateChange', this.onStateChange)
 				.on('idle', this.onIdle)
+				.on('save', this.onSave)
 		},
 
 		unlistenSyncServiceEvents() {
@@ -403,6 +404,7 @@ export default {
 				.off('error', this.onError)
 				.off('stateChange', this.onStateChange)
 				.off('idle', this.onIdle)
+				.off('save', this.onSave)
 		},
 
 		resolveUseThisVersion() {
@@ -583,6 +585,9 @@ export default {
 				})
 				this.$syncService.state = this.$editor.state
 				this.updateLastSavedStatus()
+				this.$nextTick(() => {
+					this.$emit('sync-service:sync')
+				})
 			} catch (e) {
 				console.error('Failed to update steps in collaboration plugin', e)
 				// TODO: we should recreate the editing session when this happens
@@ -592,6 +597,11 @@ export default {
 
 		onError({ type, data }) {
 			this.$editor.setOptions({ editable: false })
+
+			this.$nextTick(() => {
+				this.$emit('sync-service:error')
+			})
+
 			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 				this.contentLoaded = true
 				this.syncError = {
@@ -620,6 +630,7 @@ export default {
 					this.$editor.commands.focus()
 				}
 				this.$emit('ready')
+				// TODO: remove $parent access
 				this.$parent.$emit('ready', true)
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
@@ -632,6 +643,16 @@ export default {
 			this.idle = true
 			this.readOnly = true
 			this.$editor.setOptions({ editable: !this.readOnly })
+
+			this.$nextTick(() => {
+				this.$emit('sync-service:idle')
+			})
+		},
+
+		onSave() {
+			this.$nextTick(() => {
+				this.$emit('sync-service:save')
+			})
 		},
 
 		async close() {
