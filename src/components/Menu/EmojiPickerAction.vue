@@ -23,24 +23,28 @@
 	<EmojiPicker class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
 		@selectData="addEmoji">
-		<button v-tooltip="actionEntry.label"
+		<Button v-tooltip="actionEntry.label"
 			class="entry-action__button"
 			:title="actionEntry.label"
 			:aria-label="actionEntry.label"
 			:aria-haspopup="true">
-			<component :is="icon" />
-		</button>
+			<template #icon>
+				<component :is="icon" />
+			</template>
+		</Button>
 	</EmojiPicker>
 </template>
 
 <script>
 import { BaseActionEntry } from './BaseActionEntry.js'
 import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
+import Button from '@nextcloud/vue/dist/Components/Button'
 
 export default {
 	name: 'EmojiPickerAction',
 	components: {
 		EmojiPicker,
+		Button,
 	},
 	extends: BaseActionEntry,
 	methods: {

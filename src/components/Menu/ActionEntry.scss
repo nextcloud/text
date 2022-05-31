@@ -6,7 +6,7 @@
 		border-radius: 100%;
 		position: absolute;
 		background: var(--color-primary-element);
-		bottom: 3px;
+		bottom: 0;
 		height: 6px;
 		width: 6px;
 		content: '';
@@ -19,11 +19,12 @@
 		height: 44px;
 		margin: 0;
 		border: 0;
-		opacity: 0.5;
+		// opacity: 0.5;
 		position: relative;
 		color: var(--color-main-text);
 		background-color: transparent;
 		vertical-align: top;
+		box-shadow: none;
 		padding: 0;
 
 		p {
@@ -42,11 +43,17 @@
 		&:focus,
 		&:active {
 			background-color: var(--color-background-dark);
+			&:not(:disabled) {
+				box-shadow: var(--color-primary);
+			}
 		}
 
 		&:hover,
 		&:focus {
 			opacity: 1;
+		}
+		&:focus-visible {
+			box-shadow: var(--color-primary);
 		}
 
 		&.is-active {
