@@ -20,7 +20,7 @@
  *
  */
 
-import { randHash } from '../utils/'
+import { randHash } from '../utils/index.js'
 const randUser = randHash()
 
 describe('Workspace', function() {
@@ -38,7 +38,7 @@ describe('Workspace', function() {
 
 	it('adds a Readme.md', function() {
 		cy.get('#fileList').should('not.contain', 'Readme.md')
-		openWorkspace()
+		cy.openWorkspace()
 			.type('Hello')
 			.should('contain', 'Hello')
 		openSidebar('Readme.md')
@@ -49,14 +49,14 @@ describe('Workspace', function() {
 	})
 
 	it('formats text', function() {
-		openWorkspace()
+		cy.openWorkspace()
 			.type('Format me')
 			.type('{selectall}')
 		;[
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
-			['strike', 's'],
+			['strikethrough', 's'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
 				.click({ force: true })
@@ -69,10 +69,10 @@ describe('Workspace', function() {
 	})
 
 	it('links via menububble', function() {
-		openWorkspace()
+		cy.openWorkspace()
 			.type('Nextcloud')
 			.type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('https://nextcloud.com{enter}')
 		cy.get('.ProseMirror a')
 			.should('contain', 'Nextcloud')
@@ -85,43 +85,47 @@ describe('Workspace', function() {
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/')
 		cy.get('.ProseMirror').type('{selectall}')
-		menuBubbleButton('link').click()
+		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('/team{enter}')
 		cy.get('.ProseMirror a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/team')
 	})
 
 	it('creates headings via submenu', function() {
-		openWorkspace()
+		cy.openWorkspace()
 			.type('Heading')
 			.type('{selectall}')
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
-			menuButton('h1').click({ force: true })
-			submenuButton(heading).click({ force: true })
+			const actionName = `headings-${heading}`
 
-			menuButton(heading).should('have.class', 'is-active')
+			getSubmenuItem('headings', actionName).click()
 
 			cy.get(`.ProseMirror ${heading}`)
 				.should('contain', 'Heading')
-			menuButton(heading).click({ force: true })
-			submenuButton(heading).click({ force: true })
-			menuButton('h1').should('not.have.class', 'is-active')
+
+			getSubmenuItem('headings', actionName)
+				.should('have.class', 'is-active')
+				.click()
+
+			menuButton('headings').should('not.have.class', 'is-active')
 		})
 	})
 
 	it('creates lists', function() {
-		openWorkspace()
+		cy.openWorkspace()
 			.type('List me')
 			.type('{selectall}')
 		;[
-			['ul', 'ul'],
-			['ol', 'ol'],
-			['tasklist', 'ul[data-type="taskList"]'],
+			['unordered-list', 'ul'],
+			['ordered-list', 'ol'],
+			['task-list', 'ul[data-type="taskList"]'],
 		].forEach(([button, tag]) => {
 			menuButton(button)
 				.click({ force: true })
 				.should('have.class', 'is-active')
+
 			cy.get(`.ProseMirror ${tag}`).should('contain', 'List me')
+
 			menuButton(button)
 				.click({ force: true })
 				.should('not.have.class', 'is-active')
@@ -136,125 +140,138 @@ describe('Workspace', function() {
 			.should('contain', 'Hello world')
 	})
 
-	it('takes localized file name into account', function() {
-		cy.nextcloudUpdateUser(randUser, 'password', 'language', 'de_DE')
-		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
-		cy.reload()
-		cy.get('#fileList').should('contain', 'Anleitung.md')
-		cy.get('#rich-workspace .ProseMirror')
-			.should('contain', 'Hello world')
-	})
+	it('inserts and removes a table', function() {
+		cy.openWorkspace()
+			.type('Let\'s insert a Table')
 
-	it('ignores localized file name in other language', function() {
-		cy.nextcloudUpdateUser(randUser, 'password', 'language', 'fr')
-		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
-		cy.reload()
-		cy.get('#fileList').should('contain', 'Anleitung.md')
-		cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
+		cy.getMenu()
+			.then($el => {
+				// sometimes actions can be hide
+				if ($el.find('[data-text-action-entry="remain"]').length) {
+					toggleMoreActions()
+					return submenuButton('table').click()
+				}
+
+				return menuButton('table').click()
+			})
+
+		cy.get('.ProseMirror').type('content')
+		cy.get('.ProseMirror table tr:first-child th:first-child')
+			.should('contain', 'content')
+		cy.get('.ProseMirror [data-text-table-actions="settings"]').click()
+
+		cy.get('[data-text-table-action="delete"]').click()
+		cy.get('.ProseMirror')
+			.should('not.contain', 'content')
 	})
 
 	describe('callouts', () => {
 		const types = ['info', 'warn', 'error', 'success']
-		it('create callouts', () => {
-			const workspace = openWorkspace()
-			workspace.type('Callout')
 
-			types.forEach(type => {
+		before(function() {
+			cy.nextcloudCreateUser(randUser, 'password')
+		})
+
+		beforeEach(function() {
+			cy.login(randUser, 'password')
+			// isolate tests - each happens in it's own folder
+			cy.createFolder(Cypress.currentTest.title)
+			cy.visit(`apps/files?dir=/${encodeURIComponent(Cypress.currentTest.title)}`)
+			cy.openWorkspace().type('Callout')
+		})
+		// eslint-disable-next-line cypress/no-async-tests
+		it('create callout', () => {
+			cy.wrap(types).each((type) => {
+				cy.log(`creating ${type} callout`)
+
+				const actionName = `callout-${type}`
+
 				// enable callout
-				menuButton('info').click({ force: true })
-				submenuButton(type).click({ force: true })
+				getSubmenuItem('callouts', actionName)
+					.click()
+					.then(() => {
+						// check content
+						cy.get(`.ProseMirror .callout.callout--${type}`)
+							.should('contain', 'Callout')
 
-				// check if is active
-				menuButton(type).should('have.class', 'is-active')
-
-				// check content
-				cy.get(`.ProseMirror .callout.callout-${type}`)
-					.should('contain', 'Callout')
-
-				// disable
-				menuButton(type).click({ force: true })
-				submenuButton(type).click({ force: true })
-
-				// check if is inactive
-				menuButton('info').should('not.have.class', 'is-active')
+						// disable
+						return getSubmenuItem('callouts', actionName)
+							.should('have.class', 'is-active')
+							.click()
+					})
 			})
 		})
 
 		it('toggle callouts', () => {
-			const workspace = openWorkspace()
-			workspace.type('Callout')
-
 			const [first, ...rest] = types
 
 			let last = first
 
 			// enable callout
-			menuButton('info').click()
-			submenuButton(first).click()
+			getSubmenuItem('callouts', `callout-${first}`)
+				.click()
 
-			rest.forEach(type => {
-				// enable callout
-				menuButton(last).click()
-				submenuButton(type).click()
+			cy.wrap(rest)
+				.each(type => {
+					const actionName = `callout-${type}`
+					return getSubmenuItem('callouts', actionName)
+						.click()
+						.then(() => cy.get(`.ProseMirror .callout.callout--${type}`))
+						.should('contain', 'Callout')
+						.then(() => {
+							last = type
+						})
+				})
+				.then(() => {
+					getSubmenuItem('callouts', `callout-${last}`)
+						.click()
 
-				last = type
-
-				// check if is active
-				menuButton(type).should('have.class', 'is-active')
-
-				// check content
-				cy.get(`.ProseMirror .callout.callout-${type}`)
-					.should('contain', 'Callout')
-			})
-
-			// disable
-			menuButton(last).click()
-			submenuButton(last).click()
-
-			// check if is inactive
-			menuButton('info').should('not.have.class', 'is-active')
+					menuButton('callouts')
+						.should('not.have.class', 'is-active')
+				})
 		})
 	})
 
-	it('inserts and removes a table', function() {
-		openWorkspace()
-			.type('Let\'s insert a Table')
-		toggleMoreActions()
-		popoverButton('table')
-			.click()
-		cy.get(`.ProseMirror`).type('content')
-		cy.get(`.ProseMirror table tr:first-child th:first-child`)
-			.should('contain', 'content')
-		cy.get(`.ProseMirror .table-settings`).click()
-		popoverButton('delete').click()
-		cy.get(`.ProseMirror`)
-			.should('not.contain', 'content')
+	describe('localize', () => {
+		it('takes localized file name into account', function() {
+			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'de_DE')
+			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
+			cy.reload()
+			cy.get('#fileList').should('contain', 'Anleitung.md')
+			cy.get('#rich-workspace .ProseMirror')
+				.should('contain', 'Hello world')
+		})
+
+		it('ignores localized file name in other language', function() {
+			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'fr')
+			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
+			cy.reload()
+			cy.get('#fileList').should('contain', 'Anleitung.md')
+			cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
+		})
 	})
 
 })
 
 const menuButton = (name) => {
-	return cy.get(`#editor button.icon-${name}`)
+	return cy.getActionEntry(name)
 }
 
 const submenuButton = (name) => {
-	return cy.get(`#editor button .icon-${name}`)
-}
-
-const popoverButton = (name) => {
-	return cy.get(`.popover button .icon-${name}`)
+	return cy.get('.popover.open').getActionEntry(name)
 }
 
 const toggleMoreActions = () => {
-	cy.get('.menubar .action-item__menutoggle--default-icon').click()
+	return menuButton('remain').click()
 }
 
-const menuBubbleButton = submenuButton
+const menuBubbleButton = (name) => {
+	return cy.get('[data-text-el="menu-bubble"]').find(`[data-text-bubble-action="${name}"]`)
+}
 
-const openWorkspace = () => {
-	cy.get('#rich-workspace .empty-workspace').click()
-	cy.get('#editor .content-wrapper').click()
-	return cy.get('#rich-workspace .ProseMirror')
+const getSubmenuItem = (parent, item) => {
+	menuButton(parent).click()
+	return submenuButton(item)
 }
 
 const openSidebar = filename => {

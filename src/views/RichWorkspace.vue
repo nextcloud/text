@@ -34,10 +34,11 @@
 			:file-id="file.id"
 			:relative-path="filepath"
 			:share-token="shareToken"
-			:active="true"
-			:autohide="true"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
+			active
+			autohide
+			rich-workspace
 			@ready="ready=true; loaded=true"
 			@focus="focus=true"
 			@blur="unfocus"
@@ -84,13 +85,18 @@ export default {
 			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
 		},
 		filepath() {
-			const { path, name } = this.file
+			const { path, name } = this.file || {}
+			if (!path) {
+				return undefined
+			}
+
 			return path + (path.endsWith('/') ? '' : '/') + name
 		},
 	},
 	watch: {
 		focus(newValue) {
 			if (!newValue) {
+				// TODO: change
 				document.querySelector('#editor').scrollTo(0, 0)
 			}
 		},
@@ -161,18 +167,18 @@ export default {
 		border: none;
 	}
 
-	#rich-workspace::v-deep #editor-container {
+	#rich-workspace::v-deep .text-editor {
 		height: 100%;
 		position: unset !important;
 		top: auto !important;
 	}
 
-	#rich-workspace::v-deep #editor-wrapper {
+	#rich-workspace::v-deep .text-editor__wrapper {
 		position: unset !important;
 		overflow: visible;
 	}
 
-	#rich-workspace::v-deep #editor {
+	#rich-workspace::v-deep .text-editor__main {
 		overflow: visible !important;
 	}
 
@@ -183,19 +189,9 @@ export default {
 		padding-bottom: 60px; /* ensure menububble fits below */
 	}
 
-	#rich-workspace::v-deep #editor-wrapper .ProseMirror {
+	#rich-workspace::v-deep .text-editor__wrapper .ProseMirror {
 		padding: 0px;
 		margin: 0;
-	}
-
-	#rich-workspace::v-deep .menubar {
-		z-index: 61;
-		/* Slightly reduce vertical space */
-		margin-bottom: -10px;
-	}
-
-	#rich-workspace::v-deep .menubar .menubar-icons {
-		margin-left: 0;
 	}
 
 	#rich-workspace::v-deep .editor__content {
@@ -236,16 +232,16 @@ export default {
 
 	html.ie {
 		#rich-workspace::v-deep {
-			#editor-container {
+			.text-editor {
 				position: initial;
 			}
 
-			#editor-wrapper {
+			.text-editor__wrapper {
 				position: relative !important;
 				top: auto !important;
 			}
 
-			#editor {
+			.text-editor__main {
 				display: flex;
 				flex-direction: column;
 				overflow: hidden !important;
@@ -259,7 +255,7 @@ export default {
 				top: auto;
 			}
 
-			#editor > div:nth-child(2) {
+			.text-editor__main > div:nth-child(2) {
 				min-height: 44px;
 				overflow-x: hidden;
 				overflow-y: auto;

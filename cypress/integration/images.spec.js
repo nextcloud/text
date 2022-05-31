@@ -28,9 +28,22 @@ const randUser2 = randHash()
 let currentUser = randUser
 const attachmentFileNameToId = {}
 
-const ACTION_UPLOAD_LOCAL_FILE = 1
-const ACTION_INSERT_FROM_FILES = 2
-const ACTION_INSERT_FROM_LINK = 3
+const ACTION_UPLOAD_LOCAL_FILE = 'insert-image-upload'
+const ACTION_INSERT_FROM_FILES = 'insert-image-insert'
+// const ACTION_INSERT_FROM_LINK = 3
+
+/**
+ * @param {string} name name of file
+ * @param {string|null} requestAlias alias name
+ */
+function attachFile(name, requestAlias = null) {
+	if (requestAlias) {
+		cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
+	}
+	return cy.getEditor()
+		.find('input[type="file"][data-text-el="image-file-input"]')
+		.attachFile(name)
+}
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
@@ -45,27 +58,15 @@ function fixedEncodeURIComponent(str) {
 /**
  * Open the image action menu and click one action
  *
- * @param actionIndex position of the action to be clicked
- * @param callback what happens once it's been clicked
+ * @param actionName position of the action to be clicked
  */
-const clickOnImageAction = (actionIndex, callback) => {
-	cy.get('#viewer .action-item.submenu')
-		.should('not.have.class', 'action-item--open')
+const clickOnImageAction = (actionName) => {
+	cy.getActionEntry('insert-image')
 		.click()
-		.should('have.class', 'action-item--open')
 
-	// get the popover ID to be able to find the related DOM element
-	return cy.get('#viewer .action-item.submenu > div.v-popover > .trigger')
-		.should('have.attr', 'aria-describedby')
-		.should('contain', 'popover_')
-		.then((popoverId) => {
-			cy.log('Click on the action entry')
-			cy.get('div#' + popoverId)
-				.should('have.class', 'open')
-				.find('li:nth-child(' + actionIndex + ')').click()
-				// our job here is done
-			callback(popoverId)
-		})
+	return cy.get('.popover.open')
+		.getActionEntry(actionName)
+		.click()
 }
 
 /**
@@ -120,17 +121,15 @@ const checkImage = (documentId, imageName, imageId, index) => {
  * @param {number|undefined} index of image
  */
 const waitForRequestAndCheckImage = (requestAlias, index) => {
-	return new Cypress.Promise((resolve, reject) => {
-		return cy.wait('@' + requestAlias).then((req) => {
+	return cy.wait('@' + requestAlias)
+		.then((req) => {
 			// the name of the created file on NC side is returned in the response
 			const fileId = req.response.body.id
 			const fileName = req.response.body.name
 			const documentId = req.response.body.documentId
 
-			checkImage(documentId, fileName, fileId, index)
-				.then(resolve, reject)
+			return checkImage(documentId, fileName, fileId, index)
 		})
-	})
 }
 
 describe('Test all image insertion methods', () => {
@@ -168,17 +167,18 @@ describe('Test all image insertion methods', () => {
 
 	it('Insert an image from files', () => {
 		cy.openFile('test.md')
-		clickOnImageAction(ACTION_INSERT_FROM_FILES, () => {
-			const requestAlias = 'insertPathRequest'
-			cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
+		clickOnImageAction(ACTION_INSERT_FROM_FILES)
+			.then(() => {
+				const requestAlias = 'insertPathRequest'
+				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
-			cy.log('Select the file in the filepicker')
-			cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
-			cy.log('Click OK in the filepicker')
-			cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+				cy.log('Select the file in the filepicker')
+				cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
+				cy.log('Click OK in the filepicker')
+				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-			waitForRequestAndCheckImage(requestAlias)
-		})
+				waitForRequestAndCheckImage(requestAlias)
+			})
 	})
 
 	it('Upload a local image', () => {
@@ -186,15 +186,15 @@ describe('Test all image insertion methods', () => {
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
 		// is not handled correctly when the upload has been done in <MenuBar>
-		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
-			const requestAlias = 'uploadRequest'
-			cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
+		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE)
+			.then(() => {
+				const requestAlias = 'uploadRequest'
+				cy.log('Upload the file through the input')
 
-			cy.log('Upload the file through the input')
-			cy.get('.menubar input[type="file"]').attachFile('table.png')
+				attachFile('table.png', requestAlias)
 
-			waitForRequestAndCheckImage(requestAlias)
-		})
+				return waitForRequestAndCheckImage(requestAlias)
+			})
 	})
 
 	it('Upload images with the same name', () => {
@@ -202,15 +202,15 @@ describe('Test all image insertion methods', () => {
 		cy.openFile('empty.md')
 
 		const assertImage = index => {
-			return clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE, () => {
-				const requestAlias = `uploadRequest${index}`
-				cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
+			return clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE)
+				.then(() => {
+					const requestAlias = `uploadRequest${index}`
+					cy.log('Upload the file through the input', { index })
 
-				cy.log('Upload the file through the input', { index })
-				cy.get('.menubar input[type="file"]').attachFile('github.png')
+					attachFile('github.png', requestAlias)
 
-				return waitForRequestAndCheckImage(requestAlias, index)
-			})
+					return waitForRequestAndCheckImage(requestAlias, index)
+				})
 		}
 
 		cy.wrap([0, 1, 2])
@@ -220,7 +220,7 @@ describe('Test all image insertion methods', () => {
 				})
 			})
 			.then(() => {
-				return cy.get('#editor [data-component="image-view"]')
+				return cy.getEditor().find('[data-component="image-view"]')
 					.should('have.length', 3)
 			})
 	})

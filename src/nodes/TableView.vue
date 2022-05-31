@@ -21,15 +21,21 @@
   -->
 
 <template>
-	<NodeViewWrapper class="table-wrapper">
+	<NodeViewWrapper data-text-el="table-view" class="table-wrapper">
 		<NodeViewContent class="content" as="table" />
 		<Actions v-if="editor.isEditable"
-			:force-menu="true"
-			class="table-settings"
-			default-icon="icon-table_settings">
-			<ActionButton icon="icon-delete"
-				:close-after-click="true"
+			force-menu
+			data-text-table-actions="settings"
+			class="table-settings">
+			<template #icon>
+				<TableSettings />
+			</template>
+			<ActionButton data-text-table-action="delete"
+				close-after-click
 				@click="deleteNode">
+				<template #icon>
+					<Delete />
+				</template>
 				{{ t('text', 'Delete this table') }}
 			</ActionButton>
 		</Actions>
@@ -41,6 +47,7 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import { TableSettings, Delete } from '../components/icons.js'
 
 export default {
 	name: 'TableView',
@@ -49,6 +56,8 @@ export default {
 		Actions,
 		NodeViewWrapper,
 		NodeViewContent,
+		TableSettings,
+		Delete,
 	},
 	props: {
 		editor: {
