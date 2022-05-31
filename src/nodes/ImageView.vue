@@ -75,14 +75,12 @@
 </template>
 
 <script>
-import path from 'path'
-import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
-import { getCurrentUser } from '@nextcloud/auth'
+import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
-import ImageResolver from './ImageResolver.js'
 import store from './../mixins/store.js'
+import { useImageResolver } from './../components/EditorWrapper.provider.js'
 
 const imageMimes = [
 	'image/png',
@@ -124,6 +122,7 @@ export default {
 	},
 	mixins: [
 		store,
+		useImageResolver,
 	],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
@@ -192,13 +191,7 @@ export default {
 	},
 	methods: {
 		async init() {
-			const imageResolver = new ImageResolver({
-				currentDirectory: this.extension.options.currentDirectory,
-				user: getCurrentUser(),
-				session: this.$store.state.currentSession,
-				shareToken: this.token,
-			})
-			const [url, fallback] = imageResolver.resolve(this.src)
+			const [url, fallback] = this.$imageResolver.resolve(this.src)
 			this.loadImage(url).catch((e) => {
 				if (fallback) {
 					this.loadImage(fallback)

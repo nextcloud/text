@@ -1,4 +1,4 @@
-import ImageResolver from './../../nodes/ImageResolver.js'
+import ImageResolver from './../../services/ImageResolver.js'
 
 describe('Image resolver', () => {
 

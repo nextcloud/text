@@ -24,7 +24,8 @@ import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import path from 'path'
 
 export default class ImageResolver {
-	constructor({session, user, shareToken, currentDirectory}) {
+
+	constructor({ session, user, shareToken, currentDirectory }) {
 		this.session = session
 		this.user = user
 		this.shareToken = shareToken
@@ -110,26 +111,29 @@ export default class ImageResolver {
 		return path.normalize(f)
 	}
 
-	davUrl(src){
+	davUrl(src) {
 		if (this.user) {
 			const uid = this.user.uid
 			const encoded = encodeURI(this.filePath(src))
 			return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 		} else {
-			return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
-				{
-					token: this.shareToken,
-					dirname: this.currentDirectory,
-					basename: basename(src),
-				})
-			}
+			return generateUrl('/s/{token}/download?path={dirname}&files={basename}', {
+				token: this.shareToken,
+				dirname: this.currentDirectory,
+				basename: basename(src),
+			})
 		}
+	}
+
 }
 
-/* Urls that can be loaded directy:
- * * remote urls
- * * data urls
- * * preview urls
+/**
+ * Check if a url can be loaded directly - i.e. is one of
+ * - remote url
+ * - data url
+ * - preview url
+ *
+ * @param {string} src - the url to check
  */
 function isDirectUrl(src) {
 	return src.startsWith('http://')
@@ -139,14 +143,30 @@ function isDirectUrl(src) {
 		|| src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
 }
 
+/**
+ * Check if the given url has a preview
+ *
+ * @param {string} src - the url to check
+ */
 function hasPreview(src) {
 	return getQueryVariable(src, 'hasPreview') === 'true'
 }
 
+/**
+ * Return the relative path as specified in the url
+ *
+ * @param {string} src - the url to extract path from
+ */
 function basename(src) {
 	return decodeURI(src.split('?')[0])
 }
 
+/**
+ * Extract the value of a query variable from the given url
+ *
+ * @param {string} src - the url to extract query variable from
+ * @param {string} variable - name of the variable to read out
+ */
 function getQueryVariable(src, variable) {
 	const query = src.split('?')[1]
 	if (typeof query === 'undefined') {
@@ -163,4 +183,3 @@ function getQueryVariable(src, variable) {
 		}
 	}
 }
-
