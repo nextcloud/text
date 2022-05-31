@@ -25,11 +25,16 @@ import path from 'path'
 
 export default class ImageResolver {
 
+	#session
+	#user
+	#shareToken
+	#currentDirectory
+
 	constructor({ session, user, shareToken, currentDirectory }) {
-		this.session = session
-		this.user = user
-		this.shareToken = shareToken
-		this.currentDirectory = currentDirectory
+		this.#session = session
+		this.#user = user
+		this.#shareToken = shareToken
+		this.#currentDirectory = currentDirectory
 	}
 
 	/*
@@ -42,84 +47,84 @@ export default class ImageResolver {
 	resolve(src) {
 		if (src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
-			return [this.getAttachmentUrl(imageFileName)]
+			return [this.#getAttachmentUrl(imageFileName)]
 		}
-		if (src.startsWith(`.attachments.${this.session?.documentId}/`)) {
-			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.session?.documentId}/`, '').split('?')[0])
-			return [this.getAttachmentUrl(imageFileName)]
+		if (src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
+			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
+			return [this.#getAttachmentUrl(imageFileName)]
 		}
 		if (isDirectUrl(src)) {
 			return [src]
 		}
-		if (hasPreview(src)) { // && this.mime !== 'image/gif') {
-			return [this.previewUrl(src)]
+		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
+			return [this.#previewUrl(src)]
 		}
 
 		// if it starts with '.attachments.1234/'
 		if (src.match(/^\.attachments\.\d+\//)) {
 			const imageFileName = decodeURIComponent(src.replace(/\.attachments\.\d+\//, '').split('?')[0])
-			const attachmentUrl = this.getAttachmentUrl(imageFileName)
+			const attachmentUrl = this.#getAttachmentUrl(imageFileName)
 			// try the webdav url and attachment API if the fails
-			return [this.davUrl(src), attachmentUrl]
+			return [this.#davUrl(src), attachmentUrl]
 		}
-		return [this.davUrl(src)]
+		return [this.#davUrl(src)]
 	}
 
-	getAttachmentUrl(imageFileName) {
-		if (this.user || !this.shareToken) {
+	#getAttachmentUrl(imageFileName) {
+		if (this.#user || !this.#shareToken) {
 			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}', {
-				...this.textApiParams(),
+				...this.#textApiParams(),
 				imageFileName,
 			})
 		}
 		return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}', {
-			...this.textApiParams(),
+			...this.#textApiParams(),
 			imageFileName,
-			shareToken: this.shareToken,
+			shareToken: this.#shareToken,
 		})
 	}
 
-	textApiParams() {
-		if (this.session) {
+	#textApiParams() {
+		if (this.#session) {
 			return {
-				documentId: this.session.documentId,
-				sessionId: this.session.id,
-				sessionToken: this.session.token,
+				documentId: this.#session.documentId,
+				sessionId: this.#session.id,
+				sessionToken: this.#session.token,
 			}
 		}
 	}
 
-	previewUrl(src) {
+	#previewUrl(src) {
 		const imageFileId = getQueryVariable(src, 'fileId')
-		const path = this.filePath(src)
+		const path = this.#filePath(src)
 		const fileQuery = (imageFileId)
 			? `?fileId=${imageFileId}&file=${encodeURIComponent(path)}`
 			: `?file=${encodeURIComponent(path)}`
 		const query = fileQuery + '&x=1024&y=1024&a=true'
-		if (this.user) {
+		if (this.#user) {
 			return generateUrl('/core/preview') + query
 		} else {
-			return generateUrl(`/apps/files_sharing/publicpreview/${this.shareToken}${query}`)
+			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}${query}`)
 		}
 	}
 
-	filePath(src) {
+	#filePath(src) {
 		const f = [
-			this.currentDirectory,
+			this.#currentDirectory,
 			basename(src),
 		].join('/')
 		return path.normalize(f)
 	}
 
-	davUrl(src) {
-		if (this.user) {
-			const uid = this.user.uid
-			const encoded = encodeURI(this.filePath(src))
+	#davUrl(src) {
+		if (this.#user) {
+			const uid = this.#user.uid
+			const encoded = encodeURI(this.#filePath(src))
 			return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 		} else {
 			return generateUrl('/s/{token}/download?path={dirname}&files={basename}', {
-				token: this.shareToken,
-				dirname: this.currentDirectory,
+				token: this.#shareToken,
+				dirname: this.#currentDirectory,
 				basename: basename(src),
 			})
 		}
