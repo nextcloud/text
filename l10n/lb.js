@@ -5,8 +5,8 @@ OC.L10N.register(
     "No file was uploaded" : "Et ass kee Fichier ropgeluede ginn",
     "Missing a temporary folder" : "Et feelt en temporären Dossier",
     "Saved" : "Gespäichert",
-    "Edit" : "Änneren",
     "Info" : "Info",
-    "Warning" : "Warnung"
+    "Warning" : "Warnung",
+    "Edit" : "Änneren"
 },
 "nplurals=2; plural=(n != 1);");
