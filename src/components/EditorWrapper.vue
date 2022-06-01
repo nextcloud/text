@@ -77,7 +77,6 @@
 			</EditorMidiaHandler>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
-				:rich-text-options="richTextOptions"
 				:is-rich-editor="isRichEditor" />
 		</div>
 
@@ -563,7 +562,6 @@ export default {
 							}),
 						],
 						enableRichEditing: this.isRichEditor,
-						...this.richTextOptions,
 					})
 					this.$editor.on('focus', () => {
 						this.$emit('focus')

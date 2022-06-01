@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<RichTextReader v-if="isRichText"
+	<RichTextReader v-if="isRichEditor"
 		:content="content" />
 	<PlainTextReader v-else
 		:content="content" />
@@ -64,7 +64,4 @@ export default {
 		}
 	}
 
-</style>
-<style lang="scss">
-	@import './../../css/prosemirror';
 </style>
