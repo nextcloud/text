@@ -24,7 +24,7 @@ else
 	docker-compose up -d
 	if $(npm bin)/wait-on -i 500 -t 240000 $CYPRESS_baseUrl 2> /dev/null
 	then
-		docker-compose exec -T nextcloud bash /var/www/html/apps/text/cypress/server.sh
+		docker-compose exec -T nextcloud_cypress bash /var/www/html/custom_apps/text/cypress/server.sh
 	else
 		echo Waiting for $CYPRESS_baseUrl timed out.
 		echo Container logs:
