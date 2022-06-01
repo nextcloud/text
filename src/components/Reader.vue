@@ -21,19 +21,19 @@
   -->
 
 <template>
-	<RichtextReader v-if="isRichText"
+	<RichTextReader v-if="isRichText"
 		:content="content" />
-	<PlaintextReader v-else
+	<PlainTextReader v-else
 		:content="content" />
 </template>
 
 <script>
-import PlaintextReader from './PlaintextReader.vue'
-import RichtextReader from './RichtextReader.vue'
+import PlainTextReader from './PlainTextReader.vue'
+import RichTextReader from './RichTextReader.vue'
 
 export default {
 	name: 'Reader',
-	components: { PlaintextReader, RichtextReader },
+	components: { PlainTextReader, RichTextReader },
 	props: {
 		content: {
 			type: String,

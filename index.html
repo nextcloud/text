@@ -10,7 +10,7 @@
   <body>
     <div id="app"></div>
     <script type="module">
-	    import { RichtextReader } from './src/package.js'
+	    import { RichTextReader } from './src/package.js'
 		import Vue from 'vue'
 		const app = new Vue({
 			data() {
@@ -34,7 +34,7 @@
 						},
 					},
 				}, [app.content]),
-				h(RichtextReader, {
+				h(RichTextReader, {
 					props: { content: app.content }
 				}),
 			]),

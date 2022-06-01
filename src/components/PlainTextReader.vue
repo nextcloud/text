@@ -31,7 +31,7 @@ import { EditorContent } from '@tiptap/vue-2'
 import escapeHtml from 'escape-html'
 
 export default {
-	name: 'PlaintextReader',
+	name: 'PlainTextReader',
 	components: { EditorContent },
 	props: {
 		content: {

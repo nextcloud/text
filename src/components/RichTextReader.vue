@@ -31,7 +31,7 @@ import { EditorContent } from '@tiptap/vue-2'
 import markdownit from './../markdownit/index.js'
 
 export default {
-	name: 'RichtextReader',
+	name: 'RichTextReader',
 	components: { EditorContent },
 	props: {
 		content: {
