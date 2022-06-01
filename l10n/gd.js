@@ -9,7 +9,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Tha pasgan sealach a dhìth",
     "Could not write file to disk" : "Cha b’ urrainn dhuinn am faidhle a sgrìobhadh dhan diosg",
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
-    "Edit" : "Deasaich",
-    "Undo" : "Neo-dhèan"
+    "Undo" : "Neo-dhèan",
+    "Edit" : "Deasaich"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");

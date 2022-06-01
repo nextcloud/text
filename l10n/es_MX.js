@@ -36,7 +36,6 @@ OC.L10N.register(
     "Code block" : "Bloque de código",
     "Participants" : "Participantes",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
-    "Edit" : "Editar",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",
     "Headings" : "Títulos",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Insert image" : "Añadir imagen",
+    "Edit" : "Editar",
     "New text document" : "Nuevo documento de texto",
     "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"]
 },

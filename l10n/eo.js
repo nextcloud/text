@@ -35,7 +35,6 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
-    "Edit" : "Modifi",
     "Undo" : "Malfari",
     "Redo" : "Refari",
     "Headings" : "Titolaro",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Averto",
     "Insert image" : "Enmeti bildon",
+    "Edit" : "Modifi",
     "New text document" : "Nova tekstdokumento",
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"]
 },
