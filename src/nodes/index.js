@@ -28,7 +28,7 @@ import TaskList from './TaskList.js'
 import TrailingNode from './TrailingNode.js'
 import Heading from './Heading.js'
 import Callout from './Callouts.js'
-import { EditableTable } from './Table/index.js'
+import EditableTable from './EditableTable.js'
 
 export {
 	Image,

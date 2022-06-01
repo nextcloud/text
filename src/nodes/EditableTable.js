@@ -1,13 +1,13 @@
-import Table from './Table.js'
-import TableCaption from './TableCaption.js'
-import TableCell from './TableCell.js'
-import TableHeader from './TableHeader.js'
-import TableHeadRow from './TableHeadRow.js'
-import TableRow from './TableRow.js'
+import Table from './Table/Table.js'
+import TableCaption from './Table/TableCaption.js'
+import TableCell from './Table/TableCell.js'
+import TableHeader from './Table/TableHeader.js'
+import TableHeadRow from './Table/TableHeadRow.js'
+import TableRow from './Table/TableRow.js'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableView from './TableView.vue'
-import TableCellView from './TableCellView.vue'
-import TableHeaderView from './TableHeaderView.vue'
+import TableView from './Table/TableView.vue'
+import TableCellView from './Table/TableCellView.vue'
+import TableHeaderView from './Table/TableHeaderView.vue'
 
 /**
  * Add the node view to the node.
@@ -24,7 +24,7 @@ function extendNodeWithView(node, view) {
 	})
 }
 
-const EditableTable = Table.extend({
+export default Table.extend({
 
 	addNodeView() {
 		return VueNodeViewRenderer(TableView)
@@ -40,5 +40,3 @@ const EditableTable = Table.extend({
 		]
 	},
 })
-
-export { Table, EditableTable }

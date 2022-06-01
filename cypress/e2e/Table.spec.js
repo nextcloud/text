@@ -1,4 +1,4 @@
-import { EditableTable } from './../../src/nodes/Table'
+import EditableTable from './../../src/nodes/EditableTable'
 import Markdown from './../../src/extensions/Markdown'
 import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
