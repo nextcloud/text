@@ -21,7 +21,6 @@
  *
  */
 
-import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
@@ -45,9 +44,11 @@ import MDI_FormatQuote from 'vue-material-design-icons/FormatQuoteClose.vue'
 import MDI_FormatStrikethrough from 'vue-material-design-icons/FormatStrikethrough.vue'
 import MDI_FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue'
 import MDI_Help from 'vue-material-design-icons/HelpCircle.vue'
+import MDI_Image from 'vue-material-design-icons/ImageOutline.vue'
 import MDI_Images from 'vue-material-design-icons/ImageMultipleOutline.vue'
 import MDI_Info from 'vue-material-design-icons/Information.vue'
 import MDI_Link from 'vue-material-design-icons/Link.vue'
+import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
@@ -57,6 +58,7 @@ import MDI_TableAddColumnBefore from 'vue-material-design-icons/TableColumnPlusB
 import MDI_TableAddRowAfter from 'vue-material-design-icons/TableRowPlusAfter.vue'
 import MDI_TableAddRowBefore from 'vue-material-design-icons/TableRowPlusBefore.vue'
 import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
+import MDI_TrashCan from 'vue-material-design-icons/TrashCan.vue'
 import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
 import MDI_Upload from 'vue-material-design-icons/Upload.vue'
 import MDI_Warn from 'vue-material-design-icons/Alert.vue'
@@ -109,6 +111,7 @@ export const FormatQuote = makeIcon(MDI_FormatQuote)
 export const FormatStrikethrough = makeIcon(MDI_FormatStrikethrough)
 export const FormatUnderline = makeIcon(MDI_FormatUnderline)
 export const Help = makeIcon(MDI_Help)
+export const Image = makeIcon(MDI_Image)
 export const Images = makeIcon(MDI_Images)
 export const Info = makeIcon(MDI_Info)
 export const Link = makeIcon(MDI_Link)
@@ -121,6 +124,7 @@ export const TableAddColumnBefore = makeIcon(MDI_TableAddColumnBefore)
 export const TableAddRowAfter = makeIcon(MDI_TableAddRowAfter)
 export const TableAddRowBefore = makeIcon(MDI_TableAddRowBefore)
 export const TableSettings = makeIcon(MDI_TableSettings)
+export const TrashCan = makeIcon(MDI_TrashCan)
 export const Undo = makeIcon(MDI_Undo)
 export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
