@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<EditorContent v-if="editor" id="read-only-editor" :editor="editor" />
+	<EditorContent v-if="$editor" id="read-only-editor" :editor="$editor" />
 </template>
 
 <script>
@@ -39,11 +39,6 @@ export default {
 			required: true,
 		},
 	},
-	data: () => {
-		return {
-			editor: null,
-		}
-	},
 
 	computed: {
 		htmlContent() {
@@ -57,13 +52,13 @@ export default {
 		},
 	},
 
-	mounted() {
-		this.editor = this.createEditor()
-		this.editor.setOptions({ editable: false })
+	created() {
+		this.$editor = this.createEditor()
+		this.$editor.setOptions({ editable: false })
 	},
 
 	beforeDestroy() {
-		this.editor.destroy()
+		this.$editor.destroy()
 	},
 
 	methods: {
@@ -75,8 +70,9 @@ export default {
 		},
 
 		updateContent() {
-			this.editor.commands.setContent(this.htmlContent)
+			this.$editor.commands.setContent(this.htmlContent)
 		},
 	},
+
 }
 </script>

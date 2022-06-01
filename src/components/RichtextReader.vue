@@ -21,12 +21,12 @@
   -->
 
 <template>
-	<EditorContent v-if="editor" id="read-only-editor" :editor="editor" />
+	<EditorContent v-if="$editor" id="read-only-editor" :editor="$editor" />
 </template>
 
 <script>
 import { Editor } from '@tiptap/core'
-import { RichText } from './../extensions/index.js'
+import RichText from './../extensions/RichText.js'
 import { EditorContent } from '@tiptap/vue-2'
 import markdownit from './../markdownit/index.js'
 
@@ -38,11 +38,6 @@ export default {
 			type: String,
 			required: true,
 		},
-	},
-	data: () => {
-		return {
-			editor: null,
-		}
 	},
 
 	computed: {
@@ -57,13 +52,13 @@ export default {
 		},
 	},
 
-	mounted() {
-		this.editor = this.createEditor()
-		this.editor.setOptions({ editable: false })
+	created() {
+		this.$editor = this.createEditor()
+		this.$editor.setOptions({ editable: false })
 	},
 
 	beforeDestroy() {
-		this.editor.destroy()
+		this.$editor.destroy()
 	},
 
 	methods: {
@@ -81,7 +76,7 @@ export default {
 		},
 
 		updateContent() {
-			this.editor.commands.setContent(this.htmlContent)
+			this.$editor.commands.setContent(this.htmlContent)
 		},
 	},
 }
