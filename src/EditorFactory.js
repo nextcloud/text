@@ -105,7 +105,7 @@ const editorDecorations = (/** @param {EditorState} state */ state) => {
 	return decorations.length > 0 ? DecorationSet.create(state.doc, decorations) : null
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory, isRichWorkspace }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -208,7 +208,11 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			...richEditingExtensions,
 		].concat(extensions),
 	})
-	editor.view.props.decorations = editorDecorations
+
+	if (!isRichWorkspace) {
+		editor.view.props.decorations = editorDecorations
+	}
+
 	return editor
 }
 

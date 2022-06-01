@@ -408,6 +408,7 @@ export default {
 					loadSyntaxHighlight(language).then(() => {
 						this.$editor = createEditor({
 							content,
+							isRichWorkspace: this.isRichWorkspace,
 							onCreate: ({ editor }) => {
 								this.$syncService.state = editor.state
 								this.$syncService.startSync()
