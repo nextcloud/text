@@ -17,6 +17,7 @@
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Kollaborativ dokumentredigering! **\n\n- ** 📝 Fokuseret skrivning: ** Ingen distraktioner, kun den formatering, du har brug for.\n- ** 🙋 Arbejd sammen: ** Del og samarbejde med venner og kolleger, uanset om de bruger Nextcloud eller ej!\n- ** 💾 Åbent format: ** Filer gemmes som [Markdown] (https://da.wikipedia.org/wiki/Markdown), så du kan også redigere dem fra enhver anden tekstapp.\n- ** ✊ Stærkt fundament: ** Vi bruger [🐈 tiptap] (https://tiptap.scrumpy.io), som er baseret på [🦉 ProseMirror] (https://prosemirror.net) - kæmpe tak til dem!",
     "Use current version" : "Brug aktuelle version",
     "Use the saved version" : "Brug den gemte version",
+    "Insert an image" : "Indsæt et billede",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter. Klik for at fortsætte med at redigere",
     "Reconnect" : "Tilslut igen",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet er blevet ændret uden for editoren. Ændringerne kan ikke anvendes.",
@@ -41,9 +42,6 @@
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
-    "Insert emoji" : "Indsæt emoji",
-    "Insert an image" : "Indsæt et billede",
-    "Alt" : "Alt",
     "Update Link" : "Opdater link",
     "Add Link" : "Tilføj link",
     "Link file" : "Link fil",
@@ -54,7 +52,6 @@
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Show rich workspaces" : "Vis rige arbejdsområder",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
-    "Edit" : "Redigér",
     "Undo" : "Fortryd",
     "Redo" : "Annullér fortryd",
     "Headings" : "Overskrifter",
@@ -66,10 +63,13 @@
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Advarsler",
-    "Emoji picker" : "Emoji vælger",
+    "Insert emoji" : "Indsæt emoji",
     "Insert image" : "Indsæt billede",
+    "Alt" : "Alt",
+    "Edit" : "Redigér",
     "New text document" : "Nyt tekstdokument",
     "Currently active users:" : "Aktuelle brugere:",
-    "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"]
+    "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
+    "Emoji picker" : "Emoji vælger"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

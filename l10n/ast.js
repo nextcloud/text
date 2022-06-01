@@ -13,9 +13,9 @@ OC.L10N.register(
     "Saving …" : "Guardando...",
     "Saved" : "Guardáu",
     "Keyboard shortcuts" : "Atayos de tecláu",
-    "Edit" : "Editar",
     "Undo" : "Desfacer",
     "Info" : "Info",
-    "Warning" : "Alvertencia"
+    "Warning" : "Alvertencia",
+    "Edit" : "Editar"
 },
 "nplurals=2; plural=(n != 1);");
