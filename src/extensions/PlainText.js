@@ -27,7 +27,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Text from '@tiptap/extension-text'
 /* eslint-enable import/no-named-as-default */
 
-import { PlainTextDocument } from './../nodes/index.js'
+import PlainTextDocument from './../nodes/PlainTextDocument.js'
 
 export default Extension.create({
 	name: 'PlainText',

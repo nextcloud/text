@@ -33,18 +33,16 @@ import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import HardBreak from './HardBreak.js'
-import { Table } from './../nodes/Table/index.js'
+import Table from './../nodes/Table.js'
+import Image from './../nodes/Image.js'
+import Heading from './../nodes/Heading.js'
+import BulletList from './../nodes/BulletList.js'
+import TaskList from './../nodes/TaskList.js'
+import TaskItem from './../nodes/TaskItem.js'
+import Callout from './../nodes/Callouts.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
-import {
-	Image,
-	Heading,
-	BulletList,
-	TaskList,
-	TaskItem,
-	Callout,
-} from './../nodes/index.js'
 
 export default Extension.create({
 	name: 'RichText',
