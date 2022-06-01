@@ -21,18 +21,31 @@
   -->
 
 <template>
-	<EditorContent v-if="$editor" id="read-only-editor" :editor="$editor" />
+	<BaseReader :content="content" />
 </template>
 
 <script>
-import { Editor } from '@tiptap/core'
+import BaseReader from './BaseReader.vue'
 import RichText from './../extensions/RichText.js'
-import { EditorContent } from '@tiptap/vue-2'
 import markdownit from './../markdownit/index.js'
 
 export default {
 	name: 'RichTextReader',
-	components: { EditorContent },
+	components: { BaseReader },
+
+	provide: {
+		renderHtml(content) {
+			return markdownit.render(content)
+		},
+		extensions: [
+			RichText.configure({
+				link: {
+					onClick: (event, attrs) => this.$emit('click-link', event, attrs),
+				},
+			}),
+		],
+	},
+
 	props: {
 		content: {
 			type: String,
@@ -40,45 +53,6 @@ export default {
 		},
 	},
 
-	computed: {
-		htmlContent() {
-			return markdownit.render(this.content)
-		},
-	},
-
-	watch: {
-		content() {
-			this.updateContent()
-		},
-	},
-
-	created() {
-		this.$editor = this.createEditor()
-		this.$editor.setOptions({ editable: false })
-	},
-
-	beforeDestroy() {
-		this.$editor.destroy()
-	},
-
-	methods: {
-		createEditor() {
-			return new Editor({
-				content: this.htmlContent,
-				extensions: [
-					RichText.configure({
-						link: {
-							onClick: (event, attrs) => this.$emit('click-link', event, attrs),
-						},
-					}),
-				],
-			})
-		},
-
-		updateContent() {
-			this.$editor.commands.setContent(this.htmlContent)
-		},
-	},
 }
 </script>
 

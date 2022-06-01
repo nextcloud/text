@@ -21,24 +21,17 @@
   -->
 
 <template>
-	<BaseReader :content="content" />
+	<EditorContent v-if="$editor" id="read-only-editor" :editor="$editor" />
 </template>
 
 <script>
-import BaseReader from './BaseReader.vue'
-import { PlainText } from './../extensions/index.js'
-import escapeHtml from 'escape-html'
+import { Editor } from '@tiptap/core'
+import { EditorContent } from '@tiptap/vue-2'
 
 export default {
-	name: 'PlainTextReader',
-	components: { BaseReader },
-
-	provide: {
-		renderHtml(content) {
-			return '<pre>' + escapeHtml(content) + '</pre>'
-		},
-		extensions: [PlainText],
-	},
+	name: 'BaseReader',
+	components: { EditorContent },
+	inject: ['renderHtml', 'extensions'],
 
 	props: {
 		content: {
@@ -47,5 +40,38 @@ export default {
 		},
 	},
 
+	computed: {
+		htmlContent() {
+			return this.renderHtml(this.content)
+		},
+	},
+
+	watch: {
+		content() {
+			this.updateContent()
+		},
+	},
+
+	created() {
+		this.$editor = this.createEditor()
+		this.$editor.setOptions({ editable: false })
+	},
+
+	beforeDestroy() {
+		this.$editor.destroy()
+	},
+
+	methods: {
+		createEditor() {
+			return new Editor({
+				content: this.htmlContent,
+				extensions: this.extensions,
+			})
+		},
+
+		updateContent() {
+			this.$editor.commands.setContent(this.htmlContent)
+		},
+	},
 }
 </script>
