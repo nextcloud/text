@@ -3,10 +3,10 @@ OC.L10N.register(
     {
     "No file was uploaded" : "කිසිදු ගොනුවක් උඩුගත කර නොමැත",
     "Missing a temporary folder" : "තාවකාලික බහාලුමක් අස්ථානගත වී ඇත",
-    "Edit" : "සංස්කරණය",
     "Undo" : "පෙරසේ",
     "Info" : "තොරතුරු",
     "Success" : "සාර්ථකයි",
-    "Warning" : "අවවාදයයි"
+    "Warning" : "අවවාදයයි",
+    "Edit" : "සංස්කරණය"
 },
 "nplurals=2; plural=(n != 1);");

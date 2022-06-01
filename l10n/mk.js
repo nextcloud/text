@@ -30,10 +30,10 @@ OC.L10N.register(
     "Quoted text" : "Цитиран текст",
     "Participants" : "Учесници",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
-    "Edit" : "Уреди",
     "Undo" : "Врати",
     "Info" : "Инфо",
     "Success" : "Успешно",
-    "Warning" : "Предупредување"
+    "Warning" : "Предупредување",
+    "Edit" : "Уреди"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

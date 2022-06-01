@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container">
+	<div id="editor-container" data-text-el="editor-container" class="text-editor">
 		<div v-if="displayed" class="document-status">
 			<p v-if="idle" class="msg">
 				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
@@ -36,27 +36,24 @@
 				<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
 			</p>
 		</div>
-		<div v-if="displayed" id="editor-wrapper" :class="{'has-conflicts': hasSyncCollission, 'icon-loading': !contentLoaded && !hasConnectionIssue, 'richEditor': isRichEditor, 'show-color-annotations': showAuthorAnnotations}">
-			<div v-if="$editor"
+		<div v-if="displayed"
+			id="editor-wrapper"
+			class="text-editor__wrapper"
+			:class="{
+				'has-conflicts': hasSyncCollission,
+				'icon-loading': !contentLoaded && !hasConnectionIssue,
+				'is-rich-workspace': isRichWorkspace,
+				'is-rich-editor': isRichEditor,
+				'show-color-annotations': showAuthorAnnotations
+			}">
+			<EditorMidiaHandler v-if="$editor"
 				id="editor"
-				:class="{ draggedOver }"
-				@image-paste="onPaste"
-				@dragover.prevent.stop="draggedOver = true"
-				@dragleave.prevent.stop="draggedOver = false"
-				@image-drop="onEditorDrop">
+				class="text-editor__main">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
-					:file-path="relativePath"
-					:file-id="fileId"
-					:is-rich-editor="isRichEditor"
-					:is-public="isPublic"
 					:autohide="autohide"
-					:loaded.sync="menubarLoaded"
-					:uploading-images="uploadingImages"
-					@show-help="showHelp"
-					@image-insert="insertImagePath"
-					@image-upload="uploadImageFiles">
-					<div id="editor-session-list">
+					:loaded.sync="menubarLoaded">
+					<div class="text-editor__session-list">
 						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
@@ -66,23 +63,26 @@
 					</div>
 					<slot name="header" />
 				</MenuBar>
-				<div v-if="!menubarLoaded" class="menubar placeholder" />
-				<div ref="contentWrapper" class="content-wrapper">
+				<div v-if="!menubarLoaded" class="menubar-placeholder" />
+				<div ref="contentWrapper"
+					data-text-el="editor-content-wrapper"
+					class="content-wrapper text-editor__content-wrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
-						class="editor__content"
+						class="editor__content text-editor__content"
 						:editor="$editor" />
 				</div>
-			</div>
+			</EditorMidiaHandler>
 			<ReadOnlyEditor v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</div>
 
-		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly" @resolve-use-this-version="resolveUseThisVersion" @resolve-use-server-version="resolveUseServerVersion" />
-		<HelpModal v-if="displayHelp" @close="hideHelp" />
+		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly"
+			@resolve-use-this-version="resolveUseThisVersion"
+			@resolve-use-server-version="resolveUseServerVersion" />
 	</div>
 </template>
 
@@ -90,50 +90,48 @@
 import Vue from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
-import { showError } from '@nextcloud/dialogs'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { EditorContent } from '@tiptap/vue-2'
+import { getVersion, receiveTransaction } from 'prosemirror-collab'
+import { Step } from 'prosemirror-transform'
 
-import { EDITOR, SYNC_SERVICE } from './EditorWrapper.provider.js'
+import {
+	EDITOR,
+	FILE,
+	IS_MOBILE,
+	IS_PUBLIC,
+	IS_RICH_EDITOR,
+	IS_RICH_WORKSPACE,
+	SYNC_SERVICE,
+} from './EditorWrapper.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import { endpointUrl, getRandomGuestName } from './../helpers/index.js'
+import { getRandomGuestName } from './../helpers/index.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
-import { EditorContent } from '@tiptap/vue-2'
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import { getVersion, receiveTransaction } from 'prosemirror-collab'
-import { Step } from 'prosemirror-transform'
 import Lock from 'vue-material-design-icons/Lock'
-const EDITOR_PUSH_DEBOUNCE = 200
+import MenuBar from './Menu/MenuBar.vue'
+import EditorMidiaHandler from './EditorMediaHandler.vue'
 
-const IMAGE_MIMES = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-	'image/x-xbitmap',
-	'image/x-ms-bmp',
-	'image/bmp',
-	'image/svg+xml',
-	'image/webp',
-]
+const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
 	name: 'EditorWrapper',
 	components: {
 		EditorContent,
-		MenuBar: () => import(/* webpackChunkName: "editor-rich" */'./MenuBar.vue'),
+		EditorMidiaHandler,
+		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
-		HelpModal: () => import(/* webpackChunkName: "editor-collab" */'./HelpModal.vue'),
 		Lock,
 	},
 	directives: {
@@ -149,22 +147,39 @@ export default {
 		// providers aren't naturally reactive
 		// and $editor will start as null
 		// using getters we can always provide the
-		// actual $editor without being reactive
-		Object.defineProperty(val, EDITOR, {
-			get: () => {
-				return this.$editor
+		// actual $editor, and other values without being reactive
+		Object.defineProperties(val, {
+			[EDITOR]: {
+				get: () => this.$editor,
 			},
-		})
-
-		Object.defineProperty(val, SYNC_SERVICE, {
-			get: () => {
-				return this.$syncService
+			[SYNC_SERVICE]: {
+				get: () => this.$syncService,
+			},
+			[FILE]: {
+				get: () => this.fileData,
+			},
+			[IS_PUBLIC]: {
+				get: () => this.isPublic,
+			},
+			[IS_RICH_EDITOR]: {
+				get: () => this.isRichEditor,
+			},
+			[IS_RICH_WORKSPACE]: {
+				get: () => this.isRichWorkspace,
+			},
+			[IS_MOBILE]: {
+				get: () => this.isMobile,
 			},
 		})
 
 		return val
 	},
 	props: {
+		richWorkspace: {
+			type: Boolean,
+			require: false,
+			default: false,
+		},
 		initialSession: {
 			type: Object,
 			default: null,
@@ -221,15 +236,16 @@ export default {
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
-			uploadingImages: false,
 			draggedOver: false,
 
 			saveStatusPolling: null,
-			displayHelp: false,
 			contentWrapper: null,
 		}
 	},
 	computed: {
+		isRichWorkspace() {
+			return this.richWorkspace
+		},
 		showAuthorAnnotations() {
 			return this.$store.state.showAuthorAnnotations
 		},
@@ -264,11 +280,6 @@ export default {
 		hasUnsavedChanges() {
 			return this.document && this.document.lastSavedVersion < this.document.currentVersion
 		},
-		backendUrl() {
-			return (endpoint) => {
-				return endpointUrl(endpoint, !!this.shareToken)
-			}
-		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
 		},
@@ -295,11 +306,20 @@ export default {
 				&& !this.syncError
 				&& !this.readOnly
 		},
+		imagePath() {
+			return this.relativePath.split('/').slice(0, -1).join('/')
+		},
+		fileData() {
+			return {
+				fileId: this.fileId,
+				relativePath: this.relativePath,
+				document: {
+					...this.document,
+				},
+			}
+		},
 	},
 	watch: {
-		lastSavedStatus() {
-			this.$refs.menubar && this.$refs.menubar.redrawMenuBar()
-		},
 		displayed() {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
@@ -348,9 +368,9 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : getRandomGuestName()
 			this.$syncService = new SyncService({
+				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				guestName,
 				forceRecreate: this.forceRecreate,
 				serialize: (document) => {
 					if (this.isRichEditor) {
@@ -582,84 +602,17 @@ export default {
 				}
 			}
 		},
-
-		showHelp() {
-			this.displayHelp = true
-		},
-
-		hideHelp() {
-			this.displayHelp = false
-		},
-		onPaste(e) {
-			this.uploadImageFiles(e.detail.files)
-		},
-		onEditorDrop(e) {
-			this.uploadImageFiles(e.detail.files, e.detail.position)
-			this.draggedOver = false
-		},
-		uploadImageFiles(files, position = null) {
-			if (!files) {
-				return
-			}
-			this.uploadingImages = true
-			const uploadPromises = [...files].map((file) => {
-				return this.uploadImageFile(file, position)
-			})
-			Promise.all(uploadPromises).then((values) => {
-				this.uploadingImages = false
-			})
-		},
-		async uploadImageFile(file, position = null) {
-			if (!IMAGE_MIMES.includes(file.type)) {
-				showError(t('text', 'Image file format not supported'))
-				return
-			}
-
-			return this.$syncService.uploadImage(file).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, position, response.data?.dirname)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			})
-		},
-		insertImagePath(imagePath) {
-			this.uploadingImages = true
-			this.$syncService.insertImageFile(imagePath).then((response) => {
-				this.insertAttachmentImage(response.data?.name, response.data?.id, null, response.data?.dirname)
-			}).catch((error) => {
-				console.error(error)
-				showError(error?.response?.data?.error)
-			}).then(() => {
-				this.uploadingImages = false
-			})
-		},
-		insertAttachmentImage(name, fileId, position = null, dirname = '') {
-			// inspired by the fixedEncodeURIComponent function suggested in
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src = dirname + '/'
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
-			// simply get rid of brackets to make sure link text is valid
-			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
-			if (position) {
-				this.$editor.chain().focus(position).setImage({ src, alt }).focus().run()
-			} else {
-				this.$editor.chain().setImage({ src, alt }).focus().run()
-			}
-		},
 	},
 }
 </script>
 
 <style scoped lang="scss">
-	.modal-container #editor-container {
+	.modal-container .text-editor {
 		top: 0;
 		height: calc(100vh - var(--header-height));
 	}
 
-	#editor-container {
+	.text-editor {
 		display: block;
 		width: 100%;
 		max-width: 100%;
@@ -670,7 +623,7 @@ export default {
 		background-color: var(--color-main-background);
 	}
 
-	#editor-wrapper {
+	.text-editor__wrapper {
 		display: flex;
 		width: 100%;
 		height: 100%;
@@ -691,13 +644,13 @@ export default {
 			margin-top: 0 !important;
 		}
 		&.icon-loading {
-			#editor {
+			.text-editor__main {
 				opacity: 0.3;
 			}
 		}
 	}
 
-	#editor, .editor {
+	.text-editor__main, .editor {
 		background: var(--color-main-background);
 		color: var(--color-main-text);
 		background-clip: padding-box;
@@ -750,16 +703,16 @@ export default {
 		}
 	}
 
-	#editor-container #editor-wrapper.has-conflicts {
+	.text-editor .text-editor__wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
-		#editor, #read-only-editor {
+		.text-editor__main, #read-only-editor {
 			width: 50%;
 			height: 100%;
 		}
 	}
 
-	#editor-session-list {
+	.text-editor__session-list {
 		display: flex;
 
 		input, div {
@@ -769,7 +722,7 @@ export default {
 	}
 
 	.editor__content {
-		max-width: 670px;
+		max-width: var(--text-editor-max-width);
 		margin: auto;
 		position: relative;
 	}
@@ -779,39 +732,27 @@ export default {
 	}
 
 	#files-public-content {
-		#editor-container {
+		.text-editor {
 			top: 0;
 			width: 100%;
 
-			#editor::v-deep .menubar {
-				position: sticky;
-				top: 0px;
-				width: 100%;
-			}
-
-			#editor {
+			.text-editor__main {
 				overflow: auto;
 				z-index: 20;
 			}
-			.has-conflicts #editor {
+			.has-conflicts .text-editor__main {
 				padding-top: 0;
 			}
 		}
 	}
 
 	.ie {
-		#editor::v-deep .menubar {
-			// sticky position is not working as body is our scroll container
-			position: fixed;
-			top: 50px;
-			width: 100%;
-		}
 		.editor__content::v-deep .ProseMirror {
 			padding-top: 50px;
 		}
 	}
 
-	.menubar.placeholder {
+	.menubar-placeholder {
 		position: fixed;
 		position: -webkit-sticky;
 		position: sticky;
@@ -824,13 +765,14 @@ export default {
 	}
 
 </style>
+
 <style lang="scss">
 	@import './../../css/style';
 
-	#editor-wrapper {
+	.text-editor__wrapper {
 		@import './../../css/prosemirror';
 
-		&:not(.richEditor) .ProseMirror {
+		&:not(.is-rich-editor) .ProseMirror {
 			pre {
 				background-color: var(--color-main-background);
 
@@ -891,11 +833,11 @@ export default {
 		}
 
 		// relative position for the alignment of the menububble
-		#editor {
+		.text-editor__main {
 			&.draggedOver {
 				background-color: var(--color-primary-light);
 			}
-			.content-wrapper {
+			.text-editor__content-wrapper {
 				position: relative;
 			}
 		}

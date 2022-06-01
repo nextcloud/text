@@ -5,8 +5,8 @@ OC.L10N.register(
     "No file was uploaded" : "எந்த கோப்பும் பதிவேற்றப்படவில்லை",
     "Missing a temporary folder" : "ஒரு தற்காலிகமான கோப்புறையை காணவில்லை",
     "Keyboard shortcuts" : "விசைப்பலகை குறுக்குவழிகள்",
-    "Edit" : "தொகுக்க",
     "Info" : "Info",
-    "Warning" : "எச்சரிக்கை"
+    "Warning" : "எச்சரிக்கை",
+    "Edit" : "தொகுக்க"
 },
 "nplurals=2; plural=(n != 1);");

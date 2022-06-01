@@ -23,6 +23,7 @@
 <template>
 	<BubbleMenu :editor="$editor"
 		:tippy-options="{ onHide: hideLinkMenu, duration: 200, placement: 'bottom' }"
+		data-text-el="menu-bubble"
 		class="menububble">
 		<form v-if="linkMenuIsActive" class="menububble__form" @submit.prevent="setLinkUrl()">
 			<input ref="linkInput"
@@ -31,33 +32,39 @@
 				type="text"
 				placeholder="https://"
 				@keydown.esc="hideLinkMenu">
-			<button class="menububble__button icon-confirm"
+			<button class="menububble__button"
+				data-text-bubble-action="confirm"
 				type="button"
 				tabindex="0"
-				@click="setLinkUrl()" />
+				@click="setLinkUrl()">
+				<Check />
+			</button>
 		</form>
 
 		<template v-else>
 			<button class="menububble__button"
+				data-text-bubble-action="add-link"
 				:class="{ 'is-active': isActive('link') }"
 				@click="showLinkMenu()">
-				<span class="icon-link" />
+				<Link />
 				<span class="menububble__buttontext">
 					{{ isActive('link') ? t('text', 'Update Link') : t('text', 'Add Link') }}
 				</span>
 			</button>
 			<button v-if="!isUsingDirectEditing"
+				data-text-bubble-action="add-file"
 				class="menububble__button"
 				:class="{ 'is-active': isActive('link') }"
 				@click="selectFile()">
-				<span class="icon-file" />
+				<Document />
 				<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 			</button>
 			<button v-if="isActive('link')"
 				class="menububble__button"
+				data-text-bubble-action="remove-link"
 				:class="{ 'is-active': isActive('link') }"
 				@click="removeLinkUrl()">
-				<span class="icon-delete" />
+				<Delete />
 				<span class="menububble__buttontext">
 					{{ t('text', 'Remove Link') }}
 				</span>
@@ -69,17 +76,23 @@
 <script>
 import { BubbleMenu } from '@tiptap/vue-2'
 import { getMarkAttributes } from '@tiptap/core'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getCurrentUser } from '@nextcloud/auth'
-import { optimalPath } from './../helpers/files.js'
 import { loadState } from '@nextcloud/initial-state'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { optimalPath } from './../helpers/files.js'
 
 import { useEditorMixin } from './EditorWrapper.provider.js'
+
+import { Link, Document, Delete, Check } from '../components/icons.js'
 
 export default {
 	name: 'MenuBubble',
 	components: {
 		BubbleMenu,
+		Link,
+		Document,
+		Delete,
+		Check,
 	},
 	directives: {
 		tooltip: Tooltip,
@@ -178,7 +191,6 @@ export default {
 		height: 44px;
 
 		&__button {
-			display: block;
 			flex-grow: 1;
 			border: 0;
 			padding: 0.9rem 0.7rem;
@@ -187,6 +199,8 @@ export default {
 			cursor: pointer;
 			background-color: var(--color-main-background);
 			border-right: 1px solid var(--color-border);
+			display: flex;
+			align-items: center;
 
 			&:focus,
 			&:hover {
@@ -215,6 +229,7 @@ export default {
 			border: none;
 			background: transparent;
 			min-width: 250px;
+			margin: 0 0.5em 0 1em;
 		}
 	}
 </style>

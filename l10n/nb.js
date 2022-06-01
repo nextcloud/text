@@ -41,7 +41,6 @@ OC.L10N.register(
     "Participants" : "Deltakere",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "Edit" : "Rediger",
     "Undo" : "Angre",
     "Redo" : "Gjør om",
     "Headings" : "Overskrifter",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
     "Insert image" : "Sett inn bilde",
+    "Edit" : "Rediger",
     "New text document" : "Nytt tekstdokument",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"]
 },

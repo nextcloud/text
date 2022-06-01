@@ -14,6 +14,7 @@
     "📝 Collaborative document editing" : "📝 Edicion collaborativa de document",
     "Use current version" : "Utilizar la version actuala",
     "Use the saved version" : "Utilizar la version salvada",
+    "Insert an image" : "Inserir un imatge",
     "Reconnect" : "Se reconnectar",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Lo document es estat modificar defòra de l’editor. Se pòdon pas aplicar las modificacions.",
     "Saving …" : "Enregistrament...",
@@ -32,14 +33,11 @@
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
-    "Insert emoji" : "Inserir emoji",
-    "Insert an image" : "Inserir un imatge",
     "Link file" : "Ligam fichièr",
     "Remove Link" : "Suprimir ligam",
     "Participants" : "Participants",
     "Show author colors" : "Afichar las colors dels utilizaires",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligamas…",
-    "Edit" : "Modificar",
     "Undo" : "Anullar",
     "Redo" : "Refar",
     "Headings" : "Títols",
@@ -51,9 +49,11 @@
     "Info" : "Info",
     "Success" : "Succès",
     "Warning" : "Avertiment",
-    "Emoji picker" : "Selector emoji",
+    "Insert emoji" : "Inserir emoji",
     "Insert image" : "Inserir imatge",
+    "Edit" : "Modificar",
     "New text document" : "Novèl fichièr tèxte",
-    "Currently active users:" : "Utilizaires actius :"
+    "Currently active users:" : "Utilizaires actius :",
+    "Emoji picker" : "Selector emoji"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

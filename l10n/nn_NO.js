@@ -7,8 +7,8 @@ OC.L10N.register(
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Participants" : "Deltakarar",
-    "Edit" : "Endra",
     "Info" : "Info",
-    "Warning" : "Åtvaring"
+    "Warning" : "Åtvaring",
+    "Edit" : "Endra"
 },
 "nplurals=2; plural=(n != 1);");

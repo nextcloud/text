@@ -10,8 +10,8 @@
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
-    "Edit" : "Redigeeri",
     "Info" : "Info",
-    "Warning" : "Hoiatus"
+    "Warning" : "Hoiatus",
+    "Edit" : "Redigeeri"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

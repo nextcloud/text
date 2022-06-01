@@ -56,7 +56,6 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 		}
 
 		\OCP\Util::addScript('text', 'text-files');
-		\OCP\Util::addStyle('text', 'icons');
 
 		$this->initialStateService->provideInitialState(
 			Application::APP_NAME,

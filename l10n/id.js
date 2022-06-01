@@ -21,9 +21,9 @@ OC.L10N.register(
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
-    "Edit" : "Sunting",
     "Undo" : "Undo",
     "Info" : "Info",
-    "Warning" : "Peringatan"
+    "Warning" : "Peringatan",
+    "Edit" : "Sunting"
 },
 "nplurals=1; plural=0;");
