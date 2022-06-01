@@ -11,12 +11,12 @@ OC.L10N.register(
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
-    "Edit" : "Editează",
     "Undo" : "Anulează ultima acțiune",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",
     "Insert image" : "Introdu imagine",
+    "Edit" : "Editează",
     "New text document" : "Nou document text"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

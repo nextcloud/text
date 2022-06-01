@@ -3,7 +3,7 @@ import { randHash } from '../utils/'
 const randUser = randHash()
 const fileName = 'empty.md'
 
-const getEditor = () => cy.get('#viewer #editor .ProseMirror')
+const getEditor = () => cy.getEditor().find('.ProseMirror')
 
 const clearContent = () => getEditor()
 	.type('{selectall}')

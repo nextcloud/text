@@ -12,8 +12,8 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
-    "Edit" : "Redigeeri",
     "Info" : "Info",
-    "Warning" : "Hoiatus"
+    "Warning" : "Hoiatus",
+    "Edit" : "Redigeeri"
 },
 "nplurals=2; plural=(n != 1);");

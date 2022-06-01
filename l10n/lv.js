@@ -12,10 +12,10 @@ OC.L10N.register(
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
     "Participants" : "Dalībnieki",
-    "Edit" : "Rediģēt",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
     "Info" : "Info",
-    "Warning" : "Brīdinājums"
+    "Warning" : "Brīdinājums",
+    "Edit" : "Rediģēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

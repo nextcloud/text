@@ -22,10 +22,10 @@ OC.L10N.register(
     "Italic" : "Italic",
     "Shift" : "تغییر مکان",
     "Participants" : "شركت كنندگان",
-    "Edit" : "ویرایش",
     "Undo" : "برگرداندن",
     "Info" : "اطلاعات",
     "Success" : "موفقیت",
-    "Warning" : "هشدار"
+    "Warning" : "هشدار",
+    "Edit" : "ویرایش"
 },
 "nplurals=2; plural=(n > 1);");

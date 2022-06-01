@@ -20,8 +20,11 @@
  *
  */
 
-import { Node, mergeAttributes, isNodeActive } from '@tiptap/core'
+import { Node, isNodeActive, mergeAttributes } from '@tiptap/core'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import { typesAvailable } from './../markdownit/callouts.js'
+
+import Callout from './Callout.vue'
 
 export default Node.create({
 
@@ -92,6 +95,10 @@ export default Node.create({
 		state.ensureNewLine()
 		state.write(':::')
 		state.closeBlock(node)
+	},
+
+	addNodeView() {
+		return VueNodeViewRenderer(Callout)
 	},
 
 	addCommands() {

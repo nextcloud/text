@@ -72,7 +72,7 @@ export default {
 <style lang="scss">
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
-	#editor-container {
+	.text-editor {
 		top: auto;
 	}
 }
