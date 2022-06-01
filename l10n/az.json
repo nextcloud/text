@@ -3,8 +3,8 @@
     "No file was uploaded" : "Heç bir fayl yüklənilmədi",
     "Missing a temporary folder" : "Müvəqqəti qovluq çatışmır",
     "Saved" : "Saxlanıldı",
-    "Edit" : "Dəyişiklik et",
     "Info" : "Info",
-    "Warning" : "Xəbərdarlıq"
+    "Warning" : "Xəbərdarlıq",
+    "Edit" : "Dəyişiklik et"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
