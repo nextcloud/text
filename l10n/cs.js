@@ -67,6 +67,7 @@ OC.L10N.register(
     "Some code" : "Nějaký kód",
     "Upload from computer" : "Nahrát z počítače",
     "Insert from Files" : "Vložit ze Souborů",
+    "Remaining Actions" : "Zbývající akce",
     "Update Link" : "Aktualizovat odkaz",
     "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",
