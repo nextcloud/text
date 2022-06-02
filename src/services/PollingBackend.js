@@ -176,7 +176,7 @@ class PollingBackend {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 
 			} else {
 				console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
@@ -184,22 +184,25 @@ class PollingBackend {
 		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
 			// Only emit conflict event if we have synced until the latest version
 			console.error('Conflict during file save, please resolve')
-			this._authority.emit('error', ERROR_TYPE.SAVE_COLLISSION, {
-				outsideChange: e.response.data.outsideChange,
+			this._authority.emit('error', {
+				type: ERROR_TYPE.SAVE_COLLISSION,
+				data: {
+					outsideChange: e.response.data.outsideChange,
+				},
 			})
 		} else if (e.response.status === 403) {
-			this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
+			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 404) {
-			this._authority.emit('error', ERROR_TYPE.SOURCE_NOT_FOUND, {})
+			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 503) {
 			this.increaseRefetchTimer()
-			this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			console.error('Failed to fetch steps due to unavailable service', e)
 		} else {
 			this.disconnect()
-			this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, { retry: false })
+			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			console.error('Failed to fetch steps due to other reason', e)
 		}
 
@@ -232,7 +235,7 @@ class PollingBackend {
 			console.error('failed to apply steps due to collission, retrying')
 			this.lock = false
 			if (!response || code === 'ECONNABORTED') {
-				this._authority.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				return
 			}
 			const { status, data } = response
@@ -243,7 +246,7 @@ class PollingBackend {
 				}
 				// Only emit conflict event if we have synced until the latest version
 				if (data.document?.currentVersion === this._authority.document.currentVersion) {
-					this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
+					this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 					OC.Notification.showTemporary('Changes could not be sent yet')
 				}
 			}
@@ -304,7 +307,7 @@ class PollingBackend {
 		const newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
 		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
 			OC.Notification.showTemporary('Changes could not be sent yet')
-			this._authority.emit('error', ERROR_TYPE.PUSH_FAILURE, {})
+			this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 		}
 		this.retryTime = newRetry
 	}
