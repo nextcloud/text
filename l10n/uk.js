@@ -39,7 +39,6 @@ OC.L10N.register(
     "Participants" : "Учасники",
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
-    "Edit" : "Редашувати",
     "Undo" : "Скасувати",
     "Redo" : "Повторити",
     "Headings" : "Заголовки",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Увага",
     "Insert image" : "Додати зображення",
+    "Edit" : "Редашувати",
     "New text document" : "Новий текстовий документ",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"]
 },

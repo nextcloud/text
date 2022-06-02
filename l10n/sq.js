@@ -21,12 +21,12 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Shkurtoret e tastierës",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
-    "Edit" : "Përpuno",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
+    "Edit" : "Përpuno",
     "New text document" : "Dokument tekst i ri",
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"]
 },

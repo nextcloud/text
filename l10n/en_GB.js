@@ -18,10 +18,10 @@ OC.L10N.register(
     "Bold" : "Bold",
     "Italic" : "Italic",
     "Participants" : "Participants",
-    "Edit" : "Edit",
     "Undo" : "Undo",
     "Info" : "Info",
     "Success" : "Success",
-    "Warning" : "Warning"
+    "Warning" : "Warning",
+    "Edit" : "Edit"
 },
 "nplurals=2; plural=(n != 1);");

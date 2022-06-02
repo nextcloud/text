@@ -12,10 +12,10 @@ OC.L10N.register(
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
     "Participants" : "მონაწილეები",
-    "Edit" : "ცვლილება",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება"
+    "Warning" : "გაფრთხილება",
+    "Edit" : "ცვლილება"
 },
 "nplurals=2; plural=(n!=1);");

@@ -13,10 +13,10 @@ OC.L10N.register(
     "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "ปุ่มลัด",
-    "Edit" : "แก้ไข",
     "Undo" : "เลิกทำ",
     "Info" : "ข้อมูล",
     "Success" : "เสร็จสิ้น",
-    "Warning" : "คำเตือน"
+    "Warning" : "คำเตือน",
+    "Edit" : "แก้ไข"
 },
 "nplurals=1; plural=0;");

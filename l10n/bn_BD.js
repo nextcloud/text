@@ -6,8 +6,8 @@ OC.L10N.register(
     "Missing a temporary folder" : "অস্থায়ী ফোল্ডারটি হারানো গিয়েছে",
     "Saved" : "সংরক্ষণ করা হলো",
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",
-    "Edit" : "সম্পাদনা",
     "Info" : "Info",
-    "Warning" : "সতর্কবাণী"
+    "Warning" : "সতর্কবাণী",
+    "Edit" : "সম্পাদনা"
 },
 "nplurals=2; plural=(n != 1);");

@@ -11,9 +11,9 @@
     "Saving …" : "Guardando...",
     "Saved" : "Guardáu",
     "Keyboard shortcuts" : "Atayos de tecláu",
-    "Edit" : "Editar",
     "Undo" : "Desfacer",
     "Info" : "Info",
-    "Warning" : "Alvertencia"
+    "Warning" : "Alvertencia",
+    "Edit" : "Editar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

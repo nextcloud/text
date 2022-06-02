@@ -6,9 +6,9 @@ OC.L10N.register(
     "Missing a temporary folder" : "Il manca un dossier temporari",
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",
-    "Edit" : "Modificar",
     "Undo" : "Disfacer",
     "Info" : "Info",
-    "Warning" : "Aviso"
+    "Warning" : "Aviso",
+    "Edit" : "Modificar"
 },
 "nplurals=2; plural=(n != 1);");
