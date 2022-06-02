@@ -67,6 +67,7 @@ OC.L10N.register(
     "Some code" : "Kod metni",
     "Upload from computer" : "Bilgisayardan yükle",
     "Insert from Files" : "Dosyalar uygulamasından ekle",
+    "Remaining Actions" : "Kalan işlemler",
     "Update Link" : "Bağlantıyı güncelle",
     "Add Link" : "Bağlantı ekle",
     "Link file" : "Dosya bağla",

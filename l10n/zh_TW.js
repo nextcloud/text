@@ -67,6 +67,7 @@ OC.L10N.register(
     "Some code" : "一些程式碼",
     "Upload from computer" : "從電腦上傳",
     "Insert from Files" : "從檔案插入",
+    "Remaining Actions" : "剩餘動作",
     "Update Link" : "更新連結",
     "Add Link" : "新增連結",
     "Link file" : "連結檔案",
