@@ -23,7 +23,7 @@
 <template>
 	<Popover class="session-list" placement="top">
 		<button slot="trigger"
-			v-tooltip.bottom="t('text', 'Participants')"
+			v-tooltip.bottom="t('text', 'Active people')"
 			class="avatar-list">
 			<div class="avatardiv icon-group" />
 			<div v-for="session in sessionsVisible"
