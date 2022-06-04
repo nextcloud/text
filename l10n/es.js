@@ -67,6 +67,7 @@ OC.L10N.register(
     "Some code" : "Algo de código",
     "Upload from computer" : "Cargar desde el ordenador",
     "Insert from Files" : "Insertar desde Archivos",
+    "Remaining Actions" : "Acciones restantes",
     "Update Link" : "Actualizar Enlace",
     "Add Link" : "Añadir Enlace",
     "Link file" : "Enlace al archivo",
