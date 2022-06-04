@@ -121,7 +121,7 @@
 		"jest-raw-loader": "^1.0.1",
 		"jest-serializer-vue": "^2.0.2",
 		"regenerator-runtime": "^0.13.9",
-		"webpack": "^5.72.1"
+		"webpack": "^5.73.0"
 	},
 	"jest": {
 		"verbose": true,
