@@ -121,7 +121,7 @@ const getQueryVariable = (src, variable) => {
 	}
 }
 
-class ErrorLoadImage extends Error {
+class LoadImageError extends Error {
 
 	constructor(reason, imageUrl) {
 		super(reason?.message || t('text', 'Failed to load'))
@@ -245,7 +245,7 @@ export default {
 					resolve(imageUrl)
 				}
 				img.onerror = (e) => {
-					reject(new ErrorLoadImage(e, imageUrl))
+					reject(new LoadImageError(e, imageUrl))
 				}
 				img.src = imageUrl
 			})
@@ -256,9 +256,11 @@ export default {
 			this.loaded = true
 			this.errorMessage = err.message
 
-			if (err instanceof ErrorLoadImage) {
+			if (err instanceof LoadImageError) {
 				this.errorMessage = `${this.errorMessage} [${this.src}]`
 			}
+
+			this.$emit('error', { error: err, src: this.src })
 		},
 		updateAlt(event) {
 			this.updateAttributes({
