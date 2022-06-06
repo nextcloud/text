@@ -1,7 +1,6 @@
 #!/bin/bash
 su -s /bin/bash www-data -c "
-php /var/www/html/occ maintenance:install --database \
-    'sqlite' --admin-user 'admin' --admin-pass 'admin'
+php /var/www/html/occ config:system:set debug --value='true' --type=boolean
 export OC_PASS=1234561
 php /var/www/html/occ user:add --password-from-env user1
 php /var/www/html/occ user:add --password-from-env user2
