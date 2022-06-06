@@ -43,6 +43,7 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
+import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 
 import {
 	useEditorMixin,
@@ -55,18 +56,6 @@ import {
 	ACTION_CHOOSE_LOCAL_IMAGE,
 	STATE_UPLOADING,
 } from './EditorMediaHandler.provider.js'
-
-const IMAGE_MIMES = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-	'image/x-xbitmap',
-	'image/x-ms-bmp',
-	'image/bmp',
-	'image/svg+xml',
-	'image/webp',
-]
 
 export default {
 	name: 'EditorMediaHandler',
