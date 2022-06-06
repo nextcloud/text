@@ -26,9 +26,6 @@
 			data-component="image-view"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
 			:data-src="src">
-			<small v-if="errorMessage" class="image__error-message">
-				{{ errorMessage }}
-			</small>
 			<div v-if="canDisplayImage"
 				v-click-outside="() => showIcons = false"
 				class="image__view"
@@ -43,7 +40,7 @@
 							@load="onLoaded">
 					</template>
 					<template v-else>
-						<ImageBroken class="image__main image__main--broken-icon" :size="100" />
+						<ImageIcon class="image__main image__main--broken-icon" :size="100" />
 					</template>
 				</transition>
 				<transition name="fade">
@@ -52,7 +49,7 @@
 							type="text"
 							class="image__caption__input"
 							:value="alt"
-							@keyup.enter="updateAlt()">
+							@keyup.enter="updateAlt">
 						<div v-if="editor.isEditable && showIcons"
 							class="image__caption__delete"
 							title="Delete this image"
@@ -79,6 +76,9 @@
 					</div>
 				</transition>
 			</div>
+			<small v-if="errorMessage" class="image__error-message">
+				{{ errorMessage }}
+			</small>
 		</div>
 	</NodeViewWrapper>
 </template>
@@ -88,7 +88,7 @@ import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 // import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
-import { ImageBroken, TrashCan } from '../components/icons.js'
+import { Image as ImageIcon, TrashCan } from '../components/icons.js'
 import store from './../mixins/store.js'
 import { useImageResolver } from './../components/EditorWrapper.provider.js'
 
@@ -124,7 +124,7 @@ const getQueryVariable = (src, variable) => {
 class ErrorLoadImage extends Error {
 
 	constructor(reason, imageUrl) {
-		super(reason?.message || t('text', 'Fail to load image'))
+		super(reason?.message || t('text', 'Failed to load'))
 		this.reason = reason
 		this.imageUrl = imageUrl
 	}
@@ -134,7 +134,7 @@ class ErrorLoadImage extends Error {
 export default {
 	name: 'ImageView',
 	components: {
-		ImageBroken,
+		ImageIcon,
 		TrashCan,
 		NodeViewWrapper,
 	},
@@ -255,9 +255,15 @@ export default {
 			this.imageLoaded = false
 			this.loaded = true
 			this.errorMessage = err.message
+
+			if (err instanceof ErrorLoadImage) {
+				this.errorMessage = `${this.errorMessage} [${this.src}]`
+			}
 		},
-		updateAlt() {
-			this.alt = this.$refs.altInput.value
+		updateAlt(event) {
+			this.updateAttributes({
+				alt: event.target.value,
+			})
 		},
 		onLoaded() {
 			this.loaded = true
@@ -294,7 +300,7 @@ export default {
 	}
 
 	.image__main--broken-icon, .image__error-message {
-		color: var(--color-error);
+		color: var(--color-text-maxcontrast);
 	}
 
 	.image__view {
