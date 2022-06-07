@@ -73,3 +73,9 @@ li.ProseMirror-selectednode:after {
     transform: translate3d(0, 0, 0);
   }
 }
+
+[data-handler="text"] {
+  background-color: var(--color-main-background);
+  border-top: 3px solid var(--color-primary-element);
+  font-weight: bold;
+}
