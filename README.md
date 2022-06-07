@@ -38,3 +38,16 @@ Currently this app requires the master branch of the [Viewer app](https://github
 ### 🧙 Advanced development stuff
 To build the Javascript whenever you make changes, instead of the full `make` you can also run `npm run build`. Or run `npm run watch` to rebuild on every file save.
 
+#### 🐞 Testing the app
+Currently this app uses three different kinds of tests:
+
+For testing the backend (PHP) [Psalm](https://psalm.dev/) and [PHPUnit](https://phpunit.de/) are used,
+you can run the testcases (placed in `tests/`) using the composer scripts `psalm` and `test:unit`.
+
+For testing the frontend [jest](https://jestjs.io/) is used for unittests, whereas [cypress](https://www.cypress.io/) is used for end2end testing.
+The unittests are also placed in `tests/`, the cypress tests are placed in `cypress/`.
+You can run the tests using the package scripts `npm run test` (jest), and respective `npm run test:cypress` (cypress).
+
+Please note the cypress tests require a nextcloud server running, the if no running server is detected a docker container will be started,
+this requires the current user to be in the `docker` group.
+Or you might set the `CYPRESS_baseUrl` environment variable for a custom nextcloud server.
