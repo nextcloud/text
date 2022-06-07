@@ -141,7 +141,7 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 
 Cypress.Commands.add('createFolder', dirName => {
 	cy.window().then(win => {
-		win.OC.Files.getClient().createDirectory(dirName)
+		return win.OC.Files.getClient().createDirectory(dirName)
 	})
 })
 

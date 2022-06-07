@@ -21,18 +21,19 @@
   -->
 
 <template>
-	<EditorContent v-if="editor" id="read-only-editor" :editor="editor" />
+	<RichTextReader v-if="isRichEditor"
+		:content="content" />
+	<PlainTextReader v-else
+		:content="content" />
 </template>
 
 <script>
-import { EditorContent } from '@tiptap/vue-2'
-import escapeHtml from 'escape-html'
-import { createEditor } from '../EditorFactory.js'
-import markdownit from './../markdownit/index.js'
+import PlainTextReader from './PlainTextReader.vue'
+import RichTextReader from './RichTextReader.vue'
 
 export default {
-	name: 'ReadOnlyEditor',
-	components: { EditorContent },
+	name: 'Reader',
+	components: { PlainTextReader, RichTextReader },
 	props: {
 		content: {
 			type: String,
@@ -42,21 +43,6 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-	},
-	data: () => {
-		return {
-			editor: null,
-		}
-	},
-	mounted() {
-		this.editor = createEditor({
-			content: this.isRichEditor ? markdownit.render(this.content) : '<pre>' + escapeHtml(this.content) + '</pre>',
-			enableRichEditing: this.isRichEditor,
-		})
-		this.editor.setOptions({ editable: false })
-	},
-	beforeDestroy() {
-		this.editor.destroy()
 	},
 }
 </script>
@@ -78,7 +64,4 @@ export default {
 		}
 	}
 
-</style>
-<style lang="scss">
-	@import './../../css/prosemirror';
 </style>

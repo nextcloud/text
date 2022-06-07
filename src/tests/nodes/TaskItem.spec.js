@@ -1,4 +1,5 @@
-import { TaskList, TaskItem } from './../../nodes'
+import TaskList from './../../nodes/TaskList'
+import TaskItem from './../../nodes/TaskItem'
 import Markdown from './../../extensions/Markdown'
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'

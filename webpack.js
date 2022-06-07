@@ -11,6 +11,26 @@ webpackConfig.entry = {
 
 webpackConfig.output.chunkFilename = '[id].js?v=[contenthash]'
 
+// The app name `text` in appinfo
+// and the package name `@nextcloud/text in package.json differ.
+// webpack-vue-config reads the app name from package.json.
+// But for bundling we need the one from appinfo.
+// Can be removed after merge of
+// https://github.com/nextcloud/webpack-vue-config/pull/338
+
+const appName = 'text'
+
+Object.assign(webpackConfig.output, {
+	publicPath: path.join('/apps/', appName, '/js/'),
+	filename: `${appName}-[name].js?v=[contenthash]`,
+	devtoolNamespace: appName,
+	devtoolModuleFilenameTemplate(info) {
+		const rootDir = process.cwd()
+		const rel = path.relative(rootDir, info.absoluteResourcePath)
+		return `webpack:///${appName}/${rel}`
+	},
+})
+
 webpackConfig.optimization.chunkIds = 'named'
 webpackConfig.optimization.splitChunks.cacheGroups = {
 	defaultVendors: {

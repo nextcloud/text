@@ -21,38 +21,15 @@
 */
 
 /* eslint-disable import/no-named-as-default */
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
-import History from '@tiptap/extension-history'
-import Blockquote from '@tiptap/extension-blockquote'
-import Placeholder from '@tiptap/extension-placeholder'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import CodeBlock from '@tiptap/extension-code-block'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Dropcursor from '@tiptap/extension-dropcursor'
-import HorizontalRule from '@tiptap/extension-horizontal-rule'
-import Table from './nodes/Table.js'
-import TableCell from './nodes/TableCell.js'
-import TableHeader from './nodes/TableHeader.js'
-import TableHeadRow from './nodes/TableHeadRow.js'
-import TableRow from './nodes/TableRow.js'
+import History from '@tiptap/extension-history'
+import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
+import TrailingNode from './nodes/TrailingNode.js'
+import EditableTable from './nodes/EditableTable.js'
 import { Editor } from '@tiptap/core'
-import { Strong, Italic, Strike, Link, Underline } from './marks/index.js'
-import {
-	Image,
-	PlainTextDocument,
-	TrailingNode,
-	Heading,
-	BulletList,
-	TaskList,
-	TaskItem,
-	Callout,
-} from './nodes/index.js'
-import { HardBreak, Markdown, Emoji } from './extensions/index.js'
+import { Emoji, Markdown, PlainText, RichText } from './extensions/index.js'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
@@ -76,35 +53,14 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, currentDirectory }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
 			Markdown,
-			Document,
-			Paragraph,
-			HardBreak,
-			Heading,
-			Strong,
-			Italic,
-			Strike,
-			Link.configure({ openOnClick: true }),
-			Blockquote,
-			CodeBlock,
-			BulletList,
-			HorizontalRule,
-			OrderedList,
-			ListItem,
-			Table,
-			TableCell,
-			TableHeader,
-			TableHeadRow,
-			TableRow,
-			TaskList,
-			TaskItem,
-			Callout,
-			Underline,
-			Image.configure({ currentDirectory, inline: true }),
+			RichText.configure({
+				extensions: [EditableTable],
+			}),
 			Emoji.configure({
 				suggestion: {
 					items: ({ query }) => {
@@ -164,10 +120,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			TrailingNode,
 		]
 	} else {
-		richEditingExtensions = [
-			PlainTextDocument,
-			CodeBlockLowlight,
-		]
+		richEditingExtensions = [PlainText]
 	}
 	extensions = extensions || []
 	return new Editor({
@@ -175,7 +128,6 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		onCreate,
 		onUpdate,
 		extensions: [
-			Text,
 			History,
 			...richEditingExtensions,
 		].concat(extensions),

@@ -1,2 +1,2 @@
-(self.webpackChunktext=self.webpackChunktext||[]).push([["highlight/clojure-repl"],{36746:e=>{e.exports=function(e){return{name:"Clojure REPL",contains:[{className:"meta",begin:/^([\w.-]+|\s*#_)?=>/,starts:{end:/$/,subLanguage:"clojure"}}]}}}}]);
-//# sourceMappingURL=clojure-repl.js.map?v=f36399505c115a16a0f6
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/clojure-repl"],{36746:e=>{e.exports=function(e){return{name:"Clojure REPL",contains:[{className:"meta",begin:/^([\w.-]+|\s*#_)?=>/,starts:{end:/$/,subLanguage:"clojure"}}]}}}}]);
+//# sourceMappingURL=clojure-repl.js.map?v=3d6923be929c0dfc5d9b

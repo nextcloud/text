@@ -75,7 +75,7 @@
 						:editor="$editor" />
 				</div>
 			</EditorMidiaHandler>
-			<ReadOnlyEditor v-if="hasSyncCollission"
+			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</div>
@@ -94,10 +94,12 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { EditorContent } from '@tiptap/vue-2'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
+import { getCurrentUser } from '@nextcloud/auth'
 
 import {
 	EDITOR,
 	FILE,
+	IMAGE_RESOLVER,
 	IS_MOBILE,
 	IS_PUBLIC,
 	IS_RICH_EDITOR,
@@ -106,6 +108,7 @@ import {
 } from './EditorWrapper.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import ImageResolver from './../services/ImageResolver.js'
 import { getRandomGuestName } from './../helpers/index.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
@@ -128,7 +131,7 @@ export default {
 		EditorMidiaHandler,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
-		ReadOnlyEditor: () => import(/* webpackChunkName: "editor" */'./ReadOnlyEditor.vue'),
+		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
@@ -157,6 +160,9 @@ export default {
 			},
 			[FILE]: {
 				get: () => this.fileData,
+			},
+			[IMAGE_RESOLVER]: {
+				get: () => this.$imageResolver,
 			},
 			[IS_PUBLIC]: {
 				get: () => this.isPublic,
@@ -335,6 +341,7 @@ export default {
 	created() {
 		this.$editor = null
 		this.$syncService = null
+		this.$imageResolver = null
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
@@ -483,6 +490,12 @@ export default {
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$store.dispatch('setCurrentSession', this.currentSession)
+			this.$imageResolver = new ImageResolver({
+				session: this.currentSession,
+				user: getCurrentUser(),
+				shareToken: this.shareToken,
+				currentDirectory: this.relativePath,
+			})
 		},
 
 		onLoaded({ documentSource }) {
@@ -549,7 +562,6 @@ export default {
 							}),
 						],
 						enableRichEditing: this.isRichEditor,
-						currentDirectory: this.currentDirectory,
 					})
 					this.$editor.on('focus', () => {
 						this.$emit('focus')

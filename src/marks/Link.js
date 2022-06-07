@@ -21,20 +21,29 @@
  */
 
 import TipTapLink from '@tiptap/extension-link'
-import { domHref, parseHref } from './../helpers/links.js'
+import { domHref, parseHref, openLink } from './../helpers/links.js'
 import { clickHandler } from '../plugins/link.js'
 
 const Link = TipTapLink.extend({
 
-	attrs: {
-		href: {
-			default: null,
-		},
+	addOptions() {
+		return {
+			...this.parent?.(),
+			onClick: openLink,
+		}
+	},
+
+	addAttributes() {
+		return {
+			href: {
+				default: null,
+			},
+		}
 	},
 
 	inclusive: false,
 
-	parseDOM: [
+	parseHTML: [
 		{
 			tag: 'a[href]',
 			getAttrs: dom => ({
@@ -43,10 +52,10 @@ const Link = TipTapLink.extend({
 		},
 	],
 
-	toDOM: node => ['a', {
-		...node.attrs,
-		href: domHref(node),
-		title: node.attrs.href,
+	renderHTML: ({ mark, HTMLAttributes }) => ['a', {
+		...mark.attrs,
+		href: domHref(mark),
+		title: mark.attrs.href,
 		rel: 'noopener noreferrer nofollow',
 	}, 0],
 
@@ -62,7 +71,14 @@ const Link = TipTapLink.extend({
 		}
 
 		// add custom click handler
-		return [...plugins, clickHandler({ editor: this.editor, type: this.type })]
+		return [
+			...plugins,
+			clickHandler({
+				editor: this.editor,
+				type: this.type,
+				onClick: this.options.onClick,
+			}),
+		]
 	},
 })
 

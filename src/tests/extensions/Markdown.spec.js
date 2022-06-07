@@ -1,7 +1,8 @@
 import { Markdown } from './../../extensions';
 import { createMarkdownSerializer } from './../../extensions/Markdown';
 import Underline from './../../marks/Underline';
-import { TaskList, TaskItem } from './../../nodes'
+import TaskList from './../../nodes/TaskList';
+import TaskItem from './../../nodes/TaskItem'
 import Image from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
 import createEditor from './../createEditor'

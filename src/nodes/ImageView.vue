@@ -75,13 +75,12 @@
 </template>
 
 <script>
-import path from 'path'
-import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
-import { getCurrentUser } from '@nextcloud/auth'
+import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
 import store from './../mixins/store.js'
+import { useImageResolver } from './../components/EditorWrapper.provider.js'
 
 const imageMimes = [
 	'image/png',
@@ -123,6 +122,7 @@ export default {
 	},
 	mixins: [
 		store,
+		useImageResolver,
 	],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
@@ -135,83 +135,17 @@ export default {
 		}
 	},
 	computed: {
-		currentSession() {
-			return this.$store.state.currentSession
-		},
-		davUrl() {
-			if (getCurrentUser()) {
-				const uid = getCurrentUser().uid
-				const encoded = encodeURI(this.filePath)
-				return generateRemoteUrl(`dav/files/${uid}${encoded}`)
-			} else {
-				return generateUrl('/s/{token}/download?path={dirname}&files={basename}',
-					{
-						token: this.token,
-						dirname: this.extension.options.currentDirectory,
-						basename: this.basename,
-					})
-			}
-		},
-		isRemoteUrl() {
-			return this.src.startsWith('http://')
-				|| this.src.startsWith('https://')
-		},
-		isPreviewUrl() {
-			return this.src.match(/^(\/index.php)?\/core\/preview/)
-				|| this.src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
-		},
-		isDataUrl() {
-			return this.src.startsWith('data:')
-		},
-		isDirectUrl() {
-			return (this.isRemoteUrl || this.isPreviewUrl || this.isDataUrl)
-		},
-		basename() {
-			return decodeURI(this.src.split('?')[0])
-		},
-		fileId() {
+		imageFileId() {
 			return getQueryVariable(this.src, 'fileId')
 		},
-		filePath() {
-			const f = [
-				this.extension.options.currentDirectory,
-				this.basename,
-			].join('/')
-			return path.normalize(f)
-		},
-		hasPreview() {
-			return getQueryVariable(this.src, 'hasPreview') === 'true'
-		},
-		previewUrl() {
-			const fileQuery = (this.fileId)
-				? `?fileId=${this.fileId}&file=${encodeURIComponent(this.filePath)}`
-				: `?file=${encodeURIComponent(this.filePath)}`
-			const query = fileQuery + '&x=1024&y=1024&a=true'
-
-			if (getCurrentUser()) {
-				return generateUrl('/core/preview') + query
-			} else {
-				return generateUrl(`/apps/files_sharing/publicpreview/${this.token}${query}`)
-			}
-		},
-		mime() {
-			return getQueryVariable(this.src, 'mimetype')
-		},
-		mimeIcon() {
-			if (this.mime) {
-				const mimeIconUrl = window.OC.MimeType.getIconUrl(this.mime)
-				return { backgroundImage: `url(${mimeIconUrl})` }
-			}
-			return {}
-		},
 		isSupportedImage() {
-			return typeof this.mime === 'undefined'
-				|| imageMimes.indexOf(this.mime) !== -1
+			const mime = getQueryVariable(this.src, 'mimetype')
+			return typeof mime === 'undefined'
+				|| imageMimes.indexOf(mime) !== -1
 		},
 		internalLinkOrImage() {
-			const fileId = getQueryVariable(this.src, 'fileId')
-			if (fileId) {
-				return generateUrl('/f/' + fileId)
+			if (this.imageFileId) {
+				return generateUrl('/f/' + this.imageFileId)
 			}
 			return this.src
 		},
@@ -257,34 +191,15 @@ export default {
 	},
 	methods: {
 		async init() {
-			if (this.src.startsWith('text://')) {
-				const imageFileName = getQueryVariable(this.src, 'imageFileName')
-				return this.loadImage(this.getTextApiUrl(imageFileName))
-			}
-			if (this.src.startsWith(`.attachments.${this.currentSession?.documentId}/`)) {
-				const imageFileName = decodeURIComponent(this.src.replace(`.attachments.${this.currentSession?.documentId}/`, '').split('?')[0])
-				return this.loadImage(this.getTextApiUrl(imageFileName))
-			}
-			if (this.isDirectUrl) {
-				return this.loadImage(this.src)
-			}
-			if (this.hasPreview && this.mime !== 'image/gif') {
-				return this.loadImage(this.previewUrl)
-			}
-			// if it starts with '.attachments.1234/'
-			if (this.src.match(/^\.attachments\.\d+\//)) {
-				// try the webdav url
-				return this.loadImage(this.davUrl).catch((e) => {
-					// try the attachment API
-					const imageFileName = decodeURIComponent(this.src.replace(/\.attachments\.\d+\//, '').split('?')[0])
-					const textApiUrl = this.getTextApiUrl(imageFileName)
-					return this.loadImage(textApiUrl).then(() => {
-						// TODO if attachment works, rewrite the url with correct document ID
-					})
-				})
-			}
-			this.loadImage(this.davUrl)
+			const [url, fallback] = this.$imageResolver.resolve(this.src)
+			this.loadImage(url).catch((e) => {
+				if (fallback) {
+					this.loadImage(fallback)
+					// TODO if fallback works, rewrite the url with correct document ID
+				}
+			})
 		},
+
 		async loadImage(imageUrl) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
@@ -312,28 +227,6 @@ export default {
 			this.$nextTick(() => {
 				this.editor.commands.scrollIntoView()
 			})
-		},
-		getTextApiUrl(imageFileName) {
-			const documentId = this.currentSession?.documentId
-			const sessionId = this.currentSession?.id
-			const sessionToken = this.currentSession?.token
-			if (getCurrentUser() || !this.token) {
-				return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}',
-					{
-						documentId,
-						sessionId,
-						sessionToken,
-						imageFileName,
-					})
-			}
-			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}',
-				{
-					documentId,
-					sessionId,
-					sessionToken,
-					imageFileName,
-					shareToken: this.token,
-				})
 		},
 	},
 }

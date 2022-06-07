@@ -173,10 +173,6 @@ describe('Workspace', function() {
 		})
 
 		beforeEach(function() {
-			cy.login(randUser, 'password')
-			// isolate tests - each happens in it's own folder
-			cy.createFolder(Cypress.currentTest.title)
-			cy.visit(`apps/files?dir=/${encodeURIComponent(Cypress.currentTest.title)}`)
 			cy.openWorkspace().type('Callout')
 		})
 		// eslint-disable-next-line cypress/no-async-tests

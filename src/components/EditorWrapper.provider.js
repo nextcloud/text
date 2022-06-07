@@ -22,6 +22,7 @@
 
 export const EDITOR = Symbol('tiptap:editor')
 export const FILE = Symbol('editor:file')
+export const IMAGE_RESOLVER = Symbol('image:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
 export const IS_PUBLIC = Symbol('editor:is-public')
 export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
@@ -73,6 +74,20 @@ export const useFileMixin = {
 				relativePath: null,
 				document: null,
 			}),
+		},
+	},
+}
+
+export const useImageResolver = {
+	inject: {
+		$imageResolver: {
+			from: IMAGE_RESOLVER,
+			default: {
+				resolve(src) {
+					console.warn('No image resolver provided. Some image sources cannot be resolved.')
+					return [src]
+				},
+			},
 		},
 	},
 }

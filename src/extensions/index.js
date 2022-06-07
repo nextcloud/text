@@ -26,6 +26,8 @@ import Keymap from './Keymap.js'
 import UserColor from './UserColor.js'
 import Collaboration from './Collaboration.js'
 import Markdown from './Markdown.js'
+import PlainText from './PlainText.js'
+import RichText from './RichText.js'
 
 export {
 	Emoji,
@@ -34,4 +36,6 @@ export {
 	UserColor,
 	Collaboration,
 	Markdown,
+	PlainText,
+	RichText,
 }

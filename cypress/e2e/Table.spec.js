@@ -1,8 +1,4 @@
-import Table from './../../src/nodes/Table'
-import TableCell from './../../src/nodes/TableCell'
-import TableHeader from './../../src/nodes/TableHeader'
-import TableRow from './../../src/nodes/TableRow'
-import TableHeadRow from './../../src/nodes/TableHeadRow'
+import EditableTable from './../../src/nodes/EditableTable'
 import Markdown from './../../src/extensions/Markdown'
 import markdownit from './../../src/markdownit'
 import { createMarkdownSerializer } from './../../src/extensions/Markdown';
@@ -16,11 +12,7 @@ describe('ListItem extension integrated in the editor', () => {
 		content: '',
 		extensions: [
 			Markdown,
-			Table,
-			TableCell,
-			TableHeader,
-			TableHeadRow,
-			TableRow,
+			EditableTable,
 		],
 	})
 

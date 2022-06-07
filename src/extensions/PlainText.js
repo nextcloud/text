@@ -1,7 +1,7 @@
 /*
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
- * @author Julius Härtl <jus@bitgrid.net>
+ * @author Max <max@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -18,24 +18,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- */
+*/
 
-import Image from './Image.js'
-import PlainTextDocument from './PlainTextDocument.js'
-import BulletList from './BulletList.js'
-import TaskItem from './TaskItem.js'
-import TaskList from './TaskList.js'
-import TrailingNode from './TrailingNode.js'
-import Heading from './Heading.js'
-import Callout from './Callouts.js'
+import { Extension } from '@tiptap/core'
 
-export {
-	Image,
-	PlainTextDocument,
-	BulletList,
-	TaskItem,
-	TaskList,
-	TrailingNode,
-	Heading,
-	Callout,
-}
+/* eslint-disable import/no-named-as-default */
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Text from '@tiptap/extension-text'
+/* eslint-enable import/no-named-as-default */
+
+import PlainTextDocument from './../nodes/PlainTextDocument.js'
+
+export default Extension.create({
+	name: 'PlainText',
+
+	addExtensions() {
+		return [
+			PlainTextDocument,
+			Text,
+			CodeBlockLowlight,
+		]
+	},
+
+})

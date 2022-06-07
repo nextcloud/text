@@ -32,7 +32,6 @@ const Image = TiptapImage.extend({
 	addOptions() {
 		return {
 			...this.parent?.(),
-			currentDirectory: undefined,
 		}
 	},
 
