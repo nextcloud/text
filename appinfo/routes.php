@@ -29,7 +29,10 @@ return [
 	'routes' => [
 		['name' => 'Image#insertImageFile', 'url' => '/image/filepath', 'verb' => 'POST'],
 		['name' => 'Image#uploadImage', 'url' => '/image/upload', 'verb' => 'POST'],
-		['name' => 'Image#getImage', 'url' => '/image', 'verb' => 'GET'],
+		['name' => 'Image#getImageFile', 'url' => '/image', 'verb' => 'GET'],
+		['name' => 'Image#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
+		['name' => 'Image#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
+		['name' => 'Image#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
 
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
 		['name' => 'Session#fetch', 'url' => '/session/fetch', 'verb' => 'POST'],

@@ -284,18 +284,6 @@ class SyncService {
 		})
 	}
 
-	insertImageLink(imageLink) {
-		const params = {
-			documentId: this.document.id,
-			sessionId: this.session.id,
-			sessionToken: this.session.token,
-			shareToken: this.options.shareToken || '',
-			link: imageLink,
-		}
-		const url = endpointUrl('image/link')
-		return axios.post(url, params)
-	}
-
 	insertImageFile(imagePath) {
 		const params = {
 			documentId: this.document.id,

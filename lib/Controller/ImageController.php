@@ -33,6 +33,7 @@ use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\Files\IMimeTypeDetector;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -121,9 +122,11 @@ class ImageController extends Controller {
 		try {
 			$file = $this->getUploadedFile('image');
 			if (isset($file['tmp_name'], $file['name'], $file['type'])) {
+				/*
 				if (!in_array($file['type'], self::IMAGE_MIME_TYPES, true)) {
 					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
 				}
+				*/
 				$newFileResource = fopen($file['tmp_name'], 'rb');
 				if ($newFileResource === false) {
 					throw new Exception('Could not read file');
@@ -179,7 +182,7 @@ class ImageController extends Controller {
 	 * @NoCSRFRequired
 	 * @PublicPage
 	 *
-	 * Serve the images in the editor
+	 * Serve the image files in the editor
 	 * @param int $documentId
 	 * @param int $sessionId
 	 * @param string $sessionToken
@@ -187,17 +190,17 @@ class ImageController extends Controller {
 	 * @param string|null $shareToken
 	 * @return DataDownloadResponse|DataResponse
 	 */
-	public function getImage(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null) {
+	public function getImageFile(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null) {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse('', Http::STATUS_FORBIDDEN);
 		}
 
 		try {
 			if ($shareToken) {
-				$imageFile = $this->imageService->getImagePublic($documentId, $imageFileName, $shareToken);
+				$imageFile = $this->imageService->getImageFilePublic($documentId, $imageFileName, $shareToken);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$imageFile = $this->imageService->getImage($documentId, $imageFileName, $userId);
+				$imageFile = $this->imageService->getImageFile($documentId, $imageFileName, $userId);
 			}
 			return $imageFile !== null
 				? new DataDownloadResponse(
@@ -207,7 +210,124 @@ class ImageController extends Controller {
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
-			$this->logger->error('getImage error', ['exception' => $e]);
+			$this->logger->error('getImageFile error', ['exception' => $e]);
+			return new DataResponse('', Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	* @NoAdminRequired
+	* @NoCSRFRequired
+	* @PublicPage
+	*
+	* Serve the media files in the editor
+	* @param int $documentId
+	* @param int $sessionId
+	* @param string $sessionToken
+	* @param string $mediaFileName
+	* @param string|null $shareToken
+	* @return DataDownloadResponse|DataResponse
+	*/
+	public function getMediaFile(int $documentId, int $sessionId, string $sessionToken, string $mediaFileName, ?string $shareToken = null) {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse('', Http::STATUS_FORBIDDEN);
+		}
+
+		try {
+			if ($shareToken) {
+				$mediaFile = $this->imageService->getMediaFilePublic($documentId, $mediaFileName, $shareToken);
+			} else {
+				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
+				$mediaFile = $this->imageService->getMediaFile($documentId, $mediaFileName, $userId);
+			}
+			return $mediaFile !== null
+				? new DataDownloadResponse(
+					$mediaFile->getContent(),
+					(string) Http::STATUS_OK,
+					$this->getSecureMimeType($mediaFile->getMimeType())
+				)
+				: new DataResponse('', Http::STATUS_NOT_FOUND);
+		} catch (Exception $e) {
+			$this->logger->error('getMediaFile error', ['exception' => $e]);
+			return new DataResponse('', Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @PublicPage
+	 *
+	 * Serve the media files preview in the editor
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string $mediaFileName
+	 * @param string|null $shareToken
+	 * @return DataDownloadResponse|DataResponse|RedirectResponse
+	 */
+	public function getMediaFilePreview(int $documentId, int $sessionId, string $sessionToken, string $mediaFileName, ?string $shareToken = null) {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse('', Http::STATUS_FORBIDDEN);
+		}
+
+		try {
+			if ($shareToken) {
+				$preview = $this->imageService->getMediaFilePreviewPublic($documentId, $mediaFileName, $shareToken);
+			} else {
+				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
+				$preview = $this->imageService->getMediaFilePreview($documentId, $mediaFileName, $userId);
+			}
+			if ($preview === null) {
+				return new DataResponse('', Http::STATUS_NOT_FOUND);
+			}
+			if ($preview['type'] === 'file') {
+				return new DataDownloadResponse(
+					$preview['file']->getContent(),
+					(string) Http::STATUS_OK,
+					$this->getSecureMimeType($preview['file']->getMimeType())
+				);
+			} elseif ($preview['type'] === 'icon') {
+				return new RedirectResponse($preview['iconUrl']);
+			}
+		} catch (Exception $e) {
+			$this->logger->error('getMediaFilePreview error', ['exception' => $e]);
+			return new DataResponse('', Http::STATUS_NOT_FOUND);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @PublicPage
+	 *
+	 * Serve the media files metadata in the editor
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string $mediaFileName
+	 * @param string|null $shareToken
+	 * @return DataResponse
+	 */
+	public function getMediaFileMetadata(int $documentId, int $sessionId, string $sessionToken,
+										 string $mediaFileName, ?string $shareToken = null): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse('', Http::STATUS_FORBIDDEN);
+		}
+
+		try {
+			if ($shareToken) {
+				$metadata = $this->imageService->getMediaFileMetadataPublic($documentId, $mediaFileName, $shareToken);
+			} else {
+				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
+				$metadata = $this->imageService->getMediaFileMetadataPrivate($documentId, $mediaFileName, $userId);
+			}
+			if ($metadata === null) {
+				return new DataResponse('', Http::STATUS_NOT_FOUND);
+			}
+			return new DataResponse($metadata);
+		} catch (Exception $e) {
+			$this->logger->error('getMediaFileMetadata error', ['exception' => $e]);
 			return new DataResponse('', Http::STATUS_NOT_FOUND);
 		}
 	}

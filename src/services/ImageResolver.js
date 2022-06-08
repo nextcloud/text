@@ -21,6 +21,7 @@
  */
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 import pathNormalize from 'path-normalize'
 
 export default class ImageResolver {
@@ -50,35 +51,70 @@ export default class ImageResolver {
 	resolve(src) {
 		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
-			return [this.#getAttachmentUrl(imageFileName)]
+			return [{
+				type: 'image',
+				url: this.#getImageAttachmentUrl(imageFileName),
+			}]
 		}
 
 		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
-			return [this.#getAttachmentUrl(imageFileName)]
+			return [
+				{
+					type: 'image',
+					url: this.#getImageAttachmentUrl(imageFileName),
+				},
+				{
+					type: 'media',
+					url: this.#getMediaPreviewUrl(imageFileName),
+					name: imageFileName,
+				},
+			]
 		}
 
 		if (isDirectUrl(src)) {
-			return [src]
+			return [{
+				type: 'image',
+				url: src,
+			}]
 		}
 
 		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
-			return [this.#previewUrl(src)]
+			return [{
+				type: 'image',
+				url: this.#previewUrl(src),
+			}]
 		}
 
 		// if it starts with '.attachments.1234/'
 		if (src.match(/^\.attachments\.\d+\//)) {
 			const imageFileName = this.#relativePath(src)
 				.replace(/\.attachments\.\d+\//, '')
-			const attachmentUrl = this.#getAttachmentUrl(imageFileName)
-			// try the webdav url and attachment API if the fails
-			return [this.#davUrl(src), attachmentUrl]
+			// try the webdav url and attachment API if it fails
+			return [
+				{
+					type: 'image',
+					url: this.#davUrl(src),
+				},
+				{
+					type: 'image',
+					url: this.#getImageAttachmentUrl(imageFileName),
+				},
+				{
+					type: 'media',
+					url: this.#getMediaPreviewUrl(imageFileName),
+					name: imageFileName,
+				},
+			]
 		}
 
-		return [this.#davUrl(src)]
+		return [{
+			type: 'image',
+			url: this.#davUrl(src),
+		}]
 	}
 
-	#getAttachmentUrl(imageFileName) {
+	#getImageAttachmentUrl(imageFileName) {
 		if (!this.#session) {
 			return this.#davUrl(
 				`${this.#attachmentDirectory}/${imageFileName}`
@@ -97,6 +133,40 @@ export default class ImageResolver {
 			imageFileName,
 			shareToken: this.#shareToken,
 		})
+	}
+
+	#getMediaPreviewUrl(mediaFileName) {
+		if (this.#user || !this.#shareToken) {
+			return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
+				...this.#textApiParams(),
+				mediaFileName,
+			})
+		}
+
+		return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
+			...this.#textApiParams(),
+			mediaFileName,
+			shareToken: this.#shareToken,
+		})
+	}
+
+	#getMediaMetadataUrl(mediaFileName) {
+		if (this.#user || !this.#shareToken) {
+			return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
+				...this.#textApiParams(),
+				mediaFileName,
+			})
+		}
+
+		return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
+			...this.#textApiParams(),
+			mediaFileName,
+			shareToken: this.#shareToken,
+		})
+	}
+
+	getMediaMetadata(mediaFileName) {
+		return axios.get(this.#getMediaMetadataUrl(mediaFileName))
 	}
 
 	#textApiParams() {

@@ -34,10 +34,25 @@
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<template v-if="!failed">
-						<img v-show="loaded"
-							:src="imageUrl"
-							class="image__main"
-							@load="onLoaded">
+						<div v-if="isMediaAttachment"
+							class="media">
+							<img v-show="loaded"
+								 :src="imageUrl"
+								 class="image__main"
+								 @load="onLoaded">
+							<span class="name">
+								{{ alt }}
+							</span>
+							<span class="size">
+								{{ attachmentMetadata.size }}
+							</span>
+						</div>
+						<div v-else>
+							<img v-show="loaded"
+								:src="imageUrl"
+								class="image__main"
+								@load="onLoaded">
+						</div>
 					</template>
 					<template v-else>
 						<ImageIcon class="image__main image__main--broken-icon" :size="100" />
@@ -45,7 +60,8 @@
 				</transition>
 				<transition name="fade">
 					<div v-show="loaded" class="image__caption">
-						<input ref="altInput"
+						<input v-show="!isMediaAttachment"
+							ref="altInput"
 							type="text"
 							class="image__caption__input"
 							:value="alt"
@@ -143,9 +159,14 @@ export default {
 			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
+			attachmentType: null,
+			attachmentMetadata: {},
 		}
 	},
 	computed: {
+		isMediaAttachment() {
+			return this.attachmentType !== 'image'
+		},
 		canDisplayImage() {
 			if (!this.isSupportedImage) {
 				return false
@@ -212,30 +233,43 @@ export default {
 	},
 	methods: {
 		async init() {
-			const [url, fallback] = this.$imageResolver.resolve(this.src)
-			return this.loadImage(url).catch((e) => {
-				if (fallback) {
-					return this.loadImage(fallback)
+			const candidates = this.$imageResolver.resolve(this.src)
+			return this.load(candidates)
+		},
+		async load(candidates) {
+			const candidate = candidates.shift()
+			return this.loadImage(candidate.url, candidate.type, candidate.name).catch((e) => {
+				if (candidates.length > 0) {
+					return this.load(candidates)
 					// TODO if fallback works, rewrite the url with correct document ID
 				}
-
 				return Promise.reject(e)
 			})
 		},
-
-		async loadImage(imageUrl) {
+		async loadImage(imageUrl, attachmentType, name = null) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = () => {
 					this.imageUrl = imageUrl
 					this.imageLoaded = true
 					this.loaded = true
+					this.attachmentType = attachmentType
+					console.debug('SUCCESS type', attachmentType)
+					if (attachmentType === 'media') {
+						this.loadMediaMetadata(name)
+					}
 					resolve(imageUrl)
 				}
 				img.onerror = (e) => {
 					reject(new LoadImageError(e, imageUrl))
 				}
 				img.src = imageUrl
+			})
+		},
+		loadMediaMetadata(name) {
+			this.$imageResolver.getMediaMetadata(name).then((response) => {
+				console.debug('GOTCHAAAAAA', response.data)
+				this.attachmentMetadata = response.data
 			})
 		},
 		onImageLoadFailure(err) {
@@ -304,6 +338,20 @@ export default {
 
 	.image__main {
 		max-height: calc(100vh - 50px - 50px);
+	}
+
+	.media {
+		display: flex;
+		align-items: center;
+		img {
+			width: 32px;
+			height: 32px;
+		}
+		.name {
+			flex-grow: 1;
+			text-align: left;
+			margin-left: 8px;
+		}
 	}
 
 	.image__error-message {
