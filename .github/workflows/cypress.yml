@@ -54,12 +54,6 @@ jobs:
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
-      - name: npm install, build viewer in testing mode
-        working-directory: apps/viewer
-        run: |
-          npm ci
-          TESTING=true npm run build
-
       - name: Checkout ${{ env.APP_NAME }}
         uses: actions/checkout@v3
         with:
