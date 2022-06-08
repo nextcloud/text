@@ -494,7 +494,7 @@ export default {
 				session: this.currentSession,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
-				currentDirectory: this.relativePath,
+				currentDirectory: this.currentDirectory,
 			})
 		},
 
