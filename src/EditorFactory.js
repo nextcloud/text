@@ -52,7 +52,7 @@ import {
 	TaskItem,
 	Callout,
 } from './nodes'
-import { Markdown, Emoji } from './extensions'
+import { HardBreak, Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
@@ -83,6 +83,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Markdown,
 			Document,
 			Paragraph,
+			HardBreak,
 			Heading,
 			Strong,
 			Italic,

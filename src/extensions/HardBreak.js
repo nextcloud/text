@@ -1,5 +1,5 @@
 /*
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
@@ -18,20 +18,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- */
+*/
 
-import Emoji from './Emoji'
-import HardBreak from './HardBreak'
-import Keymap from './Keymap'
-import UserColor from './UserColor'
-import Collaboration from './Collaboration'
-import Markdown from './Markdown'
+import TipTapHardBreak from '@tiptap/extension-hard-break'
 
-export {
-	Emoji,
-	HardBreak,
-	Keymap,
-	UserColor,
-	Collaboration,
-	Markdown,
-}
+const HardBreak = TipTapHardBreak.extend({
+
+	toMarkdown(state, node, parent, index) {
+		for (let i = index + 1; i < parent.childCount; i++) {
+			if (parent.child(i).type !== node.type) {
+				state.write('  \n')
+				return
+			}
+		}
+	},
+})
+
+export default HardBreak
