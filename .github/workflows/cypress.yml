@@ -95,6 +95,12 @@ jobs:
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
 
+      - name: Build app
+        working-directory: apps/${{ env.APP_NAME }}
+        run: |
+          npm ci
+          npm run build
+
       - name: Cypress run
         uses: cypress-io/github-action@v3
         with:
