@@ -245,7 +245,7 @@ export default {
 			this.errorMessage = err.message
 
 			if (err instanceof LoadImageError) {
-				this.errorMessage = `${this.errorMessage} [${this.src}]`
+				this.errorMessage = `${this.errorMessage} ${this.src}`
 			}
 
 			this.$emit('error', { error: err, src: this.src })
