@@ -1,2 +1,2 @@
-(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[131],{588:function(t,e,n){"use strict";t.exports=function(t){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}}}]);
-//# sourceMappingURL=plaintext.js.map?v=27c5d07764190549b38d
+(window.textWebpackJsonp=window.textWebpackJsonp||[]).push([[131],{587:function(t,e,n){"use strict";t.exports=function(t){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}}}]);
+//# sourceMappingURL=plaintext.js.map?v=18ed69487dc45bdfbd2e
