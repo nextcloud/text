@@ -53,7 +53,10 @@
     </UndefinedClass>
   </file>
   <file src="lib/Db/SessionMapper.php">
-    <MoreSpecificImplementedParamType occurrences="1"/>
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>Session update(Session $session)</code>
+      <code>Session update(Session $session)</code>
+    </MoreSpecificImplementedParamType>
   </file>
   <file src="lib/Db/StepMapper.php">
     <InvalidReturnStatement occurrences="1"/>
