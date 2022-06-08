@@ -105,4 +105,30 @@ describe('Image View', () => {
 				})
 		})
 	})
+
+	describe('fail to load', () => {
+		it.only('direct access', () => {
+			const fileName = `${Cypress.currentTest.title}.md`
+
+			createMarkdown(fileName, '# from root\n\n ![yaha](/yaha.png)')
+
+			cy.openFile(fileName)
+
+			cy.getEditor()
+				.find('[data-component="image-view"]')
+				.should('have.class', 'image-view--failed')
+
+			cy.getEditor()
+				.find('[data-component="image-view"] svg')
+				.should('be.visible')
+
+			cy.getEditor()
+				.find('[data-component="image-view"] .image__error-message')
+				.should('be.visible')
+
+			cy.getEditor()
+				.find('[data-component="image-view"] .image__caption input')
+				.should('have.value', 'yaha')
+		})
+	})
 })
