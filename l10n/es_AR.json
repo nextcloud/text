@@ -10,9 +10,9 @@
     "Bold" : "Negrita",
     "Italic" : "Itálico",
     "Participants" : "Participantes",
-    "Edit" : "Editar",
     "Undo" : "Deshacer",
     "Info" : "Info",
-    "Warning" : "Advertencia"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
+    "Warning" : "Advertencia",
+    "Edit" : "Editar"
+},"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

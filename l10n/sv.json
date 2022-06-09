@@ -17,6 +17,7 @@
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Gemensam dokumentredigering!**\n\n- **📝 Fokuserat skrivande:** Inga distraktioner, endast den formatering du behöver.\n- **🙋 Arbeta tillsammans:** Dela och samarbeta med vänner och kollegor, oavsett om de använder Nextcloud eller inte!\n- **💾 Öppna format:** Filer sparas som [Markdown](https://en.wikipedia.org/wiki/Markdown), så du kan redigera dem från valfri text-app också.\n- **✊ Stark grund:** Vi använder [🐈 tiptap](https://tiptap.scrumpy.io) som baseras på [🦉 ProseMirror](https://prosemirror.net) – tack till dem!",
     "Use current version" : "Använd nuvarande version",
     "Use the saved version" : "Använd den sparade versionen",
+    "Insert an image" : "Infoga en bild",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentet inaktivt {timeout} minuter, klicka för att fortsätta redigera",
     "Reconnect" : "Återanslut",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
@@ -53,11 +54,8 @@
     "Quoted text" : "Citerad text",
     "Code block" : "Kodblock",
     "Some code" : "Någon kod",
-    "Insert emoji" : "Infoga emoji",
     "Upload from computer" : "Ladda upp från dator",
     "Insert from Files" : "Infoga från Filer",
-    "Insert an image" : "Infoga en bild",
-    "Alt" : "Alt",
     "Update Link" : "Uppdatera länk",
     "Add Link" : "Lägg till länk",
     "Link file" : "Länka fil",
@@ -68,7 +66,6 @@
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
-    "Edit" : "Redigera",
     "Undo" : "Ångra",
     "Redo" : "Gör om",
     "Headings" : "Rubriker",
@@ -81,10 +78,13 @@
     "Success" : "Lyckades",
     "Warning" : "Varning",
     "Table" : "Tabell",
-    "Emoji picker" : "Emojiväljare",
+    "Insert emoji" : "Infoga emoji",
     "Insert image" : "Infoga bild",
+    "Alt" : "Alt",
+    "Edit" : "Redigera",
     "New text document" : "Nytt textdokument",
     "Currently active users:" : "Aktiva användare just nu:",
-    "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"]
+    "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
+    "Emoji picker" : "Emojiväljare"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

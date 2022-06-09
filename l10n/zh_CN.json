@@ -17,6 +17,7 @@
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 协作式的文档编辑！**\n\n- **📝 专注的写作：** 无干扰，只有您需要的格式化。\n- **🙋 一起工作：** 与朋友和同事共享协作，无论他们是否使用Nextcloud！\n- **💾 开放标准：** 文件将保存为 [Markdown](https://en.wikipedia.org/wiki/Markdown)，所以您也可以使用任何其他文本应用。\n- **✊ 雄厚基础：** 我们使用 [🐈 tiptap](https://tiptap.scrumpy.io) ，它基于 [🦉 ProseMirror](https://prosemirror.net) – 非常感谢它们！",
     "Use current version" : "使用当前版本",
     "Use the saved version" : "使用保存的版本",
+    "Insert an image" : "插入一张图片",
     "Document idle for {timeout} minutes, click to continue editing" : "文档已闲置 {timeout} 分钟，点击以继续编辑",
     "Reconnect" : "重新连接",
     "The document has been changed outside of the editor. The changes cannot be applied." : "本文档在编辑器外被更改。无法应用更改。",
@@ -57,11 +58,8 @@
     "Quoted text" : "引用文本",
     "Code block" : "代码块",
     "Some code" : "一些代码",
-    "Insert emoji" : "插入 emoji",
     "Upload from computer" : "从电脑上传",
     "Insert from Files" : "从文件插入",
-    "Insert an image" : "插入一张图片",
-    "Alt" : "Alt",
     "Update Link" : "更新链接",
     "Add Link" : "添加链接",
     "Link file" : "链接文件",
@@ -72,7 +70,6 @@
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
-    "Edit" : "编辑",
     "Undo" : "撤销",
     "Redo" : "重做",
     "Headings" : "标题",
@@ -85,10 +82,13 @@
     "Success" : "成功",
     "Warning" : "警告",
     "Table" : "表格",
-    "Emoji picker" : "Emoji 选择器",
+    "Insert emoji" : "插入 emoji",
     "Insert image" : "插入图片",
+    "Alt" : "Alt",
+    "Edit" : "编辑",
     "New text document" : "新建文本文档",
     "Currently active users:" : "当前活跃用户：",
-    "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"]
+    "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
+    "Emoji picker" : "Emoji 选择器"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

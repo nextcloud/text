@@ -6,28 +6,29 @@ use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\ImageService;
 use OCP\Files\Folder;
 
-class TextTest extends \PHPUnit\Framework\TestCase {
+class ImageServiceTest extends \PHPUnit\Framework\TestCase {
+	private static $attachmentNames = [
+		'aaa.png',
+		'aaa (2).png',
+		'aaa 2).png',
+		'aaa (2.png',
+		'aaa ((2.png',
+		'aaa 2)).png',
+		'a[a]a.png',
+		'a(a)a.png',
+		'a](a.png',
+		',;:!?.§-_a_',
+		'a`a`.png',
+	];
+
 	public function testDummy() {
 		$app = new Application();
 		$this->assertEquals('text', $app::APP_NAME);
 	}
 
-	public function testGetAttachmentNamesFromContent() {
-		$contentNames = [
-			'aaa.png',
-			'aaa (2).png',
-			'aaa 2).png',
-			'aaa (2.png',
-			'aaa ((2.png',
-			'aaa 2)).png',
-			'a[a]a.png',
-			'a(a)a.png',
-			'a](a.png',
-			',;:!?.§-_a_',
-			'a`a`.png',
-		];
+	public function testGetOldAttachmentNamesFromContent() {
 		$content = "some content\n";
-		foreach ($contentNames as $name) {
+		foreach (self::$attachmentNames as $name) {
 			// this is how it's generated in MenuBar.vue
 			$linkText = preg_replace('/[[\]]/', '', $name);
 			$encodedName = urlencode($name);
@@ -35,8 +36,25 @@ class TextTest extends \PHPUnit\Framework\TestCase {
 		}
 		$content .= 'some content';
 
-		$computedNames = ImageService::getAttachmentNamesFromContent($content);
-		foreach ($contentNames as $contentName) {
+		$computedNames = ImageService::getAttachmentNamesFromContent($content, 33);
+		foreach (self::$attachmentNames as $contentName) {
+			$this->assertContains($contentName, $computedNames);
+		}
+	}
+
+
+	public function testGetAttachmentNamesFromContent() {
+		$content = "some content\n";
+		foreach (self::$attachmentNames as $name) {
+			// this is how it's generated in MenuBar.vue
+			$linkText = preg_replace('/[[\]]/', '', $name);
+			$encodedName = urlencode($name);
+			$content .= '![' . $linkText . '](.attachments.33/' . $encodedName . ")\n";
+		}
+		$content .= 'some content';
+
+		$computedNames = ImageService::getAttachmentNamesFromContent($content, 33);
+		foreach (self::$attachmentNames as $contentName) {
 			$this->assertContains($contentName, $computedNames);
 		}
 	}
