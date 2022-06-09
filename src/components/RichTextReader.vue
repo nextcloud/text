@@ -55,3 +55,7 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+	@import './../../css/prosemirror';
+</style>
