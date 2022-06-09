@@ -68,6 +68,7 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('__Test__')).toBe('__Test__')
 		expect(markdownThroughEditor('_Test_')).toBe('*Test*')
 		expect(markdownThroughEditor('~~Test~~')).toBe('~~Test~~')
+		expect(markdownThroughEditor('Have an `inline code` element')).toBe('Have an `inline code` element')
 	})
 	test('ul', () => {
 		expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n* bar')
@@ -88,6 +89,9 @@ describe('Markdown though editor', () => {
 	})
 	test('special characters', () => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
+	})
+	test('code block', () => {
+		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe('```\n<?php echo "Hello World";\n```')
 	})
 	test('checkboxes', () => {
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')

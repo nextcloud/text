@@ -29,6 +29,7 @@ import Blockquote from '@tiptap/extension-blockquote'
 import Placeholder from '@tiptap/extension-placeholder'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
+import Code from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Dropcursor from '@tiptap/extension-dropcursor'
@@ -90,6 +91,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			Strike,
 			Link.configure({ openOnClick: true }),
 			Blockquote,
+			Code,
 			CodeBlock,
 			BulletList,
 			HorizontalRule,
