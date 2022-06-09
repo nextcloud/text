@@ -42,7 +42,8 @@ class EncodingService {
 			return null;
 		}
 
-		return mb_convert_encoding($string, 'UTF-8', $encoding);
+		$encoded = mb_convert_encoding($string, 'UTF-8', $encoding);
+		return is_string($encoded) ? $encoded : null;
 	}
 
 	public function detectEncoding(string $string): ?string {
