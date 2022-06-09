@@ -30,6 +30,7 @@ use Exception;
 use OC\Files\Node\File;
 use OCA\Text\DocumentHasUnsavedChangesException;
 use OCA\Text\DocumentSaveConflictException;
+use OCA\Text\TextFile;
 use OCA\Text\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -47,12 +48,14 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 	protected $logger;
+	private $encodingService;
 
-	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger, EncodingService $encodingService) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
+		$this->encodingService = $encodingService;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
@@ -111,7 +114,7 @@ class ApiService {
 		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			$this->sessionService->removeInactiveSessions($documentId);
 			try {
-				$file = $this->documentService->getBaseFile($documentId);
+				$file = new TextFile($this->documentService->getBaseFile($documentId), $this->encodingService);
 			} catch (NotFoundException $e) {
 				return new NotFoundResponse();
 			}
