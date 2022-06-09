@@ -32,6 +32,7 @@ describe('Open test.md in viewer', function() {
 
 		// Upload test files
 		cy.uploadFile('test.md', 'text/markdown')
+		cy.uploadFile('empty.md', 'text/markdown')
 	})
 
 	beforeEach(function() {
@@ -59,6 +60,30 @@ describe('Open test.md in viewer', function() {
 		const editor = viewer.get('#editor .ProseMirror')
 		editor.should('contain', 'Hello world')
 		editor.get('h2').should('contain', 'Hello world')
+
+		cy.log('Inspect menubar')
+		const menubar = editor.get('.menubar .menubar-icons')
+		menubar.get('.icon-undo').should('be.visible')
+		menubar.get('.icon-bold').should('be.visible')
+
+		cy.screenshot()
+	})
+
+	it('Open an empty file', function() {
+		cy.openFile('empty.md')
+
+		cy.log('Inspect viewer')
+		const viewer = cy.get('#viewer')
+		viewer.should('be.visible')
+			.and('have.class', 'modal-mask')
+			.and('not.have.class', 'icon-loading')
+		viewer.get('.modal-title').should('contain', 'empty.md')
+		viewer.get('.modal-header button.action-item__menutoggle')
+			.should('be.visible')
+
+		cy.log('Inspect editor')
+		const editor = viewer.get('#editor .ProseMirror')
+		editor.should('contain', '')
 
 		cy.log('Inspect menubar')
 		const menubar = editor.get('.menubar .menubar-icons')
