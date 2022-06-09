@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
   <file src="lib/AppInfo/Application.php">
+    <InvalidArgument occurrences="1">
+      <code>RegisterDirectEditorEventListener::class</code>
+    </InvalidArgument>
     <UndefinedClass occurrences="3">
       <code>BeforeTemplateRenderedEvent</code>
       <code>LoadAdditionalScriptsEvent</code>
       <code>LoadViewer</code>
     </UndefinedClass>
-    <InvalidArgument occurrences="3">
-      <code>registerEventListener</code>
-    </InvalidArgument>
-  </file>
-  <file src="lib/Command/ResetDocument.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>void</code>
-    </ImplementedReturnTypeMismatch>
   </file>
   <file src="lib/Controller/DirectSessionController.php">
     <UndefinedClass occurrences="1">
       <code>InvalidTokenException</code>
     </UndefinedClass>
-  </file>
-  <file src="lib/Controller/PublicSessionController.php">
-    <InvalidCatch occurrences="1"/>
-    <MissingDependency occurrences="1">
-      <code>ShareNotFound</code>
-    </MissingDependency>
   </file>
   <file src="lib/Controller/SettingsController.php">
     <UndefinedThisPropertyAssignment occurrences="1">
@@ -35,40 +24,25 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/Controller/WorkspaceController.php">
-    <InvalidCatch occurrences="2"/>
     <InvalidReturnType occurrences="3">
       <code>DataResponse</code>
       <code>DataResponse</code>
       <code>DataResponse</code>
     </InvalidReturnType>
-    <MissingDependency occurrences="10">
-      <code>$e</code>
-      <code>$e</code>
+    <MissingDependency occurrences="4">
       <code>$this-&gt;rootFolder</code>
       <code>$this-&gt;rootFolder</code>
       <code>IRootFolder</code>
       <code>IRootFolder</code>
-      <code>ShareNotFound</code>
-      <code>StorageNotAvailableException</code>
-      <code>StorageNotAvailableException</code>
     </MissingDependency>
-    <UndefinedClass occurrences="1">
-      <code>Exception</code>
-    </UndefinedClass>
     <UndefinedInterfaceMethod occurrences="1">
       <code>open</code>
     </UndefinedInterfaceMethod>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;logger</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass occurrences="1">
       <code>ServerPlugin</code>
     </UndefinedClass>
-  </file>
-  <file src="lib/Db/SessionMapper.php">
-    <MoreSpecificImplementedParamType occurrences="1"/>
   </file>
   <file src="lib/Db/StepMapper.php">
     <InvalidReturnStatement occurrences="1"/>
@@ -97,28 +71,18 @@
     </UndefinedClass>
   </file>
   <file src="lib/Service/ApiService.php">
-    <InvalidArgument occurrences="1">
-      <code>$file</code>
-    </InvalidArgument>
     <UndefinedDocblockClass occurrences="1"/>
   </file>
   <file src="lib/Service/DocumentService.php">
-    <InvalidCatch occurrences="3"/>
-    <InvalidScalarArgument occurrences="1"/>
     <MismatchingDocblockReturnType occurrences="1">
       <code>Entity</code>
     </MismatchingDocblockReturnType>
-    <MissingDependency occurrences="7">
+    <MissingDependency occurrences="3">
       <code>$this-&gt;rootFolder</code>
       <code>IRootFolder</code>
       <code>IRootFolder</code>
-      <code>ShareNotFound</code>
-      <code>ShareNotFound</code>
-      <code>ShareNotFound</code>
-      <code>ShareNotFound</code>
     </MissingDependency>
-    <UndefinedClass occurrences="2">
-      <code>File</code>
+    <UndefinedClass occurrences="1">
       <code>\OC\User\NoUserException</code>
     </UndefinedClass>
     <UndefinedMagicMethod occurrences="18">
@@ -141,20 +105,38 @@
       <code>setSessionId</code>
       <code>setVersion</code>
     </UndefinedMagicMethod>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;lockingProvider</code>
-    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="lib/Service/ImageService.php">
+    <MissingDependency occurrences="6">
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <UndefinedClass occurrences="3">
+      <code>ClientException</code>
+      <code>ConnectException</code>
+      <code>ServerException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="8">
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+    </UndefinedDocblockClass>
   </file>
   <file src="lib/Service/SessionService.php">
-    <UndefinedDocblockClass occurrences="8">
-      <code>$color-&gt;b</code>
+    <UndefinedDocblockClass occurrences="4">
       <code>$color-&gt;b</code>
       <code>$color-&gt;g</code>
-      <code>$color-&gt;g</code>
       <code>$color-&gt;r</code>
-      <code>$color-&gt;r</code>
-      <code>$this-&gt;avatarManager-&gt;getGuestAvatar($guestName)-&gt;avatarBackgroundColor($guestName)</code>
-      <code>$this-&gt;avatarManager-&gt;getGuestAvatar($userName)-&gt;avatarBackgroundColor($userName)</code>
+      <code>$this-&gt;avatarManager-&gt;getGuestAvatar($uniqueGuestId)-&gt;avatarBackgroundColor($uniqueGuestId)</code>
     </UndefinedDocblockClass>
     <UndefinedMagicMethod occurrences="7">
       <code>setColor</code>
@@ -170,26 +152,9 @@
     <InvalidNullableReturnType occurrences="1">
       <code>\OCP\Files\File</code>
     </InvalidNullableReturnType>
-    <MissingDependency occurrences="1">
-      <code>StorageNotAvailableException</code>
-    </MissingDependency>
     <NullableReturnStatement occurrences="1">
       <code>null</code>
     </NullableReturnStatement>
-  </file>
-  <file src="lib/Service/ImageService.php">
-    <InvalidCatch occurrences="2"/>
-    <MissingDependency occurrences="8">
-      <code>$this-&gt;rootFolder</code>
-      <code>IRootFolder</code>
-      <code>ShareNotFound</code>
-    </MissingDependency>
-    <UndefinedClass occurrences="3">
-      <code>\OC\User\NoUserException</code>
-    </UndefinedClass>
-    <UndefinedDocblockClass occurrences="10">
-      <code>\OC\User\NoUserException</code>
-    </UndefinedDocblockClass>
   </file>
   <file src="vendor/christophwurst/nextcloud/OCP/BackgroundJob/TimedJob.php">
     <ImplementedParamTypeMismatch occurrences="1">
