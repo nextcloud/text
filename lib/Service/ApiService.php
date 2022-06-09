@@ -111,7 +111,7 @@ class ApiService {
 			$content = $baseFile->getContent();
 
 			$content = $this->encodingService->encodeToUtf8($content);
-			if (!$content) {
+			if ($content === null) {
 				$this->logger->log(ILogger::WARN, 'Failed to encode file to UTF8. File ID: ' . $file->getId());
 			}
 		} catch (NotFoundException $e) {
