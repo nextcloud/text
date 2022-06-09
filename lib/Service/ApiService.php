@@ -48,12 +48,14 @@ class ApiService {
 	protected $sessionService;
 	protected $documentService;
 	protected $logger;
+	private $encodingService;
 
-	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger) {
+	public function __construct(IRequest $request, SessionService $sessionService, DocumentService $documentService, ILogger $logger, EncodingService $encodingService) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
+		$this->encodingService = $encodingService;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
