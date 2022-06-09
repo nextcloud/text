@@ -2,7 +2,7 @@ kind: pipeline
 name: compatibility
 steps:
   - name: compatibility
-    image: nextcloudci/php7.3:php7.3-5
+    image: ghcr.io/nextcloud/continuous-integration-php7.4:php7.4-3
     environment:
       APP_NAME: text
       CORE_BRANCH: stable22
@@ -25,7 +25,7 @@ kind: pipeline
 name: php-sqlite
 steps:
   - name: php7.3
-    image: nextcloudci/php7.3:php7.3-5
+    image: ghcr.io/nextcloud/continuous-integration-php7.4:php7.4-3
     environment:
       APP_NAME: text
       CORE_BRANCH: stable22
@@ -36,7 +36,7 @@ steps:
       - composer install
       - phpunit -c tests/phpunit.xml --coverage-clover build/php-unit.coverage.xml
   - name: php7.4
-    image: nextcloudci/php7.4:2
+    image: ghcr.io/nextcloud/continuous-integration-php7.4:php7.4-3
     environment:
       APP_NAME: text
       CORE_BRANCH: master
@@ -58,7 +58,7 @@ kind: pipeline
 name: php-mysql
 steps:
   - name: php7.3
-    image: nextcloudci/php7.3:php7.3-5
+    image: ghcr.io/nextcloud/continuous-integration-php7.4:php7.4-3
     environment:
       APP_NAME: text
       CORE_BRANCH: stable22
@@ -89,7 +89,7 @@ kind: pipeline
 name: php-postgres
 steps:
   - name: php7.3
-    image: nextcloudci/php7.3:php7.3-5
+    image: ghcr.io/nextcloud/continuous-integration-php7.4:php7.4-3 
     environment:
       APP_NAME: text
       CORE_BRANCH: stable22
