@@ -6,7 +6,8 @@
         "christophwurst/nextcloud": "dev-stable23",
         "jakub-onderka/php-parallel-lint": "^1.0.0",
         "nextcloud/coding-standard": "^0.5.0",
-        "psalm/phar": "^4.3"
+        "psalm/phar": "^4.3",
+		"ext-mbstring": "*"
     },
     "license": "AGPLv3",
     "authors": [

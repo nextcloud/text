@@ -73,6 +73,6 @@ jobs:
           ./occ app:enable --force ${{ env.APP_NAME }}
 
       - name: PHPUnit
-        working-directory: apps/${{ env.APP_NAME }}/tests
-        run: phpunit -c phpunit.xml
+        working-directory: apps/${{ env.APP_NAME }}
+        run: phpunit -c tests/phpunit.xml
 
