@@ -98,7 +98,7 @@ Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 })
 
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
-	cy.fixture(fileName, 'base64')
+	return cy.fixture(fileName, 'base64')
 		.then(Cypress.Blob.base64StringToBlob)
 		.then(async blob => {
 			const file = new File([blob], fileName, { type: mimeType })
@@ -116,6 +116,28 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 				})
 			})
 		})
+})
+
+Cypress.Commands.add('createFile', (target, content, mimeType) => {
+	const fileName = target.split('/').pop()
+
+	const blob = new Blob([content], { type: mimeType })
+	const file = new File([blob], fileName, { type: mimeType })
+
+	const requestAlias = `request-${fileName}`
+
+	return cy.window()
+		.then(async window => {
+			const response = await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${target}`, file, {
+				headers: {
+					requesttoken: window.OC.requestToken,
+					'Content-Type': mimeType,
+				},
+			})
+
+			return cy.log(`Uploaded ${fileName}`, response.status)
+		})
+
 })
 
 Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) => {
@@ -163,8 +185,8 @@ Cypress.Commands.add('reloadFileList', () => {
 	})
 })
 
-Cypress.Commands.add('openFile', fileName => {
-	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click()
+Cypress.Commands.add('openFile', (fileName, params = {}) => {
+	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click(params)
 	cy.wait(250)
 })
 
