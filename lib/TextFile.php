@@ -63,7 +63,7 @@ class TextFile implements ISimpleFile {
 
 	public function getContent() {
 		$content = $this->encodingService->encodeToUtf8($this->file->getContent());
-		if (!$content) {
+		if ($content === null) {
 			throw new NotFoundException('File not compatible with text because it could not be encoded to UTF-8.');
 		}
 
