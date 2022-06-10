@@ -9,6 +9,7 @@ OC.L10N.register(
     "Text" : "Texto",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
+    "Guest" : "Invitado",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
     "Participants" : "Participantes",
