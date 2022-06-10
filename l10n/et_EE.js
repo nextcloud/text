@@ -11,7 +11,9 @@ OC.L10N.register(
     "Saved" : "Salvestatud",
     "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}",
     "Unsaved changes" : "Salvestamata muutused",
+    "Guest" : "Külaline",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
+    "guest" : "külaline",
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri"
