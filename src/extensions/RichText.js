@@ -29,6 +29,7 @@ import Text from '@tiptap/extension-text'
 import Blockquote from '@tiptap/extension-blockquote'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
+import Code from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
@@ -65,6 +66,7 @@ export default Extension.create({
 			Italic,
 			Strike,
 			Blockquote,
+			Code,
 			CodeBlock,
 			BulletList,
 			HorizontalRule,
