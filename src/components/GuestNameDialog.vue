@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<form v-tooltip="t('text', 'Enter your name so other users can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
+	<form v-tooltip="t('text', 'Enter your name so other people can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
 		<label><AvatarWrapper :session="session" :size="32" /></label>
 		<input v-model="guestName"
 			type="text"
