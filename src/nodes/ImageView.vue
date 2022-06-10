@@ -204,7 +204,7 @@ export default {
 			this.failed = true
 			this.imageLoaded = false
 			this.loaded = true
-			this.errorMessage = t('text', 'Unsuported image')
+			this.errorMessage = t('text', 'Unsupported image type')
 			return
 		}
 		this.init()
