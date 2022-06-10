@@ -5,6 +5,7 @@ OC.L10N.register(
     "No file was uploaded" : "Heç bir fayl yüklənilmədi",
     "Missing a temporary folder" : "Müvəqqəti qovluq çatışmır",
     "Saved" : "Saxlanıldı",
+    "guest" : "Qonaq",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq",
     "Edit" : "Dəyişiklik et"

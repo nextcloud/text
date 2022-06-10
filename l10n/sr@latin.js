@@ -1,9 +1,11 @@
 OC.L10N.register(
     "text",
     {
+    "Guest" : "Gost",
     "Bold" : "Podebljano",
     "Italic" : "Kurziv",
     "Participants" : "Učesnici",
+    "guest" : "gost",
     "Undo" : "Opozovi",
     "Info" : "Info",
     "Warning" : "Upozorenje",

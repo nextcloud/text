@@ -13,6 +13,7 @@ OC.L10N.register(
     "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "ปุ่มลัด",
+    "guest" : "ผู้เยี่ยมชม",
     "Undo" : "เลิกทำ",
     "Info" : "ข้อมูล",
     "Success" : "เสร็จสิ้น",

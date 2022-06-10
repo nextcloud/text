@@ -9,6 +9,7 @@ OC.L10N.register(
     "Text" : "ტექსტი",
     "Saved" : "შენახულია",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
+    "Guest" : "სტუმარი",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
     "Participants" : "მონაწილეები",

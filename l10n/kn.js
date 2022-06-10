@@ -4,6 +4,7 @@ OC.L10N.register(
     "No file was uploaded" : "ವರ್ಗಾವಣೆಗೆ ﻿ಯಾವುದೇ ಕಡತಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
     "Missing a temporary folder" : "ತಾತ್ಕಾಲಿಕ ಕಡತಕೋಶ ದೊರೆಕುತ್ತಿಲ್ಲ",
     "Saved" : "﻿ಉಳಿಸಿದ",
+    "guest" : "ಅತಿಥಿ",
     "Info" : "Info",
     "Warning" : "﻿ಎಚ್ಚರಿಕೆ",
     "Edit" : "ಸಂಪಾದಿಸು"
