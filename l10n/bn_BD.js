@@ -6,6 +6,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "অস্থায়ী ফোল্ডারটি হারানো গিয়েছে",
     "Saved" : "সংরক্ষণ করা হলো",
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",
+    "guest" : "অতিথি",
     "Info" : "Info",
     "Warning" : "সতর্কবাণী",
     "Edit" : "সম্পাদনা"

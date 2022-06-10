@@ -6,6 +6,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Nedostaje privremeni direktorij.",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
+    "guest" : "gost",
     "Info" : "Info",
     "Warning" : "Upozorenje",
     "Edit" : "Izmjeni"

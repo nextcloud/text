@@ -5,6 +5,7 @@ OC.L10N.register(
     "No file was uploaded" : "Ingen filer vart lasta opp",
     "Missing a temporary folder" : "Manglar ei mellombels mappe",
     "Saved" : "Lagra",
+    "Guest" : "Gjest",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Participants" : "Deltakarar",
     "Info" : "Info",
