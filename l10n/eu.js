@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Azken gordetzea {lastSave}",
     "Unsaved changes" : "Gorde gabeko aldaketak",
     "No emoji found" : "Ez da emojirik aurkitu",
-    "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Edit guest name" : "Editatu gonbidatuaren izena",
     "Guest" : "Gonbidatua",
     "Save guest name" : "Gorde gonbidatuaren izena",
@@ -74,10 +73,11 @@ OC.L10N.register(
     "Link file" : "Estekatu fitxategia",
     "Remove Link" : "Kendu esteka",
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
-    "Participants" : "Parte hartzaileak",
     "guest" : "gonbidatua",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
+    "Failed to load" : "Kargatzeak huts egin du",
+    "Unsuported image" : "Ez da irudia onartzen",
     "Add row before" : "Gehitu errenkada aurrerago",
     "Add row after" : "Gehitu errenkada ostean",
     "Delete this row" : "Ezabatu errenkada hau",
@@ -106,8 +106,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Editatu",
     "New text document" : "Testu dokumentu berria",
+    "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
-    "Emoji picker" : " Emotikono-hautatzailea"
+    "Emoji picker" : " Emotikono-hautatzailea",
+    "Participants" : "Parte hartzaileak"
 },
 "nplurals=2; plural=(n != 1);");

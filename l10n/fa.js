@@ -22,12 +22,12 @@ OC.L10N.register(
     "Bold" : "درشت",
     "Italic" : "Italic",
     "Shift" : "تغییر مکان",
-    "Participants" : "شركت كنندگان",
     "guest" : "میهمان",
     "Undo" : "برگرداندن",
     "Info" : "اطلاعات",
     "Success" : "موفقیت",
     "Warning" : "هشدار",
-    "Edit" : "ویرایش"
+    "Edit" : "ویرایش",
+    "Participants" : "شركت كنندگان"
 },
 "nplurals=2; plural=(n > 1);");

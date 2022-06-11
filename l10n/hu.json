@@ -29,7 +29,6 @@
     "Last saved {lastSaved}" : "Legutóbb mentve: {lastSaved}",
     "Unsaved changes" : "Mentetlen változtatások",
     "No emoji found" : "Nem található emodzsi",
-    "Enter your name so other users can see who is editing" : "Adja meg a nevét, hogy mások lássák ki szerkeszti",
     "Edit guest name" : "Vendégnév szerkesztése",
     "Guest" : "Vendég",
     "Save guest name" : "Vendégnév mentése",
@@ -72,10 +71,11 @@
     "Link file" : "Fájl hivatkozás készítése",
     "Remove Link" : "Hivatkozás eltávolítása",
     "Select file to link to" : "Válassza ki a hivatkozandó fájlt",
-    "Participants" : "Résztvevők",
     "guest" : "vendég",
     "Show author colors" : "Szerzők színének megjelenítése",
     "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
+    "Failed to load" : "A betöltés sikertelen",
+    "Unsuported image" : "Nem támogatott kép",
     "Add row before" : "Sor hozzáadása elé",
     "Add row after" : "Sor hozzáadása utána",
     "Delete this row" : "Sor törlése",
@@ -104,8 +104,10 @@
     "Alt" : "Alt",
     "Edit" : "Szerkesztés",
     "New text document" : "Új szöveges dokumentum",
+    "Enter your name so other users can see who is editing" : "Adja meg a nevét, hogy mások lássák ki szerkeszti",
     "Currently active users:" : "Jelenleg aktív felhasználók:",
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"],
-    "Emoji picker" : "Emodzsiválasztó"
+    "Emoji picker" : "Emodzsiválasztó",
+    "Participants" : "Résztvevők"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

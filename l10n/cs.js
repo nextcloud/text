@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
     "Unsaved changes" : "Neuložené změny",
     "No emoji found" : "Nenalezena žádná emotikona",
-    "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Edit guest name" : "Upravit jméno hosta",
     "Guest" : "Host",
     "Save guest name" : "Uložit jméno hosta",
@@ -74,7 +73,6 @@ OC.L10N.register(
     "Link file" : "Odkázat na soubor",
     "Remove Link" : "Odebrat odkaz",
     "Select file to link to" : "Vyberte soubor na který odkázat",
-    "Participants" : "Účastníci",
     "guest" : "host",
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
@@ -106,8 +104,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Upravit",
     "New text document" : "Nový textový dokument",
+    "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
-    "Emoji picker" : "Volba emotikony"
+    "Emoji picker" : "Volba emotikony",
+    "Participants" : "Účastníci"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

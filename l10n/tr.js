@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
     "No emoji found" : "Herhangi bir emoji bulunamadı",
-    "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Konuk adını düzenle",
     "Guest" : "Konuk",
     "Save guest name" : "Konuk adını kaydet",
@@ -74,10 +73,11 @@ OC.L10N.register(
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
-    "Participants" : "Katılımcılar",
     "guest" : "konuk",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
+    "Failed to load" : "Yüklenmemedi",
+    "Unsuported image" : "Desteklenmeyen görsel",
     "Add row before" : "Üste satır ekle",
     "Add row after" : "Alta satır ekle",
     "Delete this row" : "Bu satırı sil",
@@ -106,8 +106,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Düzenle",
     "New text document" : "Yeni metin belgesi",
+    "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
-    "Emoji picker" : "Emoji seçici"
+    "Emoji picker" : "Emoji seçici",
+    "Participants" : "Katılımcılar"
 },
 "nplurals=2; plural=(n > 1);");

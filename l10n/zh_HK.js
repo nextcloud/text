@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "上次儲存於 {lastSaved}",
     "Unsaved changes" : "未儲存變更",
     "No emoji found" : "找不到表情符號",
-    "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他用戶才能查看是誰在編輯",
     "Edit guest name" : "編輯訪客名稱",
     "Guest" : "訪客",
     "Save guest name" : "儲存訪客名稱",
@@ -74,10 +73,11 @@ OC.L10N.register(
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
-    "Participants" : "參與者",
     "guest" : "訪客",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
+    "Failed to load" : "加載失敗",
+    "Unsuported image" : "不支援的圖像類型",
     "Add row before" : "在前面添加行",
     "Add row after" : "在後面添加行",
     "Delete this row" : "刪除此行",
@@ -106,8 +106,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "編輯",
     "New text document" : "新文字文件",
+    "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他用戶才能查看是誰在編輯",
     "Currently active users:" : "目前活躍用戶：",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯"],
-    "Emoji picker" : "Emoji 選擇器"
+    "Emoji picker" : "Emoji 選擇器",
+    "Participants" : "參與者"
 },
 "nplurals=1; plural=0;");

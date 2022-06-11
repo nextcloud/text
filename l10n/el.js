@@ -29,7 +29,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Τελευταία αποθήκευση {lastSave}",
     "Unsaved changes" : "Μη αποθηκευμένες αλλαγές",
     "No emoji found" : "Δε βρέθηκε emoji",
-    "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
     "Guest" : "Επισκέπτης",
     "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
@@ -71,7 +70,6 @@ OC.L10N.register(
     "Link file" : "Σύνδεσμος αρχείου",
     "Remove Link" : "Αφαίρεση Συνδέσμου",
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
-    "Participants" : "Συμμετέχοντες",
     "guest" : "Επισκέπτης",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
@@ -96,8 +94,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Επεξεργασία",
     "New text document" : "Νέο έγγραφο κειμένου",
+    "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
-    "Emoji picker" : "Επιλογέας emoji"
+    "Emoji picker" : "Επιλογέας emoji",
+    "Participants" : "Συμμετέχοντες"
 },
 "nplurals=2; plural=(n != 1);");

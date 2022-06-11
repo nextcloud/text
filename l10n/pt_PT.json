@@ -18,7 +18,6 @@
     "Saving …" : "A guardar...",
     "Saved" : "Guardado",
     "Unsaved changes" : "Modificações não guardadas",
-    "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
     "Edit guest name" : "Inserir o nome do convidado",
     "Guest" : "Convidado",
     "Save guest name" : "Guardar o nome do convidado",
@@ -34,7 +33,6 @@
     "Underlined text" : "Texto sublinhado",
     "Remove Link" : "Remover hiperligação",
     "Select file to link to" : "Selecione o ficheiro a vincular a",
-    "Participants" : "Participantes",
     "guest" : "convidado",
     "Show author colors" : "Mostrar cores do autor ",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
@@ -52,8 +50,10 @@
     "Warning" : "Aviso",
     "Edit" : "Editar",
     "New text document" : "Novo documento de texto",
+    "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
     "Currently active users:" : "Utilizadores ativos no momento:",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores","e %n outros editores"],
-    "Emoji picker" : "Selecionador de emoji "
+    "Emoji picker" : "Selecionador de emoji ",
+    "Participants" : "Participantes"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

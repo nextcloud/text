@@ -24,7 +24,6 @@ OC.L10N.register(
     "Saved" : "Lagret",
     "Last saved {lastSaved}" : "Sist lagret {lastSaved}",
     "Unsaved changes" : "Ulagrede endringer",
-    "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
     "Edit guest name" : "Rediger gjestenavn",
     "Guest" : "Gjest",
     "Save guest name" : "Lagre gjestenavn",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Ordered list" : "Ordnet liste",
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
-    "Participants" : "Deltakere",
     "guest" : "gjest",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
@@ -57,6 +55,8 @@ OC.L10N.register(
     "Insert image" : "Sett inn bilde",
     "Edit" : "Rediger",
     "New text document" : "Nytt tekstdokument",
-    "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"]
+    "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
+    "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
+    "Participants" : "Deltakere"
 },
 "nplurals=2; plural=(n != 1);");

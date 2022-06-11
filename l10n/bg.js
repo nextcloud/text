@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Последно записано {lastSaved}",
     "Unsaved changes" : "Незаписани промени",
     "No emoji found" : "Няма намерено емоджи",
-    "Enter your name so other users can see who is editing" : "Въведете името си, за да могат другите потребители да видят кой редактира",
     "Edit guest name" : "Редактиране на името на госта",
     "Guest" : "Гост",
     "Save guest name" : "Запис на името на госта",
@@ -73,7 +72,6 @@ OC.L10N.register(
     "Link file" : "Файл с връзка",
     "Remove Link" : "Премахване на връзка",
     "Select file to link to" : "Избор на файл за връзка с",
-    "Participants" : "Участници",
     "guest" : "гост",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
@@ -105,8 +103,10 @@ OC.L10N.register(
     "Alt" : "Alt /бутон/",
     "Edit" : "Променяне",
     "New text document" : "Нов текстов документ",
+    "Enter your name so other users can see who is editing" : "Въведете името си, за да могат другите потребители да видят кой редактира",
     "Currently active users:" : "Потребители, които са активни в момента:",
     "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"],
-    "Emoji picker" : "Инструмент за избор на емотикони"
+    "Emoji picker" : "Инструмент за избор на емотикони",
+    "Participants" : "Участници"
 },
 "nplurals=2; plural=(n != 1);");
