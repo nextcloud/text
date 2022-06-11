@@ -24,7 +24,6 @@
     "Saved" : "Guardat",
     "Last saved {lastSaved}" : "Última actualització {lastSaved}",
     "Unsaved changes" : "Canvis sense desar",
-    "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
     "Edit guest name" : "Edita el nom de convidat",
     "Guest" : "Convidat",
     "Save guest name" : "Desa el nom de convidat",
@@ -43,7 +42,6 @@
     "Code block" : "Bloc de codi",
     "Link file" : "Fitxer d'enllaç",
     "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
-    "Participants" : "Participants",
     "guest" : "convidat",
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços …",
@@ -61,6 +59,8 @@
     "Insert image" : "Inserir imatge",
     "Edit" : "Edita",
     "New text document" : "Nou document de text",
-    "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"]
+    "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
+    "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
+    "Participants" : "Participants"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

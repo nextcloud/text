@@ -20,7 +20,6 @@ OC.L10N.register(
     "Saved" : "Зачувано",
     "Last saved {lastSaved}" : "Последно зачувано {lastSaved}",
     "Unsaved changes" : "Незачувани промени",
-    "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Edit guest name" : "Промени име на гостин",
     "Guest" : "Гостин",
     "Save guest name" : "Зачувај име на гостин",
@@ -29,13 +28,14 @@ OC.L10N.register(
     "Bold" : "Болд",
     "Italic" : "Италик",
     "Quoted text" : "Цитиран текст",
-    "Participants" : "Учесници",
     "guest" : "гостин",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Undo" : "Врати",
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Предупредување",
-    "Edit" : "Уреди"
+    "Edit" : "Уреди",
+    "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
+    "Participants" : "Учесници"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

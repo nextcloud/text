@@ -30,7 +30,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Последнее сохранение {lastSaved}",
     "Unsaved changes" : "Несохранённые изменения",
     "No emoji found" : "Эмодзи не найдено",
-    "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
     "Edit guest name" : "Изменить гостевое имя",
     "Guest" : "Гость",
     "Save guest name" : "Сохранить гостевое имя",
@@ -72,7 +71,6 @@ OC.L10N.register(
     "Link file" : "Добавить ссылку на файл",
     "Remove Link" : "Удалить ссылку",
     "Select file to link to" : "Выберете файл для создания ссылки",
-    "Participants" : "Участники",
     "guest" : "гость",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
@@ -97,8 +95,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Редактировать",
     "New text document" : "Новый текстовый документ",
+    "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
     "Currently active users:" : "Текущие активные пользователи:",
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
-    "Emoji picker" : "Выбор эмодзи"
+    "Emoji picker" : "Выбор эмодзи",
+    "Participants" : "Участники"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

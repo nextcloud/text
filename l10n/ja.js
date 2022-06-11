@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "保存済み",
     "Last saved {lastSaved}" : "最終保存日 {lastSaved}",
     "Unsaved changes" : "保存していない変更点",
-    "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Edit guest name" : "ゲスト名を編集",
     "Guest" : "ゲスト",
     "Save guest name" : "ゲスト名を保存",
@@ -52,7 +51,6 @@ OC.L10N.register(
     "Link file" : "ファイルをリンク",
     "Remove Link" : "リンクを削除",
     "Select file to link to" : "リンク先のファイルを選択",
-    "Participants" : "参加者",
     "guest" : "ゲスト",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
@@ -74,8 +72,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "編集",
     "New text document" : "新しいテキストドキュメント",
+    "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
-    "Emoji picker" : "絵文字選択"
+    "Emoji picker" : "絵文字選択",
+    "Participants" : "参加者"
 },
 "nplurals=1; plural=0;");

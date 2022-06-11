@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Gemt",
     "Last saved {lastSaved}" : "Sidst gemt {lastSaved}",
     "Unsaved changes" : "Ikke gemte ændringer",
-    "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Edit guest name" : "Rediger gæstens navn",
+    "Guest" : "Gæst",
     "Save guest name" : "Gem gæstens navn",
     "Formatting help" : "Hjælp til formatering",
     "Keyboard shortcuts" : "Tastaturgenveje",
@@ -49,7 +49,7 @@ OC.L10N.register(
     "Link file" : "Link fil",
     "Remove Link" : "Fjern link",
     "Select file to link to" : "Vælg den fil, du vil linke til",
-    "Participants" : "Deltagere",
+    "guest" : "Gæst",
     "Show author colors" : "Vis forfatterens farver",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Show rich workspaces" : "Vis rige arbejdsområder",
@@ -70,8 +70,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Redigér",
     "New text document" : "Nyt tekstdokument",
+    "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
-    "Emoji picker" : "Emoji vælger"
+    "Emoji picker" : "Emoji vælger",
+    "Participants" : "Deltagere"
 },
 "nplurals=2; plural=(n != 1);");

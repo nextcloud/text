@@ -14,7 +14,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumenti është ndryshuar jashtë redaktuesit. Ndryshimet nuk mund të aplikohen.",
     "Saved" : "Ruajtur",
     "Unsaved changes" : "Ndryshime të paruajtura",
-    "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
     "Edit guest name" : "Ndryshoni emrin e të ftuarit",
     "Guest" : "I ftuar",
     "Save guest name" : "Ruaj emrin e të ftuarit",
@@ -30,6 +29,7 @@ OC.L10N.register(
     "Warning" : "Kujdes",
     "Edit" : "Përpuno",
     "New text document" : "Dokument tekst i ri",
+    "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
     "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"]
 },
 "nplurals=2; plural=(n != 1);");

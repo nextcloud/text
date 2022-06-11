@@ -10,12 +10,12 @@
     "Bold" : "Treknraksts",
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
-    "Participants" : "Dalībnieki",
     "guest" : "viesis",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
-    "Edit" : "Rediģēt"
+    "Edit" : "Rediģēt",
+    "Participants" : "Dalībnieki"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

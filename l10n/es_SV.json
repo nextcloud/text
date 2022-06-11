@@ -14,11 +14,11 @@
     "Guest" : "Invitado",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
-    "Participants" : "Participantes",
     "Undo" : "Deshacer",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
-    "Edit" : "Editar"
+    "Edit" : "Editar",
+    "Participants" : "Participantes"
 },"pluralForm" :"nplurals=2; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

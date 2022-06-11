@@ -27,7 +27,6 @@ OC.L10N.register(
     "Saved" : "Đã lưu",
     "Last saved {lastSaved}" : "Đã lưu lần cuối {lastSaved}",
     "Unsaved changes" : "Thay đổi chưa được lưu",
-    "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
     "Edit guest name" : "Chỉnh sửa tên khách",
     "Guest" : "Khách",
     "Save guest name" : "Lưu tên khách",
@@ -45,7 +44,6 @@ OC.L10N.register(
     "Code block" : "Khối mã",
     "Link file" : "Liên kết tệp tin",
     "Select file to link to" : "Chọn tệp để liên kết đến",
-    "Participants" : "Người tham gia",
     "guest" : "khách",
     "Show author colors" : "Hiển thị màu sắc của tác giả",
     "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
@@ -66,8 +64,10 @@ OC.L10N.register(
     "Insert image" : "Chèn ảnh",
     "Edit" : "Chỉnh sửa",
     "New text document" : "Tài liệu văn bản mới",
+    "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
     "Currently active users:" : "Người dùng hiện đang hoạt động:",
     "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"],
-    "Emoji picker" : "Trình chọn emoji"
+    "Emoji picker" : "Trình chọn emoji",
+    "Participants" : "Người tham gia"
 },
 "nplurals=1; plural=0;");

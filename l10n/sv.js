@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Sparad",
     "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
     "Unsaved changes" : "Ej sparade ändringar",
-    "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Edit guest name" : "Ändra gästnamn",
     "Guest" : "Gäst",
     "Save guest name" : "Spara gästnamn",
@@ -64,7 +63,6 @@ OC.L10N.register(
     "Link file" : "Länka fil",
     "Remove Link" : "Ta bort länk",
     "Select file to link to" : "Välj fil att länka till",
-    "Participants" : "Deltagare",
     "guest" : "gäst",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
@@ -87,8 +85,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Redigera",
     "New text document" : "Nytt textdokument",
+    "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
-    "Emoji picker" : "Emojiväljare"
+    "Emoji picker" : "Emojiväljare",
+    "Participants" : "Deltagare"
 },
 "nplurals=2; plural=(n != 1);");

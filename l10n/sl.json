@@ -28,7 +28,6 @@
     "Last saved {lastSaved}" : "Nazadnje shranjeno {lastSaved}",
     "Unsaved changes" : "Neshranjene spremembe",
     "No emoji found" : "Ni najdenih izraznih ikon",
-    "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Edit guest name" : "Uredi ime gosta",
     "Guest" : "Gost",
     "Save guest name" : "Shrani ime gosta",
@@ -68,7 +67,6 @@
     "Link file" : "Datoteka povezave",
     "Remove Link" : "Odstrani povezavo",
     "Select file to link to" : "Izbor datoteke za povezavo",
-    "Participants" : "Udeleženci",
     "guest" : "gost",
     "Show author colors" : "Pokaži barve avtorja",
     "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
@@ -99,8 +97,10 @@
     "Alt" : "ALT",
     "Edit" : "Uredi",
     "New text document" : "Nov besedilni dokument",
+    "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
-    "Emoji picker" : "Izbirnik izraznih ikon"
+    "Emoji picker" : "Izbirnik izraznih ikon",
+    "Participants" : "Udeleženci"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

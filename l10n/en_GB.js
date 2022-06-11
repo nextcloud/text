@@ -18,12 +18,12 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Keyboard shortcuts",
     "Bold" : "Bold",
     "Italic" : "Italic",
-    "Participants" : "Participants",
     "guest" : "guest",
     "Undo" : "Undo",
     "Info" : "Info",
     "Success" : "Success",
     "Warning" : "Warning",
-    "Edit" : "Edit"
+    "Edit" : "Edit",
+    "Participants" : "Participants"
 },
 "nplurals=2; plural=(n != 1);");
