@@ -26,7 +26,6 @@ OC.L10N.register(
     "Saved" : "Сачувано",
     "Last saved {lastSaved}" : "Последње чување {lastSaved}",
     "Unsaved changes" : "Несачуване измене",
-    "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
     "Edit guest name" : "Измени име госта",
     "Guest" : "Гост",
     "Save guest name" : "Сачувај име госта",
@@ -45,7 +44,6 @@ OC.L10N.register(
     "Code block" : "Блок са изворним кôдом",
     "Link file" : "Увежи фајл",
     "Select file to link to" : "Одаберите фајл на који да направите везу",
-    "Participants" : "Учесници",
     "guest" : "гост",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
@@ -63,6 +61,8 @@ OC.L10N.register(
     "Insert image" : "Убаци слику",
     "Edit" : "Измени",
     "New text document" : "Нови текстуални документ",
-    "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"]
+    "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
+    "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
+    "Participants" : "Учесници"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
     "Unsaved changes" : "Neuložené zmeny",
     "No emoji found" : "Nenašli sa žiadne emotikony",
-    "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Edit guest name" : "Upraviť meno hosťa",
     "Guest" : "Hosť",
     "Save guest name" : "Uložiť meno hosťa",
@@ -73,7 +72,6 @@ OC.L10N.register(
     "Link file" : "Súbor pre odkaz",
     "Remove Link" : "Odstrániť odkaz",
     "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
-    "Participants" : "Účastníci",
     "guest" : "hosť",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
@@ -105,8 +103,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Upraviť",
     "New text document" : "Nový textový dokument",
+    "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Currently active users:" : "Aktuálne aktívny užívatelia",
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
-    "Emoji picker" : "Výber emotikonov"
+    "Emoji picker" : "Výber emotikonov",
+    "Participants" : "Účastníci"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

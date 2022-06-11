@@ -15,7 +15,6 @@ OC.L10N.register(
     "Saving …" : "Menyimpan ...",
     "Saved" : "Disimpan",
     "Last saved {lastSaved}" : "Terakhir disimpan {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit",
     "Edit guest name" : "Edit nama tamu",
     "Guest" : "Tamu",
     "Save guest name" : "Simpan nama tamu",
@@ -26,6 +25,7 @@ OC.L10N.register(
     "Undo" : "Undo",
     "Info" : "Info",
     "Warning" : "Peringatan",
-    "Edit" : "Sunting"
+    "Edit" : "Sunting",
+    "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit"
 },
 "nplurals=1; plural=0;");

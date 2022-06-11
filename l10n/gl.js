@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Gardado",
     "Last saved {lastSaved}" : "Último gardado {lastSaved}",
     "Unsaved changes" : "Cambios sen gardar",
-    "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
     "Edit guest name" : "Editar o nome do convidado",
     "Guest" : "Convidado",
     "Save guest name" : "Gardar o nome do convidado",
@@ -47,7 +46,6 @@ OC.L10N.register(
     "Code block" : "Bloque de código",
     "Link file" : "Ligar un ficheiro",
     "Select file to link to" : "Seleccione o ficheiro ao que ligar",
-    "Participants" : "Participantes",
     "guest" : "convidado",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
@@ -67,7 +65,9 @@ OC.L10N.register(
     "Insert image" : "Inserir unha imaxe",
     "Edit" : "Editar",
     "New text document" : "Novo documento de texto",
+    "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
     "Currently active users:" : "Usuarios activos actualmente:",
-    "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"]
+    "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
+    "Participants" : "Participantes"
 },
 "nplurals=2; plural=(n != 1);");

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",
     "Unsaved changes" : "Ungespeicherte Änderungen",
     "No emoji found" : "Kein Emoji gefunden",
-    "Enter your name so other users can see who is editing" : "Gib Deinen Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
     "Edit guest name" : "Gast-Namen bearbeiten",
     "Guest" : "Benötigt keine Übersetzung. Für iOS wird nur die formelle Übersetzung verwendet (de_DE).",
     "Save guest name" : "Gast-Namen speichern",
@@ -73,7 +72,6 @@ OC.L10N.register(
     "Link file" : "Datei verknüpfen",
     "Remove Link" : "Link entfernen",
     "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
-    "Participants" : "Teilnehmer",
     "guest" : "Benötigt keine Übersetzung. Für Android wird nur die formelle Übersetzung verwendet (de_DE).",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
@@ -105,8 +103,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Bearbeiten",
     "New text document" : "Neues Textdokument",
+    "Enter your name so other users can see who is editing" : "Gib Deinen Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
     "Currently active users:" : "Aktuell aktive Benutzer:",
     "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "],
-    "Emoji picker" : "Emoji-Auswahl"
+    "Emoji picker" : "Emoji-Auswahl",
+    "Participants" : "Teilnehmer"
 },
 "nplurals=2; plural=(n != 1);");

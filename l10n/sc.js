@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Sarvadu",
     "Last saved {lastSaved}" : "Ùrtimu sarvatàgiu {lastSaved}",
     "Unsaved changes" : "Mudas non sarvadas",
-    "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
     "Edit guest name" : "Modìfica nùmene de sa persone invitada",
     "Guest" : "Persone invitada",
     "Save guest name" : "Sarva nùmene de sa persone invitada",
@@ -46,7 +45,6 @@ OC.L10N.register(
     "Code block" : "Blocu de còdighe",
     "Link file" : "Ligòngiu a archìviu",
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
-    "Participants" : "Partetzipantes",
     "guest" : "persone invitada",
     "Show author colors" : "Mustra is colores de sa persone autora",
     "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
@@ -67,8 +65,10 @@ OC.L10N.register(
     "Insert image" : "Inserta·nche imàgine",
     "Edit" : "Modìfica ",
     "New text document" : "Archìviu de testu nou",
+    "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
-    "Emoji picker" : "Sèberu de carigheddas"
+    "Emoji picker" : "Sèberu de carigheddas",
+    "Participants" : "Partetzipantes"
 },
 "nplurals=2; plural=(n != 1);");

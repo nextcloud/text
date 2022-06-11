@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "已保存",
     "Last saved {lastSaved}" : "最近保存 {lastSave}",
     "Unsaved changes" : "未保存的更改",
-    "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
     "Edit guest name" : "编辑访客姓名",
     "Guest" : "访客",
     "Save guest name" : "保存访客姓名",
@@ -68,7 +67,6 @@ OC.L10N.register(
     "Link file" : "链接文件",
     "Remove Link" : "移除链接",
     "Select file to link to" : "选择文件链接至",
-    "Participants" : "参与者",
     "guest" : "访客",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
@@ -91,8 +89,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "编辑",
     "New text document" : "新建文本文档",
+    "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
     "Currently active users:" : "当前活跃用户：",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
-    "Emoji picker" : "Emoji 选择器"
+    "Emoji picker" : "Emoji 选择器",
+    "Participants" : "参与者"
 },
 "nplurals=1; plural=0;");

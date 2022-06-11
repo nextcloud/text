@@ -22,7 +22,6 @@ OC.L10N.register(
     "Saved" : "Збережено",
     "Last saved {lastSaved}" : "Збережено {lastSaved}",
     "Unsaved changes" : "Незбережені зміни",
-    "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
     "Edit guest name" : "Редагувати ім'я гостя",
     "Guest" : "Гість",
     "Save guest name" : "Зберегти ім'я гостя",
@@ -37,7 +36,6 @@ OC.L10N.register(
     "Ordered list" : "Впорядкований список",
     "Blockquote" : "Цитування",
     "Code block" : "Код",
-    "Participants" : "Учасники",
     "guest" : "гість",
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
@@ -54,6 +52,8 @@ OC.L10N.register(
     "Insert image" : "Додати зображення",
     "Edit" : "Редашувати",
     "New text document" : "Новий текстовий документ",
-    "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"]
+    "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
+    "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
+    "Participants" : "Учасники"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

@@ -23,7 +23,6 @@ OC.L10N.register(
     "Saved" : "Enregistrat",
     "Last saved {lastSaved}" : "Darrièr enregistrament {lastSaved}",
     "Unsaved changes" : "Modificacions pas enregistradas",
-    "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Edit guest name" : "Modificar lo nom de convidat",
     "Guest" : "Convidat",
     "Save guest name" : "Enregistrar lo nom de convidat",
@@ -38,7 +37,6 @@ OC.L10N.register(
     "Code block" : "Còdi",
     "Link file" : "Ligam fichièr",
     "Remove Link" : "Suprimir ligam",
-    "Participants" : "Participants",
     "guest" : "convidat",
     "Show author colors" : "Afichar las colors dels utilizaires",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligamas…",
@@ -57,7 +55,9 @@ OC.L10N.register(
     "Insert image" : "Inserir imatge",
     "Edit" : "Modificar",
     "New text document" : "Novèl fichièr tèxte",
+    "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Currently active users:" : "Utilizaires actius :",
-    "Emoji picker" : "Selector emoji"
+    "Emoji picker" : "Selector emoji",
+    "Participants" : "Participants"
 },
 "nplurals=2; plural=(n > 1);");

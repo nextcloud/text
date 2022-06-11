@@ -31,7 +31,6 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Ultimo salvataggio {lastSave}",
     "Unsaved changes" : "Modifiche non salvate",
     "No emoji found" : "Nessun emoji trovato",
-    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Edit guest name" : "Modifica nome ospite",
     "Guest" : "Ospite",
     "Save guest name" : "Salva nome ospite",
@@ -74,7 +73,6 @@ OC.L10N.register(
     "Link file" : "Collegamento a file",
     "Remove Link" : "Rimuovi collegamento",
     "Select file to link to" : "Seleziona il file da collegare",
-    "Participants" : "Partecipanti",
     "guest" : "ospite",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
@@ -105,8 +103,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Modifica",
     "New text document" : "Nuovo documento di testo",
+    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Currently active users:" : "Utenti attualmente attivi:",
     "_and %n other editor_::_and %n other editors_" : ["e %n altro redattore","e %n altri redattori","e %n altri redattori"],
-    "Emoji picker" : "Selettore di emoji"
+    "Emoji picker" : "Selettore di emoji",
+    "Participants" : "Partecipanti"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
