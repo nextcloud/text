@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Įrašyta",
     "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
-    "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
     "Guest" : "Svečias",
     "Save guest name" : "Įrašyti svečio vardą",
@@ -51,7 +50,6 @@ OC.L10N.register(
     "Link file" : "Susieti failą",
     "Remove Link" : "Šalinti nuorodą",
     "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
-    "Participants" : "Dalyviai",
     "guest" : "svečias",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
@@ -72,8 +70,10 @@ OC.L10N.register(
     "Insert image" : "Įterpti paveikslą",
     "Edit" : "Taisyti",
     "New text document" : "Naujas tekstinis dokumentas",
+    "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
-    "Emoji picker" : "Šypsenėlių parinkiklis"
+    "Emoji picker" : "Šypsenėlių parinkiklis",
+    "Participants" : "Dalyviai"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

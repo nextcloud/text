@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Spremljeno",
     "Last saved {lastSaved}" : "Posljednje spremljeno {lastSave}",
     "Unsaved changes" : "Nespremljene promjene",
-    "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
     "Edit guest name" : "Uredi ime gosta",
     "Guest" : "Gost",
     "Save guest name" : "Spremi ime gosta",
@@ -47,7 +46,6 @@ OC.L10N.register(
     "Code block" : "Odjeljak s kodom",
     "Link file" : "Poveznica datoteke",
     "Select file to link to" : "Odaberi datoteku za povezivanje",
-    "Participants" : "Sudionici",
     "guest" : "gost",
     "Show author colors" : "Prikaži boje autora",
     "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
@@ -68,8 +66,10 @@ OC.L10N.register(
     "Insert image" : "Umetni sliku",
     "Edit" : "Uredi",
     "New text document" : "Novi tekstni dokument",
+    "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
     "Currently active users:" : "Trenutno aktivni korisnici:",
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
-    "Emoji picker" : "Birač emojija"
+    "Emoji picker" : "Birač emojija",
+    "Participants" : "Sudionici"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

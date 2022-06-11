@@ -20,7 +20,6 @@ OC.L10N.register(
     "Saved" : "Bewaar",
     "Last saved {lastSaved}" : "Laas bewaar {lastSaved}",
     "Unsaved changes" : "Onbewaarde veranderinge",
-    "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
     "Guest" : "Gas",
     "Keyboard shortcuts" : "Sneltoetse",
     "Bold" : "Vet",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "Insert image" : "Voer beeld in",
     "Edit" : "Wysig",
     "New text document" : "Nuwe teksdokument",
+    "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
     "Currently active users:" : "Gebruikers wat tans aktief is:"
 },
 "nplurals=2; plural=(n != 1);");

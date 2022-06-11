@@ -20,7 +20,6 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha sido cambiado fuera de el editor. Los cambios no pueden ser aplicados.",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
-    "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
     "Edit guest name" : "Editar nombre de invitado",
     "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre de invitado",
@@ -35,7 +34,6 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
-    "Participants" : "Participantes",
     "guest" : "invitado",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
     "Undo" : "Deshacer",
@@ -52,6 +50,8 @@ OC.L10N.register(
     "Insert image" : "Añadir imagen",
     "Edit" : "Editar",
     "New text document" : "Nuevo documento de texto",
-    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"]
+    "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
+    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"],
+    "Participants" : "Participantes"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Saved" : "Opgeslagen",
     "Last saved {lastSaved}" : "Laatste opgeslagen {lastSaved}",
     "Unsaved changes" : "Niet opgeslagen veranderingen",
-    "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
     "Edit guest name" : "Bewerk gast naam",
     "Guest" : "Gast",
     "Save guest name" : "Bewaar gast naam",
@@ -68,7 +67,6 @@ OC.L10N.register(
     "Link file" : "Link bestand",
     "Remove Link" : "Verwijder Link",
     "Select file to link to" : "Selecteer een bestand om naar te linken",
-    "Participants" : "Deelnemers",
     "guest" : "gast",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
@@ -91,8 +89,10 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Edit" : "Bewerken",
     "New text document" : "Nieuw tekstdocument",
+    "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
     "Currently active users:" : "Momenteel actieve gebruikers:",
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
-    "Emoji picker" : "Emoji kiezer"
+    "Emoji picker" : "Emoji kiezer",
+    "Participants" : "Deelnemers"
 },
 "nplurals=2; plural=(n != 1);");

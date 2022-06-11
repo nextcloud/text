@@ -12,11 +12,11 @@ OC.L10N.register(
     "Guest" : "სტუმარი",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
-    "Participants" : "მონაწილეები",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება"
+    "Edit" : "ცვლილება",
+    "Participants" : "მონაწილეები"
 },
 "nplurals=2; plural=(n!=1);");
