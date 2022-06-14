@@ -21,5 +21,7 @@
 */
 
 import RichTextReader from './components/RichTextReader.vue'
+import ImageResolver from './services/ImageResolver.js'
+import { IMAGE_RESOLVER } from './components/EditorWrapper.provider.js'
 
-export { RichTextReader }
+export { RichTextReader, ImageResolver, IMAGE_RESOLVER }
