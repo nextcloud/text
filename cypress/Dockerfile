@@ -14,7 +14,9 @@ RUN set -ex; \
     cd server; \
     git submodule update --init;
 
-RUN cp -r -v /usr/src/nextcloud/config /tmp/server
+RUN set -ex; \
+	cp -r -v /usr/src/nextcloud/config /tmp/server; \
+	rm -rf /usr/src/nextcloud/apps/text;
 
 FROM nextcloud:latest
 
@@ -22,7 +24,6 @@ RUN set -ex; \
 	rm -rf /usr/src/nextcloud;
 
 COPY --from=source --chown=www-data:www-data /tmp/server /usr/src/nextcloud
-COPY --chown=www-data:www-data ./server.sh /tmp/server.sh
 
 RUN set -ex; \
 	cd /usr/src/nextcloud; \
@@ -34,13 +35,6 @@ ENV NEXTCLOUD_ADMIN_PASSWORD=admin
 ENV NEXTCLOUD_ADMIN_USER=admin
 ENV SQLITE_DATABASE=sqlite_db
 
-RUN set -ex; \
-	cd /var/www/html; \
-	NEXTCLOUD_UPDATE=1 bash -x /entrypoint.sh pwd; \
-	chown -R www-data:www-data config data apps custom_apps; \
-	bash -x /tmp/server.sh; \
-	rm -rf /var/www/html/apps/text
+RUN mv /entrypoint.sh /original_entrypoint.sh
 
-RUN set -ex; \
-	cd /var/www/html; \
-	ls -lah
+COPY --chown=www-data:www-data --chmod=0755 ./entrypoint.sh /entrypoint.sh
