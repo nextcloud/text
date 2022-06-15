@@ -130,7 +130,7 @@
 				<tr>
 					<td>{{ t('text', 'Checklist') }}</td>
 					<td>
-						<code>* [] {{ t('text', 'To-do item') }}</code>
+						<code>* [] {{ t('text', 'To-Do item') }}</code>
 					</td>
 					<td v-if="!isMobile" />
 				</tr>
