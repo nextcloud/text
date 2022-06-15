@@ -28,6 +28,7 @@ import MDI_Delete from 'vue-material-design-icons/Delete.vue'
 import MDI_Document from 'vue-material-design-icons/FileDocument.vue'
 import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
+import MDI_FileLink from 'vue-material-design-icons/FileLink.vue'
 import MDI_Folder from 'vue-material-design-icons/Folder.vue'
 import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
 import MDI_FormatHeader1 from 'vue-material-design-icons/FormatHeader1.vue'
@@ -48,6 +49,7 @@ import MDI_Image from 'vue-material-design-icons/ImageOutline.vue'
 import MDI_Images from 'vue-material-design-icons/ImageMultipleOutline.vue'
 import MDI_Info from 'vue-material-design-icons/Information.vue'
 import MDI_Link from 'vue-material-design-icons/Link.vue'
+import MDI_LinkOff from 'vue-material-design-icons/LinkOff.vue'
 import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
@@ -62,6 +64,7 @@ import MDI_TrashCan from 'vue-material-design-icons/TrashCan.vue'
 import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
 import MDI_Upload from 'vue-material-design-icons/Upload.vue'
 import MDI_Warn from 'vue-material-design-icons/Alert.vue'
+import MDI_Web from 'vue-material-design-icons/Web.vue'
 
 const DEFAULT_ICON_SIZE = 20
 
@@ -95,6 +98,7 @@ export const Delete = makeIcon(MDI_Delete)
 export const Document = makeIcon(MDI_Document)
 export const DotsHorizontal = makeIcon(MDI_DotsHorizontal)
 export const Emoticon = makeIcon(MDI_Emoticon)
+export const FileLink = makeIcon(MDI_FileLink)
 export const Folder = makeIcon(MDI_Folder)
 export const FormatBold = makeIcon(MDI_FormatBold)
 export const FormatHeader1 = makeIcon(MDI_FormatHeader1)
@@ -115,6 +119,7 @@ export const Image = makeIcon(MDI_Image)
 export const Images = makeIcon(MDI_Images)
 export const Info = makeIcon(MDI_Info)
 export const Link = makeIcon(MDI_Link)
+export const LinkOff = makeIcon(MDI_LinkOff)
 export const Lock = makeIcon(MDI_Lock)
 export const Positive = makeIcon(MDI_Positive)
 export const Redo = makeIcon(MDI_Redo)
@@ -128,3 +133,4 @@ export const TrashCan = makeIcon(MDI_TrashCan)
 export const Undo = makeIcon(MDI_Undo)
 export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
+export const Web = makeIcon(MDI_Web)

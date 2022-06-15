@@ -34,6 +34,10 @@ const optimalPath = function(from, to) {
 	while (current[0] === target[0]) {
 		current.shift()
 		target.shift()
+		// Handle case where target is the current directory
+		if (current.length === 0 && target.length === 0) {
+			return '.'
+		}
 	}
 	const relativePath = current.fill('..').concat(target)
 	const absolutePath = to.split('/')

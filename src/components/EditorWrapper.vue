@@ -74,9 +74,6 @@
 				<div ref="contentWrapper"
 					data-text-el="editor-content-wrapper"
 					class="content-wrapper text-editor__content-wrapper">
-					<MenuBubble v-if="renderMenus"
-						:content-wrapper="contentWrapper"
-						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
 						class="editor__content text-editor__content"
 						:editor="$editor" />
@@ -136,7 +133,6 @@ export default {
 		EditorContent,
 		EditorMidiaHandler,
 		MenuBar,
-		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),

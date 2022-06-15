@@ -61,8 +61,14 @@ const domHref = function(node) {
 		const [, relPath, id] = match
 		const currentDir = basedir(OCA.Viewer.file)
 		const dir = absolutePath(currentDir, basedir(relPath))
-		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
+		if (relPath.length > 1 && relPath.endsWith('/')) {
+			// is directory
+			return generateUrl(`/apps/files/?dir=${dir}&fileId=${id}`)
+		} else {
+			return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
+		}
 	}
+	return ref
 }
 
 const parseHref = function(dom) {
@@ -99,7 +105,7 @@ const openLink = function(event, _attrs) {
 		}
 		if (query.fileId) {
 			// open the direct file link
-			window.open(generateUrl(`/f/${query.fileId}`))
+			window.open(generateUrl(`/f/${query.fileId}`), '_self')
 			return
 		}
 	}
