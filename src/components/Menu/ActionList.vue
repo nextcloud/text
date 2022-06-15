@@ -83,8 +83,12 @@ export default {
 			// nothing todo
 		},
 		onTrigger(entry) {
-			this.$editor.chain().focus().run()
-			this.$emit('trigged', entry)
+			if (entry?.click) {
+				entry.click(this)
+			} else {
+				this.$editor.chain().focus().run()
+				this.$emit('trigged', entry)
+			}
 		},
 	},
 }
