@@ -52,10 +52,9 @@ describe('test link marks', function() {
 				.then($el => {
 					const id = $el.data('id')
 
-					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id} `
-					cy.getContent()
-						.type('{enter}')
-						.type(link)
+					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
+					cy.clearContent()
+						.type(`${link}{enter}`)
 
 					cy.getContent()
 						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
@@ -67,22 +66,101 @@ describe('test link marks', function() {
 				})
 		})
 
-		it('whithout protocol', () => {
-			cy.getContent()
+		it('without protocol', () => {
+			cy.clearContent()
 				.type('google.com{enter}')
-
-			cy.getContent()
-				.find('a[href*="google.com"]')
-				.should('not.exist')
+				.then(() => cy.getContent()
+					.find('a[href*="google.com"]')
+					.should('not.exist')
+				)
 		})
 
-		it('whithout space', () => {
+		it('with protocol but without space', () => {
 			cy.getContent()
 				.type('https://nextcloud.com')
 
 			cy.getContent()
 				.find('a[href*="nextcloud.com"]')
 				.should('not.exist')
+		})
+	})
+
+	describe('link menu', function() {
+		beforeEach(() => cy.clearContent())
+		const text = 'some text'
+
+		describe('link to website', function() {
+			const url = 'https://nextcloud.com/'
+			// Helper to reduce duplicated code, checking inserting with and without selected text
+			const checkLinkWebsite = (url, text) => {
+				cy.getSubmenuEntry('insert-link', 'insert-link-website').click()
+				cy.getActionSubEntry('insert-link-input').find('input[type="text"]').type(`${url}{enter}`)
+				cy.getContent()
+					.get(`a[href*="${url}"]`)
+					.should('have.text', text) // ensure correct text used
+					.click({ force: true })
+
+				cy.get('@winOpen')
+					.should('have.been.calledOnce')
+					.should('have.been.calledWith', url)
+			}
+
+			beforeEach(cy.clearContent)
+			it('Link website without selection', () => {
+				cy.getFile(fileName)
+					.then($el => {
+						checkLinkWebsite(url, url)
+					})
+			})
+
+			it('Link website with selection', () => {
+				cy.getFile(fileName)
+					.then($el => {
+						cy.getContent().type(`${text}{selectAll}`)
+						checkLinkWebsite(url, text)
+					})
+			})
+		})
+
+		describe('link to local file', function() {
+			// Helper to reduce duplicated code, checking inserting with and without selected text
+			const checkLinkFile = (filename, text) => {
+				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
+				cy.get('.oc-dialog').find(`tr[data-entryname="${filename}"]`).click()
+				cy.get('.oc-dialog').find('.oc-dialog-buttonrow > button').click()
+
+				return cy.getContent()
+					.find(`a[href*="${encodeURIComponent(filename)}"]`)
+					.should('have.text', text === undefined ? filename : text)
+					.click({ force: true })
+			}
+
+			beforeEach(() => cy.clearContent())
+
+			it('without text', () => {
+				cy.getFile(fileName)
+					.then($el => {
+						checkLinkFile(fileName)
+						cy.get('.modal-title').should('include.text', fileName)
+					})
+			})
+			it('with selected text', () => {
+				cy.getFile(fileName)
+					.then($el => {
+						cy.getContent().type(`${text}{selectAll}`)
+						checkLinkFile(fileName, text)
+						cy.get('.modal-title').should('include.text', fileName)
+					})
+			})
+			it('link to directory', () => {
+				cy.createFolder(`${window.__currentDirectory}/dummy folder`)
+				cy.getFile(fileName).then($el => {
+					cy.getContent().type(`${text}{selectAll}`)
+					checkLinkFile('dummy folder', text)
+					cy.get('@winOpen')
+						.should('have.been.calledOnce')
+				})
+			})
 		})
 	})
 })

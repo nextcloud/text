@@ -55,11 +55,7 @@
 					<div v-else class="menubar-placeholder" />
 				</template>
 				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper">
-					<MenuBubble v-if="renderMenus"
-						:content-wrapper="contentWrapper"
-						:file-path="relativePath" />
-				</ContentContainer>
+					ref="contentWrapper" />
 			</MainContainer>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
@@ -123,7 +119,6 @@ export default {
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
