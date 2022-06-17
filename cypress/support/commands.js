@@ -210,9 +210,29 @@ Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
 		.find('[data-text-el="menubar"]')
 })
 
+// Get menu entry even if moved into overflow menu
+Cypress.Commands.add('getMenuEntry', (name) => {
+	cy.getMenu().then(($body) => {
+		if ($body.find(`[data-text-action-entry="${name}"]`).length) {
+			return cy.getActionEntry(name)
+		}
+		return cy.getSubmenuEntry('remain', name)
+	})
+})
+
+Cypress.Commands.add('getSubmenuEntry', { prevSubject: 'optional' }, (subject, parent, name) => {
+	(subject ? cy.wrap(subject) : cy.getMenu())
+		.getActionEntry(parent).click()
+	return cy.getActionSubEntry(name)
+})
+
 Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, name) => {
 	return (subject ? cy.wrap(subject) : cy.getMenu())
 		.find(`[data-text-action-entry="${name}"]`)
+})
+
+Cypress.Commands.add('getActionSubEntry', (name) => {
+	return cy.get('.popover .open').getActionEntry(name)
 })
 
 Cypress.Commands.add('getContent', () => {
@@ -225,7 +245,7 @@ Cypress.Commands.add('clearContent', () => {
 		.type('{del}')
 })
 
-Cypress.Commands.add('openWorkspace', (subject, name) => {
+Cypress.Commands.add('openWorkspace', () => {
 	cy.get('#rich-workspace .empty-workspace').click()
 	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
 

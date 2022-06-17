@@ -49,52 +49,42 @@ describe('Workspace', function() {
 	})
 
 	it('formats text', function() {
-		cy.openWorkspace()
-			.type('Format me')
-			.type('{selectall}')
-		;[
+		cy.openWorkspace();
+		[
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
 			['strikethrough', 's'],
 		].forEach(([button, tag]) => {
-			menuButton(button)
-				.click({ force: true })
-				.should('have.class', 'is-active')
 			cy.getContent()
-				.find(`${tag}`)
-				.should('contain', 'Format me')
-			menuButton(button)
-				.click({ force: true })
+				.type('{selectall}Format me{selectall}')
+
+			cy.getMenuEntry(button)
+				.click()
+			cy.getContent().find(`${tag}`).should('contain', 'Format me')
+			cy.getMenuEntry(button)
+				.should('have.class', 'is-active')
+				.click()
+			cy.getMenuEntry(button)
 				.should('not.have.class', 'is-active')
 		})
 	})
 
-	it('links via menububble', function() {
+	it('create links via menu', function() {
+		cy.createFile(`${Cypress.currentTest.title}/welcome.txt`, '', 'text/plain')
 		cy.openWorkspace()
 			.type('Nextcloud')
 			.type('{selectall}')
-		menuBubbleButton('add-link').click()
-		cy.get('.menububble input').type('https://nextcloud.com{enter}')
-		cy.getContent()
-			.find('a')
-			.should('contain', 'Nextcloud')
-			.should('be.visible')
-		cy.getContent()
-			.find('a').invoke('attr', 'href')
-			.should('include', 'https://nextcloud.com')
+		cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
+		cy.get('.oc-dialog').find('tr[data-entryname="welcome.txt"]').click()
+		cy.get('.oc-dialog').find('.oc-dialog-buttonrow > button').click()
+
 		cy.window().then((win) => {
 			cy.stub(win, 'open').as('windowOpen')
 		})
-		cy.getContent()
-			.find('a').click()
-		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/')
-		cy.getContent().type('{selectall}')
-		menuBubbleButton('add-link').click()
-		cy.get('.menububble input').type('/team{enter}')
-		cy.getContent()
-			.find('a').click()
-		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/team')
+		cy.getEditor()
+			.find(`a[href*="${encodeURIComponent('welcome.txt')}"]`)
+			.click()
 	})
 
 	it('creates headings via submenu', function() {
@@ -104,17 +94,17 @@ describe('Workspace', function() {
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
 			const actionName = `headings-${heading}`
 
-			getSubmenuItem('headings', actionName).click()
+			cy.getSubmenuEntry('headings', actionName).click()
 
 			cy.getContent()
 				.find(`${heading}`)
 				.should('contain', 'Heading')
 
-			getSubmenuItem('headings', actionName)
+			cy.getSubmenuEntry('headings', actionName)
 				.should('have.class', 'is-active')
 				.click()
 
-			menuButton('headings').should('not.have.class', 'is-active')
+			cy.getActionEntry('headings').should('not.have.class', 'is-active')
 		})
 	})
 
@@ -127,14 +117,14 @@ describe('Workspace', function() {
 			['ordered-list', 'ol'],
 			['task-list', 'ul[data-type="taskList"]'],
 		].forEach(([button, tag]) => {
-			menuButton(button)
+			cy.getActionEntry(button)
 				.click({ force: true })
 				.should('have.class', 'is-active')
 
 			cy.getContent()
 				.find(`${tag}`).should('contain', 'List me')
 
-			menuButton(button)
+			cy.getActionEntry(button)
 				.click({ force: true })
 				.should('not.have.class', 'is-active')
 		})
@@ -157,10 +147,10 @@ describe('Workspace', function() {
 				// sometimes actions can be hide
 				if ($el.find('[data-text-action-entry="remain"]').length) {
 					toggleMoreActions()
-					return submenuButton('table').click()
+					return cy.getActionSubEntry('table').click()
 				}
 
-				return menuButton('table').click()
+				return cy.getActionEntry('table').click()
 			})
 
 		cy.getContent()
@@ -194,7 +184,7 @@ describe('Workspace', function() {
 				const actionName = `callout-${type}`
 
 				// enable callout
-				getSubmenuItem('callouts', actionName)
+				cy.getSubmenuEntry('callouts', actionName)
 					.click()
 					.then(() => {
 						// check content
@@ -203,7 +193,7 @@ describe('Workspace', function() {
 							.should('contain', 'Callout')
 
 						// disable
-						return getSubmenuItem('callouts', actionName)
+						return cy.getSubmenuEntry('callouts', actionName)
 							.should('have.class', 'is-active')
 							.click()
 					})
@@ -216,13 +206,13 @@ describe('Workspace', function() {
 			let last = first
 
 			// enable callout
-			getSubmenuItem('callouts', `callout-${first}`)
+			cy.getSubmenuEntry('callouts', `callout-${first}`)
 				.click()
 
 			cy.wrap(rest)
 				.each(type => {
 					const actionName = `callout-${type}`
-					return getSubmenuItem('callouts', actionName)
+					return cy.getSubmenuEntry('callouts', actionName)
 						.click()
 						.then(() => cy.getContent().find(`.callout.callout--${type}`))
 						.should('contain', 'Callout')
@@ -231,10 +221,10 @@ describe('Workspace', function() {
 						})
 				})
 				.then(() => {
-					getSubmenuItem('callouts', `callout-${last}`)
+					cy.getSubmenuEntry('callouts', `callout-${last}`)
 						.click()
 
-					menuButton('callouts')
+					cy.getActionEntry('callouts')
 						.should('not.have.class', 'is-active')
 				})
 		})
@@ -261,25 +251,8 @@ describe('Workspace', function() {
 
 })
 
-const menuButton = (name) => {
-	return cy.getActionEntry(name)
-}
-
-const submenuButton = (name) => {
-	return cy.get('.popover.open').getActionEntry(name)
-}
-
 const toggleMoreActions = () => {
-	return menuButton('remain').click()
-}
-
-const menuBubbleButton = (name) => {
-	return cy.get('[data-text-el="menu-bubble"]').find(`[data-text-bubble-action="${name}"]`)
-}
-
-const getSubmenuItem = (parent, item) => {
-	menuButton(parent).click()
-	return submenuButton(item)
+	return cy.getActionEntry('remain').click()
 }
 
 const openSidebar = filename => {
