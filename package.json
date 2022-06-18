@@ -139,7 +139,7 @@
 		"sass-loader": "^12.6.0",
 		"style-loader": "^3.3.1",
 		"vite": "^2.9.9",
-		"vite-plugin-commonjs": "^0.4.7",
+		"vite-plugin-commonjs": "^0.5.0",
 		"vite-plugin-vue2": "^2.0.0",
 		"vue-loader": "^15.9.8",
 		"vue-template-compiler": "^2.6.14",
