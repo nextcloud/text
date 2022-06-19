@@ -31,6 +31,7 @@ OC.L10N.register(
     "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",
     "Unsaved changes" : "Ungespeicherte Änderungen",
     "No emoji found" : "Kein Emoji gefunden",
+    "Enter your name so other people can see who is editing" : "Gebe Deinen Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
     "Edit guest name" : "Gast-Namen bearbeiten",
     "Guest" : "Benötigt keine Übersetzung. Für iOS wird nur die formelle Übersetzung verwendet (de_DE).",
     "Save guest name" : "Gast-Namen speichern",
