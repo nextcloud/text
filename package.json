@@ -115,7 +115,7 @@
 		"babel-loader": "^8.2.5",
 		"core-js": "^3.22.7",
 		"css-loader": "^6.7.1",
-		"cypress": "^10.0.3",
+		"cypress": "^10.1.0",
 		"cypress-file-upload": "^5.0.8",
 		"debounce": "^1.2.1",
 		"escape-html": "^1.0.3",
