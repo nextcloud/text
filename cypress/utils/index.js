@@ -35,17 +35,15 @@ export const getSearchParams = url => {
  * Can be used e.g. for a `before()`
  *
  * @param {string} userName Username of the user to create
- * @param {...string} file one ore more markdown file names to create
+ * @param {...string} files one ore more markdown file names to create
  */
-export function initUserAndFiles(userName, file) {
-	const files = [...arguments].slice(1)
-
+export function initUserAndFiles(userName, ...files) {
 	// Init user
 	cy.nextcloudCreateUser(userName, 'password')
 	cy.login(userName, 'password')
 
 	// Upload test files
-	files.forEach(file => {
+	;(files || []).forEach(file => {
 		cy.uploadFile(file, 'text/markdown')
 	})
 }

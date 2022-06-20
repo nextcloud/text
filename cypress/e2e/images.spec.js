@@ -135,6 +135,7 @@ const waitForRequestAndCheckImage = (requestAlias, index) => {
 describe('Test all image insertion methods', () => {
 	before(() => {
 		initUserAndFiles(randUser, 'test.md', 'empty.md')
+
 		cy.uploadFile('github.png', 'image/png')
 
 		cy.nextcloudCreateUser(randUser2, 'password')
@@ -192,8 +193,10 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('Upload images with the same name', () => {
-		cy.uploadFile('empty.md', 'text/markdown')
-		cy.openFile('empty.md')
+		// make sure we start from an emtpy file even on retries
+		const filename = randHash() + '.md'
+		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.openFile(filename)
 
 		const assertImage = index => {
 			return clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE)
