@@ -78,7 +78,7 @@ export default {
 
 	display: flex;
 	align-items: center;
-    justify-content: flex-start;
+	justify-content: flex-start;
 
 	+ & {
 		margin-top: 0.5em;
