@@ -209,7 +209,7 @@ export default [
 	},
 	{
 		key: 'task-list',
-		label: t('text', 'ToDo list'),
+		label: t('text', 'To-Do list'),
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
 		action: (command) => command.toggleTaskList(),
