@@ -20,4 +20,5 @@ module.exports = defineConfig({
 		experimentalSessionAndOrigin: true,
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 	},
+	retries: 2,
 })
