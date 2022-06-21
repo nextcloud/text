@@ -60,7 +60,6 @@ OC.L10N.register(
     "Ordered list" : "Подреден списък",
     "First item" : "Първи елемент",
     "Checklist" : "Контролен списък",
-    "Todo item" : "Елемент на задача за изпълнение",
     "Blockquote" : "Блоков цитат",
     "Quoted text" : "Цитиран текст",
     "Code block" : "Кодов блок",
@@ -91,7 +90,6 @@ OC.L10N.register(
     "Heading 3" : "Заглавие 3",
     "Heading 4" : "Заглавие 4",
     "Heading 5" : "Заглавие 5",
-    "ToDo list" : "Списък със задачи",
     "Callouts" : "Изнесени означения",
     "Info" : "Информация",
     "Success" : "Успех",
@@ -106,7 +104,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Въведете името си, за да могат другите потребители да видят кой редактира",
     "Currently active users:" : "Потребители, които са активни в момента:",
     "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"],
+    "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
+    "Todo item" : "Елемент на задача за изпълнение",
     "Participants" : "Участници"
 },
 "nplurals=2; plural=(n != 1);");

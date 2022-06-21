@@ -63,7 +63,6 @@ OC.L10N.register(
     "Heading 3" : "見出し3",
     "Heading 4" : "見出し4",
     "Heading 5" : "見出し5",
-    "ToDo list" : "ToDo リスト",
     "Info" : "情報",
     "Success" : "完了",
     "Warning" : "警告",
@@ -75,6 +74,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
+    "ToDo list" : "ToDo リスト",
     "Emoji picker" : "絵文字選択",
     "Participants" : "参加者"
 },

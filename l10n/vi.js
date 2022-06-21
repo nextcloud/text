@@ -56,7 +56,6 @@ OC.L10N.register(
     "Heading 3" : "Đầu đề 3",
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
-    "ToDo list" : "Cần làm",
     "Info" : "Thông tin",
     "Success" : "Thành công",
     "Warning" : "Cảnh báo",
@@ -67,6 +66,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
     "Currently active users:" : "Người dùng hiện đang hoạt động:",
     "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"],
+    "ToDo list" : "Cần làm",
     "Emoji picker" : "Trình chọn emoji",
     "Participants" : "Người tham gia"
 },

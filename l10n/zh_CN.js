@@ -55,7 +55,6 @@ OC.L10N.register(
     "Ordered list" : "编号列表",
     "First item" : "第一个项目",
     "Checklist" : "清单",
-    "Todo item" : "待办事项",
     "Blockquote" : "块引用",
     "Quoted text" : "引用文本",
     "Code block" : "代码块",
@@ -79,7 +78,6 @@ OC.L10N.register(
     "Heading 3" : "标题 3",
     "Heading 4" : "标题 4",
     "Heading 5" : "标题 5",
-    "ToDo list" : "待办事项清单",
     "Info" : "信息",
     "Success" : "成功",
     "Warning" : "警告",
@@ -92,7 +90,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
     "Currently active users:" : "当前活跃用户：",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
+    "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
+    "Todo item" : "待办事项",
     "Participants" : "参与者"
 },
 "nplurals=1; plural=0;");

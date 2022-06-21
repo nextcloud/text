@@ -89,7 +89,6 @@ OC.L10N.register(
     "Heading 3" : "Titre 3",
     "Heading 4" : "Titre 4",
     "Heading 5" : "Titre 5",
-    "ToDo list" : "Liste des tâches",
     "Info" : "Info",
     "Success" : "Succès",
     "Warning" : "Avertissement",
@@ -101,6 +100,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
     "Currently active users:" : "Utilisateurs actuellement actifs :",
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes","et %n  autres personnes"],
+    "ToDo list" : "Liste des tâches",
     "Emoji picker" : "Sélecteur d'émoticônes",
     "Participants" : "Participants"
 },
