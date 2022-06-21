@@ -59,7 +59,6 @@
     "Ordered list" : "Sıralı liste",
     "First item" : "İlk öge",
     "Checklist" : "Denetim listesi",
-    "Todo item" : "Yapılacak iş ögesi",
     "Blockquote" : "Alıntı",
     "Quoted text" : "Alıntılanmış metin",
     "Code block" : "Kod bloğu",
@@ -94,7 +93,6 @@
     "Heading 3" : "3. Başlık",
     "Heading 4" : "4. Başlık",
     "Heading 5" : "5. Başlık",
-    "ToDo list" : "Yapılacaklar listesi",
     "Callouts" : "Metin notları",
     "Info" : "Bilgiler",
     "Success" : "Başarılı",
@@ -109,7 +107,9 @@
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
+    "ToDo list" : "Yapılacaklar listesi",
     "Emoji picker" : "Emoji seçici",
+    "Todo item" : "Yapılacak iş ögesi",
     "Participants" : "Katılımcılar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

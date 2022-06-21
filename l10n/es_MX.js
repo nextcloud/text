@@ -43,7 +43,6 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista de penditentes",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "New text document" : "Nuevo documento de texto",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
     "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"],
+    "ToDo list" : "Lista de penditentes",
     "Participants" : "Participantes"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

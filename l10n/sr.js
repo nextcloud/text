@@ -54,7 +54,6 @@ OC.L10N.register(
     "Heading 3" : "Наслов 3",
     "Heading 4" : "Наслов 4",
     "Heading 5" : "Наслов 5",
-    "ToDo list" : "ToDo листа",
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Упозорење",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "New text document" : "Нови текстуални документ",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
+    "ToDo list" : "ToDo листа",
     "Participants" : "Учесници"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

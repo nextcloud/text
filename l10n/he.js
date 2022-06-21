@@ -55,7 +55,6 @@ OC.L10N.register(
     "Heading 3" : "כותרת 3",
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
-    "ToDo list" : "רשימת מטלות",
     "Info" : "פרטים",
     "Success" : "הצלחה",
     "Warning" : "אזהרה",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
     "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
+    "ToDo list" : "רשימת מטלות",
     "Participants" : "משתתפים"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

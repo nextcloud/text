@@ -40,7 +40,6 @@ OC.L10N.register(
     "Heading 3" : "Kop 3",
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
-    "ToDo list" : "Moet-doen-lys",
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "Edit" : "Wysig",
     "New text document" : "Nuwe teksdokument",
     "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
-    "Currently active users:" : "Gebruikers wat tans aktief is:"
+    "Currently active users:" : "Gebruikers wat tans aktief is:",
+    "ToDo list" : "Moet-doen-lys"
 },
 "nplurals=2; plural=(n != 1);");

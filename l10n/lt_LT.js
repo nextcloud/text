@@ -62,7 +62,6 @@ OC.L10N.register(
     "Heading 3" : "Antraštė 3",
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
-    "ToDo list" : "Užduočių sąrašas",
     "Info" : "Informacija",
     "Success" : "Pavyko",
     "Warning" : "Įspėjimas",
@@ -73,6 +72,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
+    "ToDo list" : "Užduočių sąrašas",
     "Emoji picker" : "Šypsenėlių parinkiklis",
     "Participants" : "Dalyviai"
 },
