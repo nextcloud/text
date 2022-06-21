@@ -61,7 +61,6 @@ OC.L10N.register(
     "Ordered list" : "Ordenatutako zerrenda",
     "First item" : "Lehenengo elementua",
     "Checklist" : "Kontrol-zerrenda",
-    "Todo item" : "Eginbeharreko elementua",
     "Blockquote" : "Aipamena",
     "Quoted text" : "Aipatutako testua",
     "Code block" : "Kode blokea",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "Heading 3" : "3. goiburua",
     "Heading 4" : "4. goiburua",
     "Heading 5" : "5. goiburua",
-    "ToDo list" : "Egitekoen zerrenda",
     "Callouts" : "Deialdiak",
     "Info" : "Informazioa",
     "Success" : "Arrakasta",
@@ -111,7 +109,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
+    "ToDo list" : "Egitekoen zerrenda",
     "Emoji picker" : " Emotikono-hautatzailea",
+    "Todo item" : "Eginbeharreko elementua",
     "Participants" : "Parte hartzaileak"
 },
 "nplurals=2; plural=(n != 1);");

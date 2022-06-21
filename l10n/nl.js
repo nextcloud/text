@@ -55,7 +55,6 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lijst",
     "First item" : "Eerste object",
     "Checklist" : "Checklist",
-    "Todo item" : "Te doen onderwerp",
     "Blockquote" : "Tekstblok",
     "Quoted text" : "Geciteerde tekst",
     "Code block" : "Code blok",
@@ -79,7 +78,6 @@ OC.L10N.register(
     "Heading 3" : "Kop 3",
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
-    "ToDo list" : "ToDo overzicht",
     "Info" : "Info",
     "Success" : "Geslaagd",
     "Warning" : "Waarschuwing",
@@ -92,7 +90,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
     "Currently active users:" : "Momenteel actieve gebruikers:",
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
+    "ToDo list" : "ToDo overzicht",
     "Emoji picker" : "Emoji kiezer",
+    "Todo item" : "Te doen onderwerp",
     "Participants" : "Deelnemers"
 },
 "nplurals=2; plural=(n != 1);");

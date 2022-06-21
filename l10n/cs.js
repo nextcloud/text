@@ -61,7 +61,6 @@ OC.L10N.register(
     "Ordered list" : "Řazený seznam",
     "First item" : "První položka",
     "Checklist" : "Kontrolní seznam",
-    "Todo item" : "Položka k udělání",
     "Blockquote" : "Citace",
     "Quoted text" : "Citovaný text",
     "Code block" : "Blok kódu",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "Heading 3" : "Nadpis 3",
     "Heading 4" : "Nadpis 4",
     "Heading 5" : "Nadpis 5",
-    "ToDo list" : "Seznam úkolů",
     "Callouts" : "Popisky",
     "Info" : "Informace",
     "Success" : "Úspěch",
@@ -111,7 +109,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Currently active users:" : "Nyní aktivních uživatelů:",
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
+    "ToDo list" : "Seznam úkolů",
     "Emoji picker" : "Volba emotikony",
+    "Todo item" : "Položka k udělání",
     "Participants" : "Účastníci"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

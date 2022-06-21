@@ -75,7 +75,6 @@ OC.L10N.register(
     "Heading 3" : "Rubrik 3",
     "Heading 4" : "Rubrik 4",
     "Heading 5" : "Rubrik 5",
-    "ToDo list" : "Att göra lista",
     "Info" : "Info",
     "Success" : "Lyckades",
     "Warning" : "Varning",
@@ -88,6 +87,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
+    "ToDo list" : "Att göra lista",
     "Emoji picker" : "Emojiväljare",
     "Participants" : "Deltagare"
 },

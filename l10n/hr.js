@@ -58,7 +58,6 @@ OC.L10N.register(
     "Heading 3" : "Naslov 3",
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
-    "ToDo list" : "Popis zadataka",
     "Info" : "Informacije",
     "Success" : "Uspjeh",
     "Warning" : "Upozorenje",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
     "Currently active users:" : "Trenutno aktivni korisnici:",
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
+    "ToDo list" : "Popis zadataka",
     "Emoji picker" : "Birač emojija",
     "Participants" : "Sudionici"
 },

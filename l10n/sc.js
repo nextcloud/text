@@ -57,7 +57,6 @@ OC.L10N.register(
     "Heading 3" : "Intestatzione 3",
     "Heading 4" : "Intestatzione 4",
     "Heading 5" : "Intestatzione 5",
-    "ToDo list" : "Cosas de fàghere",
     "Info" : "Informatziones",
     "Success" : "Sutzessu",
     "Warning" : "Avisu",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
+    "ToDo list" : "Cosas de fàghere",
     "Emoji picker" : "Sèberu de carigheddas",
     "Participants" : "Partetzipantes"
 },
