@@ -57,7 +57,6 @@ OC.L10N.register(
     "Ordered list" : "Oštevilčen seznam",
     "First item" : "Prvi predmet",
     "Checklist" : "Zbirni seznam",
-    "Todo item" : "Naloga",
     "Blockquote" : "Bločni navedek",
     "Quoted text" : "Navedek besedila",
     "Code block" : "Navedek s kodo",
@@ -88,7 +87,6 @@ OC.L10N.register(
     "Heading 3" : "Naslov 3",
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
-    "ToDo list" : "Seznam opravil",
     "Info" : "Podrobnosti",
     "Success" : "Uspešno končano",
     "Warning" : "Opozorilo",
@@ -102,7 +100,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Currently active users:" : "Trenutno dejavni uporabniki:",
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
+    "ToDo list" : "Seznam opravil",
     "Emoji picker" : "Izbirnik izraznih ikon",
+    "Todo item" : "Naloga",
     "Participants" : "Udeleženci"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

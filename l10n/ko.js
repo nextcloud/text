@@ -29,12 +29,12 @@ OC.L10N.register(
     "guest" : "손님",
     "Undo" : "실행 취소",
     "Redo" : "다시 실행",
-    "ToDo list" : "할일 목록",
     "Info" : "정보",
     "Success" : "성공",
     "Warning" : "경고",
     "Edit" : "편집",
     "Enter your name so other users can see who is editing" : "누가 편집하는지 알 수 있게 당신의 이름을 입력하시오.",
+    "ToDo list" : "할일 목록",
     "Participants" : "참가자"
 },
 "nplurals=1; plural=0;");

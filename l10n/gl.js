@@ -58,7 +58,6 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista «para facer»",
     "Info" : "Información",
     "Success" : "Correcto",
     "Warning" : "Aviso",
@@ -68,6 +67,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
     "Currently active users:" : "Usuarios activos actualmente:",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
+    "ToDo list" : "Lista «para facer»",
     "Participants" : "Participantes"
 },
 "nplurals=2; plural=(n != 1);");

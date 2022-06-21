@@ -48,7 +48,6 @@ OC.L10N.register(
     "Heading 3" : "Overskrift 3",
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
-    "ToDo list" : "Gjøreliste",
     "Info" : "Info",
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "New text document" : "Nytt tekstdokument",
     "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
+    "ToDo list" : "Gjøreliste",
     "Participants" : "Deltakere"
 },
 "nplurals=2; plural=(n != 1);");

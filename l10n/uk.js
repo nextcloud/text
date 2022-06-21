@@ -46,7 +46,6 @@ OC.L10N.register(
     "Heading 3" : "Заголовок 3",
     "Heading 4" : "Заголовок 4",
     "Heading 5" : "Заголовок 5",
-    "ToDo list" : "Список завдань",
     "Info" : "Info",
     "Warning" : "Увага",
     "Insert image" : "Додати зображення",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "New text document" : "Новий текстовий документ",
     "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
+    "ToDo list" : "Список завдань",
     "Participants" : "Учасники"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

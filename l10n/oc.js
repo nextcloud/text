@@ -47,7 +47,6 @@ OC.L10N.register(
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
-    "ToDo list" : "Lista a far",
     "Info" : "Info",
     "Success" : "Succès",
     "Warning" : "Avertiment",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "New text document" : "Novèl fichièr tèxte",
     "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Currently active users:" : "Utilizaires actius :",
+    "ToDo list" : "Lista a far",
     "Emoji picker" : "Selector emoji",
     "Participants" : "Participants"
 },
