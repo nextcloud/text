@@ -54,7 +54,6 @@ OC.L10N.register(
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
-    "ToDo list" : "Llista tasques pendents",
     "Info" : "Informació",
     "Success" : "Èxit",
     "Warning" : "Avís",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "New text document" : "Nou document de text",
     "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
+    "ToDo list" : "Llista tasques pendents",
     "Participants" : "Participants"
 },
 "nplurals=2; plural=(n != 1);");
