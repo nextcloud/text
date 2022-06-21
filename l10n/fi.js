@@ -86,7 +86,6 @@ OC.L10N.register(
     "Heading 3" : "Otsikko 3",
     "Heading 4" : "Otsikko 4",
     "Heading 5" : "Otsikko 5",
-    "ToDo list" : "Tehtävälista",
     "Info" : "Tietoa",
     "Success" : "Onnistui",
     "Warning" : "Varoitus",
@@ -98,6 +97,7 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkyvät kuka muokkaa asiakirjaa",
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
+    "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
     "Participants" : "Osallistujat"
 },

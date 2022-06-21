@@ -61,7 +61,6 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "First item" : "Primer element",
     "Checklist" : "Lista de tareas",
-    "Todo item" : "Elemento a completar",
     "Blockquote" : "Bloque citado",
     "Quoted text" : "Texto de cita",
     "Code block" : "Bloque de código",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "ToDo list" : "Lista de Tareas",
     "Callouts" : "Callouts",
     "Info" : "Información",
     "Success" : "Éxito",
@@ -111,7 +109,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
     "Currently active users:" : "Usuarios activos ahora:",
     "_and %n other editor_::_and %n other editors_" : ["y %n otro editor","y %n otros editores","y %n otros editores"],
+    "ToDo list" : "Lista de Tareas",
     "Emoji picker" : "Selector de emoji",
+    "Todo item" : "Elemento a completar",
     "Participants" : "Participantes"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

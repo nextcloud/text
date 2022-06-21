@@ -58,7 +58,6 @@ OC.L10N.register(
     "Ordered list" : "Ταξινομημένη λίστα",
     "First item" : "Πρώτο στοιχείο",
     "Checklist" : "Todo λίστα",
-    "Todo item" : "Στοιχείο todo",
     "Blockquote" : "Παράθεση",
     "Quoted text" : "Αναφερόμενο κείμενο",
     "Code block" : "Μπλοκ κώδικα",
@@ -82,7 +81,6 @@ OC.L10N.register(
     "Heading 3" : "Επικεφαλίδα 3",
     "Heading 4" : "Επικεφαλίδα 4",
     "Heading 5" : "Επικεφαλίδα 5",
-    "ToDo list" : "ToDo λίστα",
     "Callouts" : "Επεξηγήσεις (Callouts)",
     "Info" : "Πληροφόρηση",
     "Success" : "Επιτυχία",
@@ -97,7 +95,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
+    "ToDo list" : "ToDo λίστα",
     "Emoji picker" : "Επιλογέας emoji",
+    "Todo item" : "Στοιχείο todo",
     "Participants" : "Συμμετέχοντες"
 },
 "nplurals=2; plural=(n != 1);");

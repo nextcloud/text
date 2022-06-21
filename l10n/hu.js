@@ -61,7 +61,6 @@ OC.L10N.register(
     "Ordered list" : "Számozott lista",
     "First item" : "Első elem",
     "Checklist" : "Ellenőrzőlista",
-    "Todo item" : "Teendő elem ",
     "Blockquote" : "Idézet",
     "Quoted text" : "Idézett szöveg",
     "Code block" : "Kódblokk",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "Heading 3" : "Címsor 3",
     "Heading 4" : "Címsor 4",
     "Heading 5" : "Címsor 5",
-    "ToDo list" : "Teendőlista",
     "Callouts" : "Kiemelések",
     "Info" : "Információ",
     "Success" : "Siker",
@@ -111,7 +109,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Adja meg a nevét, hogy mások lássák ki szerkeszti",
     "Currently active users:" : "Jelenleg aktív felhasználók:",
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"],
+    "ToDo list" : "Teendőlista",
     "Emoji picker" : "Emodzsiválasztó",
+    "Todo item" : "Teendő elem ",
     "Participants" : "Résztvevők"
 },
 "nplurals=2; plural=(n != 1);");

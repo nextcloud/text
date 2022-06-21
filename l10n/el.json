@@ -56,7 +56,6 @@
     "Ordered list" : "Ταξινομημένη λίστα",
     "First item" : "Πρώτο στοιχείο",
     "Checklist" : "Todo λίστα",
-    "Todo item" : "Στοιχείο todo",
     "Blockquote" : "Παράθεση",
     "Quoted text" : "Αναφερόμενο κείμενο",
     "Code block" : "Μπλοκ κώδικα",
@@ -80,7 +79,6 @@
     "Heading 3" : "Επικεφαλίδα 3",
     "Heading 4" : "Επικεφαλίδα 4",
     "Heading 5" : "Επικεφαλίδα 5",
-    "ToDo list" : "ToDo λίστα",
     "Callouts" : "Επεξηγήσεις (Callouts)",
     "Info" : "Πληροφόρηση",
     "Success" : "Επιτυχία",
@@ -95,7 +93,9 @@
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
+    "ToDo list" : "ToDo λίστα",
     "Emoji picker" : "Επιλογέας emoji",
+    "Todo item" : "Στοιχείο todo",
     "Participants" : "Συμμετέχοντες"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

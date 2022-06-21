@@ -54,7 +54,6 @@ OC.L10N.register(
     "Heading 3" : "Fyrirsögn 3",
     "Heading 4" : "Fyrirsögn 4",
     "Heading 5" : "Fyrirsögn 5",
-    "ToDo list" : "Verkefnalisti",
     "Info" : "Upplýsingar",
     "Success" : "Tókst",
     "Warning" : "Aðvörun",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "New text document" : "Nýtt textaskjal",
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
+    "ToDo list" : "Verkefnalisti",
     "Participants" : "Þátttakendur"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

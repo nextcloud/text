@@ -61,7 +61,6 @@ OC.L10N.register(
     "Ordered list" : "有序清單",
     "First item" : "第一項",
     "Checklist" : "檢查清單",
-    "Todo item" : "待辦事項",
     "Blockquote" : "引文",
     "Quoted text" : "引用文字",
     "Code block" : "程式碼區塊",
@@ -96,7 +95,6 @@ OC.L10N.register(
     "Heading 3" : "標題 3",
     "Heading 4" : "標題 4",
     "Heading 5" : "標題 5",
-    "ToDo list" : "待辦列表",
     "Callouts" : "標記",
     "Info" : "資訊",
     "Success" : "成功",
@@ -111,7 +109,9 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他使用者才能查看是誰在編輯",
     "Currently active users:" : "目前活動中的使用者：",
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
+    "ToDo list" : "待辦列表",
     "Emoji picker" : "表情符號挑選器",
+    "Todo item" : "待辦事項",
     "Participants" : "參與者"
 },
 "nplurals=1; plural=0;");
