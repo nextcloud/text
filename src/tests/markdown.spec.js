@@ -23,30 +23,34 @@ const markdownThroughEditorHtml = (html) => {
 }
 
 describe('Commonmark', () => {
-	beforeAll(() => {
-		// Make sure html tests pass
-		// entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
-		markdownit.set({ html: true})
-	})
-	afterAll(() => {
-		markdownit.set({ html: false})
-	})
-
-	// failures because of some additional newline in markdownit
 	const skippedMarkdownTests = [
-		187, 209, 210
+		// contain HTML
+		21, 31, 201, 344, 474, 475, 476, 490, 493, 523, 535, 642, 643,
+		// contain comments
+		309, 308,
 	];
 
+	const normalize = (str) => {
+		// https://github.com/markdown-it/markdown-it/blob/df4607f1d4d4be7fdc32e71c04109aea8cc373fa/test/commonmark.js#L10
+		return str.replace(/<blockquote><\/blockquote>/g, '<blockquote>\n</blockquote>')
+			.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
+	}
+
 	spec.forEach((entry) => {
+		// We do not support HTML
+		if (entry.section === 'HTML blocks' || entry.section === 'Raw HTML') return;
+
 		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
 			return
 		}
-		test('commonmark ' + entry.example, () => {
+
+		test('commonmark parsing ' + entry.example, () => {
 			const expected = entry.markdown.includes('__')
 				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
 				: entry.html
+			const rendered = markdownit.render(entry.markdown)
 			// Ignore special markup for untouched markdown
-			expect(markdownit.render(entry.markdown).replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')).toBe(expected)
+			expect(normalize(rendered)).toBe(expected)
 		})
 	})
 })

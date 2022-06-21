@@ -24,7 +24,7 @@ describe('commonmark as plaintext', () => {
   // FIXME: Those two tests currently fail as trailing whitespace seems to be stripped,
   // if it occurs in the first line which is empty otherwise.
   const skippedMarkdownTests = [
-    67, 87
+    97, 117
   ];
 
   spec.forEach((entry) => {

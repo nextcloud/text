@@ -1,6 +1,6 @@
 import { Editor } from '@tiptap/core'
 import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
+import Paragraph from '../../src/nodes/Paragraph'
 import Text from '@tiptap/extension-text'
 
 export default function({ content, extensions }) {
