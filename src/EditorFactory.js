@@ -55,7 +55,7 @@ import {
 } from './nodes'
 import { HardBreak, Markdown, Emoji } from './extensions'
 import { translate as t } from '@nextcloud/l10n'
-import { listLanguages, registerLanguage } from 'lowlight/lib/core'
+import lowlight, { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
 import { VueRenderer } from '@tiptap/vue-2'
 import EmojiList from './components/EmojiList'
@@ -168,7 +168,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 	} else {
 		richEditingExtensions = [
 			PlainTextDocument,
-			CodeBlockLowlight,
+			CodeBlockLowlight.configure({ lowlight }),
 		]
 	}
 	extensions = extensions || []
