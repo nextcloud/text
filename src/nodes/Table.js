@@ -1,9 +1,10 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { Table } from '@tiptap/extension-table'
 import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
-import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables'
+import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables-contently'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableView from './TableView'
+import TableView from './TableView.vue'
 
 /*
  * Markdown tables do not include captions.
@@ -54,6 +55,9 @@ function createTable(schema, rowsCount, colsCount, cellContent) {
 	return schema.nodes.table.createChecked(null, [headRow, ...rows])
 }
 
+/**
+ * @param {object} $cell table cell
+ */
 function findSameCellInNextRow($cell) {
 	if ($cell.index(-1) === $cell.node(-1).childCount - 1) {
 		return null
