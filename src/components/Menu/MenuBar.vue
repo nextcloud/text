@@ -261,6 +261,8 @@ export default {
 		@media (max-width: 660px) {
 			.text-menubar__entries {
 				margin-left: 0;
+				position: fixed;
+				top: calc(100vh - 100px);
 			}
 		}
 	}

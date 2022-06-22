@@ -301,14 +301,14 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 4,
+		priority: 19,
 	},
 	{
 		key: 'insert-image',
 		label: t('text', 'Insert image'),
 		icon: Images,
 		component: ActionImageUpload,
-		priority: 2,
+		priority: 18,
 	},
 	{
 		key: 'formatting-help',
