@@ -96,40 +96,38 @@ class WorkspacePlugin extends ServerPlugin {
 		}
 
 		// Only return the property for the parent node and ignore it for further in depth nodes
-		if ($propFind->getDepth() === $this->server->getHTTPDepth(1)) {
-			$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
-				$owner = $this->userId ?? $node->getFileInfo()->getStorage()->getOwner('');
-				/** @var Folder[] $nodes */
-				$nodes = $this->rootFolder->getUserFolder($owner)->getById($node->getId());
-				if (count($nodes) > 0) {
-					/** @var File $file */
-					try {
-						$file = $this->workspaceService->getFile($nodes[0]);
-						if ($file instanceof File) {
-							return $file->getContent();
-						}
-					} catch (StorageNotAvailableException $e) {
-						// If a storage is not available we can for the propfind response assume that there is no rich workspace present
+		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($node) {
+			$owner = $this->userId ?? $node->getFileInfo()->getStorage()->getOwner('');
+			/** @var Folder[] $nodes */
+			$nodes = $this->rootFolder->getUserFolder($owner)->getById($node->getId());
+			if (count($nodes) > 0) {
+				/** @var File $file */
+				try {
+					$file = $this->workspaceService->getFile($nodes[0]);
+					if ($file instanceof File) {
+						return $file->getContent();
 					}
+				} catch (StorageNotAvailableException $e) {
+					// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 				}
-				return '';
-			});
-			$propFind->handle(self::WORKSPACE_FILE_PROPERTY, function () use ($node) {
-				/** @var Folder[] $nodes */
-				$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
-				if (count($nodes) > 0) {
-					/** @var File $file */
-					try {
-						$file = $this->workspaceService->getFile($nodes[0]);
-						if ($file instanceof File) {
-							return $file->getFileInfo()->getId();
-						}
-					} catch (StorageNotAvailableException $e) {
-						// If a storage is not available we can for the propfind response assume that there is no rich workspace present
+			}
+			return '';
+		});
+		$propFind->handle(self::WORKSPACE_FILE_PROPERTY, function () use ($node) {
+			/** @var Folder[] $nodes */
+			$nodes = $this->rootFolder->getUserFolder($this->userId)->getById($node->getId());
+			if (count($nodes) > 0) {
+				/** @var File $file */
+				try {
+					$file = $this->workspaceService->getFile($nodes[0]);
+					if ($file instanceof File) {
+						return $file->getFileInfo()->getId();
 					}
+				} catch (StorageNotAvailableException $e) {
+					// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 				}
-				return '';
-			});
-		}
+			}
+			return '';
+		});
 	}
 }
