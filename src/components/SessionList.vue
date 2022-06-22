@@ -33,12 +33,13 @@
 		</button>
 		<template #default>
 			<div class="session-menu">
+				<slot name="lastSaved" />
 				<ul>
 					<slot />
 					<li v-for="session in participantsPopover"
 						:key="session.id"
 						:style="avatarStyle(session)">
-						<AvatarWrapper :session="session" :size="32" />
+						<AvatarWrapper :session="session" :size="36" />
 						<span class="session-label">
 							{{ session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest')) }}
 						</span>
@@ -144,17 +145,19 @@ export default {
 		}
 
 		.avatar-wrapper {
-			margin: 0 -8px 0 0;
+			margin: 0 -18px 0 0;
 			z-index: 1;
 			border-radius: 50%;
 			overflow: hidden;
 			box-sizing: content-box !important;
+			height: 36px;
+			width: 36px;
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
 			background-color: var(--color-background-dark);
-			width: 44px;
-			height: 44px;
+			width: 40px;
+			height: 40px;
 			margin: 0 6px 0 0;
 		}
 	}
@@ -170,8 +173,8 @@ export default {
 			padding: 6px;
 
 			.avatar-wrapper {
-				height: 32px;
-				width: 32px;
+				height: 36px;
+				width: 36px;
 				margin-right: 6px;
 			}
 
