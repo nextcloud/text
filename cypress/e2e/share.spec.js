@@ -1,10 +1,10 @@
 
-/*
+/**
  * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,7 +21,7 @@
  *
  */
 
-import { randHash } from '../utils/'
+import { randHash } from '../utils/index.js'
 const randUser = randHash()
 
 describe('Open test.md in viewer', function() {
@@ -59,7 +59,8 @@ describe('Open test.md in viewer', function() {
 				cy.window().then(win => {
 					win.OC.appswebroots.files_texteditor = true
 					cy.getEditor().should('be.visible')
-						.find('.ProseMirror').should('contain', 'Hello world')
+					cy.getContent()
+						.should('contain', 'Hello world')
 						.find('h2').should('contain', 'Hello world')
 				})
 			})
@@ -83,9 +84,9 @@ describe('Open test.md in viewer', function() {
 				cy.visit(href)
 				cy.window().then(win => {
 					win.OC.appswebroots.files_texteditor = true
-					cy.getEditor()
-						.should('be.visible')
-						.find('.ProseMirror').should('contain', 'Hello world')
+					cy.getEditor().should('be.visible')
+					cy.getContent()
+						.should('contain', 'Hello world')
 						.find('h2').should('contain', 'Hello world')
 
 					cy.getMenu().should('be.visible')
@@ -103,7 +104,6 @@ describe('Open test.md in viewer', function() {
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
 		cy.get('#app-sidebar-vue a#sharing').trigger('click')
-		// cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
 			.then((href) => {
@@ -111,10 +111,11 @@ describe('Open test.md in viewer', function() {
 				cy.visit(href)
 				cy.window().then(win => {
 					win.OC.appswebroots.files_texteditor = true
+					// eslint-disable-next-line cypress/no-unnecessary-waiting
 					cy.wait(1000)
-					cy.getEditor()
-						.should('be.visible')
-						.find('.ProseMirror').should('contain', 'Hello world')
+					cy.getEditor().should('be.visible')
+					cy.getContent()
+						.should('contain', 'Hello world')
 						.find('h2').should('contain', 'Hello world')
 
 					cy.getMenu().should('be.visible')

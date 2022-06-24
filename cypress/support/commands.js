@@ -3,7 +3,7 @@
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,6 +21,8 @@
  */
 
 import axios from '@nextcloud/axios'
+
+// eslint-disable-next-line no-unused-vars,node/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
@@ -54,6 +56,7 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 		body: {
 			userid: user,
 			password,
+			language: 'en', // for tests that rely on the translated text
 		},
 		auth: { user: 'admin', pass: 'admin' },
 		headers: {
@@ -124,8 +127,6 @@ Cypress.Commands.add('createFile', (target, content, mimeType) => {
 	const blob = new Blob([content], { type: mimeType })
 	const file = new File([blob], fileName, { type: mimeType })
 
-	const requestAlias = `request-${fileName}`
-
 	return cy.window()
 		.then(async window => {
 			const response = await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${target}`, file, {
@@ -187,6 +188,7 @@ Cypress.Commands.add('reloadFileList', () => {
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click(params)
+	// eslint-disable-next-line cypress/no-unnecessary-waiting
 	cy.wait(250)
 })
 
@@ -213,9 +215,19 @@ Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, na
 		.find(`[data-text-action-entry="${name}"]`)
 })
 
+Cypress.Commands.add('getContent', () => {
+	return cy.getEditor().find('.ProseMirror')
+})
+
+Cypress.Commands.add('clearContent', () => {
+	return cy.getContent()
+		.type('{selectall}')
+		.type('{del}')
+})
+
 Cypress.Commands.add('openWorkspace', (subject, name) => {
 	cy.get('#rich-workspace .empty-workspace').click()
 	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
 
-	return cy.getEditor().find('.ProseMirror')
+	return cy.getContent()
 })

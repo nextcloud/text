@@ -3,7 +3,7 @@
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,18 +20,14 @@
  *
  */
 
-import { randHash } from '../utils/'
+import { initUserAndFiles, randHash } from '../utils/index.js'
 const randUser = randHash()
 
 describe('Open test.md in viewer', function() {
-	before(function() {
-		// Init user
-		cy.nextcloudCreateUser(randUser, 'password')
-		cy.login(randUser, 'password')
+	const getViewer = () => cy.get('#viewer')
 
-		// Upload test files
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.uploadFile('empty.md', 'text/markdown')
+	before(function() {
+		initUserAndFiles(randUser, 'test.md', 'empty.md')
 	})
 
 	beforeEach(function() {
@@ -47,18 +43,20 @@ describe('Open test.md in viewer', function() {
 		cy.openFile('test.md')
 
 		cy.log('Inspect viewer')
-		const viewer = cy.get('#viewer')
-		viewer.should('be.visible')
+		getViewer().should('be.visible')
 			.and('have.class', 'modal-mask')
 			.and('not.have.class', 'icon-loading')
-		viewer.get('.modal-title').should('contain', 'test.md')
-		viewer.get('.modal-header button.action-item__menutoggle')
+		getViewer()
+			.find('.modal-title').should('contain', 'test.md')
+		getViewer()
+			.find('.modal-header button.action-item__menutoggle')
 			.should('be.visible')
 
 		cy.log('Inspect editor')
-		const editor = viewer.get('#editor .ProseMirror')
-		editor.should('contain', 'Hello world')
-		editor.get('h2').should('contain', 'Hello world')
+		cy.getContent()
+			.should('contain', 'Hello world')
+		cy.getContent()
+			.get('h2').should('contain', 'Hello world')
 
 		cy.log('Inspect menubar')
 		cy.getActionEntry('undo').should('be.visible')
@@ -71,17 +69,17 @@ describe('Open test.md in viewer', function() {
 		cy.openFile('empty.md')
 
 		cy.log('Inspect viewer')
-		const viewer = cy.get('#viewer')
-		viewer.should('be.visible')
+		getViewer().should('be.visible')
 			.and('have.class', 'modal-mask')
 			.and('not.have.class', 'icon-loading')
-		viewer.get('.modal-title').should('contain', 'empty.md')
-		viewer.get('.modal-header button.action-item__menutoggle')
+		getViewer()
+			.find('.modal-title').should('contain', 'empty.md')
+		getViewer()
+			.find('.modal-header button.action-item__menutoggle')
 			.should('be.visible')
 
 		cy.log('Inspect editor')
-		const editor = viewer.get('#editor .ProseMirror')
-		editor.should('contain', '')
+		cy.getContent().should('contain', '')
 
 		cy.log('Inspect menubar')
 		cy.getActionEntry('undo').should('be.visible')

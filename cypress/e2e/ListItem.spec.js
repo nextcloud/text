@@ -1,14 +1,15 @@
+/* eslint-disable import/no-named-as-default */
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
-import TaskList from './../../src/nodes/TaskList'
-import TaskItem from './../../src/nodes/TaskItem'
-import BulletList from './../../src/nodes/BulletList'
-import Markdown from './../../src/extensions/Markdown'
-import markdownit from './../../src/markdownit'
-import { createMarkdownSerializer } from './../../src/extensions/Markdown';
-import { findChildren, findChildrenByType } from 'prosemirror-utils'
-import createEditor from './../../src/tests/createEditor'
+/* eslint-enable import/no-named-as-default */
+import TaskList from './../../src/nodes/TaskList.js'
+import TaskItem from './../../src/nodes/TaskItem.js'
+import BulletList from './../../src/nodes/BulletList.js'
+import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
+import { findChildren } from 'prosemirror-utils'
+import createEditor from './../../src/tests/createEditor.js'
 import testData from '../fixtures/ListItem.md'
+import markdownit from './../../src/markdownit/index.js'
 
 describe('ListItem extension integrated in the editor', () => {
 
@@ -24,7 +25,7 @@ describe('ListItem extension integrated in the editor', () => {
 		],
 	})
 
-	for (const spec of testData.split(/#+\s+/)){
+	for (const spec of testData.split(/#+\s+/)) {
 		const [description, ...rest] = spec.split(/\n/)
 		const [input, output] = rest.join('\n').split(/\n\n---\n\n/)
 		if (!description) {
@@ -32,22 +33,24 @@ describe('ListItem extension integrated in the editor', () => {
 		}
 		it(description, () => {
 			expect(spec).to.include('\n')
+			/* eslint-disable no-unused-expressions */
 			expect(input).to.be.ok
 			expect(output).to.be.ok
+			/* eslint-enable no-unused-expressions */
 			loadMarkdown(input)
 			runCommands()
 			expectMarkdown(output.replace(/\n*$/, ''))
 		})
 	}
 
-	function loadMarkdown(markdown) {
+	const loadMarkdown = (markdown) => {
 		const stripped = markdown.replace(/\t*/g, '')
 		editor.commands.setContent(markdownit.render(stripped))
 	}
 
-	function runCommands() {
+	const runCommands = () => {
 		let found
-		while (found = findCommand()) {
+		while ((found = findCommand())) {
 			const { node, pos } = found
 			const name = node.text
 			editor.commands.setTextSelection(pos)
@@ -56,19 +59,19 @@ describe('ListItem extension integrated in the editor', () => {
 		}
 	}
 
-	function findCommand() {
+	const findCommand = () => {
 		const doc = editor.state.doc
 		return findChildren(doc, child => {
-			return child.isText && editor.commands.hasOwnProperty(child.text)
+			return child.isText && Object.prototype.hasOwnProperty.call(editor.commands, child.text)
 		})[0]
 	}
 
-	function expectMarkdown(markdown) {
+	const expectMarkdown = (markdown) => {
 		const stripped = markdown.replace(/\t*/g, '')
 		expect(getMarkdown()).to.equal(stripped)
 	}
 
-	function getMarkdown() {
+	const getMarkdown = () => {
 		const serializer = createMarkdownSerializer(editor.schema)
 		return serializer.serialize(editor.state.doc)
 	}

@@ -1,23 +1,11 @@
-import { randHash } from '../utils/'
+import { initUserAndFiles, randHash } from '../utils/index.js'
 
 const randUser = randHash()
-const fileName = 'empty.md'
-
-const getEditor = () => cy.getEditor().find('.ProseMirror')
-
-const clearContent = () => getEditor()
-	.type('{selectall}')
-	.type('{enter}')
+const fileName = 'test.md'
 
 describe('test link marks', function() {
 	before(function() {
-		// Init user
-		cy.nextcloudCreateUser(randUser, 'password')
-		cy.login(randUser, 'password')
-
-		// Upload test files
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.uploadFile(fileName, 'text/markdown')
+		initUserAndFiles(randUser, fileName)
 	})
 
 	beforeEach(function() {
@@ -25,7 +13,6 @@ describe('test link marks', function() {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
-
 			},
 		})
 
@@ -33,18 +20,18 @@ describe('test link marks', function() {
 	})
 
 	describe('autolink', function() {
-		beforeEach(clearContent)
+		beforeEach(() => cy.clearContent())
 		it('with protocol', () => {
-			cy.getFile('test.md')
+			cy.getFile(fileName)
 				.then($el => {
 					const id = $el.data('id')
 
 					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
-					getEditor()
+					cy.getContent()
 						.type(link)
 
-					getEditor()
-						.get(`a[href*="${Cypress.env('baseUrl')}`)
+					cy.getContent()
+						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
 						.click({ force: true })
 
 					cy.get('@winOpen')
@@ -54,11 +41,11 @@ describe('test link marks', function() {
 		})
 
 		it('whithout protocol', () => {
-			getEditor()
+			cy.getContent()
 				.type('google.com')
 
-			getEditor()
-				.get('a[href*="google.com"]')
+			cy.getContent()
+				.find('a[href*="google.com"]')
 				.click({ force: true })
 
 			cy.get('@winOpen')
