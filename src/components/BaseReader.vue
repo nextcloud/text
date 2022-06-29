@@ -31,6 +31,7 @@ import { EditorContent } from '@tiptap/vue-2'
 export default {
 	name: 'BaseReader',
 	components: { EditorContent },
+	// extensions is a factory building a list of extensions for the editor
 	inject: ['renderHtml', 'extensions'],
 
 	props: {
@@ -65,7 +66,7 @@ export default {
 		createEditor() {
 			return new Editor({
 				content: this.htmlContent,
-				extensions: this.extensions,
+				extensions: this.extensions(),
 			})
 		},
 
