@@ -33,10 +33,26 @@
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
 		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
-			<ActionEntry v-for="actionEntry of visibleEntries"
-				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`"
-				@call:help="showHelp" />
+			<template v-if="!isMobile">
+				<ActionEntry v-for="actionEntry of visibleEntries"
+					v-bind="{ actionEntry }"
+					:key="`text-action--${actionEntry.key}`"
+					@call:help="showHelp" />
+			</template>
+			<template v-else>
+				<div class="top">
+					<ActionEntry v-for="actionEntry of topEntries"
+						v-bind="{ actionEntry }"
+						:key="`text-action--${actionEntry.key}`"
+						@call:help="showHelp" />
+				</div>
+				<div class="bottom">
+					<ActionEntry v-for="actionEntry of bottomEntries"
+						v-bind="{ actionEntry }"
+						:key="`text-action--${actionEntry.key}`"
+						@call:help="showHelp" />
+				</div>
+			</template>
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -50,6 +66,7 @@ import debounce from 'debounce'
 
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
+import mobileEntries from './mobileEntries.js'
 import ActionEntry from './ActionEntry.js'
 import { DotsHorizontal } from '../icons.js'
 import {
@@ -57,6 +74,7 @@ import {
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../EditorWrapper.provider.js'
+import isMobile from '../../mixins/isMobile.js'
 
 export default {
 	name: 'MenuBar',
@@ -65,6 +83,7 @@ export default {
 		useEditorMixin,
 		useIsRichEditorMixin,
 		useIsRichWorkspaceMixin,
+		isMobile,
 	],
 	props: {
 		autohide: {
@@ -127,6 +146,12 @@ export default {
 				// reverse logic from visibleEntries
 				return priority !== undefined && priority > this.iconsLimit
 			})
+		},
+		topEntries() {
+			return [...mobileEntries].filter(({ position }) => position === 'top')
+		},
+		bottomEntries() {
+			return [...mobileEntries].filter(({ position }) => position === 'bottom')
 		},
 		remainAction() {
 			return {
@@ -261,8 +286,17 @@ export default {
 		@media (max-width: 660px) {
 			.text-menubar__entries {
 				margin-left: 0;
+			}
+
+			.top {
+				display: flex;
+			}
+
+			.bottom {
+				display: flex;
 				position: fixed;
 				top: calc(100vh - 100px);
+				left: 0;
 			}
 		}
 	}
