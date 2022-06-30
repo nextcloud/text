@@ -25,11 +25,9 @@ then
 	echo Server is up at "$CYPRESS_baseUrl"
 else
 	echo No server reached at "$CYPRESS_baseUrl" - starting containers.
-	docker-compose up -d
-	if "$(npm bin)/wait-on" -i 500 -t 240000 "$CYPRESS_baseUrl" 2> /dev/null
+	DOCKER_BUILDKIT=1 docker-compose up -d
+	if ! "$(npm bin)/wait-on" -i 500 -t 240000 "$CYPRESS_baseUrl" 2> /dev/null
 	then
-		docker-compose exec -T nextcloud_cypress bash /var/www/html/custom_apps/text/cypress/server.sh
-	else
 		echo Waiting for "$CYPRESS_baseUrl" timed out.
 		echo Container logs:
 		docker-compose logs
