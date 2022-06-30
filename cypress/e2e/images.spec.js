@@ -162,6 +162,7 @@ describe('Test all image insertion methods', () => {
 
 	it('Insert an image from files', () => {
 		cy.openFile('test.md')
+
 		clickOnImageAction(ACTION_INSERT_FROM_FILES)
 			.then(() => {
 				const requestAlias = 'insertPathRequest'
@@ -172,7 +173,7 @@ describe('Test all image insertion methods', () => {
 				cy.log('Click OK in the filepicker')
 				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-				waitForRequestAndCheckImage(requestAlias)
+				return waitForRequestAndCheckImage(requestAlias)
 			})
 	})
 
@@ -195,7 +196,9 @@ describe('Test all image insertion methods', () => {
 	it('Upload images with the same name', () => {
 		// make sure we start from an emtpy file even on retries
 		const filename = randHash() + '.md'
+
 		cy.uploadFile('empty.md', 'text/markdown', filename)
+		cy.reloadFileList()
 		cy.openFile(filename)
 
 		const assertImage = index => {
