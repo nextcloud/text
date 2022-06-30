@@ -163,26 +163,26 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 })
 
 Cypress.Commands.add('createFolder', dirName => {
-	cy.window().then(win => {
+	return cy.window().then(win => {
 		return win.OC.Files.getClient().createDirectory(dirName)
 	})
 })
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => {
-	cy.window().then(win => {
-		win.OC.Files.getClient().move(path, destinationPath)
+	return cy.window().then(win => {
+		return win.OC.Files.getClient().move(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => {
-	cy.window().then(win => {
-		win.OC.Files.getClient().copy(path, destinationPath)
+	return cy.window().then(win => {
+		return win.OC.Files.getClient().copy(path, destinationPath)
 	})
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	cy.window().then(win => {
-		win.OCA?.Files?.App?.fileList?.reload()
+	return cy.window().then(win => {
+		return win.OCA?.Files?.App?.fileList?.reload()
 	})
 })
 
