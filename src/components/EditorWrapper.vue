@@ -54,10 +54,17 @@
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded">
 					<div class="text-editor__session-list">
-						<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="lastSavedStatusClass">
+						<div v-if="isMobile" v-tooltip="lastSavedStatusTooltip" :class="saveStatusClass" />
+						<div v-else
+							v-tooltip="lastSavedStatusTooltip"
+							class="save-status"
+							:class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
 						<SessionList :sessions="filteredSessions">
+							<p slot="lastSaved" class="last-saved">
+								{{ t('text', 'Last saved') }}: {{ lastSavedString }}
+							</p>
 							<GuestNameDialog v-if="isPublic && !currentSession.userId" :session="currentSession" />
 						</SessionList>
 					</div>
@@ -322,6 +329,12 @@ export default {
 					...this.document,
 				},
 			}
+		},
+		saveStatusClass() {
+			if (this.syncError && this.lastSavedString !== '') {
+				return 'save-error'
+			}
+			return this.dirtyStateIndicator ? 'saving-status' : 'saved-status'
 		},
 	},
 	watch: {
@@ -924,5 +937,40 @@ export default {
 	// as Talk overwrites the public page styles and changes the DOM layout for the sidebar injection
 	#files-public-content {
 		height: 100%;
+	}
+
+	.saved-status,.saving-status {
+		display: inline-flex;
+		padding: 0;
+		text-overflow: ellipsis;
+		color: var(--color-text-lighter);
+		position: relative;
+		background-color: white;
+		width: 38px !important;
+		height: 38px !important;
+		left: 25%;
+		z-index: 2;
+		top: 0px;
+	}
+
+	.saved-status {
+		border: 2px solid #04AA6D;
+		border-radius: 50%;
+	}
+
+	.saving-status {
+		border: 2px solid #f3f3f3;
+		border-top: 2px solid #3498db;
+		border-radius: 50%;
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	.last-saved {
+		padding: 6px;
 	}
 </style>
