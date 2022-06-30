@@ -3,7 +3,7 @@
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,17 +20,16 @@
  *
  */
 
-import { randHash } from '../utils/'
+import { initUserAndFiles, randHash } from '../utils/index.js'
+
 const randUser = randHash()
+const fileName = 'test.md'
 
 describe('Open test.md in viewer', function() {
-	before(function() {
-		// Init user
-		cy.nextcloudCreateUser(randUser, 'password')
-		cy.login(randUser, 'password')
+	const getWrapper = () => cy.get('#editor-wrapper.has-conflicts.is-rich-editor')
 
-		// Upload test files
-		cy.uploadFile('test.md', 'text/markdown')
+	before(() => {
+		initUserAndFiles(randUser, fileName)
 	})
 
 	beforeEach(function() {
@@ -38,21 +37,23 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('displays conflicts', function() {
-		cy.openFile('test.md')
+		cy.openFile(fileName)
 
 		cy.log('Inspect editor')
-		const viewer = cy.get('#viewer')
-		const editor = viewer.get('#editor .ProseMirror')
-		editor.type('Hello you cruel conflicting world')
+		cy.getContent()
+			.type('Hello you cruel conflicting world')
 		cy.uploadFile('test.md', 'text/markdown')
 
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
 		cy.openFile('test.md')
 		cy.get('#editor-container .document-status .icon-error')
-		const wrapper = cy.get('#editor-wrapper.has-conflicts.is-rich-editor ')
-		wrapper.get('#read-only-editor h2').should('contain', 'Hello world')
-		wrapper.get('#editor h2').should('contain', 'Hello world')
+		getWrapper()
+			.get('#read-only-editor h2')
+			.should('contain', 'Hello world')
+		getWrapper()
+			.get('#editor h2')
+			.should('contain', 'Hello world')
 		cy.screenshot()
 	})
 })

@@ -1,10 +1,9 @@
-import EditableTable from './../../src/nodes/EditableTable'
-import Markdown from './../../src/extensions/Markdown'
-import markdownit from './../../src/markdownit'
-import { createMarkdownSerializer } from './../../src/extensions/Markdown';
-import { findChildren, findChildrenByType } from 'prosemirror-utils'
-import createEditor from './../../src/tests/createEditor'
+import { findChildren } from 'prosemirror-utils'
+import markdownit from './../../src/markdownit/index.js'
 import testData from '../fixtures/Table.md'
+import createEditor from './../../src/tests/createEditor.js'
+import EditableTable from './../../src/nodes/EditableTable.js'
+import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
 
 describe('ListItem extension integrated in the editor', () => {
 
@@ -16,7 +15,7 @@ describe('ListItem extension integrated in the editor', () => {
 		],
 	})
 
-	for (const spec of testData.split(/#+\s+/)){
+	for (const spec of testData.split(/#+\s+/)) {
 		const [description, ...rest] = spec.split(/\n/)
 		const [input, output] = rest.join('\n').split(/\n\n---\n\n/)
 		if (!description) {
@@ -24,21 +23,23 @@ describe('ListItem extension integrated in the editor', () => {
 		}
 		it(description, () => {
 			expect(spec).to.include('\n')
+			/* eslint-disable no-unused-expressions */
 			expect(input).to.be.ok
 			expect(output).to.be.ok
+			/* eslint-enable no-unused-expressions */
 			loadMarkdown(input)
 			runCommands()
 			expectMarkdown(output.replace(/\n*$/, ''))
 		})
 	}
 
-	function loadMarkdown(markdown) {
+	const loadMarkdown = (markdown) => {
 		editor.commands.setContent(markdownit.render(markdown))
 	}
 
-	function runCommands() {
+	const runCommands = () => {
 		let found
-		while (found = findCommand()) {
+		while ((found = findCommand())) {
 			const name = found.node.text
 			editor.commands.setTextSelection(found.pos)
 			editor.commands[name]()
@@ -50,18 +51,18 @@ describe('ListItem extension integrated in the editor', () => {
 		}
 	}
 
-	function findCommand() {
+	const findCommand = () => {
 		const doc = editor.state.doc
 		return findChildren(doc, child => {
-			return child.isText && editor.commands.hasOwnProperty(child.text)
+			return child.isText && Object.prototype.hasOwnProperty.call(editor.commands, child.text)
 		})[0]
 	}
 
-	function expectMarkdown(markdown) {
+	const expectMarkdown = (markdown) => {
 		expect(getMarkdown().replace(/\n$/, '')).to.equal(markdown)
 	}
 
-	function getMarkdown() {
+	const getMarkdown = () => {
 		const serializer = createMarkdownSerializer(editor.schema)
 		return serializer.serialize(editor.state.doc)
 	}

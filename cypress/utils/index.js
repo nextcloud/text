@@ -3,7 +3,7 @@
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -28,6 +28,26 @@ export const getSearchParams = url => {
 			parts[1] && (acc[parts[0]] = parts[1])
 			return acc
 		}, {})
+}
+
+/**
+ * Creates a new user with default passwort `password` and upload one or multiple test files
+ * Can be used e.g. for a `before()`
+ *
+ * @param {string} userName Username of the user to create
+ * @param {...string} file one ore more markdown file names to create
+ */
+export function initUserAndFiles(userName, file) {
+	const files = [...arguments].slice(1)
+
+	// Init user
+	cy.nextcloudCreateUser(userName, 'password')
+	cy.login(userName, 'password')
+
+	// Upload test files
+	files.forEach(file => {
+		cy.uploadFile(file, 'text/markdown')
+	})
 }
 
 export const randHash = () => Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 10)

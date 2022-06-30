@@ -3,7 +3,7 @@
  *
  * @author Julien Veyssier <eneiluj@posteo.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
  *
  */
 
-import { randHash } from '../utils/'
+import { initUserAndFiles, randHash } from '../utils/index.js'
 import 'cypress-file-upload'
 
 const randUser = randHash()
@@ -47,7 +47,7 @@ function attachFile(name, requestAlias = null) {
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
- * @param str string
+ * @param {string} str String to encode
  */
 function fixedEncodeURIComponent(str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, (c) => {
@@ -58,7 +58,7 @@ function fixedEncodeURIComponent(str) {
 /**
  * Open the image action menu and click one action
  *
- * @param actionName position of the action to be clicked
+ * @param {string} actionName position of the action to be clicked
  */
 const clickOnImageAction = (actionName) => {
 	cy.getActionEntry('insert-image')
@@ -134,13 +134,7 @@ const waitForRequestAndCheckImage = (requestAlias, index) => {
 
 describe('Test all image insertion methods', () => {
 	before(() => {
-		// Init user
-		cy.nextcloudCreateUser(randUser, 'password')
-		cy.login(randUser, 'password')
-
-		// Upload test files to user's storage
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.uploadFile('empty.md', 'text/markdown')
+		initUserAndFiles(randUser, 'test.md', 'empty.md')
 		cy.uploadFile('github.png', 'image/png')
 
 		cy.nextcloudCreateUser(randUser2, 'password')

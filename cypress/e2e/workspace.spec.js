@@ -3,7 +3,7 @@
  *
  * @author Azul <azul@riseup.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -61,7 +61,9 @@ describe('Workspace', function() {
 			menuButton(button)
 				.click({ force: true })
 				.should('have.class', 'is-active')
-			cy.get(`.ProseMirror ${tag}`).should('contain', 'Format me')
+			cy.getContent()
+				.find(`${tag}`)
+				.should('contain', 'Format me')
 			menuButton(button)
 				.click({ force: true })
 				.should('not.have.class', 'is-active')
@@ -74,20 +76,24 @@ describe('Workspace', function() {
 			.type('{selectall}')
 		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('https://nextcloud.com{enter}')
-		cy.get('.ProseMirror a')
+		cy.getContent()
+			.find('a')
 			.should('contain', 'Nextcloud')
 			.should('be.visible')
-		cy.get('.ProseMirror a').invoke('attr', 'href')
+		cy.getContent()
+			.find('a').invoke('attr', 'href')
 			.should('include', 'https://nextcloud.com')
 		cy.window().then((win) => {
 			cy.stub(win, 'open').as('windowOpen')
 		})
-		cy.get('.ProseMirror a').click()
+		cy.getContent()
+			.find('a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/')
-		cy.get('.ProseMirror').type('{selectall}')
+		cy.getContent().type('{selectall}')
 		menuBubbleButton('add-link').click()
 		cy.get('.menububble input').type('/team{enter}')
-		cy.get('.ProseMirror a').click()
+		cy.getContent()
+			.find('a').click()
 		cy.get('@windowOpen').should('be.calledWith', 'https://nextcloud.com/team')
 	})
 
@@ -100,7 +106,8 @@ describe('Workspace', function() {
 
 			getSubmenuItem('headings', actionName).click()
 
-			cy.get(`.ProseMirror ${heading}`)
+			cy.getContent()
+				.find(`${heading}`)
 				.should('contain', 'Heading')
 
 			getSubmenuItem('headings', actionName)
@@ -124,7 +131,8 @@ describe('Workspace', function() {
 				.click({ force: true })
 				.should('have.class', 'is-active')
 
-			cy.get(`.ProseMirror ${tag}`).should('contain', 'List me')
+			cy.getContent()
+				.find(`${tag}`).should('contain', 'List me')
 
 			menuButton(button)
 				.click({ force: true })
@@ -155,13 +163,16 @@ describe('Workspace', function() {
 				return menuButton('table').click()
 			})
 
-		cy.get('.ProseMirror').type('content')
-		cy.get('.ProseMirror table tr:first-child th:first-child')
+		cy.getContent()
+			.type('content')
+		cy.getContent()
+			.find('table tr:first-child th:first-child')
 			.should('contain', 'content')
-		cy.get('.ProseMirror [data-text-table-actions="settings"]').click()
+		cy.getContent()
+			.find('[data-text-table-actions="settings"]').click()
 
 		cy.get('[data-text-table-action="delete"]').click()
-		cy.get('.ProseMirror')
+		cy.getContent()
 			.should('not.contain', 'content')
 	})
 
@@ -187,7 +198,8 @@ describe('Workspace', function() {
 					.click()
 					.then(() => {
 						// check content
-						cy.get(`.ProseMirror .callout.callout--${type}`)
+						cy.getContent()
+							.find(`.callout.callout--${type}`)
 							.should('contain', 'Callout')
 
 						// disable
@@ -212,7 +224,7 @@ describe('Workspace', function() {
 					const actionName = `callout-${type}`
 					return getSubmenuItem('callouts', actionName)
 						.click()
-						.then(() => cy.get(`.ProseMirror .callout.callout--${type}`))
+						.then(() => cy.getContent().find(`.callout.callout--${type}`))
 						.should('contain', 'Callout')
 						.then(() => {
 							last = type

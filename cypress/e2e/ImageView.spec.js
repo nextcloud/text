@@ -11,10 +11,6 @@ const createMarkdown = (fileName, content) => {
 		.then(refresh)
 }
 
-// const closeModal = () => {
-// 	cy.get('.modal-header .header-close').click()
-// }
-
 describe('Image View', () => {
 	before(() => {
 		// Init user
@@ -39,12 +35,12 @@ describe('Image View', () => {
 
 			cy.openFile(fileName)
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"]')
 				.should('have.attr', 'data-src')
 				.should('eq', '/github.png')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
 				.should('contains', `/dav/files/${currentUser}/github.png`)
@@ -57,12 +53,12 @@ describe('Image View', () => {
 
 			cy.openFile(fileName)
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"]')
 				.should('have.attr', 'data-src')
 				.should('eq', 'child-folder/github.png')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
 				.should('contains', `/dav/files/${currentUser}/child-folder/github.png`)
@@ -77,12 +73,12 @@ describe('Image View', () => {
 
 			cy.openFile(fileName, { force: true })
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"]')
 				.should('have.attr', 'data-src')
 				.should('eq', '../github.png')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
 				.should('contains', `/dav/files/${currentUser}/github.png`)
@@ -98,7 +94,7 @@ describe('Image View', () => {
 
 					cy.openFile(fileName, { force: true })
 
-					cy.getEditor()
+					cy.getContent()
 						.find('[data-component="image-view"] img')
 						.should('have.attr', 'src')
 						.should('contains', `core/preview?fileId=${imageId}&file=${encodeURIComponent('/github.png')}`, { timeout: 5000 })
@@ -114,19 +110,19 @@ describe('Image View', () => {
 
 			cy.openFile(fileName)
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"]')
 				.should('have.class', 'image-view--failed')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] svg')
 				.should('be.visible')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] .image__error-message')
 				.should('be.visible')
 
-			cy.getEditor()
+			cy.getContent()
 				.find('[data-component="image-view"] .image__caption input')
 				.should('have.value', 'yaha')
 		})
