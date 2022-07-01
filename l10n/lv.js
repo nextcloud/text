@@ -13,6 +13,7 @@ OC.L10N.register(
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
     "guest" : "viesis",
+    "Unsupported image type" : "Neatbalstīts attēla tips",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
     "Info" : "Info",

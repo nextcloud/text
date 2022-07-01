@@ -53,6 +53,7 @@ OC.L10N.register(
     "guest" : "svečias",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
+    "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Undo" : "Atšaukti",

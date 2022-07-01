@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
     "Failed to load" : "Nepodařilo se načíst",
-    "Unsuported image" : "Nepodporovaný formát obrázku",
+    "Unsupported image type" : "Nepodporovaný typ obrázku",
     "Add row before" : "Přidat řádek před",
     "Add row after" : "Předat řádek za",
     "Delete this row" : "Smazat tento řádek",

@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Mostrar cores do autor ",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
     "Failed to load" : "Falha ao carregar",
-    "Unsuported image" : "Imagem não suportada",
+    "Unsupported image type" : "Tipo de imagem não suportado",
     "Add row before" : "Adicionar linha antes",
     "Add row after" : "Adicionar linha após",
     "Delete this row" : "Excluir esta linha",

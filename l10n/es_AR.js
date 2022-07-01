@@ -12,6 +12,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Atajos de teclado",
     "Bold" : "Negrita",
     "Italic" : "Itálico",
+    "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
     "Info" : "Info",
     "Warning" : "Advertencia",

@@ -45,6 +45,7 @@ OC.L10N.register(
     "Link file" : "Увежи фајл",
     "Select file to link to" : "Одаберите фајл на који да направите везу",
     "guest" : "гост",
+    "Unsupported image type" : "Неподржани тип слике",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Undo" : "Поништи",

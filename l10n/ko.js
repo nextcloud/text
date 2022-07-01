@@ -27,6 +27,7 @@ OC.L10N.register(
     "Bold" : "굵게",
     "Italic" : "Italic체",
     "guest" : "손님",
+    "Unsupported image type" : "지원하지 않는 사진 형식",
     "Undo" : "실행 취소",
     "Redo" : "다시 실행",
     "Info" : "정보",

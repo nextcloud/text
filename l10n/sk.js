@@ -74,6 +74,7 @@ OC.L10N.register(
     "guest" : "hosť",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
+    "Unsupported image type" : "Typ obrázka nie je podporovaný",
     "Add row before" : "Pridať riadok pred",
     "Add row after" : "Pridať riadok za",
     "Delete this row" : "Zmazať tento riadok",

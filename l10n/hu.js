@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Szerzők színének megjelenítése",
     "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
     "Failed to load" : "A betöltés sikertelen",
-    "Unsuported image" : "Nem támogatott kép",
+    "Unsupported image type" : "Nem támogatott képtípus",
     "Add row before" : "Sor hozzáadása elé",
     "Add row after" : "Sor hozzáadása utána",
     "Delete this row" : "Sor törlése",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
     "guest" : "pengunjung",
+    "Unsupported image type" : "Tipe gambar tidak bisa diterima",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Undo" : "Undo",
     "Info" : "Info",
