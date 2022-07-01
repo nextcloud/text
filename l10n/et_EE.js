@@ -14,6 +14,7 @@ OC.L10N.register(
     "Guest" : "Külaline",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
     "guest" : "külaline",
+    "Unsupported image type" : "Pildi tüüp pole toetatud",
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri"

@@ -71,6 +71,7 @@ OC.L10N.register(
     "guest" : "gost",
     "Show author colors" : "Pokaži barve avtorja",
     "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
+    "Unsupported image type" : "Nepodprta vrsta slike",
     "Add row before" : "Dodaj vrstico pred",
     "Add row after" : "Dodaj vrstico za",
     "Delete this row" : "Izbriši vrstico",

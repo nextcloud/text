@@ -77,7 +77,7 @@
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
     "Failed to load" : "Kargatzeak huts egin du",
-    "Unsuported image" : "Ez da irudia onartzen",
+    "Unsupported image type" : "Irudi mota ez da onartzen",
     "Add row before" : "Gehitu errenkada aurrerago",
     "Add row after" : "Gehitu errenkada ostean",
     "Delete this row" : "Ezabatu errenkada hau",

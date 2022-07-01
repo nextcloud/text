@@ -15,6 +15,7 @@ OC.L10N.register(
     "Guest" : "Convidáu/ada",
     "Keyboard shortcuts" : "Atayos de tecláu",
     "guest" : "invitáu",
+    "Unsupported image type" : "Triba non sofitada d'imaxe",
     "Undo" : "Desfacer",
     "Info" : "Info",
     "Warning" : "Alvertencia",

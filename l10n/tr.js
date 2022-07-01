@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
     "Failed to load" : "Yüklenmemedi",
-    "Unsuported image" : "Desteklenmeyen görsel",
+    "Unsupported image type" : "Görsel türü desteklenmiyor",
     "Add row before" : "Üste satır ekle",
     "Add row after" : "Alta satır ekle",
     "Delete this row" : "Bu satırı sil",

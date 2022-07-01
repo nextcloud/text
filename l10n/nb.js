@@ -39,6 +39,7 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Code block" : "Kode",
     "guest" : "gjest",
+    "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Undo" : "Angre",

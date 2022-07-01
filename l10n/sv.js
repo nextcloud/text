@@ -66,6 +66,7 @@ OC.L10N.register(
     "guest" : "gäst",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
+    "Unsupported image type" : "Filtyp stöds inte",
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Undo" : "Ångra",

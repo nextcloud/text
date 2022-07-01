@@ -22,6 +22,7 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "guest" : "vizitor",
+    "Unsupported image type" : "Lloj imazhi i pa suportuar",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",
     "Info" : "Info",

@@ -35,6 +35,7 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "guest" : "invitado",
+    "Unsupported image type" : "Tipo de imagen no soportado",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",

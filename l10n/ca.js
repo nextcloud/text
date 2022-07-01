@@ -45,6 +45,7 @@ OC.L10N.register(
     "Link file" : "Fitxer d'enllaç",
     "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
     "guest" : "convidat",
+    "Unsupported image type" : "Tipus d'imatge no compatible",
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços …",
     "Undo" : "Desfés",

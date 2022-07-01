@@ -37,6 +37,7 @@ OC.L10N.register(
     "Blockquote" : "Цитування",
     "Code block" : "Код",
     "guest" : "гість",
+    "Unsupported image type" : "Цей тип зображення не підтримується",
     "Show rich workspaces" : "Показувати робочі області",
     "Add notes, lists or links …" : "Додавайте нотатки, створюйте списки та посилання...",
     "Undo" : "Скасувати",

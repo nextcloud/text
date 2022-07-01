@@ -69,6 +69,7 @@ OC.L10N.register(
     "guest" : "访客",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
+    "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Undo" : "撤销",

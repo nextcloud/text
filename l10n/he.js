@@ -46,6 +46,7 @@ OC.L10N.register(
     "Link file" : "קישור לקובץ",
     "Select file to link to" : "לבחור קובץ לקשר אליו",
     "guest" : "אורח",
+    "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Undo" : "ביטול",

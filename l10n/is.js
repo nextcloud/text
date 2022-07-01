@@ -45,6 +45,7 @@ OC.L10N.register(
     "Link file" : "Tengja skrá",
     "Select file to link to" : "Veldu skrá til að tengja í",
     "guest" : "gestanotandi",
+    "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Undo" : "Afturkalla",

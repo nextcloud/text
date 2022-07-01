@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
     "Failed to load" : "載入失敗",
-    "Unsuported image" : "不支援的圖片",
+    "Unsupported image type" : "不支援的圖片類型",
     "Add row before" : "在前面新增列",
     "Add row after" : "在後面新增列",
     "Delete this row" : "刪除此列",
