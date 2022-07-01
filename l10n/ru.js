@@ -73,6 +73,7 @@ OC.L10N.register(
     "guest" : "гость",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
+    "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Add column before" : "Добавьте колонку перед",
     "Add column after" : "Добавьте колонку после",
     "Show rich workspaces" : "Показывать дополнительные сведения",

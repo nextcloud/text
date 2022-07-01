@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
     "Failed to load" : "Laden mislukt",
-    "Unsuported image" : "Niet ondersteunde afbeelding",
+    "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Add row before" : "Voeg rij toe voor",
     "Add row after" : "Voeg rij to na",
     "Delete this row" : "Verwijder deze rij",

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Saved" : "Хадгалах",
     "Guest" : "Зочин",
+    "Unsupported image type" : "Дэмжигдэхгүй зургийн төрөл байна",
     "Undo" : "буцах",
     "Info" : "Info",
     "Warning" : "Warning",

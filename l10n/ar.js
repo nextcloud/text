@@ -21,6 +21,7 @@ OC.L10N.register(
     "Bold" : "غامق",
     "Italic" : "مائل",
     "guest" : "ضيف ",
+    "Unsupported image type" : "صيغة الصورة غير مقبولة",
     "Undo" : "تراجع",
     "Redo" : "إعادة",
     "Info" : "معلومات",

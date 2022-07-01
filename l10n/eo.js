@@ -35,6 +35,7 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "guest" : "gasto",
+    "Unsupported image type" : "Nesubtenata bildotipo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "Undo" : "Malfari",
     "Redo" : "Refari",

@@ -29,6 +29,7 @@ OC.L10N.register(
     "Italic" : "Италик",
     "Quoted text" : "Цитиран текст",
     "guest" : "гостин",
+    "Unsupported image type" : "Неподржан вид на слика",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Undo" : "Врати",
     "Info" : "Инфо",

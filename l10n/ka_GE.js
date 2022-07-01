@@ -12,6 +12,7 @@ OC.L10N.register(
     "Guest" : "სტუმარი",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
+    "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
