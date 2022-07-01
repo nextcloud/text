@@ -79,7 +79,7 @@ OC.L10N.register(
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Failed to load" : "Nie udało się wczytać",
-    "Unsuported image" : "Nieobsługiwany obraz",
+    "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Add row before" : "Dodaj wiersz przed",
     "Add row after" : "Dodaj wiersz po",
     "Delete this row" : "Usuń ten wiersz",

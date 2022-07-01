@@ -54,6 +54,7 @@ OC.L10N.register(
     "guest" : "ゲスト",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
+    "Unsupported image type" : "サポートされていない画像形式です",
     "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Undo" : "元に戻す",

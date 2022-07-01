@@ -72,6 +72,7 @@ OC.L10N.register(
     "guest" : "Επισκέπτης",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
+    "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Undo" : "Aναίρεση",

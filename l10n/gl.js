@@ -49,6 +49,7 @@ OC.L10N.register(
     "guest" : "convidado",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
+    "Unsupported image type" : "Tipo de imaxe non admitido",
     "Show rich workspaces" : "Amosa espazos de traballo mellorados",
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Undo" : "Desfacer",

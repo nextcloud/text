@@ -73,6 +73,7 @@
     "guest" : "ospite",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
+    "Unsupported image type" : "Tipo di immagine non supportato",
     "Add row before" : "Aggiungi riga prima",
     "Add row after" : "Aggiungi riga dopo",
     "Delete this row" : "Elimina riga",

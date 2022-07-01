@@ -49,6 +49,7 @@ OC.L10N.register(
     "guest" : "gost",
     "Show author colors" : "Prikaži boje autora",
     "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
+    "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Undo" : "Poništi",

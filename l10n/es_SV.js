@@ -16,6 +16,7 @@ OC.L10N.register(
     "Guest" : "Invitado",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
+    "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
     "Info" : "Info",
     "Success" : "Éxito",

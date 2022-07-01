@@ -38,6 +38,7 @@ OC.L10N.register(
     "guest" : "convidado",
     "Show author colors" : "Mostrar cores do autor ",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
+    "Unsupported image type" : "Tipo de imagem não suportado",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",

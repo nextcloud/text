@@ -19,6 +19,7 @@ OC.L10N.register(
     "Bold" : "Bold",
     "Italic" : "Italic",
     "guest" : "guest",
+    "Unsupported image type" : "Unsupported image type",
     "Undo" : "Undo",
     "Info" : "Info",
     "Success" : "Success",

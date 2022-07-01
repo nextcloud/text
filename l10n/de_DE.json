@@ -77,7 +77,7 @@
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
     "Failed to load" : "Fehler beim Laden",
-    "Unsuported image" : "Nicht unterstütztes Bild",
+    "Unsupported image type" : "Nicht unterstütztes Bild-Format",
     "Add row before" : "Zeile davor hinzufügen",
     "Add row after" : "Zeile danach hinzufügen",
     "Delete this row" : "Diese Zeile löschen",

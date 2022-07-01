@@ -74,6 +74,7 @@ OC.L10N.register(
     "guest" : "гост",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
+    "Unsupported image type" : "Неподдържан тип изображение",
     "Add row before" : "Добавяне на ред преди",
     "Add row after" : "Добавяне на ред след",
     "Delete this row" : "Изтриване на този ред",
