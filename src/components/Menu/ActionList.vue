@@ -24,9 +24,11 @@
 	<Actions v-tooltip="tooltip"
 		class="entry-list-action entry-action"
 		v-bind="state"
+		:force-menu="true"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
-		:data-text-action-active="activeKey">
+		:data-text-action-active="activeKey"
+		@update:open="(o) => $emit('update:open', o)">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
@@ -35,6 +37,7 @@
 			is-item
 			:action-entry="child"
 			@trigged="onTrigger" />
+		<slot name="lastAction" />
 	</Actions>
 </template>
 

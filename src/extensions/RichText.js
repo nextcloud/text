@@ -23,24 +23,25 @@
 import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import Blockquote from '@tiptap/extension-blockquote'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
+import CharacterCount from '@tiptap/extension-character-count'
 import Code from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
-import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
-import HardBreak from './HardBreak.js'
-import Table from './../nodes/Table.js'
-import Image from './../nodes/Image.js'
-import Heading from './../nodes/Heading.js'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
 import BulletList from './../nodes/BulletList.js'
-import TaskList from './../nodes/TaskList.js'
-import TaskItem from './../nodes/TaskItem.js'
 import Callout from './../nodes/Callouts.js'
+import HardBreak from './HardBreak.js'
+import Heading from './../nodes/Heading.js'
+import Image from './../nodes/Image.js'
+import Table from './../nodes/Table.js'
+import TaskItem from './../nodes/TaskItem.js'
+import TaskList from './../nodes/TaskList.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -66,6 +67,7 @@ export default Extension.create({
 			Italic,
 			Strike,
 			Blockquote,
+			CharacterCount,
 			Code,
 			CodeBlock,
 			BulletList,

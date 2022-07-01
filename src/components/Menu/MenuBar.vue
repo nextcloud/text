@@ -37,6 +37,15 @@
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry.key}`"
 				@call:help="showHelp" />
+			<ActionList key="text-action--remain"
+				:action-entry="hiddenEntries"
+				@update:open="refreshWordCount"
+				@call:help="showHelp">
+				<template #lastAction>
+					<ActionCaption :title="wordCountString"
+						data-text-action-entry="word-count" />
+				</template>
+			</ActionList>
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -45,12 +54,16 @@
 </template>
 
 <script>
+import ActionCaption from '@nextcloud/vue/dist/Components/ActionCaption'
+
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { translatePlural as n } from '@nextcloud/l10n'
 import debounce from 'debounce'
 
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
+import ActionList from './ActionList.vue'
 import { DotsHorizontal } from '../icons.js'
 import {
 	useEditorMixin,
@@ -60,7 +73,7 @@ import {
 
 export default {
 	name: 'MenuBar',
-	components: { ActionEntry, HelpModal },
+	components: { ActionEntry, ActionList, ActionCaption, HelpModal },
 	mixins: [
 		useEditorMixin,
 		useIsRichEditorMixin,
@@ -79,6 +92,7 @@ export default {
 			isReady: false,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
+			wordCount: 0,
 		}
 	},
 	computed: {
@@ -102,39 +116,26 @@ export default {
 			return slots - 1
 		},
 		visibleEntries() {
-			const { hiddenEntries, remainAction } = this
 			const list = [...actionsFullEntries].filter(({ priority }) => {
 				// if entry do not have priority, we assume it aways will be visible
 				return priority === undefined || priority <= this.iconsLimit
 			})
 
-			if (hiddenEntries.length === 0) {
-				return list
-			}
-
-			if (hiddenEntries.length === 1) {
-				// put only one entry
-				list.push(hiddenEntries[0])
-			} else {
-				// add all hidden entries as list of actions
-				list.push(remainAction)
-			}
-
 			return list
 		},
 		hiddenEntries() {
-			return [...actionsFullEntries].filter(({ priority }) => {
-				// reverse logic from visibleEntries
-				return priority !== undefined && priority > this.iconsLimit
-			})
-		},
-		remainAction() {
 			return {
 				key: 'remain',
 				label: this.t('text', 'Remaining Actions'),
 				icon: DotsHorizontal,
-				children: this.hiddenEntries,
+				children: [...actionsFullEntries].filter(({ priority }) => {
+					// reverse logic from visibleEntries
+					return priority !== undefined && priority > this.iconsLimit
+				}),
 			}
+		},
+		wordCountString() {
+			return n('text', '%n word', '%n words', this.wordCount)
 		},
 	},
 	mounted() {
@@ -204,6 +205,13 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+
+		refreshWordCount(open) {
+			// characterCount is not reactive so we need this workaround
+			if (open) {
+				this.wordCount = this.$editor.storage.characterCount.words()
+			}
 		},
 	},
 }
