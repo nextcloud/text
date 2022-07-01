@@ -27,9 +27,11 @@
 		v-bind="state"
 		:container="menuIDSelector"
 		:aria-label="actionEntry.label"
+		:force-menu="true"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
-		:data-text-action-active="activeKey">
+		:data-text-action-active="activeKey"
+		@update:open="(o) => $emit('update:open', o)">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
@@ -39,6 +41,7 @@
 			:action-entry="child"
 			v-on="$listeners"
 			@trigged="onTrigger" />
+		<slot name="lastAction" />
 	</NcActions>
 </template>
 
