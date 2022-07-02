@@ -26,6 +26,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Das Dokument wurde außerhalb des Editors gespeichert. Die Änderungen könnten nicht angewandt werden.",
     "File could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
     "This file is opened read-only as it is currently locked by {user}." : "Diese Datei ist schreibgeschützt geöffnet, da sie derzeit von {user} gesperrt ist.",
+    "Last saved" : "Zuletzt gespeichert",
     "Saving …" : "Speichern …",
     "Saved" : "Gespeichert",
     "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",

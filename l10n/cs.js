@@ -26,6 +26,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokument byl mezitím změněn mimo editor. Změny provedené v editoru proto nelze uplatnit.",
     "File could not be loaded. Please check your internet connection." : "Soubor se nepodařilo načíst. Zkontrolujte své připojení k Internetu.",
     "This file is opened read-only as it is currently locked by {user}." : "Tento soubor je otevřen pouze pro čtení, protože je nyní uzamčen uživatelem {user}.",
+    "Last saved" : "Naposledy uloženo",
     "Saving …" : "Ukládání…",
     "Saved" : "Uloženo",
     "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
