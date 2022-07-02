@@ -2,7 +2,7 @@
 import { Table } from '@tiptap/extension-table'
 import { Node, mergeAttributes } from '@tiptap/core'
 import { TextSelection } from 'prosemirror-state'
-import { isInTable, moveCellForward, selectionCell } from 'prosemirror-tables-contently'
+import { isInTable, moveCellForward, selectionCell } from '@_ueberdosis/prosemirror-tables'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import TableView from './TableView.vue'
 
