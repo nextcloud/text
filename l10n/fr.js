@@ -73,6 +73,7 @@ OC.L10N.register(
     "guest" : "invité",
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
+    "Unsupported image type" : "Ce type d'image n'est pas pris en charge",
     "Add row before" : "Ajouter une ligne avant",
     "Add row after" : "Ajouter une ligne après",
     "Delete this row" : "Supprimer cette ligne",
