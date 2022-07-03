@@ -30,10 +30,15 @@ describe('Workspace', function() {
 	})
 
 	beforeEach(function() {
-		cy.login(randUser, 'password')
-		// isolate tests - each happens in it's own folder
-		cy.createFolder(Cypress.currentTest.title)
-		cy.visit(`apps/files?dir=/${encodeURIComponent(Cypress.currentTest.title)}`)
+		cy.login(randUser, 'password').then(() => {
+			// isolate tests - each happens in its own folder
+			const retry = cy.state('test').currentRetry()
+			const folderName = retry
+				? `${Cypress.currentTest.title} (${retry})`
+				: Cypress.currentTest.title
+			cy.createFolder(folderName)
+			cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`)
+		})
 	})
 
 	it('adds a Readme.md', function() {
