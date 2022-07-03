@@ -157,13 +157,7 @@ describe('Test all image insertion methods', () => {
 			.should('contain', 'test.md')
 		cy.get('#fileList tr[data-file="github.png"]', { timeout: 10000 })
 			.should('contain', 'github.png')
-
-		cy.get('#app-settings-header', { timeout: 10000 })
-			.click()
-		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
-		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
-			.click()
-		cy.wait('@showHidden')
+		cy.showHiddenFiles()
 	})
 
 	it('Insert an image from files', () => {
@@ -234,9 +228,7 @@ describe('Test all image insertion methods', () => {
 				const files = attachmentFileNameToId[documentId]
 
 				cy.expect(Object.keys(files)).to.have.lengthOf(2)
-				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
-				cy.openFile('.attachments.' + documentId)
-				cy.wait('@chdir')
+				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
@@ -248,29 +240,16 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is moved with the markdown file', () => {
-		cy.intercept({ method: 'MKCOL', url: '**/subFolder' }).as('mkdir')
 		cy.createFolder('subFolder')
-		cy.wait('@mkdir')
-
-		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload')
 		cy.reloadFileList()
-		cy.wait('@reload')
-
-		cy.intercept({ method: 'MOVE', url: '**/test.md' }).as('move')
 		cy.moveFile('test.md', 'subFolder/test.md')
-		cy.wait('@move')
-		cy.intercept({ method: 'PROPFIND', url: '**/subFolder' }).as('chdir')
-		cy.openFile('subFolder')
-		cy.wait('@chdir')
-
+		cy.openFolder('subFolder')
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
-				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
-				cy.openFile('.attachments.' + documentId)
-				cy.wait('@chdir')
+				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
@@ -282,12 +261,8 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
-		cy.intercept({ method: 'COPY', url: '**/subFolder/test.md' }).as('copyFile')
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
-		cy.wait('@copyFile')
-		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload2')
 		cy.reloadFileList()
-		cy.wait('@reload2')
 
 		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
@@ -295,9 +270,7 @@ describe('Test all image insertion methods', () => {
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
 
-				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
-				cy.openFile('.attachments.' + documentId)
-				cy.wait('@chdir')
+				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
@@ -315,15 +288,8 @@ describe('Test all image insertion methods', () => {
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
-				cy.intercept({ method: 'DELETE', url: '**/testCopied.md' }).as('deleteFile')
 				cy.deleteFile('testCopied.md')
-				cy.wait('@deleteFile')
-
-				cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload3')
 				cy.reloadFileList()
-				cy.wait('@reload3')
-
-				// cy.wait(2000)
 				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
 					.should('not.exist')
 			})
@@ -336,14 +302,7 @@ describe('Test all image insertion methods', () => {
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
 		cy.get('#fileList tr[data-file="github.png"]').should('not.exist')
-
-		// show hidden files
-		cy.get('#app-settings-header', { timeout: 10000 })
-			.click()
-		cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
-		cy.get('#app-settings-content label[for=showhiddenfilesToggle]', { timeout: 10000 })
-			.click()
-		cy.wait('@showHidden')
+		cy.showHiddenFiles()
 
 		// check the attachment folder is not there
 		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
@@ -355,14 +314,8 @@ describe('Test all image insertion methods', () => {
 			})
 
 		// move the file and check the attachment folder is still not there
-		cy.intercept({ method: 'MOVE', url: '**/test.md' }).as('move')
 		cy.moveFile('test.md', 'testMoved.md')
-		cy.wait('@move')
-
-		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload')
 		cy.reloadFileList()
-		cy.wait('@reload')
-
 		cy.get('#fileList tr[data-file="testMoved.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
@@ -372,22 +325,14 @@ describe('Test all image insertion methods', () => {
 			})
 
 		// copy the file and check the attachment folder was copied
-		cy.intercept({ method: 'COPY', url: '**/testMoved.md' }).as('copyFile')
 		cy.copyFile('testMoved.md', 'testCopied.md')
-		cy.wait('@copyFile')
-		cy.intercept({ method: 'PROPFIND', url: '**/' }).as('reload2')
 		cy.reloadFileList()
-		cy.wait('@reload2')
-
 		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
-
-				cy.intercept({ method: 'PROPFIND', url: '**/.attachments.' + documentId }).as('chdir')
-				cy.openFile('.attachments.' + documentId)
-				cy.wait('@chdir')
+				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
 					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })

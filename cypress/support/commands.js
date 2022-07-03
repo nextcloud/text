@@ -259,3 +259,12 @@ Cypress.Commands.add('configureText', (key, value) => {
 		)
 	})
 })
+
+Cypress.Commands.add('showHiddenFiles', () => {
+	cy.get('#app-settings-header')
+		.click()
+	cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
+	cy.get('#app-settings-content label[for=showhiddenfilesToggle]')
+		.click()
+	cy.wait('@showHidden')
+})
