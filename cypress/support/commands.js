@@ -208,10 +208,16 @@ Cypress.Commands.add('reloadFileList', () => cy.window()
 	.then(win => win.OCA?.Files?.App?.fileList?.reload())
 )
 
+Cypress.Commands.add('openFolder', (name) => {
+	const url = `**/${encodeURI(name)}`
+	cy.intercept({ method: 'PROPFIND', url })
+		.as(`open-${name}`)
+	cy.openFile(name)
+	cy.wait(`@open-${name}`)
+})
+
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click(params)
-	// eslint-disable-next-line cypress/no-unnecessary-waiting
-	cy.wait(250)
 })
 
 Cypress.Commands.add('getFile', fileName => {
@@ -262,4 +268,13 @@ Cypress.Commands.add('configureText', (key, value) => {
 			{ headers: { requesttoken: win.OC.requestToken } }
 		)
 	})
+})
+
+Cypress.Commands.add('showHiddenFiles', () => {
+	cy.get('#app-settings-header')
+		.click()
+	cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
+	cy.get('#app-settings-content label[for=showhiddenfilesToggle]')
+		.click()
+	cy.wait('@showHidden')
 })
