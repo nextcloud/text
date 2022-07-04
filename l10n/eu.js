@@ -26,6 +26,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu.",
     "File could not be loaded. Please check your internet connection." : "Ezin izan da fitxategia kargatu. Egiaztatu zure internet konexioa.",
     "This file is opened read-only as it is currently locked by {user}." : "Fitxategi hau irakurtzeko soilik irekitzen da, une honetan {user} blokeatuta dagoelako.",
+    "Last saved" : "Azken gordetze-data",
     "Saving …" : "Gordetzen ...",
     "Saved" : "Gordeta",
     "Last saved {lastSaved}" : "Azken gordetzea {lastSave}",

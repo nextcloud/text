@@ -24,6 +24,7 @@
     "The document has been changed outside of the editor. The changes cannot be applied." : "文件已在編輯器外變更。變更無法套用。",
     "File could not be loaded. Please check your internet connection." : "無法載入檔案。請檢查您的網路連線。",
     "This file is opened read-only as it is currently locked by {user}." : "此檔案以唯讀模式開啟，因為其目前被 {user} 鎖定。",
+    "Last saved" : "最後儲存於",
     "Saving …" : "正在儲存……",
     "Saved" : "已儲存",
     "Last saved {lastSaved}" : "上次儲存於 {lastSaved}",
