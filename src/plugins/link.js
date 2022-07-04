@@ -15,7 +15,12 @@ const clickHandler = ({ editor, type, onClick }) => {
 					console.debug(link)
 					return false
 				}
-				return onClick?.(event, link.attrs)
+
+				// We use custom onClick handler only for left clicks
+				if (event.button === 0 && !event.ctrlKey) {
+					event.stopPropagation()
+					return onClick?.(event, link.attrs)
+				}
 			},
 		},
 	})
