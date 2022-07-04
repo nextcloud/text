@@ -43,6 +43,7 @@ export default {
 					link: {
 						onClick: (event, attrs) => {
 							this.$emit('click-link', event, attrs)
+							return true
 						},
 					},
 				}),
@@ -57,6 +58,22 @@ export default {
 		},
 	},
 
+	mounted() {
+		this.$el.addEventListener('click', this.preventOpeningLinks, true)
+	},
+
+	unmounted() {
+		this.$el.removeEventListener('click', this.preventOpeningLinks, true)
+	},
+
+	methods: {
+		preventOpeningLinks(event) {
+			// We use custom onClick handler only for left clicks
+			if (event.target.closest('a') && event.button === 0 && !event.ctrlKey) {
+				event.preventDefault()
+			}
+		},
+	},
 }
 </script>
 
