@@ -37,7 +37,7 @@ export default {
 		renderHtml(content) {
 			return '<pre>' + escapeHtml(content) + '</pre>'
 		},
-		extensions: [PlainText],
+		extensions: () => [PlainText],
 	},
 
 	props: {

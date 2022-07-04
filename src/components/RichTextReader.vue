@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<BaseReader :content="content" />
+	<BaseReader :content="content" @click-link="(e, a) => $emit('click-link', e, a)" />
 </template>
 
 <script>
@@ -37,13 +37,17 @@ export default {
 		renderHtml(content) {
 			return markdownit.render(content)
 		},
-		extensions: [
-			RichText.configure({
-				link: {
-					onClick: (event, attrs) => this.$emit('click-link', event, attrs),
-				},
-			}),
-		],
+		extensions() {
+			return [
+				RichText.configure({
+					link: {
+						onClick: (event, attrs) => {
+							this.$emit('click-link', event, attrs)
+						},
+					},
+				}),
+			]
+		},
 	},
 
 	props: {
