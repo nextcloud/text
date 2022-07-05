@@ -20,10 +20,10 @@
  *
  */
 
-import { openMimetypes } from './mime'
-import RichWorkspace from '../views/RichWorkspace'
+import { openMimetypes } from './mime.js'
+import RichWorkspace from '../views/RichWorkspace.vue'
 import { imagePath } from '@nextcloud/router'
-import store from '../store'
+import store from '../store.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -92,7 +92,7 @@ const registerFileActionFallback = () => {
 				const file = window.FileList.findFile(filename)
 				Promise.all([
 					import('vue'),
-					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor'),
+					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor.vue'),
 				]).then((imports) => {
 					const path = window.FileList.getCurrentDirectory() + '/' + filename
 					const Vue = imports[0].default

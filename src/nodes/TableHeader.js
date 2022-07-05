@@ -1,6 +1,6 @@
 import { TableHeader } from '@tiptap/extension-table-header'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableHeaderView from './TableHeaderView'
+import TableHeaderView from './TableHeaderView.vue'
 
 export default TableHeader.extend({
 	content: 'inline*',

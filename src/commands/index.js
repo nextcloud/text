@@ -20,7 +20,7 @@
  *
  */
 
-import listInputRule from './listInputRule'
+import listInputRule from './listInputRule.js'
 
 export {
 	listInputRule,

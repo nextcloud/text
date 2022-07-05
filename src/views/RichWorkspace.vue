@@ -51,7 +51,7 @@ import { subscribe } from '@nextcloud/event-bus'
 export default {
 	name: 'RichWorkspace',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper'),
+		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper.vue'),
 	},
 	props: {
 		file: {

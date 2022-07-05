@@ -38,7 +38,7 @@
 
 <script>
 import Vue from 'vue'
-import EditorWrapper from '../components/EditorWrapper'
+import EditorWrapper from '../components/EditorWrapper.vue'
 
 const log = Vue.observable({
 	messages: [],

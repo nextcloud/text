@@ -20,12 +20,12 @@
  *
  */
 
-import Emoji from './Emoji'
-import HardBreak from './HardBreak'
-import Keymap from './Keymap'
-import UserColor from './UserColor'
-import Collaboration from './Collaboration'
-import Markdown from './Markdown'
+import Emoji from './Emoji.js'
+import HardBreak from './HardBreak.js'
+import Keymap from './Keymap.js'
+import UserColor from './UserColor.js'
+import Collaboration from './Collaboration.js'
+import Markdown from './Markdown.js'
 
 export {
 	Emoji,

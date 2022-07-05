@@ -81,7 +81,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import TrashCanIcon from 'vue-material-design-icons/TrashCan.vue'
-import store from './../mixins/store'
+import store from './../mixins/store.js'
 
 const imageMimes = [
 	'image/png',

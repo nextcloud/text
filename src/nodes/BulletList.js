@@ -21,7 +21,7 @@
  */
 
 import TiptapBulletList from '@tiptap/extension-bullet-list'
-import { listInputRule } from '../commands'
+import { listInputRule } from '../commands/index.js'
 
 /* We want to allow for `* [ ]` as an input rule for bullet lists.
  * Therefore the list input rules need to check the input

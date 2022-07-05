@@ -1,6 +1,6 @@
 import { TableCell } from '@tiptap/extension-table-cell'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import TableCellView from './TableCellView'
+import TableCellView from './TableCellView.vue'
 
 export default TableCell.extend({
 	content: 'inline*',

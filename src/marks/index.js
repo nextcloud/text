@@ -21,10 +21,10 @@
  */
 
 import TipTapItalic from '@tiptap/extension-italic'
-import Link from './Link'
-import Strike from './Strike'
-import Strong from './Strong'
-import Underline from './Underline'
+import Link from './Link.js'
+import Strike from './Strike.js'
+import Strong from './Strong.js'
+import Underline from './Underline.js'
 
 const Italic = TipTapItalic.extend({
 	name: 'em',

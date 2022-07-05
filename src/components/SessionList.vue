@@ -75,7 +75,7 @@
 import Avatar from '@nextcloud/vue/dist/Components/Avatar'
 import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import store from '../mixins/store'
+import store from '../mixins/store.js'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90
