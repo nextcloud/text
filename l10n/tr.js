@@ -26,6 +26,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "This file is opened read-only as it is currently locked by {user}." : "Bu dosya {user} tarafından kilitlenmiş olduğundan salt okunur olarak açıldı.",
+    "Last saved" : "Son kaydedilme",
     "Saving …" : "Kaydediliyor …",
     "Saved" : "Kaydedildi",
     "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
