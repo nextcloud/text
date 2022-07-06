@@ -40,13 +40,13 @@
 					@call:help="showHelp" />
 			</template>
 			<template v-else>
-				<div class="top">
+				<div class="top-menubar">
 					<ActionEntry v-for="actionEntry of topEntries"
 						v-bind="{ actionEntry }"
 						:key="`text-action--${actionEntry.key}`"
 						@call:help="showHelp" />
 				</div>
-				<div class="bottom">
+				<div class="bottom-menubar">
 					<ActionEntry v-for="actionEntry of bottomEntries"
 						v-bind="{ actionEntry }"
 						:key="`text-action--${actionEntry.key}`"
@@ -287,16 +287,17 @@ export default {
 			.text-menubar__entries {
 				margin-left: 0;
 			}
-
-			.top {
+			.top-menubar {
 				display: flex;
 			}
 
-			.bottom {
+			.bottom-menubar {
 				display: flex;
 				position: fixed;
-				top: calc(100vh - 100px);
+				top: calc(100vh - 15vh);
 				left: 0;
+				width: 100%;
+				overflow-y: scroll;
 			}
 		}
 	}

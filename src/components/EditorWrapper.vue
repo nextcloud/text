@@ -54,7 +54,7 @@
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded">
 					<div class="text-editor__session-list">
-						<div v-if="isMobile" v-tooltip="lastSavedStatusTooltip" :class="saveStatusClass" />
+						<ContentSave v-if="isMobile" v-tooltip="lastSavedStatusTooltip" :fill-color="savedColor" />
 						<div v-else
 							v-tooltip="lastSavedStatusTooltip"
 							class="save-status"
@@ -125,6 +125,7 @@ import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import Lock from 'vue-material-design-icons/Lock'
+import ContentSave from 'vue-material-design-icons/ContentSave'
 import MenuBar from './Menu/MenuBar.vue'
 import EditorMidiaHandler from './EditorMediaHandler.vue'
 
@@ -142,6 +143,7 @@ export default {
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		Lock,
+		ContentSave,
 	},
 	directives: {
 		Tooltip,
@@ -266,6 +268,12 @@ export default {
 				return t('text', this.isMobile ? 'Offline' : 'Offline, changes will be saved when online')
 			}
 			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
+		},
+		savedColor() {
+			if (this.hasConnectionIssue) {
+				return 'var(--color-error)'
+			}
+			return this.dirtyStateIndicator ? 'var(--color-background-dark)' : 'var(--color-primary)'
 		},
 		lastSavedStatusClass() {
 			return this.syncError && this.lastSavedString !== '' ? 'error' : ''

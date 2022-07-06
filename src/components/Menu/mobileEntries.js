@@ -72,68 +72,56 @@ export default [
 		position: 'top',
 	},
 	{
-		key: 'style',
-		label: t('text', 'Style'),
-		keyModifiers: ['ctrl', 'shift'],
-		visible: false,
+		key: 'bold',
+		label: t('text', 'Bold'),
+		keyChar: 'b',
+		keyModifiers: ['ctrl'],
 		icon: FormatBold,
-		isActive: 'styling',
-		children: [
-			{
-				key: 'bold',
-				label: t('text', 'Bold'),
-				keyChar: 'b',
-				keyModifiers: ['ctrl'],
-				icon: FormatBold,
-				isActive: 'strong',
-				action: (command) => {
-					return command.toggleBold()
-				},
-				priority: 6,
-				position: 'top',
-			},
-			{
-				key: 'italic',
-				label: t('text', 'Italic'),
-				keyChar: 'i',
-				keyModifiers: ['ctrl'],
-				icon: FormatItalic,
-				isActive: 'em',
-				action: (command) => {
-					return command.toggleItalic()
-				},
-				priority: 7,
-				position: 'top',
-			},
-			{
-				key: 'underline',
-				label: t('text', 'Underline'),
-				keyChar: 'u',
-				keyModifiers: ['ctrl'],
-				icon: FormatUnderline,
-				isActive: 'underline',
-				action: (command) => {
-					return command.toggleUnderline()
-				},
-				priority: 14,
-				position: 'top',
-			},
-			{
-				key: 'strikethrough',
-				label: t('text', 'Strikethrough'),
-				keyChar: 'd',
-				keyModifiers: ['ctrl'],
-				icon: FormatStrikethrough,
-				isActive: 'strike',
-				action: (command) => {
-					return command.toggleStrike()
-				},
-				priority: 15,
-				position: 'top',
-			},
-		],
-		priority: 1,
-		position: 'top',
+		isActive: 'strong',
+		action: (command) => {
+			return command.toggleBold()
+		},
+		priority: 6,
+		position: 'bottom',
+	},
+	{
+		key: 'italic',
+		label: t('text', 'Italic'),
+		keyChar: 'i',
+		keyModifiers: ['ctrl'],
+		icon: FormatItalic,
+		isActive: 'em',
+		action: (command) => {
+			return command.toggleItalic()
+		},
+		priority: 7,
+		position: 'bottom',
+	},
+	{
+		key: 'underline',
+		label: t('text', 'Underline'),
+		keyChar: 'u',
+		keyModifiers: ['ctrl'],
+		icon: FormatUnderline,
+		isActive: 'underline',
+		action: (command) => {
+			return command.toggleUnderline()
+		},
+		priority: 14,
+		position: 'bottom',
+	},
+	{
+		key: 'strikethrough',
+		label: t('text', 'Strikethrough'),
+		keyChar: 'd',
+		keyModifiers: ['ctrl'],
+		icon: FormatStrikethrough,
+		isActive: 'strike',
+		action: (command) => {
+			return command.toggleStrike()
+		},
+		priority: 15,
+		position: 'bottom',
 	},
 	{
 		key: 'headings',
@@ -200,69 +188,62 @@ export default [
 			},
 		],
 		priority: 1,
-		position: 'top',
+		position: 'bottom',
 	},
 	{
-		key: 'lists',
-		label: t('text', 'Lists'),
-		keyChar: '1…6',
+		key: 'unordered-list',
+		label: t('text', 'Unordered list'),
+		keyChar: '8',
 		keyModifiers: ['ctrl', 'shift'],
-		visible: false,
+		isActive: 'bulletList',
 		icon: FormatListBulleted,
-		isActive: ['bulletList', 'orderedList', 'taskList'],
-		children: [
-			{
-				key: 'unordered-list',
-				label: t('text', 'Unordered list'),
-				icon: FormatListBulleted,
-				isActive: 'bulletList',
-				keyChar: '8',
-				keyModifiers: ['ctrl', 'shift'],
-				action: (command) => {
-					return command.toggleBulletList()
-				},
-			},
-			{
-				key: 'ordered-list',
-				label: t('text', 'Ordered list'),
-				icon: FormatListNumbered,
-				isActive: 'orderedList',
-				keyChar: '9',
-				keyModifiers: ['ctrl', 'shift'],
-				action: (command) => {
-					return command.toggleOrderedList()
-				},
-			},
-			{
-				key: 'task-list',
-				label: t('text', 'To-Do list'),
-				icon: FormatListCheckbox,
-				isActive: 'taskList',
-				action: (command) => command.toggleTaskList(),
-			},
-		],
-		priority: 1,
-		position: 'top',
+		action: (command) => {
+			return command.toggleBulletList()
+		},
+		priority: 8,
+		position: 'bottom',
 	},
 	{
-		key: 'blocks',
-		label: t('text', 'Blocks'),
+		key: 'ordered-list',
+		label: t('text', 'Ordered list'),
+		keyChar: '9',
 		keyModifiers: ['ctrl', 'shift'],
-		visible: false,
+		isActive: 'orderedList',
+		icon: FormatListNumbered,
+		action: (command) => {
+			return command.toggleOrderedList()
+		},
+		priority: 9,
+		position: 'bottom',
+	},
+	{
+		key: 'task-list',
+		label: t('text', 'To-Do list'),
+		isActive: 'taskList',
+		icon: FormatListCheckbox,
+		action: (command) => command.toggleTaskList(),
+		priority: 10,
+	},
+	{
+		key: 'blockquote',
+		label: t('text', 'Blockquote'),
+		keyChar: '>',
+		keyModifiers: ['ctrl'],
+		isActive: 'blockquote',
 		icon: FormatQuote,
-		isActive: 'blocks',
+		action: (command) => {
+			return command.toggleBlockquote()
+		},
+		priority: 12,
+		position: 'bottom',
+	},
+	{
+		key: 'callouts',
+		label: t('text', 'Callouts'),
+		visible: false,
+		icon: Info,
+		isActive: 'callout',
 		children: [
-			{
-				key: 'blockquote',
-				label: t('text', 'Blockquote'),
-				keyChar: '>',
-				keyModifiers: ['ctrl'],
-				isActive: 'blockquote',
-				icon: FormatQuote,
-				action: (command) => {
-					return command.toggleBlockquote()
-				},
-			},
 			{
 				key: 'callout-info',
 				label: t('text', 'Info'),
@@ -299,17 +280,19 @@ export default [
 					return command.toggleCallout({ type: 'error' })
 				},
 			},
-			{
-				key: 'code-block',
-				label: t('text', 'Code block'),
-				isActive: 'codeBlock',
-				icon: CodeTags,
-				action: (command) => {
-					return command.toggleCodeBlock()
-				},
-			},
 		],
-		priority: 1,
+		priority: 3,
+		position: 'bottom',
+	},
+	{
+		key: 'code-block',
+		label: t('text', 'Code block'),
+		isActive: 'codeBlock',
+		icon: CodeTags,
+		action: (command) => {
+			return command.toggleCodeBlock()
+		},
+		priority: 13,
 		position: 'bottom',
 	},
 	{
@@ -331,7 +314,7 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 4,
+		priority: 19,
 		position: 'bottom',
 	},
 	{
@@ -339,7 +322,7 @@ export default [
 		label: t('text', 'Insert image'),
 		icon: Images,
 		component: ActionImageUpload,
-		priority: 2,
+		priority: 18,
 		position: 'bottom',
 	},
 	{

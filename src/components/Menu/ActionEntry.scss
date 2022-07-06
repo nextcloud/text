@@ -72,3 +72,9 @@
 		}
 	}
 }
+
+@media (max-width: 660px) {
+	.emoji-popover {
+		top: calc(-55vh) !important;
+	}
+}
