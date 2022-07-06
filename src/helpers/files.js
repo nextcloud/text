@@ -136,7 +136,6 @@ const registerFileActionFallback = () => {
 const FilesWorkspacePlugin = {
 
 	el: null,
-	vm: null,
 
 	attach(fileList) {
 		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
@@ -150,51 +149,6 @@ const FilesWorkspacePlugin = {
 			render: this.render.bind(this),
 			priority: 10,
 		})
-
-		const PROPERTY_WORKSPACE_FILE = `{${OC.Files.Client.NS_NEXTCLOUD}}rich-workspace-file`
-
-		const oldGetWebdavProperties = fileList._getWebdavProperties
-		fileList._getWebdavProperties = function() {
-			return [
-				...oldGetWebdavProperties.apply(this, arguments),
-				PROPERTY_WORKSPACE_FILE,
-			]
-		}
-
-		let readmeId = null
-
-		fileList.filesClient.addFileInfoParser((response, data) => {
-			if (data.mimetype === 'httpd/unix-directory') {
-				const props = response.propStat[0].properties
-				const dir = data.path + (data.path.endsWith('/') ? '' : '/') + data.name
-				if (dir === fileList.getCurrentDirectory()) {
-					readmeId = props[PROPERTY_WORKSPACE_FILE]
-					this.vm.folder = {
-						permissions: data.permissions,
-					}
-					this.vm.loaded = true
-					// in case no file is found we are done
-					this.vm.ready = true
-				}
-			}
-			if (readmeId && data.id === readmeId) {
-				if (data.mimetype !== 'text/markdown') {
-					console.warn('Expected workspace file to be markdown:', data)
-				}
-				this.open(data)
-				return
-			}
-			/*
-			 * Handle the creation of 'Readme.md'.
-			 * The PROPFIND after the creation does not include the parent dir.
-			 */
-			if (data.name === 'Readme.md'
-				&& data.mimetype === 'text/markdown'
-				&& data.path === fileList.getCurrentDirectory()) {
-				this.open(data)
-			}
-		})
-
 	},
 
 	render(fileList) {
@@ -209,36 +163,20 @@ const FilesWorkspacePlugin = {
 			Vue.prototype.n = window.n
 			Vue.prototype.OCA = window.OCA
 			const View = Vue.extend(RichWorkspace)
-			this.vm = new View({
+			const vm = new View({
 				propsData: {
-					file: null,
-					folder: null,
+					path: fileList.getCurrentDirectory(),
 				},
 				store,
 			}).$mount(this.el)
 
 			fileList.$el.on('urlChanged', data => {
-				this.vm.file = null
-				this.vm.folder = null
+				vm.path = data.dir.toString()
 			})
 			fileList.$el.on('changeDirectory', data => {
-				this.vm.file = null
-				this.vm.folder = null
+				vm.path = data.dir.toString()
 			})
 		})
-	},
-
-	open(data) {
-		const previous = this.vm.file
-		const id = parseInt(data.id)
-		this.vm.file = {
-			...data,
-			id,
-		}
-		if (previous?.id !== id) {
-			// Editor loads new file. Wait for it to be ready.
-			this.vm.ready = false
-		}
 	},
 }
 
