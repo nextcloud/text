@@ -21,6 +21,7 @@
  */
 
 import { generateUrl } from '@nextcloud/router'
+import markdownit from './../markdownit/index.js'
 
 const absolutePath = function(base, rel) {
 	if (!rel) {
@@ -77,7 +78,38 @@ const parseHref = function(dom) {
 	return ref
 }
 
+const openLink = function(event, _attrs) {
+	const linkElement = event.target.closest('a')
+	const htmlHref = linkElement.href
+	const query = OC.parseQueryString(htmlHref)
+	const fragment = OC.parseQueryString(htmlHref.split('#').pop())
+	if (query.dir && fragment.relPath) {
+		const filename = fragment.relPath.split('/').pop()
+		const path = `${query.dir}/${filename}`
+		document.title = `${filename} - ${OC.theme.title}`
+		if (window.location.pathname.match(/apps\/files\/$/)) {
+			// The files app still lacks a popState handler
+			// to allow for using the back button
+			// OC.Util.History.pushState('', htmlHref)
+		}
+		OCA.Viewer.open({ path })
+		return
+	}
+	if (query.fileId) {
+		// open the direct file link
+		window.open(generateUrl(`/f/${query.fileId}`))
+		return
+	}
+	if (!markdownit.validateLink(htmlHref)) {
+		console.error('Invalid link', htmlHref)
+		return false
+	}
+	window.open(htmlHref)
+	return true
+}
+
 export {
 	domHref,
 	parseHref,
+	openLink,
 }
