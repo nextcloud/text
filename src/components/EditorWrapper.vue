@@ -568,7 +568,7 @@ export default {
 								},
 								name: (clientID) => {
 									const session = this.sessions.find(item => '' + item.id === '' + clientID)
-									return session?.userId ? session.userId : session?.guestName
+									return session?.userId ? session.displayName : (session?.guestName ? session.guestName : t('text', 'Guest'))
 								},
 							}),
 						],
