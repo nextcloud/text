@@ -29,6 +29,12 @@ const Image = TiptapImage.extend({
 
 	selectable: false,
 
+	renderHTML() {
+		// Avoid the prosemirror node creation to trigger image loading as we use a custom node view anyways
+		// Otherwise it would attempt to load the image from the current location before the node view is even initialized
+		return ['img']
+	},
+
 	addOptions() {
 		return {
 			...this.parent?.(),
