@@ -108,10 +108,10 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 			if (typeof target !== 'undefined') {
 				fileName = target
 			}
-			await cy.window().then(async window => {
+			await cy.window().then(async win => {
 				await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
 					headers: {
-						requesttoken: window.OC.requestToken,
+						requesttoken: win.OC.requestToken,
 						'Content-Type': mimeType,
 					},
 				}).then(response => {
@@ -128,10 +128,10 @@ Cypress.Commands.add('createFile', (target, content, mimeType) => {
 	const file = new File([blob], fileName, { type: mimeType })
 
 	return cy.window()
-		.then(async window => {
+		.then(async win => {
 			const response = await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${target}`, file, {
 				headers: {
-					requesttoken: window.OC.requestToken,
+					requesttoken: win.OC.requestToken,
 					'Content-Type': mimeType,
 				},
 			})
@@ -162,29 +162,51 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 	})
 })
 
-Cypress.Commands.add('createFolder', dirName => {
-	return cy.window().then(win => {
-		return win.OC.Files.getClient().createDirectory(dirName)
-	})
+Cypress.Commands.add('createFolder', dirName => cy.window()
+	.then(win => win.OC.Files.getClient().createDirectory(dirName))
+)
+
+Cypress.Commands.add('moveFile', (path, destinationPath) => cy.window()
+	.then(win => win.OC.Files.getClient().move(path, destinationPath))
+)
+
+Cypress.Commands.add('removeFile', (path) => cy.window()
+	.then(win => win.OC.Files.getClient().remove(path))
+)
+
+Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
+	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
+)
+
+Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
+	return cy.window()
+		.then(win => {
+			const files = win.OC.Files
+			const PROPERTY_WORKSPACE_FILE
+				= `{${files.Client.NS_NEXTCLOUD}}rich-workspace-file`
+			const PROPERTY_WORKSPACE
+				= `{${files.Client.NS_NEXTCLOUD}}rich-workspace`
+			const properties = [
+				...files.getClient().getPropfindProperties(),
+				PROPERTY_WORKSPACE_FILE,
+				PROPERTY_WORKSPACE,
+			]
+			const client = files.getClient().getClient()
+			return client.propFind(client.baseUrl + path, properties, depth)
+				.then((results) => {
+					cy.log(`Propfind returned ${results.status}`)
+					if (depth) {
+						return results.body
+					} else {
+						return results.body.propStat[0].properties
+					}
+				})
+		})
 })
 
-Cypress.Commands.add('moveFile', (path, destinationPath) => {
-	return cy.window().then(win => {
-		return win.OC.Files.getClient().move(path, destinationPath)
-	})
-})
-
-Cypress.Commands.add('copyFile', (path, destinationPath) => {
-	return cy.window().then(win => {
-		return win.OC.Files.getClient().copy(path, destinationPath)
-	})
-})
-
-Cypress.Commands.add('reloadFileList', () => {
-	return cy.window().then(win => {
-		return win.OCA?.Files?.App?.fileList?.reload()
-	})
-})
+Cypress.Commands.add('reloadFileList', () => cy.window()
+	.then(win => win.OCA?.Files?.App?.fileList?.reload())
+)
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click(params)
@@ -230,4 +252,14 @@ Cypress.Commands.add('openWorkspace', (subject, name) => {
 	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
 
 	return cy.getContent()
+})
+
+Cypress.Commands.add('configureText', (key, value) => {
+	return cy.window().then(win => {
+		return axios.post(
+			`${Cypress.env('baseUrl')}/index.php/apps/text/settings`,
+			{ key, value },
+			{ headers: { requesttoken: win.OC.requestToken } }
+		)
+	})
 })
