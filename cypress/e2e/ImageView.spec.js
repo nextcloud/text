@@ -103,7 +103,7 @@ describe('Image View', () => {
 	})
 
 	describe('fail to load', () => {
-		it.only('direct access', () => {
+		it('direct access', () => {
 			const fileName = `${Cypress.currentTest.title}.md`
 
 			createMarkdown(fileName, '# from root\n\n ![yaha](/yaha.png)')
