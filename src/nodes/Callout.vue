@@ -86,7 +86,7 @@ export default {
 
 	.callout__content {
 		margin-left: 1em;
-		&::v-deep p {
+		&::v-deep(p) {
 			&:last-child {
 				margin-bottom: 0;
 			}
@@ -94,7 +94,7 @@ export default {
 	}
 
 	.callout__icon {
-		&, ::v-deep svg {
+		&, ::v-deep(svg) {
 			color: var(--callout-border);
 		}
 	}

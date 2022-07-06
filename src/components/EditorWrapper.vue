@@ -750,13 +750,13 @@ export default {
 		overflow: hidden;
 		position: absolute;
 
-		&.show-color-annotations::v-deep .author-annotation {
+		&.show-color-annotations::v-deep(.author-annotation) {
 			padding-top: 2px;
 			padding-bottom: 2px;
 		}
 
-		&:not(.show-color-annotations)::v-deep .author-annotation,
-		&:not(.show-color-annotations)::v-deep .image {
+		&:not(.show-color-annotations)::v-deep(.author-annotation),
+		&:not(.show-color-annotations)::v-deep(.image) {
 			background-color: transparent !important;
 		}
 
@@ -867,7 +867,7 @@ export default {
 	}
 
 	.ie {
-		.editor__content::v-deep .ProseMirror {
+		.editor__content::v-deep(.ProseMirror) {
 			padding-top: 50px;
 		}
 	}

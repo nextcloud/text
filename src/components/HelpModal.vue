@@ -203,7 +203,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	::v-deep .modal-wrapper {
+	::v-deep(.modal-wrapper) {
 		.modal-container {
 			padding: 30px 40px 20px;
 			user-select: text;
