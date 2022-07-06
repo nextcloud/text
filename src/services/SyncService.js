@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/valid-types */
 /*
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -24,6 +25,7 @@ import axios from '@nextcloud/axios'
 import PollingBackend from './PollingBackend.js'
 import { endpointUrl } from './../helpers/index.js'
 import { getVersion, sendableSteps } from 'prosemirror-collab'
+import mitt from 'mitt'
 
 const defaultOptions = {
 	shareToken: null,
@@ -60,25 +62,8 @@ const ERROR_TYPE = {
 class SyncService {
 
 	constructor(options) {
-		this.eventHandlers = {
-			/* Document state */
-			opened: [],
-			loaded: [],
-			/* All initial steps fetched */
-			fetched: [],
-			/* received new steps */
-			sync: [],
-			/* state changed (dirty) */
-			stateChange: [],
-			/* error */
-			error: [],
-			/* Events for session and document meta data */
-			change: [],
-			/* Emitted after successful save */
-			save: [],
-			/* Emitted once a document becomes idle */
-			idle: [],
-		}
+		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
+		this._bus = mitt()
 
 		this.backend = new PollingBackend(this)
 
@@ -132,9 +117,9 @@ class SyncService {
 		})
 			.then(response => response.data, error => {
 				if (!error.response || error.code === 'ECONNABORTED') {
-					this.emit('error', ERROR_TYPE.CONNECTION_FAILED, {})
+					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				} else {
-					this.emit('error', ERROR_TYPE.LOAD_ERROR, error.response.status)
+					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response.status })
 				}
 				throw error
 			})
@@ -322,19 +307,18 @@ class SyncService {
 		return axios.post(url, params)
 	}
 
-	on(event, callback, _this) {
-		this.eventHandlers[event].push(callback.bind(_this))
+	on(event, callback) {
+		this._bus.on(event, callback)
 		return this
 	}
 
-	emit(event, data, additionalData) {
-		if (typeof this.eventHandlers[event] !== 'undefined') {
-			this.eventHandlers[event].forEach(function(callback) {
-				callback(data, additionalData)
-			})
-		} else {
-			console.error('Event not found', event)
-		}
+	off(event, callback) {
+		this._bus.off(event, callback)
+		return this
+	}
+
+	emit(event, data) {
+		this._bus.emit(event, data)
 	}
 
 	isPublic() {
