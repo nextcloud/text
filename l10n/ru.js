@@ -29,9 +29,9 @@ OC.L10N.register(
     "Saved" : "Сохранено",
     "Last saved {lastSaved}" : "Последнее сохранение {lastSaved}",
     "Unsaved changes" : "Несохранённые изменения",
+    "Guest" : "Гость",
     "No emoji found" : "Эмодзи не найдено",
     "Edit guest name" : "Изменить гостевое имя",
-    "Guest" : "Гость",
     "Save guest name" : "Сохранить гостевое имя",
     "Formatting help" : "Справка по форматированию",
     "Speed up your writing with simple shortcuts." : "Ускорьте написание текста с помощью простых сочетаний клавиш.",
@@ -99,7 +99,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
     "ToDo list" : "Список задач",
     "Emoji picker" : "Выбор эмодзи",
-    "Todo item" : "Элемент списка задач",
-    "Participants" : "Участники"
+    "Todo item" : "Элемент списка задач"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

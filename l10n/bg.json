@@ -29,10 +29,10 @@
     "Saved" : "Записано",
     "Last saved {lastSaved}" : "Последно записано {lastSaved}",
     "Unsaved changes" : "Незаписани промени",
+    "Guest" : "Гост",
     "No emoji found" : "Няма намерено емоджи",
     "Enter your name so other people can see who is editing" : "Въведете името си, за да могат другите хора да видят кой редактира",
     "Edit guest name" : "Редактиране на името на госта",
-    "Guest" : "Гост",
     "Save guest name" : "Запис на името на госта",
     "Formatting help" : "Помощ за форматиране",
     "Speed up your writing with simple shortcuts." : "Ускорете писането си с опростени преки пътища.",
@@ -112,7 +112,6 @@
     "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"],
     "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
-    "Todo item" : "Елемент на задача за изпълнение",
-    "Participants" : "Участници"
+    "Todo item" : "Елемент на задача за изпълнение"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

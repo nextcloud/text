@@ -18,8 +18,8 @@
     "Saving …" : "A guardar...",
     "Saved" : "Guardado",
     "Unsaved changes" : "Modificações não guardadas",
-    "Edit guest name" : "Inserir o nome do convidado",
     "Guest" : "Convidado",
+    "Edit guest name" : "Inserir o nome do convidado",
     "Save guest name" : "Guardar o nome do convidado",
     "Style" : "Estilo",
     "Keyboard shortcuts" : "Atalhos de teclado",
@@ -54,7 +54,6 @@
     "Currently active users:" : "Utilizadores ativos no momento:",
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores","e %n outros editores"],
     "ToDo list" : "Lista ToDo",
-    "Emoji picker" : "Selecionador de emoji ",
-    "Participants" : "Participantes"
+    "Emoji picker" : "Selecionador de emoji "
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

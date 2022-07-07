@@ -30,10 +30,10 @@ OC.L10N.register(
     "Saved" : "Opgeslagen",
     "Last saved {lastSaved}" : "Laatste opgeslagen {lastSaved}",
     "Unsaved changes" : "Niet opgeslagen veranderingen",
+    "Guest" : "Gast",
     "No emoji found" : "Geen emoji gevonden",
     "Enter your name so other people can see who is editing" : "Voer je naam in, zodat ander personen kunnen zien wie er aan het bewerken is",
     "Edit guest name" : "Bewerk gast naam",
-    "Guest" : "Gast",
     "Save guest name" : "Bewaar gast naam",
     "Formatting help" : "Formatteringshulp",
     "Speed up your writing with simple shortcuts." : "Versnel je geschrijf met deze handige snelkoppelingen.",
@@ -112,7 +112,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["en %n andere auteur","en %n andere auteurs"],
     "ToDo list" : "ToDo overzicht",
     "Emoji picker" : "Emoji kiezer",
-    "Todo item" : "Te doen onderwerp",
-    "Participants" : "Deelnemers"
+    "Todo item" : "Te doen onderwerp"
 },
 "nplurals=2; plural=(n != 1);");

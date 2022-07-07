@@ -31,10 +31,10 @@ OC.L10N.register(
     "Saved" : "Kaydedildi",
     "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
+    "Guest" : "Konuk",
     "No emoji found" : "Herhangi bir emoji bulunamadı",
     "Enter your name so other people can see who is editing" : "Adınızı yazın. Böylece diğer kişiler kimin düzenleme yaptığını görebilir",
     "Edit guest name" : "Konuk adını düzenle",
-    "Guest" : "Konuk",
     "Save guest name" : "Konuk adını kaydet",
     "Formatting help" : "Biçimlendirme yardımı",
     "Speed up your writing with simple shortcuts." : "Basit kısayol tuşlarını kullanarak yazmayı hızlandırabilirsiniz.",
@@ -114,7 +114,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "ToDo list" : "Yapılacaklar listesi",
     "Emoji picker" : "Emoji seçici",
-    "Todo item" : "Yapılacak iş ögesi",
-    "Participants" : "Katılımcılar"
+    "Todo item" : "Yapılacak iş ögesi"
 },
 "nplurals=2; plural=(n > 1);");

@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Sparad",
     "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
     "Unsaved changes" : "Ej sparade ändringar",
-    "Edit guest name" : "Ändra gästnamn",
     "Guest" : "Gäst",
+    "Edit guest name" : "Ändra gästnamn",
     "Save guest name" : "Spara gästnamn",
     "Formatting help" : "Formatteringshjälp",
     "Speed up your writing with simple shortcuts." : "Snabba upp ditt skrivande med enkla genvägar.",
@@ -89,7 +89,6 @@ OC.L10N.register(
     "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "ToDo list" : "Att göra lista",
-    "Emoji picker" : "Emojiväljare",
-    "Participants" : "Deltagare"
+    "Emoji picker" : "Emojiväljare"
 },
 "nplurals=2; plural=(n != 1);");

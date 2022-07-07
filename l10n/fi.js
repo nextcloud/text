@@ -29,10 +29,10 @@ OC.L10N.register(
     "Saved" : "Tallennettu",
     "Last saved {lastSaved}" : "Viimeksi tallennettu {lastSaved}",
     "Unsaved changes" : "Tallentamattomia muutoksia",
+    "Guest" : "Vieras",
     "No emoji found" : "Emojia ei löydy",
     "Enter your name so other people can see who is editing" : "Kirjoita nimesi, jotta muut näkevät kuka muokkaa asiakirjaa",
     "Edit guest name" : "Muokkaa vieraan nimeä",
-    "Guest" : "Vieras",
     "Save guest name" : "Tallenna vieraan nimi",
     "Formatting help" : "Muotoiluohje",
     "Speed up your writing with simple shortcuts." : "Nopeuta kirjoittamista pikanäppäimillä.",
@@ -102,7 +102,6 @@ OC.L10N.register(
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "ToDo list" : "Tehtävälista",
-    "Emoji picker" : "Emoji-valitsin",
-    "Participants" : "Osallistujat"
+    "Emoji picker" : "Emoji-valitsin"
 },
 "nplurals=2; plural=(n != 1);");

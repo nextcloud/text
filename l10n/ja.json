@@ -26,8 +26,8 @@
     "Saved" : "保存済み",
     "Last saved {lastSaved}" : "最終保存日 {lastSaved}",
     "Unsaved changes" : "保存していない変更点",
-    "Edit guest name" : "ゲスト名を編集",
     "Guest" : "ゲスト",
+    "Edit guest name" : "ゲスト名を編集",
     "Save guest name" : "ゲスト名を保存",
     "Formatting help" : "ヘルプの書式設定",
     "Keyboard shortcuts" : "キーボードショートカット",
@@ -74,7 +74,6 @@
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "ToDo list" : "ToDo リスト",
-    "Emoji picker" : "絵文字選択",
-    "Participants" : "参加者"
+    "Emoji picker" : "絵文字選択"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

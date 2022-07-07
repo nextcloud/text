@@ -28,10 +28,10 @@
     "Saved" : "Guardado",
     "Last saved {lastSaved}" : "Guardado por última vez: {lastSave}",
     "Unsaved changes" : "Cambios sin guardar",
+    "Guest" : "Invitado",
     "No emoji found" : "No se han encontrado emojis",
     "Enter your name so other people can see who is editing" : "Introduce tu nombre para que otras personas puedan ver quién está editando",
     "Edit guest name" : "Editar nombre del invitado",
-    "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre del invitado",
     "Formatting help" : "Ayuda de formato",
     "Speed up your writing with simple shortcuts." : "Mejora tu velocidad de escritura con atajos de teclado sencillos.",
@@ -111,7 +111,6 @@
     "_and %n other editor_::_and %n other editors_" : ["y %n otro editor","y %n otros editores","y %n otros editores"],
     "ToDo list" : "Lista de Tareas",
     "Emoji picker" : "Selector de emoji",
-    "Todo item" : "Elemento a completar",
-    "Participants" : "Participantes"
+    "Todo item" : "Elemento a completar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

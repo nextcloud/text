@@ -29,10 +29,10 @@
     "Saved" : "Uloženo",
     "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
     "Unsaved changes" : "Neuložené změny",
+    "Guest" : "Host",
     "No emoji found" : "Nenalezena žádná emotikona",
     "Enter your name so other people can see who is editing" : "Zadejte své jméno aby ostatní lidé viděli, kdo upravuje",
     "Edit guest name" : "Upravit jméno hosta",
-    "Guest" : "Host",
     "Save guest name" : "Uložit jméno hosta",
     "Formatting help" : "Nápověda k formátování",
     "Speed up your writing with simple shortcuts." : "Zrychlete si své psaní snadnými zkratkami.",
@@ -112,7 +112,6 @@
     "_and %n other editor_::_and %n other editors_" : ["a %n další editor(ka)","a %n další editoři/editorky","a %n dalších editorů/editorek","a %n další editoři/editorky"],
     "ToDo list" : "Seznam úkolů",
     "Emoji picker" : "Volba emotikony",
-    "Todo item" : "Položka k udělání",
-    "Participants" : "Účastníci"
+    "Todo item" : "Položka k udělání"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

@@ -26,8 +26,8 @@ OC.L10N.register(
     "Saved" : "Guardat",
     "Last saved {lastSaved}" : "Última actualització {lastSaved}",
     "Unsaved changes" : "Canvis sense desar",
-    "Edit guest name" : "Edita el nom de convidat",
     "Guest" : "Convidat",
+    "Edit guest name" : "Edita el nom de convidat",
     "Save guest name" : "Desa el nom de convidat",
     "Formatting help" : "Format d'ajuda",
     "Keyboard shortcuts" : "Dreceres de teclat",
@@ -63,7 +63,6 @@ OC.L10N.register(
     "New text document" : "Nou document de text",
     "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
-    "ToDo list" : "Llista tasques pendents",
-    "Participants" : "Participants"
+    "ToDo list" : "Llista tasques pendents"
 },
 "nplurals=2; plural=(n != 1);");

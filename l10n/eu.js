@@ -31,10 +31,10 @@ OC.L10N.register(
     "Saved" : "Gordeta",
     "Last saved {lastSaved}" : "Azken gordetzea {lastSave}",
     "Unsaved changes" : "Gorde gabeko aldaketak",
+    "Guest" : "Gonbidatua",
     "No emoji found" : "Ez da emojirik aurkitu",
     "Enter your name so other people can see who is editing" : "Idatzi zure izena besteek nor editatzen ari den ikus dezaten",
     "Edit guest name" : "Editatu gonbidatuaren izena",
-    "Guest" : "Gonbidatua",
     "Save guest name" : "Gorde gonbidatuaren izena",
     "Formatting help" : "Formatua emateko laguntza",
     "Speed up your writing with simple shortcuts." : "Bizkortu zure idazketa lasterbide errazekin.",
@@ -114,7 +114,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "ToDo list" : "Egitekoen zerrenda",
     "Emoji picker" : " Emotikono-hautatzailea",
-    "Todo item" : "Eginbeharreko elementua",
-    "Participants" : "Parte hartzaileak"
+    "Todo item" : "Eginbeharreko elementua"
 },
 "nplurals=2; plural=(n != 1);");

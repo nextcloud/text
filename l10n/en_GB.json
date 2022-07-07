@@ -22,7 +22,6 @@
     "Info" : "Info",
     "Success" : "Success",
     "Warning" : "Warning",
-    "Edit" : "Edit",
-    "Participants" : "Participants"
+    "Edit" : "Edit"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

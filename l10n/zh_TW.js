@@ -31,10 +31,10 @@ OC.L10N.register(
     "Saved" : "已儲存",
     "Last saved {lastSaved}" : "上次儲存於 {lastSaved}",
     "Unsaved changes" : "未儲存變更",
+    "Guest" : "訪客",
     "No emoji found" : "找不到表情符號",
     "Enter your name so other people can see who is editing" : "輸入您的姓名，如此其他人就可以看到是誰在編輯",
     "Edit guest name" : "編輯訪客名稱",
-    "Guest" : "訪客",
     "Save guest name" : "儲存訪客名稱",
     "Formatting help" : "格式化說明",
     "Speed up your writing with simple shortcuts." : "使用簡單的快捷鍵加速您的寫作。",
@@ -114,7 +114,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯器"],
     "ToDo list" : "待辦列表",
     "Emoji picker" : "表情符號挑選器",
-    "Todo item" : "待辦事項",
-    "Participants" : "參與者"
+    "Todo item" : "待辦事項"
 },
 "nplurals=1; plural=0;");
