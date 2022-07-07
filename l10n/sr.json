@@ -24,8 +24,8 @@
     "Saved" : "Сачувано",
     "Last saved {lastSaved}" : "Последње чување {lastSaved}",
     "Unsaved changes" : "Несачуване измене",
-    "Edit guest name" : "Измени име госта",
     "Guest" : "Гост",
+    "Edit guest name" : "Измени име госта",
     "Save guest name" : "Сачувај име госта",
     "Formatting help" : "Помоћ око форматирања",
     "Keyboard shortcuts" : "Пречице на тастатури",
@@ -61,7 +61,6 @@
     "New text document" : "Нови текстуални документ",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
-    "ToDo list" : "ToDo листа",
-    "Participants" : "Учесници"
+    "ToDo list" : "ToDo листа"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

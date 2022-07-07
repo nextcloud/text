@@ -9,7 +9,6 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Info" : "Info",
     "Warning" : "Åtvaring",
-    "Edit" : "Endra",
-    "Participants" : "Deltakarar"
+    "Edit" : "Endra"
 },
 "nplurals=2; plural=(n != 1);");

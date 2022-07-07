@@ -17,7 +17,6 @@ OC.L10N.register(
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება",
-    "Participants" : "მონაწილეები"
+    "Edit" : "ცვლილება"
 },
 "nplurals=2; plural=(n!=1);");

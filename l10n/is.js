@@ -26,8 +26,8 @@ OC.L10N.register(
     "Saved" : "Vistað",
     "Last saved {lastSaved}" : "Síðast vistað {lastSaved}",
     "Unsaved changes" : "Óvistaðar breytingar",
-    "Edit guest name" : "Breyta nafni gests",
     "Guest" : "Gestur",
+    "Edit guest name" : "Breyta nafni gests",
     "Save guest name" : "Vista nafn gests",
     "Formatting help" : "Hjálp við að sníða",
     "Keyboard shortcuts" : "Flýtileiðir á lyklaborði",
@@ -63,7 +63,6 @@ OC.L10N.register(
     "New text document" : "Nýtt textaskjal",
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
-    "ToDo list" : "Verkefnalisti",
-    "Participants" : "Þátttakendur"
+    "ToDo list" : "Verkefnalisti"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

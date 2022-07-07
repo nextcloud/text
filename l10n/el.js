@@ -28,9 +28,9 @@ OC.L10N.register(
     "Saved" : "Αποθηκεύτηκε",
     "Last saved {lastSaved}" : "Τελευταία αποθήκευση {lastSave}",
     "Unsaved changes" : "Μη αποθηκευμένες αλλαγές",
+    "Guest" : "Επισκέπτης",
     "No emoji found" : "Δε βρέθηκε emoji",
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
-    "Guest" : "Επισκέπτης",
     "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
     "Formatting help" : "Βοήθεια μορφοποίησης",
     "Speed up your writing with simple shortcuts." : "Επιταχύνετε την πληκτρολόγηση σας με απλές συντομεύσεις.",
@@ -98,7 +98,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
     "ToDo list" : "ToDo λίστα",
     "Emoji picker" : "Επιλογέας emoji",
-    "Todo item" : "Στοιχείο todo",
-    "Participants" : "Συμμετέχοντες"
+    "Todo item" : "Στοιχείο todo"
 },
 "nplurals=2; plural=(n != 1);");

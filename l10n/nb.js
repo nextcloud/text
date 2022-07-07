@@ -24,8 +24,8 @@ OC.L10N.register(
     "Saved" : "Lagret",
     "Last saved {lastSaved}" : "Sist lagret {lastSaved}",
     "Unsaved changes" : "Ulagrede endringer",
-    "Edit guest name" : "Rediger gjestenavn",
     "Guest" : "Gjest",
+    "Edit guest name" : "Rediger gjestenavn",
     "Save guest name" : "Lagre gjestenavn",
     "Formatting help" : "Formateringshjelp",
     "Keyboard shortcuts" : "Tastatursnarveier",
@@ -57,7 +57,6 @@ OC.L10N.register(
     "New text document" : "Nytt tekstdokument",
     "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
     "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
-    "ToDo list" : "Gjøreliste",
-    "Participants" : "Deltakere"
+    "ToDo list" : "Gjøreliste"
 },
 "nplurals=2; plural=(n != 1);");

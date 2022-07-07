@@ -30,9 +30,9 @@ OC.L10N.register(
     "Saved" : "Uložené",
     "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
     "Unsaved changes" : "Neuložené zmeny",
+    "Guest" : "Hosť",
     "No emoji found" : "Nenašli sa žiadne emotikony",
     "Edit guest name" : "Upraviť meno hosťa",
-    "Guest" : "Hosť",
     "Save guest name" : "Uložiť meno hosťa",
     "Formatting help" : "Pomoc pri formátovaní",
     "Speed up your writing with simple shortcuts." : "Zefektívnite svoje písanie pomocou týchto jednoduchých skratiek.",
@@ -107,7 +107,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
     "ToDo list" : "Zoznam úloh",
     "Emoji picker" : "Výber emotikonov",
-    "Todo item" : "Položka úloh",
-    "Participants" : "Účastníci"
+    "Todo item" : "Položka úloh"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
