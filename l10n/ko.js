@@ -19,8 +19,8 @@ OC.L10N.register(
     "Saving …" : "저장중 …",
     "Saved" : "저장됨",
     "Unsaved changes" : "저장하지 않은 변경 사항",
-    "Edit guest name" : "게스트 이름 편집하기",
     "Guest" : "손님",
+    "Edit guest name" : "게스트 이름 편집하기",
     "Save guest name" : "게스트 이름 저장하기",
     "Formatting help" : "서식 도움말",
     "Keyboard shortcuts" : "키보드 단축키",
@@ -35,7 +35,6 @@ OC.L10N.register(
     "Warning" : "경고",
     "Edit" : "편집",
     "Enter your name so other users can see who is editing" : "누가 편집하는지 알 수 있게 당신의 이름을 입력하시오.",
-    "ToDo list" : "할일 목록",
-    "Participants" : "참가자"
+    "ToDo list" : "할일 목록"
 },
 "nplurals=1; plural=0;");

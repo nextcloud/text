@@ -14,8 +14,8 @@ OC.L10N.register(
     "Text" : "متن",
     "Use current version" : "از نسخه فعلی استفاده کنید",
     "Saved" : "دخیره شد",
-    "Edit guest name" : "ویرایش نام مهمان",
     "Guest" : "مهمان",
+    "Edit guest name" : "ویرایش نام مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "Formatting help" : "راهنمای قالب‌بندی",
     "Keyboard shortcuts" : "میان بر صفحه ی کلید",
@@ -27,7 +27,6 @@ OC.L10N.register(
     "Info" : "اطلاعات",
     "Success" : "موفقیت",
     "Warning" : "هشدار",
-    "Edit" : "ویرایش",
-    "Participants" : "شركت كنندگان"
+    "Edit" : "ویرایش"
 },
 "nplurals=2; plural=(n > 1);");

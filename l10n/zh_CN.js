@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "已保存",
     "Last saved {lastSaved}" : "最近保存 {lastSave}",
     "Unsaved changes" : "未保存的更改",
-    "Edit guest name" : "编辑访客姓名",
     "Guest" : "访客",
+    "Edit guest name" : "编辑访客姓名",
     "Save guest name" : "保存访客姓名",
     "Formatting help" : "排版帮助",
     "Speed up your writing with simple shortcuts." : "利用简单快捷键加速写作",
@@ -93,7 +93,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
     "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
-    "Todo item" : "待办事项",
-    "Participants" : "参与者"
+    "Todo item" : "待办事项"
 },
 "nplurals=1; plural=0;");

@@ -31,10 +31,10 @@ OC.L10N.register(
     "Saved" : "Zapisano",
     "Last saved {lastSaved}" : "Ostatnio zapisane {lastSaved}",
     "Unsaved changes" : "Niezapisane zmiany",
+    "Guest" : "Gość",
     "No emoji found" : "Nie znaleziono emoji",
     "Enter your name so other people can see who is editing" : "Wprowadź swoje imię, aby inne osoby mogły zobaczyć, kto edytuje",
     "Edit guest name" : "Edytuj nazwę gościa",
-    "Guest" : "Gość",
     "Save guest name" : "Zapisz nazwę gościa",
     "Formatting help" : "Pomoc w formatowaniu",
     "Speed up your writing with simple shortcuts." : "Przyspiesz pisanie dzięki prostym skrótom.",
@@ -114,7 +114,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["i %n inny edytujący","i %n innych edytujących","i %n innych edytujących","i %n innych edytujących"],
     "ToDo list" : "Lista zadań do zrobienia",
     "Emoji picker" : "Selektor emoji",
-    "Todo item" : "Do zrobienia",
-    "Participants" : "Uczestnicy"
+    "Todo item" : "Do zrobienia"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

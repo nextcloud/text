@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Įrašyta",
     "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
     "Unsaved changes" : "Neįrašyti pakeitimai",
-    "Edit guest name" : "Taisyti svečio vardą",
     "Guest" : "Svečias",
+    "Edit guest name" : "Taisyti svečio vardą",
     "Save guest name" : "Įrašyti svečio vardą",
     "Formatting help" : "Formatavimo pagalba",
     "Style" : "Stilius",
@@ -74,7 +74,6 @@ OC.L10N.register(
     "Currently active users:" : "Šiuo metu aktyvūs naudotojai:",
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "ToDo list" : "Užduočių sąrašas",
-    "Emoji picker" : "Šypsenėlių parinkiklis",
-    "Participants" : "Dalyviai"
+    "Emoji picker" : "Šypsenėlių parinkiklis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -17,7 +17,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
-    "Edit" : "Editar",
-    "Participants" : "Participantes"
+    "Edit" : "Editar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

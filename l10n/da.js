@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Gemt",
     "Last saved {lastSaved}" : "Sidst gemt {lastSaved}",
     "Unsaved changes" : "Ikke gemte ændringer",
-    "Edit guest name" : "Rediger gæstens navn",
     "Guest" : "Gæst",
+    "Edit guest name" : "Rediger gæstens navn",
     "Save guest name" : "Gem gæstens navn",
     "Formatting help" : "Hjælp til formatering",
     "Keyboard shortcuts" : "Tastaturgenveje",
@@ -74,7 +74,6 @@ OC.L10N.register(
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
     "ToDo list" : "To-Do liste",
-    "Emoji picker" : "Emoji vælger",
-    "Participants" : "Deltagere"
+    "Emoji picker" : "Emoji vælger"
 },
 "nplurals=2; plural=(n != 1);");

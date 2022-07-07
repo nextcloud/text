@@ -29,9 +29,9 @@ OC.L10N.register(
     "Saved" : "Shranjeno",
     "Last saved {lastSaved}" : "Nazadnje shranjeno {lastSaved}",
     "Unsaved changes" : "Neshranjene spremembe",
+    "Guest" : "Gost",
     "No emoji found" : "Ni najdenih izraznih ikon",
     "Edit guest name" : "Uredi ime gosta",
-    "Guest" : "Gost",
     "Save guest name" : "Shrani ime gosta",
     "Formatting help" : "Pomoč pri oblikovanju",
     "Speed up your writing with simple shortcuts." : "Pospešite delo z uporabo tipkovnih bližnjic.",
@@ -103,7 +103,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "ToDo list" : "Seznam opravil",
     "Emoji picker" : "Izbirnik izraznih ikon",
-    "Todo item" : "Naloga",
-    "Participants" : "Udeleženci"
+    "Todo item" : "Naloga"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

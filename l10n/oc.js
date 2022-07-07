@@ -23,8 +23,8 @@ OC.L10N.register(
     "Saved" : "Enregistrat",
     "Last saved {lastSaved}" : "Darrièr enregistrament {lastSaved}",
     "Unsaved changes" : "Modificacions pas enregistradas",
-    "Edit guest name" : "Modificar lo nom de convidat",
     "Guest" : "Convidat",
+    "Edit guest name" : "Modificar lo nom de convidat",
     "Save guest name" : "Enregistrar lo nom de convidat",
     "Keyboard shortcuts" : "Acorchis de clavièr",
     "Bold" : "Gras",
@@ -57,7 +57,6 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Currently active users:" : "Utilizaires actius :",
     "ToDo list" : "Lista a far",
-    "Emoji picker" : "Selector emoji",
-    "Participants" : "Participants"
+    "Emoji picker" : "Selector emoji"
 },
 "nplurals=2; plural=(n > 1);");

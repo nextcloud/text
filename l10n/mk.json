@@ -18,8 +18,8 @@
     "Saved" : "Зачувано",
     "Last saved {lastSaved}" : "Последно зачувано {lastSaved}",
     "Unsaved changes" : "Незачувани промени",
-    "Edit guest name" : "Промени име на гостин",
     "Guest" : "Гостин",
+    "Edit guest name" : "Промени име на гостин",
     "Save guest name" : "Зачувај име на гостин",
     "Formatting help" : "Помош за форматирање",
     "Keyboard shortcuts" : "Кратенки преку тастатура",
@@ -34,7 +34,6 @@
     "Success" : "Успешно",
     "Warning" : "Предупредување",
     "Edit" : "Уреди",
-    "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
-    "Participants" : "Учесници"
+    "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

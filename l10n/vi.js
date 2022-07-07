@@ -27,8 +27,8 @@ OC.L10N.register(
     "Saved" : "Đã lưu",
     "Last saved {lastSaved}" : "Đã lưu lần cuối {lastSaved}",
     "Unsaved changes" : "Thay đổi chưa được lưu",
-    "Edit guest name" : "Chỉnh sửa tên khách",
     "Guest" : "Khách",
+    "Edit guest name" : "Chỉnh sửa tên khách",
     "Save guest name" : "Lưu tên khách",
     "Formatting help" : "Định dạng trợ giúp",
     "Keyboard shortcuts" : "Phím tắt",
@@ -68,7 +68,6 @@ OC.L10N.register(
     "Currently active users:" : "Người dùng hiện đang hoạt động:",
     "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"],
     "ToDo list" : "Cần làm",
-    "Emoji picker" : "Trình chọn emoji",
-    "Participants" : "Người tham gia"
+    "Emoji picker" : "Trình chọn emoji"
 },
 "nplurals=1; plural=0;");
