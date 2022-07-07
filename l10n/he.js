@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "נשמרה",
     "Last saved {lastSaved}" : "שמירה אחרונה: {lastSaved}",
     "Unsaved changes" : "שינויים שלא נשמרו",
-    "Edit guest name" : "עריכת שם אורח",
     "Guest" : "אורח/ת",
+    "Edit guest name" : "עריכת שם אורח",
     "Save guest name" : "שמירת שם אורח",
     "Formatting help" : "עזרה בסידור בתבנית",
     "Keyboard shortcuts" : "קיצורי מקלדת",
@@ -65,7 +65,6 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
     "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
-    "ToDo list" : "רשימת מטלות",
-    "Participants" : "משתתפים"
+    "ToDo list" : "רשימת מטלות"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

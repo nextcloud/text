@@ -24,7 +24,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Success",
     "Warning" : "Warning",
-    "Edit" : "Edit",
-    "Participants" : "Participants"
+    "Edit" : "Edit"
 },
 "nplurals=2; plural=(n != 1);");

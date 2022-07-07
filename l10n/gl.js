@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Gardado",
     "Last saved {lastSaved}" : "Último gardado {lastSaved}",
     "Unsaved changes" : "Cambios sen gardar",
-    "Edit guest name" : "Editar o nome do convidado",
     "Guest" : "Convidado",
+    "Edit guest name" : "Editar o nome do convidado",
     "Save guest name" : "Gardar o nome do convidado",
     "Formatting help" : "Axuda de formatado",
     "Keyboard shortcuts" : "Atallos de teclado",
@@ -70,7 +70,6 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
     "Currently active users:" : "Usuarios activos actualmente:",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
-    "ToDo list" : "Lista «para facer»",
-    "Participants" : "Participantes"
+    "ToDo list" : "Lista «para facer»"
 },
 "nplurals=2; plural=(n != 1);");

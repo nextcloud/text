@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Spremljeno",
     "Last saved {lastSaved}" : "Posljednje spremljeno {lastSave}",
     "Unsaved changes" : "Nespremljene promjene",
-    "Edit guest name" : "Uredi ime gosta",
     "Guest" : "Gost",
+    "Edit guest name" : "Uredi ime gosta",
     "Save guest name" : "Spremi ime gosta",
     "Formatting help" : "Pomoć pri oblikovanju",
     "Keyboard shortcuts" : "Tipkovni prečaci",
@@ -70,7 +70,6 @@ OC.L10N.register(
     "Currently active users:" : "Trenutno aktivni korisnici:",
     "_and %n other editor_::_and %n other editors_" : ["i %n drugi uređivač","i %n drugih uređivača","i %n drugih uređivača"],
     "ToDo list" : "Popis zadataka",
-    "Emoji picker" : "Birač emojija",
-    "Participants" : "Sudionici"
+    "Emoji picker" : "Birač emojija"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

@@ -28,8 +28,8 @@ OC.L10N.register(
     "Saved" : "Sarvadu",
     "Last saved {lastSaved}" : "Ùrtimu sarvatàgiu {lastSaved}",
     "Unsaved changes" : "Mudas non sarvadas",
-    "Edit guest name" : "Modìfica nùmene de sa persone invitada",
     "Guest" : "Persone invitada",
+    "Edit guest name" : "Modìfica nùmene de sa persone invitada",
     "Save guest name" : "Sarva nùmene de sa persone invitada",
     "Formatting help" : "Ghia pro sa formatatzione",
     "Keyboard shortcuts" : "Curtziadòrgios de tecladu",
@@ -68,7 +68,6 @@ OC.L10N.register(
     "Currently active users:" : "Utèntzias ativas in custu momentu:",
     "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
     "ToDo list" : "Cosas de fàghere",
-    "Emoji picker" : "Sèberu de carigheddas",
-    "Participants" : "Partetzipantes"
+    "Emoji picker" : "Sèberu de carigheddas"
 },
 "nplurals=2; plural=(n != 1);");

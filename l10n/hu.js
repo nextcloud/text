@@ -31,10 +31,10 @@ OC.L10N.register(
     "Saved" : "Elmentve",
     "Last saved {lastSaved}" : "Legutóbb mentve: {lastSaved}",
     "Unsaved changes" : "Mentetlen változtatások",
+    "Guest" : "Vendég",
     "No emoji found" : "Nem található emodzsi",
     "Enter your name so other people can see who is editing" : "Adja meg a nevét, hogy más felhasználók is lássák, hogy ki szerkeszti",
     "Edit guest name" : "Vendégnév szerkesztése",
-    "Guest" : "Vendég",
     "Save guest name" : "Vendégnév mentése",
     "Formatting help" : "Formázási súgó",
     "Speed up your writing with simple shortcuts." : "Gyorsítsa fel az írást egyszerű gyorsbillentyűkkel.",
@@ -114,7 +114,6 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"],
     "ToDo list" : "Teendőlista",
     "Emoji picker" : "Emodzsiválasztó",
-    "Todo item" : "Teendő elem ",
-    "Participants" : "Résztvevők"
+    "Todo item" : "Teendő elem "
 },
 "nplurals=2; plural=(n != 1);");
