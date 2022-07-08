@@ -38,7 +38,7 @@
 				'is-rich-editor': isRichEditor,
 				'show-color-annotations': showAuthorAnnotations
 			}">
-			<Editor v-if="$editor">
+			<Wrapper v-if="$editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:autohide="autohide"
@@ -58,7 +58,7 @@
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 				</Content>
-			</Editor>
+			</Wrapper>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
@@ -105,7 +105,7 @@ import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import Content from './Editor/Content.vue'
 import Status from './Editor/Status.vue'
-import Editor from './Editor.vue'
+import Wrapper from './Editor/Wrapper.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
@@ -113,7 +113,7 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		DocumentStatus,
-		Editor,
+		Wrapper,
 		Content,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),

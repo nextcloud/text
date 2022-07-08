@@ -21,19 +21,19 @@
   -->
 
 <template>
-	<EditorMidiaHandler id="editor"
+	<MediaHandler id="editor"
 		class="text-editor__main">
 		<slot />
-	</EditorMidiaHandler>
+	</MediaHandler>
 </template>
 
 <script>
-import EditorMidiaHandler from './EditorMediaHandler.vue'
+import MediaHandler from './MediaHandler.vue'
 
 export default {
-	name: 'Editor',
+	name: 'Wrapper',
 	components: {
-		EditorMidiaHandler,
+		MediaHandler,
 	},
 
 }
