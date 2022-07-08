@@ -38,9 +38,7 @@
 				'is-rich-editor': isRichEditor,
 				'show-color-annotations': showAuthorAnnotations
 			}">
-			<EditorMidiaHandler v-if="$editor"
-				id="editor"
-				class="text-editor__main">
+			<Editor v-if="$editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:autohide="autohide"
@@ -66,7 +64,7 @@
 						class="editor__content text-editor__content"
 						:editor="$editor" />
 				</div>
-			</EditorMidiaHandler>
+			</Editor>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
@@ -113,7 +111,7 @@ import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import Status from './Editor/Status.vue'
-import EditorMidiaHandler from './EditorMediaHandler.vue'
+import Editor from './Editor.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
@@ -121,8 +119,8 @@ export default {
 	name: 'EditorWrapper',
 	components: {
 		DocumentStatus,
+		Editor,
 		EditorContent,
-		EditorMidiaHandler,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
@@ -474,6 +472,7 @@ export default {
 
 		onLoaded({ documentSource }) {
 			this.hasConnectionIssue = false
+
 			const content = this.isRichEditor
 				? markdownit.render(documentSource)
 				: '<pre>' + escapeHtml(documentSource) + '</pre>'
@@ -715,18 +714,6 @@ export default {
 				opacity: 0.3;
 			}
 		}
-	}
-
-	.text-editor__main, .editor {
-		background: var(--color-main-background);
-		color: var(--color-main-text);
-		background-clip: padding-box;
-		border-radius: var(--border-radius);
-		padding: 0;
-		position: relative;
-		overflow-y: auto;
-		overflow-x: hidden;
-		width: 100%;
 	}
 
 	.document-status {
