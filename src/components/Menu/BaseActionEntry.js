@@ -25,7 +25,7 @@
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import debounce from 'debounce'
 
-import { useEditorMixin, useIsMobileMixin } from '../EditorWrapper.provider.js'
+import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
 import { getActionState, getKeys } from './utils.js'
 
 import './ActionEntry.scss'

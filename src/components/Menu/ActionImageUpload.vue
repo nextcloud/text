@@ -59,7 +59,7 @@ import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 
 import { Loading, Folder, Upload } from '../icons.js'
-import { useIsPublicMixin } from '../EditorWrapper.provider.js'
+import { useIsPublicMixin } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import {
 	useActionImagePromptMixin,

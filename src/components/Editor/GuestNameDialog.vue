@@ -38,7 +38,7 @@
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { useSyncServiceMixin } from '../EditorWrapper.provider.js'
+import { useSyncServiceMixin } from '../Editor.provider.js'
 
 export default {
 	name: 'GuestNameDialog',

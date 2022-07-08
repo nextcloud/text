@@ -62,7 +62,7 @@ import {
 	useEditorMixin,
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
-} from '../EditorWrapper.provider.js'
+} from '../Editor.provider.js'
 
 export default {
 	name: 'MenuBar',

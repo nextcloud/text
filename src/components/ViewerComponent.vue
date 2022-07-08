@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<EditorWrapper :file-id="fileid"
+	<Editor :file-id="fileid"
 		:relative-path="filename"
 		:active="active"
 		:autofocus="autofocus"
@@ -33,7 +33,7 @@
 export default {
 	name: 'ViewerComponent',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper.vue'),
+		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
 	},
 	props: {
 		filename: {

@@ -46,7 +46,7 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
-} from '../EditorWrapper.provider.js'
+} from '../Editor.provider.js'
 
 export default {
 	name: 'Status',

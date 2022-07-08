@@ -49,7 +49,7 @@ import {
 	useEditorMixin,
 	useFileMixin,
 	useSyncServiceMixin,
-} from '../EditorWrapper.provider.js'
+} from '../Editor.provider.js'
 
 import {
 	ACTION_IMAGE_PROMPT,

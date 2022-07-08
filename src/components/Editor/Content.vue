@@ -33,7 +33,7 @@
 
 <script>
 import { EditorContent } from '@tiptap/vue-2'
-import { useEditorMixin } from './../EditorWrapper.provider.js'
+import { useEditorMixin } from './../Editor.provider.js'
 
 export default {
 	name: 'Content',

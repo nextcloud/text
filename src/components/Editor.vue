@@ -89,7 +89,7 @@ import {
 	IS_RICH_EDITOR,
 	IS_RICH_WORKSPACE,
 	SYNC_SERVICE,
-} from './EditorWrapper.provider.js'
+} from './Editor.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import ImageResolver from './../services/ImageResolver.js'
@@ -110,7 +110,7 @@ import Wrapper from './Editor/Wrapper.vue'
 const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
-	name: 'EditorWrapper',
+	name: 'Editor',
 	components: {
 		DocumentStatus,
 		Wrapper,

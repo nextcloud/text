@@ -22,7 +22,7 @@
 
 <template>
 	<Modal v-if="active" :title="fileName" @close="close">
-		<EditorWrapper :file-id="fileId"
+		<Editor :file-id="fileId"
 			:relative-path="relativePath"
 			:active="active"
 			:share-token="shareToken"
@@ -37,7 +37,7 @@ export default {
 	name: 'PublicFilesEditor',
 	components: {
 		Modal,
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./EditorWrapper.vue'),
+		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
 	},
 	props: {
 		fileId: {
