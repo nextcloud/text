@@ -174,7 +174,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 	}
 	extensions = extensions || []
 	return new Editor({
-		content,
+		content: content + '<p/>',
 		onCreate,
 		onUpdate,
 		extensions: [
