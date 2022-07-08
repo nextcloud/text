@@ -52,18 +52,12 @@
 					<slot name="header" />
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar-placeholder" />
-				<div ref="contentWrapper"
-					data-text-el="editor-content-wrapper"
-					class="content-wrapper text-editor__content-wrapper">
+				<Content v-show="contentLoaded"
+					ref="contentWrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
-					<EditorContent v-show="contentLoaded"
-						tabindex="0"
-						role="document"
-						class="editor__content text-editor__content"
-						:editor="$editor" />
-				</div>
+				</Content>
 			</Editor>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
@@ -81,7 +75,6 @@ import Vue, { set } from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-import { EditorContent } from '@tiptap/vue-2'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -110,6 +103,7 @@ import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
+import Content from './Editor/Content.vue'
 import Status from './Editor/Status.vue'
 import Editor from './Editor.vue'
 
@@ -120,7 +114,7 @@ export default {
 	components: {
 		DocumentStatus,
 		Editor,
-		EditorContent,
+		Content,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
@@ -749,12 +743,6 @@ export default {
 		}
 	}
 
-	.editor__content {
-		max-width: var(--text-editor-max-width);
-		margin: auto;
-		position: relative;
-	}
-
 	#body-public {
 		height: auto;
 	}
@@ -771,12 +759,6 @@ export default {
 			.has-conflicts .text-editor__main {
 				padding-top: 0;
 			}
-		}
-	}
-
-	.ie {
-		.editor__content::v-deep(.ProseMirror) {
-			padding-top: 50px;
 		}
 	}
 
