@@ -1,16 +1,9 @@
 %text__is-active-item-btn {
 	opacity: 1;
-
-	&::before {
-		transform: translateX(-50%);
-		border-radius: 100%;
-		position: absolute;
-		background: var(--color-primary-element);
-		bottom: 0;
-		height: 6px;
-		width: 6px;
-		content: '';
-		left: 50%;
+	background-color: var(--color-primary-light);
+	border-radius: 50%;
+	.material-design-icon > svg {
+		fill: var(--color-primary);
 	}
 }
 
@@ -70,5 +63,15 @@
 			background-color: var(--color-primary-light);
 			box-shadow: inset 2px 0 var(--color-primary);
 		}
+	}
+
+	.button-vue {
+		svg {
+			fill: black;
+		}
+	}
+
+	.action-item__menutoggle.action-item__menutoggle--with-icon-slot {
+		opacity: 1;
 	}
 }
