@@ -676,30 +676,6 @@ export default {
 		background-color: var(--color-main-background);
 	}
 
-	.document-status {
-		position: relative;
-		background-color: var(--color-main-background);
-
-		.msg {
-			padding: 12px;
-			background-position: 8px center;
-			color: var(--color-text-maxcontrast);
-
-			&.icon-error {
-				padding-left: 30px;
-			}
-
-			.button {
-				margin-left: 8px;
-			}
-
-			&.msg-locked .lock-icon {
-				padding: 0 10px;
-				float: left;
-			}
-		}
-	}
-
 	.text-editor .text-editor__wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
