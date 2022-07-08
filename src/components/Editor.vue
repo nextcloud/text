@@ -26,19 +26,14 @@
 			:idle="idle"
 			:lock="lock"
 			:sync-error="syncError"
-			:has-connection-issues="hasConnectionIssues"
+			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
-		<div v-if="displayed"
-			id="editor-wrapper"
-			class="text-editor__wrapper"
-			:class="{
-				'has-conflicts': hasSyncCollission,
-				'icon-loading': !contentLoaded && !hasConnectionIssue,
-				'is-rich-workspace': isRichWorkspace,
-				'is-rich-editor': isRichEditor,
-				'show-color-annotations': showAuthorAnnotations
-			}">
-			<Wrapper v-if="$editor">
+		<Wrapper v-if="displayed"
+			:sync-error="syncError"
+			:has-connection-issue="hasConnectionIssue"
+			:content-loaded="contentLoaded"
+			:show-author-annotations="showAuthorAnnotations">
+			<Main v-if="$editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:autohide="autohide"
@@ -47,7 +42,7 @@
 						:dirty="dirty"
 						:sessions="filteredSessions"
 						:sync-error="syncError"
-						:has-connection-issues="hasConnectionIssues"
+						:has-connection-issue="hasConnectionIssue"
 						:last-saved-string="lastSavedString" />
 					<slot name="header" />
 				</MenuBar>
@@ -58,11 +53,11 @@
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 				</Content>
-			</Wrapper>
+			</Main>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-		</div>
+		</Wrapper>
 
 		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly"
 			@resolve-use-this-version="resolveUseThisVersion"
@@ -74,7 +69,6 @@
 import Vue, { set } from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -105,6 +99,7 @@ import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import Content from './Editor/Content.vue'
 import Status from './Editor/Status.vue'
+import Main from './Editor/Main.vue'
 import Wrapper from './Editor/Wrapper.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
@@ -114,15 +109,13 @@ export default {
 	components: {
 		DocumentStatus,
 		Wrapper,
+		Main,
 		Content,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
-	},
-	directives: {
-		Tooltip,
 	},
 	mixins: [
 		isMobile,
@@ -681,33 +674,6 @@ export default {
 		margin: 0 auto;
 		position: relative;
 		background-color: var(--color-main-background);
-	}
-
-	.text-editor__wrapper {
-		display: flex;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		position: absolute;
-
-		&.show-color-annotations::v-deep(.author-annotation) {
-			padding-top: 2px;
-			padding-bottom: 2px;
-		}
-
-		&:not(.show-color-annotations)::v-deep(.author-annotation),
-		&:not(.show-color-annotations)::v-deep(.image) {
-			background-color: transparent !important;
-		}
-
-		.ProseMirror {
-			margin-top: 0 !important;
-		}
-		&.icon-loading {
-			.text-editor__main {
-				opacity: 0.3;
-			}
-		}
 	}
 
 	.document-status {

@@ -21,34 +21,82 @@
   -->
 
 <template>
-	<MediaHandler id="editor"
-		class="text-editor__main">
+	<div id="editor-wrapper"
+		class="text-editor__wrapper"
+		:class="{
+			'has-conflicts': hasSyncCollission,
+			'icon-loading': !contentLoaded && !hasConnectionIssue,
+			'is-rich-workspace': $isRichWorkspace,
+			'is-rich-editor': $isRichEditor,
+			'show-color-annotations': showAuthorAnnotations
+		}">
 		<slot />
-	</MediaHandler>
+	</div>
 </template>
 
 <script>
-import MediaHandler from './MediaHandler.vue'
+import { ERROR_TYPE } from './../../services/SyncService.js'
+import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 
 export default {
 	name: 'Wrapper',
-	components: {
-		MediaHandler,
+	mixins: [useIsRichEditorMixin, useIsRichWorkspaceMixin],
+
+	props: {
+		syncError: {
+			type: Object,
+			default: null,
+		},
+		hasConnectionIssue: {
+			type: Boolean,
+			require: true,
+		},
+		contentLoaded: {
+			type: Boolean,
+			require: true,
+		},
+		showAuthorAnnotations: {
+			type: Boolean,
+			require: true,
+		},
+	},
+
+	computed: {
+		hasSyncCollission() {
+			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+		},
 	},
 
 }
 </script>
 
 <style scoped lang="scss">
-	.text-editor__main, .editor {
-		background: var(--color-main-background);
-		color: var(--color-main-text);
-		background-clip: padding-box;
-		border-radius: var(--border-radius);
-		padding: 0;
-		position: relative;
-		overflow-y: auto;
-		overflow-x: hidden;
+
+	.text-editor__wrapper {
+		display: flex;
 		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+
+		&.show-color-annotations::v-deep(.author-annotation) {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+
+		&:not(.show-color-annotations)::v-deep(.author-annotation),
+		&:not(.show-color-annotations)::v-deep(.image) {
+			background-color: transparent !important;
+		}
+
+		.ProseMirror {
+			margin-top: 0 !important;
+		}
+		&.icon-loading {
+			.text-editor__main {
+				opacity: 0.3;
+			}
+		}
 	}
+
 </style>
