@@ -63,7 +63,7 @@
 import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import AvatarWrapper from './AvatarWrapper.vue'
-import store from '../mixins/store.js'
+import store from '../../mixins/store.js'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90

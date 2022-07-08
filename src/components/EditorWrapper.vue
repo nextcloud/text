@@ -22,20 +22,12 @@
 
 <template>
 	<div id="editor-container" data-text-el="editor-container" class="text-editor">
-		<div v-if="displayed" class="document-status">
-			<p v-if="idle" class="msg">
-				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-			<p v-else-if="hasSyncCollission" class="msg icon-error">
-				{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
-			</p>
-			<p v-else-if="hasConnectionIssue" class="msg">
-				{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-			<p v-if="lock" class="msg msg-locked">
-				<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
-			</p>
-		</div>
+		<DocumentStatus v-if="displayed"
+			:idle="idle"
+			:lock="lock"
+			:sync-error="syncError"
+			:has-connection-issues="hasConnectionIssues"
+			@reconnect="reconnect" />
 		<div v-if="displayed"
 			id="editor-wrapper"
 			class="text-editor__wrapper"
@@ -53,24 +45,12 @@
 					ref="menubar"
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded">
-					<div class="text-editor__session-list">
-						<div v-if="isMobile"
-							v-tooltip="lastSavedStatusTooltip"
-							:class="saveStatusClass" />
-						<div v-else
-							v-tooltip="lastSavedStatusTooltip"
-							class="save-status"
-							:aria-label="t('text', 'Document save status')"
-							:class="lastSavedStatusClass">
-							{{ lastSavedStatus }}
-						</div>
-						<SessionList :sessions="filteredSessions">
-							<p slot="lastSaved" class="last-saved">
-								{{ t('text', 'Last saved') }}: {{ lastSavedString }}
-							</p>
-							<GuestNameDialog v-if="isPublic && !currentSession.userId" :session="currentSession" />
-						</SessionList>
-					</div>
+					<Status :document="document"
+						:dirty="dirty"
+						:sessions="filteredSessions"
+						:sync-error="syncError"
+						:has-connection-issues="hasConnectionIssues"
+						:last-saved-string="lastSavedString" />
 					<slot name="header" />
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar-placeholder" />
@@ -128,10 +108,11 @@ import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
+import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
-import Lock from 'vue-material-design-icons/Lock'
 import MenuBar from './Menu/MenuBar.vue'
+import Status from './Editor/Status.vue'
 import EditorMidiaHandler from './EditorMediaHandler.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
@@ -139,15 +120,14 @@ const EDITOR_PUSH_DEBOUNCE = 200
 export default {
 	name: 'EditorWrapper',
 	components: {
+		DocumentStatus,
 		EditorContent,
 		EditorMidiaHandler,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
+		Status,
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
-		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
-		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
-		Lock,
 	},
 	directives: {
 		Tooltip,
@@ -267,36 +247,9 @@ export default {
 		showAuthorAnnotations() {
 			return this.$store.state.showAuthorAnnotations
 		},
-		lastSavedStatus() {
-			if (this.hasConnectionIssue) {
-				return t('text', this.isMobile ? 'Offline' : 'Offline, changes will be saved when online')
-			}
-			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
-		},
-		lastSavedStatusClass() {
-			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
-		},
-		dirtyStateIndicator() {
-			return this.hasUnpushedChanges || this.hasUnsavedChanges
-		},
-		lastSavedStatusTooltip() {
-			let message = t('text', 'Last saved {lastSaved}', { lastSaved: this.lastSavedString })
-			if (this.hasSyncCollission) {
-				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
-			}
-			if (this.hasUnpushedChanges || this.hasUnsavedChanges) {
-				message += ' - ' + t('text', 'Unsaved changes')
-			}
-			return { content: message, placement: 'bottom' }
-		},
+
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
-		},
-		hasUnpushedChanges() {
-			return this.dirty
-		},
-		hasUnsavedChanges() {
-			return this.document && this.document.lastSavedVersion < this.document.currentVersion
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -335,12 +288,6 @@ export default {
 					...this.document,
 				},
 			}
-		},
-		saveStatusClass() {
-			if (this.syncError && this.lastSavedString !== '') {
-				return 'save-error'
-			}
-			return this.dirtyStateIndicator ? 'saving-status' : 'saved-status'
 		},
 	},
 	watch: {
@@ -806,38 +753,12 @@ export default {
 		}
 	}
 
-	.save-status {
-		display: inline-flex;
-		padding: 0;
-		text-overflow: ellipsis;
-		color: var(--color-text-lighter);
-		position: relative;
-		top: 9px;
-		min-width: 85px;
-		max-height: 36px;
-
-		&.error {
-			background-color: var(--color-error);
-			color: var(--color-main-background);
-			border-radius: 3px;
-		}
-	}
-
 	.text-editor .text-editor__wrapper.has-conflicts {
 		height: calc(100% - 50px);
 
 		.text-editor__main, #read-only-editor {
 			width: 50%;
 			height: 100%;
-		}
-	}
-
-	.text-editor__session-list {
-		display: flex;
-
-		input, div {
-			vertical-align: middle;
-			margin-left: 3px;
 		}
 	}
 
@@ -969,38 +890,9 @@ export default {
 		height: 100%;
 	}
 
-	.saved-status,.saving-status {
-		display: inline-flex;
-		padding: 0;
-		text-overflow: ellipsis;
-		color: var(--color-text-lighter);
-		position: relative;
-		background-color: white;
-		width: 38px !important;
-		height: 38px !important;
-		left: 25%;
-		z-index: 2;
-		top: 0px;
-	}
-
-	.saved-status {
-		border: 2px solid #04AA6D;
-		border-radius: 50%;
-	}
-
-	.saving-status {
-		border: 2px solid #f3f3f3;
-		border-top: 2px solid #3498db;
-		border-radius: 50%;
-		animation: spin 2s linear infinite;
-	}
-
 	@keyframes spin {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
 
-	.last-saved {
-		padding: 6px;
-	}
 </style>
