@@ -176,3 +176,27 @@ describe('Markdown serializer from html', () => {
 		)).toBe(`::: warn\n!warning!\n\n:::`)
 	})
 })
+
+describe('Trailing nodes', () => {
+	test('No extra transaction is added after loading', () => {
+		const source = "# My heading\n\n* test\n* test2"
+		const tiptap = createEditor({
+			content: markdownit.render(source),
+			enableRichEditing: true,
+		})
+
+		const jsonBefore = tiptap.getJSON()
+
+		// Focus triggers a transaction which is adding the trailing node
+		// this pushes a step through the collaboration plugin
+		// Resulting markdown will not contain the trailing paragraph so everytime the tiptap instance is created from the html, this transaction gets dispatched
+		tiptap.commands.focus()
+
+		const jsonAfter = tiptap.getJSON()
+		expect(jsonAfter).toStrictEqual(jsonBefore)
+
+		const serializer = createMarkdownSerializer(tiptap.schema)
+		const md = serializer.serialize(tiptap.state.doc)
+		expect(md).toBe(source)
+	})	
+})
