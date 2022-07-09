@@ -83,6 +83,7 @@ describe('Markdown though editor', () => {
 	})
 	test('links', () => {
 		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
+		expect(markdownThroughEditor('[test](foo "bar")')).toBe('[test](foo "bar")')
 	})
 	test('images', () => {
 		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
