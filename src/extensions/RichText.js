@@ -24,7 +24,7 @@ import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
 import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
+import TipTapParagraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
 import Blockquote from '@tiptap/extension-blockquote'
 import OrderedList from '@tiptap/extension-ordered-list'
@@ -44,6 +44,12 @@ import Callout from './../nodes/Callouts.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
+
+const Paragraph = TipTapParagraph.extend({
+	parseHTML() {
+		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
+	},
+})
 
 export default Extension.create({
 	name: 'RichText',
