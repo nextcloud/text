@@ -22,30 +22,32 @@ const markdownThroughEditorHtml = (html) => {
 	return serializer.serialize(tiptap.state.doc)
 }
 
-describe('Commonmark', () => {
-	beforeAll(() => {
-		// Make sure html tests pass
-		// entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
-		markdownit.set({ html: true})
-	})
-	afterAll(() => {
-		markdownit.set({ html: false})
-	})
-
+/**
+ * Commonmark: Test integrity of parsing and serializing commonmark markdown
+ */
+describe('Parsing Commonmark', () => {
 	// failures because of some additional newline in markdownit
 	const skippedMarkdownTests = [
-		187, 209, 210
+		//187, 209, 210
 	];
 
 	spec.forEach((entry) => {
-		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
+		// We have HTML disabled
+		if (entry.section === "Raw HTML" || entry.markdown.includes("<") || skippedMarkdownTests.indexOf(entry.example) !== -1) {
 			return
 		}
 		test('commonmark ' + entry.example, () => {
-			const expected = entry.markdown.includes('__')
-				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
-				: entry.html
-			expect(markdownit.render(entry.markdown)).toBe(expected)
+			/* We should not modify the markdown syntacticly, it is a bit complex to test.
+			   If we compare our tiptap HTML and the entry.html it will fail
+			     as we e.g. add attributes to HTML nodes (IDs to headings ...).
+			   We could also compare markdownThroughEditor with the entry.markdown,
+			     but this will fail because there are markdown repesentations that lead to the same HTML output
+				 e.g. code spans containing a newline are converted to spaces, so `a\nb` is equal to `a b`.
+			   The only robust solution is to test if the resulting markdown is equal,
+			     this is done by comparing the HTML representation of the orignal markdown and the one
+			     of the markdown after it ran through the editor
+			*/
+			expect(markdownit.render(markdownThroughEditor(entry.markdown))).toBe(markdownit.render(entry.markdown))
 		})
 	})
 })

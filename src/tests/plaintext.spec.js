@@ -21,10 +21,11 @@ const plaintextThroughEditor = (markdown) => {
 }
 
 describe('commonmark as plaintext', () => {
-  // FIXME: Those two tests currently fail as trailing whitespace seems to be stripped,
+  // FIXME: Those two tests currently fail as leading whitespace seems to be stripped,
   // if it occurs in the first line which is empty otherwise.
+  // https://github.com/ueberdosis/tiptap/issues/2980
   const skippedMarkdownTests = [
-    67, 87
+    97, 117
   ];
 
   spec.forEach((entry) => {
