@@ -29,6 +29,9 @@ import { listInputRule } from '../commands/index.js'
  * Only there we know the user is not trying to create a task list.
  */
 const BulletList = TiptapBulletList.extend({
+	parseHTML() {
+		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: true }))
+	},
 
 	addInputRules() {
 		return [

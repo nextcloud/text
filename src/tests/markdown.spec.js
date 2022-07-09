@@ -61,7 +61,7 @@ describe('Markdown though editor', () => {
 	test('hard breaks', () => {
 		expect(markdownThroughEditor('hard  \nbreak')).toBe('hard  \nbreak')
 		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard  \nbreak')
-		expect(markdownThroughEditor('no\nbreak')).toBe('no break')
+		expect(markdownThroughEditor('soft\nbreak')).toBe('soft\nbreak')
 	})
 	test('inline format', () => {
 		expect(markdownThroughEditor('**Test**')).toBe('**Test**')
@@ -79,7 +79,8 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
 	})
 	test('paragraph', () => {
-		expect(markdownThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo bar\n\nfoobar foobar')
+		// Test whitespace characters are untouched
+		expect(markdownThroughEditor('foo\nbar\n\nfoobar\nfoo\tbar')).toBe('foo\nbar\n\nfoobar\nfoo\tbar')
 	})
 	test('links', () => {
 		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
@@ -144,7 +145,7 @@ describe('Markdown serializer from html', () => {
 	test('hard line breaks', () => {
 		expect(markdownThroughEditorHtml('<p>hard<br />break</p>')).toBe('hard  \nbreak')
 		expect(markdownThroughEditorHtml('<p>hard<br>break</p>')).toBe('hard  \nbreak')
-		expect(markdownThroughEditorHtml('<p>no\nbreak</p>')).toBe('no break')
+		expect(markdownThroughEditorHtml('<p>soft\nbreak</p>')).toBe('soft\nbreak')
 	})
 	test('links', () => {
 		expect(markdownThroughEditorHtml('<a href="foo">test</a>')).toBe('[test](foo)')
