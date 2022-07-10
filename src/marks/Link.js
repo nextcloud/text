@@ -38,6 +38,9 @@ const Link = TipTapLink.extend({
 			href: {
 				default: null,
 			},
+			title: {
+				default: null,
+			},
 		}
 	},
 
@@ -48,6 +51,7 @@ const Link = TipTapLink.extend({
 			tag: 'a[href]',
 			getAttrs: dom => ({
 				href: parseHref(dom),
+				title: dom.getAttribute('title'),
 			}),
 		},
 	],
@@ -55,7 +59,6 @@ const Link = TipTapLink.extend({
 	renderHTML: ({ mark, HTMLAttributes }) => ['a', {
 		...mark.attrs,
 		href: domHref(mark),
-		title: mark.attrs.href,
 		rel: 'noopener noreferrer nofollow',
 	}, 0],
 
