@@ -91,7 +91,7 @@ const TaskItem = TipTapTaskItem.extend({
 		return [
 			...this.parent(),
 			wrappingInputRule({
-				find: /^\s*([-+*])\s(\[(x|X| ?)\])\s$/,
+				find: /^\s*([-+*])\s(\[(x|X|\s?)\])\s$/,
 				type: this.type,
 				getAttributes: match => ({
 					checked: 'xX'.includes(match[match.length - 1]),

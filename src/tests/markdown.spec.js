@@ -72,7 +72,7 @@ describe('Parsing Commonmark', () => {
 	test('checkboxes', () => {
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
-		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
+		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* \\[ [asd](sdf)')
 		expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
 		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('* [ ] foo\n* [x] bar')
 		expect(markdownThroughEditor('- [x] foo\n' +
@@ -84,9 +84,7 @@ describe('Parsing Commonmark', () => {
 				'* [ ] bim')
 		expect(markdownThroughEditor('- [X] asd')).toBe('* [x] asd')
 		expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
-		expect(markdownThroughEditor('- [  ] asd')).toBe('* [ ] asd')
 		expect(markdownThroughEditor('-   [X] asd')).toBe('* [x] asd')
-		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
 
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
