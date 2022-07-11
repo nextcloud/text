@@ -34,6 +34,7 @@ import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import HardBreak from './HardBreak.js'
+import KeepSyntax from './KeepSyntax.js'
 import Table from './../nodes/Table.js'
 import Image from './../nodes/Image.js'
 import Heading from './../nodes/Heading.js'
@@ -87,6 +88,7 @@ export default Extension.create({
 				inline: true,
 			}),
 			Dropcursor,
+			KeepSyntax,
 		]
 		if (this.options.link !== false) {
 			defaultExtensions.push(Link.configure({
