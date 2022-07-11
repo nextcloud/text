@@ -226,8 +226,13 @@ class SessionService {
 
 	private function getColorForGuestName(string $guestName = null): string {
 		$guestName = $this->userId ?? $guestName;
-		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
-		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
-		return sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
+		$uniqueGuestId = empty($guestName)
+			? $this->secureRandom->generate(12)
+			: $guestName;
+
+		return $this->avatarManager
+			->getGuestAvatar($uniqueGuestId)
+			->avatarBackgroundColor($uniqueGuestId)
+			->name();
 	}
 }
