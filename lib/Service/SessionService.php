@@ -228,6 +228,6 @@ class SessionService {
 		$guestName = $this->userId ?? $guestName;
 		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
-		return sprintf("#%02x%02x%02x", $color->r, $color->g, $color->b);
+		return $color->name();
 	}
 }
