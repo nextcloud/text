@@ -24,7 +24,6 @@
 	<div id="editor-container" data-text-el="editor-container" class="text-editor">
 		<DocumentStatus v-if="displayed"
 			:idle="idle"
-			:lock="lock"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
@@ -66,13 +65,8 @@
 </template>
 
 <script>
-import Vue, { set } from 'vue'
-import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
-import { getVersion, receiveTransaction } from 'prosemirror-collab'
-import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
-import { loadState } from '@nextcloud/initial-state'
 
 import {
 	EDITOR,
@@ -82,18 +76,11 @@ import {
 	IS_PUBLIC,
 	IS_RICH_EDITOR,
 	IS_RICH_WORKSPACE,
-	SYNC_SERVICE,
 } from './Editor.provider.js'
 
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import ImageResolver from './../services/ImageResolver.js'
-import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
-import { createMarkdownSerializer } from './../extensions/Markdown.js'
-import markdownit from './../markdownit/index.js'
-import markdownitFrontMatter from 'markdown-it-front-matter'
+import { createEditor } from './../EditorFactory.js'
 
-import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
@@ -102,8 +89,6 @@ import Content from './Editor/Content.vue'
 import Status from './Editor/Status.vue'
 import Main from './Editor/Main.vue'
 import Wrapper from './Editor/Wrapper.vue'
-
-const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
 	name: 'Editor',
@@ -133,9 +118,6 @@ export default {
 			[EDITOR]: {
 				get: () => this.$editor,
 			},
-			[SYNC_SERVICE]: {
-				get: () => this.$syncService,
-			},
 			[FILE]: {
 				get: () => this.fileData,
 			},
@@ -163,10 +145,6 @@ export default {
 			type: Boolean,
 			require: false,
 			default: false,
-		},
-		initialSession: {
-			type: Object,
-			default: null,
 		},
 		relativePath: {
 			type: String,
@@ -203,14 +181,7 @@ export default {
 	},
 	data() {
 		return {
-			IDLE_TIMEOUT,
-
 			document: null,
-			sessions: [],
-			currentSession: null,
-
-			filteredSessions: {},
-
 			idle: false,
 			dirty: false,
 			contentLoaded: false,
@@ -235,7 +206,7 @@ export default {
 		},
 
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return false // this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -255,7 +226,7 @@ export default {
 				: '/'
 		},
 		displayed() {
-			return this.currentSession && this.active
+			return this.active
 		},
 		renderMenus() {
 			return this.contentLoaded
@@ -291,14 +262,18 @@ export default {
 	},
 	created() {
 		this.$editor = null
-		this.$syncService = null
-		this.$imageResolver = null
+		this.$imageResolver = new ImageResolver({
+			user: getCurrentUser(),
+			shareToken: this.shareToken,
+			currentDirectory: this.currentDirectory,
+		})
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
 	},
 	beforeDestroy() {
-		this.close()
+		// TODO: do we need a replacement?
+		// this.close()
 	},
 	methods: {
 		updateLastSavedStatus() {
@@ -312,354 +287,45 @@ export default {
 				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
-			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
-
-			this.$syncService = new SyncService({
-				guestName,
-				shareToken: this.shareToken,
-				filePath: this.relativePath,
-				forceRecreate: this.forceRecreate,
-				serialize: (document) => {
-					if (this.isRichEditor) {
-						return (createMarkdownSerializer(this.$editor.schema)).serialize(document)
-					}
-					return serializePlainText(this.$editor)
-
-				},
+			// const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
+			this.$editor = createEditor({
+				content: '',
+				onCreate: ({ editor }) => console.debug(editor),
+				onUpdate: ({ editor }) => editor,
+				extensions: [],
+				enableRichEditing: this.isRichEditor,
 			})
-
-			this.listenSyncServiceEvents()
-
-			this.$syncService.open({
-				fileId: this.fileId,
-				filePath: this.relativePath,
-				initialSession: this.initialSession,
-			}).catch((e) => {
-				this.hasConnectionIssue = true
+			this.$editor.on('focus', () => {
+				this.$emit('focus')
+			})
+			this.$editor.on('blur', () => {
+				this.$emit('blur')
 			})
 			this.forceRecreate = false
-		},
-
-		listenEditorEvents() {
-			this.$editor.on('focus', this.onFocus)
-			this.$editor.on('blur', this.onBlur)
-		},
-		unlistenEditorEvents() {
-			this.$editor.off('focus', this.onFocus)
-			this.$editor.off('blur', this.onBlur)
-		},
-
-		listenSyncServiceEvents() {
-			this.$syncService
-				.on('opened', this.onOpened)
-				.on('change', this.onChange)
-				.on('loaded', this.onLoaded)
-				.on('sync', this.onSync)
-				.on('error', this.onError)
-				.on('stateChange', this.onStateChange)
-				.on('idle', this.onIdle)
-				.on('save', this.onSave)
-		},
-
-		unlistenSyncServiceEvents() {
-			this.$syncService
-				.off('opened', this.onOpened)
-				.off('change', this.onChange)
-				.off('loaded', this.onLoaded)
-				.off('sync', this.onSync)
-				.off('error', this.onError)
-				.off('stateChange', this.onStateChange)
-				.off('idle', this.onIdle)
-				.off('save', this.onSave)
+			// TODO: used to be set based on the session... what do we do now?
+			this.lock = null
+			this.contentLoaded = true
+			this.readOnly = false
+			this.$emit('ready')
 		},
 
 		resolveUseThisVersion() {
-			this.$syncService.forceSave()
+			// TODO: implement with yjs
 			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 
 		resolveUseServerVersion() {
-			this.forceRecreate = true
-			this.reconnect()
+			// TODO: implement with yjs
 		},
 
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-
-			const connect = () => {
-				this.unlistenSyncServiceEvents()
-				this.unlistenEditorEvents()
-				this.$syncService = null
-				this.$editor.destroy()
-				this.initSession()
-			}
-
-			if (this.$syncService) {
-				this.$syncService
-					.close()
-					.then(connect)
-					.catch((e) => {
-					// Ignore issues closing the session since those might happen due to network issues
-					})
-			} else {
-				connect()
-			}
-
+			this.$editor.destroy()
+			this.initSession()
 			this.idle = false
 		},
 
-		updateSessions(sessions) {
-			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
-
-			// Make sure we get our own session updated
-			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
-			set(this, 'currentSession', currentUpdatedSession)
-
-			const currentSessionIds = this.sessions.map((session) => session.userId)
-			const currentGuestIds = this.sessions.map((session) => session.guestId)
-
-			const removedSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
-
-			for (const index in removedSessions) {
-				Vue.delete(this.filteredSessions, removedSessions[index])
-			}
-			for (const index in this.sessions) {
-				const session = this.sessions[index]
-				const sessionKey = session.displayName ? session.userId : session.id
-				if (this.filteredSessions[sessionKey]) {
-					// update timestamp if relevant
-					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
-						set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
-					}
-				} else {
-					set(this.filteredSessions, sessionKey, session)
-				}
-				if (session.id === this.currentSession.id) {
-					set(this.filteredSessions[sessionKey], 'isCurrent', true)
-				}
-			}
-		},
-
-		onOpened({ document, session }) {
-			this.currentSession = session
-			this.document = document
-			this.readOnly = document.readOnly
-			this.lock = this.$syncService.lock
-			localStorage.setItem('nick', this.currentSession.guestName)
-			this.$store.dispatch('setCurrentSession', this.currentSession)
-			this.$imageResolver = new ImageResolver({
-				session: this.currentSession,
-				user: getCurrentUser(),
-				shareToken: this.shareToken,
-				currentDirectory: this.currentDirectory,
-			})
-		},
-
-		onLoaded({ documentSource }) {
-			let frontMatter = ''
-			const rendered = !this.isRichEditor
-				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.use(markdownitFrontMatter, (fm) => {
-					frontMatter = `<pre id="frontmatter"><code>${escapeHtml(fm)}</code></pre>`
-				}).render(documentSource)
-
-			this.hasConnectionIssue = false
-			const content = frontMatter + rendered
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
-
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					this.$editor = createEditor({
-						content,
-						onCreate: ({ editor }) => {
-							this.$syncService.state = editor.state
-							this.$syncService.startSync()
-						},
-						onUpdate: ({ editor }) => {
-							this.$syncService.state = editor.state
-						},
-						extensions: [
-							Collaboration.configure({
-								// the initial version we start with
-								// version is an integer which is incremented with every change
-								version: this.document.initialVersion,
-								clientID: this.currentSession.id,
-								// debounce changes so we can save some bandwidth
-								debounce: EDITOR_PUSH_DEBOUNCE,
-								onSendable: ({ sendable }) => {
-									if (this.$syncService) {
-										this.$syncService.sendSteps()
-									}
-								},
-								update: ({ steps, version, editor }) => {
-									const { state, view, schema } = editor
-									if (getVersion(state) > version) {
-										return
-									}
-									const tr = receiveTransaction(
-										state,
-										steps.map(item => Step.fromJSON(schema, item.step)),
-										steps.map(item => item.clientID),
-									)
-									tr.setMeta('clientID', steps.map(item => item.clientID))
-									view.dispatch(tr)
-								},
-							}),
-							Keymap.configure({
-								'Mod-s': () => {
-									this.$syncService.save()
-									return true
-								},
-							}),
-							UserColor.configure({
-								clientID: this.currentSession.id,
-								color: (clientID) => {
-									const session = this.sessions.find(item => '' + item.id === '' + clientID)
-									return session?.color
-								},
-								name: (clientID) => {
-									const session = this.sessions.find(item => '' + item.id === '' + clientID)
-									return session?.userId ? session.displayName : (session?.guestName ? session.guestName : t('text', 'Guest'))
-								},
-							}),
-						],
-						enableRichEditing: this.isRichEditor,
-					})
-
-					this.listenEditorEvents()
-
-					this.$syncService.state = this.$editor.state
-				})
-
-		},
-
-		onChange({ document, sessions }) {
-			if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
-				this.resolveUseServerVersion()
-				return
-			}
-			this.updateSessions.bind(this)(sessions)
-			this.document = document
-
-			this.syncError = null
-			this.$editor.setOptions({ editable: !this.readOnly })
-		},
-
-		onSync({ steps, document }) {
-			this.hasConnectionIssue = false
-			try {
-				const collaboration = this.$editor.extensionManager.extensions.find(e => e.name === 'collaboration')
-				collaboration.options.update({
-					version: document.currentVersion,
-					steps,
-					editor: this.$editor,
-				})
-				this.$syncService.state = this.$editor.state
-				this.updateLastSavedStatus()
-				this.$nextTick(() => {
-					this.$emit('sync-service:sync')
-				})
-			} catch (e) {
-				console.error('Failed to update steps in collaboration plugin', e)
-				// TODO: we should recreate the editing session when this happens
-			}
-			this.document = document
-		},
-
-		onError({ type, data }) {
-			this.$editor.setOptions({ editable: false })
-
-			this.$nextTick(() => {
-				this.$emit('sync-service:error')
-			})
-
-			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
-				this.contentLoaded = true
-				this.syncError = {
-					type,
-					data,
-				}
-			}
-			if (type === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
-				this.hasConnectionIssue = true
-				// FIXME: ideally we just try to reconnect in the service, so we don't loose steps
-				OC.Notification.showTemporary('Connection failed, reconnecting')
-				if (data.retry !== false) {
-					setTimeout(this.reconnect.bind(this), 5000)
-				}
-			}
-			if (type === ERROR_TYPE.SOURCE_NOT_FOUND) {
-				this.hasConnectionIssue = true
-			}
-			this.$emit('ready')
-		},
-
-		onStateChange(state) {
-			if (state.initialLoading && !this.contentLoaded) {
-				this.contentLoaded = true
-				if (this.autofocus && !this.readOnly) {
-					this.$nextTick(() => {
-						this.$editor.commands.focus()
-					})
-				}
-				this.$emit('ready')
-				// TODO: remove $parent access
-				this.$parent.$emit('ready', true)
-			}
-			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				this.dirty = state.dirty
-			}
-		},
-
-		onIdle() {
-			this.$syncService.close()
-			this.idle = true
-			this.readOnly = true
-			this.$editor.setOptions({ editable: !this.readOnly })
-
-			this.$nextTick(() => {
-				this.$emit('sync-service:idle')
-			})
-		},
-
-		onSave() {
-			this.$nextTick(() => {
-				this.$emit('sync-service:save')
-			})
-		},
-		onFocus() {
-			this.$emit('focus')
-		},
-		onBlur() {
-			this.$emit('blur')
-		},
-
-		async close() {
-			clearInterval(this.saveStatusPolling)
-			if (this.currentSession && this.$syncService) {
-				try {
-					await this.$syncService.close()
-					this.unlistenSyncServiceEvents()
-					this.currentSession = null
-					this.$syncService = null
-				} catch (e) {
-					// Ignore issues closing the session since those might happen due to network issues
-				}
-			}
-			if (this.$editor) {
-				try {
-					this.unlistenEditorEvents()
-					this.$editor.destroy()
-					this.$editor = null
-				} catch (err) {
-					console.warn(err)
-				}
-			}
-			return true
-		},
 	},
 }
 </script>
