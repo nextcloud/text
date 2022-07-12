@@ -30,6 +30,10 @@ div.ProseMirror {
 		&:focus, &:focus-visible {
 			box-shadow: none !important;
 		}
+
+		* {
+			-webkit-user-modify: read-write-plaintext-only;
+		}
 	}
 
 	.checkbox-item {
