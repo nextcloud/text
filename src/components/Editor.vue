@@ -67,6 +67,9 @@
 <script>
 import moment from '@nextcloud/moment'
 import { getCurrentUser } from '@nextcloud/auth'
+import Collaboration from '@tiptap/extension-collaboration'
+import * as Y from 'yjs'
+import { HocuspocusProvider } from '@hocuspocus/provider'
 
 import {
 	EDITOR,
@@ -195,6 +198,7 @@ export default {
 
 			saveStatusPolling: null,
 			contentWrapper: null,
+			filteredSessions: {}, //TODO: bring back sessions
 		}
 	},
 	computed: {
@@ -261,6 +265,8 @@ export default {
 		this.$parent.$emit('update:loaded', true)
 	},
 	created() {
+		this.$ydoc = new Y.Doc()
+		this.$provider = null
 		this.$editor = null
 		this.$imageResolver = new ImageResolver({
 			user: getCurrentUser(),
@@ -274,6 +280,7 @@ export default {
 	beforeDestroy() {
 		// TODO: do we need a replacement?
 		// this.close()
+		this.$provider.destroy()
 	},
 	methods: {
 		updateLastSavedStatus() {
@@ -287,12 +294,21 @@ export default {
 				this.$parent.$emit('error', 'No valid file provided')
 				return
 			}
+			this.$provider = new HocuspocusProvider({
+				document: this.$ydoc,
+				url: 'wss://connect.tiptap.dev',
+				name: 'test-text-ydoc-asdfAERWASDFSARWwasz',
+			})
 			// const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 			this.$editor = createEditor({
 				content: '',
 				onCreate: ({ editor }) => console.debug(editor),
 				onUpdate: ({ editor }) => editor,
-				extensions: [],
+				extensions: [
+					Collaboration.configure({
+						document: this.$ydoc,
+					}),
+				],
 				enableRichEditing: this.isRichEditor,
 			})
 			this.$editor.on('focus', () => {
