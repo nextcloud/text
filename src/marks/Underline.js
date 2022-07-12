@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
  * @author Max <max@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,8 +23,20 @@
 import TipTapUnderline from '@tiptap/extension-underline'
 import { markInputRule, markPasteRule } from '@tiptap/core'
 import { underscoreInputRegex, underscorePasteRegex } from '@tiptap/extension-bold'
+import { nesting } from './Strong.js'
 
 const Underline = TipTapUnderline.extend({
+	excludes: '',
+
+	addAttributes() {
+		return {
+			nesting: {
+				default: null,
+				rendered: false,
+				parseHTML: nesting('U'),
+			},
+		}
+	},
 
 	parseHTML() {
 		return [

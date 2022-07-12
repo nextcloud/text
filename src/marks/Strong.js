@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,8 +23,38 @@
 import { markInputRule, markPasteRule } from '@tiptap/core'
 import { Bold, starInputRegex, starPasteRegex } from '@tiptap/extension-bold'
 
+/**
+ * Calculate the nesting level of marks
+ * @param {...string} types Uppercase tag names to count nesting for
+ */
+export function nesting(...types) {
+	const fn = (node) => {
+		let el = node.parentElement
+		let nesting = 0
+		while (el !== null) {
+			if ([...arguments].includes(el.tagName)) nesting++
+			el = el.parentElement
+		}
+		return nesting
+	}
+	return fn
+}
+
 const Strong = Bold.extend({
 	name: 'strong',
+
+	excludes: '',
+
+	addAttributes() {
+		return {
+			...this.parent?.(),
+			nesting: {
+				default: null,
+				rendered: false,
+				parseHTML: nesting('STRONG', 'B'),
+			},
+		}
+	},
 
 	addInputRules() {
 		return [

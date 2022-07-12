@@ -29,7 +29,7 @@ import Text from '@tiptap/extension-text'
 import Blockquote from '@tiptap/extension-blockquote'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
-import Code from '@tiptap/extension-code'
+import TipTapCode from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Dropcursor from '@tiptap/extension-dropcursor'
@@ -45,6 +45,10 @@ import Callout from './../nodes/Callouts.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
+
+const Code = TipTapCode.extend({
+	excludes: null, // <em>...<code>...</code></em> is perfectly fine (to preserve markdown order)
+})
 
 const Paragraph = TipTapParagraph.extend({
 	parseHTML() {

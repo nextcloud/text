@@ -1,7 +1,5 @@
 /**
- * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
- *
- * @author Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2022
  *
  * @license AGPL-3.0-or-later
  *
@@ -20,37 +18,22 @@
  *
  */
 
-import TipTapStrike from '@tiptap/extension-strike'
+import TipTapItalic from '@tiptap/extension-italic'
+import { nesting } from './Strong.js'
 
-export default TipTapStrike.extend({
-
-	parseHTML() {
-		return [
-			{
-				tag: 's',
+const Italic = TipTapItalic.extend({
+	name: 'em',
+	excludes: '',
+	addAttributes() {
+		return {
+			...this.parent?.(),
+			nesting: {
+				default: null,
+				rendered: false,
+				parseHTML: nesting('EM', 'I'),
 			},
-			{
-				tag: 'del',
-			},
-			{
-				tag: 'strike',
-			},
-			{
-				style: 'text-decoration',
-				getAttrs: value => value === 'line-through',
-			},
-		]
-	},
-
-	renderHTML() {
-		return ['s', 0]
-	},
-
-	/** Strike is currently unsupported by prosemirror-markdown */
-	toMarkdown: {
-		open: '~~',
-		close: '~~',
-		mixable: true,
-		expelEnclosingWhitespace: true,
+		}
 	},
 })
+
+export default Italic
