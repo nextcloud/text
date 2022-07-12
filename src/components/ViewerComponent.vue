@@ -21,7 +21,8 @@
   -->
 
 <template>
-	<EditorWrapper :file-id="fileid"
+	<EditorWrapper role="dialog"
+		:file-id="fileid"
 		:relative-path="filename"
 		:active="active"
 		:autofocus="autofocus"
