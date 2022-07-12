@@ -401,6 +401,15 @@ export default {
 			this.forceRecreate = false
 		},
 
+		listenEditorEvents() {
+			this.$editor.on('focus', this.onFocus)
+			this.$editor.on('blur', this.onBlur)
+		},
+		unlistenEditorEvents() {
+			this.$editor.off('focus', this.onFocus)
+			this.$editor.off('blur', this.onBlur)
+		},
+
 		listenSyncServiceEvents() {
 			this.$syncService
 				.on('opened', this.onOpened)
@@ -441,6 +450,7 @@ export default {
 
 			const connect = () => {
 				this.unlistenSyncServiceEvents()
+				this.unlistenEditorEvents()
 				this.$syncService = null
 				this.$editor.destroy()
 				this.initSession()
@@ -574,12 +584,9 @@ export default {
 						],
 						enableRichEditing: this.isRichEditor,
 					})
-					this.$editor.on('focus', () => {
-						this.$emit('focus')
-					})
-					this.$editor.on('blur', () => {
-						this.$emit('blur')
-					})
+
+					this.listenEditorEvents()
+
 					this.$syncService.state = this.$editor.state
 				})
 
@@ -677,6 +684,12 @@ export default {
 				this.$emit('sync-service:save')
 			})
 		},
+		onFocus() {
+			this.$emit('focus')
+		},
+		onBlur() {
+			this.$emit('blur')
+		},
 
 		async close() {
 			clearInterval(this.saveStatusPolling)
@@ -688,6 +701,15 @@ export default {
 					this.$syncService = null
 				} catch (e) {
 					// Ignore issues closing the session since those might happen due to network issues
+				}
+			}
+			if (this.$editor) {
+				try {
+					this.unlistenEditorEvents()
+					this.$editor.destroy()
+					this.$editor = null
+				} catch (err) {
+					console.warn(err)
 				}
 			}
 			return true
