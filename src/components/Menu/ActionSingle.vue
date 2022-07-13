@@ -118,6 +118,7 @@ export default {
 			attrs: {
 				title,
 				type: 'tertiary',
+				role: 'menuitem',
 				'data-text-action-entry': actionEntry.key,
 				...attrs,
 			},

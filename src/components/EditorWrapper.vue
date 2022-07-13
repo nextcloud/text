@@ -54,10 +54,13 @@
 					:autohide="autohide"
 					:loaded.sync="menubarLoaded">
 					<div class="text-editor__session-list">
-						<div v-if="isMobile" v-tooltip="lastSavedStatusTooltip" :class="saveStatusClass" />
+						<div v-if="isMobile"
+							v-tooltip="lastSavedStatusTooltip"
+							:class="saveStatusClass" />
 						<div v-else
 							v-tooltip="lastSavedStatusTooltip"
 							class="save-status"
+							:aria-label="t('text', 'Document save status')"
 							:class="lastSavedStatusClass">
 							{{ lastSavedStatus }}
 						</div>
@@ -78,6 +81,8 @@
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
+						tabindex="0"
+						role="document"
 						class="editor__content text-editor__content"
 						:editor="$editor" />
 				</div>
@@ -658,7 +663,9 @@ export default {
 			if (state.initialLoading && !this.contentLoaded) {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
-					this.$editor.commands.focus()
+					this.$nextTick(() => {
+						this.$editor.commands.focus()
+					})
 				}
 				this.$emit('ready')
 				// TODO: remove $parent access
