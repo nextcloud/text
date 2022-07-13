@@ -39,7 +39,10 @@
  */
 
 import { Extension, getExtensionField } from '@tiptap/core'
+import { Plugin, PluginKey } from 'prosemirror-state'
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import markdownit from '../markdownit/index.js'
+import { DOMParser } from 'prosemirror-model'
 
 const Markdown = Extension.create({
 
@@ -67,6 +70,33 @@ const Markdown = Extension.create({
 		}
 	},
 
+	addProseMirrorPlugins() {
+		let shiftKey = false
+
+		return [
+			// Parse markdown unless Mod+Shift+V is pressed for text clipboard content
+			new Plugin({
+				key: new PluginKey('pasteEventHandler'),
+				props: {
+					handleKeyDown(_, event) {
+						shiftKey = event.shiftKey
+						return false
+					},
+					clipboardTextParser(str, $context) {
+						if (shiftKey) {
+							return
+						}
+						const doc = document.cloneNode(false)
+						const dom = doc.createElement('div')
+						dom.innerHTML = markdownit.render(str)
+
+						const parser = DOMParser.fromSchema(this.editor.view.state.schema)
+						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
+					},
+				},
+			}),
+		]
+	},
 })
 
 const createMarkdownSerializer = ({ nodes, marks }) => {
