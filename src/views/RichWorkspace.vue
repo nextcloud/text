@@ -54,7 +54,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
-import { subscribe } from '@nextcloud/event-bus'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -103,17 +103,16 @@ export default {
 			}
 		},
 	},
-	async mounted() {
+	mounted() {
 		if (this.enabled) {
 			this.getFileInfo()
 		}
-		subscribe('Text::showRichWorkspace', () => {
-			this.enabled = true
-			this.getFileInfo()
-		})
-		subscribe('Text::hideRichWorkspace', () => {
-			this.enabled = false
-		})
+		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
+		subscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+	},
+	beforeDestroy() {
+		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
+		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
 	},
 	methods: {
 		unfocus() {
@@ -178,6 +177,13 @@ export default {
 				.catch(err => {
 					console.warn(err)
 				})
+		},
+		showRichWorkspace() {
+			this.enabled = true
+			this.getFileInfo()
+		},
+		hideRichWorkspace() {
+			this.enabled = false
 		},
 	},
 }
