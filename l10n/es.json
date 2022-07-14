@@ -24,6 +24,7 @@
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha cambiado fuera del editor. Los cambios no se pueden aplicar.",
     "File could not be loaded. Please check your internet connection." : "El archivo no se pudo cargar. Por favor, compruebe su conexión a internet.",
     "This file is opened read-only as it is currently locked by {user}." : "Este archivo se ha abierto como de solo lectura pes está actualmente bloqueado por el usuario {user}.",
+    "Last saved" : "Guardado por última vez",
     "Saving …" : "Guardando …",
     "Saved" : "Guardado",
     "Last saved {lastSaved}" : "Guardado por última vez: {lastSave}",
