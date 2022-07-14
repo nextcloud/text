@@ -22,11 +22,16 @@
 
 <template>
 	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
-		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
+		<a v-if="showEmptyWorkspace"
+			tabindex="0"
+			class="empty-workspace"
+			@keyup.enter="createNew"
+			@keyup.space="createNew"
+			@click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
 			</p>
-		</div>
+		</a>
 
 		<EditorWrapper v-if="file"
 			v-show="ready"
@@ -130,39 +135,49 @@ export default {
 			if (IS_PUBLIC) {
 				params.shareToken = this.shareToken
 			}
-			return axios.get(WORKSPACE_URL, { params }).then((response) => {
-				const data = response.data.ocs.data
-				this.folder = data.folder || null
-				this.file = data.file
-				this.editing = true
-				this.loaded = true
-				return true
-			}).catch((error) => {
-				if (error.response.data.ocs && error.response.data.ocs.data.folder) {
-					this.folder = error.response.data.ocs.data.folder
-				} else {
-					this.folder = null
-				}
-				this.file = null
-				this.loaded = true
-				this.ready = true
-				this.creating = false
-				return false
-			})
+			return axios.get(WORKSPACE_URL, { params })
+				.then((response) => {
+					const data = response.data.ocs.data
+					this.folder = data.folder || null
+					this.file = data.file
+					this.editing = true
+					this.loaded = true
+					return true
+				})
+				.catch((error) => {
+					if (error.response.data.ocs && error.response.data.ocs.data.folder) {
+						this.folder = error.response.data.ocs.data.folder
+					} else {
+						this.folder = null
+					}
+					this.file = null
+					this.loaded = true
+					this.ready = true
+					this.creating = false
+					return false
+				})
 		},
 		createNew() {
 			if (this.creating) {
 				return
 			}
 			this.creating = true
-			this.getFileInfo().then((workspaceFileExists) => {
-				this.autofocus = true
-				if (!workspaceFileExists) {
-					window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
-						this.getFileInfo()
-					})
-				}
-			})
+			this.getFileInfo()
+				.then((workspaceFileExists) => {
+					if (!workspaceFileExists) {
+						return window.FileList
+							.createFile('Readme.md', { scrollTo: false, animate: false })
+							.then((status, data) => {
+								return this.getFileInfo()
+							})
+					}
+				})
+				.then(() => {
+					this.autofocus = true
+				})
+				.catch(err => {
+					console.warn(err)
+				})
 		},
 	},
 }
@@ -189,9 +204,10 @@ export default {
 	}
 
 	.empty-workspace {
+		cursor: pointer;
+		display: block;
 		padding-top: 43px;
 		color: var(--color-text-maxcontrast);
-		height: 0;
 	}
 
 	#rich-workspace::v-deep div[contenteditable=false] {

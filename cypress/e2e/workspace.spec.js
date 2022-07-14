@@ -264,6 +264,39 @@ describe('Workspace', function() {
 		})
 	})
 
+	describe('create Readme.md', () => {
+		const checkContent = () => {
+			const txt = Cypress.currentTest.title
+
+			cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
+
+			cy.getContent()
+				.type(txt)
+				.should('contain', txt)
+		}
+
+		it('click', () => {
+			cy.get('#rich-workspace .empty-workspace').click()
+			checkContent()
+		})
+
+		it('enter', () => {
+			cy.get('#rich-workspace .empty-workspace').type('{enter}')
+			checkContent()
+		})
+
+		it('spacebar', () => {
+			cy.get('#rich-workspace .empty-workspace')
+				.trigger('keyup', {
+					keyCode: 32,
+					which: 32,
+					shiftKey: false,
+					ctrlKey: false,
+					force: true,
+				})
+			checkContent()
+		})
+	})
 })
 
 const menuButton = (name) => {
