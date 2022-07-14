@@ -40,6 +40,7 @@ use OCP\Files\Lock\OwnerLockedException;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
 use OCP\PreConditionNotMetException;
+use Psr\Log\LoggerInterface;
 use function json_encode;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
@@ -62,7 +63,6 @@ use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICache;
 use OCP\ICacheFactory;
-use OCP\ILogger;
 use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
@@ -77,7 +77,7 @@ class DocumentService {
 	private ?string $userId;
 	private DocumentMapper $documentMapper;
 	private SessionMapper $sessionMapper;
-	private ILogger $logger;
+	private LoggerInterface $logger;
 	private ShareManager $shareManager;
 	private StepMapper $stepMapper;
 	private IRootFolder $rootFolder;
@@ -85,9 +85,9 @@ class DocumentService {
 	private IAppData $appData;
 	private ILockingProvider $lockingProvider;
 	private ILockManager $lockManager;
-	private $userMountCache;
+	private IUserMountCache $userMountCache;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, ILogger $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -228,7 +228,7 @@ class DocumentService {
 			throw $e;
 		} catch (\Throwable $e) {
 			if ($document !== null && $oldVersion !== null) {
-				$this->logger->logException($e, ['message' => 'This should never happen. An error occured when storing the version, trying to recover the last stable one']);
+				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
 				$document->setCurrentVersion($oldVersion);
 				$this->documentMapper->update($document);
 				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
@@ -507,7 +507,7 @@ class DocumentService {
 			$this->appData->newFolder('documents');
 		} catch (\RuntimeException $e) {
 			// Do not fail hard
-			$this->logger->logException($e);
+			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return false;
 		}
 

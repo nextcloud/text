@@ -41,24 +41,24 @@ use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
-use OCP\ILogger;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
+use Psr\Log\LoggerInterface;
 
 class ApiService {
-	protected $request;
-	protected $sessionService;
-	protected $documentService;
-	protected $logger;
-	private $imageService;
-	private $encodingService;
+	private IRequest $request;
+	private SessionService $sessionService;
+	private DocumentService $documentService;
+	private LoggerInterface $logger;
+	private ImageService $imageService;
+	private EncodingService $encodingService;
 
 	public function __construct(IRequest $request,
 								SessionService $sessionService,
 								DocumentService $documentService,
 								ImageService $imageService,
 								EncodingService $encodingService,
-								ILogger $logger) {
+								LoggerInterface $logger) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
@@ -101,7 +101,7 @@ class ApiService {
 
 			$document = $this->documentService->createDocument($file);
 		} catch (Exception $e) {
-			$this->logger->logException($e);
+			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse('Failed to create the document session', 500);
 		}
 
@@ -112,10 +112,10 @@ class ApiService {
 
 			$content = $this->encodingService->encodeToUtf8($content);
 			if ($content === null) {
-				$this->logger->log(ILogger::WARN, 'Failed to encode file to UTF8. File ID: ' . $file->getId());
+				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
 			}
 		} catch (NotFoundException $e) {
-			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			$content = null;
 		}
 
@@ -167,7 +167,7 @@ class ApiService {
 
 	/**
 	 * @throws NotFoundException
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
@@ -198,12 +198,12 @@ class ApiService {
 			$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
-			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
 			], 404);
 		} catch (DoesNotExistException $e) {
-			$this->logger->logException($e, ['level' => ILogger::INFO]);
+			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'Document no longer exists'
 			], 404);
@@ -220,7 +220,7 @@ class ApiService {
 		} catch (NotFoundException $e) {
 			return new DataResponse([], 404);
 		} catch (Exception $e) {
-			$this->logger->logException($e);
+			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'Failed to autosave document'
 			], 500);
@@ -230,7 +230,7 @@ class ApiService {
 	}
 
 	/**
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
