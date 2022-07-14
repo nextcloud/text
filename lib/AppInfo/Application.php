@@ -34,6 +34,7 @@ use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadViewerListener;
 use OCA\Text\Listeners\RegisterDirectEditorEventListener;
+use OCA\Text\Service\ConfigService;
 use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -66,9 +67,9 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
-		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l) {
-			$templateManager->registerTemplateFileCreator(function () use ($l) {
-				$markdownFile = new TemplateFileCreator(Application::APP_NAME, $l->t('New text file'), '.md');
+		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l, ConfigService $configService) {
+			$templateManager->registerTemplateFileCreator(function () use ($l, $configService) {
+				$markdownFile = new TemplateFileCreator(Application::APP_NAME, $l->t('New text file'), '.' . $configService->getDefaultFileExtension());
 				$markdownFile->addMimetype('text/markdown');
 				$markdownFile->addMimetype('text/plain');
 				$markdownFile->setIconClass('icon-filetype-text');

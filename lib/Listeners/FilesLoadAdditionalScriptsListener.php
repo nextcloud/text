@@ -26,28 +26,18 @@ declare(strict_types=1);
 namespace OCA\Text\Listeners;
 
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
-use OCA\Text\AppInfo\Application;
+use OCA\Text\Service\InitialStateProvider;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\IConfig;
-use OCP\IInitialStateService;
-use OCP\IUserSession;
 
 /**
  * @implements IEventListener<Event>
  */
 class FilesLoadAdditionalScriptsListener implements IEventListener {
-	/** @var IConfig */
-	protected $config;
-	/** @var IInitialStateService */
-	protected $initialStateService;
-	/** @var IUserSession */
-	protected $userSession;
+	private InitialStateProvider $initialStateProvider;
 
-	public function __construct(IConfig $config, IInitialStateService $initialStateService, IUserSession $userSession) {
-		$this->config = $config;
-		$this->initialStateService = $initialStateService;
-		$this->userSession = $userSession;
+	public function __construct(InitialStateProvider $initialStateProvider) {
+		$this->initialStateProvider = $initialStateProvider;
 	}
 
 	public function handle(Event $event): void {
@@ -57,15 +47,6 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 
 		\OCP\Util::addScript('text', 'text-files');
 
-		$this->initialStateService->provideInitialState(
-			Application::APP_NAME,
-			'workspace_available',
-			$this->config->getAppValue(Application::APP_NAME, 'workspace_available', '1') === '1'
-		);
-		$this->initialStateService->provideInitialState(
-			Application::APP_NAME,
-			'workspace_enabled',
-			$this->config->getUserValue($this->userSession->getUser()->getUID(), Application::APP_NAME, 'workspace_enabled', '1') === '1'
-		);
+		$this->initialStateProvider->provideState();
 	}
 }

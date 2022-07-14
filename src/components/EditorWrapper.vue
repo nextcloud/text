@@ -102,6 +102,7 @@ import { EditorContent } from '@tiptap/vue-2'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
+import { loadState } from '@nextcloud/initial-state'
 
 import {
 	EDITOR,
@@ -299,7 +300,7 @@ export default {
 			return this.isDirectEditing || (document.getElementById('isPublic') && document.getElementById('isPublic').value === '1')
 		},
 		isRichEditor() {
-			return this.mime === 'text/markdown'
+			return loadState('text', 'rich_editing_enabled', true) && this.mime === 'text/markdown'
 		},
 		fileExtension() {
 			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
