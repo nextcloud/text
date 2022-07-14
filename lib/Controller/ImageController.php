@@ -27,7 +27,7 @@ namespace OCA\Text\Controller;
 
 use Exception;
 use OCA\Text\Service\SessionService;
-use OCA\Text\UploadException;
+use OCA\Text\Exception\UploadException;
 use OCP\AppFramework\Http;
 use OCA\Text\Service\ImageService;
 use OCP\AppFramework\Controller;

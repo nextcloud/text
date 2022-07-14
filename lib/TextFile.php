@@ -34,11 +34,8 @@ use OCP\Files\SimpleFS\ISimpleFile;
  * Wrapper around a ISimpleFile object to ensure that it is correctly encoded (UTF-8) for the text app.
  */
 class TextFile implements ISimpleFile {
-
-	/** @var ISimpleFile */
-	private $file;
-	/** @var EncodingService */
-	private $encodingService;
+	private ISimpleFile $file;
+	private EncodingService $encodingService;
 
 	public function __construct(ISimpleFile $file, EncodingService $encodingService) {
 		$this->file = $file;

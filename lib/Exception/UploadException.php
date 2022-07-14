@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2021 Julien Veyssier <eneiluj@posteo.net>
  *
@@ -21,7 +24,7 @@
  *
  */
 
-namespace OCA\Text;
+namespace OCA\Text\Exception;
 
 class UploadException extends \Exception {
 }
