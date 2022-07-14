@@ -33,10 +33,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetDocument extends Command {
-	protected $documentService;
-	protected $documentMapper;
-	protected $stepMapper;
-	protected $sessionMapper;
+	protected DocumentService $documentService;
+	protected DocumentMapper $documentMapper;
+	protected StepMapper $stepMapper;
+	protected SessionMapper $sessionMapper;
 
 	public function __construct(DocumentService $documentService, DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper) {
 		parent::__construct();

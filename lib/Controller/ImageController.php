@@ -52,26 +52,11 @@ class ImageController extends Controller {
 		'image/webp',
 	];
 
-	/**
-	 * @var ImageService
-	 */
-	private $imageService;
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
-	 * @var SessionService
-	 */
-	private $sessionService;
-	/**
-	 * @var IL10N
-	 */
-	private $l10n;
-	/**
-	 * @var IMimeTypeDetector
-	 */
-	private $mimeTypeDetector;
+	private ImageService $imageService;
+	private LoggerInterface $logger;
+	private SessionService $sessionService;
+	private IL10N $l10n;
+	private IMimeTypeDetector $mimeTypeDetector;
 
 	public function __construct(string $appName,
 								IRequest $request,
@@ -163,9 +148,6 @@ class ImageController extends Controller {
 		}
 	}
 
-	/**
-	 * @return array
-	 */
 	private function getUploadedFile(string $key): array {
 		$file = $this->request->getUploadedFile($key);
 		$error = null;
