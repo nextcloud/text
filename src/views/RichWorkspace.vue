@@ -41,12 +41,12 @@
 			:share-token="shareToken"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
+			:autohide="autohide"
 			active
-			autohide
 			rich-workspace
 			@ready="ready=true"
-			@focus="focus=true"
-			@blur="unfocus"
+			@focus="onFocus"
+			@blur="onBlur"
 			@error="reset" />
 	</div>
 </template>
@@ -78,6 +78,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
+			autohide: true,
 			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
@@ -109,14 +110,23 @@ export default {
 		}
 		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		subscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+
+		this.listenKeydownEvents()
+
 	},
 	beforeDestroy() {
 		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+
+		this.unlistenKeydownEvents()
 	},
 	methods: {
-		unfocus() {
-			// setTimeout(() => this.focus = false, 2000)
+		onBlur() {
+			this.listenKeydownEvents()
+		},
+		onFocus() {
+			this.focus = true
+			this.unlistenKeydownEvents()
 		},
 		reset() {
 			this.file = null
@@ -184,6 +194,30 @@ export default {
 		},
 		hideRichWorkspace() {
 			this.enabled = false
+		},
+		listenKeydownEvents() {
+			window.addEventListener('keydown', this.onKeydown)
+		},
+		unlistenKeydownEvents() {
+			clearInterval(this.$_timeoutAutohide)
+
+			window.removeEventListener('keydown', this.onKeydown)
+		},
+		onTimeoutAutohide() {
+			this.autohide = true
+		},
+		onKeydown(e) {
+			if (e.key !== 'Tab') {
+				return
+			}
+
+			// remove previous timeout
+			clearInterval(this.$_timeoutAutohide)
+
+			this.autohide = false
+
+			// schedule to normal behaviour
+			this.$_timeoutAutohide = setTimeout(this.onTimeoutAutohide, 7000) // 7s
 		},
 	},
 }
