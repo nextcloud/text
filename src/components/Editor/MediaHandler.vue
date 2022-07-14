@@ -27,15 +27,15 @@
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
-		@image-drop="onEditorDrop">
-		<input ref="imageFileInput"
-			data-text-el="image-file-input"
+		@file-drop="onEditorDrop">
+		<input ref="attachmentFileInput"
+			data-text-el="attachment-file-input"
 			type="file"
-			accept="image/*"
+			accept="*/*"
 			aria-hidden="true"
 			class="hidden-visually"
 			multiple
-			@change="onImageUploadFilePicked">
+			@change="onAttachmentUploadFilePicked">
 		<slot />
 	</div>
 </template>
@@ -43,7 +43,6 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
-import { mimetypesImages as IMAGE_MIMES } from '../../helpers/mime.js'
 
 import {
 	useEditorMixin,
@@ -52,8 +51,8 @@ import {
 } from '../Editor.provider.js'
 
 import {
-	ACTION_IMAGE_PROMPT,
-	ACTION_CHOOSE_LOCAL_IMAGE,
+	ACTION_ATTACHMENT_PROMPT,
+	ACTION_CHOOSE_LOCAL_ATTACHMENT,
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
 
@@ -64,11 +63,11 @@ export default {
 		const val = {}
 
 		Object.defineProperties(val, {
-			[ACTION_IMAGE_PROMPT]: {
-				get: () => this.showImagePrompt,
+			[ACTION_ATTACHMENT_PROMPT]: {
+				get: () => this.showAttachmentPrompt,
 			},
-			[ACTION_CHOOSE_LOCAL_IMAGE]: {
-				get: () => this.chooseLocalImage,
+			[ACTION_CHOOSE_LOCAL_ATTACHMENT]: {
+				get: () => this.chooseLocalFile,
 			},
 			[STATE_UPLOADING]: {
 				get: () => this.state,
@@ -82,12 +81,12 @@ export default {
 			draggedOver: false,
 			// make it reactive to be used inject/provide
 			state: {
-				isUploadingImages: false,
+				isUploadingAttachments: false,
 			},
 		}
 	},
 	computed: {
-		imagePath() {
+		initialFilePath() {
 			return this.$file.relativePath.split('/').slice(0, -1).join('/')
 		},
 	},
@@ -96,30 +95,30 @@ export default {
 			this.draggedOver = val
 		},
 		onPaste(e) {
-			this.uploadImageFiles(e.detail.files)
+			this.uploadAttachmentFiles(e.detail.files)
 		},
 		onEditorDrop(e) {
-			this.uploadImageFiles(e.detail.files, e.detail.position)
+			this.uploadAttachmentFiles(e.detail.files, e.detail.position)
 			this.draggedOver = false
 		},
-		onImageUploadFilePicked(event) {
-			this.uploadImageFiles(event.target.files)
+		onAttachmentUploadFilePicked(event) {
+			this.uploadAttachmentFiles(event.target.files)
 			// Clear input to ensure that the change event will be emitted if
 			// the same file is picked again.
 			event.target.value = ''
 		},
-		chooseLocalImage() {
-			this.$refs.imageFileInput.click()
+		chooseLocalFile() {
+			this.$refs.attachmentFileInput.click()
 		},
-		async uploadImageFiles(files, position = null) {
+		async uploadAttachmentFiles(files, position = null) {
 			if (!files) {
 				return
 			}
 
-			this.uploadingImages = true
+			this.state.isUploadingAttachments = true
 
 			const uploadPromises = [...files].map((file) => {
-				return this.uploadImageFile(file, position)
+				return this.uploadAttachmentFile(file, position)
 			})
 
 			return Promise.all(uploadPromises)
@@ -128,13 +127,13 @@ export default {
 					showError(err?.response?.data?.error || err.message)
 				})
 				.then(() => {
-					this.uploadingImages = false
+					this.state.isUploadingAttachments = false
 				})
 		},
-		async uploadImageFile(file, position = null) {
-			this.state.isUploadingImages = true
+		async uploadAttachmentFile(file, position = null) {
+			this.state.isUploadingAttachments = true
 
-			return this.$syncService.uploadImage(file)
+			return this.$syncService.uploadAttachment(file)
 				.then((response) => {
 					this.insertAttachment(
 						response.data?.name, response.data?.id, file.type,
@@ -146,23 +145,23 @@ export default {
 					showError(error?.response?.data?.error)
 				})
 				.then(() => {
-					this.state.isUploadingImages = false
+					this.state.isUploadingAttachments = false
 				})
 		},
-		showImagePrompt() {
+		showAttachmentPrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
 
-			OC.dialogs.filepicker(t('text', 'Insert an image'), (filePath) => {
-				this.insertImagePath(filePath)
-			}, false, [], true, undefined, this.imagePath)
+			OC.dialogs.filepicker(t('text', 'Insert an attachment'), (filePath) => {
+				this.insertFromPath(filePath)
+			}, false, [], true, undefined, this.initialFilePath)
 		},
-		insertImagePath(imagePath) {
-			this.state.isUploadingImages = true
+		insertFromPath(filePath) {
+			this.state.isUploadingAttachments = true
 
-			return this.$syncService.insertImageFile(imagePath).then((response) => {
+			return this.$syncService.insertAttachmentFile(filePath).then((response) => {
 				this.insertAttachment(
 					response.data?.name, response.data?.id, response.data?.mimetype,
 					null, response.data?.dirname
@@ -171,34 +170,10 @@ export default {
 				console.error(error)
 				showError(error?.response?.data?.error || error.message)
 			}).then(() => {
-				this.state.isUploadingImages = false
+				this.state.isUploadingAttachments = false
 			})
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
-			if (IMAGE_MIMES.includes(mimeType)) {
-				this.insertAttachmentImage(name, fileId, mimeType, position, dirname)
-				return
-			}
-			this.insertAttachmentMedia(name, fileId, mimeType, position, dirname)
-		},
-		insertAttachmentMedia(name, fileId, mimeType, position = null, dirname = '') {
-			// inspired by the fixedEncodeURIComponent function suggested in
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src = dirname + '/'
-				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
-					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-				})
-			// simply get rid of brackets to make sure link text is valid
-			// as it does not need to be unique and matching the real file name
-			const alt = name.replaceAll(/[[\]]/g, '')
-
-			const chain = position
-				? this.$editor.chain().focus(position)
-				: this.$editor.chain()
-
-			chain.setImage({ src, alt }).focus().run()
-		},
-		insertAttachmentImage(name, fileId, mimeType, position = null, dirname = '') {
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 			const src = dirname + '/'

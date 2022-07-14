@@ -269,14 +269,14 @@ class SyncService {
 			})
 	}
 
-	uploadImage(image) {
+	uploadAttachment(file) {
 		const formData = new FormData()
-		formData.append('image', image)
+		formData.append('file', file)
 		formData.append('documentId', this.document.id)
 		formData.append('sessionId', this.session.id)
 		formData.append('sessionToken', this.session.token)
 		formData.append('shareToken', this.options.shareToken || '')
-		const url = endpointUrl('image/upload')
+		const url = endpointUrl('attachment/upload')
 		return axios.post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
@@ -284,14 +284,14 @@ class SyncService {
 		})
 	}
 
-	insertImageFile(imagePath) {
+	insertAttachmentFile(filePath) {
 		const params = {
 			documentId: this.document.id,
 			sessionId: this.session.id,
 			sessionToken: this.session.token,
-			imagePath,
+			filePath,
 		}
-		const url = endpointUrl('image/filepath')
+		const url = endpointUrl('attachment/filepath')
 		return axios.post(url, params)
 	}
 

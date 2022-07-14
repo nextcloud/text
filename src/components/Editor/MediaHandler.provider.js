@@ -1,26 +1,26 @@
 export const STATE_UPLOADING = Symbol('state:uploading-state')
-export const ACTION_IMAGE_PROMPT = Symbol('editor:action:image-prompt')
-export const ACTION_CHOOSE_LOCAL_IMAGE = Symbol('editor:action:upload-image')
+export const ACTION_ATTACHMENT_PROMPT = Symbol('editor:action:attachment-prompt')
+export const ACTION_CHOOSE_LOCAL_ATTACHMENT = Symbol('editor:action:upload-attachment')
 
 export const useUploadingStateMixin = {
 	inject: {
 		$uploadingState: {
 			from: STATE_UPLOADING,
 			default: {
-				isUploadingImages: false,
+				isUploadingAttachments: false,
 			},
 		},
 	},
 }
 
-export const useActionImagePromptMixin = {
+export const useActionAttachmentPromptMixin = {
 	inject: {
-		$callImagePrompt: { from: ACTION_IMAGE_PROMPT, default: () => {} },
+		$callAttachmentPrompt: { from: ACTION_ATTACHMENT_PROMPT, default: () => {} },
 	},
 }
 
-export const useActionChooseLocalImageMixin = {
+export const useActionChooseLocalAttachmentMixin = {
 	inject: {
-		$callChooseLocalImage: { from: ACTION_CHOOSE_LOCAL_IMAGE, default: () => {} },
+		$callChooseLocalAttachment: { from: ACTION_CHOOSE_LOCAL_ATTACHMENT, default: () => {} },
 	},
 }

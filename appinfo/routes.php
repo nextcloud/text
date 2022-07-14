@@ -27,8 +27,8 @@ namespace OCA\Text\AppInfo;
 
 return [
 	'routes' => [
-		['name' => 'Image#insertImageFile', 'url' => '/image/filepath', 'verb' => 'POST'],
-		['name' => 'Image#uploadImage', 'url' => '/image/upload', 'verb' => 'POST'],
+		['name' => 'Image#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
+		['name' => 'Image#uploadAttachment', 'url' => '/attachment/upload', 'verb' => 'POST'],
 		['name' => 'Image#getImageFile', 'url' => '/image', 'verb' => 'GET'],
 		['name' => 'Image#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
 		['name' => 'Image#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],

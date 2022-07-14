@@ -26,7 +26,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use Exception;
 use OCA\Text\Controller\ImageController;
 use OCP\Constants;
 use OCP\Files\Folder;
@@ -39,13 +38,7 @@ use OCP\IPreview;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
 use OCP\Util;
-use Throwable;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\ServerException;
-use OCP\Http\Client\IClientService;
 use OCP\Files\IRootFolder;
-use Psr\Log\LoggerInterface;
 use OCP\Share\IManager as ShareManager;
 
 class ImageService {
@@ -59,10 +52,6 @@ class ImageService {
 	 */
 	private $rootFolder;
 	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
 	 * @var IPreview
 	 */
 	private $previewManager;
@@ -72,13 +61,11 @@ class ImageService {
 	private $mimeTypeDetector;
 
 	public function __construct(IRootFolder $rootFolder,
-								LoggerInterface $logger,
 								ShareManager $shareManager,
 								IPreview $previewManager,
 								IMimeTypeDetector $mimeTypeDetector) {
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
-		$this->logger = $logger;
 		$this->previewManager = $previewManager;
 		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
@@ -298,7 +285,7 @@ class ImageService {
 	}
 
 	/**
-	 * Save an uploaded image in the attachment folder
+	 * Save an uploaded file in the attachment folder
 	 *
 	 * @param int $documentId
 	 * @param string $newFileName
@@ -310,7 +297,7 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImage(int $documentId, string $newFileName, $newFileResource, string $userId): array {
+	public function uploadAttachment(int $documentId, string $newFileName, $newFileResource, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
@@ -327,7 +314,8 @@ class ImageService {
 	}
 
 	/**
-	 * Save an uploaded image in the attachment folder in a public context
+	 * Save an uploaded file in the attachment folder in a public context
+	 *
 	 * @param int|null $documentId
 	 * @param string $newFileName
 	 * @param string $newFileContent
@@ -338,7 +326,7 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImagePublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
+	public function uploadAttachmentPublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
 			throw new NotPermittedException('No write permissions');
 		}
@@ -366,28 +354,28 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function insertImageFile(int $documentId, string $path, string $userId): array {
+	public function insertAttachmentFile(int $documentId, string $path, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
-		$imageFile = $this->getFileFromPath($path, $userId);
+		$originalFile = $this->getFileFromPath($path, $userId);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		return $this->copyImageFile($imageFile, $saveDir, $textFile);
+		return $this->copyFile($originalFile, $saveDir, $textFile);
 	}
 
 	/**
-	 * @param File $imageFile
+	 * @param File $originalFile
 	 * @param Folder $saveDir
 	 * @param File $textFile
 	 * @return array
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	private function copyImageFile(File $imageFile, Folder $saveDir, File $textFile): array {
-		$fileName = $this->getUniqueFileName($saveDir, $imageFile->getName());
+	private function copyFile(File $originalFile, Folder $saveDir, File $textFile): array {
+		$fileName = $this->getUniqueFileName($saveDir, $originalFile->getName());
 		$targetPath = $saveDir->getPath() . '/' . $fileName;
-		$targetFile = $imageFile->copy($targetPath);
+		$targetFile = $originalFile->copy($targetPath);
 		return [
 			'name' => $fileName,
 			'dirname' => $saveDir->getName(),

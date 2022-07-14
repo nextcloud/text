@@ -82,17 +82,17 @@ class ImageController extends Controller {
 	 * @param int $documentId
 	 * @param int $sessionId
 	 * @param string $sessionToken
-	 * @param string $imagePath
+	 * @param string $filePath
 	 * @return DataResponse
 	 */
-	public function insertImageFile(int $documentId, int $sessionId, string $sessionToken, string $imagePath): DataResponse {
+	public function insertAttachmentFile(int $documentId, int $sessionId, string $sessionToken, string $filePath): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 		$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 
 		try {
-			$insertResult = $this->imageService->insertImageFile($documentId, $imagePath, $userId);
+			$insertResult = $this->imageService->insertAttachmentFile($documentId, $filePath, $userId);
 			if (isset($insertResult['error'])) {
 				return new DataResponse($insertResult, Http::STATUS_BAD_REQUEST);
 			} else {
@@ -114,29 +114,24 @@ class ImageController extends Controller {
 	 * @param string|null $shareToken
 	 * @return DataResponse
 	 */
-	public function uploadImage(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
+	public function uploadAttachment(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
 		try {
-			$file = $this->getUploadedFile('image');
+			$file = $this->getUploadedFile('file');
 			if (isset($file['tmp_name'], $file['name'], $file['type'])) {
-				/*
-				if (!in_array($file['type'], self::IMAGE_MIME_TYPES, true)) {
-					return new DataResponse(['error' => 'Image type not supported'], Http::STATUS_BAD_REQUEST);
-				}
-				*/
 				$newFileResource = fopen($file['tmp_name'], 'rb');
 				if ($newFileResource === false) {
 					throw new Exception('Could not read file');
 				}
 				$newFileName = $file['name'];
 				if ($shareToken) {
-					$uploadResult = $this->imageService->uploadImagePublic($documentId, $newFileName, $newFileResource, $shareToken);
+					$uploadResult = $this->imageService->uploadAttachmentPublic($documentId, $newFileName, $newFileResource, $shareToken);
 				} else {
 					$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-					$uploadResult = $this->imageService->uploadImage($documentId, $newFileName, $newFileResource, $userId);
+					$uploadResult = $this->imageService->uploadAttachment($documentId, $newFileName, $newFileResource, $userId);
 				}
 				if (isset($uploadResult['error'])) {
 					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);

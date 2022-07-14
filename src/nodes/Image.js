@@ -53,7 +53,7 @@ const Image = TiptapImage.extend({
 						// only catch the drop if it contains files
 						if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
 							const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
-							const customEvent = new CustomEvent('image-drop', {
+							const customEvent = new CustomEvent('file-drop', {
 								bubbles: true,
 								detail: {
 									files: event.dataTransfer.files,
