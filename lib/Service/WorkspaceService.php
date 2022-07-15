@@ -3,35 +3,32 @@
 
 namespace OCA\Text\Service;
 
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
-use OCP\Files\StorageNotAvailableException;
 use OCP\IL10N;
 
 class WorkspaceService {
+	private IL10N $l10n;
+
 	private const SUPPORTED_STATIC_FILENAMES = [
 		'README.md',
 		'Readme.md',
 		'readme.md'
 	];
 
-	/** @var IL10N */
-	private $l10n;
-
 	public function __construct(IL10N $l10n) {
 		$this->l10n = $l10n;
 	}
 
-	/**
-	 * @param Folder $folder
-	 * @throws StorageNotAvailableException
-	 * @return \OCP\Files\File
-	 */
-	public function getFile(Folder $folder) {
+	public function getFile(Folder $folder): ?File {
 		foreach ($this->getSupportedFilenames() as $filename) {
 			if ($folder->nodeExists($filename)) {
 				try {
-					return $folder->get($filename);
+					$file = $folder->get($filename);
+					if ($file instanceof File) {
+						return $file;
+					}
 				} catch (NotFoundException $e) {
 				}
 			}

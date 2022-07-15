@@ -53,7 +53,6 @@ class StepMapper extends QBMapper {
 	}
 
 	public function deleteAll($documentId): void {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
@@ -61,7 +60,6 @@ class StepMapper extends QBMapper {
 	}
 
 	public function deleteBeforeVersion($documentId, $version): void {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
@@ -70,11 +68,11 @@ class StepMapper extends QBMapper {
 	}
 
 	public function deleteAfterVersion($documentId, $version): int {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		return $qb->delete($this->getTableName())
+		$result = $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($version)))
 			->execute();
+		return $result->rowCount();
 	}
 }

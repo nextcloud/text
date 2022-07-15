@@ -31,7 +31,6 @@ use OCP\IConfig;
 use OCP\IRequest;
 
 class SettingsController extends Controller {
-
 	private IConfig $config;
 	private ?string $userId;
 

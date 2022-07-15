@@ -23,23 +23,31 @@
 
 namespace OCA\Text\Db;
 
+use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 
 /**
- * @method int getLastContact()
- * @method setLastContact(int $getTime)
- * @method getDocumentId()
- * @method getUserId()
+ * @method string getUserId()
+ * @method void setUserId(?string $userId)
  * @method string getToken()
+ * @method void setToken(string $token)
+ * @method string getColor()
+ * @method void setColor(string $color)
+ * @method string|null getGuestName()
+ * @method void setGuestName(string $guestName)
+ * @method int getLastContact()
+ * @method void setLastContact(int $getTime)
+ * @method int getDocumentId()
+ * @method void setDocumentId(int $documentId)
  */
-class Session extends Entity implements \JsonSerializable {
+class Session extends Entity implements JsonSerializable {
 	public $id;
-	protected $userId;
-	protected $token;
-	protected $color;
-	protected $guestName;
-	protected $lastContact;
-	protected $documentId;
+	protected ?string $userId = null;
+	protected string $token = '';
+	protected string $color = '';
+	protected ?string $guestName = null;
+	protected int $lastContact = 0;
+	protected int $documentId = 0;
 
 	public function __construct() {
 		$this->addType('id', 'integer');

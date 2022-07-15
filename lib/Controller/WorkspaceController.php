@@ -69,7 +69,6 @@ use OCP\Share\IManager;
 use Psr\Log\LoggerInterface;
 
 class WorkspaceController extends OCSController {
-
 	private IRootFolder $rootFolder;
 	private IManager $shareManager;
 	private WorkspaceService $workspaceService;

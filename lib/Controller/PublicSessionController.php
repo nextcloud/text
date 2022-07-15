@@ -36,7 +36,6 @@ use OCP\IRequest;
 use OCP\Share\IShare;
 
 class PublicSessionController extends PublicShareController {
-
 	private ShareManager $shareManager;
 	private ?IShare $share;
 	private ApiService $apiService;
