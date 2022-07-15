@@ -96,10 +96,15 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe('```\n<?php echo "Hello World";\n```')
 	})
 	test('checkboxes', () => {
+		// Invalid ones but should be syntactical unchanged
+		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
+		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
+		// Valid, whitespace is allowed inside the checkbox
+		expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
+		expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
+		// Valid ones
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
-		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
-		expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
 		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('* [ ] foo\n* [x] bar')
 		expect(markdownThroughEditor('- [x] foo\n' +
 			'  - [ ] bar\n' +
@@ -109,10 +114,12 @@ describe('Markdown though editor', () => {
 				'  * [x] baz\n' +
 				'* [ ] bim')
 		expect(markdownThroughEditor('- [X] asd')).toBe('* [x] asd')
-		expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
-		expect(markdownThroughEditor('- [  ] asd')).toBe('* [ ] asd')
 		expect(markdownThroughEditor('-   [X] asd')).toBe('* [x] asd')
-		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
+
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
+		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
 	})
 
 	test('horizontal rule', () => {

@@ -24,16 +24,16 @@
  * @param {object} md Markdown object
  */
 export default function splitMixedLists(md) {
-	md.core.ruler.after('github-task-lists', 'split-mixed-task-lists', state => {
+	md.core.ruler.after('task-lists', 'split-mixed-task-lists', state => {
 		const tokens = state.tokens
 
 		for (let i = 0; i < tokens.length; i++) {
 			const token = tokens[i]
-			if (token.attrGet('class') !== 'contains-task-list') {
+			if (!includesClass(token, 'contains-task-list')) {
 				continue
 			}
 			const firstChild = tokens[i + 1]
-			const startsWithTask = firstChild.attrGet('class') === 'task-list-item'
+			const startsWithTask = includesClass(firstChild, 'task-list-item')
 			if (!startsWithTask) {
 				token.attrs.splice(token.attrIndex('class'))
 				if (token.attrs.length === 0) {
@@ -42,7 +42,7 @@ export default function splitMixedLists(md) {
 			}
 			const splitBefore = findChildOf(tokens, i, child => {
 				return child.nesting === 1
-					&& child.attrGet('class') !== firstChild.attrGet('class')
+					&& includesClass(child, 'task-list-item') !== startsWithTask
 			})
 			if (splitBefore > i) {
 				splitListAt(tokens, splitBefore, state.Token)
@@ -51,6 +51,14 @@ export default function splitMixedLists(md) {
 
 		return false
 	})
+}
+
+/**
+ * @param {object} token MarkdownIT token
+ * @param {string} cls Class name to query
+ */
+function includesClass(token, cls) {
+	return token.attrGet('class')?.split(' ').includes(cls) || false
 }
 
 /**
