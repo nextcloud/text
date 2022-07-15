@@ -37,14 +37,9 @@ use OCP\Share\IShare;
 
 class PublicSessionController extends PublicShareController {
 
-	/** @var ShareManager */
-	private $shareManager;
-
-	/** @var IShare */
-	private $share;
-
-	/** @var ApiService */
-	private $apiService;
+	private ShareManager $shareManager;
+	private ?IShare $share;
+	private ApiService $apiService;
 
 	public function __construct(string $appName, IRequest $request, ISession $session, ShareManager $shareManager, ApiService $apiService) {
 		parent::__construct($appName, $request, $session);

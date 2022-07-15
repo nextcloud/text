@@ -70,23 +70,12 @@ use Psr\Log\LoggerInterface;
 
 class WorkspaceController extends OCSController {
 
-	/** @var IRootFolder */
-	private $rootFolder;
-
-	/** @var IManager */
-	private $shareManager;
-
-	/** @var WorkspaceService */
-	private $workspaceService;
-
-	/** @var string|null */
-	private $userId;
-
-	/** @var IDirectEditingManager */
-	private $directEditingManager;
-
-	/** @var IURLGenerator */
-	private $urlGenerator;
+	private IRootFolder $rootFolder;
+	private IManager $shareManager;
+	private WorkspaceService $workspaceService;
+	private ?string $userId;
+	private IDirectEditingManager $directEditingManager;
+	private IURLGenerator $urlGenerator;
 
 	/** @var IEventDispatcher */
 	private $eventDispatcher;
