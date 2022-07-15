@@ -86,6 +86,8 @@ describe('Markdown though editor', () => {
 	test('links', () => {
 		expect(markdownThroughEditor('[test](foo)')).toBe('[test](foo)')
 		expect(markdownThroughEditor('[test](foo "bar")')).toBe('[test](foo "bar")')
+		// Issue #2703
+		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 	})
 	test('images', () => {
 		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
