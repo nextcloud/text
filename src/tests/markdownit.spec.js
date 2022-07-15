@@ -9,7 +9,7 @@ describe('markdownit', () => {
 		const rendered = markdownit.render('* [ ] task\n* not a task')
 		expect(stripIndent(rendered)).toBe(stripIndent(`
 			<ul class="contains-task-list">
-			<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> task</li>
+			<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-0" />task</li>
 			</ul>
 			<ul>
 			<li>not a task</li>
@@ -24,7 +24,7 @@ describe('markdownit', () => {
 			<li>not a task</li>
 			</ul>
 			<ul class="contains-task-list">
-			<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"> task</li>
+			<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-1" />task</li>
 			</ul>
 `))
 	})
