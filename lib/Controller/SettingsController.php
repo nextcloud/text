@@ -31,11 +31,8 @@ use OCP\IConfig;
 use OCP\IRequest;
 
 class SettingsController extends Controller {
-
-	/**
-	 * @var IConfig
-	 */
-	private $config;
+	private IConfig $config;
+	private ?string $userId;
 
 	public const ACCEPTED_KEYS = [
 		'workspace_enabled'

@@ -32,11 +32,7 @@ use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
 
 class SessionController extends Controller {
-
-	/**
-	 * @var ApiService
-	 */
-	private $apiService;
+	private ApiService $apiService;
 
 	public function __construct(string $appName, IRequest $request, ApiService $apiService) {
 		parent::__construct($appName, $request);

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -21,12 +24,7 @@
  *
  */
 
-namespace OCA\Text;
+namespace OCA\Text\Exception;
 
-use OCP\AppFramework\Http;
-
-class VersionMismatchException extends \Exception {
-	public function getStatus() {
-		return Http::STATUS_PRECONDITION_FAILED;
-	}
+class DocumentSaveConflictException extends \Exception {
 }

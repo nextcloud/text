@@ -25,14 +25,29 @@ namespace OCA\Text\Db;
 
 use OCP\AppFramework\Db\Entity;
 
+/**
+ * @method getId(): int
+ * @method getCurrentVersion(): int
+ * @method setCurrentVersion(int $version): void
+ * @method getLastSavedVersion(): int
+ * @method setLastSavedVersion(int $version): void
+ * @method getInitialVersion(): int
+ * @method setInitialVersion(int $version): void
+ * @method getLastSavedVersionTime(): int
+ * @method setLastSavedVersionTime(int $time): void
+ * @method getLastSavedVersionEtag(): string
+ * @method setLastSavedVersionEtag(string $etag): void
+ * @method getBaseVersionEtag(): string
+ * @method setBaseVersionEtag(string $etag): void
+ */
 class Document extends Entity implements \JsonSerializable {
 	public $id;
-	protected $currentVersion = 0;
-	protected $lastSavedVersion = 0;
-	protected $initialVersion = 0;
-	protected $lastSavedVersionTime = 0;
-	protected $lastSavedVersionEtag = '';
-	protected $baseVersionEtag = '';
+	protected int $currentVersion = 0;
+	protected int $lastSavedVersion = 0;
+	protected int $initialVersion = 0;
+	protected int $lastSavedVersionTime = 0;
+	protected string $lastSavedVersionEtag = '';
+	protected string $baseVersionEtag = '';
 
 	public function __construct() {
 		$this->addType('id', 'integer');

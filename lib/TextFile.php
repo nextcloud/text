@@ -34,34 +34,31 @@ use OCP\Files\SimpleFS\ISimpleFile;
  * Wrapper around a ISimpleFile object to ensure that it is correctly encoded (UTF-8) for the text app.
  */
 class TextFile implements ISimpleFile {
-
-	/** @var ISimpleFile */
-	private $file;
-	/** @var EncodingService */
-	private $encodingService;
+	private ISimpleFile $file;
+	private EncodingService $encodingService;
 
 	public function __construct(ISimpleFile $file, EncodingService $encodingService) {
 		$this->file = $file;
 		$this->encodingService = $encodingService;
 	}
 
-	public function getName() {
+	public function getName(): string {
 		return $this->file->getName();
 	}
 
-	public function getSize() {
+	public function getSize(): int {
 		return $this->file->getSize();
 	}
 
-	public function getETag() {
+	public function getETag(): string {
 		return $this->file->getETag();
 	}
 
-	public function getMTime() {
+	public function getMTime(): int {
 		return $this->file->getMTime();
 	}
 
-	public function getContent() {
+	public function getContent(): string {
 		$content = $this->encodingService->encodeToUtf8($this->file->getContent());
 		if ($content === null) {
 			throw new NotFoundException('File not compatible with text because it could not be encoded to UTF-8.');
@@ -70,15 +67,15 @@ class TextFile implements ISimpleFile {
 		return $content;
 	}
 
-	public function putContent($data) {
-		return $this->file->putContent($data);
+	public function putContent($data): void {
+		$this->file->putContent($data);
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->file->delete();
 	}
 
-	public function getMimeType() {
+	public function getMimeType(): string {
 		return 'text/plain;encoding=utf-8';
 	}
 

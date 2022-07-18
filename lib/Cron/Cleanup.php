@@ -29,31 +29,25 @@ declare(strict_types=1);
 namespace OCA\Text\Cron;
 
 use OCA\Text\Db\Session;
-use OCA\Text\DocumentHasUnsavedChangesException;
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\ImageService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
-/**
- * Class Cache
- *
- * @package OCA\Social\Cron
- */
 class Cleanup extends TimedJob {
-	private $sessionService;
-	private $documentService;
-	private $logger;
-	private $imageService;
-
+	private SessionService $sessionService;
+	private DocumentService $documentService;
+	private LoggerInterface $logger;
+	private ImageService $imageService;
 
 	public function __construct(ITimeFactory $time,
 								SessionService $sessionService,
 								DocumentService $documentService,
 								ImageService $imageService,
-								ILogger $logger) {
+								LoggerInterface $logger) {
 		parent::__construct($time);
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
@@ -81,6 +75,8 @@ class Cleanup extends TimedJob {
 				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
 			} catch (DocumentHasUnsavedChangesException $e) {
 				$this->logger->info('Document ' . $session->getDocumentId() . ' has not been reset, as it has unsaved changes');
+			} catch (\Throwable $e) {
+				$this->logger->error('Document ' . $session->getDocumentId() . ' has not been reset, as an error occured', ['exception' => $e]);
 			}
 		}
 		$removedSessions = $this->sessionService->removeInactiveSessions(null);

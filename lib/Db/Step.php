@@ -23,14 +23,24 @@
 
 namespace OCA\Text\Db;
 
+use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 
-class Step extends Entity implements \JsonSerializable {
-	public $id;
-	protected $data;
-	protected $version;
-	protected $sessionId;
-	protected $documentId;
+/**
+ * @method getData(): string
+ * @method setData(string $data): void
+ * @method getVersion(): int
+ * @method setVersion(int $version): void
+ * @method getSessionId(): int
+ * @method setSessionId(int $sessionId): void
+ * @method getDocumentId(): int
+ * @method setDocumentId(int $documentId): void
+ */
+class Step extends Entity implements JsonSerializable {
+	protected string $data = '';
+	protected int $version = 0;
+	protected int $sessionId = 0;
+	protected int $documentId = 0;
 
 	public function __construct() {
 		$this->addType('id', 'integer');

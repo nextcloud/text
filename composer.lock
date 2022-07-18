@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7304857559254ddd2054e835c029ff1",
+    "content-hash": "5fbae4730c1f4bec14f467f9f9d375f6",
     "packages": [],
     "packages-dev": [
         {
@@ -13,17 +13,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "56056903c03bf8c29b2a2822153951c8f783a85a"
+                "reference": "42b53effee9e232a9cf091760ee448d98eb2fae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/56056903c03bf8c29b2a2822153951c8f783a85a",
-                "reference": "56056903c03bf8c29b2a2822153951c8f783a85a",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/42b53effee9e232a9cf091760ee448d98eb2fae0",
+                "reference": "42b53effee9e232a9cf091760ee448d98eb2fae0",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ~8.0 || ~8.1",
-                "psr/container": "^1.0",
+                "psr/container": "^1.1.1",
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
             },
@@ -31,7 +31,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "24.0.0-dev"
+                    "dev-master": "25.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,7 +49,7 @@
                 "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
                 "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
             },
-            "time": "2022-03-01T01:41:01+00:00"
+            "time": "2022-07-13T02:14:57+00:00"
         },
         {
             "name": "composer/pcre",
@@ -4590,7 +4590,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.4|^8.0"
     },
     "platform-dev": {
         "ext-mbstring": "*"

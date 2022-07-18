@@ -15,14 +15,6 @@
       <code>InvalidTokenException</code>
     </UndefinedClass>
   </file>
-  <file src="lib/Controller/SettingsController.php">
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;userId</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;userId</code>
-    </UndefinedThisPropertyFetch>
-  </file>
   <file src="lib/Controller/WorkspaceController.php">
     <InvalidReturnType occurrences="3">
       <code>DataResponse</code>
@@ -43,12 +35,6 @@
     <UndefinedClass occurrences="1">
       <code>ServerPlugin</code>
     </UndefinedClass>
-  </file>
-  <file src="lib/Db/StepMapper.php">
-    <InvalidReturnStatement occurrences="1"/>
-    <InvalidReturnType occurrences="1">
-      <code>int</code>
-    </InvalidReturnType>
   </file>
   <file src="lib/DirectEditing/TextDirectEditor.php">
     <LessSpecificImplementedReturnType occurrences="3">
@@ -85,26 +71,6 @@
     <UndefinedClass occurrences="1">
       <code>\OC\User\NoUserException</code>
     </UndefinedClass>
-    <UndefinedMagicMethod occurrences="18">
-      <code>getCurrentVersion</code>
-      <code>getCurrentVersion</code>
-      <code>getCurrentVersion</code>
-      <code>getCurrentVersion</code>
-      <code>getCurrentVersion</code>
-      <code>getLastSavedVersion</code>
-      <code>getLastSavedVersion</code>
-      <code>getLastSavedVersionEtag</code>
-      <code>getLastSavedVersionTime</code>
-      <code>setCurrentVersion</code>
-      <code>setCurrentVersion</code>
-      <code>setData</code>
-      <code>setDocumentId</code>
-      <code>setLastSavedVersion</code>
-      <code>setLastSavedVersionEtag</code>
-      <code>setLastSavedVersionTime</code>
-      <code>setSessionId</code>
-      <code>setVersion</code>
-    </UndefinedMagicMethod>
   </file>
   <file src="lib/Service/ImageService.php">
     <MissingDependency occurrences="6">
@@ -130,31 +96,6 @@
       <code>\OC\User\NoUserException</code>
       <code>\OC\User\NoUserException</code>
     </UndefinedDocblockClass>
-  </file>
-  <file src="lib/Service/SessionService.php">
-    <UndefinedDocblockClass occurrences="4">
-      <code>$color-&gt;b</code>
-      <code>$color-&gt;g</code>
-      <code>$color-&gt;r</code>
-      <code>$this-&gt;avatarManager-&gt;getGuestAvatar($uniqueGuestId)-&gt;avatarBackgroundColor($uniqueGuestId)</code>
-    </UndefinedDocblockClass>
-    <UndefinedMagicMethod occurrences="7">
-      <code>setColor</code>
-      <code>setColor</code>
-      <code>setDocumentId</code>
-      <code>setGuestName</code>
-      <code>setGuestName</code>
-      <code>setToken</code>
-      <code>setUserId</code>
-    </UndefinedMagicMethod>
-  </file>
-  <file src="lib/Service/WorkspaceService.php">
-    <InvalidNullableReturnType occurrences="1">
-      <code>\OCP\Files\File</code>
-    </InvalidNullableReturnType>
-    <NullableReturnStatement occurrences="1">
-      <code>null</code>
-    </NullableReturnStatement>
   </file>
   <file src="vendor/christophwurst/nextcloud/OCP/BackgroundJob/TimedJob.php">
     <ImplementedParamTypeMismatch occurrences="1">

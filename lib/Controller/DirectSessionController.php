@@ -51,27 +51,17 @@ use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Response;
 use OCP\DirectEditing\IManager;
-use OCP\Share\IManager as ShareManager;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\Share\IShare;
 
 class DirectSessionController extends Controller {
+	private IShare $share;
+	private ApiService $apiService;
+	private IManager $directManager;
 
-	/** @var ShareManager */
-	private $shareManager;
-
-	/** @var IShare */
-	private $share;
-
-	/** @var ApiService */
-	private $apiService;
-	/**  @var IManager */
-	private $directManager;
-
-	public function __construct(string $appName, IRequest $request, ShareManager $shareManager, ApiService $apiService, IManager $directManager) {
+	public function __construct(string $appName, IRequest $request, ApiService $apiService, IManager $directManager) {
 		parent::__construct($appName, $request);
-		$this->shareManager = $shareManager;
 		$this->apiService = $apiService;
 		$this->directManager = $directManager;
 	}
