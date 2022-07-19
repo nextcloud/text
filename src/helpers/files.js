@@ -20,6 +20,7 @@
  *
  */
 
+import { loadState } from '@nextcloud/initial-state'
 import { openMimetypes } from './mime.js'
 import RichWorkspace from '../views/RichWorkspace.vue'
 import { imagePath } from '@nextcloud/router'
@@ -56,7 +57,7 @@ const registerFileCreate = () => {
 			menu.addMenuEntry({
 				id: 'file',
 				displayName: t('text', 'New text file'),
-				templateName: t('text', 'New text file') + '.md',
+				templateName: t('text', 'New text file') + '.' + loadState('text', 'default_file_extension'),
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
 				actionHandler(name) {

@@ -25,31 +25,23 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\AppInfo\Application;
+use OCA\Text\Service\InitialStateProvider;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IConfig;
-use OCP\IInitialStateService;
+use OCP\Util;
 
 /** @implements IEventListener<Event> */
 class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
-	/** @var IConfig */
-	protected $config;
-	/** @var IInitialStateService */
-	protected $initialStateService;
+	protected InitialStateProvider $initialStateProvider;
 
-	public function __construct(IConfig $config, IInitialStateService $initialStateService) {
-		$this->config = $config;
-		$this->initialStateService = $initialStateService;
+	public function __construct(IConfig $config, InitialStateProvider $initialStateProvider) {
+		$this->initialStateProvider = $initialStateProvider;
 	}
 
 	public function handle(Event $event): void {
-		\OCP\Util::addScript('text', 'text-public');
+		Util::addScript('text', 'text-public');
 
-		$this->initialStateService->provideInitialState(
-			Application::APP_NAME,
-			'workspace_available',
-			$this->config->getAppValue(Application::APP_NAME, 'workspace_available', '1') === '1'
-		);
+		$this->initialStateProvider->provideState();
 	}
 }
