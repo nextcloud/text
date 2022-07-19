@@ -79,8 +79,6 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 		),
 		serialize(content, options) {
 			return this.serializer.serialize(content, { ...options, tightLists: true })
-				.split('\\[').join('[')
-				.split('\\]').join(']')
 		},
 	}
 }
