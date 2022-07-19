@@ -89,6 +89,7 @@ const extensionHighlight = {
 	ml: 'ocaml',
 	rs: 'rust',
 	sci: 'scilab',
+	txt: 'plaintext',
 	vb: 'vbnet',
 	vbs: 'vbscript',
 }
