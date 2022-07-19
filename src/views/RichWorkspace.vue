@@ -22,11 +22,16 @@
 
 <template>
 	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
-		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
+		<a v-if="showEmptyWorkspace"
+			tabindex="0"
+			class="empty-workspace"
+			@keyup.enter="createNew"
+			@keyup.space="createNew"
+			@click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
 			</p>
-		</div>
+		</a>
 
 		<EditorWrapper v-if="file"
 			v-show="ready"
@@ -36,12 +41,12 @@
 			:share-token="shareToken"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
+			:autohide="autohide"
 			active
-			autohide
 			rich-workspace
 			@ready="ready=true"
-			@focus="focus=true"
-			@blur="unfocus"
+			@focus="onFocus"
+			@blur="onBlur"
 			@error="reset" />
 	</div>
 </template>
@@ -49,7 +54,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
-import { subscribe } from '@nextcloud/event-bus'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -73,6 +78,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
+			autohide: true,
 			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
@@ -98,21 +104,29 @@ export default {
 			}
 		},
 	},
-	async mounted() {
+	mounted() {
 		if (this.enabled) {
 			this.getFileInfo()
 		}
-		subscribe('Text::showRichWorkspace', () => {
-			this.enabled = true
-			this.getFileInfo()
-		})
-		subscribe('Text::hideRichWorkspace', () => {
-			this.enabled = false
-		})
+		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
+		subscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+
+		this.listenKeydownEvents()
+
+	},
+	beforeDestroy() {
+		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
+		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+
+		this.unlistenKeydownEvents()
 	},
 	methods: {
-		unfocus() {
-			// setTimeout(() => this.focus = false, 2000)
+		onBlur() {
+			this.listenKeydownEvents()
+		},
+		onFocus() {
+			this.focus = true
+			this.unlistenKeydownEvents()
 		},
 		reset() {
 			this.file = null
@@ -130,39 +144,80 @@ export default {
 			if (IS_PUBLIC) {
 				params.shareToken = this.shareToken
 			}
-			return axios.get(WORKSPACE_URL, { params }).then((response) => {
-				const data = response.data.ocs.data
-				this.folder = data.folder || null
-				this.file = data.file
-				this.editing = true
-				this.loaded = true
-				return true
-			}).catch((error) => {
-				if (error.response.data.ocs && error.response.data.ocs.data.folder) {
-					this.folder = error.response.data.ocs.data.folder
-				} else {
-					this.folder = null
-				}
-				this.file = null
-				this.loaded = true
-				this.ready = true
-				this.creating = false
-				return false
-			})
+			return axios.get(WORKSPACE_URL, { params })
+				.then((response) => {
+					const data = response.data.ocs.data
+					this.folder = data.folder || null
+					this.file = data.file
+					this.editing = true
+					this.loaded = true
+					return true
+				})
+				.catch((error) => {
+					if (error.response.data.ocs && error.response.data.ocs.data.folder) {
+						this.folder = error.response.data.ocs.data.folder
+					} else {
+						this.folder = null
+					}
+					this.file = null
+					this.loaded = true
+					this.ready = true
+					this.creating = false
+					return false
+				})
 		},
 		createNew() {
 			if (this.creating) {
 				return
 			}
 			this.creating = true
-			this.getFileInfo().then((workspaceFileExists) => {
-				this.autofocus = true
-				if (!workspaceFileExists) {
-					window.FileList.createFile('Readme.md', { scrollTo: false, animate: false }).then((status, data) => {
-						this.getFileInfo()
-					})
-				}
-			})
+			this.getFileInfo()
+				.then((workspaceFileExists) => {
+					if (!workspaceFileExists) {
+						return window.FileList
+							.createFile('Readme.md', { scrollTo: false, animate: false })
+							.then((status, data) => {
+								return this.getFileInfo()
+							})
+					}
+				})
+				.then(() => {
+					this.autofocus = true
+				})
+				.catch(err => {
+					console.warn(err)
+				})
+		},
+		showRichWorkspace() {
+			this.enabled = true
+			this.getFileInfo()
+		},
+		hideRichWorkspace() {
+			this.enabled = false
+		},
+		listenKeydownEvents() {
+			window.addEventListener('keydown', this.onKeydown)
+		},
+		unlistenKeydownEvents() {
+			clearInterval(this.$_timeoutAutohide)
+
+			window.removeEventListener('keydown', this.onKeydown)
+		},
+		onTimeoutAutohide() {
+			this.autohide = true
+		},
+		onKeydown(e) {
+			if (e.key !== 'Tab') {
+				return
+			}
+
+			// remove previous timeout
+			clearInterval(this.$_timeoutAutohide)
+
+			this.autohide = false
+
+			// schedule to normal behaviour
+			this.$_timeoutAutohide = setTimeout(this.onTimeoutAutohide, 7000) // 7s
 		},
 	},
 }
@@ -189,9 +244,10 @@ export default {
 	}
 
 	.empty-workspace {
+		cursor: pointer;
+		display: block;
 		padding-top: 43px;
 		color: var(--color-text-maxcontrast);
-		height: 0;
 	}
 
 	#rich-workspace::v-deep div[contenteditable=false] {
