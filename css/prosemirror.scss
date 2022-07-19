@@ -26,6 +26,10 @@ div.ProseMirror {
 		-webkit-user-select: text;
 		user-select: text;
 		font-size: 14px;
+
+		&:focus, &:focus-visible {
+			box-shadow: none !important;
+		}
 	}
 
 	.checkbox-item {
