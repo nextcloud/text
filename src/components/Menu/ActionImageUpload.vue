@@ -24,6 +24,7 @@
 		:data-text-action-entry="actionEntry.key"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
+		role="menu"
 		aria-haspopup>
 		<template #icon>
 			<component :is="icon"

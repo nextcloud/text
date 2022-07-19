@@ -25,6 +25,7 @@
 		@selectData="addEmoji">
 		<Button v-tooltip="actionEntry.label"
 			class="entry-action__button"
+			role="menu"
 			:title="actionEntry.label"
 			:aria-label="actionEntry.label"
 			:aria-haspopup="true">

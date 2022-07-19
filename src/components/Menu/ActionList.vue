@@ -23,7 +23,9 @@
 <template>
 	<Actions v-tooltip="tooltip"
 		class="entry-list-action entry-action"
+		role="menu"
 		v-bind="state"
+		:aria-label="actionEntry.label"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey">

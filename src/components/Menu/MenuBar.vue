@@ -24,6 +24,8 @@
 <template>
 	<div class="text-menubar"
 		data-text-el="menubar"
+		role="menubar"
+		:aria-label="t('text', 'Formatting menubar')"
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--show': isVisible,
@@ -32,7 +34,11 @@
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
-		<div v-if="$isRichEditor" ref="menubar" class="text-menubar__entries">
+		<div v-if="$isRichEditor"
+			ref="menubar"
+			role="group"
+			class="text-menubar__entries"
+			:aria-label="t('text', 'Editor actions')">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry.key}`"
