@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue, { set } from 'vue'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
@@ -482,7 +482,7 @@ export default {
 			// Make sure we get our own session updated
 			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
 			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
-			Vue.set(this, 'currentSession', currentUpdatedSession)
+			set(this, 'currentSession', currentUpdatedSession)
 
 			const currentSessionIds = this.sessions.map((session) => session.userId)
 			const currentGuestIds = this.sessions.map((session) => session.guestId)
@@ -499,13 +499,13 @@ export default {
 				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant
 					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
-						Vue.set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
+						set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
 					}
 				} else {
-					Vue.set(this.filteredSessions, sessionKey, session)
+					set(this.filteredSessions, sessionKey, session)
 				}
 				if (session.id === this.currentSession.id) {
-					Vue.set(this.filteredSessions[sessionKey], 'isCurrent', true)
+					set(this.filteredSessions[sessionKey], 'isCurrent', true)
 				}
 			}
 		},
@@ -750,13 +750,13 @@ export default {
 		overflow: hidden;
 		position: absolute;
 
-		&.show-color-annotations::v-deep .author-annotation {
+		&.show-color-annotations::v-deep(.author-annotation) {
 			padding-top: 2px;
 			padding-bottom: 2px;
 		}
 
-		&:not(.show-color-annotations)::v-deep .author-annotation,
-		&:not(.show-color-annotations)::v-deep .image {
+		&:not(.show-color-annotations)::v-deep(.author-annotation),
+		&:not(.show-color-annotations)::v-deep(.image) {
 			background-color: transparent !important;
 		}
 
@@ -867,7 +867,7 @@ export default {
 	}
 
 	.ie {
-		.editor__content::v-deep .ProseMirror {
+		.editor__content::v-deep(.ProseMirror) {
 			padding-top: 50px;
 		}
 	}

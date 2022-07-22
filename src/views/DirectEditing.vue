@@ -136,11 +136,11 @@ export default {
 		position: fixed;
 		overflow: hidden;
 
-		&::v-deep .text-editor {
+		&::v-deep(.text-editor) {
 			height: 100%;
 			top: 0;
 		}
-		&::v-deep .text-editor__wrapper div.ProseMirror {
+		&::v-deep(.text-editor__wrapper div.ProseMirror) {
 			margin-top: 0;
 		}
 	}

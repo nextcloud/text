@@ -46,7 +46,7 @@
 		"@nextcloud/moment": "^1.2.1",
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^5.3.1",
-		"@tiptap/core": "^2.0.0-beta.181",
+		"@tiptap/core": "^2.0.0-beta.182",
 		"@tiptap/extension-blockquote": "^2.0.0-beta.29",
 		"@tiptap/extension-bold": "^2.0.0-beta.28",
 		"@tiptap/extension-bullet-list": "^2.0.0-beta.29",
@@ -89,12 +89,12 @@
 		"prosemirror-tables-contently": "^1.1.2",
 		"prosemirror-transform": "^1.6.0",
 		"prosemirror-utils": "^1.0.0-0",
-		"prosemirror-view": "^1.26.4",
+		"prosemirror-view": "^1.26.5",
 		"proxy-polyfill": "^0.3.2",
 		"tippy.js": "^6.3.7",
-		"vue": "^2.6.14",
+		"vue": "^2.7.8",
 		"vue-click-outside": "^1.1.0",
-		"vue-material-design-icons": "^5.0.0",
+		"vue-material-design-icons": "^5.1.1",
 		"vuex": "^3.6.2"
 	},
 	"engines": {
@@ -108,23 +108,25 @@
 		"@nextcloud/browserslist-config": "^2.2.0",
 		"@nextcloud/eslint-config": "^8.0.0",
 		"@nextcloud/stylelint-config": "^2.1.2",
-		"@nextcloud/webpack-vue-config": "^5.1.0",
+		"@nextcloud/webpack-vue-config": "^5.2.1",
 		"@vue/test-utils": "^1.3.0",
-		"@vue/vue2-jest": "^27.0.0",
+		"@vue/vue2-jest": "^28.0.1",
 		"cypress": "^10.3.0",
 		"cypress-file-upload": "^5.0.8",
 		"debounce": "^1.2.1",
 		"escape-html": "^1.0.3",
 		"eslint-plugin-cypress": "^2.12.1",
 		"highlight.js": "^10.7.2",
-		"jest": "^27.5.1",
-		"jest-raw-loader": "^1.0.1",
+		"jest": "^28.1.3",
+		"jest-environment-jsdom": "^28.1.3",
 		"jest-serializer-vue": "^2.0.2",
 		"lowlight": "^1.20.0",
 		"mitt": "^3.0.0",
-		"vite": "^2.9.9",
+		"vite": "^3.0.2",
 		"vite-plugin-commonjs": "^0.5.0",
-		"vite-plugin-vue2": "^2.0.0"
+		"@vitejs/plugin-vue2": "^1.1.2",
+		"vue-demi": "^0.13.5",
+		"vue-template-compiler": "^2.7.8"
 	},
 	"jest": {
 		"verbose": true,
@@ -146,8 +148,7 @@
 		"transform": {
 			"^.+\\.js$": "<rootDir>/node_modules/babel-jest",
 			".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-			".*\\.md$": "jest-raw-loader",
-			".*\\.html$": "jest-raw-loader"
+			"\\.(html|xml|svg|md)$": "<rootDir>/jest-raw-loader.js"
 		},
 		"snapshotSerializers": [
 			"<rootDir>/node_modules/jest-serializer-vue"
