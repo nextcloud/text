@@ -68,6 +68,7 @@ OC.L10N.register(
     "Link file" : "Datoteka povezave",
     "Remove Link" : "Odstrani povezavo",
     "Select file to link to" : "Izbor datoteke za povezavo",
+    "Active people" : "Dejavni posamezniki",
     "guest" : "gost",
     "Show author colors" : "Pokaži barve avtorja",
     "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
