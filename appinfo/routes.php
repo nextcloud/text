@@ -46,6 +46,8 @@ return [
 		['name' => 'PublicSession#close', 'url' => '/public/session/close', 'verb' => 'POST'],
 
 		['name' => 'Settings#updateConfig', 'url' => '/settings', 'verb' => 'POST'],
+
+		['name' => 'UserApi#index', 'url' => '/api/v1/users', 'verb' => 'POST'],
 	],
 	'ocs' => [
 		['name' => 'Workspace#folder', 'url' => '/workspace', 'verb' => 'GET'],
