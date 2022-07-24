@@ -1,15 +1,17 @@
+import { mergeAttributes } from '@tiptap/core'
 import TiptapCodeBlock from '@tiptap/extension-code-block'
 
 const FrontMatter = TiptapCodeBlock.extend({
 	name: 'frontMatter',
-	addAttributes() {
-		return {
-			...this.parent?.(),
-			class: {
-				default: 'frontmatter',
-				rendered: true,
-			},
-		}
+	// FrontMatter are only valid at the begin of a document
+	draggable: false,
+
+	renderHTML({ node, HTMLAttributes }) {
+		return this.parent({
+			node,
+			HTMLAttributes:
+			mergeAttributes(HTMLAttributes, { 'data-title': t('text', 'Front matter'), class: 'frontmatter' }),
+		})
 	},
 	parseHTML: () => {
 		return [
@@ -33,13 +35,32 @@ const FrontMatter = TiptapCodeBlock.extend({
 		state.write('---')
 		state.closeBlock(node)
 	},
-	// FrontMatter are only valid at the begin of a document
-	draggable: false,
+
+	// Allow users to add a FrontMatter, but only at the beginning of the document
+	addInputRules() {
+		return [
+			{
+				find: /^---$/g,
+				handler: ({ state, range, chain }) => {
+					if (range.from === 1) {
+						if (state.doc.resolve(1).parent.type.name === this.name) return false
+						chain()
+							.deleteRange(range)
+							.insertContentAt(0, {
+								type: this.name,
+							})
+						return true
+					}
+					return false
+				},
+			},
+		]
+	},
+
 	// Override rules from Codeblock
 	addCommands() {
 		return {}
 	},
-	addInputRules: () => [],
 	addPasteRules: () => [],
 	addProseMirrorPlugins: () => [],
 })
