@@ -25,7 +25,7 @@
 	<div class="text-menubar"
 		data-text-el="menubar"
 		role="menubar"
-		:aria-label="t('text', 'Formatting menubar')"
+		:aria-label="t('text', 'Formatting menu bar')"
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--show': isVisible,
