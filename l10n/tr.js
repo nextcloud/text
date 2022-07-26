@@ -70,7 +70,6 @@ OC.L10N.register(
     "Some code" : "Kod metni",
     "Upload from computer" : "Bilgisayardan yükle",
     "Insert from Files" : "Dosyalar uygulamasından ekle",
-    "Formatting menubar" : "Menü çubuğu biçimlendiriliyor",
     "Editor actions" : "Düzenleyici işlemleri",
     "Remaining Actions" : "Kalan işlemler",
     "Update Link" : "Bağlantıyı güncelle",

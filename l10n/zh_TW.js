@@ -70,7 +70,6 @@ OC.L10N.register(
     "Some code" : "一些程式碼",
     "Upload from computer" : "從電腦上傳",
     "Insert from Files" : "從檔案插入",
-    "Formatting menubar" : "格式化選項選單列",
     "Editor actions" : "編輯器動作",
     "Remaining Actions" : "剩餘動作",
     "Update Link" : "更新連結",
