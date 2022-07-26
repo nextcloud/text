@@ -147,9 +147,9 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('See test files in the list and display hidden files', () => {
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
-		cy.get('#fileList tr[data-file="github.png"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="github.png"]', { timeout: 10000 })
 			.should('contain', 'github.png')
 		cy.showHiddenFiles()
 	})
@@ -222,7 +222,7 @@ describe('Test all image insertion methods', () => {
 	it('test if image files are in the attachment folder', () => {
 		// check we stored the image names/ids
 
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
@@ -231,7 +231,7 @@ describe('Test all image insertion methods', () => {
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
-					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+					cy.get(`.files-fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						.should('eq', String(files[name]))
@@ -244,7 +244,7 @@ describe('Test all image insertion methods', () => {
 		cy.reloadFileList()
 		cy.moveFile('test.md', 'subFolder/test.md')
 		cy.openFolder('subFolder')
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -252,7 +252,7 @@ describe('Test all image insertion methods', () => {
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
-					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+					cy.get(`.files-fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						.should('eq', String(files[name]))
@@ -264,7 +264,7 @@ describe('Test all image insertion methods', () => {
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
 		cy.reloadFileList()
 
-		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -273,7 +273,7 @@ describe('Test all image insertion methods', () => {
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
-					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+					cy.get(`.files-fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
@@ -284,13 +284,13 @@ describe('Test all image insertion methods', () => {
 	})
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
-		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
 				cy.deleteFile('testCopied.md')
 				cy.reloadFileList()
-				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+				cy.get(`.files-fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
 					.should('not.exist')
 			})
 		// change the current user for next tests
@@ -299,35 +299,35 @@ describe('Test all image insertion methods', () => {
 
 	it('[share] check everything behaves correctly on the share target user side', () => {
 		// check the file list
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
-		cy.get('#fileList tr[data-file="github.png"]').should('not.exist')
+		cy.get('files-fileList tr[data-file="github.png"]').should('not.exist')
 		cy.showHiddenFiles()
 
 		// check the attachment folder is not there
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
-				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+				cy.get(`.files-fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
 					.should('not.exist')
 			})
 
 		// move the file and check the attachment folder is still not there
 		cy.moveFile('test.md', 'testMoved.md')
 		cy.reloadFileList()
-		cy.get('#fileList tr[data-file="testMoved.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="testMoved.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
-				cy.get(`#fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
+				cy.get(`.files-fileList tr[data-file=".attachments.${documentId}"]`, { timeout: 10000 })
 					.should('not.exist')
 			})
 
 		// copy the file and check the attachment folder was copied
 		cy.copyFile('testMoved.md', 'testCopied.md')
 		cy.reloadFileList()
-		cy.get('#fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="testCopied.md"]', { timeout: 10000 })
 			.should('exist')
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
@@ -335,7 +335,7 @@ describe('Test all image insertion methods', () => {
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
-					cy.get(`#fileList tr[data-file="${name}"]`, { timeout: 10000 })
+					cy.get(`.files-fileList tr[data-file="${name}"]`, { timeout: 10000 })
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files

@@ -217,16 +217,16 @@ Cypress.Commands.add('openFolder', (name) => {
 })
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
-	cy.get(`#fileList tr[data-file="${fileName}"] a.name`).click(params)
+	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name`).click(params)
 })
 
 Cypress.Commands.add('getFile', fileName => {
-	return cy.get(`#fileList tr[data-file="${fileName}"]`)
+	return cy.get(`.files-fileList tr[data-file="${fileName}"]`)
 })
 
 Cypress.Commands.add('deleteFile', fileName => {
-	cy.get(`#fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
-	cy.get(`#fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
 })
 
 Cypress.Commands.add('getEditor', () => {

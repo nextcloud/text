@@ -42,7 +42,7 @@ describe('Workspace', function() {
 	})
 
 	it('adds a Readme.md', function() {
-		cy.get('#fileList').should('not.contain', 'Readme.md')
+		cy.get('.files-fileList').should('not.contain', 'Readme.md')
 		cy.openWorkspace()
 			.type('Hello')
 			.should('contain', 'Hello')
@@ -148,7 +148,7 @@ describe('Workspace', function() {
 	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
 		cy.reload()
-		cy.get('#fileList').should('contain', 'README.md')
+		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 	})
@@ -250,7 +250,7 @@ describe('Workspace', function() {
 			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
-			cy.get('#fileList').should('contain', 'Anleitung.md')
+			cy.get('.files-fileList').should('contain', 'Anleitung.md')
 			cy.get('#rich-workspace .ProseMirror')
 				.should('contain', 'Hello world')
 		})
@@ -259,7 +259,7 @@ describe('Workspace', function() {
 			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
-			cy.get('#fileList').should('contain', 'Anleitung.md')
+			cy.get('.files-fileList').should('contain', 'Anleitung.md')
 			cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
 		})
 	})
@@ -321,9 +321,9 @@ const getSubmenuItem = (parent, item) => {
 }
 
 const openSidebar = filename => {
-	cy.get(`#fileList tr[data-file="${filename}"]`)
+	cy.get(`.files-fileList tr[data-file="${filename}"]`)
 		.should('contain', filename)
-	cy.get(`#fileList tr[data-file="${filename}"] .icon-more`).click()
-	cy.get(`#fileList tr[data-file="${filename}"] .icon-details`).click()
+	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-details`).click()
 	cy.get('.app-sidebar-header').should('contain', filename)
 }
