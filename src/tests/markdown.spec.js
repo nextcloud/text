@@ -192,4 +192,10 @@ describe('Markdown serializer from html', () => {
 			`<p class="callout warning">!warning!</p>`
 		)).toBe(`::: warn\n!warning!\n\n:::`)
 	})
+
+	test('front matter', () => {
+		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>some: value</code></pre><h1>Heading</h1>')).toBe('---\nsome: value\n---\n\n# Heading')
+		// Test --- within front matter is allowed
+		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>---</code></pre><h1>Heading</h1>')).toBe('----\n---\n----\n\n# Heading')
+	})
 })
