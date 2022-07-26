@@ -2,7 +2,7 @@ import { randHash } from '../utils/index.js'
 
 const currentUser = randHash()
 
-const refresh = () => cy.get('#controls .crumb:not(.hidden) a')
+const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
 	.last()
 	.click({ force: true })
 
@@ -85,7 +85,7 @@ describe('Image View', () => {
 		})
 
 		it('with preview', () => {
-			cy.get('#fileList tr[data-file="github.png"]')
+			cy.get('.files-fileList tr[data-file="github.png"]')
 				.should('have.attr', 'data-id')
 				.then(imageId => {
 					const fileName = `${Cypress.currentTest.title}.md`

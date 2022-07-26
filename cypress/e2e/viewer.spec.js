@@ -35,7 +35,7 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('See test.md in the list', function() {
-		cy.get('#fileList tr[data-file="test.md"]', { timeout: 10000 })
+		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('contain', 'test.md')
 	})
 

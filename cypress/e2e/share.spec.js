@@ -37,7 +37,7 @@ describe('Open test.md in viewer', function() {
 		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
 		cy.uploadFile('test.md', 'text/markdown')
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test.md"]')
+		cy.get('.files-fileList tr[data-file="test.md"]')
 			.should('contain', 'test.md')
 	})
 	beforeEach(function() {
@@ -46,7 +46,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public read only link', function() {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test.md"] a.action-share')
+		cy.get('.files-fileList tr[data-file="test.md"] a.action-share')
 			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -68,7 +68,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares the file as a public link with write permissions', function() {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test2.md"] a.action-share')
+		cy.get('.files-fileList tr[data-file="test2.md"] a.action-share')
 			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -99,7 +99,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Opens the editor as guest', function() {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="test2.md"] a.action-share')
+		cy.get('.files-fileList tr[data-file="test2.md"] a.action-share')
 			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
@@ -128,7 +128,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Shares a folder as a public read only link', function() {
 		cy.visit('/apps/files')
-		cy.get('#fileList tr[data-file="folder"] a.action-share')
+		cy.get('.files-fileList tr[data-file="folder"] a.action-share')
 			.click({ force: true })
 		cy.get('#app-sidebar-vue')
 			.should('be.visible')
