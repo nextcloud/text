@@ -94,6 +94,7 @@ export default Extension.create({
 			defaultExtensions.push(Link.configure({
 				...this.options.link,
 				openOnClick: true,
+				validate: href => /^https?:\/\//.test(href),
 			}))
 		}
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)

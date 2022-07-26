@@ -46,11 +46,7 @@ describe('test link marks', function() {
 
 			cy.getContent()
 				.find('a[href*="google.com"]')
-				.click({ force: true })
-
-			cy.get('@winOpen')
-				.should('have.been.calledOnce')
-				.should('have.been.calledWith', 'http://google.com/')
+				.should('not.exist')
 		})
 	})
 })
