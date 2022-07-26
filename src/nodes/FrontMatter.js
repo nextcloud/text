@@ -13,26 +13,29 @@ const FrontMatter = TiptapCodeBlock.extend({
 			mergeAttributes(HTMLAttributes, { 'data-title': t('text', 'Front matter'), class: 'frontmatter' }),
 		})
 	},
-	parseHTML: () => {
-		return [
-			{
-				tag: 'pre[id="frontmatter"]',
-				preserveWhitespace: 'full',
-				priority: 9001,
-				attrs: {
-					language: 'yaml',
-				},
+	parseHTML() {
+		return [{
+			tag: 'pre#frontmatter',
+			preserveWhitespace: 'full',
+			priority: 9001,
+			attrs: {
+				language: 'yaml',
 			},
-		]
+		}]
 	},
 	toMarkdown: (state, node) => {
 		if (!state.out.match(/^\s*/)) throw Error('FrontMatter must be the first node of the document!')
+		const text = node.textContent
+		// Make sure the front matter fences are longer than any dash sequence within it
+		const dashes = text.match(/-{3,}/gm)
+		const separator = '-'.repeat(dashes ? dashes.sort().slice(-1)[0].length + 1 : 3)
+
 		state.write('')
 		state.out = ''
-		state.write('---\n')
-		state.text(node.textContent, false)
+		state.write(`${separator}\n`)
+		state.text(text, false)
 		state.ensureNewLine()
-		state.write('---')
+		state.write(separator)
 		state.closeBlock(node)
 	},
 
