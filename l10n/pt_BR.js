@@ -70,7 +70,6 @@ OC.L10N.register(
     "Some code" : "Algum código",
     "Upload from computer" : "Enviar do computador",
     "Insert from Files" : "Inserir de arquivos",
-    "Formatting menubar" : "Barra de menu de formatação",
     "Editor actions" : "Ações do editor",
     "Remaining Actions" : "Ações Restantes",
     "Update Link" : "Atualizar Link",
