@@ -184,7 +184,7 @@ export default {
 				clearInterval(this.$checkInterval)
 			}
 
-			if (isWidthAvailable) {
+			if (isWidthAvailable || !this.$isRichEditor) {
 				this.$nextTick(() => {
 					this.isReady = true
 				})
