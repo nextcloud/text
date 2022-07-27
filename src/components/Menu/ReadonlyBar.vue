@@ -8,6 +8,9 @@
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry.key}`" />
 		</div>
+		<div class="text-menubar__slot">
+			<slot />
+		</div>
 	</div>
 </template>
 
@@ -28,6 +31,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.text-readonly-bar {
+	display: flex;
+}
 .text-readonly-bar__entries {
 	display: flex;
 	flex-grow: 1;
