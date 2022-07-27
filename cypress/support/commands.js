@@ -35,7 +35,7 @@ Cypress.Commands.add('login', (user, password, { route, onBeforeLoad } = {}) => 
 		cy.visit(route)
 		cy.get('input[name=user]').type(user)
 		cy.get('input[name=password]').type(password)
-		cy.get('.submit-wrapper input[type=submit]').click()
+		cy.get('form[name=login] button[type=submit]').click()
 		cy.url().should('include', route)
 	})
 	// in case the session already existed but we are on a different route...
@@ -227,6 +227,7 @@ Cypress.Commands.add('getFile', fileName => {
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
 	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"]`).should('not.exist')
 })
 
 Cypress.Commands.add('getEditor', () => {
