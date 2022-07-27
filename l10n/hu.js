@@ -70,6 +70,7 @@ OC.L10N.register(
     "Some code" : "Valamilyen kód",
     "Upload from computer" : "Feltöltés a számítógépről",
     "Insert from Files" : "Beillesztés a Fájlokból",
+    "Formatting menu bar" : "Formázási menüsáv",
     "Editor actions" : "Szerkesztőműveletek",
     "Remaining Actions" : "Hátralévő műveletek",
     "Update Link" : "Hivatkozás frissítése",
