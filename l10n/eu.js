@@ -70,6 +70,7 @@ OC.L10N.register(
     "Some code" : "Kode zatia",
     "Upload from computer" : "Kargatu ordenagailutik",
     "Insert from Files" : "Txertatu Fitxategi-tik",
+    "Formatting menu bar" : "Menu-barra formateatzea",
     "Editor actions" : "Editore ekintzak",
     "Remaining Actions" : "Gainerako ekintzak",
     "Update Link" : "Eguneratu esteka",
