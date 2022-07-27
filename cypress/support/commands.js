@@ -227,6 +227,7 @@ Cypress.Commands.add('getFile', fileName => {
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
 	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"]`).should('not.exist')
 })
 
 Cypress.Commands.add('getEditor', () => {
