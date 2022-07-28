@@ -70,6 +70,7 @@ OC.L10N.register(
     "Some code" : "Nějaký kód",
     "Upload from computer" : "Nahrát z počítače",
     "Insert from Files" : "Vložit ze Souborů",
+    "Formatting menu bar" : "Lišta s nabídkami formátování",
     "Editor actions" : "Akce editoru",
     "Remaining Actions" : "Zbývající akce",
     "Update Link" : "Aktualizovat odkaz",
