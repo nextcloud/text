@@ -20,16 +20,24 @@
  *
  */
 
-describe('Files default view', function() {
-	beforeEach(function() {
-		cy.login('admin', 'admin')
+import { randHash } from '../utils/index.js'
+
+const randUser = randHash()
+
+describe('Files default view', () => {
+	before(() => {
+		cy.nextcloudCreateUser(randUser, randUser)
 	})
 
-	it('See the default files list', function() {
-		cy.get('.files-fileList tr').should('contain', 'welcome.txt')
+	beforeEach(() => {
+		cy.login(randUser, randUser)
 	})
 
-	it('Take screenshot', function() {
+	it('See the default files list', () => {
+		cy.get('#app-content-files table tr').should('contain', 'welcome.txt')
+	})
+
+	it('Take screenshot', () => {
 		cy.screenshot()
 	})
 })
