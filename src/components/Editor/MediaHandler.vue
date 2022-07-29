@@ -43,22 +43,22 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
-import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
+import { mimetypesImages as IMAGE_MIMES } from '../../helpers/mime.js'
 
 import {
 	useEditorMixin,
 	useFileMixin,
 	useSyncServiceMixin,
-} from './EditorWrapper.provider.js'
+} from '../Editor.provider.js'
 
 import {
 	ACTION_IMAGE_PROMPT,
 	ACTION_CHOOSE_LOCAL_IMAGE,
 	STATE_UPLOADING,
-} from './EditorMediaHandler.provider.js'
+} from './MediaHandler.provider.js'
 
 export default {
-	name: 'EditorMediaHandler',
+	name: 'MediaHandler',
 	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
 	provide() {
 		const val = {}

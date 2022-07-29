@@ -33,7 +33,7 @@
 			</p>
 		</a>
 
-		<EditorWrapper v-if="file"
+		<Editor v-if="file"
 			v-show="ready"
 			:key="file.path"
 			:file-id="file.id"
@@ -62,7 +62,7 @@ const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') 
 export default {
 	name: 'RichWorkspace',
 	components: {
-		EditorWrapper: () => import(/* webpackChunkName: "editor" */'./../components/EditorWrapper.vue'),
+		Editor: () => import(/* webpackChunkName: "editor" */'./../components/Editor.vue'),
 	},
 	props: {
 		path: {

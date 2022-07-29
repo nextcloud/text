@@ -22,7 +22,7 @@
 
 <template>
 	<div id="direct-editor" :class="{'icon-loading': saving}">
-		<EditorWrapper ref="editor"
+		<Editor ref="editor"
 			:initial-session="initialSession"
 			:active="true"
 			:mime="initial.mimetype"
@@ -32,13 +32,13 @@
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
 			</template>
-		</EditorWrapper>
+		</Editor>
 	</div>
 </template>
 
 <script>
 import Vue from 'vue'
-import EditorWrapper from '../components/EditorWrapper.vue'
+import Editor from '../components/Editor.vue'
 
 const log = Vue.observable({
 	messages: [],
@@ -87,7 +87,7 @@ window.addEventListener('message', function(message) {
 
 export default {
 	name: 'DirectEditing',
-	components: { EditorWrapper },
+	components: { Editor },
 	data() {
 		return {
 			initial: OCP.InitialState.loadState('text', 'file'),

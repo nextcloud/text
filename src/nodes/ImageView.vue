@@ -89,7 +89,7 @@ import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import { Image as ImageIcon, TrashCan } from '../components/icons.js'
 import store from './../mixins/store.js'
-import { useImageResolver } from './../components/EditorWrapper.provider.js'
+import { useImageResolver } from './../components/Editor.provider.js'
 
 import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 

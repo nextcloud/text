@@ -19,7 +19,7 @@ const loadEditor = ({ sharingToken, mimetype, $el }) => {
 
 	Promise.all([
 		import(/* webpackChunkName: "vendor" */'vue'),
-		import(/* webpackChunkName: "editor" */'./components/EditorWrapper.vue'),
+		import(/* webpackChunkName: "editor" */'./components/Editor.vue'),
 	])
 		.then(([vue, editor]) => ({
 			Vue: vue.default,

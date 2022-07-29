@@ -81,7 +81,7 @@ import { loadState } from '@nextcloud/initial-state'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import { optimalPath } from './../helpers/files.js'
 
-import { useEditorMixin } from './EditorWrapper.provider.js'
+import { useEditorMixin } from './Editor.provider.js'
 
 import { Link, Document, Delete, Check } from '../components/icons.js'
 
