@@ -20,11 +20,10 @@
  *
  */
 
-const translations = {
-	ctrl: t('text', 'Ctrl'),
-	alt: t('text', 'Alt'),
-	shift: t('text', 'Shift'),
-}
+import {
+	TRANSLATIONS,
+	MODIFIERS,
+} from './keys.js'
 
 const getEntryClasses = (actionEntry, isActive) => {
 	return {
@@ -34,10 +33,16 @@ const getEntryClasses = (actionEntry, isActive) => {
 }
 
 const keysString = (keyChar, modifiers = []) => {
-	return Object.entries(translations)
-		.filter(([k, v]) => modifiers.includes(k))
-		.map(([k, v]) => v)
+	return modifiers
+		.map(mod => TRANSLATIONS[mod])
 		.concat(keyChar.toUpperCase())
+		.join('+')
+}
+
+const getKeyshortcuts = ({ keyChar, keyModifiers = [] }) => {
+	return keyModifiers
+		.map(mod => MODIFIERS[mod])
+		.concat(keyChar)
 		.join('+')
 }
 
@@ -78,6 +83,7 @@ export {
 	isDisabled,
 	getIsActive,
 	getKeys,
+	getKeyshortcuts,
 	getEntryClasses,
 	getActionState,
 }

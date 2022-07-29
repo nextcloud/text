@@ -43,6 +43,8 @@ export default {
 				: Button
 		},
 		bindState() {
+			const { keyshortcuts } = this
+
 			const state = {
 				...this.state,
 			}
@@ -53,7 +55,11 @@ export default {
 				'entry-action-item': this.isItem,
 			}
 
-			// item list bejaviour
+			if (keyshortcuts) {
+				state['aria-keyshortcuts'] = keyshortcuts
+			}
+
+			// item list behaviour
 			if (this.isItem) {
 				state.closeAfterClick = true
 			}

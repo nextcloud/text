@@ -50,12 +50,14 @@ import {
 import EmojiPickerAction from './EmojiPickerAction.vue'
 import ActionImageUpload from './ActionImageUpload.vue'
 
+import { MODIFIERS } from './keys.js'
+
 export default [
 	{
 		key: 'undo',
 		label: t('text', 'Undo'),
 		keyChar: 'z',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: Undo,
 		action: (command) => command.undo(),
 		priority: 5,
@@ -64,7 +66,7 @@ export default [
 		key: 'redo',
 		label: t('text', 'Redo'),
 		keyChar: 'y',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: Redo,
 		action: (command) => command.redo(),
 		priority: 11,
@@ -73,7 +75,7 @@ export default [
 		key: 'bold',
 		label: t('text', 'Bold'),
 		keyChar: 'b',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: FormatBold,
 		isActive: 'strong',
 		action: (command) => {
@@ -85,7 +87,7 @@ export default [
 		key: 'italic',
 		label: t('text', 'Italic'),
 		keyChar: 'i',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: FormatItalic,
 		isActive: 'em',
 		action: (command) => {
@@ -97,7 +99,7 @@ export default [
 		key: 'underline',
 		label: t('text', 'Underline'),
 		keyChar: 'u',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: FormatUnderline,
 		isActive: 'underline',
 		action: (command) => {
@@ -109,7 +111,7 @@ export default [
 		key: 'strikethrough',
 		label: t('text', 'Strikethrough'),
 		keyChar: 'd',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		icon: FormatStrikethrough,
 		isActive: 'strike',
 		action: (command) => {
@@ -121,7 +123,7 @@ export default [
 		key: 'headings',
 		label: t('text', 'Headings'),
 		keyChar: '1…6',
-		keyModifiers: ['ctrl', 'shift'],
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		visible: false,
 		icon: FormatHeader1,
 		isActive: 'heading',
@@ -187,7 +189,7 @@ export default [
 		key: 'unordered-list',
 		label: t('text', 'Unordered list'),
 		keyChar: '8',
-		keyModifiers: ['ctrl', 'shift'],
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		isActive: 'bulletList',
 		icon: FormatListBulleted,
 		action: (command) => {
@@ -199,7 +201,7 @@ export default [
 		key: 'ordered-list',
 		label: t('text', 'Ordered list'),
 		keyChar: '9',
-		keyModifiers: ['ctrl', 'shift'],
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		isActive: 'orderedList',
 		icon: FormatListNumbered,
 		action: (command) => {
@@ -219,7 +221,7 @@ export default [
 		key: 'blockquote',
 		label: t('text', 'Blockquote'),
 		keyChar: '>',
-		keyModifiers: ['ctrl'],
+		keyModifiers: [MODIFIERS.Mod],
 		isActive: 'blockquote',
 		icon: FormatQuote,
 		action: (command) => {

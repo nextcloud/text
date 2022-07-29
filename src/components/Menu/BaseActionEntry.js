@@ -26,7 +26,7 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import debounce from 'debounce'
 
 import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
-import { getActionState, getKeys } from './utils.js'
+import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
 
@@ -52,6 +52,9 @@ const BaseActionEntry = {
 	computed: {
 		icon() {
 			return this.actionEntry.icon
+		},
+		keyshortcuts() {
+			return getKeyshortcuts(this.actionEntry)
 		},
 		tooltip() {
 			return [this.actionEntry.label, getKeys(this.$isMobile, this.actionEntry)].join(' ')
