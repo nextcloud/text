@@ -14,7 +14,7 @@ const MODIFIERS = {
 const TRANSLATIONS = {
 	[MODIFIERS.Mod]: t('text', isMac ? 'Command' : 'Control'),
 	[MODIFIERS.Control]: t('text', 'Ctrl'),
-	[MODIFIERS.Alt]: t('text', isMac ? 'Option' : 'Command'),
+	[MODIFIERS.Alt]: t('text', isMac ? 'Option' : 'Alt'),
 	[MODIFIERS.Shift]: t('text', 'Shift'),
 }
 
