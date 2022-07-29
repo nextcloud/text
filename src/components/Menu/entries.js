@@ -200,7 +200,7 @@ export default [
 	{
 		key: 'ordered-list',
 		label: t('text', 'Ordered list'),
-		keyChar: '9',
+		keyChar: '7',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		isActive: 'orderedList',
 		icon: FormatListNumbered,
@@ -212,6 +212,8 @@ export default [
 	{
 		key: 'task-list',
 		label: t('text', 'To-Do list'),
+		keyChar: '9',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
 		action: (command) => command.toggleTaskList(),
@@ -278,6 +280,8 @@ export default [
 	{
 		key: 'code-block',
 		label: t('text', 'Code block'),
+		keyChar: 'c',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
 		isActive: 'codeBlock',
 		icon: CodeTags,
 		action: (command) => {
