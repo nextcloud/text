@@ -11,8 +11,41 @@ import store from './store.js'
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
+const loadEditor = ({ sharingToken, mimetype, $el }) => {
+	const container = document.createElement('div')
+	container.id = 'texteditor'
+
+	document.getElementById('app-content').appendChild(container)
+
+	Promise.all([
+		import(/* webpackChunkName: "vendor" */'vue'),
+		import(/* webpackChunkName: "editor" */'./components/EditorWrapper.vue'),
+	])
+		.then(([vue, editor]) => ({
+			Vue: vue.default,
+			Editor: editor.default,
+		}))
+		.then(({ Vue, Editor }) => {
+			Vue.prototype.t = window.t
+			Vue.prototype.OCA = window.OCA
+
+			new Vue({
+				render: h => h(Editor, {
+					props: {
+						active: true,
+						shareToken: sharingToken,
+						mime: mimetype,
+					},
+				}),
+				store,
+			})
+				.$mount($el)
+
+		})
+		.catch(console.error)
+}
+
 documentReady(() => {
-	const dir = document.getElementById('dir').value
 	const mimetype = document.getElementById('mimetype').value
 	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
 
@@ -20,39 +53,19 @@ documentReady(() => {
 		return
 	}
 
-	if (dir !== '') {
+	const filesTable = document.querySelector('#preview table.files-filestable')
+
+	// list of files - dir sharing
+	if (filesTable) {
 		OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 		registerFileActionFallback()
 		registerFileCreate()
-	} else {
-		// single file share
-		const container = document.createElement('div')
-		container.id = 'texteditor'
-		const body = document.getElementById('app-content')
-		body.appendChild(container)
+		return
+	}
 
-		if (openMimetypes.indexOf(mimetype) !== -1) {
-			Promise.all([
-				import(/* webpackChunkName: "vendor" */'vue'),
-				import(/* webpackChunkName: "editor" */'./components/EditorWrapper.vue'),
-			]).then((imports) => {
-				const Vue = imports[0].default
-				Vue.prototype.t = window.t
-				Vue.prototype.OCA = window.OCA
-				const Editor = imports[1].default
-				const vm = new Vue({
-					render: h => h(Editor, {
-						props: {
-							active: true,
-							shareToken: sharingToken,
-							mime: mimetype,
-						},
-					}),
-					store,
-				})
-				vm.$mount(document.getElementById('preview'))
-			})
-		}
+	// single file share
+	if (openMimetypes.indexOf(mimetype) !== -1) {
+		loadEditor({ mimetype, sharingToken, $el: document.getElementById('preview') })
 	}
 })
 

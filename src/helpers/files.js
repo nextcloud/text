@@ -78,9 +78,9 @@ const registerFileCreate = () => {
 
 const registerFileActionFallback = () => {
 	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
-	const dir = document.getElementById('dir').value
+	const filesTable = document.querySelector('#preview table.files-filestable')
 
-	if (!sharingToken || dir !== '') {
+	if (!sharingToken || !filesTable) {
 		const ViewerRoot = document.createElement('div')
 		ViewerRoot.id = 'text-viewer-fallback'
 		document.body.appendChild(ViewerRoot)

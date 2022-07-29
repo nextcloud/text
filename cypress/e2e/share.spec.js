@@ -54,15 +54,12 @@ describe('Open test.md in viewer', function() {
 		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => {
-				cy.visit(href)
-				cy.window().then(win => {
-					win.OC.appswebroots.files_texteditor = true
-					cy.getEditor().should('be.visible')
-					cy.getContent()
-						.should('contain', 'Hello world')
-						.find('h2').should('contain', 'Hello world')
-				})
+			.then((href) => cy.visit(href))
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				cy.getContent()
+					.should('contain', 'Hello world')
+					.find('h2').should('contain', 'Hello world')
 			})
 	})
 
@@ -80,20 +77,17 @@ describe('Open test.md in viewer', function() {
 		cy.get(checkboxAllowEditing).first().should('be.checked')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => {
-				cy.visit(href)
-				cy.window().then(win => {
-					win.OC.appswebroots.files_texteditor = true
-					cy.getEditor().should('be.visible')
-					cy.getContent()
-						.should('contain', 'Hello world')
-						.find('h2').should('contain', 'Hello world')
+			.then((href) => cy.visit(href))
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				cy.getContent()
+					.should('contain', 'Hello world')
+					.find('h2').should('contain', 'Hello world')
 
-					cy.getMenu().should('be.visible')
-					cy.getActionEntry('undo').should('be.visible')
-					cy.getActionEntry('redo').should('be.visible')
-					cy.getActionEntry('bold').should('be.visible')
-				})
+				cy.getMenu().should('be.visible')
+				cy.getActionEntry('undo').should('be.visible')
+				cy.getActionEntry('redo').should('be.visible')
+				cy.getActionEntry('bold').should('be.visible')
 			})
 	})
 
@@ -107,22 +101,19 @@ describe('Open test.md in viewer', function() {
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
 			.then((href) => {
-				cy.logout()
-				cy.visit(href)
-				cy.window().then(win => {
-					win.OC.appswebroots.files_texteditor = true
-					// eslint-disable-next-line cypress/no-unnecessary-waiting
-					cy.wait(1000)
-					cy.getEditor().should('be.visible')
-					cy.getContent()
-						.should('contain', 'Hello world')
-						.find('h2').should('contain', 'Hello world')
+				return cy.logout()
+					.then(() => cy.visit(href))
+			})
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				cy.getContent()
+					.should('contain', 'Hello world')
+					.find('h2').should('contain', 'Hello world')
 
-					cy.getMenu().should('be.visible')
-					cy.getActionEntry('undo').should('be.visible')
-					cy.getActionEntry('redo').should('be.visible')
-					cy.getActionEntry('bold').should('be.visible')
-				})
+				cy.getMenu().should('be.visible')
+				cy.getActionEntry('undo').should('be.visible')
+				cy.getActionEntry('redo').should('be.visible')
+				cy.getActionEntry('bold').should('be.visible')
 			})
 	})
 
@@ -136,18 +127,15 @@ describe('Open test.md in viewer', function() {
 		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 		cy.get('#app-sidebar-vue a.sharing-entry__copy')
 			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => {
-				cy.visit(href)
-				cy.window().then(win => {
-					win.OC.appswebroots.files_texteditor = true
-					cy.get('#rich-workspace').should('contain', 'Hello world')
-					cy.openFile('test.md')
-					cy.get('#editor-container').should('be.visible')
-					cy.get('#editor .ProseMirror').should('contain', 'Hello world')
-					cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
-					cy.get('.modal-header button.header-close').click()
-					cy.get('.modal-mask').should('not.exist')
-				})
+			.then((href) => cy.visit(href))
+			.then(() => {
+				cy.get('#rich-workspace').should('contain', 'Hello world')
+				cy.openFile('test.md')
+				cy.get('#editor-container').should('be.visible')
+				cy.get('#editor .ProseMirror').should('contain', 'Hello world')
+				cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
+				cy.get('.modal-header button.header-close').click()
+				cy.get('.modal-mask').should('not.exist')
 			})
 	})
 
