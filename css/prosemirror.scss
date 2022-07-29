@@ -163,6 +163,18 @@ div.ProseMirror {
 		margin-bottom: 1em;
 	}
 
+	pre.frontmatter {
+		margin-bottom: 2em;
+		border-left: 4px solid var(--color-primary-element);
+	}
+
+	pre.frontmatter::before {
+		display: block;
+		content: attr(data-title);
+		color: var(--color-text-maxcontrast);
+		padding-bottom: 0.5em;
+	}
+
 	p code {
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
