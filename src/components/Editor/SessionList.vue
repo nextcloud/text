@@ -23,7 +23,9 @@
 <template>
 	<Popover class="session-list" placement="bottom">
 		<button slot="trigger"
-			v-tooltip.bottom="t('text', 'Active people')"
+			v-tooltip.bottom="label"
+			:title="label"
+			:aria-label="label"
 			class="avatar-list">
 			<div class="avatardiv icon-group" />
 			<AvatarWrapper v-for="session in sessionsVisible"
@@ -90,6 +92,9 @@ export default {
 		}
 	},
 	computed: {
+		label() {
+			return t('text', 'Active people')
+		},
 		showAuthorAnnotations: {
 			get() {
 				return this.$store.state.showAuthorAnnotations
