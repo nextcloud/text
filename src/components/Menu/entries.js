@@ -110,8 +110,8 @@ export default [
 	{
 		key: 'strikethrough',
 		label: t('text', 'Strikethrough'),
-		keyChar: 'd',
-		keyModifiers: [MODIFIERS.Mod],
+		keyChar: 'x',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		icon: FormatStrikethrough,
 		isActive: 'strike',
 		action: (command) => {
@@ -220,8 +220,8 @@ export default [
 	{
 		key: 'blockquote',
 		label: t('text', 'Blockquote'),
-		keyChar: '>',
-		keyModifiers: [MODIFIERS.Mod],
+		keyChar: 'b',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		isActive: 'blockquote',
 		icon: FormatQuote,
 		action: (command) => {
