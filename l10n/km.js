@@ -1,8 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "Saved" : "បាន​រក្សាទុក",
     "guest" : "ភ្ញៀវ",
+    "Saved" : "បាន​រក្សាទុក",
     "Info" : "Info",
     "Warning" : "បម្រាម",
     "Table" : "តារាង",
