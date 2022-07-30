@@ -4,9 +4,9 @@ OC.L10N.register(
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Učitana datoteka premašuje maksimalnu dopuštenu veličinu datoteke MAX_FILE_SIZE navedenu u HTML formi",
     "No file was uploaded" : "Nijedna datoteka nije učitana.",
     "Missing a temporary folder" : "Nedostaje privremeni direktorij.",
+    "guest" : "gost",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
-    "guest" : "gost",
     "Info" : "Info",
     "Warning" : "Upozorenje",
     "Edit" : "Izmjeni"
