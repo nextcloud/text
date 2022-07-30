@@ -1,8 +1,8 @@
 OC.L10N.register(
     "text",
     {
-    "Saved" : "Хадгалах",
     "Guest" : "Зочин",
+    "Saved" : "Хадгалах",
     "Unsupported image type" : "Дэмжигдэхгүй зургийн төрөл байна",
     "Undo" : "буцах",
     "Info" : "Info",
