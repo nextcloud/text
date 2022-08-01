@@ -21,7 +21,10 @@
   -->
 
 <template>
-	<Popover class="session-list" placement="bottom">
+	<Popover class="session-list"
+		placement="bottom"
+		@after-show="applyFocus"
+		@after-hide="revertFocus">
 		<button slot="trigger"
 			v-tooltip.bottom="label"
 			:title="label"
@@ -48,14 +51,16 @@
 						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
 					</li>
 				</ul>
-				<input id="toggle-color-annotations"
-					v-model="showAuthorAnnotations"
-					type="checkbox"
-					class="checkbox">
-				<label for="toggle-color-annotations">{{ t('text', 'Show author colors') }}</label>
-				<p class="hint">
-					{{ t('text', 'Author colors are only shown until everyone has closed the document.') }}
-				</p>
+				<form ref="form" tabindex="0" @submit.prevent>
+					<input id="toggle-color-annotations"
+						v-model="showAuthorAnnotations"
+						type="checkbox"
+						class="checkbox">
+					<label for="toggle-color-annotations">{{ t('text', 'Show author colors') }}</label>
+					<p class="hint">
+						{{ t('text', 'Author colors are only shown until everyone has closed the document.') }}
+					</p>
+				</form>
 			</div>
 		</template>
 	</Popover>
@@ -66,6 +71,7 @@ import Popover from '@nextcloud/vue/dist/Components/Popover'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import AvatarWrapper from './AvatarWrapper.vue'
 import store from '../../mixins/store.js'
+import { useEditorMixin } from '../Editor.provider.js'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90
@@ -79,7 +85,7 @@ export default {
 	directives: {
 		tooltip: Tooltip,
 	},
-	mixins: [store],
+	mixins: [store, useEditorMixin],
 	props: {
 		sessions: {
 			type: Object,
@@ -130,6 +136,14 @@ export default {
 		},
 		sessionsVisible() {
 			return this.participantsWithoutCurrent.slice(0, 3)
+		},
+	},
+	methods: {
+		applyFocus() {
+			this.$refs.form.focus()
+		},
+		revertFocus() {
+			this.$editor.chain().focus().run()
 		},
 	},
 }
@@ -186,9 +200,16 @@ export default {
 			.session-label {
 				padding-right: 3px;
 			}
+
 			.guest-label {
 				padding-left: 3px;
 				color: var(--color-text-maxcontrast);
+			}
+
+			&:focus-visible {
+				box-shadow: 0 0 0 2px inset var(--color-primary) !important;
+				border-radius: var(--border-radius);
+				background-position: 12px center;
 			}
 		}
 	}
