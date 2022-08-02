@@ -18,6 +18,7 @@ OC.L10N.register(
     "Redo" : "Atcelt atsaukšanu",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
+    "Command" : "Komanda",
     "Edit" : "Rediģēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

@@ -91,7 +91,8 @@ OC.L10N.register(
     "Table" : "Таблица",
     "Insert emoji" : "Вставить emoji",
     "Insert image" : "Вставить изображение",
-    "Alt" : "Alt",
+    "Command" : "Команда",
+    "Control" : "Контроль",
     "Edit" : "Редактировать",
     "New text document" : "Новый текстовый документ",
     "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
@@ -99,6 +100,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
     "ToDo list" : "Список задач",
     "Emoji picker" : "Выбор эмодзи",
-    "Todo item" : "Элемент списка задач"
+    "Todo item" : "Элемент списка задач",
+    "Alt" : "Alt"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

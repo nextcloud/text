@@ -67,13 +67,13 @@ OC.L10N.register(
     "Warning" : "Advarsler",
     "Insert emoji" : "Indsæt emoji",
     "Insert image" : "Indsæt billede",
-    "Alt" : "Alt",
     "Edit" : "Redigér",
     "New text document" : "Nyt tekstdokument",
     "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
     "ToDo list" : "To-Do liste",
-    "Emoji picker" : "Emoji vælger"
+    "Emoji picker" : "Emoji vælger",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n != 1);");

@@ -64,6 +64,8 @@ OC.L10N.register(
     "Warning" : "Upozorenje",
     "Insert emoji" : "Umetni emoji",
     "Insert image" : "Umetni sliku",
+    "Command" : "Naredba",
+    "Control" : "Kontrola",
     "Edit" : "Uredi",
     "New text document" : "Novi tekstni dokument",
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",

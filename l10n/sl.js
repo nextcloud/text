@@ -96,7 +96,8 @@ OC.L10N.register(
     "Table" : "Razpredelnica",
     "Insert emoji" : "Vstavi izrazno ikono",
     "Insert image" : "Vstavi sliko",
-    "Alt" : "ALT",
+    "Command" : "Ukaz",
+    "Control" : "Nadzor",
     "Edit" : "Uredi",
     "New text document" : "Nov besedilni dokument",
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
@@ -104,6 +105,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "ToDo list" : "Seznam opravil",
     "Emoji picker" : "Izbirnik izraznih ikon",
-    "Todo item" : "Naloga"
+    "Todo item" : "Naloga",
+    "Alt" : "ALT"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

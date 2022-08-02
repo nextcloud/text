@@ -27,6 +27,7 @@ OC.L10N.register(
     "Info" : "اطلاعات",
     "Success" : "موفقیت",
     "Warning" : "هشدار",
+    "Control" : "کنترل",
     "Edit" : "ویرایش"
 },
 "nplurals=2; plural=(n > 1);");

@@ -90,7 +90,8 @@ OC.L10N.register(
     "Table" : "Πίνακας",
     "Insert emoji" : "Εισαγωγή emoji",
     "Insert image" : "Εισαγωγή εικόνας",
-    "Alt" : "Alt",
+    "Command" : "Εντολή",
+    "Control" : "Έλεγχος",
     "Edit" : "Επεξεργασία",
     "New text document" : "Νέο έγγραφο κειμένου",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
@@ -98,6 +99,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
     "ToDo list" : "ToDo λίστα",
     "Emoji picker" : "Επιλογέας emoji",
-    "Todo item" : "Στοιχείο todo"
+    "Todo item" : "Στοιχείο todo",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n != 1);");

@@ -109,14 +109,17 @@ OC.L10N.register(
     "Table" : "Tablo",
     "Insert emoji" : "Emoji ekle",
     "Insert image" : "Görsel ekle",
-    "Alt" : "Alt",
+    "Command" : "Komut",
+    "Control" : "Kontrol",
     "Edit" : "Düzenle",
+    "Front matter" : "Açılış bölümleri ",
     "New text document" : "Yeni metin belgesi",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Currently active users:" : "Etkin kullanıcı sayısı:",
     "_and %n other editor_::_and %n other editors_" : ["%n diğer düzenleyici ekle","%n diğer düzenleyici ekle"],
     "ToDo list" : "Yapılacaklar listesi",
     "Emoji picker" : "Emoji seçici",
-    "Todo item" : "Yapılacak iş ögesi"
+    "Todo item" : "Yapılacak iş ögesi",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n > 1);");

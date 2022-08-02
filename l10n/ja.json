@@ -67,13 +67,15 @@
     "Warning" : "警告",
     "Insert emoji" : "絵文字を挿入",
     "Insert image" : "画像の挿入",
-    "Alt" : "Alt",
+    "Command" : "コマンド",
+    "Control" : "コントロール",
     "Edit" : "編集",
     "New text document" : "新しいテキストドキュメント",
     "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Currently active users:" : "現在のアクティブユーザー:",
     "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "ToDo list" : "ToDo リスト",
-    "Emoji picker" : "絵文字選択"
+    "Emoji picker" : "絵文字選択",
+    "Alt" : "Alt"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
