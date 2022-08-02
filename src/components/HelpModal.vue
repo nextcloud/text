@@ -24,6 +24,33 @@
 			</thead>
 			<tbody>
 				<tr>
+					<td>{{ t('text', 'New paragraph') }}</td>
+					<template v-if="!isMobile">
+						<td />
+						<td>
+							<kbd>{{ t('text', 'Enter') }}</kbd>
+						</td>
+					</template>
+					<td v-else>
+						2x
+						<kbd>{{ t('text', 'Enter') }}</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Hard line break') }}</td>
+					<template v-if="!isMobile">
+						<td />
+						<td>
+							<kbd>{{ t('text', 'Shift') }}</kbd>
+							+
+							<kbd>{{ t('text', 'Enter') }}</kbd>
+						</td>
+					</template>
+					<td v-else>
+						<kbd>{{ t('text', 'Enter') }}</kbd>
+					</td>
+				</tr>
+				<tr>
 					<td>{{ t('text', 'Bold') }}</td>
 					<td><code>**{{ t('text', 'Bold text') }}**</code></td>
 					<td v-if="!isMobile">
