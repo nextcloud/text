@@ -99,7 +99,8 @@ OC.L10N.register(
     "Table" : "Tabuľka",
     "Insert emoji" : "Vložiť emotikon",
     "Insert image" : "Vložiť obrázok",
-    "Alt" : "Alt",
+    "Command" : "Príkaz",
+    "Control" : "Riadenie",
     "Edit" : "Upraviť",
     "New text document" : "Nový textový dokument",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
@@ -107,6 +108,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["a %n ďalší editor","a %n ďalší editori","a %n ďalších editorov","a %n ďalších editorov"],
     "ToDo list" : "Zoznam úloh",
     "Emoji picker" : "Výber emotikonov",
-    "Todo item" : "Položka úloh"
+    "Todo item" : "Položka úloh",
+    "Alt" : "Alt"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

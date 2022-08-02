@@ -35,6 +35,8 @@ OC.L10N.register(
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Предупредување",
+    "Command" : "Команда",
+    "Control" : "Контрола",
     "Edit" : "Уреди",
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува"
 },

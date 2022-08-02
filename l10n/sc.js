@@ -62,6 +62,8 @@ OC.L10N.register(
     "Warning" : "Avisu",
     "Insert emoji" : "Inserta·nche una carighedda",
     "Insert image" : "Inserta·nche imàgine",
+    "Command" : "Cumandu",
+    "Control" : "Controllu",
     "Edit" : "Modìfica ",
     "New text document" : "Archìviu de testu nou",
     "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",

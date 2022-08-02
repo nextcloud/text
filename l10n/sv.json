@@ -80,13 +80,15 @@
     "Table" : "Tabell",
     "Insert emoji" : "Infoga emoji",
     "Insert image" : "Infoga bild",
-    "Alt" : "Alt",
+    "Command" : "Kommando",
+    "Control" : "Kontroll",
     "Edit" : "Redigera",
     "New text document" : "Nytt textdokument",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Currently active users:" : "Aktiva användare just nu:",
     "_and %n other editor_::_and %n other editors_" : ["och %n annan redaktör","och %n andra redaktörer"],
     "ToDo list" : "Att göra lista",
-    "Emoji picker" : "Emojiväljare"
+    "Emoji picker" : "Emojiväljare",
+    "Alt" : "Alt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

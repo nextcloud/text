@@ -106,7 +106,8 @@ OC.L10N.register(
     "Table" : "Таблица",
     "Insert emoji" : "Вмъкване на емотикон",
     "Insert image" : "Вмъкване на изображение",
-    "Alt" : "Alt /бутон/",
+    "Command" : "Команда",
+    "Control" : "Control Center",
     "Edit" : "Променяне",
     "New text document" : "Нов текстов документ",
     "Enter your name so other users can see who is editing" : "Въведете името си, за да могат другите потребители да видят кой редактира",
@@ -114,6 +115,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и %n други редактори","и %n други редактори"],
     "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
-    "Todo item" : "Елемент на задача за изпълнение"
+    "Todo item" : "Елемент на задача за изпълнение",
+    "Alt" : "Alt /бутон/"
 },
 "nplurals=2; plural=(n != 1);");

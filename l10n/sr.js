@@ -59,6 +59,8 @@ OC.L10N.register(
     "Success" : "Успешно",
     "Warning" : "Упозорење",
     "Insert image" : "Убаци слику",
+    "Command" : "Команда",
+    "Control" : "Контрола",
     "Edit" : "Измени",
     "New text document" : "Нови текстуални документ",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",

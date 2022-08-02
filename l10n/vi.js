@@ -62,6 +62,8 @@ OC.L10N.register(
     "Warning" : "Cảnh báo",
     "Insert emoji" : "Chèn emoji",
     "Insert image" : "Chèn ảnh",
+    "Command" : "Lệnh",
+    "Control" : "Kiểm soát",
     "Edit" : "Chỉnh sửa",
     "New text document" : "Tài liệu văn bản mới",
     "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
