@@ -64,5 +64,8 @@ export default {
 	line-height: var(--size);
 	font-size: var(--font-size);
 	font-weight: normal;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>
