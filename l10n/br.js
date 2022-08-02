@@ -19,6 +19,7 @@ OC.L10N.register(
     "Info" : "Titouroù",
     "Success" : "Graet",
     "Warning" : "Kemenadenn",
+    "Command" : "Urzh",
     "Edit" : "Cheñch",
     "Enter your name so other users can see who is editing" : "Lakait o anv ma vo posuple d'an implijourien all gwellet piv a zo oc'h embannañ"
 },

@@ -83,7 +83,8 @@
     "Table" : "表格",
     "Insert emoji" : "插入 emoji",
     "Insert image" : "插入图片",
-    "Alt" : "Alt",
+    "Command" : "命令",
+    "Control" : "控制",
     "Edit" : "编辑",
     "New text document" : "新建文本文档",
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
@@ -91,6 +92,7 @@
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
     "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
-    "Todo item" : "待办事项"
+    "Todo item" : "待办事项",
+    "Alt" : "Alt"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

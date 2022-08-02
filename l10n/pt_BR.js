@@ -109,7 +109,8 @@ OC.L10N.register(
     "Table" : "Tabela",
     "Insert emoji" : "Inserir emoji ",
     "Insert image" : "Inserir imagem",
-    "Alt" : "Alt",
+    "Command" : "Comando",
+    "Control" : "Controle",
     "Edit" : "Editar",
     "New text document" : "Novo documento de texto",
     "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
@@ -117,6 +118,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores","e %n outros editores"],
     "ToDo list" : "Lista ToDo",
     "Emoji picker" : "Selecionador de emoji ",
-    "Todo item" : "Todo item"
+    "Todo item" : "Todo item",
+    "Alt" : "Alt"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

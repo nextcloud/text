@@ -53,6 +53,8 @@ OC.L10N.register(
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
     "Insert image" : "Sett inn bilde",
+    "Command" : "Kommando",
+    "Control" : "Kontroll",
     "Edit" : "Rediger",
     "New text document" : "Nytt tekstdokument",
     "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",

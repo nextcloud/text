@@ -65,6 +65,8 @@ OC.L10N.register(
     "Success" : "Correcto",
     "Warning" : "Aviso",
     "Insert image" : "Inserir unha imaxe",
+    "Command" : "Orde",
+    "Control" : "Control",
     "Edit" : "Editar",
     "New text document" : "Novo documento de texto",
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",

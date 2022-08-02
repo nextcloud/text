@@ -96,6 +96,8 @@ OC.L10N.register(
     "Table" : "Taulukko",
     "Insert emoji" : "Lisää emoji",
     "Insert image" : "Lisää kuva",
+    "Command" : "Komento",
+    "Control" : "Hallinta",
     "Edit" : "Muokkaa",
     "New text document" : "Uusi tekstiasiakirja",
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkevät kuka muokkaa asiakirjaa",

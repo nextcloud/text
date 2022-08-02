@@ -59,6 +59,8 @@ OC.L10N.register(
     "Success" : "Tókst",
     "Warning" : "Aðvörun",
     "Insert image" : "Setja inn mynd",
+    "Command" : "Skipun",
+    "Control" : "Stjórnun",
     "Edit" : "Breyta",
     "New text document" : "Nýtt textaskjal",
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",

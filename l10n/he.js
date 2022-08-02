@@ -60,6 +60,8 @@ OC.L10N.register(
     "Success" : "הצלחה",
     "Warning" : "אזהרה",
     "Insert image" : "הוספת תמונה",
+    "Command" : "פקודה",
+    "Control" : "שליטה",
     "Edit" : "עריכה",
     "New text document" : "מסמך טקסט חדש",
     "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
