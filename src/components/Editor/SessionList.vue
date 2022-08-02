@@ -143,7 +143,7 @@ export default {
 			this.$refs.form.focus()
 		},
 		revertFocus() {
-			this.$editor.chain().focus().run()
+			this.$editor.commands.focus()
 		},
 	},
 }
