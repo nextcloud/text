@@ -109,7 +109,8 @@ OC.L10N.register(
     "Table" : "Táblázat",
     "Insert emoji" : "Emodzsi beszúrása",
     "Insert image" : "Kép beszúrása",
-    "Alt" : "Alt",
+    "Command" : "Parancs",
+    "Control" : "Irányítás",
     "Edit" : "Szerkesztés",
     "New text document" : "Új szöveges dokumentum",
     "Enter your name so other users can see who is editing" : "Adja meg a nevét, hogy mások lássák ki szerkeszti",
@@ -117,6 +118,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["és %n további szerkesztő","és %n további szerkesztő"],
     "ToDo list" : "Teendőlista",
     "Emoji picker" : "Emodzsiválasztó",
-    "Todo item" : "Teendő elem "
+    "Todo item" : "Teendő elem ",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n != 1);");

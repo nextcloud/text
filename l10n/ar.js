@@ -27,6 +27,7 @@ OC.L10N.register(
     "Info" : "معلومات",
     "Success" : "نجاح",
     "Warning" : "تحذير",
+    "Command" : "الأمر",
     "Edit" : "تعديل",
     "New text document" : "مستند نصي جديد"
 },

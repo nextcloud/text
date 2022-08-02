@@ -96,6 +96,8 @@ OC.L10N.register(
     "Table" : "Tableau",
     "Insert emoji" : "Insérer une émoticône",
     "Insert image" : "Ajouter image",
+    "Command" : "Commande",
+    "Control" : "Contrôler",
     "Edit" : "Modifier",
     "New text document" : "Nouveau document texte",
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",

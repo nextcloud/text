@@ -47,6 +47,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Averto",
     "Insert image" : "Enmeti bildon",
+    "Control" : "Kontrolo",
     "Edit" : "Modifi",
     "New text document" : "Nova tekstdokumento",
     "Enter your name so other users can see who is editing" : "Entajpu vian nomon, por ke aliuloj videblu, kiu modifas",

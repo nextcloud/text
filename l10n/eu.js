@@ -109,7 +109,8 @@ OC.L10N.register(
     "Table" : "Taula",
     "Insert emoji" : "Txertatu emojia",
     "Insert image" : "Txertatu irudia",
-    "Alt" : "Alt",
+    "Command" : "Komandoa",
+    "Control" : "Kontrola",
     "Edit" : "Editatu",
     "New text document" : "Testu dokumentu berria",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
@@ -117,6 +118,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["eta beste editore %n","eta beste %n editore"],
     "ToDo list" : "Egitekoen zerrenda",
     "Emoji picker" : " Emotikono-hautatzailea",
-    "Todo item" : "Eginbeharreko elementua"
+    "Todo item" : "Eginbeharreko elementua",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n != 1);");

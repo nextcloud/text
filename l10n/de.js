@@ -109,7 +109,8 @@ OC.L10N.register(
     "Table" : "Tabelle",
     "Insert emoji" : "Emoji einfügen",
     "Insert image" : "Bild einfügen",
-    "Alt" : "Alt",
+    "Command" : "Befehl",
+    "Control" : "Kontrolle",
     "Edit" : "Bearbeiten",
     "New text document" : "Neues Textdokument",
     "Enter your name so other users can see who is editing" : "Gib Deinen Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
@@ -117,6 +118,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["und %n anderer Bearbeiter ","und %n andere Bearbeiter "],
     "ToDo list" : "To-do-Liste",
     "Emoji picker" : "Emoji-Auswahl",
-    "Todo item" : "Todo-Element"
+    "Todo item" : "Todo-Element",
+    "Alt" : "Alt"
 },
 "nplurals=2; plural=(n != 1);");

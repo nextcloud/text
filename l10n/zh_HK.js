@@ -109,7 +109,8 @@ OC.L10N.register(
     "Table" : "表",
     "Insert emoji" : "插入 emoji",
     "Insert image" : "插入圖像",
-    "Alt" : "Alt",
+    "Command" : "指令",
+    "Control" : "掌控",
     "Edit" : "編輯",
     "Front matter" : "前言",
     "New text document" : "新文字文件",
@@ -118,6 +119,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["及其他 %n 個編輯"],
     "ToDo list" : "待辦清單",
     "Emoji picker" : "Emoji 選擇器",
-    "Todo item" : "待辦事項"
+    "Todo item" : "待辦事項",
+    "Alt" : "Alt"
 },
 "nplurals=1; plural=0;");
