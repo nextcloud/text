@@ -23,8 +23,8 @@
 <template>
 	<Popover class="session-list"
 		placement="bottom"
-		@after-show="applyFocus"
-		@after-hide="revertFocus">
+		@after-show="useFocusTrap"
+		@apply-hide="clearFocusTrap">
 		<button slot="trigger"
 			v-tooltip.bottom="label"
 			:title="label"
@@ -37,7 +37,7 @@
 				:size="40" />
 		</button>
 		<template #default>
-			<div class="session-menu">
+			<div ref="wrapper" class="session-menu">
 				<slot name="lastSaved" />
 				<ul>
 					<slot />
@@ -51,7 +51,7 @@
 						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
 					</li>
 				</ul>
-				<form ref="form" tabindex="0" @submit.prevent>
+				<form tabindex="0" @submit.prevent>
 					<input id="toggle-color-annotations"
 						v-model="showAuthorAnnotations"
 						type="checkbox"
@@ -72,6 +72,7 @@ import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 import AvatarWrapper from './AvatarWrapper.vue'
 import store from '../../mixins/store.js'
 import { useEditorMixin } from '../Editor.provider.js'
+import { createFocusTrap } from 'focus-trap'
 
 const COLLABORATOR_IDLE_TIME = 60
 const COLLABORATOR_DISCONNECT_TIME = 90
@@ -139,11 +140,18 @@ export default {
 		},
 	},
 	methods: {
-		applyFocus() {
-			this.$refs.form.focus()
+		/**
+		 * Add focus trap for accessibility.
+		 */
+		useFocusTrap() {
+			this.$nextTick(() => {
+				this.$focusTrap = createFocusTrap(this.$refs.wrapper)
+				this.$focusTrap.activate()
+			})
 		},
-		revertFocus() {
-			this.$editor.commands.focus()
+		clearFocusTrap() {
+			this.$focusTrap?.deactivate()
+			this.$focusTrap = null
 		},
 	},
 }
