@@ -1,94 +1,98 @@
 <template>
-  <div class="items">
-    <template v-if="items.length">
-      <button
-        class="item"
-        :class="{ 'is-selected': index === selectedIndex }"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="selectItem(index)"
-      >
-        {{ item }}
-      </button>
-    </template>
-    <div class="item" v-else>
-      No result
-    </div>
-  </div>
+	<div class="items">
+		<template v-if="items.length">
+			<div v-for="(item, index) in items"
+				:key="index"
+				:class="index === selectedIndex ? 'highlight' : null">
+				<AutoCompleteResult :id="item"
+					:label="item"
+					icon="icon-user"
+					source="users"
+					@mouseover.native="selectedIndex = index"
+					@click.native="selectItem(index)" />
+			</div>
+		</template>
+		<div v-else class="item">
+			No result
+		</div>
+	</div>
 </template>
 
 <script>
+import AutoCompleteResult from "./AutoCompleteResult.vue";
 export default {
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
+	components: {
+		AutoCompleteResult,
+	},
+	props: {
+		items: {
+			type: Array,
+			required: true,
+		},
 
-    command: {
-      type: Function,
-      required: true,
-    },
-  },
+		command: {
+			type: Function,
+			required: true,
+		},
+	},
 
-  data() {
-    return {
-      selectedIndex: 0,
-    }
-  },
+	data() {
+		return {
+			selectedIndex: 0,
+		}
+	},
 
-  watch: {
-    items() {
-      this.selectedIndex = 0
-    },
-  },
+	watch: {
+		items() {
+			this.selectedIndex = 0
+		},
+	},
 
-  methods: {
-    onKeyDown({ event }) {
-      if (event.key === 'ArrowUp') {
-        this.upHandler()
-        return true
-      }
+	methods: {
+		onKeyDown({ event }) {
+			if (event.key === 'ArrowUp') {
+				this.upHandler()
+				return true
+			}
 
-      if (event.key === 'ArrowDown') {
-        this.downHandler()
-        return true
-      }
+			if (event.key === 'ArrowDown') {
+				this.downHandler()
+				return true
+			}
 
-      if (event.key === 'Enter') {
-        this.enterHandler()
-        return true
-      }
+			if (event.key === 'Enter') {
+				this.enterHandler()
+				return true
+			}
 
-      return false
-    },
+			return false
+		},
 
-    upHandler() {
-      this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
-    },
+		upHandler() {
+			this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
+		},
 
-    downHandler() {
-      this.selectedIndex = (this.selectedIndex + 1) % this.items.length
-    },
+		downHandler() {
+			this.selectedIndex = (this.selectedIndex + 1) % this.items.length
+		},
 
-    enterHandler() {
-      this.selectItem(this.selectedIndex)
-    },
+		enterHandler() {
+			this.selectItem(this.selectedIndex)
+		},
 
-    selectItem(index) {
-      const item = this.items[index]
+		selectItem(index) {
+			const item = this.items[index]
 
-      if (item) {
-        this.command({ id: item })
-      }
-    },
-  },
+			if (item) {
+				this.command({ id: item })
+			}
+		},
+	},
 }
 </script>
 
 <style lang="scss">
 .items {
-  padding: 0.2rem;
   position: relative;
   border-radius: 0.5rem;
   background: #FFF;

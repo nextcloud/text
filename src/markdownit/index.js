@@ -1,6 +1,5 @@
 import MarkdownIt from 'markdown-it'
 import taskLists from '@hedgedoc/markdown-it-task-lists'
-import markdownitMentions from '@quartzy/markdown-it-mentions'
 import underline from './underline.js'
 import splitMixedLists from './splitMixedLists.js'
 import callouts from './callouts.js'
@@ -14,6 +13,5 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(underline)
 	.use(callouts)
 	.use(keepSyntax)
-	.use(markdownitMentions)
 
 export default markdownit

@@ -34,7 +34,7 @@ import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
 import { VueRenderer } from '@tiptap/vue-2'
 import EmojiList from './components/EmojiList.vue'
-import MentionSuggestion from './components/Mention/suggestion'
+import MentionSuggestion from './components/Mention/suggestion.js'
 import tippy from 'tippy.js'
 
 import 'proxy-polyfill'

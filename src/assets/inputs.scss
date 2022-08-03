@@ -1,0 +1,104 @@
+/**
+ * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/**
+ * color-text-lighter		normal state
+ * color-text-lighter		active state
+ * color-text-maxcontrast 	disabled state
+ */
+
+/* Default global values */
+button:not(.button-vue),
+input:not([type='range']),
+textarea {
+	margin: 0;
+	padding: 7px 6px;
+
+	cursor: text;
+
+	color: var(--color-text-lighter);
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+	outline: none;
+	background-color: var(--color-main-background);
+
+	font-size: 13px;
+
+	&:not(:disabled):not(.primary) {
+		&:hover,
+		&:focus,
+		&.active {
+			/* active class used for multiselect */
+			border-color: var(--color-primary-element);
+			outline: none;
+		}
+
+		&:active {
+			color: var(--color-text-light);
+			outline: none;
+			background-color: var(--color-main-background);
+		}
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: $opacity_disabled;
+		color: var(--color-text-maxcontrast);
+		background-color: var(--color-background-dark);
+	}
+
+	&:required {
+		box-shadow: none;
+	}
+
+	&:invalid {
+		border-color: var(--color-error);
+		box-shadow: none !important;
+	}
+
+	/* Primary action button, use sparingly */
+	&.primary {
+		cursor: pointer;
+		color: var(--color-primary-text);
+		border-color: var(--color-primary-element);
+		background-color: var(--color-primary-element);
+
+		&:not(:disabled) {
+			&:hover,
+			&:focus,
+			&:active {
+				border-color: var(--color-primary-element-light);
+				background-color: var(--color-primary-element-light);
+			}
+			&:active {
+				color: var(--color-primary-text-dark);
+			}
+		}
+
+		&:disabled {
+			cursor: default;
+			color: var(--color-primary-text-dark);
+			// opacity is already defined to .5 if disabled
+			background-color: var(--color-primary-element);
+		}
+	}
+}
