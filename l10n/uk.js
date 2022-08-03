@@ -50,6 +50,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Увага",
     "Insert image" : "Додати зображення",
+    "Command" : "Команда",
     "Edit" : "Редашувати",
     "New text document" : "Новий текстовий документ",
     "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
