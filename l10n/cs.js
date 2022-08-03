@@ -111,6 +111,7 @@ OC.L10N.register(
     "Insert image" : "Vložit obrázek",
     "Command" : "Příkaz",
     "Control" : "Kontrola",
+    "Option" : "Volba",
     "Edit" : "Upravit",
     "Front matter" : "Front matter",
     "New text document" : "Nový textový dokument",

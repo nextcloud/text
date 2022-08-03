@@ -111,6 +111,7 @@ OC.L10N.register(
     "Insert image" : "Txertatu irudia",
     "Command" : "Komandoa",
     "Control" : "Kontrola",
+    "Option" : "Aukera",
     "Edit" : "Editatu",
     "New text document" : "Testu dokumentu berria",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
