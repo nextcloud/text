@@ -21,8 +21,11 @@
   -->
 
 <template>
-	<div data-text-el="editor-container" class="text-editor" @keydown.esc.stop.prevent="() => {}">
-		<DocumentStatus v-if="displayed"
+	<div id="editor-container"
+		data-text-el="editor-container"
+		class="text-editor"
+		@keydown.esc.stop.prevent="() => {}">
+		<DocumentStatus v-if="displayedStatus"
 			:idle="idle"
 			:lock="lock"
 			:sync-error="syncError"
@@ -275,6 +278,9 @@ export default {
 		},
 		displayed() {
 			return this.currentSession && this.active
+		},
+		displayedStatus() {
+			return this.displayed || !!this.syncError
 		},
 		renderRichEditorMenus() {
 			return this.contentLoaded
@@ -611,11 +617,18 @@ export default {
 		},
 
 		onError({ type, data }) {
-			this.$editor.setOptions({ editable: false })
 
 			this.$nextTick(() => {
+				this.$editor?.setEditable(false)
 				this.$emit('sync-service:error')
 			})
+
+			if (type === ERROR_TYPE.LOAD_ERROR) {
+				this.syncError = {
+					type,
+					data,
+				}
+			}
 
 			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
 				this.contentLoaded = true
@@ -635,6 +648,7 @@ export default {
 			if (type === ERROR_TYPE.SOURCE_NOT_FOUND) {
 				this.hasConnectionIssue = true
 			}
+
 			this.$emit('ready')
 		},
 

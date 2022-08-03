@@ -22,15 +22,24 @@
 
 <template>
 	<div class="document-status">
-		<p v-if="idle" class="msg">
+		<NcEmptyContent v-if="isLoadingError" :title="t('text', 'Failed to load file')" :description="syncError.data.data">
+			<template #icon>
+				<AlertOctagonOutline />
+			</template>
+		</NcEmptyContent>
+
+		<p v-else-if="idle" class="msg">
 			{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 		</p>
+
 		<p v-else-if="hasSyncCollission" class="msg icon-error">
 			{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
 		</p>
+
 		<p v-else-if="hasConnectionIssue" class="msg">
 			{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
 		</p>
+
 		<p v-if="lock" class="msg msg-locked">
 			<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
 		</p>
@@ -40,13 +49,17 @@
 <script>
 
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
+import AlertOctagonOutline from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import Lock from 'vue-material-design-icons/Lock.vue'
+import { NcEmptyContent } from '@nextcloud/vue'
 
 export default {
 	name: 'DocumentStatus',
 
 	components: {
+		AlertOctagonOutline,
 		Lock,
+		NcEmptyContent,
 	},
 
 	props: {
@@ -77,6 +90,9 @@ export default {
 	computed: {
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+		},
+		isLoadingError() {
+			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
 		},
 	},
 
