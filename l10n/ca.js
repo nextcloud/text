@@ -58,6 +58,7 @@ OC.L10N.register(
     "Info" : "Informació",
     "Success" : "Èxit",
     "Warning" : "Avís",
+    "Table" : "Taula",
     "Insert image" : "Inserir imatge",
     "Command" : "Ordre",
     "Control" : "Control",
