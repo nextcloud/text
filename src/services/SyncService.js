@@ -118,7 +118,7 @@ class SyncService {
 				if (!error.response || error.code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				} else {
-					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response.status })
+					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
 				}
 				throw error
 			})
