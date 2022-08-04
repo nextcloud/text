@@ -111,6 +111,7 @@ OC.L10N.register(
     "Insert image" : "插入圖像",
     "Command" : "指令",
     "Control" : "掌控",
+    "Option" : "選項",
     "Edit" : "編輯",
     "Front matter" : "前言",
     "New text document" : "新文字文件",
