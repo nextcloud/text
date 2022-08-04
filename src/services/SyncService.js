@@ -22,7 +22,6 @@
  */
 import axios from '@nextcloud/axios'
 import mitt from 'mitt'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 import PollingBackend from './PollingBackend.js'
 import { logger } from '../helpers/logger.js'
@@ -160,8 +159,7 @@ class SyncService {
 		})
 	}
 
-	sendSteps(_sendable) {
-		const sendable = _sendable || sendableSteps(this.state)
+	sendSteps(sendable) {
 		if (!sendable) {
 			return
 		}
@@ -194,7 +192,6 @@ class SyncService {
 		}
 		this.lastStepPush = Date.now()
 		this.emit('sync', { steps: newSteps, document })
-		logger.debug('receivedSteps', { newVersion: this._getVersion() })
 	}
 
 	checkIdle() {
@@ -205,21 +202,8 @@ class SyncService {
 		}
 	}
 
-	_getVersion() {
-		if (this.state) {
-			return getVersion(this.state)
-		}
-		return 0
-	}
-
-	_getDocument() {
-		if (this.state) {
-			return this.state.doc
-		}
-	}
-
 	_getContent() {
-		return this.options.serialize(this._getDocument())
+		return this.options.serialize()
 	}
 
 	save() {

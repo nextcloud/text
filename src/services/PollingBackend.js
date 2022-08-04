@@ -23,7 +23,6 @@ import axios from '@nextcloud/axios'
 import { logger } from '../helpers/logger.js'
 import { endpointUrl } from '../helpers/index.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
-import { sendableSteps } from 'prosemirror-collab'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -114,8 +113,7 @@ class PollingBackend {
 		this.lock = true
 		let autosaveContent
 		if (this._forcedSave || this._manualSave
-			|| (!sendableSteps(this._authority.state)
-			&& (this._authority._getVersion() !== this._authority.document.lastSavedVersion))
+		// TODO: figure out when to autosave
 		) {
 			autosaveContent = this._authority._getContent()
 		}
@@ -123,7 +121,7 @@ class PollingBackend {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
-			version: this._authority._getVersion(),
+			version: this._authority.document.currentVersion,
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
@@ -214,7 +212,7 @@ class PollingBackend {
 		this._authority.emit('stateChange', { dirty: true })
 		if (this.lock) {
 			setTimeout(() => {
-				this._authority.sendSteps()
+				this._authority.sendSteps(_sendable)
 			}, 100)
 			return
 		}
