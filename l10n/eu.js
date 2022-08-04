@@ -113,6 +113,7 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Aukera",
     "Edit" : "Editatu",
+    "Front matter" : "Aurreko gaia",
     "New text document" : "Testu dokumentu berria",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Currently active users:" : "Une honetan erabiltzaile aktiboak:",
