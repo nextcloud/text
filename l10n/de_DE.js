@@ -111,6 +111,7 @@ OC.L10N.register(
     "Insert image" : "Bild einfügen",
     "Command" : "Befehl",
     "Control" : "Kontrolle",
+    "Option" : "Option",
     "Edit" : "Bearbeiten",
     "Front matter" : "Titelei",
     "New text document" : "Neues Textdokument",
