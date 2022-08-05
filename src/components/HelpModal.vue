@@ -158,8 +158,7 @@
 </template>
 
 <script>
-import Modal from '@nextcloud/vue/dist/Components/Modal'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { Modal, Tooltip } from '@nextcloud/vue'
 import isMobile from './../mixins/isMobile.js'
 
 export default {

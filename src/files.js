@@ -27,6 +27,8 @@ import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
 import store from './store.js'
 
+import '@nextcloud/vue/style.css'
+
 __webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 

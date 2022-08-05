@@ -42,7 +42,7 @@
 
 <script>
 import { translate as t } from '@nextcloud/l10n'
-import { addRecent } from '@nextcloud/vue/dist/Functions/emoji'
+import { emojiAddRecent } from '@nextcloud/vue'
 
 export default {
 	name: 'EmojiList',
@@ -113,7 +113,7 @@ export default {
 
 			if (emojiObject) {
 				this.command(emojiObject)
-				addRecent(emojiObject)
+				emojiAddRecent(emojiObject)
 			}
 		},
 	},

@@ -1,5 +1,7 @@
 import store from './store.js'
 
+import '@nextcloud/vue/style.css'
+
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 

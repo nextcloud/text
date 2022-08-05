@@ -22,7 +22,7 @@
 
 /* eslint-disable jsdoc/valid-types */
 
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import { Tooltip } from '@nextcloud/vue'
 import debounce from 'debounce'
 
 import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'

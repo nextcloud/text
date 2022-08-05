@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+import '@nextcloud/vue/style.css'
 
 import ViewerComponent from './components/ViewerComponent.vue'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'

@@ -38,8 +38,7 @@
 
 <script>
 import { BaseActionEntry } from './BaseActionEntry.js'
-import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import { EmojiPicker, Button } from '@nextcloud/vue'
 
 export default {
 	name: 'EmojiPickerAction',

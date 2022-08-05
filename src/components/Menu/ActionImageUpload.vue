@@ -55,8 +55,7 @@
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import { Actions, ActionButton } from '@nextcloud/vue'
 
 import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../Editor.provider.js'

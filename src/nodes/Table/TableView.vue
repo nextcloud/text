@@ -45,8 +45,7 @@
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import { Actions, ActionButton } from '@nextcloud/vue'
 import { TableSettings, Delete } from '../../components/icons.js'
 
 export default {

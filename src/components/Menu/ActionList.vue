@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import { Actions } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
