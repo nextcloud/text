@@ -8,12 +8,17 @@ const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users');
 
 export default {
 	items: async ({ query }) => {
-    
-		const params = { filter: query };
-		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params);
-		const users = JSON.parse(JSON.stringify(response.data));
+		const params = { filter: query }
+		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)
+		const users = JSON.parse(JSON.stringify(response.data))
+		let result = []
 
-		return Object.keys(users).map(key => users[key]);
+		Object.keys(users).map(key => result.push({
+			id: key,
+			label: users[key],
+		}))
+
+		return result
 	},
 
 	render: () => {

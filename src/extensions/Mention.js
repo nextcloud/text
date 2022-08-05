@@ -13,8 +13,10 @@ export default TipTapMention.extend({
 	parseHTML() {
 		return [
 			{
-				tag: `span[data-type="${this.name}"]`,
-				getAttrs: element => ((element.getAttribute('data-type') === this.name) && null),
+				tag: `span[data-type="user"]`,
+				getAttrs: element => ((element.getAttribute('data-type') === "user") 
+					&& (element.getAttribute('class') === "mention") 
+					&& null),
 				priority: 100,
 			},
 		]
@@ -61,8 +63,8 @@ export default TipTapMention.extend({
 	},
 
 	toMarkdown(state, node) {
-		state.write('@')
-		state.write(node.attrs.id)
+		state.write(' ')
+		state.write(`@[${node.attrs.id}](mention://user/${node.attrs.id})`)
 		state.write(' ')
 	},
 });

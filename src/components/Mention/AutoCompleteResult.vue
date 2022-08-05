@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$clickable-area: 44px;
+$clickable-area: 30px;
 $autocomplete-padding: 10px;
 
 .autocomplete-result {

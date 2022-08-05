@@ -1,14 +1,15 @@
 <template>
 	<div class="items">
 		<template v-if="items.length">
-			<div v-for="(item, index) in items"
+			<div v-for="({ id, label }, index) in items"
 				:key="index"
-				:class="index === selectedIndex ? 'highlight' : null">
-				<AutoCompleteResult :id="item"
-					:label="item"
+				:class="id === selectedIndex ? 'highlight' : null">
+				<AutoCompleteResult 
+					:id="id"
+					:label="label"
 					icon="icon-user"
 					source="users"
-					@mouseover.native="selectedIndex = index"
+					@mouseover.native="selectedIndex = id"
 					@click.native="selectItem(index)" />
 			</div>
 		</template>
@@ -84,7 +85,7 @@ export default {
 			const item = this.items[index]
 
 			if (item) {
-				this.command({ id: item })
+				this.command(item)
 			}
 		},
 	},
