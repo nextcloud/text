@@ -38,6 +38,7 @@ OC.L10N.register(
     "Unordered list" : "Uordnet liste",
     "Ordered list" : "Ordnet liste",
     "Blockquote" : "Sitat",
+    "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde",
