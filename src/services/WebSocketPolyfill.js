@@ -75,7 +75,6 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		onLoaded({ document, session, content }) {
 			this.#document = document
 			this.#session = session
-			syncService.startSync()
 		}
 
 		onSync({ steps, document }) {
