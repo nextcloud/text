@@ -42,17 +42,35 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		constructor(url) {
 			this.url = url
 			logger.debug(url, fileId)
-			this.#registerHandlers()
+			this.#registerHandlers({
+				opened: ({ document, session }) => {
+					this.#document = document
+					this.#session = session
+					this.onopen()
+				},
+				loaded: ({ document, session, content }) => {
+					this.#document = document
+					this.#session = session
+				},
+				sync: ({ steps, document }) => {
+					this.#document = document
+					if (steps) {
+						steps.forEach(s => {
+							this.onmessage({ data: s.step })
+						})
+					}
+				},
+			})
 			syncService.open({
 				fileId,
 				filePath: syncService.options.filePath,
 			})
 		}
 
-		#registerHandlers() {
-			syncService.on('opened', this.onOpened.bind(this))
-			syncService.on('loaded', this.onLoaded.bind(this))
-			syncService.on('sync', this.onSync.bind(this))
+		#registerHandlers(handlers) {
+			this.#handlers = handlers
+			Object.entries(this.#handlers)
+				.forEach(([key, value]) => syncService.on(key, value))
 		}
 
 		send(data) {
@@ -66,30 +84,10 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 			})
 		}
 
-		onOpened({ document, session }) {
-			this.#document = document
-			this.#session = session
-			this.onopen()
-		}
-
-		onLoaded({ document, session, content }) {
-			this.#document = document
-			this.#session = session
-		}
-
-		onSync({ steps, document }) {
-			this.#document = document
-			if (steps) {
-				steps.forEach(s => {
-					this.onmessage({ data: s.step })
-				})
-			}
-		}
-
 		close() {
-			syncService.off('opened', this.onOpened.bind(this))
-			syncService.off('loaded', this.onLoaded.bind(this))
-			syncService.off('sync', this.onSync.bind(this))
+			Object.entries(this.#handlers)
+				.forEach(([key, value]) => syncService.off(key, value))
+			this.#handlers = []
 			syncService.close()
 			logger.debug('Websocket closed')
 		}
