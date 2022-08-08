@@ -362,9 +362,6 @@ export default {
 				syncService: this.$syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
-			}).catch((e) => {
-				this.hasConnectionIssue = true
-				logger.error('Problems connecting to server:', { exception: e })
 			})
 			this.$providers.push(syncServiceProvider)
 			this.forceRecreate = false
