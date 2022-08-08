@@ -196,9 +196,11 @@ class DocumentService {
 
 		try {
 			$document = $this->documentMapper->find($documentId);
+			/*
 			if ($version !== $document->getCurrentVersion()) {
 				throw new VersionMismatchException('Version does not match');
 			}
+			*/
 			$stepsJson = json_encode($steps);
 			if (!is_array($steps) || $stepsJson === null) {
 				throw new InvalidArgumentException('Failed to encode steps');
