@@ -187,12 +187,6 @@ class DocumentService {
 		$stepsVersion = null;
 
 		try {
-			$this->lockingProvider->acquireLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
-		} catch (LockedException $e) {
-			throw new VersionMismatchException('Version does not match');
-		}
-
-		try {
 			$document = $this->documentMapper->find($documentId);
 			$stepsJson = json_encode($steps);
 			if (!is_array($steps) || $stepsJson === null) {
@@ -214,10 +208,8 @@ class DocumentService {
 			$step->setVersion($newVersion);
 			$this->stepMapper->insert($step);
 			// TODO write steps to cache for quicker reading
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			return $steps;
 		} catch (DoesNotExistException $e) {
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		} catch (\Throwable $e) {
 			if ($document !== null && $stepsVersion !== null) {
@@ -225,7 +217,6 @@ class DocumentService {
 				$this->cache->set('document-version-' . $document->getId(), $stepsVersion);
 				$this->stepMapper->deleteAfterVersion($documentId, $stepsVersion);
 			}
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		}
 	}
