@@ -80,22 +80,27 @@ class SyncService {
 
 		this.lock = null
 
+		this.version = null
+
 		return this
 	}
 
 	async open({ fileId, filePath, initialSession }) {
 		const connectionData = initialSession
 			|| await this._openDocument({ fileId, filePath })
+		this.version = 0
 		this.document = connectionData.document
 		this.document.readOnly = connectionData.readOnly
 		this.session = connectionData.session
 		this.lock = connectionData.lock
 		this.emit('opened', {
 			document: this.document,
+			version: this.version,
 			session: this.session,
 		})
 		this.emit('loaded', {
 			document: this.document,
+			version: this.version,
 			session: this.session,
 			documentSource: '' + connectionData.content,
 		})
@@ -178,6 +183,9 @@ class SyncService {
 		const newSteps = []
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
+			if (this.version < steps[i].version) {
+				this.version = steps[i].version
+			}
 			if (!Array.isArray(singleSteps)) {
 				logger.error('Invalid step data, skipping step', { step: steps[i] })
 				// TODO: recover
@@ -192,7 +200,11 @@ class SyncService {
 			})
 		}
 		this.lastStepPush = Date.now()
-		this.emit('sync', { steps: newSteps, document })
+		this.emit('sync', {
+			steps: newSteps,
+			document: this.document,
+			version: this.version
+		})
 	}
 
 	checkIdle() {

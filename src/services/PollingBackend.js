@@ -121,7 +121,7 @@ class PollingBackend {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
-			version: this._authority.document.currentVersion,
+			version: this._authority.version,
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
@@ -135,8 +135,8 @@ class PollingBackend {
 	_handleResponse(response) {
 		this.fetchRetryCounter = 0
 
-		if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
-			logger.debug('Saved document', { document: response.data.document })
+		if (this._authority.version < response.data.document.lastSavedVersion) {
+			logger.debug('Saved document', response.data.document)
 			this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
 		}
 
@@ -180,7 +180,7 @@ class PollingBackend {
 			} else {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
 			}
-		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.version) {
 			// Only emit conflict event if we have synced until the latest version
 			logger.error('Conflict during file save, please resolve')
 			this._authority.emit('error', {
@@ -245,7 +245,7 @@ class PollingBackend {
 					logger.error('failed to write to document - not allowed')
 				}
 				// Only emit conflict event if we have synced until the latest version
-				if (data.document?.currentVersion === this._authority.document.currentVersion) {
+				if (data.document?.currentVersion === this._authority.version) {
 					this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 					OC.Notification.showTemporary('Changes could not be sent yet')
 				}

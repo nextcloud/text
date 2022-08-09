@@ -32,7 +32,7 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 
 		#url
 		#session
-		#document
+		#version
 		binaryType
 		onmessage
 		onerror
@@ -44,20 +44,20 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 			this.url = url
 			logger.debug(url, fileId)
 			this.#registerHandlers({
-				opened: ({ document, session }) => {
-					this.#document = document
-					logger.debug('opened ', document.currentVersion, session)
+				opened: ({ version, session }) => {
+					this.#version = version
+					logger.debug('opened ', version, session)
 					this.#session = session
 					this.onopen()
 				},
-				loaded: ({ document, session, content }) => {
-					logger.debug('loaded ', document.currentVersion, session)
-					this.#document = document
+				loaded: ({ version, session, content }) => {
+					logger.debug('loaded ', version, session)
+					this.#version = version
 					this.#session = session
 				},
-				sync: ({ steps, document }) => {
-					logger.debug('synced ', document.currentVersion, steps)
-					this.#document = document
+				sync: ({ steps, version }) => {
+					logger.debug('synced ', version, steps)
+					this.#version = version
 					if (steps) {
 						steps.forEach(s => {
 							this.onmessage({ data: s.step })
@@ -79,10 +79,9 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 
 		send(data) {
 			syncService.sendSteps(() => {
-				const doc = this.#document
-				logger.debug('send steps ', doc.currentVersion, data)
+				logger.debug('send steps ', this.#version, data)
 				return {
-					version: doc.currentVersion,
+					version: this.#version,
 					steps: [data],
 				}
 			})

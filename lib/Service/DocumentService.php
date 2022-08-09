@@ -125,11 +125,11 @@ class DocumentService {
 
 			// Do not hard reset if changed from outside since this will throw away possible steps
 			// This way the user can still resolve conflicts in the editor view
-			if ($document->getLastSavedVersion() !== $document->getCurrentVersion()) {
+			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+			if ($stepsVersion && ($document->getLastSavedVersion() !== $stepsVersion)) {
 				$this->logger->debug('Unsaved steps but collission with file, continue collaborative editing');
 				return $document;
 			}
-
 			return $document;
 		} catch (DoesNotExistException $e) {
 		} catch (InvalidPathException $e) {
@@ -149,7 +149,6 @@ class DocumentService {
 
 		$document = new Document();
 		$document->setId($file->getFileInfo()->getId());
-		$document->setCurrentVersion(0);
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($file->getFileInfo()->getMtime());
 		$document->setLastSavedVersionEtag($file->getEtag());
@@ -182,11 +181,10 @@ class DocumentService {
 	 * @param $version
 	 * @return array
 	 * @throws DoesNotExistException
-	 * @throws VersionMismatchException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
 		$document = null;
-		$oldVersion = null;
+		$stepsVersion = null;
 
 		try {
 			$this->lockingProvider->acquireLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
@@ -196,11 +194,6 @@ class DocumentService {
 
 		try {
 			$document = $this->documentMapper->find($documentId);
-			/*
-			if ($version !== $document->getCurrentVersion()) {
-				throw new VersionMismatchException('Version does not match');
-			}
-			*/
 			$stepsJson = json_encode($steps);
 			if (!is_array($steps) || $stepsJson === null) {
 				throw new InvalidArgumentException('Failed to encode steps');
@@ -211,16 +204,14 @@ class DocumentService {
 					throw new InvalidArgumentException('Invalid step data');
 				}
 			}
-			$oldVersion = $document->getCurrentVersion();
-			$newVersion = $oldVersion + count($steps);
+			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+			$newVersion = $stepsVersion + count($steps);
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
-			$document->setCurrentVersion($newVersion);
-			$this->documentMapper->update($document);
 			$step = new Step();
 			$step->setData($stepsJson);
 			$step->setSessionId($sessionId);
 			$step->setDocumentId($documentId);
-			$step->setVersion($version + 1);
+			$step->setVersion($newVersion);
 			$this->stepMapper->insert($step);
 			// TODO write steps to cache for quicker reading
 			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
@@ -229,12 +220,10 @@ class DocumentService {
 			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		} catch (\Throwable $e) {
-			if ($document !== null && $oldVersion !== null) {
+			if ($document !== null && $stepsVersion !== null) {
 				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
-				$document->setCurrentVersion($oldVersion);
-				$this->documentMapper->update($document);
-				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
-				$this->stepMapper->deleteAfterVersion($documentId, $oldVersion);
+				$this->cache->set('document-version-' . $document->getId(), $stepsVersion);
+				$this->stepMapper->deleteAfterVersion($documentId, $stepsVersion);
 			}
 			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
@@ -245,19 +234,7 @@ class DocumentService {
 		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
 			return [];
 		}
-		$steps = $this->stepMapper->find($documentId, $lastVersion);
-		$unique_array = [];
-		foreach ($steps as $step) {
-			$version = $step->getVersion();
-			if (!array_key_exists($version, $unique_array)) {
-				$unique_array[(string)$version] = $step;
-			} else {
-				// found duplicate step
-				// FIXME: verify that this version is the correct one
-				//$this->stepMapper->delete($step);
-			}
-		}
-		return array_values($unique_array);
+		return $this->stepMapper->find($documentId, $lastVersion);
 	}
 
 	/**
@@ -303,7 +280,8 @@ class DocumentService {
 			return $document;
 		}
 		// Do not save if version already saved
-		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$document->getCurrentVersion())) {
+		$stepsVersion = $this->stepMapper->getLatestVersion($documentId);
+		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$stepsVersion)) {
 			return $document;
 		}
 
@@ -324,7 +302,7 @@ class DocumentService {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		}
-		$document->setLastSavedVersion($document->getCurrentVersion());
+		$document->setLastSavedVersion($stepsVersion);
 		$document->setLastSavedVersionTime(time());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$this->documentMapper->update($document);
@@ -503,7 +481,8 @@ class DocumentService {
 	}
 
 	public function hasUnsavedChanges(Document $document) {
-		return $document->getCurrentVersion() !== $document->getLastSavedVersion();
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+		return $stepsVersion !== $document->getLastSavedVersion();
 	}
 
 	private function ensureDocumentsFolder(): bool {

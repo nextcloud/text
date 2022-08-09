@@ -23,6 +23,7 @@
 
 namespace OCA\Text\Db;
 
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
@@ -49,6 +50,24 @@ class StepMapper extends QBMapper {
 			->orderBy('id');
 
 		return $this->findEntities($qb);
+	}
+
+	public function getLatestVersion($documentId): ?string {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('version')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->setMaxResults(1)
+			->orderBy('version', 'DESC')
+			->execute();
+
+		$data = $result->fetch();
+		if ($data === false) {
+			return null;
+		}
+
+		return $data['version'];
 	}
 
 	public function deleteAll($documentId): void {
