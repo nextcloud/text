@@ -45,14 +45,17 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 			this.#registerHandlers({
 				opened: ({ document, session }) => {
 					this.#document = document
+					logger.debug('opened ', document.currentVersion, session)
 					this.#session = session
 					this.onopen()
 				},
 				loaded: ({ document, session, content }) => {
+					logger.debug('loaded ', document.currentVersion, session)
 					this.#document = document
 					this.#session = session
 				},
 				sync: ({ steps, document }) => {
+					logger.debug('synced ', document.currentVersion, steps)
 					this.#document = document
 					if (steps) {
 						steps.forEach(s => {
@@ -74,9 +77,9 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		}
 
 		send(data) {
-			logger.debug(data)
 			syncService.sendSteps(() => {
 				const doc = this.#document
+				logger.debug('send steps ', doc.currentVersion, data)
 				return {
 					version: doc.currentVersion,
 					steps: [data],
