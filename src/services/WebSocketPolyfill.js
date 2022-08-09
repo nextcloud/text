@@ -38,6 +38,7 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		onerror
 		onclose
 		onopen
+		#handlers
 
 		constructor(url) {
 			this.url = url
@@ -91,7 +92,9 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 			Object.entries(this.#handlers)
 				.forEach(([key, value]) => syncService.off(key, value))
 			this.#handlers = []
-			syncService.close()
+			syncService.close().then(() => {
+					this.onclose()
+				})
 			logger.debug('Websocket closed')
 		}
 
