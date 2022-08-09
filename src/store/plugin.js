@@ -1,9 +1,9 @@
-/*
- * @copyright Copyright (c) 2021 Julius Härtl <jus@bitgrid.net>
+/**
+ * @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
  *
- * @author Julius Härtl <jus@bitgrid.net>
+ * @author Vinicius Reis <vinicius@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,23 +19,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+import debounce from 'debounce'
+import { SET_VIEW_WIDTH } from './mutation-types.js'
 
-import store from '../store/index.js'
+const getClientWidth = () => document.documentElement.clientWidth
 
-/**
- * This mixin is required since we cannot be sure that the root Vue instance has
- * registered the global store. This might be the case if the text app components
- * are mounted in other apps e.g. viewer
- */
-export default {
-	data() {
-		return {
-			$store: store,
-		}
-	},
-	beforeMount() {
-		if (typeof this.$store === 'undefined') {
-			this.$store = store
-		}
-	},
+const plugin = ({ commit }) => {
+	const onResize = debounce(() => {
+		commit(SET_VIEW_WIDTH, getClientWidth())
+	}, 100)
+
+	window.addEventListener('resize', onResize)
 }
+
+export { getClientWidth }
+
+export default plugin

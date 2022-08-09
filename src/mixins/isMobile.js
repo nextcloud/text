@@ -20,26 +20,25 @@
  *
  */
 
+import debounce from 'debounce'
+
+const getClientWidth = () => document.documentElement.clientWidth
+const isMobile = () => getClientWidth() < 768
+
 export default {
 	data() {
 		return {
-			isMobile: this._isMobile(),
+			isMobile: isMobile(),
 		}
 	},
 	beforeMount() {
-		window.addEventListener('resize', this._onResize)
+		this.$onResize = debounce(() => {
+			this.isMobile = isMobile()
+		}, 100)
+
+		window.addEventListener('resize', this.$onResize)
 	},
 	beforeDestroy() {
-		window.removeEventListener('resize', this._onResize)
-	},
-	methods: {
-		_onResize() {
-			// Update mobile mode
-			this.isMobile = this._isMobile()
-		},
-		_isMobile() {
-			// check if content width is under 768px
-			return document.documentElement.clientWidth < 768
-		},
+		window.removeEventListener('resize', this.$onResize)
 	},
 }

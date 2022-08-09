@@ -24,31 +24,48 @@ import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 import { getBuilder } from '@nextcloud/browser-storage'
 
+import {
+	SET_SHOW_AUTHOR_ANNOTATIONS,
+	SET_CURRENT_SESSION,
+	SET_VIEW_WIDTH,
+} from './mutation-types.js'
+import plugin, { getClientWidth } from './plugin.js'
+
 const persistentStorage = getBuilder('text').persist().build()
 
 Vue.use(Vuex)
 
 const store = new Store({
+	plugins: [plugin],
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
+		viewWidth: getClientWidth(),
 	},
 	mutations: {
-		SET_SHOW_AUTHOR_ANNOTATIONS(state, value) {
+		[SET_VIEW_WIDTH](state, value) {
+			state.viewWidth = value
+		},
+		[SET_SHOW_AUTHOR_ANNOTATIONS](state, value) {
 			state.showAuthorAnnotations = value
 			persistentStorage.setItem('showAuthorAnnotations', '' + value)
 		},
-		SET_CURRENT_SESSION(state, value) {
+		[SET_CURRENT_SESSION](state, value) {
 			state.currentSession = value
 			persistentStorage.setItem('currentSession', value)
 		},
 	},
+	getters: {
+		isMobileView({ viewWidth }) {
+			return viewWidth < 768
+		},
+	},
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
-			store.commit('SET_SHOW_AUTHOR_ANNOTATIONS', value)
+			commit(SET_SHOW_AUTHOR_ANNOTATIONS, value)
 		},
 		setCurrentSession({ commit }, value) {
-			store.commit('SET_CURRENT_SESSION', value)
+			commit(SET_CURRENT_SESSION, value)
 		},
 	},
 })
