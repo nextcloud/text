@@ -213,7 +213,7 @@ class PollingBackend {
 		if (this.lock) {
 			setTimeout(() => {
 				this._authority.sendSteps(_sendable)
-			}, 100)
+			}, 200)
 			return
 		}
 		this.lock = true
@@ -230,7 +230,6 @@ class PollingBackend {
 		}).then((response) => {
 			this.carefulRetryReset()
 			this.lock = false
-			this.fetchSteps()
 		}).catch(({ response, code }) => {
 			logger.error('failed to apply steps due to collission, retrying')
 			this.lock = false

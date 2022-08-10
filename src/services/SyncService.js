@@ -203,7 +203,7 @@ class SyncService {
 		this.emit('sync', {
 			steps: newSteps,
 			document: this.document,
-			version: this.version
+			version: this.version,
 		})
 	}
 

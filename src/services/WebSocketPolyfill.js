@@ -108,8 +108,8 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 				.forEach(([key, value]) => syncService.off(key, value))
 			this.#handlers = []
 			syncService.close().then(() => {
-					this.onclose()
-				})
+				this.onclose()
+			})
 			logger.debug('Websocket closed')
 		}
 
