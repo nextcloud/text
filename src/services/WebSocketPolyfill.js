@@ -39,9 +39,11 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		onclose
 		onopen
 		#handlers
+		#queue
 
 		constructor(url) {
 			this.url = url
+			this.#queue = []
 			logger.debug(url, fileId)
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
@@ -77,13 +79,27 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 				.forEach(([key, value]) => syncService.on(key, value))
 		}
 
-		send(data) {
+		send(...data) {
+			const sending = this.#queue.length > 0
+			this.#queue.push(...data)
+			if (!sending) {
+				this.#initiateSending()
+			}
+		}
+
+		#initiateSending() {
+			let steps
 			syncService.sendSteps(() => {
-				logger.debug('send steps ', this.#version, data)
+				steps = this.#queue
+				this.#queue = []
+				logger.debug('sending steps ', this.#version, steps.length, steps)
 				return {
 					version: this.#version,
-					steps: [data],
+					steps,
 				}
+			})?.catch(() => {
+				// try again
+				this.send(...steps)
 			})
 		}
 

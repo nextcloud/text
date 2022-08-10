@@ -219,7 +219,7 @@ class PollingBackend {
 		this.lock = true
 		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
 		const steps = sendable.steps
-		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
+		return axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
