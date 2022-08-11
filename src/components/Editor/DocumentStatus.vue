@@ -40,7 +40,7 @@
 <script>
 
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
-import Lock from 'vue-material-design-icons/Lock'
+import Lock from 'vue-material-design-icons/Lock.vue'
 
 export default {
 	name: 'DocumentStatus',

@@ -22,7 +22,7 @@
 
 import axios from '@nextcloud/axios'
 
-// eslint-disable-next-line no-unused-vars,node/no-extraneous-import
+// eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
