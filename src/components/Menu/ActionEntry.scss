@@ -7,7 +7,7 @@
 	}
 }
 
-.text-menubar, .popover {
+.text-menubar, .v-popper__inner {
 	button.entry-action__button {
 		height: 44px;
 		margin: 0;
@@ -62,6 +62,10 @@
 		&.is-active {
 			background-color: var(--color-primary-light);
 			box-shadow: inset 2px 0 var(--color-primary);
+			border-radius: 0;
+		}
+		&:hover {
+			border-radius: 0;
 		}
 	}
 
