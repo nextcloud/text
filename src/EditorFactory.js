@@ -30,8 +30,8 @@ import EditableTable from './nodes/EditableTable.js'
 import { Editor } from '@tiptap/core'
 import { Emoji, Markdown, PlainText, RichText } from './extensions/index.js'
 import { translate as t } from '@nextcloud/l10n'
-import { listLanguages, registerLanguage } from 'lowlight/lib/core'
-import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
+import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
+import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
 import { VueRenderer } from '@tiptap/vue-2'
 import EmojiList from './components/EmojiList.vue'
 import tippy from 'tippy.js'
@@ -43,6 +43,7 @@ const loadSyntaxHighlight = async (language) => {
 	console.info(list)
 	if (!listLanguages().includes(language)) {
 		try {
+			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + language)
 			registerLanguage(language, syntax.default)
 		} catch (e) {

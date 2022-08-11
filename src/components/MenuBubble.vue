@@ -46,7 +46,7 @@
 				data-text-bubble-action="add-link"
 				:class="{ 'is-active': isActive('link') }"
 				@click="showLinkMenu()">
-				<Link />
+				<LinkIcon />
 				<span class="menububble__buttontext">
 					{{ isActive('link') ? t('text', 'Update Link') : t('text', 'Add Link') }}
 				</span>
@@ -78,18 +78,18 @@ import { BubbleMenu } from '@tiptap/vue-2'
 import { getMarkAttributes } from '@tiptap/core'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import { optimalPath } from './../helpers/files.js'
 
 import { useEditorMixin } from './Editor.provider.js'
 
-import { Link, Document, Delete, Check } from '../components/icons.js'
+import { LinkIcon, Document, Delete, Check } from '../components/icons.js'
 
 export default {
 	name: 'MenuBubble',
 	components: {
 		BubbleMenu,
-		Link,
+		LinkIcon,
 		Document,
 		Delete,
 		Check,

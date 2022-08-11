@@ -45,7 +45,7 @@ import { useOutlineStateMixin } from './Wrapper.provider.js'
 import EditorOutline from './EditorOutline.vue'
 
 export default {
-	name: 'Content',
+	name: 'ContentContainer',
 	components: {
 		EditorContent,
 		EditorOutline,
