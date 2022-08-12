@@ -64,7 +64,7 @@ const clickOnImageAction = (actionName) => {
 	cy.getActionEntry('insert-image')
 		.click()
 
-	return cy.get('.popover.open')
+	return cy.get('.v-popper__wrapper .open')
 		.getActionEntry(actionName)
 		.click()
 }
