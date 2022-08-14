@@ -3,7 +3,7 @@
 		<ul v-if="hasHeadings"
 			class="editor--toc__list">
 			<li v-for="(heading) in headings"
-				:key="heading.id"
+				:key="heading.uuid"
 				:data-toc-level="heading.level"
 				class="editor--toc__item"
 				:class="`editor--toc__item--${heading.level}`">
@@ -17,6 +17,7 @@
 
 <script>
 import debounce from 'debounce'
+import { v4 as uuidv4 } from 'uuid'
 import { useEditorMixin } from '../Editor.provider.js'
 
 const regexSpaces = /\s+/g
@@ -92,11 +93,17 @@ export default {
 				if (node.type.name === 'heading') {
 					const text = node.textContent
 					const id = getId(text)
+					let uuid = node.attrs.uuid ?? uuidv4()
 
-					if (node.attrs.id !== id) {
+					if (node.attrs.id !== id || !node.attrs.uuid) {
+						uuid = node.attrs.uuid ?? uuid
 						const attrs = {
 							...node.attrs,
 							id,
+						}
+
+						if (!node.attrs.uuid) {
+							attrs.uuid = uuid
 						}
 
 						transaction.setNodeMarkup(position, undefined, attrs)
@@ -107,6 +114,7 @@ export default {
 						position,
 						text,
 						id,
+						uuid,
 					})
 				}
 			})
@@ -116,7 +124,26 @@ export default {
 
 			this.$editor.view.dispatch(transaction)
 
-			this.headings = headings
+			if (this.headings.length === 0) {
+				this.headings = headings
+				return
+			}
+
+			// Only update the affected fields
+			headings.forEach((heading, index) => {
+				if (this.headings[index]?.uuid === heading.uuid) {
+					this.$set(this.headings[index], 'text', heading.text)
+					this.$set(this.headings[index], 'id', heading.id)
+					if (this.headings[index].level !== heading.level) {
+						this.$set(this.headings[index], 'level', heading.level)
+					}
+					if (this.headings[index].position !== heading.position) {
+						this.$set(this.headings[index], 'position', heading.position)
+					}
+				} else {
+					this.$set(this.headings, index, heading)
+				}
+			})
 		},
 	},
 }
@@ -144,11 +171,12 @@ export default {
 	&__item {
 		transition: padding-left 0.8s;
 		// Disable per item animation as we currently update all headings data
-		// animation: initialPadding 1.5s;
+		animation: initialPadding 1.5s;
 		padding-left: var(--padding-left, 0rem);
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+
 		a:hover {
 			color: var(--color-primary-hover);
 		}

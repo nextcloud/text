@@ -8,6 +8,10 @@ const Heading = TipTapHeading.extend({
 				default: undefined,
 				rendered: true,
 			},
+			uuid: {
+				default: undefined,
+				rendered: false,
+			},
 		}
 	},
 	addKeyboardShortcuts() {
