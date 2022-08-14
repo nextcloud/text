@@ -48,7 +48,7 @@ export default {
 	mounted() {
 		this.$handleUpdate = debounce(this.handleUpdate, 900)
 		this.$editor.on('update', this.$handleUpdate)
-		this.$nextTick(this.$handleUpdate)
+		this.$nextTick(this.handleUpdate)
 	},
 	beforeDestroy() {
 		this.$editor.off('update', this.$handleUpdate)
