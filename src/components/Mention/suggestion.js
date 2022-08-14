@@ -50,7 +50,7 @@ export default {
 			onUpdate(props) {
 				component.updateProps(props)
 
-				if (!props.clientRect) {
+				if (!props.clientRect || !popup) {
 					return
 				}
 
@@ -60,6 +60,10 @@ export default {
 			},
 
 			onKeyDown(props) {
+				if (!popup) {
+					return
+				}
+
 				if (props.event.key === 'Escape') {
 					popup[0].hide()
 
@@ -70,6 +74,9 @@ export default {
 			},
 
 			onExit() {
+				if (!popup) {
+					return
+				}
 				popup[0].destroy()
 				component.destroy()
 			},
