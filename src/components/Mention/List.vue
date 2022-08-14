@@ -4,8 +4,7 @@
 			<div v-for="({ id, label }, index) in items"
 				:key="index"
 				:class="id === selectedIndex ? 'highlight' : null">
-				<AutoCompleteResult 
-					:id="id"
+				<AutoCompleteResult :id="id"
 					:label="label"
 					icon="icon-user"
 					source="users"
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-import AutoCompleteResult from "./AutoCompleteResult.vue";
+import AutoCompleteResult from './AutoCompleteResult.vue'
 export default {
 	components: {
 		AutoCompleteResult,

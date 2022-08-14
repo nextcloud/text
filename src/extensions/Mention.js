@@ -7,15 +7,15 @@ const getAvatarUrl = (user, size) => {
 		user,
 		size,
 	})
-};
+}
 
 export default TipTapMention.extend({
 	parseHTML() {
 		return [
 			{
-				tag: `span[data-type="user"]`,
-				getAttrs: element => ((element.getAttribute('data-type') === "user") 
-					&& (element.getAttribute('class') === "mention") 
+				tag: 'span[data-type="user"]',
+				getAttrs: element => ((element.getAttribute('data-type') === 'user')
+					&& (element.getAttribute('class') === 'mention')
 					&& null),
 				priority: 100,
 			},
@@ -29,13 +29,13 @@ export default TipTapMention.extend({
 			'span',
 			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
 				'data-type': this.name,
-				'class': 'mention-bubble mention-bubble--primary',
-				'contenteditable': false,
+				class: 'mention-bubble mention-bubble--primary',
+				contenteditable: false,
 			}),
 			[
 				'span',
 				{
-					'class': 'mention-bubble__wrapper',
+					class: 'mention-bubble__wrapper',
 				},
 				[
 					'span',
@@ -45,16 +45,16 @@ export default TipTapMention.extend({
 					[
 						'span',
 						{
-							'class': `mention-bubble__icon mention-bubble__icon--with-avatar`,
-							'style': avatarUrl ? `background-image: url('${avatarUrl}')` : '',
+							class: 'mention-bubble__icon mention-bubble__icon--with-avatar',
+							style: avatarUrl ? `background-image: url('${avatarUrl}')` : '',
 						},
 					],
 					[
 						'span',
 						{
-							'role': 'heading',
-							'class': 'mention-bubble__title',
-							'title': node.attrs.id,
+							role: 'heading',
+							class: 'mention-bubble__title',
+							title: node.attrs.id,
 						},
 					],
 				],
@@ -67,4 +67,4 @@ export default TipTapMention.extend({
 		state.write(`@[${node.attrs.id}](mention://user/${node.attrs.id})`)
 		state.write(' ')
 	},
-});
+})
