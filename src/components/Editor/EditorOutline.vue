@@ -1,37 +1,48 @@
 <template>
-	<div data-text-el="editor-outline" class="editor--outline">
-		<header v-if="enabled && visible" class="editor--outline__header">
+	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': mobile }">
+		<header class="editor--outline__header">
 			<h2>{{ t('text', 'Outline') }}</h2>
+			<Button type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineState.visible=false">
+				<template #icon>
+					<Close />
+				</template>
+			</Button>
 		</header>
-		<TableOfContents v-if="enabled" @has-headings="setVisible" />
+		<TableOfContents @has-headings="setVisible" />
 	</div>
 </template>
 
 <script>
 import debounce from 'debounce'
+import Button from '@nextcloud/vue/dist/Components/Button'
 import TableOfContents from './TableOfContents.vue'
+import { useOutlineStateMixin } from './Wrapper.provider.js'
+import { Close } from './../icons.js'
 
 export default {
 	name: 'EditorOutline',
 	components: {
+		Close,
+		Button,
 		TableOfContents,
 	},
+	mixins: [useOutlineStateMixin],
 	data: () => ({
 		visible: false,
-		enabled: true,
+		mobile: false,
 	}),
 	mounted() {
 		this.$onResize = debounce(() => {
-			this.enabled = this.$el.clientWidth >= 275
-		}, 500)
+			this.mobile = this.$el.parentElement.clientWidth < 320
+		}, 10)
 
 		this.$resizeObserver = new ResizeObserver(this.$onResize)
-		this.$resizeObserver.observe(this.$el)
+		this.$resizeObserver.observe(this.$el.parentElement)
 
 		this.$onResize()
 	},
 	beforeDestroy() {
-		this.$resizeObserver.unobserve(this.$el)
+		this.$resizeObserver.unobserve(this.$el.parentElement)
 		this.$resizeObserver = null
 		this.$onResize = null
 	},
@@ -45,17 +56,31 @@ export default {
 
 <style lang="scss" scoped>
 .editor--outline {
-	max-width: var(--text-editor-outline-max-width, 380px);
-	margin: 0 0.75rem;
-	position: sticky;
-	top: 44px; // menu bar
+	max-width: var(--text-editor-outline-max-width, 300px);
+	padding: 0 10px;
+	position: fixed;
+	top: 104px;
+	height: calc(100% - 100px);
+	overflow: auto;
+
+	&-mobile {
+		box-shadow: 8px 0 17px -19px var(--color-box-shadow);
+		background-color: var(--color-main-background-translucent);
+		z-index: 1;
+		width: 300px;
+		max-width: 100%;
+	}
 }
 
 .editor--outline__header {
 	margin: 0rem;
+	position: sticky;
+	padding: 10px;
+	display: flex;
 	h2 {
 		font-size: 1rem;
 		margin-top: 13px;
+		flex-grow: 1;
 	}
 }
 </style>

@@ -133,8 +133,7 @@ export default {
 	}
 
 	&__list {
-		display: inline-block;
-		min-width: 60%;
+		width: 100%;
 		list-style: none;
 		font-size: 0.9rem;
 		padding: 0;
@@ -145,8 +144,12 @@ export default {
 
 	&__item {
 		transition: padding-left 0.8s;
-		animation: initialPadding 1.5s;
+		// Disable per item animation as we currently update all headings data
+		// animation: initialPadding 1.5s;
 		padding-left: var(--padding-left, 0rem);
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 		a:hover {
 			color: var(--color-primary-hover);
 		}

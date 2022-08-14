@@ -53,9 +53,7 @@ export default {
 	mixins: [useEditorMixin, useOutlineStateMixin],
 	computed: {
 		showOutline() {
-			const { visible, enable } = this.$outlineState
-
-			return visible && enable
+			return this.$outlineState.visible
 		},
 	},
 }

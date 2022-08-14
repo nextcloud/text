@@ -21,6 +21,7 @@
  *
  */
 
+import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
@@ -88,6 +89,7 @@ export const Loading = {
 	},
 }
 
+export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeTags = makeIcon(MDI_CodeTags)
 export const Danger = makeIcon(MDI_Danger)

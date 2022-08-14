@@ -184,7 +184,6 @@ export default [
 			{
 				key: 'outline',
 				icon: FormatListBulleted,
-				visible: ({ $outlineState }) => $outlineState.enable,
 				click: ({ $outlineActions }) => $outlineActions.toggle(),
 				label: ({ $outlineState }) => {
 					return $outlineState.visible
