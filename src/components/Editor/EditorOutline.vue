@@ -77,6 +77,7 @@ export default {
 	position: sticky;
 	padding: 10px;
 	display: flex;
+	height: 44px;
 	h2 {
 		font-size: 1rem;
 		margin-top: 13px;

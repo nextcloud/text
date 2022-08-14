@@ -124,10 +124,9 @@ export default {
 
 <style lang="scss">
 .editor--toc {
-	opacity: 0.55;
-	&:hover {
-		opacity: 1;
-	}
+	padding: 0 10px;
+	color: var(--color-main-text-maxcontrast);
+
 	h3 {
 		padding-left: 0.75rem;
 	}
