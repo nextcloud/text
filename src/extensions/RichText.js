@@ -32,6 +32,7 @@ import CodeBlock from '@tiptap/extension-code-block'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import FrontMatter from './../nodes/FrontMatter.js'
+import Paragraph from './../nodes/Paragraph.js'
 import HardBreak from './HardBreak.js'
 import Heading from '../nodes/Heading/index.js'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
@@ -44,16 +45,9 @@ import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
-import TipTapParagraph from '@tiptap/extension-paragraph'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
-
-const Paragraph = TipTapParagraph.extend({
-	parseHTML() {
-		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
-	},
-})
 
 export default Extension.create({
 	name: 'RichText',
