@@ -3,12 +3,13 @@
 		<template v-if="items.length">
 			<div v-for="({ id, label }, index) in items"
 				:key="index"
-				:class="id === selectedIndex ? 'highlight' : null">
+				:class="index === selectedIndex ? 'highlight' : null">
 				<AutoCompleteResult :id="id"
 					:label="label"
 					icon="icon-user"
 					source="users"
-					@mouseover.native="selectedIndex = id"
+					:class="id === selectedIndex ? 'highlight' : null"
+					@mouseover.native="selectedIndex = index"
 					@click.native="selectItem(index)" />
 			</div>
 		</template>
