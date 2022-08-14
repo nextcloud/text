@@ -1,6 +1,8 @@
 import { mergeAttributes } from '@tiptap/core'
 import TipTapMention from '@tiptap/extension-mention'
 import { generateUrl } from '@nextcloud/router'
+import Mention from './Mention.vue'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
 const getAvatarUrl = (user, size) => {
 	return generateUrl('/avatar/{user}/{size}', {
@@ -21,7 +23,11 @@ export default TipTapMention.extend({
 			},
 		]
 	},
-    
+
+	addNodeView() {
+		return VueNodeViewRenderer(Mention)
+	},
+
 	renderHTML({ node, HTMLAttributes }) {
 		const avatarUrl = getAvatarUrl(node.attrs.id, 44)
 
