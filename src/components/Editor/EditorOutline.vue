@@ -2,13 +2,13 @@
 	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': mobile }">
 		<header class="editor--outline__header">
 			<h2>{{ t('text', 'Outline') }}</h2>
-			<Button type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineState.visible=false">
+			<Button type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineActions.toggle">
 				<template #icon>
 					<Close />
 				</template>
 			</Button>
 		</header>
-		<TableOfContents @has-headings="setVisible" />
+		<TableOfContents />
 	</div>
 </template>
 
@@ -16,8 +16,9 @@
 import debounce from 'debounce'
 import Button from '@nextcloud/vue/dist/Components/Button'
 import TableOfContents from './TableOfContents.vue'
-import { useOutlineStateMixin } from './Wrapper.provider.js'
+import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
+import useStore from '../../mixins/store.js'
 
 export default {
 	name: 'EditorOutline',
@@ -26,11 +27,14 @@ export default {
 		Button,
 		TableOfContents,
 	},
-	mixins: [useOutlineStateMixin],
+	mixins: [useStore, useOutlineStateMixin, useOutlineActions],
 	data: () => ({
 		visible: false,
 		mobile: false,
 	}),
+	watch: {
+		'$store.getters.hasHeadings': 'setVisible',
+	},
 	mounted() {
 		this.$onResize = debounce(() => {
 			this.mobile = this.$el.parentElement.clientWidth < 320

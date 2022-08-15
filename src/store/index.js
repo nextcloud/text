@@ -28,6 +28,7 @@ import {
 	SET_SHOW_AUTHOR_ANNOTATIONS,
 	SET_CURRENT_SESSION,
 	SET_VIEW_WIDTH,
+	SET_HEADINGS,
 } from './mutation-types.js'
 import plugin, { getClientWidth } from './plugin.js'
 
@@ -41,6 +42,7 @@ const store = new Store({
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
 		viewWidth: getClientWidth(),
+		headings: Object.freeze([]),
 	},
 	mutations: {
 		[SET_VIEW_WIDTH](state, value) {
@@ -54,10 +56,16 @@ const store = new Store({
 			state.currentSession = value
 			persistentStorage.setItem('currentSession', value)
 		},
+		[SET_HEADINGS](state, value) {
+			state.headings = Object.freeze(value)
+		},
 	},
 	getters: {
 		isMobileView({ viewWidth }) {
 			return viewWidth < 768
+		},
+		hasHeadings({ headings }) {
+			return headings.length > 0
 		},
 	},
 	actions: {
@@ -66,6 +74,9 @@ const store = new Store({
 		},
 		setCurrentSession({ commit }, value) {
 			commit(SET_CURRENT_SESSION, value)
+		},
+		setHeadings({ commit }, value) {
+			commit(SET_HEADINGS, value)
 		},
 	},
 })

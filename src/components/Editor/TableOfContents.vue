@@ -1,7 +1,6 @@
 <template>
-	<div data-text-el="editor-table-of-contents" class="editor--toc">
-		<ul v-if="hasHeadings"
-			class="editor--toc__list">
+	<div data-text-el="editor-table-of-contents" :class="{ '--initial-render': initialRender }" class="editor--toc">
+		<ul class="editor--toc__list">
 			<li v-for="(heading) in headings"
 				:key="heading.uuid"
 				:data-toc-level="heading.level"
@@ -16,28 +15,18 @@
 </template>
 
 <script>
-import debounce from 'debounce'
-import { v4 as uuidv4 } from 'uuid'
 import { useEditorMixin } from '../Editor.provider.js'
-
-const regexSpaces = /\s+/g
-const regexInvalidCaracters = /[^\p{Letter}\p{Mark}\w\s-]/gu
-
-const slugify = (str) => String(str)
-	.toLowerCase()
-	.replace(regexInvalidCaracters, '')
-	.trim()
-	.replace(regexSpaces, '-')
+import useStore from '../../mixins/store.js'
 
 export default {
 	name: 'TableOfContents',
-	mixins: [useEditorMixin],
+	mixins: [useStore, useEditorMixin],
 	data: () => ({
-		headings: [],
+		initialRender: true,
 	}),
 	computed: {
-		hasHeadings() {
-			return this.headings.length > 0
+		headings() {
+			return this.$store.state.headings
 		},
 	},
 	watch: {
@@ -46,12 +35,10 @@ export default {
 		},
 	},
 	mounted() {
-		this.$handleUpdate = debounce(this.handleUpdate, 900)
-		this.$editor.on('update', this.$handleUpdate)
-		this.$nextTick(this.handleUpdate)
-	},
-	beforeDestroy() {
-		this.$editor.off('update', this.$handleUpdate)
+
+		setTimeout(() => {
+			this.initialRender = false
+		}, 1000)
 	},
 	methods: {
 		goto(heading) {
@@ -66,93 +53,25 @@ export default {
 				window.location.hash = heading.id
 			})
 		},
-		handleUpdate() {
-			const counter = new Map()
-			const headings = []
-			const transaction = this.$editor.state.tr
-
-			const getId = text => {
-				const id = slugify(text)
-
-				if (counter.has(id)) {
-					const next = counter.get(id)
-
-					// increment counter
-					counter.set(id, next + 1)
-
-					return `${id}--${next}`
-				}
-
-				// define counter
-				counter.set(id, 1)
-
-				return id
-			}
-
-			this.$editor.state.doc.descendants((node, position) => {
-				if (node.type.name === 'heading') {
-					const text = node.textContent
-					const id = getId(text)
-					let uuid = node.attrs.uuid ?? uuidv4()
-
-					if (node.attrs.id !== id || !node.attrs.uuid) {
-						uuid = node.attrs.uuid ?? uuid
-						const attrs = {
-							...node.attrs,
-							id,
-						}
-
-						if (!node.attrs.uuid) {
-							attrs.uuid = uuid
-						}
-
-						transaction.setNodeMarkup(position, undefined, attrs)
-					}
-
-					headings.push({
-						level: node.attrs.level,
-						position,
-						text,
-						id,
-						uuid,
-					})
-				}
-			})
-
-			transaction.setMeta('addToHistory', false)
-			transaction.setMeta('preventUpdate', true)
-
-			this.$editor.view.dispatch(transaction)
-
-			if (this.headings.length === 0) {
-				this.headings = headings
-				return
-			}
-
-			// Only update the affected fields
-			headings.forEach((heading, index) => {
-				if (this.headings[index]?.uuid === heading.uuid) {
-					this.$set(this.headings[index], 'text', heading.text)
-					this.$set(this.headings[index], 'id', heading.id)
-					if (this.headings[index].level !== heading.level) {
-						this.$set(this.headings[index], 'level', heading.level)
-					}
-					if (this.headings[index].position !== heading.position) {
-						this.$set(this.headings[index], 'position', heading.position)
-					}
-				} else {
-					this.$set(this.headings, index, heading)
-				}
-			})
-		},
 	},
 }
 </script>
 
 <style lang="scss">
+.--initial-render {
+	.editor--toc {
+		&__item {
+			--initial-padding-left: 0;
+			animation: initialPadding 1.5s;
+			animation-fill-mode: forwards;
+		}
+	}
+}
+
 .editor--toc {
 	padding: 0 10px;
 	color: var(--color-main-text-maxcontrast);
+	--animation-duration: 0.8s;
 
 	h3 {
 		padding-left: 0.75rem;
@@ -165,14 +84,11 @@ export default {
 		padding: 0;
 
 		animation-name: fadeInLeft;
-		animation-duration: 0.8s;
+		animation-duration: var(--animation-duration);
 	}
 
 	&__item {
-		transition: padding-left 0.8s;
-		// Disable per item animation as we currently update all headings data
-		animation: initialPadding 1.5s;
-		padding-left: var(--padding-left, 0rem);
+		transform: translateX(var(--padding-left, 0rem));
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
@@ -213,11 +129,11 @@ export default {
 
 @keyframes initialPadding {
   from {
-    padding-left: 0;
+	transform: translateX(var(--initial-padding-left, initial));
   }
 
   to {
-    padding-left: var(--padding-left, inherit);
+	transform: translateX(var(--padding-left, 0rem));
   }
 }
 
