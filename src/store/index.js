@@ -57,7 +57,23 @@ const store = new Store({
 			persistentStorage.setItem('currentSession', value)
 		},
 		[SET_HEADINGS](state, value) {
-			state.headings = Object.freeze(value)
+			if (state.headings.length !== value.length) {
+				state.headings = Object.freeze(value)
+				return
+			}
+
+			// merge with previous position
+			const old = state.headings
+			const headings = value.map((row, index) => {
+				const previous = old[index].level
+
+				return Object.freeze({
+					...row,
+					previous,
+				})
+			})
+
+			state.headings = Object.freeze(headings)
 		},
 	},
 	getters: {

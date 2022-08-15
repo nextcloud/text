@@ -5,7 +5,10 @@
 				:key="heading.uuid"
 				:data-toc-level="heading.level"
 				class="editor--toc__item"
-				:class="`editor--toc__item--${heading.level}`">
+				:class="{
+					[`editor--toc__item--${heading.level}`]: true,
+					[`editor--toc__item--previous-${heading.previous}`]: heading.previous > 0,
+				}">
 				<a :href="`#${heading.id}`" @click.prevent="goto(heading)">
 					{{ heading.text }}
 				</a>
@@ -63,7 +66,6 @@ export default {
 		&__item {
 			--initial-padding-left: 0;
 			animation: initialPadding 1.5s;
-			animation-fill-mode: forwards;
 		}
 	}
 }
@@ -92,6 +94,7 @@ export default {
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
+		animation: initialPadding calc(var(--animation-duration) * 2);
 
 		a:hover {
 			color: var(--color-primary-hover);
@@ -123,6 +126,30 @@ export default {
 
 		&--6 {
 			--padding-left: 5rem;
+		}
+
+		&--previous-1 {
+			--initial-padding-left: 0rem
+		}
+
+		&--previous-2 {
+			--initial-padding-left: 1rem
+		}
+
+		&--previous-3 {
+			--initial-padding-left: 2rem
+		}
+
+		&--previous-4 {
+			--initial-padding-left: 3rem
+		}
+
+		&--previous-5 {
+			--initial-padding-left: 4rem
+		}
+
+		&--previous-6 {
+			--initial-padding-left: 5rem
 		}
 	}
 }
