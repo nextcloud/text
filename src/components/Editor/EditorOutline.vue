@@ -56,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 .editor--outline {
-	max-width: var(--text-editor-outline-max-width, 300px);
+	width:  300px;
 	padding: 0 10px;
 	position: fixed;
 	top: 104px;
@@ -67,8 +67,6 @@ export default {
 		box-shadow: 8px 0 17px -19px var(--color-box-shadow);
 		background-color: var(--color-main-background-translucent);
 		z-index: 1;
-		width: 300px;
-		max-width: 100%;
 	}
 }
 
