@@ -68,7 +68,7 @@ describe('Table of Contents', () => {
 			.then(clickOutline)
 
 		cy.getOutline()
-			.find('header')
-			.should('not.exist')
+			.find('ul')
+			.should('be.empty')
 	})
 })
