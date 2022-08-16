@@ -31,6 +31,14 @@ const Heading = TipTapHeading.extend({
 		}
 	},
 
+	onCreate() {
+		extractHeadings(this.editor)
+
+		if (this.parent) {
+			this.parent()
+		}
+	},
+
 	onUpdate: debounce(function onUpdate({ editor }) {
 		extractHeadings(editor)
 	}, 900),
