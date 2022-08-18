@@ -159,7 +159,7 @@
       "<rootDir>/src/tests/setup.js"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!vue-material-design-icons)"
+      "/node_modules/(?!vue-material-design-icons|uuid)"
     ]
   }
 }
