@@ -24,48 +24,48 @@
 	<NodeViewWrapper data-text-el="table-cell" as="td">
 		<div class="container">
 			<NodeViewContent class="content" />
-			<Actions v-if="editor.isEditable"
+			<NcActions v-if="editor.isEditable"
 				data-text-table-actions="row">
-				<ActionButton data-text-table-action="add-row-before"
+				<NcActionButton data-text-table-action="add-row-before"
 					close-after-click
 					@click="addRowBefore">
 					<template #icon>
 						<TableAddRowBefore />
 					</template>
 					{{ t('text', 'Add row before') }}
-				</ActionButton>
-				<ActionButton data-text-table-action="add-row-after"
+				</NcActionButton>
+				<NcActionButton data-text-table-action="add-row-after"
 					close-after-click
 					@click="addRowAfter">
 					<template #icon>
 						<TableAddRowAfter />
 					</template>
 					{{ t('text', 'Add row after') }}
-				</ActionButton>
-				<ActionButton data-text-table-action="remove-row"
+				</NcActionButton>
+				<NcActionButton data-text-table-action="remove-row"
 					close-after-click
 					@click="deleteRow">
 					<template #icon>
 						<Delete />
 					</template>
 					{{ t('text', 'Delete this row') }}
-				</ActionButton>
-			</Actions>
+				</NcActionButton>
+			</NcActions>
 		</div>
 	</NodeViewWrapper>
 </template>
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import Actions from '@nextcloud/vue/dist/Components/Actions.js'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton.js'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import { TableAddRowBefore, TableAddRowAfter, Delete } from '../../components/icons.js'
 
 export default {
 	name: 'TableCellView',
 	components: {
-		ActionButton,
-		Actions,
+		NcActionButton,
+		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
 		TableAddRowBefore,

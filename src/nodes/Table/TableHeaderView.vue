@@ -24,48 +24,48 @@
 	<NodeViewWrapper data-text-el="table-header" as="th">
 		<div>
 			<NodeViewContent class="content" />
-			<Actions v-if="editor.isEditable"
+			<NcActions v-if="editor.isEditable"
 				data-text-table-actions="header">
-				<ActionButton data-text-table-action="add-column-before"
+				<NcActionButton data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
 					<template #icon>
 						<TableAddColumnBefore />
 					</template>
 					{{ t('text', 'Add column before') }}
-				</ActionButton>
-				<ActionButton data-text-table-action="add-column-after"
+				</NcActionButton>
+				<NcActionButton data-text-table-action="add-column-after"
 					close-after-click
 					@click="addColumnAfter">
 					<template #icon>
 						<TableAddColumnAfter />
 					</template>
 					{{ t('text', 'Add column after') }}
-				</ActionButton>
-				<ActionButton data-text-table-action="remove-column"
+				</NcActionButton>
+				<NcActionButton data-text-table-action="remove-column"
 					close-after-click
 					@click="deleteColumn">
 					<template #icon>
 						<Delete />
 					</template>
 					{{ t('text', 'Delete this column') }}
-				</ActionButton>
-			</Actions>
+				</NcActionButton>
+			</NcActions>
 		</div>
 	</NodeViewWrapper>
 </template>
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import Actions from '@nextcloud/vue/dist/Components/Actions.js'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton.js'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import { Delete, TableAddColumnBefore, TableAddColumnAfter } from '../../components/icons.js'
 
 export default {
 	name: 'TableHeaderView',
 	components: {
-		ActionButton,
-		Actions,
+		NcActionButton,
+		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
 		Delete,

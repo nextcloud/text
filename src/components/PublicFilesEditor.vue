@@ -21,22 +21,22 @@
   -->
 
 <template>
-	<Modal v-if="active" :title="fileName" @close="close">
+	<NcModal v-if="active" :title="fileName" @close="close">
 		<Editor :file-id="fileId"
 			:relative-path="relativePath"
 			:active="active"
 			:share-token="shareToken"
 			:mime="mimeType" />
-	</Modal>
+	</NcModal>
 </template>
 
 <script>
-import Modal from '@nextcloud/vue/dist/Components/Modal.js'
+import NcModal from '@nextcloud/vue/dist/Components/NcModal.js'
 
 export default {
 	name: 'PublicFilesEditor',
 	components: {
-		Modal,
+		NcModal,
 		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
 	},
 	props: {

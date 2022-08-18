@@ -1,6 +1,6 @@
 <template>
 	<div class="avatar-wrapper" :style="sessionAvatarStyle">
-		<Avatar v-if="session.userId"
+		<NcAvatar v-if="session.userId"
 			:user="session.userId ? session.userId : session.guestName"
 			:is-guest="session.userId === null"
 			:disable-menu="true"
@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import Avatar from '@nextcloud/vue/dist/Components/Avatar.js'
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 export default {
 	name: 'AvatarWrapper',
 	components: {
-		Avatar,
+		NcAvatar,
 	},
 	props: {
 		session: {

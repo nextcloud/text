@@ -20,10 +20,10 @@
   -
   -->
 <template>
-	<EmojiPicker class="entry-action entry-action__emoji"
+	<NcEmojiPicker class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
 		@selectData="addEmoji">
-		<ButtonVue v-tooltip="actionEntry.label"
+		<NcButton v-tooltip="actionEntry.label"
 			class="entry-action__button"
 			role="menu"
 			:title="actionEntry.label"
@@ -32,20 +32,20 @@
 			<template #icon>
 				<component :is="icon" />
 			</template>
-		</ButtonVue>
-	</EmojiPicker>
+		</NcButton>
+	</NcEmojiPicker>
 </template>
 
 <script>
 import { BaseActionEntry } from './BaseActionEntry.js'
-import EmojiPicker from '@nextcloud/vue/dist/Components/EmojiPicker.js'
-import ButtonVue from '@nextcloud/vue/dist/Components/ButtonVue.js'
+import NcEmojiPicker from '@nextcloud/vue/dist/Components/NcEmojiPicker.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'EmojiPickerAction',
 	components: {
-		EmojiPicker,
-		ButtonVue,
+		NcEmojiPicker,
+		NcButton,
 	},
 	extends: BaseActionEntry,
 	methods: {

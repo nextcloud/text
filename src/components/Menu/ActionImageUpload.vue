@@ -20,7 +20,7 @@
   -
   -->
 <template>
-	<Actions class="entry-action entry-action__image-upload"
+	<NcActions class="entry-action entry-action__image-upload"
 		:data-text-action-entry="actionEntry.key"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
@@ -32,7 +32,7 @@
 				:aria-label="actionEntry.label"
 				aria-haspopup />
 		</template>
-		<ActionButton close-after-click
+		<NcActionButton close-after-click
 			:disabled="isUploadingImages"
 			:data-text-action-entry="`${actionEntry.key}-upload`"
 			@click="$callChooseLocalImage">
@@ -40,8 +40,8 @@
 				<Upload />
 			</template>
 			{{ t('text', 'Upload from computer') }}
-		</ActionButton>
-		<ActionButton v-if="!$isPublic"
+		</NcActionButton>
+		<NcActionButton v-if="!$isPublic"
 			close-after-click
 			:disabled="isUploadingImages"
 			:data-text-action-entry="`${actionEntry.key}-insert`"
@@ -50,13 +50,13 @@
 				<Folder />
 			</template>
 			{{ t('text', 'Insert from Files') }}
-		</ActionButton>
-	</Actions>
+		</NcActionButton>
+	</NcActions>
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions.js'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton.js'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 
 import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../Editor.provider.js'
@@ -70,8 +70,8 @@ import {
 export default {
 	name: 'ActionImageUpload',
 	components: {
-		Actions,
-		ActionButton,
+		NcActions,
+		NcActionButton,
 		Loading,
 		Folder,
 		Upload,

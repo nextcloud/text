@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<Popover class="session-list" placement="bottom">
+	<NcPopover class="session-list" placement="bottom">
 		<button slot="trigger"
 			v-tooltip.bottom="label"
 			:title="label"
@@ -58,11 +58,11 @@
 				</p>
 			</div>
 		</template>
-	</Popover>
+	</NcPopover>
 </template>
 
 <script>
-import Popover from '@nextcloud/vue/dist/Components/Popover.js'
+import NcPopover from '@nextcloud/vue/dist/Components/NcPopover.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import AvatarWrapper from './AvatarWrapper.vue'
 import store from '../../mixins/store.js'
@@ -74,7 +74,7 @@ export default {
 	name: 'SessionList',
 	components: {
 		AvatarWrapper,
-		Popover,
+		NcPopover,
 	},
 	directives: {
 		tooltip: Tooltip,

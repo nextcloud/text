@@ -1,5 +1,5 @@
 <template>
-	<Modal size="normal"
+	<NcModal size="normal"
 		:title="t('text', 'Formatting help')"
 		@close="$emit('close')">
 		<h2>{{ t('text', 'Formatting help') }}</h2>
@@ -154,18 +154,18 @@
 				</tr>
 			</tbody>
 		</table>
-	</Modal>
+	</NcModal>
 </template>
 
 <script>
-import Modal from '@nextcloud/vue/dist/Components/Modal.js'
+import NcModal from '@nextcloud/vue/dist/Components/NcModal.js'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import isMobile from './../mixins/isMobile.js'
 
 export default {
 	name: 'HelpModal',
 	components: {
-		Modal,
+		NcModal,
 	},
 	directives: {
 		Tooltip,
