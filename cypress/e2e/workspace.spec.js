@@ -304,7 +304,7 @@ const menuButton = (name) => {
 }
 
 const submenuButton = (name) => {
-	return cy.get('.popover.open').getActionEntry(name)
+	return cy.get('.v-popper__wrapper .open').getActionEntry(name)
 }
 
 const toggleMoreActions = () => {

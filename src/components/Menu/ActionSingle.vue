@@ -21,8 +21,8 @@
   -->
 
 <script>
-import Button from '@nextcloud/vue/dist/Components/Button'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {
@@ -36,11 +36,11 @@ export default {
 	},
 	computed: {
 		component() {
-			// Button and ActionButton shares styles and behaviours
+			// Button and NcActionButton shares styles and behaviours
 			// to keep it simple, this component handle the small differences
 			return this.isItem
-				? ActionButton
-				: Button
+				? NcActionButton
+				: NcButton
 		},
 		bindState() {
 			const { keyshortcuts } = this

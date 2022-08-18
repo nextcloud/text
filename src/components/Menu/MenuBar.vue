@@ -137,7 +137,7 @@ export default {
 		remainAction() {
 			return {
 				key: 'remain',
-				label: this.t('text', 'Remaining Actions'),
+				label: this.t('text', 'Remaining actions'),
 				icon: DotsHorizontal,
 				children: this.hiddenEntries,
 			}

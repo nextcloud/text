@@ -33,7 +33,7 @@
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
 			:show-author-annotations="showAuthorAnnotations">
-			<Main v-if="$editor">
+			<MainContainer v-if="$editor">
 				<MenuBar v-if="renderMenus"
 					ref="menubar"
 					:autohide="autohide"
@@ -47,12 +47,13 @@
 					<slot name="header" />
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar-placeholder" />
-				<Content v-show="contentLoaded" ref="contentWrapper">
+				<ContentContainer v-show="contentLoaded"
+					ref="contentWrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
-				</Content>
-			</Main>
+				</ContentContainer>
+			</MainContainer>
 			<Reader v-if="hasSyncCollission"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
@@ -97,9 +98,9 @@ import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
-import Content from './Editor/Content.vue'
+import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
-import Main from './Editor/Main.vue'
+import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
@@ -109,8 +110,8 @@ export default {
 	components: {
 		DocumentStatus,
 		Wrapper,
-		Main,
-		Content,
+		MainContainer,
+		ContentContainer,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),

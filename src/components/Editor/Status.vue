@@ -42,7 +42,7 @@
 <script>
 
 import { ERROR_TYPE } from './../../services/SyncService.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,

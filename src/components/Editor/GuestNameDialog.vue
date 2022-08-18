@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { useSyncServiceMixin } from '../Editor.provider.js'

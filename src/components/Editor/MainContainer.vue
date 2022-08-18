@@ -31,7 +31,7 @@
 import MediaHandler from './MediaHandler.vue'
 
 export default {
-	name: 'Main',
+	name: 'MainContainer',
 	components: {
 		MediaHandler,
 	},

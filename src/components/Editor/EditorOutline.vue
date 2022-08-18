@@ -2,11 +2,11 @@
 	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': mobile }">
 		<header class="editor--outline__header">
 			<h2>{{ t('text', 'Outline') }}</h2>
-			<Button type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineActions.toggle">
+			<NcButton type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineActions.toggle">
 				<template #icon>
 					<Close />
 				</template>
-			</Button>
+			</NcButton>
 		</header>
 		<TableOfContents />
 	</div>
@@ -14,7 +14,7 @@
 
 <script>
 import debounce from 'debounce'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
@@ -24,7 +24,7 @@ export default {
 	name: 'EditorOutline',
 	components: {
 		Close,
-		Button,
+		NcButton,
 		TableOfContents,
 	},
 	mixins: [useStore, useOutlineStateMixin, useOutlineActions],

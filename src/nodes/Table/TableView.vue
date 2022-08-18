@@ -23,37 +23,37 @@
 <template>
 	<NodeViewWrapper data-text-el="table-view" class="table-wrapper">
 		<NodeViewContent class="content" as="table" />
-		<Actions v-if="editor.isEditable"
+		<NcActions v-if="editor.isEditable"
 			force-menu
 			data-text-table-actions="settings"
 			class="table-settings">
 			<template #icon>
 				<TableSettings />
 			</template>
-			<ActionButton data-text-table-action="delete"
+			<NcActionButton data-text-table-action="delete"
 				close-after-click
 				@click="deleteNode">
 				<template #icon>
 					<Delete />
 				</template>
 				{{ t('text', 'Delete this table') }}
-			</ActionButton>
-		</Actions>
+			</NcActionButton>
+		</NcActions>
 		<div class="clearfix" />
 	</NodeViewWrapper>
 </template>
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import { TableSettings, Delete } from '../../components/icons.js'
 
 export default {
 	name: 'TableView',
 	components: {
-		ActionButton,
-		Actions,
+		NcActionButton,
+		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
 		TableSettings,

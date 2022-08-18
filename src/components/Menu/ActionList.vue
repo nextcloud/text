@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<Actions v-tooltip="tooltip"
+	<NcActions v-tooltip="tooltip"
 		class="entry-list-action entry-action"
 		role="menu"
 		v-bind="state"
@@ -37,11 +37,11 @@
 			is-item
 			:action-entry="child"
 			@trigged="onTrigger" />
-	</Actions>
+	</NcActions>
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
@@ -50,7 +50,7 @@ import useStore from '../../mixins/store.js'
 
 export default {
 	name: 'ActionList',
-	components: { Actions, ActionSingle },
+	components: { NcActions, ActionSingle },
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin],
 	computed: {
