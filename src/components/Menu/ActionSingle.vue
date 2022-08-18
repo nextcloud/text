@@ -47,6 +47,7 @@ export default {
 
 			const state = {
 				...this.state,
+				ariaLabel: this.label,
 			}
 
 			state.class = {
@@ -95,6 +96,7 @@ export default {
 			isItem,
 			runAction,
 			tooltip,
+			label,
 		} = this
 
 		const { class: classes, ...attrs } = bindState
@@ -110,11 +112,11 @@ export default {
 		const children = [h(icon, { slot: 'icon' })]
 
 		// do not use title if is a item of action list
-		const title = isItem ? undefined : actionEntry.label
+		const title = isItem ? undefined : label
 
 		if (isItem) {
 			// add label
-			children.push(actionEntry.label)
+			children.push(label)
 		}
 
 		return h(component, {

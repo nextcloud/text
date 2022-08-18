@@ -37,10 +37,28 @@
 <script>
 import { ERROR_TYPE } from './../../services/SyncService.js'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
+import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
+import useStore from '../../mixins/store.js'
 
 export default {
 	name: 'Wrapper',
-	mixins: [useIsRichEditorMixin, useIsRichWorkspaceMixin],
+	mixins: [useStore, useIsRichEditorMixin, useIsRichWorkspaceMixin],
+	provide() {
+		const val = {}
+
+		Object.defineProperties(val, {
+			[OUTLINE_STATE]: {
+				get: () => this.outline,
+			},
+			[OUTLINE_ACTIONS]: {
+				get: () => ({
+					toggle: this.outlineToggle,
+				}),
+			},
+		})
+
+		return val
+	},
 
 	props: {
 		syncError: {
@@ -60,10 +78,44 @@ export default {
 			require: true,
 		},
 	},
+	data: () => ({
+		outline: {
+			visible: false,
+			enable: false,
+		},
+	}),
 
 	computed: {
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+		},
+		showOutline() {
+			return this.isAbleToShowOutline
+				? this.outline.visible
+				: false
+		},
+		isAbleToShowOutline() {
+			if (this.$isRichWorkspace) {
+				return false
+			}
+
+			return this.$store.state.viewWidth > 1265
+		},
+	},
+	mounted() {
+		this.outline.enable = this.isAbleToShowOutline
+
+		this.$watch(
+			() => this.isAbleToShowOutline,
+			(enable) => {
+				// make outline state reactive through the provider
+				Object.assign(this.outline, { enable })
+			}
+		)
+	},
+	methods: {
+		outlineToggle() {
+			this.outline.visible = !this.outline.visible
 		},
 	},
 

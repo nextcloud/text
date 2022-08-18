@@ -125,6 +125,10 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		content,
 		onCreate,
 		onUpdate,
+		editorProps: {
+			scrollMargin: 50,
+			scrollThreshold: 50,
+		},
 		extensions: [
 			History,
 			...richEditingExtensions,

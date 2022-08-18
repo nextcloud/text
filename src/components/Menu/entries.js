@@ -124,7 +124,6 @@ export default [
 		label: t('text', 'Headings'),
 		keyChar: '1…6',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		visible: false,
 		icon: FormatHeader1,
 		isActive: 'heading',
 		children: [
@@ -180,6 +179,16 @@ export default [
 				icon: FormatHeader6,
 				action: (command) => {
 					return command.toggleHeading({ level: 6 })
+				},
+			},
+			{
+				key: 'outline',
+				icon: FormatListBulleted,
+				click: ({ $outlineActions }) => $outlineActions.toggle(),
+				label: ({ $outlineState }) => {
+					return $outlineState.visible
+						? t('text', 'Hide Outline')
+						: t('text', 'Show Outline')
 				},
 			},
 		],

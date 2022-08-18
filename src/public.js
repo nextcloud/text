@@ -6,7 +6,7 @@ import {
 } from './helpers/files.js'
 import { openMimetypes } from './helpers/mime.js'
 import { loadState } from '@nextcloud/initial-state'
-import store from './store.js'
+import store from './store/index.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line

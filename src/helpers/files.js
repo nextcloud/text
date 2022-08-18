@@ -24,7 +24,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { openMimetypes } from './mime.js'
 import RichWorkspace from '../views/RichWorkspace.vue'
 import { imagePath } from '@nextcloud/router'
-import store from '../store.js'
+import store from '../store/index.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 

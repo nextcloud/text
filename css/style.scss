@@ -61,6 +61,14 @@ li.ProseMirror-selectednode:after {
 	animation: rotate var(--animation-duration, 0.8s) linear infinite;
 }
 
+[data-handler="text"] {
+  background-color: var(--color-main-background);
+  border-top: 3px solid var(--color-primary-element);
+  .modal-title {
+    font-weight: bold;
+  }
+}
+
 // from https://github.com/animate-css/animate.css/blob/main/source/fading_entrances/fadeInDown.css
 @keyframes fadeInDown {
   from {
@@ -74,10 +82,20 @@ li.ProseMirror-selectednode:after {
   }
 }
 
-[data-handler="text"] {
-  background-color: var(--color-main-background);
-  border-top: 3px solid var(--color-primary-element);
-  .modal-title {
-    font-weight: bold;
+
+// from https://github.com/animate-css/animate.css/blob/main/source/fading_entrances/fadeInLeft.css
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
   }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInLeft {
+  animation-name: fadeInLeft;
 }

@@ -248,6 +248,14 @@ Cypress.Commands.add('getContent', () => {
 	return cy.getEditor().find('.ProseMirror')
 })
 
+Cypress.Commands.add('getOutline', () => {
+	return cy.getEditor().find('[data-text-el="editor-outline"]')
+})
+
+Cypress.Commands.add('getTOC', () => {
+	return cy.getEditor().find('[data-text-el="editor-table-of-contents"]')
+})
+
 Cypress.Commands.add('clearContent', () => {
 	return cy.getContent()
 		.type('{selectall}')

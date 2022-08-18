@@ -32,7 +32,7 @@
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
-		<ActionSingle v-for="child in actionEntry.children"
+		<ActionSingle v-for="child in children"
 			:key="`child-${child.key}`"
 			is-item
 			:action-entry="child"
@@ -45,11 +45,14 @@ import Actions from '@nextcloud/vue/dist/Components/Actions'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
+import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
+import useStore from '../../mixins/store.js'
 
 export default {
 	name: 'ActionList',
 	components: { Actions, ActionSingle },
 	extends: BaseActionEntry,
+	mixins: [useStore, useOutlineStateMixin],
 	computed: {
 		currentChild() {
 			const {
@@ -79,6 +82,17 @@ export default {
 		activeKey() {
 			return this.currentChild?.key
 		},
+		children() {
+			return this.actionEntry.children.filter(({ visible }) => {
+				if (visible === undefined) {
+					return true
+				}
+
+				return typeof visible === 'function'
+					? visible(this)
+					: visible
+			})
+		},
 	},
 	methods: {
 		runAction() {
@@ -86,11 +100,10 @@ export default {
 		},
 		onTrigger(entry) {
 			if (entry?.click) {
-				entry.click(this)
-			} else {
-				this.$editor.chain().focus().run()
-				this.$emit('trigged', entry)
+				return
 			}
+			this.$editor.chain().focus().run()
+			this.$emit('trigged', entry)
 		},
 	},
 }

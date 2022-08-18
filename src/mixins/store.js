@@ -20,7 +20,7 @@
  *
  */
 
-import store from '../store.js'
+import store from '../store/index.js'
 
 /**
  * This mixin is required since we cannot be sure that the root Vue instance has

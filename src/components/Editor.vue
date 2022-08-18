@@ -47,8 +47,7 @@
 					<slot name="header" />
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar-placeholder" />
-				<Content v-show="contentLoaded"
-					ref="contentWrapper">
+				<Content v-show="contentLoaded" ref="contentWrapper">
 					<MenuBubble v-if="renderMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
@@ -233,7 +232,6 @@ export default {
 		showAuthorAnnotations() {
 			return this.$store.state.showAuthorAnnotations
 		},
-
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
 		},
@@ -810,5 +808,4 @@ export default {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
-
 </style>
