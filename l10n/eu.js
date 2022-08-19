@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Txertatu Fitxategi-tik",
     "Formatting menu bar" : "Menu-barra formateatzea",
     "Editor actions" : "Editore ekintzak",
-    "Remaining Actions" : "Gainerako ekintzak",
     "Update Link" : "Eguneratu esteka",
     "Add Link" : "Gehitu esteka",
     "Link file" : "Estekatu fitxategia",

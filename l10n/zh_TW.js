@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "從檔案插入",
     "Formatting menu bar" : "格式化選項選單列",
     "Editor actions" : "編輯器動作",
-    "Remaining Actions" : "剩餘動作",
     "Update Link" : "更新連結",
     "Add Link" : "新增連結",
     "Link file" : "連結檔案",
