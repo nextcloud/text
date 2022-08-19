@@ -72,7 +72,6 @@ OC.L10N.register(
     "Some code" : "Wat code",
     "Upload from computer" : "Uploaden vanaf computer",
     "Insert from Files" : "Invoegen vanuit Bestanden",
-    "Remaining Actions" : "Overige Acties",
     "Update Link" : "Link bijwerken",
     "Add Link" : "Link toevoegen",
     "Link file" : "Link bestand",

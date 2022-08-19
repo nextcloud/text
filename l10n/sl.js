@@ -66,7 +66,6 @@ OC.L10N.register(
     "Code block" : "Navedek s kodo",
     "Some code" : "Vpisana koda",
     "Insert from Files" : "Vstavi iz oblaka",
-    "Remaining Actions" : "Preostala dejanja",
     "Update Link" : "Posodobi povezavo",
     "Add Link" : "Dodaj povezavo",
     "Link file" : "Datoteka povezave",
