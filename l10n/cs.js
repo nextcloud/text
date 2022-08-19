@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Vložit ze Souborů",
     "Formatting menu bar" : "Lišta s nabídkami formátování",
     "Editor actions" : "Akce editoru",
-    "Remaining Actions" : "Zbývající akce",
     "Update Link" : "Aktualizovat odkaz",
     "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",

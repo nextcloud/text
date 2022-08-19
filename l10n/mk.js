@@ -60,7 +60,6 @@ OC.L10N.register(
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
     "Editor actions" : "Акции на уредникот",
-    "Remaining Actions" : "Преостанати акции",
     "Update Link" : "Ажурирај линк",
     "Add Link" : "Додади линк",
     "Link file" : "Поврзи датотека (Линк)",
