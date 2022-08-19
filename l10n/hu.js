@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Beillesztés a Fájlokból",
     "Formatting menu bar" : "Formázási menüsáv",
     "Editor actions" : "Szerkesztőműveletek",
-    "Remaining Actions" : "Hátralévő műveletek",
     "Update Link" : "Hivatkozás frissítése",
     "Add Link" : "Hivatkozás hozzáadása",
     "Link file" : "Fájl hivatkozás készítése",

@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Вмъкване от Файлове",
     "Formatting menu bar" : "Лента с меню за форматиране",
     "Editor actions" : "Действия на редактора",
-    "Remaining Actions" : "Оставащи действия",
     "Update Link" : "Актуализиране на връзка",
     "Add Link" : "Добавяне на връзка",
     "Link file" : "Файл с връзка",

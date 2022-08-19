@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Wstaw z Plików",
     "Formatting menu bar" : "Formatowanie paska menu",
     "Editor actions" : "Akcje edytora",
-    "Remaining Actions" : "Pozostałe akcje",
     "Update Link" : "Aktualizuj link",
     "Add Link" : "Dodaj link",
     "Link file" : "Link pliku",

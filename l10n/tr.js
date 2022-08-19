@@ -76,7 +76,6 @@ OC.L10N.register(
     "Insert from Files" : "Dosyalar uygulamasından ekle",
     "Formatting menu bar" : "Menü çubuğu biçimlendiriliyor",
     "Editor actions" : "Düzenleyici işlemleri",
-    "Remaining Actions" : "Kalan işlemler",
     "Update Link" : "Bağlantıyı güncelle",
     "Add Link" : "Bağlantı ekle",
     "Link file" : "Dosya bağla",
