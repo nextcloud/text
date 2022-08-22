@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
+	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate, 'empty': showEmptyWorkspace}">
 		<a v-if="showEmptyWorkspace"
 			tabindex="0"
 			class="empty-workspace"
@@ -299,7 +299,7 @@ export default {
 		overflow: hidden;
 	}
 
-	#rich-workspace:not(.focus):not(.icon-loading):after {
+	#rich-workspace:not(.focus):not(.icon-loading):not(.empty):after {
 		content: '';
 		position: absolute;
 		z-index: 1;
