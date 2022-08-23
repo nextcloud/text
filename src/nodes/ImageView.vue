@@ -167,7 +167,7 @@ export default {
 	},
 	computed: {
 		isMediaAttachment() {
-			return this.attachmentType !== 'image'
+			return this.attachmentType === this.$imageResolver.ATTACHMENT_TYPE_MEDIA
 		},
 		canDisplayImage() {
 			if (!this.isSupportedImage) {
@@ -256,8 +256,7 @@ export default {
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentType = attachmentType
-					console.debug('SUCCESS type', attachmentType)
-					if (attachmentType === 'media') {
+					if (attachmentType === this.$imageResolver.ATTACHMENT_TYPE_MEDIA) {
 						this.loadMediaMetadata(name)
 					}
 					resolve(imageUrl)
@@ -270,7 +269,6 @@ export default {
 		},
 		loadMediaMetadata(name) {
 			this.$imageResolver.getMediaMetadata(name).then((response) => {
-				console.debug('GOTCHAAAAAA', response.data)
 				this.attachmentMetadata = response.data
 			})
 		},

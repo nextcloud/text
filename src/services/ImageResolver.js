@@ -32,6 +32,9 @@ export default class ImageResolver {
 	#currentDirectory
 	#attachmentDirectory
 
+	ATTACHMENT_TYPE_IMAGE = 'image'
+	ATTACHMENT_TYPE_MEDIA = 'media'
+
 	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
 		this.#user = user
@@ -52,7 +55,7 @@ export default class ImageResolver {
 		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
 			return [{
-				type: 'image',
+				type: this.ATTACHMENT_TYPE_IMAGE,
 				url: this.#getImageAttachmentUrl(imageFileName),
 			}]
 		}
@@ -61,11 +64,11 @@ export default class ImageResolver {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
 			return [
 				{
-					type: 'image',
+					type: this.ATTACHMENT_TYPE_IMAGE,
 					url: this.#getImageAttachmentUrl(imageFileName),
 				},
 				{
-					type: 'media',
+					type: this.ATTACHMENT_TYPE_MEDIA,
 					url: this.#getMediaPreviewUrl(imageFileName),
 					name: imageFileName,
 				},
@@ -74,14 +77,14 @@ export default class ImageResolver {
 
 		if (isDirectUrl(src)) {
 			return [{
-				type: 'image',
+				type: this.ATTACHMENT_TYPE_IMAGE,
 				url: src,
 			}]
 		}
 
 		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
 			return [{
-				type: 'image',
+				type: this.ATTACHMENT_TYPE_IMAGE,
 				url: this.#previewUrl(src),
 			}]
 		}
@@ -93,15 +96,15 @@ export default class ImageResolver {
 			// try the webdav url and attachment API if it fails
 			return [
 				{
-					type: 'image',
+					type: this.ATTACHMENT_TYPE_IMAGE,
 					url: this.#davUrl(src),
 				},
 				{
-					type: 'image',
+					type: this.ATTACHMENT_TYPE_IMAGE,
 					url: this.#getImageAttachmentUrl(imageFileName),
 				},
 				{
-					type: 'media',
+					type: this.ATTACHMENT_TYPE_MEDIA,
 					url: this.#getMediaPreviewUrl(imageFileName),
 					name: imageFileName,
 				},
@@ -109,7 +112,7 @@ export default class ImageResolver {
 		}
 
 		return [{
-			type: 'image',
+			type: this.ATTACHMENT_TYPE_IMAGE,
 			url: this.#davUrl(src),
 		}]
 	}
