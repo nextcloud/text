@@ -40,12 +40,14 @@
 								 :src="imageUrl"
 								 class="image__main"
 								 @load="onLoaded">
-							<span class="name">
-								{{ alt }}
-							</span>
-							<span class="size">
-								{{ attachmentMetadata.size }}
-							</span>
+							<div class="metadata">
+								<span class="name">
+									{{ alt }}
+								</span>
+								<span class="size">
+									{{ attachmentMetadata.size }}
+								</span>
+							</div>
 						</div>
 						<div v-else>
 							<img v-show="loaded"
@@ -343,14 +345,23 @@ export default {
 	.media {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		img {
-			width: 32px;
-			height: 32px;
+			width: 40px;
+			height: 40px;
 		}
-		.name {
-			flex-grow: 1;
-			text-align: left;
+		.metadata {
 			margin-left: 8px;
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			span {
+				line-height: 20px;
+				font-weight: normal;
+				&.size {
+					color: var(--color-text-maxcontrast);
+				}
+			}
 		}
 	}
 
