@@ -13,7 +13,7 @@
  */
 
 /*!
- * Vue.js v2.7.8
+ * Vue.js v2.7.10
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -60,7 +60,7 @@
  * Copyright (c) 2016 Jorik Tangelder;
  * Licensed under the MIT license */
 
-/*! https://mths.be/punycode v1.4.1 by @mathias */
+/*! https://mths.be/punycode v1.3.2 by @mathias */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
