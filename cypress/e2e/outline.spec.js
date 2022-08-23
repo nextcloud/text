@@ -10,7 +10,7 @@ const clickOutline = () => {
 	cy.getActionEntry('headings')
 		.click()
 
-	cy.get('.popover.open').getActionEntry('outline')
+	cy.get('.v-popper__wrapper .open').getActionEntry('outline')
 		.click()
 }
 
