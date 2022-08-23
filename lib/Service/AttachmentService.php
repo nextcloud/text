@@ -196,8 +196,8 @@ class AttachmentService {
 	 * @throws \OC\User\NoUserException
 	 */
 	public function getMediaFilePreviewPublic(int $documentId, string $mediaFileName, string $shareToken): ?array {
-			$textFile = $this->getTextFilePublic($documentId, $shareToken);
-			return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
 	}
 
 	/**

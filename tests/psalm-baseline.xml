@@ -86,7 +86,15 @@
       <code>ConnectException</code>
       <code>ServerException</code>
     </UndefinedClass>
-    <UndefinedDocblockClass occurrences="8">
+    <UndefinedDocblockClass occurrences="16">
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
       <code>\OC\User\NoUserException</code>
       <code>\OC\User\NoUserException</code>
       <code>\OC\User\NoUserException</code>

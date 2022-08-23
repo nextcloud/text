@@ -211,18 +211,18 @@ class AttachmentController extends Controller {
 	}
 
 	/**
-	* @NoAdminRequired
-	* @NoCSRFRequired
-	* @PublicPage
-	*
-	* Serve the media files in the editor
-	* @param int $documentId
-	* @param int $sessionId
-	* @param string $sessionToken
-	* @param string $mediaFileName
-	* @param string|null $shareToken
-	* @return DataDownloadResponse|DataResponse
-	*/
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @PublicPage
+	 *
+	 * Serve the media files in the editor
+	 * @param int $documentId
+	 * @param int $sessionId
+	 * @param string $sessionToken
+	 * @param string $mediaFileName
+	 * @param string|null $shareToken
+	 * @return DataDownloadResponse|DataResponse
+	 */
 	public function getMediaFile(int $documentId, int $sessionId, string $sessionToken, string $mediaFileName, ?string $shareToken = null) {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse('', Http::STATUS_FORBIDDEN);
@@ -287,8 +287,8 @@ class AttachmentController extends Controller {
 			}
 		} catch (Exception $e) {
 			$this->logger->error('getMediaFilePreview error', ['exception' => $e]);
-			return new DataResponse('', Http::STATUS_NOT_FOUND);
 		}
+		return new DataResponse('', Http::STATUS_NOT_FOUND);
 	}
 
 	/**

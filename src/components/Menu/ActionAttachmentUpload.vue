@@ -68,7 +68,7 @@ import {
 } from '../Editor/MediaHandler.provider.js'
 
 export default {
-	name: 'ActionImageUpload',
+	name: 'ActionAttachmentUpload',
 	components: {
 		NcActions,
 		NcActionButton,

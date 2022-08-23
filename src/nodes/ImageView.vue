@@ -37,9 +37,9 @@
 						<div v-if="isMediaAttachment"
 							class="media">
 							<img v-show="loaded"
-								 :src="imageUrl"
-								 class="image__main"
-								 @load="onLoaded">
+								:src="imageUrl"
+								class="image__main"
+								@load="onLoaded">
 							<div class="metadata">
 								<span class="name">
 									{{ alt }}
@@ -107,7 +107,7 @@ import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 import store from './../mixins/store.js'
-import { useImageResolver } from './../components/Editor.provider.js'
+import { useAttachmentResolver } from './../components/Editor.provider.js'
 
 import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 
@@ -150,7 +150,7 @@ export default {
 	},
 	mixins: [
 		store,
-		useImageResolver,
+		useAttachmentResolver,
 	],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
@@ -167,7 +167,7 @@ export default {
 	},
 	computed: {
 		isMediaAttachment() {
-			return this.attachmentType === this.$imageResolver.ATTACHMENT_TYPE_MEDIA
+			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 		},
 		canDisplayImage() {
 			if (!this.isSupportedImage) {
@@ -235,7 +235,7 @@ export default {
 	},
 	methods: {
 		async init() {
-			const candidates = this.$imageResolver.resolve(this.src)
+			const candidates = this.$attachmentResolver.resolve(this.src)
 			return this.load(candidates)
 		},
 		async load(candidates) {
@@ -256,7 +256,7 @@ export default {
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentType = attachmentType
-					if (attachmentType === this.$imageResolver.ATTACHMENT_TYPE_MEDIA) {
+					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
 						this.loadMediaMetadata(name)
 					}
 					resolve(imageUrl)
@@ -268,7 +268,7 @@ export default {
 			})
 		},
 		loadMediaMetadata(name) {
-			this.$imageResolver.getMediaMetadata(name).then((response) => {
+			this.$attachmentResolver.getMediaMetadata(name).then((response) => {
 				this.attachmentMetadata = response.data
 			})
 		},

@@ -24,7 +24,7 @@ import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import pathNormalize from 'path-normalize'
 
-export default class ImageResolver {
+export default class AttachmentResolver {
 
 	#session
 	#user

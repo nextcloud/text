@@ -22,7 +22,7 @@
 
 export const EDITOR = Symbol('tiptap:editor')
 export const FILE = Symbol('editor:file')
-export const IMAGE_RESOLVER = Symbol('image:resolver')
+export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
 export const IS_PUBLIC = Symbol('editor:is-public')
 export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
@@ -78,10 +78,10 @@ export const useFileMixin = {
 	},
 }
 
-export const useImageResolver = {
+export const useAttachmentResolver = {
 	inject: {
-		$imageResolver: {
-			from: IMAGE_RESOLVER,
+		$attachmentResolver: {
+			from: ATTACHMENT_RESOLVER,
 			default: {
 				resolve(src) {
 					console.warn('No image resolver provided. Some image sources cannot be resolved.')
