@@ -27,12 +27,12 @@ namespace OCA\Text\AppInfo;
 
 return [
 	'routes' => [
-		['name' => 'Image#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
-		['name' => 'Image#uploadAttachment', 'url' => '/attachment/upload', 'verb' => 'POST'],
-		['name' => 'Image#getImageFile', 'url' => '/image', 'verb' => 'GET'],
-		['name' => 'Image#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
-		['name' => 'Image#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
-		['name' => 'Image#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
+		['name' => 'Attachment#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
+		['name' => 'Attachment#uploadAttachment', 'url' => '/attachment/upload', 'verb' => 'POST'],
+		['name' => 'Attachment#getImageFile', 'url' => '/image', 'verb' => 'GET'],
+		['name' => 'Attachment#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
+		['name' => 'Attachment#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
+		['name' => 'Attachment#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
 
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
 		['name' => 'Session#fetch', 'url' => '/session/fetch', 'verb' => 'POST'],

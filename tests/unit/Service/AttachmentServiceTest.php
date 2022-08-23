@@ -3,10 +3,10 @@
 namespace OCA\Text\Tests;
 
 use OCA\Text\AppInfo\Application;
-use OCA\Text\Service\ImageService;
+use OCA\Text\Service\AttachmentService;
 use OCP\Files\Folder;
 
-class ImageServiceTest extends \PHPUnit\Framework\TestCase {
+class AttachmentServiceTest extends \PHPUnit\Framework\TestCase {
 	private static $attachmentNames = [
 		'aaa.png',
 		'aaa (2).png',
@@ -36,7 +36,7 @@ class ImageServiceTest extends \PHPUnit\Framework\TestCase {
 		}
 		$content .= 'some content';
 
-		$computedNames = ImageService::getAttachmentNamesFromContent($content, 33);
+		$computedNames = AttachmentService::getAttachmentNamesFromContent($content, 33);
 		foreach (self::$attachmentNames as $contentName) {
 			$this->assertContains($contentName, $computedNames);
 		}
@@ -53,7 +53,7 @@ class ImageServiceTest extends \PHPUnit\Framework\TestCase {
 		}
 		$content .= 'some content';
 
-		$computedNames = ImageService::getAttachmentNamesFromContent($content, 33);
+		$computedNames = AttachmentService::getAttachmentNamesFromContent($content, 33);
 		foreach (self::$attachmentNames as $contentName) {
 			$this->assertContains($contentName, $computedNames);
 		}
@@ -83,15 +83,15 @@ class ImageServiceTest extends \PHPUnit\Framework\TestCase {
 			});
 
 		// files that do not exist yet
-		$this->assertEquals('doesNotExistYet', ImageService::getUniqueFileName($folder, 'doesNotExistYet'));
-		$this->assertEquals('doesNotExistYet.png', ImageService::getUniqueFileName($folder, 'doesNotExistYet.png'));
+		$this->assertEquals('doesNotExistYet', AttachmentService::getUniqueFileName($folder, 'doesNotExistYet'));
+		$this->assertEquals('doesNotExistYet.png', AttachmentService::getUniqueFileName($folder, 'doesNotExistYet.png'));
 
 		// files that already exist
-		$this->assertEquals('foo (2).png', ImageService::getUniqueFileName($folder, 'foo.png'));
-		$this->assertEquals('bar (2)', ImageService::getUniqueFileName($folder, 'bar'));
-		$this->assertEquals('plop (3).png', ImageService::getUniqueFileName($folder, 'plop.png'));
-		$this->assertEquals('lala (4).png', ImageService::getUniqueFileName($folder, 'lala.png'));
-		$this->assertEquals('yay (4).png', ImageService::getUniqueFileName($folder, 'yay.png'));
-		$this->assertEquals('file.ext (2).ext', ImageService::getUniqueFileName($folder, 'file.ext.ext'));
+		$this->assertEquals('foo (2).png', AttachmentService::getUniqueFileName($folder, 'foo.png'));
+		$this->assertEquals('bar (2)', AttachmentService::getUniqueFileName($folder, 'bar'));
+		$this->assertEquals('plop (3).png', AttachmentService::getUniqueFileName($folder, 'plop.png'));
+		$this->assertEquals('lala (4).png', AttachmentService::getUniqueFileName($folder, 'lala.png'));
+		$this->assertEquals('yay (4).png', AttachmentService::getUniqueFileName($folder, 'yay.png'));
+		$this->assertEquals('file.ext (2).ext', AttachmentService::getUniqueFileName($folder, 'file.ext.ext'));
 	}
 }

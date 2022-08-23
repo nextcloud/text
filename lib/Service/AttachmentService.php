@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use OCA\Text\Controller\ImageController;
+use OCA\Text\Controller\AttachmentController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
@@ -41,7 +41,7 @@ use OCP\Util;
 use OCP\Files\IRootFolder;
 use OCP\Share\IManager as ShareManager;
 
-class ImageService {
+class AttachmentService {
 
 	/**
 	 * @var ShareManager
@@ -113,7 +113,7 @@ class ImageService {
 	private function getImageFilePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$imageFile = $attachmentFolder->get($imageFileName);
-		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), ImageController::IMAGE_MIME_TYPES)) {
+		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), AttachmentController::IMAGE_MIME_TYPES)) {
 			if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}

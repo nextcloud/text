@@ -50,20 +50,20 @@ class ApiService {
 	private SessionService $sessionService;
 	private DocumentService $documentService;
 	private LoggerInterface $logger;
-	private ImageService $imageService;
+	private AttachmentService $attachmentService;
 	private EncodingService $encodingService;
 
 	public function __construct(IRequest $request,
 								SessionService $sessionService,
 								DocumentService $documentService,
-								ImageService $imageService,
+								AttachmentService $attachmentService,
 								EncodingService $encodingService,
 								LoggerInterface $logger) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
-		$this->imageService = $imageService;
+		$this->attachmentService = $attachmentService;
 		$this->encodingService = $encodingService;
 	}
 
@@ -158,7 +158,7 @@ class ApiService {
 		if (count($activeSessions) === 0) {
 			try {
 				$this->documentService->resetDocument($documentId);
-				$this->imageService->cleanupAttachments($documentId);
+				$this->attachmentService->cleanupAttachments($documentId);
 			} catch (DocumentHasUnsavedChangesException $e) {
 			}
 		}

@@ -29,7 +29,7 @@ use Exception;
 use OCA\Text\Service\SessionService;
 use OCA\Text\Exception\UploadException;
 use OCP\AppFramework\Http;
-use OCA\Text\Service\ImageService;
+use OCA\Text\Service\AttachmentService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\DataResponse;
@@ -40,7 +40,7 @@ use OCP\IRequest;
 use OCP\Util;
 use Psr\Log\LoggerInterface;
 
-class ImageController extends Controller {
+class AttachmentController extends Controller {
 	public const IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',
@@ -53,7 +53,7 @@ class ImageController extends Controller {
 		'image/webp',
 	];
 
-	private ImageService $imageService;
+	private AttachmentService $attachmentService;
 	private LoggerInterface $logger;
 	private SessionService $sessionService;
 	private IL10N $l10n;
@@ -64,10 +64,10 @@ class ImageController extends Controller {
 								IL10N $l10n,
 								LoggerInterface $logger,
 								IMimeTypeDetector $mimeTypeDetector,
-								ImageService $imageService,
+								AttachmentService $attachmentService,
 								SessionService $sessionService) {
 		parent::__construct($appName, $request);
-		$this->imageService = $imageService;
+		$this->attachmentService = $attachmentService;
 		$this->request = $request;
 		$this->logger = $logger;
 		$this->sessionService = $sessionService;
@@ -92,7 +92,7 @@ class ImageController extends Controller {
 		$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
 
 		try {
-			$insertResult = $this->imageService->insertAttachmentFile($documentId, $filePath, $userId);
+			$insertResult = $this->attachmentService->insertAttachmentFile($documentId, $filePath, $userId);
 			if (isset($insertResult['error'])) {
 				return new DataResponse($insertResult, Http::STATUS_BAD_REQUEST);
 			} else {
@@ -128,10 +128,10 @@ class ImageController extends Controller {
 				}
 				$newFileName = $file['name'];
 				if ($shareToken) {
-					$uploadResult = $this->imageService->uploadAttachmentPublic($documentId, $newFileName, $newFileResource, $shareToken);
+					$uploadResult = $this->attachmentService->uploadAttachmentPublic($documentId, $newFileName, $newFileResource, $shareToken);
 				} else {
 					$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-					$uploadResult = $this->imageService->uploadAttachment($documentId, $newFileName, $newFileResource, $userId);
+					$uploadResult = $this->attachmentService->uploadAttachment($documentId, $newFileName, $newFileResource, $userId);
 				}
 				if (isset($uploadResult['error'])) {
 					return new DataResponse($uploadResult, Http::STATUS_BAD_REQUEST);
@@ -192,10 +192,10 @@ class ImageController extends Controller {
 
 		try {
 			if ($shareToken) {
-				$imageFile = $this->imageService->getImageFilePublic($documentId, $imageFileName, $shareToken);
+				$imageFile = $this->attachmentService->getImageFilePublic($documentId, $imageFileName, $shareToken);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$imageFile = $this->imageService->getImageFile($documentId, $imageFileName, $userId);
+				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId);
 			}
 			return $imageFile !== null
 				? new DataDownloadResponse(
@@ -230,10 +230,10 @@ class ImageController extends Controller {
 
 		try {
 			if ($shareToken) {
-				$mediaFile = $this->imageService->getMediaFilePublic($documentId, $mediaFileName, $shareToken);
+				$mediaFile = $this->attachmentService->getMediaFilePublic($documentId, $mediaFileName, $shareToken);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$mediaFile = $this->imageService->getMediaFile($documentId, $mediaFileName, $userId);
+				$mediaFile = $this->attachmentService->getMediaFile($documentId, $mediaFileName, $userId);
 			}
 			return $mediaFile !== null
 				? new DataDownloadResponse(
@@ -268,10 +268,10 @@ class ImageController extends Controller {
 
 		try {
 			if ($shareToken) {
-				$preview = $this->imageService->getMediaFilePreviewPublic($documentId, $mediaFileName, $shareToken);
+				$preview = $this->attachmentService->getMediaFilePreviewPublic($documentId, $mediaFileName, $shareToken);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$preview = $this->imageService->getMediaFilePreview($documentId, $mediaFileName, $userId);
+				$preview = $this->attachmentService->getMediaFilePreview($documentId, $mediaFileName, $userId);
 			}
 			if ($preview === null) {
 				return new DataResponse('', Http::STATUS_NOT_FOUND);
@@ -312,10 +312,10 @@ class ImageController extends Controller {
 
 		try {
 			if ($shareToken) {
-				$metadata = $this->imageService->getMediaFileMetadataPublic($documentId, $mediaFileName, $shareToken);
+				$metadata = $this->attachmentService->getMediaFileMetadataPublic($documentId, $mediaFileName, $shareToken);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$metadata = $this->imageService->getMediaFileMetadataPrivate($documentId, $mediaFileName, $userId);
+				$metadata = $this->attachmentService->getMediaFileMetadataPrivate($documentId, $mediaFileName, $userId);
 			}
 			if ($metadata === null) {
 				return new DataResponse('', Http::STATUS_NOT_FOUND);

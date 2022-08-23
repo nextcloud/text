@@ -72,7 +72,7 @@
       <code>\OC\User\NoUserException</code>
     </UndefinedClass>
   </file>
-  <file src="lib/Service/ImageService.php">
+  <file src="lib/Service/AttachmentService.php">
     <MissingDependency occurrences="6">
       <code>$this-&gt;rootFolder</code>
       <code>$this-&gt;rootFolder</code>
