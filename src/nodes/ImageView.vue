@@ -70,7 +70,7 @@
 							class="image__caption__delete"
 							title="Delete this image"
 							@click="deleteNode">
-							<TrashCan />
+							<DeleteIcon />
 						</div>
 					</div>
 				</transition>
@@ -103,7 +103,7 @@
 import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
-import { Image as ImageIcon, TrashCan } from '../components/icons.js'
+import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 import store from './../mixins/store.js'
 import { useImageResolver } from './../components/Editor.provider.js'
 
@@ -140,7 +140,7 @@ export default {
 	name: 'ImageView',
 	components: {
 		ImageIcon,
-		TrashCan,
+		DeleteIcon,
 		NodeViewWrapper,
 	},
 	directives: {
