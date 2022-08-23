@@ -21,7 +21,7 @@ export default TipTapMention.extend({
 
 	toMarkdown(state, node) {
 		state.write(' ')
-		state.write(`@[${node.attrs.id}](mention://user/${node.attrs.id})`)
+		state.write(`@[${node.attrs.id}](mention://user/${node.attrs.label})`)
 		state.write(' ')
 	},
 })

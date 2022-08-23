@@ -3,31 +3,35 @@
 namespace OCA\Text\Controller;
 
 use \OCP\AppFramework\ApiController;
+use OCP\Collaboration\Collaborators\ISearch;
 use \OCP\IRequest;
-use \OCP\IUserManager;
+use OCP\Share\IShare;
 
 class UserApiController extends ApiController {
 
-    protected IUserManager $userManager;
+	protected ISearch $collaboratorSearch;
 
-    public function __construct($appName, IRequest $request, IUserManager $userManager) {
+    public function __construct($appName, IRequest $request, ISearch $ISearch) {
         parent::__construct($appName, $request);
 
-        $this->userManager = $userManager;
+        $this->collaboratorSearch = $ISearch;
     }
 
     /**
      * @param string $filter
      */
-    public function index(string $filter) {
-		$result = [];
+    public function index(string $filter, int $limit = 5) {
+		$users = [];
+		[$result] = $this->collaboratorSearch->search($filter, [IShare::TYPE_USER], false, $limit, 0);
 
-        $users = $this->userManager->search($filter, 5);
-        foreach ($users as $user) {
-            $result[$user->getUID()] = $user->getDisplayName();
+        foreach ($result['users'] as ['label' => $label, 'value' => $value]) {
+			if (isset($value['shareWith'])) {
+				$id = $value['shareWith'];
+            	$users[$id] = $label;
+			}
         }
 
-		return $result;
+		return $users;
 	}
 
 }
