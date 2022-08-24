@@ -1,19 +1,19 @@
 <template>
 	<NodeViewWrapper as="span" class="mention" contenteditable="false">
-		<UserBubble :user="node.attrs.id" :display-name="username" class="mention-user-bubble">
+		<NcUserBubble :user="node.attrs.id" :display-name="username" class="mention-user-bubble">
 			@{{ username }}
-		</UserBubble>
+		</NcUserBubble>
 	</NodeViewWrapper>
 </template>
 
 <script>
-import UserBubble from '@nextcloud/vue/dist/Components/UserBubble'
+import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
 	name: 'Mention',
 	components: {
-		UserBubble,
+		NcUserBubble,
 		NodeViewWrapper,
 	},
 	props: {
@@ -38,12 +38,5 @@ export default {
 /* This is required to properly render the bubble text (which seems linke a browser bug) */
 .text-editor__wrapper div.ProseMirror .mention[contenteditable=false] :deep(*) {
     -webkit-user-modify: read-only !important;
-}
-
-.mention-user-bubble /deep/ .user-bubble__content .user-bubble__title {
-	position: relative !important;
-    top: -20px !important;
-    left: -60px !important;
-	height: 40px;
 }
 </style>

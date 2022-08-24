@@ -3,13 +3,17 @@ import Mention from './Mention.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
 export default TipTapMention.extend({
+
 	parseHTML() {
 		return [
 			{
 				tag: 'span[data-type="user"]',
-				getAttrs: element => ((element.getAttribute('data-type') === 'user')
-					&& (element.getAttribute('class') === 'mention')
-					&& null),
+				getAttrs: element => {
+					return {
+						id: element.getAttribute('data-id'),
+						label: element.innerText ?? element.getAttribute('data-id'),
+					}
+				},
 				priority: 100,
 			},
 		]
@@ -21,7 +25,7 @@ export default TipTapMention.extend({
 
 	toMarkdown(state, node) {
 		state.write(' ')
-		state.write(`@[${node.attrs.id}](mention://user/${node.attrs.label})`)
+		state.write(`@[${node.attrs.label}](mention://user/${node.attrs.id})`)
 		state.write(' ')
 	},
 })
