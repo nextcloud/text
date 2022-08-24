@@ -47,7 +47,7 @@ export default class AttachmentResolver {
 	/*
 	 * Resolve a given src.
 	 * @param { string } the original src in the node.
-	 * @returns { Array<string> } - resolved urls to try.
+	 * @returns { Array<Array> } - resolved candidates to try.
 	 *
 	 * Currently returns either one or two urls.
 	 */

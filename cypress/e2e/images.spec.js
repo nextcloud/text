@@ -41,7 +41,7 @@ function attachFile(name, requestAlias = null) {
 		cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
 	}
 	return cy.getEditor()
-		.find('input[type="file"][data-text-el="image-file-input"]')
+		.find('input[type="file"][data-text-el="attachment-file-input"]')
 		.attachFile(name)
 }
 
