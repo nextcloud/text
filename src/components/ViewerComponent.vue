@@ -21,21 +21,29 @@
   -->
 
 <template>
-	<Editor :file-id="fileid"
+	<Editor v-if="isEditable"
+		:file-id="fileid"
 		:relative-path="filename"
 		:active="active"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
+	<Component :is="readerComponent" v-else :content="content" />
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+import PlainTextReader from './PlainTextReader.vue'
+import RichTextReader from './RichTextReader.vue'
+
 import { getSharingToken } from '../helpers/token.js'
 
 export default {
 	name: 'ViewerComponent',
 	components: {
+		RichTextReader,
+		PlainTextReader,
 		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
 	},
 	props: {
@@ -66,6 +74,58 @@ export default {
 		showOutlineOutside: {
 			type: Boolean,
 			default: false,
+		},
+		permissions: {
+			type: String,
+			default: '',
+		},
+		source: {
+			type: String,
+			default: undefined,
+		},
+	},
+	data() {
+		return {
+			content: '',
+		}
+	},
+	computed: {
+		/** @return {boolean} */
+		isEditable() {
+			return this.permissions.includes('W')
+		},
+
+		/** @return {boolean} */
+		readerComponent() {
+			return this.mime === 'text/markdown' ? RichTextReader : PlainTextReader
+		},
+	},
+
+	watch: {
+		active() {
+			this.loadFileContent()
+		},
+	},
+
+	beforeMount() {
+		// FIXME Dirty fix to avoid recreating the component on stable16
+		if (typeof this.$parent.$parent !== 'undefined' && this.$parent.$parent.onResize) {
+			window.removeEventListener('resize', this.$parent.$parent.onResize)
+		}
+	},
+
+	mounted() {
+		this.loadFileContent()
+	},
+
+	methods: {
+		async loadFileContent() {
+			if (!this.isEditable && this.content === '') {
+				const response = await axios.get(this.source)
+				this.content = response.data
+				this.contentLoaded = true
+				this.$emit('update:loaded', true)
+			}
 		},
 	},
 }
