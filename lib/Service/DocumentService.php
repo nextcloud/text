@@ -335,7 +335,7 @@ class DocumentService {
 	 * @param bool $force
 	 * @throws DocumentHasUnsavedChangesException
 	 */
-	public function resetDocument($documentId, $force = false): void {
+	public function resetDocument(int $documentId, $force = false): void {
 		try {
 			$this->unlock($documentId);
 
