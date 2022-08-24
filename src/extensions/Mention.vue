@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble'
+import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
@@ -29,14 +29,14 @@ export default {
 	},
 	data() {
 		return {
-			username: this.node.attrs.label
+			username: this.node.attrs.label,
 		}
-	}
+	},
 }
 </script>
 <style scoped>
 /* This is required to properly render the bubble text (which seems linke a browser bug) */
 .text-editor__wrapper div.ProseMirror .mention[contenteditable=false] :deep(*) {
-    -webkit-user-modify: read-only !important;
+	-webkit-user-modify: read-only !important;
 }
 </style>

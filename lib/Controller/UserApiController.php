@@ -18,6 +18,7 @@ class UserApiController extends ApiController {
     }
 
     /**
+     * @NoAdminRequired
      * @param string $filter
      */
     public function index(string $filter, int $limit = 5) {
