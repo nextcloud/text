@@ -32,22 +32,17 @@ use OCP\IAvatarManager;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IRequest;
+use OCP\IUserManager;
 use OCP\Security\ISecureRandom;
 
 class SessionService {
 	public const SESSION_VALID_TIME = 5 * 60;
 
-	/** @var SessionMapper */
-	private $sessionMapper;
-
-	/** @var ISecureRandom */
-	private $secureRandom;
-
-	/** @var ITimeFactory */
-	private $timeFactory;
-
-	/** @var IAvatarManager */
-	private $avatarManager;
+	private SessionMapper $sessionMapper;
+	private ISecureRandom $secureRandom;
+	private ITimeFactory $timeFactory;
+	private IUserManager $userManager;
+	private IAvatarManager $avatarManager;
 
 	/** @var string|null */
 	private $userId;
@@ -62,6 +57,7 @@ class SessionService {
 		SessionMapper $sessionMapper,
 		ISecureRandom $secureRandom,
 		ITimeFactory $timeFactory,
+		IUserManager $userManager,
 		IAvatarManager $avatarManager,
 		IRequest $request,
 		IManager $directManager,
@@ -71,6 +67,7 @@ class SessionService {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;
 		$this->timeFactory = $timeFactory;
+		$this->userManager = $userManager;
 		$this->avatarManager = $avatarManager;
 		$this->userId = $userId;
 
@@ -119,11 +116,7 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAll($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			$userManager = \OC::$server->getUserManager();
-			$user = $userManager->get($session->getUserId());
-			if ($user) {
-				$result['displayName'] = $user->getDisplayName();
-			}
+			$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
 			return $result;
 		}, $sessions);
 	}
@@ -132,11 +125,7 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			$userManager = \OC::$server->getUserManager();
-			$user = $userManager->get($session->getUserId());
-			if ($user) {
-				$result['displayName'] = $user->getDisplayName();
-			}
+			$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
 			return $result;
 		}, $sessions);
 	}
