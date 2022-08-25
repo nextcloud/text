@@ -31,7 +31,9 @@ jest.mock('@nextcloud/auth', () => ({
 		uid: 'user1',
 		displayName: 'User 1',
 		isAdmin: false,
-	}))
+	})),
+	getRequestToken: jest.fn().mockImplementation(() => '123456abcdef'),
+	onRequestTokenUpdate: jest.fn().mockImplementation(() => {}),
 }))
 
 
