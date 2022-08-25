@@ -54,7 +54,7 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, session }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -116,7 +116,9 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 				HTMLAttributes: {
 					class: 'mention',
 				},
-				suggestion: MentionSuggestion,
+				suggestion: MentionSuggestion({
+					session,
+				}),
 			}),
 			Placeholder.configure({
 				emptyNodeClass: 'is-empty',
