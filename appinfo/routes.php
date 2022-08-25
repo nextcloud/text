@@ -36,6 +36,7 @@ return [
 		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'POST'],
 		['name' => 'Session#push', 'url' => '/session/push', 'verb' => 'POST'],
 		['name' => 'Session#close', 'url' => '/session/close', 'verb' => 'POST'],
+		['name' => 'Session#mention', 'url' => '/session/mention', 'verb' => 'PUT'],
 
 		['name' => 'PublicSession#create', 'url' => '/public/session/create', 'verb' => 'PUT'],
 		['name' => 'PublicSession#updateSession', 'url' => '/public/session', 'verb' => 'POST'],

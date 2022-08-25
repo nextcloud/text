@@ -34,6 +34,7 @@ use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadViewerListener;
 use OCA\Text\Listeners\RegisterDirectEditorEventListener;
+use OCA\Text\Notification\Notifier;
 use OCA\Text\Service\ConfigService;
 use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
@@ -64,6 +65,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(NodeCopiedEvent::class, NodeCopiedListener::class);
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
+		$context->registerNotifierService(Notifier::class);
 	}
 
 	public function boot(IBootContext $context): void {
