@@ -26,6 +26,8 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\ApiService;
+use OCA\Text\Service\NotificationService;
+use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\Response;
@@ -33,10 +35,14 @@ use OCP\IRequest;
 
 class SessionController extends Controller {
 	private ApiService $apiService;
+	private SessionService $sessionService;
+	private NotificationService $notificationService;
 
-	public function __construct(string $appName, IRequest $request, ApiService $apiService) {
+	public function __construct(string $appName, IRequest $request, ApiService $apiService, SessionService $sessionService, NotificationService $notificationService) {
 		parent::__construct($appName, $request);
 		$this->apiService = $apiService;
+		$this->sessionService = $sessionService;
+		$this->notificationService = $notificationService;
 	}
 
 	/**
@@ -76,5 +82,24 @@ class SessionController extends Controller {
 	 */
 	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @PublicPage
+	 * @UserRateThrottle(limit=5, period=120)
+	 */
+	public function mention(int $documentId, int $sessionId, string $sessionToken, string $mention): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 403);
+		}
+
+		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+
+		if ($currentSession->getUserId() === null && !$this->sessionService->isUserInDocument($documentId, $mention)) {
+			return new DataResponse([], 403);
+		}
+
+		return new DataResponse($this->notificationService->mention($documentId, $mention));
 	}
 }

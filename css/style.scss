@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 :root {
 	--text-editor-max-width: 670px
 }
@@ -99,3 +101,4 @@ li.ProseMirror-selectednode:after {
 .fadeInLeft {
   animation-name: fadeInLeft;
 }
+

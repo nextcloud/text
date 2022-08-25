@@ -219,4 +219,8 @@ class SessionService {
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();
 	}
+
+	public function isUserInDocument(int $documentId, string $mention): bool {
+		return $this->sessionMapper->isUserInDocument($documentId, $mention);
+	}
 }

@@ -50,6 +50,8 @@
 
 /*! For license information please see NcModal.js.LICENSE.txt */
 
+/*! For license information please see NcUserBubble.js.LICENSE.txt */
+
 /*! For license information please see Tooltip.js.LICENSE.txt */
 
 /*! For license information please see emoji.js.LICENSE.txt */

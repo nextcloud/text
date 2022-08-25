@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace OC\Hooks {
+    class Emitter {}
+}
+
+namespace OC\AppFramework\OCS {
+	class BaseResponse {}
+}
+
+namespace OCA\Viewer\Event {
+	class LoadViewer extends \OCP\EventDispatcher\Event {}
+}
+
+namespace OC\User {
+	class NoUserException extends \Exception {}
+}
+

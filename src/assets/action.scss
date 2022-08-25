@@ -1,0 +1,135 @@
+/**
+ * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
+ * @author Marco Ambrosini <marcoambrosini@icloud.com>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+@mixin action-active {
+	li {
+		&.active {
+			background-color: var(--color-background-hover);
+			border-radius: 6px;
+			padding: 0;
+		}
+	}
+}
+
+@mixin action--disabled {
+	.action--disabled {
+		pointer-events: none;
+		opacity: $opacity_disabled;
+		&:hover, &:focus {
+			cursor: default;
+			opacity: $opacity_disabled;
+		}
+		& * {
+			opacity: 1 !important;
+		}
+	}
+}
+
+
+@mixin action-item($name) {
+	.action-#{$name} {
+		display: flex;
+		align-items: flex-start;
+
+		width: 100%;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		padding-right: $icon-margin;
+		box-sizing: border-box; // otherwise router-link overflows in Firefox
+
+		cursor: pointer;
+		white-space: nowrap;
+
+		opacity: $opacity_normal;
+		color: var(--color-main-text);
+		border: 0;
+		border-radius: 0; // otherwise Safari will cut the border-radius area
+		background-color: transparent;
+		box-shadow: none;
+
+		font-weight: normal;
+		font-size: var(--default-font-size);
+		line-height: $clickable-area;
+
+		&:hover,
+		&:focus {
+			opacity: $opacity_full;
+		}
+
+		& > span {
+			cursor: pointer;
+			white-space: nowrap;
+		}
+
+		&__icon {
+			width: $clickable-area;
+			height: $clickable-area;
+			opacity: $opacity_full;
+			background-position: $icon-margin center;
+			background-size: $icon-size;
+			background-repeat: no-repeat;
+		}
+
+		&::v-deep .material-design-icon {
+			width: $clickable-area;
+			height: $clickable-area;
+			opacity: $opacity_full;
+
+			.material-design-icon__svg {
+				vertical-align: middle;
+			}
+		}
+
+		// long text area
+		p {
+			max-width: 220px;
+			line-height: 1.6em;
+
+			// 14px are currently 1em line-height. Mixing units as '44px - 1.6em' does not work.
+			padding: #{math.div($clickable-area - 1.6 * 14px, 2)} 0;
+
+			cursor: pointer;
+			text-align: left;
+
+			// in case there are no spaces like long email addresses
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		&__longtext {
+			cursor: pointer;
+			// allow the use of `\n`
+			white-space: pre-wrap;
+		}
+
+		&__title {
+			font-weight: bold;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			max-width: 100%;
+			display: inline-block;
+		}
+	}
+}

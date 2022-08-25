@@ -234,7 +234,7 @@ class ApiService {
 	 */
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 500);
+			return new DataResponse([], 403);
 		}
 
 		return new DataResponse($this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName));

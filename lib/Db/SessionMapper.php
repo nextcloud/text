@@ -117,4 +117,22 @@ class SessionMapper extends QBMapper {
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		return $qb->execute();
 	}
+
+	public function isUserInDocument($documentId, $userId): bool {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('*')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->andWhere($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)))
+			->setMaxResults(1)
+			->executeQuery();
+
+		$data = $result->fetch();
+		$result->closeCursor();
+		if ($data === false) {
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -29,6 +29,7 @@ import Markdown from './Markdown.js'
 import PlainText from './PlainText.js'
 import RichText from './RichText.js'
 import KeepSyntax from './KeepSyntax.js'
+import Mention from './Mention.js'
 
 export {
 	Emoji,
@@ -40,4 +41,5 @@ export {
 	PlainText,
 	RichText,
 	KeepSyntax,
+	Mention,
 }
