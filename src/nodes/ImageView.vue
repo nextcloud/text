@@ -48,6 +48,16 @@
 									{{ attachmentMetadata.size }}
 								</span>
 							</div>
+							<div v-if="editor.isEditable && showIcons"
+								class="buttons">
+								<NcButton :aria-label="t('text', 'Delete this attachment')"
+									:title="t('text', 'Delete this attachment')"
+									@click="deleteNode">
+									<template #icon>
+										<DeleteIcon />
+									</template>
+								</NcButton>
+							</div>
 						</div>
 						<div v-else>
 							<img v-show="loaded"
@@ -68,11 +78,15 @@
 							class="image__caption__input"
 							:value="alt"
 							@keyup.enter="updateAlt">
-						<div v-if="editor.isEditable && showIcons"
-							class="image__caption__delete"
-							title="Delete this image"
-							@click="deleteNode">
-							<DeleteIcon />
+						<div v-if="editor.isEditable && showIcons && !isMediaAttachment"
+							class="image__caption__delete">
+							<NcButton :aria-label="t('text', 'Delete this image')"
+								:title="t('text', 'Delete this image')"
+								@click="deleteNode">
+								<template #icon>
+									<DeleteIcon />
+								</template>
+							</NcButton>
 						</div>
 					</div>
 				</transition>
@@ -106,6 +120,7 @@ import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import store from './../mixins/store.js'
 import { useAttachmentResolver } from './../components/Editor.provider.js'
 
@@ -143,6 +158,7 @@ export default {
 	components: {
 		ImageIcon,
 		DeleteIcon,
+		NcButton,
 		NodeViewWrapper,
 	},
 	directives: {
@@ -317,6 +333,7 @@ export default {
 			max-width: 80%;
 			border: none;
 			text-align: center;
+			color: var(--color-text-maxcontrast);
 			background-color: transparent;
 		}
 	}
@@ -345,10 +362,10 @@ export default {
 	.media {
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: left;
 		img {
-			width: 40px;
-			height: 40px;
+			width: 44px;
+			height: 44px;
 		}
 		.metadata {
 			margin-left: 8px;
@@ -362,6 +379,9 @@ export default {
 					color: var(--color-text-maxcontrast);
 				}
 			}
+		}
+		.buttons {
+			margin-left: 12px;
 		}
 	}
 
