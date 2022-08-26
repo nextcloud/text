@@ -319,8 +319,8 @@ export default [
 		priority: 4,
 	},
 	{
-		key: 'insert-image',
-		label: t('text', 'Insert image'),
+		key: 'insert-attachment',
+		label: t('text', 'Insert attachment'),
 		icon: Images,
 		component: ActionAttachmentUpload,
 		priority: 2,

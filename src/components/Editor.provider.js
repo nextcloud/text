@@ -84,7 +84,7 @@ export const useAttachmentResolver = {
 			from: ATTACHMENT_RESOLVER,
 			default: {
 				resolve(src) {
-					console.warn('No image resolver provided. Some image sources cannot be resolved.')
+					console.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
 					return [src]
 				},
 			},

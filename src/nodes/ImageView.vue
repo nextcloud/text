@@ -251,13 +251,13 @@ export default {
 		async loadImage(imageUrl, attachmentType, name = null) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
-				img.onload = () => {
+				img.onload = async () => {
 					this.imageUrl = imageUrl
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentType = attachmentType
 					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
-						this.loadMediaMetadata(name)
+						await this.loadMediaMetadata(name)
 					}
 					resolve(imageUrl)
 				}
@@ -268,8 +268,10 @@ export default {
 			})
 		},
 		loadMediaMetadata(name) {
-			this.$attachmentResolver.getMediaMetadata(name).then((response) => {
+			return this.$attachmentResolver.getMediaMetadata(name).then((response) => {
 				this.attachmentMetadata = response.data
+			}).catch((error) => {
+				console.error(error)
 			})
 		},
 		onImageLoadFailure(err) {

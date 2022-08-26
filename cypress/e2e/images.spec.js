@@ -28,8 +28,8 @@ const randUser2 = randHash()
 let currentUser = randUser
 const attachmentFileNameToId = {}
 
-const ACTION_UPLOAD_LOCAL_FILE = 'insert-image-upload'
-const ACTION_INSERT_FROM_FILES = 'insert-image-insert'
+const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
+const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
 // const ACTION_INSERT_FROM_LINK = 3
 
 /**
@@ -61,7 +61,7 @@ function fixedEncodeURIComponent(str) {
  * @param {string} actionName position of the action to be clicked
  */
 const clickOnImageAction = (actionName) => {
-	cy.getActionEntry('insert-image')
+	cy.getActionEntry('insert-attachment')
 		.click()
 
 	return cy.get('.v-popper__wrapper .open')
