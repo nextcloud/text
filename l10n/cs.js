@@ -13,6 +13,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Nebyl nahrán žádný soubor nebo jeho velikost přesáhla %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "textový dokument",
+    "{user} has mentioned you in the text document {node}" : "{user} vás zmínil(a) v textovém dokumentu {node}",
     "Readme" : "Čtimne",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Upravování dokumentů vícero uživateli naráz",
