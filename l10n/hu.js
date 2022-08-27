@@ -13,6 +13,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Nincs fájl feltöltve, vagy a fájl meghaladja a maximumot: %s",
     "Nextcloud Text" : "Nextcloud Szöveg",
     "text document" : "szöveges dokumentum",
+    "{user} has mentioned you in the text document {node}" : "{user} megemlítette a(z) {node} szöveges dokumentumban",
     "Readme" : "Olvass el",
     "Text" : "Szöveg",
     "📝 Collaborative document editing" : "📝 Közös dokumentumszerkesztés",
