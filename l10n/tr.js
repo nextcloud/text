@@ -13,6 +13,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Herhangi bir dosya yüklenmedi ya da %s olan en büyük dosya boyutu sınırı aşıldı",
     "Nextcloud Text" : "Nextcloud Metin",
     "text document" : "metin belgesi",
+    "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} metin belgesinde sizi andı",
     "Readme" : "Benioku",
     "Text" : "Metin",
     "📝 Collaborative document editing" : "📝 İşbirlikli belge düzenleme",
