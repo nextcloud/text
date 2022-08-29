@@ -21,7 +21,6 @@
  */
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
 import pathNormalize from 'path-normalize'
 
 export default class AttachmentResolver {
@@ -47,7 +46,7 @@ export default class AttachmentResolver {
 	/*
 	 * Resolve a given src.
 	 * @param { string } the original src in the node.
-	 * @returns { Array<Array> } - resolved candidates to try.
+	 * @returns { Array<Object> } - resolved candidates to try.
 	 *
 	 * Currently returns either one or two urls.
 	 */
@@ -153,7 +152,7 @@ export default class AttachmentResolver {
 		})
 	}
 
-	#getMediaMetadataUrl(mediaFileName) {
+	getMediaMetadataUrl(mediaFileName) {
 		if (this.#user || !this.#shareToken) {
 			return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
 				...this.#textApiParams(),
@@ -166,10 +165,6 @@ export default class AttachmentResolver {
 			mediaFileName,
 			shareToken: this.#shareToken,
 		})
-	}
-
-	getMediaMetadata(mediaFileName) {
-		return axios.get(this.#getMediaMetadataUrl(mediaFileName))
 	}
 
 	#textApiParams() {

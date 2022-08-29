@@ -117,6 +117,7 @@
 
 <script>
 import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
@@ -284,7 +285,10 @@ export default {
 			})
 		},
 		loadMediaMetadata(name) {
-			return this.$attachmentResolver.getMediaMetadata(name).then((response) => {
+			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
+			console.debug('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', metadataUrl)
+			return axios.get(metadataUrl).then((response) => {
+				console.debug('response', response.data)
 				this.attachmentMetadata = response.data
 			}).catch((error) => {
 				console.error(error)
