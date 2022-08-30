@@ -347,10 +347,10 @@ export default {
 		input[type='text'] {
 			width: 200px;
 			max-width: 80%;
-			border: none;
 			text-align: center;
-			color: var(--color-text-maxcontrast) !important;
 			background-color: transparent;
+			border: none !important;
+			color: var(--color-text-maxcontrast) !important;
 		}
 	}
 
@@ -368,6 +368,14 @@ export default {
 
 		img {
 			max-width: 100%;
+		}
+
+		&:hover,
+		&:focus {
+			input[type='text'] {
+				border: 2px solid var(--color-border-dark) !important;
+				color: var(--color-main-text) !important;
+			}
 		}
 	}
 
