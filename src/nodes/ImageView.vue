@@ -74,21 +74,23 @@
 				</transition>
 				<transition name="fade">
 					<div v-show="loaded" class="image__caption">
-						<input v-show="!isMediaAttachment"
-							ref="altInput"
-							type="text"
-							class="image__caption__input"
-							:value="alt"
-							@keyup.enter="updateAlt">
-						<div v-if="showImageDeleteIcon"
-							class="image__caption__delete">
-							<NcButton :aria-label="t('text', 'Delete this image')"
-								:title="t('text', 'Delete this image')"
-								@click="deleteNode">
-								<template #icon>
-									<DeleteIcon />
-								</template>
-							</NcButton>
+						<div class="image__caption__wrapper">
+							<input v-show="!isMediaAttachment"
+								ref="altInput"
+								type="text"
+								class="image__caption__input"
+								:value="alt"
+								@keyup.enter="updateAlt">
+							<div v-if="showImageDeleteIcon"
+								class="image__caption__delete">
+								<NcButton :aria-label="t('text', 'Delete this image')"
+									:title="t('text', 'Delete this image')"
+									@click="deleteNode">
+									<template #icon>
+										<DeleteIcon />
+									</template>
+								</NcButton>
+							</div>
 						</div>
 					</div>
 				</transition>
@@ -295,7 +297,6 @@ export default {
 		loadMediaMetadata(name) {
 			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
 			return axios.get(metadataUrl).then((response) => {
-				console.debug('response', response.data)
 				this.attachmentMetadata = response.data
 			}).catch((error) => {
 				console.error(error)
@@ -340,6 +341,9 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		&__wrapper {
+			position: relative;
+		}
 		input[type='text'] {
 			width: 200px;
 			max-width: 80%;
@@ -429,7 +433,9 @@ export default {
 		align-items: center;
 		width: 20px;
 		height: 20px;
-		margin-left: 8px;
+		position: absolute;
+		right: -6px;
+		bottom: 10px;
 		&, svg {
 			cursor: pointer;
 		}
