@@ -262,10 +262,10 @@ export default {
 			return this.load(candidates)
 		},
 		async load(candidates) {
-			const candidate = candidates.shift()
+			const [candidate, ...fallbacks] = candidates
 			return this.loadImage(candidate.url, candidate.type, candidate.name).catch((e) => {
-				if (candidates.length > 0) {
-					return this.load(candidates)
+				if (fallbacks.length > 0) {
+					return this.load(fallbacks)
 					// TODO if fallback works, rewrite the url with correct document ID
 				}
 				return Promise.reject(e)
@@ -292,7 +292,6 @@ export default {
 		},
 		loadMediaMetadata(name) {
 			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
-			console.debug('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', metadataUrl)
 			return axios.get(metadataUrl).then((response) => {
 				console.debug('response', response.data)
 				this.attachmentMetadata = response.data
