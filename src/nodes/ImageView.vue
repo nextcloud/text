@@ -48,7 +48,7 @@
 									{{ attachmentMetadata.size }}
 								</span>
 							</div>
-							<div v-if="editor.isEditable && showIcons"
+							<div v-if="showDeleteIcon"
 								class="buttons">
 								<NcButton :aria-label="t('text', 'Delete this attachment')"
 									:title="t('text', 'Delete this attachment')"
@@ -78,7 +78,7 @@
 							class="image__caption__input"
 							:value="alt"
 							@keyup.enter="updateAlt">
-						<div v-if="editor.isEditable && showIcons && !isMediaAttachment"
+						<div v-if="showImageDeleteIcon"
 							class="image__caption__delete">
 							<NcButton :aria-label="t('text', 'Delete this image')"
 								:title="t('text', 'Delete this image')"
@@ -185,6 +185,12 @@ export default {
 	computed: {
 		isMediaAttachment() {
 			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+		},
+		showDeleteIcon() {
+			return this.editor.isEditable && this.showIcons
+		},
+		showImageDeleteIcon() {
+			return this.showDeleteIcon && !this.isMediaAttachment
 		},
 		canDisplayImage() {
 			if (!this.isSupportedImage) {
@@ -337,7 +343,6 @@ export default {
 			max-width: 80%;
 			border: none;
 			text-align: center;
-			color: var(--color-text-maxcontrast);
 			background-color: transparent;
 		}
 	}
