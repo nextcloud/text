@@ -42,12 +42,8 @@
 									class="image__main"
 									@load="onLoaded">
 								<div class="metadata">
-									<span class="name">
-										{{ alt }}
-									</span>
-									<span class="size">
-										{{ attachmentMetadata.size }}
-									</span>
+									<span class="name">{{ alt }}</span>
+									<span class="size">{{ attachmentMetadata.size }}</span>
 								</div>
 							</div>
 							<div v-if="showDeleteIcon"

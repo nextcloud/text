@@ -30,7 +30,6 @@ const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
-// const ACTION_INSERT_FROM_LINK = 3
 
 /**
  * @param {string} name name of file
@@ -56,11 +55,11 @@ function fixedEncodeURIComponent(str) {
 }
 
 /**
- * Open the image action menu and click one action
+ * Open the attachment action menu and click one action
  *
  * @param {string} actionName position of the action to be clicked
  */
-const clickOnImageAction = (actionName) => {
+const clickOnAttachmentAction = (actionName) => {
 	cy.getActionEntry('insert-attachment')
 		.click()
 
@@ -70,44 +69,53 @@ const clickOnImageAction = (actionName) => {
 }
 
 /**
- * Check if an image is visible in the document
+ * Check if an attachment is visible in the document
  *
  * @param {number} documentId file ID of the current document
- * @param {string} imageName file name to be checked
- * @param {number} imageId file id
- * @param {number|undefined} index index of image in the document
+ * @param {string} fileName attachment file name to be checked
+ * @param {number} fileId attachment file id
+ * @param {number|undefined} index index of the attachment in the document
+ * @param {boolean} isImage is the attachment an image or a media file?
  */
-const checkImage = (documentId, imageName, imageId, index) => {
-	const encodedName = fixedEncodeURIComponent(imageName)
+const checkAttachment = (documentId, fileName, fileId, index, isImage = true) => {
+	const encodedName = fixedEncodeURIComponent(fileName)
 	const src = `.attachments.${documentId}/${encodedName}`
 
-	cy.log('Check the image is visible and well formed', documentId, imageName, imageId, index, encodedName)
+	cy.log('Check the attachment is visible and well formed', documentId, fileName, fileId, index, encodedName)
 	return new Cypress.Promise((resolve, reject) => {
 		cy.get(`#editor [data-component="image-view"][data-src="${src}"]`)
 			.find('.image__view') // wait for load finish
 			.within(($el) => {
-				// keep track that we have created this image in the attachment dir
+				// keep track that we have created this attachment in the attachment dir
 				if (!attachmentFileNameToId[documentId]) {
 					attachmentFileNameToId[documentId] = {}
 				}
 
-				attachmentFileNameToId[documentId][imageName] = imageId
+				attachmentFileNameToId[documentId][fileName] = fileId
 
 				if (index > 0) {
-					expect(imageName).include(`(${index + 1})`)
+					expect(fileName).include(`(${index + 1})`)
 				}
+
+				const srcPathEnd = isImage ? 'image' : 'mediaPreview'
+				const srcFileNameParam = isImage ? 'imageFileName' : 'mediaFileName'
 
 				cy.wrap($el)
 					.should('be.visible')
 					.find('img')
 					.should('have.attr', 'src')
-					.should('contain', 'apps/text/image?documentId=' + documentId)
-					.should('contain', 'imageFileName=' + encodeURIComponent(imageName))
+					.should('contain', 'apps/text/' + srcPathEnd + '?documentId=' + documentId)
+					.should('contain', srcFileNameParam + '=' + encodeURIComponent(fileName))
 
-				return cy.wrap($el)
-					.find('.image__caption input')
-					.should('be.visible')
-					.should('have.value', imageName)
+				return isImage
+					? cy.wrap($el)
+						.find('.image__caption input')
+						.should('be.visible')
+						.should('have.value', fileName)
+					: cy.wrap($el)
+						.find('.metadata .name')
+						.should('be.visible')
+						.should('have.text', fileName)
 
 			})
 			.then(resolve, reject)
@@ -115,12 +123,12 @@ const checkImage = (documentId, imageName, imageId, index) => {
 }
 
 /**
- * Wait for the image insertion request to finish and check if the image is visible
+ * Wait for the attachment insertion request to finish and check if the attachment is visible
  *
  * @param {string} requestAlias Alias of the request we are waiting for
- * @param {number|undefined} index of image
+ * @param {number|undefined} index of the attachment
  */
-const waitForRequestAndCheckImage = (requestAlias, index) => {
+const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) => {
 	return cy.wait('@' + requestAlias)
 		.then((req) => {
 			// the name of the created file on NC side is returned in the response
@@ -128,11 +136,11 @@ const waitForRequestAndCheckImage = (requestAlias, index) => {
 			const fileName = req.response.body.name
 			const documentId = req.response.body.documentId
 
-			return checkImage(documentId, fileName, fileId, index)
+			return checkAttachment(documentId, fileName, fileId, index, isImage)
 		})
 }
 
-describe('Test all image insertion methods', () => {
+describe('Test all attachment insertion methods', () => {
 	before(() => {
 		initUserAndFiles(randUser, 'test.md', 'empty.md')
 
@@ -154,10 +162,10 @@ describe('Test all image insertion methods', () => {
 		cy.showHiddenFiles()
 	})
 
-	it('Insert an image from files', () => {
+	it('Insert an image file from Files', () => {
 		cy.openFile('test.md')
 
-		clickOnImageAction(ACTION_INSERT_FROM_FILES)
+		clickOnAttachmentAction(ACTION_INSERT_FROM_FILES)
 			.then(() => {
 				const requestAlias = 'insertPathRequest'
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
@@ -167,27 +175,43 @@ describe('Test all image insertion methods', () => {
 				cy.log('Click OK in the filepicker')
 				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
 
-				return waitForRequestAndCheckImage(requestAlias)
+				return waitForRequestAndCheckAttachment(requestAlias)
 			})
 	})
 
-	it('Upload a local image', () => {
+	it('Upload a local image file', () => {
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
 		// is not handled correctly when the upload has been done in <MenuBar>
-		clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE)
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
 			.then(() => {
 				const requestAlias = 'uploadRequest'
 				cy.log('Upload the file through the input')
 
 				attachFile('table.png', requestAlias)
 
-				return waitForRequestAndCheckImage(requestAlias)
+				return waitForRequestAndCheckAttachment(requestAlias)
 			})
 	})
 
-	it('Upload images with the same name', () => {
+	it('Upload a local media file', () => {
+		cy.openFile('test.md')
+		// in this case we almost could just attach the file to the input
+		// BUT we still need to click on the action because otherwise the command
+		// is not handled correctly when the upload has been done in <MenuBar>
+		clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
+			.then(() => {
+				const requestAlias = 'uploadMediaRequest'
+				cy.log('Upload the file through the input')
+
+				attachFile('file.txt.gz', requestAlias)
+
+				return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
+			})
+	})
+
+	it('Upload image files with the same name', () => {
 		// make sure we start from an emtpy file even on retries
 		const filename = randHash() + '.md'
 
@@ -196,14 +220,14 @@ describe('Test all image insertion methods', () => {
 		cy.openFile(filename)
 
 		const assertImage = index => {
-			return clickOnImageAction(ACTION_UPLOAD_LOCAL_FILE)
+			return clickOnAttachmentAction(ACTION_UPLOAD_LOCAL_FILE)
 				.then(() => {
 					const requestAlias = `uploadRequest${index}`
 					cy.log('Upload the file through the input', { index })
 
 					attachFile('github.png', requestAlias)
 
-					return waitForRequestAndCheckImage(requestAlias, index)
+					return waitForRequestAndCheckAttachment(requestAlias, index)
 				})
 		}
 
@@ -219,15 +243,15 @@ describe('Test all image insertion methods', () => {
 			})
 	})
 
-	it('test if image files are in the attachment folder', () => {
-		// check we stored the image names/ids
+	it('test if attachment files are in the attachment folder', () => {
+		// check we stored the attachment names/ids
 
 		cy.get('.files-fileList tr[data-file="test.md"]', { timeout: 10000 })
 			.should('have.attr', 'data-id')
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
 
-				cy.expect(Object.keys(files)).to.have.lengthOf(2)
+				cy.expect(Object.keys(files)).to.have.lengthOf(3)
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
@@ -277,7 +301,7 @@ describe('Test all image insertion methods', () => {
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
-						// so they should not have the same IDs than the ones created when uploading the images
+						// so they should not have the same IDs than the ones created when uploading the files
 						.should('not.eq', String(files[name]))
 				}
 			})
@@ -339,7 +363,7 @@ describe('Test all image insertion methods', () => {
 						.should('exist')
 						.should('have.attr', 'data-id')
 						// these are new copied attachment files
-						// so they should not have the same IDs than the ones created when uploading the images
+						// so they should not have the same IDs than the ones created when uploading the files
 						.should('not.eq', String(files[name]))
 				}
 			})
