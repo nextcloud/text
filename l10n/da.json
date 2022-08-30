@@ -67,7 +67,7 @@
     "Insert image" : "Indsæt billede",
     "Command" : "Kommando",
     "Edit" : "Redigér",
-    "New text document" : "Nyt tekstdokument",
+    "New text document" : "Nyt tekst dokument",
     "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
