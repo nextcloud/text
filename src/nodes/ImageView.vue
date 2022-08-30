@@ -343,6 +343,7 @@ export default {
 			max-width: 80%;
 			border: none;
 			text-align: center;
+			color: var(--color-text-maxcontrast) !important;
 			background-color: transparent;
 		}
 	}
