@@ -83,10 +83,12 @@ export default Vue.extend({
 div.ProseMirror {
 	/* Anchor links */
 	h1, h2, h3, h4, h5, h6 {
+		position: relative;
 		.anchor-link {
 			opacity: 0;
 			padding: 0;
-			left: -18px;
+			left: -1em;
+			bottom: 0;
 			font-size: max(1em, 16px);
 			position: absolute;
 			text-decoration: none;
@@ -96,7 +98,7 @@ div.ProseMirror {
 		}
 
 		&:hover .anchor-link {
-			opacity: 0.45;
+			opacity: 0.5;
 		}
 	}
 
