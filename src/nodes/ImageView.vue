@@ -339,6 +339,7 @@ export default {
 		align-items: center;
 		justify-content: center;
 		input[type='text'] {
+			width: 200px;
 			max-width: 80%;
 			border: none;
 			text-align: center;
@@ -412,13 +413,11 @@ export default {
 	}
 
 	.image__caption__delete {
-		position: absolute;
-		right: 0;
 		display: flex;
-		justify-content: flex-end;
 		align-items: center;
 		width: 20px;
 		height: 20px;
+		margin-left: 8px;
 		&, svg {
 			cursor: pointer;
 		}
