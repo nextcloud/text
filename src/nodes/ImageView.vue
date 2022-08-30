@@ -36,17 +36,19 @@
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
 							class="media">
-							<img v-show="loaded"
-								:src="imageUrl"
-								class="image__main"
-								@load="onLoaded">
-							<div class="metadata">
-								<span class="name">
-									{{ alt }}
-								</span>
-								<span class="size">
-									{{ attachmentMetadata.size }}
-								</span>
+							<div class="media__wrapper">
+								<img v-show="loaded"
+									:src="imageUrl"
+									class="image__main"
+									@load="onLoaded">
+								<div class="metadata">
+									<span class="name">
+										{{ alt }}
+									</span>
+									<span class="size">
+										{{ attachmentMetadata.size }}
+									</span>
+								</div>
 							</div>
 							<div v-if="showDeleteIcon"
 								class="buttons">
@@ -373,25 +375,35 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: left;
-		img {
-			width: 44px;
-			height: 44px;
-		}
-		.metadata {
-			margin-left: 8px;
+		.media__wrapper {
 			display: flex;
-			flex-direction: column;
-			align-items: start;
-			span {
-				line-height: 20px;
-				font-weight: normal;
-				&.size {
-					color: var(--color-text-maxcontrast);
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+			padding: 8px;
+
+			img {
+				width: 44px;
+				height: 44px;
+			}
+
+			.metadata {
+				margin-left: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: start;
+
+				span {
+					line-height: 20px;
+					font-weight: normal;
+
+					&.size {
+						color: var(--color-text-maxcontrast);
+					}
 				}
 			}
 		}
 		.buttons {
-			margin-left: 12px;
+			margin-left: 8px;
 		}
 	}
 
