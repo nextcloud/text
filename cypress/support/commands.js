@@ -162,6 +162,40 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 	})
 })
 
+Cypress.Commands.add('shareFile', (path, options = {}) => {
+	return cy.window().then(async window => {
+		try {
+			const headers = { requesttoken: window.OC.requestToken }
+			const request = await axios.post(
+				`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
+				{ path, shareType: window.OC.Share.SHARE_TYPE_LINK },
+				{ headers }
+			)
+			const token = request.data?.ocs?.data?.token
+			const id = request.data?.ocs?.data?.id
+			if (!token || !id || token.length === 0) {
+				throw request
+			}
+			cy.log(`Share link created: ${token}`)
+
+			if (options.edit) {
+				// Same permissions makeing the share editable in the UI would set
+				// 1 = read; 2 = write; 16 = share;
+				const permissions = 19
+				await axios.put(
+					`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
+					{ permissions },
+					{ headers }
+				)
+				cy.log(`Made share ${token} editable.`)
+			}
+			return cy.wrap(token)
+		} catch (error) {
+			console.error(error)
+		}
+	}).should('have.length', 15)
+})
+
 Cypress.Commands.add('createFolder', dirName => cy.window()
 	.then(win => win.OC.Files.getClient().createDirectory(dirName))
 )

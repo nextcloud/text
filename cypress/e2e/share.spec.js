@@ -45,16 +45,11 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Shares the file as a public read only link', function() {
-		cy.visit('/apps/files')
-		cy.get('.files-fileList tr[data-file="test.md"] a.action-share')
-			.click({ force: true })
-		cy.get('#app-sidebar-vue')
-			.should('be.visible')
-		cy.get('#app-sidebar-vue a#sharing').trigger('click')
-		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
-		cy.get('#app-sidebar-vue a.sharing-entry__copy')
-			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => cy.visit(href))
+		cy.shareFile('/test.md')
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
+			})
 			.then(() => {
 				cy.getEditor().should('be.visible')
 				cy.getContent()
@@ -64,20 +59,10 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Shares the file as a public link with write permissions', function() {
-		cy.visit('/apps/files')
-		cy.get('.files-fileList tr[data-file="test2.md"] a.action-share')
-			.click({ force: true })
-		cy.get('#app-sidebar-vue')
-			.should('be.visible')
-		cy.get('#app-sidebar-vue a#sharing').trigger('click')
-		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
-		cy.get('#app-sidebar-vue .sharing-link-list .action-item__menutoggle').trigger('click')
-		const checkboxAllowEditing = '.popover.open input[type=checkbox]'
-		cy.get(checkboxAllowEditing).first().check({ force: true })
-		cy.get(checkboxAllowEditing).first().should('be.checked')
-		cy.get('#app-sidebar-vue a.sharing-entry__copy')
-			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => cy.visit(href))
+		cy.shareFile('/test2.md', { edit: true })
+			.then((token) => {
+				cy.visit(`/s/${token}`)
+			})
 			.then(() => {
 				cy.getEditor().should('be.visible')
 				cy.getContent()
@@ -92,17 +77,10 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Opens the editor as guest', function() {
-		cy.visit('/apps/files')
-		cy.get('.files-fileList tr[data-file="test2.md"] a.action-share')
-			.click({ force: true })
-		cy.get('#app-sidebar-vue')
-			.should('be.visible')
-		cy.get('#app-sidebar-vue a#sharing').trigger('click')
-		cy.get('#app-sidebar-vue a.sharing-entry__copy')
-			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => {
-				return cy.logout()
-					.then(() => cy.visit(href))
+		cy.shareFile('/test2.md', { edit: true })
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
 			})
 			.then(() => {
 				cy.getEditor().should('be.visible')
@@ -118,16 +96,11 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('Shares a folder as a public read only link', function() {
-		cy.visit('/apps/files')
-		cy.get('.files-fileList tr[data-file="folder"] a.action-share')
-			.click({ force: true })
-		cy.get('#app-sidebar-vue')
-			.should('be.visible')
-		cy.get('#app-sidebar-vue a#sharing').trigger('click')
-		cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
-		cy.get('#app-sidebar-vue a.sharing-entry__copy')
-			.should('have.attr', 'href').and('include', '/s/')
-			.then((href) => cy.visit(href))
+		cy.shareFile('/folder')
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
+			})
 			.then(() => {
 				cy.get('#rich-workspace').should('contain', 'Hello world')
 				cy.openFile('test.md')
