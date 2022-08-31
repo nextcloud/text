@@ -27,7 +27,7 @@ use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 
 /**
- * @method string getUserId()
+ * @method ?string getUserId()
  * @method void setUserId(?string $userId)
  * @method string getToken()
  * @method void setToken(string $token)
