@@ -218,9 +218,9 @@ class ImageController extends Controller {
 	 * @param int $documentId
 	 * @param int $sessionId
 	 * @param string $sessionToken
-	 * @return string
+	 * @return ?string
 	 */
-	private function getUserIdFromSession(int $documentId, int $sessionId, string $sessionToken): string {
+	private function getUserIdFromSession(int $documentId, int $sessionId, string $sessionToken): ?string {
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		return $session->getUserId();
 	}
