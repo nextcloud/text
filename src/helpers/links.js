@@ -56,6 +56,9 @@ const domHref = function(node) {
 	if (ref.match(/^[a-zA-Z]*:/)) {
 		return ref
 	}
+	if (ref.startsWith('#')) {
+		return ref
+	}
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
@@ -82,9 +85,10 @@ const openLink = function(event, _attrs) {
 	const linkElement = event.target.closest('a')
 	const htmlHref = linkElement.href
 	const query = OC.parseQueryString(htmlHref)
-	const fragment = OC.parseQueryString(htmlHref.split('#').pop())
-	if (query.dir && fragment.relPath) {
-		const filename = fragment.relPath.split('/').pop()
+	const fragment = htmlHref.split('#').pop()
+	const fragmentQuery = OC.parseQueryString(fragment)
+	if (query?.dir && fragmentQuery?.relPath) {
+		const filename = fragmentQuery.relPath.split('/').pop()
 		const path = `${query.dir}/${filename}`
 		document.title = `${filename} - ${OC.theme.title}`
 		if (window.location.pathname.match(/apps\/files\/$/)) {
@@ -95,7 +99,7 @@ const openLink = function(event, _attrs) {
 		OCA.Viewer.open({ path })
 		return
 	}
-	if (query.fileId) {
+	if (query?.fileId) {
 		// open the direct file link
 		window.open(generateUrl(`/f/${query.fileId}`))
 		return
@@ -103,6 +107,13 @@ const openLink = function(event, _attrs) {
 	if (!markdownit.validateLink(htmlHref)) {
 		console.error('Invalid link', htmlHref)
 		return false
+	}
+	if (fragment) {
+		const el = document.getElementById(fragment)
+		if (el) {
+			el.scrollIntoView()
+			return
+		}
 	}
 	window.open(htmlHref)
 	return true

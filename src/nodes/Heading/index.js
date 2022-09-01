@@ -1,8 +1,18 @@
 import TipTapHeading from '@tiptap/extension-heading'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import debounce from 'debounce'
+
+import HeadingView from './HeadingView.vue'
 import { setHeadings, extractHeadings } from './extractor.js'
 
 const Heading = TipTapHeading.extend({
+	addOptions() {
+		return {
+			...this.parent?.(),
+			linkSymbol: '#',
+		}
+	},
+
 	addAttributes() {
 		return {
 			...this.parent(),
@@ -16,6 +26,11 @@ const Heading = TipTapHeading.extend({
 			},
 		}
 	},
+
+	addNodeView() {
+		return VueNodeViewRenderer(HeadingView)
+	},
+
 	addKeyboardShortcuts() {
 		return this.options.levels.reduce((items, level) => ({
 			...items,

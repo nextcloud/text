@@ -102,7 +102,7 @@ div.ProseMirror {
 	h5,
 	h6 {
 		font-weight: 600;
-		line-height: 120%;
+		line-height: 1.1em;
 		margin-top: 24px;
 		margin-bottom: 12px;
 		color: var(--color-main-text);
@@ -110,12 +110,10 @@ div.ProseMirror {
 
 	h1 {
 		font-size: 36px;
-		margin-top: 48px;
 	}
 
 	h2 {
 		font-size: 30px;
-		margin-top: 48px;
 	}
 
 	h3 {
