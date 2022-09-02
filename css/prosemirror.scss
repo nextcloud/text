@@ -29,7 +29,10 @@ div.ProseMirror {
 		&:focus, &:focus-visible {
 			box-shadow: none !important;
 		}
+	}
 
+	&[contenteditable=true],
+	[contenteditable=true] {
 		* {
 			-webkit-user-modify: read-write-plaintext-only;
 		}
