@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "New text file" : "ملف نصي جديد",
     "The file was uploaded" : "تم رفع الملف",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "حجم الملف المرفوع قد تجاوز  upload_max_filesize الموجودة في ملف php.ini ",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "حجم الملف الذي تريد رفعه أعلى من الحد المسموح به في واجهة ال HTML.",
