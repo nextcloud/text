@@ -347,6 +347,11 @@ export default {
 			background-color: transparent;
 			border: none !important;
 			color: var(--color-text-maxcontrast) !important;
+
+			&:focus {
+				border: 2px solid var(--color-border-dark) !important;
+				color: var(--color-main-text) !important;
+			}
 		}
 	}
 
@@ -366,8 +371,7 @@ export default {
 			max-width: 100%;
 		}
 
-		&:hover,
-		&:focus {
+		&:hover {
 			input[type='text'] {
 				border: 2px solid var(--color-border-dark) !important;
 				color: var(--color-main-text) !important;

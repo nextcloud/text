@@ -127,6 +127,7 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
  *
  * @param {string} requestAlias Alias of the request we are waiting for
  * @param {number|undefined} index of the attachment
+ * @param {boolean} isImage is the attachment an image or a media file?
  */
 const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) => {
 	return cy.wait('@' + requestAlias)
