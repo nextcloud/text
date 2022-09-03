@@ -85,6 +85,7 @@ OC.L10N.register(
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
+    "Link to this section" : "Bu bölüme bağlantı",
     "Failed to load" : "Yüklenmemedi",
     "Unsupported image type" : "Görsel türü desteklenmiyor",
     "Add row before" : "Üste satır ekle",

@@ -85,6 +85,7 @@ OC.L10N.register(
     "Link file" : "Datei verknüpfen",
     "Remove Link" : "Link entfernen",
     "Select file to link to" : "Wählen Sie die zu verknüpfende Datei aus",
+    "Link to this section" : "Link zu diesem Abschnitt",
     "Failed to load" : "Fehler beim Laden",
     "Unsupported image type" : "Nicht unterstütztes Bild-Format",
     "Add row before" : "Zeile davor hinzufügen",
