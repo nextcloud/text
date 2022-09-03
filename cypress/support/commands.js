@@ -264,8 +264,14 @@ Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`.files-fileList tr[data-file="${fileName}"]`).should('not.exist')
 })
 
-Cypress.Commands.add('getEditor', () => {
-	return cy.get('[data-text-el="editor-container"]')
+Cypress.Commands.add('getModal', () => {
+	return cy.get('#viewer[data-handler="text"]')
+})
+
+Cypress.Commands.add('getEditor', { prevSubject: 'optional' }, (subject) => {
+	return subject
+		? cy.wrap(subject).find('[data-text-el="editor-container"]')
+		: cy.get('[data-text-el="editor-container"]')
 })
 
 Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
@@ -278,8 +284,9 @@ Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, na
 		.find(`[data-text-action-entry="${name}"]`)
 })
 
-Cypress.Commands.add('getContent', () => {
-	return cy.getEditor().find('.ProseMirror')
+Cypress.Commands.add('getContent', { prevSubject: 'optional' }, (subject) => {
+	return (subject ? cy.wrap(subject) : cy.getEditor())
+		.find('.ProseMirror')
 })
 
 Cypress.Commands.add('getOutline', () => {
@@ -296,7 +303,7 @@ Cypress.Commands.add('clearContent', () => {
 		.type('{selectAll}{backspace}', { force: true })
 })
 
-Cypress.Commands.add('openWorkspace', (subject, name) => {
+Cypress.Commands.add('openWorkspace', () => {
 	cy.get('#rich-workspace .empty-workspace').click()
 	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
 

@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { getSharingToken } from '../helpers/token.js'
+
 export default {
 	name: 'ViewerComponent',
 	components: {
@@ -54,7 +56,7 @@ export default {
 		},
 		shareToken: {
 			type: String,
-			default: null,
+			default: () => getSharingToken(),
 		},
 		mime: {
 			type: String,
