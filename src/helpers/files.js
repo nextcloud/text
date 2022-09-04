@@ -22,6 +22,7 @@
 
 import { loadState } from '@nextcloud/initial-state'
 import { openMimetypes } from './mime.js'
+import { getSharingToken } from './token.js'
 import RichWorkspace from '../views/RichWorkspace.vue'
 import { imagePath } from '@nextcloud/router'
 import store from '../store/index.js'
@@ -77,9 +78,8 @@ const registerFileCreate = () => {
 }
 
 const registerFileActionFallback = () => {
-	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+	const sharingToken = getSharingToken()
 	const filesTable = document.querySelector('#preview table.files-filestable')
-
 	if (!sharingToken || !filesTable) {
 		const ViewerRoot = document.createElement('div')
 		ViewerRoot.id = 'text-viewer-fallback'
@@ -135,7 +135,6 @@ const registerFileActionFallback = () => {
 }
 
 const FilesWorkspacePlugin = {
-
 	el: null,
 
 	attach(fileList) {

@@ -99,15 +99,16 @@ describe('Open test.md in viewer', function() {
 		cy.shareFile('/folder')
 			.then((token) => {
 				cy.logout()
-				cy.visit(`/s/${token}`)
+
+				return cy.visit(`/s/${token}`)
 			})
 			.then(() => {
-				cy.get('#rich-workspace').should('contain', 'Hello world')
+				cy.get('#rich-workspace').getContent().should('contain', 'Hello world')
 				cy.openFile('test.md')
-				cy.get('#editor-container').should('be.visible')
-				cy.get('#editor .ProseMirror').should('contain', 'Hello world')
-				cy.get('#editor .ProseMirror h2').should('contain', 'Hello world')
-				cy.get('.modal-header button.header-close').click()
+				cy.getModal().getContent().should('be.visible')
+				cy.getModal().getContent().should('contain', 'Hello world')
+				cy.getModal().getContent().find('h2').should('contain', 'Hello world')
+				cy.getModal().find('.modal-header button.header-close').click()
 				cy.get('.modal-mask').should('not.exist')
 			})
 	})
