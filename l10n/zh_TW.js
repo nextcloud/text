@@ -85,6 +85,7 @@ OC.L10N.register(
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
+    "Link to this section" : "連結至此節",
     "Failed to load" : "載入失敗",
     "Unsupported image type" : "不支援的圖片類型",
     "Add row before" : "在前面新增列",
