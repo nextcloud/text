@@ -188,7 +188,7 @@ export default {
 				? this.$editor.chain().focus(position)
 				: this.$editor.chain()
 
-			chain.setImage({ src, alt }).focus().run()
+			chain.setImage({ src, alt }).insertContent('<br />').focus().run()
 		},
 	},
 }
