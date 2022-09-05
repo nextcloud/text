@@ -84,6 +84,11 @@ export default {
 	methods: {
 		t,
 		onKeyDown({ event }) {
+			// Ignore any key modifier combinations
+			if (event.ctrlKey || event.shiftKey || event.altKey || event.metaKey) {
+				return false
+			}
+
 			if (event.key === 'ArrowUp') {
 				this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
 				if (!this.itemInsideScrollView) {
