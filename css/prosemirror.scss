@@ -13,6 +13,11 @@ div.ProseMirror {
 	font-size: 14px;
 	outline: none;
 
+	:target {
+		// Menubar height: 44px + 3px bottom + 3px top padding
+		scroll-margin-top: 50px;
+	}
+
 	&[contenteditable=true],
 	&[contenteditable=false],
 	[contenteditable=true],

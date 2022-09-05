@@ -112,6 +112,7 @@ const openLink = function(event, _attrs) {
 		const el = document.getElementById(fragment)
 		if (el) {
 			el.scrollIntoView()
+			window.location.hash = fragment
 			return
 		}
 	}
