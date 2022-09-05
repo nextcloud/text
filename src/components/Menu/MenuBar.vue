@@ -231,6 +231,7 @@ export default {
 
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
 
 		&.text-menubar--ready:not(.text-menubar--autohide) {
 			visibility: visible;
