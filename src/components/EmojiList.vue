@@ -105,7 +105,7 @@ export default {
 				return true
 			}
 
-			if (event.key === 'Enter') {
+			if (event.key === 'Enter' || event.key === 'Tab') {
 				this.selectItem(this.selectedIndex)
 				return true
 			}
