@@ -102,8 +102,6 @@ OC.L10N.register(
     "Heading 3" : "3. goiburua",
     "Heading 4" : "4. goiburua",
     "Heading 5" : "5. goiburua",
-    "Hide Outline" : "Ezkutatu eskema",
-    "Show Outline" : "Erakutsi eskema",
     "To-Do list" : "Egiteke zerrenda",
     "Callouts" : "Deialdiak",
     "Info" : "Informazioa",

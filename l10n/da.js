@@ -47,6 +47,7 @@ OC.L10N.register(
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
+    "Upload from computer" : "Upload fra computer",
     "Update Link" : "Opdater link",
     "Add Link" : "Tilføj link",
     "Link file" : "Link fil",

@@ -104,8 +104,6 @@ OC.L10N.register(
     "Heading 3" : "Überschrift 3",
     "Heading 4" : "Überschrift 4",
     "Heading 5" : "Überschrift 5",
-    "Hide Outline" : "Gliederung ausblenden",
-    "Show Outline" : "Gliederung anzeigen",
     "To-Do list" : "Aufgabenliste",
     "Callouts" : "Beschriftungen",
     "Info" : "Info",

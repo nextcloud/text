@@ -104,8 +104,6 @@ OC.L10N.register(
     "Heading 3" : "Nadpis 3",
     "Heading 4" : "Nadpis 4",
     "Heading 5" : "Nadpis 5",
-    "Hide Outline" : "Skrýt ohraničení",
-    "Show Outline" : "Zobrazit ohraničení",
     "To-Do list" : "Seznam úkolů",
     "Callouts" : "Popisky",
     "Info" : "Informace",

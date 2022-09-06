@@ -104,8 +104,6 @@ OC.L10N.register(
     "Heading 3" : "標題 3",
     "Heading 4" : "標題 4",
     "Heading 5" : "標題 5",
-    "Hide Outline" : "隱藏大綱",
-    "Show Outline" : "顯示大綱",
     "To-Do list" : "待辦事項清單",
     "Callouts" : "標記",
     "Info" : "資訊",
