@@ -116,7 +116,12 @@ class AttachmentController extends Controller {
 	 */
 	public function uploadAttachment(int $documentId, int $sessionId, string $sessionToken, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], Http::STATUS_FORBIDDEN);
+			$this->logger->debug('Invalid session found when uploading', [
+				'documentId' => $documentId,
+				'sessionId' => $sessionId,
+				'sessionToken' => $sessionToken
+			]);
+			return new DataResponse(['error' => 'Upload error, unauthorized action'], Http::STATUS_FORBIDDEN);
 		}
 
 		try {
