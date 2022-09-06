@@ -49,6 +49,7 @@ OC.L10N.register(
     "Heading 5" : "Заголовок 5",
     "Info" : "Info",
     "Warning" : "Увага",
+    "Table" : "Таблиця",
     "Insert image" : "Додати зображення",
     "Command" : "Команда",
     "Edit" : "Редашувати",
