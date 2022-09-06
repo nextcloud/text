@@ -269,14 +269,14 @@ class SyncService {
 			})
 	}
 
-	uploadImage(image) {
+	uploadAttachment(file) {
 		const formData = new FormData()
-		formData.append('image', image)
-		formData.append('documentId', this.document.id)
-		formData.append('sessionId', this.session.id)
-		formData.append('sessionToken', this.session.token)
-		formData.append('shareToken', this.options.shareToken || '')
-		const url = endpointUrl('image/upload')
+		formData.append('file', file)
+		const url = endpointUrl('attachment/upload')
+			+ '?documentId=' + encodeURIComponent(this.document.id)
+			+ '&sessionId=' + encodeURIComponent(this.session.id)
+			+ '&sessionToken=' + encodeURIComponent(this.session.token)
+			+ '&shareToken=' + encodeURIComponent(this.options.shareToken || '')
 		return axios.post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
@@ -284,26 +284,14 @@ class SyncService {
 		})
 	}
 
-	insertImageLink(imageLink) {
+	insertAttachmentFile(filePath) {
 		const params = {
 			documentId: this.document.id,
 			sessionId: this.session.id,
 			sessionToken: this.session.token,
-			shareToken: this.options.shareToken || '',
-			link: imageLink,
+			filePath,
 		}
-		const url = endpointUrl('image/link')
-		return axios.post(url, params)
-	}
-
-	insertImageFile(imagePath) {
-		const params = {
-			documentId: this.document.id,
-			sessionId: this.session.id,
-			sessionToken: this.session.token,
-			imagePath,
-		}
-		const url = endpointUrl('image/filepath')
+		const url = endpointUrl('attachment/filepath')
 		return axios.post(url, params)
 	}
 

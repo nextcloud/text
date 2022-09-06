@@ -13,7 +13,7 @@
 	OC = { webroot: '/OC_WEBROOT' }
 	</script>
     <script type="module">
-	    import { RichTextReader, ImageResolver, IMAGE_RESOLVER } from './src/package.js'
+	    import { RichTextReader, AttachmentResolver, ATTACHMENT_RESOLVER } from './src/package.js'
 		import Vue from 'vue'
 		import content from './src/tests/fixtures/basic.md?raw'
 		const app = new Vue({
@@ -25,7 +25,7 @@
 			provide() {
 				const val = {}
 				Object.defineProperties(val, {
-					[IMAGE_RESOLVER]: { get: () => this.$imageResolver },
+					[ATTACHMENT_RESOLVER]: { get: () => this.$attachmentResolver },
 				})
 				return val
 			},
@@ -47,7 +47,7 @@
 				}),
 			]),
 			created() {
-				this.$imageResolver = new ImageResolver({
+				this.$attachmentResolver = new AttachmentResolver({
 					currentDirectory: '/dir/',
 					shareToken: 'SHARE_TOKEN',
 					user: { uid: 'USER_UID' },

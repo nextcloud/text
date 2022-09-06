@@ -25,17 +25,17 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Service\ImageService;
+use OCA\Text\Service\AttachmentService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
 use OCP\Files\File;
 
 class BeforeNodeRenamedListener implements IEventListener {
-	private $imageService;
+	private $attachmentService;
 
-	public function __construct(ImageService $imageService) {
-		$this->imageService = $imageService;
+	public function __construct(AttachmentService $attachmentService) {
+		$this->attachmentService = $attachmentService;
 	}
 
 	public function handle(Event $event): void {
@@ -46,7 +46,7 @@ class BeforeNodeRenamedListener implements IEventListener {
 			&& $event->getSource()->getMimeType() === 'text/markdown'
 			&& $event->getTarget() instanceof File
 		) {
-			$this->imageService->moveAttachments($event->getSource(), $event->getTarget());
+			$this->attachmentService->moveAttachments($event->getSource(), $event->getTarget());
 		}
 	}
 }

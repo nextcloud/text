@@ -34,27 +34,59 @@
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<template v-if="!failed">
-						<img v-show="loaded"
-							:src="imageUrl"
-							class="image__main"
-							@load="onLoaded">
+						<div v-if="isMediaAttachment"
+							class="media">
+							<div class="media__wrapper">
+								<img v-show="loaded"
+									:src="imageUrl"
+									class="image__main"
+									@load="onLoaded">
+								<div class="metadata">
+									<span class="name">{{ alt }}</span>
+									<span class="size">{{ attachmentMetadata.size }}</span>
+								</div>
+							</div>
+							<div v-if="showDeleteIcon"
+								class="buttons">
+								<NcButton :aria-label="t('text', 'Delete this attachment')"
+									:title="t('text', 'Delete this attachment')"
+									@click="deleteNode">
+									<template #icon>
+										<DeleteIcon />
+									</template>
+								</NcButton>
+							</div>
+						</div>
+						<div v-else>
+							<img v-show="loaded"
+								:src="imageUrl"
+								class="image__main"
+								@load="onLoaded">
+						</div>
 					</template>
 					<template v-else>
 						<ImageIcon class="image__main image__main--broken-icon" :size="100" />
 					</template>
 				</transition>
 				<transition name="fade">
-					<div v-show="loaded" class="image__caption">
-						<input ref="altInput"
-							type="text"
-							class="image__caption__input"
-							:value="alt"
-							@keyup.enter="updateAlt">
-						<div v-if="editor.isEditable && showIcons"
-							class="image__caption__delete"
-							title="Delete this image"
-							@click="deleteNode">
-							<TrashCan />
+					<div v-if="!isMediaAttachment" v-show="loaded" class="image__caption">
+						<div class="image__caption__wrapper">
+							<input v-show="!isMediaAttachment"
+								ref="altInput"
+								type="text"
+								class="image__caption__input"
+								:value="alt"
+								@keyup.enter="updateAlt">
+							<div v-if="showImageDeleteIcon"
+								class="image__caption__delete">
+								<NcButton :aria-label="t('text', 'Delete this image')"
+									:title="t('text', 'Delete this image')"
+									@click="deleteNode">
+									<template #icon>
+										<DeleteIcon />
+									</template>
+								</NcButton>
+							</div>
 						</div>
 					</div>
 				</transition>
@@ -85,11 +117,13 @@
 
 <script>
 import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
-import { Image as ImageIcon, TrashCan } from '../components/icons.js'
+import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import store from './../mixins/store.js'
-import { useImageResolver } from './../components/Editor.provider.js'
+import { useAttachmentResolver } from './../components/Editor.provider.js'
 
 import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 
@@ -124,7 +158,8 @@ export default {
 	name: 'ImageView',
 	components: {
 		ImageIcon,
-		TrashCan,
+		DeleteIcon,
+		NcButton,
 		NodeViewWrapper,
 	},
 	directives: {
@@ -132,7 +167,7 @@ export default {
 	},
 	mixins: [
 		store,
-		useImageResolver,
+		useAttachmentResolver,
 	],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
@@ -143,9 +178,20 @@ export default {
 			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
+			attachmentType: null,
+			attachmentMetadata: {},
 		}
 	},
 	computed: {
+		isMediaAttachment() {
+			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+		},
+		showDeleteIcon() {
+			return this.editor.isEditable && this.showIcons
+		},
+		showImageDeleteIcon() {
+			return this.showDeleteIcon && !this.isMediaAttachment
+		},
 		canDisplayImage() {
 			if (!this.isSupportedImage) {
 				return false
@@ -212,30 +258,44 @@ export default {
 	},
 	methods: {
 		async init() {
-			const [url, fallback] = this.$imageResolver.resolve(this.src)
-			return this.loadImage(url).catch((e) => {
-				if (fallback) {
-					return this.loadImage(fallback)
+			const candidates = this.$attachmentResolver.resolve(this.src)
+			return this.load(candidates)
+		},
+		async load(candidates) {
+			const [candidate, ...fallbacks] = candidates
+			return this.loadImage(candidate.url, candidate.type, candidate.name).catch((e) => {
+				if (fallbacks.length > 0) {
+					return this.load(fallbacks)
 					// TODO if fallback works, rewrite the url with correct document ID
 				}
-
 				return Promise.reject(e)
 			})
 		},
-
-		async loadImage(imageUrl) {
+		async loadImage(imageUrl, attachmentType, name = null) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
-				img.onload = () => {
+				img.onload = async () => {
 					this.imageUrl = imageUrl
 					this.imageLoaded = true
 					this.loaded = true
+					this.attachmentType = attachmentType
+					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
+						await this.loadMediaMetadata(name)
+					}
 					resolve(imageUrl)
 				}
 				img.onerror = (e) => {
 					reject(new LoadImageError(e, imageUrl))
 				}
 				img.src = imageUrl
+			})
+		},
+		loadMediaMetadata(name) {
+			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
+			return axios.get(metadataUrl).then((response) => {
+				this.attachmentMetadata = response.data
+			}).catch((error) => {
+				console.error(error)
 			})
 		},
 		onImageLoadFailure(err) {
@@ -277,11 +337,21 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		&__wrapper {
+			position: relative;
+		}
 		input[type='text'] {
+			width: 200px;
 			max-width: 80%;
-			border: none;
 			text-align: center;
 			background-color: transparent;
+			border: none !important;
+			color: var(--color-text-maxcontrast) !important;
+
+			&:focus {
+				border: 2px solid var(--color-border-dark) !important;
+				color: var(--color-main-text) !important;
+			}
 		}
 	}
 
@@ -300,10 +370,53 @@ export default {
 		img {
 			max-width: 100%;
 		}
+
+		&:hover {
+			input[type='text'] {
+				border: 2px solid var(--color-border-dark) !important;
+				color: var(--color-main-text) !important;
+			}
+		}
 	}
 
 	.image__main {
 		max-height: calc(100vh - 50px - 50px);
+	}
+
+	.media {
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		.media__wrapper {
+			display: flex;
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+			padding: 8px;
+
+			img {
+				width: 44px;
+				height: 44px;
+			}
+
+			.metadata {
+				margin-left: 8px;
+				display: flex;
+				flex-direction: column;
+				align-items: start;
+
+				span {
+					line-height: 20px;
+					font-weight: normal;
+
+					&.size {
+						color: var(--color-text-maxcontrast);
+					}
+				}
+			}
+		}
+		.buttons {
+			margin-left: 8px;
+		}
 	}
 
 	.image__error-message {
@@ -324,13 +437,13 @@ export default {
 	}
 
 	.image__caption__delete {
-		position: absolute;
-		right: 0;
 		display: flex;
-		justify-content: flex-end;
 		align-items: center;
 		width: 20px;
 		height: 20px;
+		position: absolute;
+		right: -6px;
+		bottom: 10px;
 		&, svg {
 			cursor: pointer;
 		}

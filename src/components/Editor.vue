@@ -77,7 +77,7 @@ import { loadState } from '@nextcloud/initial-state'
 import {
 	EDITOR,
 	FILE,
-	IMAGE_RESOLVER,
+	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
 	IS_PUBLIC,
 	IS_RICH_EDITOR,
@@ -86,7 +86,7 @@ import {
 } from './Editor.provider.js'
 
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import ImageResolver from './../services/ImageResolver.js'
+import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
@@ -139,8 +139,8 @@ export default {
 			[FILE]: {
 				get: () => this.fileData,
 			},
-			[IMAGE_RESOLVER]: {
-				get: () => this.$imageResolver,
+			[ATTACHMENT_RESOLVER]: {
+				get: () => this.$attachmentResolver,
 			},
 			[IS_PUBLIC]: {
 				get: () => this.isPublic,
@@ -291,7 +291,7 @@ export default {
 	created() {
 		this.$editor = null
 		this.$syncService = null
-		this.$imageResolver = null
+		this.$attachmentResolver = null
 		this.saveStatusPolling = setInterval(() => {
 			this.updateLastSavedStatus()
 		}, 2000)
@@ -449,7 +449,7 @@ export default {
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$store.dispatch('setCurrentSession', this.currentSession)
-			this.$imageResolver = new ImageResolver({
+			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,

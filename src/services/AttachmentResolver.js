@@ -23,13 +23,16 @@
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
 
-export default class ImageResolver {
+export default class AttachmentResolver {
 
 	#session
 	#user
 	#shareToken
 	#currentDirectory
 	#attachmentDirectory
+
+	ATTACHMENT_TYPE_IMAGE = 'image'
+	ATTACHMENT_TYPE_MEDIA = 'media'
 
 	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
@@ -43,42 +46,77 @@ export default class ImageResolver {
 	/*
 	 * Resolve a given src.
 	 * @param { string } the original src in the node.
-	 * @returns { Array<string> } - resolved urls to try.
+	 * @returns { Array<Object> } - resolved candidates to try.
 	 *
 	 * Currently returns either one or two urls.
 	 */
 	resolve(src) {
 		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
-			return [this.#getAttachmentUrl(imageFileName)]
+			return [{
+				type: this.ATTACHMENT_TYPE_IMAGE,
+				url: this.#getImageAttachmentUrl(imageFileName),
+			}]
 		}
 
 		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
-			return [this.#getAttachmentUrl(imageFileName)]
+			return [
+				{
+					type: this.ATTACHMENT_TYPE_IMAGE,
+					url: this.#getImageAttachmentUrl(imageFileName),
+				},
+				{
+					type: this.ATTACHMENT_TYPE_MEDIA,
+					url: this.#getMediaPreviewUrl(imageFileName),
+					name: imageFileName,
+				},
+			]
 		}
 
 		if (isDirectUrl(src)) {
-			return [src]
+			return [{
+				type: this.ATTACHMENT_TYPE_IMAGE,
+				url: src,
+			}]
 		}
 
 		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
-			return [this.#previewUrl(src)]
+			return [{
+				type: this.ATTACHMENT_TYPE_IMAGE,
+				url: this.#previewUrl(src),
+			}]
 		}
 
 		// if it starts with '.attachments.1234/'
 		if (src.match(/^\.attachments\.\d+\//)) {
 			const imageFileName = this.#relativePath(src)
 				.replace(/\.attachments\.\d+\//, '')
-			const attachmentUrl = this.#getAttachmentUrl(imageFileName)
-			// try the webdav url and attachment API if the fails
-			return [this.#davUrl(src), attachmentUrl]
+			// try the webdav url and attachment API if it fails
+			return [
+				{
+					type: this.ATTACHMENT_TYPE_IMAGE,
+					url: this.#davUrl(src),
+				},
+				{
+					type: this.ATTACHMENT_TYPE_IMAGE,
+					url: this.#getImageAttachmentUrl(imageFileName),
+				},
+				{
+					type: this.ATTACHMENT_TYPE_MEDIA,
+					url: this.#getMediaPreviewUrl(imageFileName),
+					name: imageFileName,
+				},
+			]
 		}
 
-		return [this.#davUrl(src)]
+		return [{
+			type: this.ATTACHMENT_TYPE_IMAGE,
+			url: this.#davUrl(src),
+		}]
 	}
 
-	#getAttachmentUrl(imageFileName) {
+	#getImageAttachmentUrl(imageFileName) {
 		if (!this.#session) {
 			return this.#davUrl(
 				`${this.#attachmentDirectory}/${imageFileName}`
@@ -95,6 +133,36 @@ export default class ImageResolver {
 		return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}', {
 			...this.#textApiParams(),
 			imageFileName,
+			shareToken: this.#shareToken,
+		})
+	}
+
+	#getMediaPreviewUrl(mediaFileName) {
+		if (this.#user || !this.#shareToken) {
+			return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
+				...this.#textApiParams(),
+				mediaFileName,
+			})
+		}
+
+		return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
+			...this.#textApiParams(),
+			mediaFileName,
+			shareToken: this.#shareToken,
+		})
+	}
+
+	getMediaMetadataUrl(mediaFileName) {
+		if (this.#user || !this.#shareToken) {
+			return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
+				...this.#textApiParams(),
+				mediaFileName,
+			})
+		}
+
+		return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
+			...this.#textApiParams(),
+			mediaFileName,
 			shareToken: this.#shareToken,
 		})
 	}

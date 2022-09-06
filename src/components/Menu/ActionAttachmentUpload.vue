@@ -33,9 +33,9 @@
 				aria-haspopup />
 		</template>
 		<NcActionButton close-after-click
-			:disabled="isUploadingImages"
+			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-upload`"
-			@click="$callChooseLocalImage">
+			@click="$callChooseLocalAttachment">
 			<template #icon>
 				<Upload />
 			</template>
@@ -43,9 +43,9 @@
 		</NcActionButton>
 		<NcActionButton v-if="!$isPublic"
 			close-after-click
-			:disabled="isUploadingImages"
+			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-insert`"
-			@click="$callImagePrompt">
+			@click="$callAttachmentPrompt">
 			<template #icon>
 				<Folder />
 			</template>
@@ -62,13 +62,13 @@ import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import {
-	useActionImagePromptMixin,
+	useActionAttachmentPromptMixin,
 	useUploadingStateMixin,
-	useActionChooseLocalImageMixin,
+	useActionChooseLocalAttachmentMixin,
 } from '../Editor/MediaHandler.provider.js'
 
 export default {
-	name: 'ActionImageUpload',
+	name: 'ActionAttachmentUpload',
 	components: {
 		NcActions,
 		NcActionButton,
@@ -79,18 +79,18 @@ export default {
 	extends: BaseActionEntry,
 	mixins: [
 		useIsPublicMixin,
-		useActionImagePromptMixin,
+		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
-		useActionChooseLocalImageMixin,
+		useActionChooseLocalAttachmentMixin,
 	],
 	computed: {
 		icon() {
-			return this.isUploadingImages
+			return this.isUploadingAttachments
 				? Loading
 				: this.actionEntry.icon
 		},
-		isUploadingImages() {
-			return this.$uploadingState.isUploadingImages
+		isUploadingAttachments() {
+			return this.$uploadingState.isUploadingAttachments
 		},
 	},
 }

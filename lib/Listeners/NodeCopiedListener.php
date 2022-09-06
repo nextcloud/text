@@ -25,17 +25,17 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Service\ImageService;
+use OCA\Text\Service\AttachmentService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\File;
 
 class NodeCopiedListener implements IEventListener {
-	private $imageService;
+	private $attachmentService;
 
-	public function __construct(ImageService $imageService) {
-		$this->imageService = $imageService;
+	public function __construct(AttachmentService $attachmentService) {
+		$this->attachmentService = $attachmentService;
 	}
 
 	public function handle(Event $event): void {
@@ -47,7 +47,7 @@ class NodeCopiedListener implements IEventListener {
 			&& $event->getTarget() instanceof File
 			&& $event->getTarget()->getMimeType() === 'text/markdown'
 		) {
-			$this->imageService->copyAttachments($event->getSource(), $event->getTarget());
+			$this->attachmentService->copyAttachments($event->getSource(), $event->getTarget());
 		}
 	}
 }

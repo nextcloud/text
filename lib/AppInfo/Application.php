@@ -61,7 +61,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(LoadViewer::class, LoadViewerListener::class);
 		$context->registerEventListener(LoadAdditionalScriptsEvent::class, FilesLoadAdditionalScriptsListener::class);
 		$context->registerEventListener(BeforeTemplateRenderedEvent::class, FilesSharingLoadAdditionalScriptsListener::class);
-		// for image attachments
+		// for attachments
 		$context->registerEventListener(NodeCopiedEvent::class, NodeCopiedListener::class);
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);

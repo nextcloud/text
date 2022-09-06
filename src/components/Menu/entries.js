@@ -48,7 +48,7 @@ import {
 	Images,
 } from '../icons.js'
 import EmojiPickerAction from './EmojiPickerAction.vue'
-import ActionImageUpload from './ActionImageUpload.vue'
+import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 
 import { MODIFIERS } from './keys.js'
 
@@ -319,10 +319,10 @@ export default [
 		priority: 4,
 	},
 	{
-		key: 'insert-image',
-		label: t('text', 'Insert image'),
+		key: 'insert-attachment',
+		label: t('text', 'Insert attachment'),
 		icon: Images,
-		component: ActionImageUpload,
+		component: ActionAttachmentUpload,
 		priority: 2,
 	},
 	{

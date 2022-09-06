@@ -26,27 +26,22 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use Exception;
-use OCA\Text\Controller\ImageController;
+use OCA\Text\Controller\AttachmentController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
+use OCP\Files\IMimeTypeDetector;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
-use Throwable;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\ServerException;
-use OCP\Http\Client\IClientService;
+use OCP\Util;
 use OCP\Files\IRootFolder;
-use Psr\Log\LoggerInterface;
 use OCP\Share\IManager as ShareManager;
 
-class ImageService {
+class AttachmentService {
 
 	/**
 	 * @var ShareManager
@@ -57,32 +52,26 @@ class ImageService {
 	 */
 	private $rootFolder;
 	/**
-	 * @var IClientService
-	 */
-	private $clientService;
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
 	 * @var IPreview
 	 */
 	private $previewManager;
+	/**
+	 * @var IMimeTypeDetector
+	 */
+	private $mimeTypeDetector;
 
 	public function __construct(IRootFolder $rootFolder,
-								LoggerInterface $logger,
 								ShareManager $shareManager,
 								IPreview $previewManager,
-								IClientService $clientService) {
+								IMimeTypeDetector $mimeTypeDetector) {
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
-		$this->clientService = $clientService;
-		$this->logger = $logger;
 		$this->previewManager = $previewManager;
+		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
 	/**
-	 * Get image content or preview from file id
+	 * Get image content or preview from file name
 	 * @param int $documentId
 	 * @param string $imageFileName
 	 * @param string $userId
@@ -91,9 +80,9 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getImage(int $documentId, string $imageFileName, string $userId) {
+	public function getImageFile(int $documentId, string $imageFileName, string $userId) {
 		$textFile = $this->getTextFile($documentId, $userId);
-		return $this->getImagePreview($imageFileName, $textFile);
+		return $this->getImageFilePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -107,9 +96,9 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getImagePublic(int $documentId, string $imageFileName, string $shareToken) {
+	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken) {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		return $this->getImagePreview($imageFileName, $textFile);
+		return $this->getImageFilePreview($imageFileName, $textFile);
 	}
 
 	/**
@@ -121,10 +110,10 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	private function getImagePreview(string $imageFileName, File $textFile) {
+	private function getImageFilePreview(string $imageFileName, File $textFile) {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$imageFile = $attachmentFolder->get($imageFileName);
-		if ($imageFile instanceof File) {
+		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), AttachmentController::IMAGE_MIME_TYPES)) {
 			if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}
@@ -134,7 +123,169 @@ class ImageService {
 	}
 
 	/**
-	 * Save an uploaded image in the attachment folder
+	 * Get media file from file name
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $userId
+	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @throws NotFoundException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OCP\Files\NotPermittedException
+	 */
+	public function getMediaFile(int $documentId, string $mediaFileName, string $userId) {
+		$textFile = $this->getTextFile($documentId, $userId);
+		return $this->getMediaFullFile($mediaFileName, $textFile);
+	}
+
+	/**
+	 * Get image content or preview from file id in public context
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $shareToken
+	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken) {
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		return $this->getMediaFullFile($mediaFileName, $textFile);
+	}
+
+	/**
+	 * @param string $mediaFileName
+	 * @param File $textFile
+	 * @return File|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
+		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
+		$mediaFile = $attachmentFolder->get($mediaFileName);
+		if ($mediaFile instanceof File) {
+			return $mediaFile;
+		}
+		return null;
+	}
+
+	/**
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $userId
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getMediaFilePreview(int $documentId, string $mediaFileName, string $userId): ?array {
+		$textFile = $this->getTextFile($documentId, $userId);
+		return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
+	}
+	/**
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $shareToken
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getMediaFilePreviewPublic(int $documentId, string $mediaFileName, string $shareToken): ?array {
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
+	}
+
+	/**
+	 * Get media preview or mimetype icon address
+	 * @param string $mediaFileName
+	 * @param File $textFile
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
+		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
+		$mediaFile = $attachmentFolder->get($mediaFileName);
+		if ($mediaFile instanceof File) {
+			if ($this->previewManager->isMimeSupported($mediaFile->getMimeType())) {
+				try {
+					return [
+						'type' => 'file',
+						'file' => $this->previewManager->getPreview($mediaFile, 1024, 1024),
+					];
+				} catch (NotFoundException $e) {
+					// the preview might not be found even if the mimetype is supported
+				}
+			}
+			// fallback: mimetype icon URL
+			return [
+				'type' => 'icon',
+				'iconUrl' => $this->mimeTypeDetector->mimeTypeIcon($mediaFile->getMimeType()),
+			];
+		}
+		return null;
+	}
+
+	/**
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $userId
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getMediaFileMetadataPrivate(int $documentId, string $mediaFileName, string $userId): ?array {
+		$textFile = $this->getTextFile($documentId, $userId);
+		return $this->getMediaFileMetadata($mediaFileName, $textFile);
+	}
+
+	/**
+	 * @param int $documentId
+	 * @param string $mediaFileName
+	 * @param string $shareToken
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	public function getMediaFileMetadataPublic(int $documentId, string $mediaFileName, string $shareToken): ?array {
+		$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		return $this->getMediaFileMetadata($mediaFileName, $textFile);
+	}
+
+	/**
+	 * @param string $mediaFileName
+	 * @param File $textFile
+	 * @return array|null
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws \OCP\Files\InvalidPathException
+	 * @throws \OC\User\NoUserException
+	 */
+	private function getMediaFileMetadata(string $mediaFileName, File $textFile): ?array {
+		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
+		$mediaFile = $attachmentFolder->get($mediaFileName);
+		if ($mediaFile instanceof File) {
+			return [
+				'size' => Util::humanFileSize($mediaFile->getSize()),
+				'mtime' => $mediaFile->getMTime(),
+			];
+		}
+		return null;
+	}
+
+	/**
+	 * Save an uploaded file in the attachment folder
 	 *
 	 * @param int $documentId
 	 * @param string $newFileName
@@ -146,7 +297,7 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImage(int $documentId, string $newFileName, $newFileResource, string $userId): array {
+	public function uploadAttachment(int $documentId, string $newFileName, $newFileResource, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
@@ -163,7 +314,8 @@ class ImageService {
 	}
 
 	/**
-	 * Save an uploaded image in the attachment folder in a public context
+	 * Save an uploaded file in the attachment folder in a public context
+	 *
 	 * @param int|null $documentId
 	 * @param string $newFileName
 	 * @param string $newFileContent
@@ -174,7 +326,7 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function uploadImagePublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
+	public function uploadAttachmentPublic(?int $documentId, string $newFileName, $newFileResource, string $shareToken): array {
 		if (!$this->hasUpdatePermissions($shareToken)) {
 			throw new NotPermittedException('No write permissions');
 		}
@@ -202,40 +354,34 @@ class ImageService {
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function insertImageFile(int $documentId, string $path, string $userId): array {
+	public function insertAttachmentFile(int $documentId, string $path, string $userId): array {
 		$textFile = $this->getTextFile($documentId, $userId);
 		if (!$textFile->isUpdateable()) {
 			throw new NotPermittedException('No write permissions');
 		}
-		$imageFile = $this->getFileFromPath($path, $userId);
+		$originalFile = $this->getFileFromPath($path, $userId);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
-		return $this->copyImageFile($imageFile, $saveDir, $textFile);
+		return $this->copyFile($originalFile, $saveDir, $textFile);
 	}
 
 	/**
-	 * @param File $imageFile
+	 * @param File $originalFile
 	 * @param Folder $saveDir
 	 * @param File $textFile
 	 * @return array
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 */
-	private function copyImageFile(File $imageFile, Folder $saveDir, File $textFile): array {
-		$mimeType = $imageFile->getMimeType();
-		if (in_array($mimeType, ImageController::IMAGE_MIME_TYPES, true)) {
-			$fileName = $this->getUniqueFileName($saveDir, $imageFile->getName());
-			$targetPath = $saveDir->getPath() . '/' . $fileName;
-			$targetFile = $imageFile->copy($targetPath);
-			// get file type and name
-			return [
-				'name' => $fileName,
-				'dirname' => $saveDir->getName(),
-				'id' => $targetFile->getId(),
-				'documentId' => $textFile->getId(),
-			];
-		}
+	private function copyFile(File $originalFile, Folder $saveDir, File $textFile): array {
+		$fileName = $this->getUniqueFileName($saveDir, $originalFile->getName());
+		$targetPath = $saveDir->getPath() . '/' . $fileName;
+		$targetFile = $originalFile->copy($targetPath);
 		return [
-			'error' => 'Unsupported file type',
+			'name' => $fileName,
+			'dirname' => $saveDir->getName(),
+			'id' => $targetFile->getId(),
+			'documentId' => $textFile->getId(),
+			'mimetype' => $targetFile->getMimetype(),
 		];
 	}
 
@@ -390,49 +536,6 @@ class ImageService {
 	}
 
 	/**
-	 * Download a file and write it to a resource
-	 * @param string $url
-	 * @param $resource
-	 * @return array
-	 */
-	private function simpleDownload(string $url, $resource): array {
-		$client = $this->clientService->newClient();
-		try {
-			$options = [
-				// does not work with sink if SSE is enabled
-				// 'sink' => $resource,
-				// rather use stream and write to the file ourselves
-				'stream' => true,
-				'timeout' => 0,
-				'headers' => [
-					'User-Agent' => 'Nextcloud Text',
-				],
-			];
-
-			$response = $client->get($url, $options);
-			$body = $response->getBody();
-			while (!feof($body)) {
-				// write ~5 MB chunks
-				$chunk = fread($body, 5000000);
-				fwrite($resource, $chunk);
-			}
-
-			return ['Content-Type' => $response->getHeader('Content-Type')];
-		} catch (ServerException | ClientException $e) {
-			//$response = $e->getResponse();
-			//if ($response->getStatusCode() === 401) {
-			$this->logger->warning('Impossible to download image', ['exception' => $e]);
-			return ['error' => 'Impossible to download image'];
-		} catch (ConnectException $e) {
-			$this->logger->error('Connection error', ['exception' => $e]);
-			return ['error' => 'Connection error'];
-		} catch (Throwable | Exception $e) {
-			$this->logger->error('Unknown download error', ['exception' => $e]);
-			return ['error' => 'Unknown download error'];
-		}
-	}
-
-	/**
 	 * Actually delete attachment files which are not pointed in the markdown content
 	 *
 	 * @param int $fileId
@@ -498,7 +601,7 @@ class ImageService {
 		$matches = [];
 		// matches ![ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](.attachments.DOCUMENT_ID/ANY_FILE_NAME) and captures FILE_NAME
 		preg_match_all(
-			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\.attachments\.'.$fileId.'\/([^)&]+)\)/',
+			'/\!\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\.attachments\.' . $fileId . '\/([^)&]+)\)/',
 			$content,
 			$matches,
 			PREG_SET_ORDER
