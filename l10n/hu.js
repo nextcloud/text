@@ -104,8 +104,6 @@ OC.L10N.register(
     "Heading 3" : "Címsor 3",
     "Heading 4" : "Címsor 4",
     "Heading 5" : "Címsor 5",
-    "Hide Outline" : "Vázlat elrejtése",
-    "Show Outline" : "Vázlat megjelenítése",
     "To-Do list" : "Teendőlista",
     "Callouts" : "Kiemelések",
     "Info" : "Információ",
