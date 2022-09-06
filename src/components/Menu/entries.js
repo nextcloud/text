@@ -187,8 +187,8 @@ export default [
 				click: ({ $outlineActions }) => $outlineActions.toggle(),
 				label: ({ $outlineState }) => {
 					return $outlineState.visible
-						? t('text', 'Hide Outline')
-						: t('text', 'Show Outline')
+						? t('text', 'Hide outline')
+						: t('text', 'Show outline')
 				},
 			},
 		],

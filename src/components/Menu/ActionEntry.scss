@@ -61,11 +61,7 @@
 	.entry-action.entry-action-item {
 		&.is-active {
 			background-color: var(--color-primary-light);
-			box-shadow: inset 2px 0 var(--color-primary);
-			border-radius: 0;
-		}
-		&:hover {
-			border-radius: 0;
+			border-radius: var(--border-radius-large);
 		}
 	}
 
