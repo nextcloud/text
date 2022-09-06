@@ -37,7 +37,7 @@ const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
  */
 function attachFile(name, requestAlias = null) {
 	if (requestAlias) {
-		cy.intercept({ method: 'POST', url: '**/upload' }).as(requestAlias)
+		cy.intercept({ method: 'POST', url: '**/text/attachment/upload?**' }).as(requestAlias)
 	}
 	return cy.getEditor()
 		.find('input[type="file"][data-text-el="attachment-file-input"]')
