@@ -104,8 +104,6 @@ OC.L10N.register(
     "Heading 3" : "3. Başlık",
     "Heading 4" : "4. Başlık",
     "Heading 5" : "5. Başlık",
-    "Hide Outline" : "Özeti gizle",
-    "Show Outline" : "Özeti görüntüle",
     "To-Do list" : "Yapılacak iş listesi",
     "Callouts" : "Metin notları",
     "Info" : "Bilgiler",
