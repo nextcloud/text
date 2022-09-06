@@ -3,7 +3,7 @@
   -
   - @author Julius Härtl <jus@bitgrid.net>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -55,6 +55,8 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+
+import { logger } from '../helpers/logger.js'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -184,8 +186,8 @@ export default {
 				.then(() => {
 					this.autofocus = true
 				})
-				.catch(err => {
-					console.warn(err)
+				.catch(error => {
+					logger.warn('Create readme failed', { error })
 				})
 		},
 		showRichWorkspace() {

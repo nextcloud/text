@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
-*/
+ */
 
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
@@ -26,30 +26,33 @@ import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
 import TrailingNode from './nodes/TrailingNode.js'
-import EditableTable from './nodes/EditableTable.js'
-import { Editor } from '@tiptap/core'
-import { Emoji, Markdown, Mention, PlainText, RichText } from './extensions/index.js'
-import { translate as t } from '@nextcloud/l10n'
-import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
-import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
-import { VueRenderer } from '@tiptap/vue-2'
 import EmojiListWrapper from './components/EmojiListWrapper.vue'
+import EditableTable from './nodes/EditableTable.js'
 import MentionSuggestion from './components/Mention/suggestion.js'
-import tippy from 'tippy.js'
 
+import tippy from 'tippy.js'
 import 'proxy-polyfill'
+
+import { Editor } from '@tiptap/core'
+import { VueRenderer } from '@tiptap/vue-2'
+import { translate as t } from '@nextcloud/l10n'
+import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
+import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
+
+import { logger } from './helpers/logger.js'
+import { Emoji, Markdown, Mention, PlainText, RichText } from './extensions/index.js'
 
 const loadSyntaxHighlight = async (language) => {
 	const list = listLanguages()
-	console.info(list)
+	logger.debug('Supported languages', { list })
 	if (!listLanguages().includes(language)) {
 		try {
 			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + language)
 			registerLanguage(language, syntax.default)
-		} catch (e) {
-			// No matching highlighing found, fallback to none
-			console.debug(e)
+		} catch (error) {
+			// fallback to none
+			logger.debug('No matching highlighing found', { error })
 		}
 	}
 }

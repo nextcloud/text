@@ -1,10 +1,10 @@
 /* eslint-disable jsdoc/valid-types */
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,11 +21,12 @@
  *
  */
 import axios from '@nextcloud/axios'
+import mitt from 'mitt'
+import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 import PollingBackend from './PollingBackend.js'
-import { endpointUrl } from './../helpers/index.js'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
-import mitt from 'mitt'
+import { logger } from '../helpers/logger.js'
+import { endpointUrl } from '../helpers/index.js'
 
 const defaultOptions = {
 	shareToken: null,
@@ -156,7 +157,7 @@ class SyncService {
 			this.session = data
 			return data
 		}).catch((error) => {
-			console.error('Failed to update the session', error)
+			logger.error('Failed to update the session', { error })
 			return Promise.reject(error)
 		})
 	}
@@ -181,7 +182,7 @@ class SyncService {
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
 			if (!Array.isArray(singleSteps)) {
-				console.error('Invalid step data, skipping step', steps[i])
+				logger.error('Invalid step data, skipping step', { step: steps[i] })
 				// TODO: recover
 				continue
 			}
@@ -195,13 +196,13 @@ class SyncService {
 		}
 		this.lastStepPush = Date.now()
 		this.emit('sync', { steps: newSteps, document })
-		console.debug('receivedSteps', 'newVersion', this._getVersion())
+		logger.debug('receivedSteps', { newVersion: this._getVersion() })
 	}
 
 	checkIdle() {
 		const lastPushMinutesAgo = (Date.now() - this.lastStepPush) / 1000 / 60
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
-			console.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
+			logger.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
 			this.emit('idle')
 		}
 	}

@@ -3,7 +3,7 @@
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -43,6 +43,7 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
+import { logger } from '../../helpers/logger.js'
 
 import {
 	useEditorMixin,
@@ -122,9 +123,9 @@ export default {
 			})
 
 			return Promise.all(uploadPromises)
-				.catch(err => {
-					console.error(err)
-					showError(err?.response?.data?.error || err.message)
+				.catch(error => {
+					logger.error('Uploading multiple images failed', { error })
+					showError(error?.response?.data?.error || error.message)
 				})
 				.then(() => {
 					this.state.isUploadingAttachments = false
@@ -141,7 +142,7 @@ export default {
 					)
 				})
 				.catch((error) => {
-					console.error(error)
+					logger.error('Uploading image failed', { error })
 					showError(error?.response?.data?.error)
 				})
 				.then(() => {
@@ -167,7 +168,7 @@ export default {
 					null, response.data?.dirname
 				)
 			}).catch((error) => {
-				console.error(error)
+				logger.error('Failed to insert image path', { error })
 				showError(error?.response?.data?.error || error.message)
 			}).then(() => {
 				this.state.isUploadingAttachments = false

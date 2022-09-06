@@ -116,16 +116,17 @@
 </template>
 
 <script>
-import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { NodeViewWrapper } from '@tiptap/vue-2'
 import ClickOutside from 'vue-click-outside'
-import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import store from './../mixins/store.js'
-import { useAttachmentResolver } from './../components/Editor.provider.js'
+import { generateUrl } from '@nextcloud/router'
+import { NodeViewWrapper } from '@tiptap/vue-2'
 
+import store from './../mixins/store.js'
+import { logger } from '../helpers/logger.js'
 import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
+import { useAttachmentResolver } from '../components/Editor.provider.js'
+import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 
 const getQueryVariable = (src, variable) => {
 	const query = src.split('?')[1]
@@ -295,7 +296,7 @@ export default {
 			return axios.get(metadataUrl).then((response) => {
 				this.attachmentMetadata = response.data
 			}).catch((error) => {
-				console.error(error)
+				logger.error('Failed to load media metadata', { error })
 			})
 		},
 		onImageLoadFailure(err) {

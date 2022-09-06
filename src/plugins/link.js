@@ -1,5 +1,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state'
 
+import { logger } from '../helpers/logger.js'
+
 const clickHandler = ({ editor, type, onClick }) => {
 	return new Plugin({
 		props: {
@@ -11,8 +13,8 @@ const clickHandler = ({ editor, type, onClick }) => {
 					return false
 				}
 				if (!link.attrs.href) {
-					console.warn('Could not determine href of link.')
-					console.debug(link)
+					logger.warn('Could not determine href of link.')
+					logger.debug('Link', { link })
 					return false
 				}
 				// We use custom onClick handler only for left clicks
