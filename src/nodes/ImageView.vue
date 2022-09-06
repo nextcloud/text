@@ -69,7 +69,7 @@
 					</template>
 				</transition>
 				<transition name="fade">
-					<div v-show="loaded" class="image__caption">
+					<div v-if="!isMediaAttachment" v-show="loaded" class="image__caption">
 						<div class="image__caption__wrapper">
 							<input v-show="!isMediaAttachment"
 								ref="altInput"
