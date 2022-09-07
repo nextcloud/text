@@ -25,8 +25,6 @@
     "Edit guest name" : "Modifier le nom de l'invité",
     "Guest" : "Invité",
     "Save guest name" : "Enregistrer le nom de l'invité",
-    "Image file format not supported" : "Le format du fichier image n'est pas pris en charge",
-    "Insert an image" : "Insérer une image",
     "guest" : "invité",
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
@@ -93,15 +91,18 @@
     "Warning" : "Avertissement",
     "Table" : "Tableau",
     "Insert emoji" : "Insérer une émoticône",
-    "Insert image" : "Ajouter image",
+    "Insert attachment" : "Insérer une pièce jointe",
     "Command" : "Commande",
     "Control" : "Contrôler",
     "Edit" : "Modifier",
     "New text document" : "Nouveau document texte",
     "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
+    "Insert image" : "Ajouter image",
+    "Insert an image" : "Insérer une image",
     "Currently active users:" : "Utilisateurs actuellement actifs :",
     "_and %n other editor_::_and %n other editors_" : ["and %n other editor","et %n  autres personnes","et %n  autres personnes"],
     "ToDo list" : "Liste des tâches",
-    "Emoji picker" : "Sélecteur d'émoticônes"
+    "Emoji picker" : "Sélecteur d'émoticônes",
+    "Image file format not supported" : "Le format du fichier image n'est pas pris en charge"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
