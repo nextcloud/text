@@ -24,8 +24,6 @@
     "Edit guest name" : "Промени име на гостин",
     "Guest" : "Гостин",
     "Save guest name" : "Зачувај име на гостин",
-    "Image file format not supported" : "Форматот на датотеката со слика не е поддржан",
-    "Insert an image" : "Вметни фотографија",
     "guest" : "гостин",
     "Active people" : "Активни луѓе",
     "Document save status" : "Статус на зачувување на документот",
@@ -85,15 +83,17 @@
     "Warning" : "Предупредување",
     "Table" : "Табела",
     "Insert emoji" : "Вметни емотикон",
-    "Insert image" : "Вметни фотографија",
     "Command" : "Команда",
     "Control" : "Контрола",
     "Option" : "Опции",
     "Edit" : "Уреди",
     "New text document" : "Нов текстуален документ",
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
+    "Insert image" : "Вметни фотографија",
+    "Insert an image" : "Вметни фотографија",
     "Currently active users:" : "Моментално активни корисници:",
     "_and %n other editor_::_and %n other editors_" : ["и 1 друг уредник","и%n други уредници"],
+    "Image file format not supported" : "Форматот на датотеката со слика не е поддржан",
     "Alt" : "Alt"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }
