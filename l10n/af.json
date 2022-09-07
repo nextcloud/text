@@ -14,7 +14,6 @@
     "Use the saved version" : "Gebruik die bewaarde weergawe",
     "Reconnect" : "Herverbind",
     "Guest" : "Gas",
-    "Insert an image" : "Voer ’n beeld in",
     "guest" : "gas",
     "Show author colors" : "Toon outeurkleure",
     "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het.",
@@ -42,10 +41,11 @@
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
-    "Insert image" : "Voer beeld in",
     "Edit" : "Wysig",
     "New text document" : "Nuwe teksdokument",
     "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
+    "Insert image" : "Voer beeld in",
+    "Insert an image" : "Voer ’n beeld in",
     "Currently active users:" : "Gebruikers wat tans aktief is:",
     "ToDo list" : "Moet-doen-lys"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

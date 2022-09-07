@@ -50,11 +50,11 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Увага",
     "Table" : "Таблиця",
-    "Insert image" : "Додати зображення",
     "Command" : "Команда",
     "Edit" : "Редашувати",
     "New text document" : "Новий текстовий документ",
     "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
+    "Insert image" : "Додати зображення",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
     "ToDo list" : "Список завдань"
 },
