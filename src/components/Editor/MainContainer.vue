@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<MediaHandler id="editor"
-		class="text-editor__main">
+	<MediaHandler class="text-editor__main">
 		<slot />
 	</MediaHandler>
 </template>

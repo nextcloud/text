@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<div id="editor-wrapper"
-		class="text-editor__wrapper"
+	<div class="text-editor__wrapper"
 		:class="{
 			'has-conflicts': hasSyncCollission,
 			'icon-loading': !contentLoaded && !hasConnectionIssue,

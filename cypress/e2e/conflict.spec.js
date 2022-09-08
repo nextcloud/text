@@ -26,7 +26,7 @@ const randUser = randHash()
 const fileName = 'test.md'
 
 describe('Open test.md in viewer', function() {
-	const getWrapper = () => cy.get('#editor-wrapper.has-conflicts.is-rich-editor')
+	const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts.is-rich-editor')
 
 	before(() => {
 		initUserAndFiles(randUser, fileName)
@@ -47,12 +47,12 @@ describe('Open test.md in viewer', function() {
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
 		cy.openFile('test.md')
-		cy.get('#editor-container .document-status .icon-error')
+		cy.get('.text-editor .document-status .icon-error')
 		getWrapper()
 			.get('#read-only-editor h2')
 			.should('contain', 'Hello world')
 		getWrapper()
-			.get('#editor h2')
+			.get('.text-editor__main h2')
 			.should('contain', 'Hello world')
 		cy.screenshot()
 	})

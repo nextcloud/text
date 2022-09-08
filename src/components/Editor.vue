@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div id="editor-container" data-text-el="editor-container" class="text-editor">
+	<div data-text-el="editor-container" class="text-editor">
 		<DocumentStatus v-if="displayed"
 			:idle="idle"
 			:lock="lock"
