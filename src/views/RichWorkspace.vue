@@ -100,7 +100,7 @@ export default {
 		},
 		focus(newValue) {
 			if (!newValue) {
-				document.querySelector('#editor').scrollTo(0, 0)
+				document.querySelector('#rich-workspace .text-editor__main').scrollTo(0, 0)
 			}
 		},
 	},

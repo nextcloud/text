@@ -83,7 +83,7 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 
 	cy.log('Check the attachment is visible and well formed', documentId, fileName, fileId, index, encodedName)
 	return new Cypress.Promise((resolve, reject) => {
-		cy.get(`#editor [data-component="image-view"][data-src="${src}"]`)
+		cy.get(`.text-editor__main [data-component="image-view"][data-src="${src}"]`)
 			.find('.image__view') // wait for load finish
 			.within(($el) => {
 				// keep track that we have created this attachment in the attachment dir

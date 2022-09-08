@@ -4,7 +4,7 @@
 	--text-editor-max-width: 670px
 }
 
-.modal-container #editor-container {
+.modal-container .text-editor {
   position: absolute;
 }
 
@@ -31,7 +31,7 @@ li.ProseMirror-selectednode:after {
 }
 
 .has-conflicts,
-#editor-wrapper.icon-loading {
+.text-editor__wrapper.icon-loading {
   .ProseMirror-menubar {
     display: none;
   }
