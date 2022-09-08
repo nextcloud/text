@@ -44,25 +44,25 @@
 		<template v-else>
 			<button class="menububble__button"
 				data-text-bubble-action="add-link"
-				:class="{ 'is-active': isActive('link') }"
+				:class="{ 'is-active': isActive }"
 				@click="showLinkMenu()">
 				<LinkIcon />
 				<span class="menububble__buttontext">
-					{{ isActive('link') ? t('text', 'Update Link') : t('text', 'Add Link') }}
+					{{ isActive ? t('text', 'Update Link') : t('text', 'Add Link') }}
 				</span>
 			</button>
 			<button v-if="!isUsingDirectEditing"
 				data-text-bubble-action="add-file"
 				class="menububble__button"
-				:class="{ 'is-active': isActive('link') }"
+				:class="{ 'is-active': isActive }"
 				@click="selectFile()">
 				<Document />
 				<span class="menububble__buttontext">{{ t('text', 'Link file') }}</span>
 			</button>
-			<button v-if="isActive('link')"
+			<button v-if="isActive"
 				class="menububble__button"
 				data-text-bubble-action="remove-link"
-				:class="{ 'is-active': isActive('link') }"
+				:class="{ 'is-active': isActive }"
 				@click="removeLinkUrl()">
 				<Delete />
 				<span class="menububble__buttontext">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import debounce from 'debounce'
 import { BubbleMenu } from '@tiptap/vue-2'
 import { getMarkAttributes } from '@tiptap/core'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -113,10 +114,20 @@ export default {
 	},
 	data: () => {
 		return {
+			isActive: false,
 			linkUrl: null,
 			linkMenuIsActive: false,
 			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
+	},
+	mounted() {
+		this.$_updateIsActive = debounce(this.updateIsActive.bind(this), 50)
+		this.$editor.on('update', this.$_updateIsActive)
+		this.$editor.on('selectionUpdate', this.$_updateIsActive)
+	},
+	beforeDestroy() {
+		this.$editor.off('update', this.$_updateIsActive)
+		this.$editor.off('selectionUpdate', this.$_updateIsActive)
 	},
 	methods: {
 		showLinkMenu() {
@@ -171,8 +182,8 @@ export default {
 		removeLinkUrl() {
 			this.$editor.chain().unsetLink().focus().run()
 		},
-		isActive(selector, args = {}) {
-			return this.$editor.isActive(selector, args)
+		updateIsActive() {
+			this.isActive = this.$editor.isActive('link')
 		},
 	},
 }
