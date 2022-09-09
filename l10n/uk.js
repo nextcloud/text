@@ -9,6 +9,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Відсутня тека для тимчасових файлів",
     "Could not write file to disk" : "Неможливо записати файл на диск",
     "A PHP extension stopped the file upload" : "Розширення PHP призупинило завантаження файлу",
+    "No file uploaded or file size exceeds maximum of %s" : "Немає завантажених файлів або розмір файлу перевищує максимум %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "текстовий документ",
     "Readme" : "Readme",
