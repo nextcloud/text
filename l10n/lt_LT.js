@@ -12,7 +12,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "PHP plėtinys sustabdė failo įkėlimą",
     "No file uploaded or file size exceeds maximum of %s" : "Neįkeltas joks failas arba failo dydis viršija maksimalų %s dydį",
     "Nextcloud Text" : "Nextcloud tekstas",
-    "text document" : "tekstinis dokumentas",
+    "text document" : "tekstinį dokumentą",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
     "Readme" : "Perskaityti",
     "Text" : "Tekstas",
@@ -29,9 +29,11 @@ OC.L10N.register(
     "Edit guest name" : "Taisyti svečio vardą",
     "Guest" : "Svečias",
     "Save guest name" : "Įrašyti svečio vardą",
+    "Insert an attachment" : "Įterpti priedą",
     "guest" : "svečias",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
+    "Document save status" : "Dokumento įrašymo būsena",
     "Saving …" : "Įrašoma…",
     "Saved" : "Įrašyta",
     "Last saved {lastSaved}" : "Paskutinis įrašymas {lastSaved}",
@@ -74,6 +76,8 @@ OC.L10N.register(
     "Link file" : "Susieti failą",
     "Remove Link" : "Šalinti nuorodą",
     "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
+    "Delete this attachment" : "Ištrinti šį priedą",
+    "Delete this image" : "Ištrinti šį paveikslą",
     "Failed to load" : "Nepavyko įkelti",
     "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Add row before" : "Pridėti eilutę aukščiau",
@@ -112,6 +116,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["ir dar %n redaktorius","ir dar %n redaktoriai","ir dar %n redaktorių","ir dar %n redaktorius"],
     "ToDo list" : "Užduočių sąrašas",
     "Emoji picker" : "Šypsenėlių parinkiklis",
-    "Image file format not supported" : "Paveikslo failo formatas yra nepalaikomas"
+    "Image file format not supported" : "Paveikslo failo formatas yra nepalaikomas",
+    "Alt" : "Alt"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

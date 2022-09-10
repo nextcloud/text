@@ -84,7 +84,6 @@ OC.L10N.register(
     "Link file" : "Odkázat na soubor",
     "Remove Link" : "Odebrat odkaz",
     "Select file to link to" : "Vyberte soubor na který odkázat",
-    "Link to this section" : "Odkázat na tuto sekci",
     "Delete this attachment" : "Smazat tuto přílohu",
     "Delete this image" : "Smazat tento obrázek",
     "Failed to load" : "Nepodařilo se načíst",
