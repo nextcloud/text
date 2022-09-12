@@ -69,6 +69,7 @@
 		"@tiptap/suggestion": "^2.0.0-beta.96",
 		"@tiptap/vue-2": "^2.0.0-beta.83",
 		"core-js": "^3.23.2",
+		"debounce": "^1.2.1",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^10.7.2",
 		"lowlight": "^1.20.0",
