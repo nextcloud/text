@@ -517,9 +517,9 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 			if (position) {
-				this.$editor.chain().focus(position).setImage({ src, alt }).focus().run()
+				this.$editor.chain().focus(position).setImage({ src, alt }).insertContent('<br />').focus().run()
 			} else {
-				this.$editor.chain().setImage({ src, alt }).focus().run()
+				this.$editor.chain().setImage({ src, alt }).insertContent('<br />').focus().run()
 			}
 		},
 
