@@ -3,7 +3,7 @@
   -
   - @author Julius Härtl <jus@bitgrid.net>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -285,6 +285,12 @@ export default {
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
 			this.initSession()
+		}
+		if (!this.richWorkspace) {
+			/* If the editor is shown in the viewer we need to hide the content,
+			   if richt workspace is used we **must** not hide the content */
+			window.addEventListener('beforeprint', this.preparePrinting)
+			window.addEventListener('afterprint', this.preparePrinting)
 		}
 		this.$parent.$emit('update:loaded', true)
 	},
@@ -639,6 +645,9 @@ export default {
 
 		async close() {
 			clearInterval(this.saveStatusPolling)
+			window.removeEventListener('beforeprint', this.preparePrinting)
+			window.removeEventListener('afterprint', this.preparePrinting)
+
 			if (this.currentSession && this.$syncService) {
 				try {
 					await this.$syncService.close()
@@ -659,6 +668,17 @@ export default {
 				}
 			}
 			return true
+		},
+
+		/** @param {Event} event */
+		preparePrinting(event) {
+			const content = document.getElementById('content')
+			// Hide Content behind modal, this also hides the sidebar if open
+			if (content && event.type === 'beforeprint') {
+				content.style.display = 'none'
+			} else if (content) {
+				content.style.display = ''
+			}
 		},
 	},
 }
@@ -725,6 +745,7 @@ export default {
 
 <style lang="scss">
 	@import './../../css/style';
+	@import './../../css/print';
 
 	.text-editor__wrapper {
 		@import './../../css/prosemirror';

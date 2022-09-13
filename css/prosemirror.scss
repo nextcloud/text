@@ -1,4 +1,4 @@
-@use "sass:selector";
+@use 'sass:selector';
 
 /* Document rendering styles */
 div.ProseMirror {
@@ -153,7 +153,7 @@ div.ProseMirror {
 	}
 
 	hr:after {
-		content: "";
+		content: '';
 		display: block;
 		height: 1px;
 		background-color: var(--color-border-dark);
