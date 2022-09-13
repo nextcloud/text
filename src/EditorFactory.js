@@ -33,7 +33,7 @@ import { translate as t } from '@nextcloud/l10n'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
 import { VueRenderer } from '@tiptap/vue-2'
-import EmojiList from './components/EmojiList.vue'
+import EmojiListWrapper from './components/EmojiListWrapper.vue'
 import MentionSuggestion from './components/Mention/suggestion.js'
 import tippy from 'tippy.js'
 
@@ -73,7 +73,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 
 						return {
 							onStart: props => {
-								component = new VueRenderer(EmojiList, {
+								component = new VueRenderer(EmojiListWrapper, {
 									parent: this,
 									propsData: props,
 								})
@@ -98,7 +98,8 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 
 							onKeyDown(props) {
 								if (props.event.key === 'Escape') {
-									popup[0].hide()
+									component.destroy()
+									popup[0].destroy()
 									return true
 								}
 								return component.ref?.onKeyDown(props)
