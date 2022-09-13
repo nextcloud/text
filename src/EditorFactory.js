@@ -58,7 +58,7 @@ import { translate as t } from '@nextcloud/l10n'
 import lowlight, { listLanguages, registerLanguage } from 'lowlight/lib/core'
 import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji'
 import { VueRenderer } from '@tiptap/vue-2'
-import EmojiList from './components/EmojiList.vue'
+import EmojiListWrapper from './components/EmojiListWrapper.vue'
 import tippy from 'tippy.js'
 
 import 'proxy-polyfill'
@@ -118,7 +118,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 
 						return {
 							onStart: props => {
-								component = new VueRenderer(EmojiList, {
+								component = new VueRenderer(EmojiListWrapper, {
 									parent: this,
 									propsData: props,
 								})
@@ -143,7 +143,8 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 
 							onKeyDown(props) {
 								if (props.event.key === 'Escape') {
-									popup[0].hide()
+									component.destroy()
+									popup[0].destroy()
 									return true
 								}
 								return component.ref?.onKeyDown(props)
