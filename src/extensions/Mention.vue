@@ -1,6 +1,9 @@
 <template>
 	<NodeViewWrapper as="span" class="mention" contenteditable="false">
-		<NcUserBubble :user="node.attrs.id" :display-name="username" class="mention-user-bubble">
+		<NcUserBubble :user="node.attrs.id"
+			:display-name="username"
+			:primary="isCurrentUser"
+			class="mention-user-bubble">
 			@{{ username }}
 		</NcUserBubble>
 	</NodeViewWrapper>
@@ -9,6 +12,7 @@
 <script>
 import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import { NodeViewWrapper } from '@tiptap/vue-2'
+import { getCurrentUser } from '@nextcloud/auth'
 
 export default {
 	name: 'Mention',
@@ -31,6 +35,11 @@ export default {
 		return {
 			username: this.node.attrs.label,
 		}
+	},
+	computed: {
+		isCurrentUser() {
+			return this.node.attrs.id === getCurrentUser().uid
+		},
 	},
 }
 </script>

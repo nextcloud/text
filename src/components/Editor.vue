@@ -670,7 +670,7 @@ export default {
 			return true
 		},
 
-		/** @param {Event} event */
+		/** @param {Event} event The passed event */
 		preparePrinting(event) {
 			const content = document.getElementById('content')
 			// Hide Content behind modal, this also hides the sidebar if open
