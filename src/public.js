@@ -1,11 +1,13 @@
-import { documentReady } from './helpers/index.js'
+import { loadState } from '@nextcloud/initial-state'
+
 import {
 	FilesWorkspacePlugin,
 	registerFileActionFallback,
 	registerFileCreate,
 } from './helpers/files.js'
+import { logger } from './helpers/logger.js'
 import { openMimetypes } from './helpers/mime.js'
-import { loadState } from '@nextcloud/initial-state'
+import { documentReady } from './helpers/index.js'
 import store from './store/index.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
@@ -42,7 +44,7 @@ const loadEditor = ({ sharingToken, mimetype, $el }) => {
 				.$mount($el)
 
 		})
-		.catch(console.error)
+		.catch((error) => logger.error('Failed to attach editor', { error }))
 }
 
 documentReady(() => {

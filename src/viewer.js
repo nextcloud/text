@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,13 +21,14 @@
  */
 
 import ViewerComponent from './components/ViewerComponent.vue'
+import { logger } from './helpers/logger.js'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 if (typeof OCA.Viewer === 'undefined') {
-	console.error('Viewer app is not installed')
+	logger.error('Viewer app is not installed')
 } else {
 	OCA.Viewer.registerHandler({
 		id: 'text',

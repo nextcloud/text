@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2020 Azul <azul@riseup.net>
  *
  * @author Azul <azul@riseup.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,6 +21,8 @@
  */
 
 import { generateUrl } from '@nextcloud/router'
+
+import { logger } from '../helpers/logger.js'
 import markdownit from './../markdownit/index.js'
 
 const absolutePath = function(base, rel) {
@@ -105,7 +107,7 @@ const openLink = function(event, _attrs) {
 		return
 	}
 	if (!markdownit.validateLink(htmlHref)) {
-		console.error('Invalid link', htmlHref)
+		logger.error('Invalid link', { htmlHref })
 		return false
 	}
 	if (fragment) {

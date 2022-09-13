@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,6 +20,7 @@
  *
  */
 import axios from '@nextcloud/axios'
+import { logger } from '../helpers/logger.js'
 import { endpointUrl } from '../helpers/index.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
 import { sendableSteps } from 'prosemirror-collab'
@@ -137,7 +138,7 @@ class PollingBackend {
 		this.fetchRetryCounter = 0
 
 		if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
-			console.debug('Saved document', response.data.document)
+			logger.debug('Saved document', { document: response.data.document })
 			this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
 		}
 
@@ -175,15 +176,15 @@ class PollingBackend {
 		this.lock = false
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
-				console.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
+				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
 				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 
 			} else {
-				console.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
 			}
 		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
 			// Only emit conflict event if we have synced until the latest version
-			console.error('Conflict during file save, please resolve')
+			logger.error('Conflict during file save, please resolve')
 			this._authority.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
 				data: {
@@ -200,11 +201,11 @@ class PollingBackend {
 		} else if (e.response.status === 503) {
 			this.increaseRefetchTimer()
 			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
-			console.error('Failed to fetch steps due to unavailable service', e)
+			logger.error('Failed to fetch steps due to unavailable service', { error: e })
 		} else {
 			this.disconnect()
 			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
-			console.error('Failed to fetch steps due to other reason', e)
+			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
 
 	}
@@ -233,7 +234,7 @@ class PollingBackend {
 			this.lock = false
 			this.fetchSteps()
 		}).catch(({ response, code }) => {
-			console.error('failed to apply steps due to collission, retrying')
+			logger.error('failed to apply steps due to collission, retrying')
 			this.lock = false
 			if (!response || code === 'ECONNABORTED') {
 				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
@@ -243,7 +244,7 @@ class PollingBackend {
 			if (status === 403) {
 				if (!data.document) {
 					// either the session is invalid or the document is read only.
-					console.error('failed to write to document - not allowed')
+					logger.error('failed to write to document - not allowed')
 				}
 				// Only emit conflict event if we have synced until the latest version
 				if (data.document?.currentVersion === this._authority.document.currentVersion) {

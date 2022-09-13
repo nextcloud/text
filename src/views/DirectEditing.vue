@@ -3,7 +3,7 @@
   -
   - @author Julius Härtl <jus@bitgrid.net>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -40,13 +40,15 @@
 import Vue from 'vue'
 import Editor from '../components/Editor.vue'
 
+import { logger } from '../helpers/logger.js'
+
 const log = Vue.observable({
 	messages: [],
 	mtime: 0,
 })
 
 const callMobileMessage = (messageName, attributes) => {
-	console.debug('callMobileMessage ' + messageName, attributes)
+	logger.debug(`callMobileMessage ${messageName}`, { attributes })
 	let message = messageName
 	if (typeof attributes !== 'undefined') {
 		message = {
@@ -82,7 +84,7 @@ const callMobileMessage = (messageName, attributes) => {
 
 window.addEventListener('message', function(message) {
 	log.messages.push(message.data)
-	console.debug('postMessage', message)
+	logger.debug('postMessage', { message })
 })
 
 export default {

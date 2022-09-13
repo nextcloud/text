@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
  *
  * @author Vinicius Reis <vinicius@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,6 +19,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+import { logger } from '../helpers/logger.js'
 
 export const EDITOR = Symbol('tiptap:editor')
 export const FILE = Symbol('editor:file')
@@ -84,7 +86,7 @@ export const useAttachmentResolver = {
 			from: ATTACHMENT_RESOLVER,
 			default: {
 				resolve(src) {
-					console.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
+					logger.warn('No attachment resolver provided. Some attachment sources cannot be resolved.')
 					return [src]
 				},
 			},

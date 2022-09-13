@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,11 +21,13 @@
  */
 
 import Vue from 'vue'
-import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files.js'
-import FilesSettings from './views/FilesSettings.vue'
-import { loadState } from '@nextcloud/initial-state'
 import { linkTo } from '@nextcloud/router'
+import { loadState } from '@nextcloud/initial-state'
+
 import store from './store/index.js'
+import FilesSettings from './views/FilesSettings.vue'
+import { logger } from './helpers/logger.js'
+import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files.js'
 
 __webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
@@ -35,11 +37,11 @@ const workspaceEnabled = loadState('text', 'workspace_enabled')
 
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
-		console.error('Viewer app is not installed')
+		logger.error('Viewer app is not installed')
 		registerFileActionFallback()
 	}
 
-	if (workspaceAvailable && OCA && OCA.Files && OCA.Files.Settings) {
+	if (workspaceAvailable && OCA && OCA?.Files?.Settings) {
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
 		Vue.prototype.OCA = window.OCA

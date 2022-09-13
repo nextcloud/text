@@ -85,6 +85,7 @@ import {
 	SYNC_SERVICE,
 } from './Editor.provider.js'
 
+import { logger } from '../helpers/logger.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
@@ -568,8 +569,8 @@ export default {
 				this.$nextTick(() => {
 					this.$emit('sync-service:sync')
 				})
-			} catch (e) {
-				console.error('Failed to update steps in collaboration plugin', e)
+			} catch (error) {
+				logger.error('Failed to update steps in collaboration plugin', { error })
 				// TODO: we should recreate the editing session when this happens
 			}
 			this.document = document
@@ -663,8 +664,8 @@ export default {
 					this.unlistenEditorEvents()
 					this.$editor.destroy()
 					this.$editor = null
-				} catch (err) {
-					console.warn(err)
+				} catch (error) {
+					logger.warn('Failed to destroy editor', { error })
 				}
 			}
 			return true

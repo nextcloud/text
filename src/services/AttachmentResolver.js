@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
  * @author Max <max@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,6 +22,8 @@
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
+
+import { logger } from '../helpers/logger.js'
 
 export default class AttachmentResolver {
 
@@ -197,7 +199,7 @@ export default class AttachmentResolver {
 			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}?${query}`)
 		}
 
-		console.error('No way to authenticate image retrival - need to be logged in or provide a token')
+		logger.error('No way to authenticate image retrival - need to be logged in or provide a token')
 		return src
 	}
 
