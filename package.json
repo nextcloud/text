@@ -76,7 +76,7 @@
     "@tiptap/extension-task-item": "^2.0.0-beta.194",
     "@tiptap/extension-task-list": "^2.0.0-beta.194",
     "@tiptap/extension-text": "^2.0.0-beta.194",
-    "@tiptap/extension-underline": "^2.0.0-beta.25",
+    "@tiptap/extension-underline": "^2.0.0-beta.194",
     "@tiptap/suggestion": "^2.0.0-beta.194",
     "@tiptap/vue-2": "^2.0.0-beta.194",
     "markdown-it": "^13.0.1",
