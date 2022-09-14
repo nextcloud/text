@@ -185,6 +185,7 @@ export default {
 			submenuVisibility: {},
 			lastImagePath: null,
 			icons: [...menuBarIcons],
+			editorHasFocus: false
 		}
 	},
 	computed: {
@@ -209,7 +210,7 @@ export default {
 			}
 		},
 		isVisible() {
-			return this.$editor.isFocused
+			return this.editorHasFocus
 				|| Object.values(this.submenuVisibility).find((v) => v)
 		},
 		disabled() {
@@ -278,6 +279,14 @@ export default {
 			}
 		}, 100)
 		this.$emit('update:loaded', true)
+
+		this.$editor.on('focus', _ => {
+			this.editorHasFocus = true
+		})
+
+		this.$editor.on('blur', _ => {
+			this.editorHasFocus = false
+		})
 	},
 	beforeDestroy() {
 		window.removeEventListener('resize', this.getWindowWidth)
