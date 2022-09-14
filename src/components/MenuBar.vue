@@ -83,7 +83,11 @@
 						<button v-tooltip="getLabelAndKeys(icon)"
 							:class="childIconClasses(icon.children, )"
 							@click.prevent="toggleChildMenu(icon)" />
-						<div :class="{open: isChildMenuVisible(icon)}" class="popovermenu menu-center">
+						<div :class="[
+								isChildMenuVisible(icon) ? 'open' : '',
+								menuAlignClass,
+							]"
+							class="popovermenu">
 							<PopoverMenu :menu="childPopoverMenu(icon.children, icon)" />
 						</div>
 					</div>
@@ -263,6 +267,10 @@ export default {
 		imagePath() {
 			return this.lastImagePath
 				|| this.filePath.split('/').slice(0, -1).join('/')
+		},
+		menuAlignClass() {
+			// Align popover menus to the left on mobile (https://github.com/nextcloud/text/issues/2915)
+			return (this.isMobile) ? 'menu-left' : 'menu-center'
 		},
 	},
 	mounted() {
