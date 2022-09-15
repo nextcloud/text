@@ -84,6 +84,7 @@ OC.L10N.register(
     "Link file" : "Fájl hivatkozás készítése",
     "Remove Link" : "Hivatkozás eltávolítása",
     "Select file to link to" : "Válassza ki a hivatkozandó fájlt",
+    "Link to this section" : "Hivatkozás erre a szakaszra",
     "Delete this attachment" : "Melléklet törlése",
     "Delete this image" : "Kép törlése",
     "Failed to load" : "A betöltés sikertelen",
