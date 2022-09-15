@@ -84,6 +84,7 @@ OC.L10N.register(
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
+    "Link to this section" : "連結至此節",
     "Delete this attachment" : "刪除此附件",
     "Delete this image" : "刪除此圖片",
     "Failed to load" : "載入失敗",

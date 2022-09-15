@@ -42,7 +42,7 @@ OC.L10N.register(
     "Formatting help" : "Formatavimo pagalba",
     "Style" : "Stilius",
     "Syntax" : "Sintaksė",
-    "Keyboard shortcuts" : "Klavišų kombinacijos",
+    "Keyboard shortcuts" : "Spartieji klavišai",
     "Bold" : "Pusjuodis",
     "Bold text" : "Pusjuodis tekstas",
     "Ctrl" : "Vald",
