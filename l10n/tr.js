@@ -84,6 +84,7 @@ OC.L10N.register(
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlanacak dosyayı seçin",
+    "Link to this section" : "Bu bölüme bağlantı",
     "Delete this attachment" : "Bu ek dosyayı sil",
     "Delete this image" : "Bu görseli sil",
     "Failed to load" : "Yüklenmemedi",

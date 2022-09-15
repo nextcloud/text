@@ -75,6 +75,7 @@ OC.L10N.register(
     "Link file" : "Linkitä tiedosto",
     "Remove Link" : "Poista linkki",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
+    "Link to this section" : "Linkki tähän osioon",
     "Delete this attachment" : "Poista tämä liite",
     "Delete this image" : "Poista tämä kuva",
     "Failed to load" : "Lataaminen epäonnistui",

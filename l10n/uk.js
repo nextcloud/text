@@ -39,6 +39,7 @@ OC.L10N.register(
     "Ordered list" : "Впорядкований список",
     "Blockquote" : "Цитування",
     "Code block" : "Код",
+    "Link to this section" : "Посилання на цей розділ",
     "Delete this attachment" : "Видалити цей вкладений файл",
     "Delete this image" : "Видалити це зображення",
     "Unsupported image type" : "Цей тип зображення не підтримується",
