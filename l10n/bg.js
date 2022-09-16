@@ -84,6 +84,7 @@ OC.L10N.register(
     "Link file" : "Файл с връзка",
     "Remove Link" : "Премахване на връзка",
     "Select file to link to" : "Избор на файл за връзка с",
+    "Link to this section" : "Връзка към този раздел",
     "Delete this attachment" : "Изтрийте този прикачен файл",
     "Delete this image" : "Изтрийте това изображение",
     "Failed to load" : "Неуспешно зареждане",
