@@ -60,7 +60,7 @@
     "@tiptap/extension-hard-break": "^2.0.0-beta.194",
     "@tiptap/extension-heading": "^2.0.0-beta.194",
     "@tiptap/extension-history": "^2.0.0-beta.194",
-    "@tiptap/extension-horizontal-rule": "^2.0.0-beta.194",
+    "@tiptap/extension-horizontal-rule": "^2.0.0-beta.195",
     "@tiptap/extension-image": "^2.0.0-beta.194",
     "@tiptap/extension-italic": "^2.0.0-beta.194",
     "@tiptap/extension-link": "^2.0.0-beta.194",
