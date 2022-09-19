@@ -1,4 +1,4 @@
-const { Mark } = require('@tiptap/core')
+import { Mark } from '@tiptap/core'
 
 /**
  * Keep markdown untouched
