@@ -10,7 +10,16 @@
   <body>
     <div id="app"></div>
 	<script>
-	OC = { webroot: '/OC_WEBROOT' }
+		// mock some required objects
+		function t(app, string) {
+			return string
+		}
+		OC = {
+			webroot: '/OC_WEBROOT',
+			isUserAdmin() {
+				return true
+			}
+		}
 	</script>
     <script type="module">
 	    import { RichTextReader, AttachmentResolver, ATTACHMENT_RESOLVER } from './src/package.js'
