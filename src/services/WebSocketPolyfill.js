@@ -21,6 +21,7 @@
  */
 
 import { logger } from '../helpers/logger.js'
+import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
 
 /**
  *
@@ -62,7 +63,8 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 					this.#version = version
 					if (steps) {
 						steps.forEach(s => {
-							this.onmessage({ data: s.step })
+							const data = decodeArrayBuffer(s.step)
+							this.onmessage({ data })
 						})
 					}
 				},
@@ -90,7 +92,7 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		#initiateSending() {
 			let steps
 			syncService.sendSteps(() => {
-				steps = this.#queue
+				steps = this.#queue.map(s => encodeArrayBuffer(s))
 				this.#queue = []
 				logger.debug('sending steps ', this.#version, steps.length, steps)
 				return {

@@ -192,12 +192,6 @@ class DocumentService {
 			if (!is_array($steps) || $stepsJson === null) {
 				throw new InvalidArgumentException('Failed to encode steps');
 			}
-			$validStepTypes = ['addMark', 'attr', 'removeMark', 'replace', 'replaceAround'];
-			foreach ($steps as $step) {
-				if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
-					throw new InvalidArgumentException('Invalid step data');
-				}
-			}
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			$newVersion = $stepsVersion + count($steps);
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
