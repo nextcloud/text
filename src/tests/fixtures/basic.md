@@ -9,3 +9,5 @@
 |table| heading| row|
 | --- | --- | --- |
 |first| body| row|
+
+@[user](mention://user/user)

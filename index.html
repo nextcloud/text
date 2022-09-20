@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/dist/style.css" />
+    <style>
+      @import url('https://nextcloud.github.io/server/apps/theming/css/default.css');
+      @import url('https://nextcloud.github.io/server/core/css/server.css');
+      body {
+        position: absolute;
+        height: unset;
+        background-color: var(--color-main-background);
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test the package</title>
   </head>
@@ -15,7 +24,8 @@
 			return string
 		}
 		OC = {
-			webroot: '/OC_WEBROOT',
+			webroot: '/dist/OC_WEBROOT',
+			config: {},
 			isUserAdmin() {
 				return true
 			}

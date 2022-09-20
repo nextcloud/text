@@ -63,7 +63,17 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 		richEditingExtensions = [
 			Markdown,
 			RichText.configure({
-				extensions: [EditableTable],
+				extensions: [
+					EditableTable,
+					Mention.configure({
+						HTMLAttributes: {
+							class: 'mention',
+						},
+						suggestion: MentionSuggestion({
+							session,
+						}),
+					}),
+				],
 			}),
 			Emoji.configure({
 				suggestion: {
@@ -115,14 +125,6 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 						}
 					},
 				},
-			}),
-			Mention.configure({
-				HTMLAttributes: {
-					class: 'mention',
-				},
-				suggestion: MentionSuggestion({
-					session,
-				}),
 			}),
 			Placeholder.configure({
 				emptyNodeClass: 'is-empty',

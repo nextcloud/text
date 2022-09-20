@@ -38,7 +38,7 @@ export default {
 	},
 	computed: {
 		isCurrentUser() {
-			return this.node.attrs.id === getCurrentUser().uid
+			return this.node.attrs.id === getCurrentUser()?.uid
 		},
 	},
 }
