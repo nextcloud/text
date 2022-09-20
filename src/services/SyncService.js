@@ -27,12 +27,6 @@ import PollingBackend from './PollingBackend.js'
 import { logger } from '../helpers/logger.js'
 import { endpointUrl } from '../helpers/index.js'
 
-const defaultOptions = {
-	shareToken: null,
-	forceRecreate: false,
-	serialize: (document) => document,
-}
-
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
  * The session will be terminated and the document will stay open in read-only mode with a button to reconnect if needed
@@ -67,7 +61,7 @@ class SyncService {
 
 		this.backend = new PollingBackend(this)
 
-		this.options = Object.assign({}, defaultOptions, options)
+		this.options = options
 
 		this.document = null
 		this.session = null
