@@ -43,6 +43,7 @@ import BulletList from './../nodes/BulletList.js'
 import TaskList from './../nodes/TaskList.js'
 import TaskItem from './../nodes/TaskItem.js'
 import Callout from './../nodes/Callouts.js'
+import Mention from './../extensions/Mention.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -91,6 +92,11 @@ export default Extension.create({
 			Dropcursor,
 			KeepSyntax,
 			FrontMatter,
+			Mention.configure({
+				HTMLAttributes: {
+					class: 'mention',
+				},
+			}),
 		]
 		if (this.options.link !== false) {
 			defaultExtensions.push(Link.configure({
