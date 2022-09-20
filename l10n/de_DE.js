@@ -31,7 +31,7 @@ OC.L10N.register(
     "Edit guest name" : "Gast-Namen bearbeiten",
     "Guest" : "Gast",
     "Save guest name" : "Gast-Namen speichern",
-    "Insert an attachment" : "Ein Anhang einfügen",
+    "Insert an attachment" : "Einen Anhang einfügen",
     "guest" : "Gast",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
