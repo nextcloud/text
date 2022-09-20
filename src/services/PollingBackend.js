@@ -19,10 +19,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from '@nextcloud/axios'
 import { logger } from '../helpers/logger.js'
-import { endpointUrl } from '../helpers/index.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
+import SessionApi from './SessionApi.js'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -73,6 +72,7 @@ class PollingBackend {
 	constructor(authority) {
 		/** @type {SyncService} */
 		this._authority = authority
+		this._api = new SessionApi(authority)
 		this.fetchInterval = FETCH_INTERVAL
 		this.retryTime = MIN_PUSH_RETRY
 		this.lock = false
@@ -83,10 +83,6 @@ class PollingBackend {
 		this.initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
-	}
-
-	_isPublic() {
-		return !!this._authority.options.shareToken
 	}
 
 	forceSave() {
@@ -117,16 +113,11 @@ class PollingBackend {
 		) {
 			autosaveContent = this._authority._getContent()
 		}
-		axios.post(endpointUrl('session/sync', this._isPublic()), {
-			documentId: this._authority.document.id,
-			sessionId: this._authority.session.id,
-			sessionToken: this._authority.session.token,
+		this._api.sync({
 			version: this._authority.version,
 			autosaveContent,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
-			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath,
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this._manualSave = false
 		this._forcedSave = false
@@ -222,14 +213,9 @@ class PollingBackend {
 		this.lock = true
 		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
 		const steps = sendable.steps
-		return axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
-			documentId: this._authority.document.id,
-			sessionId: this._authority.session.id,
-			sessionToken: this._authority.session.token,
+		return this._api.push({
 			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
 			version: sendable.version,
-			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath,
 		}).then((response) => {
 			this.carefulRetryReset()
 			this.lock = false
