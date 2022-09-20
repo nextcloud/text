@@ -132,19 +132,20 @@ class PollingBackend {
 		this._forcedSave = false
 	}
 
-	_handleResponse(response) {
+	_handleResponse({ data }) {
+		const { document, sessions } = data
 		this.fetchRetryCounter = 0
 
-		if (this._authority.version < response.data.document.lastSavedVersion) {
-			logger.debug('Saved document', response.data.document)
-			this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
+		if (this._authority.version < document.lastSavedVersion) {
+			logger.debug('Saved document', document)
+			this._authority.emit('save', { document, sessions })
 		}
 
-		this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
-		this._authority.document = response.data.document
-		this._authority.sessions = response.data.sessions
+		this._authority.emit('change', { document, sessions })
+		this._authority.document = document
+		this._authority.sessions = sessions
 
-		if (response.data.steps.length === 0) {
+		if (data.steps.length === 0) {
 			if (!this.initialLoadingFinished) {
 				this.initialLoadingFinished = true
 			}
@@ -152,7 +153,9 @@ class PollingBackend {
 				return
 			}
 			this.lock = false
-			if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
+			const disconnect = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
+			const alive = sessions.filter((s) => s.lastContact > disconnect)
+			if (alive.length < 2) {
 				this.maximumRefetchTimer()
 			} else {
 				this.increaseRefetchTimer()
@@ -162,7 +165,7 @@ class PollingBackend {
 			return
 		}
 
-		this._authority._receiveSteps(response.data)
+		this._authority._receiveSteps(data)
 		this.lock = false
 		this._forcedSave = false
 		if (this.initialLoadingFinished) {
