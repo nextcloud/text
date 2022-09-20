@@ -106,6 +106,10 @@ div.ProseMirror {
 		&:hover .heading-anchor {
 			opacity: 0.5!important;
 		}
+
+		&:focus-visible {
+			outline: none;
+		}
 	}
 
 	// Shrink clickable area of anchor permalinks while editing
