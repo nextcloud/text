@@ -82,6 +82,8 @@ OC.L10N.register(
     "Link file" : "Estekatu fitxategia",
     "Remove Link" : "Kendu esteka",
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
+    "Delete this attachment" : "Ezabatu eranskin hau",
+    "Delete this image" : "Ezabatu irudi hau",
     "Failed to load" : "Kargatzeak huts egin du",
     "Unsupported image type" : "Irudi mota ez da onartzen",
     "Add row before" : "Gehitu errenkada aurrerago",
