@@ -76,6 +76,7 @@
 								type="text"
 								class="image__caption__input"
 								:value="alt"
+								:disabled="!editable"
 								@keyup.enter="updateAlt">
 							<div v-if="showImageDeleteIcon"
 								class="image__caption__delete">
@@ -104,6 +105,7 @@
 						<input ref="altInput"
 							type="text"
 							:value="alt"
+							:disabled="!editable"
 							@keyup.enter="updateAlt()">
 					</div>
 				</transition>
@@ -187,8 +189,11 @@ export default {
 		isMediaAttachment() {
 			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 		},
+		editable() {
+			return this.editor.isEditable
+		},
 		showDeleteIcon() {
-			return this.editor.isEditable && this.showIcons
+			return this.editable && this.showIcons
 		},
 		showImageDeleteIcon() {
 			return this.showDeleteIcon && !this.isMediaAttachment
