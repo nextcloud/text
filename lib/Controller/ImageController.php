@@ -50,6 +50,8 @@ class ImageController extends Controller {
 		'image/bmp',
 		'image/svg+xml',
 		'image/webp',
+		'image/heic',
+		'image/heif',
 	];
 
 	/**

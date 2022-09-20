@@ -121,6 +121,8 @@ const IMAGE_MIMES = [
 	'image/bmp',
 	'image/svg+xml',
 	'image/webp',
+	'image/heic',
+	'image/heif',
 ]
 
 export default {

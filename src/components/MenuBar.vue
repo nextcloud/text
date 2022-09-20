@@ -24,7 +24,7 @@
 	<div class="menubar" :class="{ 'show': isVisible, 'autohide': autohide }">
 		<input ref="imageFileInput"
 			type="file"
-			accept="image/*"
+			accept="image/*, image/heic, image/heif"
 			aria-hidden="true"
 			class="hidden-visually"
 			:multiple="true"
