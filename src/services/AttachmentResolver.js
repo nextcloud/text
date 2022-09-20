@@ -118,7 +118,7 @@ export default class AttachmentResolver {
 		}]
 	}
 
-	#getImageAttachmentUrl(imageFileName) {
+	#getImageAttachmentUrl(imageFileName, preferRawImage = false) {
 		if (!this.#session) {
 			return this.#davUrl(
 				`${this.#attachmentDirectory}/${imageFileName}`
@@ -126,16 +126,18 @@ export default class AttachmentResolver {
 		}
 
 		if (this.#user || !this.#shareToken) {
-			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}', {
+			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&preferRawImage={preferRawImage}', {
 				...this.#textApiParams(),
 				imageFileName,
+				preferRawImage: preferRawImage ? 1 : 0,
 			})
 		}
 
-		return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}', {
+		return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}&preferRawImage={preferRawImage}', {
 			...this.#textApiParams(),
 			imageFileName,
 			shareToken: this.#shareToken,
+			preferRawImage: preferRawImage ? 1 : 0,
 		})
 	}
 
