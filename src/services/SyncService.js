@@ -165,11 +165,8 @@ class SyncService {
 		})
 	}
 
-	sendSteps(sendable) {
-		if (!sendable) {
-			return
-		}
-		return this.backend.sendSteps(sendable)
+	sendSteps(getSendable) {
+		return this.backend.sendSteps(getSendable)
 	}
 
 	stepsSince(version) {

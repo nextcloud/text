@@ -202,21 +202,17 @@ class PollingBackend {
 
 	}
 
-	sendSteps(_sendable) {
+	sendSteps(getSendable) {
 		this._authority.emit('stateChange', { dirty: true })
 		if (this.lock) {
 			setTimeout(() => {
-				this._authority.sendSteps(_sendable)
+				this._authority.sendSteps(getSendable)
 			}, 200)
 			return
 		}
 		this.lock = true
-		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
-		const steps = sendable.steps
-		return this._api.push({
-			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
-			version: sendable.version,
-		}).then((response) => {
+		return this._api.push(getSendable())
+		.then((response) => {
 			this.carefulRetryReset()
 			this.lock = false
 		}).catch(({ response, code }) => {
