@@ -45,21 +45,21 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		constructor(url) {
 			this.url = url
 			this.#queue = []
-			logger.debug(url, fileId)
+			logger.debug('WebSocketPolyfill#constructor', { url, fileId })
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
 					this.#version = version
-					logger.debug('opened ', version, session)
+					logger.debug('opened ', { version, session })
 					this.#session = session
 					this.onopen()
 				},
 				loaded: ({ version, session, content }) => {
-					logger.debug('loaded ', version, session)
+					logger.debug('loaded ', { version, session })
 					this.#version = version
 					this.#session = session
 				},
 				sync: ({ steps, version }) => {
-					logger.debug('synced ', version, steps)
+					logger.debug('synced ', { version, steps })
 					this.#version = version
 					if (steps) {
 						steps.forEach(s => {
@@ -94,11 +94,9 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 			syncService.sendSteps(() => {
 				steps = this.#queue.map(s => encodeArrayBuffer(s))
 				this.#queue = []
-				logger.debug('sending steps ', this.#version, steps.length, steps)
-				return {
-					version: this.#version,
-					steps,
-				}
+				const version = this.#version
+				logger.debug('sending steps ', { version, steps })
+				return { version, steps }
 			})?.catch(() => {
 				// try again
 				this.send(...steps)

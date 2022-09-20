@@ -39,6 +39,6 @@ export default function createSyncServiceProvider({ ydoc, syncService, fileId })
 		ydoc,
 		{ WebSocketPolyfill }
 	)
-	websocketProvider.on('status', event => logger.debug(event.status))
+	websocketProvider.on('status', event => logger.debug('status', event))
 	return websocketProvider
 }
