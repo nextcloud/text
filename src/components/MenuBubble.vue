@@ -79,7 +79,7 @@ import { BubbleMenu } from '@tiptap/vue-2'
 import { getMarkAttributes } from '@tiptap/core'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
+import { Tooltip } from '@nextcloud/vue'
 import { optimalPath } from './../helpers/files.js'
 
 import { useEditorMixin } from './Editor.provider.js'

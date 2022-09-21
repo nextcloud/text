@@ -159,8 +159,7 @@
 </template>
 
 <script>
-import NcModal from '@nextcloud/vue/dist/Components/NcModal.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
+import { NcModal, Tooltip } from '@nextcloud/vue'
 import isMobile from './../mixins/isMobile.js'
 
 export default {

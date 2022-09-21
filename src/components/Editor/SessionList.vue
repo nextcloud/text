@@ -62,8 +62,7 @@
 </template>
 
 <script>
-import NcPopover from '@nextcloud/vue/dist/Components/NcPopover.js'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
+import { NcPopover, Tooltip } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
 import store from '../../mixins/store.js'
 

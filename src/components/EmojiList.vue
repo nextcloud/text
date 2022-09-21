@@ -42,7 +42,7 @@
 
 <script>
 import { translate as t } from '@nextcloud/l10n'
-import { addRecent } from '@nextcloud/vue/dist/Functions/emoji.js'
+import { emojiAddRecent } from '@nextcloud/vue'
 
 export default {
 	name: 'EmojiList',
