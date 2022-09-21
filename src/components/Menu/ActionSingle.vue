@@ -21,8 +21,7 @@
   -->
 
 <script>
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
+import { NcButton, NcActionButton } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {

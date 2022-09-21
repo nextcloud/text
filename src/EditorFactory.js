@@ -36,7 +36,7 @@ import 'proxy-polyfill'
 import { Editor } from '@tiptap/core'
 import { VueRenderer } from '@tiptap/vue-2'
 import { translate as t } from '@nextcloud/l10n'
-import { emojiSearch } from '@nextcloud/vue/dist/Functions/emoji.js'
+import { emojiSearch } from '@nextcloud/vue'
 import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
 
 import { logger } from './helpers/logger.js'

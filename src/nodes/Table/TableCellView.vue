@@ -57,8 +57,7 @@
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
+import { NcActions, NcActionButton } from '@nextcloud/vue'
 import { TableAddRowBefore, TableAddRowAfter, Delete } from '../../components/icons.js'
 
 export default {

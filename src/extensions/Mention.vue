@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
+import { NcUserBubble } from '@nextcloud/vue'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import { getCurrentUser } from '@nextcloud/auth'
 
