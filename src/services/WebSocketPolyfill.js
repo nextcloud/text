@@ -69,10 +69,7 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 					}
 				},
 			})
-			syncService.open({
-				fileId,
-				filePath: syncService.options.filePath,
-			})
+			syncService.open({ fileId })
 		}
 
 		#registerHandlers(handlers) {

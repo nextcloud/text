@@ -21,7 +21,7 @@
  */
 import { logger } from '../helpers/logger.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
-import SessionApi from './SessionApi.js'
+import { Connection } from './SessionApi.js'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -69,10 +69,11 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
 
-	constructor(authority) {
+	constructor(authority, connection) {
 		/** @type {SyncService} */
 		this._authority = authority
-		this._api = new SessionApi(authority)
+		/** @type {Connection} */
+		this.connection = connection
 		this.fetchInterval = FETCH_INTERVAL
 		this.retryTime = MIN_PUSH_RETRY
 		this.lock = false
@@ -113,7 +114,7 @@ class PollingBackend {
 		) {
 			autosaveContent = this._authority._getContent()
 		}
-		this._api.sync({
+		this.connection.sync({
 			version: this._authority.version,
 			autosaveContent,
 			force: !!this._forcedSave,
@@ -133,8 +134,6 @@ class PollingBackend {
 		}
 
 		this._authority.emit('change', { document, sessions })
-		this._authority.document = document
-		this._authority.sessions = sessions
 
 		if (data.steps.length === 0) {
 			if (!this.initialLoadingFinished) {
@@ -206,38 +205,38 @@ class PollingBackend {
 		this._authority.emit('stateChange', { dirty: true })
 		if (this.lock) {
 			setTimeout(() => {
-				this._authority.sendSteps(getSendable)
+				this.sendSteps(getSendable)
 			}, 200)
 			return
 		}
 		this.lock = true
-		return this._api.push(getSendable())
-		.then((response) => {
-			this.carefulRetryReset()
-			this.lock = false
-		}).catch(({ response, code }) => {
-			logger.error('failed to apply steps due to collission, retrying')
-			this.lock = false
-			if (!response || code === 'ECONNABORTED') {
-				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-				return
-			}
-			const { status, data } = response
-			if (status === 403) {
-				if (!data.document) {
-					// either the session is invalid or the document is read only.
-					logger.error('failed to write to document - not allowed')
+		return this.connection.push(getSendable())
+			.then((response) => {
+				this.carefulRetryReset()
+				this.lock = false
+			}).catch(({ response, code }) => {
+				logger.error('failed to apply steps due to collission, retrying')
+				this.lock = false
+				if (!response || code === 'ECONNABORTED') {
+					this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+					return
 				}
-				// Only emit conflict event if we have synced until the latest version
-				if (data.document?.currentVersion === this._authority.version) {
-					this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-					OC.Notification.showTemporary('Changes could not be sent yet')
+				const { status, data } = response
+				if (status === 403) {
+					if (!data.document) {
+						// either the session is invalid or the document is read only.
+						logger.error('failed to write to document - not allowed')
+					}
+					// Only emit conflict event if we have synced until the latest version
+					if (data.document?.currentVersion === this._authority.version) {
+						this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
+						OC.Notification.showTemporary('Changes could not be sent yet')
+					}
 				}
-			}
 
-			this.fetchSteps()
-			this.carefulRetry()
-		})
+				this.fetchSteps()
+				this.carefulRetry()
+			})
 	}
 
 	disconnect() {
