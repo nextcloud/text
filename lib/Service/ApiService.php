@@ -191,13 +191,16 @@ class ApiService {
 	 * @throws DoesNotExistException
 	 */
 	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 403);
+		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		$file = $this->documentService->getFileForSession($session, $token);
-		if ($this->sessionService->isValidSession($documentId, $sessionId, $sessionToken) && !$this->documentService->isReadOnly($file, $token)) {
+		if (!$this->documentService->isReadOnly($file, $token)) {
 			try {
 				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
-			} catch (VersionMismatchException $e) {
-				return new DataResponse($e->getMessage(), $e->getStatus());
+			} catch (InvalidArgumentException $e) {
+				return new DataResponse($e->getMessage(), 422);
 			}
 			return new DataResponse($steps);
 		}

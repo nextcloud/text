@@ -48,7 +48,6 @@ use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
-use OCA\Text\Exception\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\Constants;
@@ -181,6 +180,7 @@ class DocumentService {
 	 * @param $version
 	 * @return array
 	 * @throws DoesNotExistException
+	 * @throws InvalidArgumentException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
 		$document = null;
