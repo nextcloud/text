@@ -52,12 +52,6 @@ const FETCH_INTERVAL_SINGLE_EDITOR = 5000
  */
 const FETCH_INTERVAL_INVISIBLE = 60000
 
-const MIN_PUSH_RETRY = 500
-const MAX_PUSH_RETRY = 10000
-
-/* Timeout after that a PUSH_FAILURE error is emitted */
-const WARNING_PUSH_RETRY = 5000
-
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
 
@@ -75,7 +69,6 @@ class PollingBackend {
 		/** @type {Connection} */
 		this.connection = connection
 		this.fetchInterval = FETCH_INTERVAL
-		this.retryTime = MIN_PUSH_RETRY
 		this.lock = false
 		this.fetchRetryCounter = 0
 	}
@@ -201,44 +194,6 @@ class PollingBackend {
 
 	}
 
-	sendSteps(getSendable) {
-		this._authority.emit('stateChange', { dirty: true })
-		if (this.lock) {
-			setTimeout(() => {
-				this.sendSteps(getSendable)
-			}, 200)
-			return
-		}
-		this.lock = true
-		return this.connection.push(getSendable())
-			.then((response) => {
-				this.carefulRetryReset()
-				this.lock = false
-			}).catch(({ response, code }) => {
-				logger.error('failed to apply steps due to collission, retrying')
-				this.lock = false
-				if (!response || code === 'ECONNABORTED') {
-					this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-					return
-				}
-				const { status, data } = response
-				if (status === 403) {
-					if (!data.document) {
-						// either the session is invalid or the document is read only.
-						logger.error('failed to write to document - not allowed')
-					}
-					// Only emit conflict event if we have synced until the latest version
-					if (data.document?.currentVersion === this._authority.version) {
-						this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-						OC.Notification.showTemporary('Changes could not be sent yet')
-					}
-				}
-
-				this.fetchSteps()
-				this.carefulRetry()
-			})
-	}
-
 	disconnect() {
 		clearInterval(this.fetcher)
 		this.fetcher = 0
@@ -284,19 +239,6 @@ class PollingBackend {
 		} else {
 			this.resetRefetchTimer()
 		}
-	}
-
-	carefulRetry() {
-		const newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
-		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
-			OC.Notification.showTemporary('Changes could not be sent yet')
-			this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-		}
-		this.retryTime = newRetry
-	}
-
-	carefulRetryReset() {
-		this.retryTime = MIN_PUSH_RETRY
 	}
 
 }

@@ -70,6 +70,7 @@ class SyncService {
 		this.lastStepPush = Date.now()
 
 		this.version = null
+		this.sending = false
 
 		return this
 	}
@@ -121,7 +122,38 @@ class SyncService {
 	}
 
 	sendSteps(getSendable) {
-		return this.backend?.sendSteps(getSendable)
+		this.emit('stateChange', { dirty: true })
+		if (!this.connection || this.sending) {
+			setTimeout(() => {
+				this.sendSteps(getSendable)
+			}, 200)
+			return
+		}
+		this.sending = true
+		return this.connection.push(getSendable())
+			.then((response) => {
+				this.sending = false
+			}).catch(({ response, code }) => {
+				logger.error('failed to apply steps due to collission, retrying')
+				this.sending = false
+				if (!response || code === 'ECONNABORTED') {
+					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+					return
+				}
+				const { status, data } = response
+				if (status === 403) {
+					if (!data.document) {
+						// either the session is invalid or the document is read only.
+						logger.error('failed to write to document - not allowed')
+					}
+					// Only emit conflict event if we have synced until the latest version
+					if (data.document?.currentVersion === this.version) {
+						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
+						OC.Notification.showTemporary('Changes could not be sent yet')
+					}
+				}
+				// TODO: Retry and warn
+			})
 	}
 
 	stepsSince(version) {
