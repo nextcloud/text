@@ -20,7 +20,7 @@
  *
  */
 import axios from '@nextcloud/axios'
-import { endpointUrl } from '../helpers/index.js'
+import { generateUrl } from '@nextcloud/router'
 
 class SessionApi {
 
@@ -31,13 +31,18 @@ class SessionApi {
 	}
 
 	open({ fileId }) {
-		return axios.put(endpointUrl('session/create', !!this.#options.shareToken), {
+		return axios.put(this.#url('session/create'), {
 			fileId,
 			filePath: this.#options.filePath,
 			token: this.#options.shareToken,
 			guestName: this.#options.guestName,
 			forceRecreate: this.#options.forceRecreate,
 		}).then(response => new Connection(response, this.#options))
+	}
+
+	#url(endpoint) {
+		const isPublic = !!this.#options.shareToken
+		return _endpointUrl(endpoint, isPublic)
 	}
 
 }
@@ -83,12 +88,8 @@ export class Connection {
 		}
 	}
 
-	get #isPublic() {
-		return !!this.#defaultParams.token
-	}
-
 	sync({ version, autosaveContent, force, manualSave }) {
-		return axios.post(endpointUrl('session/sync', this.#isPublic), {
+		return axios.post(this.#url('session/sync'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,
@@ -99,7 +100,7 @@ export class Connection {
 	}
 
 	push({ steps, version }) {
-		return axios.post(endpointUrl('session/push', this.#isPublic), {
+		return axios.post(this.#url('session/push'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			steps,
@@ -109,7 +110,7 @@ export class Connection {
 
 	// TODO: maybe return a new connection here so connections have immutable state
 	update(guestName) {
-		return axios.post(endpointUrl('session', this.#isPublic), {
+		return axios.post(this.#url('session'), {
 			...this.#defaultParams,
 			guestName,
 		}).then(({ data }) => {
@@ -120,7 +121,7 @@ export class Connection {
 	uploadAttachment(file) {
 		const formData = new FormData()
 		formData.append('file', file)
-		const url = endpointUrl('attachment/upload')
+		const url = _endpointUrl('attachment/upload')
 			+ '?documentId=' + encodeURIComponent(this.#doc.id)
 			+ '&sessionId=' + encodeURIComponent(this.#session.id)
 			+ '&sessionToken=' + encodeURIComponent(this.#session.token)
@@ -133,20 +134,16 @@ export class Connection {
 	}
 
 	insertAttachmentFile(filePath) {
-		const params = {
+		return axios.post(_endpointUrl('attachment/filepath'), {
 			documentId: this.#doc.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
 			filePath,
-		}
-		const url = endpointUrl('attachment/filepath')
-		return axios.post(url, params)
+		})
 	}
 
 	close() {
-		return axios.post(endpointUrl('session/close', this.#isPublic), {
-			...this.#defaultParams,
-		})
+		return axios.post(this.#url('session/close'), this.#defaultParams)
 	}
 
 	_fetchDocument() {
@@ -154,12 +151,30 @@ export class Connection {
 		// Just return the plain content here.
 		const transformResponse = [(data) => data]
 		return axios.post(
-			endpointUrl('session/fetch', this.#isPublic),
+			this.#url('session/fetch'),
 			this.#defaultParams,
 			{ transformResponse }
 		).then(response => response.data)
 	}
 
+	#url(endpoint) {
+		const isPublic = !!this.#defaultParams.token
+		return _endpointUrl(endpoint, isPublic)
+	}
+
+}
+
+/**
+ *
+ * @param {string} endpoint - endpoint of the url inside apps/text
+ * @param {boolean} isPublic - public url or not
+ */
+function _endpointUrl(endpoint, isPublic = false) {
+	const _baseUrl = generateUrl('/apps/text')
+	if (isPublic) {
+		return `${_baseUrl}/public/${endpoint}`
+	}
+	return `${_baseUrl}/${endpoint}`
 }
 
 export default SessionApi

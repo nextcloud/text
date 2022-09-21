@@ -25,7 +25,6 @@
  *
  * @param callback
  */
-import { generateUrl } from '@nextcloud/router'
 
 const documentReady = function(callback) {
 	const fn = () => setTimeout(callback, 0)
@@ -36,15 +35,6 @@ const documentReady = function(callback) {
 	}
 }
 
-const _baseUrl = generateUrl('/apps/text')
-const endpointUrl = (endpoint, isPublic = false) => {
-	if (isPublic) {
-		return `${_baseUrl}/public/${endpoint}`
-	}
-	return `${_baseUrl}/${endpoint}`
-}
-
 export {
 	documentReady,
-	endpointUrl,
 }
