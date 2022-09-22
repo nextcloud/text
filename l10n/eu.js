@@ -30,6 +30,7 @@ OC.L10N.register(
     "Edit guest name" : "Editatu gonbidatuaren izena",
     "Guest" : "Gonbidatua",
     "Save guest name" : "Gorde gonbidatuaren izena",
+    "Insert an attachment" : "Txertatu eranskin bat",
     "guest" : "gonbidatua",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
