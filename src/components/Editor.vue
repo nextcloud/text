@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div data-text-el="editor-container" class="text-editor">
+	<div data-text-el="editor-container" class="text-editor" @keydown.esc.stop.prevent="() => {}">
 		<DocumentStatus v-if="displayed"
 			:idle="idle"
 			:lock="lock"
