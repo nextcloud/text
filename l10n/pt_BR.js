@@ -84,6 +84,7 @@ OC.L10N.register(
     "Link file" : "Linkar um arquivo",
     "Remove Link" : "Remover Link",
     "Select file to link to" : "Selecione o arquivo a linkar",
+    "Link to this section" : "Link para esta seção",
     "Delete this attachment" : "Excluir este anexo",
     "Delete this image" : "Excluir esta imagem",
     "Failed to load" : "Falha ao carregar",
