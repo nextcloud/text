@@ -53,7 +53,7 @@
     "@tiptap/extension-bold": "^2.0.0-beta.195",
     "@tiptap/extension-bullet-list": "^2.0.0-beta.195",
     "@tiptap/extension-code": "^2.0.0-beta.196",
-    "@tiptap/extension-code-block": "^2.0.0-beta.195",
+    "@tiptap/extension-code-block": "^2.0.0-beta.196",
     "@tiptap/extension-code-block-lowlight": "^2.0.0-beta.195",
     "@tiptap/extension-document": "^2.0.0-beta.195",
     "@tiptap/extension-dropcursor": "^2.0.0-beta.195",
