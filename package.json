@@ -55,7 +55,7 @@
     "@tiptap/extension-code": "^2.0.0-beta.196",
     "@tiptap/extension-code-block": "^2.0.0-beta.196",
     "@tiptap/extension-code-block-lowlight": "^2.0.0-beta.195",
-    "@tiptap/extension-document": "^2.0.0-beta.195",
+    "@tiptap/extension-document": "^2.0.0-beta.196",
     "@tiptap/extension-dropcursor": "^2.0.0-beta.195",
     "@tiptap/extension-hard-break": "^2.0.0-beta.195",
     "@tiptap/extension-heading": "^2.0.0-beta.196",
