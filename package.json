@@ -93,7 +93,7 @@
     "prosemirror-tables-contently": "^1.1.2",
     "prosemirror-transform": "^1.7.0",
     "prosemirror-utils": "^1.0.0-0",
-    "prosemirror-view": "^1.28.0",
+    "prosemirror-view": "^1.28.1",
     "proxy-polyfill": "^0.3.2",
     "tippy.js": "^6.3.7",
     "uuid": "^9.0.0",
