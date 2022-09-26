@@ -36,6 +36,7 @@
 			:key="`child-${child.key}`"
 			is-item
 			:action-entry="child"
+			v-on="$listeners"
 			@trigged="onTrigger" />
 	</NcActions>
 </template>
