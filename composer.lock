@@ -4,48 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08c970b3d11a483fa6df1e4f3271708b",
+    "content-hash": "1c6d7fc475152e7d7367aff723453b0d",
     "packages": [],
     "packages-dev": [
-        {
-            "name": "christophwurst/nextcloud",
-            "version": "dev-stable23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "3725f37085a0de42135df9aad3939f7a137205c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/3725f37085a0de42135df9aad3939f7a137205c2",
-                "reference": "3725f37085a0de42135df9aad3939f7a137205c2",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ~8.0.0",
-                "psr/container": "^1.1.1",
-                "psr/event-dispatcher": "^1.0",
-                "psr/log": "^1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "23.0.0-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "AGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Christoph Wurst",
-                    "email": "christoph@winzerhof-wurst.at"
-                }
-            ],
-            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2022-06-02T14:13:38+00:00"
-        },
         {
             "name": "composer/pcre",
             "version": "1.0.1",
@@ -580,6 +541,48 @@
             ],
             "description": "Nextcloud coding standards for the php cs fixer",
             "time": "2021-01-11T14:15:58+00:00"
+        },
+        {
+            "name": "nextcloud/ocp",
+            "version": "dev-stable23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextcloud-deps/ocp.git",
+                "reference": "74fa82bb013bb329eb59b18d6eb94a660d724fea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/74fa82bb013bb329eb59b18d6eb94a660d724fea",
+                "reference": "74fa82bb013bb329eb59b18d6eb94a660d724fea",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ~8.0.0",
+                "psr/container": "^1.1.1",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "23.0.0-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Wurst",
+                    "email": "christoph@winzerhof-wurst.at"
+                }
+            ],
+            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
+            "support": {
+                "source": "https://github.com/nextcloud-deps/ocp/tree/stable23"
+            },
+            "time": "2022-08-23T02:31:53+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
@@ -2743,7 +2746,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "roave/security-advisories": 20,
-        "christophwurst/nextcloud": 20
+        "nextcloud/ocp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -2751,5 +2754,5 @@
     "platform-dev": {
         "ext-mbstring": "*"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }

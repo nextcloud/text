@@ -1,25 +1,30 @@
 {
-    "name": "nextcloud/text",
-    "type": "project",
-    "require-dev": {
-        "roave/security-advisories": "dev-master",
-        "christophwurst/nextcloud": "dev-stable23",
-        "jakub-onderka/php-parallel-lint": "^1.0.0",
-        "nextcloud/coding-standard": "^0.5.0",
-        "psalm/phar": "^4.3",
-		"ext-mbstring": "*"
-    },
-    "license": "AGPLv3",
-    "authors": [
-        {
-            "name": "Julius Härtl",
-            "email": "jus@bitgrid.net"
-        }
-    ],
-    "scripts": {
-      "lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
-      "cs:check": "php-cs-fixer fix --dry-run --diff",
-      "cs:fix": "php-cs-fixer fix",
-      "psalm": "psalm.phar"
-    }
+	"name": "nextcloud/text",
+	"type": "project",
+	"require-dev": {
+		"roave/security-advisories": "dev-master",
+		"jakub-onderka/php-parallel-lint": "^1.0.0",
+		"nextcloud/coding-standard": "^0.5.0",
+		"psalm/phar": "^4.3",
+		"ext-mbstring": "*",
+		"nextcloud/ocp": "dev-stable23"
+	},
+	"license": "AGPLv3",
+	"authors": [
+		{
+			"name": "Julius Härtl",
+			"email": "jus@bitgrid.net"
+		}
+	],
+	"scripts": {
+		"lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
+		"cs:check": "php-cs-fixer fix --dry-run --diff",
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm.phar"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"OCP\\": "vendor/nextcloud/ocp/OCP"
+		}
+	}
 }
