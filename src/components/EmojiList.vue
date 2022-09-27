@@ -118,7 +118,7 @@ export default {
 
 			if (emojiObject) {
 				this.command(emojiObject)
-				addRecent(emojiObject)
+				emojiAddRecent(emojiObject)
 			}
 		},
 	},
