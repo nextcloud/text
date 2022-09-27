@@ -46,7 +46,7 @@
     "@nextcloud/logger": "^2.3.0",
     "@nextcloud/moment": "^1.2.1",
     "@nextcloud/router": "^2.0.0",
-    "@nextcloud/vue": "^7.0.0-beta.2",
+    "@nextcloud/vue": "^7.0.0-beta.6",
     "@quartzy/markdown-it-mentions": "^0.2.0",
     "@tiptap/core": "^2.0.0-beta.195",
     "@tiptap/extension-blockquote": "^2.0.0-beta.195",
@@ -80,10 +80,15 @@
     "@tiptap/extension-underline": "^2.0.0-beta.195",
     "@tiptap/suggestion": "^2.0.0-beta.195",
     "@tiptap/vue-2": "^2.0.0-beta.195",
+    "debounce": "^1.2.1",
+    "escape-html": "^1.0.3",
+    "highlight.js": "^10.7.3",
+    "lowlight": "^1.20.0",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-front-matter": "^0.2.3",
     "path-normalize": "^6.0.6",
+    "mitt": "^3.0.0",
     "prosemirror-collab": "^1.3.0",
     "prosemirror-inputrules": "^1.2.0",
     "prosemirror-markdown": "^1.9.4",
@@ -119,15 +124,11 @@
     "@vue/vue2-jest": "^28.1.0",
     "cypress": "^10.7.0",
     "cypress-file-upload": "^5.0.8",
-    "debounce": "^1.2.1",
-    "escape-html": "^1.0.3",
     "eslint-plugin-cypress": "^2.12.1",
-    "highlight.js": "^10.7.3",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^29.0.3",
     "jest-serializer-vue": "^2.0.2",
-    "lowlight": "^1.20.0",
-    "mitt": "^3.0.0",
     "vite": "^3.1.0",
     "vite-plugin-commonjs": "^0.5.2",
     "vue-demi": "^0.13.11",
@@ -143,7 +144,8 @@
       "html"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "^@/(.*)$": "<rootDir>/src/$1",
+	  "\\.(css)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",
@@ -162,7 +164,7 @@
       "<rootDir>/src/tests/setup.js"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!vue-material-design-icons|uuid)"
+
     ]
   }
 }
