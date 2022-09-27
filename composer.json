@@ -1,29 +1,34 @@
 {
-    "name": "nextcloud/text",
-    "type": "project",
-    "require-dev": {
-        "roave/security-advisories": "dev-master",
-        "christophwurst/nextcloud": "dev-master",
-        "nextcloud/coding-standard": "^1.0.0",
-        "psalm/phar": "^4.3",
-        "phpunit/phpunit": "^9.5",
-        "ext-mbstring": "*"
-    },
-    "license": "AGPLv3",
-    "authors": [
-        {
-            "name": "Julius Härtl",
-            "email": "jus@bitgrid.net"
-        }
-    ],
-    "require": {
-      "php": "^7.4|^8.0"
-    },
-    "scripts": {
-      "lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
-      "cs:check": "php-cs-fixer fix --dry-run --diff",
-      "cs:fix": "php-cs-fixer fix",
-      "psalm": "psalm.phar",
-      "test:unit": "phpunit -c tests/phpunit.xml"
-    }
+	"name": "nextcloud/text",
+	"type": "project",
+	"require-dev": {
+		"roave/security-advisories": "dev-master",
+		"nextcloud/coding-standard": "^1.0.0",
+		"psalm/phar": "^4.3",
+		"phpunit/phpunit": "^9.5",
+		"ext-mbstring": "*",
+		"nextcloud/ocp": "dev-master"
+	},
+	"license": "AGPLv3",
+	"authors": [
+		{
+			"name": "Julius Härtl",
+			"email": "jus@bitgrid.net"
+		}
+	],
+	"require": {
+		"php": "^7.4|^8.0"
+	},
+	"scripts": {
+		"lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
+		"cs:check": "php-cs-fixer fix --dry-run --diff",
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm.phar",
+		"test:unit": "phpunit -c tests/phpunit.xml"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"OCP\\": "vendor/nextcloud/ocp/OCP"
+		}
+	}
 }
