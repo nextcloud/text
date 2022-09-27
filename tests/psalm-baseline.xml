@@ -149,7 +149,7 @@
       <code>null</code>
     </NullableReturnStatement>
   </file>
-  <file src="vendor/christophwurst/nextcloud/OCP/BackgroundJob/TimedJob.php">
+  <file src="vendor/nextcloud/ocp/OCP/BackgroundJob/TimedJob.php">
     <ImplementedParamTypeMismatch occurrences="1">
       <code>$jobList</code>
     </ImplementedParamTypeMismatch>
