@@ -55,9 +55,7 @@
 </template>
 
 <script>
-import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
-
+import { NcActions, NcActionButton } from '@nextcloud/vue'
 import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'

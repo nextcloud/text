@@ -120,7 +120,7 @@
 <script>
 import axios from '@nextcloud/axios'
 import ClickOutside from 'vue-click-outside'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import { NcButton } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 
