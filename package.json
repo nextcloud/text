@@ -87,8 +87,8 @@
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-front-matter": "^0.2.3",
-    "path-normalize": "^6.0.7",
     "mitt": "^3.0.0",
+    "path-normalize": "^6.0.7",
     "prosemirror-collab": "^1.3.0",
     "prosemirror-inputrules": "^1.2.0",
     "prosemirror-markdown": "^1.9.4",
@@ -125,6 +125,7 @@
     "cypress": "^10.8.0",
     "cypress-file-upload": "^5.0.8",
     "eslint-plugin-cypress": "^2.12.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^29.0.3",
     "jest-serializer-vue": "^2.0.2",
@@ -143,7 +144,8 @@
       "html"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "^@/(.*)$": "<rootDir>/src/$1",
+	  "\\.(css)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",
@@ -162,7 +164,7 @@
       "<rootDir>/src/tests/setup.js"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!vue-material-design-icons|uuid)"
+
     ]
   }
 }
