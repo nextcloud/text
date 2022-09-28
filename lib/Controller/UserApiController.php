@@ -10,6 +10,7 @@ use \OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Share\IShare;
+use Psr\Log\LoggerInterface;
 
 class UserApiController extends ApiController {
 	private ISearch $collaboratorSearch;
@@ -43,7 +44,10 @@ class UserApiController extends ApiController {
 		foreach ($sessions as $session) {
 			$sessionUserId = $session['userId'];
 			if ($sessionUserId !== null && !isset($users[$sessionUserId])) {
-				$users[$sessionUserId] = $this->userManager->getDisplayName($sessionUserId);
+				$displayName = $this->userManager->getDisplayName($sessionUserId);
+				if (stripos($displayName, $filter) !== false) {
+					$users[$sessionUserId] = $displayName;
+				}
 			}
 		}
 
@@ -51,16 +55,14 @@ class UserApiController extends ApiController {
 		if ($currentSession->getUserId() !== null) {
 			// Add other users to the autocomplete list
 			[$result] = $this->collaboratorSearch->search($filter, [IShare::TYPE_USER], false, $limit, 0);
+			$userSearch = array_merge($result['users'], $result['exact']['users']);
 
-			foreach ($result['users'] as ['label' => $label, 'value' => $value]) {
+			foreach ($userSearch as ['label' => $label, 'value' => $value]) {
 				if (isset($value['shareWith'])) {
 					$id = $value['shareWith'];
 					$users[$id] = $label;
 				}
 			}
-
-			$user = $this->userSession->getUser();
-			$users[$user->getUID()] = $user->getDisplayName();
 		}
 
 		return new DataResponse($users);
