@@ -23,7 +23,7 @@
 	<NcEmojiPicker class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
 		:container="menuIDSelector"
-		@selectData="addEmoji">
+		@select-data="addEmoji">
 		<NcButton v-tooltip="actionEntry.label"
 			class="entry-action__button"
 			role="menu"
@@ -52,7 +52,6 @@ export default {
 	mixins: [useMenuIDMixin],
 	methods: {
 		addEmoji({ id, native }) {
-			console.log({ id, native })
 			this.actionEntry
 				.action(this.$editor.chain(), { id, native })
 				.focus()
