@@ -24,6 +24,7 @@
 		:data-text-action-entry="actionEntry.key"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
+		:container="menuIDSelector"
 		role="menu"
 		aria-haspopup>
 		<template #icon>
@@ -59,6 +60,7 @@ import { NcActions, NcActionButton } from '@nextcloud/vue'
 import { Loading, Folder, Upload } from '../icons.js'
 import { useIsPublicMixin } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
+import { useMenuIDMixin } from './MenuBar.provider.js'
 import {
 	useActionAttachmentPromptMixin,
 	useUploadingStateMixin,
@@ -80,6 +82,7 @@ export default {
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,
+		useMenuIDMixin,
 	],
 	computed: {
 		icon() {
