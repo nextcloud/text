@@ -26,11 +26,14 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
+use OC\User\NoUserException;
 use OCA\Text\Controller\AttachmentController;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
 use OCP\Files\IMimeTypeDetector;
+use OCP\Files\InvalidPathException;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -75,14 +78,16 @@ class AttachmentService {
 	 * @param int $documentId
 	 * @param string $imageFileName
 	 * @param string $userId
-	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @param bool $preferRawImage
+	 * @return File|Node|ISimpleFile|null
+	 * @throws InvalidPathException
+	 * @throws NoUserException
 	 * @throws NotFoundException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws NotPermittedException
 	 */
-	public function getImageFile(int $documentId, string $imageFileName, string $userId) {
+	public function getImageFile(int $documentId, string $imageFileName, string $userId, bool $preferRawImage) {
 		$textFile = $this->getTextFile($documentId, $userId);
-		return $this->getImageFilePreview($imageFileName, $textFile);
+		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
 	/**
@@ -90,33 +95,40 @@ class AttachmentService {
 	 * @param int $documentId
 	 * @param string $imageFileName
 	 * @param string $shareToken
-	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @param bool $preferRawImage
+	 * @return File|Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OC\User\NoUserException
+	 * @throws InvalidPathException
+	 * @throws NoUserException
 	 */
-	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken) {
+	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken, bool $preferRawImage) {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		return $this->getImageFilePreview($imageFileName, $textFile);
+		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
 	/**
 	 * @param string $imageFileName
 	 * @param File $textFile
-	 * @return File|\OCP\Files\Node|ISimpleFile|null
+	 * @param bool $preferRawImage
+	 * @return File|Node|ISimpleFile|null
+	 * @throws InvalidPathException
+	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
-	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OC\User\NoUserException
 	 */
-	private function getImageFilePreview(string $imageFileName, File $textFile) {
+	private function getImageFileContent(string $imageFileName, File $textFile, bool $preferRawImage) {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$imageFile = $attachmentFolder->get($imageFileName);
 		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), AttachmentController::IMAGE_MIME_TYPES)) {
+			// we might prefer the raw image
+			if ($preferRawImage && in_array($imageFile->getMimetype(), AttachmentController::BROWSER_SUPPORTED_IMAGE_MIME_TYPES)) {
+				return $imageFile;
+			}
 			if ($this->previewManager->isMimeSupported($imageFile->getMimeType())) {
 				return $this->previewManager->getPreview($imageFile, 1024, 1024);
 			}
+			// fallback: raw image
 			return $imageFile;
 		}
 		return null;

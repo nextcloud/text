@@ -54,6 +54,17 @@ class AttachmentController extends Controller {
 		'image/heic',
 		'image/heif',
 	];
+	public const BROWSER_SUPPORTED_IMAGE_MIME_TYPES = [
+		'image/png',
+		'image/jpeg',
+		'image/jpg',
+		'image/gif',
+		'image/x-xbitmap',
+		'image/x-ms-bmp',
+		'image/bmp',
+		'image/svg+xml',
+		'image/webp',
+	];
 
 	private AttachmentService $attachmentService;
 	private LoggerInterface $logger;
@@ -190,19 +201,21 @@ class AttachmentController extends Controller {
 	 * @param string $sessionToken
 	 * @param string $imageFileName
 	 * @param string|null $shareToken
+	 * @param int $preferRawImage
 	 * @return DataDownloadResponse|DataResponse
 	 */
-	public function getImageFile(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null) {
+	public function getImageFile(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null,
+								int $preferRawImage = 0) {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse('', Http::STATUS_FORBIDDEN);
 		}
 
 		try {
 			if ($shareToken) {
-				$imageFile = $this->attachmentService->getImageFilePublic($documentId, $imageFileName, $shareToken);
+				$imageFile = $this->attachmentService->getImageFilePublic($documentId, $imageFileName, $shareToken, $preferRawImage === 1);
 			} else {
 				$userId = $this->getUserIdFromSession($documentId, $sessionId, $sessionToken);
-				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId);
+				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId, $preferRawImage === 1);
 			}
 			return $imageFile !== null
 				? new DataDownloadResponse(
