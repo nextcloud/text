@@ -28,6 +28,13 @@ div.ProseMirror {
 		font-size: 14px;
 	}
 
+	&[contenteditable=true],
+	[contenteditable=true] {
+		* {
+			-webkit-user-modify: read-write-plaintext-only;
+		}
+	}
+
 	.checkbox-item {
 		display: flex;
 		align-items: start;
