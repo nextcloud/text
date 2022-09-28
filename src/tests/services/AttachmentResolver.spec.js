@@ -24,7 +24,7 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ session })
 		const [candidate] = resolver.resolve(src)
 		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
 	})
 
 	it('handles text:// urls with token via Text API', () => {
@@ -35,7 +35,7 @@ describe('Image resolver', () => {
 		})
 		const [candidate] = resolver.resolve(src)
 		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
+		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken&preferRawImage=0')
 	})
 
 	it('uses user auth over token auth', () => {
@@ -55,7 +55,7 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ session })
 		const [candidate, fallbackCandidate] = resolver.resolve(src)
 		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
 		expect(fallbackCandidate.type).toBe('media')
 		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 		expect(fallbackCandidate.name).toBe('group pic.jpg')
@@ -71,7 +71,7 @@ describe('Image resolver', () => {
 		})
 		const [candidate, fallbackCandidate] = resolver.resolve(src)
 		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken')
+		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken&preferRawImage=0')
 		expect(fallbackCandidate.type).toBe('media')
 		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg&shareToken=myShareToken')
 		expect(fallbackCandidate.name).toBe('group pic.jpg')
@@ -128,7 +128,7 @@ describe('Image resolver', () => {
 		expect(candidate.type).toBe('image')
 		expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4174/group%20pic.jpg')
 		expect(fallbackCandidate.type).toBe('image')
-		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg')
+		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
 		expect(secondFallback.type).toBe('media')
 		expect(secondFallback.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 		expect(secondFallback.name).toBe('group pic.jpg')
