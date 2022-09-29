@@ -25,6 +25,7 @@
 		class="entry-list-action entry-action"
 		role="menu"
 		v-bind="state"
+		:container="menuIDSelector"
 		:aria-label="actionEntry.label"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
@@ -48,12 +49,13 @@ import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
+import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {
 	name: 'ActionList',
 	components: { NcActions, ActionSingle },
 	extends: BaseActionEntry,
-	mixins: [useStore, useOutlineStateMixin],
+	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
 	computed: {
 		currentChild() {
 			const {

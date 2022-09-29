@@ -22,7 +22,8 @@
 <template>
 	<NcEmojiPicker class="entry-action entry-action__emoji"
 		:data-text-action-entry="actionEntry.key"
-		@selectData="addEmoji">
+		:container="menuIDSelector"
+		@select-data="addEmoji">
 		<NcButton v-tooltip="actionEntry.label"
 			class="entry-action__button"
 			role="menu"
@@ -39,6 +40,7 @@
 <script>
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { NcEmojiPicker, NcButton } from '@nextcloud/vue'
+import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {
 	name: 'EmojiPickerAction',
@@ -47,10 +49,8 @@ export default {
 		NcButton,
 	},
 	extends: BaseActionEntry,
+	mixins: [useMenuIDMixin],
 	methods: {
-		toggleChildMenu() {
-
-		},
 		addEmoji({ id, native }) {
 			this.actionEntry
 				.action(this.$editor.chain(), { id, native })

@@ -22,7 +22,8 @@
   -->
 
 <template>
-	<div class="text-menubar"
+	<div :id="randomID"
+		class="text-menubar"
 		data-text-el="menubar"
 		role="menubar"
 		:aria-label="t('text', 'Formatting menu bar')"
@@ -57,6 +58,7 @@ import debounce from 'debounce'
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
+import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal } from '../icons.js'
 import {
 	useEditorMixin,
@@ -72,6 +74,17 @@ export default {
 		useIsRichEditorMixin,
 		useIsRichWorkspaceMixin,
 	],
+	provide() {
+		const val = {}
+
+		Object.defineProperties(val, {
+			[MENU_ID]: {
+				get: () => this.randomID,
+			},
+		})
+
+		return val
+	},
 	props: {
 		autohide: {
 			type: Boolean,
@@ -80,6 +93,7 @@ export default {
 	},
 	data() {
 		return {
+			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
 			forceRecompute: 0,
 			isReady: false,
