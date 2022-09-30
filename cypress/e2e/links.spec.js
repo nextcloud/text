@@ -16,7 +16,7 @@ describe('test link marks', function() {
 			},
 		})
 
-		cy.openFile(fileName)
+		return cy.openFile(fileName)
 	})
 
 	describe('autolink', function() {
