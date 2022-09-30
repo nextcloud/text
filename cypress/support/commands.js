@@ -162,6 +162,21 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 	})
 })
 
+Cypress.Commands.add('isolateTest', ({ sourceFile = 'text.md', targetFile = null, onBeforeLoad } = {}) => {
+	targetFile = targetFile || sourceFile
+
+	const retry = cy.state('test').currentRetry()
+	const folderName = retry
+		? `${Cypress.currentTest.title} (${retry})`
+		: Cypress.currentTest.title
+
+	cy.createFolder(folderName)
+	cy.uploadFile(sourceFile, 'text/markdown', `${encodeURIComponent(folderName)}/${targetFile}`)
+
+	return cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`, { onBeforeLoad })
+		.then(() => ({ folderName, fileName: targetFile }))
+})
+
 Cypress.Commands.add('shareFile', (path, options = {}) => {
 	return cy.window().then(async window => {
 		try {
