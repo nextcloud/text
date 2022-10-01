@@ -63,6 +63,7 @@ OC.L10N.register(
     "Info" : "Información",
     "Success" : "Correcto",
     "Warning" : "Aviso",
+    "Table" : "Táboa",
     "Insert attachment" : "Inserir o anexo",
     "Command" : "Orde",
     "Control" : "Control",
