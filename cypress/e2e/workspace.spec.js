@@ -181,6 +181,22 @@ describe('Workspace', function() {
 			.should('not.contain', 'content')
 	})
 
+	it('emoji picker', () => {
+		cy.openWorkspace()
+			.type('# Let\'s smile together{enter}## ')
+
+		menuButton('emoji-picker')
+			.click()
+
+		cy.get('#emoji-mart-list button[aria-label="😀, grinning"]')
+			.first()
+			.click()
+
+		cy.getEditor()
+			.find('h2')
+			.contains('😀')
+	})
+
 	describe('callouts', () => {
 		const types = ['info', 'warn', 'error', 'success']
 
