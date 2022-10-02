@@ -22,7 +22,6 @@
 
 <template>
 	<NodeViewWrapper data-text-el="table-view" class="table-wrapper">
-		<NodeViewContent class="content" as="table" />
 		<NcActions v-if="editor.isEditable"
 			force-menu
 			data-text-table-actions="settings"
@@ -39,6 +38,7 @@
 				{{ t('text', 'Delete this table') }}
 			</NcActionButton>
 		</NcActions>
+		<NodeViewContent class="content" as="table" />
 		<div class="clearfix" />
 	</NodeViewWrapper>
 </template>
@@ -75,6 +75,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.table-wrapper {
+	position: relative;
+}
 
 .clearfix {
 	clear: both;
@@ -87,10 +90,12 @@ table {
 .table-settings {
 	padding-left: 3px;
 	opacity: .5;
+	position: absolute;
+	top: 0;
+	right: 3px;
 
 	&:hover {
 		opacity: 1;
 	}
 }
-
 </style>
