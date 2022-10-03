@@ -193,6 +193,11 @@ describe('Markdown serializer from html', () => {
 		)).toBe(`::: warn\n!warning!\n\n:::`)
 	})
 
+	test('table cell escaping', () => {
+		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
+		expect(markdownThroughEditorHtml('<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>')).toBe('| greetings |\n|-----------|\n| hello \\| hallo |\n')
+	})
+
 	test('front matter', () => {
 		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>some: value</code></pre><h1>Heading</h1>')).toBe('---\nsome: value\n---\n\n# Heading')
 		// Test --- within front matter is allowed
