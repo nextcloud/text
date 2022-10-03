@@ -5,7 +5,10 @@ export default TableCell.extend({
 
 	toMarkdown(state, node) {
 		state.write(' ')
+		const backup = state.options?.escapeExtraCharacters
+		state.options.escapeExtraCharacters = /\|/
 		state.renderInline(node)
+		state.options.escapeExtraCharacters = backup
 		state.write(' |')
 	},
 
