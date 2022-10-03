@@ -335,6 +335,10 @@ export default {
 .image {
 	margin: 0;
 	padding: 0;
+
+	&, * {
+		-webkit-user-modify: read-only !important;
+	}
 }
 
 .image__caption {
