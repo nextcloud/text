@@ -10,7 +10,6 @@ use \OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Share\IShare;
-use Psr\Log\LoggerInterface;
 
 class UserApiController extends ApiController {
 	private ISearch $collaboratorSearch;
