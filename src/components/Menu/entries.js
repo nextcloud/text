@@ -44,7 +44,6 @@ import {
 	CodeTags,
 	Table,
 	Emoticon,
-	Help,
 	Images,
 } from '../icons.js'
 import EmojiPickerAction from './EmojiPickerAction.vue'
@@ -324,12 +323,5 @@ export default [
 		icon: Images,
 		component: ActionAttachmentUpload,
 		priority: 2,
-	},
-	{
-		key: 'formatting-help',
-		label: t('text', 'Formatting help'),
-		icon: Help,
-		click: (view) => view.$emit('call:help'),
-		priority: 17,
 	},
 ]

@@ -42,13 +42,13 @@
 			:aria-label="t('text', 'Editor actions')">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`"
-				@call:help="showHelp" />
+				:key="`text-action--${actionEntry.key}`" />
 			<ActionList key="text-action--remain"
 				:action-entry="hiddenEntries"
 				@update:open="refreshWordCount"
 				@call:help="showHelp">
 				<template #lastAction>
+					<NcActionSeparator />
 					<NcActionText data-text-action-entry="character-count">
 						<template #icon>
 							<AlphabeticalVariant />
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { NcActionText } from '@nextcloud/vue'
+import { NcActionSeparator, NcActionText } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { translatePlural as n } from '@nextcloud/l10n'
 import debounce from 'debounce'
@@ -91,6 +91,7 @@ export default {
 		ActionList,
 		AlphabeticalVariant,
 		HelpModal,
+		NcActionSeparator,
 		NcActionText,
 	},
 	mixins: [
