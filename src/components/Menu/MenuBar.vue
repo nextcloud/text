@@ -49,8 +49,14 @@
 				@update:open="refreshWordCount"
 				@call:help="showHelp">
 				<template #lastAction>
-					<NcActionCaption :title="wordCountString"
-						data-text-action-entry="word-count" />
+					<NcActionText data-text-action-entry="character-count">
+						<template #icon>
+							<AlphabeticalVariant />
+						</template>
+						<template #default>
+							{{ countString }}
+						</template>
+					</NcActionText>
 				</template>
 			</ActionList>
 		</div>
@@ -61,7 +67,7 @@
 </template>
 
 <script>
-import { NcActionCaption } from '@nextcloud/vue'
+import { NcActionText } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { translatePlural as n } from '@nextcloud/l10n'
 import debounce from 'debounce'
@@ -71,7 +77,7 @@ import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ActionList from './ActionList.vue'
-import { DotsHorizontal } from '../icons.js'
+import { AlphabeticalVariant, DotsHorizontal } from '../icons.js'
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
@@ -83,8 +89,9 @@ export default {
 	components: {
 		ActionEntry,
 		ActionList,
+		AlphabeticalVariant,
 		HelpModal,
-		NcActionCaption,
+		NcActionText,
 	},
 	mixins: [
 		useEditorMixin,
@@ -117,6 +124,7 @@ export default {
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
 			wordCount: 0,
+			charCount: 0,
 		}
 	},
 	computed: {
@@ -158,8 +166,8 @@ export default {
 				}),
 			}
 		},
-		wordCountString() {
-			return n('text', '%n word', '%n words', this.wordCount)
+		countString() {
+			return `${n('text', '%n word', '%n words', this.wordCount)}, ${n('text', '%n char', '%n chars', this.charCount)}`
 		},
 	},
 	mounted() {
@@ -235,6 +243,7 @@ export default {
 			// characterCount is not reactive so we need this workaround
 			if (open) {
 				this.wordCount = this.$editor.storage.characterCount.words()
+				this.charCount = this.$editor.storage.characterCount.characters()
 			}
 		},
 	},
