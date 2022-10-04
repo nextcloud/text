@@ -23,7 +23,7 @@ describe('Test the rich text editor menu bar', function() {
 		 *
 		 */
 		function getWordCount() {
-			return cy.get('.popover .open').get('[data-text-action-entry="word-count"]')
+			return cy.get('.v-popper__popper .open').get('[data-text-action-entry="character-count"]')
 		}
 
 		beforeEach(cy.clearContent)
@@ -33,31 +33,31 @@ describe('Test the rich text editor menu bar', function() {
 					cy.getActionEntry('remain')
 						.click()
 					getWordCount()
-						.should('include.text', '0 words')
+						.should('include.text', '0 words, 0 chars')
 				})
 		})
 
 		it('single word', () => {
 			cy.getFile(fileName)
 				.then($el => {
-					cy.getContent()
+					cy.clearContent()
 						.type('  Hello  ')
 					cy.getActionEntry('remain')
 						.click()
 					getWordCount()
-						.should('include.text', '1 word')
+						.should('include.text', '1 word, 9 chars')
 				})
 		})
 
 		it('multiple words', () => {
 			cy.getFile(fileName)
 				.then($el => {
-					cy.getContent()
+					cy.clearContent()
 						.type('Hello \nworld')
 					cy.getActionEntry('remain')
 						.click()
 					getWordCount()
-						.should('include.text', '2 word')
+						.should('include.text', '2 word, 11 chars')
 				})
 		})
 	})
