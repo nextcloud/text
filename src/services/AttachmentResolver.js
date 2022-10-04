@@ -48,16 +48,17 @@ export default class AttachmentResolver {
 	/*
 	 * Resolve a given src.
 	 * @param { string } the original src in the node.
+	 * @param { bool } choose to fetch the raw image or a preview | default = false
 	 * @returns { Array<Object> } - resolved candidates to try.
 	 *
 	 * Currently returns either one or two urls.
 	 */
-	resolve(src) {
+	resolve(src, preferRawImage = false) {
 		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
 			return [{
 				type: this.ATTACHMENT_TYPE_IMAGE,
-				url: this.#getImageAttachmentUrl(imageFileName),
+				url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
 			}]
 		}
 
@@ -66,7 +67,7 @@ export default class AttachmentResolver {
 			return [
 				{
 					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#getImageAttachmentUrl(imageFileName),
+					url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
 				},
 				{
 					type: this.ATTACHMENT_TYPE_MEDIA,
@@ -102,7 +103,7 @@ export default class AttachmentResolver {
 				},
 				{
 					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#getImageAttachmentUrl(imageFileName),
+					url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
 				},
 				{
 					type: this.ATTACHMENT_TYPE_MEDIA,

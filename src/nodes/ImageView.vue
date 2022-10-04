@@ -29,7 +29,7 @@
 			<div v-if="canDisplayImage"
 				v-click-outside="() => showIcons = false"
 				class="image__view"
-				@click="showIcons = true"
+				@click="handleImageClick(src)"
 				@mouseover="showIcons = true"
 				@mouseleave="showIcons = false">
 				<transition name="fade">
@@ -94,6 +94,12 @@
 						</div>
 					</div>
 				</transition>
+				<div class="image__modal">
+					<ShowImageModal :images="embeddedImagesList"
+						:start-index="imageIndex"
+						:show="showImageModal"
+						@close="showImageModal=false" />
+				</div>
 			</div>
 			<div v-else class="image-view__cant_display">
 				<transition name="fade">
@@ -125,13 +131,13 @@
 import axios from '@nextcloud/axios'
 import ClickOutside from 'vue-click-outside'
 import { NcButton } from '@nextcloud/vue'
+import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
+import store from './../mixins/store.js'
+import { useAttachmentResolver } from './../components/Editor.provider.js'
+import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
-
-import store from './../mixins/store.js'
 import { logger } from '../helpers/logger.js'
-import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
-import { useAttachmentResolver } from '../components/Editor.provider.js'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 
 const getQueryVariable = (src, variable) => {
@@ -167,6 +173,7 @@ export default {
 		ImageIcon,
 		DeleteIcon,
 		NcButton,
+		ShowImageModal,
 		NodeViewWrapper,
 	},
 	directives: {
@@ -187,6 +194,9 @@ export default {
 			errorMessage: null,
 			attachmentType: null,
 			attachmentMetadata: {},
+			showImageModal: false,
+			embeddedImagesList: [],
+			imageIndex: null,
 		}
 	},
 	computed: {
@@ -327,6 +337,23 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
+		},
+		handleImageClick(src) {
+			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"].image-view'))
+			let basename, relativePath
+
+			imageViews.forEach(imgv => {
+				relativePath = imgv.getAttribute('data-src')
+				basename = relativePath.split('/').slice(-1).join()
+				const { url: source } = this.$attachmentResolver.resolve(relativePath, true).shift()
+				this.embeddedImagesList.push({
+					source,
+					basename,
+					relativePath,
+				})
+			})
+			this.imageIndex = this.embeddedImagesList.findIndex(image => image.relativePath === src)
+			this.showImageModal = true
 		},
 	},
 }
