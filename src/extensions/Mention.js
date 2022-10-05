@@ -11,7 +11,7 @@ export default TipTapMention.extend({
 				getAttrs: element => {
 					return {
 						id: element.getAttribute('data-id'),
-						label: element.innerText ?? element.getAttribute('data-id'),
+						label: element.innerText || element.textContent || element.getAttribute('data-label'),
 					}
 				},
 				priority: 100,
