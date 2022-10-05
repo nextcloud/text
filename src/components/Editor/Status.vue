@@ -171,13 +171,10 @@ export default {
 		padding: 0;
 		text-overflow: ellipsis;
 		color: var(--color-text-lighter);
-		position: relative;
-		background-color: white;
+		background-color: var(--color-main-background);
 		width: 38px !important;
 		height: 38px !important;
-		left: 25%;
 		z-index: 2;
-		top: 0px;
 	}
 
 	.saved-status {
