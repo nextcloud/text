@@ -102,7 +102,7 @@ export default {
 		align-items: center;
 		padding: 6px;
 
-		&::v-deep(img) {
+		&:deep(img) {
 			margin: 0 !important;
 		}
 
