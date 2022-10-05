@@ -252,7 +252,7 @@ export default {
 		color: var(--color-text-maxcontrast);
 	}
 
-	#rich-workspace::v-deep(div[contenteditable=false]){
+	#rich-workspace:deep(div[contenteditable=false]){
 		width: 100%;
 		padding: 0px;
 		background-color: var(--color-main-background);
@@ -260,34 +260,34 @@ export default {
 		border: none;
 	}
 
-	#rich-workspace::v-deep(.text-editor) {
+	#rich-workspace:deep(.text-editor) {
 		height: 100%;
 		position: unset !important;
 		top: auto !important;
 	}
 
-	#rich-workspace::v-deep(.text-editor__wrapper) {
+	#rich-workspace:deep(.text-editor__wrapper) {
 		position: unset !important;
 		overflow: visible;
 	}
 
-	#rich-workspace::v-deep(.text-editor__main) {
+	#rich-workspace:deep(.text-editor__main) {
 		overflow: visible !important;
 	}
 
-	#rich-workspace::v-deep(.content-wrapper) {
+	#rich-workspace:deep(.content-wrapper) {
 		overflow: scroll !important;
 		max-height: calc(40vh - 50px);
 		padding-left: 10px;
 		padding-bottom: 60px; /* ensure menububble fits below */
 	}
 
-	#rich-workspace::v-deep(.text-editor__wrapper .ProseMirror) {
+	#rich-workspace:deep(.text-editor__wrapper .ProseMirror) {
 		padding: 0px;
 		margin: 0;
 	}
 
-	#rich-workspace::v-deep(.editor__content) {
+	#rich-workspace:deep(.editor__content) {
 		margin: 0;
 	}
 
@@ -324,7 +324,7 @@ export default {
 	}
 
 	html.ie {
-		#rich-workspace::v-deep {
+		#rich-workspace:deep() {
 			.text-editor {
 				position: initial;
 			}
