@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
  * @author Max <max@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,32 +18,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
-*/
+ */
 
 import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
-import Document from '@tiptap/extension-document'
-import TipTapParagraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import Blockquote from '@tiptap/extension-blockquote'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
+import BulletList from './../nodes/BulletList.js'
+import Callout from './../nodes/Callouts.js'
+import CharacterCount from '@tiptap/extension-character-count'
 import Code from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
-import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import FrontMatter from './../nodes/FrontMatter.js'
 import HardBreak from './HardBreak.js'
-import KeepSyntax from './KeepSyntax.js'
-import Table from './../nodes/Table.js'
-import Image from './../nodes/Image.js'
 import Heading from '../nodes/Heading/index.js'
-import BulletList from './../nodes/BulletList.js'
-import TaskList from './../nodes/TaskList.js'
-import TaskItem from './../nodes/TaskItem.js'
-import Callout from './../nodes/Callouts.js'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
+import Image from './../nodes/Image.js'
+import KeepSyntax from './KeepSyntax.js'
+import ListItem from '@tiptap/extension-list-item'
 import Mention from './../extensions/Mention.js'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Table from './../nodes/Table.js'
+import TaskItem from './../nodes/TaskItem.js'
+import TaskList from './../nodes/TaskList.js'
+import Text from '@tiptap/extension-text'
+import TipTapParagraph from '@tiptap/extension-paragraph'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -75,6 +76,7 @@ export default Extension.create({
 			Italic,
 			Strike,
 			Blockquote,
+			CharacterCount,
 			Code,
 			CodeBlock,
 			BulletList,

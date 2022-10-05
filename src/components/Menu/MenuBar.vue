@@ -42,8 +42,23 @@
 			:aria-label="t('text', 'Editor actions')">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`"
-				@call:help="showHelp" />
+				:key="`text-action--${actionEntry.key}`" />
+			<ActionList key="text-action--remain"
+				:action-entry="hiddenEntries"
+				@update:open="refreshWordCount"
+				@call:help="showHelp">
+				<template #lastAction>
+					<NcActionSeparator />
+					<NcActionText data-text-action-entry="character-count">
+						<template #icon>
+							<AlphabeticalVariant />
+						</template>
+						<template #default>
+							{{ countString }}
+						</template>
+					</NcActionText>
+				</template>
+			</ActionList>
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -52,14 +67,17 @@
 </template>
 
 <script>
+import { NcActionSeparator, NcActionText } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { translatePlural as n } from '@nextcloud/l10n'
 import debounce from 'debounce'
 
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { MENU_ID } from './MenuBar.provider.js'
-import { DotsHorizontal } from '../icons.js'
+import ActionList from './ActionList.vue'
+import { AlphabeticalVariant, DotsHorizontal } from '../icons.js'
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
@@ -68,7 +86,14 @@ import {
 
 export default {
 	name: 'MenuBar',
-	components: { ActionEntry, HelpModal },
+	components: {
+		ActionEntry,
+		ActionList,
+		AlphabeticalVariant,
+		HelpModal,
+		NcActionSeparator,
+		NcActionText,
+	},
 	mixins: [
 		useEditorMixin,
 		useIsRichEditorMixin,
@@ -99,6 +124,8 @@ export default {
 			isReady: false,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
+			wordCount: 0,
+			charCount: 0,
 		}
 	},
 	computed: {
@@ -122,39 +149,26 @@ export default {
 			return slots - 1
 		},
 		visibleEntries() {
-			const { hiddenEntries, remainAction } = this
 			const list = [...actionsFullEntries].filter(({ priority }) => {
 				// if entry do not have priority, we assume it aways will be visible
 				return priority === undefined || priority <= this.iconsLimit
 			})
 
-			if (hiddenEntries.length === 0) {
-				return list
-			}
-
-			if (hiddenEntries.length === 1) {
-				// put only one entry
-				list.push(hiddenEntries[0])
-			} else {
-				// add all hidden entries as list of actions
-				list.push(remainAction)
-			}
-
 			return list
 		},
 		hiddenEntries() {
-			return [...actionsFullEntries].filter(({ priority }) => {
-				// reverse logic from visibleEntries
-				return priority !== undefined && priority > this.iconsLimit
-			})
-		},
-		remainAction() {
 			return {
 				key: 'remain',
 				label: this.t('text', 'Remaining actions'),
 				icon: DotsHorizontal,
-				children: this.hiddenEntries,
+				children: [...actionsFullEntries].filter(({ priority }) => {
+					// reverse logic from visibleEntries
+					return priority !== undefined && priority > this.iconsLimit
+				}),
 			}
+		},
+		countString() {
+			return `${n('text', '%n word', '%n words', this.wordCount)}, ${n('text', '%n char', '%n chars', this.charCount)}`
 		},
 	},
 	mounted() {
@@ -224,6 +238,14 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+
+		refreshWordCount(open) {
+			// characterCount is not reactive so we need this workaround
+			if (open) {
+				this.wordCount = this.$editor.storage.characterCount.words()
+				this.charCount = this.$editor.storage.characterCount.characters()
+			}
 		},
 	},
 }
