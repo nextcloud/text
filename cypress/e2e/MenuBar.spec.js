@@ -57,7 +57,7 @@ describe('Test the rich text editor menu bar', function() {
 					cy.getActionEntry('remain')
 						.click()
 					getWordCount()
-						.should('include.text', '2 word, 11 chars')
+						.should('include.text', '2 words, 11 chars')
 				})
 		})
 	})
