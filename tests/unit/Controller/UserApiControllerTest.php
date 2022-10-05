@@ -57,8 +57,7 @@ class UserApiControllerTest extends TestCase {
 	/**
 	 * @dataProvider dataTestUsersIndex
 	 */
-	public function testUsersIndex(int $documentId, int $sessionId, string $sessionToken, string $filter)
-	{
+	public function testUsersIndex(int $documentId, int $sessionId, string $sessionToken, string $filter) {
 		$session = new Session();
 		$session->setUserId('admin');
 		$this->sessionService
@@ -96,13 +95,15 @@ class UserApiControllerTest extends TestCase {
 				]
 			]);
 
-			$users = $this->userApiController->index(
-				$documentId,
-				$sessionId,
-				$sessionToken,
-				$filter
-			);
-			$this->assertInstanceOf(DataResponse::class, $users);
+		$response = $this->userApiController->index(
+			$documentId,
+			$sessionId,
+			$sessionToken,
+			$filter
+		);
+		$this->assertInstanceOf(DataResponse::class, $response);
+		$this->assertIsArray($response->getData());
+		$this->assertSame(['admin' => 'admin'], $response->getData());
 	}
 
 	public function dataTestUsersIndex() {
