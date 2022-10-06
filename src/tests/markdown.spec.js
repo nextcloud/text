@@ -152,6 +152,10 @@ describe('Markdown though editor', () => {
 			expect(markdownThroughEditor(entry)).toBe(entry)
 		})
 	})
+
+	test('mentions', () => {
+		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe(' @[username](mention://user/id) ')
+	})
 })
 
 describe('Markdown serializer from html', () => {
@@ -202,6 +206,10 @@ describe('Markdown serializer from html', () => {
 		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>some: value</code></pre><h1>Heading</h1>')).toBe('---\nsome: value\n---\n\n# Heading')
 		// Test --- within front matter is allowed
 		expect(markdownThroughEditorHtml('<pre id="frontmatter"><code>---</code></pre><h1>Heading</h1>')).toBe('----\n---\n----\n\n# Heading')
+	})
+
+	test('mentions', () => {
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe(' @[username](mention://user/id) ')
 	})
 })
 
