@@ -79,6 +79,8 @@ OC.L10N.register(
     "Formatting menu bar" : "格式化選項單欄",
     "Editor actions" : "編輯器操作",
     "Remaining actions" : "剩餘操作",
+    "_%n word_::_%n words_" : ["%n 個單詞"],
+    "_%n char_::_%n chars_" : ["%n 個字母"],
     "Update Link" : "更新連結",
     "Add Link" : "添加連結",
     "Link file" : "連結檔案",

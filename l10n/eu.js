@@ -79,6 +79,8 @@ OC.L10N.register(
     "Formatting menu bar" : "Menu-barra formateatzea",
     "Editor actions" : "Editore ekintzak",
     "Remaining actions" : "Gainerako ekintzak",
+    "_%n word_::_%n words_" : ["hitz %n","%n hitz"],
+    "_%n char_::_%n chars_" : ["karaktere %n","%n karaktere"],
     "Update Link" : "Eguneratu esteka",
     "Add Link" : "Gehitu esteka",
     "Link file" : "Estekatu fitxategia",
