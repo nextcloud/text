@@ -79,6 +79,8 @@ OC.L10N.register(
     "Formatting menu bar" : "Barre de menu de formatage",
     "Editor actions" : "Actions de l'éditeur",
     "Remaining actions" : "Actions restantes",
+    "_%n word_::_%n words_" : ["%n mot","%n mots","%n mots"],
+    "_%n char_::_%n chars_" : ["%n caractère","%n caractères","%n caractères"],
     "Update Link" : "Mettre à jour le lien",
     "Add Link" : "Ajouter un lien",
     "Link file" : "Lier un fichier",

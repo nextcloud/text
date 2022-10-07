@@ -77,6 +77,8 @@
     "Formatting menu bar" : "Lišta s nabídkami formátování",
     "Editor actions" : "Akce editoru",
     "Remaining actions" : "Zbývající akce",
+    "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slova"],
+    "_%n char_::_%n chars_" : ["%n znak","%n znaky","%n znaků","%n znaky"],
     "Update Link" : "Aktualizovat odkaz",
     "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",

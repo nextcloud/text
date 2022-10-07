@@ -77,6 +77,8 @@
     "Formatting menu bar" : "Formatiere die Menü-Leiste",
     "Editor actions" : "Editor-Aktionen",
     "Remaining actions" : "Verbleibende Aktionen",
+    "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
+    "_%n char_::_%n chars_" : ["%n Zeichen","%n Zeichen"],
     "Update Link" : "Link aktualisieren",
     "Add Link" : "Link hinzufügen",
     "Link file" : "Datei verknüpfen",
