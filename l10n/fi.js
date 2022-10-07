@@ -70,6 +70,8 @@ OC.L10N.register(
     "Upload from computer" : "Lähetä tietokoneelta",
     "Insert from Files" : "Syötä Tiedostot-sovelluksesta",
     "Formatting menu bar" : "Muotoiluvalikko",
+    "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
+    "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
     "Update Link" : "Päivitä linkki",
     "Add Link" : "Lisää linkki",
     "Link file" : "Linkitä tiedosto",
