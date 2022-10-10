@@ -24,7 +24,6 @@ class UserApiController extends ApiController {
 		$this->collaboratorSearch = $ISearch;
 		$this->userSession = $userSession;
 		$this->userManager = $userManager;
-		$this->sessionService = $sessionService;
 	}
 
 	/**
