@@ -79,6 +79,8 @@ OC.L10N.register(
     "Formatting menu bar" : "Menü çubuğu biçimlendiriliyor",
     "Editor actions" : "Düzenleyici işlemleri",
     "Remaining actions" : "Yeniden adlandırma işlemleri",
+    "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
+    "_%n char_::_%n chars_" : ["%n karakter","%n karakter"],
     "Update Link" : "Bağlantıyı güncelle",
     "Add Link" : "Bağlantı ekle",
     "Link file" : "Dosya bağla",

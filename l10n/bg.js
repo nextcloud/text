@@ -79,6 +79,8 @@ OC.L10N.register(
     "Formatting menu bar" : "Лента с меню за форматиране",
     "Editor actions" : "Действия на редактора",
     "Remaining actions" : "Оставащи действия",
+    "_%n word_::_%n words_" : ["%n думи","%n думи"],
+    "_%n char_::_%n chars_" : ["%n знаци","%n знаци"],
     "Update Link" : "Актуализиране на връзка",
     "Add Link" : "Добавяне на връзка",
     "Link file" : "Файл с връзка",
