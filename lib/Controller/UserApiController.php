@@ -8,21 +8,18 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\Collaboration\Collaborators\ISearch;
 use \OCP\IRequest;
 use OCP\IUserManager;
-use OCP\IUserSession;
 use OCP\Share\IShare;
 
 class UserApiController extends ApiController {
 	private ISearch $collaboratorSearch;
-	private IUserSession $userSession;
 	private IUserManager $userManager;
 	private SessionService $sessionService;
 
-	public function __construct($appName, IRequest $request, SessionService $sessionService, ISearch $ISearch, IUserManager $userManager, IUserSession $userSession) {
+	public function __construct($appName, IRequest $request, SessionService $sessionService, ISearch $ISearch, IUserManager $userManager) {
 		parent::__construct($appName, $request);
 
 		$this->sessionService = $sessionService;
 		$this->collaboratorSearch = $ISearch;
-		$this->userSession = $userSession;
 		$this->userManager = $userManager;
 	}
 
