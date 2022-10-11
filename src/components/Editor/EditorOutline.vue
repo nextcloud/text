@@ -1,12 +1,15 @@
 <template>
 	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': mobile }">
 		<header class="editor--outline__header">
-			<h2>{{ t('text', 'Outline') }}</h2>
-			<NcButton type="tertiary" :aria-label="t('text', 'Close outline view')" @click="$outlineActions.toggle">
+			<NcButton class="editor--outline__btn-close"
+				type="tertiary"
+				:aria-label="t('text', 'Close outline view')"
+				@click="$outlineActions.toggle">
 				<template #icon>
 					<Close />
 				</template>
 			</NcButton>
+			<h2>{{ t('text', 'Outline') }}</h2>
 		</header>
 		<TableOfContents />
 	</div>
@@ -63,7 +66,6 @@ export default {
 	width:  300px;
 	padding: 0 10px;
 	position: fixed;
-	top: 104px;
 	height: calc(100% - 100px);
 	overflow: auto;
 
@@ -72,18 +74,21 @@ export default {
 		background-color: var(--color-main-background-translucent);
 		z-index: 1;
 	}
-}
 
-.editor--outline__header {
-	margin: 0rem;
-	position: sticky;
-	padding: 10px;
-	display: flex;
-	height: 44px;
-	h2 {
-		font-size: 1rem;
-		margin-top: 13px;
-		flex-grow: 1;
+	&__header {
+		margin: 0;
+		position: sticky;
+		padding: 0.6em 0.6em 0.6em 0;
+		display: flex;
+		align-items: center;
+
+		h2 {
+			font-size: 1rem;
+			line-height: 1.1rem;
+			flex-grow: 1;
+			padding: 0;
+			margin: 0;
+		}
 	}
 }
 </style>

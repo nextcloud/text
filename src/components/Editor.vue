@@ -34,19 +34,26 @@
 			:content-loaded="contentLoaded"
 			:show-author-annotations="showAuthorAnnotations">
 			<MainContainer v-if="$editor">
-				<MenuBar v-if="renderMenus"
-					ref="menubar"
-					:autohide="autohide"
-					:loaded.sync="menubarLoaded">
-					<Status :document="document"
-						:dirty="dirty"
-						:sessions="filteredSessions"
-						:sync-error="syncError"
-						:has-connection-issue="hasConnectionIssue"
-						:last-saved-string="lastSavedString" />
-					<slot name="header" />
-				</MenuBar>
-				<div v-if="!menubarLoaded" class="menubar-placeholder" />
+				<!-- Readonly -->
+				<div v-if="readOnly" class="text-editor--readonly-bar">
+					<ReadonlyBar />
+				</div>
+				<!-- Rich Menu -->
+				<template v-else>
+					<MenuBar v-if="renderMenus"
+						ref="menubar"
+						:autohide="autohide"
+						:loaded.sync="menubarLoaded">
+						<Status :document="document"
+							:dirty="dirty"
+							:sessions="filteredSessions"
+							:sync-error="syncError"
+							:has-connection-issue="hasConnectionIssue"
+							:last-saved-string="lastSavedString" />
+						<slot name="header" />
+					</MenuBar>
+					<div v-else class="menubar-placeholder" />
+				</template>
 				<ContentContainer v-show="contentLoaded"
 					ref="contentWrapper">
 					<MenuBubble v-if="renderMenus"
@@ -84,6 +91,7 @@ import {
 	IS_RICH_WORKSPACE,
 	SYNC_SERVICE,
 } from './Editor.provider.js'
+import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
@@ -112,6 +120,7 @@ export default {
 		DocumentStatus,
 		Wrapper,
 		MainContainer,
+		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
 		MenuBubble: () => import(/* webpackChunkName: "editor-rich" */'./MenuBubble.vue'),
@@ -686,61 +695,74 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.modal-container .text-editor {
-		top: 0;
-		height: calc(100vh - var(--header-height));
-	}
+.modal-container .text-editor {
+	top: 0;
+	height: calc(100vh - var(--header-height));
+}
 
-	.text-editor {
-		display: block;
-		width: 100%;
-		max-width: 100%;
+.text-editor {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	left: 0;
+	margin: 0 auto;
+	position: relative;
+	background-color: var(--color-main-background);
+}
+
+.text-editor .text-editor__wrapper.has-conflicts {
+	height: calc(100% - 50px);
+
+	.text-editor__main, #read-only-editor {
+		width: 50%;
 		height: 100%;
-		left: 0;
-		margin: 0 auto;
-		position: relative;
-		background-color: var(--color-main-background);
 	}
+}
 
-	.text-editor .text-editor__wrapper.has-conflicts {
-		height: calc(100% - 50px);
+#body-public {
+	height: auto;
+}
 
-		.text-editor__main, #read-only-editor {
-			width: 50%;
-			height: 100%;
-		}
-	}
-
-	#body-public {
-		height: auto;
-	}
-
-	#files-public-content {
-		.text-editor {
-			top: 0;
-			width: 100%;
-
-			.text-editor__main {
-				overflow: auto;
-				z-index: 20;
-			}
-			.has-conflicts .text-editor__main {
-				padding-top: 0;
-			}
-		}
-	}
-
-	.menubar-placeholder {
-		position: fixed;
-		position: -webkit-sticky;
-		position: sticky;
+#files-public-content {
+	.text-editor {
 		top: 0;
-		opacity: 0;
-		visibility: hidden;
-		height: 44px; // important for mobile so that the buttons are always inside the container
-		padding-top:3px;
-		padding-bottom: 3px;
+		width: 100%;
+
+		.text-editor__main {
+			overflow: auto;
+			z-index: 20;
+		}
+		.has-conflicts .text-editor__main {
+			padding-top: 0;
+		}
 	}
+}
+
+.menubar-placeholder,
+.text-editor--readonly-bar {
+	position: fixed;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	opacity: 0;
+	visibility: hidden;
+	height: 44px; // important for mobile so that the buttons are always inside the container
+	padding-top:3px;
+	padding-bottom: 3px;
+}
+
+.text-editor--readonly-bar,
+.menubar-placeholder--with-slot {
+	opacity: unset;
+	visibility: unset;
+
+	z-index: 50;
+	max-width: var(--text-editor-max-width);
+	margin: auto;
+	width: 100%;
+	background-color: var(--color-main-background);
+}
 
 </style>
 

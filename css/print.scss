@@ -1,7 +1,7 @@
 @media print {
 	@page {
 		size: A4;
-		margin: 2.5cm 2cm 2cm 2.5cm; 
+		margin: 2.5cm 2cm 2cm 2.5cm;
 	}
 
 	body {
@@ -79,6 +79,26 @@
 			td:last-of-type {
 				border: none!important;
 			}
+		}
+	}
+
+	.menubar-placeholder, .text-editor--readonly-bar {
+		display: none;
+	}
+
+	.text-editor__content-wrapper {
+		&.--show-outline {
+			display: block;
+		}
+
+		.editor--outline {
+			width: auto;
+			height: auto;
+			overflow: unset;
+			position: relative;
+		}
+		.editor--outline__btn-close {
+			display: none;
 		}
 	}
 }

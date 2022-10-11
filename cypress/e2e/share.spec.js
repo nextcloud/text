@@ -55,6 +55,14 @@ describe('Open test.md in viewer', function() {
 				cy.getContent()
 					.should('contain', 'Hello world')
 					.find('h2').should('contain', 'Hello world')
+
+				cy.get('.text-editor--readonly-bar')
+					.getActionEntry('outline')
+					.click()
+
+				cy.getOutline()
+					.find('header')
+					.should('exist')
 			})
 	})
 
