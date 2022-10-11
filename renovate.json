@@ -2,5 +2,29 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "ignoreUnstable": true,
+  "baseBranches": [
+	"master",
+	"stable25",
+	"stable24",
+	"stable23"
+  ],
+  "enabledManagers": [
+    "npm"
+  ],
+  "packageRules": [
+    {
+      "groupName": "tiptap",
+      "matchPackagePrefixes": [
+        "@tiptap/",
+        "prosemirror-"
+      ]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "matchBaseBranches": ["stable25", "stable24", "stable23"],
+      "enabled": false
+    }
   ]
 }
