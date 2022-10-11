@@ -66,7 +66,10 @@ const BaseActionEntry = {
 			return getKeyshortcuts(this.actionEntry)
 		},
 		tooltip() {
-			return [this.actionEntry.label, getKeys(this.$isMobile, this.actionEntry)].join(' ')
+			return [
+				this.label,
+				getKeys(this.$isMobile, this.actionEntry),
+			].join(' ')
 		},
 	},
 	mounted() {
