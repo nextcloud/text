@@ -25,6 +25,14 @@
       "matchUpdateTypes": ["major"],
       "matchBaseBranches": ["stable25", "stable24", "stable23"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["vue"],
+      "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["vuex"],
+      "allowedVersions": "<4"
     }
   ]
 }
