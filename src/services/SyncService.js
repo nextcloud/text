@@ -82,7 +82,7 @@ class SyncService {
 		// TODO: get connection from initialSession and fetch
 		this.connection = await this._api.open({ fileId })
 			.catch(error => this._emitError(error))
-		this.version = 0
+		this.version = this.connection.state.document.lastSavedVersion
 		this.emit('opened', {
 			...this.connection.state,
 			version: this.version,
