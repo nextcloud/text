@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "rangeStrategy": "bump",
+  "ignoreUnstable": false,
+  "baseBranches": [
+	"master",
+	"stable25",
+	"stable24",
+	"stable23"
+  ],
+  "enabledManagers": [
+    "npm"
+  ],
+  "packageRules": [
+    {
+      "groupName": "tiptap",
+      "matchPackagePrefixes": [
+        "@tiptap/",
+        "prosemirror-"
+      ]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "matchBaseBranches": ["stable25", "stable24", "stable23"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["vue"],
+      "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["vuex"],
+      "allowedVersions": "<4"
+    }
+  ]
+}
