@@ -92,7 +92,7 @@
     "path-normalize": "^6.0.7",
     "prosemirror-collab": "^1.3.0",
     "prosemirror-inputrules": "^1.2.0",
-    "prosemirror-markdown": "^1.9.4",
+    "prosemirror-markdown": "^1.10.0",
     "prosemirror-model": "^1.18.1",
     "prosemirror-schema-list": "^1.2.2",
     "prosemirror-state": "^1.4.1",
