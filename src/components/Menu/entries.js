@@ -51,6 +51,18 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 
 import { MODIFIERS } from './keys.js'
 
+export const ReadonlyEntries = [{
+	key: 'outline',
+	forceLabel: true,
+	icon: FormatListBulleted,
+	click: ({ $outlineActions }) => $outlineActions.toggle(),
+	label: ({ $outlineState }) => {
+		return $outlineState.visible
+			? t('text', 'Hide outline')
+			: t('text', 'Show outline')
+	},
+}]
+
 export default [
 	{
 		key: 'undo',
@@ -184,6 +196,9 @@ export default [
 				key: 'outline',
 				icon: FormatListBulleted,
 				click: ({ $outlineActions }) => $outlineActions.toggle(),
+				visible: ({ $outlineState }) => {
+					return $outlineState.enable
+				},
 				label: ({ $outlineState }) => {
 					return $outlineState.visible
 						? t('text', 'Hide outline')

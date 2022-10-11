@@ -113,7 +113,7 @@ export default {
 		// do not use title if is a item of action list
 		const title = isItem ? undefined : label
 
-		if (isItem) {
+		if (isItem || actionEntry.forceLabel) {
 			// add label
 			children.push(label)
 		}
