@@ -66,7 +66,6 @@ export default {
 	width:  300px;
 	padding: 0 10px;
 	position: fixed;
-	top: 104px;
 	height: calc(100% - 100px);
 	overflow: auto;
 
