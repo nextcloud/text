@@ -3,7 +3,7 @@
   "extends": [
     "config:base"
   ],
-  "ignoreUnstable": true,
+  "ignoreUnstable": false,
   "baseBranches": [
 	"master",
 	"stable25",
