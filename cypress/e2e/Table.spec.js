@@ -5,6 +5,11 @@ import createEditor from './../../src/tests/createEditor.js'
 import EditableTable from './../../src/nodes/EditableTable.js'
 import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
 
+import { initUserAndFiles, randHash } from '../utils/index.js'
+
+const randUser = randHash()
+const fileName = 'empty.md'
+
 describe('ListItem extension integrated in the editor', () => {
 
 	const editor = createEditor({
@@ -66,4 +71,41 @@ describe('ListItem extension integrated in the editor', () => {
 		const serializer = createMarkdownSerializer(editor.schema)
 		return serializer.serialize(editor.state.doc)
 	}
+})
+
+describe('table plugin', () => {
+	before(() => {
+		initUserAndFiles(randUser)
+	})
+
+	beforeEach(() => {
+		cy.login(randUser, 'password')
+
+		cy.isolateTest({
+			sourceFile: fileName,
+		})
+
+		return cy.openFile(fileName, { force: true })
+	})
+
+	it('inserts and removes a table', () => {
+		cy.getContent()
+			.type('Let\'s insert a Table')
+
+		cy.getActionEntry('table').click()
+
+		cy.getContent()
+			.type('content')
+
+		cy.getContent()
+			.find('table tr:first-child th:first-child')
+			.should('contain', 'content')
+
+		cy.getContent()
+			.find('[data-text-table-actions="settings"]').click()
+
+		cy.get('[data-text-table-action="delete"]').click()
+		cy.getContent()
+			.should('not.contain', 'content')
+	})
 })

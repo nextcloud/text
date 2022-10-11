@@ -153,34 +153,6 @@ describe('Workspace', function() {
 			.should('contain', 'Hello world')
 	})
 
-	it('inserts and removes a table', function() {
-		cy.openWorkspace()
-			.type('Let\'s insert a Table')
-
-		cy.getMenu()
-			.then($el => {
-				// sometimes actions can be hide
-				if ($el.find('[data-text-action-entry="remain"]').length) {
-					toggleMoreActions()
-					return submenuButton('table').click()
-				}
-
-				return menuButton('table').click()
-			})
-
-		cy.getContent()
-			.type('content')
-		cy.getContent()
-			.find('table tr:first-child th:first-child')
-			.should('contain', 'content')
-		cy.getContent()
-			.find('[data-text-table-actions="settings"]').click()
-
-		cy.get('[data-text-table-action="delete"]').click()
-		cy.getContent()
-			.should('not.contain', 'content')
-	})
-
 	it('emoji picker', () => {
 		cy.openWorkspace()
 			.type('# Let\'s smile together{enter}## ')
@@ -321,10 +293,6 @@ const menuButton = (name) => {
 
 const submenuButton = (name) => {
 	return cy.get('.v-popper__wrapper .open').getActionEntry(name)
-}
-
-const toggleMoreActions = () => {
-	return menuButton('remain').click()
 }
 
 const menuBubbleButton = (name) => {
