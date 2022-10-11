@@ -3,6 +3,7 @@
   "extends": [
     "config:base"
   ],
+  "rangeStrategy": "bump",
   "ignoreUnstable": false,
   "baseBranches": [
 	"master",
