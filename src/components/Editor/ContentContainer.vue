@@ -68,7 +68,7 @@ export default {
 	}
 
 	.ie {
-		.editor__content::v-deep(.ProseMirror) {
+		.editor__content:deep(.ProseMirror) {
 			padding-top: 50px;
 		}
 	}
