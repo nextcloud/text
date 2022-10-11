@@ -127,6 +127,13 @@ export default {
 }
 </script>
 
+<style lang="scss">
+	#content[class=app-public] {
+		margin: 0;
+		margin-top: 0;
+	}
+</style>
+
 <style scoped lang="scss">
 	body {
 		position: fixed;
