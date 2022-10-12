@@ -21,15 +21,14 @@
 <template>
 	<NodeViewWrapper :id="node.attrs.id"
 		ref="container"
-		:as="domElement"
-		tabindex="-1">
+		:as="domElement">
 		<a aria-hidden="true"
 			class="heading-anchor"
 			:href="href"
 			:title="t('text', 'Link to this section')"
 			:contenteditable="false"
 			@click.stop="click">{{ linkSymbol }}</a>
-		<NodeViewContent />
+		<NodeViewContent as="span" />
 	</NodeViewWrapper>
 </template>
 
