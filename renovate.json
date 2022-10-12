@@ -14,6 +14,9 @@
   "enabledManagers": [
     "npm"
   ],
+  "ignoreDeps": [
+    "node"
+  ],
   "packageRules": [
     {
       "groupName": "tiptap",
