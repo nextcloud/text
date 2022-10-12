@@ -110,7 +110,7 @@
     "vuex": "^3.6.2"
   },
   "engines": {
-    "node": "^16.0.0",
+    "node": "^v18.10.0",
     "npm": "^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
