@@ -19,7 +19,31 @@ describe('test link marks', function() {
 			},
 		})
 
-		return cy.openFile(fileName, { force: true })
+		cy.openFile(fileName, { force: true })
+		return cy.clearContent()
+	})
+
+	describe('link preview', function() {
+		it('shows a link preview', () => {
+			cy.getContent()
+				.type('https://nextcloud.com')
+				.type('{enter}')
+
+			cy.getContent()
+				.find('.widgets--list', { timeout: 10000 })
+				.find('.widget-default--title')
+				.contains('Nextcloud - Online collaboration platform')
+		})
+
+		it('does not show a link preview for links within a paragraph', () => {
+			cy.getContent()
+				.type('Please visit https://nextcloud.com')
+				.type('{enter}')
+
+			cy.getContent()
+				.find('.widgets--list', { timeout: 10000 })
+				.should('not.exist')
+		})
 	})
 
 	describe('autolink', function() {
@@ -30,6 +54,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id} `
 					cy.getContent()
+						.type('{enter}')
 						.type(link)
 
 					cy.getContent()
