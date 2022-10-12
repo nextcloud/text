@@ -6,10 +6,10 @@
   "rangeStrategy": "bump",
   "ignoreUnstable": false,
   "baseBranches": [
-	"master",
-	"stable25",
-	"stable24",
-	"stable23"
+    "master",
+    "stable25",
+    "stable24",
+    "stable23"
   ],
   "enabledManagers": [
     "npm"
@@ -20,6 +20,13 @@
       "matchPackagePrefixes": [
         "@tiptap/",
         "prosemirror-"
+      ]
+    },
+    {
+      "groupName": "highlight",
+      "matchPackageNames": [
+        "highlight.js",
+        "lowlight"
       ]
     },
     {
