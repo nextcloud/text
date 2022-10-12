@@ -4,6 +4,7 @@
     "config:base"
   ],
   "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
   "baseBranches": [
     "master",
