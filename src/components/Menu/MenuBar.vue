@@ -44,19 +44,11 @@
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry.key}`" />
 			<ActionList key="text-action--remain"
-				:action-entry="hiddenEntries"
-				@update:open="refreshWordCount">
-				<template #lastAction>
+				:action-entry="hiddenEntries">
+				<template #lastAction="{ visible }">
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
-					<NcActionText data-text-action-entry="character-count">
-						<template #icon>
-							<AlphabeticalVariant />
-						</template>
-						<template #default>
-							{{ countString }}
-						</template>
-					</NcActionText>
+					<CharacterCount v-bind="{ visible }" />
 				</template>
 			</ActionList>
 		</div>
@@ -67,9 +59,8 @@
 </template>
 
 <script>
-import { NcActionSeparator, NcActionText } from '@nextcloud/vue'
+import { NcActionSeparator } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import { translatePlural as n } from '@nextcloud/l10n'
 import debounce from 'debounce'
 
 import HelpModal from '../HelpModal.vue'
@@ -77,13 +68,14 @@ import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ActionList from './ActionList.vue'
-import { AlphabeticalVariant, DotsHorizontal } from '../icons.js'
+import { DotsHorizontal } from '../icons.js'
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
+import CharacterCount from './CharacterCount.vue'
 
 export default {
 	name: 'MenuBar',
@@ -91,10 +83,9 @@ export default {
 		ActionEntry,
 		ActionFormattingHelp,
 		ActionList,
-		AlphabeticalVariant,
 		HelpModal,
 		NcActionSeparator,
-		NcActionText,
+		CharacterCount,
 	},
 	mixins: [
 		useEditorMixin,
@@ -126,8 +117,6 @@ export default {
 			isReady: false,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
-			wordCount: 0,
-			charCount: 0,
 		}
 	},
 	computed: {
@@ -168,9 +157,6 @@ export default {
 					return priority !== undefined && priority > this.iconsLimit
 				}),
 			}
-		},
-		countString() {
-			return `${n('text', '%n word', '%n words', this.wordCount)}, ${n('text', '%n char', '%n chars', this.charCount)}`
 		},
 	},
 	mounted() {
@@ -240,14 +226,6 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
-		},
-
-		refreshWordCount(open) {
-			// characterCount is not reactive so we need this workaround
-			if (open) {
-				this.wordCount = this.$editor.storage.characterCount.words()
-				this.charCount = this.$editor.storage.characterCount.characters()
-			}
 		},
 	},
 }
