@@ -93,8 +93,7 @@ describe('Content Sections', () => {
 			// Insert content above link
 			cy.getContent()
 				.type('{moveToStart}\n{moveToStart}# top \n')
-				.type('lorem ipsum \n'.repeat(25))
-				.type('{moveToEnd}\n')
+				.type('lorem ipsum \n'.repeat(25) + '{moveToEnd}\n')
 				.find('h1#top')
 				.should('not.be.inViewport')
 			// Click link and test view moved to anchor
