@@ -17,7 +17,8 @@
     "npm"
   ],
   "ignoreDeps": [
-    "node"
+    "node",
+    "npm"
   ],
   "packageRules": [
     {
