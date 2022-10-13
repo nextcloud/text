@@ -1,7 +1,7 @@
 import { initUserAndFiles, randHash } from '../utils/index.js'
 
 const randUser = randHash()
-const fileName = 'test.md'
+const fileName = 'empty.md'
 
 describe('Test the rich text editor menu bar', function() {
 	before(() => initUserAndFiles(randUser, fileName))
