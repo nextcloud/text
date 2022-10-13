@@ -39,6 +39,7 @@
 			:action-entry="child"
 			v-on="$listeners"
 			@trigged="onTrigger" />
+		<slot name="lastAction" />
 	</NcActions>
 </template>
 
@@ -53,7 +54,10 @@ import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {
 	name: 'ActionList',
-	components: { NcActions, ActionSingle },
+	components: {
+		NcActions,
+		ActionSingle,
+	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
 	computed: {

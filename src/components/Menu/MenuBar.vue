@@ -42,8 +42,23 @@
 			:aria-label="t('text', 'Editor actions')">
 			<ActionEntry v-for="actionEntry of visibleEntries"
 				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`"
-				@call:help="showHelp" />
+				:key="`text-action--${actionEntry.key}`" />
+			<ActionList key="text-action--remain"
+				:action-entry="hiddenEntries"
+				@update:open="refreshWordCount">
+				<template #lastAction>
+					<ActionFormattingHelp @click="showHelp" />
+					<NcActionSeparator />
+					<NcActionText data-text-action-entry="character-count">
+						<template #icon>
+							<AlphabeticalVariant />
+						</template>
+						<template #default>
+							{{ countString }}
+						</template>
+					</NcActionText>
+				</template>
+			</ActionList>
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -58,6 +73,7 @@ import debounce from 'debounce'
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
+import ActionList from './ActionList.vue'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal } from '../icons.js'
 import {
@@ -65,10 +81,16 @@ import {
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
+import ActionFormattingHelp from './ActionFormattingHelp.vue'
 
 export default {
 	name: 'MenuBar',
-	components: { ActionEntry, HelpModal },
+	components: {
+		ActionList,
+		ActionEntry,
+		ActionFormattingHelp,
+		HelpModal,
+	},
 	mixins: [
 		useEditorMixin,
 		useIsRichEditorMixin,
