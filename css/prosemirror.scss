@@ -36,13 +36,6 @@ div.ProseMirror {
 		}
 	}
 
-	&[contenteditable=true],
-	[contenteditable=true] {
-		* {
-			-webkit-user-modify: read-write-plaintext-only;
-		}
-	}
-
 	.checkbox-item {
 		display: flex;
 		align-items: start;

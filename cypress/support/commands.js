@@ -121,7 +121,7 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 		})
 })
 
-Cypress.Commands.add('createFile', (target, content, mimeType) => {
+Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown') => {
 	const fileName = target.split('/').pop()
 
 	const blob = new Blob([content], { type: mimeType })

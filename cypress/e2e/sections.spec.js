@@ -1,7 +1,7 @@
 import { initUserAndFiles, randHash } from '../utils/index.js'
 
 const currentUser = randHash()
-const fileName = 'test.md'
+const fileName = 'empty.md'
 
 const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
 	.last()
@@ -28,13 +28,19 @@ describe('Content Sections', () => {
 			},
 		})
 
-		cy.openFile(fileName)
-			.then(() => cy.clearContent())
+		cy.isolateTest({
+			sourceFile: fileName,
+			onBeforeLoad(win) {
+				cy.stub(win, 'open')
+					.as('winOpen')
+			},
+		})
+
+		cy.openFile(fileName, { force: true })
+		return cy.clearContent()
 	})
 
 	describe('Heading anchors', () => {
-		beforeEach(() => cy.clearContent())
-
 		it('Anchor exists', () => {
 			cy.getContent()
 				.type('# Heading\nText\n## Heading 2\nText\n## Heading 2')
@@ -120,7 +126,8 @@ describe('Content Sections', () => {
 				})
 			cy.then(() => {
 				cy.getContent()
-					.type('{selectAll}')
+					.find('h1 [data-node-view-content] span')
+					.click({ force: true, position: 'center' })
 					.then(() => {
 						cy.getActionEntry('headings')
 							.click()
@@ -136,8 +143,6 @@ describe('Content Sections', () => {
 	})
 
 	describe('Table of Contents', () => {
-		beforeEach(() => cy.clearContent())
-
 		it('sidebar toc', () => {
 			cy.getContent()
 				.type('# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
