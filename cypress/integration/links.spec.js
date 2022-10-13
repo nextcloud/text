@@ -29,7 +29,7 @@ describe('test link marks', function() {
 			},
 		})
 
-		cy.openFile(fileName)
+		cy.openFile(fileName, { force: true })
 	})
 
 	describe('autolink', function() {
@@ -39,7 +39,7 @@ describe('test link marks', function() {
 				.then($el => {
 					const id = $el.data('id')
 
-					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
+					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id} `
 					getEditor()
 						.type(link)
 
@@ -55,7 +55,7 @@ describe('test link marks', function() {
 
 		it('whithout protocol', () => {
 			getEditor()
-				.type('google.com')
+				.type('google.com{enter}')
 
 			getEditor()
 				.get('a[href*="google.com"]')

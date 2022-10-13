@@ -35,6 +35,7 @@ const Emoji = Node.create({
 			HTMLAttributes: {},
 			suggestion: {
 				char: ':',
+				allowedPrefixes: [' '],
 				pluginKey: EmojiPluginKey,
 				command: ({ editor, range, props }) => {
 					editor
