@@ -41,35 +41,24 @@
 			:action-entry="child"
 			v-on="$listeners"
 			@trigged="onTrigger" />
-		<NcActionButton close-after-click
-			data-text-action-entry="formatting-help"
-			@click="$emit('call:help')">
-			<template #icon>
-				<Help />
-			</template>
-			{{ t('text', 'Formatting help') }}
-		</NcActionButton>
 		<slot name="lastAction" />
 	</NcActions>
 </template>
 
 <script>
-import { NcActions, NcActionButton } from '@nextcloud/vue'
+import { NcActions } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionSingle from './ActionSingle.vue'
 import { getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
-import { Help } from '../icons.js'
 
 export default {
 	name: 'ActionList',
 	components: {
 		NcActions,
-		NcActionButton,
 		ActionSingle,
-		Help,
 	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],

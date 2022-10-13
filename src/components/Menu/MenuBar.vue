@@ -45,9 +45,9 @@
 				:key="`text-action--${actionEntry.key}`" />
 			<ActionList key="text-action--remain"
 				:action-entry="hiddenEntries"
-				@update:open="refreshWordCount"
-				@call:help="showHelp">
+				@update:open="refreshWordCount">
 				<template #lastAction>
+					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<NcActionText data-text-action-entry="character-count">
 						<template #icon>
@@ -83,11 +83,13 @@ import {
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
+import ActionFormattingHelp from './ActionFormattingHelp.vue'
 
 export default {
 	name: 'MenuBar',
 	components: {
 		ActionEntry,
+		ActionFormattingHelp,
 		ActionList,
 		AlphabeticalVariant,
 		HelpModal,
