@@ -54,6 +54,10 @@
     {
       "matchPackageNames": ["vuex"],
       "allowedVersions": "<4"
+    },
+    {
+      "matchPackageNames": ["@vue/test-utils"],
+      "allowedVersions": "<2"
     }
   ]
 }
