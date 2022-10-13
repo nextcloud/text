@@ -5,6 +5,8 @@ const randUser = randHash()
 const randUser1 = randHash()
 const currentUser = randUser
 
+const fileName = 'empty.md'
+
 const refresh = () => {
 	cy.get('.files-controls .crumb:not(.hidden) a')
 		.last()
@@ -12,9 +14,8 @@ const refresh = () => {
 }
 
 const createFileWithMention = (target, userToMention) => {
-	const mimeType = 'text/markdown'
 	const content = `Hello @[${userToMention}](mention://user/${userToMention})`
-	cy.createFile(target, content, mimeType)
+	cy.createFile(target, content)
 		.then(refresh)
 }
 
@@ -32,9 +33,17 @@ describe('Test mentioning users', () => {
 		const requestAlias = 'fetchUsersList'
 		cy.intercept({ method: 'POST', url: '**/users' }).as(requestAlias)
 
-		cy.openFile('test.md')
-		cy.get('.text-editor__content div[contenteditable="true"]')
-			.clear()
+		cy.isolateTest({
+			sourceFile: fileName,
+			onBeforeLoad(win) {
+				cy.stub(win, 'open')
+					.as('winOpen')
+			},
+		})
+
+		cy.openFile(fileName, { force: true })
+
+		cy.getContent()
 			.type(`@${randUser1.substring(0, 3)}`)
 
 		return cy.wait(`@${requestAlias}`)
@@ -51,7 +60,16 @@ describe('Test mentioning users', () => {
 		const autocompleteReauestAlias = 'fetchUsersList'
 		cy.intercept({ method: 'POST', url: '**/users' }).as(autocompleteReauestAlias)
 
-		cy.openFile('test.md')
+		cy.isolateTest({
+			sourceFile: fileName,
+			onBeforeLoad(win) {
+				cy.stub(win, 'open')
+					.as('winOpen')
+			},
+		})
+
+		cy.openFile(fileName, { force: true })
+
 		cy.get('.text-editor__content div[contenteditable="true"]')
 			.clear()
 			.type(`@${randUser1.substring(0, 3)}`)
