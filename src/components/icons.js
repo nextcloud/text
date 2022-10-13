@@ -21,6 +21,7 @@
  *
  */
 
+import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
 import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
@@ -89,6 +90,7 @@ export const Loading = {
 	},
 }
 
+export const AlphabeticalVariant = makeIcon(MDI_AlphabeticalVariant)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeTags = makeIcon(MDI_CodeTags)

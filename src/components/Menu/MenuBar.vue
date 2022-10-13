@@ -44,19 +44,11 @@
 				v-bind="{ actionEntry }"
 				:key="`text-action--${actionEntry.key}`" />
 			<ActionList key="text-action--remain"
-				:action-entry="hiddenEntries"
-				@update:open="refreshWordCount">
-				<template #lastAction>
+				:action-entry="hiddenEntries">
+				<template #lastAction="{ visible }">
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
-					<NcActionText data-text-action-entry="character-count">
-						<template #icon>
-							<AlphabeticalVariant />
-						</template>
-						<template #default>
-							{{ countString }}
-						</template>
-					</NcActionText>
+					<CharacterCount v-bind="{ visible }" />
 				</template>
 			</ActionList>
 		</div>
@@ -67,6 +59,7 @@
 </template>
 
 <script>
+import { NcActionSeparator } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import debounce from 'debounce'
 
@@ -82,6 +75,7 @@ import {
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
+import CharacterCount from './CharacterCount.vue'
 
 export default {
 	name: 'MenuBar',
@@ -90,6 +84,8 @@ export default {
 		ActionEntry,
 		ActionFormattingHelp,
 		HelpModal,
+		NcActionSeparator,
+		CharacterCount,
 	},
 	mixins: [
 		useEditorMixin,

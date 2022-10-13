@@ -29,7 +29,8 @@
 		:aria-label="actionEntry.label"
 		:title="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
-		:data-text-action-active="activeKey">
+		:data-text-action-active="activeKey"
+		@update:open="onOpenChange">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
@@ -39,7 +40,7 @@
 			:action-entry="child"
 			v-on="$listeners"
 			@trigged="onTrigger" />
-		<slot name="lastAction" />
+		<slot v-bind="{ visible }" name="lastAction" />
 	</NcActions>
 </template>
 
@@ -60,6 +61,9 @@ export default {
 	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
+	data: () => ({
+		visible: false,
+	}),
 	computed: {
 		currentChild() {
 			const {
@@ -102,6 +106,9 @@ export default {
 		},
 	},
 	methods: {
+		onOpenChange(val) {
+			this.visible = val
+		},
 		runAction() {
 			// nothing todo
 		},
