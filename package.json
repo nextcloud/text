@@ -68,7 +68,7 @@
 		"@tiptap/extension-underline": "^2.0.0-beta.199",
 		"@tiptap/suggestion": "^2.0.0-beta.199",
 		"@tiptap/vue-2": "^2.0.0-beta.199",
-		"core-js": "^3.23.2",
+		"core-js": "^3.25.5",
 		"debounce": "^1.2.1",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^10.7.3",
