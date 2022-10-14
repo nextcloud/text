@@ -3,5 +3,5 @@
   "projectId": "hx9gqy",
   "viewportWidth": 1280,
   "viewportHeight": 720,
-  "experimentalSessionSupport": true
+  "experimentalSessionAndOrigin": true
 }
