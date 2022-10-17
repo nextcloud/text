@@ -101,12 +101,14 @@ describe('Content Sections', () => {
 				.type('{moveToStart}\n{moveToStart}# top \n')
 				.type('lorem ipsum \n'.repeat(25))
 				.type('{moveToEnd}\n')
-				.find('h1#top')
+
+			cy.getContent().find('h1#top')
 				.should('not.be.inViewport')
+
 			// Click link and test view moved to anchor
 			cy.getContent()
 				.find('a:not(.heading-anchor)')
-				.click()
+				.click({ force: true })
 				.then(() => {
 					cy.getContent()
 						.get('h1[id="top"]')
