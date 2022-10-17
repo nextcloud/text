@@ -13,6 +13,26 @@ describe('recorded session', () => {
 		return arr.reduce((total, cur) => total + cur.length, 0)
 	}
 
+	function processStep(ydoc, step) {
+		const buf = decodeArrayBuffer(step)
+		const decoder = decoding.createDecoder(buf)
+		const encoder = encoding.createEncoder()
+		const messageType = decoding.readVarUint(decoder)
+		const inType = syncProtocol.readSyncMessage(
+			decoder,
+			encoder,
+			ydoc
+		)
+		if (!encoding.length(encoder)) {
+			return {inType, length: 0}
+		}
+		const binary = encoding.toUint8Array(encoder)
+		const outBuf = decodeArrayBuffer(binary)
+		const outDecoder = decoding.createDecoder(outBuf)
+		const outType = decoding.peekVarUint(outDecoder)
+		return {inType, outType, length: encoding.length(encoder)}
+	}
+
 	test('original size', () => {
 		expect(recorded.length).toBe(4964)
 	})
@@ -68,19 +88,11 @@ describe('recorded session', () => {
 
 	test('read messages', () => {
 		const ydoc = new Doc()
-		sync.forEach((step) => {
-			const buf = decodeArrayBuffer(step)
-			const decoder = decoding.createDecoder(buf)
-			const encoder = encoding.createEncoder()
-			const messageType = decoding.readVarUint(decoder)
-			const inType = syncProtocol.readSyncMessage(
-				decoder,
-				encoder,
-				ydoc
-			)
+		const responses = sync.map(step => processStep(ydoc, step))
+		responses.forEach(({inType, length}) => {
 			expect([0, 1, 2]).toContain(inType)
 			if (inType !== syncProtocol.messageYjsSyncStep1) {
-				expect(encoding.length(encoder)).toBe(0)
+				expect(length).toBe(0)
 			}
 		})
 		expect(encodeStateAsUpdate(ydoc).length).toBe(34503)
@@ -88,25 +100,7 @@ describe('recorded session', () => {
 
 	test('analyse responses', () => {
 		const ydoc = new Doc()
-		const responses = sync.map((step) => {
-			const buf = decodeArrayBuffer(step)
-			const decoder = decoding.createDecoder(buf)
-			const encoder = encoding.createEncoder()
-			const messageType = decoding.readVarUint(decoder)
-			const inType = syncProtocol.readSyncMessage(
-				decoder,
-				encoder,
-				ydoc
-			)
-			if (!encoding.length(encoder)) {
-				return {inType}
-			}
-			const binary = encoding.toUint8Array(encoder)
-			const outBuf = decodeArrayBuffer(binary)
-			const outDecoder = decoding.createDecoder(outBuf)
-			const outType = decoding.peekVarUint(outDecoder)
-			return {inType, outType, length: encoding.length(encoder)}
-		})
+		const responses = sync.map(step => processStep(ydoc, step))
 		responses.forEach(({inType, outType}) => {
 			if (inType === syncProtocol.messageYjsSyncStep1) {
 				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
@@ -121,6 +115,27 @@ describe('recorded session', () => {
 		const replies = responses.filter(r => r.length)
 		expect(replies.length).toBe(344)
 		expect(size(replies)).toBe(562868)
+	})
+
+	test('leaving out queries', () => {
+		const ydoc = new Doc()
+		const withoutQueries = sync.filter(step => step > 'AAE')
+		const responses = withoutQueries.map(step => processStep(ydoc, step))
+		responses.forEach(({inType, outType}) => {
+			if (inType === syncProtocol.messageYjsSyncStep1) {
+				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
+			}
+			if (inType === syncProtocol.messageYjsSyncStep2) {
+				expect(outType).toBeUndefined()
+			}
+			if (inType === syncProtocol.messageYjsUpdate) {
+				expect(outType).toBeUndefined()
+			}
+		})
+		const replies = responses.filter(r => r.length)
+		expect(encodeStateAsUpdate(ydoc).length).toBe(34503)
+		expect(replies.length).toBe(0)
+		expect(size(replies)).toBe(0)
 	})
 
 })
