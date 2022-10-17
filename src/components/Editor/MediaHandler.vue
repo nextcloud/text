@@ -57,6 +57,8 @@ import {
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
 
+const getDir = (val) => val.split('/').slice(0, -1).join('/')
+
 export default {
 	name: 'MediaHandler',
 	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
@@ -79,6 +81,7 @@ export default {
 	},
 	data() {
 		return {
+			lastFilePath: null,
 			draggedOver: false,
 			// make it reactive to be used inject/provide
 			state: {
@@ -88,7 +91,7 @@ export default {
 	},
 	computed: {
 		initialFilePath() {
-			return this.$file.relativePath.split('/').slice(0, -1).join('/')
+			return this.lastFilePath ?? getDir(this.$file.relativePath)
 		},
 	},
 	methods: {
@@ -160,6 +163,8 @@ export default {
 			}, false, [], true, undefined, this.initialFilePath)
 		},
 		insertFromPath(filePath) {
+			this.lastFilePath = getDir(filePath)
+
 			this.state.isUploadingAttachments = true
 
 			return this.$syncService.insertAttachmentFile(filePath).then((response) => {
