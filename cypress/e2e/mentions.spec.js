@@ -81,10 +81,10 @@ describe('Test mentioning users', () => {
 			})
 	})
 
-	it(' Open a document with an existing mention and properly see the user bubble rendered', () => {
+	it('Open a document with an existing mention and properly see the user bubble rendered', () => {
 		const mentionFilename = 'mention.md'
 		createFileWithMention(mentionFilename, randUser1)
-		cy.openFile(mentionFilename)
+		cy.openFile(mentionFilename, { force: true })
 		cy.get('.text-editor__content div[contenteditable="true"] span.mention')
 			.contains(randUser1)
 			.should('be.visible')
