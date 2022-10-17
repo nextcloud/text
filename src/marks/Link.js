@@ -30,6 +30,7 @@ const Link = TipTapLink.extend({
 		return {
 			...this.parent?.(),
 			onClick: openLink,
+			relativePath: null,
 		}
 	},
 
@@ -56,11 +57,15 @@ const Link = TipTapLink.extend({
 		},
 	],
 
-	renderHTML: ({ mark, HTMLAttributes }) => ['a', {
-		...mark.attrs,
-		href: domHref(mark),
-		rel: 'noopener noreferrer nofollow',
-	}, 0],
+	renderHTML(options) {
+		const { mark } = options
+
+		return ['a', {
+			...mark.attrs,
+			href: domHref(mark, this.options.relativePath),
+			rel: 'noopener noreferrer nofollow',
+		}, 0]
+	},
 
 	addProseMirrorPlugins() {
 		const plugins = this.parent()

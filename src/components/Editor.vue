@@ -488,6 +488,7 @@ export default {
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
 					this.$editor = createEditor({
+						relativePath: this.relativePath,
 						session: this.currentSession,
 						content,
 						onCreate: ({ editor }) => {
