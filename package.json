@@ -96,7 +96,7 @@
     "prosemirror-markdown": "^1.10.0",
     "prosemirror-model": "^1.18.1",
     "prosemirror-schema-list": "^1.2.2",
-    "prosemirror-state": "^1.4.1",
+    "prosemirror-state": "^1.4.2",
     "prosemirror-tables-contently": "^1.1.2",
     "prosemirror-transform": "^1.7.0",
     "prosemirror-utils": "^1.0.0-0",
