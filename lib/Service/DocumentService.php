@@ -183,9 +183,39 @@ class DocumentService {
 	 * @throws InvalidArgumentException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
+		$stepsToInsert = [];
+		$querySteps = [];
+		$getStepsSinceVersion = null;
+		$newVersion = $version;
+		foreach ($steps as $step) {
+			if ($step > "AAE") {
+				array_push($stepsToInsert, $step);
+			} else {
+				array_push($querySteps, $step);
+			}
+		}
+		if (sizeof($stepsToInsert) > 0) {
+			$newVersion = $this->insertSteps($documentId, $sessionId, $stepsToInsert, $version);
+		}
+		$getStepsSinceVersion = sizeof($querySteps) > 0 ? 0 : $version;
+		return [
+			'steps' => $this->getSteps($documentId, $getStepsSinceVersion),
+			'version' => $newVersion
+		];
+	}
+
+	/**
+	 * @param $documentId
+	 * @param $sessionId
+	 * @param $steps
+	 * @param $version
+	 * @return string
+	 * @throws DoesNotExistException
+	 * @throws InvalidArgumentException
+	 */
+	private function insertSteps($documentId, $sessionId, $steps, $version): string {
 		$document = null;
 		$stepsVersion = null;
-
 		try {
 			$document = $this->documentMapper->find($documentId);
 			$stepsJson = json_encode($steps);
@@ -202,7 +232,7 @@ class DocumentService {
 			$step->setVersion($newVersion);
 			$this->stepMapper->insert($step);
 			// TODO write steps to cache for quicker reading
-			return $steps;
+			return $newVersion;
 		} catch (DoesNotExistException $e) {
 			throw $e;
 		} catch (\Throwable $e) {

@@ -198,11 +198,11 @@ class ApiService {
 		$file = $this->documentService->getFileForSession($session, $token);
 		if (!$this->documentService->isReadOnly($file, $token)) {
 			try {
-				$steps = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
+				$result = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
 			} catch (InvalidArgumentException $e) {
 				return new DataResponse($e->getMessage(), 422);
 			}
-			return new DataResponse($steps);
+			return new DataResponse($result);
 		}
 		return new DataResponse([], 403);
 	}
