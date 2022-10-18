@@ -13,14 +13,16 @@
 					@click.native="selectItem(index)" />
 			</div>
 		</template>
-		<div v-else class="item">
-			No result
+		<div v-else class="item-empty">
+			{{ t('text', 'No user found') }}
 		</div>
 	</div>
 </template>
 
 <script>
+import { translate as t } from '@nextcloud/l10n'
 import AutoCompleteResult from './AutoCompleteResult.vue'
+
 export default {
 	components: {
 		AutoCompleteResult,
@@ -50,6 +52,7 @@ export default {
 	},
 
 	methods: {
+		t,
 		onKeyDown({ event }) {
 			// Ignore any key modifier combinations
 			if (event.ctrlKey || event.shiftKey || event.altKey || event.metaKey) {
@@ -99,11 +102,17 @@ export default {
 
 <style lang="scss">
 .items {
-  position: relative;
-  border-radius: var(--border-radius);
-  background: var(--color-main-background);
-  overflow: hidden;
-  font-size: 0.9rem;
-  box-shadow: 0 1px 5px var(--color-box-shadow);
+	position: relative;
+	border-radius: var(--border-radius);
+	background: var(--color-main-background);
+	overflow: hidden;
+	font-size: 0.9rem;
+	box-shadow: 0 1px 5px var(--color-box-shadow);
+	min-width: 250px;
+}
+
+.item-empty {
+	padding: 4px 8px;
+	opacity: 0.8;
 }
 </style>
