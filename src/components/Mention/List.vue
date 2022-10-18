@@ -51,6 +51,11 @@ export default {
 
 	methods: {
 		onKeyDown({ event }) {
+			// Ignore any key modifier combinations
+			if (event.ctrlKey || event.shiftKey || event.altKey || event.metaKey) {
+				return false
+			}
+
 			if (event.key === 'ArrowUp') {
 				this.upHandler()
 				return true
