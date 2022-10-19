@@ -38,6 +38,7 @@ import HardBreak from './HardBreak.js'
 import KeepSyntax from './KeepSyntax.js'
 import Table from './../nodes/Table.js'
 import Image from './../nodes/Image.js'
+import ImageInline from './../nodes/ImageInline.js'
 import Heading from '../nodes/Heading/index.js'
 import BulletList from './../nodes/BulletList.js'
 import TaskList from './../nodes/TaskList.js'
@@ -80,9 +81,8 @@ export default Extension.create({
 			TaskItem,
 			Callout,
 			Underline,
-			Image.configure({
-				inline: true,
-			}),
+			Image,
+			ImageInline,
 			Dropcursor,
 			KeepSyntax,
 			FrontMatter,
