@@ -37,6 +37,11 @@ describe('Commonmark', () => {
 			.replace(/<br \/>/, '<br />\n')
 	}
 
+	// special treatment because we use markdown-it-image-figures
+	const figureImageMarkdownTests = [
+		516, 519, 530, 571, 572, 573, 574, 575, 576, 577, 579, 580, 581, 582, 583, 584, 585, 587, 588, 590
+	]
+
 	spec.forEach((entry) => {
 		// We do not support HTML
 		if (entry.section === 'HTML blocks' || entry.section === 'Raw HTML') return;
@@ -46,13 +51,33 @@ describe('Commonmark', () => {
 		}
 
 		test('commonmark parsing ' + entry.example, () => {
-			const expected = entry.markdown.includes('__')
+			let expected = entry.markdown.includes('__')
 				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
 				: entry.html
+			if (figureImageMarkdownTests.indexOf(entry.example) !== -1) {
+				expected = expected.replace(/<p>/g, '<figure>').replace(/<\/p>/g, '</figure>')
+			}
+
 			const rendered = markdownit.render(entry.markdown)
+
 			// Ignore special markup for untouched markdown
 			expect(normalize(rendered)).toBe(expected)
 		})
+	})
+})
+
+describe('Commonmark images', () => {
+	beforeAll(() => {
+		// Make sure html tests pass
+		// entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
+		markdownit.set({ html: true})
+	})
+	afterAll(() => {
+		markdownit.set({ html: false})
+	})
+
+	test('commonmark 513', () => {
+		expect(markdownit.render('[![moon](moon.jpg)](/uri)\n')).toBe('<figure><a href=\"/uri\"><img src=\"moon.jpg\" alt=\"moon\" /></a></figure>\n')
 	})
 })
 
@@ -96,6 +121,7 @@ describe('Markdown though editor', () => {
 	})
 	test('images', () => {
 		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
+		expect(markdownThroughEditor('text ![test](foo) moretext')).toBe('text ![test](foo) moretext')
 	})
 	test('special characters', () => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
@@ -180,6 +206,7 @@ describe('Markdown serializer from html', () => {
 	test('images', () => {
 		expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
 		expect(markdownThroughEditorHtml('<p><img src="image" alt="description" /></p>')).toBe('![description](image)')
+		expect(markdownThroughEditorHtml('<p>text<img src="image" alt="description" />moretext</p>')).toBe('text![description](image)moretext')
 	})
 	test('checkboxes', () => {
 		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
