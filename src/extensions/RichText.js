@@ -37,6 +37,7 @@ import HardBreak from './HardBreak.js'
 import Heading from '../nodes/Heading/index.js'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Image from './../nodes/Image.js'
+import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
 import ListItem from '@tiptap/extension-list-item'
 import Mention from './../extensions/Mention.js'
@@ -82,9 +83,8 @@ export default Extension.create({
 			TaskItem,
 			Callout,
 			Underline,
-			Image.configure({
-				inline: true,
-			}),
+			Image,
+			ImageInline,
 			Dropcursor,
 			KeepSyntax,
 			FrontMatter,
