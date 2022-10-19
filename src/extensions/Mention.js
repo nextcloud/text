@@ -1,9 +1,9 @@
 import TipTapMention from '@tiptap/extension-mention'
 import Mention from './Mention.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { mergeAttributes } from '@tiptap/core'
 
 export default TipTapMention.extend({
-
 	parseHTML() {
 		return [
 			{
@@ -16,6 +16,17 @@ export default TipTapMention.extend({
 				},
 				priority: 100,
 			},
+		]
+	},
+
+	renderHTML({ node, HTMLAttributes }) {
+		return [
+			'span',
+			mergeAttributes({ 'data-type': 'user' }, this.options.HTMLAttributes, HTMLAttributes),
+			this.options.renderLabel({
+				options: this.options,
+				node,
+			}),
 		]
 	},
 
