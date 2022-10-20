@@ -74,6 +74,7 @@
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js'
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js'
 import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js'
+import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
@@ -103,6 +104,7 @@ export default {
 		return {
 			href: null,
 			isInputMode: false,
+			startPath: null,
 		}
 	},
 	computed: {
@@ -116,15 +118,30 @@ export default {
 		 * Triggered by the "link file" button
 		 */
 		linkFile() {
+			if (this.startPath === null) {
+				this.startPath = this.$file.relativePath.split('/').slice(0, -1).join('/')
+			}
+
+			const filePicker = new FilePicker(
 				t('text', 'Select file or folder to link to'),
+				false, // multiselect
+				[], // mime filter
+				true, // modal
+				FilePickerType.Choose, // type
+				true, // directories
+				this.startPath // path
+			)
+
+			filePicker.pick().then((file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
 					const path = optimalPath(this.$file.relativePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/') + (fileInfo.type === 'dir' ? '/' : '')
 					const href = `${encodedPath}?fileId=${fileInfo.id}`
 					this.setLink(href, fileInfo.name)
+					this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 				})
-			}, false, [], true, 1, startPath, { allowDirectoryChooser: true })
+			})
 		},
 		/**
 		 * Allow user to enter an URL manually
