@@ -74,6 +74,7 @@ OC.L10N.register(
     "Quoted text" : "引用文字",
     "Code block" : "程式碼區塊",
     "Some code" : "一些程式碼",
+    "No user found" : "找不到使用者",
     "Upload from computer" : "從電腦上傳",
     "Insert from Files" : "從檔案插入",
     "_%n word_::_%n words_" : ["%n 個字"],
