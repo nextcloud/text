@@ -74,6 +74,7 @@ OC.L10N.register(
     "Quoted text" : "Цитиран текст",
     "Code block" : "Кодов блок",
     "Some code" : "Някакъв код",
+    "No user found" : "Няма намерен потребител",
     "Upload from computer" : "Качване от компютър",
     "Insert from Files" : "Вмъкване от Файлове",
     "_%n word_::_%n words_" : ["%n думи","%n думи"],

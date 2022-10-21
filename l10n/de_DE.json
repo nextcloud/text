@@ -72,6 +72,7 @@
     "Quoted text" : "Zitierter Text",
     "Code block" : "Codeblock",
     "Some code" : "Etwas Code",
+    "No user found" : "Kein Benutzer gefunden",
     "Upload from computer" : "Vom Computer hochladen",
     "Insert from Files" : "Aus Dateien einfügen",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],

@@ -74,6 +74,7 @@ OC.L10N.register(
     "Quoted text" : "Citation",
     "Code block" : "Bloc de code",
     "Some code" : "Code source",
+    "No user found" : "Aucun utilisateur trouvé",
     "Upload from computer" : "Téléverser depuis l'ordinateur",
     "Insert from Files" : "Insérer depuis Fichiers",
     "_%n word_::_%n words_" : ["%n mot","%n mots","%n mots"],

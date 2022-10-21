@@ -74,6 +74,7 @@ OC.L10N.register(
     "Quoted text" : "Citovaný text",
     "Code block" : "Blok kódu",
     "Some code" : "Nějaký kód",
+    "No user found" : "Nenalezen žádný uživatel",
     "Upload from computer" : "Nahrát z počítače",
     "Insert from Files" : "Vložit ze Souborů",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slova"],
