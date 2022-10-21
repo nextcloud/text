@@ -22,7 +22,7 @@
 
 import TipTapLink from '@tiptap/extension-link'
 import { domHref, parseHref, openLink } from './../helpers/links.js'
-import { clickHandler } from '../plugins/link.js'
+import { clickHandler, clickPreventer } from '../plugins/link.js'
 
 const Link = TipTapLink.extend({
 
@@ -86,6 +86,7 @@ const Link = TipTapLink.extend({
 				type: this.type,
 				onClick: this.options.onClick,
 			}),
+			clickPreventer()
 		]
 	},
 })

@@ -27,4 +27,20 @@ const clickHandler = ({ editor, type, onClick }) => {
 	})
 }
 
-export { clickHandler }
+const clickPreventer = () => {
+	return new Plugin({
+		props: {
+			key: new PluginKey('textAvoidLinkClick'),
+			handleDOMEvents: {
+				click: (view, event) => {
+					if (!view.editable) {
+						event.preventDefault()
+						return false
+					}
+				}
+			}
+		},
+	})
+}
+
+export { clickHandler, clickPreventer }
