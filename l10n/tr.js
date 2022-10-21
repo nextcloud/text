@@ -74,6 +74,7 @@ OC.L10N.register(
     "Quoted text" : "Alıntılanmış metin",
     "Code block" : "Kod bloğu",
     "Some code" : "Kod metni",
+    "No user found" : "Herhangi bir kullanıcı bulunamadı",
     "Upload from computer" : "Bilgisayardan yükle",
     "Insert from Files" : "Dosyalar uygulamasından ekle",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
