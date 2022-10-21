@@ -23,6 +23,7 @@ OC.L10N.register(
     "Reconnect" : "Återanslut",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
     "File could not be loaded. Please check your internet connection." : "Filen kunde inte läsas in. Vänligen kontrollera din internetanslutning.",
+    "This file is opened read-only as it is currently locked by {user}." : "Den här filen öppnas skrivskyddad eftersom den för närvarande är låst av {user}.",
     "Edit guest name" : "Ändra gästnamn",
     "Guest" : "Gäst",
     "Save guest name" : "Spara gästnamn",

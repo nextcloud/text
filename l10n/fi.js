@@ -67,6 +67,7 @@ OC.L10N.register(
     "Quoted text" : "Lainattu teksti",
     "Code block" : "Koodilohko",
     "Some code" : "Koodia",
+    "No user found" : "Käyttäjää ei löytynyt",
     "Upload from computer" : "Lähetä tietokoneelta",
     "Insert from Files" : "Syötä Tiedostot-sovelluksesta",
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
