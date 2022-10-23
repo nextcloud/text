@@ -49,7 +49,7 @@ OC.L10N.register(
     "Just type the Markdown syntax from below." : "Просто введіть синтаксис Markdown знизу.",
     "Style" : "Стиль",
     "Syntax" : "Синтаксис",
-    "Keyboard shortcuts" : "Гарячі клавіші",
+    "Keyboard shortcuts" : "Скорочення",
     "Bold" : "Грубий",
     "Bold text" : "Грубий текст",
     "Ctrl" : "Ctrl",
