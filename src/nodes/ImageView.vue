@@ -21,8 +21,14 @@
   -->
 
 <template>
-	<NodeViewWrapper>
-		<div class="image image-view"
+	<NodeViewWrapper :as="nodeViewWrapperAs">
+		<img v-if="inline"
+			v-show="loaded"
+			:src="imageUrl"
+			class="image__main image__inline"
+			@load="onLoaded">
+		<div v-else
+			class="image image-view"
 			data-component="image-view"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
 			:data-src="src">
@@ -172,7 +178,28 @@ export default {
 		store,
 		useAttachmentResolver,
 	],
-	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
+	props: {
+		editor: {
+			type: Object,
+			required: true,
+		},
+		node: {
+			type: Object,
+			required: true,
+		},
+		extension: {
+			type: Object,
+			required: true,
+		},
+		updateAttributes: {
+			type: Function,
+			required: true,
+		},
+		deleteNode: {
+			type: Function,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			imageLoaded: false,
@@ -248,6 +275,12 @@ export default {
 		token() {
 			return document.getElementById('sharingToken')
 				&& document.getElementById('sharingToken').value
+		},
+		inline() {
+			return this.extension.options.inline
+		},
+		nodeViewWrapperAs() {
+			return this.inline ? 'span' : 'div'
 		},
 	},
 	beforeMount() {
@@ -391,6 +424,12 @@ export default {
 
 .image__main {
 	max-height: calc(100vh - 50px - 50px);
+
+	&.image__inline {
+		// Make inline images fit into a text line
+		max-height: 2em;
+		vertical-align: bottom;
+	}
 }
 
 .media {
