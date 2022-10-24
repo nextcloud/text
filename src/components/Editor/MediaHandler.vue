@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<div class="editor editor-midia-handler"
-		data-text-el="editor-midia-handler"
+	<div class="editor editor-media-handler"
+		data-text-el="editor-media-handler"
 		:class="{ draggedOver }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
