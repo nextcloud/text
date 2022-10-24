@@ -93,6 +93,12 @@ const Image = TiptapImage.extend({
 		]
 	},
 
+	// Append two newlines after image to make it a block image
+	toMarkdown(state, node) {
+		state.write('![' + state.esc(node.attrs.alt || '') + '](' + node.attrs.src.replace(/[()]/g, '\\$&')
+			+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '') + ')\n\n')
+	},
+
 })
 
 export default Image
