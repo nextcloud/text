@@ -23,6 +23,9 @@
 import {
 	Undo,
 	Redo,
+	CodeTags,
+	Danger,
+	Emoticon,
 	FormatBold,
 	FormatItalic,
 	FormatUnderline,
@@ -37,17 +40,16 @@ import {
 	FormatListBulleted,
 	FormatListCheckbox,
 	FormatQuote,
-	Info,
-	Positive,
-	Warn,
-	Danger,
-	CodeTags,
-	Table,
-	Emoticon,
 	Images,
+	Info,
+	LinkIcon,
+	Positive,
+	Table,
+	Warn,
 } from '../icons.js'
 import EmojiPickerAction from './EmojiPickerAction.vue'
 import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
+import ActionInsertLink from './ActionInsertLink.vue'
 
 import { MODIFIERS } from './keys.js'
 
@@ -71,7 +73,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Undo,
 		action: (command) => command.undo(),
-		priority: 5,
+		priority: 6,
 	},
 	{
 		key: 'redo',
@@ -80,7 +82,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Redo,
 		action: (command) => command.redo(),
-		priority: 11,
+		priority: 12,
 	},
 	{
 		key: 'bold',
@@ -92,7 +94,7 @@ export default [
 		action: (command) => {
 			return command.toggleBold()
 		},
-		priority: 6,
+		priority: 7,
 	},
 	{
 		key: 'italic',
@@ -104,7 +106,7 @@ export default [
 		action: (command) => {
 			return command.toggleItalic()
 		},
-		priority: 7,
+		priority: 8,
 	},
 	{
 		key: 'underline',
@@ -116,7 +118,7 @@ export default [
 		action: (command) => {
 			return command.toggleUnderline()
 		},
-		priority: 14,
+		priority: 15,
 	},
 	{
 		key: 'strikethrough',
@@ -128,7 +130,7 @@ export default [
 		action: (command) => {
 			return command.toggleStrike()
 		},
-		priority: 15,
+		priority: 16,
 	},
 	{
 		key: 'headings',
@@ -218,7 +220,7 @@ export default [
 		action: (command) => {
 			return command.toggleBulletList()
 		},
-		priority: 8,
+		priority: 9,
 	},
 	{
 		key: 'ordered-list',
@@ -230,7 +232,7 @@ export default [
 		action: (command) => {
 			return command.toggleOrderedList()
 		},
-		priority: 9,
+		priority: 10,
 	},
 	{
 		key: 'task-list',
@@ -240,7 +242,15 @@ export default [
 		isActive: 'taskList',
 		icon: FormatListCheckbox,
 		action: (command) => command.toggleTaskList(),
-		priority: 10,
+		priority: 11,
+	},
+	{
+		key: 'insert-link',
+		label: t('text', 'Insert link'),
+		isActive: 'link',
+		icon: LinkIcon,
+		component: ActionInsertLink,
+		priority: 2,
 	},
 	{
 		key: 'blockquote',
@@ -252,7 +262,7 @@ export default [
 		action: (command) => {
 			return command.toggleBlockquote()
 		},
-		priority: 12,
+		priority: 13,
 	},
 	{
 		key: 'callouts',
@@ -310,7 +320,7 @@ export default [
 		action: (command) => {
 			return command.toggleCodeBlock()
 		},
-		priority: 13,
+		priority: 14,
 	},
 	{
 		key: 'table',
@@ -320,7 +330,7 @@ export default [
 		action: (command) => {
 			return command.insertTable()
 		},
-		priority: 16,
+		priority: 17,
 	},
 	{
 		key: 'emoji-picker',
@@ -330,13 +340,13 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 4,
+		priority: 5,
 	},
 	{
 		key: 'insert-attachment',
 		label: t('text', 'Insert attachment'),
 		icon: Images,
 		component: ActionAttachmentUpload,
-		priority: 2,
+		priority: 4,
 	},
 ]

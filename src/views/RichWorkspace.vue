@@ -279,7 +279,7 @@ export default {
 		overflow: scroll !important;
 		max-height: calc(40vh - 50px);
 		padding-left: 10px;
-		padding-bottom: 60px; /* ensure menububble fits below */
+		padding-bottom: 10px;
 	}
 
 	#rich-workspace:deep(.text-editor__wrapper .ProseMirror) {

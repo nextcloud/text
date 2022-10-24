@@ -89,12 +89,14 @@ describe('Content Sections', () => {
 			// Create link to top heading
 			cy.clearContent()
 				.type('{selectAll}{backspace}move top\n{selectAll}')
-				.get('.menububble button[data-text-bubble-action="add-link"]')
-				.click({ force: true })
 				.then(() => {
-					cy.get('.menububble .menububble__input')
-						.type('{shift}')
-						.type('#top{enter}', { force: true })
+					cy.getSubmenuEntry('insert-link', 'insert-link-website')
+						.click()
+						.then(() => {
+							cy.getActionSubEntry('insert-link-input')
+								.find('input[type="text"]')
+								.type('#top{enter}')
+						})
 				})
 			// Insert content above link
 			cy.getContent()

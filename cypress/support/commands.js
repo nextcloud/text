@@ -173,6 +173,7 @@ Cypress.Commands.add('isolateTest', ({ sourceFile = 'text.md', targetFile = null
 	cy.createFolder(folderName)
 	cy.uploadFile(sourceFile, 'text/markdown', `${encodeURIComponent(folderName)}/${targetFile}`)
 
+	window.__currentDirectory = folderName
 	return cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`, { onBeforeLoad })
 		.then(() => ({ folderName, fileName: targetFile }))
 })
@@ -294,9 +295,30 @@ Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
 		.find('[data-text-el="menubar"]')
 })
 
+// Get menu entry even if moved into overflow menu
+Cypress.Commands.add('getMenuEntry', (name) => {
+	cy.getMenu().then(($body) => {
+		if ($body.find(`[data-text-action-entry="${name}"]`).length) {
+			return cy.getActionEntry(name)
+		}
+		return cy.getSubmenuEntry('remain', name)
+	})
+})
+
+Cypress.Commands.add('getSubmenuEntry', { prevSubject: 'optional' }, (subject, parent, name) => {
+	return (subject ? cy.wrap(subject) : cy.getMenu())
+		.getActionEntry(parent)
+		.click()
+		.then(() => cy.getActionSubEntry(name))
+})
+
 Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, name) => {
 	return (subject ? cy.wrap(subject) : cy.getMenu())
 		.find(`[data-text-action-entry="${name}"]`)
+})
+
+Cypress.Commands.add('getActionSubEntry', (name) => {
+	return cy.get('.action-item__popper .open').getActionEntry(name)
 })
 
 Cypress.Commands.add('getContent', { prevSubject: 'optional' }, (subject) => {
@@ -315,7 +337,10 @@ Cypress.Commands.add('getTOC', () => {
 Cypress.Commands.add('clearContent', () => {
 	return cy.getContent()
 		.scrollIntoView()
-		.type('{selectAll}{backspace}', { force: true })
+		.then(() => cy.getContent()
+			.type('{selectAll}{backspace}')
+		)
+		.then(() => cy.getContent())
 })
 
 Cypress.Commands.add('openWorkspace', () => {

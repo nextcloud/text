@@ -29,5 +29,8 @@ cy.getContent()
 | `getContent`         | Get editor content     |                                     |
 | `clearContent`       | Clear the editor content |                                   |
 | `getMenu`            | Get editor menu bar    |                                     |
+| `getMenuEntry`       | Same as `getActionEntry` but also searches the overflow menu | `name` |
+| `getSubmenuEntry`    | Open parent menu and then return sub menu entry | `parent`, `name` |
 | `getActionEntry`     | Get menu entry         | `name`                              |
+| `getActionSubEntry`  | Get submenu entry (after menu clicked) | `name`              |
 | `openWorkspace`      | Open workspace and return Editor content |                   |
