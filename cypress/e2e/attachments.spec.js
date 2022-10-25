@@ -145,7 +145,13 @@ describe('Test all attachment insertion methods', () => {
 	before(() => {
 		initUserAndFiles(randUser, 'test.md', 'empty.md')
 
+		cy.createFolder('sub')
+		cy.createFolder('sub/a')
+		cy.createFolder('sub/b')
+
 		cy.uploadFile('github.png', 'image/png')
+		cy.uploadFile('github.png', 'image/png', 'sub/a/a.png')
+		cy.uploadFile('github.png', 'image/png', 'sub/b/b.png')
 
 		cy.nextcloudCreateUser(randUser2, 'password')
 		cy.shareFileToUser(randUser, 'password', 'test.md', randUser2)
@@ -168,8 +174,43 @@ describe('Test all attachment insertion methods', () => {
 
 		clickOnAttachmentAction(ACTION_INSERT_FROM_FILES)
 			.then(() => {
-				const requestAlias = 'insertPathRequest'
+				const requestAlias = 'insertPathRequest-a'
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
+
+				cy.log('Go to sub folder (a)')
+				cy.get('#picker-filestable tr[data-entryname="sub"]').click()
+				cy.get('#picker-filestable tr[data-entryname="a"]').click()
+				cy.get('#picker-filestable tr[data-entryname="a.png"]').click()
+
+				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+
+				return waitForRequestAndCheckAttachment(requestAlias)
+			})
+			.then(() => clickOnAttachmentAction(ACTION_INSERT_FROM_FILES))
+			.then(() => {
+				const requestAlias = 'insertPathRequest-b'
+				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
+
+				cy.log('Go back to sub folder')
+				cy.get('#oc-dialog-filepicker-content .dirtree [data-dir="/sub"] a').click()
+
+				cy.log('Go to sub folder (b)')
+				cy.get('#picker-filestable tr[data-entryname="b"]').click()
+				cy.get('#picker-filestable tr[data-entryname="b.png"]').click()
+
+				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+
+				return waitForRequestAndCheckAttachment(requestAlias)
+			})
+
+			.then(() => clickOnAttachmentAction(ACTION_INSERT_FROM_FILES))
+
+			.then(() => {
+				const requestAlias = 'insertPathRequest-root'
+				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
+
+				cy.log('Go back to home')
+				cy.get('#oc-dialog-filepicker-content .dirtree > .crumb:first-child').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
@@ -180,7 +221,7 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it('Upload a local image file', () => {
+	it('Upload a local image file (table.png)', () => {
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
@@ -196,7 +237,7 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it('Upload a local media file', () => {
+	it('Upload a local media file (file.txt.gz)', () => {
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
@@ -252,7 +293,7 @@ describe('Test all attachment insertion methods', () => {
 			.then((documentId) => {
 				const files = attachmentFileNameToId[documentId]
 
-				cy.expect(Object.keys(files)).to.have.lengthOf(3)
+				cy.expect(Object.keys(files)).to.have.lengthOf(5)
 				cy.openFolder('.attachments.' + documentId)
 				cy.screenshot()
 				for (const name in files) {
