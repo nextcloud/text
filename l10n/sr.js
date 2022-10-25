@@ -42,8 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Издвојени цитат",
     "Quoted text" : "Цитирани текст",
     "Code block" : "Блок са изворним кôдом",
-    "Link file" : "Увежи фајл",
-    "Select file to link to" : "Одаберите фајл на који да направите везу",
+    "Update link" : "Ажурирај везу",
     "Unsupported image type" : "Неподржани тип слике",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
@@ -65,6 +64,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
     "Insert image" : "Убаци слику",
     "Insert an image" : "Убаци слику",
+    "Link file" : "Увежи фајл",
+    "Select file to link to" : "Одаберите фајл на који да направите везу",
     "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
     "ToDo list" : "ToDo листа"
 },

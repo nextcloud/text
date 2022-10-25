@@ -68,14 +68,10 @@
     "No user found" : "Käyttäjää ei löytynyt",
     "Upload from computer" : "Lähetä tietokoneelta",
     "Insert from Files" : "Syötä Tiedostot-sovelluksesta",
+    "Remove link" : "Poista linkki",
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
     "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
     "Formatting menu bar" : "Muotoiluvalikko",
-    "Update Link" : "Päivitä linkki",
-    "Add Link" : "Lisää linkki",
-    "Link file" : "Linkitä tiedosto",
-    "Remove Link" : "Poista linkki",
-    "Select file to link to" : "Valitse tiedosto johon linkitetään",
     "Link to this section" : "Linkki tähän osioon",
     "Delete this attachment" : "Poista tämä liite",
     "Delete this image" : "Poista tämä kuva",
@@ -111,10 +107,15 @@
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkevät kuka muokkaa asiakirjaa",
     "Insert image" : "Lisää kuva",
     "Insert an image" : "Lisää kuva",
+    "Update Link" : "Päivitä linkki",
+    "Add Link" : "Lisää linkki",
+    "Link file" : "Linkitä tiedosto",
+    "Select file to link to" : "Valitse tiedosto johon linkitetään",
     "Currently active users:" : "Aktiiviset käyttäjät nyt:",
     "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
-    "Image file format not supported" : "Kuvan tiedostomuoto ei ole tuettu"
+    "Image file format not supported" : "Kuvan tiedostomuoto ei ole tuettu",
+    "Remove Link" : "Poista linkki"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
