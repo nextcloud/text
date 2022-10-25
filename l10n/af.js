@@ -32,8 +32,6 @@ OC.L10N.register(
     "Unordered list" : "Ongesorteerde lys",
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
-    "Link file" : "Koppel lêer",
-    "Select file to link to" : "Kies lêer om na te koppel",
     "Unsupported image type" : "Onondersteunde beeldtipe",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
@@ -48,6 +46,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
     "Insert image" : "Voer beeld in",
     "Insert an image" : "Voer ’n beeld in",
+    "Link file" : "Koppel lêer",
+    "Select file to link to" : "Kies lêer om na te koppel",
     "Currently active users:" : "Gebruikers wat tans aktief is:",
     "ToDo list" : "Moet-doen-lys"
 },

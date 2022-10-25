@@ -46,10 +46,7 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Quoted text" : "Texto citado",
     "Code block" : "Bloque de código",
-    "Add Link" : "Engadir ligazón",
-    "Link file" : "Ligar un ficheiro",
-    "Remove Link" : "Retirar ligazón",
-    "Select file to link to" : "Seleccione o ficheiro ao que ligar",
+    "Update link" : "Ligazón de actualización",
     "Unsupported image type" : "Tipo de imaxe non admitido",
     "Show rich workspaces" : "Amosa espazos de traballo mellorados",
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
@@ -72,8 +69,12 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
     "Insert image" : "Inserir unha imaxe",
     "Insert an image" : "Inserir unha imaxe",
+    "Add Link" : "Engadir ligazón",
+    "Link file" : "Ligar un ficheiro",
+    "Select file to link to" : "Seleccione o ficheiro ao que ligar",
     "Currently active users:" : "Usuarios activos actualmente:",
     "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
-    "ToDo list" : "Lista «para facer»"
+    "ToDo list" : "Lista «para facer»",
+    "Remove Link" : "Retirar ligazón"
 },
 "nplurals=2; plural=(n != 1);");

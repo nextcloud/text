@@ -61,11 +61,7 @@
     "Some code" : "一些代码",
     "Upload from computer" : "从电脑上传",
     "Insert from Files" : "从文件插入",
-    "Update Link" : "更新链接",
-    "Add Link" : "添加链接",
-    "Link file" : "链接文件",
-    "Remove Link" : "移除链接",
-    "Select file to link to" : "选择文件链接至",
+    "Update link" : "更新链接",
     "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
@@ -89,11 +85,16 @@
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
     "Insert image" : "插入图片",
     "Insert an image" : "插入一张图片",
+    "Update Link" : "更新链接",
+    "Add Link" : "添加链接",
+    "Link file" : "链接文件",
+    "Select file to link to" : "选择文件链接至",
     "Currently active users:" : "当前活跃用户：",
     "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
     "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
     "Todo item" : "待办事项",
-    "Alt" : "Alt"
+    "Alt" : "Alt",
+    "Remove Link" : "移除链接"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
