@@ -37,8 +37,8 @@ const clickPreventer = () => {
 						event.preventDefault()
 						return false
 					}
-				}
-			}
+				},
+			},
 		},
 	})
 }

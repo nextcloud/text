@@ -86,7 +86,7 @@ const Link = TipTapLink.extend({
 				type: this.type,
 				onClick: this.options.onClick,
 			}),
-			clickPreventer()
+			clickPreventer(),
 		]
 	},
 })
