@@ -80,11 +80,6 @@
     "Formatting menu bar" : "Форматування панелі меню",
     "Editor actions" : "Дії редактора",
     "Remaining actions" : "Решта дій",
-    "Update Link" : "Оновити посилання",
-    "Add Link" : "Додати посилання",
-    "Link file" : "Файл посилання",
-    "Remove Link" : "Видалити посилання",
-    "Select file to link to" : "Виберіть файл для посилання",
     "Link to this section" : "Посилання на цей розділ",
     "Delete this attachment" : "Видалити цей вкладений файл",
     "Delete this image" : "Видалити це зображення",
@@ -109,6 +104,7 @@
     "Heading 4" : "Заголовок 4",
     "Heading 5" : "Заголовок 5",
     "To-Do list" : "Список справ",
+    "Insert link" : "Вставити посилання",
     "Callouts" : "Виноски",
     "Info" : "Info",
     "Success" : "Успіх",
@@ -126,12 +122,17 @@
     "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
     "Insert image" : "Додати зображення",
     "Insert an image" : "Вставте зображення",
+    "Update Link" : "Оновити посилання",
+    "Add Link" : "Додати посилання",
+    "Link file" : "Файл посилання",
+    "Select file to link to" : "Виберіть файл для посилання",
     "Currently active users:" : "Зараз активні користувачі:",
     "_and %n other editor_::_and %n other editors_" : ["та %n інший дописувач","та %n інших дописувачів","та %n інших дописувачів","та %n інших дописувачів"],
     "ToDo list" : "Список завдань",
     "Emoji picker" : "Вибір емодзі",
     "Image file format not supported" : "Формат файлу зображення не підтримується",
     "Todo item" : "Елемент Todo",
-    "Alt" : "Alt"
+    "Alt" : "Alt",
+    "Remove Link" : "Видалити посилання"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

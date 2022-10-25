@@ -47,11 +47,6 @@ OC.L10N.register(
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
     "Upload from computer" : "Upload fra computer",
-    "Update Link" : "Opdater link",
-    "Add Link" : "Tilføj link",
-    "Link file" : "Link fil",
-    "Remove Link" : "Fjern link",
-    "Select file to link to" : "Vælg den fil, du vil linke til",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
@@ -72,10 +67,15 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Insert image" : "Indsæt billede",
     "Insert an image" : "Indsæt et billede",
+    "Update Link" : "Opdater link",
+    "Add Link" : "Tilføj link",
+    "Link file" : "Link fil",
+    "Select file to link to" : "Vælg den fil, du vil linke til",
     "Currently active users:" : "Aktuelle brugere:",
     "_and %n other editor_::_and %n other editors_" : ["og %n anden editor","og %n andre editorer"],
     "ToDo list" : "To-Do liste",
     "Emoji picker" : "Emoji vælger",
-    "Alt" : "Alt"
+    "Alt" : "Alt",
+    "Remove Link" : "Fjern link"
 },
 "nplurals=2; plural=(n != 1);");

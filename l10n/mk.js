@@ -58,11 +58,6 @@ OC.L10N.register(
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
     "Editor actions" : "Акции на уредникот",
-    "Update Link" : "Ажурирај линк",
-    "Add Link" : "Додади линк",
-    "Link file" : "Поврзи датотека (Линк)",
-    "Remove Link" : "Острани линк",
-    "Select file to link to" : "Изберете датотека за линк до неа",
     "Failed to load" : "Неуспешно вчитување",
     "Unsupported image type" : "Неподржан вид на слика",
     "Add row before" : "Додади ред пред",
@@ -93,9 +88,14 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Insert image" : "Вметни фотографија",
     "Insert an image" : "Вметни фотографија",
+    "Update Link" : "Ажурирај линк",
+    "Add Link" : "Додади линк",
+    "Link file" : "Поврзи датотека (Линк)",
+    "Select file to link to" : "Изберете датотека за линк до неа",
     "Currently active users:" : "Моментално активни корисници:",
     "_and %n other editor_::_and %n other editors_" : ["и 1 друг уредник","и%n други уредници"],
     "Image file format not supported" : "Форматот на датотеката со слика не е поддржан",
-    "Alt" : "Alt"
+    "Alt" : "Alt",
+    "Remove Link" : "Острани линк"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

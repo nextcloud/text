@@ -42,8 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Quoted text" : "Text citat",
     "Code block" : "Bloc de codi",
-    "Link file" : "Fitxer d'enllaç",
-    "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
+    "Update link" : "Actualitza l'enllaç",
     "Unsupported image type" : "Tipus d'imatge no compatible",
     "Show rich workspaces" : "Mostra els espai de treball enriquits",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços …",
@@ -66,6 +65,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
     "Insert image" : "Inserir imatge",
     "Insert an image" : "Insereix una imatge",
+    "Link file" : "Fitxer d'enllaç",
+    "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
     "_and %n other editor_::_and %n other editors_" : ["i %n altres editors","i %n altres editors"],
     "ToDo list" : "Llista tasques pendents"
 },
