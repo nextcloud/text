@@ -36,8 +36,6 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
-    "Link file" : "Ligam fichièr",
-    "Remove Link" : "Suprimir ligam",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligamas…",
     "Undo" : "Anullar",
     "Redo" : "Refar",
@@ -56,8 +54,10 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Insert image" : "Inserir imatge",
     "Insert an image" : "Inserir un imatge",
+    "Link file" : "Ligam fichièr",
     "Currently active users:" : "Utilizaires actius :",
     "ToDo list" : "Lista a far",
-    "Emoji picker" : "Selector emoji"
+    "Emoji picker" : "Selector emoji",
+    "Remove Link" : "Suprimir ligam"
 },
 "nplurals=2; plural=(n > 1);");

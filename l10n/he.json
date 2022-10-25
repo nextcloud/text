@@ -41,8 +41,7 @@
     "Ordered list" : "רשימה ממוינת",
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
-    "Link file" : "קישור לקובץ",
-    "Select file to link to" : "לבחור קובץ לקשר אליו",
+    "Update link" : "עדכן את הקישור",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
@@ -64,6 +63,8 @@
     "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
     "Insert image" : "הוספת תמונה",
     "Insert an image" : "הוספת תמונה",
+    "Link file" : "קישור לקובץ",
+    "Select file to link to" : "לבחור קובץ לקשר אליו",
     "Currently active users:" : "משתמשים פעילים עכשיו:",
     "_and %n other editor_::_and %n other editors_" : ["ועורך (%n) נוסף","ו־%n עורכים נוספים","ו־%n עורכים נוספים","ו־%n עורכים נוספים"],
     "ToDo list" : "רשימת מטלות"

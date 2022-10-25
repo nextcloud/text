@@ -42,8 +42,7 @@ OC.L10N.register(
     "Blockquote" : "Tilvitnun",
     "Quoted text" : "Tilvitnaður texti",
     "Code block" : "Kóðablokk",
-    "Link file" : "Tengja skrá",
-    "Select file to link to" : "Veldu skrá til að tengja í",
+    "Update link" : "Uppfæra tengil",
     "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
@@ -65,6 +64,8 @@ OC.L10N.register(
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
     "Insert image" : "Setja inn mynd",
     "Insert an image" : "Setja inn mynd",
+    "Link file" : "Tengja skrá",
+    "Select file to link to" : "Veldu skrá til að tengja í",
     "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
     "ToDo list" : "Verkefnalisti"
 },
