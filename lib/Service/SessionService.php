@@ -165,12 +165,17 @@ class SessionService {
 
 		try {
 			$data = $this->sessionMapper->find($documentId, $sessionId, $token);
-			$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME - 30);
-			return $data;
+			$jsonData = json_encode($data);
+
+			if ($jsonData) {
+				$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME - 30);
+				return $data;
+			}
 		} catch (DoesNotExistException $e) {
-			$this->session = false;
-			return false;
 		}
+
+		$this->session = false;
+		return false;
 	}
 
 	public function isValidSession($documentId, $sessionId, $token): bool {
