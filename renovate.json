@@ -70,6 +70,11 @@
       "matchPackageNames": ["vue"],
       "allowedVersions": "<2.7",
       "matchBaseBranches": ["stable24", "stable23"]
+    },
+    {
+      "matchPackageNames": ["@nextcloud/webpack-vue-config"],
+      "allowedVersions": "<4.2",
+      "matchBaseBranches": ["stable23"]
     }
   ]
 }
