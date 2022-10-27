@@ -40,7 +40,7 @@ jobs:
           RELATIVE_CI_SLUG: nextcloud/deck
         run: |
           mkdir -p js
-          npm run build --if-present -- --profile --json | tail -n +6 > js/webpack-stats.json
+          npm run build --if-present -- --profile --json=js/webpack-stats.json
 
       - name: Send webpack stats to RelativeCI
         uses: relative-ci/agent-action@v2
