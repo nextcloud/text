@@ -57,12 +57,13 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, session }) => {
+const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, session, relativePath }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
 			Markdown,
 			RichText.configure({
+				relativePath,
 				extensions: [
 					EditableTable,
 					Mention.configure({
