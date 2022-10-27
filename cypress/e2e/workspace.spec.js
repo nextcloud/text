@@ -24,6 +24,7 @@ import { randHash } from '../utils/index.js'
 const randUser = randHash()
 
 describe('Workspace', function() {
+	let currentFolder
 
 	before(function() {
 		cy.nextcloudCreateUser(randUser, 'password')
@@ -33,11 +34,12 @@ describe('Workspace', function() {
 		cy.login(randUser, 'password').then(() => {
 			// isolate tests - each happens in its own folder
 			const retry = cy.state('test').currentRetry()
-			const folderName = retry
+
+			currentFolder = retry
 				? `${Cypress.currentTest.title} (${retry})`
 				: Cypress.currentTest.title
-			cy.createFolder(folderName)
-			cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`)
+			cy.createFolder(currentFolder)
+			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		})
 	})
 
@@ -140,6 +142,44 @@ describe('Workspace', function() {
 		cy.getEditor()
 			.find('h2')
 			.contains('😀')
+	})
+
+	it.only('relative folder links', () => {
+		cy.createFolder(`${currentFolder}/sub-folder`)
+		cy.createFolder(`${currentFolder}/sub-folder/alpha`)
+
+		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/sub-folder/alpha/test.md`)
+
+		cy.openWorkspace()
+			.type('link me')
+			.type('{selectall}')
+
+		cy.getSubmenuEntry('insert-link', 'insert-link-file')
+			.click()
+
+		cy.get('#picker-filestable tr[data-entryname="sub-folder"]').click()
+		cy.get('#picker-filestable tr[data-entryname="alpha"]').click()
+		cy.get('#picker-filestable tr[data-entryname="test.md"]').click()
+		cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+
+		cy.getEditor()
+			.find('a')
+			.should('have.attr', 'href')
+			.and('contains', `dir=/${currentFolder}/sub-folder/alpha`)
+			.and('contains', '#relPath=sub-folder/alpha/test.md')
+
+		cy.getEditor()
+			.find('a').click()
+
+		cy.getModal()
+			.find('.modal-header')
+			.contains('test.md')
+
+		cy.getModal()
+			.getEditor()
+			.contains('Hello world')
+
+		cy.getModal().find('button.header-close').click()
 	})
 
 	describe('callouts', () => {
