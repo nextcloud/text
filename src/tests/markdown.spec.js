@@ -20,9 +20,11 @@ describe('Commonmark', () => {
 		// we interpret this as front matter
 		96, 98,
 		// contain HTML
-		21, 31, 201, 344, 474, 475, 476, 490, 493, 523, 535, 642, 643,
+		21, 31, 344, 474, 475, 476, 642, 643,
 		// contain comments
 		309, 308,
+		// < > are escaped, because HTML is disabled for markdown-it
+		201, 490, 493, 523, 535
 	];
 
 	const normalize = (str) => {
@@ -58,6 +60,18 @@ describe('Commonmark', () => {
 
 			// Ignore special markup for untouched markdown
 			expect(normalize(rendered)).toBe(expected)
+		})
+
+		test('commonmark serialization ' + entry.example, () => {
+			const expected = markdownit.render(entry.markdown)
+			const serialized = markdownThroughEditorHtml(expected)
+
+			try {
+				expect(markdownit.render(serialized)).toBe(expected)
+			} catch(e) {
+				// This is just for debugging, so jest shows also the difference within the two markdown source codes
+				expect(markdownit.render(serialized) + '\n\n' + serialized).toBe(expected + '\n\n' + entry.markdown)
+			}
 		})
 	})
 })
