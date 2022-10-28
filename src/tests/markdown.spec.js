@@ -101,6 +101,8 @@ describe('Markdown though editor', () => {
 	})
 	test('code block', () => {
 		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe('```\n<?php echo "Hello World";\n```')
+		// Issue #3328
+		expect(markdownThroughEditor('```python\nprint("Hello World")\n```')).toBe('```python\nprint("Hello World")\n```')
 	})
 	test('markdown untouched', () => {
 		// Issue #2703
