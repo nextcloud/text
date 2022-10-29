@@ -144,7 +144,7 @@ describe('Workspace', function() {
 			.contains('😀')
 	})
 
-	it.only('relative folder links', () => {
+	it('relative folder links', () => {
 		cy.createFolder(`${currentFolder}/sub-folder`)
 		cy.createFolder(`${currentFolder}/sub-folder/alpha`)
 
