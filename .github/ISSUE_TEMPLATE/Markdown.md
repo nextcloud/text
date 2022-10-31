@@ -15,15 +15,15 @@ labels: bug, "formatting: markdown"
 
 ## Example markdown file
 
-```markdown
+````markdown
 Please add your example markdown file here
-```
+````
 
 ## Resulting markdown file after opening in text
 
-```markdown
+````markdown
 Please add your example markdown file here
-```
+````
 
 ## Screenshot of the rendering in text
 
