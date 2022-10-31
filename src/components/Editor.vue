@@ -491,6 +491,7 @@ export default {
 							this.$syncService.startSync()
 						},
 						onUpdate: ({ editor }) => {
+							// this.debugContent(editor)
 							this.$syncService.state = editor.state
 						},
 						extensions: [
@@ -685,6 +686,23 @@ export default {
 			} else if (content) {
 				content.style.display = ''
 			}
+		},
+
+		/**
+		 * Helper method to debug serialization of content between markdown and HTML
+		 *
+		 * @param {object} editor The Tiptap editor
+		 */
+		debugContent(editor) {
+			const proseMirrorMarkdown = this.$syncService.options.serialize(editor.state.doc)
+			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+
+			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
+			console.debug(proseMirrorMarkdown)
+			logger.debug('HTML, serialized from markdown by markdown-it')
+			console.debug(markdownItHtml)
+			logger.debug('HTML, as rendered in the browser by Tiptap')
+			console.debug(editor.getHTML())
 		},
 	},
 }
