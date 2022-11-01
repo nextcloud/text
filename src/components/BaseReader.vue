@@ -71,7 +71,7 @@ export default {
 		},
 
 		updateContent() {
-			this.$editor.commands.setContent(this.htmlContent)
+			this.$editor.commands.setContent(this.htmlContent, true)
 		},
 	},
 }
