@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
+	<div v-if="enabled && active" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate}">
 		<div v-if="showEmptyWorkspace" class="empty-workspace" @click="createNew">
 			<p class="placeholder">
 				{{ t('text', 'Add notes, lists or links …') }}
@@ -62,6 +62,10 @@ export default {
 		path: {
 			type: String,
 			required: true,
+		},
+		active: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {
