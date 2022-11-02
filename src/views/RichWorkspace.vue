@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate, 'empty': showEmptyWorkspace}">
+	<div v-if="enabled && active" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate, 'empty': showEmptyWorkspace}">
 		<a v-if="showEmptyWorkspace"
 			tabindex="0"
 			class="empty-workspace"
@@ -70,6 +70,10 @@ export default {
 		path: {
 			type: String,
 			required: true,
+		},
+		active: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {
