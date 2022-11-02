@@ -106,6 +106,7 @@ OC.L10N.register(
     "Heading 4" : "4. goiburua",
     "Heading 5" : "5. goiburua",
     "To-Do list" : "Egiteke zerrenda",
+    "Insert link" : "Txertatu esteka",
     "Callouts" : "Deialdiak",
     "Info" : "Informazioa",
     "Success" : "Arrakasta",
