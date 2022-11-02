@@ -117,7 +117,8 @@ const TaskItem = TipTapTaskItem.extend({
 						const isListClicked = event.target.tagName.toLowerCase() === 'li'
 						if (!isListClicked
 							|| !parentList
-							|| parentList.node.type !== schema.nodes.taskItem) {
+							|| parentList.node.type !== schema.nodes.taskItem
+						    || !view.editable) {
 							return
 						}
 						const tr = state.tr
