@@ -56,7 +56,6 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
-use OCP\Share\IShare;
 
 class DirectSessionController extends Controller {
 
