@@ -60,7 +60,6 @@ OC.L10N.register(
     "Command" : "Skipun",
     "Control" : "Stjórnun",
     "Edit" : "Breyta",
-    "New text document" : "Nýtt textaskjal",
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
     "Insert image" : "Setja inn mynd",
     "Insert an image" : "Setja inn mynd",

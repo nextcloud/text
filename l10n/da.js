@@ -63,7 +63,6 @@ OC.L10N.register(
     "Insert emoji" : "Indsæt emoji",
     "Command" : "Kommando",
     "Edit" : "Redigér",
-    "New text document" : "Nyt tekst dokument",
     "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
     "Insert image" : "Indsæt billede",
     "Insert an image" : "Indsæt et billede",

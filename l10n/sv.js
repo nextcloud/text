@@ -81,7 +81,6 @@ OC.L10N.register(
     "Command" : "Kommando",
     "Control" : "Kontroll",
     "Edit" : "Redigera",
-    "New text document" : "Nytt textdokument",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Insert image" : "Infoga bild",
     "Insert an image" : "Infoga en bild",

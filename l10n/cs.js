@@ -125,7 +125,6 @@ OC.L10N.register(
     "Option" : "Volba",
     "Edit" : "Upravit",
     "Front matter" : "Front matter",
-    "New text document" : "Nový textový dokument",
     "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
     "Insert image" : "Vložit obrázek",
     "Insert an image" : "Vložit obrázek",

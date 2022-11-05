@@ -61,7 +61,6 @@ OC.L10N.register(
     "Command" : "Cumandu",
     "Control" : "Controllu",
     "Edit" : "Modìfica ",
-    "New text document" : "Archìviu de testu nou",
     "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
     "Insert image" : "Inserta·nche imàgine",
     "Insert an image" : "Inserta·nche un'imàgine",

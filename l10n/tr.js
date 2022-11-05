@@ -125,7 +125,6 @@ OC.L10N.register(
     "Option" : "Seçenek",
     "Edit" : "Düzenle",
     "Front matter" : "Açılış bölümleri ",
-    "New text document" : "Yeni metin belgesi",
     "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
     "Insert image" : "Görsel ekle",
     "Insert an image" : "Bir görsel ekle",

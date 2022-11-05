@@ -120,7 +120,6 @@ OC.L10N.register(
     "Option" : "Aukera",
     "Edit" : "Editatu",
     "Front matter" : "Aurreko gaia",
-    "New text document" : "Testu dokumentu berria",
     "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
     "Insert image" : "Txertatu irudia",
     "Insert an image" : "Txertatu irudi bat",

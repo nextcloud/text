@@ -88,7 +88,6 @@ OC.L10N.register(
     "Command" : "Εντολή",
     "Control" : "Έλεγχος",
     "Edit" : "Επεξεργασία",
-    "New text document" : "Νέο έγγραφο κειμένου",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
     "Insert image" : "Εισαγωγή εικόνας",
     "Insert an image" : "Εισαγωγή εικόνας",

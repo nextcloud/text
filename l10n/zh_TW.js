@@ -125,7 +125,6 @@ OC.L10N.register(
     "Option" : "選項",
     "Edit" : "編輯",
     "Front matter" : "前言",
-    "New text document" : "新文字文件",
     "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他使用者才能查看是誰在編輯",
     "Insert image" : "插入影像",
     "Insert an image" : "插入圖片",

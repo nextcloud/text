@@ -61,7 +61,6 @@ OC.L10N.register(
     "Command" : "פקודה",
     "Control" : "שליטה",
     "Edit" : "עריכה",
-    "New text document" : "מסמך טקסט חדש",
     "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
     "Insert image" : "הוספת תמונה",
     "Insert an image" : "הוספת תמונה",

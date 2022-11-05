@@ -125,7 +125,6 @@ OC.L10N.register(
     "Option" : "Opción",
     "Edit" : "Editar",
     "Front matter" : "Prefacio",
-    "New text document" : "Nuevo documento de texto",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
     "Insert image" : "Insertar imagen",
     "Insert an image" : "Insertar imagen",

@@ -48,7 +48,6 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Edit" : "Editar",
-    "New text document" : "Nuevo documento de texto",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
     "Insert image" : "Añadir imagen",
     "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"],

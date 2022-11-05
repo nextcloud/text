@@ -65,7 +65,6 @@ OC.L10N.register(
     "Command" : "Naredba",
     "Control" : "Kontrola",
     "Edit" : "Uredi",
-    "New text document" : "Novi tekstni dokument",
     "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
     "Insert image" : "Umetni sliku",
     "Insert an image" : "Umetni sliku",

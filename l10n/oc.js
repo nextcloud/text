@@ -50,7 +50,6 @@ OC.L10N.register(
     "Insert emoji" : "Inserir emoji",
     "Command" : "Comanda",
     "Edit" : "Modificar",
-    "New text document" : "Novèl fichièr tèxte",
     "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
     "Insert image" : "Inserir imatge",
     "Insert an image" : "Inserir un imatge",
