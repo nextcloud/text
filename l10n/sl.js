@@ -93,7 +93,6 @@ OC.L10N.register(
     "Command" : "Ukaz",
     "Control" : "Nadzor",
     "Edit" : "Uredi",
-    "New text document" : "Nov besedilni dokument",
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
     "Insert image" : "Vstavi sliko",
     "Insert an image" : "Vstavi sliko",

@@ -95,7 +95,6 @@ OC.L10N.register(
     "Command" : "Comando",
     "Control" : "Controllo",
     "Edit" : "Modifica",
-    "New text document" : "Nuovo documento di testo",
     "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
     "Insert image" : "Inserisci immagine",
     "Insert an image" : "Inserisci un'immagine",

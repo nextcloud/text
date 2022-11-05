@@ -61,7 +61,6 @@ OC.L10N.register(
     "Command" : "Ordre",
     "Control" : "Control",
     "Edit" : "Edita",
-    "New text document" : "Nou document de text",
     "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
     "Insert image" : "Inserir imatge",
     "Insert an image" : "Insereix una imatge",

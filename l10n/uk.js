@@ -120,7 +120,6 @@ OC.L10N.register(
     "Option" : "Варіант",
     "Edit" : "Редашувати",
     "Front matter" : "Передня справа",
-    "New text document" : "Новий текстовий документ",
     "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
     "Insert image" : "Додати зображення",
     "Insert an image" : "Вставте зображення",

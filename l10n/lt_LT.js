@@ -107,7 +107,6 @@ OC.L10N.register(
     "Command" : "Komanda",
     "Control" : "Valdoma",
     "Edit" : "Taisyti",
-    "New text document" : "Naujas tekstinis dokumentas",
     "Enter your name so other users can see who is editing" : "Įveskite savo vardą, kad kiti naudotojai matytų, kas redaguoja dokumentą",
     "Insert image" : "Įterpti paveikslą",
     "Insert an image" : "Įterpti paveikslą",

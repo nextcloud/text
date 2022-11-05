@@ -60,7 +60,6 @@ OC.L10N.register(
     "Command" : "Команда",
     "Control" : "Контрола",
     "Edit" : "Измени",
-    "New text document" : "Нови текстуални документ",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
     "Insert image" : "Убаци слику",
     "Insert an image" : "Убаци слику",

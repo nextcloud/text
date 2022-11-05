@@ -125,7 +125,6 @@ OC.L10N.register(
     "Option" : "Опция",
     "Edit" : "Променяне",
     "Front matter" : "Предно съдържание",
-    "New text document" : "Нов текстов документ",
     "Enter your name so other users can see who is editing" : "Въведете името си, за да могат другите потребители да видят кой редактира",
     "Insert image" : "Вмъкване на изображение",
     "Insert an image" : "Вмъкване на изображение",

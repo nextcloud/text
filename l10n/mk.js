@@ -84,7 +84,6 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Option" : "Опции",
     "Edit" : "Уреди",
-    "New text document" : "Нов текстуален документ",
     "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
     "Insert image" : "Вметни фотографија",
     "Insert an image" : "Вметни фотографија",

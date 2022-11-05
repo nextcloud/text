@@ -89,7 +89,6 @@ OC.L10N.register(
     "Command" : "Команда",
     "Control" : "Контроль",
     "Edit" : "Редактировать",
-    "New text document" : "Новый текстовый документ",
     "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
     "Insert image" : "Вставить изображение",
     "Insert an image" : "Вставить изображение",

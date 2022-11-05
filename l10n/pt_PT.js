@@ -50,7 +50,6 @@ OC.L10N.register(
     "Warning" : "Aviso",
     "Control" : "Controle",
     "Edit" : "Editar",
-    "New text document" : "Novo documento de texto",
     "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
     "Select file to link to" : "Selecione o ficheiro a vincular a",
     "Currently active users:" : "Utilizadores ativos no momento:",
