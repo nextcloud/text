@@ -68,7 +68,6 @@ OC.L10N.register(
     "Command" : "コマンド",
     "Control" : "コントロール",
     "Edit" : "編集",
-    "New text document" : "新しいテキストドキュメント",
     "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
     "Insert image" : "画像の挿入",
     "Insert an image" : "画像を追加",

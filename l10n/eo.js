@@ -49,7 +49,6 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
     "Edit" : "Modifi",
-    "New text document" : "Nova tekstdokumento",
     "Enter your name so other users can see who is editing" : "Entajpu vian nomon, por ke aliuloj videblu, kiu modifas",
     "Insert image" : "Enmeti bildon",
     "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"]

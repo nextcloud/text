@@ -120,7 +120,6 @@ OC.L10N.register(
     "Option" : "Možnosť",
     "Edit" : "Upraviť",
     "Front matter" : "Predná strana",
-    "New text document" : "Nový textový dokument",
     "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
     "Insert image" : "Vložiť obrázok",
     "Insert an image" : "Vložiť obrázok",

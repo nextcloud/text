@@ -110,7 +110,6 @@ OC.L10N.register(
     "Command" : "Komento",
     "Control" : "Hallinta",
     "Edit" : "Muokkaa",
-    "New text document" : "Uusi tekstiasiakirja",
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkevät kuka muokkaa asiakirjaa",
     "Insert image" : "Lisää kuva",
     "Insert an image" : "Lisää kuva",

@@ -42,7 +42,6 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
     "Edit" : "Wysig",
-    "New text document" : "Nuwe teksdokument",
     "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
     "Insert image" : "Voer beeld in",
     "Insert an image" : "Voer ’n beeld in",
