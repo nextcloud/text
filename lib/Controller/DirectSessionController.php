@@ -70,7 +70,12 @@ class DirectSessionController extends Controller {
 	/**  @var IManager */
 	private $directManager;
 
-	public function __construct(string $appName, IRequest $request, ShareManager $shareManager, ApiService $apiService, IManager $directManager) {
+	/** @var \OCP\IUserSession */
+	private $userSession;
+	/** @var \OCP\IUserManager */
+	private $userManager;
+
+	public function __construct(string $appName, IRequest $request, ShareManager $shareManager, ApiService $apiService, IManager $directManager, IUserSession $userSession, IUserManager $userManager) {
 		parent::__construct($appName, $request);
 		$this->shareManager = $shareManager;
 		$this->apiService = $apiService;
