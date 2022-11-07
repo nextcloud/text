@@ -51,29 +51,26 @@ use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Response;
 use OCP\DirectEditing\IManager;
-use OCP\Share\IManager as ShareManager;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
-use OCP\Share\IShare;
+use OCP\IUserManager;
+use OCP\IUserSession;
 
 class DirectSessionController extends Controller {
+	private ApiService $apiService;
+	private IManager $directManager;
+	private IUserSession $userSession;
+	/**
+	 * @var \OCP\IUserManager
+	 */
+	private IUserManager $userManager;
 
-	/** @var ShareManager */
-	private $shareManager;
-
-	/** @var IShare */
-	private $share;
-
-	/** @var ApiService */
-	private $apiService;
-	/**  @var IManager */
-	private $directManager;
-
-	public function __construct(string $appName, IRequest $request, ShareManager $shareManager, ApiService $apiService, IManager $directManager) {
+	public function __construct(string $appName, IRequest $request, ApiService $apiService, IManager $directManager, IUserSession $userSession, IUserManager $userManager) {
 		parent::__construct($appName, $request);
-		$this->shareManager = $shareManager;
 		$this->apiService = $apiService;
 		$this->directManager = $directManager;
+		$this->userSession = $userSession;
+		$this->userManager = $userManager;
 	}
 
 	/**
@@ -116,6 +113,7 @@ class DirectSessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $token): DataResponse {
+		$this->loginTokenUser($token);
 		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $token);
 	}
 
@@ -124,6 +122,7 @@ class DirectSessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
+		$this->loginTokenUser($token);
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave, $token);
 	}
 
@@ -133,5 +132,13 @@ class DirectSessionController extends Controller {
 	 */
 	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
 		return $this->apiService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
+	}
+
+	private function loginTokenUser(string $token) {
+		$tokenObject = $this->directManager->getToken($token);
+		$user = $this->userManager->get($tokenObject->getUser());
+		if ($user !== null) {
+			$this->userSession->setUser($user);
+		}
 	}
 }
