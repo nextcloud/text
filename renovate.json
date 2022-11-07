@@ -72,6 +72,16 @@
       "matchBaseBranches": ["stable24", "stable23"]
     },
     {
+      "matchPackageNames": ["@nextcloud/eslint-config"],
+      "allowedVersions": "<8.1",
+      "matchBaseBranches": ["stable24"]
+    },
+    {
+      "matchPackageNames": ["@nextcloud/webpack-vue-config"],
+      "allowedVersions": "<5.1",
+      "matchBaseBranches": ["stable24"]
+    },
+    {
       "matchPackageNames": ["@nextcloud/webpack-vue-config"],
       "allowedVersions": "<4.2",
       "matchBaseBranches": ["stable23"]
