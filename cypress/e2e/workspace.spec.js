@@ -44,8 +44,8 @@ describe('Workspace', function() {
 	})
 
 	it('Hides the workspace when switching to another folder', function() {
-		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
-		cy.createFolder(`${Cypress.currentTest.title}/subdirectory`)
+		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
+		cy.createFolder(`${currentFolder}/subdirectory`)
 		cy.reload()
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
@@ -57,15 +57,14 @@ describe('Workspace', function() {
 	})
 
 	it('Hides the workspace when switching to another view', function() {
-		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
+		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.reload()
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 		cy.get('.nav-recent')
 			.click()
-		cy.get('#rich-workspace')
-			.get('.ProseMirror')
+		cy.get('#rich-workspace .ProseMirror')
 			.should('not.exist')
 	})
 
