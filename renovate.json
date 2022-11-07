@@ -67,7 +67,7 @@
       "allowedVersions": "<2"
     },
     {
-      "matchPackageNames": ["vue"],
+      "matchPackageNames": ["vue", "vue-template-compiler"],
       "allowedVersions": "<2.7",
       "matchBaseBranches": ["stable24", "stable23"]
     },
