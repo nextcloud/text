@@ -50,7 +50,7 @@ const basedir = function(file) {
 		: file.slice(0, end + 1) // basedir('/toplevel') should return '/'
 }
 
-const domHref = function(node) {
+const domHref = function(node, relativePath) {
 	const ref = node.attrs.href
 	if (!ref) {
 		return ref
@@ -61,10 +61,11 @@ const domHref = function(node) {
 	if (ref.startsWith('#')) {
 		return ref
 	}
+
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
-		const currentDir = basedir(OCA.Viewer.file)
+		const currentDir = basedir(relativePath || OCA.Viewer.file)
 		const dir = absolutePath(currentDir, basedir(relPath))
 		return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
 	}
