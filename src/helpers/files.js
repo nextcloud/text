@@ -21,6 +21,7 @@
  */
 
 import { loadState } from '@nextcloud/initial-state'
+import { subscribe } from '@nextcloud/event-bus'
 import { openMimetypes } from './mime.js'
 import { getSharingToken } from './token.js'
 import RichWorkspace from '../views/RichWorkspace.vue'
@@ -173,6 +174,12 @@ const FilesWorkspacePlugin = {
 				},
 				store,
 			}).$mount(this.el)
+
+			subscribe('files:navigation:changed', () => {
+				// Expose if the default file list is active to the component
+				// to only render the workspace if the file list is actually visible
+				vm.active = OCA.Files.App.getCurrentFileList() === fileList
+			})
 
 			fileList.$el.on('urlChanged', data => {
 				vm.path = data.dir.toString()
