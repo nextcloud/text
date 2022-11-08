@@ -32,17 +32,23 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
+use OCP\IUserManager;
+use OCP\IUserSession;
 
 class SessionController extends Controller {
 	private ApiService $apiService;
 	private SessionService $sessionService;
 	private NotificationService $notificationService;
+	private IUserManager $userManager;
+	private IUserSession $userSession;
 
-	public function __construct(string $appName, IRequest $request, ApiService $apiService, SessionService $sessionService, NotificationService $notificationService) {
+	public function __construct(string $appName, IRequest $request, ApiService $apiService, SessionService $sessionService, NotificationService $notificationService, IUserManager $userManager, IUserSession $userSession) {
 		parent::__construct($appName, $request);
 		$this->apiService = $apiService;
 		$this->sessionService = $sessionService;
 		$this->notificationService = $notificationService;
+		$this->userManager = $userManager;
+		$this->userSession = $userSession;
 	}
 
 	/**
@@ -73,6 +79,7 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
+		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
 		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
 	}
 
@@ -81,6 +88,7 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
+		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);
 	}
 
@@ -101,5 +109,13 @@ class SessionController extends Controller {
 		}
 
 		return new DataResponse($this->notificationService->mention($documentId, $mention));
+	}
+
+	private function loginSessionUser(int $documentId, int $sessionId, string $sessionToken) {
+		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$user = $this->userManager->get($currentSession->getUserId());
+		if ($user !== null) {
+			$this->userSession->setUser($user);
+		}
 	}
 }
