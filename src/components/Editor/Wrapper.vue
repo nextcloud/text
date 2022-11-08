@@ -38,6 +38,7 @@ import { ERROR_TYPE } from './../../services/SyncService.js'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
+import { mapState } from 'vuex'
 
 export default {
 	name: 'Wrapper',
@@ -77,6 +78,7 @@ export default {
 			require: true,
 		},
 	},
+
 	data: () => ({
 		outline: {
 			visible: false,
@@ -85,6 +87,8 @@ export default {
 	}),
 
 	computed: {
+		...mapState(['viewWidth']),
+
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
 		},
@@ -98,7 +102,7 @@ export default {
 				return false
 			}
 
-			return this.$store.state.viewWidth > 1265
+			return this.viewWidth > 1265
 		},
 	},
 	mounted() {

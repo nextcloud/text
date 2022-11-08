@@ -64,6 +64,7 @@
 <script>
 import { NcPopover, Tooltip } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
+import { mapActions, mapState } from 'vuex'
 import store from '../../mixins/store.js'
 
 const COLLABORATOR_IDLE_TIME = 60
@@ -91,15 +92,19 @@ export default {
 		}
 	},
 	computed: {
+		...mapState({
+			storeShowAuthorAnnotations: (state) => state.showAuthorAnnotations,
+		}),
+
 		label() {
 			return t('text', 'Active people')
 		},
 		showAuthorAnnotations: {
 			get() {
-				return this.$store.state.showAuthorAnnotations
+				return this.storeShowAuthorAnnotations
 			},
 			set(value) {
-				this.$store.dispatch('setShowAuthorAnnotations', value)
+				this.dispatchSetShowAuthorAnnotations(value)
 			},
 		},
 		participantsPopover() {
@@ -130,6 +135,12 @@ export default {
 		sessionsVisible() {
 			return this.participantsWithoutCurrent.slice(0, 3)
 		},
+	},
+
+	methods: {
+		...mapActions({
+			dispatchSetShowAuthorAnnotations: 'setShowAuthorAnnotations',
+		}),
 	},
 }
 </script>

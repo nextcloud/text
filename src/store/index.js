@@ -76,14 +76,6 @@ const store = new Store({
 			state.headings = Object.freeze(headings)
 		},
 	},
-	getters: {
-		isMobileView({ viewWidth }) {
-			return viewWidth < 768
-		},
-		hasHeadings({ headings }) {
-			return headings.length > 0
-		},
-	},
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
 			commit(SET_SHOW_AUTHOR_ANNOTATIONS, value)
