@@ -30,6 +30,8 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
+use OCP\IUserManager;
+use OCP\IUserSession;
 
 class SessionController extends Controller {
 
@@ -71,6 +73,7 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
+		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
 		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
 	}
 
@@ -79,6 +82,7 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
+		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
 		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);
 	}
 }
