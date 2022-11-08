@@ -76,6 +76,7 @@ import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
+import { generateUrl } from '@nextcloud/router'
 
 import {
 	EDITOR,
@@ -346,6 +347,13 @@ export default {
 				initialSession: this.initialSession,
 			}).catch((e) => {
 				this.hasConnectionIssue = true
+				if (e.response.status === 401) {
+					const redirectUrl = OCA.Files
+						? '/index.php/apps/files/?dir=' + encodeURIComponent(this.currentDirectory || '/') + '&openfile=' + this.fileId
+						: window.location.pathname
+
+					window.location = generateUrl('/login') + '?redirect_url=' + encodeURIComponent(redirectUrl)
+				}
 			})
 			this.forceRecreate = false
 		},
