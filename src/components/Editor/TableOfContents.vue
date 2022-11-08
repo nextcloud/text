@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { useEditorMixin } from '../Editor.provider.js'
 import useStore from '../../mixins/store.js'
 
@@ -28,14 +29,7 @@ export default {
 		initialRender: true,
 	}),
 	computed: {
-		headings() {
-			return this.$store.state.headings
-		},
-	},
-	watch: {
-		hasHeadings(val) {
-			this.$emit('has-headings', val)
-		},
+		...mapState(['headings']),
 	},
 	mounted() {
 
