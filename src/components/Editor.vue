@@ -349,8 +349,8 @@ export default {
 				this.hasConnectionIssue = true
 				if (e.response.status === 401) {
 					const redirectUrl = OCA.Files
-							? '/index.php/apps/files/?dir=' + encodeURIComponent(this.currentDirectory || '/') + '&openfile=' + this.fileId
-							: window.location.pathname;
+						? '/index.php/apps/files/?dir=' + encodeURIComponent(this.currentDirectory || '/') + '&openfile=' + this.fileId
+						: window.location.pathname
 
 					window.location = generateUrl('/login') + '?redirect_url=' + encodeURIComponent(redirectUrl)
 				}
