@@ -43,11 +43,16 @@ const UserColor = Extension.create({
 	},
 
 	addProseMirrorPlugins() {
+		let viewReference = null
 		return [
 			new Plugin({
 				clientID: this.options.clientID,
 				color: this.options.color,
 				name: this.options.name,
+				view: (editorView) => {
+					viewReference = editorView
+					return {}
+				},
 				state: {
 					init(_, instance) {
 						return {
@@ -63,8 +68,11 @@ const UserColor = Extension.create({
 								// we have an undefined client id for own transactions
 								tr.setMeta('clientID', tr.steps.map(i => this.spec.clientID))
 							}
-							tracked = tracked.applyTransform(tr)
-							tState = tracked
+							// Don't apply transaction when in composition (Github issue #2871)
+							if (!viewReference.composing) {
+								tracked = tracked.applyTransform(tr)
+								tState = tracked
+							}
 						}
 						decos = tState.blameMap
 							.map(span => {
