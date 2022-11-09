@@ -228,6 +228,16 @@ Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
 	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
 )
 
+Cypress.Commands.add('getFileContent', (userId, path) => {
+	return cy.request({
+		method: 'GET',
+		url: `${Cypress.env('baseUrl')}/remote.php/webdav/${path}`,
+		auth: { user: userId, pass: 'password' },
+	}).then(response => {
+		cy.wrap(response.body)
+	})
+})
+
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 	return cy.window()
 		.then(win => {
