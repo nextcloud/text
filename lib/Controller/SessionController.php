@@ -113,5 +113,4 @@ class SessionController extends Controller {
 			$this->userSession->setUser($user);
 		}
 	}
-
 }
