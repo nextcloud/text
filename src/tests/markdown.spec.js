@@ -34,6 +34,7 @@ describe('Commonmark', () => {
 		// https://github.com/markdown-it/markdown-it/blob/df4607f1d4d4be7fdc32e71c04109aea8cc373fa/test/commonmark.js#L10
 		return str.replace(/<blockquote><\/blockquote>/g, '<blockquote>\n</blockquote>')
 			.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
+			.replace(/<br \/>/, '<br />\n')
 	}
 
 	spec.forEach((entry) => {
