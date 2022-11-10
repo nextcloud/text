@@ -1,11 +1,11 @@
-import { createEditor } from './../EditorFactory'
-import { createMarkdownSerializer } from './../extensions/Markdown'
-import markdownit from './../markdownit'
-import input from './fixtures/table.md'
-import output from './fixtures/tables/basic.out.html'
-import otherStructure from './fixtures/tableWithOtherStructure.html'
-import handbook from './fixtures/tables/handbook.html'
-import handbookOut from './fixtures/tables/handbook.out.html'
+import { createEditor } from '../../EditorFactory'
+import { createMarkdownSerializer } from '../../extensions/Markdown'
+import markdownit from '../../markdownit'
+import input from '../fixtures/table.md'
+import output from '../fixtures/tables/basic.out.html'
+import otherStructure from '../fixtures/tableWithOtherStructure.html'
+import handbook from '../fixtures/tables/handbook.html'
+import handbookOut from '../fixtures/tables/handbook.out.html'
 
 describe('Table', () => {
 
