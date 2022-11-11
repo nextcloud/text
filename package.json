@@ -135,7 +135,7 @@
     "vite": "^3.2.3",
     "vite-plugin-commonjs": "^0.5.3",
     "vue-demi": "^0.13.11",
-    "vue-template-compiler": "^2.7.13 <3"
+    "vue-template-compiler": "^2.7.14"
   },
   "jest": {
     "verbose": true,
