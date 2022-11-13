@@ -16,4 +16,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(keepSyntax)
 	.use(markdownitMentions)
 
+// Issue #3370: To preserve softbreaks within md files we preserve all whitespaces, so we must not introduce additional new lines after a <br> element
+markdownit.renderer.rules.hardbreak = (tokens, idx, options) => (options.xhtmlOut ? '<br />' : '<br>')
+
 export default markdownit
