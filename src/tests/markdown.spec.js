@@ -37,6 +37,11 @@ describe('Commonmark', () => {
 		187, 209, 210
 	];
 
+	const normalize = (str) => {
+		return str.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
+				.replace(/<br \/>/, '<br />\n')
+	}
+
 	spec.forEach((entry) => {
 		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
 			return
@@ -45,8 +50,9 @@ describe('Commonmark', () => {
 			const expected = entry.markdown.includes('__')
 				? entry.html.replace(/<strong>/g, '<u>').replace(/<\/strong>/g, '</u>')
 				: entry.html
+			const rendered = markdownit.render(entry.markdown)
 			// Ignore special markup for untouched markdown
-			expect(markdownit.render(entry.markdown).replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')).toBe(expected)
+			expect(normalize(rendered)).toBe(expected)
 		})
 	})
 })
