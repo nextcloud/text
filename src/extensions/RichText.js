@@ -31,6 +31,7 @@ import Code from '@tiptap/extension-code'
 import CodeBlock from './../nodes/CodeBlock.js'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
+import Gapcursor from '@tiptap/extension-gapcursor'
 import FrontMatter from './../nodes/FrontMatter.js'
 import Paragraph from './../nodes/Paragraph.js'
 import HardBreak from './HardBreak.js'
@@ -86,6 +87,7 @@ export default Extension.create({
 			Image,
 			ImageInline,
 			Dropcursor,
+			Gapcursor,
 			KeepSyntax,
 			FrontMatter,
 			Mention.configure({

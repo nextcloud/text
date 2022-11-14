@@ -202,13 +202,7 @@ export default {
 				// subsequent editor inserts (see tiptap#3355). So unselect the image by placing
 				// the cursor at the end of the selection.
 				this.$editor.commands.focus(selection.to)
-			} else {
-				// Place the cursor after the inserted image node
-				this.$editor.commands.focus(selection.to + 2)
 			}
-
-			// Insert a newline to allow placing the cursor in between subsequent images
-			this.$editor.chain().insertContent('<br />').focus().run()
 		},
 	},
 }
