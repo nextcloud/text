@@ -36,7 +36,7 @@ const persistentStorage = getBuilder('text').persist().build()
 
 Vue.use(Vuex)
 
-const textModule = {
+export const textModule = {
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
