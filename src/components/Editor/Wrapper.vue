@@ -87,7 +87,9 @@ export default {
 	}),
 
 	computed: {
-		...mapState(['viewWidth']),
+		...mapState({
+			viewWidth: (state) => state.text.viewWidth,
+		}),
 
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION

@@ -36,8 +36,7 @@ const persistentStorage = getBuilder('text').persist().build()
 
 Vue.use(Vuex)
 
-const store = new Store({
-	plugins: [plugin],
+const textModule = {
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
@@ -85,6 +84,16 @@ const store = new Store({
 		},
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)
+		},
+	},
+}
+
+const store = new Store({
+	plugins: [plugin],
+	modules: {
+		text: {
+			namespaced: true,
+			...textModule,
 		},
 	},
 })

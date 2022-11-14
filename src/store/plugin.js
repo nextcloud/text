@@ -26,7 +26,7 @@ const getClientWidth = () => document.documentElement.clientWidth
 
 const plugin = ({ commit }) => {
 	const onResize = debounce(() => {
-		commit(SET_VIEW_WIDTH, getClientWidth())
+		commit(`text/${SET_VIEW_WIDTH}`, getClientWidth())
 	}, 100)
 
 	window.addEventListener('resize', onResize)

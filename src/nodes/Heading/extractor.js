@@ -1,9 +1,8 @@
-
 import store from '../../store/index.js'
 import { slugify } from './slug.js'
 import { v4 as uuidv4 } from 'uuid'
 
-const setHeadings = (val) => store.dispatch('setHeadings', val)
+const setHeadings = (val) => store.dispatch('text/setHeadings', val)
 
 const extractHeadings = (editor) => {
 	const counter = new Map()
