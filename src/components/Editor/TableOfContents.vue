@@ -29,7 +29,9 @@ export default {
 		initialRender: true,
 	}),
 	computed: {
-		...mapState(['headings']),
+		...mapState({
+			headings: (state) => state.text.headings,
+		}),
 	},
 	mounted() {
 

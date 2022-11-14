@@ -241,7 +241,9 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['showAuthorAnnotations']),
+		...mapState({
+			showAuthorAnnotations: (state) => state.text.showAuthorAnnotations,
+		}),
 		isRichWorkspace() {
 			return this.richWorkspace
 		},
@@ -322,9 +324,9 @@ export default {
 		this.close()
 	},
 	methods: {
-		...mapActions({
-			dispatchSetCurrentSession: 'setCurrentSession',
-		}),
+		...mapActions('text', [
+			'setCurrentSession',
+		]),
 
 		updateLastSavedStatus() {
 			if (this.document) {
@@ -481,7 +483,7 @@ export default {
 			this.readOnly = document.readOnly
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
-			this.dispatchSetCurrentSession(this.currentSession)
+			this.setCurrentSession(this.currentSession)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
 				user: getCurrentUser(),

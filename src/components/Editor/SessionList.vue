@@ -93,7 +93,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			storeShowAuthorAnnotations: (state) => state.showAuthorAnnotations,
+			storeShowAuthorAnnotations: (state) => state.text.showAuthorAnnotations,
 		}),
 
 		label() {
@@ -104,7 +104,7 @@ export default {
 				return this.storeShowAuthorAnnotations
 			},
 			set(value) {
-				this.dispatchSetShowAuthorAnnotations(value)
+				this.setShowAuthorAnnotations(value)
 			},
 		},
 		participantsPopover() {
@@ -138,9 +138,9 @@ export default {
 	},
 
 	methods: {
-		...mapActions({
-			dispatchSetShowAuthorAnnotations: 'setShowAuthorAnnotations',
-		}),
+		...mapActions('text', [
+			'setShowAuthorAnnotations',
+		]),
 	},
 }
 </script>
