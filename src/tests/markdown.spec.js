@@ -121,8 +121,9 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 	})
 	test('images', () => {
-		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
 		expect(markdownThroughEditor('text ![test](foo) moretext')).toBe('text ![test](foo) moretext')
+		// regression introduced in #3282. To be fixed in #3428.
+		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)\n\n')
 	})
 	test('special characters', () => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
