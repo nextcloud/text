@@ -21,8 +21,8 @@
   -->
 
 <template>
-	<div class="editor editor-midia-handler"
-		data-text-el="editor-midia-handler"
+	<div class="editor editor-media-handler"
+		data-text-el="editor-media-handler"
 		:class="{ draggedOver }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
@@ -194,7 +194,21 @@ export default {
 				? this.$editor.chain().focus(position)
 				: this.$editor.chain()
 
-			chain.setImage({ src, alt }).insertContent('<br />').focus().run()
+			chain.setImage({ src, alt }).run()
+
+			const selection = this.$editor.view.state.selection
+			if (!selection.empty) {
+				// If inserted image is first element, it is selected and would get overwritten by
+				// subsequent editor inserts (see tiptap#3355). So unselect the image by placing
+				// the cursor at the end of the selection.
+				this.$editor.commands.focus(selection.to)
+			} else {
+				// Place the cursor after the inserted image node
+				this.$editor.commands.focus(selection.to + 2)
+			}
+
+			// Insert a newline to allow placing the cursor in between subsequent images
+			this.$editor.chain().insertContent('<br />').focus().run()
 		},
 	},
 }
