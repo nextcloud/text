@@ -144,10 +144,6 @@ export default {
 		display: inline-flex;
 		flex-direction: row-reverse;
 
-		&:focus {
-			background-color: #eee;
-		}
-
 		.avatar-wrapper {
 			margin: 0 -18px 0 0;
 			z-index: 1;
