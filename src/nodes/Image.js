@@ -29,6 +29,16 @@ const Image = TiptapImage.extend({
 
 	selectable: false,
 
+	parseHTML() {
+		return [
+			{
+				tag: this.options.allowBase64
+					? 'figure img[src]'
+					: 'figure img[src]:not([src^="data:"])',
+			},
+		]
+	},
+
 	renderHTML() {
 		// Avoid the prosemirror node creation to trigger image loading as we use a custom node view anyways
 		// Otherwise it would attempt to load the image from the current location before the node view is even initialized
@@ -81,6 +91,12 @@ const Image = TiptapImage.extend({
 				},
 			}),
 		]
+	},
+
+	// Append two newlines after image to make it a block image
+	toMarkdown(state, node) {
+		state.write('![' + state.esc(node.attrs.alt || '') + '](' + node.attrs.src.replace(/[()]/g, '\\$&')
+			+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '') + ')\n\n')
 	},
 
 })
