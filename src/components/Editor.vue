@@ -36,7 +36,14 @@
 			<MainContainer v-if="$editor">
 				<!-- Readonly -->
 				<div v-if="readOnly" class="text-editor--readonly-bar">
-					<ReadonlyBar />
+					<ReadonlyBar>
+						<Status :document="document"
+							:dirty="dirty"
+							:sessions="filteredSessions"
+							:sync-error="syncError"
+							:has-connection-issue="hasConnectionIssue"
+							:last-saved-string="lastSavedString" />
+					</ReadonlyBar>
 				</div>
 				<!-- Rich Menu -->
 				<template v-else>
@@ -266,11 +273,15 @@ export default {
 		displayed() {
 			return this.currentSession && this.active
 		},
-		renderMenus() {
+		renderRichEditorMenus() {
 			return this.contentLoaded
 				&& this.isRichEditor
 				&& !this.syncError
 				&& !this.readOnly
+		},
+		renderMenus() {
+			return this.contentLoaded
+				&& !this.syncError
 		},
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
