@@ -77,6 +77,7 @@
 
 <script>
 import Vue, { set } from 'vue'
+import { mapActions, mapState } from 'vuex'
 import escapeHtml from 'escape-html'
 import moment from '@nextcloud/moment'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
@@ -240,11 +241,11 @@ export default {
 		}
 	},
 	computed: {
+		...mapState({
+			showAuthorAnnotations: (state) => state.text.showAuthorAnnotations,
+		}),
 		isRichWorkspace() {
 			return this.richWorkspace
-		},
-		showAuthorAnnotations() {
-			return this.$store.state.showAuthorAnnotations
 		},
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
@@ -323,6 +324,10 @@ export default {
 		this.close()
 	},
 	methods: {
+		...mapActions('text', [
+			'setCurrentSession',
+		]),
+
 		updateLastSavedStatus() {
 			if (this.document) {
 				this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow()
@@ -478,7 +483,7 @@ export default {
 			this.readOnly = document.readOnly
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
-			this.$store.dispatch('setCurrentSession', this.currentSession)
+			this.setCurrentSession(this.currentSession)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
 				user: getCurrentUser(),

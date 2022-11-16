@@ -20,7 +20,7 @@
  *
  */
 
-import store from '../store/index.js'
+import store, { textModule } from '../store/index.js'
 
 /**
  * This mixin is required since we cannot be sure that the root Vue instance has
@@ -35,7 +35,11 @@ export default {
 	},
 	beforeMount() {
 		if (typeof this.$store === 'undefined') {
+			// Store is undefined, e.g. when used through `viewer.js`
 			this.$store = store
+		} else if (!this.$store.hasModule('text')) {
+			// Store lacks text modul (another store exists), e.g. when used as component via NPM package
+			this.$store.registerModule('text', textModule)
 		}
 	},
 }
