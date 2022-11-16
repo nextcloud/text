@@ -32,12 +32,8 @@ export default {
 	},
 	mixins: [useStore, useOutlineStateMixin, useOutlineActions],
 	data: () => ({
-		visible: false,
 		mobile: false,
 	}),
-	watch: {
-		'$store.getters.hasHeadings': 'setVisible',
-	},
 	mounted() {
 		this.$onResize = debounce(() => {
 			this.mobile = this.$el.parentElement.clientWidth < 320
@@ -52,11 +48,6 @@ export default {
 		this.$resizeObserver.unobserve(this.$el.parentElement)
 		this.$resizeObserver = null
 		this.$onResize = null
-	},
-	methods: {
-		setVisible(val) {
-			this.visible = val
-		},
 	},
 }
 </script>

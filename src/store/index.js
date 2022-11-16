@@ -36,8 +36,7 @@ const persistentStorage = getBuilder('text').persist().build()
 
 Vue.use(Vuex)
 
-const store = new Store({
-	plugins: [plugin],
+export const textModule = {
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		currentSession: persistentStorage.getItem('currentSession'),
@@ -76,14 +75,6 @@ const store = new Store({
 			state.headings = Object.freeze(headings)
 		},
 	},
-	getters: {
-		isMobileView({ viewWidth }) {
-			return viewWidth < 768
-		},
-		hasHeadings({ headings }) {
-			return headings.length > 0
-		},
-	},
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
 			commit(SET_SHOW_AUTHOR_ANNOTATIONS, value)
@@ -93,6 +84,16 @@ const store = new Store({
 		},
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)
+		},
+	},
+}
+
+const store = new Store({
+	plugins: [plugin],
+	modules: {
+		text: {
+			namespaced: true,
+			...textModule,
 		},
 	},
 })
