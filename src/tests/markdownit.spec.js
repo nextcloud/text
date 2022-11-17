@@ -5,6 +5,10 @@ import tableHtml from './fixtures/table.html'
 
 describe('markdownit', () => {
 
+	it('render image figures', () => {
+		expect(markdownit.render('[![moon](moon.jpg)](/uri)\n')).toBe('<figure><a href=\"/uri\"><img src=\"moon.jpg\" alt=\"moon\" /></a></figure>\n')
+	})
+
 	it('renders task lists', () => {
 		const rendered = markdownit.render('* [ ] task\n* not a task')
 		expect(stripIndent(rendered)).toBe(stripIndent(`

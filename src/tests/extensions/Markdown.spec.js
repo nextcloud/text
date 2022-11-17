@@ -61,11 +61,11 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('serializes block images with the default prosemirror way', () => {
 		const editor = createEditor({
-			content: '<figure><img alt="Hello" src="test"></figure>',
+			content: '<figure><img alt="Hello" src="test"></figure><p>hello</p>',
 			extensions: [Markdown, Image, ImageInline],
 		})
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)\n\n')
+		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)\n\nhello')
 	})
 
 	it('serializes inline images with the default prosemirror way', () => {
