@@ -111,7 +111,7 @@ class Notifier implements INotifier {
 			default:
 				throw new InvalidArgumentException();
 		}
-		$notification->setIcon($this->url->getAbsoluteURL($this->url->imagePath('text', 'app.svg')));
+		$notification->setIcon($this->url->getAbsoluteURL($this->url->imagePath('text', 'app-dark.svg')));
 		$notification->setLink($fileLink);
 		$this->setParsedSubjectFromRichSubject($notification);
 		return $notification;
