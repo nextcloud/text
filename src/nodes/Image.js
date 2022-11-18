@@ -24,6 +24,7 @@ import TiptapImage from '@tiptap/extension-image'
 import { Plugin } from 'prosemirror-state'
 import ImageView from './ImageView.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 const Image = TiptapImage.extend({
 
@@ -93,12 +94,11 @@ const Image = TiptapImage.extend({
 		]
 	},
 
-	// Append two newlines after image to make it a block image
-	toMarkdown(state, node) {
-		state.write('![' + state.esc(node.attrs.alt || '') + '](' + node.attrs.src.replace(/[()]/g, '\\$&')
-			+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '') + ')\n\n')
+	/* Serializes an image node as a block image, so it ensures an image is always a block by itself */
+	toMarkdown(state, node, parent, index) {
+		defaultMarkdownSerializer.nodes.image(state, node, parent, index)
+		state.closeBlock(node)
 	},
-
 })
 
 export default Image

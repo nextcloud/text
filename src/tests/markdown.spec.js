@@ -66,21 +66,6 @@ describe('Commonmark', () => {
 	})
 })
 
-describe('Commonmark images', () => {
-	beforeAll(() => {
-		// Make sure html tests pass
-		// entry.section === 'HTML blocks' || entry.section === 'Raw HTML'
-		markdownit.set({ html: true})
-	})
-	afterAll(() => {
-		markdownit.set({ html: false})
-	})
-
-	test('commonmark 513', () => {
-		expect(markdownit.render('[![moon](moon.jpg)](/uri)\n')).toBe('<figure><a href=\"/uri\"><img src=\"moon.jpg\" alt=\"moon\" /></a></figure>\n')
-	})
-})
-
 describe('Markdown though editor', () => {
 	test('headlines', () => {
 		expect(markdownThroughEditor('# Test')).toBe('# Test')
@@ -120,9 +105,11 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 	})
 	test('images', () => {
+		// Inline images
 		expect(markdownThroughEditor('text ![test](foo) moretext')).toBe('text ![test](foo) moretext')
-		// regression introduced in #3282. To be fixed in #3428.
-		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)\n\n')
+		// regression introduced in #3282. See issue #3428.
+		expect(markdownThroughEditor('![test](foo)')).toBe('![test](foo)')
+		expect(markdownThroughEditor('Hello\n\n![test](foo)')).toBe('Hello\n\n![test](foo)')
 	})
 	test('special characters', () => {
 		expect(markdownThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')

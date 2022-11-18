@@ -23,6 +23,7 @@
 import TiptapImage from '@tiptap/extension-image'
 import ImageView from './ImageView.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 // Inline image extension. Needed if markdown contains inline images.
 // Not supported to be created from our UI (we default to block images).
@@ -65,9 +66,8 @@ const ImageInline = TiptapImage.extend({
 		return VueNodeViewRenderer(ImageView)
 	},
 
-	toMarkdown(state, node) {
-		state.write('![' + state.esc(node.attrs.alt || '') + '](' + node.attrs.src.replace(/[()]/g, '\\$&')
-			+ (node.attrs.title ? ' "' + node.attrs.title.replace(/"/g, '\\"') + '"' : '') + ')')
+	toMarkdown(state, node, parent, index) {
+		return defaultMarkdownSerializer.nodes.image(state, node, parent, index)
 	},
 })
 
