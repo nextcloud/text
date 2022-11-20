@@ -280,6 +280,10 @@ Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name`).click(params)
 })
 
+Cypress.Commands.add('closeFile', (fileName, params = {}) => {
+	cy.get('#viewer .modal-header button.header-close').click(params)
+})
+
 Cypress.Commands.add('getFile', fileName => {
 	return cy.get(`.files-fileList tr[data-file="${fileName}"]`)
 })

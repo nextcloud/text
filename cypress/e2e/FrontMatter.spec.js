@@ -33,7 +33,10 @@ describe('Front matter support', function() {
 
 	it('Open file with front matter', function() {
 		cy.openFile('frontmatter.md').then(() => {
-			expect(cy.getContent().find('pre.frontmatter').length === 1)
+			cy.getContent().find('pre.frontmatter').should(pre => {
+				expect(pre.length === 1)
+				expect(pre[0].text === 'some: value\nother: 1.2')
+			})
 		})
 	})
 
@@ -57,6 +60,23 @@ describe('Front matter support', function() {
 				.type('---test')
 			cy.getContent().find('pre.frontmatter').should(pre => expect(pre.length === 1))
 			cy.getContent().find('hr').should(hr => expect(hr.length === 1))
+		})
+	})
+
+	it('Reopen front matter', function() {
+		cy.openFile('frontmatter.md').then(() => {
+			cy.getContent()
+				.type('{moveToEnd}New line{enter}')
+				.find('pre.frontmatter').should(pre => {
+					expect(pre.length === 1)
+				})
+				.closeFile().then(() => {
+					cy.openFile('frontmatter.md').then(() => {
+						cy.getContent().then(() => {
+							expect(cy.getContent().find('pre.frontmatter').length === 1)
+						})
+					})
+				})
 		})
 	})
 })

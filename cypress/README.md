@@ -22,6 +22,7 @@ cy.getContent()
 | `createFolder`       | Create a folder        | `dirName`                           |
 | `shareFileToUser`    | Share a file with user | `userId`, `password`, `path`, `targetUserId`|
 | `openFile`           | Open file in Viewer / Editor | `fileName`, `clickParams`     |
+| `closeFile`          | Close the current file |                                     |
 | `getFile`            | Get file list element of file | `fileName`                   |
 | `deleteFile`         | Remove a file          | `fileName`                          |
 | `reloadFileList`     | Refresh the file list  |                                     |
