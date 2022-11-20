@@ -34,7 +34,9 @@ describe('Commonmark', () => {
 
 	// failures because of some additional newline in markdownit
 	const skippedMarkdownTests = [
-		187, 209, 210
+		187, 209, 210,
+		// We interpret these as front matter
+		66, 68
 	];
 
 	const normalize = (str) => {
@@ -186,6 +188,11 @@ describe('Markdown though editor', () => {
 			const entry = `::: ${type}\n!${type}!\n\njust do it\n\n:::`
 			expect(markdownThroughEditor(entry)).toBe(entry)
 		})
+	})
+
+	test('front matter', () => {
+		expect(markdownThroughEditor('---\nhello: world\n---')).toBe('---\nhello: world\n---')
+		expect(markdownThroughEditor('---\n---')).toBe('---\n---')
 	})
 
 	test('mentions', () => {
