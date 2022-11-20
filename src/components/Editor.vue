@@ -110,7 +110,6 @@ import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
-import markdownitFrontMatter from 'markdown-it-front-matter'
 
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
@@ -496,15 +495,11 @@ export default {
 		},
 
 		onLoaded({ documentSource }) {
-			let frontMatter = ''
-			const rendered = !this.isRichEditor
+			const content = !this.isRichEditor
 				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.use(markdownitFrontMatter, (fm) => {
-					frontMatter = `<pre id="frontmatter"><code>${escapeHtml(fm)}</code></pre>`
-				}).render(documentSource)
+				: markdownit.render(documentSource)
 
 			this.hasConnectionIssue = false
-			const content = frontMatter + rendered
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
