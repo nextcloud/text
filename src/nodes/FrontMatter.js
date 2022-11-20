@@ -28,7 +28,7 @@ const FrontMatter = TiptapCodeBlock.extend({
 		const text = node.textContent
 		// Make sure the front matter fences are longer than any dash sequence within it
 		const dashes = text.match(/-{3,}/gm)
-		const separator = '-'.repeat(dashes ? dashes.sort().slice(-1)[0].length + 1 : 3)
+		const separator = dashes ? (dashes.sort().slice(-1)[0] + '-') : '---'
 
 		state.write('')
 		state.out = ''
