@@ -26,7 +26,8 @@
 		:active="active"
 		:autofocus="autofocus"
 		:share-token="shareToken"
-		:mime="mime" />
+		:mime="mime"
+		:show-outline-outside="showOutlineOutside" />
 </template>
 
 <script>
@@ -61,6 +62,10 @@ export default {
 		mime: {
 			type: String,
 			default: null,
+		},
+		showOutlineOutside: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	beforeMount() {
