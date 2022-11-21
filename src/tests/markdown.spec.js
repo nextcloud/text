@@ -24,6 +24,8 @@ const markdownThroughEditorHtml = (html) => {
 
 describe('Commonmark', () => {
 	const skippedMarkdownTests = [
+		// we interpret this as front matter
+		96, 98,
 		// contain HTML
 		21, 31, 201, 344, 474, 475, 476, 490, 493, 523, 535, 642, 643,
 		// contain comments
@@ -172,6 +174,11 @@ describe('Markdown though editor', () => {
 			const entry = `::: ${type}\n!${type}!\n\njust do it\n\n:::`
 			expect(markdownThroughEditor(entry)).toBe(entry)
 		})
+	})
+
+	test('front matter', () => {
+		expect(markdownThroughEditor('---\nhello: world\n---')).toBe('---\nhello: world\n---')
+		expect(markdownThroughEditor('---\n---')).toBe('---\n---')
 	})
 
 	test('mentions', () => {
