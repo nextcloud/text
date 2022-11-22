@@ -77,6 +77,10 @@ export default {
 			type: Boolean,
 			require: true,
 		},
+		showOutlineOutside: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data: () => ({
@@ -107,6 +111,13 @@ export default {
 			return this.viewWidth > 1265
 		},
 	},
+
+	watch: {
+		'showOutlineOutside'() {
+			this.outline.visible = this.showOutlineOutside
+		},
+	},
+
 	mounted() {
 		this.outline.enable = this.isAbleToShowOutline
 
@@ -121,6 +132,7 @@ export default {
 	methods: {
 		outlineToggle() {
 			this.outline.visible = !this.outline.visible
+			this.$emit('outline-toggled', this.outline.visible)
 		},
 	},
 
