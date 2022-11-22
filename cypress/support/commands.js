@@ -21,6 +21,7 @@
  */
 
 import axios from '@nextcloud/axios'
+import { login } from '@nextcloud/cypress/commands'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
@@ -28,17 +29,11 @@ import regeneratorRuntime from 'regenerator-runtime'
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 
-Cypress.Commands.add('login', (user, password, { route, onBeforeLoad } = {}) => {
-	route = route || '/apps/files'
+Cypress.Commands.add('loginWithoutVisit', login)
 
-	cy.session(user, function() {
-		cy.visit(route)
-		cy.get('input[name=user]').type(user)
-		cy.get('input[name=password]').type(password)
-		cy.get('form[name=login] button[type=submit]').click()
-		cy.url().should('include', route)
-	})
-	// in case the session already existed but we are on a different route...
+Cypress.Commands.add('login', (userId, password, { route, onBeforeLoad } = {}) => {
+	route = route || '/apps/files'
+	cy.loginWithoutVisit({ userId, password })
 	cy.visit(route, { onBeforeLoad })
 })
 
