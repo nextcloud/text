@@ -23,5 +23,6 @@
 import RichTextReader from './components/RichTextReader.vue'
 import AttachmentResolver from './services/AttachmentResolver.js'
 import { ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
+import { OUTLINE_STATE, OUTLINE_ACTIONS } from './components/Editor/Wrapper.provider.js'
 
-export { RichTextReader, AttachmentResolver, ATTACHMENT_RESOLVER }
+export { RichTextReader, AttachmentResolver, ATTACHMENT_RESOLVER, OUTLINE_STATE, OUTLINE_ACTIONS }

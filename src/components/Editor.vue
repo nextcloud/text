@@ -32,7 +32,9 @@
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
-			:show-author-annotations="showAuthorAnnotations">
+			:show-author-annotations="showAuthorAnnotations"
+			:show-outline-outside="showOutlineOutside"
+			@outline-toggled="outlineToggled">
 			<MainContainer v-if="$editor">
 				<!-- Readonly -->
 				<div v-if="readOnly" class="text-editor--readonly-bar">
@@ -215,6 +217,10 @@ export default {
 			default: false,
 		},
 		isDirectEditing: {
+			type: Boolean,
+			default: false,
+		},
+		showOutlineOutside: {
 			type: Boolean,
 			default: false,
 		},
