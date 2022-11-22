@@ -3,10 +3,10 @@
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\SessionService;
-use \OCP\AppFramework\ApiController;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Collaboration\Collaborators\ISearch;
-use \OCP\IRequest;
+use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Share\IShare;
 
@@ -41,7 +41,7 @@ class UserApiController extends ApiController {
 			$sessionUserId = $session['userId'];
 			if ($sessionUserId !== null && !isset($users[$sessionUserId])) {
 				$displayName = $this->userManager->getDisplayName($sessionUserId);
-				if (stripos($displayName, $filter) !== false) {
+				if (stripos($displayName, $filter) !== false || stripos($sessionUserId, $filter) !== false) {
 					$users[$sessionUserId] = $displayName;
 				}
 			}
