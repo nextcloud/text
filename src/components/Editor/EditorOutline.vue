@@ -55,9 +55,8 @@ export default {
 <style lang="scss" scoped>
 .editor--outline {
 	width:  300px;
-	padding: 0 10px;
+	padding: 0 10px 10px 10px;
 	position: fixed;
-	height: calc(100% - 100px);
 	overflow: auto;
 
 	&-mobile {
