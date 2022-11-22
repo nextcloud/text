@@ -110,6 +110,7 @@ jobs:
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
           config: defaultCommandTimeout=10000,video=false
+          tag: ${{ github.event_name }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           npm_package_name: ${{ env.APP_NAME }}
