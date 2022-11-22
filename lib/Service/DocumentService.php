@@ -197,6 +197,7 @@ class DocumentService {
 		if (sizeof($stepsToInsert) > 0) {
 			$newVersion = $this->insertSteps($documentId, $sessionId, $stepsToInsert, $version);
 		}
+		// If there were any queries in the steps send the entire history
 		$getStepsSinceVersion = sizeof($querySteps) > 0 ? 0 : $version;
 		return [
 			'steps' => $this->getSteps($documentId, $getStepsSinceVersion),
