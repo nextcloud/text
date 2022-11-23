@@ -29,7 +29,7 @@
 			class="hidden-visually"
 			:multiple="true"
 			@change="onImageUploadFilePicked">
-		<div v-if="isRichEditor" ref="menubar" class="menubar-icons">
+		<div v-if="isRichEditor && !isReadOnly" ref="menubar" class="menubar-icons">
 			<template v-for="(icon) in icons">
 				<EmojiPicker v-if="icon.class === 'icon-emoji'"
 					v-show="icon.priority <= iconCount"
@@ -154,6 +154,10 @@ export default {
 		useEditorMixin,
 	],
 	props: {
+		isReadOnly: {
+			type: Boolean,
+			default: false,
+		},
 		isRichEditor: {
 			type: Boolean,
 			default: true,
@@ -189,7 +193,7 @@ export default {
 			submenuVisibility: {},
 			lastImagePath: null,
 			icons: [...menuBarIcons],
-			editorHasFocus: false
+			editorHasFocus: false,
 		}
 	},
 	computed: {

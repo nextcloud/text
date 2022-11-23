@@ -20,16 +20,25 @@
  *
  */
 
+import { randHash } from '../utils/'
+const randUser = randHash()
+
 describe('Files default view', function() {
+	before(function() {
+		cy.nextcloudCreateUser(randUser, 'password')
+		cy.login(randUser, 'password')
+		cy.createFile('textfile.txt', '', 'text/plain')
+	})
+
 	beforeEach(function() {
-		cy.login('admin', 'admin')
+		cy.login(randUser, 'password')
 	})
 
-	it('See the default files list', function() {
-		cy.get('#fileList tr').should('contain', 'welcome.txt')
+	it('opens plain text files', function() {
+		cy.get('#fileList tr').should('contain', 'textfile.txt')
+		cy.openFile('textfile.txt')
+		cy.get('.modal-title').should('contain', 'textfile.txt')
+		cy.get('#editor-session-list').should('contain', 'Saved')
 	})
 
-	it('Take screenshot', function() {
-		cy.screenshot()
-	})
 })

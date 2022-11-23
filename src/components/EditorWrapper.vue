@@ -48,6 +48,7 @@
 					ref="menubar"
 					:file-path="relativePath"
 					:file-id="fileId"
+					:is-read-only="readOnly"
 					:is-rich-editor="isRichEditor"
 					:is-public="isPublic"
 					:autohide="autohide"
@@ -68,7 +69,7 @@
 				</MenuBar>
 				<div v-if="!menubarLoaded" class="menubar placeholder" />
 				<div ref="contentWrapper" class="content-wrapper">
-					<MenuBubble v-if="renderMenus"
+					<MenuBubble v-if="renderRichEditorMenus"
 						:content-wrapper="contentWrapper"
 						:file-path="relativePath" />
 					<EditorContent v-show="contentLoaded"
@@ -291,11 +292,15 @@ export default {
 		displayed() {
 			return this.currentSession && this.active
 		},
-		renderMenus() {
+		renderRichEditorMenus() {
 			return this.contentLoaded
 				&& this.isRichEditor
 				&& !this.syncError
 				&& !this.readOnly
+		},
+		renderMenus() {
+			return this.contentLoaded
+				&& !this.syncError
 		},
 	},
 	watch: {
