@@ -155,7 +155,6 @@ class TextDirectEditor implements IEditor {
 			$this->initialStateService->provideInitialState('text', 'file', [
 				'fileId' => $token->getFile()->getId(),
 				'mimetype' => $token->getFile()->getMimeType(),
-				'content' => $token->getFile()->getContent(),
 				'session' => \json_encode($session->getData())
 			]);
 			$this->initialStateService->provideInitialState('text', 'directEditingToken', $token->getToken());
