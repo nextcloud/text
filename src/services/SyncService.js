@@ -95,12 +95,10 @@ class SyncService {
 			document: this.document,
 			session: this.session,
 		})
-		const content = connectionData.content
-			|| await this._fetchDocument()
 		this.emit('loaded', {
 			document: this.document,
 			session: this.session,
-			documentSource: '' + content,
+			documentSource: '' + connectionData.content,
 		})
 	}
 
