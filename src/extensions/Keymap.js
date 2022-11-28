@@ -44,6 +44,12 @@ const Keymap = Extension.create({
 							window.dispatchEvent(event)
 							return true
 						}
+						if (event.key === 'Delete' && event.ctrlKey === true) {
+							// Prevent deleting the file, by core Viewer.vue
+                                                        event.stopPropagation()
+                                                        window.dispatchEvent(event)
+                                                        return true
+                                                }
 					},
 				},
 			}),
