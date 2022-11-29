@@ -1,8 +1,9 @@
+import { User } from '@nextcloud/cypress'
 import { initUserAndFiles, randHash } from '../utils/index.js'
 import 'cypress-file-upload'
 
-const randUser = randHash()
-const randUser1 = randHash()
+const randUser = new User(randHash(), 'password')
+const randUser1 = new User(randHash(), 'password')
 const currentUser = randUser
 
 const fileName = 'empty.md'
@@ -22,11 +23,12 @@ const createFileWithMention = (target, userToMention) => {
 describe('Test mentioning users', () => {
 	before(() => {
 		initUserAndFiles(randUser, 'test.md')
-		cy.nextcloudCreateUser(randUser1, 'password')
+		cy.createUser(randUser1)
 	})
 
 	beforeEach(() => {
-		cy.login(currentUser, 'password')
+		cy.login(currentUser)
+		cy.visit('/apps/files')
 	})
 
 	it('Type @ and see the user list', () => {
@@ -44,14 +46,14 @@ describe('Test mentioning users', () => {
 		cy.openFile(fileName, { force: true })
 
 		cy.getContent()
-			.type(`@${randUser1.substring(0, 3)}`)
+			.type(`@${randUser1.userId.substring(0, 3)}`)
 
 		return cy.wait(`@${requestAlias}`)
 			.then(() => {
 				cy.get('.tippy-box .items').children().should(($children) => {
 					const users = $children.map((i, el) => el.innerText).get()
 					expect(users.length).to.be.greaterThan(0)
-					expect(randUser1).to.be.oneOf(users)
+					expect(randUser1.userId).to.be.oneOf(users)
 				})
 			})
 	})
@@ -72,21 +74,21 @@ describe('Test mentioning users', () => {
 
 		cy.get('.text-editor__content div[contenteditable="true"]')
 			.clear()
-			.type(`@${randUser1.substring(0, 3)}`)
+			.type(`@${randUser1.userId.substring(0, 3)}`)
 
 		return cy.wait(`@${autocompleteReauestAlias}`)
 			.then(() => {
-				cy.get('.tippy-box .items').contains(randUser1).click()
-				cy.get('span.mention').contains(randUser1).should('be.visible')
+				cy.get('.tippy-box .items').contains(randUser1.userId).click()
+				cy.get('span.mention').contains(randUser1.userId).should('be.visible')
 			})
 	})
 
 	it('Open a document with an existing mention and properly see the user bubble rendered', () => {
 		const mentionFilename = 'mention.md'
-		createFileWithMention(mentionFilename, randUser1)
+		createFileWithMention(mentionFilename, randUser1.userId)
 		cy.openFile(mentionFilename, { force: true })
 		cy.get('.text-editor__content div[contenteditable="true"] span.mention')
-			.contains(randUser1)
+			.contains(randUser1.userId)
 			.should('be.visible')
 	})
 })

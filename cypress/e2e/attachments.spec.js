@@ -21,10 +21,11 @@
  */
 
 import { initUserAndFiles, randHash } from '../utils/index.js'
+import { User } from '@nextcloud/cypress'
 import 'cypress-file-upload'
 
-const randUser = randHash()
-const randUser2 = randHash()
+const randUser = new User(randHash(), 'password')
+const randUser2 = new User(randHash(), 'password')
 let currentUser = randUser
 const attachmentFileNameToId = {}
 
@@ -153,12 +154,13 @@ describe('Test all attachment insertion methods', () => {
 		cy.uploadFile('github.png', 'image/png', 'sub/a/a.png')
 		cy.uploadFile('github.png', 'image/png', 'sub/b/b.png')
 
-		cy.nextcloudCreateUser(randUser2, 'password')
-		cy.shareFileToUser(randUser, 'password', 'test.md', randUser2)
+		cy.createUser(randUser2)
+		cy.shareFileToUser(randUser, 'test.md', randUser2)
 	})
 
 	beforeEach(() => {
-		cy.login(currentUser, 'password')
+		cy.login(currentUser)
+		cy.visit('/apps/files')
 	})
 
 	it('See test files in the list and display hidden files', () => {

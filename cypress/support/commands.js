@@ -21,7 +21,7 @@
  */
 
 import axios from '@nextcloud/axios'
-import { login } from '@nextcloud/cypress/commands'
+import { addCommands } from '@nextcloud/cypress'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
@@ -29,47 +29,15 @@ import regeneratorRuntime from 'regenerator-runtime'
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 
-Cypress.Commands.add('loginWithoutVisit', login)
+addCommands()
 
-Cypress.Commands.add('login', (userId, password, { route, onBeforeLoad } = {}) => {
-	route = route || '/apps/files'
-	cy.loginWithoutVisit({ userId, password })
-	cy.visit(route, { onBeforeLoad })
-})
-
-Cypress.Commands.add('logout', (route = '/') => {
-	cy.session('_guest', function() {
-	})
-})
-
-Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
-	cy.clearCookies()
-	cy.request({
-		method: 'POST',
-		url: `${Cypress.env('baseUrl')}/ocs/v1.php/cloud/users?format=json`,
-		form: true,
-		body: {
-			userid: user,
-			password,
-			language: 'en', // for tests that rely on the translated text
-		},
-		auth: { user: 'admin', pass: 'admin' },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-	}).then(response => {
-		cy.log(`Created user ${user}`, response.status)
-	})
-})
-
-Cypress.Commands.add('nextcloudUpdateUser', (user, password, key, value) => {
+Cypress.Commands.add('nextcloudUpdateUser', (user, key, value) => {
 	cy.request({
 		method: 'PUT',
-		url: `${Cypress.env('baseUrl')}/ocs/v2.php/cloud/users/${user}`,
+		url: `${Cypress.env('baseUrl')}/ocs/v2.php/cloud/users/${user.userId}`,
 		form: true,
 		body: { key, value },
-		auth: { user, pass: password },
+		auth: { user: user.userId, password: user.password },
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
@@ -98,21 +66,23 @@ Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	return cy.fixture(fileName, 'base64')
 		.then(Cypress.Blob.base64StringToBlob)
-		.then(async blob => {
+		.then(blob => {
 			const file = new File([blob], fileName, { type: mimeType })
 			if (typeof target !== 'undefined') {
 				fileName = target
 			}
-			await cy.window().then(async win => {
-				await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
-					headers: {
-						requesttoken: win.OC.requestToken,
-						'Content-Type': mimeType,
-					},
-				}).then(response => {
-					cy.log(`Uploaded ${fileName}`, response.status)
+			return cy.request('/csrftoken')
+				.then(({ body }) => body.token)
+				.then(requesttoken => {
+					return axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
+						headers: {
+							requesttoken,
+							'Content-Type': mimeType,
+						},
+					}).then(response => {
+						cy.log(`Uploaded ${fileName}`, response.status)
+					})
 				})
-			})
 		})
 })
 
@@ -136,7 +106,7 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 
 })
 
-Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) => {
+Cypress.Commands.add('shareFileToUser', (user, path, targetUser) => {
 	cy.clearCookies()
 	cy.request({
 		method: 'POST',
@@ -145,19 +115,19 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 		body: {
 			path,
 			shareType: 0,
-			shareWith: targetUserId,
+			shareWith: targetUser.userId,
 		},
-		auth: { user: userId, pass: password },
+		auth: { user: user.userId, password: user.password },
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	}).then(response => {
-		cy.log(`${userId} shared ${path} with ${targetUserId}`, response.status)
+		cy.log(`${user.userId} shared ${path} with ${targetUser.userId}`, response.status)
 	})
 })
 
-Cypress.Commands.add('isolateTest', ({ sourceFile = 'text.md', targetFile = null, onBeforeLoad } = {}) => {
+Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = null, onBeforeLoad } = {}) => {
 	targetFile = targetFile || sourceFile
 
 	const retry = cy.state('test').currentRetry()
@@ -223,11 +193,11 @@ Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
 	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
 )
 
-Cypress.Commands.add('getFileContent', (userId, path) => {
+Cypress.Commands.add('getFileContent', (user, path) => {
 	return cy.request({
 		method: 'GET',
 		url: `${Cypress.env('baseUrl')}/remote.php/webdav/${path}`,
-		auth: { user: userId, pass: 'password' },
+		auth: { user: user.userId, pass: user.password },
 	}).then(response => {
 		cy.wrap(response.body)
 	})
@@ -277,6 +247,7 @@ Cypress.Commands.add('openFile', (fileName, params = {}) => {
 
 Cypress.Commands.add('closeFile', (fileName, params = {}) => {
 	cy.get('#viewer .modal-header button.header-close').click(params)
+	cy.get('#viewer .modal-header').should('not.exist')
 })
 
 Cypress.Commands.add('getFile', fileName => {

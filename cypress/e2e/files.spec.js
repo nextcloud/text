@@ -20,17 +20,19 @@
  *
  */
 
+import { User } from '@nextcloud/cypress'
 import { randHash } from '../utils/index.js'
 
-const randUser = randHash()
+const randUser = new User(randHash(), 'password')
 
 describe('Files default view', () => {
 	before(() => {
-		cy.nextcloudCreateUser(randUser, randUser)
+		cy.createUser(randUser)
 	})
 
 	beforeEach(() => {
-		cy.login(randUser, randUser)
+		cy.login(randUser)
+		cy.visit('/apps/files')
 	})
 
 	it('See the default files list', () => {

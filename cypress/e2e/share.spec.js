@@ -21,14 +21,17 @@
  *
  */
 
+import { User } from '@nextcloud/cypress'
 import { randHash } from '../utils/index.js'
-const randUser = randHash()
+
+const randUser = new User(randHash(), 'password')
 
 describe('Open test.md in viewer', function() {
 	before(function() {
 		// Init user
-		cy.nextcloudCreateUser(randUser, 'password')
-		cy.login(randUser, 'password')
+		cy.createUser(randUser)
+		cy.login(randUser)
+		cy.visit('/apps/files')
 
 		// Upload test files
 		cy.createFolder('folder')
@@ -41,7 +44,8 @@ describe('Open test.md in viewer', function() {
 			.should('contain', 'test.md')
 	})
 	beforeEach(function() {
-		cy.login(randUser, 'password')
+		cy.login(randUser)
+		cy.visit('/apps/files')
 	})
 
 	it('Shares the file as a public read only link', function() {

@@ -1,6 +1,7 @@
+import { User } from '@nextcloud/cypress'
 import { initUserAndFiles, randHash } from '../utils/index.js'
 
-const currentUser = randHash()
+const currentUser = new User(randHash(), 'password')
 const fileName = 'empty.md'
 
 const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
@@ -21,12 +22,13 @@ describe('Content Sections', () => {
 	})
 
 	beforeEach(function() {
-		cy.login(currentUser, 'password', {
+		cy.login(currentUser, {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
 			},
 		})
+		cy.visit('/apps/files')
 
 		cy.isolateTest({
 			sourceFile: fileName,

@@ -20,70 +20,60 @@
  *
  */
 
-import { randHash } from '../utils/index.js'
-
-const randUser = randHash()
-
-const prepareTest = () => {
-	return cy.openFile(`${Cypress.currentTest.title}.md`)
-		.then(() => {
-			return cy.getContent()
-				.type(Cypress.currentTest.title)
-				.type('{selectall}')
-		})
-}
-
-const applyTest = (shortcut, tag) => {
+const testShortcut = (shortcut, tag) => {
 	cy.getContent()
 		.type(shortcut)
 
-	return cy.getContent()
+	cy.getContent()
 		.find(tag)
 		.should('contain', Cypress.currentTest.title)
+
+	return cy.closeFile()
 }
 
-const shortcuts = {
-	bold: ['{ctrl}b', 'strong'],
-	italic: ['{ctrl}i', 'em'],
-	underline: ['{ctrl}u', 'u'],
-	strikethrough: ['{ctrl}{shift}x', 's'],
-	blockquote: ['{ctrl}{shift}b', 'blockquote'],
-	codeblock: ['{ctrl}{alt}c', 'pre'],
-	'ordered-list': ['{ctrl}{shift}7', 'ol'],
-	'unordered-list': ['{ctrl}{shift}8', 'ul'],
-	'task-list': ['{ctrl}{shift}9', 'ul[data-type="taskList"]'],
-	...Array.from({ length: 6 }).reduce((acc, _, index) => {
-		const num = index + 1
-		const tag = `h${num}`
-		acc[`heading-${tag}`] = [`{ctrl}{shift}${num}`, tag]
-
-		return acc
-	}, {}),
+const testHeading = (num) => {
+	testShortcut(`{ctrl}{shift}${num}`, `h${num}`)
 }
 
 describe('keyboard shortcuts', () => {
+
+	let user
+
 	before(() => {
-		cy.nextcloudCreateUser(randUser, 'password')
+		cy.createRandomUser().then(u => {
+			user = u
+		})
 	})
 
 	beforeEach(() => {
-		cy.login(randUser, 'password')
-			.then(() => {
-				return cy.uploadFile(
-					'empty.md',
-					'text/markdown',
-					`${Cypress.currentTest.title}.md`
-				)
-			})
-			.then(() => cy.reloadFileList())
+		cy.login(user)
+		cy.visit('/apps/files')
+		const path = `/${Cypress.currentTest.title}.md`
+		cy.uploadFile(
+			'empty.md',
+			'text/markdown',
+			path
+		)
+		cy.window().then(win => win.OCA.Viewer.open({ path }))
+	    cy.getContent()
+			.type(Cypress.currentTest.title)
+			.type('{selectall}')
 	})
 
-	Object.entries(shortcuts)
-		.forEach(([name, [shortcut, tag]]) => {
-			it(name, () => {
-				prepareTest()
-					.then(() => applyTest(shortcut, tag))
-			})
-		})
+	it('bold', () => testShortcut('{ctrl}b', 'strong'))
+	it('italic', () => testShortcut('{ctrl}i', 'em'))
+	it('underline', () => testShortcut('{ctrl}u', 'u'))
+	it('strikethrough', () => testShortcut('{ctrl}{shift}x', 's'))
+	it('blockquote', () => testShortcut('{ctrl}{shift}b', 'blockquote'))
+	it('codeblock', () => testShortcut('{ctrl}{alt}c', 'pre'))
+	it('ordered-list', () => testShortcut('{ctrl}{shift}7', 'ol'))
+	it('unordered-list', () => testShortcut('{ctrl}{shift}8', 'ul'))
+	it('task-list', () => testShortcut('{ctrl}{shift}9', 'ul[data-type="taskList"]'))
+
+	// Headings
+	const levels = [1, 2, 3, 4, 5, 6]
+	levels.forEach((level) => {
+		it(`heading-${level}`, () => testHeading(level))
+	})
 
 })
