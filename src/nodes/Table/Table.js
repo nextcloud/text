@@ -127,20 +127,25 @@ export default Table.extend({
 		return {
 			...this.parent(),
 			Tab: () => this.editor.commands.goToNextCell() || this.editor.commands.leaveTable(),
-			Enter: () => {
-				if (this.editor.commands.goToNextRow()) {
-					return true
-				}
+			Enter: ({ editor }) => {
+				const { selection } = editor.state
+				if (!selection.$from.parent.type.name.startsWith('table')) return false
 
-				if (!this.editor.can().addRowAfter()) {
-					return false
+				if (selection.$from.nodeBefore?.type.name === 'hardBreak'
+					&& (editor.can().goToNextRow() || editor.can().addRowAfter())) {
+					// Remove previous hard break and move to next row instead
+					editor.chain()
+						.setTextSelection({ from: selection.from - 1, to: selection.from })
+						.deleteSelection()
+						.run()
+					if (editor.commands.goToNextRow()) return true
+					return editor.chain().addRowAfter().goToNextRow().run()
+				} else {
+					return editor.chain()
+						.insertContent('<br data-syntax="html" />')
+						.focus()
+						.run()
 				}
-
-				return this.editor
-					.chain()
-					.addRowAfter()
-					.goToNextRow()
-					.run()
 			},
 		}
 	},

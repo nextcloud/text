@@ -14,10 +14,10 @@ export default TableCell.extend({
 
 	parseHTML() {
 		return [
-			{ tag: 'td' },
-			{ tag: 'th' },
-			{ tag: 'table thead ~ tbody th', priority: 70 },
-			{ tag: 'table thead ~ tbody td', priority: 70 },
+			{ tag: 'td', preserveWhitespace: true },
+			{ tag: 'th', preserveWhitespace: true },
+			{ tag: 'table thead ~ tbody th', priority: 70, preserveWhitespace: true },
+			{ tag: 'table thead ~ tbody td', priority: 70, preserveWhitespace: true },
 		]
 	},
 
