@@ -22,7 +22,7 @@
 
 <template>
 	<NodeViewWrapper>
-		<div class="image image-view"
+		<figure class="image image-view"
 			data-component="image-view"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
 			:data-src="src">
@@ -70,13 +70,15 @@
 				</transition>
 				<transition name="fade">
 					<div v-if="!isMediaAttachment" v-show="loaded" class="image__caption">
-						<div class="image__caption__wrapper">
+						<figcaption v-if="!editable">
+							{{ alt }}
+						</figcaption>
+						<div v-else class="image__caption__wrapper">
 							<input v-show="!isMediaAttachment"
 								ref="altInput"
 								type="text"
 								class="image__caption__input"
 								:value="alt"
-								:disabled="!editable"
 								@keyup.enter="updateAlt">
 							<div v-if="showImageDeleteIcon"
 								class="image__caption__delete">
@@ -113,7 +115,7 @@
 			<small v-if="errorMessage" class="image__error-message">
 				{{ errorMessage }}
 			</small>
-		</div>
+		</figure>
 	</NodeViewWrapper>
 </template>
 
@@ -350,6 +352,19 @@ export default {
 	&__wrapper {
 		position: relative;
 	}
+	&__delete {
+		display: flex;
+		align-items: center;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		right: -6px;
+		bottom: 10px;
+		&, svg {
+			cursor: pointer;
+		}
+	}
+
 	input[type='text'] {
 		width: 200px;
 		max-width: 80%;
@@ -363,14 +378,29 @@ export default {
 			color: var(--color-main-text) !important;
 		}
 	}
+	figcaption {
+		color: var(--color-text-maxcontrast) !important;
+		max-width: 80%;
+		text-align: center;
+		width: fit-content;
+	}
 }
 
 .image__loading {
 	height: 100px;
 }
 
+.image__main {
+	max-height: calc(100vh - 50px - 50px);
+}
+
 .image__main--broken-icon, .image__error-message {
 	color: var(--color-text-maxcontrast);
+}
+
+.image__error-message {
+	display: block;
+	text-align: center;
 }
 
 .image__view {
@@ -387,10 +417,6 @@ export default {
 			color: var(--color-main-text) !important;
 		}
 	}
-}
-
-.image__main {
-	max-height: calc(100vh - 50px - 50px);
 }
 
 .media {
@@ -429,11 +455,6 @@ export default {
 	}
 }
 
-.image__error-message {
-	display: block;
-	text-align: center;
-}
-
 .fade-enter-active {
 	transition: opacity .3s ease-in-out;
 }
@@ -444,18 +465,5 @@ export default {
 
 .fade-enter {
 	opacity: 0;
-}
-
-.image__caption__delete {
-	display: flex;
-	align-items: center;
-	width: 20px;
-	height: 20px;
-	position: absolute;
-	right: -6px;
-	bottom: 10px;
-	&, svg {
-		cursor: pointer;
-	}
 }
 </style>
