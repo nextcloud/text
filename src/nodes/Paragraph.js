@@ -1,6 +1,5 @@
 import TiptapParagraph from '@tiptap/extension-paragraph'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import { isMobile } from '../helpers/platform.js'
 import ParagraphView from './ParagraphView.vue'
 
 const Paragraph = TiptapParagraph.extend({
@@ -18,8 +17,6 @@ const Paragraph = TiptapParagraph.extend({
 		return {
 			...this.parent?.(),
 			Enter: ({ editor }) => {
-				if (!isMobile()) return false
-
 				const { selection } = editor.state
 				const atBeginning = selection.$from.parentOffset === 0
 				if (selection.$from.parent.type !== this.type || atBeginning) return false

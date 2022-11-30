@@ -5,7 +5,7 @@
 		@close="$emit('close')">
 		<h2>{{ t('text', 'Formatting help') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
-		<p v-if="!isMobile">
+		<p v-if="!isMobileDevice">
 			{{ t('text', 'Just type the Markdown syntax or use keyboard shortcuts from below.') }}
 		</p>
 		<p v-else>
@@ -17,7 +17,7 @@
 				<tr>
 					<th>{{ t('text', 'Style') }}</th>
 					<th>{{ t('text', 'Syntax') }}</th>
-					<th v-if="!isMobile">
+					<th v-if="!isMobileDevice">
 						{{ t('text', 'Keyboard shortcuts') }}
 					</th>
 				</tr>
@@ -25,35 +25,27 @@
 			<tbody>
 				<tr>
 					<td>{{ t('text', 'New paragraph') }}</td>
-					<template v-if="!isMobile">
-						<td />
-						<td>
-							<kbd>{{ t('text', 'Enter') }}</kbd>
-						</td>
-					</template>
-					<td v-else>
+					<td>
 						2x
 						<kbd>{{ t('text', 'Enter') }}</kbd>
 					</td>
+					<td v-if="!isMobileDevice" />
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Hard line break') }}</td>
-					<template v-if="!isMobile">
-						<td />
-						<td>
-							<kbd>{{ t('text', 'Shift') }}</kbd>
-							+
-							<kbd>{{ t('text', 'Enter') }}</kbd>
-						</td>
-					</template>
-					<td v-else>
+					<td>
+						<kbd>{{ t('text', 'Enter') }}</kbd>
+					</td>
+					<td v-if="!isMobileDevice">
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
 						<kbd>{{ t('text', 'Enter') }}</kbd>
 					</td>
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Bold') }}</td>
 					<td><code>**{{ t('text', 'Bold text') }}**</code></td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>B</kbd>
@@ -62,7 +54,7 @@
 				<tr>
 					<td>{{ t('text', 'Italic') }}</td>
 					<td><code>*{{ t('text', 'Italicized text') }}*</code></td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>I</kbd>
@@ -71,7 +63,7 @@
 				<tr>
 					<td>{{ t('text', 'Strikethrough') }}</td>
 					<td><code>~~{{ t('text', 'Mistaken text') }}~~</code></td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
@@ -82,7 +74,7 @@
 				<tr>
 					<td>{{ t('text', 'Underline') }}</td>
 					<td><code>__{{ t('text', 'Underlined text') }}__</code></td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>U</kbd>
@@ -95,7 +87,7 @@
 					<td class="ellipsis_top">
 						<code># {{ t('text', 'Heading level 1') }}</code>
 					</td>
-					<td v-if="!isMobile" class="ellipsis_top">
+					<td v-if="!isMobileDevice" class="ellipsis_top">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
@@ -110,7 +102,7 @@
 					<td class="noborder ellipsis">
 						…
 					</td>
-					<td v-if="!isMobile" class="ellipsis noborder">
+					<td v-if="!isMobileDevice" class="ellipsis noborder">
 						…
 					</td>
 				</tr>
@@ -121,7 +113,7 @@
 					<td class="noborder ellipsis_bottom">
 						<code>###### {{ t('text', 'Heading level 6') }}</code>
 					</td>
-					<td v-if="!isMobile" class="noborder ellipsis_bottom">
+					<td v-if="!isMobileDevice" class="noborder ellipsis_bottom">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
@@ -134,7 +126,7 @@
 					<td>
 						<code>* {{ t('text', 'An item') }}</code>
 					</td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
@@ -147,7 +139,7 @@
 					<td>
 						<code>1. {{ t('text', 'First item') }}</code>
 					</td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
@@ -160,14 +152,14 @@
 					<td>
 						<code>* [] {{ t('text', 'To-Do item') }}</code>
 					</td>
-					<td v-if="!isMobile" />
+					<td v-if="!isMobileDevice" />
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Blockquote') }}</td>
 					<td>
 						<code>> {{ t('text', 'Quoted text') }}</code>
 					</td>
-					<td v-if="!isMobile">
+					<td v-if="!isMobileDevice">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
 						<kbd>></kbd>
@@ -178,7 +170,7 @@
 					<td>
 						<code>``` {{ t('text', 'Some code') }}</code>
 					</td>
-					<td v-if="!isMobile" />
+					<td v-if="!isMobileDevice" />
 				</tr>
 			</tbody>
 		</table>
@@ -187,7 +179,7 @@
 
 <script>
 import { NcModal, Tooltip } from '@nextcloud/vue'
-import isMobile from './../mixins/isMobile.js'
+import { isMobileDevice } from './../helpers/platform.js'
 
 export default {
 	name: 'HelpModal',
@@ -197,9 +189,6 @@ export default {
 	directives: {
 		Tooltip,
 	},
-	mixins: [
-		isMobile,
-	],
 	data() {
 		return {
 			formatted: {
@@ -214,6 +203,7 @@ export default {
 				blockQuote: true,
 				codeBlock: true,
 			},
+			isMobileDevice: isMobileDevice(),
 		}
 	},
 	computed: {

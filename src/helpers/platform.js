@@ -1,4 +1,9 @@
-const isMobile = () => {
+/**
+ * Check if current platform is a mobile device
+ *
+ * @return {boolean} whether the platform is a mobile device
+ */
+export function isMobileDevice() {
 	// Use client hints if already available
 	if (navigator?.userAgentData?.mobile !== undefined) return navigator.userAgentData.mobile
 
@@ -16,8 +21,4 @@ const isMobile = () => {
 	]
 
 	return mobileDevices.some(regex => navigator.userAgent.match(regex))
-}
-
-export {
-	isMobile,
 }

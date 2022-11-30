@@ -87,6 +87,7 @@ import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
+import { isMobile } from '@nextcloud/vue'
 
 import {
 	EDITOR,
@@ -110,7 +111,6 @@ import markdownit from './../markdownit/index.js'
 
 import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
-import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
