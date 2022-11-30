@@ -23,12 +23,22 @@
 import TipTapHardBreak from '@tiptap/extension-hard-break'
 
 const HardBreak = TipTapHardBreak.extend({
+	addAttributes() {
+		return {
+			syntax: {
+				default: '  ',
+				rendered: false,
+				keepOnSplit: true,
+				parseHTML: (el) => el.getAttribute('data-syntax') || '  ',
+			},
+		}
+	},
 
 	toMarkdown(state, node, parent, index) {
 		for (let i = index + 1; i < parent.childCount; i++) {
 			if (parent.child(i).type !== node.type) {
-				if (parent.child(i).text?.startsWith('\n')) state.write('  ')
-				else state.write('  \n')
+				state.write(node.attrs.syntax)
+				if (!parent.child(i).text?.startsWith('\n')) state.write('\n')
 				return
 			}
 		}

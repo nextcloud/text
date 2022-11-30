@@ -368,7 +368,9 @@ export default {
 				initialSession: this.initialSession,
 			}).catch((e) => {
 				this.hasConnectionIssue = true
-				if (e.response.status === 401) {
+				if (e.response === undefined) {
+					logger.error('Unexpected error encountered', { exception: e })
+				} else if (e.response.status === 401) {
 					const redirectUrl = OCA.Files
 						? '/index.php/apps/files/?dir=' + encodeURIComponent(this.currentDirectory || '/') + '&openfile=' + this.fileId
 						: window.location.pathname

@@ -36,7 +36,7 @@ describe('Commonmark', () => {
 		// https://github.com/markdown-it/markdown-it/blob/df4607f1d4d4be7fdc32e71c04109aea8cc373fa/test/commonmark.js#L10
 		return str.replace(/<blockquote><\/blockquote>/g, '<blockquote>\n</blockquote>')
 			.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
-			.replace(/<br \/>/, '<br />\n')
+			.replace(/<br data-syntax=".{1,2}" \/>/, '<br />\n')
 	}
 
 	// special treatment because we use markdown-it-image-figures
@@ -78,7 +78,8 @@ describe('Markdown though editor', () => {
 	})
 	test('hard breaks', () => {
 		expect(markdownThroughEditor('hard  \nbreak')).toBe('hard  \nbreak')
-		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard  \nbreak')
+		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard\\\nbreak')
+		expect(markdownThroughEditor('mixed\\\nhard  \nbreak')).toBe('mixed\\\nhard  \nbreak')
 		expect(markdownThroughEditor('soft\nbreak')).toBe('soft\nbreak')
 	})
 	test('inline format', () => {
