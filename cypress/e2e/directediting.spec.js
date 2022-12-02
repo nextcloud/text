@@ -1,9 +1,10 @@
+import { User } from '@nextcloud/cypress'
 import { initUserAndFiles, randHash } from '../utils/index.js'
 
-const randUser = randHash()
+const randUser = new User(randHash(), 'password')
 
 const createDirectEditingLink = (user, file) => {
-	cy.login(user, 'password')
+	cy.login(user)
 	return cy.request({
 		method: 'POST',
 		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files/api/v1/directEditing/open?format=json`,
@@ -11,7 +12,7 @@ const createDirectEditingLink = (user, file) => {
 		body: {
 			path: file,
 		},
-		auth: { user, pass: 'password' },
+		auth: { user: user.userId, pass: user.password },
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
@@ -19,13 +20,13 @@ const createDirectEditingLink = (user, file) => {
 	}).then(response => {
 		cy.log(response)
 		const token = response.body?.ocs?.data?.url
-		cy.log(`Created direct editing token for ${user}`, token)
+		cy.log(`Created direct editing token for ${user.userId}`, token)
 		return cy.wrap(token)
 	})
 }
 
 const createDirectEditingLinkForNewFile = (user, file) => {
-	cy.login(user, 'password')
+	cy.login(user)
 	return cy.request({
 		method: 'POST',
 		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files/api/v1/directEditing/create?format=json`,
@@ -35,7 +36,7 @@ const createDirectEditingLinkForNewFile = (user, file) => {
 			editorId: 'text',
 			creatorId: 'textdocument',
 		},
-		auth: { user, pass: 'password' },
+		auth: { user: user.userId, pass: user.password },
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
@@ -43,7 +44,7 @@ const createDirectEditingLinkForNewFile = (user, file) => {
 	}).then(response => {
 		cy.log(response)
 		const token = response.body?.ocs?.data?.url
-		cy.log(`Created direct editing token for ${user}`, token)
+		cy.log(`Created direct editing token for ${user.userId}`, token)
 		return cy.wrap(token)
 	})
 }

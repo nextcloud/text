@@ -1,7 +1,3 @@
-import { randHash } from '../utils/index.js'
-
-const currentUser = randHash()
-
 const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
 	.last()
 	.click({ force: true })
@@ -12,10 +8,14 @@ const createMarkdown = (fileName, content) => {
 }
 
 describe('Image View', () => {
+	let user
 	before(() => {
 		// Init user
-		cy.nextcloudCreateUser(currentUser, 'password')
-		cy.login(currentUser, 'password')
+		cy.createRandomUser().then(u => {
+			user = u
+			cy.login(u)
+		})
+		cy.visit('/apps/files')
 
 		// Upload test files to user's storage
 		cy.createFolder('child-folder')
@@ -24,7 +24,8 @@ describe('Image View', () => {
 	})
 
 	beforeEach(() => {
-		cy.login(currentUser, 'password')
+		cy.login(user)
+		cy.visit('/apps/files')
 	})
 
 	describe('direct access', () => {
@@ -43,7 +44,7 @@ describe('Image View', () => {
 			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
-				.should('contains', `/dav/files/${currentUser}/github.png`)
+				.should('contains', `/dav/files/${user.userId}/github.png`)
 		})
 
 		it('from child folder', () => {
@@ -61,7 +62,7 @@ describe('Image View', () => {
 			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
-				.should('contains', `/dav/files/${currentUser}/child-folder/github.png`)
+				.should('contains', `/dav/files/${user.userId}/child-folder/github.png`)
 		})
 
 		it('from parent folder', () => {
@@ -81,7 +82,7 @@ describe('Image View', () => {
 			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
-				.should('contains', `/dav/files/${currentUser}/github.png`)
+				.should('contain', `/dav/files/${user.userId}/github.png`)
 		})
 
 		it('with preview', () => {

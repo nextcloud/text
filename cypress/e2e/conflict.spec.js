@@ -20,9 +20,10 @@
  *
  */
 
+import { User } from '@nextcloud/cypress'
 import { initUserAndFiles, randHash } from '../utils/index.js'
 
-const randUser = randHash()
+const randUser = new User(randHash(), 'password')
 const fileName = 'test.md'
 
 describe('Open test.md in viewer', function() {
@@ -33,7 +34,8 @@ describe('Open test.md in viewer', function() {
 	})
 
 	beforeEach(function() {
-		cy.login(randUser, 'password')
+		cy.login(randUser)
+		cy.visit('/apps/files')
 	})
 
 	it('displays conflicts', function() {

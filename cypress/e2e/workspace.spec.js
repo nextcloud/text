@@ -20,18 +20,20 @@
  *
  */
 
+import { User } from '@nextcloud/cypress'
 import { randHash } from '../utils/index.js'
-const randUser = randHash()
+const randUser = new User(randHash(), 'password')
 
 describe('Workspace', function() {
 	let currentFolder
 
 	before(function() {
-		cy.nextcloudCreateUser(randUser, 'password')
+		cy.createUser(randUser, 'password')
 	})
 
 	beforeEach(function() {
-		cy.login(randUser, 'password').then(() => {
+		cy.login(randUser)
+		cy.visit('/apps/files').then(() => {
 			// isolate tests - each happens in its own folder
 			const retry = cy.state('test').currentRetry()
 
@@ -210,10 +212,6 @@ describe('Workspace', function() {
 	describe('callouts', () => {
 		const types = ['info', 'warn', 'error', 'success']
 
-		before(function() {
-			cy.nextcloudCreateUser(randUser, 'password')
-		})
-
 		beforeEach(function() {
 			cy.openWorkspace().type('Callout')
 		})
@@ -273,7 +271,7 @@ describe('Workspace', function() {
 
 	describe('localize', () => {
 		it('takes localized file name into account', function() {
-			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'de_DE')
+			cy.nextcloudUpdateUser(randUser, 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
@@ -282,7 +280,7 @@ describe('Workspace', function() {
 		})
 
 		it('ignores localized file name in other language', function() {
-			cy.nextcloudUpdateUser(randUser, 'password', 'language', 'fr')
+			cy.nextcloudUpdateUser(randUser, 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')

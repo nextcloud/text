@@ -20,6 +20,8 @@
  *
  */
 
+import { User } from '@nextcloud/cypress'
+
 export const getSearchParams = url => {
 	return url
 		.split(/[?&]/)
@@ -34,13 +36,14 @@ export const getSearchParams = url => {
  * Creates a new user with default passwort `password` and upload one or multiple test files
  * Can be used e.g. for a `before()`
  *
- * @param {string} userName Username of the user to create
+ * @param {User} user - to create
  * @param {...string} files one ore more markdown file names to create
  */
-export function initUserAndFiles(userName, ...files) {
+export function initUserAndFiles(user, ...files) {
 	// Init user
-	cy.nextcloudCreateUser(userName, 'password')
-	cy.login(userName, 'password')
+	cy.createUser(user)
+	cy.login(user)
+	cy.visit('/apps/files')
 
 	// Upload test files
 	;(files || []).forEach(file => {

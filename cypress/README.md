@@ -10,9 +10,6 @@ cy.getContent()
 ### Available custom commands
 | Command              | Function               | Parameters                          |
 | -------------------- | ---------------------- | ----------------------------------- |
-| `login`              | Log in `user`          | `user`, `password`                  |
-| `logout`             | Logout                 |                                     |
-| `nextcloudCreateUser`| Create a new user      | `user`, `password`                  |
 | `nextcloudUpdateUser`| Update user setting    | `user`, `password`, `key`, `value`  |
 | `nextcloudDeleteUser`| Delete user            | `user`                              |
 | `uploadFile`         | Upload file            | `fileName`, `mimeType`, `target`    |
@@ -35,3 +32,13 @@ cy.getContent()
 | `getActionEntry`     | Get menu entry         | `name`                              |
 | `getActionSubEntry`  | Get submenu entry (after menu clicked) | `name`              |
 | `openWorkspace`      | Open workspace and return Editor content |                   |
+
+### Commands from `@nextcloud/cypress`
+
+We also use some commands from `@nextcloud/cypress`:
+* `login(user)`
+* `logout()`
+* `createRandomUser().then(user => login(user))`
+* `createUser(user)`
+
+see https://github.com/nextcloud/nextcloud-cypress
