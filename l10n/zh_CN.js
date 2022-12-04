@@ -66,6 +66,8 @@ OC.L10N.register(
     "Insert from Files" : "从文件插入",
     "Remove link" : "删除链接",
     "Update link" : "更新链接",
+    "_%n word_::_%n words_" : ["%n 字"],
+    "_%n char_::_%n chars_" : ["%n 字符"],
     "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
