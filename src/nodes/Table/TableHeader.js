@@ -22,4 +22,13 @@ export default TableHeader.extend({
 		]
 	},
 
+	addAttributes() {
+		return {
+			...this.parent?.(),
+			textAlign: {
+				rendered: false,
+				parseHTML: (element) => element.style.textAlign || null,
+			},
+		}
+	},
 })

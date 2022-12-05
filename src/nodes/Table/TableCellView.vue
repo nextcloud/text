@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-cell" as="td">
+	<NodeViewWrapper data-text-el="table-cell" as="td" :style="textAlign">
 		<div class="container">
 			<NodeViewContent class="content" />
 			<NcActions v-if="editor.isEditable"
@@ -83,6 +83,9 @@ export default {
 	},
 	computed: {
 		t: () => window.t,
+		textAlign() {
+			return { 'text-align': this.node.attrs.textAlign }
+		},
 	},
 	methods: {
 		deleteRow() {

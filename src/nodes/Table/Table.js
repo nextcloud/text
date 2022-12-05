@@ -6,7 +6,14 @@ import TableHeader from './TableHeader.js'
 import TableHeadRow from './TableHeadRow.js'
 import TableRow from './TableRow.js'
 import { TextSelection } from 'prosemirror-state'
-import { isInTable, moveCellForward, selectionCell } from '@tiptap/prosemirror-tables'
+import {
+	addRowAfter,
+	addRowBefore,
+	isInTable,
+	moveCellForward,
+	selectedRect,
+	selectionCell,
+} from '@tiptap/prosemirror-tables'
 
 /**
  *
@@ -75,6 +82,54 @@ export default Table.extend({
 	addCommands() {
 		return {
 			...this.parent(),
+			addRowAfter: () => ({ chain, dispatch }) => {
+				return chain()
+					.command(({ state }) => addRowAfter(state, dispatch))
+					.command(({ state, tr }) => {
+						const { tableStart, table, bottom } = selectedRect(state)
+
+						if (dispatch) {
+							const lastRow = table.child(bottom - 1)
+							const newRow = table.child(bottom)
+							let pos = tableStart + 1
+							for (let i = 0; i < bottom; i++) { pos += table.child(i).nodeSize }
+
+							for (let i = 0; i < lastRow.childCount; i++) {
+								tr.setNodeAttribute(
+									pos,
+									'textAlign',
+									lastRow.child(i).attrs.textAlign
+								)
+								pos += newRow.child(i).nodeSize
+							}
+						}
+						return true
+					})
+					.run()
+			},
+			addRowBefore: () => ({ chain, dispatch }) =>
+				chain()
+					.command(({ state }) => addRowBefore(state, dispatch))
+					.command(({ state, tr }) => {
+						const { tableStart, table, top } = selectedRect(state)
+						if (dispatch) {
+							const lastRow = table.child(top)
+							const newRow = table.child(top - 1)
+							let pos = tableStart + 1
+							for (let i = 0; i < (top - 1); i++) { pos += table.child(i).nodeSize }
+
+							for (let i = 0; i < lastRow.childCount; i++) {
+								tr.setNodeAttribute(
+									pos,
+									'textAlign',
+									lastRow.child(i).attrs.textAlign
+								)
+								pos += newRow.child(i).nodeSize
+							}
+						}
+						return true
+					})
+					.run(),
 			insertTable: () => ({ tr, dispatch, editor }) => {
 				if (isInTable(tr)) return false
 				const node = createTable(editor.schema, 3, 3, true)
@@ -131,15 +186,17 @@ export default Table.extend({
 				const { selection } = editor.state
 				if (!selection.$from.parent.type.name.startsWith('table')) return false
 
-				if (selection.$from.nodeBefore?.type.name === 'hardBreak'
-					&& (editor.can().goToNextRow() || editor.can().addRowAfter())) {
-					// Remove previous hard break and move to next row instead
-					editor.chain()
-						.setTextSelection({ from: selection.from - 1, to: selection.from })
-						.deleteSelection()
-						.run()
-					if (editor.commands.goToNextRow()) return true
-					return editor.chain().addRowAfter().goToNextRow().run()
+				if (selection.$from.nodeBefore?.type.name === 'hardBreak') {
+					if (editor.can().goToNextRow() || editor.can().addRowAfter()) {
+						// Remove previous hard break and move to next row instead
+						editor.chain()
+							.setTextSelection({ from: selection.from - 1, to: selection.from })
+							.deleteSelection()
+							.run()
+						if (editor.commands.goToNextRow()) return true
+						return editor.chain().addRowAfter().goToNextRow().run()
+					}
+					return false
 				} else {
 					return editor.chain()
 						.insertContent('<br data-syntax="html" />')
