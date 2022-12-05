@@ -37,8 +37,12 @@ const HardBreak = TipTapHardBreak.extend({
 	toMarkdown(state, node, parent, index) {
 		for (let i = index + 1; i < parent.childCount; i++) {
 			if (parent.child(i).type !== node.type) {
-				state.write(node.attrs.syntax)
-				if (!parent.child(i).text?.startsWith('\n')) state.write('\n')
+				if (node.attrs.syntax !== 'html') {
+					state.write(node.attrs.syntax)
+					if (!parent.child(i).text?.startsWith('\n')) state.write('\n')
+				} else {
+					state.write('<br />')
+				}
 				return
 			}
 		}

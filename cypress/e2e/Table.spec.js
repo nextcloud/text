@@ -110,4 +110,28 @@ describe('table plugin', () => {
 		cy.getContent()
 			.should('not.contain', 'content')
 	})
+
+	it('Enter creates newline and navigates', () => {
+		cy.getActionEntry('table').click()
+
+		cy.getContent()
+			.find('table tr')
+			.should('have.length', 3)
+
+		cy.getContent()
+			.type('first{Enter}row')
+			.type('{Enter}{Enter}second row')
+			.type('{Enter}{Enter}third row')
+			.type('{Enter}{Enter}forth row')
+
+		// Added a row
+		cy.getContent()
+			.find('table tr')
+			.should('have.length', 4)
+
+		// First cell now contains a hard break
+		cy.getContent()
+			.find('table tr:first-child th:first-child br')
+			.should('exist')
+	})
 })

@@ -80,6 +80,8 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('hard  \nbreak')).toBe('hard  \nbreak')
 		expect(markdownThroughEditor('hard\\\nbreak')).toBe('hard\\\nbreak')
 		expect(markdownThroughEditor('mixed\\\nhard  \nbreak')).toBe('mixed\\\nhard  \nbreak')
+		expect(markdownThroughEditor('hard<br>break')).toBe('hard<br />break')
+		expect(markdownThroughEditor('hard<br />break')).toBe('hard<br />break')
 		expect(markdownThroughEditor('soft\nbreak')).toBe('soft\nbreak')
 	})
 	test('inline format', () => {
