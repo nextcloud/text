@@ -7,13 +7,13 @@ import TaskItem from './../../src/nodes/TaskItem.js'
 import BulletList from './../../src/nodes/BulletList.js'
 import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
 import { findChildren } from 'prosemirror-utils'
-import createEditor from './../../src/tests/createEditor.js'
+import { createCustomEditor } from './../support/components.js'
 import testData from '../fixtures/ListItem.md'
 import markdownit from './../../src/markdownit/index.js'
 
 describe('ListItem extension integrated in the editor', () => {
 
-	const editor = createEditor({
+	const editor = createCustomEditor({
 		content: '',
 		extensions: [
 			Markdown,

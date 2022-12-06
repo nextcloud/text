@@ -1,26 +1,15 @@
-import { createEditor } from './../EditorFactory';
-import { createMarkdownSerializer } from './../extensions/Markdown'
 import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
 import { typesAvailable } from './../markdownit/callouts'
+import { markdownThroughEditor, markdownThroughEditorHtml } from "./helpers";
+import { createMarkdownSerializer } from "../extensions/Markdown";
+import createEditor from "../EditorFactory";
 
-const markdownThroughEditor = (markdown) => {
-	const tiptap = createEditor({
-		content: markdownit.render(markdown),
-		enableRichEditing: true
-	})
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
-}
-
-const markdownThroughEditorHtml = (html) => {
-	const tiptap = createEditor({
-		content: html,
-		enableRichEditing: true
-	})
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
-}
+/*
+ * This file is for various markdown tests, mainly testing if input and output stays the same.
+ *
+ * Please add test belonging to some Node or Mark to the corresponding file in './nodes/` or `./marks/`
+ */
 
 describe('Commonmark', () => {
 	const skippedMarkdownTests = [
