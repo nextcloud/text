@@ -20,20 +20,19 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { randHash } from '../utils/index.js'
+import { randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 
 describe('Text PROPFIND extension ', function() {
 	const richWorkspace = '{http://nextcloud.org/ns}rich-workspace'
 
 	before(function() {
-		cy.createUser(randUser)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 	})
 

@@ -1,7 +1,6 @@
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const currentUser = new User(randHash(), 'password')
+const user = randUser()
 const fileName = 'empty.md'
 
 const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
@@ -18,11 +17,11 @@ const clickOutline = () => {
 
 describe('Content Sections', () => {
 	before(function() {
-		initUserAndFiles(currentUser, fileName)
+		initUserAndFiles(user, fileName)
 	})
 
 	beforeEach(function() {
-		cy.login(currentUser, {
+		cy.login(user, {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')

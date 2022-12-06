@@ -1,7 +1,6 @@
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 
 const createDirectEditingLink = (user, file) => {
 	cy.login(user)
@@ -51,11 +50,11 @@ const createDirectEditingLinkForNewFile = (user, file) => {
 
 describe('direct editing', function() {
 	before(function() {
-		initUserAndFiles(randUser, 'test.md', 'empty.md', 'empty.txt')
+		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 
 	it('Open an existing file, edit and close it', () => {
-		createDirectEditingLink(randUser, 'empty.md')
+		createDirectEditingLink(user, 'empty.md')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
@@ -71,7 +70,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(randUser, 'empty.md').then((content) => {
+			cy.getFileContent(user, 'empty.md').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');
@@ -79,7 +78,7 @@ describe('direct editing', function() {
 		})
 	})
 	it('Create a file, edit and close it', () => {
-		createDirectEditingLinkForNewFile(randUser, 'newfile.md')
+		createDirectEditingLinkForNewFile(user, 'newfile.md')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
@@ -95,7 +94,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(randUser, 'newfile.md').then((content) => {
+			cy.getFileContent(user, 'newfile.md').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');
@@ -104,7 +103,7 @@ describe('direct editing', function() {
 	})
 
 	it('Open an existing plain text file, edit and close it', () => {
-		createDirectEditingLink(randUser, 'empty.txt')
+		createDirectEditingLink(user, 'empty.txt')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
@@ -120,7 +119,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(randUser, 'empty.txt').then((content) => {
+			cy.getFileContent(user, 'empty.txt').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');

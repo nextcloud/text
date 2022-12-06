@@ -20,21 +20,20 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 const fileName = 'test.md'
 
 describe('Open test.md in viewer', function() {
 	const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts.is-rich-editor')
 
 	before(() => {
-		initUserAndFiles(randUser, fileName)
+		initUserAndFiles(user, fileName)
 	})
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 	})
 

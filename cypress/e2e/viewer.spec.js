@@ -20,19 +20,18 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
-const randUser = new User(randHash(), 'password')
+import { initUserAndFiles, randUser } from '../utils/index.js'
+const user = randUser()
 
 describe('Open test.md in viewer', function() {
 	const getViewer = () => cy.get('#viewer')
 
 	before(function() {
-		initUserAndFiles(randUser, 'test.md', 'empty.md')
+		initUserAndFiles(user, 'test.md', 'empty.md')
 	})
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 	})
 
