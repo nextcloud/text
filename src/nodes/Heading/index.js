@@ -53,8 +53,11 @@ const Heading = TipTapHeading.extend({
 		}
 	},
 
-	onUpdate: debounce(function onUpdate({ editor }) {
-		extractHeadings(editor)
+	onUpdate: debounce(({ editor }) => {
+		if (editor.view && editor.state && !editor.isDestroyed) {
+			// Only run if editor still exists (prevent dangling debounced extractHeadings function)
+			extractHeadings(editor)
+		}
 	}, 900),
 
 })
