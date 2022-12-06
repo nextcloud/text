@@ -154,7 +154,7 @@ describe('Test all attachment insertion methods', () => {
 		cy.uploadFile('github.png', 'image/png', 'sub/b/b.png')
 
 		cy.createUser(recipient)
-		cy.shareFileToUser(user, 'test.md', recipient)
+		cy.shareFileToUser('test.md', recipient)
 	})
 
 	beforeEach(() => {

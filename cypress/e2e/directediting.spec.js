@@ -70,7 +70,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(user, 'empty.md').then((content) => {
+			cy.getFileContent('empty.md').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');
@@ -94,7 +94,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(user, 'newfile.md').then((content) => {
+			cy.getFileContent('newfile.md').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');
@@ -119,7 +119,7 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent(user, 'empty.txt').then((content) => {
+			cy.getFileContent('empty.txt').then((content) => {
 				// FIXME: This currently fails due to the save not happening fast enough
 				// The best would be if we always send the markdown at least on close and perform a save if the content changed
 				// expect(content).to.equal('# This is a headline\n\nSome text');

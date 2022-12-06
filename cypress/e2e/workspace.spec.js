@@ -270,7 +270,7 @@ describe('Workspace', function() {
 
 	describe('localize', () => {
 		it('takes localized file name into account', function() {
-			cy.nextcloudUpdateUser(user, 'language', 'de_DE')
+			cy.updateUserSetting('language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
@@ -279,7 +279,7 @@ describe('Workspace', function() {
 		})
 
 		it('ignores localized file name in other language', function() {
-			cy.nextcloudUpdateUser(user, 'language', 'fr')
+			cy.updateUserSetting('language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.reload()
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
