@@ -47,7 +47,7 @@
 
 ---
 
-* [ ] did toggleTaskList
+- [ ] did toggleTaskList
 
 * keep
 
@@ -76,7 +76,7 @@ toggleBulletList
 
 ---
 
-* did toggleBulletList
+- did toggleBulletList
 
 ## Splits bullet list when turning one item into task
 
@@ -85,7 +85,7 @@ toggleBulletList
 
 ---
 
-* [ ] did toggleTaskList
+- [ ] did toggleTaskList
 
 * not todo
 
@@ -97,11 +97,11 @@ toggleBulletList
 
 ---
 
-* [ ] did toggleTaskList
+- [ ] did toggleTaskList
 
 * not todo
 
-* [ ] did toggleTaskList
+- [ ] did toggleTaskList
 
 ## toggle off task list item should turn it into normal list item
 

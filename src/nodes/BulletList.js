@@ -33,6 +33,18 @@ const BulletList = TiptapBulletList.extend({
 		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: true }))
 	},
 
+	addAttributes() {
+		return {
+			...this.parent?.(),
+			bullet: {
+				default: '-',
+				rendered: false,
+				isRequired: true,
+				parseHTML: (el) => el.getAttribute('data-bullet'),
+			},
+		}
+	},
+
 	addInputRules() {
 		return [
 			listInputRule(

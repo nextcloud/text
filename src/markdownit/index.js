@@ -26,4 +26,13 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 // Render front matter tokens
 markdownit.renderer.rules.front_matter = (tokens, idx, options) => `<pre id="frontmatter"><code>${escapeHtml(tokens[idx].meta)}</code></pre>`
 
+// Render lists with bullet attribute
+markdownit.renderer.rules.bullet_list_open = (tokens, idx, options) => {
+	tokens[idx].attrs = [
+		...(tokens[idx].attrs || []),
+		['data-bullet', tokens[idx].markup],
+	]
+	return markdownit.renderer.renderToken(tokens, idx, options)
+}
+
 export default markdownit

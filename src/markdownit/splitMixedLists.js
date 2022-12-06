@@ -21,7 +21,7 @@
  */
 
 /**
- * @param {object} md Markdown object
+ * @param {import('markdown-it')} md Markdown object
  */
 export default function splitMixedLists(md) {
 	md.core.ruler.after('task-lists', 'split-mixed-task-lists', state => {
@@ -72,6 +72,7 @@ function splitListAt(tokens, index, TokenConstructor) {
 	const openList = new TokenConstructor('bullet_list_open', 'ul', 1)
 	openList.attrSet('class', 'contains-task-list')
 	openList.block = true
+	openList.markup = tokens[index].markup
 	tokens.splice(index, 0, closeList, openList)
 }
 
