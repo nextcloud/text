@@ -40,17 +40,23 @@ Cypress.Commands.overwrite('login', (login, user) => {
 	login(user)
 })
 
-Cypress.Commands.add('updateUserSetting', (key, value) => {
-	cy.request({
-		method: 'PUT',
-		url: `${url}/ocs/v2.php/cloud/users/${auth.user}`,
+Cypress.Commands.add('ocsRequest', (options) => {
+	return cy.request({
 		form: true,
-		body: { key, value },
 		auth,
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
+		...options,
+	})
+})
+
+Cypress.Commands.add('updateUserSetting', (key, value) => {
+	cy.ocsRequest({
+		method: 'PUT',
+		url: `${url}/ocs/v2.php/cloud/users/${auth.user}`,
+		body: { key, value },
 	}).then(response => {
 		cy.log(`Updated ${auth.user} ${key} to ${value}`, response.status)
 	})
@@ -58,15 +64,10 @@ Cypress.Commands.add('updateUserSetting', (key, value) => {
 
 Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 	cy.clearCookies()
-	cy.request({
+	cy.ocsRequest({
 		method: 'DELETE',
 		url: `${url}/ocs/v1.php/cloud/users/${user}`,
-		form: true,
 		auth: { user: 'admin', pass: 'admin' },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
 	}).then(response => {
 		cy.log(`Deleted user ${user}`, response.status)
 	})
@@ -117,19 +118,13 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 
 Cypress.Commands.add('shareFileToUser', (path, targetUser) => {
 	cy.clearCookies()
-	cy.request({
+	cy.ocsRequest({
 		method: 'POST',
 		url: `${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
-		form: true,
 		body: {
 			path,
 			shareType: 0,
 			shareWith: targetUser.userId,
-		},
-		auth,
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	}).then(response => {
 		cy.log(`${auth.user} shared ${path} with ${targetUser.userId}`, response.status)
