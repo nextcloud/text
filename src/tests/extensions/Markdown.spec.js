@@ -47,7 +47,7 @@ describe('Markdown extension integrated in the editor', () => {
 			extensions: [Markdown, TaskList, TaskItem],
 		})
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('\n* [ ] Hello')
+		expect(serializer.serialize(editor.state.doc)).toBe('\n- [ ] Hello')
 	})
 
 	it('serializes images with the default prosemirror way', () => {
