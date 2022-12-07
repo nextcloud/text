@@ -82,7 +82,7 @@ describe('table plugin', () => {
 			cy.getContent()
 				.find('table tr:first-child th:first-child button')
 				.click()
-			cy.get(`.data-text-table-action-align-column-${align}`)
+			cy.get(`[data-text-table-action="align-column-${align}"]`)
 				.click()
 			// Check header has correct text align and text is preserved
 			cy.getContent()
@@ -103,7 +103,7 @@ describe('table plugin', () => {
 		cy.getContent()
 			.find('table tr:first-child th:first-child button')
 			.click()
-		cy.get('.data-text-table-action-align-column-center')
+		cy.get('[data-text-table-action="align-column-center"]')
 			.click()
 
 		// Test before adding a row
