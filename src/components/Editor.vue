@@ -87,6 +87,7 @@ import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
+import { emit } from '@nextcloud/event-bus'
 
 import {
 	EDITOR,
@@ -666,6 +667,7 @@ export default {
 		},
 
 		onSave() {
+			emit('files:file:updated', { fileid: this.fileId })
 			this.$nextTick(() => {
 				this.$emit('sync-service:save')
 			})
