@@ -34,7 +34,6 @@ export default {
 		}),
 	},
 	mounted() {
-
 		setTimeout(() => {
 			this.initialRender = false
 		}, 1000)
