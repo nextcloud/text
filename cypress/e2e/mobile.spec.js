@@ -20,10 +20,9 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { randHash } from '../utils/index.js'
+import { randUser } from '../utils/index.js'
 
-const currentUser = new User(randHash(), 'password')
+const user = randUser()
 
 const getRemainItem = (name) => {
 	cy.getActionEntry('remain').click()
@@ -36,11 +35,11 @@ describe('Mobile actions', {
 	viewportHeight: 640,
 }, () => {
 	before(() => {
-		cy.createUser(currentUser)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
-		cy.login(currentUser)
+		cy.login(user)
 		cy.visit('/apps/files').then(() => {
 			// isolate tests - each happens in its own folder
 			const retry = cy.state('test').currentRetry()

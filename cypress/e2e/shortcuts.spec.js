@@ -20,6 +20,9 @@
  *
  */
 
+import { randUser } from '../utils/index.js'
+const user = randUser()
+
 const testShortcut = (shortcut, tag) => {
 	cy.getContent()
 		.type(shortcut)
@@ -37,12 +40,8 @@ const testHeading = (num) => {
 
 describe('keyboard shortcuts', () => {
 
-	let user
-
 	before(() => {
-		cy.createRandomUser().then(u => {
-			user = u
-		})
+		cy.createUser(user)
 	})
 
 	beforeEach(() => {

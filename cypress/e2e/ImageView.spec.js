@@ -1,3 +1,7 @@
+import { randUser } from '../utils/index.js'
+
+const user = randUser()
+
 const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
 	.last()
 	.click({ force: true })
@@ -8,13 +12,9 @@ const createMarkdown = (fileName, content) => {
 }
 
 describe('Image View', () => {
-	let user
 	before(() => {
-		// Init user
-		cy.createRandomUser().then(u => {
-			user = u
-			cy.login(u)
-		})
+		cy.createUser(user)
+		cy.login(user)
 		cy.visit('/apps/files')
 
 		// Upload test files to user's storage

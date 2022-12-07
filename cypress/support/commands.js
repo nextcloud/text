@@ -31,33 +31,43 @@ Cypress.env('baseUrl', url)
 
 addCommands()
 
-Cypress.Commands.add('nextcloudUpdateUser', (user, key, value) => {
-	cy.request({
-		method: 'PUT',
-		url: `${Cypress.env('baseUrl')}/ocs/v2.php/cloud/users/${user.userId}`,
+// Keep track of the current user authentication.
+// We need it for various commands to authenticate
+// and also to determine paths, urls and the like.
+let auth
+Cypress.Commands.overwrite('login', (login, user) => {
+	auth = { user: user.userId, password: user.password }
+	login(user)
+})
+
+Cypress.Commands.add('ocsRequest', (options) => {
+	return cy.request({
 		form: true,
-		body: { key, value },
-		auth: { user: user.userId, password: user.password },
+		auth,
 		headers: {
 			'OCS-ApiRequest': 'true',
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
+		...options,
+	})
+})
+
+Cypress.Commands.add('updateUserSetting', (key, value) => {
+	cy.ocsRequest({
+		method: 'PUT',
+		url: `${url}/ocs/v2.php/cloud/users/${auth.user}`,
+		body: { key, value },
 	}).then(response => {
-		cy.log(`Updated user ${user} ${key} to ${value}`, response.status)
+		cy.log(`Updated ${auth.user} ${key} to ${value}`, response.status)
 	})
 })
 
 Cypress.Commands.add('nextcloudDeleteUser', (user) => {
 	cy.clearCookies()
-	cy.request({
+	cy.ocsRequest({
 		method: 'DELETE',
-		url: `${Cypress.env('baseUrl')}/ocs/v1.php/cloud/users/${user}`,
-		form: true,
+		url: `${url}/ocs/v1.php/cloud/users/${user}`,
 		auth: { user: 'admin', pass: 'admin' },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
 	}).then(response => {
 		cy.log(`Deleted user ${user}`, response.status)
 	})
@@ -74,7 +84,7 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 			return cy.request('/csrftoken')
 				.then(({ body }) => body.token)
 				.then(requesttoken => {
-					return axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${fileName}`, file, {
+					return axios.put(`${url}/remote.php/webdav/${fileName}`, file, {
 						headers: {
 							requesttoken,
 							'Content-Type': mimeType,
@@ -94,7 +104,7 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 
 	return cy.window()
 		.then(async win => {
-			const response = await axios.put(`${Cypress.env('baseUrl')}/remote.php/webdav/${target}`, file, {
+			const response = await axios.put(`${url}/remote.php/webdav/${target}`, file, {
 				headers: {
 					requesttoken: win.OC.requestToken,
 					'Content-Type': mimeType,
@@ -106,24 +116,18 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 
 })
 
-Cypress.Commands.add('shareFileToUser', (user, path, targetUser) => {
+Cypress.Commands.add('shareFileToUser', (path, targetUser) => {
 	cy.clearCookies()
-	cy.request({
+	cy.ocsRequest({
 		method: 'POST',
-		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
-		form: true,
+		url: `${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
 		body: {
 			path,
 			shareType: 0,
 			shareWith: targetUser.userId,
 		},
-		auth: { user: user.userId, password: user.password },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
 	}).then(response => {
-		cy.log(`${user.userId} shared ${path} with ${targetUser.userId}`, response.status)
+		cy.log(`${auth.user} shared ${path} with ${targetUser.userId}`, response.status)
 	})
 })
 
@@ -148,7 +152,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 		try {
 			const headers = { requesttoken: window.OC.requestToken }
 			const request = await axios.post(
-				`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
+				`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
 				{ path, shareType: window.OC.Share.SHARE_TYPE_LINK },
 				{ headers }
 			)
@@ -164,7 +168,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 				// 1 = read; 2 = write; 16 = share;
 				const permissions = 19
 				await axios.put(
-					`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
+					`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
 					{ permissions },
 					{ headers }
 				)
@@ -193,11 +197,11 @@ Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
 	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
 )
 
-Cypress.Commands.add('getFileContent', (user, path) => {
+Cypress.Commands.add('getFileContent', (path) => {
 	return cy.request({
 		method: 'GET',
-		url: `${Cypress.env('baseUrl')}/remote.php/webdav/${path}`,
-		auth: { user: user.userId, pass: user.password },
+		url: `${url}/remote.php/webdav/${path}`,
+		auth,
 	}).then(response => {
 		cy.wrap(response.body)
 	})
@@ -333,7 +337,7 @@ Cypress.Commands.add('openWorkspace', () => {
 Cypress.Commands.add('configureText', (key, value) => {
 	return cy.window().then(win => {
 		return axios.post(
-			`${Cypress.env('baseUrl')}/index.php/apps/text/settings`,
+			`${url}/index.php/apps/text/settings`,
 			{ key, value },
 			{ headers: { requesttoken: win.OC.requestToken } }
 		)

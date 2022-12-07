@@ -1,6 +1,5 @@
-import { User } from '@nextcloud/cypress'
 import { findChildren } from 'prosemirror-utils'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 import { createCustomEditor } from './../support/components.js'
 
 import markdownit from './../../src/markdownit/index.js'
@@ -9,16 +8,16 @@ import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markd
 
 import testData from '../fixtures/Table.md'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 const fileName = 'empty.md'
 
 describe('table plugin', () => {
 	before(() => {
-		initUserAndFiles(randUser)
+		initUserAndFiles(user)
 	})
 
 	beforeEach(() => {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 
 		cy.isolateTest({

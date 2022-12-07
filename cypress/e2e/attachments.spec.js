@@ -20,13 +20,12 @@
  *
  */
 
-import { initUserAndFiles, randHash } from '../utils/index.js'
-import { User } from '@nextcloud/cypress'
+import { initUserAndFiles, randHash, randUser } from '../utils/index.js'
 import 'cypress-file-upload'
 
-const randUser = new User(randHash(), 'password')
-const randUser2 = new User(randHash(), 'password')
-let currentUser = randUser
+const user = randUser()
+const recipient = randUser()
+let currentUser = user
 const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
@@ -144,7 +143,7 @@ const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) =
 
 describe('Test all attachment insertion methods', () => {
 	before(() => {
-		initUserAndFiles(randUser, 'test.md', 'empty.md')
+		initUserAndFiles(user, 'test.md', 'empty.md')
 
 		cy.createFolder('sub')
 		cy.createFolder('sub/a')
@@ -154,8 +153,8 @@ describe('Test all attachment insertion methods', () => {
 		cy.uploadFile('github.png', 'image/png', 'sub/a/a.png')
 		cy.uploadFile('github.png', 'image/png', 'sub/b/b.png')
 
-		cy.createUser(randUser2)
-		cy.shareFileToUser(randUser, 'test.md', randUser2)
+		cy.createUser(recipient)
+		cy.shareFileToUser('test.md', recipient)
 	})
 
 	beforeEach(() => {
@@ -362,7 +361,7 @@ describe('Test all attachment insertion methods', () => {
 					.should('not.exist')
 			})
 		// change the current user for next tests
-		currentUser = randUser2
+		currentUser = recipient
 	})
 
 	it('[share] check everything behaves correctly on the share target user side', () => {
@@ -414,8 +413,8 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Delete the user', () => {
-		cy.nextcloudDeleteUser(randUser, 'password')
-		cy.nextcloudDeleteUser(randUser2, 'password')
+		cy.nextcloudDeleteUser(user)
+		cy.nextcloudDeleteUser(recipient)
 	})
 
 })

@@ -1,14 +1,13 @@
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 const fileName = 'empty.md'
 
 describe('Test the rich text editor menu bar', function() {
-	before(() => initUserAndFiles(randUser, fileName))
+	before(() => initUserAndFiles(user, fileName))
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files', {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')

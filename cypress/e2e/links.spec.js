@@ -1,16 +1,15 @@
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 const fileName = 'empty.md'
 
 describe('test link marks', function() {
 	before(function() {
-		initUserAndFiles(randUser)
+		initUserAndFiles(user)
 	})
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 
 		cy.isolateTest({

@@ -18,18 +18,17 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { initUserAndFiles, randHash } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 
 describe('Front matter support', function() {
 	before(function() {
-		initUserAndFiles(randUser, 'frontmatter.md', 'empty.md')
+		initUserAndFiles(user, 'frontmatter.md', 'empty.md')
 	})
 
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 	})
 

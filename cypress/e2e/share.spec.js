@@ -21,16 +21,15 @@
  *
  */
 
-import { User } from '@nextcloud/cypress'
-import { randHash } from '../utils/index.js'
+import { randUser } from '../utils/index.js'
 
-const randUser = new User(randHash(), 'password')
+const user = randUser()
 
 describe('Open test.md in viewer', function() {
 	before(function() {
 		// Init user
-		cy.createUser(randUser)
-		cy.login(randUser)
+		cy.createUser(user)
+		cy.login(user)
 		cy.visit('/apps/files')
 
 		// Upload test files
@@ -44,7 +43,7 @@ describe('Open test.md in viewer', function() {
 			.should('contain', 'test.md')
 	})
 	beforeEach(function() {
-		cy.login(randUser)
+		cy.login(user)
 		cy.visit('/apps/files')
 	})
 
