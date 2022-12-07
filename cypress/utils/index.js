@@ -33,7 +33,7 @@ export const getSearchParams = url => {
 }
 
 /**
- * Creates a new user with default passwort `password` and upload one or multiple test files
+ * Creates a new user and upload one or multiple test files
  * Can be used e.g. for a `before()`
  *
  * @param {User} user - to create
@@ -43,7 +43,6 @@ export function initUserAndFiles(user, ...files) {
 	// Init user
 	cy.createUser(user)
 	cy.login(user)
-	cy.visit('/apps/files')
 
 	// Upload test files
 	;(files || []).forEach(file => {
