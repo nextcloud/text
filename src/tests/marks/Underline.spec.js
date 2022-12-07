@@ -1,6 +1,6 @@
 import Underline from './../../marks/Underline';
 import { getExtensionField } from '@tiptap/core'
-import createEditor from './../createEditor'
+import { createCustomEditor } from '../helpers'
 
 describe('Underline extension unit', () => {
 	it('exposes toMarkdown function', () => {
@@ -17,7 +17,7 @@ describe('Underline extension unit', () => {
 describe('Underline extension integrated in the editor', () => {
 
 	it('is not active by default', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p>Test</p>',
 			extensions: [Underline],
 		})
@@ -25,7 +25,7 @@ describe('Underline extension integrated in the editor', () => {
 	})
 
 	it('is active within <u> tags', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p><u>Test</u></p>',
 			extensions: [Underline],
 		})

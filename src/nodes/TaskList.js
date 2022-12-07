@@ -31,8 +31,20 @@ const TaskList = TiptapTaskList.extend({
 		},
 	],
 
+	addAttributes() {
+		return {
+			...this.parent?.(),
+			bullet: {
+				default: '-',
+				rendered: false,
+				isRequired: true,
+				parseHTML: (el) => el.getAttribute('data-bullet'),
+			},
+		}
+	},
+
 	toMarkdown: (state, node) => {
-		state.renderList(node, '  ', () => (node.attrs.bullet || '*') + ' ')
+		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
 	},
 
 })

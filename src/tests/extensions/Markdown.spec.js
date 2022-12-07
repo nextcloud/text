@@ -7,7 +7,7 @@ import TaskItem from './../../nodes/TaskItem.js'
 import Underline from './../../marks/Underline.js'
 import TiptapImage from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
-import createEditor from './../createEditor.js'
+import { createCustomEditor } from '../helpers.js'
 
 describe('Markdown extension unit', () => {
 	it('has a config', () => {
@@ -20,7 +20,7 @@ describe('Markdown extension unit', () => {
 	})
 
 	it('makes toMarkdown available in prose mirror schema', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			extensions: [Markdown, Underline],
 		})
 		const serializer = createMarkdownSerializer(editor.schema)
@@ -33,7 +33,7 @@ describe('Markdown extension unit', () => {
 
 describe('Markdown extension integrated in the editor', () => {
 	it('serializes marks according to their spec', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p><u>Test</u></p>',
 			extensions: [Markdown, Underline],
 		})
@@ -42,16 +42,16 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('serializes nodes according to their spec', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></p>',
 			extensions: [Markdown, TaskList, TaskItem],
 		})
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('\n* [ ] Hello')
+		expect(serializer.serialize(editor.state.doc)).toBe('\n- [ ] Hello')
 	})
 
 	it('serializes images with the default prosemirror way', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p><img alt="Hello" src="test"></p>',
 			extensions: [Markdown, TiptapImage.configure({ inline: true })],
 		})
@@ -60,7 +60,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('serializes block images with the default prosemirror way', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<figure><img alt="Hello" src="test"></figure><p>hello</p>',
 			extensions: [Markdown, Image, ImageInline],
 		})
@@ -69,7 +69,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('serializes inline images with the default prosemirror way', () => {
-		const editor = createEditor({
+		const editor = createCustomEditor({
 			content: '<p>inline image <img alt="Hello" src="test"> inside text</p>',
 			extensions: [Markdown, Image, ImageInline],
 		})

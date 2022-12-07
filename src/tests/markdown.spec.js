@@ -1,26 +1,15 @@
-import { createEditor } from './../EditorFactory';
-import { createMarkdownSerializer } from './../extensions/Markdown'
 import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
 import { typesAvailable } from './../markdownit/callouts'
+import { markdownThroughEditor, markdownThroughEditorHtml } from "./helpers";
+import { createMarkdownSerializer } from "../extensions/Markdown";
+import createEditor from "../EditorFactory";
 
-const markdownThroughEditor = (markdown) => {
-	const tiptap = createEditor({
-		content: markdownit.render(markdown),
-		enableRichEditing: true
-	})
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
-}
-
-const markdownThroughEditorHtml = (html) => {
-	const tiptap = createEditor({
-		content: html,
-		enableRichEditing: true
-	})
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
-}
+/*
+ * This file is for various markdown tests, mainly testing if input and output stays the same.
+ *
+ * Please add test belonging to some Node or Mark to the corresponding file in './nodes/` or `./marks/`
+ */
 
 describe('Commonmark', () => {
 	const skippedMarkdownTests = [
@@ -36,7 +25,8 @@ describe('Commonmark', () => {
 		// https://github.com/markdown-it/markdown-it/blob/df4607f1d4d4be7fdc32e71c04109aea8cc373fa/test/commonmark.js#L10
 		return str.replace(/<blockquote><\/blockquote>/g, '<blockquote>\n</blockquote>')
 			.replace(/<span class="keep-md">([^<]+)<\/span>/g, '$1')
-			.replace(/<br data-syntax=".{1,2}" \/>/, '<br />\n')
+			.replace(/<br data-syntax=".{1,2}" \/>/g, '<br />\n')
+			.replace(/<ul data-bullet="."/g, '<ul')
 	}
 
 	// special treatment because we use markdown-it-image-figures
@@ -92,9 +82,11 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('Have an `inline code` element')).toBe('Have an `inline code` element')
 	})
 	test('ul', () => {
-		expect(markdownThroughEditor('- foo\n- bar')).toBe('* foo\n* bar')
-		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('* foo\n* bar')
-		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('* foo\n* bar')
+		expect(markdownThroughEditor('+ foo\n+ bar')).toBe('+ foo\n+ bar')
+		expect(markdownThroughEditor('* foo\n* bar')).toBe('* foo\n* bar')
+		expect(markdownThroughEditor('- foo\n- bar')).toBe('- foo\n- bar')
+		expect(markdownThroughEditor('- foo\n\n- bar')).toBe('- foo\n- bar')
+		expect(markdownThroughEditor('- foo\n\n\n- bar')).toBe('- foo\n- bar')
 	})
 	test('ol', () => {
 		expect(markdownThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
@@ -128,33 +120,7 @@ describe('Markdown though editor', () => {
 		// Issue #2703
 		expect(markdownThroughEditor('[bar\\\\]: /uri\n\n[bar\\\\]')).toBe('[bar\\\\](/uri)')
 		expect(markdownThroughEditor('## Test \\')).toBe('## Test \\')
-		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
-	})
-	test('checkboxes', () => {
-		// Invalid ones but should be syntactical unchanged
-		expect(markdownThroughEditor('- [F] asd')).toBe('* [F] asd')
-		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('* [ [asd](sdf)')
-		// Valid, whitespace is allowed inside the checkbox
-		expect(markdownThroughEditor('- [\t] asd')).toBe('* [ ] asd')
-		expect(markdownThroughEditor('- [ ] asd')).toBe('* [ ] asd')
-		// Valid ones
-		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('* [ ] [asd](sdf)')
-		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('* [x] [asd](sdf)')
-		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('* [ ] foo\n* [x] bar')
-		expect(markdownThroughEditor('- [x] foo\n' +
-			'  - [ ] bar\n' +
-			'  - [x] baz\n' +
-			'- [ ] bim')).toBe('* [x] foo\n' +
-				'  * [ ] bar\n' +
-				'  * [x] baz\n' +
-				'* [ ] bim')
-		expect(markdownThroughEditor('- [X] asd')).toBe('* [x] asd')
-		expect(markdownThroughEditor('-   [X] asd')).toBe('* [x] asd')
-
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
+		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('- [ [asd](sdf)')
 	})
 
 	test('horizontal rule', () => {
@@ -190,6 +156,10 @@ describe('Markdown though editor', () => {
 })
 
 describe('Markdown serializer from html', () => {
+	test('ul', () => {
+		expect(markdownThroughEditorHtml('<ul data-bullet="*"><li>1</li><li>2</li></ul>')).toBe('* 1\n* 2')
+		expect(markdownThroughEditorHtml('<ul data-bullet="-"><li>1</li><li>2</li></ul>')).toBe('- 1\n- 2')
+	})
 	test('paragraph', () => {
 		expect(markdownThroughEditorHtml('<p>hello</p><p>world</p>')).toBe('hello\n\nworld')
 	})
@@ -205,12 +175,6 @@ describe('Markdown serializer from html', () => {
 		expect(markdownThroughEditorHtml('<img src="image" alt="description" />')).toBe('![description](image)')
 		expect(markdownThroughEditorHtml('<p><img src="image" alt="description" /></p>')).toBe('![description](image)')
 		expect(markdownThroughEditorHtml('<p>text<img src="image" alt="description" />moretext</p>')).toBe('text![description](image)moretext')
-	})
-	test('checkboxes', () => {
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><label>foo</label></li></ul>')).toBe('* [x] foo')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" /><label>test</label></li></ul>')).toBe('* [ ] test')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><div><h2>Test</h2><p><strong>content</strong></p></div></li></ul>')).toBe('* [x] Test\n\n  **content**')
-		expect(markdownThroughEditorHtml('<ul class="contains-task-list"><li><input type="checkbox" checked /><p>Test</p><h1>Block level headline</h1></li></ul>')).toBe('* [x] Test\n\n  # Block level headline')
 	})
 
 	test('callouts', () => {
