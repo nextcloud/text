@@ -1,7 +1,7 @@
 import TipTapHeading from '@tiptap/extension-heading'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import debounce from 'debounce'
-import { setHeadings, extractHeadings } from './extractor.js'
+import { extractHeadings } from './extractor.js'
 import HeaderViewVue from './HeadingView.vue'
 
 const Heading = TipTapHeading.extend({
@@ -43,14 +43,6 @@ const Heading = TipTapHeading.extend({
 				return true
 			},
 		})
-	},
-
-	onDestroy() {
-		setHeadings([])
-
-		if (this.parent) {
-			this.parent()
-		}
 	},
 
 	onCreate() {
