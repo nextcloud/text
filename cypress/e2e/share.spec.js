@@ -30,7 +30,6 @@ describe('Open test.md in viewer', function() {
 		// Init user
 		cy.createUser(user)
 		cy.login(user)
-		cy.visit('/apps/files')
 
 		// Upload test files
 		cy.createFolder('folder')
@@ -38,9 +37,6 @@ describe('Open test.md in viewer', function() {
 		cy.uploadFile('test.md', 'text/markdown', 'folder/Readme.md')
 		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
 		cy.uploadFile('test.md', 'text/markdown')
-		cy.visit('/apps/files')
-		cy.get('.files-fileList tr[data-file="test.md"]')
-			.should('contain', 'test.md')
 	})
 	beforeEach(function() {
 		cy.login(user)

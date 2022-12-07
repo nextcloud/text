@@ -181,9 +181,22 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 	}).should('have.length', 15)
 })
 
-Cypress.Commands.add('createFolder', dirName => cy.window()
-	.then(win => win.OC.Files.getClient().createDirectory(dirName))
-)
+Cypress.Commands.add('createFolder', (target) => {
+	const rootPath = `${Cypress.env('baseUrl')}/remote.php/dav/files/${encodeURIComponent(auth.user)}`
+	const dirPath = target.split('/').map(encodeURIComponent).join('/')
+
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return axios.request(`${rootPath}/${dirPath}`, {
+				method: 'MKCOL',
+				auth,
+				headers: {
+					requesttoken,
+				},
+			})
+		})
+})
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => cy.window()
 	.then(win => win.OC.Files.getClient().move(path, destinationPath))
