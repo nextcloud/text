@@ -528,6 +528,8 @@ export default {
 			} else {
 				this.$editor.chain().setImage({ src, alt }).insertContent('<br />').focus().run()
 			}
+			// Scroll image into view
+			this.$editor.commands.scrollIntoView()
 		},
 
 		onOpened({ document, session }) {
