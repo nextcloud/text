@@ -1,7 +1,5 @@
 import markdownit from './../markdownit'
 import { typesAvailable } from '../markdownit/callouts'
-import tableMarkdown from './fixtures/table.md'
-import tableHtml from './fixtures/table.html'
 
 describe('markdownit', () => {
 
@@ -31,11 +29,6 @@ describe('markdownit', () => {
 			<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-1" />task</li>
 			</ul>
 `))
-	})
-
-	it('renders tables', () => {
-		const rendered = markdownit.render(tableMarkdown)
-		expect(rendered).toBe(tableHtml)
 	})
 
 	describe('callouts', () => {

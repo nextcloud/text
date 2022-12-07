@@ -32,6 +32,9 @@ import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
 import MDI_Folder from 'vue-material-design-icons/Folder.vue'
 import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
+import MDI_AlignHorizontalCenter from 'vue-material-design-icons/AlignHorizontalCenter.vue'
+import MDI_AlignHorizontalLeft from 'vue-material-design-icons/AlignHorizontalLeft.vue'
+import MDI_AlignHorizontalRight from 'vue-material-design-icons/AlignHorizontalRight.vue'
 import MDI_FormatHeader1 from 'vue-material-design-icons/FormatHeader1.vue'
 import MDI_FormatHeader2 from 'vue-material-design-icons/FormatHeader2.vue'
 import MDI_FormatHeader3 from 'vue-material-design-icons/FormatHeader3.vue'
@@ -93,6 +96,9 @@ export const Loading = {
 }
 
 export const AlphabeticalVariant = makeIcon(MDI_AlphabeticalVariant)
+export const AlignHorizontalCenter = makeIcon(MDI_AlignHorizontalCenter)
+export const AlignHorizontalLeft = makeIcon(MDI_AlignHorizontalLeft)
+export const AlignHorizontalRight = makeIcon(MDI_AlignHorizontalRight)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeTags = makeIcon(MDI_CodeTags)

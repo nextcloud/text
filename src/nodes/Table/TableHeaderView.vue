@@ -21,11 +21,38 @@
   -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-header" as="th">
+	<NodeViewWrapper data-text-el="table-header" as="th" :style="textAlign">
 		<div>
 			<NodeViewContent class="content" />
 			<NcActions v-if="editor.isEditable"
+				ref="menu"
 				data-text-table-actions="header">
+				<NcActions :inline="3" data-text-table-action="align-column-header">
+					<NcActionButton data-text-table-action="align-column-left"
+						class="data-text-table-action-align-column-left"
+						@click="alignLeft">
+						<template #icon>
+							<AlignHorizontalLeft />
+						</template>
+						{{ t('text', 'Left align column') }}
+					</NcActionButton>
+					<NcActionButton data-text-table-action="align-column-center"
+						class="data-text-table-action-align-column-center"
+						@click="alignCenter">
+						<template #icon>
+							<AlignHorizontalCenter />
+						</template>
+						{{ t('text', 'Center align column') }}
+					</NcActionButton>
+					<NcActionButton data-text-table-action="align-column-right"
+						class="data-text-table-action-align-column-right"
+						@click="alignRight">
+						<template #icon>
+							<AlignHorizontalRight />
+						</template>
+						{{ t('text', 'Right align column') }}
+					</NcActionButton>
+				</NcActions>
 				<NcActionButton data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
@@ -58,11 +85,21 @@
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcActions, NcActionButton } from '@nextcloud/vue'
-import { Delete, TableAddColumnBefore, TableAddColumnAfter } from '../../components/icons.js'
+import {
+	AlignHorizontalCenter,
+	AlignHorizontalLeft,
+	AlignHorizontalRight,
+	Delete,
+	TableAddColumnBefore,
+	TableAddColumnAfter,
+} from '../../components/icons.js'
 
 export default {
 	name: 'TableHeaderView',
 	components: {
+		AlignHorizontalCenter,
+		AlignHorizontalLeft,
+		AlignHorizontalRight,
 		NcActionButton,
 		NcActions,
 		NodeViewWrapper,
@@ -80,11 +117,43 @@ export default {
 			type: Function,
 			required: true,
 		},
+		node: {
+			type: Object,
+			required: true,
+		},
 	},
 	computed: {
 		t: () => window.t,
+		textAlign() {
+			return { 'text-align': this.node.attrs.textAlign }
+		},
 	},
 	methods: {
+		alignCenter() {
+			this.align('center')
+		},
+		alignLeft() {
+			this.align('left')
+		},
+		alignRight() {
+			this.align('right')
+		},
+		align(textAlign) {
+			this.editor.chain()
+				.focus()
+				.setTextSelection(this.getPos())
+				.setCellAttribute('textAlign', textAlign)
+				.run()
+			while (this.editor.commands.goToNextRow()) {
+				this.editor.commands.setCellAttribute('textAlign', textAlign)
+			}
+			// Set focus back to first row
+			this.editor.chain()
+				.setTextSelection(this.getPos())
+				.focus()
+				.run()
+			this.$refs.menu.closeMenu(false)
+		},
 		deleteColumn() {
 			this.editor.chain()
 				.focus()
@@ -118,7 +187,6 @@ th {
 		padding-top: 0.75em;
 		flex-grow: 1;
 	}
-
 	.action-item {
 		opacity: 50%;
 	}
@@ -128,6 +196,10 @@ th {
 			opacity: 100%;
 		}
 	}
+}
+
+[data-text-table-action="align-column-header"] {
+	justify-content: space-between;
 }
 
 </style>
