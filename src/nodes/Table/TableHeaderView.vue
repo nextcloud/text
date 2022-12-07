@@ -27,32 +27,29 @@
 			<NcActions v-if="editor.isEditable"
 				ref="menu"
 				data-text-table-actions="header">
-				<NcActions :inline="3" data-text-table-action="align-column-header">
+				<InlineActionsContainer>
 					<NcActionButton data-text-table-action="align-column-left"
-						class="data-text-table-action-align-column-left"
+						:aria-label="t('text', 'Left align column')"
 						@click="alignLeft">
 						<template #icon>
 							<AlignHorizontalLeft />
 						</template>
-						{{ t('text', 'Left align column') }}
 					</NcActionButton>
 					<NcActionButton data-text-table-action="align-column-center"
-						class="data-text-table-action-align-column-center"
+						:aria-label="t('text', 'Center align column')"
 						@click="alignCenter">
 						<template #icon>
 							<AlignHorizontalCenter />
 						</template>
-						{{ t('text', 'Center align column') }}
 					</NcActionButton>
 					<NcActionButton data-text-table-action="align-column-right"
-						class="data-text-table-action-align-column-right"
+						:aria-label="t('text', 'Right align column')"
 						@click="alignRight">
 						<template #icon>
 							<AlignHorizontalRight />
 						</template>
-						{{ t('text', 'Right align column') }}
 					</NcActionButton>
-				</NcActions>
+				</InlineActionsContainer>
 				<NcActionButton data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
@@ -85,6 +82,7 @@
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcActions, NcActionButton } from '@nextcloud/vue'
+import InlineActionsContainer from '../../components/InlineActionsContainer.vue'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
@@ -100,11 +98,12 @@ export default {
 		AlignHorizontalCenter,
 		AlignHorizontalLeft,
 		AlignHorizontalRight,
+		Delete,
+		InlineActionsContainer,
 		NcActionButton,
 		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
-		Delete,
 		TableAddColumnBefore,
 		TableAddColumnAfter,
 	},
@@ -197,9 +196,4 @@ th {
 		}
 	}
 }
-
-[data-text-table-action="align-column-header"] {
-	justify-content: space-between;
-}
-
 </style>
