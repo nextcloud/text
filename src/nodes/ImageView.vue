@@ -323,9 +323,6 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
-			this.$nextTick(() => {
-				this.editor.commands.scrollIntoView()
-			})
 		},
 	},
 }

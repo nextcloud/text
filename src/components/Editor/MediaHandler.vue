@@ -209,6 +209,9 @@ export default {
 
 			// Insert a newline to allow placing the cursor in between subsequent images
 			this.$editor.chain().insertContent('<br />').focus().run()
+
+			// Scroll image into view
+			this.$editor.commands.scrollIntoView()
 		},
 	},
 }
