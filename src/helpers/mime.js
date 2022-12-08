@@ -48,6 +48,7 @@ const openMimetypesPlainText = [
 	'application/x-tex',
 	'application/xml',
 	'application/yaml',
+	'text/asciidoc',
 	'text/css',
 	'text/html',
 	'text/org',
