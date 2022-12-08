@@ -32,22 +32,18 @@ describe('Workspace', function() {
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.visit('/apps/files').then(() => {
-			// isolate tests - each happens in its own folder
-			const retry = cy.state('test').currentRetry()
-
-			currentFolder = retry
-				? `${Cypress.currentTest.title} (${retry})`
-				: Cypress.currentTest.title
-			cy.createFolder(currentFolder)
-			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		})
+		// isolate tests - each happens in its own folder
+		const retry = cy.state('test').currentRetry()
+		currentFolder = retry
+			? `${Cypress.currentTest.title} (${retry})`
+			: Cypress.currentTest.title
+		cy.createFolder(currentFolder)
 	})
 
 	it('Hides the workspace when switching to another folder', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.createFolder(`${currentFolder}/subdirectory`)
-		cy.reload()
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
@@ -59,7 +55,7 @@ describe('Workspace', function() {
 
 	it('Hides the workspace when switching to another view', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
-		cy.reload()
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
@@ -70,6 +66,7 @@ describe('Workspace', function() {
 	})
 
 	it('adds a Readme.md', function() {
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.get('.files-fileList').should('not.contain', 'Readme.md')
 		cy.openWorkspace()
 			.type('Hello')
@@ -82,6 +79,7 @@ describe('Workspace', function() {
 	})
 
 	it('formats text', function() {
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace()
 			.type('Format me')
 			.type('{selectall}')
@@ -104,6 +102,7 @@ describe('Workspace', function() {
 	})
 
 	it('creates headings via submenu', function() {
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace()
 			.type('Heading')
 			.type('{selectall}')
@@ -125,6 +124,7 @@ describe('Workspace', function() {
 	})
 
 	it('creates lists', function() {
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace()
 			.type('List me')
 			.type('{selectall}')
@@ -148,13 +148,14 @@ describe('Workspace', function() {
 
 	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
-		cy.reload()
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 	})
 
 	it('emoji picker', () => {
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace()
 			.type('# Let\'s smile together{enter}## ')
 
@@ -175,6 +176,7 @@ describe('Workspace', function() {
 		cy.createFolder(`${currentFolder}/sub-folder/alpha`)
 
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/sub-folder/alpha/test.md`)
+		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 
 		cy.openWorkspace()
 			.type('link me')
@@ -212,6 +214,7 @@ describe('Workspace', function() {
 		const types = ['info', 'warn', 'error', 'success']
 
 		beforeEach(function() {
+			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.openWorkspace().type('Callout')
 		})
 		// eslint-disable-next-line cypress/no-async-tests
@@ -272,7 +275,7 @@ describe('Workspace', function() {
 		it('takes localized file name into account', function() {
 			cy.updateUserSetting('language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
-			cy.reload()
+			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
 			cy.get('#rich-workspace .ProseMirror')
 				.should('contain', 'Hello world')
@@ -281,7 +284,7 @@ describe('Workspace', function() {
 		it('ignores localized file name in other language', function() {
 			cy.updateUserSetting('language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
-			cy.reload()
+			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
 			cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
 		})
@@ -297,6 +300,10 @@ describe('Workspace', function() {
 				.type(txt)
 				.should('contain', txt)
 		}
+
+		beforeEach(() => {
+			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
+		})
 
 		it('click', () => {
 			cy.get('#rich-workspace .empty-workspace').click()
