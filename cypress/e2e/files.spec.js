@@ -24,21 +24,29 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('Files default view', () => {
+describe('Text and server mimetypes', () => {
 	before(() => {
 		cy.createUser(user)
 	})
 
 	beforeEach(() => {
 		cy.login(user)
+	})
+
+	it('handle plaintext in a pre tag', () => {
+		cy.uploadFile('empty.md', 'text/plain', 'textfile.txt')
 		cy.visit('/apps/files')
+		cy.get('#app-content-files table tr').should('contain', 'textfile.txt')
+		cy.openFile('textfile.txt')
+		cy.getContent().find('pre').should('exist')
 	})
 
-	it('See the default files list', () => {
-		cy.get('#app-content-files table tr').should('contain', 'welcome.txt')
+	it('handle markdown with richtext editor', () => {
+		cy.uploadFile('test.md', 'text/markdown', 'markdown.md')
+		cy.visit('/apps/files')
+		cy.get('#app-content-files table tr').should('contain', 'markdown.md')
+		cy.openFile('markdown.md')
+		cy.getContent().find('h2').should('contain', 'Hello world')
 	})
 
-	it('Take screenshot', () => {
-		cy.screenshot()
-	})
 })
