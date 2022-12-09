@@ -116,7 +116,7 @@
   },
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
-    "@cypress/webpack-preprocessor": "^5.15.5",
+    "@cypress/webpack-preprocessor": "^5.15.6",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^2.3.0",
     "@nextcloud/eslint-config": "^8.1.4",
