@@ -19,7 +19,7 @@
   -->
 <template>
 	<li class="inline-container-base">
-		<ul>
+		<ul class="inline-container-content">
 			<slot />
 		</ul>
 	</li>
@@ -38,13 +38,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.inline-container-base {
-	ul {
-		display: flex;
-		justify-content: space-between;
+ul.inline-container-content {
+	display: flex;
+	justify-content: space-between;
+	li {
+		flex: 1 1;
 	}
+
 	.action-button {
+		// Fix action buttons beeing shifted to the left (right padding)
 		padding: 0 !important;
+		width: 100%;
+		display: flex;
+		justify-content: center;
 	}
 }
 </style>
