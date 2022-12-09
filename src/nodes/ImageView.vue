@@ -309,9 +309,6 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
-			this.$nextTick(() => {
-				this.editor.commands.scrollIntoView()
-			})
 		},
 		getTextApiUrl(imageFileName) {
 			const documentId = this.currentSession?.documentId
