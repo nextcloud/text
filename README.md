@@ -45,9 +45,15 @@ For testing the backend (PHP) [Psalm](https://psalm.dev/) and [PHPUnit](https://
 you can run the testcases (placed in `tests/`) using the composer scripts `psalm` and `test:unit`.
 
 For testing the frontend [jest](https://jestjs.io/) is used for unittests, whereas [cypress](https://www.cypress.io/) is used for end2end testing.
-The unittests are also placed in `tests/`, the cypress tests are placed in `cypress/`.
+The unittests are also placed in `src/tests/`, the cypress tests are placed in `cypress/`.
 You can run the tests using the package scripts `npm run test` (jest), and respective `npm run test:cypress` (cypress).
 
 Please note the cypress tests require a nextcloud server running, the if no running server is detected a docker container will be started,
 this requires the current user to be in the `docker` group.
 Or you might set the `CYPRESS_baseUrl` environment variable for a custom nextcloud server.
+
+#### Adding support for other mime types
+
+- The mime type needs to be known by Nextcloud server (see https://github.com/nextcloud/server/pull/24488 for how this can be added)
+- Once that is there, please open a pull request to add them to https://github.com/nextcloud/text/blob/12df66ffdd3d71cc696438e2e4ec60fa17b89a64/src/helpers/mime.js#L35-L61
+- You can test them like other mime types in cypress/e2e/files.spec.js
