@@ -90,13 +90,13 @@ describe('Workspace', function() {
 			['strikethrough', 's'],
 		].forEach(([button, tag]) => {
 			cy.getMenuEntry(button)
-				.click({ force: true })
+				.click()
 				.should('have.class', 'is-active')
 			cy.getContent()
 				.find(`${tag}`)
 				.should('contain', 'Format me')
 			cy.getMenuEntry(button)
-				.click({ force: true })
+				.click()
 				.should('not.have.class', 'is-active')
 		})
 	})
@@ -134,14 +134,14 @@ describe('Workspace', function() {
 			['task-list', 'ul[data-type="taskList"]'],
 		].forEach(([button, tag]) => {
 			cy.getMenuEntry(button)
-				.click({ force: true })
+				.click()
 				.should('have.class', 'is-active')
 
 			cy.getContent()
 				.find(`${tag}`).should('contain', 'List me')
 
 			cy.getMenuEntry(button)
-				.click({ force: true })
+				.click()
 				.should('not.have.class', 'is-active')
 		})
 	})
