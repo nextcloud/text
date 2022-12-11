@@ -28,10 +28,10 @@
   ],
   "packageRules": [
     {
-      "groupName": "tiptap",
-      "matchPackagePrefixes": [
-        "@tiptap/",
-        "prosemirror-"
+      "groupName": "cypress",
+      "matchPackageNames": [
+        "cypress",
+        "@nextcloud/cypress"
       ]
     },
     {
@@ -47,6 +47,13 @@
         "jest",
         "@vue/vue2-jest",
         "jest-environment-jsdom"
+      ]
+    },
+    {
+      "groupName": "tiptap",
+      "matchPackagePrefixes": [
+        "@tiptap/",
+        "prosemirror-"
       ]
     },
     {
