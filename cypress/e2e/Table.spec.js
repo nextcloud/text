@@ -18,7 +18,6 @@ describe('table plugin', () => {
 
 	beforeEach(() => {
 		cy.login(user)
-		cy.visit('/apps/files')
 
 		cy.isolateTest({
 			sourceFile: fileName,

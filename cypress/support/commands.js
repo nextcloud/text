@@ -131,20 +131,36 @@ Cypress.Commands.add('shareFileToUser', (path, targetUser) => {
 	})
 })
 
-Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = null, onBeforeLoad } = {}) => {
-	targetFile = targetFile || sourceFile
-
+Cypress.Commands.add('testName', () => {
 	const retry = cy.state('test').currentRetry()
 	const folderName = retry
 		? `${Cypress.currentTest.title} (${retry})`
 		: Cypress.currentTest.title
+	return cy.wrap(folderName)
+})
 
-	cy.createFolder(folderName)
-	cy.uploadFile(sourceFile, 'text/markdown', `${encodeURIComponent(folderName)}/${targetFile}`)
+Cypress.Commands.add('createTestFolder', () => {
+	return cy.testName().then(folderName => {
+		cy.createFolder(folderName)
+		return cy.wrap(folderName)
+	})
+})
 
-	window.__currentDirectory = folderName
-	return cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`, { onBeforeLoad })
-		.then(() => ({ folderName, fileName: targetFile }))
+Cypress.Commands.add('visitTestFolder', (visitOptions = {}) => {
+	return cy.testName().then(folderName => {
+		const url = `apps/files?dir=/${encodeURIComponent(folderName)}`
+		return cy.visit(url, visitOptions)
+	})
+})
+
+Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = null, onBeforeLoad } = {}) => {
+	targetFile = targetFile || sourceFile
+	cy.createTestFolder().then(folderName => {
+		cy.uploadFile(sourceFile, 'text/markdown', `${encodeURIComponent(folderName)}/${targetFile}`)
+		window.__currentDirectory = folderName
+		return cy.visitTestFolder({ onBeforeLoad })
+			.then(() => ({ folderName, fileName: targetFile }))
+	})
 })
 
 Cypress.Commands.add('shareFile', (path, options = {}) => {
