@@ -10,8 +10,6 @@ describe('test link marks', function() {
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.visit('/apps/files')
-
 		cy.isolateTest({
 			sourceFile: fileName,
 			onBeforeLoad(win) {
@@ -19,9 +17,7 @@ describe('test link marks', function() {
 					.as('winOpen')
 			},
 		})
-
 		cy.openFile(fileName, { force: true })
-		return cy.clearContent()
 	})
 
 	describe('link preview', function() {
