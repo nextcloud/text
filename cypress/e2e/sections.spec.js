@@ -1,4 +1,4 @@
-import { initUserAndFiles, randUser } from '../utils/index.js'
+import { randUser } from '../utils/index.js'
 
 const user = randUser()
 const fileName = 'empty.md'
@@ -15,25 +15,25 @@ const clickOutline = () => {
 		.click()
 }
 
+let currentFolder
+
 describe('Content Sections', () => {
 	before(function() {
-		initUserAndFiles(user, fileName)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.isolateTest({
-			onBeforeLoad(win) {
-				cy.stub(win, 'open')
-					.as('winOpen')
-			},
+		cy.createTestFolder().then(folderName => {
+			currentFolder = folderName
+			cy.uploadFile(fileName, 'text/markdown', `${currentFolder}/${fileName}`)
 		})
-
-		cy.openFile(fileName, { force: true })
 	})
 
 	describe('Heading anchors', () => {
 		it('Anchor exists', () => {
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
 			cy.getContent()
 				.type('# Heading\nText\n## Heading 2\nText\n## Heading 2')
 				.then(() => {
@@ -49,6 +49,8 @@ describe('Content Sections', () => {
 		})
 
 		it('Anchor ID is updated', () => {
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
 			cy.getContent()
 				.type('# Heading 1{enter}')
 				.then(() => {
@@ -77,40 +79,24 @@ describe('Content Sections', () => {
 			})
 		})
 
-		it('Anchor scrolls into view', () => {
-			// Create link to top heading
+		it('scrolls anchor into view', () => {
+			cy.uploadFile('anchors.md', 'text/markdown', `${currentFolder}/anchors.md`)
+			cy.visitTestFolder()
+			cy.openFile('anchors.md')
 			cy.getContent()
-				.type('{selectAll}{backspace}move top\n{selectAll}')
-				.then(() => {
-					cy.getSubmenuEntry('insert-link', 'insert-link-website')
-						.click()
-						.then(() => {
-							cy.getActionSubEntry('insert-link-input')
-								.find('input[type="text"]')
-								.type('#top{enter}')
-						})
-				})
-			// Insert content above link
-			cy.getContent()
-				.type('{moveToStart}\n{moveToStart}# top \n')
-				.type('lorem ipsum \n'.repeat(25))
-				.type('{moveToEnd}\n')
-
-			cy.getContent().find('h1#top')
+				.get('h2[id="bottom"]')
 				.should('not.be.inViewport')
-
-			// Click link and test view moved to anchor
 			cy.getContent()
-				.find('a:not(.heading-anchor)')
+				.find('a[href="#bottom"]:not(.heading-anchor)')
 				.click({ force: true })
-				.then(() => {
-					cy.getContent()
-						.get('h1[id="top"]')
-						.should('be.inViewport')
-				})
+			cy.getContent()
+				.get('h2[id="bottom"]')
+				.should('be.inViewport')
 		})
 
 		it('Can change heading level', () => {
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
 			// Issue #2868
 			cy.getContent()
 				.type('# Heading 1{enter}')
@@ -140,6 +126,8 @@ describe('Content Sections', () => {
 
 	describe('Table of Contents', () => {
 		it('sidebar toc', () => {
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
 			cy.getContent()
 				.type('# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
 				.then(refresh)
@@ -168,8 +156,8 @@ describe('Content Sections', () => {
 		})
 
 		it('empty toc', () => {
-			refresh()
-				.then(() => cy.openFile(fileName, { force: true }))
+			cy.visitTestFolder()
+			cy.openFile(fileName, { force: true })
 				.then(clickOutline)
 
 			cy.getOutline()
