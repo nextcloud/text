@@ -295,7 +295,7 @@ Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
 // Get menu entry even if moved into overflow menu
 Cypress.Commands.add('getMenuEntry', (name) => {
 	cy.getMenu().then(($body) => {
-		if ($body.find(`[data-text-action-entry="${name}"]`).length) {
+		if ($body.find(`div.text-menubar__entries > [data-text-action-entry="${name}"]`).length) {
 			return cy.getActionEntry(name)
 		}
 		return cy.getSubmenuEntry('remain', name)
