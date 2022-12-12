@@ -21,16 +21,8 @@ describe('Content Sections', () => {
 	})
 
 	beforeEach(function() {
-		cy.login(user, {
-			onBeforeLoad(win) {
-				cy.stub(win, 'open')
-					.as('winOpen')
-			},
-		})
-		cy.visit('/apps/files')
-
+		cy.login(user)
 		cy.isolateTest({
-			sourceFile: fileName,
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
@@ -38,7 +30,6 @@ describe('Content Sections', () => {
 		})
 
 		cy.openFile(fileName, { force: true })
-		return cy.clearContent()
 	})
 
 	describe('Heading anchors', () => {
@@ -58,7 +49,7 @@ describe('Content Sections', () => {
 		})
 
 		it('Anchor ID is updated', () => {
-			cy.clearContent()
+			cy.getContent()
 				.type('# Heading 1{enter}')
 				.then(() => {
 					cy.getContent()
@@ -88,7 +79,7 @@ describe('Content Sections', () => {
 
 		it('Anchor scrolls into view', () => {
 			// Create link to top heading
-			cy.clearContent()
+			cy.getContent()
 				.type('{selectAll}{backspace}move top\n{selectAll}')
 				.then(() => {
 					cy.getSubmenuEntry('insert-link', 'insert-link-website')
