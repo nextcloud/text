@@ -64,4 +64,13 @@ describe('Hard break support', function() {
 			.find('p br')
 			.should('exist')
 	})
+
+	it('Do not create hard breaks within headings', () => {
+		cy.getContent()
+			.type('# Hello')
+			.type('{shift+enter}world')
+		cy.getContent()
+			.find('h1 br')
+			.should('not.exist')
+	})
 })
