@@ -18,6 +18,7 @@ OC.L10N.register(
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
     "Unsupported image type" : "Pildi tüüp pole toetatud",
+    "Undo" : "Tühista",
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri"
