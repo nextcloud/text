@@ -88,7 +88,7 @@ describe('Content Sections', () => {
 				.should('not.be.inViewport')
 			cy.getContent()
 				.find('a[href="#bottom"]:not(.heading-anchor)')
-				.click({ force: true })
+				.click()
 			cy.getContent()
 				.get('h2[id="bottom"]')
 				.should('be.inViewport')
