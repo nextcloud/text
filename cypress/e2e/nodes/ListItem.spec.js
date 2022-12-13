@@ -2,14 +2,14 @@
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 /* eslint-enable import/no-named-as-default */
-import TaskList from './../../src/nodes/TaskList.js'
-import TaskItem from './../../src/nodes/TaskItem.js'
-import BulletList from './../../src/nodes/BulletList.js'
-import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
+import TaskList from './../../../src/nodes/TaskList.js'
+import TaskItem from './../../../src/nodes/TaskItem.js'
+import BulletList from './../../../src/nodes/BulletList.js'
+import Markdown, { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
 import { findChildren } from 'prosemirror-utils'
-import { createCustomEditor } from './../support/components.js'
-import testData from '../fixtures/ListItem.md'
-import markdownit from './../../src/markdownit/index.js'
+import { createCustomEditor } from './../../support/components.js'
+import testData from '../../fixtures/ListItem.md'
+import markdownit from './../../../src/markdownit/index.js'
 
 describe('ListItem extension integrated in the editor', () => {
 

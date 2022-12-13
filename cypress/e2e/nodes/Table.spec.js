@@ -1,12 +1,12 @@
 import { findChildren } from 'prosemirror-utils'
-import { initUserAndFiles, randUser } from '../utils/index.js'
-import { createCustomEditor } from './../support/components.js'
+import { initUserAndFiles, randUser } from '../../utils/index.js'
+import { createCustomEditor } from './../../support/components.js'
 
-import markdownit from './../../src/markdownit/index.js'
-import EditableTable from './../../src/nodes/EditableTable.js'
-import Markdown, { createMarkdownSerializer } from './../../src/extensions/Markdown.js'
+import markdownit from './../../../src/markdownit/index.js'
+import EditableTable from './../../../src/nodes/EditableTable.js'
+import Markdown, { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
 
-import testData from '../fixtures/Table.md'
+import testData from '../../fixtures/Table.md'
 
 const user = randUser()
 const fileName = 'empty.md'
