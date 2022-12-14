@@ -34,6 +34,19 @@ const HardBreak = TipTapHardBreak.extend({
 		}
 	},
 
+	addCommands() {
+		return {
+			...this?.parent(),
+			setHardBreak: () => (ctx) => {
+				// Prevent hard breaks within headings
+				for (let d = ctx.state.selection.$from.depth; d >= 0; d--) {
+					if (ctx.state.selection.$from.node(d).type.name === 'heading') return false
+				}
+				return this.parent().setHardBreak()(ctx)
+			},
+		}
+	},
+
 	toMarkdown(state, node, parent, index) {
 		for (let i = index + 1; i < parent.childCount; i++) {
 			if (parent.child(i).type !== node.type) {

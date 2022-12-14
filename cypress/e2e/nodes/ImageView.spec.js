@@ -1,4 +1,4 @@
-import { randUser } from '../utils/index.js'
+import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 

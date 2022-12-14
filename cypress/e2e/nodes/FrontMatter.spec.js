@@ -18,7 +18,7 @@
  *
  */
 
-import { initUserAndFiles, randUser } from '../utils/index.js'
+import { initUserAndFiles, randUser } from '../../utils/index.js'
 
 const user = randUser()
 
