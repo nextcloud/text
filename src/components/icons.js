@@ -24,6 +24,7 @@
 import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
 import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
+import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
 import MDI_Delete from 'vue-material-design-icons/Delete.vue'
@@ -102,6 +103,7 @@ export const AlignHorizontalRight = makeIcon(MDI_AlignHorizontalRight)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
 export const CodeTags = makeIcon(MDI_CodeTags)
+export const CircleMedium = makeIcon(MDI_CircleMedium)
 export const Danger = makeIcon(MDI_Danger)
 export const Delete = makeIcon(MDI_Delete)
 export const Document = makeIcon(MDI_Document)
