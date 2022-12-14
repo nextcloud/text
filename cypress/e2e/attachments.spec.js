@@ -413,8 +413,8 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Delete the user', () => {
-		cy.nextcloudDeleteUser(user)
-		cy.nextcloudDeleteUser(recipient)
+		cy.deleteUser(user)
+		cy.deleteUser(recipient)
 	})
 
 })

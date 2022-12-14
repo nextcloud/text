@@ -273,7 +273,7 @@ describe('Workspace', function() {
 
 	describe('localize', () => {
 		it('takes localized file name into account', function() {
-			cy.updateUserSetting('language', 'de_DE')
+			cy.modifyUser(user, 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
@@ -282,7 +282,7 @@ describe('Workspace', function() {
 		})
 
 		it('ignores localized file name in other language', function() {
-			cy.updateUserSetting('language', 'fr')
+			cy.modifyUser(user, 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')

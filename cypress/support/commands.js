@@ -52,27 +52,6 @@ Cypress.Commands.add('ocsRequest', (options) => {
 	})
 })
 
-Cypress.Commands.add('updateUserSetting', (key, value) => {
-	cy.ocsRequest({
-		method: 'PUT',
-		url: `${url}/ocs/v2.php/cloud/users/${auth.user}`,
-		body: { key, value },
-	}).then(response => {
-		cy.log(`Updated ${auth.user} ${key} to ${value}`, response.status)
-	})
-})
-
-Cypress.Commands.add('nextcloudDeleteUser', (user) => {
-	cy.clearCookies()
-	cy.ocsRequest({
-		method: 'DELETE',
-		url: `${url}/ocs/v1.php/cloud/users/${user}`,
-		auth: { user: 'admin', pass: 'admin' },
-	}).then(response => {
-		cy.log(`Deleted user ${user}`, response.status)
-	})
-})
-
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	return cy.fixture(fileName, 'base64')
 		.then(Cypress.Blob.base64StringToBlob)
