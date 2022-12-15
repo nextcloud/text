@@ -23,9 +23,8 @@
 <template>
 	<div class="text-editor__session-list">
 		<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
-			<CheckIcon v-if="saveStatusClass === 'saved'" />
-			<CircleIcon v-else-if="saveStatusClass === 'saving'" />
-			<WarnIcon v-else />
+			<SavingIndicator :saving="saveStatusClass === 'saving'"
+				:error="saveStatusClass === 'error'" />
 		</div>
 		<SessionList :sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
@@ -38,8 +37,8 @@
 
 <script>
 
+import SavingIndicator from '../SavingIndicator.vue'
 import { ERROR_TYPE } from './../../services/SyncService.js'
-import { Check as CheckIcon, CircleMedium as CircleIcon, Warn as WarnIcon } from '../icons.js'
 import { Tooltip } from '@nextcloud/vue'
 import {
 	useIsMobileMixin,
@@ -50,9 +49,7 @@ export default {
 	name: 'Status',
 
 	components: {
-		CheckIcon,
-		CircleIcon,
-		WarnIcon,
+		SavingIndicator,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 	},
@@ -155,10 +152,6 @@ export default {
 
 		&:hover {
 			background-color: var(--color-background-hover);
-		}
-
-		&.error {
-			color: var(--color-error)
 		}
 	}
 
