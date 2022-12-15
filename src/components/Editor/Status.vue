@@ -135,7 +135,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 	.text-editor__session-list {
 		display: flex;
 
@@ -146,23 +145,20 @@ export default {
 	}
 
 	.save-status {
-		background-color: var(--color-background-dark);
 		border-radius: 50%;
 		color: var(--color-text-lighter);
 		display: inline-flex;
 		justify-content: center;
 		padding: 0;
-		height: 40px;
-		width: 40px;
+		height: 44px;
+		width: 44px;
 
-		&.error {
-			border: 2px solid var(--color-error);
-			width: 36px;
-			height: 36px;
+		&:hover {
+			background-color: var(--color-background-hover);
 		}
 
-		&.saved {
-			color: var(--color-success)
+		&.error {
+			color: var(--color-error)
 		}
 	}
 
