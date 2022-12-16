@@ -50,7 +50,7 @@ OC.L10N.register(
     "Style" : "Stil",
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Tastaturkürzel",
-    "Backspace" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Backspace" : "Rücktaste",
     "Shift" : "Umschalttaste",
     "Bold" : "Fett",
     "Bold text" : "Fetter Text",
