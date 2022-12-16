@@ -146,12 +146,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+	.session-list {
+		height: 44px;
+	}
 	.avatar-list {
 		border: none;
 		background-color: var(--color-main-background);
 		padding: 0;
 		margin: 0;
-		padding-left: 6px;
+		padding-left: 3px;
 		display: inline-flex;
 		flex-direction: row-reverse;
 
@@ -166,10 +169,13 @@ export default {
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
-			background-color: var(--color-background-dark);
-			width: 40px;
-			height: 40px;
-			margin: 0 6px 0 0;
+			width: 44px;
+			height: 44px;
+			margin: 0 3px 0 0;
+
+			&:hover {
+				background-color: var(--color-background-hover);
+			}
 		}
 	}
 

@@ -22,13 +22,9 @@
 
 <template>
 	<div class="text-editor__session-list">
-		<div v-if="$isMobile" v-tooltip="lastSavedStatusTooltip" :class="saveStatusClass" />
-		<div v-else
-			v-tooltip="lastSavedStatusTooltip"
-			class="save-status"
-			:aria-label="t('text', 'Document save status')"
-			:class="lastSavedStatusClass">
-			{{ lastSavedStatus }}
+		<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
+			<SavingIndicator :saving="saveStatusClass === 'saving'"
+				:error="saveStatusClass === 'error'" />
 		</div>
 		<SessionList :sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
@@ -41,6 +37,7 @@
 
 <script>
 
+import SavingIndicator from '../SavingIndicator.vue'
 import { ERROR_TYPE } from './../../services/SyncService.js'
 import { Tooltip } from '@nextcloud/vue'
 import {
@@ -52,6 +49,7 @@ export default {
 	name: 'Status',
 
 	components: {
+		SavingIndicator,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 	},
@@ -100,9 +98,6 @@ export default {
 			}
 			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
-		lastSavedStatusClass() {
-			return this.syncError && this.lastSavedString !== '' ? 'error' : ''
-		},
 		dirtyStateIndicator() {
 			return this.dirty || this.hasUnsavedChanges
 		},
@@ -125,9 +120,9 @@ export default {
 		},
 		saveStatusClass() {
 			if (this.syncError && this.lastSavedString !== '') {
-				return 'save-error'
+				return 'error'
 			}
-			return this.dirtyStateIndicator ? 'saving-status' : 'saved-status'
+			return this.dirtyStateIndicator ? 'saving' : 'saved'
 		},
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
@@ -137,7 +132,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 	.text-editor__session-list {
 		display: flex;
 
@@ -148,45 +142,17 @@ export default {
 	}
 
 	.save-status {
-		display: inline-flex;
-		padding: 0;
-		text-overflow: ellipsis;
+		border-radius: 50%;
 		color: var(--color-text-lighter);
-		position: relative;
-		top: 9px;
-		min-width: 85px;
-		max-height: 36px;
+		display: inline-flex;
+		justify-content: center;
+		padding: 0;
+		height: 44px;
+		width: 44px;
 
-		&.error {
-			background-color: var(--color-error);
-			color: var(--color-main-background);
-			border-radius: 3px;
+		&:hover {
+			background-color: var(--color-background-hover);
 		}
-	}
-</style>
-
-<style lang="scss">
-	.saved-status,.saving-status {
-		display: inline-flex;
-		padding: 0;
-		text-overflow: ellipsis;
-		color: var(--color-text-lighter);
-		background-color: var(--color-main-background);
-		width: 38px !important;
-		height: 38px !important;
-		z-index: 2;
-	}
-
-	.saved-status {
-		border: 2px solid #04AA6D;
-		border-radius: 50%;
-	}
-
-	.saving-status {
-		border: 2px solid #f3f3f3;
-		border-top: 2px solid #3498db;
-		border-radius: 50%;
-		animation: spin 2s linear infinite;
 	}
 
 	.last-saved {
