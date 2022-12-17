@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
     "Active people" : "Активни хора",
-    "Document save status" : "Състояние на запис на документа",
     "Last saved" : "Последно запазено",
     "Saving …" : "Записване …",
     "Saved" : "Записано",
@@ -143,6 +142,7 @@ OC.L10N.register(
     "Image file format not supported" : "Форматът на файла с изображение не се поддържа",
     "Todo item" : "Елемент на задача за изпълнение",
     "Alt" : "Alt /бутон/",
-    "Remove Link" : "Премахване на връзка"
+    "Remove Link" : "Премахване на връзка",
+    "Document save status" : "Състояние на запис на документа"
 },
 "nplurals=2; plural=(n != 1);");

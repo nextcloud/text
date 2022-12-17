@@ -34,7 +34,6 @@
     "Show author colors" : "Показати кольори автора",
     "Author colors are only shown until everyone has closed the document." : "Кольори автора відображаються, лише доки всі не закриють документ.",
     "Active people" : "Активні люди",
-    "Document save status" : "Статус збереження документа",
     "Last saved" : "Востаннє збережено",
     "Saving …" : "Збереження ..",
     "Saved" : "Збережено",
@@ -132,6 +131,7 @@
     "Image file format not supported" : "Формат файлу зображення не підтримується",
     "Todo item" : "Елемент Todo",
     "Alt" : "Alt",
-    "Remove Link" : "Видалити посилання"
+    "Remove Link" : "Видалити посилання",
+    "Document save status" : "Статус збереження документа"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

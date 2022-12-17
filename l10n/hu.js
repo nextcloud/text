@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Szerzők színének megjelenítése",
     "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
     "Active people" : "Aktív emberek",
-    "Document save status" : "Dokumentum mentési állapota",
     "Last saved" : "Legutóbb mentve",
     "Saving …" : "Mentés…",
     "Saved" : "Elmentve",
@@ -140,6 +139,7 @@ OC.L10N.register(
     "Image file format not supported" : "A képfájl nem támogatott",
     "Todo item" : "Teendő elem ",
     "Alt" : "Alt",
-    "Remove Link" : "Hivatkozás eltávolítása"
+    "Remove Link" : "Hivatkozás eltávolítása",
+    "Document save status" : "Dokumentum mentési állapota"
 },
 "nplurals=2; plural=(n != 1);");

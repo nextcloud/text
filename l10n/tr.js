@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
     "Active people" : "Etkin kişiler",
-    "Document save status" : "Belge kaydetme durumu",
     "Last saved" : "Son kaydedilme",
     "Saving …" : "Kaydediliyor …",
     "Saved" : "Kaydedildi",
@@ -143,6 +142,7 @@ OC.L10N.register(
     "Image file format not supported" : "Görsel dosya biçimi desteklenmiyor",
     "Todo item" : "Yapılacak iş ögesi",
     "Alt" : "Alt",
-    "Remove Link" : "Bağlantıyı kaldır"
+    "Remove Link" : "Bağlantıyı kaldır",
+    "Document save status" : "Belge kaydetme durumu"
 },
 "nplurals=2; plural=(n > 1);");

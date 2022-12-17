@@ -34,7 +34,6 @@
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
     "Active people" : "Personnes actives",
-    "Document save status" : "Statut de sauvegarde du document",
     "Last saved" : "Dernière sauvegarde",
     "Saving …" : "Enregistrement…",
     "Saved" : "Enregistré",
@@ -145,6 +144,7 @@
     "Image file format not supported" : "Type d'image non pris en charge",
     "Todo item" : "Tâche",
     "Alt" : "Alternatif",
-    "Remove Link" : "Supprimer le lien"
+    "Remove Link" : "Supprimer le lien",
+    "Document save status" : "Statut de sauvegarde du document"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

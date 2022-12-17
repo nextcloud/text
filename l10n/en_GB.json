@@ -34,7 +34,6 @@
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
     "Active people" : "Active people",
-    "Document save status" : "Document save status",
     "Last saved" : "Last saved",
     "Saving …" : "Saving …",
     "Saved" : "Saved",
@@ -145,6 +144,7 @@
     "Image file format not supported" : "Image file format not supported",
     "Todo item" : "Todo item",
     "Alt" : "Alt",
-    "Remove Link" : "Remove Link"
+    "Remove Link" : "Remove Link",
+    "Document save status" : "Document save status"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
