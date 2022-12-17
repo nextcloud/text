@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
     "Active people" : "Pertsona aktiboak",
-    "Document save status" : "Dokumentuaren gordeketa egoera",
     "Last saved" : "Azken gordetze-data",
     "Saving …" : "Gordetzen ...",
     "Saved" : "Gordeta",
@@ -135,6 +134,7 @@ OC.L10N.register(
     "Image file format not supported" : "Irudi-fitxategiaren formatua ez da onartzen",
     "Todo item" : "Eginbeharreko elementua",
     "Alt" : "Alt",
-    "Remove Link" : "Kendu esteka"
+    "Remove Link" : "Kendu esteka",
+    "Document save status" : "Dokumentuaren gordeketa egoera"
 },
 "nplurals=2; plural=(n != 1);");

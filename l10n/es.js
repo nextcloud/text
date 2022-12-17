@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Ver colores del autor",
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor sólo se muestran cuando todo el mundo ha cerrado el documento.",
     "Active people" : "Personas activas",
-    "Document save status" : "Estado de guardado del documento ",
     "Last saved" : "Guardado por última vez",
     "Saving …" : "Guardando …",
     "Saved" : "Guardado",
@@ -147,6 +146,7 @@ OC.L10N.register(
     "Image file format not supported" : "Formato de archivo de imagen no soportado",
     "Todo item" : "Elemento a completar",
     "Alt" : "Alt",
-    "Remove Link" : "Eliminar Enlace"
+    "Remove Link" : "Eliminar Enlace",
+    "Document save status" : "Estado de guardado del documento "
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Save guest name" : "Зачувај име на гостин",
     "guest" : "гостин",
     "Active people" : "Активни луѓе",
-    "Document save status" : "Статус на зачувување на документот",
     "Last saved" : "Последно зачувано",
     "Saving …" : "Зачувува ...",
     "Saved" : "Зачувано",
@@ -95,6 +94,7 @@ OC.L10N.register(
     "_and %n other editor_::_and %n other editors_" : ["и 1 друг уредник","и%n други уредници"],
     "Image file format not supported" : "Форматот на датотеката со слика не е поддржан",
     "Alt" : "Alt",
-    "Remove Link" : "Острани линк"
+    "Remove Link" : "Острани линк",
+    "Document save status" : "Статус на зачувување на документот"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
