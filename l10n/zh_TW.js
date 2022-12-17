@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
     "Active people" : "活躍的人",
-    "Document save status" : "文件儲存狀態",
     "Last saved" : "最後儲存於",
     "Saving …" : "正在儲存……",
     "Saved" : "已儲存",
@@ -147,6 +146,7 @@ OC.L10N.register(
     "Image file format not supported" : "不支援的圖片檔案格式",
     "Todo item" : "待辦事項",
     "Alt" : "Alt",
-    "Remove Link" : "移除連結"
+    "Remove Link" : "移除連結",
+    "Document save status" : "文件儲存狀態"
 },
 "nplurals=1; plural=0;");

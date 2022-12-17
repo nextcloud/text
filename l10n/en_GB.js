@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
     "Active people" : "Active people",
-    "Document save status" : "Document save status",
     "Last saved" : "Last saved",
     "Saving …" : "Saving …",
     "Saved" : "Saved",
@@ -147,6 +146,7 @@ OC.L10N.register(
     "Image file format not supported" : "Image file format not supported",
     "Todo item" : "Todo item",
     "Alt" : "Alt",
-    "Remove Link" : "Remove Link"
+    "Remove Link" : "Remove Link",
+    "Document save status" : "Document save status"
 },
 "nplurals=2; plural=(n != 1);");

@@ -33,7 +33,6 @@ OC.L10N.register(
     "Show author colors" : "Näytä tekijän värit",
     "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
     "Active people" : "Aktiiviset ihmiset",
-    "Document save status" : "Asiakirjan tallennuksen tila",
     "Last saved" : "Viimeksi tallennettu",
     "Saving …" : "Tallennetaan...",
     "Saved" : "Tallennettu",
@@ -122,6 +121,7 @@ OC.L10N.register(
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
     "Image file format not supported" : "Kuvan tiedostomuoto ei ole tuettu",
-    "Remove Link" : "Poista linkki"
+    "Remove Link" : "Poista linkki",
+    "Document save status" : "Asiakirjan tallennuksen tila"
 },
 "nplurals=2; plural=(n != 1);");
