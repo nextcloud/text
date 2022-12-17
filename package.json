@@ -36,7 +36,7 @@
   "dependencies": {
     "@hedgedoc/markdown-it-task-lists": "^1.0.5",
     "@nextcloud/auth": "^2.0.0",
-    "@nextcloud/axios": "^2.2.0",
+    "@nextcloud/axios": "^2.3.0",
     "@nextcloud/browser-storage": "^0.2.0",
     "@nextcloud/dialogs": "^3.2.0",
     "@nextcloud/event-bus": "^3.0.2",
