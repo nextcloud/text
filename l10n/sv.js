@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
     "Active people" : "Aktiva användare",
-    "Document save status" : "Dokumentets spara status",
     "Last saved" : "Senast sparad",
     "Saving …" : "Sparar …",
     "Saved" : "Sparad",
@@ -144,6 +143,7 @@ OC.L10N.register(
     "Image file format not supported" : "Bildfilformat stöds inte",
     "Todo item" : "Att göra objekt",
     "Alt" : "Alt",
-    "Remove Link" : "Ta bort länk"
+    "Remove Link" : "Ta bort länk",
+    "Document save status" : "Dokumentets spara status"
 },
 "nplurals=2; plural=(n != 1);");

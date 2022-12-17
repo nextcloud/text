@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
     "Active people" : "Aktivní lidé",
-    "Document save status" : "Stav uložení dokumentu",
     "Last saved" : "Naposledy uloženo",
     "Saving …" : "Ukládání…",
     "Saved" : "Uloženo",
@@ -143,6 +142,7 @@ OC.L10N.register(
     "Image file format not supported" : "Nepodporovaný souborový formát obrázku",
     "Todo item" : "Položka k udělání",
     "Alt" : "Alt",
-    "Remove Link" : "Odebrat odkaz"
+    "Remove Link" : "Odebrat odkaz",
+    "Document save status" : "Stav uložení dokumentu"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -36,7 +36,6 @@ OC.L10N.register(
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Active people" : "Aktywne osoby",
-    "Document save status" : "Status zapisywania dokumentu",
     "Last saved" : "Ostatnio zapisane",
     "Saving …" : "Zapisywanie…",
     "Saved" : "Zapisano",
@@ -143,6 +142,7 @@ OC.L10N.register(
     "Image file format not supported" : "Format pliku obrazu nie jest obsługiwany",
     "Todo item" : "Do zrobienia",
     "Alt" : "Alt",
-    "Remove Link" : "Usuń link"
+    "Remove Link" : "Usuń link",
+    "Document save status" : "Status zapisywania dokumentu"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

@@ -33,7 +33,6 @@ OC.L10N.register(
     "guest" : "svečias",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
-    "Document save status" : "Dokumento įrašymo būsena",
     "Last saved" : "Paskutinį kartą įrašyta",
     "Saving …" : "Įrašoma…",
     "Saved" : "Įrašyta",
@@ -124,6 +123,7 @@ OC.L10N.register(
     "Emoji picker" : "Šypsenėlių parinkiklis",
     "Image file format not supported" : "Paveikslo failo formatas yra nepalaikomas",
     "Alt" : "Alt",
-    "Remove Link" : "Šalinti nuorodą"
+    "Remove Link" : "Šalinti nuorodą",
+    "Document save status" : "Dokumento įrašymo būsena"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
