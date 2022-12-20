@@ -23,6 +23,7 @@
 
 import { randHash } from '../utils/index.js'
 const randUser = randHash()
+const recipient = randHash()
 
 describe('Open test.md in viewer', function() {
 	before(function() {
@@ -39,6 +40,8 @@ describe('Open test.md in viewer', function() {
 		cy.visit('/apps/files')
 		cy.get('.files-fileList tr[data-file="test.md"]')
 			.should('contain', 'test.md')
+
+		cy.nextcloudCreateUser(recipient, 'password')
 	})
 	beforeEach(function() {
 		cy.login(randUser, 'password')
@@ -119,6 +122,18 @@ describe('Open test.md in viewer', function() {
 				cy.getModal().find('.modal-header button.header-close').click()
 				cy.get('.modal-mask').should('not.exist')
 			})
+	})
+
+	it('Share a file with download disabled shows an error', function() {
+		cy.shareFileToUser(randUser, 'password', 'test.md', recipient, {
+			attributes: '[{"scope":"permissions","key":"download","enabled":false}]',
+		}).then(() => {
+			cy.login(recipient, 'password')
+			cy.visit('/apps/files')
+			cy.openFile('test.md')
+			cy.getModal().find('.empty-content__title').should('contain', 'Failed to load file')
+			cy.getModal().getContent().should('not.exist')
+		})
 	})
 
 })

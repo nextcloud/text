@@ -141,7 +141,7 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 
 })
 
-Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) => {
+Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId, shareData = {}) => {
 	cy.clearCookies()
 	cy.request({
 		method: 'POST',
@@ -151,6 +151,7 @@ Cypress.Commands.add('shareFileToUser', (userId, password, path, targetUserId) =
 			path,
 			shareType: 0,
 			shareWith: targetUserId,
+			...shareData,
 		},
 		auth: { user: userId, pass: password },
 		headers: {
