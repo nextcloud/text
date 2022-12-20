@@ -31,6 +31,9 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
 use OCP\Files\File;
 
+/**
+ * @template-implements IEventListener<Event|BeforeNodeDeletedEvent>
+ */
 class BeforeNodeDeletedListener implements IEventListener {
 	private $attachmentService;
 
