@@ -24,6 +24,7 @@
 import { randUser } from '../utils/index.js'
 
 const user = randUser()
+const recipient = randUser()
 
 describe('Open test.md in viewer', function() {
 	before(function() {
@@ -37,6 +38,8 @@ describe('Open test.md in viewer', function() {
 		cy.uploadFile('test.md', 'text/markdown', 'folder/Readme.md')
 		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
 		cy.uploadFile('test.md', 'text/markdown')
+
+		cy.createUser(recipient)
 	})
 	beforeEach(function() {
 		cy.login(user)
@@ -118,6 +121,18 @@ describe('Open test.md in viewer', function() {
 				cy.getModal().find('.modal-header button.header-close').click()
 				cy.get('.modal-mask').should('not.exist')
 			})
+	})
+
+	it('Share a file with download disabled shows an error', function() {
+		cy.shareFileToUser('test.md', recipient, {
+			attributes: '[{"scope":"permissions","key":"download","enabled":false}]',
+		}).then(() => {
+			cy.login(recipient)
+			cy.visit('/apps/files')
+			cy.openFile('test.md')
+			cy.getModal().find('.empty-content__title').should('contain', 'Failed to load file')
+			cy.getModal().getContent().should('not.exist')
+		})
 	})
 
 })
