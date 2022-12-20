@@ -708,6 +708,10 @@ export default {
 				content.style.display = ''
 			}
 		},
+
+		outlineToggled(visible) {
+			this.$parent.$emit('outline-toggled', visible)
+		},
 	},
 }
 </script>
