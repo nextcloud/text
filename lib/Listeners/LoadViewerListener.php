@@ -33,7 +33,7 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
-/** @implements IEventListener<Event> */
+/** @implements IEventListener<Event|LoadViewer> */
 class LoadViewerListener implements IEventListener {
 	private InitialStateProvider $initialStateProvider;
 	private IEventDispatcher $eventDispatcher;

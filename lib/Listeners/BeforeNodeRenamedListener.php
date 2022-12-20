@@ -31,8 +31,11 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
 use OCP\Files\File;
 
+/**
+ * @template-implements IEventListener<Event|BeforeNodeRenamedEvent>
+ */
 class BeforeNodeRenamedListener implements IEventListener {
-	private $attachmentService;
+	private AttachmentService $attachmentService;
 
 	public function __construct(AttachmentService $attachmentService) {
 		$this->attachmentService = $attachmentService;
