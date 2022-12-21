@@ -29,7 +29,6 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Kujdes",
     "Edit" : "Përpuno",
-    "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime",
-    "_and %n other editor_::_and %n other editors_" : ["shto %nredaktor tjetër","shto %nredaktorë të tjerë"]
+    "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime"
 },
 "nplurals=2; plural=(n != 1);");

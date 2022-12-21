@@ -51,12 +51,11 @@ OC.L10N.register(
     "Command" : "Comanda",
     "Edit" : "Modificar",
     "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
-    "Insert image" : "Inserir imatge",
     "Insert an image" : "Inserir un imatge",
     "Link file" : "Ligam fichièr",
-    "Currently active users:" : "Utilizaires actius :",
+    "Remove Link" : "Suprimir ligam",
     "ToDo list" : "Lista a far",
     "Emoji picker" : "Selector emoji",
-    "Remove Link" : "Suprimir ligam"
+    "Insert image" : "Inserir imatge"
 },
 "nplurals=2; plural=(n > 1);");

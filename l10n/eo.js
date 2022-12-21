@@ -50,7 +50,6 @@ OC.L10N.register(
     "Control" : "Kontrolo",
     "Edit" : "Modifi",
     "Enter your name so other users can see who is editing" : "Entajpu vian nomon, por ke aliuloj videblu, kiu modifas",
-    "Insert image" : "Enmeti bildon",
-    "_and %n other editor_::_and %n other editors_" : ["kaj %n alia redaktanto","kaj %naliaj redaktantoj"]
+    "Insert image" : "Enmeti bildon"
 },
 "nplurals=2; plural=(n != 1);");

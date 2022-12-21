@@ -88,20 +88,18 @@
     "Command" : "Команда",
     "Control" : "Контроль",
     "Edit" : "Редактировать",
+    "Image file format not supported" : "Формат файла изображения не поддерживается",
     "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
-    "Insert image" : "Вставить изображение",
+    "Todo item" : "Элемент списка задач",
     "Insert an image" : "Вставить изображение",
+    "Alt" : "Alt",
     "Update Link" : "Обновить ссылку",
     "Add Link" : "Добавить ссылку",
     "Link file" : "Добавить ссылку на файл",
+    "Remove Link" : "Удалить ссылку",
     "Select file to link to" : "Выберете файл для создания ссылки",
-    "Currently active users:" : "Текущие активные пользователи:",
-    "_and %n other editor_::_and %n other editors_" : ["и ещё %n редактор","и ещё %n редактора","и ещё %n редакторов","и ещё %n редакторов"],
     "ToDo list" : "Список задач",
     "Emoji picker" : "Выбор эмодзи",
-    "Image file format not supported" : "Формат файла изображения не поддерживается",
-    "Todo item" : "Элемент списка задач",
-    "Alt" : "Alt",
-    "Remove Link" : "Удалить ссылку"
+    "Insert image" : "Вставить изображение"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

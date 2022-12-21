@@ -67,14 +67,12 @@ OC.L10N.register(
     "Control" : "Control",
     "Edit" : "Editar",
     "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
-    "Insert image" : "Inserir unha imaxe",
     "Insert an image" : "Inserir unha imaxe",
     "Add Link" : "Engadir ligazón",
     "Link file" : "Ligar un ficheiro",
+    "Remove Link" : "Retirar ligazón",
     "Select file to link to" : "Seleccione o ficheiro ao que ligar",
-    "Currently active users:" : "Usuarios activos actualmente:",
-    "_and %n other editor_::_and %n other editors_" : ["e outro editor ","e outros %n editores"],
     "ToDo list" : "Lista «para facer»",
-    "Remove Link" : "Retirar ligazón"
+    "Insert image" : "Inserir unha imaxe"
 },
 "nplurals=2; plural=(n != 1);");

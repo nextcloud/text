@@ -70,16 +70,14 @@ OC.L10N.register(
     "Control" : "コントロール",
     "Edit" : "編集",
     "Enter your name so other users can see who is editing" : "自分の名前を入力して、他のユーザーの誰が編集中かを確認する",
-    "Insert image" : "画像の挿入",
     "Insert an image" : "画像を追加",
+    "Alt" : "Alt",
     "Add Link" : "リンクを追加",
     "Link file" : "ファイルをリンク",
+    "Remove Link" : "リンクを削除",
     "Select file to link to" : "リンク先のファイルを選択",
-    "Currently active users:" : "現在のアクティブユーザー:",
-    "_and %n other editor_::_and %n other editors_" : ["他に%n人の編集者"],
     "ToDo list" : "ToDo リスト",
     "Emoji picker" : "絵文字選択",
-    "Alt" : "Alt",
-    "Remove Link" : "リンクを削除"
+    "Insert image" : "画像の挿入"
 },
 "nplurals=1; plural=0;");

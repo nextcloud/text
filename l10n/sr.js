@@ -61,11 +61,10 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Edit" : "Измени",
     "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
-    "Insert image" : "Убаци слику",
     "Insert an image" : "Убаци слику",
     "Link file" : "Увежи фајл",
     "Select file to link to" : "Одаберите фајл на који да направите везу",
-    "_and %n other editor_::_and %n other editors_" : ["и још %n уређивач","и још %n уређивача","и још %n уређивача"],
-    "ToDo list" : "ToDo листа"
+    "ToDo list" : "ToDo листа",
+    "Insert image" : "Убаци слику"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

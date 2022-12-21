@@ -51,11 +51,9 @@ OC.L10N.register(
     "Control" : "Controle",
     "Edit" : "Editar",
     "Enter your name so other users can see who is editing" : "Insira o seu nome para que os os outros utilizadores possam ver quem é que está a editar",
+    "Remove Link" : "Remover hiperligação",
     "Select file to link to" : "Selecione o ficheiro a vincular a",
-    "Currently active users:" : "Utilizadores ativos no momento:",
-    "_and %n other editor_::_and %n other editors_" : ["e %n outro editor","e %n outros editores","e %n outros editores"],
     "ToDo list" : "Lista ToDo",
-    "Emoji picker" : "Selecionador de emoji ",
-    "Remove Link" : "Remover hiperligação"
+    "Emoji picker" : "Selecionador de emoji "
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
