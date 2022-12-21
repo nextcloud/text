@@ -482,7 +482,7 @@ class DocumentService {
 	/**
 	 * @param $shareToken
 	 * @return void
-	 * @throws NotFoundException
+	 * @throws NotFoundException|NotPermittedException
 	 */
 	public function checkSharePermissions($shareToken, $permission = Constants::PERMISSION_READ): void {
 		try {
@@ -493,6 +493,10 @@ class DocumentService {
 
 		if (($share->getPermissions() & $permission) === 0) {
 			throw new NotFoundException();
+		}
+
+		if ($share->getHideDownload()) {
+			throw new NotPermittedException();
 		}
 	}
 
