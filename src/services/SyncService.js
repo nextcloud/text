@@ -40,7 +40,7 @@ const defaultOptions = {
  *
  * @type {number}
  */
-const IDLE_TIMEOUT = 30
+const IDLE_TIMEOUT = 1440
 
 const ERROR_TYPE = {
 	/**
