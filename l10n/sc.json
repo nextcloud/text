@@ -60,13 +60,11 @@
     "Control" : "Controllu",
     "Edit" : "Modìfica ",
     "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
-    "Insert image" : "Inserta·nche imàgine",
     "Insert an image" : "Inserta·nche un'imàgine",
     "Link file" : "Ligòngiu a archìviu",
     "Select file to link to" : "Seletziona s'archìviu de ligongiare",
-    "Currently active users:" : "Utèntzias ativas in custu momentu:",
-    "_and %n other editor_::_and %n other editors_" : ["e %n persone editende","e %n persones editende"],
     "ToDo list" : "Cosas de fàghere",
-    "Emoji picker" : "Sèberu de carigheddas"
+    "Emoji picker" : "Sèberu de carigheddas",
+    "Insert image" : "Inserta·nche imàgine"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
