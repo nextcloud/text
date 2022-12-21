@@ -91,20 +91,18 @@
     "Command" : "Ukaz",
     "Control" : "Nadzor",
     "Edit" : "Uredi",
+    "Image file format not supported" : "Uporabljen slikovni zapis ni podprt.",
     "Enter your name so other users can see who is editing" : "Vpišite ime, da bodo drugi uporabniki lahko spremljali, kdo ureja dokument.",
-    "Insert image" : "Vstavi sliko",
+    "Todo item" : "Naloga",
     "Insert an image" : "Vstavi sliko",
+    "Alt" : "ALT",
     "Update Link" : "Posodobi povezavo",
     "Add Link" : "Dodaj povezavo",
     "Link file" : "Datoteka povezave",
+    "Remove Link" : "Odstrani povezavo",
     "Select file to link to" : "Izbor datoteke za povezavo",
-    "Currently active users:" : "Trenutno dejavni uporabniki:",
-    "_and %n other editor_::_and %n other editors_" : ["in %n drug urednik","in %n druga urednika","in %n drugi uredniki","in %n drugih urednikov"],
     "ToDo list" : "Seznam opravil",
     "Emoji picker" : "Izbirnik izraznih ikon",
-    "Image file format not supported" : "Uporabljen slikovni zapis ni podprt.",
-    "Todo item" : "Naloga",
-    "Alt" : "ALT",
-    "Remove Link" : "Odstrani povezavo"
+    "Insert image" : "Vstavi sliko"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

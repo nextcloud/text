@@ -43,11 +43,10 @@ OC.L10N.register(
     "Warning" : "Waarskuwing",
     "Edit" : "Wysig",
     "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
-    "Insert image" : "Voer beeld in",
     "Insert an image" : "Voer ’n beeld in",
     "Link file" : "Koppel lêer",
     "Select file to link to" : "Kies lêer om na te koppel",
-    "Currently active users:" : "Gebruikers wat tans aktief is:",
-    "ToDo list" : "Moet-doen-lys"
+    "ToDo list" : "Moet-doen-lys",
+    "Insert image" : "Voer beeld in"
 },
 "nplurals=2; plural=(n != 1);");

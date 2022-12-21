@@ -87,18 +87,16 @@
     "Control" : "Έλεγχος",
     "Edit" : "Επεξεργασία",
     "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
-    "Insert image" : "Εισαγωγή εικόνας",
+    "Todo item" : "Στοιχείο todo",
     "Insert an image" : "Εισαγωγή εικόνας",
+    "Alt" : "Alt",
     "Update Link" : "Ενημέρωση συνδέσμου",
     "Add Link" : "Προσθήκη Συνδέσμου",
     "Link file" : "Σύνδεσμος αρχείου",
+    "Remove Link" : "Αφαίρεση Συνδέσμου",
     "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
-    "Currently active users:" : "Τρέχοντες ενεργοί χρήστες:",
-    "_and %n other editor_::_and %n other editors_" : ["και %n άλλος επεξεργαστής","και %n άλλοι συγγραφείς"],
     "ToDo list" : "ToDo λίστα",
     "Emoji picker" : "Επιλογέας emoji",
-    "Todo item" : "Στοιχείο todo",
-    "Alt" : "Alt",
-    "Remove Link" : "Αφαίρεση Συνδέσμου"
+    "Insert image" : "Εισαγωγή εικόνας"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

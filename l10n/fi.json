@@ -107,19 +107,17 @@
     "Command" : "Komento",
     "Control" : "Hallinta",
     "Edit" : "Muokkaa",
+    "Image file format not supported" : "Kuvan tiedostomuoto ei ole tuettu",
     "Enter your name so other users can see who is editing" : "Kirjoita nimesi, jotta muut näkevät kuka muokkaa asiakirjaa",
-    "Insert image" : "Lisää kuva",
     "Insert an image" : "Lisää kuva",
     "Update Link" : "Päivitä linkki",
     "Add Link" : "Lisää linkki",
     "Link file" : "Linkitä tiedosto",
+    "Remove Link" : "Poista linkki",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
-    "Currently active users:" : "Aktiiviset käyttäjät nyt:",
-    "_and %n other editor_::_and %n other editors_" : ["ja %n muu muokkaaja","ja %n muuta muokkaajaa"],
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
-    "Image file format not supported" : "Kuvan tiedostomuoto ei ole tuettu",
-    "Remove Link" : "Poista linkki",
+    "Insert image" : "Lisää kuva",
     "Document save status" : "Asiakirjan tallennuksen tila"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

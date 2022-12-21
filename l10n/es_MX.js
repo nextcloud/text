@@ -49,8 +49,7 @@ OC.L10N.register(
     "Warning" : "Advertencia",
     "Edit" : "Editar",
     "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
-    "Insert image" : "Añadir imagen",
-    "_and %n other editor_::_and %n other editors_" : ["Y otro %n editor","Y otros %n editores","Y otros %n editores"],
-    "ToDo list" : "Lista de penditentes"
+    "ToDo list" : "Lista de penditentes",
+    "Insert image" : "Añadir imagen"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

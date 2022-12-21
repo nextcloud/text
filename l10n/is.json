@@ -59,11 +59,10 @@
     "Control" : "Stjórnun",
     "Edit" : "Breyta",
     "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
-    "Insert image" : "Setja inn mynd",
     "Insert an image" : "Setja inn mynd",
     "Link file" : "Tengja skrá",
     "Select file to link to" : "Veldu skrá til að tengja í",
-    "_and %n other editor_::_and %n other editors_" : ["og %n annar ritill","og %n aðrir ritlar"],
-    "ToDo list" : "Verkefnalisti"
+    "ToDo list" : "Verkefnalisti",
+    "Insert image" : "Setja inn mynd"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

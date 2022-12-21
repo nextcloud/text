@@ -63,13 +63,11 @@ OC.L10N.register(
     "Control" : "Kiểm soát",
     "Edit" : "Chỉnh sửa",
     "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
-    "Insert image" : "Chèn ảnh",
     "Insert an image" : "Chèn ảnh",
     "Link file" : "Liên kết tệp tin",
     "Select file to link to" : "Chọn tệp để liên kết đến",
-    "Currently active users:" : "Người dùng hiện đang hoạt động:",
-    "_and %n other editor_::_and %n other editors_" : ["và %n người chỉnh sửa khác"],
     "ToDo list" : "Cần làm",
-    "Emoji picker" : "Trình chọn emoji"
+    "Emoji picker" : "Trình chọn emoji",
+    "Insert image" : "Chèn ảnh"
 },
 "nplurals=1; plural=0;");

@@ -88,18 +88,16 @@ OC.L10N.register(
     "Control" : "控制",
     "Edit" : "编辑",
     "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
-    "Insert image" : "插入图片",
+    "Todo item" : "待办事项",
     "Insert an image" : "插入一张图片",
+    "Alt" : "Alt",
     "Update Link" : "更新链接",
     "Add Link" : "添加链接",
     "Link file" : "链接文件",
+    "Remove Link" : "移除链接",
     "Select file to link to" : "选择文件链接至",
-    "Currently active users:" : "当前活跃用户：",
-    "_and %n other editor_::_and %n other editors_" : ["和 %n 位其他编辑者"],
     "ToDo list" : "待办事项清单",
     "Emoji picker" : "Emoji 选择器",
-    "Todo item" : "待办事项",
-    "Alt" : "Alt",
-    "Remove Link" : "移除链接"
+    "Insert image" : "插入图片"
 },
 "nplurals=1; plural=0;");

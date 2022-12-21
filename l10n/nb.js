@@ -58,8 +58,7 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Edit" : "Rediger",
     "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
-    "Insert image" : "Sett inn bilde",
-    "_and %n other editor_::_and %n other editors_" : ["og %nannet redigeringsprogram","og %n andre redigeringsprogrammer"],
-    "ToDo list" : "Gjøreliste"
+    "ToDo list" : "Gjøreliste",
+    "Insert image" : "Sett inn bilde"
 },
 "nplurals=2; plural=(n != 1);");
