@@ -50,6 +50,8 @@ OC.L10N.register(
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
+    "Hide outline" : "Skjul outline",
+    "Show outline" : "Vis outline",
     "Undo" : "Fortryd",
     "Redo" : "Annullér fortryd",
     "Headings" : "Overskrifter",
