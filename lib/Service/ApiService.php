@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OC\Files\Node\File;
+use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
@@ -41,8 +42,11 @@ use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Constants;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
+use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
@@ -52,19 +56,23 @@ class ApiService {
 	private LoggerInterface $logger;
 	private AttachmentService $attachmentService;
 	private EncodingService $encodingService;
+	private IL10N $l10n;
 
 	public function __construct(IRequest $request,
 								SessionService $sessionService,
 								DocumentService $documentService,
 								AttachmentService $attachmentService,
 								EncodingService $encodingService,
-								LoggerInterface $logger) {
+								LoggerInterface $logger,
+								IL10N $l10n
+	) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
 		$this->attachmentService = $attachmentService;
 		$this->encodingService = $encodingService;
+		$this->l10n = $l10n;
 	}
 
 	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
@@ -81,11 +89,24 @@ class ApiService {
 					$this->documentService->checkSharePermissions($token, Constants::PERMISSION_READ);
 				} catch (NotFoundException $e) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
+				} catch (NotPermittedException $e) {
+					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 404);
 				}
 			} elseif ($fileId) {
 				$file = $this->documentService->getFileById($fileId);
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
+			}
+
+			$storage = $file->getStorage();
+
+			// Block using text for disabled download internal shares
+			if ($storage->instanceOfStorage(SharedStorage::class)) {
+				/** @var IShare $share */
+				$share = $storage->getShare();
+				if ($share->getAttributes()->getAttribute('permissions', 'download') === false) {
+					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 403);
+				}
 			}
 
 			$readOnly = $this->documentService->isReadOnly($file, $token);
