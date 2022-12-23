@@ -25,6 +25,7 @@ OC.L10N.register(
     "Unsaved changes" : "저장하지 않은 변경 사항",
     "Formatting help" : "서식 도움말",
     "Keyboard shortcuts" : "키보드 단축키",
+    "Backspace" : "백스페이스",
     "Bold" : "굵게",
     "Italic" : "Italic체",
     "Unsupported image type" : "지원하지 않는 사진 형식",

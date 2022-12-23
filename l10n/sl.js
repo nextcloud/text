@@ -76,6 +76,8 @@ OC.L10N.register(
     "Delete this table" : "Izbriši razpredelnico",
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ...",
+    "Hide outline" : "Skrij obris",
+    "Show outline" : "Pokaži obris",
     "Undo" : "Razveljavi",
     "Redo" : "Ponovi",
     "Headings" : "Naslovi",
