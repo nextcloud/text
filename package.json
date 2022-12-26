@@ -68,7 +68,7 @@
 		"@tiptap/prosemirror-tables": "^1.1.4",
 		"@tiptap/suggestion": "^2.0.0-beta.209",
 		"@tiptap/vue-2": "^2.0.0-beta.209",
-		"core-js": "^3.26.1",
+		"core-js": "^3.27.0",
 		"debounce": "^1.2.1",
 		"escape-html": "^1.0.3",
 		"highlight.js": "^10.7.3",
