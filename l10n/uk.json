@@ -39,7 +39,7 @@
     "Saved" : "Збережено",
     "Last saved {lastSaved}" : "Збережено {lastSaved}",
     "Unsaved changes" : "Незбережені зміни",
-    "No emoji found" : "Емодзі не знайдено",
+    "No emoji found" : "Емоційки не знайдено",
     "Formatting help" : "Форматування довідки",
     "Speed up your writing with simple shortcuts." : "Прискоріть написання за допомогою простих комбінацій клавіш.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Просто введіть синтаксис Markdown або скористайтеся комбінаціями клавіш нижче.",
@@ -110,7 +110,7 @@
     "Warning" : "Увага",
     "Danger" : "Небезпека",
     "Table" : "Таблиця",
-    "Insert emoji" : "Вставте емодзі",
+    "Insert emoji" : "Вставте емоційку",
     "Insert attachment" : "Вставте вкладення",
     "Command" : "Команда",
     "Control" : "Контроль",
@@ -128,7 +128,7 @@
     "Remove Link" : "Видалити посилання",
     "Select file to link to" : "Виберіть файл для посилання",
     "ToDo list" : "Список завдань",
-    "Emoji picker" : "Вибір емодзі",
+    "Emoji picker" : "Вибір емоційки",
     "Insert image" : "Додати зображення",
     "Document save status" : "Статус збереження документа"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
