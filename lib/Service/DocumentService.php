@@ -210,11 +210,11 @@ class DocumentService {
 	 * @param $sessionId
 	 * @param $steps
 	 * @param $version
-	 * @return string
+	 * @return int
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
 	 */
-	private function insertSteps($documentId, $sessionId, $steps, $version): string {
+	private function insertSteps($documentId, $sessionId, $steps, $version): int {
 		$document = null;
 		$stepsVersion = null;
 		try {

@@ -69,7 +69,14 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 							'Content-Type': mimeType,
 						},
 					}).then(response => {
-						cy.log(`Uploaded ${fileName}`, response.status)
+						const fileId = Number(
+							response.headers['oc-fileid']?.split('oc')?.[0]
+						)
+						cy.log(`Uploaded ${fileName}`,
+							response.status,
+							{ fileId }
+						)
+						return fileId
 					})
 				})
 		})

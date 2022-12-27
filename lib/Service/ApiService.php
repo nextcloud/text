@@ -93,9 +93,13 @@ class ApiService {
 					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 404);
 				}
 			} elseif ($fileId) {
-				$file = $this->documentService->getFileById($fileId);
+				try {
+					$file = $this->documentService->getFileById($fileId);
+				} catch (NotFoundException $e) {
+					return new DataResponse([], Http::STATUS_NOT_FOUND);
+				}
 			} else {
-				return new DataResponse('No valid file argument provided', 500);
+				return new DataResponse('No valid file argument provided', 412);
 			}
 
 			$storage = $file->getStorage();

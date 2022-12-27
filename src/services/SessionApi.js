@@ -26,7 +26,7 @@ class SessionApi {
 
 	#options
 
-	constructor(options) {
+	constructor(options = {}) {
 		this.#options = options
 	}
 
