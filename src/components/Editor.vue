@@ -482,10 +482,6 @@ export default {
 		},
 
 		onLoaded({ documentSource, documentState }) {
-			const content = !this.isRichEditor
-				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.render(documentSource)
-
 			if (documentState) {
 				applyDocumentState(this.$ydoc, documentState)
 			}
@@ -499,12 +495,16 @@ export default {
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
 						session,
-						content: documentState ? '' : content,
+						content: documentState ? '' : this.parseContent(documentSource),
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
 						},
 						onUpdate: ({ editor }) => {
 							// this.debugContent(editor)
+							const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+							this.$parent.$emit('update:content', {
+								markdown: proseMirrorMarkdown,
+							})
 						},
 						extensions: [
 							Collaboration.configure({
