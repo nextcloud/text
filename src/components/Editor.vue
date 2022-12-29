@@ -340,6 +340,16 @@ export default {
 			'setCurrentSession',
 		]),
 
+		setContent(content) {
+			this.$editor.commands.setContent(this.parseContent(content), true)
+		},
+
+		parseContent(documentSource) {
+			return !this.isRichEditor
+				? `<pre>${escapeHtml(documentSource)}</pre>`
+				: markdownit.render(documentSource)
+		},
+
 		initSession() {
 			if (!this.hasDocumentParameters) {
 				this.$parent.$emit('error', 'No valid file provided')
