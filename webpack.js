@@ -7,6 +7,7 @@ webpackConfig.entry = {
 	files: path.join(__dirname, 'src', 'files.js'),
 	public: path.join(__dirname, 'src', 'public.js'),
 	viewer: path.join(__dirname, 'src', 'viewer.js'),
+	editors: path.join(__dirname, 'src', 'editor.js'),
 }
 
 webpackConfig.output.chunkFilename = '[id].js?v=[contenthash]'
