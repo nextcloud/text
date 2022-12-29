@@ -82,7 +82,7 @@ const Markdown = Extension.create({
 						shiftKey = event.shiftKey
 						return false
 					},
-					clipboardTextParser(str, $context) {
+					clipboardTextParser(str, $context, _, view) {
 						if (shiftKey) {
 							return
 						}
@@ -90,7 +90,7 @@ const Markdown = Extension.create({
 						const dom = doc.createElement('div')
 						dom.innerHTML = markdownit.render(str)
 
-						const parser = DOMParser.fromSchema(this.editor.view.state.schema)
+						const parser = DOMParser.fromSchema(view.state.schema)
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
 					},
 				},
