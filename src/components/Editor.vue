@@ -318,7 +318,7 @@ export default {
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
-		this.$parent.$emit('update:loaded', true)
+		this.$parent?.$emit('update:loaded', true)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -352,7 +352,7 @@ export default {
 
 		initSession() {
 			if (!this.hasDocumentParameters) {
-				this.$parent.$emit('error', 'No valid file provided')
+				this.$parent?.$emit('error', 'No valid file provided')
 				return
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
@@ -687,7 +687,7 @@ export default {
 		},
 
 		outlineToggled(visible) {
-			this.$parent.$emit('outline-toggled', visible)
+			this.$parent?.$emit('outline-toggled', visible)
 		},
 	},
 }
