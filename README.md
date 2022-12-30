@@ -1,6 +1,6 @@
 # Nextcloud Text
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/nextcloud/text/Node)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nextcloud/text/node.yml?branch=master)
 [![Start contributing](https://img.shields.io/github/issues/nextcloud/text/good%20first%20issue?color=7057ff&label=Contribute)](https://github.com/nextcloud/text/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22)
 
 
