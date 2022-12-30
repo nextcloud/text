@@ -78,6 +78,12 @@ const Markdown = Extension.create({
 			new Plugin({
 				key: new PluginKey('pasteEventHandler'),
 				props: {
+					handleDOMEvents: {
+						mouseup(_, event) {
+							shiftKey = event.shiftKey
+							return false
+						},
+					},
 					handleKeyDown(_, event) {
 						shiftKey = event.shiftKey
 						return false
