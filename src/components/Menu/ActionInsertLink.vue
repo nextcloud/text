@@ -118,6 +118,9 @@ export default {
 		activeClass() {
 			return this.state.active ? 'is-active' : ''
 		},
+		relativePath() {
+			return this.$file?.relativePath ?? '/'
+		},
 	},
 	methods: {
 		/**
@@ -126,7 +129,7 @@ export default {
 		 */
 		linkFile() {
 			if (this.startPath === null) {
-				this.startPath = this.$file.relativePath.split('/').slice(0, -1).join('/')
+				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
 			}
 
 			const filePicker = new FilePicker(
@@ -142,7 +145,7 @@ export default {
 			filePicker.pick().then((file) => {
 				const client = OC.Files.getClient()
 				client.getFileInfo(file).then((_status, fileInfo) => {
-					const path = optimalPath(this.$file.relativePath, `${fileInfo.path}/${fileInfo.name}`)
+					const path = optimalPath(this.relativePath, `${fileInfo.path}/${fileInfo.name}`)
 					const encodedPath = path.split('/').map(encodeURIComponent).join('/') + (fileInfo.type === 'dir' ? '/' : '')
 					const href = `${encodedPath}?fileId=${fileInfo.id}`
 					this.setLink(href, fileInfo.name)
