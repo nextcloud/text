@@ -14,7 +14,7 @@ const emitMention = ({ session, props }) => {
 	})
 }
 
-export default ({ session }) => createSuggestions({
+export default ({ session, params }) => createSuggestions({
 	listComponent: MentionList,
 	items: async ({ query }) => {
 		const params = {
@@ -36,7 +36,14 @@ export default ({ session }) => createSuggestions({
 	},
 
 	command: ({ editor, range, props }) => {
-		emitMention({ session, props })
+		if (params?.emitMention) {
+			params.emitMention({ props })
+		} else {
+			emitMention({
+				session,
+				props,
+			})
+		}
 
 		// Insert mention
 		// from https://github.com/ueberdosis/tiptap/blob/9a254bf9daf6d839bd02c968e14837098b903b38/packages/extension-mention/src/mention.ts
@@ -67,4 +74,5 @@ export default ({ session }) => createSuggestions({
 
 		window.getSelection()?.collapseToEnd()
 	},
+	...params,
 })
