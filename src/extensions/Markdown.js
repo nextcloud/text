@@ -78,19 +78,27 @@ const Markdown = Extension.create({
 			new Plugin({
 				key: new PluginKey('pasteEventHandler'),
 				props: {
+					handleDOMEvents: {
+						mouseup(_, event) {
+							shiftKey = event.shiftKey
+							return false
+						},
+					},
 					handleKeyDown(_, event) {
 						shiftKey = event.shiftKey
 						return false
 					},
 					clipboardTextParser(str, $context, _, view) {
-						if (shiftKey) {
-							return
-						}
+						const parser = DOMParser.fromSchema(view.state.schema)
 						const doc = document.cloneNode(false)
 						const dom = doc.createElement('div')
-						dom.innerHTML = markdownit.render(str)
+						if (shiftKey) {
+							// Treat single newlines as linebreaks and double newlines as paragraph breaks when pasting as plaintext
+							dom.innerHTML = '<p>' + str.replaceAll('\n', '<br />').replaceAll('<br /><br />', '</p><p>') + '</p>'
+						} else {
+							dom.innerHTML = markdownit.render(str)
+						}
 
-						const parser = DOMParser.fromSchema(view.state.schema)
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
 					},
 				},
