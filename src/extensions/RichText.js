@@ -31,6 +31,8 @@ import Code from '@tiptap/extension-code'
 import CodeBlock from './../nodes/CodeBlock.js'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
+import Emoji from './Emoji.js'
+import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
 import FrontMatter from './../nodes/FrontMatter.js'
 import Paragraph from './../nodes/Paragraph.js'
 import HardBreak from './../nodes/HardBreak.js'
@@ -40,29 +42,38 @@ import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
 import ListItem from '@tiptap/extension-list-item'
+import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
 import LinkPicker from './../extensions/LinkPicker.js'
 import OrderedList from '@tiptap/extension-ordered-list'
+import Placeholder from '@tiptap/extension-placeholder'
 import Table from './../nodes/Table.js'
+import EditableTable from './../nodes/EditableTable.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
+import TrailingNode from './../nodes/TrailingNode.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
+import { translate as t } from '@nextcloud/l10n'
 
 export default Extension.create({
 	name: 'RichText',
 
 	addOptions() {
 		return {
+			editing: true,
 			link: {},
 			extensions: [],
+			component: null,
+			relativePath: null,
 		}
 	},
 
 	addExtensions() {
 		const defaultExtensions = [
+			this.options.editing ? Markdown : null,
 			Document,
 			Text,
 			Paragraph,
@@ -79,7 +90,7 @@ export default Extension.create({
 			HorizontalRule,
 			OrderedList,
 			ListItem,
-			Table,
+			this.options.editing ? EditableTable : Table,
 			TaskList,
 			TaskItem,
 			Callout,
@@ -89,12 +100,19 @@ export default Extension.create({
 			Dropcursor,
 			KeepSyntax,
 			FrontMatter,
-			Mention.configure({
-				HTMLAttributes: {
-					class: 'mention',
-				},
+			Mention,
+			Emoji.configure({
+				suggestion: EmojiSuggestion(),
 			}),
 			LinkPicker,
+			this.options.editing
+				? Placeholder.configure({
+					emptyNodeClass: 'is-empty',
+					placeholder: t('text', 'Add notes, lists or links …'),
+					showOnlyWhenEditable: true,
+				})
+				: null,
+			TrailingNode,
 		]
 		if (this.options.link !== false) {
 			defaultExtensions.push(Link.configure({
@@ -106,7 +124,7 @@ export default Extension.create({
 		}
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)
 		return [
-			...defaultExtensions.filter(e => !additionalExtensionNames.includes(e.name)),
+			...defaultExtensions.filter(e => e && !additionalExtensionNames.includes(e.name)),
 			...this.options.extensions,
 		]
 	},

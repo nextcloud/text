@@ -22,7 +22,7 @@ export default TipTapMention.extend({
 	renderHTML({ node, HTMLAttributes }) {
 		return [
 			'span',
-			mergeAttributes({ 'data-type': 'user' }, this.options.HTMLAttributes, HTMLAttributes),
+			mergeAttributes({ 'data-type': 'user', class: 'mention' }, this.options.HTMLAttributes, HTMLAttributes),
 			this.options.renderLabel({
 				options: this.options,
 				node,

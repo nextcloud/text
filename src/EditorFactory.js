@@ -20,24 +20,16 @@
  *
  */
 
-/* eslint-disable import/no-named-as-default */
-import Placeholder from '@tiptap/extension-placeholder'
-/* eslint-enable import/no-named-as-default */
-
-import TrailingNode from './nodes/TrailingNode.js'
-import EditableTable from './nodes/EditableTable.js'
 import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
-import EmojiSuggestion from './components/Suggestion/Emoji/suggestions.js'
 
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
-import { translate as t } from '@nextcloud/l10n'
 import { lowlight } from 'lowlight/lib/core.js'
 import hljs from 'highlight.js'
 
 import { logger } from './helpers/logger.js'
-import { Emoji, Markdown, Mention, PlainText, RichText } from './extensions/index.js'
+import { Mention, PlainText, RichText } from './extensions/index.js'
 
 const loadSyntaxHighlight = async (language) => {
 	const list = hljs.listLanguages()
@@ -56,38 +48,25 @@ const loadSyntaxHighlight = async (language) => {
 }
 
 const createEditor = ({ content, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
-	let richEditingExtensions = []
+	let defaultExtensions
 	if (enableRichEditing) {
-		richEditingExtensions = [
-			Markdown,
+		defaultExtensions = [
 			RichText.configure({
 				relativePath,
+				component: this,
 				extensions: [
-					EditableTable,
 					Mention.configure({
-						HTMLAttributes: {
-							class: 'mention',
-						},
 						suggestion: MentionSuggestion({
 							session,
 						}),
 					}),
 				],
 			}),
-			Emoji.configure({
-				suggestion: EmojiSuggestion(),
-			}),
-			Placeholder.configure({
-				emptyNodeClass: 'is-empty',
-				placeholder: t('text', 'Add notes, lists or links …'),
-				showOnlyWhenEditable: true,
-			}),
-			TrailingNode,
 		]
 	} else {
-		richEditingExtensions = [PlainText]
+		defaultExtensions = [PlainText]
 	}
-	extensions = extensions || []
+
 	return new Editor({
 		content: content + '<p/>',
 		onCreate,
@@ -96,9 +75,7 @@ const createEditor = ({ content, onCreate, onUpdate = () => {}, extensions, enab
 			scrollMargin: 50,
 			scrollThreshold: 50,
 		},
-		extensions: [
-			...richEditingExtensions,
-		].concat(extensions),
+		extensions: defaultExtensions.concat(extensions || []),
 	})
 }
 
