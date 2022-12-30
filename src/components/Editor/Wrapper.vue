@@ -67,15 +67,15 @@ export default {
 		},
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			default: false,
 		},
 		contentLoaded: {
 			type: Boolean,
-			require: true,
+			default: true,
 		},
 		showAuthorAnnotations: {
 			type: Boolean,
-			require: true,
+			default: false,
 		},
 		showOutlineOutside: {
 			type: Boolean,
