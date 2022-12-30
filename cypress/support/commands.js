@@ -81,16 +81,15 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 	const blob = new Blob([content], { type: mimeType })
 	const file = new File([blob], fileName, { type: mimeType })
 
-	return cy.window()
-		.then(async win => {
-			const response = await axios.put(`${url}/remote.php/webdav/${target}`, file, {
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return axios.put(`${url}/remote.php/webdav/${target}`, file, {
 				headers: {
-					requesttoken: win.OC.requestToken,
+					requesttoken,
 					'Content-Type': mimeType,
 				},
-			})
-
-			return cy.log(`Uploaded ${fileName}`, response.status)
+			}).then(({status}) => cy.log(`Uploaded ${fileName}`, status))
 		})
 
 })

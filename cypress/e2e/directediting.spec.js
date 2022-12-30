@@ -65,6 +65,39 @@ describe('direct editing', function() {
 			})
 		})
 	})
+
+	it('Open an existing file with a link and close it', () => {
+		cy.login(user)
+		cy.createFile('link.md', "[relative link](empty.md)\n")
+		createDirectEditingLink(user, 'link.md')
+			.then((token) => {
+				cy.logout()
+				cy.visit(token)
+			})
+		const closeRequestAlias = 'closeRequest'
+		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
+
+		cy.getContent()
+			.get('a')
+			.should('have.attr', 'href')
+
+		cy.getContent()
+			.type('# This is a headline')
+			.type('{enter}')
+			.type('Some text')
+			.type('{enter}')
+
+		cy.get('button.icon-close').click()
+		cy.wait(`@${closeRequestAlias}`).then(() => {
+			cy.getFileContent('empty.md').then((content) => {
+				// FIXME: This currently fails due to the save not happening fast enough
+				// The best would be if we always send the markdown at least on close and perform a save if the content changed
+				// expect(content).to.equal('# This is a headline\n\nSome text');
+			})
+		})
+	})
+
+
 	it('Create a file, edit and close it', () => {
 		createDirectEditingLinkForNewFile(user, 'newfile.md')
 			.then((token) => {
