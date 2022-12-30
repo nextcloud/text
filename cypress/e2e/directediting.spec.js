@@ -4,17 +4,11 @@ const user = randUser()
 
 const createDirectEditingLink = (user, file) => {
 	cy.login(user)
-	return cy.request({
+	return cy.ocsRequest({
 		method: 'POST',
 		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files/api/v1/directEditing/open?format=json`,
-		form: true,
 		body: {
 			path: file,
-		},
-		auth: { user: user.userId, pass: user.password },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	}).then(response => {
 		cy.log(response)
@@ -26,19 +20,13 @@ const createDirectEditingLink = (user, file) => {
 
 const createDirectEditingLinkForNewFile = (user, file) => {
 	cy.login(user)
-	return cy.request({
+	return cy.ocsRequest({
 		method: 'POST',
 		url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/files/api/v1/directEditing/create?format=json`,
-		form: true,
 		body: {
 			path: file,
 			editorId: 'text',
 			creatorId: 'textdocument',
-		},
-		auth: { user: user.userId, pass: user.password },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 	}).then(response => {
 		cy.log(response)
