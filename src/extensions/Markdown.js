@@ -39,7 +39,9 @@
  */
 
 import { Extension, getExtensionField } from '@tiptap/core'
+import { Plugin, PluginKey } from 'prosemirror-state'
 import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { DOMParser } from 'prosemirror-model'
 
 const Markdown = Extension.create({
 
@@ -67,6 +69,24 @@ const Markdown = Extension.create({
 		}
 	},
 
+	addProseMirrorPlugins() {
+		return [
+			new Plugin({
+				key: new PluginKey('pasteEventHandler'),
+				props: {
+					clipboardTextParser(str, $context, _, view) {
+						const parser = DOMParser.fromSchema(view.state.schema)
+						const doc = document.cloneNode(false)
+						const dom = doc.createElement('div')
+						// Treat single newlines as linebreaks and double newlines as paragraph breaks when pasting as plaintext
+						dom.innerHTML = '<p>' + str.replaceAll('\n', '<br />').replaceAll('<br /><br />', '</p><p>') + '</p>'
+
+						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
+					},
+				},
+			}),
+		]
+	},
 })
 
 const createMarkdownSerializer = ({ nodes, marks }) => {
