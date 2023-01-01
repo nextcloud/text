@@ -361,3 +361,8 @@ Cypress.Commands.add('showHiddenFiles', () => {
 		.click()
 	cy.wait('@showHidden')
 })
+
+Cypress.on(
+	'uncaught:exception',
+	err => !err.message.includes('ResizeObserver loop limit exceeded'),
+)
