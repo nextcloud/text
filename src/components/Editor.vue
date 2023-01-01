@@ -38,7 +38,7 @@
 			:show-author-annotations="showAuthorAnnotations"
 			:show-outline-outside="showOutlineOutside"
 			@outline-toggled="outlineToggled">
-			<MainContainer v-if="$editor">
+			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
 				<div v-if="readOnly" class="text-editor--readonly-bar">
 					<ReadonlyBar>
@@ -236,6 +236,7 @@ export default {
 			contentLoaded: false,
 			syncError: null,
 			hasConnectionIssue: false,
+			hasEditor: false,
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
@@ -426,6 +427,7 @@ export default {
 				this.unlistenEditorEvents()
 				this.$syncService = null
 				this.$editor.destroy()
+				this.hasEditor = false
 				this.initSession()
 			}
 
@@ -561,6 +563,7 @@ export default {
 						],
 						enableRichEditing: this.isRichEditor,
 					})
+					this.hasEditor = true
 
 					this.listenEditorEvents()
 
@@ -697,6 +700,7 @@ export default {
 					this.unlistenEditorEvents()
 					this.$editor.destroy()
 					this.$editor = null
+					this.hasEditor = false
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}
