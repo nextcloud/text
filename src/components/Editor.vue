@@ -326,6 +326,10 @@ export default {
 		this.$attachmentResolver = null
 	},
 	beforeDestroy() {
+		if (!this.richWorkspace) {
+			window.removeEventListener('beforeprint', this.preparePrinting)
+			window.removeEventListener('afterprint', this.preparePrinting)
+		}
 		this.close()
 	},
 	methods: {
@@ -421,27 +425,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-
-			const connect = () => {
-				this.unlistenSyncServiceEvents()
-				this.unlistenEditorEvents()
-				this.$syncService = null
-				this.$editor.destroy()
-				this.hasEditor = false
-				this.initSession()
-			}
-
-			if (this.$syncService) {
-				this.$syncService
-					.close()
-					.then(connect)
-					.catch((e) => {
-					// Ignore issues closing the session since those might happen due to network issues
-					})
-			} else {
-				connect()
-			}
-
+			this.close().then(this.initSession)
 			this.idle = false
 		},
 
@@ -682,8 +666,6 @@ export default {
 		},
 
 		async close() {
-			window.removeEventListener('beforeprint', this.preparePrinting)
-			window.removeEventListener('afterprint', this.preparePrinting)
 
 			if (this.currentSession && this.$syncService) {
 				try {
