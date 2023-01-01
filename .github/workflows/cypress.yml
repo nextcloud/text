@@ -16,24 +16,10 @@ env:
   CYPRESS_baseUrl: http://localhost:8081/index.php
 
 jobs:
-  cypress:
-
+  init:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [16]
-        containers: [1, 2, 3, 4]
-        php-versions: [ '7.4' ]
-        databases: [ 'sqlite' ]
-        server-versions: [ 'master' ]
-
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Checkout server
         uses: actions/checkout@v3
@@ -55,17 +41,54 @@ jobs:
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
-      - name: Checkout ${{ env.APP_NAME }}
+      - name: Checkout app
         uses: actions/checkout@v3
         with:
           path: apps/${{ env.APP_NAME }}
 
-      - name: setup npm cache
+      - name: Set up node 16
         uses: actions/setup-node@v3
         with:
           cache: 'npm'
-          cache-dependency-path: apps/${{ env.APP_NAME }}/package-lock.json
-          # cypress will install dependencies
+          cache-dependency-path: apps/${{ env.APP_NAME}}/package-lock.json
+          node-version: 16
+
+      - name: Install dependencies & build app
+        working-directory: apps/${{ env.APP_NAME }}
+        run: |
+          npm ci
+          TESTING=true npm run build --if-present
+
+      - name: Save context
+        uses: actions/cache@v3
+        with:
+          key: cypress-context-${{ github.run_id }}
+          path: /home/runner/work
+
+  cypress:
+    runs-on: ubuntu-latest
+    needs: init
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [16]
+        containers: [1, 2, 3, 4, 5, 6, 7, 8]
+        php-versions: [ '7.4' ]
+        databases: [ 'sqlite' ]
+        server-versions: [ 'master' ]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Restore context
+        uses: actions/cache@v3
+        with:
+          key: cypress-context-${{ github.run_id }}
+          path: /home/runner/work
 
       - name: Set up php ${{ matrix.php-versions }}
         uses: shivammathur/setup-php@v2
@@ -82,9 +105,8 @@ jobs:
           PHP_CLI_SERVER_WORKERS: 10
         run: |
           mkdir data
+          echo '<?php $CONFIG=["memcache.local"=>"\OC\Memcache\APCu","hashing_default_password"=>true];' > config/config.php
           php occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
-          php occ config:system:set memcache.local --value="\\OC\\Memcache\\APCu"
-          php occ config:system:set debug --value=true --type=boolean
           php -f index.php
           php -S 0.0.0.0:8081 &
           export OC_PASS=1234561
@@ -95,12 +117,6 @@ jobs:
           php occ app:list
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
-
-      - name: Build app
-        working-directory: apps/${{ env.APP_NAME }}
-        run: |
-          npm ci
-          npm run build
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
