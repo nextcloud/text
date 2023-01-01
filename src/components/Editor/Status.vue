@@ -40,6 +40,7 @@
 import SavingIndicator from '../SavingIndicator.vue'
 import { ERROR_TYPE } from './../../services/SyncService.js'
 import { Tooltip } from '@nextcloud/vue'
+import moment from '@nextcloud/moment'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
@@ -69,10 +70,6 @@ export default {
 			type: Boolean,
 			require: true,
 		},
-		lastSavedString: {
-			type: String,
-			default: '',
-		},
 		document: {
 			type: Object,
 			default: null,
@@ -85,6 +82,12 @@ export default {
 			type: Object,
 			default: () => { return {} },
 		},
+	},
+
+	data() {
+		return {
+			refreshEvery20Seconds: 0,
+		}
 	},
 
 	computed: {
@@ -127,7 +130,22 @@ export default {
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
+		lastSavedString() {
+			this.refreshEvery20Seconds
+			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
+		},
 	},
+
+	mounted() {
+		this.$refreshInterval = setInterval(() => {
+			this.refreshEvery20Seconds++
+		}, 20000)
+	},
+
+	beforeDestroy() {
+		clearInterval(this.$refreshInterval)
+	},
+
 }
 </script>
 

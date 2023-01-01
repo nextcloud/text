@@ -46,8 +46,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue"
-							:last-saved-string="lastSavedString" />
+							:has-connection-issue="hasConnectionIssue" />
 					</ReadonlyBar>
 				</div>
 				<!-- Rich Menu -->
@@ -60,8 +59,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue"
-							:last-saved-string="lastSavedString" />
+							:has-connection-issue="hasConnectionIssue" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -84,7 +82,6 @@
 import Vue, { set } from 'vue'
 import { mapActions, mapState } from 'vuex'
 import escapeHtml from 'escape-html'
-import moment from '@nextcloud/moment'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -237,7 +234,6 @@ export default {
 			idle: false,
 			dirty: false,
 			contentLoaded: false,
-			lastSavedString: '',
 			syncError: null,
 			hasConnectionIssue: false,
 			readOnly: true,
@@ -245,7 +241,6 @@ export default {
 			menubarLoaded: false,
 			draggedOver: false,
 
-			saveStatusPolling: null,
 			contentWrapper: null,
 		}
 	},
@@ -328,9 +323,6 @@ export default {
 		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
-		this.saveStatusPolling = setInterval(() => {
-			this.updateLastSavedStatus()
-		}, 2000)
 	},
 	beforeDestroy() {
 		this.close()
@@ -339,12 +331,6 @@ export default {
 		...mapActions('text', [
 			'setCurrentSession',
 		]),
-
-		updateLastSavedStatus() {
-			if (this.document) {
-				this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow()
-			}
-		},
 
 		initSession() {
 			if (!this.hasDocumentParameters) {
@@ -605,7 +591,6 @@ export default {
 					editor: this.$editor,
 				})
 				this.$syncService.state = this.$editor.state
-				this.updateLastSavedStatus()
 				this.$nextTick(() => {
 					this.$emit('sync-service:sync')
 				})
@@ -694,7 +679,6 @@ export default {
 		},
 
 		async close() {
-			clearInterval(this.saveStatusPolling)
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 
