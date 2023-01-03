@@ -234,24 +234,14 @@ class SyncService {
 		}
 	}
 
+	saveIfNeeded() {
+		return this.backend.fetchSteps()
+	}
+
 	close() {
-		let closed = false
-		return new Promise((resolve, reject) => {
-			this.on('save', () => {
-				this._close().then(() => {
-					closed = true
-					resolve()
-				}).catch(() => resolve())
-			})
-			setTimeout(() => {
-				if (!closed) {
-					this._close().then(() => {
-						resolve()
-					}).catch(() => resolve())
-				}
-			}, 2000)
-			this.save()
-		})
+		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+		return Promise.any([timeout, this.saveIfNeeded()])
+			.then(() => this._close()).catch(console.info)
 	}
 
 	_close() {

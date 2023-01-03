@@ -119,7 +119,7 @@ class PollingBackend {
 		) {
 			autosaveContent = this._authority._getContent()
 		}
-		axios.post(endpointUrl('session/sync', this._isPublic()), {
+		const request = axios.post(endpointUrl('session/sync', this._isPublic()), {
 			documentId: this._authority.document.id,
 			sessionId: this._authority.session.id,
 			sessionToken: this._authority.session.token,
@@ -132,6 +132,7 @@ class PollingBackend {
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this._manualSave = false
 		this._forcedSave = false
+		return request
 	}
 
 	_handleResponse(response) {

@@ -133,6 +133,14 @@ Cypress.Commands.add('visitTestFolder', (visitOptions = {}) => {
 	})
 })
 
+Cypress.Commands.add('uploadTestFile', source => {
+	cy.testName().then(name => cy.uploadFile(source, 'text/markdown', `${name}.md`))
+})
+
+Cypress.Commands.add('openTestFile', () => {
+	cy.testName().then(name => cy.openFile(`${name}.md`))
+})
+
 Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = null, onBeforeLoad } = {}) => {
 	targetFile = targetFile || sourceFile
 	cy.createTestFolder().then(folderName => {
