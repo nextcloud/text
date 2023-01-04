@@ -38,7 +38,7 @@
 			:show-author-annotations="showAuthorAnnotations"
 			:show-outline-outside="showOutlineOutside"
 			@outline-toggled="outlineToggled">
-			<MainContainer v-if="$editor">
+			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
 				<div v-if="readOnly" class="text-editor--readonly-bar">
 					<ReadonlyBar>
@@ -46,8 +46,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue"
-							:last-saved-string="lastSavedString" />
+							:has-connection-issue="hasConnectionIssue" />
 					</ReadonlyBar>
 				</div>
 				<!-- Rich Menu -->
@@ -60,8 +59,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue"
-							:last-saved-string="lastSavedString" />
+							:has-connection-issue="hasConnectionIssue" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -84,7 +82,6 @@
 import Vue, { set } from 'vue'
 import { mapActions, mapState } from 'vuex'
 import escapeHtml from 'escape-html'
-import moment from '@nextcloud/moment'
 import { getVersion, receiveTransaction } from 'prosemirror-collab'
 import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
@@ -237,15 +234,14 @@ export default {
 			idle: false,
 			dirty: false,
 			contentLoaded: false,
-			lastSavedString: '',
 			syncError: null,
 			hasConnectionIssue: false,
+			hasEditor: false,
 			readOnly: true,
 			forceRecreate: false,
 			menubarLoaded: false,
 			draggedOver: false,
 
-			saveStatusPolling: null,
 			contentWrapper: null,
 		}
 	},
@@ -328,23 +324,18 @@ export default {
 		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
-		this.saveStatusPolling = setInterval(() => {
-			this.updateLastSavedStatus()
-		}, 2000)
 	},
 	beforeDestroy() {
+		if (!this.richWorkspace) {
+			window.removeEventListener('beforeprint', this.preparePrinting)
+			window.removeEventListener('afterprint', this.preparePrinting)
+		}
 		this.close()
 	},
 	methods: {
 		...mapActions('text', [
 			'setCurrentSession',
 		]),
-
-		updateLastSavedStatus() {
-			if (this.document) {
-				this.lastSavedString = moment(this.document.lastSavedVersionTime * 1000).fromNow()
-			}
-		},
 
 		initSession() {
 			if (!this.hasDocumentParameters) {
@@ -434,26 +425,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-
-			const connect = () => {
-				this.unlistenSyncServiceEvents()
-				this.unlistenEditorEvents()
-				this.$syncService = null
-				this.$editor.destroy()
-				this.initSession()
-			}
-
-			if (this.$syncService) {
-				this.$syncService
-					.close()
-					.then(connect)
-					.catch((e) => {
-					// Ignore issues closing the session since those might happen due to network issues
-					})
-			} else {
-				connect()
-			}
-
+			this.close().then(this.initSession)
 			this.idle = false
 		},
 
@@ -575,6 +547,7 @@ export default {
 						],
 						enableRichEditing: this.isRichEditor,
 					})
+					this.hasEditor = true
 
 					this.listenEditorEvents()
 
@@ -605,7 +578,6 @@ export default {
 					editor: this.$editor,
 				})
 				this.$syncService.state = this.$editor.state
-				this.updateLastSavedStatus()
 				this.$nextTick(() => {
 					this.$emit('sync-service:sync')
 				})
@@ -694,9 +666,6 @@ export default {
 		},
 
 		async close() {
-			clearInterval(this.saveStatusPolling)
-			window.removeEventListener('beforeprint', this.preparePrinting)
-			window.removeEventListener('afterprint', this.preparePrinting)
 
 			if (this.currentSession && this.$syncService) {
 				try {
@@ -713,6 +682,7 @@ export default {
 					this.unlistenEditorEvents()
 					this.$editor.destroy()
 					this.$editor = null
+					this.hasEditor = false
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}

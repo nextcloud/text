@@ -39,11 +39,13 @@
 
 import SavingIndicator from '../SavingIndicator.vue'
 import { ERROR_TYPE } from './../../services/SyncService.js'
+import moment from '@nextcloud/moment'
 import { Tooltip } from '@nextcloud/vue'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
 } from '../Editor.provider.js'
+import refreshMoment from '../../mixins/refreshMoment.js'
 
 export default {
 	name: 'Status',
@@ -58,7 +60,7 @@ export default {
 		Tooltip,
 	},
 
-	mixins: [useIsMobileMixin, useIsPublicMixin],
+	mixins: [useIsMobileMixin, useIsPublicMixin, refreshMoment],
 
 	props: {
 		hasConnectionIssue: {
@@ -68,10 +70,6 @@ export default {
 		dirty: {
 			type: Boolean,
 			require: true,
-		},
-		lastSavedString: {
-			type: String,
-			default: '',
 		},
 		document: {
 			type: Object,
@@ -127,7 +125,14 @@ export default {
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
+		lastSavedString() {
+			// Make this a dependent of refreshMoment so it will be recomputed
+			/* eslint-disable-next-line no-unused-expressions */
+			this.refreshMoment
+			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
+		},
 	},
+
 }
 </script>
 
