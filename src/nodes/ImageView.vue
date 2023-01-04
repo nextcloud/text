@@ -79,6 +79,7 @@
 								type="text"
 								class="image__caption__input"
 								:value="alt"
+								@blur="updateAlt"
 								@keyup.enter="updateAlt">
 							<div v-if="showImageDeleteIcon"
 								class="image__caption__delete">
@@ -108,7 +109,8 @@
 							type="text"
 							:value="alt"
 							:disabled="!editable"
-							@keyup.enter="updateAlt()">
+							@blur="updateAlt"
+							@keyup.enter="updateAlt">
 					</div>
 				</transition>
 			</div>
