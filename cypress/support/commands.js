@@ -354,12 +354,13 @@ Cypress.Commands.add('configureText', (key, value) => {
 })
 
 Cypress.Commands.add('showHiddenFiles', () => {
-	cy.get('#app-settings-header')
+	cy.get('[data-cy-files-navigation-settings-button]')
 		.click()
-	cy.intercept({ method: 'POST', url: '**/showhidden' }).as('showHidden')
-	cy.get('#app-settings-content label[for=showhiddenfilesToggle]')
-		.click()
+	cy.get('.app-settings__content').should('be.visible')
+	cy.intercept({ method: 'POST', url: '**/show_hidden' }).as('showHidden')
+	cy.get('.app-settings__content').contains('Show hidden files').closest('label').click()
 	cy.wait('@showHidden')
+	cy.get('.modal-container__close').click()
 })
 
 Cypress.on(
