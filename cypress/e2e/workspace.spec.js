@@ -59,7 +59,7 @@ describe('Workspace', function() {
 		cy.get('.files-fileList').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
-		cy.get('.nav-recent')
+		cy.get('a[href*="/apps/files/recent"]')
 			.click()
 		cy.get('#rich-workspace .ProseMirror')
 			.should('not.exist')
