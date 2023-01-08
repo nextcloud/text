@@ -82,6 +82,8 @@ OC.L10N.register(
     "Delete this table" : "Verwijder deze tabel",
     "Show rich workspaces" : "Toon rijke werkplekken",
     "Add notes, lists or links …" : "Toevoegen notities, lijsten of links...",
+    "Hide outline" : "Overzicht verbergen",
+    "Show outline" : "Overzicht tonen",
     "Undo" : "Ongedaan maken",
     "Redo" : "Opnieuw doen",
     "Headings" : "Kopstijlen",
