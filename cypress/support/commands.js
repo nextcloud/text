@@ -82,6 +82,18 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 		})
 })
 
+Cypress.Commands.add('downloadFile', (fileName) => {
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return axios.get(`${url}/remote.php/webdav/${fileName}`, {
+				headers: {
+					requesttoken,
+				},
+			})
+		})
+})
+
 Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown') => {
 	const fileName = target.split('/').pop()
 
@@ -140,6 +152,16 @@ Cypress.Commands.add('visitTestFolder', (visitOptions = {}) => {
 	})
 })
 
+Cypress.Commands.add('uploadTestFile', (source = 'empty.md') => {
+	return cy.testName().then(name => {
+		return cy.uploadFile(source, 'text/markdown', `${name}.md`)
+	})
+})
+
+Cypress.Commands.add('openTestFile', () => {
+	return cy.testName().then(name => cy.openFile(`${name}.md`))
+})
+
 Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = null, onBeforeLoad } = {}) => {
 	targetFile = targetFile || sourceFile
 	cy.createTestFolder().then(folderName => {
@@ -151,12 +173,14 @@ Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = nul
 })
 
 Cypress.Commands.add('shareFile', (path, options = {}) => {
-	return cy.window().then(async window => {
-		try {
-			const headers = { requesttoken: window.OC.requestToken }
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(async requesttoken => {
+			const headers = { requesttoken }
+			const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
 			const request = await axios.post(
 				`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
-				{ path, shareType: window.OC.Share.SHARE_TYPE_LINK },
+				{ path, shareType },
 				{ headers }
 			)
 			const token = request.data?.ocs?.data?.token
@@ -178,10 +202,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 				cy.log(`Made share ${token} editable.`)
 			}
 			return cy.wrap(token)
-		} catch (error) {
-			console.error(error)
-		}
-	}).should('have.length', 15)
+		}).should('have.length', 15)
 })
 
 Cypress.Commands.add('createFolder', (target) => {

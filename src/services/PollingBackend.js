@@ -102,14 +102,17 @@ class PollingBackend {
 		}
 		this.lock = true
 		let autosaveContent
+		let documentState
 		if (this._forcedSave || this._manualSave
 		// TODO: figure out when to autosave
 		) {
 			autosaveContent = this._authority._getContent()
+			documentState = this._authority.getDocumentState()
 		}
 		this.connection.sync({
 			version: this._authority.version,
 			autosaveContent,
+			documentState,
 			force: !!this._forcedSave,
 			manualSave: !!this._manualSave,
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))

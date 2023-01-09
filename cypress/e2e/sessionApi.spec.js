@@ -1,4 +1,4 @@
-/**
+/*
  * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
  *
  * @author Max <max@nextcloud.com>
@@ -20,32 +20,37 @@
  *
  */
 
-import { initUserAndFiles, randUser } from '../utils/index.js'
+import { randUser } from '../utils/index.js'
 
 const user = randUser()
+const messages = {
+	awareness: 'AQoBw9LM0gwAAnt9',
+	update: 'AAIKAAHYidydCwEEAQ==',
+	query: 'AAABAA==',
+	response: 'AAECAAA=',
+}
 
 describe('The session Api', function() {
 
 	before(function() {
 		cy.createUser(user)
 		window.OC = {
-			config: {modRewriteWorking: false},
-			webroot: ''
+			config: { modRewriteWorking: false },
+			webroot: '',
 		}
-		cy.prepareSessionApi()
 	})
 
 	beforeEach(function() {
 		cy.login(user)
+		cy.prepareSessionApi()
 	})
 
 	describe('open the session', function() {
-		const filename = 'empty.md'
 		let fileId
 
 		before(function() {
 			cy.login(user)
-			cy.uploadFile(filename, 'text/markdown')
+			cy.uploadTestFile()
 				.then(id => {
 					fileId = id
 				})
@@ -76,21 +81,13 @@ describe('The session Api', function() {
 
 	describe('step types', function() {
 		let connection
-		const messages = {
-			awareness: "AQoBw9LM0gwAAnt9",
-			update: "AAIKAAHYidydCwEEAQ==",
-			query: "AAABAA==",
-			response: "AAECAAA=",
-		}
 
 		beforeEach(function() {
-			cy.testName().then(name => {
-				cy.uploadFile('empty.md', 'text/markdown', name)
-					.then(cy.createTextSession)
-					.then(session => {
-						connection = session
-					})
-			})
+			cy.uploadTestFile()
+				.then(cy.createTextSession)
+				.then(session => {
+					connection = session
+				})
 		})
 
 		afterEach(function() {
@@ -101,25 +98,25 @@ describe('The session Api', function() {
 		Object.entries(messages)
 			.filter(([key, _value]) => key !== 'query')
 			.forEach(([type, sample]) => {
-			it(`echos ${type} messages`, function() {
-				const steps = [sample]
-				const version = 0
-				cy.pushSteps({connection, steps, version})
-					.its('version')
-					.should('eql', 1)
-				cy.syncSteps({connection, version})
-					.its('steps[0].data')
-					.should('eql', steps)
+				it(`echos ${type} messages`, function() {
+					const steps = [sample]
+					const version = 0
+					cy.pushSteps({ connection, steps, version })
+						.its('version')
+						.should('eql', 1)
+					cy.syncSteps(connection)
+						.its('steps[0].data')
+						.should('eql', steps)
+				})
 			})
-		})
 
 		it('responds to queries', function() {
 			const version = 0
 			Object.entries(messages)
 				.forEach(([type, sample]) => {
-					cy.pushSteps({connection, steps: [sample], version})
+					cy.pushSteps({ connection, steps: [sample], version })
 				})
-			cy.pushSteps({connection, steps: [messages.query], version})
+			cy.pushSteps({ connection, steps: [messages.query], version })
 				.then(response => {
 					cy.wrap(response)
 						.its('version')
@@ -128,11 +125,141 @@ describe('The session Api', function() {
 						.its('steps.length')
 						.should('eql', 3)
 					cy.wrap(response)
-					cy.wrap(response)
 						.its('steps[0].data')
 						.should('eql', [messages.awareness])
 				})
 		})
 	})
-})
 
+	describe('sync', function() {
+		const version = 0
+		let connection
+		let fileId
+		let filePath
+
+		beforeEach(function() {
+			cy.testName().then(name => {
+				filePath = `/${name}.md`
+			})
+			cy.uploadTestFile()
+				.then(id => {
+					fileId = id
+					return cy.createTextSession(fileId, { filePath })
+				})
+				.then(session => {
+					connection = session
+				})
+		})
+
+		it('starts empty', function() {
+			cy.syncSteps(connection)
+				.its('steps')
+				.should('eql', [])
+		})
+
+		it('saves', function() {
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.downloadFile('saves.md')
+				.its('data')
+				.should('eql', '# Heading 1')
+		})
+
+		it('saves yjs document state', function() {
+			const documentState = 'Base64 encoded string'
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.syncSteps(connection, {
+				version: 1,
+				autosaveContent: '# Heading 1',
+				documentState,
+				manualSave: true,
+			})
+				.then(() => connection.close())
+			cy.createTextSession(fileId, { filePath })
+				.then(session => {
+					connection = session
+					return session.content
+				})
+				.should('eql', documentState)
+		})
+
+		afterEach(function() {
+			connection.close()
+		})
+	})
+
+	describe('public sync', function() {
+		const version = 0
+		let connection
+		let filePath
+		let shareToken
+
+		beforeEach(function() {
+			cy.testName().then(name => {
+				filePath = `/${name}.md`
+			})
+			cy.uploadTestFile()
+				.then(_id => {
+					return cy.shareFile(filePath, { edit: true })
+				})
+				.then(token => {
+					shareToken = token
+				})
+				.then(() => cy.logout())
+				.then(() => {
+					cy.prepareSessionApi()
+					return cy.createTextSession(undefined, { filePath: '', shareToken })
+						.then(session => {
+							connection = session
+						})
+				})
+		})
+
+		it('starts empty public', function() {
+			cy.syncSteps(connection)
+				.its('steps')
+				.should('eql', [])
+		})
+
+		it('saves public', function() {
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.login(user)
+			cy.prepareSessionApi()
+			cy.downloadFile('saves.md')
+				.its('data')
+				.should('eql', '# Heading 1')
+		})
+
+		it('saves yjs document state public', function() {
+			const documentState = 'Base64 encoded string'
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.syncSteps(connection, {
+				version: 1,
+				autosaveContent: '# Heading 1',
+				documentState,
+				manualSave: true,
+			})
+				.then(() => connection.close())
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(session => {
+					connection = session
+					return session.content
+				})
+				.should('eql', documentState)
+		})
+
+		afterEach(function() {
+			connection.close()
+		})
+	})
+
+})

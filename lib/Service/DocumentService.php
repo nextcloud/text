@@ -139,13 +139,6 @@ class DocumentService {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
-		try {
-			$documentBaseFile = $this->getBaseFile((string)$file->getFileInfo()->getId());
-		} catch (NotFoundException $e) {
-			$documentBaseFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
-		}
-		$documentBaseFile->putContent($file->fopen('r'));
-
 		$document = new Document();
 		$document->setId($file->getFileInfo()->getId());
 		$document->setLastSavedVersion(0);
@@ -162,7 +155,7 @@ class DocumentService {
 	 * @return ISimpleFile
 	 * @throws NotFoundException
 	 */
-	public function getBaseFile($document): ISimpleFile {
+	public function getStateFile($document): ISimpleFile {
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
@@ -258,6 +251,7 @@ class DocumentService {
 	 * @param $documentId
 	 * @param $version
 	 * @param $autoaveDocument
+	 * @param $documentState
 	 * @param bool $force
 	 * @param bool $manualSave
 	 * @param null $shareToken
@@ -268,7 +262,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 * @throws \OCP\DB\Exception
 	 */
-	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
+	public function autosave($file, $documentId, $version, $autoaveDocument, $documentState, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
@@ -305,14 +299,24 @@ class DocumentService {
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
+
+		try {
+			$documentStateFile = $this->getStateFile((string)$file->getFileInfo()->getId());
+		} catch (NotFoundException $e) {
+			$documentStateFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
+		}
+
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoaveDocument) {
+			), function () use ($file, $autoaveDocument, $documentStateFile, $documentState) {
 				$file->putContent($autoaveDocument);
+				if ($documentState) {
+					$documentStateFile->putContent($documentState);
+				}
 			});
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
@@ -343,7 +347,7 @@ class DocumentService {
 				$this->documentMapper->delete($document);
 
 				try {
-					$this->getBaseFile($documentId)->delete();
+					$this->getStateFile($documentId)->delete();
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}

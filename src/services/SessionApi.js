@@ -52,7 +52,7 @@ export class Connection {
 	#doc
 	#session
 	#lock
-	#content
+	content
 	#readOnly
 	#options
 
@@ -62,7 +62,7 @@ export class Connection {
 		this.#session = session
 		this.#lock = lock
 		this.#readOnly = readOnly
-		this.#content = content
+		this.content = content
 		this.#options = options
 	}
 
@@ -71,12 +71,6 @@ export class Connection {
 			document: { ...this.#doc, readOnly: this.#readOnly },
 			session: this.#session,
 		}
-	}
-
-	fetch() {
-		return this.#content
-			? Promise.resolve(this.#content)
-			: this._fetchDocument()
 	}
 
 	get #defaultParams() {
@@ -88,12 +82,13 @@ export class Connection {
 		}
 	}
 
-	sync({ version, autosaveContent, force, manualSave }) {
+	sync({ version, autosaveContent, documentState, force, manualSave }) {
 		return axios.post(this.#url('session/sync'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,
 			autosaveContent,
+			documentState,
 			force,
 			manualSave,
 		})
@@ -144,17 +139,6 @@ export class Connection {
 
 	close() {
 		return axios.post(this.#url('session/close'), this.#defaultParams)
-	}
-
-	_fetchDocument() {
-		// Axios normally tries to parse string responses as json.
-		// Just return the plain content here.
-		const transformResponse = [(data) => data]
-		return axios.post(
-			this.#url('session/fetch'),
-			this.#defaultParams,
-			{ transformResponse }
-		).then(response => response.data)
 	}
 
 	#url(endpoint) {

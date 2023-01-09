@@ -101,6 +101,7 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
+import { getDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -353,6 +354,7 @@ export default {
 				serialize: this.isRichEditor
 					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
 					: () => serializePlainText(this.$editor),
+				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
 			this.listenSyncServiceEvents()

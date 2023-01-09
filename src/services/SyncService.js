@@ -54,11 +54,12 @@ const ERROR_TYPE = {
 
 class SyncService {
 
-	constructor({ serialize, ...options }) {
+	constructor({ serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
 		this.serialize = serialize
+		this.getDocumentState = getDocumentState
 		this._api = new SessionApi(options)
 		this.connection = null
 
@@ -87,12 +88,10 @@ class SyncService {
 			...this.connection.state,
 			version: this.version,
 		})
-		const content = await this.connection.fetch()
-			.catch(error => this._emitError(error))
 		this.emit('loaded', {
 			...this.connection.state,
 			version: this.version,
-			documentSource: '' + content,
+			documentSource: this.connection.content || '',
 		})
 		this.backend = new PollingBackend(this, this.connection)
 

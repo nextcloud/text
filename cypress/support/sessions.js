@@ -28,27 +28,26 @@ Cypress.Commands.add('prepareSessionApi', (fileId) => {
 		.then(({ body }) => emit('csrf-token-update', body))
 })
 
-Cypress.Commands.add('createTextSession', (fileId) => {
-	const api = new SessionApi()
-	return api.open({fileId})
+Cypress.Commands.add('createTextSession', (fileId, options = {}) => {
+	const api = new SessionApi(options)
+	return api.open({ fileId })
 })
 
 Cypress.Commands.add('failToCreateTextSession', (fileId) => {
 	const api = new SessionApi()
-	return api.open({fileId})
+	return api.open({ fileId })
 		.then((response) => {
-			throw 'Expected request to fail - but it succeeded!'
+			throw new Error('Expected request to fail - but it succeeded!')
 		})
 		.catch((err) => err.response)
 })
 
-Cypress.Commands.add('pushSteps', ({connection, steps, version}) => {
-	return connection.push({steps, version})
+Cypress.Commands.add('pushSteps', ({ connection, steps, version }) => {
+	return connection.push({ steps, version })
 		.then(response => response.data)
 })
 
-Cypress.Commands.add('syncSteps', ({connection, version}) => {
-	return connection.sync({version})
+Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
+	return connection.sync(options)
 		.then(response => response.data)
 })
-
