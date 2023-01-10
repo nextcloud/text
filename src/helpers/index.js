@@ -44,7 +44,15 @@ const endpointUrl = (endpoint, isPublic = false) => {
 	return `${_baseUrl}/${endpoint}`
 }
 
+const getAvatarUrl = (user, size) => {
+	return generateUrl('/avatar/{user}/{size}', {
+		user,
+		size,
+	})
+}
+
 export {
 	documentReady,
 	endpointUrl,
+	getAvatarUrl,
 }

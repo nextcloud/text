@@ -1,3 +1,5 @@
+$text-menubar-action-white-color: white;
+
 %text__is-active-item-btn {
 	opacity: 1;
 	background-color: var(--color-primary-light);
@@ -14,7 +16,7 @@
 		border: 0;
 		// opacity: 0.5;
 		position: relative;
-		color: var(--color-main-text);
+		color: $text-menubar-action-white-color;
 		background-color: transparent;
 		vertical-align: top;
 		box-shadow: none;
@@ -67,7 +69,14 @@
 
 	.button-vue {
 		svg {
-			fill: var(--color-main-text);
+			fill: $text-menubar-action-white-color;
+		}
+		&:hover,
+		&:focus,
+		&:active {
+			svg {
+				fill: var(--color-main-text);
+			}
 		}
 	}
 

@@ -26,12 +26,6 @@
 			<SavingIndicator :saving="saveStatusClass === 'saving'"
 				:error="saveStatusClass === 'error'" />
 		</div>
-		<SessionList :sessions="sessions">
-			<p slot="lastSaved" class="last-saved">
-				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
-			</p>
-			<GuestNameDialog v-if="$isPublic && !currentSession.userId" :session="currentSession" />
-		</SessionList>
 	</div>
 </template>
 

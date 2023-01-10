@@ -118,6 +118,7 @@ import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
+import RightSideActions from './Editor/RightSideActions.vue'
 
 const EDITOR_PUSH_DEBOUNCE = 200
 
@@ -133,6 +134,7 @@ export default {
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
+		RightSideActions,
 	},
 	mixins: [
 		isMobile,
@@ -190,6 +192,10 @@ export default {
 		},
 		fileId: {
 			type: Number,
+			default: null,
+		},
+		basename: {
+			type: String,
 			default: null,
 		},
 		active: {
@@ -885,4 +891,5 @@ export default {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
+
 </style>

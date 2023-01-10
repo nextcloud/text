@@ -34,6 +34,12 @@
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
+		<div class="text-menubar--logo">
+			<a href="/">
+				<img src="http://nextcloud.local/core/img/logo/logo.svg">
+			</a>
+			<p>{{ fileName }}</p>
+		</div>
 
 		<div v-if="$isRichEditor"
 			ref="menubar"
@@ -108,6 +114,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		relativePath: {
+			type: String,
+			default: '',
+		},
 	},
 	data() {
 		return {
@@ -157,6 +167,9 @@ export default {
 					return priority !== undefined && priority > this.iconsLimit
 				}),
 			}
+		},
+		fileName() {
+			return this.relativePath.substring(this.relativePath.lastIndexOf('/') + 1)
 		},
 	},
 	mounted() {
@@ -231,10 +244,11 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+	$color-white: white;
 	.text-menubar {
 		--background-blur: blur(10px);
-		position: sticky;
+		position: fixed;
 		top: 0;
 		z-index: 10021; // above modal-header so menubar is always on top
 		background-color: var(--color-main-background-translucent);
@@ -242,12 +256,22 @@ export default {
 		max-height: 44px; // important for mobile so that the buttons are always inside the container
 		padding-top:3px;
 		padding-bottom: 3px;
-
 		visibility: hidden;
 
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
+		.text-menubar--logo {
+			display: flex;
+			align-items: center;
+			min-width: 200px;
+			color: white;
+			font-weight: bold;
+
+			img {
+				width: 62px;
+				height: 48px;
+				margin-right: 10px;
+				margin-left: 10px;
+			}
+		}
 
 		&.text-menubar--ready:not(.text-menubar--autohide) {
 			visibility: visible;
@@ -266,13 +290,18 @@ export default {
 		.text-menubar__entries {
 			display: flex;
 			flex-grow: 1;
-			margin-left: calc((100% - var(--text-editor-max-width)) / 2);
+			margin-left: calc((100% - var(--text-editor-max-width) - 25%) / 2);
+			button, .icon, .entry-action {
+				color: $color-white !important;
+			}
 		}
 
 		.text-menubar__slot {
-			// width: 100%;
 			justify-content: flex-end;
 			display: flex;
+			.action-item svg {
+				fill: $color-white;
+			}
 		}
 
 		&.text-menubar--is-workspace {

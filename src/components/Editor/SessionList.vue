@@ -151,7 +151,8 @@ export default {
 	}
 	.avatar-list {
 		border: none;
-		background-color: var(--color-main-background);
+		/* background-color: var(--color-main-background); */
+		background-color: unset;
 		padding: 0;
 		margin: 0;
 		padding-left: 3px;
