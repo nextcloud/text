@@ -5,23 +5,23 @@
 		</div>
 		<a :download="basename"
 			:href="fullPathToFile">
-			<Button class="download__button"
+			<NcButton class="download__button"
 				type="primary">
 				Download
-			</Button>
+			</NcButton>
 		</a>
-		<Actions>
-			<ActionButton icon="icon-edit"
+		<NcActions>
+			<NcActionButton icon="icon-edit"
 				:close-after-click="true"
 				@click="showSidebar">
 				Open sidebar
-			</ActionButton>
-			<ActionButton icon="icon-delete"
+			</NcActionButton>
+			<NcActionButton icon="icon-delete"
 				:close-after-click="true"
 				@click="onDelete">
 				Delete
-			</ActionButton>
-		</Actions>
+			</NcActionButton>
+		</NcActions>
 	</div>
 </template>
 
@@ -29,9 +29,9 @@
 
 import axios from '@nextcloud/axios'
 import { getCurrentUser } from '@nextcloud/auth'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton'
 import { getRootPath } from '../../helpers/files.js'
 import { getAvatarUrl } from '../../helpers'
 
@@ -39,9 +39,9 @@ export default {
 	name: 'RightSideActions',
 
 	components: {
-		Actions,
-		ActionButton,
-		Button,
+		NcActions,
+		NcActionButton,
+		NcButton,
 	},
 
 	props: {

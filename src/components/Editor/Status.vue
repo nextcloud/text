@@ -141,8 +141,26 @@ export default {
 	}
 
 	.save-status {
-		border-radius: 50%;
-		color: var(--color-text-lighter);
+		--color-text-white: white;
+		display: inline-flex;
+		padding: 0;
+		text-overflow: ellipsis;
+		color: var(--color-text-white);
+		position: relative;
+		top: 9px;
+		min-width: 85px;
+		max-height: 36px;
+
+		&.error {
+			background-color: var(--color-error);
+			color: var(--color-main-background);
+			border-radius: 3px;
+		}
+	}
+</style>
+
+<style lang="scss">
+	.saved-status,.saving-status {
 		display: inline-flex;
 		justify-content: center;
 		padding: 0;

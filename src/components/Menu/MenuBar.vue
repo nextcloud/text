@@ -36,7 +36,7 @@
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 		<div class="text-menubar--logo">
 			<a href="/">
-				<img src="http://nextcloud.local/core/img/logo/logo.svg">
+				<img src="../../../../../core/img/logo/logo.svg">
 			</a>
 			<p>{{ fileName }}</p>
 		</div>
@@ -245,13 +245,16 @@ export default {
 </script>
 
 <style lang="scss">
-	$color-white: white;
 	.text-menubar {
+		--color-white: white;
 		--background-blur: blur(10px);
 		position: fixed;
 		top: 0;
-		z-index: 10021; // above modal-header so menubar is always on top
-		background-color: var(--color-main-background-translucent);
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		background-color: var(--color-primary);
+		z-index: 10021; // above modal-header and menububble so menubar is always on top
 		backdrop-filter: var(--background-blur);
 		max-height: 44px; // important for mobile so that the buttons are always inside the container
 		padding-top:3px;
@@ -292,7 +295,7 @@ export default {
 			flex-grow: 1;
 			margin-left: calc((100% - var(--text-editor-max-width) - 25%) / 2);
 			button, .icon, .entry-action {
-				color: $color-white !important;
+				color:  var(--color-white) !important;
 			}
 		}
 
@@ -300,7 +303,7 @@ export default {
 			justify-content: flex-end;
 			display: flex;
 			.action-item svg {
-				fill: $color-white;
+				fill: var(--color-white);
 			}
 		}
 

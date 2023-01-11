@@ -54,12 +54,16 @@
 					<MenuBar v-if="renderMenus"
 						ref="menubar"
 						:autohide="autohide"
-						:loaded.sync="menubarLoaded">
+						:loaded.sync="menubarLoaded"
+						:relative-path="relativePath">
 						<Status :document="document"
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue" />
+							:has-connection-issue="hasConnectionIssue"
+							:last-saved-string="lastSavedString" />
+						<RightSideActions :relative-path="relativePath"
+							:basename="basename" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />

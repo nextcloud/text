@@ -50,12 +50,13 @@ const optimalPath = function(from, to) {
 		: to
 }
 
-const getRootPath = function() {
-	if (getCurrentUser()) {
-		return generateRemoteUrl(`dav/files/${getCurrentUser().uid}`)
-	} else {
-		return generateRemoteUrl('webdav').replace('/remote.php', '/public.php')
+const getRootPath = () => {
+    const user = getCurrentUser()
+	if (user) {
+		return generateRemoteUrl(`dav/files/${user.uid}`)
 	}
+	
+	return generateRemoteUrl('webdav').replace('/remote.php', '/public.php')
 }
 
 const registerFileCreate = () => {
