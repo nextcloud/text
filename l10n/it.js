@@ -78,6 +78,8 @@ OC.L10N.register(
     "Delete this table" : "Elimina tabella",
     "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
+    "Hide outline" : "Nascondi indice",
+    "Show outline" : "Mostra indice",
     "Undo" : "Annulla",
     "Redo" : "Rifai",
     "Headings" : "Intestazioni",
