@@ -47,6 +47,7 @@ OC.L10N.register(
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
     "Upload from computer" : "Upload fra computer",
+    "Remove link" : "Fjern link",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
