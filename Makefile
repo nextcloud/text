@@ -41,6 +41,9 @@ test-js-watch:
 test-js-coverage:
 	npm run test:coverage
 
+dump-autoloader:
+	cd composer && composer dump
+
 # Linting
 lint:
 	npm run lint
