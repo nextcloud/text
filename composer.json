@@ -17,7 +17,14 @@
 		}
 	],
 	"require": {
-		"php": "^7.4|^8.0"
+		"php": "^8.0"
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"classmap-authoritative": true,
+		"platform": {
+			"php": "8.0"
+		}
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -print0 | xargs -0 -n1 php -l",
