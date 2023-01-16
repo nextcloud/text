@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: nextcloud/server
-          ref: bugfix/36153/fix-sharemount-cache-key-logic
+          ref: bugfix/36153/fix-sharemount-cache-key-include-target
 
       - name: Checkout submodules
         shell: bash
