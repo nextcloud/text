@@ -14,7 +14,7 @@
   "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
   "baseBranches": [
-    "master",
+    "main",
     "stable25",
     "stable24",
     "stable23"

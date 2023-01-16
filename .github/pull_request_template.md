@@ -20,4 +20,4 @@ B | A
 - [ ] Code is properly formatted (`npm run lint` / `npm run stylelint` / `composer run cs:check`)
 - [ ] [Sign-off message](https://probot.github.io/apps/dco/) is added to all commits
 - [ ] [Tests](https://github.com/nextcloud/text#-testing-the-app) (unit, integration and/or end-to-end) passing and the changes are covered with tests
-- [ ] Documentation ([README](https://github.com/nextcloud/text/blob/master/README.md) or [documentation](https://github.com/nextcloud/documentation/blob/master/admin_manual/configuration_server/text_configuration.rst#L2)) has been updated or is not required
+- [ ] Documentation ([README](https://github.com/nextcloud/text/blob/main/README.md) or [documentation](https://github.com/nextcloud/documentation/blob/master/admin_manual/configuration_server/text_configuration.rst#L2)) has been updated or is not required

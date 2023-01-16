@@ -23,9 +23,9 @@
 	<website>https://github.com/nextcloud/text</website>
 	<bugs>https://github.com/nextcloud/text/issues</bugs>
 	<repository type="git">https://github.com/nextcloud/text.git</repository>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot1.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot2.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/text/master/img/screenshots/screenshot3.gif</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot1.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot2.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot3.gif</screenshot>
 	<dependencies>
 		<nextcloud min-version="26" max-version="26" />
 	</dependencies>
