@@ -162,7 +162,7 @@ describe('The session Api', function() {
 				.its('version')
 				.should('eql', 1)
 			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
-			cy.downloadFile('saves.md')
+			cy.downloadFile(filePath)
 				.its('data')
 				.should('eql', '# Heading 1')
 		})
