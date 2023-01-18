@@ -83,7 +83,7 @@ class SyncService {
 		// TODO: get connection from initialSession and fetch
 		this.connection = await this._api.open({ fileId })
 			.catch(error => this._emitError(error))
-		this.version = this.connection.state.document.lastSavedVersion
+		this.version = this.connection.lastSavedVersion
 		this.emit('opened', {
 			...this.connection.state,
 			version: this.version,
@@ -91,7 +91,6 @@ class SyncService {
 		this.emit('loaded', {
 			...this.connection.state,
 			version: this.version,
-			documentSource: this.connection.content || '',
 		})
 		this.backend = new PollingBackend(this, this.connection)
 
@@ -186,7 +185,7 @@ class SyncService {
 		this.emit('sync', {
 			steps: newSteps,
 			// TODO: do we actually need to dig into the connection here?
-			document: this.connection.state.document,
+			document: this.connection.document,
 			version: this.version,
 		})
 	}

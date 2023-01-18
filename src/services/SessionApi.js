@@ -49,33 +49,45 @@ class SessionApi {
 
 export class Connection {
 
-	#doc
+	#content
+	#documentumentState
+	#document
 	#session
 	#lock
-	content
 	#readOnly
 	#options
 
 	constructor(response, options) {
-		const { document, session, lock, readOnly, content } = response.data
-		this.#doc = document
+		const { document, session, lock, readOnly, content, documentState } = response.data
+		this.#document = document
 		this.#session = session
 		this.#lock = lock
 		this.#readOnly = readOnly
-		this.content = content
+		this.#content = content
+		this.#documentumentState = documentState
 		this.#options = options
+	}
+
+	get document() {
+		return this.#document
+	}
+
+	get lastSavedVersion() {
+		return this.#document.lastSavedVersion
 	}
 
 	get state() {
 		return {
-			document: { ...this.#doc, readOnly: this.#readOnly },
+			document: { ...this.#document, readOnly: this.#readOnly },
 			session: this.#session,
+			documentSource: this.#content || '',
+			documentState: this.#documentumentState
 		}
 	}
 
 	get #defaultParams() {
 		return {
-			documentId: this.#doc.id,
+			documentId: this.#document.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
 			token: this.#options.shareToken,
@@ -117,7 +129,7 @@ export class Connection {
 		const formData = new FormData()
 		formData.append('file', file)
 		const url = _endpointUrl('attachment/upload')
-			+ '?documentId=' + encodeURIComponent(this.#doc.id)
+			+ '?documentId=' + encodeURIComponent(this.#document.id)
 			+ '&sessionId=' + encodeURIComponent(this.#session.id)
 			+ '&sessionToken=' + encodeURIComponent(this.#session.token)
 			+ '&shareToken=' + encodeURIComponent(this.#options.shareToken || '')
@@ -130,7 +142,7 @@ export class Connection {
 
 	insertAttachmentFile(filePath) {
 		return axios.post(_endpointUrl('attachment/filepath'), {
-			documentId: this.#doc.id,
+			documentId: this.#document.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
 			filePath,

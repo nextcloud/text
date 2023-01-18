@@ -57,11 +57,11 @@ describe('The session Api', function() {
 		})
 
 		it('returns connection', function() {
-			cy.createTextSession(fileId).then(session => {
-				cy.wrap(session)
-					.its('state.document.id')
+			cy.createTextSession(fileId).then(connection => {
+				cy.wrap(connection)
+					.its('document.id')
 					.should('equal', fileId)
-				session.close()
+				connection.close()
 			})
 		})
 
@@ -85,8 +85,8 @@ describe('The session Api', function() {
 		beforeEach(function() {
 			cy.uploadTestFile()
 				.then(cy.createTextSession)
-				.then(session => {
-					connection = session
+				.then(con => {
+					connection = con
 				})
 		})
 
@@ -146,8 +146,8 @@ describe('The session Api', function() {
 					fileId = id
 					return cy.createTextSession(fileId, { filePath })
 				})
-				.then(session => {
-					connection = session
+				.then(con => {
+					connection = con
 				})
 		})
 
@@ -180,10 +180,11 @@ describe('The session Api', function() {
 			})
 				.then(() => connection.close())
 			cy.createTextSession(fileId, { filePath })
-				.then(session => {
-					connection = session
-					return session.content
+				.then(con => {
+					connection = con
+					return connection
 				})
+				.its('state.documentState')
 				.should('eql', documentState)
 		})
 
@@ -213,8 +214,8 @@ describe('The session Api', function() {
 				.then(() => {
 					cy.prepareSessionApi()
 					return cy.createTextSession(undefined, { filePath: '', shareToken })
-						.then(session => {
-							connection = session
+						.then(con => {
+							connection = con
 						})
 				})
 		})
@@ -250,10 +251,11 @@ describe('The session Api', function() {
 			})
 				.then(() => connection.close())
 			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(session => {
-					connection = session
-					return session.content
+				.then(con => {
+					connection = con
+					return con
 				})
+				.its('state.documentState')
 				.should('eql', documentState)
 		})
 
