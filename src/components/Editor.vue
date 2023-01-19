@@ -101,7 +101,7 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.js'
+import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -468,10 +468,14 @@ export default {
 			})
 		},
 
-		onLoaded({ documentSource }) {
+		onLoaded({ documentSource, documentState }) {
 			const content = !this.isRichEditor
 				? `<pre>${escapeHtml(documentSource)}</pre>`
 				: markdownit.render(documentSource)
+
+			if (documentState) {
+				applyDocumentState(this.$ydoc, documentState)
+			}
 
 			this.hasConnectionIssue = false
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
@@ -481,7 +485,7 @@ export default {
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
 						session: this.currentSession,
-						content,
+						content: documentState ? '' : content,
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
 						},

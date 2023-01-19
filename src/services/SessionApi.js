@@ -81,7 +81,7 @@ export class Connection {
 			document: { ...this.#document, readOnly: this.#readOnly },
 			session: this.#session,
 			documentSource: this.#content || '',
-			documentState: this.#documentumentState
+			documentState: this.#documentumentState,
 		}
 	}
 

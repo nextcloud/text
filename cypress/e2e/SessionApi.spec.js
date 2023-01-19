@@ -47,13 +47,16 @@ describe('The session Api', function() {
 
 	describe('open the session', function() {
 		let fileId
+		let filePath
 
-		before(function() {
-			cy.login(user)
-			cy.uploadTestFile()
+		beforeEach(function() {
+			cy.uploadTestFile('test.md')
 				.then(id => {
 					fileId = id
 				})
+			cy.testName().then(name => {
+				filePath = `/${name}.md`
+			})
 		})
 
 		it('returns connection', function() {
@@ -61,6 +64,15 @@ describe('The session Api', function() {
 				cy.wrap(connection)
 					.its('document.id')
 					.should('equal', fileId)
+				connection.close()
+			})
+		})
+
+		it('provides initial content', function() {
+			cy.createTextSession(fileId, { filePath }).then(connection => {
+				cy.wrap(connection)
+					.its('state.documentSource')
+					.should('eql', '## Hello world\n')
 				connection.close()
 			})
 		})
