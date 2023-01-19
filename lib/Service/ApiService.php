@@ -97,7 +97,7 @@ class ApiService {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				}
 			} else {
-				return new DataResponse('No valid file argument provided', 412);
+				return new DataResponse('No valid file argument provided', Http::STATUS_PRECONDITION_FAILED);
 			}
 
 			$storage = $file->getStorage();

@@ -52,7 +52,7 @@ class StepMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function getLatestVersion($documentId): ?string {
+	public function getLatestVersion($documentId): ?int {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('version')
