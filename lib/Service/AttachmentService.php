@@ -121,6 +121,10 @@ class AttachmentService {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$imageFile = $attachmentFolder->get($imageFileName);
 		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), AttachmentController::IMAGE_MIME_TYPES)) {
+			// previews of gifs are static images, always provide the real gif
+			if ($imageFile->getMimetype() === 'image/gif') {
+				return $imageFile;
+			}
 			// we might prefer the raw image
 			if ($preferRawImage && in_array($imageFile->getMimetype(), AttachmentController::BROWSER_SUPPORTED_IMAGE_MIME_TYPES)) {
 				return $imageFile;
