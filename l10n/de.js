@@ -14,6 +14,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "Textdokument",
     "{user} has mentioned you in the text document {node}" : "{user} hat dich in dem Textdokument {node} erwähnt.",
+    "This file cannot be displayed as download is disabled by the share" : "Diese Datei kann nicht angezeigt werden, da das Herunterladen durch die Freigabe deaktiviert ist",
     "Readme" : "Anleitung",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Gemeinschaftliche Dokumentenbearbeitung",
