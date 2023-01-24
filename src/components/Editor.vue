@@ -86,6 +86,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
+import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 import { Doc } from 'yjs'
 
 import {
@@ -482,9 +483,10 @@ export default {
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
+					const session = this.currentSession
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
-						session: this.currentSession,
+						session,
 						content: documentState ? '' : content,
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
@@ -495,6 +497,15 @@ export default {
 						extensions: [
 							Collaboration.configure({
 								document: this.$ydoc,
+							}),
+							CollaborationCursor.configure({
+								provider: this.$providers[0],
+								user: {
+									name: session?.userId
+										? session.displayName
+										: (session?.guestName || t('text', 'Guest')),
+									color: session?.color
+								},
 							}),
 							Keymap.configure({
 								'Mod-s': () => {
@@ -830,4 +841,32 @@ export default {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
+
+	/* Give a remote user a caret */
+	.collaboration-cursor__caret {
+		position: relative;
+		margin-left: -1px;
+		margin-right: -1px;
+		border-left: 1px solid #0D0D0D;
+		border-right: 1px solid #0D0D0D;
+		word-break: normal;
+		pointer-events: none;
+	}
+
+	/* Render the username above the caret */
+	.collaboration-cursor__label {
+		position: absolute;
+		top: -1.4em;
+		left: -1px;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		user-select: none;
+		color: #0D0D0D;
+		padding: 0.1rem 0.3rem;
+		border-radius: 3px 3px 3px 0;
+		white-space: nowrap;
+	}
+
 </style>
