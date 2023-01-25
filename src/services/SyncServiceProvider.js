@@ -35,7 +35,7 @@ export default function createSyncServiceProvider({ ydoc, syncService, fileId })
 	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId)
 	const websocketProvider = new WebsocketProvider(
 		'ws://localhost:1234',
-		'my-roomname',
+		'file:' + fileId,
 		ydoc,
 		{ WebSocketPolyfill }
 	)
