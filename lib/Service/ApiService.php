@@ -159,7 +159,7 @@ class ApiService {
 
 		return new DataResponse([
 			'document' => $document,
-			'session' => $session,
+			'session' => array_merge($session->jsonSerialize(), ['displayName' => $this->sessionService->getNameForSession($session)]),
 			'readOnly' => $readOnly,
 			'content' => $content,
 			'documentState' => $documentState,
