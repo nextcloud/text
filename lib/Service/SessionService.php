@@ -134,7 +134,7 @@ class SessionService {
 		}, $sessions);
 	}
 
-	public function getNameForSession(Session $session): string {
+	public function getNameForSession(Session $session): ?string {
 		if ($session->getUserId() !== null) {
 			return $this->userManager->getDisplayName($session->getUserId());
 		}
