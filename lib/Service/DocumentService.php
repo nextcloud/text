@@ -501,8 +501,9 @@ class DocumentService {
 	}
 
 	public function hasUnsavedChanges(Document $document) {
-		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
-		return $stepsVersion !== $document->getLastSavedVersion();
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId()) ?: 0;
+		$docVersion = $document->getLastSavedVersion();
+		return $stepsVersion !== $docVersion;
 	}
 
 	private function ensureDocumentsFolder(): bool {
