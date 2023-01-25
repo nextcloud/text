@@ -32,8 +32,6 @@ use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
-use OCA\Text\TextFile;
-use OCA\Text\Exception\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;

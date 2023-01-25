@@ -26,7 +26,6 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\ApiService;
-use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\PublicShareController;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;

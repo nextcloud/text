@@ -30,7 +30,6 @@ use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
