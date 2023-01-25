@@ -148,6 +148,7 @@ describe('The session Api', function() {
 		let connection
 		let fileId
 		let filePath
+		let joining
 
 		beforeEach(function() {
 			cy.testName().then(name => {
@@ -190,14 +191,14 @@ describe('The session Api', function() {
 				documentState,
 				manualSave: true,
 			})
-				.then(() => connection.close())
 			cy.createTextSession(fileId, { filePath })
 				.then(con => {
-					connection = con
-					return connection
+					joining = con
+					return joining
 				})
 				.its('state.documentState')
 				.should('eql', documentState)
+				.then(() => joining.close())
 		})
 
 		afterEach(function() {
@@ -210,6 +211,7 @@ describe('The session Api', function() {
 		let connection
 		let filePath
 		let shareToken
+		let joining
 
 		beforeEach(function() {
 			cy.testName().then(name => {
@@ -261,14 +263,14 @@ describe('The session Api', function() {
 				documentState,
 				manualSave: true,
 			})
-				.then(() => connection.close())
 			cy.createTextSession(undefined, { filePath: '', shareToken })
 				.then(con => {
-					connection = con
+					joining = con
 					return con
 				})
 				.its('state.documentState')
 				.should('eql', documentState)
+				.then(() => joining.close())
 		})
 
 		afterEach(function() {
