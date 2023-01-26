@@ -50,7 +50,7 @@ describe('Test mentioning users', () => {
 
 		return cy.wait(`@${requestAlias}`)
 			.then(() => {
-				cy.get('.tippy-box .items').children().should(($children) => {
+				cy.get('.tippy-box .suggestion-list').children().should(($children) => {
 					const users = $children.map((i, el) => el.innerText).get()
 					expect(users.length).to.be.greaterThan(0)
 					expect(mention).to.be.oneOf(users)
@@ -78,7 +78,7 @@ describe('Test mentioning users', () => {
 
 		return cy.wait(`@${autocompleteReauestAlias}`)
 			.then(() => {
-				cy.get('.tippy-box .items').contains(mention).click()
+				cy.get('.tippy-box .suggestion-list').contains(mention).click()
 				cy.get('span.mention').contains(mention).should('be.visible')
 			})
 	})
