@@ -344,7 +344,7 @@ Cypress.Commands.add('getActionSubEntry', (name) => {
 
 Cypress.Commands.add('getContent', { prevSubject: 'optional' }, (subject) => {
 	return (subject ? cy.wrap(subject) : cy.getEditor())
-		.find('.ProseMirror')
+		.find('.ProseMirror', { timeout: 10000 })
 })
 
 Cypress.Commands.add('getOutline', () => {

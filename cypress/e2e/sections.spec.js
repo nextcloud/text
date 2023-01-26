@@ -108,7 +108,7 @@ describe('Content Sections', () => {
 				})
 			cy.then(() => {
 				cy.getContent()
-					.find('h1 [data-node-view-content] span')
+					.find('h1 [data-node-view-content]')
 					.click({ force: true, position: 'center' })
 					.then(() => {
 						cy.getActionEntry('headings')
