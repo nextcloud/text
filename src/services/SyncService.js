@@ -249,7 +249,7 @@ class SyncService {
 	}
 
 	insertAttachmentFile(filePath) {
-		return this.connection.insertAttachment(filePath)
+		return this.connection.insertAttachmentFile(filePath)
 	}
 
 	on(event, callback) {
