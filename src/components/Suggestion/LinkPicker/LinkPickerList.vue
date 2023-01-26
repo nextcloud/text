@@ -19,9 +19,15 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -->
 <template>
-	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items" @select="(item) => $emit('select', item)">
+	<SuggestionListWrapper ref="suggestionList"
+		:command="command"
+		:items="items"
+		@select="(item) => $emit('select', item)">
 		<template #default="{ item }">
-			{{ item.label }}
+			<div class="link-picker__item">
+				<img :src="item.icon">
+				<div>{{ item.label }}</div>
+			</div>
 		</template>
 		<template #empty>
 			{{ t('text', 'No command found') }}
@@ -54,3 +60,19 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.link-picker__item {
+	display: flex;
+
+	& > div {
+		padding: 4px;
+		padding-left: 12px;
+	}
+
+	img {
+		width: 32px;
+		height: 32px;
+		filter: var(--background-invert-if-dark);
+	}
+}
+</style>
