@@ -53,6 +53,10 @@ export default ({
 					trigger: 'manual',
 					placement: 'bottom-start',
 				})
+
+				component.ref.$on('select', () => {
+					popup.length > 0 && popup[0].hide()
+				})
 			},
 
 			onUpdate(props) {

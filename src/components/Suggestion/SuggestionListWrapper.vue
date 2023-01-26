@@ -111,6 +111,7 @@ export default {
 			const item = this.items[index]
 
 			if (item) {
+				this.$emit('select', item)
 				this.command(item)
 			}
 		},

@@ -19,7 +19,7 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -->
 <template>
-	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items">
+	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items" @select="(item) => $emit('select', item)">
 		<template #default="{ item }">
 			{{ item.label }}
 		</template>
