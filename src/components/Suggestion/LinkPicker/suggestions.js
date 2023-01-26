@@ -22,25 +22,31 @@
 import createSuggestions from '../suggestions.js'
 import LinkPickerList from './LinkPickerList.vue'
 
+import { searchProvider, getLinkWithPicker } from '@nextcloud/vue-richtext'
+
 export default () => createSuggestions({
 	listComponent: LinkPickerList,
 	command: ({ editor, range, props }) => {
-		editor
-			.chain()
-			.focus()
-			.insertContentAt(range, props.label + ' ')
-			.run()
+		getLinkWithPicker(props.provider)
+			.then(link => {
+				editor
+					.chain()
+					.focus()
+					.insertContentAt(range, link)
+					.run()
+			})
+			.catch(error => {
+				console.error('Link picker promise rejected:', error)
+			})
 	},
 	items: ({ query }) => {
-		return [
-			{
-				label: 'Hello',
-				icon: '',
-			},
-			{
-				label: 'Hello2',
-				icon: '',
-			},
-		]
+		return searchProvider(query)
+			.map(p => {
+				return {
+					label: p.title,
+					icon: p.icon_url,
+					provider: p,
+				}
+			})
 	},
 })
