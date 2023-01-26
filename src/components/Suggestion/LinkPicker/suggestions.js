@@ -32,7 +32,7 @@ export default () => createSuggestions({
 				editor
 					.chain()
 					.focus()
-					.insertContentAt(range, link)
+					.insertContentAt(range, link + ' ')
 					.run()
 			})
 			.catch(error => {

@@ -75,8 +75,8 @@ export default {
 	methods: {
 		getTextReference(text) {
 			const PATTERN = /(^)(https?:\/\/)?((?:[-A-Z0-9+_]+\.)+[-A-Z]+(?:\/[-A-Z0-9+&@#%?=~_|!:,.;()]*)*)($)/ig
-			if ((new RegExp(PATTERN)).test(text)) {
-				return text
+			if ((new RegExp(PATTERN)).test(text.trim())) {
+				return text.trim()
 			}
 
 			return null
