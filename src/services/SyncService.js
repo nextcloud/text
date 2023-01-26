@@ -23,8 +23,7 @@
 import mitt from 'mitt'
 
 import PollingBackend from './PollingBackend.js'
-import SessionApi from './SessionApi.js'
-import { Connection } from './SessionApi.js'
+import SessionApi, { Connection } from './SessionApi.js'
 import { logger } from '../helpers/logger.js'
 
 /**

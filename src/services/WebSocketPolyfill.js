@@ -27,6 +27,7 @@ import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
  *
  * @param {object} syncService - the sync service to build upon
  * @param {number} fileId - id of the file to open
+ * @param initialSession
  */
 export default function initWebSocketPolyfill(syncService, fileId, initialSession) {
 	return class WebSocketPolyfill {

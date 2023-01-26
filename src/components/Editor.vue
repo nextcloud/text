@@ -504,7 +504,7 @@ export default {
 									name: session?.userId
 										? session.displayName
 										: (session?.guestName || t('text', 'Guest')),
-									color: session?.color
+									color: session?.color,
 								},
 							}),
 							Keymap.configure({
