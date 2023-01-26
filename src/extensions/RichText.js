@@ -41,6 +41,7 @@ import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
 import ListItem from '@tiptap/extension-list-item'
 import Mention from './../extensions/Mention.js'
+import LinkPicker from './../extensions/LinkPicker.js'
 import OrderedList from '@tiptap/extension-ordered-list'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
@@ -93,6 +94,7 @@ export default Extension.create({
 					class: 'mention',
 				},
 			}),
+			LinkPicker,
 		]
 		if (this.options.link !== false) {
 			defaultExtensions.push(Link.configure({

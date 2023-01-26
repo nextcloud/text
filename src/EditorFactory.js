@@ -26,17 +26,14 @@ import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
 import TrailingNode from './nodes/TrailingNode.js'
-import EmojiListWrapper from './components/EmojiListWrapper.vue'
 import EditableTable from './nodes/EditableTable.js'
-import MentionSuggestion from './components/Mention/suggestion.js'
+import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
+import EmojiSuggestion from './components/Suggestion/Emoji/suggestions.js'
 
-import tippy from 'tippy.js'
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
-import { VueRenderer } from '@tiptap/vue-2'
 import { translate as t } from '@nextcloud/l10n'
-import { emojiSearch } from '@nextcloud/vue'
 import { lowlight } from 'lowlight/lib/core.js'
 import hljs from 'highlight.js'
 
@@ -79,55 +76,7 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 				],
 			}),
 			Emoji.configure({
-				suggestion: {
-					items: ({ query }) => {
-						return emojiSearch(query)
-					},
-					render: () => {
-						let component
-						let popup
-
-						return {
-							onStart: props => {
-								component = new VueRenderer(EmojiListWrapper, {
-									parent: this,
-									propsData: props,
-								})
-
-								popup = tippy('body', {
-									getReferenceClientRect: props.clientRect,
-									appendTo: () => document.body,
-									content: component.element,
-									showOnCreate: true,
-									interactive: true,
-									trigger: 'manual',
-									placement: 'bottom-start',
-								})
-							},
-
-							onUpdate(props) {
-								component.updateProps(props)
-								popup[0].setProps({
-									getReferenceClientRect: props.clientRect,
-								})
-							},
-
-							onKeyDown(props) {
-								if (props.event.key === 'Escape') {
-									component.destroy()
-									popup[0].destroy()
-									return true
-								}
-								return component.ref?.onKeyDown(props)
-							},
-
-							onExit() {
-								popup[0].destroy()
-								component.destroy()
-							},
-						}
-					},
-				},
+				suggestion: EmojiSuggestion(),
 			}),
 			Placeholder.configure({
 				emptyNodeClass: 'is-empty',

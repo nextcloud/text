@@ -37,13 +37,6 @@ const Emoji = Node.create({
 				char: ':',
 				allowedPrefixes: [' '],
 				pluginKey: EmojiPluginKey,
-				command: ({ editor, range, props }) => {
-					editor
-						.chain()
-						.focus()
-						.insertContentAt(range, props.native + ' ')
-						.run()
-				},
 			},
 		}
 	},

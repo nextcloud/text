@@ -1,7 +1,7 @@
 <!--
-  - @copyright Copyright (c) 2021 Jonas <jonas@freesources.org>
+  - @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
   -
-  - @author Jonas <jonas@freesources.org>
+  - @author Julius Härtl <jus@bitgrid.net>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -17,25 +17,25 @@
   -
   - You should have received a copy of the GNU Affero General Public License
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
-  -
   -->
-
 <template>
-	<EmojiList ref="emojiList"
-		:items="items"
-		:command="command" />
+	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items">
+		<template #default="{ item }">
+			{{ item.label }}
+		</template>
+		<template #empty>
+			{{ t('text', 'No command found') }}
+		</template>
+	</SuggestionListWrapper>
 </template>
 
 <script>
-import EmojiList from './EmojiList.vue'
+import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 
 export default {
-	name: 'EmojiListWrapper',
-
 	components: {
-		EmojiList,
+		SuggestionListWrapper,
 	},
-
 	props: {
 		items: {
 			type: Array,
@@ -46,11 +46,10 @@ export default {
 			required: true,
 		},
 	},
-
 	methods: {
 		onKeyDown({ event }) {
 			// Ignore any key modifier combinations
-			return this.$refs.emojiList?.onKeyDown({ event })
+			return this.$refs.suggestionList?.onKeyDown({ event })
 		},
 	},
 }
