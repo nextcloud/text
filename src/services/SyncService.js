@@ -203,9 +203,7 @@ class SyncService {
 	}
 
 	save() {
-		if (this.backend.save) {
-			this.backend.save()
-		}
+		this?.backend?.save?.()
 	}
 
 	forceSave() {
