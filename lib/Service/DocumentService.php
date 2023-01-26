@@ -30,6 +30,7 @@ use \InvalidArgumentException;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
+use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\Lock\ILock;
@@ -247,22 +248,14 @@ class DocumentService {
 	}
 
 	/**
-	 * @param File $file
-	 * @param $documentId
-	 * @param $version
-	 * @param $autoaveDocument
-	 * @param $documentState
-	 * @param bool $force
-	 * @param bool $manualSave
-	 * @param null $shareToken
-	 * @param null $filePath
-	 * @return Document
 	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
+	 * @throws InvalidPathException
 	 * @throws NotFoundException
-	 * @throws \OCP\DB\Exception
+	 * @throws NotPermittedException
+	 * @throws Exception
 	 */
-	public function autosave($file, $documentId, $version, $autoaveDocument, $documentState, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
+	public function autosave(?File $file, int $documentId, int $version, ?string $autoaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null, ?string $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
@@ -301,9 +294,9 @@ class DocumentService {
 		}
 
 		try {
-			$documentStateFile = $this->getStateFile((string)$file->getFileInfo()->getId());
+			$documentStateFile = $this->getStateFile((string)$file->getId());
 		} catch (NotFoundException $e) {
-			$documentStateFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
+			$documentStateFile = $this->appData->getFolder('documents')->newFile((string)$file->getId());
 		}
 
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
@@ -361,10 +354,10 @@ class DocumentService {
 	/**
 	 * @param Session $session
 	 * @param $shareToken
-	 * @return \OCP\Files\File|Folder|Node
+	 * @return File
 	 * @throws NotFoundException
 	 */
-	public function getFileForSession(Session $session, $shareToken) {
+	public function getFileForSession(Session $session, ?string $shareToken = null): File {
 		if ($session->getUserId() !== null && $shareToken === null) {
 			return $this->getFileById($session->getDocumentId(), $session->getUserId());
 		}
@@ -375,11 +368,11 @@ class DocumentService {
 		}
 
 		$node = $share->getNode();
-		if ($node instanceof \OCP\Files\File) {
-			return $node;
-		}
 		if ($node instanceof Folder) {
-			return $node->getById($session->getDocumentId())[0];
+			$node = $node->getById($session->getDocumentId())[0];
+		}
+		if ($node instanceof File) {
+			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
 	}
@@ -387,7 +380,7 @@ class DocumentService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function getFileById($fileId, $userId = null): Node {
+	public function getFileById($fileId, $userId = null): File {
 		$userId = $userId ?? $this->userId;
 
 		// If no user is provided we need to get any file from existing mounts for cleanup jobs
@@ -423,12 +416,9 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $shareToken
-	 * @param null|string $path
-	 * @return \OCP\Files\File|Folder|Node
 	 * @throws NotFoundException
 	 */
-	public function getFileByShareToken($shareToken, $path = null) {
+	public function getFileByShareToken($shareToken, ?string $path = null): File {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound $e) {
@@ -436,11 +426,11 @@ class DocumentService {
 		}
 
 		$node = $share->getNode();
-		if ($node instanceof \OCP\Files\File) {
-			return $node;
-		}
 		if ($node instanceof Folder) {
-			return $node->get($path);
+			$node = $node->get($path);
+		}
+		if ($node instanceof File) {
+			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
 	}

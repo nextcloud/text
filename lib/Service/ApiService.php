@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use Exception;
+use InvalidArgumentException;
 use OC\Files\Node\File;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
