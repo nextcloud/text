@@ -31,8 +31,8 @@ import { logger } from '../helpers/logger.js'
  * @param {object} options.syncService - sync service to build upon
  * @param {number} options.fileId - file id of the file to open
  */
-export default function createSyncServiceProvider({ ydoc, syncService, fileId }) {
-	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId)
+export default function createSyncServiceProvider({ ydoc, syncService, fileId, initialSession }) {
+	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
 	const websocketProvider = new WebsocketProvider(
 		'ws://localhost:1234',
 		'file:' + fileId,

@@ -24,6 +24,7 @@ import mitt from 'mitt'
 
 import PollingBackend from './PollingBackend.js'
 import SessionApi from './SessionApi.js'
+import { Connection } from './SessionApi.js'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -80,9 +81,13 @@ class SyncService {
 		this.on('change', ({ sessions }) => {
 			this.sessions = sessions
 		})
-		// TODO: get connection from initialSession and fetch
-		this.connection = await this._api.open({ fileId })
-			.catch(error => this._emitError(error))
+
+		// TODO: Only continue if a connection was made
+		this.connection = initialSession
+			? new Connection({ data: initialSession }, {})
+			: await this._api.open({ fileId })
+				.catch(error => this._emitError(error))
+
 		this.version = this.connection.lastSavedVersion
 		this.emit('opened', {
 			...this.connection.state,

@@ -28,7 +28,7 @@ import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
  * @param {object} syncService - the sync service to build upon
  * @param {number} fileId - id of the file to open
  */
-export default function initWebSocketPolyfill(syncService, fileId) {
+export default function initWebSocketPolyfill(syncService, fileId, initialSession) {
 	return class WebSocketPolyfill {
 
 		#url
@@ -45,13 +45,13 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 		constructor(url) {
 			this.url = url
 			this.#queue = []
-			logger.debug('WebSocketPolyfill#constructor', { url, fileId })
+			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
 					this.#version = version
 					logger.debug('opened ', { version, session })
 					this.#session = session
-					this.onopen()
+					this.onopen?.()
 				},
 				loaded: ({ version, session, content }) => {
 					logger.debug('loaded ', { version, session })
@@ -69,7 +69,7 @@ export default function initWebSocketPolyfill(syncService, fileId) {
 					}
 				},
 			})
-			syncService.open({ fileId })
+			syncService.open({ fileId, initialSession })
 		}
 
 		#registerHandlers(handlers) {
