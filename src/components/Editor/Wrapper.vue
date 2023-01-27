@@ -146,7 +146,6 @@ export default {
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
-		position: absolute;
 
 		&.show-color-annotations:deep(.author-annotation) {
 			padding-top: 2px;
