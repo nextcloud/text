@@ -127,7 +127,7 @@ export default {
 	overflow: auto;
 
 	min-width: 200px;
-	max-width: 200px;
+	max-width: 400px;
 	padding: 4px;
 	// Show maximum 5 entries and a half to show scroll
 	max-height: 35.5px * 5 + 18px;
