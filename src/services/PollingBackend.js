@@ -85,6 +85,10 @@ class PollingBackend {
 	}
 
 	connect() {
+		if (this.fetcher > 0) {
+			console.error('Trying to connect, but already connected')
+			return
+		}
 		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))

@@ -213,6 +213,7 @@ class SyncService {
 	}
 
 	forceSave() {
+		this.backend.connect()
 		if (this.backend.forceSave) {
 			this.backend.forceSave()
 		}
