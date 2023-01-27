@@ -44,7 +44,7 @@ class StepMapper extends QBMapper {
 			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
 		}
 		$qb
-			->setMaxResults(100)
+			->setMaxResults(1000)
 			->orderBy('version')
 			->orderBy('id');
 
