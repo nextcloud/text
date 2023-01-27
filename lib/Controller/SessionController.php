@@ -113,9 +113,11 @@ class SessionController extends Controller {
 
 	private function loginSessionUser(int $documentId, int $sessionId, string $sessionToken) {
 		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		$user = $this->userManager->get($currentSession->getUserId());
-		if ($user !== null) {
-			$this->userSession->setUser($user);
+		if ($currentSession !== false) {
+			$user = $this->userManager->get($currentSession->getUserId());
+			if ($user !== null) {
+				$this->userSession->setUser($user);
+			}
 		}
 	}
 }
