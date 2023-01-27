@@ -124,8 +124,10 @@ class PollingBackend {
 
 		this.#pollActive = true
 
-		const autosaveContent = shouldSave ? this.#syncService._getContent() : null
-		const documentState = shouldSave ? this.#syncService.getDocumentState() : null
+		const shouldAutosave = true // FIXME: Figure out when we should autosave
+
+		const autosaveContent = shouldSave || shouldAutosave ? this.#syncService._getContent() : null
+		const documentState = shouldSave || shouldAutosave ? this.#syncService.getDocumentState() : null
 
 		try {
 			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)

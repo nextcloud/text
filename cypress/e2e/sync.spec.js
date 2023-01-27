@@ -36,8 +36,15 @@ describe('yjs document state', () => {
 	})
 
 	it('saves the actual file', () => {
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }).as('push')
 		cy.openTestFile()
-		cy.getContent().type('* Saving the doc saves the doc state{enter}{ctrl+s}')
+		cy.getContent().type('* Saving the doc saves the doc state{enter}')
+		cy.wait('@push', { timeout: 7000 })
+		cy.wait('@sync', { timeout: 7000 })
+		cy.getContent().type('{ctrl+s}')
+		cy.wait('@sync').its('request.body.autosaveContent', {timeout: 6000})
+			.should('not.be.empty')
 		cy.closeFile()
 		cy.testName()
 			.then(name => cy.downloadFile(`/${name}.md`))
@@ -46,8 +53,8 @@ describe('yjs document state', () => {
 	})
 
 	it('passes the doc state from one session to the next', () => {
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
-			.as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }).as('push')
 		cy.openTestFile()
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.wait('@sync', { timeout: 7000 })

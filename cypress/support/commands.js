@@ -287,8 +287,11 @@ Cypress.Commands.add('openFile', (fileName, params = {}) => {
 })
 
 Cypress.Commands.add('closeFile', (fileName, params = {}) => {
+	cy.intercept({ method: 'POST', url: '**/apps/text/session/close' })
+		.as('close')
 	cy.get('#viewer .modal-header button.header-close').click(params)
 	cy.get('#viewer .modal-header').should('not.exist')
+	cy.wait('@close', { timeout: 7000 })
 })
 
 Cypress.Commands.add('getFile', fileName => {
