@@ -199,7 +199,9 @@ class SyncService {
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
 			logger.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
 			this.emit('idle')
+			return true
 		}
+		return false
 	}
 
 	_getContent() {

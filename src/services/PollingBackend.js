@@ -63,82 +63,104 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
 
-	constructor(authority, connection) {
-		/** @type {SyncService} */
-		this._authority = authority
-		/** @type {Connection} */
-		this.connection = connection
-		this.fetchInterval = FETCH_INTERVAL
-		this.lock = false
-		this.fetchRetryCounter = 0
+	/** @type {SyncService} */
+	#syncService
+	/** @type {Connection} */
+	#connection
+
+	#lastPoll
+	#fetchInterval
+	#fetchRetryCounter
+	#pollActive
+	#forcedSave
+	#manualSave
+	#initialLoadingFinished
+
+	constructor(syncService, connection) {
+		this.#syncService = syncService
+		this.#connection = connection
+		this.#fetchInterval = FETCH_INTERVAL
+		this.#fetchRetryCounter = 0
+		this.#lastPoll = 0
 	}
 
 	connect() {
-		this.initialLoadingFinished = false
+		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
 	forceSave() {
-		this._forcedSave = true
-		this.fetchSteps()
+		this.#forcedSave = true
 	}
 
 	save() {
-		this._manualSave = true
-		this.fetchSteps()
-	}
-
-	fetchSteps() {
-		this._fetchSteps()
+		this.#manualSave = true
 	}
 
 	/**
 	 * This method is only called though the timer
 	 */
-	_fetchSteps() {
-		if (this.lock || !this.fetcher) {
+	async _fetchSteps() {
+		if (this.#pollActive) {
 			return
 		}
-		this.lock = true
-		let autosaveContent
-		let documentState
-		if (this._forcedSave || this._manualSave
-		// TODO: figure out when to autosave
-		) {
-			autosaveContent = this._authority._getContent()
-			documentState = this._authority.getDocumentState()
+
+		const now = Date.now()
+		const shouldSave = this.#forcedSave || this.#manualSave
+
+		if (this.#lastPoll > (now - this.#fetchInterval) && !shouldSave) {
+			return
 		}
-		this.connection.sync({
-			version: this._authority.version,
-			autosaveContent,
-			documentState,
-			force: !!this._forcedSave,
-			manualSave: !!this._manualSave,
-		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
-		this._manualSave = false
-		this._forcedSave = false
+
+		if (!this.fetcher) {
+			console.error('No inverval but triggered')
+			return
+		}
+
+		this.#pollActive = true
+
+		const autosaveContent = shouldSave ? this.#syncService._getContent() : null
+		const documentState = shouldSave ? this.#syncService.getDocumentState() : null
+
+		try {
+			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
+			const response = await this.#connection.sync({
+				version: this.#syncService.version,
+				autosaveContent,
+				documentState,
+				force: !!this.#forcedSave,
+				manualSave: !!this.#manualSave,
+			})
+			this._handleResponse(response)
+		} catch (e) {
+			this._handleError(e)
+		} finally {
+			this.#lastPoll = Date.now()
+			this.#pollActive = false
+			this.#manualSave = false
+			this.#forcedSave = false
+		}
 	}
 
 	_handleResponse({ data }) {
 		const { document, sessions } = data
-		this.fetchRetryCounter = 0
+		this.#fetchRetryCounter = 0
 
-		if (this._authority.version < document.lastSavedVersion) {
+		if (this.#syncService.version < document.lastSavedVersion) {
 			logger.debug('Saved document', document)
-			this._authority.emit('save', { document, sessions })
+			this.#syncService.emit('save', { document, sessions })
 		}
 
-		this._authority.emit('change', { document, sessions })
+		this.#syncService.emit('change', { document, sessions })
 
 		if (data.steps.length === 0) {
-			if (!this.initialLoadingFinished) {
-				this.initialLoadingFinished = true
+			if (!this.#initialLoadingFinished) {
+				this.#initialLoadingFinished = true
 			}
-			if (this._authority.checkIdle()) {
+			if (this.#syncService.checkIdle()) {
 				return
 			}
-			this.lock = false
 			const disconnect = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
 			const alive = sessions.filter((s) => s.lastContact > disconnect)
 			if (alive.length < 2) {
@@ -146,33 +168,31 @@ class PollingBackend {
 			} else {
 				this.increaseRefetchTimer()
 			}
-			this._authority.emit('stateChange', { dirty: false })
-			this._authority.emit('stateChange', { initialLoading: true })
+			this.#syncService.emit('stateChange', { dirty: false })
+			this.#syncService.emit('stateChange', { initialLoading: true })
 			return
 		}
 
-		this._authority._receiveSteps(data)
-		this.lock = false
-		this._forcedSave = false
-		if (this.initialLoadingFinished) {
+		this.#syncService._receiveSteps(data)
+		this.#forcedSave = false
+		if (this.#initialLoadingFinished) {
 			this.resetRefetchTimer()
 		}
 	}
 
 	_handleError(e) {
-		this.lock = false
 		if (!e.response || e.code === 'ECONNABORTED') {
-			if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 
 			} else {
-				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
-		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.version) {
+		} else if (e.response.status === 409) {
 			// Only emit conflict event if we have synced until the latest version
 			logger.error('Conflict during file save, please resolve')
-			this._authority.emit('error', {
+			this.#syncService.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
 				data: {
 					outsideChange: e.response.data.outsideChange,
@@ -180,18 +200,18 @@ class PollingBackend {
 			})
 			this.disconnect()
 		} else if (e.response.status === 403) {
-			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 404) {
-			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 503) {
 			this.increaseRefetchTimer()
-			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			logger.error('Failed to fetch steps due to unavailable service', { error: e })
 		} else {
 			this.disconnect()
-			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
 
@@ -204,41 +224,21 @@ class PollingBackend {
 	}
 
 	resetRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = FETCH_INTERVAL
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = FETCH_INTERVAL
 
 	}
 
 	increaseRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = Math.min(this.fetchInterval * 2, FETCH_INTERVAL_MAX)
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = Math.min(this.#fetchInterval * 2, FETCH_INTERVAL_MAX)
 	}
 
 	maximumRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 	}
 
 	visibilitychange() {
-		if (this.fetcher === 0) {
-			return
-		}
 		if (document.visibilityState === 'hidden') {
-			this.fetchInterval = FETCH_INTERVAL_INVISIBLE
-			clearInterval(this.fetcher)
-			this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+			this.#fetchInterval = FETCH_INTERVAL_INVISIBLE
 		} else {
 			this.resetRefetchTimer()
 		}
