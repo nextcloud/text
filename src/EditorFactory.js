@@ -37,19 +37,21 @@ import { Editor } from '@tiptap/core'
 import { VueRenderer } from '@tiptap/vue-2'
 import { translate as t } from '@nextcloud/l10n'
 import { emojiSearch } from '@nextcloud/vue'
-import { listLanguages, registerLanguage } from 'lowlight/lib/core.js'
+import { lowlight } from 'lowlight/lib/core.js'
+import hljs from 'highlight.js'
 
 import { logger } from './helpers/logger.js'
 import { Emoji, Markdown, Mention, PlainText, RichText } from './extensions/index.js'
 
 const loadSyntaxHighlight = async (language) => {
-	const list = listLanguages()
+	const list = hljs.listLanguages()
 	logger.debug('Supported languages', { list })
-	if (!listLanguages().includes(language)) {
+	if (!lowlight.listLanguages().includes(language)) {
 		try {
+			logger.debug('Loading language', language)
 			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(/* webpackChunkName: "highlight/[request]" */'highlight.js/lib/languages/' + language)
-			registerLanguage(language, syntax.default)
+			const syntax = await import(/* webpackChunkName: "highlight/[request]" */`../node_modules/highlight.js/lib/languages/${language}`)
+			lowlight.registerLanguage(language, syntax.default)
 		} catch (error) {
 			// fallback to none
 			logger.debug('No matching highlighing found', { error })

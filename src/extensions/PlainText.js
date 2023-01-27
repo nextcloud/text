@@ -27,7 +27,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Text from '@tiptap/extension-text'
 /* eslint-enable import/no-named-as-default */
 
-import lowlight from 'lowlight/lib/core' // eslint-disable-line n/no-missing-import
+import { lowlight } from 'lowlight/lib/core.js' // eslint-disable-line n/no-missing-import
 
 import PlainTextDocument from './../nodes/PlainTextDocument.js'
 
