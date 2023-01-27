@@ -63,15 +63,16 @@ export default {
 <style lang="scss" scoped>
 .link-picker__item {
 	display: flex;
+	align-items: center;
 
 	& > div {
 		padding: 4px;
-		padding-left: 12px;
+		padding-left: 8px;
 	}
 
 	img {
-		width: 32px;
-		height: 32px;
+		width: 20px;
+		height: 20px;
 		filter: var(--background-invert-if-dark);
 	}
 }
