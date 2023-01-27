@@ -22,7 +22,6 @@ div.ProseMirror {
 	&[contenteditable=false],
 	[contenteditable=true],
 	[contenteditable=false] {
-		border: none !important;
 		width: 100%;
 		background-color: transparent;
 		color: var(--color-main-text);
@@ -30,6 +29,10 @@ div.ProseMirror {
 		-webkit-user-select: text;
 		user-select: text;
 		font-size: 14px;
+
+		&:not(.collaboration-cursor__caret) {
+			border: none !important;
+		}
 
 		&:focus, &:focus-visible {
 			box-shadow: none !important;
