@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ocaml-js-js"],{63808:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ocaml" instead of "highlight.js/lib/languages/ocaml.js"'))}(),e.exports=n(57552)}}]);
+//# sourceMappingURL=ocaml-js-js.js.map?v=feef64188b1221d23cc5

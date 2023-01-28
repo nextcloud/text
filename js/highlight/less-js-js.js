@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/less-js-js"],{63224:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/less" instead of "highlight.js/lib/languages/less.js"'))}(),e.exports=i(44210)}}]);
+//# sourceMappingURL=less-js-js.js.map?v=949c255990381ea99399

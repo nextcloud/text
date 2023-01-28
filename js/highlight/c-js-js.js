@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/c-js-js"],{96991:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/c" instead of "highlight.js/lib/languages/c.js"'))}(),e.exports=n(80612)}}]);
+//# sourceMappingURL=c-js-js.js.map?v=c0b701edbecbea02d08b

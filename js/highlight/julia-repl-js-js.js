@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/julia-repl-js-js"],{40996:(e,i,l)=>{var n=l(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/julia-repl" instead of "highlight.js/lib/languages/julia-repl.js"'))}(),e.exports=l(25850)}}]);
+//# sourceMappingURL=julia-repl-js-js.js.map?v=9c114e8cb2c0c33ba382

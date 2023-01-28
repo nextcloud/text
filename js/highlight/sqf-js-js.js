@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/sqf-js-js"],{27351:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/sqf" instead of "highlight.js/lib/languages/sqf.js"'))}(),e.exports=i(3677)}}]);
+//# sourceMappingURL=sqf-js-js.js.map?v=db7e1ff92aab44b4ebac

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/scheme-js-js"],{76613:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/scheme" instead of "highlight.js/lib/languages/scheme.js"'))}(),e.exports=i(82254)}}]);
+//# sourceMappingURL=scheme-js-js.js.map?v=53326a4c0ad42121158f

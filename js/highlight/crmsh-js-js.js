@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/crmsh-js-js"],{31965:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/crmsh" instead of "highlight.js/lib/languages/crmsh.js"'))}(),e.exports=i(77740)}}]);
+//# sourceMappingURL=crmsh-js-js.js.map?v=740a0f8f54fdc6e2bede

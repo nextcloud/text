@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ldif-js-js"],{57137:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ldif" instead of "highlight.js/lib/languages/ldif.js"'))}(),e.exports=n(57604)}}]);
+//# sourceMappingURL=ldif-js-js.js.map?v=116d72fb360e9ea374e5

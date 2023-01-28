@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/actionscript-js-js"],{78197:(e,i,n)=>{var t=n(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/actionscript" instead of "highlight.js/lib/languages/actionscript.js"'))}(),e.exports=n(55505)}}]);
+//# sourceMappingURL=actionscript-js-js.js.map?v=9d903c91f07f1b2e942e

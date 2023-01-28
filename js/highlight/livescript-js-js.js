@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/livescript-js-js"],{72714:(e,i,s)=>{var n=s(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/livescript" instead of "highlight.js/lib/languages/livescript.js"'))}(),e.exports=s(69735)}}]);
+//# sourceMappingURL=livescript-js-js.js.map?v=1d5794b07ac732a5e6aa

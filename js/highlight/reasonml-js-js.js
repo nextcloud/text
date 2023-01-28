@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/reasonml-js-js"],{39057:(e,n,s)=>{var i=s(25108);!function e(){e.warned||(e.warned=!0,i.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/reasonml" instead of "highlight.js/lib/languages/reasonml.js"'))}(),e.exports=s(2318)}}]);
+//# sourceMappingURL=reasonml-js-js.js.map?v=4bf9006528f78ca3e127

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/puppet-js-js"],{973:(e,i,n)=>{var t=n(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/puppet" instead of "highlight.js/lib/languages/puppet.js"'))}(),e.exports=n(93867)}}]);
+//# sourceMappingURL=puppet-js-js.js.map?v=694eacf7f703c7c5d78e

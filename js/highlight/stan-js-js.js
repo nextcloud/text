@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/stan-js-js"],{41047:(e,n,s)=>{var i=s(25108);!function e(){e.warned||(e.warned=!0,i.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/stan" instead of "highlight.js/lib/languages/stan.js"'))}(),e.exports=s(50052)}}]);
+//# sourceMappingURL=stan-js-js.js.map?v=5932f9e0dbf243589598

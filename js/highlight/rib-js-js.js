@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/rib-js-js"],{50363:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/rib" instead of "highlight.js/lib/languages/rib.js"'))}(),e.exports=n(94820)}}]);
+//# sourceMappingURL=rib-js-js.js.map?v=6432637e836bb330751f

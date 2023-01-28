@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ruby-js-js"],{7453:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ruby" instead of "highlight.js/lib/languages/ruby.js"'))}(),e.exports=n(67905)}}]);
+//# sourceMappingURL=ruby-js-js.js.map?v=adf80ec2c0d1c9fe371c

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ebnf-js-js"],{82808:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ebnf" instead of "highlight.js/lib/languages/ebnf.js"'))}(),e.exports=i(13039)}}]);
+//# sourceMappingURL=ebnf-js-js.js.map?v=193cc9905d798ffe8c32

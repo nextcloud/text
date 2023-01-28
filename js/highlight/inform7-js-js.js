@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/inform7-js-js"],{96955:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/inform7" instead of "highlight.js/lib/languages/inform7.js"'))}(),e.exports=n(84458)}}]);
+//# sourceMappingURL=inform7-js-js.js.map?v=7a955f20befd5420285d

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/bnf-js-js"],{14060:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/bnf" instead of "highlight.js/lib/languages/bnf.js"'))}(),e.exports=i(87061)}}]);
+//# sourceMappingURL=bnf-js-js.js.map?v=273da75de3c9ec3db397

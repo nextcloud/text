@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dsconfig-js-js"],{63264:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dsconfig" instead of "highlight.js/lib/languages/dsconfig.js"'))}(),e.exports=n(7522)}}]);
+//# sourceMappingURL=dsconfig-js-js.js.map?v=b4ce81539290ff33fa09

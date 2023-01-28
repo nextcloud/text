@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dust-js-js"],{26229:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dust" instead of "highlight.js/lib/languages/dust.js"'))}(),e.exports=i(1450)}}]);
+//# sourceMappingURL=dust-js-js.js.map?v=3739f76c9a161408b8be

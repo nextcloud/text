@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/prolog-js-js"],{45640:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/prolog" instead of "highlight.js/lib/languages/prolog.js"'))}(),e.exports=n(63944)}}]);
+//# sourceMappingURL=prolog-js-js.js.map?v=46c370dc350d42415bec

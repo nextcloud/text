@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/graphql-js-js"],{94840:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/graphql" instead of "highlight.js/lib/languages/graphql.js"'))}(),e.exports=n(21738)}}]);
+//# sourceMappingURL=graphql-js-js.js.map?v=9afae890201ee426fe12
