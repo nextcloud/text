@@ -29,13 +29,13 @@
 			<div v-if="canDisplayImage"
 				v-click-outside="() => showIcons = false"
 				class="image__view"
-				@click="handleImageClick(src)"
 				@mouseover="showIcons = true"
 				@mouseleave="showIcons = false">
 				<transition name="fade">
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
-							class="media">
+							class="media"
+							@click="handleImageClick(src)">
 							<div class="media__wrapper">
 								<img v-show="loaded"
 									:src="imageUrl"
@@ -61,6 +61,7 @@
 							<img v-show="loaded"
 								:src="imageUrl"
 								class="image__main"
+								@click="handleImageClick(src)"
 								@load="onLoaded">
 						</div>
 					</template>
