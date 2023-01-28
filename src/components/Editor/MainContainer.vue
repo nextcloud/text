@@ -52,8 +52,6 @@ export default {
 		border-radius: var(--border-radius);
 		padding: 0;
 		position: relative;
-		overflow-y: auto;
-		overflow-x: hidden;
 		width: 100%;
 	}
 </style>

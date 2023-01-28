@@ -270,9 +270,9 @@ export default {
 		}
 
 		.text-menubar__slot {
-			// width: 100%;
 			justify-content: flex-end;
 			display: flex;
+			min-width: max(0px, min(200px, (100% - var(--text-editor-max-width)) / 2));
 		}
 
 		&.text-menubar--is-workspace {
