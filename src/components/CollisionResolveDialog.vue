@@ -21,11 +21,11 @@
   -->
 
 <template>
-	<div id="resolve-conflicts" class="collision-resolve-dialog">
-		<button @click="$emit('resolve-use-this-version')">
+	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
+		<button @click="resolveThisVersion" :disabled="clicked">
 			{{ t('text', 'Use current version') }}
 		</button>
-		<button @click="$emit('resolve-use-server-version')">
+		<button @click="resolveServerVersion" :disabled="clicked">
 			{{ t('text', 'Use the saved version') }}
 		</button>
 	</div>
@@ -34,6 +34,21 @@
 <script>
 export default {
 	name: 'CollisionResolveDialog',
+	data() {
+		return {
+			clicked: false,
+		}
+	},
+	methods: {
+		resolveThisVersion() {
+			this.clicked = true
+			this.$emit('resolve-use-this-version')
+		},
+		resolveServerVersion() {
+			this.clicked = true
+			this.$emit('resolve-use-server-version')
+		},
+	},
 }
 </script>
 

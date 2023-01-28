@@ -220,6 +220,7 @@ class SyncService {
 	}
 
 	close() {
+		this.backend.disconnect()
 		let closed = false
 		return new Promise((resolve, reject) => {
 			this.on('save', () => {

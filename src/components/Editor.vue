@@ -409,8 +409,10 @@ export default {
 		},
 
 		resolveUseServerVersion() {
-			this.forceRecreate = true
-			this.reconnect()
+			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
+			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.commands.setContent(markdownItHtml)
+			this.$syncService.forceSave()
 		},
 
 		reconnect() {
