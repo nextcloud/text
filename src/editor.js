@@ -46,6 +46,13 @@ class TextEditorEmbed {
 		return this
 	}
 
+	onLoaded(onLoadedCallback = () => {}) {
+		this.#vm.$on('ready', () => {
+			onLoadedCallback()
+		})
+		return this
+	}
+
 	onUpdate(onUpdateCallback = () => {}) {
 		this.#vm.$on('update:content', (content) => {
 			onUpdateCallback(content)
@@ -57,7 +64,7 @@ class TextEditorEmbed {
 		el.innerHTML = ''
 		const element = document.createElement('div')
 		el.appendChild(element)
-		this.#vm.$mount(el)
+		this.#vm.$mount(element)
 		return this
 	}
 
