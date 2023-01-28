@@ -1,5 +1,5 @@
 /*
- * @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
+ * @copyright Copyright (c) 2023 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
@@ -20,21 +20,79 @@
  */
 
 import Vue from 'vue'
-import Editor from './components/Editor.vue'
-import MarkdownContentEditor from './components/Editor/MarkdownContentEditor.vue'
 import store from './store/index.js'
+import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, HOOK_LINK_CLICK, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
+import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
-
-window.OCA.Text = {}
 
 Vue.prototype.t = window.t
 Vue.prototype.n = window.n
 Vue.prototype.OCA = window.OCA
 
-// TODO: Add jsdoc once stable
-window.OCA.Text.createEditor = function({
+window.OCA.Text = {
+	...window.OCA.Text,
+}
+
+class TextEditorEmbed {
+
+	#vm
+	#data
+	constructor(vm, data) {
+		this.#vm = vm
+		this.#data = data
+		this.#registerDebug()
+		return this
+	}
+
+	onUpdate(onUpdateCallback = () => {}) {
+		this.#vm.$on('update:content', (content) => {
+			onUpdateCallback(content)
+		})
+		return this
+	}
+
+	render(el) {
+		el.innerHTML = ''
+		const element = document.createElement('div')
+		el.appendChild(element)
+		this.#vm.$mount(el)
+		return this
+	}
+
+	destroy() {
+		this.#vm.$destroy()
+		this.#vm.$el.innerHTML = ''
+	}
+
+	setContent(content) {
+		this.#vm.$set(this.#data, 'content', content)
+		return this
+	}
+
+	setReadOnly(value) {
+		this.#vm.$set(this.#data, 'readOnly', value)
+		return this
+	}
+
+	insertAtCursor(content) {
+		this.#vm.$children[0].$editor.chain().insertContent(content).focus().run()
+	}
+
+	#registerDebug() {
+		if (window?._oc_debug) {
+			this.vm = this.#vm
+			window.OCA.Text._debug = [
+				...(window.OCA.Text._debug ?? []),
+				this,
+			]
+		}
+	}
+
+}
+
+window.OCA.Text.createEditor = async function({
 	// Element to render the editor to
 	el,
 
@@ -45,90 +103,62 @@ window.OCA.Text.createEditor = function({
 	content = '',
 
 	readOnly = false,
-	// Update callback that emits the content
+
 	onUpdate = ({ markdown }) => {},
-
-	// Callbacks to have custom implementations for certain context related actions
-	onFileLink = () => {},
-	onFileInsert = () => {},
-	onFileUpload = () => {},
-
-	onLinkClick = () => {},
-	onImageDisplay = () => {},
-
-	// FIXME: Mentioning only works with the file editor for now as otherwise we need to provide hooks (e.g. to list options and to trigger on insert)
-	// FIXME: Need to check about why collectives needed to render the TOC outside and how we can wrap that into this API
-	// TODO: Implement AttachmentResolver logic
+	onLinkClick = undefined,
+	onFileInsert = undefined,
+	onMentionSearch = undefined,
+	onMentionInsert = undefined,
 }) {
+	const { default: MarkdownContentEditor } = await import('./components/Editor/MarkdownContentEditor.vue')
+	const { default: Editor } = await import('./components/Editor.vue')
 
-	const provide = {
-		'editor:hook:onFileLink': onFileLink,
-		'editor:hook:onFileInsert': onFileInsert,
-		'editor:hook:onFileUpload': onFileUpload,
-		'editor:hook:onLinkClick': onLinkClick,
-		'editor:hook:onImageDisplay': onImageDisplay,
-	}
-
-	// File mode
-	if (fileId) {
-		// Provide does not play well if we use Vue.extend with the Editor.vue component
-		const vm = new Vue({
-			provide() {
-				return provide
-			},
-			render: h => h(Editor, {
-				props: {
-					fileId,
-					mime: 'text/markdown',
-					active: true,
-					relativePath: filePath,
-				},
-			}),
-			store,
-		})
-		vm.$on('update:content', (content) => {
-			onUpdate(content)
-		})
-		vm.$mount(el)
-		return {
-			vm,
-			destroy() {
-				vm.$destroy()
-			},
-			setContent(content) {
-				vm.$children[0].setContent(content)
-			},
-		}
-	}
-
-	// We need a reactive content as we cannot mutate the content prop otherwise
-	const data = Vue.observable({ content })
+	const data = Vue.observable({
+		readOnly,
+		content,
+	})
 
 	const vm = new Vue({
 		provide() {
-			return provide
+			return {
+				[HOOK_LINK_CLICK]: onLinkClick,
+				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
+				[EDITOR_UPLOAD]: !!fileId,
+				[HOOK_MENTION_SEARCH]: fileId ? true : onMentionSearch,
+				[HOOK_MENTION_INSERT]: fileId ? true : onMentionInsert,
+				[ATTACHMENT_RESOLVER]: {
+					resolve(src, preferRaw) {
+						return [{
+							type: 'image',
+							url: src,
+						}]
+					},
+				},
+			}
 		},
 		data() {
 			return data
 		},
-		methods: {
-			setContent: (content) => {
-				vm.$set(data, 'content', content)
-			},
-			destroy() {
-				vm.$destroy()
-			},
+		render: h => {
+			return fileId
+				? h(Editor, {
+					props: {
+						fileId,
+						mime: 'text/markdown',
+						active: true,
+						relativePath: filePath,
+					},
+				})
+				: h(MarkdownContentEditor, {
+					props: {
+						content: data.content,
+						readOnly: data.readOnly,
+					},
+				})
 		},
-		render: h => h(MarkdownContentEditor, {
-			props: {
-				content: data.content,
-				readOnly,
-			},
-		}),
+		store,
 	})
-	vm.$on('update:content', (content) => {
-		onUpdate(content)
-	})
-	vm.$mount(el)
-	return vm
+	return new TextEditorEmbed(vm, data)
+		.onUpdate(onUpdate)
+		.render(el)
 }

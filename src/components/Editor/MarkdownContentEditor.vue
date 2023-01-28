@@ -22,7 +22,7 @@
 <template>
 	<Wrapper :content-loaded="true">
 		<MainContainer>
-			<MenuBar v-if="!readOnly" />
+			<MenuBar v-if="!readOnly" :autohide="false" />
 			<ReadonlyBar v-else />
 			<ContentContainer />
 		</MainContainer>
@@ -35,18 +35,17 @@ import MainContainer from './MainContainer.vue'
 import MenuBar from '../Menu/MenuBar.vue'
 import { useOutlineActions, useOutlineStateMixin } from './Wrapper.provider.js'
 import { Editor } from '@tiptap/core'
-import { EDITOR, IS_RICH_EDITOR } from '../Editor.provider.js'
+import { EDITOR, IS_RICH_EDITOR, useLinkClickHook } from '../Editor.provider.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
-import { Mention, RichText } from '../../extensions/index.js'
-import MentionSuggestion from '../Suggestion/Mention/suggestions.js'
+import { RichText } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
-	mixins: [useOutlineStateMixin, useOutlineActions],
+	mixins: [useOutlineStateMixin, useOutlineActions, useLinkClickHook],
 	provide() {
 		const val = {}
 
@@ -60,12 +59,6 @@ export default {
 		})
 
 		return val
-	},
-
-	inject: {
-		onLink: {
-			from: 'editor:hook:onLinkClick',
-		},
 	},
 
 	props: {
@@ -112,34 +105,13 @@ export default {
 			return [
 				RichText.configure({
 					component: this,
-					link: {
-						onClick: (event, attrs) => {
-							this.onLink(attrs)
-							this.$emit('click-link', event, attrs)
-							return true
-						},
-					},
-					extensions: [
-						Mention.configure({
-							suggestion: MentionSuggestion({
-								session: null,
-								params: {
-									items: async ({ query }) => {
-										return [
-											{
-												id: 'admin',
-												label: 'administrator',
-											},
-										]
-									},
-									emitMention({ props }) {
-										console.error(props)
-										alert('emit mention')
-									},
-								},
-							}),
-						}),
-					],
+					link: this?.$linkHookClick
+						? {
+							onClick: (event, attrs) => {
+								return this?.$linkHookClick?.(event, attrs)
+							},
+						}
+						: undefined,
 				}),
 			]
 		},
@@ -150,6 +122,7 @@ export default {
 				onUpdate: ({ editor }) => {
 					const markdown = (createMarkdownSerializer(this.$editor.schema)).serialize(editor.state.doc)
 					this.$root.$emit('update:content', {
+						json: editor.state.doc,
 						markdown,
 					})
 				},

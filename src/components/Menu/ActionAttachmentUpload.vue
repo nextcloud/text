@@ -33,7 +33,8 @@
 				:aria-label="actionEntry.label"
 				aria-haspopup />
 		</template>
-		<NcActionButton close-after-click
+		<NcActionButton v-if="$editorUpload"
+			close-after-click
 			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-upload`"
 			@click="$callChooseLocalAttachment">
@@ -58,7 +59,7 @@
 <script>
 import { NcActions, NcActionButton } from '@nextcloud/vue'
 import { Loading, Folder, Upload } from '../icons.js'
-import { useIsPublicMixin } from '../Editor.provider.js'
+import { useIsPublicMixin, useEditorUpload } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import {
@@ -79,6 +80,7 @@ export default {
 	extends: BaseActionEntry,
 	mixins: [
 		useIsPublicMixin,
+		useEditorUpload,
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,

@@ -21,20 +21,26 @@
   -->
 
 <template>
-	<MediaHandler class="text-editor__main">
-		<slot />
-	</MediaHandler>
+	<div class="editor">
+		<MediaHandler v-if="$editorUpload" class="text-editor__main">
+			<slot />
+		</MediaHandler>
+		<slot v-else />
+	</div>
 </template>
 
 <script>
 import MediaHandler from './MediaHandler.vue'
+import { useEditorUpload } from '../Editor.provider.js'
 
 export default {
 	name: 'MainContainer',
 	components: {
 		MediaHandler,
 	},
-
+	mixins: [
+		useEditorUpload,
+	],
 }
 </script>
 
