@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/autoit-js-js"],{81923:(e,i,t)=>{var n=t(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/autoit" instead of "highlight.js/lib/languages/autoit.js"'))}(),e.exports=t(1892)}}]);
+//# sourceMappingURL=autoit-js-js.js.map?v=173b5867027de077a880

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/scala-js-js"],{76940:(e,s,a)=>{var i=a(25108);!function e(){e.warned||(e.warned=!0,i.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/scala" instead of "highlight.js/lib/languages/scala.js"'))}(),e.exports=a(30729)}}]);
+//# sourceMappingURL=scala-js-js.js.map?v=f99ab84b313cb8f5a2c4

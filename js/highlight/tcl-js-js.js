@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/tcl-js-js"],{16925:(e,i,n)=>{var t=n(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/tcl" instead of "highlight.js/lib/languages/tcl.js"'))}(),e.exports=n(78158)}}]);
+//# sourceMappingURL=tcl-js-js.js.map?v=feabdc3826100feaf082

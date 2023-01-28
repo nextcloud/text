@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dns-js-js"],{37854:(e,n,s)=>{var i=s(25108);!function e(){e.warned||(e.warned=!0,i.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dns" instead of "highlight.js/lib/languages/dns.js"'))}(),e.exports=s(31344)}}]);
+//# sourceMappingURL=dns-js-js.js.map?v=b92b5da3a7b7d5174004

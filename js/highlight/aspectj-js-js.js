@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/aspectj-js-js"],{79219:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/aspectj" instead of "highlight.js/lib/languages/aspectj.js"'))}(),e.exports=i(59950)}}]);
+//# sourceMappingURL=aspectj-js-js.js.map?v=ab34cbb6fcd41acb0364

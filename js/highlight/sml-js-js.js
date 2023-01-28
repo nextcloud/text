@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/sml-js-js"],{26301:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/sml" instead of "highlight.js/lib/languages/sml.js"'))}(),e.exports=i(45935)}}]);
+//# sourceMappingURL=sml-js-js.js.map?v=47989bce3f8851c81f55

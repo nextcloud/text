@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/vhdl-js-js"],{63461:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/vhdl" instead of "highlight.js/lib/languages/vhdl.js"'))}(),e.exports=n(48110)}}]);
+//# sourceMappingURL=vhdl-js-js.js.map?v=9ee481dbb40fc19516c5

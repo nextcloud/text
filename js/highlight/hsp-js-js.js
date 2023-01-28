@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/hsp-js-js"],{67423:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/hsp" instead of "highlight.js/lib/languages/hsp.js"'))}(),e.exports=i(69662)}}]);
+//# sourceMappingURL=hsp-js-js.js.map?v=2c6f99de59b6765aea90

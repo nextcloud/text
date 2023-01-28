@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/roboconf-js-js"],{25875:(e,n,i)=>{var o=i(25108);!function e(){e.warned||(e.warned=!0,o.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/roboconf" instead of "highlight.js/lib/languages/roboconf.js"'))}(),e.exports=i(41874)}}]);
+//# sourceMappingURL=roboconf-js-js.js.map?v=96381753829ddb60de8f

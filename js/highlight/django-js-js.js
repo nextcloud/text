@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/django-js-js"],{94723:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/django" instead of "highlight.js/lib/languages/django.js"'))}(),e.exports=i(33189)}}]);
+//# sourceMappingURL=django-js-js.js.map?v=4cc2e6fecb41b41b46fd

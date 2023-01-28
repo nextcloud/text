@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/rsl-js-js"],{25978:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/rsl" instead of "highlight.js/lib/languages/rsl.js"'))}(),e.exports=i(92852)}}]);
+//# sourceMappingURL=rsl-js-js.js.map?v=b8563f537d260d4c45b9

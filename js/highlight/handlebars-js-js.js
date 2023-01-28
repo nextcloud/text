@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/handlebars-js-js"],{74313:(e,n,s)=>{var a=s(25108);!function e(){e.warned||(e.warned=!0,a.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/handlebars" instead of "highlight.js/lib/languages/handlebars.js"'))}(),e.exports=s(71407)}}]);
+//# sourceMappingURL=handlebars-js-js.js.map?v=c6feb149a9d149795bd6

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/x86asm-js-js"],{50923:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/x86asm" instead of "highlight.js/lib/languages/x86asm.js"'))}(),e.exports=i(19947)}}]);
+//# sourceMappingURL=x86asm-js-js.js.map?v=e5bd43b818979c191c04

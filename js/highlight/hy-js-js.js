@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/hy-js-js"],{85952:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/hy" instead of "highlight.js/lib/languages/hy.js"'))}(),e.exports=n(99358)}}]);
+//# sourceMappingURL=hy-js-js.js.map?v=f7f1f590dbe49ba8316f

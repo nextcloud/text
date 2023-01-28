@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/csp-js-js"],{82162:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/csp" instead of "highlight.js/lib/languages/csp.js"'))}(),e.exports=i(89534)}}]);
+//# sourceMappingURL=csp-js-js.js.map?v=36617251efd739669761

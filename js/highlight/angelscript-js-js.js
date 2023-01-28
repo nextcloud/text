@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/angelscript-js-js"],{62053:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/angelscript" instead of "highlight.js/lib/languages/angelscript.js"'))}(),e.exports=n(72921)}}]);
+//# sourceMappingURL=angelscript-js-js.js.map?v=8dad077eaa7bf1304e9d

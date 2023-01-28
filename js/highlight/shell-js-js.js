@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/shell-js-js"],{16605:(e,s,i)=>{var l=i(25108);!function e(){e.warned||(e.warned=!0,l.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/shell" instead of "highlight.js/lib/languages/shell.js"'))}(),e.exports=i(7874)}}]);
+//# sourceMappingURL=shell-js-js.js.map?v=b3aa3f34019b2ac00047

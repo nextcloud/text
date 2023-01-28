@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/fsharp-js-js"],{11770:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/fsharp" instead of "highlight.js/lib/languages/fsharp.js"'))}(),e.exports=i(36652)}}]);
+//# sourceMappingURL=fsharp-js-js.js.map?v=76b13f0ae2ac270871ef

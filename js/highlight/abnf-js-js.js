@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/abnf-js-js"],{5116:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/abnf" instead of "highlight.js/lib/languages/abnf.js"'))}(),e.exports=i(62853)}}]);
+//# sourceMappingURL=abnf-js-js.js.map?v=33d1eec0fdeb209a16e7

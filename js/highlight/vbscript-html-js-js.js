@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/vbscript-html-js-js"],{43992:(e,i,t)=>{var s=t(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/vbscript-html" instead of "highlight.js/lib/languages/vbscript-html.js"'))}(),e.exports=t(48704)}}]);
+//# sourceMappingURL=vbscript-html-js-js.js.map?v=b1da3c4eb6c3e5acfbc7

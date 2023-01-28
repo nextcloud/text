@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/autohotkey-js-js"],{54598:(e,t,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/autohotkey" instead of "highlight.js/lib/languages/autohotkey.js"'))}(),e.exports=i(31599)}}]);
+//# sourceMappingURL=autohotkey-js-js.js.map?v=e048f7557b490cf04284

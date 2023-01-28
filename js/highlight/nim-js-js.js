@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/nim-js-js"],{51698:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/nim" instead of "highlight.js/lib/languages/nim.js"'))}(),e.exports=n(45968)}}]);
+//# sourceMappingURL=nim-js-js.js.map?v=a2e12fca36ea81037704

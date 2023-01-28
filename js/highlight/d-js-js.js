@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/d-js-js"],{51484:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/d" instead of "highlight.js/lib/languages/d.js"'))}(),e.exports=n(118)}}]);
+//# sourceMappingURL=d-js-js.js.map?v=e25fcc0044982d98af6c

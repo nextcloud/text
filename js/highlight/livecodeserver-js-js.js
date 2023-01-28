@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/livecodeserver-js-js"],{99261:(e,i,s)=>{var n=s(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/livecodeserver" instead of "highlight.js/lib/languages/livecodeserver.js"'))}(),e.exports=s(82299)}}]);
+//# sourceMappingURL=livecodeserver-js-js.js.map?v=0a0a090ccd3f1603fdfc

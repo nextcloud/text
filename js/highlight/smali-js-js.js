@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/smali-js-js"],{21216:(e,i,s)=>{var n=s(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/smali" instead of "highlight.js/lib/languages/smali.js"'))}(),e.exports=s(10943)}}]);
+//# sourceMappingURL=smali-js-js.js.map?v=d6802282a1112c47a4d5

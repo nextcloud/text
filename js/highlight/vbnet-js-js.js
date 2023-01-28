@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/vbnet-js-js"],{48701:(e,n,i)=>{var t=i(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/vbnet" instead of "highlight.js/lib/languages/vbnet.js"'))}(),e.exports=i(27531)}}]);
+//# sourceMappingURL=vbnet-js-js.js.map?v=4fa6f5d47e224d3be2d5

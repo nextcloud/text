@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/arcade-js-js"],{99434:(e,a,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/arcade" instead of "highlight.js/lib/languages/arcade.js"'))}(),e.exports=i(70149)}}]);
+//# sourceMappingURL=arcade-js-js.js.map?v=de7f882c66747ce946d0

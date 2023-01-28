@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/taggerscript-js-js"],{43700:(e,i,t)=>{var s=t(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/taggerscript" instead of "highlight.js/lib/languages/taggerscript.js"'))}(),e.exports=t(15460)}}]);
+//# sourceMappingURL=taggerscript-js-js.js.map?v=edd0ebee2c26714d3792

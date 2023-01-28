@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ini-js-js"],{38305:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ini" instead of "highlight.js/lib/languages/ini.js"'))}(),e.exports=n(94762)}}]);
+//# sourceMappingURL=ini-js-js.js.map?v=c78b6241f633b6295a7c

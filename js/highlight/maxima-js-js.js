@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/maxima-js-js"],{11307:(e,i,a)=>{var n=a(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/maxima" instead of "highlight.js/lib/languages/maxima.js"'))}(),e.exports=a(27020)}}]);
+//# sourceMappingURL=maxima-js-js.js.map?v=02d067a776a666243df8

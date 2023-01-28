@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/cmake-js-js"],{30520:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/cmake" instead of "highlight.js/lib/languages/cmake.js"'))}(),e.exports=n(35849)}}]);
+//# sourceMappingURL=cmake-js-js.js.map?v=204bae227825d2746b94

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/oxygene-js-js"],{93871:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/oxygene" instead of "highlight.js/lib/languages/oxygene.js"'))}(),e.exports=i(80136)}}]);
+//# sourceMappingURL=oxygene-js-js.js.map?v=98e6a79e409076d62a7d

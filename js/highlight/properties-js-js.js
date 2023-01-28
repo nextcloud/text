@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/properties-js-js"],{19862:(e,i,s)=>{var n=s(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/properties" instead of "highlight.js/lib/languages/properties.js"'))}(),e.exports=s(17546)}}]);
+//# sourceMappingURL=properties-js-js.js.map?v=52d0d54491d83b32bb40

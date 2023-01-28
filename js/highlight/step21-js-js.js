@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/step21-js-js"],{85098:(e,s,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/step21" instead of "highlight.js/lib/languages/step21.js"'))}(),e.exports=i(37022)}}]);
+//# sourceMappingURL=step21-js-js.js.map?v=68b46a3e5193079183fb
