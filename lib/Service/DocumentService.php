@@ -193,12 +193,15 @@ class DocumentService {
 		}
 		// If there were any queries in the steps send the entire history
 		$getStepsSinceVersion = count($querySteps) > 0 ? 0 : $version;
-		// TODO: To discuss
-		// above causes increasing requests, maybe we need to filter out query steps in the above response
-		// Likely steps returned here will also get returned in the next fetch request, so maybe we just skip this
-		// as this was only a shortcut for the old handling to avoid another conflict/sync/push
+		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
+		$stepsToReturn = [];
+		foreach ($allSteps as $step) {
+			if ($step < "AAQ") {
+				array_push($stepsToReturn, $step);
+			}
+		}
 		return [
-			'steps' => [], // $this->getSteps($documentId, $getStepsSinceVersion),
+			'steps' => $stepsToReturn,
 			'version' => $newVersion
 		];
 	}
