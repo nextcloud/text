@@ -22,10 +22,10 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<button @click="resolveThisVersion" :disabled="clicked">
+		<button :disabled="clicked" @click="resolveThisVersion">
 			{{ t('text', 'Use current version') }}
 		</button>
-		<button @click="resolveServerVersion" :disabled="clicked">
+		<button :disabled="clicked" @click="resolveServerVersion">
 			{{ t('text', 'Use the saved version') }}
 		</button>
 	</div>

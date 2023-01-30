@@ -43,7 +43,7 @@ describe('yjs document state', () => {
 		cy.wait('@push', { timeout: 7000 })
 		cy.wait('@sync', { timeout: 7000 })
 		cy.getContent().type('{ctrl+s}')
-		cy.wait('@sync').its('request.body.autosaveContent', {timeout: 6000})
+		cy.wait('@sync').its('request.body.autosaveContent', { timeout: 6000 })
 			.should('not.be.empty')
 		cy.closeFile()
 		cy.testName()
