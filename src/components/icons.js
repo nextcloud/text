@@ -55,6 +55,7 @@ import MDI_Images from 'vue-material-design-icons/ImageMultipleOutline.vue'
 import MDI_Info from 'vue-material-design-icons/Information.vue'
 import MDI_Link from 'vue-material-design-icons/Link.vue'
 import MDI_LinkOff from 'vue-material-design-icons/LinkOff.vue'
+import MDI_LinkVariantPlus from 'vue-material-design-icons/LinkVariantPlus.vue'
 import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
@@ -130,6 +131,7 @@ export const Images = makeIcon(MDI_Images)
 export const Info = makeIcon(MDI_Info)
 export const LinkIcon = makeIcon(MDI_Link)
 export const LinkOff = makeIcon(MDI_LinkOff)
+export const LinkVariantPlus = makeIcon(MDI_LinkVariantPlus)
 export const Lock = makeIcon(MDI_Lock)
 export const Positive = makeIcon(MDI_Positive)
 export const Redo = makeIcon(MDI_Redo)

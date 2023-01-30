@@ -67,16 +67,24 @@
 			</template>
 			{{ state.active ? t('text', 'Update link') : t('text', 'Link to website') }}
 		</NcActionButton>
+		<NcActionButton :data-text-action-entry="`${actionEntry.key}-picker`"
+			@click="linkPicker">
+			<template #icon>
+				<LinkVariantPlus />
+			</template>
+			{{ t('text', 'Open link picker') }}
+		</NcActionButton>
 	</NcActions>
 </template>
 
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
+import { getLinkWithPicker } from '@nextcloud/vue-richtext'
 import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
-import { Document, Loading, LinkOff, Web } from '../icons.js'
+import { Document, Loading, LinkOff, Web, LinkVariantPlus } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { optimalPath } from '../../helpers/files.js'
 import { useFileMixin } from '../Editor.provider.js'
@@ -92,6 +100,7 @@ export default {
 		Loading,
 		LinkOff,
 		Web,
+		LinkVariantPlus,
 	},
 	extends: BaseActionEntry,
 	mixins: [
@@ -213,6 +222,19 @@ export default {
 		 */
 		removeLink() {
 			this.$editor.chain().unsetLink().focus().run()
+		},
+		linkPicker() {
+			getLinkWithPicker()
+				.then(link => {
+					this.$editor
+						.chain()
+						.focus()
+						.insertContent(link + ' ')
+						.run()
+				})
+				.catch(error => {
+					console.error('Link picker promise rejected:', error)
+				})
 		},
 	},
 }
