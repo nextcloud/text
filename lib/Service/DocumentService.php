@@ -182,10 +182,14 @@ class DocumentService {
 		$getStepsSinceVersion = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
-			if ($step > "AAE") {
-				array_push($stepsToInsert, $step);
-			} else {
+			// Steps are base64 encoded messages of the yjs protocols
+			// https://github.com/yjs/y-protocols
+			// Base64 encoded values smaller than "AAE" belong to sync step 1 messages.
+			// These messages query other participants for their current state.
+			if ($step < "AAE") {
 				array_push($querySteps, $step);
+			} else {
+				array_push($stepsToInsert, $step);
 			}
 		}
 		if (sizeof($stepsToInsert) > 0) {
