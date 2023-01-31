@@ -42,6 +42,7 @@ use OCP\AppFramework\Db\Entity;
  */
 class Document extends Entity implements \JsonSerializable {
 	public $id;
+	// TODO: Remove obsolete field `currentVersion`
 	protected int $currentVersion = 0;
 	protected int $lastSavedVersion = 0;
 	protected int $initialVersion = 0;
@@ -60,7 +61,6 @@ class Document extends Entity implements \JsonSerializable {
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-			'currentVersion' => $this->currentVersion,
 			'lastSavedVersion' => $this->lastSavedVersion,
 			'lastSavedVersionTime' => $this->lastSavedVersionTime,
 			'baseVersionEtag' => $this->baseVersionEtag,

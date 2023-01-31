@@ -44,11 +44,29 @@ class StepMapper extends QBMapper {
 			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
 		}
 		$qb
-			->setMaxResults(100)
+			->setMaxResults(1000)
 			->orderBy('version')
 			->orderBy('id');
 
 		return $this->findEntities($qb);
+	}
+
+	public function getLatestVersion($documentId): ?int {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('version')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
+			->setMaxResults(1)
+			->orderBy('version', 'DESC')
+			->execute();
+
+		$data = $result->fetch();
+		if ($data === false) {
+			return null;
+		}
+
+		return $data['version'];
 	}
 
 	public function deleteAll($documentId): void {

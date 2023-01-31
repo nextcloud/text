@@ -30,6 +30,7 @@ use \InvalidArgumentException;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
+use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\Lock\ILock;
@@ -48,7 +49,6 @@ use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
-use OCA\Text\Exception\VersionMismatchException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\Constants;
@@ -125,11 +125,11 @@ class DocumentService {
 
 			// Do not hard reset if changed from outside since this will throw away possible steps
 			// This way the user can still resolve conflicts in the editor view
-			if ($document->getLastSavedVersion() !== $document->getCurrentVersion()) {
+			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+			if ($stepsVersion && ($document->getLastSavedVersion() !== $stepsVersion)) {
 				$this->logger->debug('Unsaved steps but collission with file, continue collaborative editing');
 				return $document;
 			}
-
 			return $document;
 		} catch (DoesNotExistException $e) {
 		} catch (InvalidPathException $e) {
@@ -140,16 +140,8 @@ class DocumentService {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
 
-		try {
-			$documentBaseFile = $this->getBaseFile((string)$file->getFileInfo()->getId());
-		} catch (NotFoundException $e) {
-			$documentBaseFile = $this->appData->getFolder('documents')->newFile((string)$file->getFileInfo()->getId());
-		}
-		$documentBaseFile->putContent($file->fopen('r'));
-
 		$document = new Document();
 		$document->setId($file->getFileInfo()->getId());
-		$document->setCurrentVersion(0);
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($file->getFileInfo()->getMtime());
 		$document->setLastSavedVersionEtag($file->getEtag());
@@ -164,7 +156,7 @@ class DocumentService {
 	 * @return ISimpleFile
 	 * @throws NotFoundException
 	 */
-	public function getBaseFile($document): ISimpleFile {
+	public function getStateFile($document): ISimpleFile {
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
@@ -182,59 +174,79 @@ class DocumentService {
 	 * @param $version
 	 * @return array
 	 * @throws DoesNotExistException
-	 * @throws VersionMismatchException
+	 * @throws InvalidArgumentException
 	 */
 	public function addStep($documentId, $sessionId, $steps, $version): array {
-		$document = null;
-		$oldVersion = null;
-
-		try {
-			$this->lockingProvider->acquireLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
-		} catch (LockedException $e) {
-			throw new VersionMismatchException('Version does not match');
+		$stepsToInsert = [];
+		$querySteps = [];
+		$getStepsSinceVersion = null;
+		$newVersion = $version;
+		foreach ($steps as $step) {
+			// Steps are base64 encoded messages of the yjs protocols
+			// https://github.com/yjs/y-protocols
+			// Base64 encoded values smaller than "AAE" belong to sync step 1 messages.
+			// These messages query other participants for their current state.
+			if ($step < "AAE") {
+				array_push($querySteps, $step);
+			} else {
+				array_push($stepsToInsert, $step);
+			}
 		}
+		if (sizeof($stepsToInsert) > 0) {
+			$newVersion = $this->insertSteps($documentId, $sessionId, $stepsToInsert, $version);
+		}
+		// If there were any queries in the steps send the entire history
+		$getStepsSinceVersion = count($querySteps) > 0 ? 0 : $version;
+		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
+		$stepsToReturn = [];
+		foreach ($allSteps as $step) {
+			if ($step < "AAQ") {
+				array_push($stepsToReturn, $step);
+			}
+		}
+		return [
+			'steps' => $stepsToReturn,
+			'version' => $newVersion
+		];
+	}
 
+	/**
+	 * @param $documentId
+	 * @param $sessionId
+	 * @param $steps
+	 * @param $version
+	 * @return int
+	 * @throws DoesNotExistException
+	 * @throws InvalidArgumentException
+	 */
+	private function insertSteps($documentId, $sessionId, $steps, $version): int {
+		$document = null;
+		$stepsVersion = null;
 		try {
 			$document = $this->documentMapper->find($documentId);
-			if ($version !== $document->getCurrentVersion()) {
-				throw new VersionMismatchException('Version does not match');
-			}
 			$stepsJson = json_encode($steps);
 			if (!is_array($steps) || $stepsJson === null) {
 				throw new InvalidArgumentException('Failed to encode steps');
 			}
-			$validStepTypes = ['addMark', 'attr', 'removeMark', 'replace', 'replaceAround'];
-			foreach ($steps as $step) {
-				if (array_key_exists('stepType', $step) && !in_array($step['stepType'], $validStepTypes, true)) {
-					throw new InvalidArgumentException('Invalid step data');
-				}
-			}
-			$oldVersion = $document->getCurrentVersion();
-			$newVersion = $oldVersion + count($steps);
+			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
+			$newVersion = $stepsVersion + count($steps);
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
-			$document->setCurrentVersion($newVersion);
-			$this->documentMapper->update($document);
 			$step = new Step();
 			$step->setData($stepsJson);
 			$step->setSessionId($sessionId);
 			$step->setDocumentId($documentId);
-			$step->setVersion($version + 1);
+			$step->setVersion($newVersion);
 			$this->stepMapper->insert($step);
 			// TODO write steps to cache for quicker reading
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
-			return $steps;
+			return $newVersion;
 		} catch (DoesNotExistException $e) {
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		} catch (\Throwable $e) {
-			if ($document !== null && $oldVersion !== null) {
+			if ($document !== null && $stepsVersion !== null) {
 				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
-				$document->setCurrentVersion($oldVersion);
-				$this->documentMapper->update($document);
-				$this->cache->set('document-version-' . $document->getId(), $oldVersion);
-				$this->stepMapper->deleteAfterVersion($documentId, $oldVersion);
+				$this->cache->set('document-version-' . $document->getId(), $stepsVersion);
+				$this->stepMapper->deleteAfterVersion($documentId, $stepsVersion);
 			}
-			$this->lockingProvider->releaseLock('document-push-lock-' . $documentId, ILockingProvider::LOCK_EXCLUSIVE);
 			throw $e;
 		}
 	}
@@ -243,37 +255,18 @@ class DocumentService {
 		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
 			return [];
 		}
-		$steps = $this->stepMapper->find($documentId, $lastVersion);
-		$unique_array = [];
-		foreach ($steps as $step) {
-			$version = $step->getVersion();
-			if (!array_key_exists($version, $unique_array)) {
-				$unique_array[(string)$version] = $step;
-			} else {
-				// found duplicate step
-				// FIXME: verify that this version is the correct one
-				//$this->stepMapper->delete($step);
-			}
-		}
-		return array_values($unique_array);
+		return $this->stepMapper->find($documentId, $lastVersion);
 	}
 
 	/**
-	 * @param File $file
-	 * @param $documentId
-	 * @param $version
-	 * @param $autoaveDocument
-	 * @param bool $force
-	 * @param bool $manualSave
-	 * @param null $shareToken
-	 * @param null $filePath
-	 * @return Document
 	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
+	 * @throws InvalidPathException
 	 * @throws NotFoundException
-	 * @throws \OCP\DB\Exception
+	 * @throws NotPermittedException
+	 * @throws Exception
 	 */
-	public function autosave($file, $documentId, $version, $autoaveDocument, $force = false, $manualSave = false, $shareToken = null, $filePath = null): Document {
+	public function autosave(?File $file, int $documentId, int $version, ?string $autoaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null, ?string $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
@@ -301,7 +294,8 @@ class DocumentService {
 			return $document;
 		}
 		// Do not save if version already saved
-		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$document->getCurrentVersion())) {
+		$stepsVersion = $this->stepMapper->getLatestVersion($documentId);
+		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$stepsVersion)) {
 			return $document;
 		}
 
@@ -309,20 +303,30 @@ class DocumentService {
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
+
+		try {
+			$documentStateFile = $this->getStateFile((string)$file->getId());
+		} catch (NotFoundException $e) {
+			$documentStateFile = $this->appData->getFolder('documents')->newFile((string)$file->getId());
+		}
+
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoaveDocument) {
+			), function () use ($file, $autoaveDocument, $documentStateFile, $documentState) {
 				$file->putContent($autoaveDocument);
+				if ($documentState) {
+					$documentStateFile->putContent($documentState);
+				}
 			});
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
 		}
-		$document->setLastSavedVersion($document->getCurrentVersion());
+		$document->setLastSavedVersion($stepsVersion);
 		$document->setLastSavedVersionTime(time());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$this->documentMapper->update($document);
@@ -347,7 +351,7 @@ class DocumentService {
 				$this->documentMapper->delete($document);
 
 				try {
-					$this->getBaseFile($documentId)->delete();
+					$this->getStateFile($documentId)->delete();
 				} catch (NotFoundException $e) {
 				} catch (NotPermittedException $e) {
 				}
@@ -361,10 +365,10 @@ class DocumentService {
 	/**
 	 * @param Session $session
 	 * @param $shareToken
-	 * @return \OCP\Files\File|Folder|Node
+	 * @return File
 	 * @throws NotFoundException
 	 */
-	public function getFileForSession(Session $session, $shareToken) {
+	public function getFileForSession(Session $session, ?string $shareToken = null): File {
 		if ($session->getUserId() !== null && $shareToken === null) {
 			return $this->getFileById($session->getDocumentId(), $session->getUserId());
 		}
@@ -375,11 +379,11 @@ class DocumentService {
 		}
 
 		$node = $share->getNode();
-		if ($node instanceof \OCP\Files\File) {
-			return $node;
-		}
 		if ($node instanceof Folder) {
-			return $node->getById($session->getDocumentId())[0];
+			$node = $node->getById($session->getDocumentId())[0];
+		}
+		if ($node instanceof File) {
+			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
 	}
@@ -387,7 +391,7 @@ class DocumentService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function getFileById($fileId, $userId = null): Node {
+	public function getFileById($fileId, $userId = null): File {
 		$userId = $userId ?? $this->userId;
 
 		// If no user is provided we need to get any file from existing mounts for cleanup jobs
@@ -423,12 +427,9 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $shareToken
-	 * @param null|string $path
-	 * @return \OCP\Files\File|Folder|Node
 	 * @throws NotFoundException
 	 */
-	public function getFileByShareToken($shareToken, $path = null) {
+	public function getFileByShareToken($shareToken, ?string $path = null): File {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound $e) {
@@ -436,11 +437,11 @@ class DocumentService {
 		}
 
 		$node = $share->getNode();
-		if ($node instanceof \OCP\Files\File) {
-			return $node;
-		}
 		if ($node instanceof Folder) {
-			return $node->get($path);
+			$node = $node->get($path);
+		}
+		if ($node instanceof File) {
+			return $node;
 		}
 		throw new \InvalidArgumentException('No proper share data');
 	}
@@ -501,7 +502,9 @@ class DocumentService {
 	}
 
 	public function hasUnsavedChanges(Document $document) {
-		return $document->getCurrentVersion() !== $document->getLastSavedVersion();
+		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId()) ?: 0;
+		$docVersion = $document->getLastSavedVersion();
+		return $stepsVersion !== $docVersion;
 	}
 
 	private function ensureDocumentsFolder(): bool {

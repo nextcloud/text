@@ -20,19 +20,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from '@nextcloud/axios'
 import mitt from 'mitt'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
 
 import PollingBackend from './PollingBackend.js'
+import SessionApi, { Connection } from './SessionApi.js'
 import { logger } from '../helpers/logger.js'
-import { endpointUrl } from '../helpers/index.js'
-
-const defaultOptions = {
-	shareToken: null,
-	forceRecreate: false,
-	serialize: (document) => document,
-}
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -62,16 +54,15 @@ const ERROR_TYPE = {
 
 class SyncService {
 
-	constructor(options) {
+	constructor({ serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
-		this.backend = new PollingBackend(this)
+		this.serialize = serialize
+		this.getDocumentState = getDocumentState
+		this._api = new SessionApi(options)
+		this.connection = null
 
-		this.options = Object.assign({}, defaultOptions, options)
-
-		this.document = null
-		this.session = null
 		this.sessions = []
 
 		this.steps = []
@@ -79,93 +70,92 @@ class SyncService {
 
 		this.lastStepPush = Date.now()
 
-		this.lock = null
+		this.version = null
+		this.sending = false
 
 		return this
 	}
 
-	async open({ fileId, filePath, initialSession }) {
-		const connectionData = initialSession
-			|| await this._openDocument({ fileId, filePath })
-		this.document = connectionData.document
-		this.document.readOnly = connectionData.readOnly
-		this.session = connectionData.session
-		this.lock = connectionData.lock
+	async open({ fileId, initialSession }) {
+		this.on('change', ({ sessions }) => {
+			this.sessions = sessions
+		})
+
+		// TODO: Only continue if a connection was made
+		this.connection = initialSession
+			? new Connection({ data: initialSession }, {})
+			: await this._api.open({ fileId })
+				.catch(error => this._emitError(error))
+
+		this.version = this.connection.lastSavedVersion
 		this.emit('opened', {
-			document: this.document,
-			session: this.session,
+			...this.connection.state,
+			version: this.version,
 		})
 		this.emit('loaded', {
-			document: this.document,
-			session: this.session,
-			documentSource: '' + connectionData.content,
+			...this.connection.state,
+			version: this.version,
 		})
+		this.backend = new PollingBackend(this, this.connection)
+
 	}
 
 	startSync() {
 		this.backend.connect()
 	}
 
-	_openDocument({ fileId, filePath }) {
-		return axios.put(endpointUrl('session/create', !!this.options.shareToken), {
-			fileId,
-			filePath,
-			token: this.options.shareToken,
-			guestName: this.options.guestName,
-			forceRecreate: this.options.forceRecreate,
-		})
-			.then(response => response.data, error => {
-				if (!error.response || error.code === 'ECONNABORTED') {
-					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-				} else {
-					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
-				}
-				throw error
-			})
-	}
-
-	_fetchDocument() {
-		return axios.post(
-			endpointUrl('session/fetch', !!this.options.shareToken), {
-				documentId: this.document.id,
-				sessionId: this.session.id,
-				sessionToken: this.session.token,
-				token: this.options.shareToken,
-			}, {
-				// Axios normally tries to parse string responses as json.
-				// Just return the plain content here.
-				transformResponse: [(data) => data],
-			}
-		).then(response => response.data)
+	_emitError(error) {
+		if (!error.response || error.code === 'ECONNABORTED') {
+			this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+		} else {
+			this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
+		}
 	}
 
 	updateSession(guestName) {
-		if (!this.isPublic()) {
+		if (!this.connection.isPublic) {
 			return
 		}
-		return axios.post(
-			endpointUrl('session', !!this.options.shareToken), {
-				documentId: this.document.id,
-				sessionId: this.session.id,
-				sessionToken: this.session.token,
-				token: this.options.shareToken,
-				guestName,
-			}
-		).then(({ data }) => {
-			this.session = data
-			return data
-		}).catch((error) => {
-			logger.error('Failed to update the session', { error })
-			return Promise.reject(error)
-		})
+		return this.connection.update(guestName)
+			.catch((error) => {
+				logger.error('Failed to update the session', { error })
+				return Promise.reject(error)
+			})
 	}
 
-	sendSteps(_sendable) {
-		const sendable = _sendable || sendableSteps(this.state)
-		if (!sendable) {
+	sendSteps(getSendable) {
+		this.emit('stateChange', { dirty: true })
+		if (!this.connection || this.sending) {
+			setTimeout(() => {
+				this.sendSteps(getSendable)
+			}, 200)
 			return
 		}
-		return this.backend.sendSteps(sendable)
+		this.sending = true
+		return this.connection.push(getSendable())
+			.then((response) => {
+				this.sending = false
+			}).catch(({ response, code }) => {
+				logger.error('failed to apply steps due to collission, retrying')
+				this.sending = false
+				if (!response || code === 'ECONNABORTED') {
+					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+					return
+				}
+				const { status, data } = response
+				if (status === 403) {
+					if (!data.document) {
+						// either the session is invalid or the document is read only.
+						logger.error('failed to write to document - not allowed')
+					}
+					// Only emit conflict event if we have synced until the latest version
+					if (data.document?.currentVersion === this.version) {
+						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
+						OC.Notification.showTemporary('Changes could not be sent yet')
+					}
+				}
+				// TODO: Retry and warn
+			})
 	}
 
 	stepsSince(version) {
@@ -179,6 +169,9 @@ class SyncService {
 		const newSteps = []
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
+			if (this.version < steps[i].version) {
+				this.version = steps[i].version
+			}
 			if (!Array.isArray(singleSteps)) {
 				logger.error('Invalid step data, skipping step', { step: steps[i] })
 				// TODO: recover
@@ -193,8 +186,12 @@ class SyncService {
 			})
 		}
 		this.lastStepPush = Date.now()
-		this.emit('sync', { steps: newSteps, document })
-		logger.debug('receivedSteps', { newVersion: this._getVersion() })
+		this.emit('sync', {
+			steps: newSteps,
+			// TODO: do we actually need to dig into the connection here?
+			document: this.connection.document,
+			version: this.version,
+		})
 	}
 
 	checkIdle() {
@@ -202,39 +199,28 @@ class SyncService {
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
 			logger.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
 			this.emit('idle')
+			return true
 		}
-	}
-
-	_getVersion() {
-		if (this.state) {
-			return getVersion(this.state)
-		}
-		return 0
-	}
-
-	_getDocument() {
-		if (this.state) {
-			return this.state.doc
-		}
+		return false
 	}
 
 	_getContent() {
-		return this.options.serialize(this._getDocument())
+		return this.serialize()
 	}
 
 	save() {
-		if (this.backend.save) {
-			this.backend.save()
-		}
+		this?.backend?.save?.()
 	}
 
 	forceSave() {
+		this.backend.connect()
 		if (this.backend.forceSave) {
 			this.backend.forceSave()
 		}
 	}
 
 	close() {
+		this.backend.disconnect()
 		let closed = false
 		return new Promise((resolve, reject) => {
 			this.on('save', () => {
@@ -255,43 +241,19 @@ class SyncService {
 	}
 
 	_close() {
-		if (this.document === null || this.session === null) {
+		if (this.connection === null) {
 			return Promise.resolve()
 		}
 		this.backend.disconnect()
-		return axios.post(
-			endpointUrl('session/close', !!this.options.shareToken), {
-				documentId: this.document.id,
-				sessionId: this.session.id,
-				sessionToken: this.session.token,
-				token: this.options.shareToken,
-			})
+		return this.connection.close()
 	}
 
 	uploadAttachment(file) {
-		const formData = new FormData()
-		formData.append('file', file)
-		const url = endpointUrl('attachment/upload')
-			+ '?documentId=' + encodeURIComponent(this.document.id)
-			+ '&sessionId=' + encodeURIComponent(this.session.id)
-			+ '&sessionToken=' + encodeURIComponent(this.session.token)
-			+ '&shareToken=' + encodeURIComponent(this.options.shareToken || '')
-		return axios.post(url, formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		})
+		return this.connection.uploadAttachment(file)
 	}
 
 	insertAttachmentFile(filePath) {
-		const params = {
-			documentId: this.document.id,
-			sessionId: this.session.id,
-			sessionToken: this.session.token,
-			filePath,
-		}
-		const url = endpointUrl('attachment/filepath')
-		return axios.post(url, params)
+		return this.connection.insertAttachmentFile(filePath)
 	}
 
 	on(event, callback) {
@@ -306,10 +268,6 @@ class SyncService {
 
 	emit(event, data) {
 		this._bus.emit(event, data)
-	}
-
-	isPublic() {
-		return !!this.options.shareToken
 	}
 
 }

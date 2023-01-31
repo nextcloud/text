@@ -82,12 +82,12 @@
 import Vue, { set } from 'vue'
 import { mapActions, mapState } from 'vuex'
 import escapeHtml from 'escape-html'
-import { getVersion, receiveTransaction } from 'prosemirror-collab'
-import { Step } from 'prosemirror-transform'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
-import { generateUrl } from '@nextcloud/router'
 import { emit } from '@nextcloud/event-bus'
+import { Collaboration } from '@tiptap/extension-collaboration'
+import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
+import { Doc } from 'yjs'
 
 import {
 	EDITOR,
@@ -102,14 +102,16 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
+import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
-import { Collaboration, Keymap, UserColor } from './../extensions/index.js'
+import { Keymap } from './../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
@@ -118,8 +120,6 @@ import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
-
-const EDITOR_PUSH_DEBOUNCE = 200
 
 export default {
 	name: 'Editor',
@@ -321,6 +321,8 @@ export default {
 		this.$parent.$emit('update:loaded', true)
 	},
 	created() {
+		this.$ydoc = new Doc()
+		this.$providers = []
 		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
@@ -330,6 +332,7 @@ export default {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
+		this.$providers.forEach(p => p.destroy())
 		this.close()
 	},
 	methods: {
@@ -349,33 +352,21 @@ export default {
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
 				forceRecreate: this.forceRecreate,
-				serialize: (document) => {
-					if (this.isRichEditor) {
-						return (createMarkdownSerializer(this.$editor.schema)).serialize(document)
-					}
-					return serializePlainText(this.$editor)
-
-				},
+				serialize: this.isRichEditor
+					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
+					: () => serializePlainText(this.$editor),
+				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
 			this.listenSyncServiceEvents()
 
-			this.$syncService.open({
+			const syncServiceProvider = createSyncServiceProvider({
+				ydoc: this.$ydoc,
+				syncService: this.$syncService,
 				fileId: this.fileId,
-				filePath: this.relativePath,
 				initialSession: this.initialSession,
-			}).catch((e) => {
-				this.hasConnectionIssue = true
-				if (e.response === undefined) {
-					logger.error('Unexpected error encountered', { exception: e })
-				} else if (e.response.status === 401) {
-					const redirectUrl = OCA.Files
-						? '/index.php/apps/files/?dir=' + encodeURIComponent(this.currentDirectory || '/') + '&openfile=' + this.fileId
-						: window.location.pathname
-
-					window.location = generateUrl('/login') + '?redirect_url=' + encodeURIComponent(redirectUrl)
-				}
 			})
+			this.$providers.push(syncServiceProvider)
 			this.forceRecreate = false
 		},
 
@@ -418,8 +409,10 @@ export default {
 		},
 
 		resolveUseServerVersion() {
-			this.forceRecreate = true
-			this.reconnect()
+			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
+			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.commands.setContent(markdownItHtml)
+			this.$syncService.forceSave()
 		},
 
 		reconnect() {
@@ -478,70 +471,48 @@ export default {
 			})
 		},
 
-		onLoaded({ documentSource }) {
+		onLoaded({ documentSource, documentState }) {
 			const content = !this.isRichEditor
 				? `<pre>${escapeHtml(documentSource)}</pre>`
 				: markdownit.render(documentSource)
+
+			if (documentState) {
+				applyDocumentState(this.$ydoc, documentState)
+			}
 
 			this.hasConnectionIssue = false
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
+					const session = this.currentSession
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
-						session: this.currentSession,
-						content,
+						session,
+						content: documentState ? '' : content,
 						onCreate: ({ editor }) => {
-							this.$syncService.state = editor.state
 							this.$syncService.startSync()
 						},
 						onUpdate: ({ editor }) => {
 							// this.debugContent(editor)
-							this.$syncService.state = editor.state
 						},
 						extensions: [
 							Collaboration.configure({
-								// the initial version we start with
-								// version is an integer which is incremented with every change
-								version: this.document.initialVersion,
-								clientID: this.currentSession.id,
-								// debounce changes so we can save some bandwidth
-								debounce: EDITOR_PUSH_DEBOUNCE,
-								onSendable: ({ sendable }) => {
-									if (this.$syncService) {
-										this.$syncService.sendSteps()
-									}
-								},
-								update: ({ steps, version, editor }) => {
-									const { state, view, schema } = editor
-									if (getVersion(state) > version) {
-										return
-									}
-									const tr = receiveTransaction(
-										state,
-										steps.map(item => Step.fromJSON(schema, item.step)),
-										steps.map(item => item.clientID),
-									)
-									tr.setMeta('clientID', steps.map(item => item.clientID))
-									view.dispatch(tr)
+								document: this.$ydoc,
+							}),
+							CollaborationCursor.configure({
+								provider: this.$providers[0],
+								user: {
+									name: session?.userId
+										? session.displayName
+										: (session?.guestName || t('text', 'Guest')),
+									color: session?.color,
 								},
 							}),
 							Keymap.configure({
 								'Mod-s': () => {
 									this.$syncService.save()
 									return true
-								},
-							}),
-							UserColor.configure({
-								clientID: this.currentSession.id,
-								color: (clientID) => {
-									const session = this.sessions.find(item => '' + item.id === '' + clientID)
-									return session?.color
-								},
-								name: (clientID) => {
-									const session = this.sessions.find(item => '' + item.id === '' + clientID)
-									return session?.userId ? session.displayName : (session?.guestName ? session.guestName : t('text', 'Guest'))
 								},
 							}),
 						],
@@ -551,7 +522,6 @@ export default {
 
 					this.listenEditorEvents()
 
-					this.$syncService.state = this.$editor.state
 				})
 
 		},
@@ -570,21 +540,9 @@ export default {
 
 		onSync({ steps, document }) {
 			this.hasConnectionIssue = false
-			try {
-				const collaboration = this.$editor.extensionManager.extensions.find(e => e.name === 'collaboration')
-				collaboration.options.update({
-					version: document.currentVersion,
-					steps,
-					editor: this.$editor,
-				})
-				this.$syncService.state = this.$editor.state
-				this.$nextTick(() => {
-					this.$emit('sync-service:sync')
-				})
-			} catch (error) {
-				logger.error('Failed to update steps in collaboration plugin', { error })
-				// TODO: we should recreate the editing session when this happens
-			}
+			this.$nextTick(() => {
+				this.$emit('sync-service:sync')
+			})
 			this.document = document
 		},
 
@@ -885,4 +843,32 @@ export default {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
+
+	/* Give a remote user a caret */
+	.collaboration-cursor__caret {
+		position: relative;
+		margin-left: -1px;
+		margin-right: -1px;
+		border-left: 1px solid #0D0D0D;
+		border-right: 1px solid #0D0D0D;
+		word-break: normal;
+		pointer-events: none;
+	}
+
+	/* Render the username above the caret */
+	.collaboration-cursor__label {
+		position: absolute;
+		top: -1.4em;
+		left: -1px;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		user-select: none;
+		color: #0D0D0D;
+		padding: 0.1rem 0.3rem;
+		border-radius: 3px 3px 3px 0;
+		white-space: nowrap;
+	}
+
 </style>

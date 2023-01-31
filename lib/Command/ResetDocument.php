@@ -84,8 +84,6 @@ class ResetDocument extends Command {
 			$document = $this->documentMapper->find($fileId);
 			$deleted = $this->stepMapper->deleteAfterVersion($fileId, $document->getLastSavedVersion());
 			if ($deleted > 0) {
-				$document->setCurrentVersion($document->getLastSavedVersion());
-				$this->documentMapper->update($document);
 				$this->sessionMapper->deleteByDocumentId($fileId);
 				$output->writeln('Reverted document to the last saved version');
 

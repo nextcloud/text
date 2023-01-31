@@ -19,11 +19,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import axios from '@nextcloud/axios'
 import { logger } from '../helpers/logger.js'
-import { endpointUrl } from '../helpers/index.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
-import { sendableSteps } from 'prosemirror-collab'
+import { Connection } from './SessionApi.js'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -54,11 +52,12 @@ const FETCH_INTERVAL_SINGLE_EDITOR = 5000
  */
 const FETCH_INTERVAL_INVISIBLE = 60000
 
-const MIN_PUSH_RETRY = 500
-const MAX_PUSH_RETRY = 10000
-
-/* Timeout after that a PUSH_FAILURE error is emitted */
-const WARNING_PUSH_RETRY = 5000
+/**
+ * Interval to save the serialized document and the document state
+ *
+ * @type {number} time in ms
+ */
+const AUTOSAVE_INTERVAL = 30000
 
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
@@ -71,121 +70,148 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
 
-	constructor(authority) {
-		/** @type {SyncService} */
-		this._authority = authority
-		this.fetchInterval = FETCH_INTERVAL
-		this.retryTime = MIN_PUSH_RETRY
-		this.lock = false
-		this.fetchRetryCounter = 0
+	/** @type {SyncService} */
+	#syncService
+	/** @type {Connection} */
+	#connection
+
+	#lastPoll
+	#lastSave
+	#fetchInterval
+	#fetchRetryCounter
+	#pollActive
+	#forcedSave
+	#manualSave
+	#initialLoadingFinished
+
+	constructor(syncService, connection) {
+		this.#syncService = syncService
+		this.#connection = connection
+		this.#fetchInterval = FETCH_INTERVAL
+		this.#fetchRetryCounter = 0
+		this.#lastPoll = 0
+		this.#lastSave = Date.now()
 	}
 
 	connect() {
-		this.initialLoadingFinished = false
+		if (this.fetcher > 0) {
+			console.error('Trying to connect, but already connected')
+			return
+		}
+		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
-	_isPublic() {
-		return !!this._authority.options.shareToken
-	}
-
 	forceSave() {
-		this._forcedSave = true
-		this.fetchSteps()
+		this.#forcedSave = true
 	}
 
 	save() {
-		this._manualSave = true
-		this.fetchSteps()
-	}
-
-	fetchSteps() {
-		this._fetchSteps()
+		this.#manualSave = true
 	}
 
 	/**
 	 * This method is only called though the timer
 	 */
-	_fetchSteps() {
-		if (this.lock || !this.fetcher) {
+	async _fetchSteps() {
+		if (this.#pollActive) {
 			return
 		}
-		this.lock = true
-		let autosaveContent
-		if (this._forcedSave || this._manualSave
-			|| (!sendableSteps(this._authority.state)
-			&& (this._authority._getVersion() !== this._authority.document.lastSavedVersion))
-		) {
-			autosaveContent = this._authority._getContent()
+
+		const now = Date.now()
+		const shouldSave = this.#forcedSave || this.#manualSave
+
+		if (this.#lastPoll > (now - this.#fetchInterval) && !shouldSave) {
+			return
 		}
-		axios.post(endpointUrl('session/sync', this._isPublic()), {
-			documentId: this._authority.document.id,
-			sessionId: this._authority.session.id,
-			sessionToken: this._authority.session.token,
-			version: this._authority._getVersion(),
-			autosaveContent,
-			force: !!this._forcedSave,
-			manualSave: !!this._manualSave,
-			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath,
-		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
-		this._manualSave = false
-		this._forcedSave = false
+
+		if (!this.fetcher) {
+			console.error('No inverval but triggered')
+			return
+		}
+
+		this.#pollActive = true
+
+		const shouldAutosave = this.#lastSave < (now - AUTOSAVE_INTERVAL)
+		const saveData = shouldSave || shouldAutosave
+			? {
+				autosaveContent: this.#syncService._getContent(),
+				documentState: this.#syncService.getDocumentState(),
+			}
+			: {}
+
+		try {
+			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
+			const response = await this.#connection.sync({
+				version: this.#syncService.version,
+				...saveData,
+				force: !!this.#forcedSave,
+				manualSave: !!this.#manualSave,
+			})
+			this._handleResponse(response)
+		} catch (e) {
+			this._handleError(e)
+		} finally {
+			this.#lastPoll = Date.now()
+			this.#pollActive = false
+			this.#manualSave = false
+			this.#forcedSave = false
+		}
 	}
 
-	_handleResponse(response) {
-		this.fetchRetryCounter = 0
+	_handleResponse({ data }) {
+		const { document, sessions } = data
+		this.#fetchRetryCounter = 0
 
-		if (this._authority.document.lastSavedVersion < response.data.document.lastSavedVersion) {
-			logger.debug('Saved document', { document: response.data.document })
-			this._authority.emit('save', { document: response.data.document, sessions: response.data.sessions })
+		if (this.#syncService.version < document.lastSavedVersion) {
+			logger.debug('Saved document', document)
+			this.#lastSave = document.lastSavedVersionTime
+			this.#syncService.emit('save', { document, sessions })
 		}
 
-		this._authority.emit('change', { document: response.data.document, sessions: response.data.sessions })
-		this._authority.document = response.data.document
-		this._authority.sessions = response.data.sessions
+		this.#syncService.emit('change', { document, sessions })
 
-		if (response.data.steps.length === 0) {
-			if (!this.initialLoadingFinished) {
-				this.initialLoadingFinished = true
+		if (data.steps.length === 0) {
+			if (!this.#initialLoadingFinished) {
+				this.#initialLoadingFinished = true
+				this.#lastSave = document.lastSavedVersionTime
 			}
-			if (this._authority.checkIdle()) {
+			if (this.#syncService.checkIdle()) {
 				return
 			}
-			this.lock = false
-			if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
+			const disconnect = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
+			const alive = sessions.filter((s) => s.lastContact > disconnect)
+			if (alive.length < 2) {
 				this.maximumRefetchTimer()
 			} else {
 				this.increaseRefetchTimer()
 			}
-			this._authority.emit('stateChange', { dirty: false })
-			this._authority.emit('stateChange', { initialLoading: true })
+			this.#syncService.emit('stateChange', { dirty: false })
+			this.#syncService.emit('stateChange', { initialLoading: true })
 			return
 		}
 
-		this._authority._receiveSteps(response.data)
-		this.lock = false
-		this._forcedSave = false
-		if (this.initialLoadingFinished) {
+		this.#syncService._receiveSteps(data)
+		this.#forcedSave = false
+		if (this.#initialLoadingFinished) {
 			this.resetRefetchTimer()
 		}
 	}
 
 	_handleError(e) {
-		this.lock = false
 		if (!e.response || e.code === 'ECONNABORTED') {
-			if (this.fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
+			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 
 			} else {
-				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.fetchRetryCounter}`)
+				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
-		} else if (e.response.status === 409 && e.response.data.document.currentVersion === this._authority.document.currentVersion) {
+		} else if (e.response.status === 409) {
 			// Only emit conflict event if we have synced until the latest version
 			logger.error('Conflict during file save, please resolve')
-			this._authority.emit('error', {
+			this.#syncService.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
 				data: {
 					outsideChange: e.response.data.outsideChange,
@@ -193,69 +219,21 @@ class PollingBackend {
 			})
 			this.disconnect()
 		} else if (e.response.status === 403) {
-			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 404) {
-			this._authority.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
 		} else if (e.response.status === 503) {
 			this.increaseRefetchTimer()
-			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			logger.error('Failed to fetch steps due to unavailable service', { error: e })
 		} else {
 			this.disconnect()
-			this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
 			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
 
-	}
-
-	sendSteps(_sendable) {
-		this._authority.emit('stateChange', { dirty: true })
-		if (this.lock) {
-			setTimeout(() => {
-				this._authority.sendSteps()
-			}, 100)
-			return
-		}
-		this.lock = true
-		const sendable = (typeof _sendable === 'function') ? _sendable() : _sendable
-		const steps = sendable.steps
-		axios.post(endpointUrl('session/push', !!this._authority.options.shareToken), {
-			documentId: this._authority.document.id,
-			sessionId: this._authority.session.id,
-			sessionToken: this._authority.session.token,
-			steps: steps.map(s => s.toJSON ? s.toJSON() : s) || [],
-			version: sendable.version,
-			token: this._authority.options.shareToken,
-			filePath: this._authority.options.filePath,
-		}).then((response) => {
-			this.carefulRetryReset()
-			this.lock = false
-			this.fetchSteps()
-		}).catch(({ response, code }) => {
-			logger.error('failed to apply steps due to collission, retrying')
-			this.lock = false
-			if (!response || code === 'ECONNABORTED') {
-				this._authority.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-				return
-			}
-			const { status, data } = response
-			if (status === 403) {
-				if (!data.document) {
-					// either the session is invalid or the document is read only.
-					logger.error('failed to write to document - not allowed')
-				}
-				// Only emit conflict event if we have synced until the latest version
-				if (data.document?.currentVersion === this._authority.document.currentVersion) {
-					this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-					OC.Notification.showTemporary('Changes could not be sent yet')
-				}
-			}
-
-			this.fetchSteps()
-			this.carefulRetry()
-		})
 	}
 
 	disconnect() {
@@ -265,57 +243,24 @@ class PollingBackend {
 	}
 
 	resetRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = FETCH_INTERVAL
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = FETCH_INTERVAL
 
 	}
 
 	increaseRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = Math.min(this.fetchInterval * 2, FETCH_INTERVAL_MAX)
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = Math.min(this.#fetchInterval * 2, FETCH_INTERVAL_MAX)
 	}
 
 	maximumRefetchTimer() {
-		if (this.fetcher === 0) {
-			return
-		}
-		this.fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
-		clearInterval(this.fetcher)
-		this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+		this.#fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 	}
 
 	visibilitychange() {
-		if (this.fetcher === 0) {
-			return
-		}
 		if (document.visibilityState === 'hidden') {
-			this.fetchInterval = FETCH_INTERVAL_INVISIBLE
-			clearInterval(this.fetcher)
-			this.fetcher = setInterval(this._fetchSteps.bind(this), this.fetchInterval)
+			this.#fetchInterval = FETCH_INTERVAL_INVISIBLE
 		} else {
 			this.resetRefetchTimer()
 		}
-	}
-
-	carefulRetry() {
-		const newRetry = this.retryTime ? Math.min(this.retryTime * 2, MAX_PUSH_RETRY) : MIN_PUSH_RETRY
-		if (newRetry > WARNING_PUSH_RETRY && this.retryTime < WARNING_PUSH_RETRY) {
-			OC.Notification.showTemporary('Changes could not be sent yet')
-			this._authority.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-		}
-		this.retryTime = newRetry
-	}
-
-	carefulRetryReset() {
-		this.retryTime = MIN_PUSH_RETRY
 	}
 
 }

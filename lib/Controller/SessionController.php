@@ -30,7 +30,6 @@ use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
@@ -62,14 +61,6 @@ class SessionController extends Controller {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function fetch(int $documentId, int $sessionId, string $sessionToken): Response {
-		return $this->apiService->fetch($documentId, $sessionId, $sessionToken);
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
 		return $this->apiService->close($documentId, $sessionId, $sessionToken);
 	}
@@ -87,9 +78,9 @@ class SessionController extends Controller {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $force, $manualSave);
+		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave);
 	}
 
 	/**

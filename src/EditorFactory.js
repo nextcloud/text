@@ -21,7 +21,6 @@
  */
 
 /* eslint-disable import/no-named-as-default */
-import History from '@tiptap/extension-history'
 import Placeholder from '@tiptap/extension-placeholder'
 /* eslint-enable import/no-named-as-default */
 
@@ -56,7 +55,7 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditing, session, relativePath }) => {
+const createEditor = ({ content, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
 	let richEditingExtensions = []
 	if (enableRichEditing) {
 		richEditingExtensions = [
@@ -98,7 +97,6 @@ const createEditor = ({ content, onCreate, onUpdate, extensions, enableRichEditi
 			scrollThreshold: 50,
 		},
 		extensions: [
-			History,
 			...richEditingExtensions,
 		].concat(extensions),
 	})

@@ -35,6 +35,7 @@
   ],
   "dependencies": {
     "@hedgedoc/markdown-it-task-lists": "^2.0.1",
+    "@hocuspocus/provider": "^1.0.0-alpha.40",
     "@nextcloud/auth": "^2.0.0",
     "@nextcloud/axios": "^2.3.0",
     "@nextcloud/browser-storage": "^0.2.0",
@@ -56,6 +57,8 @@
     "@tiptap/extension-code": "^2.0.0-beta.209",
     "@tiptap/extension-code-block": "^2.0.0-beta.209",
     "@tiptap/extension-code-block-lowlight": "^2.0.0-beta.209",
+    "@tiptap/extension-collaboration": "^2.0.0-beta.209",
+    "@tiptap/extension-collaboration-cursor": "^2.0.0-beta.209",
     "@tiptap/extension-document": "^2.0.0-beta.209",
     "@tiptap/extension-dropcursor": "^2.0.0-beta.209",
     "@tiptap/extension-hard-break": "^2.0.0-beta.209",
@@ -85,6 +88,7 @@
     "debounce": "^1.2.1",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.7.0",
+    "lib0": "^0.2.52",
     "lowlight": "^2.8.0",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
@@ -109,7 +113,9 @@
     "vue": "^2.7.14",
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.1.2",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "y-websocket": "^1.4.5",
+    "yjs": "^13.5.41"
   },
   "engines": {
     "node": "^16.0.0",
