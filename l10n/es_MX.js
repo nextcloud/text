@@ -35,6 +35,7 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
+    "Remove link" : "Eliminar enlace",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
     "Undo" : "Deshacer",
