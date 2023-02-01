@@ -96,6 +96,7 @@ const Image = TiptapImage.extend({
 
 	/* Serializes an image node as a block image, so it ensures an image is always a block by itself */
 	toMarkdown(state, node, parent, index) {
+		node.attrs.alt = node.attrs.alt.toString()
 		defaultMarkdownSerializer.nodes.image(state, node, parent, index)
 		state.closeBlock(node)
 	},
