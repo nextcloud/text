@@ -226,14 +226,12 @@ div.ProseMirror {
 	}
 
 	// table variables
-	@at-root :root {
-		--table-color-border: var(--color-border);
-		--table-color-heading: var(--color-text-maxcontrast);
-		--table-color-heading-border: var(--color-border-dark);
-		--table-color-background: var(--color-main-background);
-		--table-color-background-hover: var(--color-primary-light);
-		--table-border-radius: var(--border-radius);
-	}
+	--table-color-border: var(--color-border);
+	--table-color-heading: var(--color-text-maxcontrast);
+	--table-color-heading-border: var(--color-border-dark);
+	--table-color-background: var(--color-main-background);
+	--table-color-background-hover: var(--color-primary-light);
+	--table-border-radius: var(--border-radius);
 
 	table {
 		border-spacing: 0;
