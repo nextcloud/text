@@ -40,7 +40,7 @@
 
 <script>
 import { EditorContent } from '@tiptap/vue-2'
-import { useEditorMixin } from './../Editor.provider.js'
+import { useEditorMixin } from '../Editor.provider.js'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
 import EditorOutline from './EditorOutline.vue'
 

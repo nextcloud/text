@@ -124,8 +124,8 @@ window.OCA.Text.createEditor = async function({
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
 }) {
-	const { default: MarkdownContentEditor } = await import('./components/Editor/MarkdownContentEditor.vue')
-	const { default: Editor } = await import('./components/Editor.vue')
+	const { default: MarkdownContentEditor } = await import(/* webpackChunkName: "editor" */'./components/Editor/MarkdownContentEditor.vue')
+	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
 
 	const data = Vue.observable({
 		readOnly,
