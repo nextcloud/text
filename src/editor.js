@@ -90,6 +90,10 @@ class TextEditorEmbed {
 		this.#vm.$children[0].$editor.chain().insertContent(content).focus().run()
 	}
 
+	focus() {
+		this.#vm.$children[0].$editor.focus()
+	}
+
 	#registerDebug() {
 		if (window?._oc_debug) {
 			this.vm = this.#vm
