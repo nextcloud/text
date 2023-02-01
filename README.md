@@ -28,7 +28,7 @@ occ config:app:set text workspace_available --value=0
 
 ## 🏗 Development setup
 
-Currently this app requires the main branch of the [Viewer app](https://github.com/nextcloud/viewer).
+Currently, this app requires the main branch of the [Viewer app](https://github.com/nextcloud/viewer).
 
 1. ☁ Clone this app into the `apps` folder of your Nextcloud: `git clone https://github.com/nextcloud/text.git`
 2. 👩‍💻 In the folder of the app, run the command `make` to install dependencies and build the Javascript.
@@ -36,10 +36,12 @@ Currently this app requires the main branch of the [Viewer app](https://github.c
 4. 🎉 Partytime! Help fix [some issues](https://github.com/nextcloud/text/issues) and [review pull requests](https://github.com/nextcloud/text/pulls) 👍
 
 ### 🧙 Advanced development stuff
+
 To build the Javascript whenever you make changes, instead of the full `make` you can also run `npm run build`. Or run `npm run watch` to rebuild on every file save.
 
 #### 🐞 Testing the app
-Currently this app uses three different kinds of tests:
+
+Currently, this app uses three different kinds of tests:
 
 For testing the backend (PHP) [Psalm](https://psalm.dev/) and [PHPUnit](https://phpunit.de/) are used,
 you can run the testcases (placed in `tests/`) using the composer scripts `psalm` and `test:unit`.
@@ -73,10 +75,10 @@ if (class_exists(LoadEditor::class)) {
 
 ### Integrate a file editor
 
-Make sure to check if OCA.Text is available as the text app needs to be enabled. You will need to provide an editor fallback on your own in this case.
+Make sure to check if OCA.Text is available as the Text app needs to be enabled. If you want your app to work without Text being installed, you will need to provide an editor fallback on your own.
 
 
-```
+```js
 window.OCA.Text.createEditor({
 	el: document.getElementById('my-editor-div'),
 	fileId: 12345,
@@ -84,7 +86,7 @@ window.OCA.Text.createEditor({
 }).then((editor) => {
 	// Once ready you can access the editor instance and call methods like:
 
-	editor.setContent('new content')
+	editor.setContent('new content') // Beware: this will overwrite the content read from the source file
 	editor.setReadOnly(true)
 	editor.insertAtCursor('<h1>Heading</h1>')
 
@@ -95,7 +97,7 @@ window.OCA.Text.createEditor({
 
 ### Markdown based content editor
 
-```
+```js
 window.OCA.Text.createEditor({
 	el: document.getElementById('my-editor-div'),
 	content: 'initial content',
