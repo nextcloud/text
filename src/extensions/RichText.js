@@ -23,6 +23,7 @@
 import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
+import History from '@tiptap/extension-history'
 import Blockquote from '@tiptap/extension-blockquote'
 import BulletList from './../nodes/BulletList.js'
 import Callout from './../nodes/Callouts.js'
@@ -101,6 +102,7 @@ export default Extension.create({
 			KeepSyntax,
 			FrontMatter,
 			Mention,
+			History,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
 			}),
