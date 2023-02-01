@@ -74,7 +74,10 @@ class TextEditorEmbed {
 	}
 
 	setContent(content) {
+		// Update reactive prop for MarkdownContentEditor
 		this.#vm.$set(this.#data, 'content', content)
+		// Call setContent for file based Editor
+		this.#vm.$children[0]?.setContent?.(content)
 		return this
 	}
 
