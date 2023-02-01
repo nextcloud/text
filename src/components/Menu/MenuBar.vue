@@ -266,13 +266,13 @@ export default {
 		.text-menubar__entries {
 			display: flex;
 			flex-grow: 1;
-			margin-left: calc((100% - var(--text-editor-max-width)) / 2);
+			margin-left: max(0px, calc((100% - var(--text-editor-max-width)) / 2));
 		}
 
 		.text-menubar__slot {
-			// width: 100%;
 			justify-content: flex-end;
 			display: flex;
+			min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
 		}
 
 		&.text-menubar--is-workspace {

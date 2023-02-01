@@ -35,6 +35,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IInitialStateService;
 use OCP\IL10N;
+use OCP\Util;
 
 class TextDirectEditor implements IEditor {
 
@@ -158,6 +159,7 @@ class TextDirectEditor implements IEditor {
 				'session' => \json_encode($session->getData())
 			]);
 			$this->initialStateService->provideInitialState('text', 'directEditingToken', $token->getToken());
+			Util::addScript('text', 'text-text');
 			return new TemplateResponse('text', 'main', [], 'base');
 		} catch (InvalidPathException $e) {
 		} catch (NotFoundException $e) {

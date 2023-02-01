@@ -318,7 +318,7 @@ export default {
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
-		this.$parent.$emit('update:loaded', true)
+		this.$parent?.$emit('update:loaded', true)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -340,9 +340,19 @@ export default {
 			'setCurrentSession',
 		]),
 
+		setContent(content) {
+			this.$editor.commands.setContent(this.parseContent(content), true)
+		},
+
+		parseContent(documentSource) {
+			return !this.isRichEditor
+				? `<pre>${escapeHtml(documentSource)}</pre>`
+				: markdownit.render(documentSource)
+		},
+
 		initSession() {
 			if (!this.hasDocumentParameters) {
-				this.$parent.$emit('error', 'No valid file provided')
+				this.$parent?.$emit('error', 'No valid file provided')
 				return
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
@@ -472,10 +482,6 @@ export default {
 		},
 
 		onLoaded({ documentSource, documentState }) {
-			const content = !this.isRichEditor
-				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.render(documentSource)
-
 			if (documentState) {
 				applyDocumentState(this.$ydoc, documentState)
 			}
@@ -489,12 +495,16 @@ export default {
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
 						session,
-						content: documentState ? '' : content,
+						content: documentState ? '' : this.parseContent(documentSource),
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
 						},
 						onUpdate: ({ editor }) => {
 							// this.debugContent(editor)
+							const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+							this.$parent.$emit('update:content', {
+								markdown: proseMirrorMarkdown,
+							})
 						},
 						extensions: [
 							Collaboration.configure({
@@ -677,7 +687,7 @@ export default {
 		},
 
 		outlineToggled(visible) {
-			this.$parent.$emit('outline-toggled', visible)
+			this.$parent?.$emit('outline-toggled', visible)
 		},
 	},
 }

@@ -30,6 +30,10 @@ export const IS_PUBLIC = Symbol('editor:is-public')
 export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
 export const IS_RICH_WORKSPACE = Symbol('editor:is-rich-woskapace')
 export const SYNC_SERVICE = Symbol('sync:service')
+export const EDITOR_UPLOAD = Symbol('editor:upload')
+export const HOOK_LINK_CLICK = Symbol('hook:link-click')
+export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
+export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
 
 export const useEditorMixin = {
 	inject: {
@@ -90,6 +94,34 @@ export const useAttachmentResolver = {
 					return [src]
 				},
 			},
+		},
+	},
+}
+export const useEditorUpload = {
+	inject: {
+		$editorUpload: {
+			from: EDITOR_UPLOAD,
+			default: true,
+		},
+	},
+}
+export const useMentionHook = {
+	inject: {
+		$mentionHookInsert: {
+			from: HOOK_MENTION_INSERT,
+			default: true,
+		},
+		$mentionHookSearch: {
+			from: HOOK_MENTION_SEARCH,
+			default: true,
+		},
+	},
+}
+export const useLinkClickHook = {
+	inject: {
+		$linkHookClick: {
+			from: HOOK_LINK_CLICK,
+			default: null,
 		},
 	},
 }

@@ -67,15 +67,15 @@ export default {
 		},
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			default: false,
 		},
 		contentLoaded: {
 			type: Boolean,
-			require: true,
+			default: true,
 		},
 		showAuthorAnnotations: {
 			type: Boolean,
-			require: true,
+			default: false,
 		},
 		showOutlineOutside: {
 			type: Boolean,
@@ -145,8 +145,6 @@ export default {
 		display: flex;
 		width: 100%;
 		height: 100%;
-		overflow: hidden;
-		position: absolute;
 
 		&.show-color-annotations:deep(.author-annotation) {
 			padding-top: 2px;

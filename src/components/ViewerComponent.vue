@@ -76,6 +76,11 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.text-editor {
+	overflow: scroll;
+}
+</style>
 <style lang="scss">
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px

@@ -65,7 +65,7 @@ const domHref = function(node, relativePath) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, relPath, id] = match
-		const currentDir = basedir(relativePath || OCA.Viewer.file)
+		const currentDir = basedir(relativePath || OCA.Viewer?.file || '/')
 		const dir = absolutePath(currentDir, basedir(relPath))
 		if (relPath.length > 1 && relPath.endsWith('/')) {
 			// is directory

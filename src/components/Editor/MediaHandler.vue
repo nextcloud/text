@@ -91,7 +91,7 @@ export default {
 	},
 	computed: {
 		initialFilePath() {
-			return this.lastFilePath ?? getDir(this.$file.relativePath)
+			return this.lastFilePath ?? getDir(this.$file?.relativePath ?? '/')
 		},
 	},
 	methods: {

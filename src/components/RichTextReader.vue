@@ -40,6 +40,7 @@ export default {
 		extensions() {
 			return [
 				RichText.configure({
+					editing: false,
 					link: {
 						onClick: (event, attrs) => {
 							this.$emit('click-link', event, attrs)
