@@ -272,7 +272,7 @@ export default {
 		.text-menubar__slot {
 			justify-content: flex-end;
 			display: flex;
-			min-width: max(0px, min(200px, (100% - var(--text-editor-max-width)) / 2));
+			min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
 		}
 
 		&.text-menubar--is-workspace {
