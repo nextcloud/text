@@ -62,20 +62,26 @@ describe('Workspace', function() {
 		cy.get('a[href*="/apps/files/recent"]')
 			.click()
 		cy.get('#rich-workspace .ProseMirror')
-			.should('not.exist')
+			.should('not.visible')
 	})
 
 	it('adds a Readme.md', function() {
+		const url = '**/remote.php/dav/files/**'
+		cy.intercept({ method: 'PUT', url })
+			.as('addDescription')
+
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.get('.files-fileList').should('not.contain', 'Readme.md')
-		cy.openWorkspace()
-			.type('Hello')
-			.should('contain', 'Hello')
+
+		cy.get('.files-controls').first().within(() => {
+			cy.get('.button.new').click()
+			cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()
+			cy.wait('@addDescription')
+		})
+
 		openSidebar('Readme.md')
-		cy.log('Regression test for #2215')
-		cy.get('#rich-workspace .ProseMirror')
+		cy.get('#rich-workspace .text-editor .text-editor__wrapper')
 			.should('be.visible')
-			.should('contain', 'Hello')
 	})
 
 	it('formats text', function() {
@@ -286,7 +292,6 @@ describe('Workspace', function() {
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 			cy.get('.files-fileList').should('contain', 'Anleitung.md')
-			cy.get('.empty-workspace').should('contain', 'Ajoutez des notes, listes ou liens')
 		})
 	})
 
@@ -306,17 +311,17 @@ describe('Workspace', function() {
 		})
 
 		it('click', () => {
-			cy.get('#rich-workspace .empty-workspace').click()
+			cy.openWorkspace().click()
 			checkContent()
 		})
 
 		it('enter', () => {
-			cy.get('#rich-workspace .empty-workspace').type('{enter}')
+			cy.openWorkspace().type('{enter}')
 			checkContent()
 		})
 
 		it('spacebar', () => {
-			cy.get('#rich-workspace .empty-workspace')
+			cy.openWorkspace()
 				.trigger('keyup', {
 					keyCode: 32,
 					which: 32,

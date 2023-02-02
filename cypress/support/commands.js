@@ -342,7 +342,7 @@ Cypress.Commands.add('getActionEntry', { prevSubject: 'optional' }, (subject, na
 })
 
 Cypress.Commands.add('getActionSubEntry', (name) => {
-	return cy.get('.action-item__popper .open').getActionEntry(name)
+	return cy.get('div[data-text-el="menubar"]').getActionEntry(name)
 })
 
 Cypress.Commands.add('getContent', { prevSubject: 'optional' }, (subject) => {
@@ -368,8 +368,9 @@ Cypress.Commands.add('clearContent', () => {
 })
 
 Cypress.Commands.add('openWorkspace', () => {
-	cy.get('#rich-workspace .empty-workspace').click()
-	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
+	cy.createDescription()
+	cy.get('#rich-workspace .editor__content').click({ force: true })
+	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click({ force: true })
 
 	return cy.getContent()
 })
@@ -392,6 +393,19 @@ Cypress.Commands.add('showHiddenFiles', () => {
 	cy.get('.app-settings__content').contains('Show hidden files').closest('label').click()
 	cy.wait('@showHidden')
 	cy.get('.modal-container__close').click()
+})
+
+Cypress.Commands.add('createDescription', () => {
+	const url = '**/remote.php/dav/files/**'
+	cy.intercept({ method: 'PUT', url })
+		.as('addDescription')
+
+	cy.get('.files-fileList').should('not.contain', 'Readme.md')
+	cy.get('.files-controls').first().within(() => {
+		cy.get('.button.new').click()
+		cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()
+	})
+	cy.wait('@addDescription')
 })
 
 Cypress.on(

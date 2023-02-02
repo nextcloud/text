@@ -21,18 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled && active" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate, 'empty': showEmptyWorkspace}">
-		<a v-if="showEmptyWorkspace"
-			tabindex="0"
-			class="empty-workspace"
-			@keyup.enter="createNew"
-			@keyup.space="createNew"
-			@click="createNew">
-			<p class="placeholder">
-				{{ t('text', 'Add notes, lists or links …') }}
-			</p>
-		</a>
-
+	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
 		<Editor v-if="file"
 			v-show="ready"
 			:key="file.path"
@@ -55,8 +44,6 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-
-import { logger } from '../helpers/logger.js'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -95,9 +82,6 @@ export default {
 		},
 		canCreate() {
 			return !!(this.folder && (this.folder.permissions & OC.PERMISSION_CREATE))
-		},
-		showEmptyWorkspace() {
-			return (!this.file || (this.autofocus && !this.ready)) && this.canCreate
 		},
 	},
 	watch: {
@@ -157,6 +141,7 @@ export default {
 					this.file = data.file
 					this.editing = true
 					this.loaded = true
+					this.autofocus = true
 					return true
 				})
 				.catch((error) => {
@@ -170,28 +155,6 @@ export default {
 					this.ready = true
 					this.creating = false
 					return false
-				})
-		},
-		createNew() {
-			if (this.creating) {
-				return
-			}
-			this.creating = true
-			this.getFileInfo()
-				.then((workspaceFileExists) => {
-					if (!workspaceFileExists) {
-						return window.FileList
-							.createFile('Readme.md', { scrollTo: false, animate: false })
-							.then((status, data) => {
-								return this.getFileInfo()
-							})
-					}
-				})
-				.then(() => {
-					this.autofocus = true
-				})
-				.catch(error => {
-					logger.warn('Create readme failed', { error })
 				})
 		},
 		showRichWorkspace() {
@@ -240,7 +203,7 @@ export default {
 		z-index: 61;
 		position: relative;
 		&.creatable {
-			min-height: 90px;
+			min-height: 100px;
 		}
 	}
 
@@ -256,7 +219,7 @@ export default {
 		color: var(--color-text-maxcontrast);
 	}
 
-	#rich-workspace:deep(div[contenteditable=false]){
+	#rich-workspace:deep(div[contenteditable=false]) {
 		width: 100%;
 		padding: 0px;
 		background-color: var(--color-main-background);
