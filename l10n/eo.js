@@ -36,7 +36,6 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Unsupported image type" : "Nesubtenata bildotipo",
-    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "Undo" : "Malfari",
     "Redo" : "Refari",
     "Headings" : "Titolaro",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "Warning" : "Averto",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
+    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "Edit" : "Modifi",
     "Enter your name so other users can see who is editing" : "Entajpu vian nomon, por ke aliuloj videblu, kiu modifas",
     "Insert image" : "Enmeti bildon"
