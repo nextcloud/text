@@ -27,7 +27,7 @@ import { searchProvider, getLinkWithPicker } from '@nextcloud/vue-richtext'
 export default () => createSuggestions({
 	listComponent: LinkPickerList,
 	command: ({ editor, range, props }) => {
-		getLinkWithPicker(props.provider)
+		getLinkWithPicker(props.providerId)
 			.then(link => {
 				editor
 					.chain()
@@ -45,7 +45,7 @@ export default () => createSuggestions({
 				return {
 					label: p.title,
 					icon: p.icon_url,
-					provider: p,
+					providerId: p.id,
 				}
 			})
 	},
