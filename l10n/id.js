@@ -22,10 +22,10 @@ OC.L10N.register(
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima",
-    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Undo" : "Undo",
     "Info" : "Info",
     "Warning" : "Peringatan",
+    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
     "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit"
 },
