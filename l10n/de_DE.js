@@ -136,6 +136,7 @@ OC.L10N.register(
     "Option" : "Option",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
+    "Add description" : "Beschreibung hinzufügen",
     "Front matter" : "Titelei",
     "Image file format not supported" : "Dateiformat des Bildes wird nicht unterstützt",
     "Enter your name so other users can see who is editing" : "Geben Sie Ihren Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",

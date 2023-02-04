@@ -136,6 +136,7 @@ OC.L10N.register(
     "Option" : "選項",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Edit" : "編輯",
+    "Add description" : "添加描述",
     "Front matter" : "前言",
     "Image file format not supported" : "不支持圖像格式",
     "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他用戶才能查看是誰在編輯",
