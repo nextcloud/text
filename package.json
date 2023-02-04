@@ -49,7 +49,7 @@
 		"prosemirror-state": "^1.4.2",
 		"prosemirror-transform": "~1.7.1",
 		"prosemirror-utils": "^1.0.0-0",
-		"prosemirror-view": "^1.30.0",
+		"prosemirror-view": "^1.30.1",
 		"proxy-polyfill": "^0.3.2",
 		"tiptap": "^1.32.2",
 		"tiptap-commands": "^1.17.1",
