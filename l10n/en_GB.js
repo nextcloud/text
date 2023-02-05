@@ -136,6 +136,7 @@ OC.L10N.register(
     "Option" : "Option",
     "Add notes, lists or links …" : "Add notes, lists or links …",
     "Edit" : "Edit",
+    "Add description" : "Add description",
     "Front matter" : "Front matter",
     "Image file format not supported" : "Image file format not supported",
     "Enter your name so other users can see who is editing" : "Enter your name so other users can see who is editing",
