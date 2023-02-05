@@ -134,6 +134,7 @@ OC.L10N.register(
     "Option" : "Alternativ",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Edit" : "Redigera",
+    "Add description" : "Lägg till beskrivning",
     "Image file format not supported" : "Bildfilformat stöds inte",
     "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
     "Todo item" : "Att göra objekt",
