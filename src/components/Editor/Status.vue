@@ -88,11 +88,9 @@ export default {
 	computed: {
 		lastSavedStatus() {
 			if (this.hasConnectionIssue) {
-				return t('text',
-					this.$isMobile
-						? 'Offline'
-						: 'Offline, changes will be saved when online'
-				)
+				return this.$isMobile
+					? t('text', 'Offline')
+					: t('text', 'Offline, changes will be saved when online')
 			}
 			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
@@ -100,7 +98,7 @@ export default {
 			return this.dirty || this.hasUnsavedChanges
 		},
 		lastSavedStatusTooltip() {
-			let message = t('text', 'Last saved {lastSaved}', { lastSaved: this.lastSavedString })
+			let message = t('text', 'Last saved {lastSave}', { lastSave: this.lastSavedString })
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 			}
