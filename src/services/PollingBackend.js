@@ -180,8 +180,8 @@ class PollingBackend {
 			if (this.#syncService.checkIdle()) {
 				return
 			}
-			const disconnect = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-			const alive = sessions.filter((s) => s.lastContact > disconnect)
+			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
+			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
 			if (alive.length < 2) {
 				this.maximumRefetchTimer()
 			} else {
