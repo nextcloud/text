@@ -227,7 +227,7 @@ export default {
 			this.$editor.chain().unsetLink().focus().run()
 		},
 		linkPicker() {
-			getLinkWithPicker()
+			getLinkWithPicker(null, true)
 				.then(link => {
 					this.$editor
 						.chain()
