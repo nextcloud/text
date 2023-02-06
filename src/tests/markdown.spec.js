@@ -115,6 +115,8 @@ describe('Markdown though editor', () => {
 		expect(markdownThroughEditor('```\n<?php echo "Hello World";\n```')).toBe('```\n<?php echo "Hello World";\n```')
 		// Issue #3328
 		expect(markdownThroughEditor('```python\nprint("Hello World")\n```')).toBe('```python\nprint("Hello World")\n```')
+		// Issue #3739
+		expect(markdownThroughEditor('```\n```')).toBe('```\n```')
 	})
 	test('markdown untouched', () => {
 		// Issue #2703
