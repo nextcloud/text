@@ -153,7 +153,9 @@ class PollingBackend {
 				return
 			}
 			this.lock = false
-			if (response.data.sessions.filter((session) => session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME).length < 2) {
+			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
+			const alive = response.data.sessions.filter((s) => s.lastContact * 1000 > disconnect)
+			if (alive.length < 2) {
 				this.maximumRefetchTimer()
 			} else {
 				this.increaseRefetchTimer()
