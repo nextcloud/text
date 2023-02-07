@@ -24,7 +24,7 @@ const extractHeadings = (editor) => {
 		// define counter
 		counter.set(id, 1)
 
-		return id
+		return 'heading-' + id
 	}
 
 	editor.state.doc.descendants((node, position) => {
