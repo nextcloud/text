@@ -18,7 +18,6 @@ OC.L10N.register(
     "guest" : "pengunjung",
     "Saving …" : "Menyimpan ...",
     "Saved" : "Disimpan",
-    "Last saved {lastSaved}" : "Terakhir disimpan {lastSaved}",
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima",
@@ -27,6 +26,7 @@ OC.L10N.register(
     "Warning" : "Peringatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
+    "Last saved {lastSaved}" : "Terakhir disimpan {lastSaved}",
     "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit"
 },
 "nplurals=1; plural=0;");

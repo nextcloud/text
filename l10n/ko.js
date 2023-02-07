@@ -20,6 +20,7 @@ OC.L10N.register(
     "Guest" : "손님",
     "Save guest name" : "게스트 이름 저장하기",
     "guest" : "손님",
+    "Offline" : "오프라인",
     "Saving …" : "저장중 …",
     "Saved" : "저장됨",
     "Unsaved changes" : "저장하지 않은 변경 사항",

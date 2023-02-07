@@ -16,6 +16,7 @@ OC.L10N.register(
     "Guest" : "I ftuar",
     "Save guest name" : "Ruaj emrin e të ftuarit",
     "guest" : "vizitor",
+    "Offline" : "Jashtë linje",
     "Saved" : "Ruajtur",
     "Unsaved changes" : "Ndryshime të paruajtura",
     "Formatting help" : "Ndihmë formatimi",

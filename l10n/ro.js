@@ -14,6 +14,7 @@ OC.L10N.register(
     "Use the saved version" : "Folosește versiuna salvată",
     "Guest" : "Invitat",
     "guest" : "invitat",
+    "Offline" : "Offline",
     "Saving …" : "Se salvează",
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",

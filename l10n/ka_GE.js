@@ -8,6 +8,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "დროებითი დირექტორია არ არსებობს",
     "Text" : "ტექსტი",
     "Guest" : "სტუმარი",
+    "Offline" : "კავშირ-გარეშე რეჟიმი",
     "Saved" : "შენახულია",
     "Unsaved changes" : "შეუნახავი ცვლილებები",
     "Formatting help" : "დახმარება ფორმატირებაზე",

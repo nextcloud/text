@@ -24,9 +24,9 @@ OC.L10N.register(
     "Guest" : "Gjest",
     "Save guest name" : "Lagre gjestenavn",
     "guest" : "gjest",
+    "Offline" : "Frakoblet",
     "Saving …" : "Lagrer ...",
     "Saved" : "Lagret",
-    "Last saved {lastSaved}" : "Sist lagret {lastSaved}",
     "Unsaved changes" : "Ulagrede endringer",
     "Formatting help" : "Formateringshjelp",
     "Keyboard shortcuts" : "Tastatursnarveier",
@@ -57,6 +57,7 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
+    "Last saved {lastSaved}" : "Sist lagret {lastSaved}",
     "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
     "ToDo list" : "Gjøreliste",
     "Insert image" : "Sett inn bilde"
