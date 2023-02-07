@@ -18,13 +18,13 @@ const extractHeadings = (editor) => {
 			// increment counter
 			counter.set(id, next + 1)
 
-			return `${id}--${next}`
+			return `h-${id}--${next}`
 		}
 
 		// define counter
 		counter.set(id, 1)
 
-		return id
+		return 'h-' + id
 	}
 
 	editor.state.doc.descendants((node, position) => {
