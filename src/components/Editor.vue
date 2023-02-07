@@ -51,18 +51,20 @@
 				</div>
 				<!-- Rich Menu -->
 				<template v-else>
-					<MenuBar v-if="renderMenus"
-						ref="menubar"
-						:autohide="autohide"
-						:loaded.sync="menubarLoaded">
-						<Status :document="document"
-							:dirty="dirty"
-							:sessions="filteredSessions"
-							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue" />
-						<slot name="header" />
-					</MenuBar>
-					<div v-else class="menubar-placeholder" />
+					<Portal to="header-destination">
+						<MenuBar v-if="renderMenus"
+							ref="menubar"
+							:autohide="autohide"
+							:loaded.sync="menubarLoaded">
+							<Status :document="document"
+								:dirty="dirty"
+								:sessions="filteredSessions"
+								:sync-error="syncError"
+								:has-connection-issue="hasConnectionIssue" />
+							<slot name="header" />
+						</MenuBar>
+						<div v-else class="menubar-placeholder" />
+					</Portal>
 				</template>
 				<ContentContainer v-show="contentLoaded"
 					ref="contentWrapper" />
@@ -326,6 +328,11 @@ export default {
 		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
+
+		// TODO: Put the logic in a separate file
+		const portalTarget = document.createElement('Portal-target');
+		portalTarget.setAttribute('name', "header-destination");
+		document.querySelector('#viewer .modal-header .modal-title').appendChild(portalTarget);
 	},
 	beforeDestroy() {
 		if (!this.richWorkspace) {

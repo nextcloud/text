@@ -21,6 +21,7 @@
  */
 
 import Vue from 'vue'
+import PortalVue from 'portal-vue'
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
 		Vue.prototype.OCA = window.OCA
+		Vue.use(PortalVue)
 		const vm = new Vue({
 			render: h => h(FilesSettings, {}),
 			store,
