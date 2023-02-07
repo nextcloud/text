@@ -7,6 +7,7 @@ OC.L10N.register(
     "Text" : "Teksts",
     "Guest" : "Viesis",
     "guest" : "viesis",
+    "Offline" : "Bezsaistē",
     "Saving …" : "Saglabā ...",
     "Saved" : "Saglabāts",
     "Keyboard shortcuts" : "Tastatūras saīsnes",

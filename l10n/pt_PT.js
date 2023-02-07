@@ -23,6 +23,7 @@ OC.L10N.register(
     "guest" : "convidado",
     "Show author colors" : "Mostrar cores do autor ",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
+    "Offline" : "Offline",
     "Saving …" : "A guardar...",
     "Saved" : "Guardado",
     "Unsaved changes" : "Modificações não guardadas",

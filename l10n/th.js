@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "ส่วนขยาย PHP ได้หยุดการอัปโหลดไฟล์",
     "Text" : "ข้อความ",
     "guest" : "ผู้เยี่ยมชม",
+    "Offline" : "ออฟไลน์",
     "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
