@@ -22,6 +22,7 @@ OC.L10N.register(
     "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre de invitado",
     "guest" : "invitado",
+    "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",

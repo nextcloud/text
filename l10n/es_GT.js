@@ -12,6 +12,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Una extensión de PHP detuvo la carga del archivo",
     "Text" : "Texto",
     "Guest" : "Invitado",
+    "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",

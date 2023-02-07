@@ -7,6 +7,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Falta un directorio temporal",
     "Text" : "Texto",
     "Guest" : "Invitado",
+    "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos de teclado",

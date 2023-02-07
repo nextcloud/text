@@ -8,6 +8,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Falta una carpeta temporal",
     "Text" : "Texto",
     "Guest" : "Invitado",
+    "Offline" : "Sin conexión",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",

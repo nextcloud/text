@@ -17,6 +17,7 @@ OC.L10N.register(
     "Guest" : "مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "guest" : "میهمان",
+    "Offline" : "آفلاین",
     "Saved" : "دخیره شد",
     "Formatting help" : "راهنمای قالب‌بندی",
     "Keyboard shortcuts" : "میان بر صفحه ی کلید",
