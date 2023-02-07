@@ -230,6 +230,23 @@ class SessionService {
 		return $this->sessionMapper->update($session);
 	}
 
+	/**
+	 * @param $documentId
+	 * @param $sessionId
+	 * @param $sessionToken
+	 * @param $message
+	 * @return Session
+	 * @throws DoesNotExistException
+	 */
+	public function updateSessionAwareness(int $documentId, int $sessionId, string $sessionToken, string $message): Session {
+		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
+		if (empty($message)) {
+			return $session;
+		}
+		$session->setLastAwarenessMessage($message);
+		return $this->sessionMapper->update($session);
+	}
+
 	private function getColorForGuestName(string $guestName = null): string {
 		$guestName = $this->userId ?? $guestName;
 		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);

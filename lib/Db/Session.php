@@ -35,6 +35,8 @@ use OCP\AppFramework\Db\Entity;
  * @method void setColor(string $color)
  * @method string|null getGuestName()
  * @method void setGuestName(string $guestName)
+ * @method string|null getAwarenessMessage()
+ * @method void setLastAwarenessMessage(string $message)
  * @method int getLastContact()
  * @method void setLastContact(int $getTime)
  * @method int getDocumentId()
@@ -46,6 +48,7 @@ class Session extends Entity implements JsonSerializable {
 	protected string $token = '';
 	protected string $color = '';
 	protected ?string $guestName = null;
+	protected ?string $lastAwarenessMessage = '';
 	protected int $lastContact = 0;
 	protected int $documentId = 0;
 
@@ -61,6 +64,7 @@ class Session extends Entity implements JsonSerializable {
 			'userId' => $this->userId,
 			'token' => $this->token,
 			'color' => $this->color,
+			'lastAwarenessMessage' => $this->lastAwarenessMessage,
 			'lastContact' => $this->lastContact,
 			'guestName' => $this->guestName,
 			'documentId' => $this->documentId,

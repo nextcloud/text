@@ -82,8 +82,8 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $token): DataResponse {
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $token);
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
+		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token);
 	}
 
 	/**

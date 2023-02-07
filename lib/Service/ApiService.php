@@ -184,11 +184,12 @@ class ApiService {
 	 * @throws NotFoundException
 	 * @throws DoesNotExistException
 	 */
-	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $token = null): DataResponse {
+	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 403);
 		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
+		$this->sessionService->updateSessionAwareness($documentId, $sessionId, $sessionToken, $awareness);
 		$file = $this->documentService->getFileForSession($session, $token);
 		if (!$this->documentService->isReadOnly($file, $token)) {
 			try {

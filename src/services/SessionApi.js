@@ -106,12 +106,13 @@ export class Connection {
 		})
 	}
 
-	push({ steps, version }) {
+	push({ steps, version, awareness }) {
 		return axios.post(this.#url('session/push'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			steps,
 			version,
+			awareness,
 		})
 	}
 
