@@ -2,14 +2,19 @@ import TiptapCodeBlock from '@tiptap/extension-code-block'
 import { defaultMarkdownSerializer } from 'prosemirror-markdown'
 
 const CodeBlock = TiptapCodeBlock.extend({
+
 	parseHTML() {
 		return [
 			{
 				tag: 'pre',
 				preserveWhitespace: 'full',
-				// Remove trailing newline from code blocks (Github issue #2344)
+				// Remove trailing newline from code blocks (#2344)
 				getContent: (node, schema) => {
-					return schema.nodes.codeBlock.create(null, [schema.text(node.textContent.replace(/\n$/, ''))])
+					const textContent = node.textContent.replace(/\n$/, '')
+					const inner = textContent
+						? [schema.text(textContent)]
+						: []
+					return schema.nodes.codeBlock.create(null, inner)
 				},
 			},
 		]
