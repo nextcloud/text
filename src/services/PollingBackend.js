@@ -171,6 +171,7 @@ class PollingBackend {
 		}
 
 		this.#syncService.emit('change', { document, sessions })
+		this.#syncService._receiveSteps(data)
 
 		if (data.steps.length === 0) {
 			if (!this.#initialLoadingFinished) {
@@ -192,7 +193,6 @@ class PollingBackend {
 			return
 		}
 
-		this.#syncService._receiveSteps(data)
 		this.#forcedSave = false
 		if (this.#initialLoadingFinished) {
 			this.resetRefetchTimer()

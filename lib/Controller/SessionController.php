@@ -69,9 +69,9 @@ class SessionController extends Controller {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps): DataResponse {
+	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness): DataResponse {
 		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps);
+		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness);
 	}
 
 	/**

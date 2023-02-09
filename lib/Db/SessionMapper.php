@@ -62,7 +62,7 @@ class SessionMapper extends QBMapper {
 
 	public function findAll($documentId) {
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('id', 'color', 'document_id', 'last_contact', 'user_id', 'guest_name')
+		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 
@@ -71,7 +71,7 @@ class SessionMapper extends QBMapper {
 
 	public function findAllActive($documentId) {
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('id', 'color', 'document_id', 'last_contact', 'user_id', 'guest_name')
+		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
@@ -81,7 +81,7 @@ class SessionMapper extends QBMapper {
 
 	public function findAllInactive() {
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('id', 'color', 'document_id', 'last_contact', 'user_id', 'guest_name')
+		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
 			->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
 

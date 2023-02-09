@@ -59,6 +59,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Migration\\Version030201Date20201116110353' => __DIR__ . '/..' . '/../lib/Migration/Version030201Date20201116110353.php',
         'OCA\\Text\\Migration\\Version030201Date20201116123153' => __DIR__ . '/..' . '/../lib/Migration/Version030201Date20201116123153.php',
         'OCA\\Text\\Migration\\Version030501Date20220202101853' => __DIR__ . '/..' . '/../lib/Migration/Version030501Date20220202101853.php',
+        'OCA\\Text\\Migration\\Version030701Date20230207131313' => __DIR__ . '/..' . '/../lib/Migration/Version030701Date20230207131313.php',
         'OCA\\Text\\Notification\\Notifier' => __DIR__ . '/..' . '/../lib/Notification/Notifier.php',
         'OCA\\Text\\Service\\ApiService' => __DIR__ . '/..' . '/../lib/Service/ApiService.php',
         'OCA\\Text\\Service\\AttachmentService' => __DIR__ . '/..' . '/../lib/Service/AttachmentService.php',

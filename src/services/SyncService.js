@@ -158,15 +158,14 @@ class SyncService {
 			})
 	}
 
-	stepsSince(version) {
-		return {
-			steps: this.steps.slice(version),
-			clientIDs: this.stepClientIDs.slice(version),
-		}
-	}
-
-	_receiveSteps({ steps, document }) {
-		const newSteps = []
+	_receiveSteps({ steps, document, sessions }) {
+		const awareness = sessions
+			.filter(s => s.lastAwarenessMessage)
+			.map(s => {
+				return { step: s.lastAwarenessMessage, clientId: s.clientId }
+			})
+		const newSteps = awareness
+		this.steps = [...this.steps, ...awareness.map(s => s.step)]
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
 			if (this.version < steps[i].version) {

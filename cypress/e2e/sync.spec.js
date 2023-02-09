@@ -53,7 +53,7 @@ describe('yjs document state', () => {
 			.should('include', 'saves the doc state')
 	})
 
-	it('passes the doc state from one session to the next', () => {
+	it('passes the doc content from one session to the next', () => {
 		cy.getContent().type('{ctrl+s}')
 		cy.wait('@sync').its('request.body')
 			.should('have.property', 'documentState')
@@ -64,7 +64,7 @@ describe('yjs document state', () => {
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')
-			.should('have.property', 'documentState')
+			.should('have.property', 'content')
 			.should('not.be.empty')
 		cy.wait('@sync').its('request.body').should('have.property', 'version')
 		cy.getContent().find('h2').should('contain', 'Hello world')
