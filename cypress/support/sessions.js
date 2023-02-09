@@ -42,8 +42,8 @@ Cypress.Commands.add('failToCreateTextSession', (fileId) => {
 		.catch((err) => err.response)
 })
 
-Cypress.Commands.add('pushSteps', ({ connection, steps, version }) => {
-	return connection.push({ steps, version })
+Cypress.Commands.add('pushSteps', ({ connection, steps, version, awareness = '' }) => {
+	return connection.push({ steps, version, awareness })
 		.then(response => response.data)
 })
 
