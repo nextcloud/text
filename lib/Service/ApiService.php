@@ -190,6 +190,9 @@ class ApiService {
 		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->updateSessionAwareness($documentId, $sessionId, $sessionToken, $awareness);
+		if (empty($steps)) {
+			return new DataResponse([]);
+		}
 		$file = $this->documentService->getFileForSession($session, $token);
 		if (!$this->documentService->isReadOnly($file, $token)) {
 			try {
