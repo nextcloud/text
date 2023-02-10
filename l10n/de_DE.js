@@ -40,7 +40,7 @@ OC.L10N.register(
     "Active people" : "Aktive Benutzer",
     "Last saved" : "Zuletzt gespeichert",
     "Offline" : "Offline",
-    "Offline, changes will be saved when online" : "Offline, Änderungen werden gespeichert, wenn Sie online sind",
+    "Offline, changes will be saved when online" : "Offline. Änderungen werden gespeichert, wenn Sie online sind.",
     "Saving …" : "Speichern …",
     "Saved" : "Gespeichert",
     "Last saved {lastSave}" : "Zuletzt gespeichert {lastSave}",
