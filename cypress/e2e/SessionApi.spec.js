@@ -231,6 +231,10 @@ describe('The session Api', function() {
 				})
 		})
 
+		afterEach(function() {
+			connection.close()
+		})
+
 		it('starts empty public', function() {
 			cy.syncSteps(connection)
 				.its('steps')
@@ -270,9 +274,67 @@ describe('The session Api', function() {
 				.then(() => joining.close())
 		})
 
-		afterEach(function() {
-			connection.close()
-		})
 	})
 
+	describe('race conditions', function() {
+		const version = 0
+		let connection
+		let shareToken
+
+		beforeEach(function() {
+			cy.testName().then(name => {
+				const filePath = `/${name}.md`
+				cy.uploadTestFile('test.md')
+				return cy.shareFile(filePath, { edit: true })
+			}).then(token => {
+				cy.log(token)
+				shareToken = token
+				cy.logout()
+				cy.prepareSessionApi()
+				cy.createTextSession(undefined, { filePath: '', shareToken })
+					.then(con => {
+						connection = con
+					})
+			})
+		})
+
+		it('does not send initial content if session is alive even without saved state', function() {
+			let joining
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+					return con
+				})
+				.its('state.documentSource')
+				.should('eql', '')
+				.then(() => joining.close())
+				.then(() => connection.close())
+		})
+
+		it('recovers session even if last person leaves right after create', function() {
+			let joining
+			cy.log('Initial user pushes steps')
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.log('Other user creates session')
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+				})
+			cy.log('Initial user closes session')
+				.then(() => connection.close())
+			cy.log('Other user still finds the steps')
+				.then(() => {
+					cy.syncSteps(joining, {
+						version: 0,
+					}).its('steps[0].data')
+						.should('eql', [messages.update])
+				})
+		})
+
+	})
 })

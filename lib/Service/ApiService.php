@@ -129,21 +129,28 @@ class ApiService {
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
-		try {
-			$stateFile = $this->documentService->getStateFile($document->getId());
-			$documentState = $stateFile->getContent();
-			$content = null;
-		} catch (NotFoundException $e) {
+		if ($forceRecreate || count($activeSessions) === 0) {
+			$this->logger->debug('Starting a fresh session');
 			$documentState = null;
-			$this->logger->info('No state file found. Sending file content.');
-			$content = $file->getContent();
-			$content = $this->encodingService->encodeToUtf8($content);
-			if ($content === null) {
-				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
+			try {
+				$content = $file->getContent();
+				$content = $this->encodingService->encodeToUtf8($content);
+				if ($content === null) {
+					$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
+				}
+			} catch (NotFoundException $e) {
+				$this->logger->warning($e->getMessage(), ['exception' => $e]);
+				$content = null;
 			}
-		} catch (NotFoundException $e) {
-			$this->logger->warning($e->getMessage(), ['exception' => $e]);
+		} else {
+			$this->logger->debug('Seeding existing session');
 			$content = null;
+			try {
+				$stateFile = $this->documentService->getStateFile($document->getId());
+				$documentState = $stateFile->getContent();
+			} catch (NotFoundException $e) {
+				$documentState = ''; // no state saved yet.
+			}
 		}
 
 		$lockInfo = $this->documentService->getLockInfo($file);
