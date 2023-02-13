@@ -207,15 +207,26 @@ class SyncService {
 		return this.serialize()
 	}
 
-	save() {
-		this?.backend?.save?.()
+	async save({ forcedSave = false } = {}) {
+		logger.debug('[SyncService] saving', arguments[0])
+		try {
+			const response = await this.connection.sync({
+				version: this.version,
+				autosaveContent: this._getContent(),
+				documentState: this.getDocumentState(),
+				force: !!forcedSave,
+				manualSave: true,
+			})
+			logger.debug('[SyncService] saved', response)
+			const { document, sessions } = response.data
+			this.emit('save', { document, sessions })
+		} catch (e) {
+			logger.error('Failed to save document.', { error: e })
+		}
 	}
 
 	forceSave() {
-		this.backend.connect()
-		if (this.backend.forceSave) {
-			this.backend.forceSave()
-		}
+		return this.save({ forcedSave: true })
 	}
 
 	close() {

@@ -80,8 +80,6 @@ class PollingBackend {
 	#fetchInterval
 	#fetchRetryCounter
 	#pollActive
-	#forcedSave
-	#manualSave
 	#initialLoadingFinished
 
 	constructor(syncService, connection) {
@@ -103,14 +101,6 @@ class PollingBackend {
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
-	forceSave() {
-		this.#forcedSave = true
-	}
-
-	save() {
-		this.#manualSave = true
-	}
-
 	/**
 	 * This method is only called though the timer
 	 */
@@ -120,9 +110,8 @@ class PollingBackend {
 		}
 
 		const now = Date.now()
-		const shouldSave = this.#forcedSave || this.#manualSave
 
-		if (this.#lastPoll > (now - this.#fetchInterval) && !shouldSave) {
+		if (this.#lastPoll > (now - this.#fetchInterval)) {
 			return
 		}
 
@@ -134,7 +123,7 @@ class PollingBackend {
 		this.#pollActive = true
 
 		const shouldAutosave = this.#lastSave < (now - AUTOSAVE_INTERVAL)
-		const saveData = shouldSave || shouldAutosave
+		const saveData = shouldAutosave
 			? {
 				autosaveContent: this.#syncService._getContent(),
 				documentState: this.#syncService.getDocumentState(),
@@ -146,8 +135,8 @@ class PollingBackend {
 			const response = await this.#connection.sync({
 				version: this.#syncService.version,
 				...saveData,
-				force: !!this.#forcedSave,
-				manualSave: !!this.#manualSave,
+				force: false,
+				manualSave: false,
 			})
 			this._handleResponse(response)
 		} catch (e) {
@@ -155,8 +144,6 @@ class PollingBackend {
 		} finally {
 			this.#lastPoll = Date.now()
 			this.#pollActive = false
-			this.#manualSave = false
-			this.#forcedSave = false
 		}
 	}
 
@@ -193,7 +180,6 @@ class PollingBackend {
 			return
 		}
 
-		this.#forcedSave = false
 		if (this.#initialLoadingFinished) {
 			this.resetRefetchTimer()
 		}
