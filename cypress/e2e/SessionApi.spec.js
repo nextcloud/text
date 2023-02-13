@@ -298,6 +298,19 @@ describe('The session Api', function() {
 			})
 		})
 
+		it('sends initial content if other session is alive but did not push any steps', function() {
+			let joining
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+					return con
+				})
+				.its('state.documentSource')
+				.should('not.eql', '')
+				.then(() => joining.close())
+				.then(() => connection.close())
+		})
+
 		it('does not send initial content if session is alive even without saved state', function() {
 			let joining
 			cy.pushSteps({ connection, steps: [messages.update], version })

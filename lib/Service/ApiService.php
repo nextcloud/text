@@ -114,11 +114,11 @@ class ApiService {
 
 			$this->sessionService->removeInactiveSessions($file->getId());
 			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
-			$recoverSession = true;
+			$freshSession = false;
 			if ($forceRecreate || count($activeSessions) === 0) {
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
-					$recoverSession = false;
+					$freshSession = true;
 				} catch (DocumentHasUnsavedChangesException $e) {
 				}
 			}
@@ -131,19 +131,10 @@ class ApiService {
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
-		if (!$recoverSession) {
+		if ($freshSession) {
 			$this->logger->debug('Starting a fresh session');
 			$documentState = null;
-			try {
-				$content = $file->getContent();
-				$content = $this->encodingService->encodeToUtf8($content);
-				if ($content === null) {
-					$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
-				}
-			} catch (NotFoundException $e) {
-				$this->logger->warning($e->getMessage(), ['exception' => $e]);
-				$content = null;
-			}
+			$content = $this->loadContent($file);
 		} else {
 			$this->logger->debug('Loading existing session');
 			$content = null;
@@ -152,6 +143,11 @@ class ApiService {
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException $e) {
 				$documentState = ''; // no state saved yet.
+				// If there are no steps yet we might still need the content.
+				$steps = $this->documentService->getSteps($document->getId(), 0);
+				if (empty($steps)) {
+					$content = $this->loadContent($file);
+				}
 			}
 		}
 
@@ -269,5 +265,19 @@ class ApiService {
 		}
 
 		return new DataResponse($this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName));
+	}
+
+	private function loadContent(\OCP\Files\File $file): ?string {
+		try {
+			$content = $file->getContent();
+			$content = $this->encodingService->encodeToUtf8($content);
+			if ($content === null) {
+				$this->logger->warning('Failed to encode file to UTF8. File ID: ' . $file->getId());
+			}
+		} catch (NotFoundException $e) {
+			$this->logger->warning($e->getMessage(), ['exception' => $e]);
+			$content = null;
+		}
+		return $content;
 	}
 }
