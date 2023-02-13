@@ -221,7 +221,7 @@ describe('The session Api', function() {
 				.then(token => {
 					shareToken = token
 				})
-				.then(() => cy.logout())
+				.then(() => cy.clearCookies())
 				.then(() => {
 					cy.prepareSessionApi()
 					return cy.createTextSession(undefined, { filePath: '', shareToken })
@@ -289,7 +289,7 @@ describe('The session Api', function() {
 			}).then(token => {
 				cy.log(token)
 				shareToken = token
-				cy.logout()
+				cy.clearCookies()
 				cy.prepareSessionApi()
 				cy.createTextSession(undefined, { filePath: '', shareToken })
 					.then(con => {
