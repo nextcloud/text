@@ -209,7 +209,8 @@ class PollingBackend {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
 		} else if (e.response.status === 409) {
-			// Only emit conflict event if we have synced until the latest version
+			// Still apply the steps to update our version of the document
+			this._handleResponse(e.response)
 			logger.error('Conflict during file save, please resolve')
 			this.#syncService.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
