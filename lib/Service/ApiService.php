@@ -114,9 +114,11 @@ class ApiService {
 
 			$this->sessionService->removeInactiveSessions($file->getId());
 			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
+			$recoverSession = true;
 			if ($forceRecreate || count($activeSessions) === 0) {
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
+					$recoverSession = false;
 				} catch (DocumentHasUnsavedChangesException $e) {
 				}
 			}
@@ -129,7 +131,7 @@ class ApiService {
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
-		if ($forceRecreate || count($activeSessions) === 0) {
+		if (!$recoverSession) {
 			$this->logger->debug('Starting a fresh session');
 			$documentState = null;
 			try {
@@ -143,7 +145,7 @@ class ApiService {
 				$content = null;
 			}
 		} else {
-			$this->logger->debug('Seeding existing session');
+			$this->logger->debug('Loading existing session');
 			$content = null;
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());

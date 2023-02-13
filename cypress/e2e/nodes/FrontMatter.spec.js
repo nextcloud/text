@@ -65,19 +65,17 @@ describe('Front matter support', function() {
 	})
 
 	it('Reopen front matter', function() {
-		cy.openFile('frontmatter.md').then(() => {
-			cy.getContent()
-				.type('{moveToEnd}New line{enter}')
-				.find('pre.frontmatter').should(pre => {
-					expect(pre.length === 1)
-				})
-				.closeFile().then(() => {
-					cy.openFile('frontmatter.md').then(() => {
-						cy.getContent().then(() => {
-							expect(cy.getContent().find('pre.frontmatter').length === 1)
-						})
-					})
-				})
-		})
+		cy.openFile('frontmatter.md')
+		cy.getContent()
+			.type('{moveToEnd}New line{enter}')
+			.find('pre.frontmatter').should(pre => {
+				expect(pre.length === 1)
+			})
+		cy.closeFile()
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.openFile('frontmatter.md')
+		cy.wait('@sync')
+		cy.wait('@sync')
+		cy.getContent().find('pre.frontmatter').should('have.length', 1)
 	})
 })
