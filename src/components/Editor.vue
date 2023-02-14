@@ -340,8 +340,15 @@ export default {
 			'setCurrentSession',
 		]),
 
-		setContent(content) {
-			this.$editor.commands.setContent(this.parseContent(content), true)
+		setContent(content, { addToHistory = true } = {}) {
+			this.$editor.chain()
+				.setContent(this.parseContent(content), addToHistory)
+				.command(({ tr }) => {
+					tr.setMeta("addToHistory", addToHistory)
+					return true
+				})
+				.run()
+
 		},
 
 		parseContent(documentSource) {
@@ -529,7 +536,7 @@ export default {
 					})
 					this.hasEditor = true
 					if (!documentState && documentSource) {
-						this.setContent(documentSource)
+						this.setContent(documentSource, { addToHistory: false })
 					}
 					this.listenEditorEvents()
 
