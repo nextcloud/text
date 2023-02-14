@@ -78,7 +78,7 @@ describe('The session Api', function() {
 		})
 
 		it('handles invalid file id', function() {
-			cy.failToCreateTextSession(123)
+			cy.failToCreateTextSession(123456789)
 				.its('status')
 				.should('equal', 404)
 		})
