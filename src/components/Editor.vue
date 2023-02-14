@@ -347,7 +347,7 @@ export default {
 		parseContent(documentSource) {
 			return !this.isRichEditor
 				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.render(documentSource)
+				: markdownit.render(documentSource) + '<p/>'
 		},
 
 		initSession() {
@@ -495,7 +495,6 @@ export default {
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
 						session,
-						content: documentState ? '' : this.parseContent(documentSource),
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
 						},
@@ -529,7 +528,9 @@ export default {
 						enableRichEditing: this.isRichEditor,
 					})
 					this.hasEditor = true
-
+					if (!documentState && documentSource) {
+						this.setContent(documentSource)
+					}
 					this.listenEditorEvents()
 
 				})
