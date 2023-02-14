@@ -21,12 +21,23 @@
  */
 
 /**
+ * Call callback in intervals that double
+ *
+ * Returns a handle to modify the interval:
+ * - handle.wakeUp() resets it to the minimum.
+ * - handle.sleep() uses maximum interval right away.
+ * - handle.interval can be used to clear the interval:
+ *   `clearInterval(handle.interval)`
  *
  * @param {Function} callback to be triggered by the timer
+ * @param {object} options optional
+ * @param {number} options.minInterval minimum interval between two calls
+ * @param {number} options.maxDelay maximum factor to multiply the interval by
+ * @return {Function} handle to modify behavior
  */
-function lazyTimer(callback) {
-	const fn = lazy(callback)
-	fn.interval = setInterval(fn, 300)
+function lazyTimer(callback, { minInterval = 300, maxDelay = 16 } = {}) {
+	const fn = lazy(callback, { maxDelay })
+	fn.interval = setInterval(fn, minInterval)
 	return fn
 }
 
@@ -48,16 +59,16 @@ export { lazyTimer }
  *
  * @param {Function} inner function to be called
  * @param {object} options optional
- * @param {number} options.maxInterval maximum interval between two calls to inner
+ * @param {number} options.maxDelay maximum interval between two calls to inner
  */
-export function lazy(inner, { maxInterval = 16 } = {}) {
+export function lazy(inner, { maxDelay = 16 } = {}) {
 	let count = 0
 	let interval = 1
 	const result = (...args) => {
 		count++
 		if (count === interval) {
 			count = 0
-			interval = Math.min(interval * 2, maxInterval)
+			interval = Math.min(interval * 2, maxDelay)
 			return inner(...args)
 		}
 	}
@@ -66,7 +77,7 @@ export function lazy(inner, { maxInterval = 16 } = {}) {
 		interval = 1
 	}
 	result.sleep = () => {
-		interval = maxInterval
+		interval = maxDelay
 	}
 	return result
 }
