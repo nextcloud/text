@@ -21,7 +21,19 @@ describe('lazy timer', () => {
         jest.useRealTimers()
     })
     
-    test('stays at same interval once it reached maxInterval', () => {
+    test('allows configuring min and max intervals', () => {
+        jest.useFakeTimers()
+        const callback = jest.fn();
+        const timer = lazyTimer(callback, { minInterval: 10, maxDelay: 2 });
+        expect(callback).not.toBeCalled();
+        jest.advanceTimersByTime(40);
+        expect(callback).toHaveBeenCalledTimes(2); // 10, 30
+        jest.advanceTimersByTime(40);
+        expect(callback).toHaveBeenCalledTimes(4); // 50, 70
+        jest.useRealTimers()
+    })
+    
+    test('stays at same interval once it reached maxDelay', () => {
         jest.useFakeTimers()
         const callback = jest.fn();
         const timer = lazyTimer(callback);
@@ -50,7 +62,7 @@ describe('lazy timer', () => {
         jest.useRealTimers()
     })
     
-    test('goes to maxInterval when sleep is called', () => {
+    test('goes to maxDelay when sleep is called', () => {
         jest.useFakeTimers()
         const callback = jest.fn();
         const timer = lazyTimer(callback);
@@ -114,22 +126,22 @@ describe('lazy function', () => {
 
     test('respects skipAtMost option', () => {
         const inner = jest.fn()
-        const fn = lazy(inner, { maxInterval: 4 })
+        const fn = lazy(inner, { maxDelay: 4 })
         callNTimes(20, fn)
         expect(inner.mock.calls.map(call => call[0])).toEqual([1,3,7,11,15,19])
     })
 
-    test('maxInterval defaults to 16', () => {
+    test('maxDelay defaults to 16', () => {
         const inner = jest.fn()
         const fn = lazy(inner)
         callNTimes(64, fn)
         expect(inner.mock.calls.map(call => call[0])).toEqual([1,3,7,15,31,47,63])
     })
 
-    test('Uses maxInterval after sleep was called', () => {
+    test('Uses maxDelay after sleep was called', () => {
         const inner = jest.fn()
         let count = 0
-        const lazyFn = lazy(() => inner(count), { maxInterval: 6 })
+        const lazyFn = lazy(() => inner(count), { maxDelay: 6 })
         const trigger = () => {
             count++
             lazyFn()
