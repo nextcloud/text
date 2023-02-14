@@ -344,7 +344,7 @@ export default {
 			this.$editor.chain()
 				.setContent(this.parseContent(content), addToHistory)
 				.command(({ tr }) => {
-					tr.setMeta("addToHistory", addToHistory)
+					tr.setMeta('addToHistory', addToHistory)
 					return true
 				})
 				.run()
@@ -613,7 +613,15 @@ export default {
 				this.$parent.$emit('ready', true)
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				this.dirty = state.dirty
+				// ignore initial loading and other automated changes
+				if (this.$editor
+					&& (this.$editor.can().undo() || this.$editor.can().redo())
+				) {
+					this.dirty = state.dirty
+					if (this.dirty) {
+						this.$syncService.autosave()
+					}
+				}
 			}
 		},
 

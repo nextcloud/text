@@ -21,6 +21,7 @@
  *
  */
 import mitt from 'mitt'
+import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import SessionApi, { Connection } from './SessionApi.js'
@@ -33,6 +34,13 @@ import { logger } from '../helpers/logger.js'
  * @type {number}
  */
 const IDLE_TIMEOUT = 1440
+
+/**
+ * Interval to save the serialized document and the document state
+ *
+ * @type {number} time in ms
+ */
+const AUTOSAVE_INTERVAL = 30000
 
 const ERROR_TYPE = {
 	/**
@@ -72,6 +80,8 @@ class SyncService {
 
 		this.version = null
 		this.sending = false
+
+		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
 
 		return this
 	}
@@ -124,7 +134,6 @@ class SyncService {
 	}
 
 	sendSteps(getSendable) {
-		this.emit('stateChange', { dirty: true })
 		if (!this.connection || this.sending) {
 			setTimeout(() => {
 				this.sendSteps(getSendable)
@@ -132,7 +141,11 @@ class SyncService {
 			return
 		}
 		this.sending = true
-		return this.connection.push(getSendable())
+		const data = getSendable()
+		if (data.steps.length > 0) {
+			this.emit('stateChange', { dirty: true })
+		}
+		return this.connection.push(data)
 			.then((response) => {
 				this.sending = false
 			}).catch(({ response, code }) => {
@@ -207,26 +220,32 @@ class SyncService {
 		return this.serialize()
 	}
 
-	async save({ forcedSave = false } = {}) {
+	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
 			const response = await this.connection.sync({
 				version: this.version,
 				autosaveContent: this._getContent(),
 				documentState: this.getDocumentState(),
-				force: !!forcedSave,
-				manualSave: true,
+				force,
+				manualSave,
 			})
+			this.emit('stateChange', { dirty: false })
 			logger.debug('[SyncService] saved', response)
 			const { document, sessions } = response.data
 			this.emit('save', { document, sessions })
+			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
 		}
 	}
 
 	forceSave() {
-		return this.save({ forcedSave: true })
+		return this.save({ force: true })
+	}
+
+	_autosave() {
+		return this.save({ manualSave: false })
 	}
 
 	close() {

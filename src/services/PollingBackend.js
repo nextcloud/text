@@ -52,13 +52,6 @@ const FETCH_INTERVAL_SINGLE_EDITOR = 5000
  */
 const FETCH_INTERVAL_INVISIBLE = 60000
 
-/**
- * Interval to save the serialized document and the document state
- *
- * @type {number} time in ms
- */
-const AUTOSAVE_INTERVAL = 30000
-
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
 
@@ -76,7 +69,6 @@ class PollingBackend {
 	#connection
 
 	#lastPoll
-	#lastSave
 	#fetchInterval
 	#fetchRetryCounter
 	#pollActive
@@ -88,7 +80,6 @@ class PollingBackend {
 		this.#fetchInterval = FETCH_INTERVAL
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
-		this.#lastSave = Date.now()
 	}
 
 	connect() {
@@ -122,19 +113,10 @@ class PollingBackend {
 
 		this.#pollActive = true
 
-		const shouldAutosave = this.#lastSave < (now - AUTOSAVE_INTERVAL)
-		const saveData = shouldAutosave
-			? {
-				autosaveContent: this.#syncService._getContent(),
-				documentState: this.#syncService.getDocumentState(),
-			}
-			: {}
-
 		try {
 			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
 			const response = await this.#connection.sync({
 				version: this.#syncService.version,
-				...saveData,
 				force: false,
 				manualSave: false,
 			})
@@ -151,19 +133,12 @@ class PollingBackend {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
-		if (this.#syncService.version < document.lastSavedVersion) {
-			logger.debug('Saved document', document)
-			this.#lastSave = document.lastSavedVersionTime
-			this.#syncService.emit('save', { document, sessions })
-		}
-
 		this.#syncService.emit('change', { document, sessions })
 		this.#syncService._receiveSteps(data)
 
 		if (data.steps.length === 0) {
 			if (!this.#initialLoadingFinished) {
 				this.#initialLoadingFinished = true
-				this.#lastSave = document.lastSavedVersionTime
 			}
 			if (this.#syncService.checkIdle()) {
 				return
@@ -175,7 +150,6 @@ class PollingBackend {
 			} else {
 				this.increaseRefetchTimer()
 			}
-			this.#syncService.emit('stateChange', { dirty: false })
 			this.#syncService.emit('stateChange', { initialLoading: true })
 			return
 		}
