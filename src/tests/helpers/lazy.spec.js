@@ -114,22 +114,22 @@ describe('lazy function', () => {
 
     test('respects skipAtMost option', () => {
         const inner = jest.fn()
-        const fn = lazy(inner, { skipAtMost: 3 })
+        const fn = lazy(inner, { maxInterval: 4 })
         callNTimes(20, fn)
         expect(inner.mock.calls.map(call => call[0])).toEqual([1,3,7,11,15,19])
     })
 
-    test('skipAtMost defaults to 15', () => {
+    test('maxInterval defaults to 16', () => {
         const inner = jest.fn()
         const fn = lazy(inner)
         callNTimes(64, fn)
         expect(inner.mock.calls.map(call => call[0])).toEqual([1,3,7,15,31,47,63])
     })
 
-    test('skips skipAtMost after sleep was called', () => {
+    test('Uses maxInterval after sleep was called', () => {
         const inner = jest.fn()
         let count = 0
-        const lazyFn = lazy(() => inner(count), { skipAtMost: 5 })
+        const lazyFn = lazy(() => inner(count), { maxInterval: 6 })
         const trigger = () => {
             count++
             lazyFn()

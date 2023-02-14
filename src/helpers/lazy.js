@@ -48,80 +48,25 @@ export { lazyTimer }
  *
  * @param {Function} inner function to be called
  * @param {object} options optional
- * @param {number} options.skipAtMost maximum number of calls to skip, default: 15
+ * @param {number} options.maxInterval maximum interval between two calls to inner
  */
-export function lazy(inner, { skipAtMost = 15 } = {}) {
+export function lazy(inner, { maxInterval = 16 } = {}) {
 	let count = 0
+	let interval = 1
 	const result = (...args) => {
 		count++
-		if (runFor(count, skipAtMost)) {
+		if (count === interval) {
+			count = 0
+			interval = Math.min(interval * 2, maxInterval)
 			return inner(...args)
 		}
 	}
 	result.wakeUp = () => {
 		count = 0
+		interval = 1
 	}
 	result.sleep = () => {
-		const previousRun = runsBefore(count)
-		const previousCount = countAt(previousRun)
-		count = lastCountAfterDoubling(skipAtMost) + count - previousCount
+		interval = maxInterval
 	}
 	return result
-}
-
-/**
- * @param {number} count time the function is being called
- * @param {number} skipAtMost maximum number of calls to skip
- */
-function runFor(count, skipAtMost) {
-	const nextRun = runsBefore(count) + 1
-	const skips = skipsBefore(nextRun)
-	if (!skipAtMost || skips < skipAtMost) {
-		return count === countAt(nextRun)
-	} else {
-		const runEvery = skipAtMost + 1
-		const result = (count - lastCountAfterDoubling(skipAtMost)) % runEvery === 0
-		return result
-	}
-}
-
-/**
- * At what count does the inner function run for the nth time.
- *
- * @param {number} n time the inner function runs
- * @return {number}
- */
-function countAt(n) {
-	return 2 ** n - 1
-}
-
-/**
- * How many runs happened before count.
- *
- * @param {number} count time the lazy function is being called
- * @return {number}
- */
-function runsBefore(count) {
-	return Math.floor(Math.log2(count))
-}
-
-/**
- * How many calls of the lazy function are skipped before it runs the nth time.
- *
- * @param {number} n time the inner function runs
- * @return {number}
- */
-function skipsBefore(n) {
-	return (n === 1) ? 1 : countAt(n - 1)
-}
-
-/**
- * Count when the limit to doubling the intervals was reached.
- *
- * @param {number} skipAtMost upper limit for doubling
- * @return {number}
- */
-function lastCountAfterDoubling(skipAtMost) {
-	const lastRunToDoubleAfter = Math.floor(Math.log2(skipAtMost + 1))
-	return countAt(lastRunToDoubleAfter + 1)
 }
