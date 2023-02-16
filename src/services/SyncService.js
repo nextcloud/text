@@ -71,9 +71,6 @@ class SyncService {
 		this._api = new SessionApi(options)
 		this.connection = null
 
-		this.sessions = []
-
-		this.steps = []
 		this.stepClientIDs = []
 
 		this.lastStepPush = Date.now()
@@ -87,9 +84,6 @@ class SyncService {
 	}
 
 	async open({ fileId, initialSession }) {
-		this.on('change', ({ sessions }) => {
-			this.sessions = sessions
-		})
 
 		// TODO: Only continue if a connection was made
 		this.connection = initialSession
@@ -178,7 +172,6 @@ class SyncService {
 				return { step: s.lastAwarenessMessage, clientId: s.clientId }
 			})
 		const newSteps = awareness
-		this.steps = [...this.steps, ...awareness.map(s => s.step)]
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
 			if (this.version < steps[i].version) {
@@ -190,7 +183,6 @@ class SyncService {
 				continue
 			}
 			singleSteps.forEach(step => {
-				this.steps.push(step)
 				newSteps.push({
 					step,
 					clientID: steps[i].sessionId,
