@@ -77,9 +77,6 @@ class SyncService {
 		this._api = new SessionApi(options)
 		this.connection = null
 
-		this.sessions = []
-
-		this.steps = []
 		this.stepClientIDs = []
 
 		this.lastStepPush = Date.now()
@@ -94,10 +91,6 @@ class SyncService {
 	}
 
 	async open({ fileId, initialSession }) {
-		const onChange = ({ sessions }) => {
-			this.sessions = sessions
-		}
-		this.on('change', onChange)
 
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
@@ -106,7 +99,6 @@ class SyncService {
 
 		this.connection = await connect
 		if (!this.connection) {
-			this.off('change', onChange)
 			// Error was already emitted in connect
 			return
 		}
@@ -208,7 +200,6 @@ class SyncService {
 				return { step: s.lastAwarenessMessage, clientId: s.clientId }
 			})
 		const newSteps = [...awareness]
-		this.steps = [...this.steps, ...awareness.map(s => s.step)]
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
 			if (this.version < steps[i].version) {
@@ -220,7 +211,6 @@ class SyncService {
 				continue
 			}
 			singleSteps.forEach(step => {
-				this.steps.push(step)
 				newSteps.push({
 					step,
 					clientID: steps[i].sessionId,
