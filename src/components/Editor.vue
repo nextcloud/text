@@ -340,14 +340,21 @@ export default {
 			'setCurrentSession',
 		]),
 
-		setContent(content) {
-			this.$editor.commands.setContent(this.parseContent(content), true)
+		setContent(content, { addToHistory = true } = {}) {
+			this.$editor.chain()
+				.setContent(this.parseContent(content), addToHistory)
+				.command(({ tr }) => {
+					tr.setMeta('addToHistory', addToHistory)
+					return true
+				})
+				.run()
+
 		},
 
 		parseContent(documentSource) {
 			return !this.isRichEditor
 				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.render(documentSource)
+				: markdownit.render(documentSource) + '<p/>'
 		},
 
 		initSession() {
@@ -495,7 +502,6 @@ export default {
 					this.$editor = createEditor({
 						relativePath: this.relativePath,
 						session,
-						content: documentState ? '' : this.parseContent(documentSource),
 						onCreate: ({ editor }) => {
 							this.$syncService.startSync()
 						},
@@ -529,7 +535,9 @@ export default {
 						enableRichEditing: this.isRichEditor,
 					})
 					this.hasEditor = true
-
+					if (!documentState && documentSource) {
+						this.setContent(documentSource, { addToHistory: false })
+					}
 					this.listenEditorEvents()
 
 				})
@@ -605,7 +613,15 @@ export default {
 				this.$parent.$emit('ready', true)
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				this.dirty = state.dirty
+				// ignore initial loading and other automated changes
+				if (this.$editor
+					&& (this.$editor.can().undo() || this.$editor.can().redo())
+				) {
+					this.dirty = state.dirty
+					if (this.dirty) {
+						this.$syncService.autosave()
+					}
+				}
 			}
 		},
 

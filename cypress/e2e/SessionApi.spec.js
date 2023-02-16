@@ -78,7 +78,7 @@ describe('The session Api', function() {
 		})
 
 		it('handles invalid file id', function() {
-			cy.failToCreateTextSession(123)
+			cy.failToCreateTextSession(123456789)
 				.its('status')
 				.should('equal', 404)
 		})
@@ -221,7 +221,7 @@ describe('The session Api', function() {
 				.then(token => {
 					shareToken = token
 				})
-				.then(() => cy.logout())
+				.then(() => cy.clearCookies())
 				.then(() => {
 					cy.prepareSessionApi()
 					return cy.createTextSession(undefined, { filePath: '', shareToken })
@@ -229,6 +229,10 @@ describe('The session Api', function() {
 							connection = con
 						})
 				})
+		})
+
+		afterEach(function() {
+			connection.close()
 		})
 
 		it('starts empty public', function() {
@@ -270,9 +274,80 @@ describe('The session Api', function() {
 				.then(() => joining.close())
 		})
 
-		afterEach(function() {
-			connection.close()
-		})
 	})
 
+	describe('race conditions', function() {
+		const version = 0
+		let connection
+		let shareToken
+
+		beforeEach(function() {
+			cy.testName().then(name => {
+				const filePath = `/${name}.md`
+				cy.uploadTestFile('test.md')
+				return cy.shareFile(filePath, { edit: true })
+			}).then(token => {
+				cy.log(token)
+				shareToken = token
+				cy.clearCookies()
+				cy.prepareSessionApi()
+				cy.createTextSession(undefined, { filePath: '', shareToken })
+					.then(con => {
+						connection = con
+					})
+			})
+		})
+
+		it('sends initial content if other session is alive but did not push any steps', function() {
+			let joining
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+					return con
+				})
+				.its('state.documentSource')
+				.should('not.eql', '')
+				.then(() => joining.close())
+				.then(() => connection.close())
+		})
+
+		it('does not send initial content if session is alive even without saved state', function() {
+			let joining
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+					return con
+				})
+				.its('state.documentSource')
+				.should('eql', '')
+				.then(() => joining.close())
+				.then(() => connection.close())
+		})
+
+		it('recovers session even if last person leaves right after create', function() {
+			let joining
+			cy.log('Initial user pushes steps')
+			cy.pushSteps({ connection, steps: [messages.update], version })
+				.its('version')
+				.should('eql', 1)
+			cy.log('Other user creates session')
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					joining = con
+				})
+			cy.log('Initial user closes session')
+				.then(() => connection.close())
+			cy.log('Other user still finds the steps')
+				.then(() => {
+					cy.syncSteps(joining, {
+						version: 0,
+					}).its('steps[0].data')
+						.should('eql', [messages.update])
+				})
+		})
+
+	})
 })

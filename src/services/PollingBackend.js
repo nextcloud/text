@@ -52,13 +52,6 @@ const FETCH_INTERVAL_SINGLE_EDITOR = 5000
  */
 const FETCH_INTERVAL_INVISIBLE = 60000
 
-/**
- * Interval to save the serialized document and the document state
- *
- * @type {number} time in ms
- */
-const AUTOSAVE_INTERVAL = 30000
-
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
 
@@ -76,12 +69,9 @@ class PollingBackend {
 	#connection
 
 	#lastPoll
-	#lastSave
 	#fetchInterval
 	#fetchRetryCounter
 	#pollActive
-	#forcedSave
-	#manualSave
 	#initialLoadingFinished
 
 	constructor(syncService, connection) {
@@ -90,7 +80,6 @@ class PollingBackend {
 		this.#fetchInterval = FETCH_INTERVAL
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
-		this.#lastSave = Date.now()
 	}
 
 	connect() {
@@ -103,14 +92,6 @@ class PollingBackend {
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
 	}
 
-	forceSave() {
-		this.#forcedSave = true
-	}
-
-	save() {
-		this.#manualSave = true
-	}
-
 	/**
 	 * This method is only called though the timer
 	 */
@@ -120,9 +101,8 @@ class PollingBackend {
 		}
 
 		const now = Date.now()
-		const shouldSave = this.#forcedSave || this.#manualSave
 
-		if (this.#lastPoll > (now - this.#fetchInterval) && !shouldSave) {
+		if (this.#lastPoll > (now - this.#fetchInterval)) {
 			return
 		}
 
@@ -133,21 +113,12 @@ class PollingBackend {
 
 		this.#pollActive = true
 
-		const shouldAutosave = this.#lastSave < (now - AUTOSAVE_INTERVAL)
-		const saveData = shouldSave || shouldAutosave
-			? {
-				autosaveContent: this.#syncService._getContent(),
-				documentState: this.#syncService.getDocumentState(),
-			}
-			: {}
-
 		try {
 			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
 			const response = await this.#connection.sync({
 				version: this.#syncService.version,
-				...saveData,
-				force: !!this.#forcedSave,
-				manualSave: !!this.#manualSave,
+				force: false,
+				manualSave: false,
 			})
 			this._handleResponse(response)
 		} catch (e) {
@@ -155,8 +126,6 @@ class PollingBackend {
 		} finally {
 			this.#lastPoll = Date.now()
 			this.#pollActive = false
-			this.#manualSave = false
-			this.#forcedSave = false
 		}
 	}
 
@@ -164,19 +133,12 @@ class PollingBackend {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
-		if (this.#syncService.version < document.lastSavedVersion) {
-			logger.debug('Saved document', document)
-			this.#lastSave = document.lastSavedVersionTime
-			this.#syncService.emit('save', { document, sessions })
-		}
-
 		this.#syncService.emit('change', { document, sessions })
 		this.#syncService._receiveSteps(data)
 
 		if (data.steps.length === 0) {
 			if (!this.#initialLoadingFinished) {
 				this.#initialLoadingFinished = true
-				this.#lastSave = document.lastSavedVersionTime
 			}
 			if (this.#syncService.checkIdle()) {
 				return
@@ -188,12 +150,10 @@ class PollingBackend {
 			} else {
 				this.increaseRefetchTimer()
 			}
-			this.#syncService.emit('stateChange', { dirty: false })
 			this.#syncService.emit('stateChange', { initialLoading: true })
 			return
 		}
 
-		this.#forcedSave = false
 		if (this.#initialLoadingFinished) {
 			this.resetRefetchTimer()
 		}
@@ -209,7 +169,8 @@ class PollingBackend {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
 		} else if (e.response.status === 409) {
-			// Only emit conflict event if we have synced until the latest version
+			// Still apply the steps to update our version of the document
+			this._handleResponse(e.response)
 			logger.error('Conflict during file save, please resolve')
 			this.#syncService.emit('error', {
 				type: ERROR_TYPE.SAVE_COLLISSION,
