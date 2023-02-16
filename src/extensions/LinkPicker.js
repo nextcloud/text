@@ -1,6 +1,6 @@
 import { Extension } from '@tiptap/core'
 import { Suggestion } from '@tiptap/suggestion'
-import { PluginKey } from 'prosemirror-state'
+import { PluginKey } from '@tiptap/pm/state'
 import suggestions from '../components/Suggestion/LinkPicker/suggestions.js'
 
 export const LinkPickerPluginKey = new PluginKey('linkPicker')

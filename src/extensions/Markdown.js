@@ -39,10 +39,10 @@
  */
 
 import { Extension, getExtensionField } from '@tiptap/core'
-import { Plugin, PluginKey } from 'prosemirror-state'
-import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { MarkdownSerializer, defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 import markdownit from '../markdownit/index.js'
-import { DOMParser } from 'prosemirror-model'
+import { DOMParser } from '@tiptap/pm/model'
 
 const Markdown = Extension.create({
 
