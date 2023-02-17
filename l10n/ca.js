@@ -37,6 +37,7 @@ OC.L10N.register(
     "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom hagi tancat el document.",
     "Active people" : "Persones actives",
     "Last saved" : "Últim desat",
+    "Offline" : "Fora de línia",
     "Saving …" : "Desant …",
     "Saved" : "Guardat",
     "Unsaved changes" : "Canvis sense desar",

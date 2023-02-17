@@ -9,6 +9,7 @@ OC.L10N.register(
     "Guest" : "Kouviad",
     "Save guest name" : "Enrollañ anv an hini pedet",
     "guest" : "kouviad",
+    "Offline" : "Distaget",
     "Saving …" : "Orc'h enrolliñ",
     "Saved" : "Enrollet",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",

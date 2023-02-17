@@ -16,6 +16,7 @@ OC.L10N.register(
     "Text" : "نص",
     "Guest" : "ضيف",
     "guest" : "ضيف ",
+    "Offline" : "غير متصل",
     "Saving …" : "جاري الحفظ…",
     "Saved" : "تم الحفظ",
     "Formatting help" : "مساعدة التنسيق",
