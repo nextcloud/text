@@ -19,6 +19,7 @@ OC.L10N.register(
     "guest" : "gas",
     "Show author colors" : "Toon outeurkleure",
     "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het.",
+    "Offline" : "Vanlyn",
     "Saving …" : "Bewaar tans…",
     "Saved" : "Bewaar",
     "Unsaved changes" : "Onbewaarde veranderinge",
