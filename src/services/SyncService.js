@@ -75,7 +75,6 @@ class SyncService {
 
 		this.lastStepPush = Date.now()
 
-		this.version = null
 		this.sending = false
 
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
@@ -91,14 +90,11 @@ class SyncService {
 			: await this._api.open({ fileId })
 				.catch(error => this._emitError(error))
 
-		this.version = this.connection.lastSavedVersion
 		this.emit('opened', {
 			...this.connection.state,
-			version: this.version,
 		})
 		this.emit('loaded', {
 			...this.connection.state,
-			version: this.version,
 		})
 		this.backend = new PollingBackend(this, this.connection)
 
@@ -143,7 +139,7 @@ class SyncService {
 			.then((response) => {
 				this.sending = false
 			}).catch(({ response, code }) => {
-				logger.error('failed to apply steps due to collission, retrying')
+				logger.error('Failed to apply steps due to error communicating with server.')
 				this.sending = false
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
@@ -153,12 +149,7 @@ class SyncService {
 				if (status === 403) {
 					if (!data.document) {
 						// either the session is invalid or the document is read only.
-						logger.error('failed to write to document - not allowed')
-					}
-					// Only emit conflict event if we have synced until the latest version
-					if (data.document?.currentVersion === this.version) {
-						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-						OC.Notification.showTemporary('Changes could not be sent yet')
+						logger.error('Failed to write to document - not allowed')
 					}
 				}
 				// TODO: Retry and warn
@@ -174,9 +165,6 @@ class SyncService {
 		const newSteps = awareness
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
-			if (this.version < steps[i].version) {
-				this.version = steps[i].version
-			}
 			if (!Array.isArray(singleSteps)) {
 				logger.error('Invalid step data, skipping step', { step: steps[i] })
 				// TODO: recover
@@ -194,7 +182,6 @@ class SyncService {
 			steps: newSteps,
 			// TODO: do we actually need to dig into the connection here?
 			document: this.connection.document,
-			version: this.version,
 		})
 	}
 
@@ -212,11 +199,11 @@ class SyncService {
 		return this.serialize()
 	}
 
-	async save({ force = false, manualSave = true } = {}) {
+	async save(version, { force = false, manualSave = true } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
-			const response = await this.connection.sync({
-				version: this.version,
+			const response = await this.connection.save({
+				version: this.backend.version,
 				autosaveContent: this._getContent(),
 				documentState: this.getDocumentState(),
 				force,
@@ -224,20 +211,33 @@ class SyncService {
 			})
 			this.emit('stateChange', { dirty: false })
 			logger.debug('[SyncService] saved', response)
-			const { document, sessions } = response.data
-			this.emit('save', { document, sessions })
+			this.emit('save')
+			this.emit('change', { document: response.data.document })
 			this.autosave.clear()
 		} catch (e) {
-			logger.error('Failed to save document.', { error: e })
+			if (e.response.status === 409) {
+
+				// Still apply the steps to update our version of the document
+				// TODO: this is not possible anymore - do we need it? this._handleResponse(e.response)
+				// we also used to disconnect the polling backend.
+				logger.error('Conflict during file save, please resolve')
+				this.emit('error', {
+					type: ERROR_TYPE.SAVE_COLLISSION,
+					data: {
+						outsideChange: e.response.data.outsideChange,
+					},
+				})
+				logger.error('Failed to save document.', { error: e })
+			}
 		}
 	}
 
-	forceSave() {
-		return this.save({ force: true })
+	forceSave(version) {
+		return this.save(version, { force: true })
 	}
 
-	_autosave() {
-		return this.save({ manualSave: false })
+	_autosave(version) {
+		return this.save(version, { manualSave: false })
 	}
 
 	close() {

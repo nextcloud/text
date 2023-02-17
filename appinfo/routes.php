@@ -35,6 +35,7 @@ return [
 		['name' => 'Attachment#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
 
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
+		['name' => 'Session#save', 'url' => '/session/save', 'verb' => 'POST'],
 		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'POST'],
 		['name' => 'Session#push', 'url' => '/session/push', 'verb' => 'POST'],
 		['name' => 'Session#close', 'url' => '/session/close', 'verb' => 'POST'],
@@ -42,6 +43,7 @@ return [
 
 		['name' => 'PublicSession#create', 'url' => '/public/session/create', 'verb' => 'PUT'],
 		['name' => 'PublicSession#updateSession', 'url' => '/public/session', 'verb' => 'POST'],
+		['name' => 'PublicSession#save', 'url' => '/public/session/save', 'verb' => 'POST'],
 		['name' => 'PublicSession#sync', 'url' => '/public/session/sync', 'verb' => 'POST'],
 		['name' => 'PublicSession#push', 'url' => '/public/session/push', 'verb' => 'POST'],
 

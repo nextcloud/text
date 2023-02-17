@@ -51,3 +51,8 @@ Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 	return connection.sync(options)
 		.then(response => response.data)
 })
+
+Cypress.Commands.add('saveDoc', (connection, options = { }) => {
+	return connection.save(options)
+		.then(response => response.data)
+})

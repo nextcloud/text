@@ -94,8 +94,15 @@ export class Connection {
 		}
 	}
 
-	sync({ version, autosaveContent, documentState, force, manualSave }) {
+	sync({ version }) {
 		return axios.post(this.#url('session/sync'), {
+			...this.#defaultParams,
+			version,
+		})
+	}
+
+	save({ version, autosaveContent, documentState, force, manualSave }) {
+		return axios.post(this.#url('session/save'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,

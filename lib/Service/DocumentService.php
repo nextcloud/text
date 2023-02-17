@@ -171,16 +171,15 @@ class DocumentService {
 	 * @param $documentId
 	 * @param $sessionId
 	 * @param $steps
-	 * @param $version
 	 * @return array
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
 	 */
-	public function addStep($documentId, $sessionId, $steps, $version): array {
+	public function addStep($documentId, $sessionId, $steps): array {
 		$stepsToInsert = [];
 		$querySteps = [];
 		$getStepsSinceVersion = null;
-		$newVersion = $version;
+		$newVersion = 0;
 		foreach ($steps as $step) {
 			// Steps are base64 encoded messages of the yjs protocols
 			// https://github.com/yjs/y-protocols
@@ -193,17 +192,13 @@ class DocumentService {
 			}
 		}
 		if (sizeof($stepsToInsert) > 0) {
-			$newVersion = $this->insertSteps($documentId, $sessionId, $stepsToInsert, $version);
+			$newVersion = $this->insertSteps($documentId, $sessionId, $stepsToInsert);
 		}
 		// If there were any queries in the steps send the entire history
-		$getStepsSinceVersion = count($querySteps) > 0 ? 0 : $version;
-		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
-		$stepsToReturn = [];
-		foreach ($allSteps as $step) {
-			if ($step < "AAQ") {
-				array_push($stepsToReturn, $step);
-			}
-		}
+		// TODO: make use of the saved document state here - otherwise it migth be too big.
+		$stepsToReturn = count($querySteps) === 0
+			? []
+			: $this->getSteps($documentId, 0);
 		return [
 			'steps' => $stepsToReturn,
 			'version' => $newVersion
@@ -214,12 +209,11 @@ class DocumentService {
 	 * @param $documentId
 	 * @param $sessionId
 	 * @param $steps
-	 * @param $version
 	 * @return int
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
 	 */
-	private function insertSteps($documentId, $sessionId, $steps, $version): int {
+	private function insertSteps($documentId, $sessionId, $steps): int {
 		$document = null;
 		$stepsVersion = null;
 		try {
