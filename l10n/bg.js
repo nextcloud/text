@@ -39,6 +39,7 @@ OC.L10N.register(
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
     "Active people" : "Активни хора",
     "Last saved" : "Последно запазено",
+    "Offline" : "Офлайн",
     "Saving …" : "Записване …",
     "Saved" : "Записано",
     "Unsaved changes" : "Незаписани промени",
