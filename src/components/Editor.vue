@@ -90,6 +90,7 @@ import { emit } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 import { Doc } from 'yjs'
+import { Portal, PortalTarget } from 'portal-vue';
 
 import {
 	EDITOR,
@@ -135,6 +136,8 @@ export default {
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
 		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
+		Portal,
+		PortalTarget,
 	},
 	mixins: [
 		isMobile,
@@ -321,6 +324,25 @@ export default {
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
 		this.$parent?.$emit('update:loaded', true)
+
+
+		// TODO: Put the logic in a separate file
+		const portalTargetParent = document.createElement('div');
+		portalTargetParent.setAttribute('id', 'vue-portal-app');
+		document.querySelector('#viewer .modal-header .modal-title').appendChild(portalTargetParent);
+
+		// const portalTarget = document.createElement('portal-target');
+		// portalTarget.setAttribute('name', "header-destination");
+
+		const vm = new Vue({
+			render: h => h(PortalTarget, {
+				props: {
+					name: "header-destination"
+				}
+			}),
+			store
+		})
+		vm.$mount(portalTargetParent)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -328,11 +350,6 @@ export default {
 		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
-
-		// TODO: Put the logic in a separate file
-		const portalTarget = document.createElement('Portal-target');
-		portalTarget.setAttribute('name', "header-destination");
-		document.querySelector('#viewer .modal-header .modal-title').appendChild(portalTarget);
 	},
 	beforeDestroy() {
 		if (!this.richWorkspace) {
