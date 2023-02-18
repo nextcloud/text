@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { Mark, Node } from 'prosemirror-model'
+import { Mark, Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
 import createEditor from '../EditorFactory'
 
@@ -38,7 +38,7 @@ export const thead = getBuilders().thead
 function createDocumentString(node) {
 	/**
 	 * Extract attributes of node or mark
-	 * @param {Node|Mark} node 
+	 * @param {Node|Mark} node
 	 * @returns {string}
 	 */
 	const extractAttributes = (node) => {
@@ -57,7 +57,7 @@ function createDocumentString(node) {
 
 	/**
 	 * Create string representation of a single Node
-	 * @param {Node} node 
+	 * @param {Node} node
 	 * @returns {string}
 	 */
 	const stringifyNode = (node) => {
