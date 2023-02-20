@@ -189,7 +189,7 @@ class ApiService {
 	 * @throws NotFoundException
 	 * @throws DoesNotExistException
 	 */
-	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token = null): DataResponse {
+	public function push($documentId, $sessionId, $sessionToken, $steps, $awareness, $token = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 403);
 		}
@@ -201,7 +201,7 @@ class ApiService {
 		$file = $this->documentService->getFileForSession($session, $token);
 		if (!$this->documentService->isReadOnly($file, $token)) {
 			try {
-				$result = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
+				$result = $this->documentService->addStep($documentId, $sessionId, $steps);
 			} catch (InvalidArgumentException $e) {
 				return new DataResponse($e->getMessage(), 422);
 			}
@@ -210,18 +210,25 @@ class ApiService {
 		return new DataResponse([], 403);
 	}
 
-	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
+	public function sync($documentId, $sessionId, $sessionToken, $version = 0): DataResponse {
+		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+			return new DataResponse([], 403);
+		}
+
+		$result = [
+			'steps' => $this->documentService->getSteps($documentId, $version),
+			'sessions' => $this->sessionService->getAllSessions($documentId),
+		];
+		return new DataResponse($result, 200);
+	}
+
+	public function save($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
+		$file = null;
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse([], 403);
 		}
 
 		try {
-			$result = [
-				'steps' => $this->documentService->getSteps($documentId, $version),
-				'sessions' => $this->sessionService->getAllSessions($documentId),
-				'document' => $this->documentService->get($documentId)
-			];
-
 			$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
@@ -237,10 +244,12 @@ class ApiService {
 		}
 
 		try {
-			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $documentState, $force, $manualSave, $token, $this->request->getParam('filePath'));
+			$document = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $documentState, $force, $manualSave, $token, $this->request->getParam('filePath'));
 		} catch (DocumentSaveConflictException $e) {
 			try {
-				$result['outsideChange'] = $file->getContent();
+				return new DataResponse([
+					'outsideChange' => $file->getContent()
+				], 409);
 			} catch (LockedException $e) {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
@@ -252,8 +261,9 @@ class ApiService {
 				'message' => 'Failed to autosave document'
 			], 500);
 		}
-
-		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
+		return new DataResponse([
+			'document' => $document
+		]);
 	}
 
 	/**

@@ -82,16 +82,24 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token);
+	public function push(int $documentId, int $sessionId, string $sessionToken, array $steps, string $awareness, string $token): DataResponse {
+		return $this->apiService->push($documentId, $sessionId, $sessionToken, $steps, $awareness, $token);
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
-		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave, $token);
+	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0): DataResponse {
+		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @PublicPage
+	 */
+	public function save(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+		return $this->apiService->save($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 
 	/**

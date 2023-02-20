@@ -63,6 +63,7 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
 
+	version
 	/** @type {SyncService} */
 	#syncService
 	/** @type {Connection} */
@@ -80,6 +81,7 @@ class PollingBackend {
 		this.#fetchInterval = FETCH_INTERVAL
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
+		this.version = 0
 	}
 
 	connect() {
@@ -114,9 +116,9 @@ class PollingBackend {
 		this.#pollActive = true
 
 		try {
-			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
+			logger.debug('[PollingBackend] Fetching steps', this.version)
 			const response = await this.#connection.sync({
-				version: this.#syncService.version,
+				version: this.version,
 				force: false,
 				manualSave: false,
 			})
@@ -130,11 +132,16 @@ class PollingBackend {
 	}
 
 	_handleResponse({ data }) {
-		const { document, sessions } = data
+		const { sessions } = data
 		this.#fetchRetryCounter = 0
 
-		this.#syncService.emit('change', { document, sessions })
+		const version = Math.max(
+			this.version,
+			...data.steps.map(s => s.version)
+		)
+		this.#syncService.emit('change', { sessions, version })
 		this.#syncService._receiveSteps(data)
+		this.version = version
 
 		if (data.steps.length === 0) {
 			if (!this.#initialLoadingFinished) {
@@ -168,17 +175,6 @@ class PollingBackend {
 			} else {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
 			}
-		} else if (e.response.status === 409) {
-			// Still apply the steps to update our version of the document
-			this._handleResponse(e.response)
-			logger.error('Conflict during file save, please resolve')
-			this.#syncService.emit('error', {
-				type: ERROR_TYPE.SAVE_COLLISSION,
-				data: {
-					outsideChange: e.response.data.outsideChange,
-				},
-			})
-			this.disconnect()
 		} else if (e.response.status === 403) {
 			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()

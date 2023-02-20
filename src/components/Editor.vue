@@ -241,6 +241,7 @@ export default {
 			forceRecreate: false,
 			menubarLoaded: false,
 			draggedOver: false,
+			version: 0,
 
 			contentWrapper: null,
 		}
@@ -421,7 +422,7 @@ export default {
 		},
 
 		resolveUseThisVersion() {
-			this.$syncService.forceSave()
+			this.$syncService.forceSave(this.version)
 			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 
@@ -429,7 +430,7 @@ export default {
 			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
 			this.$editor.setOptions({ editable: !this.readOnly })
 			this.$editor.commands.setContent(markdownItHtml)
-			this.$syncService.forceSave()
+			this.$syncService.forceSave(this.version)
 		},
 
 		reconnect() {
@@ -528,7 +529,7 @@ export default {
 							}),
 							Keymap.configure({
 								'Mod-s': () => {
-									this.$syncService.save()
+									this.$syncService.save(this.version)
 									return true
 								},
 							}),
@@ -545,16 +546,22 @@ export default {
 
 		},
 
+		// TODO: split up in two handlers:
+		// - one that gets the session from PollingBackend
+		// - one that gets the document from SyncService
 		onChange({ document, sessions }) {
-			if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
-				this.resolveUseServerVersion()
-				return
+			if (document) {
+				if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
+					this.resolveUseServerVersion()
+					return
+				}
+				this.document = document
+				this.$editor.setOptions({ editable: !this.readOnly })
 			}
-			this.updateSessions.bind(this)(sessions)
-			this.document = document
-
-			this.syncError = null
-			this.$editor.setOptions({ editable: !this.readOnly })
+			if (sessions) {
+				this.updateSessions.bind(this)(sessions)
+				this.syncError = null
+			}
 		},
 
 		onSync({ steps, document }) {
@@ -620,7 +627,7 @@ export default {
 				) {
 					this.dirty = state.dirty
 					if (this.dirty) {
-						this.$syncService.autosave()
+						this.$syncService.autosave(this.version)
 					}
 				}
 			}

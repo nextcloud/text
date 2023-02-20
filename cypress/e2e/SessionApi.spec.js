@@ -130,12 +130,14 @@ describe('The session Api', function() {
 				})
 			cy.pushSteps({ connection, steps: [messages.query], version })
 				.then(response => {
+					// no steps inserted
 					cy.wrap(response)
 						.its('version')
 						.should('eql', 0)
+					// but returns all 3 other samples
 					cy.wrap(response)
 						.its('steps.length')
-						.should('eql', 0)
+						.should('eql', 3)
 				})
 		})
 	})
@@ -171,7 +173,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.saveDoc(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.downloadFile(filePath)
 				.its('data')
 				.should('eql', '# Heading 1')
@@ -182,7 +184,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, {
+			cy.saveDoc(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,
@@ -245,7 +247,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.saveDoc(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.login(user)
 			cy.prepareSessionApi()
 			cy.downloadFile('saves.md')
@@ -258,7 +260,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, {
+			cy.saveDoc(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,
