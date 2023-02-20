@@ -500,6 +500,7 @@ export default {
 				.then(() => {
 					const session = this.currentSession
 					this.$editor = createEditor({
+						language,
 						relativePath: this.relativePath,
 						session,
 						onCreate: ({ editor }) => {

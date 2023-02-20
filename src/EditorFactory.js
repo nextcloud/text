@@ -30,6 +30,8 @@ import hljs from 'highlight.js'
 
 import { logger } from './helpers/logger.js'
 import { Mention, PlainText, RichText } from './extensions/index.js'
+// eslint-disable-next-line import/no-named-as-default
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
 const loadSyntaxHighlight = async (language) => {
 	const list = hljs.listLanguages()
@@ -47,7 +49,7 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
+const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
@@ -64,7 +66,7 @@ const createEditor = ({ onCreate, onUpdate = () => {}, extensions, enableRichEdi
 			}),
 		]
 	} else {
-		defaultExtensions = [PlainText]
+		defaultExtensions = [PlainText, CodeBlockLowlight.configure({ lowlight, defaultLanguage: language })]
 	}
 
 	return new Editor({

@@ -23,12 +23,7 @@
 import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Text from '@tiptap/extension-text'
-/* eslint-enable import/no-named-as-default */
-
-import { lowlight } from 'lowlight/lib/core.js' // eslint-disable-line n/no-missing-import
-
 import PlainTextDocument from './../nodes/PlainTextDocument.js'
 
 export default Extension.create({
@@ -38,7 +33,6 @@ export default Extension.create({
 		return [
 			PlainTextDocument,
 			Text,
-			CodeBlockLowlight.configure({ lowlight }),
 		]
 	},
 
