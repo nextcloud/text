@@ -55,6 +55,7 @@ OC.L10N.register(
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Упозорење",
+    "Table" : "Табела",
     "Insert attachment" : "Убаци прилог",
     "Command" : "Команда",
     "Control" : "Контрола",
