@@ -91,11 +91,13 @@ class SyncService {
 			this.sessions = sessions
 		})
 
-		// TODO: Only continue if a connection was made
-		this.connection = initialSession
-			? new Connection({ data: initialSession }, {})
-			: await this._api.open({ fileId })
+		const connect = initialSession
+			? Promise.resolve(new Connection({ data: initialSession }, {}))
+			: this._api.open({ fileId })
 				.catch(error => this._emitError(error))
+
+		// TODO: Only continue if a connection was made
+		this.connection = await connect
 
 		this.version = this.connection.lastSavedVersion
 		this.emit('opened', {
