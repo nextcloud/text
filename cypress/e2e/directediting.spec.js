@@ -61,22 +61,25 @@ describe('direct editing', function() {
 			})
 		const closeRequestAlias = 'closeRequest'
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
-
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
 		cy.getContent()
 			.type('# This is a headline')
 			.type('{enter}')
 			.type('Some text')
 			.type('{enter}')
 
+		// ensure we have received our own steps
+		cy.wait('@sync', { timeout: 7000 })
+		cy.wait('@sync', { timeout: 7000 })
+
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
 			cy.getFileContent('empty.md').then((content) => {
-				// FIXME: This currently fails due to the save not happening fast enough
-				// The best would be if we always send the markdown at least on close and perform a save if the content changed
-				// expect(content).to.equal('# This is a headline\n\nSome text');
+				expect(content).to.equal('# This is a headline\n\nSome text')
 			})
 		})
 	})
+
 	it('Create a file, edit and close it', () => {
 		createDirectEditingLinkForNewFile(user, 'newfile.md')
 			.then((token) => {
@@ -85,6 +88,7 @@ describe('direct editing', function() {
 			})
 		const closeRequestAlias = 'closeRequest'
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
 
 		cy.getContent()
 			.type('# This is a headline')
@@ -92,12 +96,14 @@ describe('direct editing', function() {
 			.type('Some text')
 			.type('{enter}')
 
+		// ensure we have received our own steps
+		cy.wait('@sync', { timeout: 7000 })
+		cy.wait('@sync', { timeout: 7000 })
+
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
 			cy.getFileContent('newfile.md').then((content) => {
-				// FIXME: This currently fails due to the save not happening fast enough
-				// The best would be if we always send the markdown at least on close and perform a save if the content changed
-				// expect(content).to.equal('# This is a headline\n\nSome text');
+				expect(content).to.equal('# This is a headline\n\nSome text')
 			})
 		})
 	})
@@ -110,6 +116,7 @@ describe('direct editing', function() {
 			})
 		const closeRequestAlias = 'closeRequest'
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
 
 		cy.getContent()
 			.type('# This is a headline')
@@ -117,12 +124,14 @@ describe('direct editing', function() {
 			.type('Some text')
 			.type('{enter}')
 
+		// ensure we have received our own steps
+		cy.wait('@sync', { timeout: 7000 })
+		cy.wait('@sync', { timeout: 7000 })
+
 		cy.get('button.icon-close').click()
 		cy.wait(`@${closeRequestAlias}`).then(() => {
 			cy.getFileContent('empty.txt').then((content) => {
-				// FIXME: This currently fails due to the save not happening fast enough
-				// The best would be if we always send the markdown at least on close and perform a save if the content changed
-				// expect(content).to.equal('# This is a headline\n\nSome text');
+				expect(content).to.equal('# This is a headline\nSome text\n')
 			})
 		})
 	})
