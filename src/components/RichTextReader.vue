@@ -26,7 +26,7 @@
 
 <script>
 import BaseReader from './BaseReader.vue'
-import RichText from './../extensions/RichText.js'
+import { RichText } from './../extensions/index.js'
 import markdownit from './../markdownit/index.js'
 
 export default {
