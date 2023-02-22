@@ -1,4 +1,4 @@
-import { findChildren } from 'prosemirror-utils'
+import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
 import { initUserAndFiles, randUser } from '../../utils/index.js'
 import { createCustomEditor } from './../../support/components.js'
 
