@@ -325,24 +325,6 @@ export default {
 		}
 		this.$parent?.$emit('update:loaded', true)
 
-
-		// TODO: Put the logic in a separate file
-		const portalTargetParent = document.createElement('div');
-		portalTargetParent.setAttribute('id', 'vue-portal-app');
-		document.querySelector('#viewer .modal-header .modal-title').appendChild(portalTargetParent);
-
-		// const portalTarget = document.createElement('portal-target');
-		// portalTarget.setAttribute('name', "header-destination");
-
-		const vm = new Vue({
-			render: h => h(PortalTarget, {
-				props: {
-					name: "header-destination"
-				}
-			}),
-			store
-		})
-		vm.$mount(portalTargetParent)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -363,6 +345,62 @@ export default {
 		...mapActions('text', [
 			'setCurrentSession',
 		]),
+
+		menubarPortal() {
+			// TODO: Put the logic in a separate file
+			const portalTargetParent = document.createElement('div');
+			portalTargetParent.setAttribute('id', 'vue-portal-app');
+			document.querySelector('#viewer .modal-header .modal-title').appendChild(portalTargetParent);
+
+			// const portalTarget = document.createElement('portal-target');
+			// portalTarget.setAttribute('name', "header-destination");
+
+			const self = this
+			const vm = new Vue({
+				provide() {
+					const val = {}
+					// providers aren't naturally reactive
+					// and $editor will start as null
+					// using getters we can always provide the
+					// actual $editor, and other values without being reactive
+					Object.defineProperties(val, {
+						[EDITOR]: {
+							get: () => this.$editor,
+						},
+						[SYNC_SERVICE]: {
+							get: () => this.$syncService,
+						},
+						[FILE]: {
+							get: () => this.fileData,
+						},
+						[ATTACHMENT_RESOLVER]: {
+							get: () => this.$attachmentResolver,
+						},
+						[IS_PUBLIC]: {
+							get: () => this.isPublic,
+						},
+						[IS_RICH_EDITOR]: {
+							get: () => this.isRichEditor,
+						},
+						[IS_RICH_WORKSPACE]: {
+							get: () => this.isRichWorkspace,
+						},
+						[IS_MOBILE]: {
+							get: () => this.isMobile,
+						},
+					})
+
+					return val
+				},
+				render: h => h(PortalTarget, {
+					props: {
+						name: 'header-destination',
+					},
+				}),
+				store,
+			})
+			vm.$mount(portalTargetParent)
+		},
 
 		setContent(content, { addToHistory = true } = {}) {
 			this.$editor.chain()
@@ -564,6 +602,7 @@ export default {
 						this.setContent(documentSource, { addToHistory: false })
 					}
 					this.listenEditorEvents()
+					this.menubarPortal()
 
 				})
 
