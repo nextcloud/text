@@ -250,25 +250,11 @@ class SyncService {
 		return this.save({ manualSave: false })
 	}
 
-	close() {
+	async close() {
 		this.backend.disconnect()
-		let closed = false
-		return new Promise((resolve, reject) => {
-			this.on('save', () => {
-				this._close().then(() => {
-					closed = true
-					resolve()
-				}).catch(() => resolve())
-			})
-			setTimeout(() => {
-				if (!closed) {
-					this._close().then(() => {
-						resolve()
-					}).catch(() => resolve())
-				}
-			}, 2000)
-			this.save()
-		})
+		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+		await Promise.any([timeout, this.save()])
+		return this._close()
 	}
 
 	_close() {
