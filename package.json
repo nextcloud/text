@@ -105,7 +105,7 @@
     "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2",
     "y-websocket": "^1.4.5",
-    "yjs": "^13.5.46"
+    "yjs": "^13.5.47"
   },
   "engines": {
     "node": "^16.0.0",
