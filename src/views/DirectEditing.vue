@@ -128,6 +128,10 @@ export default {
 </script>
 
 <style lang="scss">
+	body {
+		position: fixed;
+		background-color: var(--color-main-background);
+	}
 	#content[class=app-public] {
 		margin: 0;
 		margin-top: 0;
@@ -135,15 +139,11 @@ export default {
 </style>
 
 <style scoped lang="scss">
-	body {
-		position: fixed;
-	}
-
 	#direct-editor {
 		width: 100%;
 		height: 100%;
 		position: fixed;
-		overflow: hidden;
+		overflow: auto;
 
 		&:deep(.text-editor) {
 			height: 100%;
