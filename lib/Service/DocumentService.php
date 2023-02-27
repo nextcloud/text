@@ -152,16 +152,44 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $document
+	 * @param int $documentId
 	 * @return ISimpleFile
 	 * @throws NotFoundException
 	 */
-	public function getStateFile($document): ISimpleFile {
+	public function getStateFile(int $documentId): ISimpleFile {
+		$filename = (string)$documentId . '.yjs';
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
-		return $this->appData->getFolder('documents')->getFile((string) $document);
+		return $this->appData->getFolder('documents')->getFile($filename);
 	}
+
+	/**
+	 * @param int $documentId
+	 * @return ISimpleFile
+	 * @throws NotPermittedException
+	 */
+	public function createStateFile(int $documentId): ISimpleFile {
+		$filename = (string)$documentId . '.yjs';
+		return $this->appData->getFolder('documents')->newFile($filename);
+	}
+
+	/**
+	 * @param int $documentId
+	 * @param string $content
+	 */
+	public function writeDocumentState(int $documentId, string $content): void {
+		try {
+			$documentStateFile = $this->getStateFile($documentId);
+		} catch (NotFoundException $e) {
+			$documentStateFile = $this->createStateFile($documentId);
+		} catch (NotPermittedException $e) {
+			$this->logger->error('Failed to create document state file', ['exception' => $e]);
+			return;
+		}
+		$documentStateFile->putContent($content);
+	}
+
 
 	public function get($documentId) {
 		return $this->documentMapper->find($documentId);
@@ -304,22 +332,16 @@ class DocumentService {
 			return $document;
 		}
 
-		try {
-			$documentStateFile = $this->getStateFile((string)$file->getId());
-		} catch (NotFoundException $e) {
-			$documentStateFile = $this->appData->getFolder('documents')->newFile((string)$file->getId());
-		}
-
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoaveDocument, $documentStateFile, $documentState) {
+			), function () use ($file, $autoaveDocument, $documentState) {
 				$file->putContent($autoaveDocument);
 				if ($documentState) {
-					$documentStateFile->putContent($documentState);
+					$this->writeDocumentState($file->getId(), $documentState);
 				}
 			});
 		} catch (LockedException $e) {
