@@ -333,7 +333,6 @@ export default {
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		this.$providers.forEach(p => p.destroy())
-		this.close()
 	},
 	methods: {
 		...mapActions('text', [

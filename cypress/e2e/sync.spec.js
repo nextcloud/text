@@ -24,7 +24,7 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('yjs document state', () => {
+describe('Save', () => {
 	before(() => {
 		cy.createUser(user)
 	})
@@ -33,20 +33,31 @@ describe('yjs document state', () => {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 		cy.visit('/apps/files')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }, (req) => {
+			if (req.body.autosaveContent) {
+				req.alias = 'save'
+			}
+		}).as('sync')
 		cy.openTestFile()
 		cy.getContent().find('h2').should('contain', 'Hello world')
-		cy.wait('@sync', { timeout: 7000 })
 		cy.getContent().type('* Saving the doc saves the doc state{enter}')
-		cy.wait('@sync', { timeout: 7000 })
 	})
 
 	it('saves the actual file and document state', () => {
 		cy.getContent().type('{ctrl+s}')
-		cy.wait('@sync').its('request.body')
-			.should('have.property', 'autosaveContent')
+		cy.wait('@save').its('request.body')
+			.should('have.property', 'documentState')
 			.should('not.be.empty')
+		cy.testName()
+			.then(name => cy.downloadFile(`/${name}.md`))
+			.its('data')
+			.should('include', 'saves the doc state')
 		cy.closeFile()
+	})
+
+	it('saves on close', () => {
+		cy.closeFile()
+		cy.wait('@save')
 		cy.testName()
 			.then(name => cy.downloadFile(`/${name}.md`))
 			.its('data')
@@ -54,10 +65,6 @@ describe('yjs document state', () => {
 	})
 
 	it('passes the doc content from one session to the next', () => {
-		cy.getContent().type('{ctrl+s}')
-		cy.wait('@sync').its('request.body')
-			.should('have.property', 'documentState')
-			.should('not.be.empty')
 		cy.closeFile()
 		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
 			.as('create')
@@ -66,10 +73,20 @@ describe('yjs document state', () => {
 			.its('response.body')
 			.should('have.property', 'content')
 			.should('not.be.empty')
-		cy.wait('@sync').its('request.body').should('have.property', 'version')
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.getContent().find('li').should('contain', 'Saving the doc saves the doc state')
 		cy.getContent().type('recovered')
 		cy.closeFile()
 	})
+
+	// regression test #3834
+	it('close triggers one close request', () => {
+		cy.closeFile()
+		// Wait to make sure there is enough time for all close requests to run
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(100)
+		// reuse @close intercepted in closeFile()
+		cy.get('@close.all').should('have.length', 1)
+	})
+
 })
