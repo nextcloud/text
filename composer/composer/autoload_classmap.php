@@ -39,6 +39,7 @@ return array(
     'OCA\\Text\\Listeners\\LoadViewerListener' => $baseDir . '/../lib/Listeners/LoadViewerListener.php',
     'OCA\\Text\\Listeners\\NodeCopiedListener' => $baseDir . '/../lib/Listeners/NodeCopiedListener.php',
     'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => $baseDir . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
+    'OCA\\Text\\Migration\\ResetSessionsBeforeYjs' => $baseDir . '/../lib/Migration/ResetSessionsBeforeYjs.php',
     'OCA\\Text\\Migration\\Version010000Date20190617184535' => $baseDir . '/../lib/Migration/Version010000Date20190617184535.php',
     'OCA\\Text\\Migration\\Version030001Date20200402075029' => $baseDir . '/../lib/Migration/Version030001Date20200402075029.php',
     'OCA\\Text\\Migration\\Version030201Date20201116110353' => $baseDir . '/../lib/Migration/Version030201Date20201116110353.php',

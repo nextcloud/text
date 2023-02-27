@@ -36,6 +36,17 @@ class SessionMapper extends QBMapper {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function findAllDocuments(): array {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from($this->getTableName());
+
+		return $this->findEntities($qb);
+	}
+
+	/**
 	 * @param $documentId
 	 * @param $sessionId
 	 * @param $token

@@ -54,6 +54,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Listeners\\LoadViewerListener' => __DIR__ . '/..' . '/../lib/Listeners/LoadViewerListener.php',
         'OCA\\Text\\Listeners\\NodeCopiedListener' => __DIR__ . '/..' . '/../lib/Listeners/NodeCopiedListener.php',
         'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
+        'OCA\\Text\\Migration\\ResetSessionsBeforeYjs' => __DIR__ . '/..' . '/../lib/Migration/ResetSessionsBeforeYjs.php',
         'OCA\\Text\\Migration\\Version010000Date20190617184535' => __DIR__ . '/..' . '/../lib/Migration/Version010000Date20190617184535.php',
         'OCA\\Text\\Migration\\Version030001Date20200402075029' => __DIR__ . '/..' . '/../lib/Migration/Version030001Date20200402075029.php',
         'OCA\\Text\\Migration\\Version030201Date20201116110353' => __DIR__ . '/..' . '/../lib/Migration/Version030201Date20201116110353.php',
