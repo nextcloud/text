@@ -57,7 +57,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: phpunit
+          tools: phpunit:9
           extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, gd, zip
 
       - name: Set up PHPUnit
@@ -100,7 +100,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: phpunit
+          tools: phpunit:9
           extensions: mbstring, iconv, fileinfo, intl, oci8
           coverage: none
 
