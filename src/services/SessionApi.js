@@ -50,7 +50,7 @@ class SessionApi {
 export class Connection {
 
 	#content
-	#documentumentState
+	#documentState
 	#document
 	#session
 	#lock
@@ -64,7 +64,7 @@ export class Connection {
 		this.#lock = lock
 		this.#readOnly = readOnly
 		this.#content = content
-		this.#documentumentState = documentState
+		this.#documentState = documentState
 		this.#options = options
 	}
 
@@ -72,8 +72,8 @@ export class Connection {
 		return this.#document
 	}
 
-	get lastSavedVersion() {
-		return this.#document.lastSavedVersion
+	get docStateVersion() {
+		return this.#documentState ? this.#document.lastSavedVersion : 0
 	}
 
 	get state() {
@@ -81,7 +81,7 @@ export class Connection {
 			document: { ...this.#document, readOnly: this.#readOnly },
 			session: this.#session,
 			documentSource: this.#content || '',
-			documentState: this.#documentumentState,
+			documentState: this.#documentState,
 		}
 	}
 
