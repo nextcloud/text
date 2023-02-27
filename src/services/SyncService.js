@@ -99,7 +99,7 @@ class SyncService {
 		// TODO: Only continue if a connection was made
 		this.connection = await connect
 
-		this.version = this.connection.lastSavedVersion
+		this.version = this.connection.docStateVersion
 		this.emit('opened', {
 			...this.connection.state,
 			version: this.version,
