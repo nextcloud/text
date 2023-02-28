@@ -14,6 +14,12 @@ namespace OCA\Viewer\Event {
 	class LoadViewer extends \OCP\EventDispatcher\Event {}
 }
 
+namespace OCA\Files_Sharing\Event {
+	class BeforeTemplateRenderedEvent extends \OCP\EventDispatcher\Event {
+		abstract public function getShare(): \OCP\Share\IShare;
+	}
+}
+
 namespace OC\User {
 	class NoUserException extends \Exception {}
 }
