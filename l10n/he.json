@@ -21,6 +21,7 @@
     "Reconnect" : "התחבר מחדש",
     "The document has been changed outside of the editor. The changes cannot be applied." : "המסמך נערך מחוץ לעורך. לא ניתן להחיל את השינויים.",
     "File could not be loaded. Please check your internet connection." : "לא ניתן לטעון את הקובץ. נא לבדוק את מצב החיבור שלך לאינטרנט.",
+    "This file is opened read-only as it is currently locked by {user}." : "הקובץ נפתח לקריאה בלבד מפני שהוא כרגע נעול על ידי [user].",
     "Edit guest name" : "עריכת שם אורח",
     "Guest" : "אורח/ת",
     "Save guest name" : "שמירת שם אורח",
