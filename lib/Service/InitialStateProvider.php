@@ -36,4 +36,8 @@ class InitialStateProvider {
 			$this->configService->isRichEditingEnabled()
 		);
 	}
+
+	public function provideFileId(int $fileId): void {
+		$this->initialState->provideInitialState('fileId', $fileId);
+	}
 }

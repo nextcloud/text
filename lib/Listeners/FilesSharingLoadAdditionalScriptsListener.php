@@ -25,13 +25,14 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
+use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCA\Text\Service\InitialStateProvider;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IConfig;
 use OCP\Util;
 
-/** @implements IEventListener<Event> */
+/** @implements IEventListener<Event|BeforeTemplateRenderedEvent> */
 class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	protected InitialStateProvider $initialStateProvider;
 
@@ -43,5 +44,9 @@ class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 		Util::addScript('text', 'text-public');
 
 		$this->initialStateProvider->provideState();
+		$node = $event->getShare()->getNode();
+		if ($node instanceof \OCP\Files\File) {
+			$this->initialStateProvider->provideFileId($node->getId());
+		}
 	}
 }
