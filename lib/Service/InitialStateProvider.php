@@ -38,6 +38,6 @@ class InitialStateProvider {
 	}
 
 	public function provideFileId(int $fileId): void {
-		$this->initialState->provideInitialState('fileId', $fileId);
+		$this->initialState->provideInitialState('file_id', $fileId);
 	}
 }

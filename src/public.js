@@ -13,7 +13,7 @@ import store from './store/index.js'
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
-const loadEditor = ({ sharingToken, mimetype, $el }) => {
+const loadEditor = ({ sharingToken, mimetype, fileId, $el }) => {
 	const container = document.createElement('div')
 	container.id = 'texteditor'
 
@@ -37,6 +37,7 @@ const loadEditor = ({ sharingToken, mimetype, $el }) => {
 						active: true,
 						shareToken: sharingToken,
 						mime: mimetype,
+						fileId,
 					},
 				}),
 				store,
@@ -67,7 +68,9 @@ documentReady(() => {
 
 	// single file share
 	if (openMimetypes.indexOf(mimetype) !== -1) {
-		loadEditor({ mimetype, sharingToken, $el: document.getElementById('preview') })
+		const $el = document.getElementById('preview')
+		const fileId = loadState('text', 'file_id')
+		loadEditor({ mimetype, sharingToken, fileId, $el })
 	}
 })
 
