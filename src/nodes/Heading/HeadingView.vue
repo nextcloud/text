@@ -90,6 +90,8 @@ div.ProseMirror {
 	h1,h2,h3,h4,h5,h6 {
 		position: relative;
 		.heading-anchor[contenteditable="false"] {
+			// Shrink clickable area of anchor permalinks to not overlay the heading
+			width: 1em;
 			opacity: 0;
 			padding: 0;
 			left: -1em;
@@ -108,15 +110,6 @@ div.ProseMirror {
 
 		&:focus-visible {
 			outline: none;
-		}
-	}
-
-	// Shrink clickable area of anchor permalinks while editing
-	&[contenteditable="true"] {
-		h1,h2,h3,h4,h5,h6 {
-			.heading-anchor {
-				width: 1em;
-			}
 		}
 	}
 }
