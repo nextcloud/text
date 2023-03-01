@@ -23,7 +23,7 @@
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
 		<NodeViewContent class="paragraph-content" />
-		<ReferenceList v-if="text"
+		<ReferenceList v-if="isLoggedIn && text"
 			:text="text"
 			:limit="1"
 			contenteditable="false" />
@@ -32,11 +32,11 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import { getCurrentUser } from '@nextcloud/auth'
 import { ReferenceList } from '@nextcloud/vue-richtext'
 import debounce from 'debounce'
 
 import '@nextcloud/vue-richtext/dist/style.css'
-
 export default {
 	name: 'ParagraphView',
 	components: {
@@ -48,6 +48,7 @@ export default {
 	data() {
 		return {
 			text: null,
+			isLoggedIn: getCurrentUser()
 		}
 	},
 	watch: {
