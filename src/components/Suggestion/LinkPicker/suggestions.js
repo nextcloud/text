@@ -22,7 +22,7 @@
 import createSuggestions from '../suggestions.js'
 import LinkPickerList from './LinkPickerList.vue'
 
-import { searchProvider, getLinkWithPicker } from '@nextcloud/vue-richtext'
+import { searchProvider, getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 export default () => createSuggestions({
 	listComponent: LinkPickerList,
