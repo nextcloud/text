@@ -47,7 +47,27 @@ describe('test link marks', function() {
 	})
 
 	describe('autolink', function() {
-		it('with protocol', () => {
+		it('with protocol to files app and fileId', () => {
+			cy.getFile(fileName)
+				.then($el => {
+					const id = $el.data('id')
+
+					const link = `${Cypress.env('baseUrl')}/apps/files/file-name?fileId=${id} `
+					cy.getContent()
+						.type('{enter}')
+						.type(link)
+
+					cy.getContent()
+						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
+						.click({ force: true })
+
+					cy.get('@winOpen')
+						.should('have.been.calledOnce')
+						.should('have.been.calledWithMatch', new RegExp(`/f/${id}$`))
+				})
+		})
+
+		it('with protocol and fileId', () => {
 			cy.getFile(fileName)
 				.then($el => {
 					const id = $el.data('id')
@@ -63,7 +83,7 @@ describe('test link marks', function() {
 
 					cy.get('@winOpen')
 						.should('have.been.calledOnce')
-						.should('have.been.calledWithMatch', new RegExp(`/f/${id}$`))
+						.should('have.been.calledWithMatch', new RegExp(`${Cypress.env('baseUrl')}/file-name\\?fileId=${id}$`))
 				})
 		})
 
