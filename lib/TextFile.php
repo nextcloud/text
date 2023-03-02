@@ -46,7 +46,7 @@ class TextFile implements ISimpleFile {
 		return $this->file->getName();
 	}
 
-	public function getSize(): int {
+	public function getSize(): float|int {
 		return $this->file->getSize();
 	}
 
