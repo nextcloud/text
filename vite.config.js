@@ -21,6 +21,7 @@ export default defineConfig({
 				/markdown-it\/.*/,
 				/@tiptap\/pm\/.*/,
 				/vue-material-design-icons\/.*/,
+				/@nextcloud\/vue\/.*/,
 			],
 			output: {
 				globals: { vue: 'Vue' },

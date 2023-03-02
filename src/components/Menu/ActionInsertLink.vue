@@ -79,7 +79,7 @@
 
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
-import { getLinkWithPicker } from '@nextcloud/vue-richtext'
+import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'

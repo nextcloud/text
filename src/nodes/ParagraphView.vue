@@ -23,7 +23,7 @@
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
 		<NodeViewContent class="paragraph-content" />
-		<ReferenceList v-if="isLoggedIn && text"
+		<NcReferenceList v-if="isLoggedIn && text"
 			:text="text"
 			:limit="1"
 			contenteditable="false" />
@@ -33,16 +33,15 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 import { getCurrentUser } from '@nextcloud/auth'
-import { ReferenceList } from '@nextcloud/vue-richtext'
+import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import debounce from 'debounce'
 
-import '@nextcloud/vue-richtext/dist/style.css'
 export default {
 	name: 'ParagraphView',
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,
-		ReferenceList,
+		NcReferenceList,
 	},
 	props: nodeViewProps,
 	data() {
