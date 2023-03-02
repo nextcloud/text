@@ -34,6 +34,11 @@
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
+		<Translate v-if="displayTranslate !== false"
+			:content="displayTranslate"
+			@insert-content="translateInsert"
+			@replace-content="translateReplace"
+			@close="hideTranslate" />
 
 		<div v-if="$isRichEditor"
 			ref="menubar"
@@ -46,6 +51,12 @@
 			<ActionList key="text-action--remain"
 				:action-entry="hiddenEntries">
 				<template #lastAction="{ visible }">
+					<NcActionButton @click="showTranslate">
+						<template #icon>
+							<TranslateVariant />
+						</template>
+						{{ t('text', 'Translate') }}
+					</NcActionButton>
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<CharacterCount v-bind="{ visible }" />
@@ -59,8 +70,9 @@
 </template>
 
 <script>
-import { NcActionSeparator } from '@nextcloud/vue'
+import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { loadState } from '@nextcloud/initial-state'
 import debounce from 'debounce'
 
 import HelpModal from '../HelpModal.vue'
@@ -68,7 +80,7 @@ import actionsFullEntries from './entries.js'
 import ActionEntry from './ActionEntry.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ActionList from './ActionList.vue'
-import { DotsHorizontal } from '../icons.js'
+import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
@@ -76,6 +88,7 @@ import {
 } from '../Editor.provider.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import CharacterCount from './CharacterCount.vue'
+import Translate from './../Modal/Translate.vue'
 
 export default {
 	name: 'MenuBar',
@@ -85,7 +98,10 @@ export default {
 		ActionList,
 		HelpModal,
 		NcActionSeparator,
+		NcActionButton,
 		CharacterCount,
+		TranslateVariant,
+		Translate,
 	},
 	mixins: [
 		useEditorMixin,
@@ -113,10 +129,12 @@ export default {
 		return {
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
+			displayTranslate: false,
 			forceRecompute: 0,
 			isReady: false,
 			isVisible: this.$editor.isFocused,
 			windowWidth: 0,
+			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 		}
 	},
 	computed: {
@@ -226,6 +244,32 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
+		},
+		showTranslate() {
+			const { from, to } = this.$editor.view.state.selection
+			const selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
+			console.debug('translation click', this.$editor.view.state.selection, selectedText)
+			this.displayTranslate = selectedText ?? ''
+		},
+		hideTranslate() {
+			this.displayTranslate = false
+		},
+		translateInsert(content) {
+			this.$editor.commands.command(({ tr, commands }) => {
+				return commands.insertContentAt(tr.selection.to, content)
+			})
+			this.displayTranslate = false
+		},
+		translateReplace(content) {
+			this.$editor.commands.command(({ tr, commands }) => {
+				const selection = tr.selection
+				const range = {
+					from: selection.from,
+					to: selection.to,
+				}
+				return commands.insertContentAt(range, content)
+			})
+			this.displayTranslate = false
 		},
 	},
 }
