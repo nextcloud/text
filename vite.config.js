@@ -15,7 +15,13 @@ export default defineConfig({
 			formats: ['es'],
 		},
 		rollupOptions: {
-			external: Object.keys(dependencies),
+			external: [
+				Object.keys(dependencies),
+				/markdown-it\/.*/,
+				/@tiptap\/pm\/.*/,
+				/vue-material-design-icons\/.*/,
+				/@nextcloud\/vue\/.*/,
+			],
 			output: {
 				globals: { vue: 'Vue' },
 			},
