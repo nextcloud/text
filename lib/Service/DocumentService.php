@@ -333,6 +333,18 @@ class DocumentService {
 		}
 
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
+		if (empty($autoaveDocument)) {
+			$this->logger->error('Saving empty document', [
+				'requestVersion' => $version,
+				'requestAutosaveDocument' => $autoaveDocument,
+				'requestDocumentState' => $documentState,
+				'document' => $document->jsonSerialize(),
+				'fileSizeBeforeSave' => $file->getSize(),
+				'steps' => array_map(function(Step $step) {
+					return $step->jsonSerialize();
+				}, $this->stepMapper->find($documentId, 0))
+			]);
+		}
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
