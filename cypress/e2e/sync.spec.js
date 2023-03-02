@@ -43,6 +43,26 @@ describe('Save', () => {
 		cy.getContent().type('* Saving the doc saves the doc state{enter}')
 	})
 
+	it('recovers content from the steps alone', () => {
+		// prevent all saves
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }, (req) => {
+			if (req.body.autosaveContent) {
+				req.destroy()
+				req.alias = 'save'
+			}
+		}).as('sync')
+		cy.closeFile()
+		// we prevented the save
+		cy.testName()
+			.then(name => cy.downloadFile(`/${name}.md`))
+			.its('data')
+			.should('not.include', 'saves the doc state')
+		cy.openTestFile()
+		cy.getContent().find('h2').should('contain', 'Hello world')
+		cy.getContent().find('li').should('contain', 'saves the doc')
+		cy.getContent().type('recovered')
+	})
+
 	it('saves the actual file and document state', () => {
 		cy.getContent().type('{ctrl+s}')
 		cy.wait('@save').its('request.body')

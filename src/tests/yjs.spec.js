@@ -1,9 +1,29 @@
 import recorded from './fixtures/recorded'
-import { Doc, encodeStateAsUpdate } from 'yjs'
+import { Doc, encodeStateAsUpdate, XmlFragment } from 'yjs'
 import { decodeArrayBuffer } from '../helpers/base64.js'
 import * as decoding from 'lib0/decoding'
 import * as encoding from 'lib0/encoding'
 import * as syncProtocol from 'y-protocols/sync'
+
+function processStep(ydoc, step) {
+	const buf = decodeArrayBuffer(step)
+	const decoder = decoding.createDecoder(buf)
+	const encoder = encoding.createEncoder()
+	const messageType = decoding.readVarUint(decoder)
+	const inType = syncProtocol.readSyncMessage(
+		decoder,
+		encoder,
+		ydoc
+	)
+	if (!encoding.length(encoder)) {
+		return {inType, length: 0}
+	}
+	const binary = encoding.toUint8Array(encoder)
+	const outBuf = decodeArrayBuffer(binary)
+	const outDecoder = decoding.createDecoder(outBuf)
+	const outType = decoding.peekVarUint(outDecoder)
+	return {inType, outType, length: encoding.length(encoder)}
+}
 
 describe('recorded session', () => {
 	const flattened = recorded.flat()
@@ -11,26 +31,6 @@ describe('recorded session', () => {
 	const awareness = flattened.filter(step => /^A[QRSTU]/.test(step))
 	function size(arr) {
 		return arr.reduce((total, cur) => total + cur.length, 0)
-	}
-
-	function processStep(ydoc, step) {
-		const buf = decodeArrayBuffer(step)
-		const decoder = decoding.createDecoder(buf)
-		const encoder = encoding.createEncoder()
-		const messageType = decoding.readVarUint(decoder)
-		const inType = syncProtocol.readSyncMessage(
-			decoder,
-			encoder,
-			ydoc
-		)
-		if (!encoding.length(encoder)) {
-			return {inType, length: 0}
-		}
-		const binary = encoding.toUint8Array(encoder)
-		const outBuf = decodeArrayBuffer(binary)
-		const outDecoder = decoding.createDecoder(outBuf)
-		const outType = decoding.peekVarUint(outDecoder)
-		return {inType, outType, length: encoding.length(encoder)}
 	}
 
 	test('original size', () => {
@@ -138,4 +138,32 @@ describe('recorded session', () => {
 		expect(size(replies)).toBe(0)
 	})
 
+})
+
+describe('file empty sample', () => {
+	test('parsing the only step', () => {
+		const ydoc = new Doc()
+		const step = "AAKmAQEO9ausmQ4AqMnD4roGrgQBf6jJw+K6Bq8EAX+oycPiugawBAF\/qMnD4roGsQQBf6jJw+K6BrIEAX+oycPiugazBAF\/qMnD4roGtAQBf6jJw+K6BrUEAX+oycPiuga2BAF\/qMnD4roGtwQBf6jJw+K6BrgEAX+oycPiuga5BAF\/qMnD4roGugQBf6jJw+K6BrsEAX8C9ausmQ4BAA7Jw+K6BgGuBA4="
+		const {inType, outType} = processStep(ydoc, step)
+		expect(inType).toBe(syncProtocol.messageYjsUpdate)
+		expect(outType).toBeUndefined()
+		expect(ydoc.get('default', XmlFragment)).toBe('asdf')
+	})
+})
+
+describe('working sample', () => {
+	test('parsing the steps', () => {
+		const ydoc = new Doc()
+		const steps = [
+			"AAJ4AQfOyOfpCwAHAQdkZWZhdWx0AwdoZWFkaW5nBwDOyOfpCwAGBADOyOfpCwELSGVsbG8gd29ybGQoAM7I5+kLAAVsZXZlbAF9AigAzsjn6QsAAmlkAX8oAM7I5+kLAAR1dWlkAX+Hzsjn6QsAAwlwYXJhZ3JhcGgA",
+			"AAJWAQLOyOfpCxGozsjn6QsOAXcNaC1oZWxsby13b3JsZKjOyOfpCw8BdyQ3ODI4Mjg5My0yOTVlLTQyMjYtODcyZi1lOTg3NzBmZDk0NmQBzsjn6QsBDgI="
+		]
+		for (const step of steps) {
+			const {inType, outType} = processStep(ydoc, step)
+			expect(inType).toBe(syncProtocol.messageYjsUpdate)
+			expect(outType).toBeUndefined()
+		}
+		expect(ydoc.get('default', XmlFragment).firstChild.nodeName)
+			.toBe('heading')
+	})
 })
