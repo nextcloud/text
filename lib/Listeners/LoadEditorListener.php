@@ -28,22 +28,26 @@ namespace OCA\Text\Listeners;
 
 use OCA\Text\Event\LoadEditor;
 use OCA\Text\Service\InitialStateProvider;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
 use OCP\EventDispatcher\Event;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
 /** @template-implements IEventListener<Event|LoadEditor> */
 class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
-	private InitialStateProvider $initialStateProvider;
-
-	public function __construct(InitialStateProvider $initialStateProvider) {
-		$this->initialStateProvider = $initialStateProvider;
+	public function __construct(
+		private InitialStateProvider $initialStateProvider,
+		private IEventDispatcher $eventDispatcher
+	) {
 	}
 
 	public function handle(Event $event): void {
 		if (!$event instanceof LoadEditor) {
 			return;
 		}
+
+		$this->eventDispatcher->dispatchTyped(new RenderReferenceEvent());
 
 		$this->initialStateProvider->provideState();
 		Util::addScript('text', 'text-editors');
