@@ -71,6 +71,7 @@ import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
 import MDI_Upload from 'vue-material-design-icons/Upload.vue'
 import MDI_Warn from 'vue-material-design-icons/Alert.vue'
 import MDI_Web from 'vue-material-design-icons/Web.vue'
+import MDI_TranslateVariant from 'vue-material-design-icons/TranslateVariant.vue'
 
 const DEFAULT_ICON_SIZE = 20
 
@@ -142,6 +143,7 @@ export const TableAddRowAfter = makeIcon(MDI_TableAddRowAfter)
 export const TableAddRowBefore = makeIcon(MDI_TableAddRowBefore)
 export const TableSettings = makeIcon(MDI_TableSettings)
 export const TrashCan = makeIcon(MDI_TrashCan)
+export const TranslateVariant = makeIcon(MDI_TranslateVariant)
 export const Undo = makeIcon(MDI_Undo)
 export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
