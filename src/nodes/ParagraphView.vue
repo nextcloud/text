@@ -63,20 +63,51 @@ export default {
 	},
 	beforeCreate() {
 		this.debouncedUpdateText = debounce((newNode) => {
-			this.text = this.getTextReference(this.node?.textContent)
+			this.text = this.getTextReference(this.node)
 		}, 500)
 	},
 	created() {
-		this.text = this.getTextReference(this.node?.textContent)
+		this.text = this.getTextReference(this.node)
 	},
 	beforeUnmount() {
 		this.debouncedUpdateText?.cancel()
 	},
 	methods: {
-		getTextReference(text) {
-			const PATTERN = /(^)(https?:\/\/)?((?:[-A-Z0-9+_]+\.)+[-A-Z]+(?:\/[-A-Z0-9+&@#%?=~_|!:,.;()]*)*)($)/ig
-			if ((new RegExp(PATTERN)).test(text)) {
-				return text
+		getTextReference(node) {
+			if (!node?.childCount) {
+				return null
+			}
+
+			// Only regard paragraphs with exactly one text node (ignoring whitespace-only nodes)
+			let textNode
+			for (let i = 0; i < node.childCount; i++) {
+				const childNode = node.child(i)
+
+				// Disregard paragraphs with non-text nodes
+				if (childNode.type.name !== 'text') {
+					return null
+				}
+
+				// Ignore children with empty text
+				if (!childNode.textContent.trim()) {
+					continue
+				}
+
+				// Disregard paragraphs with more than one text nodes
+				if (textNode) {
+					return null
+				}
+
+				textNode = childNode
+			}
+
+			// Check if the text node is a link
+			const linkMark = textNode?.marks.find((m) => m.type.name === 'link')
+			const href = linkMark?.attrs?.href
+
+			const PATTERN = /(^)(https?:\/\/)((?:[-A-Z0-9+_]+\.)+[-A-Z]+(?:\/[-A-Z0-9+&@#%?=~_|!:,.;()]*)*)($)/ig
+			if ((new RegExp(PATTERN)).test(href)) {
+				return href
 			}
 
 			return null
