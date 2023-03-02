@@ -98,7 +98,7 @@ class SyncService {
 
 		// TODO: Only continue if a connection was made
 		this.connection = await connect
-
+		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
 		this.emit('opened', {
 			...this.connection.state,
@@ -108,8 +108,6 @@ class SyncService {
 			...this.connection.state,
 			version: this.version,
 		})
-		this.backend = new PollingBackend(this, this.connection)
-
 	}
 
 	startSync() {

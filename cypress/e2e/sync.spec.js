@@ -24,7 +24,7 @@ import { randUser } from '../utils/index.js'
 
 const user = randUser()
 
-describe('Save', () => {
+describe('Sync', () => {
 	before(() => {
 		cy.createUser(user)
 	})
@@ -62,6 +62,34 @@ describe('Save', () => {
 			.then(name => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'saves the doc state')
+	})
+
+	it('recovers from a lost connection', () => {
+		let count = 0
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }, (req) => {
+			if (count < 5) {
+				count++
+				req.destroy()
+				req.alias = 'dead'
+			}
+		}).as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }, (req) => {
+			if (count < 5) {
+				count++
+				req.destroy()
+				req.alias = 'deadSync'
+			}
+		})
+		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
+		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
+		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
+		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
+		cy.getContent().type('* more content added after the lost connection{enter}')
+		cy.closeFile()
+		cy.testName()
+			.then(name => cy.downloadFile(`/${name}.md`))
+			.its('data')
+			.should('include', 'after the lost connection')
 	})
 
 	it('passes the doc content from one session to the next', () => {

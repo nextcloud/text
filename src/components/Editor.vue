@@ -498,7 +498,7 @@ export default {
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
 					const session = this.currentSession
-					this.$editor = createEditor({
+					this.$editor ||= createEditor({
 						language,
 						relativePath: this.relativePath,
 						session,
