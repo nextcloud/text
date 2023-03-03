@@ -23,6 +23,8 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Shkurtoret e tastierës",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
+    "Translate" : "Përkthe",
+    "Replace" : "Mbishkruaj",
     "Unsupported image type" : "Lloj imazhi i pa suportuar",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",

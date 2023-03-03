@@ -37,6 +37,8 @@ OC.L10N.register(
     "Strikethrough" : "Rasurado",
     "Underline" : "Sublinhado",
     "Underlined text" : "Texto sublinhado",
+    "Translate" : "Traduzir",
+    "Replace" : "Substitua",
     "Unsupported image type" : "Tipo de imagem não suportado",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",

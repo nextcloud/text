@@ -66,6 +66,8 @@
     "Update link" : "更新链接",
     "_%n word_::_%n words_" : ["%n 字"],
     "_%n char_::_%n chars_" : ["%n 字符"],
+    "Translate" : "翻译",
+    "Replace" : "替换",
     "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
     "Undo" : "撤销",

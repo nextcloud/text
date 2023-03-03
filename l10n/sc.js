@@ -45,6 +45,8 @@ OC.L10N.register(
     "Blockquote" : "Mentovu",
     "Quoted text" : "Testu tzitadu",
     "Code block" : "Blocu de còdighe",
+    "Translate" : "Borta",
+    "Replace" : "Càmbia cun àteru",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Undo" : "Iscontza",
     "Redo" : "Torra a fàghere",

@@ -36,6 +36,7 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
+    "Translate" : "Translate",
     "Undo" : "Anullar",
     "Redo" : "Refar",
     "Headings" : "Títols",

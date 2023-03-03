@@ -19,6 +19,8 @@ OC.L10N.register(
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
+    "Translate" : "Tradu",
+    "Replace" : "Înlocuiește",
     "Undo" : "Anulează ultima acțiune",
     "Info" : "Info",
     "Success" : "Succes",
