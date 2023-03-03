@@ -68,6 +68,8 @@ export default {
 	& > div {
 		padding: 4px;
 		padding-left: 8px;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	img {
