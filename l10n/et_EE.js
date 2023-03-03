@@ -16,6 +16,8 @@ OC.L10N.register(
     "Saved" : "Salvestatud",
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
+    "Translate" : "Tõlgi",
+    "Replace" : "Asenda",
     "Unsupported image type" : "Pildi tüüp pole toetatud",
     "Undo" : "Tühista",
     "Info" : "Info",

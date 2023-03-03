@@ -43,6 +43,8 @@ OC.L10N.register(
     "Quoted text" : "Tilvitnaður texti",
     "Code block" : "Kóðablokk",
     "Update link" : "Uppfæra tengil",
+    "Translate" : "Þýða",
+    "Replace" : "Skipta út",
     "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Undo" : "Afturkalla",

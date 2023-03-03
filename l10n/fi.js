@@ -81,6 +81,8 @@ OC.L10N.register(
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
     "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
     "Formatting menu bar" : "Muotoiluvalikko",
+    "Translate" : "Käännä",
+    "Replace" : "Korvaa",
     "No emoji found" : "Emojia ei löydy",
     "No command found" : "Komentoa ei löytynyt",
     "No user found" : "Käyttäjää ei löytynyt",

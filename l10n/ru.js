@@ -68,6 +68,8 @@ OC.L10N.register(
     "Insert from Files" : "Вставить из файлов",
     "Remove link" : "Удалить ссылку",
     "Update link" : "Обновить ссылку",
+    "Translate" : "Помочь с переводом",
+    "Replace" : "Заменить",
     "No emoji found" : "Эмодзи не найдено",
     "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Add column before" : "Добавьте колонку перед",

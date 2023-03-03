@@ -16,6 +16,8 @@ OC.L10N.register(
     "Strikethrough" : "Pārsvītrojums",
     "Remove link" : "Noņemt saiti",
     "Update link" : "Atjaunināt saiti",
+    "Translate" : "Tulkot",
+    "Replace" : "Aizvietot",
     "Unsupported image type" : "Neatbalstīts attēla tips",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",

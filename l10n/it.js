@@ -67,6 +67,8 @@ OC.L10N.register(
     "Upload from computer" : "Carica dal computer",
     "Insert from Files" : "Inserisci dai file",
     "Update link" : "Aggiorna collegamento",
+    "Translate" : "Traduci",
+    "Replace" : "Sostituisci",
     "No emoji found" : "Nessun emoji trovato",
     "Unsupported image type" : "Tipo di immagine non supportato",
     "Add row before" : "Aggiungi riga prima",

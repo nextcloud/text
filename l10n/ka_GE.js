@@ -13,6 +13,8 @@ OC.L10N.register(
     "Unsaved changes" : "შეუნახავი ცვლილებები",
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
+    "Translate" : "გადათარგმნეთ",
+    "Replace" : "ჩანაცვლება",
     "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",

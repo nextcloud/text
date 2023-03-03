@@ -24,6 +24,8 @@ OC.L10N.register(
     "Shift" : "تغییر مکان",
     "Bold" : "درشت",
     "Italic" : "Italic",
+    "Translate" : "ترجمه",
+    "Replace" : "جایگزین کردن",
     "Undo" : "برگرداندن",
     "Info" : "اطلاعات",
     "Success" : "موفقیت",

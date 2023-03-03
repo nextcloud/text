@@ -43,6 +43,8 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Quoted text" : "Văn bản được trích dẫn",
     "Code block" : "Khối mã",
+    "Translate" : "Dịch",
+    "Replace" : "Thay thế",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Undo" : "Hoàn tác",

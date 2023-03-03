@@ -65,6 +65,8 @@ OC.L10N.register(
     "Insert from Files" : "Vstavi iz oblaka",
     "Remove link" : "Odstrani povezavo",
     "Update link" : "Posodobi povezavo",
+    "Translate" : "Prevodi",
+    "Replace" : "Zamenjaj",
     "No emoji found" : "Ni najdenih izraznih ikon",
     "Unsupported image type" : "Nepodprta vrsta slike",
     "Add row before" : "Dodaj vrstico pred",

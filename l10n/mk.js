@@ -56,6 +56,8 @@ OC.L10N.register(
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
     "Editor actions" : "Акции на уредникот",
+    "Translate" : "Преведи",
+    "Replace" : "Преклопи",
     "No emoji found" : "Не се пронајдени емотикони",
     "Failed to load" : "Неуспешно вчитување",
     "Unsupported image type" : "Неподржан вид на слика",

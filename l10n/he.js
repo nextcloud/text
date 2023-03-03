@@ -45,6 +45,8 @@ OC.L10N.register(
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
     "Update link" : "עדכן את הקישור",
+    "Translate" : "תרגום",
+    "Replace" : "החלפה",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Undo" : "ביטול",

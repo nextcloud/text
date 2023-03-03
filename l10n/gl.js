@@ -48,6 +48,8 @@ OC.L10N.register(
     "Quoted text" : "Texto citado",
     "Code block" : "Bloque de código",
     "Update link" : "Ligazón de actualización",
+    "Translate" : "Traducir",
+    "Replace" : "Substituír",
     "Unsupported image type" : "Tipo de imaxe non admitido",
     "Show rich workspaces" : "Amosa espazos de traballo mellorados",
     "Undo" : "Desfacer",
