@@ -70,6 +70,8 @@ OC.L10N.register(
     "Upload from computer" : "Uploaden vanaf computer",
     "Insert from Files" : "Invoegen vanuit Bestanden",
     "Update link" : "Bijwerken link",
+    "Translate" : "Vertalen",
+    "Replace" : "Vervangen",
     "No emoji found" : "Geen emoji gevonden",
     "Failed to load" : "Laden mislukt",
     "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",

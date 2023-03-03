@@ -7,6 +7,8 @@ OC.L10N.register(
     "Guest" : "Gjest",
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
+    "Translate" : "Translate",
+    "Replace" : "Erstatt",
     "Info" : "Info",
     "Warning" : "Åtvaring",
     "Edit" : "Endra"

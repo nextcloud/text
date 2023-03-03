@@ -29,6 +29,8 @@ OC.L10N.register(
     "Backspace" : "백스페이스",
     "Bold" : "굵게",
     "Italic" : "Italic체",
+    "Translate" : "번역:",
+    "Replace" : "바꾸기",
     "Unsupported image type" : "지원하지 않는 사진 형식",
     "Undo" : "실행 취소",
     "Redo" : "다시 실행",

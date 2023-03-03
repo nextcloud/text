@@ -7,6 +7,8 @@ OC.L10N.register(
     "Missing a temporary folder" : "Ixuṣ ukaram akudan",
     "Guest" : "Inebgi",
     "Backspace" : "Retour",
+    "Translate" : "Suqel",
+    "Replace" : "Semselsi",
     "Warning" : "Alɣu",
     "Edit" : "Ẓreg"
 },

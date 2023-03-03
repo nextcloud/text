@@ -8,6 +8,7 @@ OC.L10N.register(
     "guest" : "hospite",
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",
+    "Translate" : "Translate",
     "Undo" : "Disfacer",
     "Info" : "Info",
     "Warning" : "Aviso",

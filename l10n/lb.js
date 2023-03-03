@@ -6,6 +6,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Et feelt en temporären Dossier",
     "guest" : "Gaascht",
     "Saved" : "Gespäichert",
+    "Translate" : "Iwwersetzen",
     "Info" : "Info",
     "Warning" : "Warnung",
     "Edit" : "Änneren"

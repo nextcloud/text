@@ -40,6 +40,8 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
+    "Translate" : "Oversett",
+    "Replace" : "Erstatt",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde",
     "Undo" : "Angre",

@@ -47,6 +47,8 @@ OC.L10N.register(
     "Quoted text" : "Citirani tekst",
     "Code block" : "Odjeljak s kodom",
     "Update link" : "Ažuriraj poveznicu",
+    "Translate" : "Prevedi",
+    "Replace" : "Zamijeni",
     "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Undo" : "Poništi",
