@@ -17,6 +17,7 @@ OC.L10N.register(
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
+    "Translate" : "Traducir",
     "Replace" : "Reemplazar",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
