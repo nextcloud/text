@@ -7,6 +7,7 @@ OC.L10N.register(
     "guest" : "gost",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
+    "Translate" : "Translate",
     "Info" : "Info",
     "Warning" : "Upozorenje",
     "Edit" : "Izmjeni"

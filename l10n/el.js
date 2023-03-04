@@ -67,6 +67,8 @@ OC.L10N.register(
     "Insert from Files" : "Εισαγωγή από Αρχεία",
     "Remove link" : "Αφαίρεση συνδέσμου",
     "Update link" : "Ενημέρωση συνδέσμου",
+    "Translate" : "Μετάφραση",
+    "Replace" : "Αντικατάσταση",
     "No emoji found" : "Δε βρέθηκε emoji",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",

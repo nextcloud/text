@@ -23,6 +23,8 @@ OC.L10N.register(
     "Keyboard shortcuts" : "إختصارات لوحة المفاتيح",
     "Bold" : "غامق",
     "Italic" : "مائل",
+    "Translate" : "ترجم",
+    "Replace" : "تبديل",
     "Unsupported image type" : "صيغة الصورة غير مقبولة",
     "Undo" : "تراجع",
     "Redo" : "إعادة",
