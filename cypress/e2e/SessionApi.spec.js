@@ -349,5 +349,16 @@ describe('The session Api', function() {
 				})
 		})
 
+		// Failed with a probability of ~ 50% initially
+		it('ignores steps stored after close cleaned up', function() {
+			cy.pushAndClose({ connection, steps: [messages.update], version })
+			cy.createTextSession(undefined, { filePath: '', shareToken })
+				.then(con => {
+					connection = con
+				})
+				.its('state.documentSource')
+				.should('eql', '## Hello world\n')
+		})
+
 	})
 })
