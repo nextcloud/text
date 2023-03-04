@@ -113,12 +113,12 @@ class ApiService {
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessions($file->getId());
-			$activeSessions = $this->sessionService->getActiveSessions($file->getId());
+			$remainingSessions = $this->sessionService->getAllSessions($file->getId());
 			$freshSession = false;
-			if ($forceRecreate || count($activeSessions) === 0) {
+			if ($forceRecreate || count($remainingSessions) === 0) {
+				$freshSession = true;
 				try {
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
-					$freshSession = true;
 				} catch (DocumentHasUnsavedChangesException $e) {
 				}
 			}
