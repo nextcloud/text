@@ -13,6 +13,8 @@ OC.L10N.register(
     "Saving …" : "Orc'h enrolliñ",
     "Saved" : "Enrollet",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",
+    "Translate" : "Treiñ",
+    "Replace" : "Erlec'hiañ",
     "Info" : "Titouroù",
     "Success" : "Graet",
     "Warning" : "Kemenadenn",

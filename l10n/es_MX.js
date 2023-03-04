@@ -37,6 +37,8 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Remove link" : "Eliminar enlace",
+    "Translate" : "Traducir",
+    "Replace" : "Reemplazar",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
     "Redo" : "Rehacer",

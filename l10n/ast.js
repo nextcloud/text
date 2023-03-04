@@ -15,6 +15,8 @@ OC.L10N.register(
     "Saving …" : "Guardando...",
     "Saved" : "Guardáu",
     "Keyboard shortcuts" : "Atayos de tecláu",
+    "Translate" : "Traducir",
+    "Replace" : "Trocar",
     "Unsupported image type" : "Triba non sofitada d'imaxe",
     "Undo" : "Desfacer",
     "Info" : "Info",
