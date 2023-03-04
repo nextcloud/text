@@ -51,3 +51,14 @@ Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 	return connection.sync(options)
 		.then(response => response.data)
 })
+
+// Used to test for race conditions between the last push and the close request
+Cypress.Commands.add('pushAndClose', ({ connection, steps, version, awareness = '' }) => {
+	cy.log('Race between push and close')
+		.then(() => {
+			const push = connection.push({ steps, version, awareness })
+				.catch(e => e) // handle 403 gracefully
+			const close = connection.close()
+			return Promise.all([push, close])
+		})
+})
