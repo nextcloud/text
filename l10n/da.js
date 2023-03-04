@@ -48,6 +48,8 @@ OC.L10N.register(
     "Code block" : "Kodeblok",
     "Upload from computer" : "Upload fra computer",
     "Remove link" : "Fjern link",
+    "Translate" : "Oversæt",
+    "Replace" : "Erstat",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Delete this table" : "Slet denne tabel",
     "Show rich workspaces" : "Vis rige arbejdsområder",

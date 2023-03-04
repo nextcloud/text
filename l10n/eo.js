@@ -35,6 +35,8 @@ OC.L10N.register(
     "Ordered list" : "Ordigita listo",
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
+    "Translate" : "Traduku",
+    "Replace" : "Anstataŭigi",
     "Unsupported image type" : "Nesubtenata bildotipo",
     "Undo" : "Malfari",
     "Redo" : "Refari",
