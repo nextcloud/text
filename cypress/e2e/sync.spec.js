@@ -80,11 +80,14 @@ describe('Sync', () => {
 				req.alias = 'deadSync'
 			}
 		})
-		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
-		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
-		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
-		cy.wait('@push', { timeout: 15000 + Cypress.config().defaultCommandTimeout })
+		cy.get('#editor-container .document-status')
+			.should('contain', 'File could not be loaded', { timeout: 10000 })
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('not.contain', 'File could not be loaded')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+			.as('syncAfterRecovery')
 		cy.getContent().type('* more content added after the lost connection{enter}')
+		cy.wait('@syncAfterRecovery')
 		cy.closeFile()
 		cy.testName()
 			.then(name => cy.downloadFile(`/${name}.md`))
