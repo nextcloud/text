@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@hedgedoc/markdown-it-task-lists": "^2.0.1",
-    "@hocuspocus/provider": "^1.1.0",
+    "@hocuspocus/provider": "^1.1.1",
     "@nextcloud/auth": "^2.0.0",
     "@nextcloud/axios": "^2.3.0",
     "@nextcloud/browser-storage": "^0.2.0",
