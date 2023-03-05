@@ -476,6 +476,9 @@ export default {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
+			if (this.$editor) {
+				this.$editor.setOptions({ editable: !this.readOnly })
+			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.setCurrentSession(this.currentSession)
@@ -498,47 +501,52 @@ export default {
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
 					const session = this.currentSession
-					this.$editor ||= createEditor({
-						language,
-						relativePath: this.relativePath,
-						session,
-						onCreate: ({ editor }) => {
-							this.$syncService.startSync()
-						},
-						onUpdate: ({ editor }) => {
-							// this.debugContent(editor)
-							const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-							this.$parent.$emit('update:content', {
-								markdown: proseMirrorMarkdown,
-							})
-						},
-						extensions: [
-							Collaboration.configure({
-								document: this.$ydoc,
-							}),
-							CollaborationCursor.configure({
-								provider: this.$providers[0],
-								user: {
-									name: session?.userId
-										? session.displayName
-										: (session?.guestName || t('text', 'Guest')),
-									color: session?.color,
-								},
-							}),
-							Keymap.configure({
-								'Mod-s': () => {
-									this.$syncService.save()
-									return true
-								},
-							}),
-						],
-						enableRichEditing: this.isRichEditor,
-					})
-					this.hasEditor = true
-					if (!documentState && documentSource) {
-						this.setContent(documentSource, { addToHistory: false })
+					if (!this.$editor) {
+						this.$editor = createEditor({
+							language,
+							relativePath: this.relativePath,
+							session,
+							onCreate: ({ editor }) => {
+								this.$syncService.startSync()
+							},
+							onUpdate: ({ editor }) => {
+								// this.debugContent(editor)
+								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+								this.$parent.$emit('update:content', {
+									markdown: proseMirrorMarkdown,
+								})
+							},
+							extensions: [
+								Collaboration.configure({
+									document: this.$ydoc,
+								}),
+								CollaborationCursor.configure({
+									provider: this.$providers[0],
+									user: {
+										name: session?.userId
+											? session.displayName
+											: (session?.guestName || t('text', 'Guest')),
+										color: session?.color,
+									},
+								}),
+								Keymap.configure({
+									'Mod-s': () => {
+										this.$syncService.save()
+										return true
+									},
+								}),
+							],
+							enableRichEditing: this.isRichEditor,
+						})
+						this.hasEditor = true
+						if (!documentState && documentSource) {
+							this.setContent(documentSource, { addToHistory: false })
+						}
+						this.listenEditorEvents()
+					} else {
+						// $editor already existed. So this is a reconnect.
+						this.$syncService.startSync()
 					}
-					this.listenEditorEvents()
 
 				})
 
