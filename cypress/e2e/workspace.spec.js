@@ -298,6 +298,7 @@ describe('Workspace', function() {
 			checkContent()
 		})
 	})
+
 })
 
 const openSidebar = filename => {
