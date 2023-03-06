@@ -102,7 +102,7 @@ const openLink = function(event, _attrs) {
 		OCA.Viewer.open({ path })
 		return
 	}
-	if (query?.fileId) {
+	if (htmlHref.match(/apps\/files\//) && query?.fileId) {
 		// open the direct file link
 		window.open(generateUrl(`/f/${query.fileId}`))
 		return
