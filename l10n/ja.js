@@ -51,6 +51,7 @@ OC.L10N.register(
     "Code block" : "コードブロック",
     "Upload from computer" : "コンピュータからアップロード",
     "Remove link" : "リンクを削除",
+    "Select file or folder to link to" : "リンク先のファイルまたはフォルダを選択",
     "Translate" : "翻訳",
     "Replace" : "入り替え",
     "Unsupported image type" : "サポートされていない画像形式です",
