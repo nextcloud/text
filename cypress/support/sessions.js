@@ -57,7 +57,12 @@ Cypress.Commands.add('pushAndClose', ({ connection, steps, version, awareness = 
 	cy.log('Race between push and close')
 		.then(() => {
 			const push = connection.push({ steps, version, awareness })
-				.catch(e => e) // handle 403 gracefully
+				.catch(error => {
+					 // handle 403 gracefully
+					 if (error.response?.status !== 403) {
+						 throw error
+					 }
+				})
 			const close = connection.close()
 			return Promise.all([push, close])
 		})
