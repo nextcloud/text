@@ -194,20 +194,31 @@ class ApiService {
 			return new DataResponse([], 403);
 		}
 		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		$this->sessionService->updateSessionAwareness($documentId, $sessionId, $sessionToken, $awareness);
+		if (!$session) {
+			return new DataResponse([], 403);
+		}
+		try {
+			$this->sessionService->updateSessionAwareness($documentId, $sessionId, $sessionToken, $awareness);
+		} catch (DoesNotExistException $e) {
+			// Session was removed in the meantime. #3875
+			return new DataResponse([], 403);
+		}
 		if (empty($steps)) {
 			return new DataResponse([]);
 		}
 		$file = $this->documentService->getFileForSession($session, $token);
-		if (!$this->documentService->isReadOnly($file, $token)) {
-			try {
-				$result = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
-			} catch (InvalidArgumentException $e) {
-				return new DataResponse($e->getMessage(), 422);
-			}
-			return new DataResponse($result);
+		if ($this->documentService->isReadOnly($file, $token)) {
+			return new DataResponse([], 403);
 		}
-		return new DataResponse([], 403);
+		try {
+			$result = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
+		} catch (InvalidArgumentException $e) {
+			return new DataResponse($e->getMessage(), 422);
+		} catch (DoesNotExistException $e) {
+			// Session was removed in the meantime. #3875
+			return new DataResponse([], 403);
+		}
+		return new DataResponse($result);
 	}
 
 	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
