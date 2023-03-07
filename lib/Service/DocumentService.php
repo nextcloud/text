@@ -127,7 +127,7 @@ class DocumentService {
 			// This way the user can still resolve conflicts in the editor view
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			if ($stepsVersion && ($document->getLastSavedVersion() !== $stepsVersion)) {
-				$this->logger->debug('Unsaved steps but collission with file, continue collaborative editing');
+				$this->logger->debug('Unsaved steps, continue collaborative editing');
 				return $document;
 			}
 			return $document;
@@ -258,6 +258,7 @@ class DocumentService {
 			}
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			$newVersion = $stepsVersion + count($steps);
+			$this->logger->debug("Adding steps to $documentId: bumping version from $stepsVersion to $newVersion");
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			$step = new Step();
 			$step->setData($stepsJson);
