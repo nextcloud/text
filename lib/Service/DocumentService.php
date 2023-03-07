@@ -332,6 +332,22 @@ class DocumentService {
 			return $document;
 		}
 
+		if (empty($autoaveDocument)) {
+			$this->logger->debug('Saving empty document', [
+				'requestVersion' => $version,
+				'requestAutosaveDocument' => $autoaveDocument,
+				'requestDocumentState' => $documentState,
+				'document' => $document->jsonSerialize(),
+				'fileSizeBeforeSave' => $file->getSize(),
+				'steps' => array_map(function (Step $step) {
+					return $step->jsonSerialize();
+				}, $this->stepMapper->find($documentId, 0)),
+				'sessions' => array_map(function (Session $session) {
+					return $session->jsonSerialize();
+				}, $this->sessionMapper->findAll($documentId))
+			]);
+		}
+
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
