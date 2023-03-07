@@ -280,12 +280,12 @@ export default {
 	},
 	methods: {
 		async init() {
-			const candidates = this.$attachmentResolver.resolve(this.src)
+			const candidates = await this.$attachmentResolver.resolve(this.src)
 			return this.load(candidates)
 		},
 		async load(candidates) {
 			const [candidate, ...fallbacks] = candidates
-			return this.loadImage(candidate.url, candidate.type, candidate.name).catch((e) => {
+			return this.loadImage(candidate.url, candidate.type, candidate.name, candidate.metadata).catch((e) => {
 				if (fallbacks.length > 0) {
 					return this.load(fallbacks)
 					// TODO if fallback works, rewrite the url with correct document ID
@@ -293,7 +293,7 @@ export default {
 				return Promise.reject(e)
 			})
 		},
-		async loadImage(imageUrl, attachmentType, name = null) {
+		async loadImage(imageUrl, attachmentType, name = null, metadata = null) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
@@ -301,7 +301,9 @@ export default {
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentType = attachmentType
-					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
+					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA && metadata) {
+						this.attachmentMetadata = metadata
+					} else if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
 						await this.loadMediaMetadata(name)
 					}
 					resolve(imageUrl)
@@ -340,20 +342,21 @@ export default {
 		onLoaded() {
 			this.loaded = true
 		},
-		handleImageClick(src) {
+		async handleImageClick(src) {
 			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"].image-view'))
 			let basename, relativePath
 
-			imageViews.forEach(imgv => {
+			for (const imgv of imageViews) {
 				relativePath = imgv.getAttribute('data-src')
 				basename = relativePath.split('/').slice(-1).join()
-				const { url: source } = this.$attachmentResolver.resolve(relativePath, true).shift()
+				const response = await this.$attachmentResolver.resolve(relativePath, true)
+				const { url: source } = response.shift()
 				this.embeddedImagesList.push({
 					source,
 					basename,
 					relativePath,
 				})
-			})
+			}
 			this.imageIndex = this.embeddedImagesList.findIndex(image => image.relativePath === src)
 			this.showImageModal = true
 		},
