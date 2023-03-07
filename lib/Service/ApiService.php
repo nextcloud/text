@@ -118,9 +118,17 @@ class ApiService {
 			if ($forceRecreate || count($remainingSessions) === 0) {
 				$freshSession = true;
 				try {
+					$this->logger->info('Attempt to reset document during session create for ' . $file->getId());
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
 				} catch (DocumentHasUnsavedChangesException $e) {
+					$this->logger->debug('Failed to reset document during session create for ' . $file->getId(), [
+						'remainingSessions' => $remainingSessions,
+					]);
 				}
+			} else {
+				$this->logger->info('Keep previous document state of ' . $file->getId(), [
+					'remainingSessions' => $remainingSessions,
+				]);
 			}
 
 			$document = $this->documentService->createDocument($file);
@@ -132,20 +140,22 @@ class ApiService {
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
 		if ($freshSession) {
-			$this->logger->debug('Starting a fresh session');
+			$this->logger->debug('Starting a fresh editing session for ' . $file->getId());
 			$documentState = null;
 			$content = $this->loadContent($file);
 		} else {
-			$this->logger->debug('Loading existing session');
+			$this->logger->debug('Loading existing session for ' . $file->getId());
 			$content = null;
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException $e) {
+				$this->logger->debug('State file not found for ' . $file->getId());
 				$documentState = ''; // no state saved yet.
 				// If there are no steps yet we might still need the content.
 				$steps = $this->documentService->getSteps($document->getId(), 0);
 				if (empty($steps)) {
+					$this->logger->debug('Empty steps, loading content for ' . $file->getId());
 					$content = $this->loadContent($file);
 				}
 			}
@@ -179,7 +189,9 @@ class ApiService {
 			try {
 				$this->documentService->resetDocument($documentId);
 				$this->attachmentService->cleanupAttachments($documentId);
+				$this->logger->info('Reset unsaved changes of ' . $documentId);
 			} catch (DocumentHasUnsavedChangesException $e) {
+				$this->logger->error('Did not reset unsaved changes during close of ' . $documentId, ['exception' => $e]);
 			}
 		}
 		return new DataResponse([]);
