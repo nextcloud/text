@@ -120,6 +120,7 @@ class ApiService {
 				try {
 					$this->logger->info('Attempt to reset document during session create for ' . $file->getId());
 					$this->documentService->resetDocument($file->getId(), $forceRecreate);
+					$this->attachmentService->cleanupAttachments($file->getId());
 				} catch (DocumentHasUnsavedChangesException $e) {
 					$this->logger->debug('Failed to reset document during session create for ' . $file->getId(), [
 						'remainingSessions' => $remainingSessions,
