@@ -360,15 +360,16 @@ class DocumentService {
 					$this->writeDocumentState($file->getId(), $documentState);
 				}
 			});
+			$document->setLastSavedVersion($stepsVersion);
+			$document->setLastSavedVersionTime(time());
+			$document->setLastSavedVersionEtag($file->getEtag());
+			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
+		} finally {
+			$this->cache->remove('document-save-lock-' . $documentId);
 		}
-		$document->setLastSavedVersion($stepsVersion);
-		$document->setLastSavedVersionTime(time());
-		$document->setLastSavedVersionEtag($file->getEtag());
-		$this->documentMapper->update($document);
-		$this->cache->remove('document-save-lock-' . $documentId);
 		return $document;
 	}
 
