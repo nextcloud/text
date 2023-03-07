@@ -77,6 +77,7 @@ export default {
 <style scoped lang="scss">
 .table-wrapper {
 	position: relative;
+	overflow-x: auto;
 }
 
 .clearfix {
