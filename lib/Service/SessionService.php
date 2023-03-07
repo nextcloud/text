@@ -146,9 +146,9 @@ class SessionService {
 		return $this->sessionMapper->findAllInactive();
 	}
 
-	public function removeInactiveSessions($documentId = -1) {
+	public function removeInactiveSessionsWithoutSteps($documentId = -1) {
 		// No need to clear the cache here as we already set a TTL
-		return $this->sessionMapper->deleteInactive($documentId);
+		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
 
 	/**

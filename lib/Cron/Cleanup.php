@@ -79,7 +79,7 @@ class Cleanup extends TimedJob {
 				$this->logger->error('Document ' . $session->getDocumentId() . ' has not been reset, as an error occured', ['exception' => $e]);
 			}
 		}
-		$removedSessions = $this->sessionService->removeInactiveSessions(null);
+		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps(null);
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 	}
 }
