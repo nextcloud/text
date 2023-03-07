@@ -112,7 +112,7 @@ class ApiService {
 
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
-			$this->sessionService->removeInactiveSessions($file->getId());
+			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$remainingSessions = $this->sessionService->getAllSessions($file->getId());
 			$freshSession = false;
 			if ($forceRecreate || count($remainingSessions) === 0) {
@@ -183,17 +183,7 @@ class ApiService {
 
 	public function close($documentId, $sessionId, $sessionToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
-		$this->sessionService->removeInactiveSessions($documentId);
-		$activeSessions = $this->sessionService->getActiveSessions($documentId);
-		if (count($activeSessions) === 0) {
-			try {
-				$this->documentService->resetDocument($documentId);
-				$this->attachmentService->cleanupAttachments($documentId);
-				$this->logger->info('Reset unsaved changes of ' . $documentId);
-			} catch (DocumentHasUnsavedChangesException $e) {
-				$this->logger->error('Did not reset unsaved changes during close of ' . $documentId, ['exception' => $e]);
-			}
-		}
+		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		return new DataResponse([]);
 	}
 
