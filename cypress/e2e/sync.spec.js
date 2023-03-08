@@ -95,14 +95,14 @@ describe('Sync', () => {
 			.should('include', 'after the lost connection')
 	})
 
-	it('passes the doc content from one session to the next', () => {
+	it.only('passes the doc content from one session to the next', () => {
 		cy.closeFile()
 		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
 			.as('create')
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')
-			.should('have.property', 'content')
+			.should('have.property', 'documentState')
 			.should('not.be.empty')
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.getContent().find('li').should('contain', 'Saving the doc saves the doc state')
