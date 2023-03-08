@@ -112,6 +112,14 @@ class DocumentService {
 		}
 	}
 
+	public function getDocument(File $file): ?Document {
+		try {
+			return $this->documentMapper->find($file->getId());
+		} catch (DoesNotExistException|NotFoundException $e) {
+			return null;
+		}
+	}
+
 	/**
 	 * @param File $file
 	 * @return Entity
@@ -383,6 +391,7 @@ class DocumentService {
 		try {
 			$document = $this->documentMapper->find($documentId);
 			if (!$force && $this->hasUnsavedChanges($document)) {
+				$this->logger->debug('did not reset document for ' . $documentId);
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
 
@@ -393,6 +402,7 @@ class DocumentService {
 			$this->documentMapper->delete($document);
 
 			$this->getStateFile($documentId)->delete();
+			$this->logger->debug('document reset for ' . $documentId);
 		} catch (DoesNotExistException|NotFoundException $e) {
 			// Ignore if document not found or state file not found
 		}

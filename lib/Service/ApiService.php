@@ -31,7 +31,6 @@ use InvalidArgumentException;
 use OC\Files\Node\File;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -72,7 +71,7 @@ class ApiService {
 		$this->l10n = $l10n;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null, $guestName = null): DataResponse {
 		try {
 			/** @var File $file */
 			if ($token) {
@@ -113,26 +112,15 @@ class ApiService {
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$remainingSessions = $this->sessionService->getAllSessions($file->getId());
-			$freshSession = false;
-			if ($forceRecreate || count($remainingSessions) === 0) {
-				$freshSession = true;
-				try {
-					$this->logger->info('Attempt to reset document during session create for ' . $file->getId());
-					$this->documentService->resetDocument($file->getId(), $forceRecreate);
-					$this->attachmentService->cleanupAttachments($file->getId());
-				} catch (DocumentHasUnsavedChangesException $e) {
-					$this->logger->debug('Failed to reset document during session create for ' . $file->getId(), [
-						'remainingSessions' => $remainingSessions,
-					]);
-				}
-			} else {
-				$this->logger->info('Keep previous document state of ' . $file->getId(), [
-					'remainingSessions' => $remainingSessions,
-				]);
-			}
+			$document = $this->documentService->getDocument($file);
+			$freshSession = $document === null;
 
-			$document = $this->documentService->createDocument($file);
+			if ($freshSession) {
+				$this->logger->info('Create new document of ' . $file->getId());
+				$document = $this->documentService->createDocument($file);
+			} else {
+				$this->logger->info('Keep previous document of ' . $file->getId());
+			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse('Failed to create the document session', 500);
