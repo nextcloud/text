@@ -55,6 +55,7 @@ OC.L10N.register(
     "Some code" : "Некој код",
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
+    "Select file or folder to link to" : "Изберете датотека или папка за линк до",
     "Editor actions" : "Акции на уредникот",
     "Translate" : "Преведи",
     "Replace" : "Преклопи",
