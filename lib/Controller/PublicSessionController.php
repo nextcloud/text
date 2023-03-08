@@ -66,8 +66,8 @@ class PublicSessionController extends PublicShareController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 */
-	public function create(string $token, string $file = null, $guestName = null, bool $forceRecreate = false): DataResponse {
-		return $this->apiService->create(null, $file, $token, $guestName, $forceRecreate);
+	public function create(string $token, string $file = null, $guestName = null): DataResponse {
+		return $this->apiService->create(null, $file, $token, $guestName);
 	}
 
 	/**
