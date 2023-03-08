@@ -48,6 +48,7 @@
 						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
 					</li>
 				</ul>
+				<!-- disable for now as this broke during the y.js migration
 				<input id="toggle-color-annotations"
 					v-model="showAuthorAnnotations"
 					type="checkbox"
@@ -56,6 +57,7 @@
 				<p class="hint">
 					{{ t('text', 'Author colors are only shown until everyone has closed the document.') }}
 				</p>
+				-->
 			</div>
 		</template>
 	</NcPopover>
