@@ -185,6 +185,10 @@ class ApiService {
 	public function close($documentId, $sessionId, $sessionToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
+		$activeSessions = $this->sessionService->getActiveSessions($documentId);
+		if (count($activeSessions) === 0) {
+			$this->documentService->unlock($documentId);
+		}
 		return new DataResponse([]);
 	}
 
