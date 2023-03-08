@@ -408,6 +408,10 @@ class DocumentService {
 		}
 	}
 
+	public function getAll() {
+		return $this->documentMapper->findAll();
+	}
+
 	/**
 	 * @param Session $session
 	 * @param $shareToken
