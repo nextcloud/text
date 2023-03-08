@@ -375,30 +375,26 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $documentId
-	 * @param bool $force
 	 * @throws DocumentHasUnsavedChangesException
+	 * @throws Exception
+	 * @throws NotPermittedException
 	 */
 	public function resetDocument(int $documentId, bool $force = false): void {
 		try {
-			$this->unlock($documentId);
-
 			$document = $this->documentMapper->find($documentId);
-
-			if ($force || !$this->hasUnsavedChanges($document)) {
-				$this->stepMapper->deleteAll($documentId);
-				$this->sessionMapper->deleteByDocumentId($documentId);
-				$this->documentMapper->delete($document);
-
-				try {
-					$this->getStateFile($documentId)->delete();
-				} catch (NotFoundException $e) {
-				} catch (NotPermittedException $e) {
-				}
-			} elseif ($this->hasUnsavedChanges($document)) {
+			if (!$force && $this->hasUnsavedChanges($document)) {
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
-		} catch (DoesNotExistException $e) {
+
+			$this->unlock($documentId);
+
+			$this->stepMapper->deleteAll($documentId);
+			$this->sessionMapper->deleteByDocumentId($documentId);
+			$this->documentMapper->delete($document);
+
+			$this->getStateFile($documentId)->delete();
+		} catch (DoesNotExistException|NotFoundException $e) {
+			// Ignore if document not found or state file not found
 		}
 	}
 
