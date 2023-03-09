@@ -48,6 +48,7 @@ OC.L10N.register(
     "Code block" : "Kodeblok",
     "Upload from computer" : "Upload fra computer",
     "Remove link" : "Fjern link",
+    "Select file or folder to link to" : "Vælg fil eller mappe at linke til",
     "Translate" : "Oversæt",
     "Replace" : "Erstat",
     "Unsupported image type" : "Ikke-understøttet billede format",
