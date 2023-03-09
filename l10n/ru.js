@@ -68,6 +68,7 @@ OC.L10N.register(
     "Insert from Files" : "Вставить из файлов",
     "Remove link" : "Удалить ссылку",
     "Update link" : "Обновить ссылку",
+    "Select file or folder to link to" : "Выберите файл или папку для создания ссылки",
     "Translate" : "Помочь с переводом",
     "Replace" : "Заменить",
     "No emoji found" : "Эмодзи не найдено",
