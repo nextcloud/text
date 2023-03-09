@@ -54,4 +54,13 @@ class DocumentMapper extends QBMapper {
 		}
 		return Document::fromRow($data);
 	}
+
+	public function findAll(): array {
+		$qb = $this->db->getQueryBuilder();
+		$result = $qb->select('*')
+			->from($this->getTableName())
+			->execute();
+
+		return $this->findEntities($qb);
+	}
 }

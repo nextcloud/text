@@ -31,7 +31,6 @@ use InvalidArgumentException;
 use OC\Files\Node\File;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -72,7 +71,7 @@ class ApiService {
 		$this->l10n = $l10n;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null, $guestName = null, bool $forceRecreate = false): DataResponse {
+	public function create($fileId = null, $filePath = null, $token = null, $guestName = null): DataResponse {
 		try {
 			/** @var File $file */
 			if ($token) {
@@ -112,18 +111,16 @@ class ApiService {
 
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
-			$this->sessionService->removeInactiveSessions($file->getId());
-			$remainingSessions = $this->sessionService->getAllSessions($file->getId());
-			$freshSession = false;
-			if ($forceRecreate || count($remainingSessions) === 0) {
-				$freshSession = true;
-				try {
-					$this->documentService->resetDocument($file->getId(), $forceRecreate);
-				} catch (DocumentHasUnsavedChangesException $e) {
-				}
-			}
+			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
+			$document = $this->documentService->getDocument($file);
+			$freshSession = $document === null;
 
-			$document = $this->documentService->createDocument($file);
+			if ($freshSession) {
+				$this->logger->info('Create new document of ' . $file->getId());
+				$document = $this->documentService->createDocument($file);
+			} else {
+				$this->logger->info('Keep previous document of ' . $file->getId());
+			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse('Failed to create the document session', 500);
@@ -132,20 +129,22 @@ class ApiService {
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
 		if ($freshSession) {
-			$this->logger->debug('Starting a fresh session');
+			$this->logger->debug('Starting a fresh editing session for ' . $file->getId());
 			$documentState = null;
 			$content = $this->loadContent($file);
 		} else {
-			$this->logger->debug('Loading existing session');
+			$this->logger->debug('Loading existing session for ' . $file->getId());
 			$content = null;
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
 			} catch (NotFoundException $e) {
+				$this->logger->debug('State file not found for ' . $file->getId());
 				$documentState = ''; // no state saved yet.
 				// If there are no steps yet we might still need the content.
 				$steps = $this->documentService->getSteps($document->getId(), 0);
 				if (empty($steps)) {
+					$this->logger->debug('Empty steps, loading content for ' . $file->getId());
 					$content = $this->loadContent($file);
 				}
 			}
@@ -173,14 +172,10 @@ class ApiService {
 
 	public function close($documentId, $sessionId, $sessionToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
-		$this->sessionService->removeInactiveSessions($documentId);
+		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
 		if (count($activeSessions) === 0) {
-			try {
-				$this->documentService->resetDocument($documentId);
-				$this->attachmentService->cleanupAttachments($documentId);
-			} catch (DocumentHasUnsavedChangesException $e) {
-			}
+			$this->documentService->unlock($documentId);
 		}
 		return new DataResponse([]);
 	}

@@ -112,6 +112,14 @@ class DocumentService {
 		}
 	}
 
+	public function getDocument(File $file): ?Document {
+		try {
+			return $this->documentMapper->find($file->getId());
+		} catch (DoesNotExistException|NotFoundException $e) {
+			return null;
+		}
+	}
+
 	/**
 	 * @param File $file
 	 * @return Entity
@@ -127,7 +135,7 @@ class DocumentService {
 			// This way the user can still resolve conflicts in the editor view
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			if ($stepsVersion && ($document->getLastSavedVersion() !== $stepsVersion)) {
-				$this->logger->debug('Unsaved steps but collission with file, continue collaborative editing');
+				$this->logger->debug('Unsaved steps, continue collaborative editing');
 				return $document;
 			}
 			return $document;
@@ -258,6 +266,7 @@ class DocumentService {
 			}
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			$newVersion = $stepsVersion + count($steps);
+			$this->logger->debug("Adding steps to $documentId: bumping version from $stepsVersion to $newVersion");
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			$step = new Step();
 			$step->setData($stepsJson);
@@ -332,6 +341,22 @@ class DocumentService {
 			return $document;
 		}
 
+		if (empty($autoaveDocument)) {
+			$this->logger->debug('Saving empty document', [
+				'requestVersion' => $version,
+				'requestAutosaveDocument' => $autoaveDocument,
+				'requestDocumentState' => $documentState,
+				'document' => $document->jsonSerialize(),
+				'fileSizeBeforeSave' => $file->getSize(),
+				'steps' => array_map(function (Step $step) {
+					return $step->jsonSerialize();
+				}, $this->stepMapper->find($documentId, 0)),
+				'sessions' => array_map(function (Session $session) {
+					return $session->jsonSerialize();
+				}, $this->sessionMapper->findAll($documentId))
+			]);
+		}
+
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
@@ -344,44 +369,47 @@ class DocumentService {
 					$this->writeDocumentState($file->getId(), $documentState);
 				}
 			});
+			$document->setLastSavedVersion($stepsVersion);
+			$document->setLastSavedVersionTime(time());
+			$document->setLastSavedVersionEtag($file->getEtag());
+			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
 			// Ignore lock since it might occur when multiple people save at the same time
 			return $document;
+		} finally {
+			$this->cache->remove('document-save-lock-' . $documentId);
 		}
-		$document->setLastSavedVersion($stepsVersion);
-		$document->setLastSavedVersionTime(time());
-		$document->setLastSavedVersionEtag($file->getEtag());
-		$this->documentMapper->update($document);
-		$this->cache->remove('document-save-lock-' . $documentId);
 		return $document;
 	}
 
 	/**
-	 * @param $documentId
-	 * @param bool $force
 	 * @throws DocumentHasUnsavedChangesException
+	 * @throws Exception
+	 * @throws NotPermittedException
 	 */
 	public function resetDocument(int $documentId, bool $force = false): void {
 		try {
-			$this->unlock($documentId);
-
 			$document = $this->documentMapper->find($documentId);
-
-			if ($force || !$this->hasUnsavedChanges($document)) {
-				$this->stepMapper->deleteAll($documentId);
-				$this->sessionMapper->deleteByDocumentId($documentId);
-				$this->documentMapper->delete($document);
-
-				try {
-					$this->getStateFile($documentId)->delete();
-				} catch (NotFoundException $e) {
-				} catch (NotPermittedException $e) {
-				}
-			} elseif ($this->hasUnsavedChanges($document)) {
+			if (!$force && $this->hasUnsavedChanges($document)) {
+				$this->logger->debug('did not reset document for ' . $documentId);
 				throw new DocumentHasUnsavedChangesException('Did not reset document, as it has unsaved changes');
 			}
-		} catch (DoesNotExistException $e) {
+
+			$this->unlock($documentId);
+
+			$this->stepMapper->deleteAll($documentId);
+			$this->sessionMapper->deleteByDocumentId($documentId);
+			$this->documentMapper->delete($document);
+
+			$this->getStateFile($documentId)->delete();
+			$this->logger->debug('document reset for ' . $documentId);
+		} catch (DoesNotExistException|NotFoundException $e) {
+			// Ignore if document not found or state file not found
 		}
+	}
+
+	public function getAll() {
+		return $this->documentMapper->findAll();
 	}
 
 	/**

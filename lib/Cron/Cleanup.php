@@ -28,8 +28,6 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
-use OCA\Text\Db\Session;
-use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\SessionService;
@@ -57,29 +55,25 @@ class Cleanup extends TimedJob {
 	}
 
 	protected function run($argument) {
-		$this->logger->debug('Run cleanup job for text sessions');
-		$inactive = $this->sessionService->findAllInactive();
-		/** @var Session $session */
-		foreach ($inactive as $session) {
-			$activeSessions = $this->sessionService->getActiveSessions($session->getDocumentId());
-			if (count($activeSessions) > 0) {
+		$this->logger->debug('Run cleanup job for text documents');
+		$documents = $this->documentService->getAll();
+		foreach ($documents as $document) {
+			$allSessions = $this->sessionService->getAllSessions($document->getId());
+			if (count($allSessions) > 0) {
+				// Do not reset if there are any sessions left
+				// Inactive sessions will get removed further down and will trigger a reset next time
 				continue;
 			}
 
-			$this->documentService->unlock($session->getDocumentId());
-
-			try {
-				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
-				$this->documentService->resetDocument($session->getDocumentId());
-				$this->attachmentService->cleanupAttachments($session->getDocumentId());
-				$this->logger->debug('Resetting document ' . $session->getDocumentId() . '');
-			} catch (DocumentHasUnsavedChangesException $e) {
-				$this->logger->info('Document ' . $session->getDocumentId() . ' has not been reset, as it has unsaved changes');
-			} catch (\Throwable $e) {
-				$this->logger->error('Document ' . $session->getDocumentId() . ' has not been reset, as an error occured', ['exception' => $e]);
+			if ($this->documentService->hasUnsavedChanges($document)) {
+				continue;
 			}
+
+			$this->documentService->resetDocument($document->getId());
 		}
-		$removedSessions = $this->sessionService->removeInactiveSessions(null);
+
+		$this->logger->debug('Run cleanup job for text sessions');
+		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps(null);
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 	}
 }
