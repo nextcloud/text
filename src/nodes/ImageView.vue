@@ -34,17 +34,19 @@
 				<transition name="fade">
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
-							class="media"
-							@click="handleImageClick(src)">
+							class="media">
 							<div class="media__wrapper">
-								<img v-show="loaded"
-									:src="imageUrl"
-									class="image__main"
-									@load="onLoaded">
-								<div class="metadata">
-									<span class="name">{{ alt }}</span>
-									<span class="size">{{ attachmentMetadata.size }}</span>
-								</div>
+								<a :href="internalLinkOrImage"
+									target="_blank">
+									<img v-show="loaded"
+										:src="imageUrl"
+										class="image__main"
+										@load="onLoaded">
+									<div class="metadata">
+										<span class="name">{{ alt }}</span>
+										<span class="size">{{ attachmentMetadata.size }}</span>
+									</div>
+								</a>
 							</div>
 							<div v-if="showDeleteIcon"
 								class="buttons">
@@ -225,16 +227,13 @@ export default {
 
 			return this.loaded && this.imageLoaded
 		},
-		imageFileId() {
-			return getQueryVariable(this.src, 'fileId')
-		},
 		isSupportedImage() {
 			return typeof this.mime === 'undefined'
 				|| IMAGE_MIMES.indexOf(this.mime) !== -1
 		},
 		internalLinkOrImage() {
-			if (this.imageFileId) {
-				return generateUrl('/f/' + this.imageFileId)
+			if (this.fileId) {
+				return generateUrl('/f/' + this.fileId)
 			}
 			return this.src
 		},
@@ -257,6 +256,9 @@ export default {
 					alt,
 				})
 			},
+		},
+		fileId() {
+			return getQueryVariable(this.src, 'fileId')
 		},
 		t() {
 			return (a, s) => window.t(a, s)
@@ -463,6 +465,10 @@ export default {
 		border: 2px solid var(--color-border);
 		border-radius: var(--border-radius-large);
 		padding: 8px;
+
+		a {
+			display: contents;
+		}
 
 		img {
 			width: 44px;
