@@ -93,6 +93,7 @@ OC.L10N.register(
     "Translate" : "Itzuli",
     "Remaining actions" : "Gainerako ekintzak",
     "Replace" : "Ordeztu",
+    "Detect language" : "Detektatu hizkuntza",
     "No emoji found" : "Ez da emojirik aurkitu",
     "No user found" : "Ez da erabiltzailerik aurkitu",
     "Link to this section" : "Estekatu atal honetara",
