@@ -103,7 +103,7 @@
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2",
-    "y-websocket": "^1.4.6",
+    "y-websocket": "^1.5.0",
     "yjs": "^13.5.50"
   },
   "engines": {
