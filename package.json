@@ -132,7 +132,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "jest-serializer-vue": "^2.0.2",
     "vite": "^3.2.5",
-    "vite-plugin-commonjs": "^0.6.1",
+    "vite-plugin-commonjs": "^0.6.2",
     "vue-demi": "^0.13.11",
     "vue-template-compiler": "^2.7.14"
   },
