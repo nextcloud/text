@@ -249,7 +249,7 @@ class SyncService {
 	}
 
 	async close() {
-		this.backend.disconnect()
+		this.backend?.disconnect()
 		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 		await Promise.any([timeout, this.save()])
 		return this._close()
