@@ -534,6 +534,14 @@ export default {
 										this.$syncService.save()
 										return true
 									},
+									'Shift-Mod-c': ({ editor }) => {
+										if (!navigator?.clipboard) {
+											console.error('Clipboard API is not available')
+										}
+
+										const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+										navigator.clipboard.writeText(proseMirrorMarkdown)
+									},
 								}),
 							],
 							enableRichEditing: this.isRichEditor,
