@@ -20,6 +20,7 @@ OC.L10N.register(
     "Saved" : "Disimpan",
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
+    "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "Translate" : "Terjemahkan",
     "Replace" : "Timpa",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima",
