@@ -31,6 +31,7 @@ use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
+use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
 
@@ -40,6 +41,9 @@ class SessionController extends Controller {
 	private NotificationService $notificationService;
 	private IUserManager $userManager;
 	private IUserSession $userSession;
+
+	private bool $restoreUser = false;
+	private ?IUser $userToRestore = null;
 
 	public function __construct(string $appName, IRequest $request, ApiService $apiService, SessionService $sessionService, NotificationService $notificationService, IUserManager $userManager, IUserSession $userSession) {
 		parent::__construct($appName, $request);
@@ -70,8 +74,12 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness): DataResponse {
-		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness);
+		try {
+			$this->loginSessionUser($documentId, $sessionId, $sessionToken);
+			return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness);
+		} finally {
+			$this->restoreSessionUser();
+		}
 	}
 
 	/**
@@ -79,8 +87,12 @@ class SessionController extends Controller {
 	 * @PublicPage
 	 */
 	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
-		$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave);
+		try {
+			$this->loginSessionUser($documentId, $sessionId, $sessionToken);
+			return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave);
+		} finally {
+			$this->restoreSessionUser();
+		}
 	}
 
 	/**
@@ -104,11 +116,19 @@ class SessionController extends Controller {
 
 	private function loginSessionUser(int $documentId, int $sessionId, string $sessionToken) {
 		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		if ($currentSession !== false) {
+		if ($currentSession !== false && !$this->userSession->isLoggedIn()) {
 			$user = $this->userManager->get($currentSession->getUserId());
 			if ($user !== null) {
+				$this->restoreUser = true;
+				$this->userToRestore = $this->userSession->getUser();
 				$this->userSession->setUser($user);
 			}
+		}
+	}
+
+	private function restoreSessionUser(): void {
+		if ($this->restoreUser) {
+			$this->userSession->setUser($this->userToRestore);
 		}
 	}
 }
