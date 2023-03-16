@@ -21,12 +21,41 @@
 
 import createSuggestions from '../suggestions.js'
 import LinkPickerList from './LinkPickerList.vue'
+import markdownit from '../../../markdownit/index.js'
 
 import { searchProvider, getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 export default () => createSuggestions({
 	listComponent: LinkPickerList,
 	command: ({ editor, range, props }) => {
+		const raw = '- [ ] Clean bedroom\n' +
+			'- [ ] Take out trash\n' +
+			'- [ ] Wash dishes\n' +
+			'- [ ] Vacuum living room\n' +
+			'- [ ] Mop kitchen\n\n'
+		const html = markdownit.render(raw)
+		console.debug('hhhhhhhh RAW', raw)
+		console.debug('hhhhhhhh PROCESSED', html)
+		editor
+			.chain()
+			.focus()
+			.insertContentAt(range, html)
+			.run()
+
+		const raw2 = '- Clean bedroom\n' +
+			'- Take out trash\n' +
+			'- Wash dishes\n' +
+			'- Vacuum living room\n' +
+			'- Mop kitchen'
+		const html2 = markdownit.render(raw2)
+		console.debug('hhhhhhhh RAW', raw2)
+		console.debug('hhhhhhhh PROCESSED', html2)
+		editor
+			.chain()
+			.focus()
+			.insertContentAt(range, html2)
+			.run()
+
 		getLinkWithPicker(props.providerId, true)
 			.then(link => {
 				editor
