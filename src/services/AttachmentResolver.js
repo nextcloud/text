@@ -22,6 +22,8 @@
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
+import axios from '@nextcloud/axios'
+import { formatFileSize } from '@nextcloud/files'
 
 import { logger } from '../helpers/logger.js'
 
@@ -53,7 +55,7 @@ export default class AttachmentResolver {
 	 *
 	 * Currently returns either one or two urls.
 	 */
-	resolve(src, preferRawImage = false) {
+	async resolve(src, preferRawImage = false) {
 		if (this.#session && src.startsWith('text://')) {
 			const imageFileName = getQueryVariable(src, 'imageFileName')
 			return [{
@@ -62,6 +64,7 @@ export default class AttachmentResolver {
 			}]
 		}
 
+		// Has session and URL points to attachment from current document
 		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
 			return [
@@ -91,11 +94,11 @@ export default class AttachmentResolver {
 			}]
 		}
 
-		// if it starts with '.attachments.1234/'
-		if (src.match(/^\.attachments\.\d+\//)) {
+		//  Has session and URL points to attachment from a (different) text document
+		if (this.#session && src.match(/^\.attachments\.\d+\//)) {
 			const imageFileName = this.#relativePath(src)
 				.replace(/\.attachments\.\d+\//, '')
-			// try the webdav url and attachment API if it fails
+			// Try webdav URL, use attachment API as fallback
 			return [
 				{
 					type: this.ATTACHMENT_TYPE_IMAGE,
@@ -108,6 +111,26 @@ export default class AttachmentResolver {
 				{
 					type: this.ATTACHMENT_TYPE_MEDIA,
 					url: this.#getMediaPreviewUrl(imageFileName),
+					name: imageFileName,
+				},
+			]
+		}
+
+		// Doesn't have session and URL points to attachment from (current or different) text document
+		if (!this.#session && src.match(/^\.attachments\.\d+\//)) {
+			const imageFileName = this.#relativePath(src)
+				.replace(/\.attachments\.\d+\//, '')
+			const { mimeType, size } = await this.getMetadata(this.#davUrl(src))
+			// Without session, use webdav URL for images and mimetype icon for media attachments
+			return [
+				{
+					type: this.ATTACHMENT_TYPE_IMAGE,
+					url: this.#davUrl(src),
+				},
+				{
+					type: this.ATTACHMENT_TYPE_MEDIA,
+					url: this.getMimeUrl(mimeType),
+					metadata: { size },
 					name: imageFileName,
 				},
 			]
@@ -247,6 +270,17 @@ export default class AttachmentResolver {
 		].join('/')
 
 		return pathNormalize(f)
+	}
+
+	async getMetadata(src) {
+		const headResponse = await axios.head(src)
+		const mimeType = headResponse.headers['content-type']
+		const size = formatFileSize(headResponse.headers['content-length'])
+		return { mimeType, size }
+	}
+
+	getMimeUrl(mimeType) {
+		return mimeType ? OC.MimeType.getIconUrl(mimeType) : null
 	}
 
 }

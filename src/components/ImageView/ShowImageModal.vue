@@ -6,7 +6,7 @@
 		:has-next="true"
 		:has-previous="true"
 		:close-button-contained="false"
-		dark="true"
+		:dark="true"
 		@next="showNextImage"
 		@previous="showPreviousImage"
 		@close="$emit('close')">
@@ -33,7 +33,7 @@ export default {
 			validator(imagesList) {
 				return (imagesList.length === 0)
 					? true
-					: imagesList.findIndex(({ basename, source }) => !(basename && source)) !== -1
+					: imagesList.every(image => image.basename && image.source)
 			},
 		},
 		startIndex: {
