@@ -95,7 +95,7 @@ describe('Sync', () => {
 			.should('include', 'after the lost connection')
 	})
 
-	it.only('passes the doc content from one session to the next', () => {
+	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
 		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
 			.as('create')
