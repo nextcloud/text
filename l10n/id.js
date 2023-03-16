@@ -27,6 +27,7 @@ OC.L10N.register(
     "Undo" : "Undo",
     "Info" : "Info",
     "Warning" : "Peringatan",
+    "Control" : "Kendali",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
     "Last saved {lastSaved}" : "Terakhir disimpan {lastSaved}",
