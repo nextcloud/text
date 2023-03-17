@@ -875,6 +875,18 @@ export default {
 		}
 	}
 
+	.text-editor__wrapper.has-conflicts > .editor {
+		width: 50%;
+	}
+
+	.text-editor__wrapper.has-conflicts > .content-wrapper {
+		width: 50%;
+		#read-only-editor {
+			margin: 0px;
+			padding-top: 50px;
+		}
+	}
+
 	// Required in order to make the public pages behave the same if talk is enabled or not
 	// as Talk overwrites the public page styles and changes the DOM layout for the sidebar injection
 	#files-public-content {
