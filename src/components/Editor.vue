@@ -426,6 +426,7 @@ export default {
 		resolveUseThisVersion() {
 			this.$syncService.forceSave()
 			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$syncService.startSync()
 		},
 
 		resolveUseServerVersion() {
@@ -433,6 +434,7 @@ export default {
 			this.$editor.setOptions({ editable: !this.readOnly })
 			this.$editor.commands.setContent(markdownItHtml)
 			this.$syncService.forceSave()
+			this.$syncService.startSync()
 		},
 
 		reconnect() {
@@ -565,10 +567,6 @@ export default {
 		},
 
 		onChange({ document, sessions }) {
-			if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
-				this.resolveUseServerVersion()
-				return
-			}
 			this.updateSessions.bind(this)(sessions)
 			this.document = document
 
