@@ -370,7 +370,7 @@ class DocumentService {
 				}
 			});
 			$document->setLastSavedVersion($stepsVersion);
-			$document->setLastSavedVersionTime(time());
+			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
