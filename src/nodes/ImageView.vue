@@ -50,7 +50,7 @@
 								class="buttons">
 								<NcButton :aria-label="t('text', 'Delete this attachment')"
 									:title="t('text', 'Delete this attachment')"
-									@click="deleteNode">
+									@click="onDelete">
 									<template #icon>
 										<DeleteIcon />
 									</template>
@@ -86,7 +86,7 @@
 								class="image__caption__delete">
 								<NcButton :aria-label="t('text', 'Delete this image')"
 									:title="t('text', 'Delete this image')"
-									@click="deleteNode">
+									@click="onDelete">
 									<template #icon>
 										<DeleteIcon />
 									</template>
@@ -133,9 +133,10 @@ import axios from '@nextcloud/axios'
 import ClickOutside from 'vue-click-outside'
 import { NcButton } from '@nextcloud/vue'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
-import store from './../mixins/store.js'
-import { useAttachmentResolver } from './../components/Editor.provider.js'
+import store from '../mixins/store.js'
+import { useAttachmentResolver } from '../components/Editor.provider.js'
 import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
+import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import { logger } from '../helpers/logger.js'
@@ -355,6 +356,10 @@ export default {
 			})
 			this.imageIndex = this.embeddedImagesList.findIndex(image => image.relativePath === src)
 			this.showImageModal = true
+		},
+		onDelete() {
+			emit('text:image-node:delete', this.imageUrl)
+			this.deleteNode()
 		},
 	},
 }

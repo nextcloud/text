@@ -43,6 +43,7 @@
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
 import { logger } from '../../helpers/logger.js'
 
 import {
@@ -212,6 +213,8 @@ export default {
 
 			// Scroll image into view
 			this.$editor.commands.scrollIntoView()
+
+			emit('text:image-node:add', null)
 		},
 	},
 }
