@@ -289,39 +289,4 @@ export default {
 			max-height: 30vh;
 		}
 	}
-
-	html.ie {
-		#rich-workspace:deep() {
-			.text-editor {
-				position: initial;
-			}
-
-			.text-editor__wrapper {
-				position: relative !important;
-				top: auto !important;
-			}
-
-			.text-editor__main {
-				display: flex;
-				flex-direction: column;
-				overflow: hidden !important;
-			}
-
-			.menubar {
-				position: relative;
-				overflow: hidden;
-				flex-shrink: 0;
-				height: 44px;
-				top: auto;
-			}
-
-			.text-editor__main > div:nth-child(2) {
-				min-height: 44px;
-				overflow-x: hidden;
-				overflow-y: auto;
-				flex-shrink: 1;
-			}
-		}
-	}
-
 </style>
