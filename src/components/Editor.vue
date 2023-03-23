@@ -84,7 +84,7 @@ import { mapActions, mapState } from 'vuex'
 import escapeHtml from 'escape-html'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
-import { emit } from '@nextcloud/event-bus'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 import { Doc } from 'yjs'
@@ -318,6 +318,8 @@ export default {
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
+		subscribe('text:image-node:add', this.onAddImageNode)
+		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.$parent?.$emit('update:loaded', true)
 	},
 	created() {
@@ -332,6 +334,8 @@ export default {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
+		unsubscribe('text:image-node:add', this.onAddImageNode)
+		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.$providers.forEach(p => p.destroy())
 	},
 	methods: {
@@ -581,7 +585,6 @@ export default {
 		},
 
 		onError({ type, data }) {
-
 			this.$nextTick(() => {
 				this.$editor?.setEditable(false)
 				this.$emit('sync-service:error')
@@ -658,6 +661,7 @@ export default {
 				this.$emit('sync-service:save')
 			})
 		},
+
 		onFocus() {
 			this.$emit('focus')
 		},
@@ -665,8 +669,15 @@ export default {
 			this.$emit('blur')
 		},
 
-		async close() {
+		onAddImageNode() {
+			this.$parent.$emit('add-image-node')
+		},
 
+		onDeleteImageNode(imageUrl) {
+			this.$parent.$emit('delete-image-node', imageUrl)
+		},
+
+		async close() {
 			if (this.currentSession && this.$syncService) {
 				try {
 					await this.$syncService.close()
