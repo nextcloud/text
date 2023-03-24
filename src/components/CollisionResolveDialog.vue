@@ -22,18 +22,34 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<button :disabled="clicked" @click="resolveThisVersion">
+		<NcButton :disabled="clicked" data-cy="resolveThisVersion" @click="resolveThisVersion">
 			{{ t('text', 'Use current version') }}
-		</button>
-		<button :disabled="clicked" @click="resolveServerVersion">
+		</NcButton>
+		<NcButton :disabled="clicked" data-cy="resolveServerVersion" @click="resolveServerVersion">
 			{{ t('text', 'Use the saved version') }}
-		</button>
+		</NcButton>
 	</div>
 </template>
 
 <script>
+import { useEditorMixin, useSyncServiceMixin } from './Editor.provider.js'
+import { NcButton } from '@nextcloud/vue'
+import markdownit from './../markdownit/index.js'
 export default {
 	name: 'CollisionResolveDialog',
+	components: {
+		NcButton,
+	},
+	mixins: [
+		useEditorMixin,
+		useSyncServiceMixin,
+	],
+	props: {
+		syncError: {
+			type: Object,
+			default: null,
+		}
+	},
 	data() {
 		return {
 			clicked: false,
@@ -42,11 +58,17 @@ export default {
 	methods: {
 		resolveThisVersion() {
 			this.clicked = true
-			this.$emit('resolve-use-this-version')
+			this.$syncService.forceSave()
+			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$syncService.startSync()
 		},
 		resolveServerVersion() {
 			this.clicked = true
-			this.$emit('resolve-use-server-version')
+			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
+			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.commands.setContent(markdownItHtml)
+			this.$syncService.forceSave()
+			this.$syncService.startSync()
 		},
 	},
 }
@@ -55,17 +77,12 @@ export default {
 <style scoped lang="scss">
 	#resolve-conflicts {
 		display: flex;
-		position: fixed;
-		z-index: 10000;
-		bottom: 0;
-		max-width: 900px;
-		width: 100vw;
+		width: 100%;
 		margin: auto;
 		padding: 20px 0;
 
 		button {
 			margin: auto;
-			box-shadow: 0 0 10px var(--color-box-shadow);
 		}
 	}
 </style>

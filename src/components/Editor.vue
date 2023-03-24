@@ -31,6 +31,7 @@
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
+
 		<Wrapper v-if="displayed"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
@@ -71,10 +72,6 @@
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
-
-		<CollisionResolveDialog v-if="hasSyncCollission && !readOnly"
-			@resolve-use-this-version="resolveUseThisVersion"
-			@resolve-use-server-version="resolveUseServerVersion" />
 	</div>
 </template>
 
@@ -132,7 +129,6 @@ export default {
 		MenuBar,
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
-		CollisionResolveDialog: () => import(/* webpackChunkName: "editor" */'./CollisionResolveDialog.vue'),
 	},
 	mixins: [
 		isMobile,
@@ -423,18 +419,6 @@ export default {
 				.off('save', this.onSave)
 		},
 
-		resolveUseThisVersion() {
-			this.$syncService.forceSave()
-			this.$editor.setOptions({ editable: !this.readOnly })
-		},
-
-		resolveUseServerVersion() {
-			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
-			this.$editor.setOptions({ editable: !this.readOnly })
-			this.$editor.commands.setContent(markdownItHtml)
-			this.$syncService.forceSave()
-		},
-
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
@@ -565,10 +549,6 @@ export default {
 		},
 
 		onChange({ document, sessions }) {
-			if (this.document.baseVersionEtag !== '' && document.baseVersionEtag !== this.document.baseVersionEtag) {
-				this.resolveUseServerVersion()
-				return
-			}
 			this.updateSessions.bind(this)(sessions)
 			this.document = document
 
@@ -893,8 +873,9 @@ export default {
 	.text-editor__wrapper.has-conflicts > .content-wrapper {
 		width: 50%;
 		#read-only-editor {
-			margin: 0px;
+			margin: 0px auto;
 			padding-top: 50px;
+			overflow: initial;
 		}
 	}
 

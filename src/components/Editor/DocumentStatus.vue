@@ -43,6 +43,8 @@
 		<p v-if="lock" class="msg msg-locked">
 			<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
 		</p>
+
+		<CollisionResolveDialog v-if="hasSyncCollission" :sync-error="syncError" />
 	</div>
 </template>
 
@@ -52,11 +54,13 @@ import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
 import AlertOctagonOutline from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import Lock from 'vue-material-design-icons/Lock.vue'
 import { NcEmptyContent } from '@nextcloud/vue'
+import CollisionResolveDialog from '../CollisionResolveDialog.vue'
 
 export default {
 	name: 'DocumentStatus',
 
 	components: {
+		CollisionResolveDialog,
 		AlertOctagonOutline,
 		Lock,
 		NcEmptyContent,
@@ -107,7 +111,10 @@ export default {
 
 <style scoped lang="scss">
 	.document-status {
-		position: relative;
+		position: sticky;
+		top: 0;
+		z-index: 10000;
+		height: 50px;
 		background-color: var(--color-main-background);
 
 		.msg {
