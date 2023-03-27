@@ -90,6 +90,7 @@ export default {
 		overflow: hidden;
 		white-space: nowrap;
 		animation: initialPadding calc(var(--animation-duration) * 2);
+		width: calc(100% - var(--padding-left));
 
 		a:hover {
 			color: var(--color-primary-hover);
