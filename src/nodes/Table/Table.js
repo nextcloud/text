@@ -170,7 +170,11 @@ export default Table.extend({
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		return ['table', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+		return [
+			'div',
+			{ class: 'table-wrapper', style: 'overflow-x: auto;' },
+			['table', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0],
+		]
 	},
 
 	toMarkdown(state, node) {
