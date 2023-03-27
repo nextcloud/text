@@ -23,8 +23,13 @@
 <template>
 	<div class="text-editor__session-list">
 		<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
-			<SavingIndicator :saving="saveStatusClass === 'saving'"
-				:error="saveStatusClass === 'error'" />
+			<NcButton type="tertiary"
+				@click="onClickSave">
+				<template #icon>
+					<SavingIndicator :saving="saveStatusClass === 'saving'"
+						:error="saveStatusClass === 'error'" />
+				</template>
+			</NcButton>
 		</div>
 		<SessionList :sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
@@ -38,12 +43,13 @@
 <script>
 
 import SavingIndicator from '../SavingIndicator.vue'
-import { ERROR_TYPE } from './../../services/SyncService.js'
+import { ERROR_TYPE } from '../../services/SyncService.js'
 import moment from '@nextcloud/moment'
-import { Tooltip } from '@nextcloud/vue'
+import { NcButton, Tooltip } from '@nextcloud/vue'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
+	useSyncServiceMixin,
 } from '../Editor.provider.js'
 import refreshMoment from '../../mixins/refreshMoment.js'
 
@@ -51,6 +57,7 @@ export default {
 	name: 'Status',
 
 	components: {
+		NcButton,
 		SavingIndicator,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
@@ -60,7 +67,12 @@ export default {
 		Tooltip,
 	},
 
-	mixins: [useIsMobileMixin, useIsPublicMixin, refreshMoment],
+	mixins: [
+		useIsMobileMixin,
+		useIsPublicMixin,
+		useSyncServiceMixin,
+		refreshMoment,
+	],
 
 	props: {
 		hasConnectionIssue: {
@@ -124,13 +136,20 @@ export default {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		lastSavedString() {
-			// Make this a dependent of refreshMoment so it will be recomputed
+			// Make this a dependent of refreshMoment, so it will be recomputed
 			/* eslint-disable-next-line no-unused-expressions */
 			this.refreshMoment
 			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
 		},
 	},
 
+	methods: {
+		onClickSave() {
+			if (this.dirtyStateIndicator) {
+				this.$syncService.forceSave()
+			}
+		},
+	},
 }
 </script>
 
