@@ -20,7 +20,7 @@
 
 <template>
 	<span class="material-design-icon">
-		<CheckIcon />
+		<CheckIcon class="saving-indicator-check" />
 		<span class="saving-indicator-container" :class="{error, saving}">
 			<CircleMedium class="saving-indicator" />
 		</span>
@@ -53,6 +53,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.saving-indicator-check {
+	cursor: pointer;
+
+	:deep(svg) {
+		fill: var(--color-text-lighter);
+	}
+}
+
 .saving-indicator-container {
 	display: none;
 	position: absolute;
@@ -63,14 +71,21 @@ export default defineComponent({
 			position: relative;
 			top: 6px;
 			left: 6px;
+			cursor: pointer;
 		}
 	}
 
 	&.saving > span {
 		color: var(--color-primary);
+		:deep(svg) {
+			fill: var(--color-primary);
+		}
 	}
 	&.error > span {
 		color: var(--color-error);
+		:deep(svg) {
+			fill: var(--color-primary);
+		}
 	}
 }
 </style>
