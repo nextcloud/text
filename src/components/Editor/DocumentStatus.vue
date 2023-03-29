@@ -114,7 +114,7 @@ export default {
 		position: sticky;
 		top: 0;
 		z-index: 10000;
-		height: 50px;
+		max-height: 50px;
 		background-color: var(--color-main-background);
 
 		.msg {
