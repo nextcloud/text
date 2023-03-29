@@ -303,7 +303,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(?File $file, int $documentId, int $version, ?string $autoaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null, ?string $filePath = null): Document {
+	public function autosave(?File $file, int $documentId, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null, ?string $filePath = null): Document {
 		/** @var Document $document */
 		$document = $this->documentMapper->find($documentId);
 
@@ -327,7 +327,7 @@ class DocumentService {
 			}
 		}
 
-		if ($autoaveDocument === null) {
+		if ($autoSaveDocument === null) {
 			return $document;
 		}
 		// Do not save if version already saved
@@ -341,10 +341,10 @@ class DocumentService {
 			return $document;
 		}
 
-		if (empty($autoaveDocument)) {
+		if (empty($autoSaveDocument)) {
 			$this->logger->debug('Saving empty document', [
 				'requestVersion' => $version,
-				'requestAutosaveDocument' => $autoaveDocument,
+				'requestAutosaveDocument' => $autoSaveDocument,
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
 				'fileSizeBeforeSave' => $file->getSize(),
@@ -357,20 +357,32 @@ class DocumentService {
 			]);
 		}
 
+		// Version changed but the content remains the same
+		if ($autoSaveDocument === $file->getContent()) {
+			if ($documentState) {
+				$this->writeDocumentState($file->getId(), $documentState);
+			}
+			$document->setLastSavedVersion($stepsVersion);
+			$document->setLastSavedVersionTime($file->getMTime());
+			$document->setLastSavedVersionEtag($file->getEtag());
+			$this->documentMapper->update($document);
+			return $document;
+		}
+
 		$this->cache->set('document-save-lock-' . $documentId, true, 10);
 		try {
 			$this->lockManager->runInScope(new LockContext(
 				$file,
 				ILock::TYPE_APP,
 				Application::APP_NAME
-			), function () use ($file, $autoaveDocument, $documentState) {
-				$file->putContent($autoaveDocument);
+			), function () use ($file, $autoSaveDocument, $documentState) {
+				$file->putContent($autoSaveDocument);
 				if ($documentState) {
 					$this->writeDocumentState($file->getId(), $documentState);
 				}
 			});
 			$document->setLastSavedVersion($stepsVersion);
-			$document->setLastSavedVersionTime(time());
+			$document->setLastSavedVersionTime($file->getMTime());
 			$document->setLastSavedVersionEtag($file->getEtag());
 			$this->documentMapper->update($document);
 		} catch (LockedException $e) {
