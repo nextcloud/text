@@ -43,6 +43,7 @@ OC.L10N.register(
     "Style" : "Stijl",
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Toetsenbord sneltoetsen",
+    "Backspace" : "Backspace",
     "Shift" : "Shift",
     "Bold" : "Vet",
     "Bold text" : "Vette tekst",
