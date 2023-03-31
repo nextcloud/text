@@ -85,7 +85,7 @@ OC.L10N.register(
     "Insert from Files" : "Dosyalar uygulamasından ekle",
     "Remove link" : "Bağlantıyı kaldır",
     "Link to file or folder" : "Dosya ya da klasör bağlantısı",
-    "Link to website" : "Web sitesi bağlantısı",
+    "Link to website" : "Site bağlantısı",
     "Update link" : "Bağlantıyı güncelle",
     "Open link picker" : "Bağlantı seçiciyi aç",
     "Select file or folder to link to" : "Bağlantı verilecek dosya ya da klasörü seçin",
