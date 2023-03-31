@@ -154,7 +154,7 @@ OC.L10N.register(
     "Insert an image" : "Insérer une image",
     "Alt" : "Alternatif",
     "Update Link" : "Mettre à jour le lien",
-    "Add Link" : "Ajouter un lien",
+    "Add Link" : "Insérer un lien",
     "Link file" : "Lier un fichier",
     "Remove Link" : "Supprimer le lien",
     "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien",
