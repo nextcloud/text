@@ -41,6 +41,10 @@ class FilesSharingLoadAdditionalScriptsListener implements IEventListener {
 	}
 
 	public function handle(Event $event): void {
+		if (!$event instanceof BeforeTemplateRenderedEvent) {
+			return;
+		}
+
 		Util::addScript('text', 'text-public');
 
 		$this->initialStateProvider->provideState();
