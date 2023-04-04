@@ -13,6 +13,7 @@ OC.L10N.register(
     "Text" : "Texto",
     "Guest" : "Invitado",
     "Offline" : "Sin conexión",
+    "Saving …" : "Saving …",
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",
