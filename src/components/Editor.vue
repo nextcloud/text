@@ -597,6 +597,7 @@ export default {
 			}
 
 			this.$emit('ready')
+			this.$parent?.$emit('ready')
 		},
 
 		onStateChange(state) {
@@ -608,8 +609,7 @@ export default {
 					})
 				}
 				this.$emit('ready')
-				// TODO: remove $parent access
-				this.$parent.$emit('ready', true)
+				this.$parent?.$emit('ready', true)
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes
