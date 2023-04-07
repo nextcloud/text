@@ -211,7 +211,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back to home')
-				cy.get('#oc-dialog-filepicker-content .dirtree > .crumb:first-child').click()
+				cy.get('#oc-dialog-filepicker-content .dirtree .crumb:first-child').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
