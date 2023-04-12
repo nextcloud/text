@@ -58,6 +58,8 @@ export default {
 	padding: 0 10px 10px 10px;
 	position: fixed;
 	overflow: auto;
+	// 204px = 50px nc header + 60px collectives titlebar + 44px menubar + 50px bottom margin
+	max-height: calc(100% - 204px);
 
 	&-mobile {
 		box-shadow: 8px 0 17px -19px var(--color-box-shadow);
@@ -68,6 +70,9 @@ export default {
 	&__header {
 		margin: 0;
 		position: sticky;
+		top: 0;
+		z-index: 1;
+		background-color: var(--color-main-background);
 		padding: 0.6em 0.6em 0.6em 0;
 		display: flex;
 		align-items: center;
