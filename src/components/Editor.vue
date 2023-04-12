@@ -316,7 +316,7 @@ export default {
 		}
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
-		this.$parent?.$emit('update:loaded', true)
+		this.emit('update:loaded', true)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -358,7 +358,7 @@ export default {
 
 		initSession() {
 			if (!this.hasDocumentParameters) {
-				this.$parent?.$emit('error', 'No valid file provided')
+				this.emit('error', 'No valid file provided')
 				return
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
@@ -500,7 +500,7 @@ export default {
 							onUpdate: ({ editor }) => {
 								// this.debugContent(editor)
 								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.$parent.$emit('update:content', {
+								this.emit('update:content', {
 									markdown: proseMirrorMarkdown,
 								})
 							},
@@ -559,7 +559,7 @@ export default {
 		onSync({ steps, document }) {
 			this.hasConnectionIssue = false
 			this.$nextTick(() => {
-				this.$emit('sync-service:sync')
+				this.emit('sync-service:sync')
 			})
 			this.document = document
 		},
@@ -567,7 +567,7 @@ export default {
 		onError({ type, data }) {
 			this.$nextTick(() => {
 				this.$editor?.setEditable(false)
-				this.$emit('sync-service:error')
+				this.emit('sync-service:error')
 			})
 
 			if (type === ERROR_TYPE.LOAD_ERROR) {
@@ -596,7 +596,7 @@ export default {
 				this.hasConnectionIssue = true
 			}
 
-			this.$emit('ready')
+			this.emit('ready')
 		},
 
 		onStateChange(state) {
@@ -607,9 +607,7 @@ export default {
 						this.$editor.commands.focus()
 					})
 				}
-				this.$emit('ready')
-				// TODO: remove $parent access
-				this.$parent.$emit('ready', true)
+				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes
@@ -631,30 +629,30 @@ export default {
 			this.$editor.setOptions({ editable: !this.readOnly })
 
 			this.$nextTick(() => {
-				this.$emit('sync-service:idle')
+				this.emit('sync-service:idle')
 			})
 		},
 
 		onSave() {
 			emit('files:file:updated', { fileid: this.fileId })
 			this.$nextTick(() => {
-				this.$emit('sync-service:save')
+				this.emit('sync-service:save')
 			})
 		},
 
 		onFocus() {
-			this.$emit('focus')
+			this.emit('focus')
 		},
 		onBlur() {
-			this.$emit('blur')
+			this.emit('blur')
 		},
 
 		onAddImageNode() {
-			this.$parent.$emit('add-image-node')
+			this.emit('add-image-node')
 		},
 
 		onDeleteImageNode(imageUrl) {
-			this.$parent.$emit('delete-image-node', imageUrl)
+			this.emit('delete-image-node', imageUrl)
 		},
 
 		async close() {
@@ -679,6 +677,23 @@ export default {
 				}
 			}
 			return true
+		},
+
+		/**
+		 * Wrapper to emit events on our own and the parent component
+		 *
+		 * The parent might be either the root component of src/editor.js or Viewer.vue which collectives currently uses
+		 *
+		 * Ideally this would be done in a generic way in the src/editor.js API abstraction, but it seems
+		 * that there is no proper way to pass any received event along in vue, the only option I've found
+		 * in https://github.com/vuejs/vue/issues/230 feels too hacky to me, so we just emit twice for now
+		 *
+		 * @param {string} event The event name
+		 * @param {any} data The data to pass along
+		 */
+		emit(event, data) {
+			this.$emit(event, data)
+			this.$parent?.$emit(event, true)
 		},
 
 		/** @param {Event} event The passed event */
@@ -710,7 +725,7 @@ export default {
 		},
 
 		outlineToggled(visible) {
-			this.$parent?.$emit('outline-toggled', visible)
+			this.emit('outline-toggled', visible)
 		},
 	},
 }
