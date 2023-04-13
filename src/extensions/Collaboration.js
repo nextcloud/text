@@ -1,11 +1,11 @@
 import { Extension } from '@tiptap/core'
-import { Step } from 'prosemirror-transform'
+import { Step } from '@tiptap/pm/transform'
 import {
 	collab,
 	sendableSteps,
 	getVersion,
 	receiveTransaction,
-} from 'prosemirror-collab'
+} from '@tiptap/pm/collab'
 
 let timeout
 const debounce = (fn, delay) => (...args) => {

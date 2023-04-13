@@ -23,7 +23,7 @@
 /*
  * Tiptap extension to ease customize the serialization to markdown
  *
- * Most markdown serialization can be handled by `prosemirror-markdown`.
+ * Most markdown serialization can be handled by `@tiptap/pm/markdown`.
  * In order to make it easier to add custom markdown rendering
  * this extension will extend the prosemirror schema for nodes and marks
  * with a `toMarkdown` specification if that is defined in a tiptap extension.
@@ -39,9 +39,9 @@
  */
 
 import { Extension, getExtensionField } from '@tiptap/core'
-import { Plugin, PluginKey } from 'prosemirror-state'
-import { MarkdownSerializer, defaultMarkdownSerializer } from 'prosemirror-markdown'
-import { DOMParser } from 'prosemirror-model'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { MarkdownSerializer, defaultMarkdownSerializer } from '@tiptap/pm/markdown'
+import { DOMParser } from '@tiptap/pm/model'
 
 const Markdown = Extension.create({
 

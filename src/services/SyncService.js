@@ -22,7 +22,7 @@
  */
 import axios from '@nextcloud/axios'
 import mitt from 'mitt'
-import { getVersion, sendableSteps } from 'prosemirror-collab'
+import { getVersion, sendableSteps } from '@tiptap/pm/collab'
 
 import PollingBackend from './PollingBackend.js'
 import { logger } from '../helpers/logger.js'

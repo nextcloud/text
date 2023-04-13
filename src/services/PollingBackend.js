@@ -23,7 +23,7 @@ import axios from '@nextcloud/axios'
 import { logger } from '../helpers/logger.js'
 import { endpointUrl } from '../helpers/index.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
-import { sendableSteps } from 'prosemirror-collab'
+import { sendableSteps } from '@tiptap/pm/collab'
 
 /**
  * Minimum inverval to refetch the document changes

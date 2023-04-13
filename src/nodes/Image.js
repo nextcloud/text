@@ -21,7 +21,7 @@
  */
 
 import TiptapImage from '@tiptap/extension-image'
-import { Plugin } from 'prosemirror-state'
+import { Plugin } from '@tiptap/pm/state'
 import ImageView from './ImageView.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 

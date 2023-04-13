@@ -5,8 +5,8 @@ import TableCell from './TableCell.js'
 import TableHeader from './TableHeader.js'
 import TableHeadRow from './TableHeadRow.js'
 import TableRow from './TableRow.js'
-import { TextSelection } from 'prosemirror-state'
-import { isInTable, moveCellForward, selectionCell } from '@tiptap/prosemirror-tables'
+import { TextSelection } from '@tiptap/pm/state'
+import { isInTable, moveCellForward, selectionCell } from '@tiptap/pm/tables'
 
 /**
  *

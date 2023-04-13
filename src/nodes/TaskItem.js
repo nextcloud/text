@@ -22,7 +22,7 @@
 
 import TipTapTaskItem from '@tiptap/extension-task-item'
 import { wrappingInputRule, mergeAttributes } from '@tiptap/core'
-import { Plugin } from 'prosemirror-state'
+import { Plugin } from '@tiptap/pm/state'
 import { findParentNodeClosestToPos } from 'prosemirror-utils'
 
 const TaskItem = TipTapTaskItem.extend({

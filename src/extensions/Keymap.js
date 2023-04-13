@@ -21,7 +21,7 @@
  */
 
 import { Extension } from '@tiptap/core'
-import { Plugin } from 'prosemirror-state'
+import { Plugin } from '@tiptap/pm/state'
 
 const Keymap = Extension.create({
 
