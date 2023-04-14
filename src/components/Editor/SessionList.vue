@@ -68,9 +68,7 @@ import { NcPopover, Tooltip } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { mapActions, mapState } from 'vuex'
 import store from '../../mixins/store.js'
-
-const COLLABORATOR_IDLE_TIME = 60
-const COLLABORATOR_DISCONNECT_TIME = 90
+import { COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME } from '../../services/SyncService.js'
 
 export default {
 	name: 'SessionList',
