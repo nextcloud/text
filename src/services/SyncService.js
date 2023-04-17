@@ -42,6 +42,10 @@ const IDLE_TIMEOUT = 1440
  */
 const AUTOSAVE_INTERVAL = 30000
 
+const COLLABORATOR_IDLE_TIME = 60
+
+const COLLABORATOR_DISCONNECT_TIME = 90
+
 const ERROR_TYPE = {
 	/**
 	 * Failed to save collaborative document due to external change
@@ -173,6 +177,7 @@ class SyncService {
 
 	_receiveSteps({ steps, document, sessions }) {
 		const awareness = sessions
+			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
 			.filter(s => s.lastAwarenessMessage)
 			.map(s => {
 				return { step: s.lastAwarenessMessage, clientId: s.clientId }
@@ -288,4 +293,4 @@ class SyncService {
 }
 
 export default SyncService
-export { SyncService, ERROR_TYPE, IDLE_TIMEOUT }
+export { SyncService, ERROR_TYPE, IDLE_TIMEOUT, COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME }
