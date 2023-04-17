@@ -70,7 +70,7 @@
 		<NcActionButton :data-text-action-entry="`${actionEntry.key}-picker`"
 			@click="linkPicker">
 			<template #icon>
-				<LinkVariantPlus />
+				<Shape />
 			</template>
 			{{ t('text', 'Open the Smart Picker') }}
 		</NcActionButton>
@@ -84,7 +84,7 @@ import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
-import { Document, Loading, LinkOff, Web, LinkVariantPlus } from '../icons.js'
+import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { optimalPath } from '../../helpers/files.js'
 import { useFileMixin } from '../Editor.provider.js'
@@ -100,7 +100,7 @@ export default {
 		Loading,
 		LinkOff,
 		Web,
-		LinkVariantPlus,
+		Shape,
 	},
 	extends: BaseActionEntry,
 	mixins: [
