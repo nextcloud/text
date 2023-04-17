@@ -72,7 +72,7 @@
 			<template #icon>
 				<LinkVariantPlus />
 			</template>
-			{{ t('text', 'Open link picker') }}
+			{{ t('text', 'Open the Smart Picker') }}
 		</NcActionButton>
 	</NcActions>
 </template>
@@ -236,7 +236,7 @@ export default {
 						.run()
 				})
 				.catch(error => {
-					console.error('Link picker promise rejected:', error)
+					console.error('Smart picker promise rejected', error)
 				})
 		},
 	},
