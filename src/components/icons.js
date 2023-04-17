@@ -60,6 +60,7 @@ import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
+import MDI_Shape from 'vue-material-design-icons/Shape.vue'
 import MDI_Table from 'vue-material-design-icons/Table.vue'
 import MDI_TableAddColumnAfter from 'vue-material-design-icons/TableColumnPlusAfter.vue'
 import MDI_TableAddColumnBefore from 'vue-material-design-icons/TableColumnPlusBefore.vue'
@@ -136,6 +137,7 @@ export const LinkVariantPlus = makeIcon(MDI_LinkVariantPlus)
 export const Lock = makeIcon(MDI_Lock)
 export const Positive = makeIcon(MDI_Positive)
 export const Redo = makeIcon(MDI_Redo)
+export const Shape = makeIcon(MDI_Shape)
 export const Table = makeIcon(MDI_Table)
 export const TableAddColumnAfter = makeIcon(MDI_TableAddColumnAfter)
 export const TableAddColumnBefore = makeIcon(MDI_TableAddColumnBefore)
