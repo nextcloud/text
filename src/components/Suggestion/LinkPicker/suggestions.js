@@ -36,7 +36,7 @@ export default () => createSuggestions({
 					.run()
 			})
 			.catch(error => {
-				console.error('Link picker promise rejected:', error)
+				console.error('Smart picker promise rejected', error)
 			})
 	},
 	items: ({ query }) => {
