@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Dosya ya da klasör bağlantısı",
     "Link to website" : "Site bağlantısı",
     "Update link" : "Bağlantıyı güncelle",
-    "Open link picker" : "Bağlantı seçiciyi aç",
     "Select file or folder to link to" : "Bağlantı verilecek dosya ya da klasörü seçin",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
     "_%n char_::_%n chars_" : ["%n karakter","%n karakter"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Emoji picker" : "Emoji seçici",
     "Insert image" : "Görsel ekle",
-    "Document save status" : "Belge kaydetme durumu"
+    "Document save status" : "Belge kaydetme durumu",
+    "Open link picker" : "Bağlantı seçiciyi aç"
 },
 "nplurals=2; plural=(n > 1);");
