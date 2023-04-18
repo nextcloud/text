@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "連結至檔案或資料夾",
     "Link to website" : "連結至網站",
     "Update link" : "更新連結",
-    "Open link picker" : "開啟連結挑選器",
     "Select file or folder to link to" : "選取要連結的檔案或資料夾",
     "_%n word_::_%n words_" : ["%n 個字"],
     "_%n char_::_%n chars_" : ["%n 個字元"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "待辦列表",
     "Emoji picker" : "表情符號挑選器",
     "Insert image" : "插入影像",
-    "Document save status" : "文件儲存狀態"
+    "Document save status" : "文件儲存狀態",
+    "Open link picker" : "開啟連結挑選器"
 },
 "nplurals=1; plural=0;");

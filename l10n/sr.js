@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Линк на фајл или фолдер",
     "Link to website" : "Линк на веб сајт",
     "Update link" : "Ажурирај везу",
-    "Open link picker" : "Отвори бирач линка",
     "Select file or folder to link to" : "Изаберите фајл или фордер на који показује линк",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
     "_%n char_::_%n chars_" : ["%n карактер","%n карактера","%n карактера"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "ToDo листа",
     "Emoji picker" : "Бирач емођија",
     "Insert image" : "Убаци слику",
-    "Document save status" : "Статус чувања документа"
+    "Document save status" : "Статус чувања документа",
+    "Open link picker" : "Отвори бирач линка"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
