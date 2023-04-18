@@ -62,11 +62,10 @@ describe('direct editing', function() {
 		const closeRequestAlias = 'closeRequest'
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
-		cy.getContent()
-			.type('# This is a headline')
-			.type('{enter}')
-			.type('Some text')
-			.type('{enter}')
+		cy.getContent().type('# This is a headline')
+		cy.getContent().type('{enter}')
+		cy.getContent().type('Some text')
+		cy.getContent().type('{enter}')
 
 		// ensure we have received our own steps
 		cy.wait('@sync', { timeout: 7000 })
@@ -90,11 +89,10 @@ describe('direct editing', function() {
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
 
-		cy.getContent()
-			.type('# This is a headline')
-			.type('{enter}')
-			.type('Some text')
-			.type('{enter}')
+		cy.getContent().type('# This is a headline')
+		cy.getContent().type('{enter}')
+		cy.getContent().type('Some text')
+		cy.getContent().type('{enter}')
 
 		// ensure we have received our own steps
 		cy.wait('@sync', { timeout: 7000 })
@@ -118,11 +116,10 @@ describe('direct editing', function() {
 		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
 
-		cy.getContent()
-			.type('# This is a headline')
-			.type('{enter}')
-			.type('Some text')
-			.type('{enter}')
+		cy.getContent().type('# This is a headline')
+		cy.getContent().type('{enter}')
+		cy.getContent().type('Some text')
+		cy.getContent().type('{enter}')
 
 		// ensure we have received our own steps
 		cy.wait('@sync', { timeout: 7000 })

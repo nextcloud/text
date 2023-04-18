@@ -54,11 +54,10 @@ describe('table plugin', () => {
 			.find('table tr')
 			.should('have.length', 3)
 
-		cy.getContent()
-			.type('first{Enter}row')
-			.type('{Enter}{Enter}second row')
-			.type('{Enter}{Enter}third row')
-			.type('{Enter}{Enter}forth row')
+		cy.getContent().type('first{Enter}row')
+		cy.getContent().type('{Enter}{Enter}second row')
+		cy.getContent().type('{Enter}{Enter}third row')
+		cy.getContent().type('{Enter}{Enter}forth row')
 
 		// Added a row
 		cy.getContent()

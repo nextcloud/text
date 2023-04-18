@@ -48,7 +48,7 @@ export default {
 		syncError: {
 			type: Object,
 			default: null,
-		}
+		},
 	},
 	data() {
 		return {

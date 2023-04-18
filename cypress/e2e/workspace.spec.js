@@ -86,32 +86,21 @@ describe('Workspace', function() {
 
 	it('formats text', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace()
-			.type('Format me')
-			.type('{selectall}')
+		cy.openWorkspace().type('Format me')
+		cy.getContent().type('{selectall}')
 		;[
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
 			['strikethrough', 's'],
-		].forEach(([button, tag]) => {
-			cy.getMenuEntry(button)
-				.click()
-				.should('have.class', 'is-active')
-			cy.getContent()
-				.find(`${tag}`)
-				.should('contain', 'Format me')
-			cy.getMenuEntry(button)
-				.click()
-				.should('not.have.class', 'is-active')
-		})
+		].forEach(([button, tag]) => testButton(button, tag, 'Format me'))
+
 	})
 
 	it('creates headings via submenu', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace()
-			.type('Heading')
-			.type('{selectall}')
+		cy.openWorkspace().type('Heading')
+		cy.getContent().type('{selectall}')
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
 			const actionName = `headings-${heading}`
 
@@ -131,25 +120,13 @@ describe('Workspace', function() {
 
 	it('creates lists', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace()
-			.type('List me')
-			.type('{selectall}')
+		cy.openWorkspace().type('List me')
+		cy.getContent().type('{selectall}')
 		;[
 			['unordered-list', 'ul'],
 			['ordered-list', 'ol'],
 			['task-list', 'ul[data-type="taskList"]'],
-		].forEach(([button, tag]) => {
-			cy.getMenuEntry(button)
-				.click()
-				.should('have.class', 'is-active')
-
-			cy.getContent()
-				.find(`${tag}`).should('contain', 'List me')
-
-			cy.getMenuEntry(button)
-				.click()
-				.should('not.have.class', 'is-active')
-		})
+		].forEach(([button, tag]) => testButton(button, tag, 'List me'))
 	})
 
 	it('takes README.md into account', function() {
@@ -186,6 +163,7 @@ describe('Workspace', function() {
 
 		cy.openWorkspace()
 			.type('link me')
+		cy.getContent()
 			.type('{selectall}')
 
 		cy.getSubmenuEntry('insert-link', 'insert-link-file')
@@ -231,19 +209,18 @@ describe('Workspace', function() {
 				const actionName = `callout-${type}`
 
 				// enable callout
-				cy.getSubmenuEntry('callouts', actionName)
-					.click()
-					.then(() => {
-						// check content
-						cy.getContent()
-							.find(`.callout.callout--${type}`)
-							.should('contain', 'Callout')
+				cy.getSubmenuEntry('callouts', actionName).click()
+				cy.getSubmenuEntry('callouts', actionName).then(() => {
+					// check content
+					cy.getContent()
+						.find(`.callout.callout--${type}`)
+						.should('contain', 'Callout')
 
-						// disable
-						return cy.getSubmenuEntry('callouts', actionName)
-							.should('have.class', 'is-active')
-							.click()
-					})
+					// disable
+					return cy.getSubmenuEntry('callouts', actionName)
+						.should('have.class', 'is-active')
+						.click()
+				})
 			})
 		})
 
@@ -259,21 +236,21 @@ describe('Workspace', function() {
 			cy.wrap(rest)
 				.each(type => {
 					const actionName = `callout-${type}`
+					cy.getSubmenuEntry('callouts', actionName).click()
 					return cy.getSubmenuEntry('callouts', actionName)
-						.click()
 						.then(() => cy.getContent().find(`.callout.callout--${type}`))
 						.should('contain', 'Callout')
 						.then(() => {
 							last = type
 						})
 				})
-				.then(() => {
-					cy.getSubmenuEntry('callouts', `callout-${last}`)
-						.click()
 
-					cy.getMenuEntry('callouts')
-						.should('not.have.class', 'is-active')
-				})
+			cy.then(() => {
+				cy.getSubmenuEntry('callouts', `callout-${last}`)
+					.click()
+				cy.getMenuEntry('callouts')
+					.should('not.have.class', 'is-active')
+			})
 		})
 	})
 
@@ -301,9 +278,8 @@ describe('Workspace', function() {
 
 			cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
 
-			cy.getContent()
-				.type(txt)
-				.should('contain', txt)
+			cy.getContent().type(txt)
+			cy.getContent().should('contain', txt)
 		}
 
 		beforeEach(() => {
@@ -340,4 +316,20 @@ const openSidebar = filename => {
 	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-more`).click()
 	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-details`).click()
 	cy.get('.app-sidebar-header').should('contain', filename)
+}
+
+/**
+ *
+ * @param {string} button Name of the button to click.
+ * @param {string} tag Html tag expected to be toggled.
+ * @param {string} content Content expected in the element.
+ */
+function testButton(button, tag, content) {
+	cy.getMenuEntry(button).click()
+	cy.getMenuEntry(button).should('have.class', 'is-active')
+	cy.getContent()
+		.find(`${tag}`)
+		.should('contain', content)
+	cy.getMenuEntry(button).click()
+	cy.getMenuEntry(button).should('not.have.class', 'is-active')
 }

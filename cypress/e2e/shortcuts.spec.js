@@ -54,9 +54,8 @@ describe('keyboard shortcuts', () => {
 			path
 		)
 		cy.window().then(win => win.OCA.Viewer.open({ path }))
-	    cy.getContent()
-			.type(Cypress.currentTest.title)
-			.type('{selectall}')
+	    cy.getContent().type(Cypress.currentTest.title)
+		cy.getContent().type('{selectall}')
 	})
 
 	it('bold', () => testShortcut('{ctrl}b', 'strong'))
