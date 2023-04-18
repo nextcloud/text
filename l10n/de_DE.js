@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Link zu Datei oder Ordner",
     "Link to website" : "Link zur Website",
     "Update link" : "Link aktualisieren",
-    "Open link picker" : "Linkauswahl öffnen",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
     "_%n char_::_%n chars_" : ["%n Zeichen","%n Zeichen"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "To-do-Liste",
     "Emoji picker" : "Emoji-Auswahl",
     "Insert image" : "Bild einfügen",
-    "Document save status" : "Speicherstatus des Dokuments"
+    "Document save status" : "Speicherstatus des Dokuments",
+    "Open link picker" : "Linkauswahl öffnen"
 },
 "nplurals=2; plural=(n != 1);");
