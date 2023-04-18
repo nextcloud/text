@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Hivatkozás egy fájlhoz vagy mappához",
     "Link to website" : "Hivatkozás egy weboldalhoz",
     "Update link" : "Hivatkozás frissítése",
-    "Open link picker" : "Hivatkozásválasztó megnyitása",
     "Select file or folder to link to" : "Válassza ki a hivatkozandó fájlt vagy mappát",
     "_%n word_::_%n words_" : ["%n szó","%n szó"],
     "_%n char_::_%n chars_" : ["%n karakter","%n karakter"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "Teendőlista",
     "Emoji picker" : "Emodzsiválasztó",
     "Insert image" : "Kép beszúrása",
-    "Document save status" : "Dokumentum mentési állapota"
+    "Document save status" : "Dokumentum mentési állapota",
+    "Open link picker" : "Hivatkozásválasztó megnyitása"
 },
 "nplurals=2; plural=(n != 1);");

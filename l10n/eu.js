@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Esteka fitxategira edo karpetara",
     "Link to website" : "Esteka webgunera",
     "Update link" : "Eguneratu esteka",
-    "Open link picker" : "Ireki esteka-hautatzailea",
     "Select file or folder to link to" : "Hautatu estekatzeko fitxategia edo karpeta",
     "_%n word_::_%n words_" : ["hitz %n","%n hitz"],
     "_%n char_::_%n chars_" : ["karaktere %n","%n karaktere"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "Egitekoen zerrenda",
     "Emoji picker" : " Emotikono-hautatzailea",
     "Insert image" : "Txertatu irudia",
-    "Document save status" : "Dokumentuaren gordeketa egoera"
+    "Document save status" : "Dokumentuaren gordeketa egoera",
+    "Open link picker" : "Ireki esteka-hautatzailea"
 },
 "nplurals=2; plural=(n != 1);");

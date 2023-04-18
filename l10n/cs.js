@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Odkaz na soubor nebo složku",
     "Link to website" : "Odkaz na webovou stránku",
     "Update link" : "Aktualizovat odkaz",
-    "Open link picker" : "Otevřít nabídku výběru odkazu",
     "Select file or folder to link to" : "Vyberte soubor nebo složku na kterou odkazovat",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slova"],
     "_%n char_::_%n chars_" : ["%n znak","%n znaky","%n znaků","%n znaky"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "Seznam úkolů",
     "Emoji picker" : "Volba emotikony",
     "Insert image" : "Vložit obrázek",
-    "Document save status" : "Stav uložení dokumentu"
+    "Document save status" : "Stav uložení dokumentu",
+    "Open link picker" : "Otevřít nabídku výběru odkazu"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

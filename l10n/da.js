@@ -50,7 +50,6 @@ OC.L10N.register(
     "Remove link" : "Fjern link",
     "Link to file or folder" : "Link til fil eller mappe",
     "Link to website" : "Link til internet side",
-    "Open link picker" : "Åbn linkvælgeren",
     "Select file or folder to link to" : "Link til fil eller mappe",
     "Translate" : "Oversæt",
     "Replace" : "Erstat",
@@ -84,6 +83,7 @@ OC.L10N.register(
     "Select file to link to" : "Vælg den fil, du vil linke til",
     "ToDo list" : "To-Do liste",
     "Emoji picker" : "Emoji vælger",
-    "Insert image" : "Indsæt billede"
+    "Insert image" : "Indsæt billede",
+    "Open link picker" : "Åbn linkvælgeren"
 },
 "nplurals=2; plural=(n != 1);");

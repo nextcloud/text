@@ -87,7 +87,6 @@ OC.L10N.register(
     "Link to file or folder" : "Връзка към файл или папка",
     "Link to website" : "Връзка към уеб сайт",
     "Update link" : "Връзка за актуализиране",
-    "Open link picker" : "Отваряне на приложение за избиране на връзки",
     "Select file or folder to link to" : "Избор на файл или папка, към които да поставите връзка",
     "_%n word_::_%n words_" : ["%n думи","%n думи"],
     "_%n char_::_%n chars_" : ["%n знаци","%n знаци"],
@@ -161,6 +160,7 @@ OC.L10N.register(
     "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
     "Insert image" : "Вмъкване на изображение",
-    "Document save status" : "Състояние на запис на документа"
+    "Document save status" : "Състояние на запис на документа",
+    "Open link picker" : "Отваряне на приложение за избиране на връзки"
 },
 "nplurals=2; plural=(n != 1);");

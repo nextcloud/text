@@ -86,7 +86,6 @@ OC.L10N.register(
     "Link to file or folder" : "Länk till fil eller mapp",
     "Link to website" : "Länk till webbplats",
     "Update link" : "Uppdatera länk",
-    "Open link picker" : "Öppna länkväljaren",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tecken","%n tecken"],
@@ -158,6 +157,7 @@ OC.L10N.register(
     "ToDo list" : "Att göra lista",
     "Emoji picker" : "Emojiväljare",
     "Insert image" : "Infoga bild",
-    "Document save status" : "Dokumentets spara status"
+    "Document save status" : "Dokumentets spara status",
+    "Open link picker" : "Öppna länkväljaren"
 },
 "nplurals=2; plural=(n != 1);");

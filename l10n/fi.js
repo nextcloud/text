@@ -76,7 +76,6 @@ OC.L10N.register(
     "Link to file or folder" : "Linkki tiedostoon tai kansioon",
     "Link to website" : "Linkki verkkosivulle",
     "Update link" : "Päivitä linkki",
-    "Open link picker" : "Avaa linkkivalitsin",
     "Select file or folder to link to" : "Valitse tiedosto tai kansio, johon linkitetään",
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
     "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
@@ -132,6 +131,7 @@ OC.L10N.register(
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
     "Insert image" : "Lisää kuva",
-    "Document save status" : "Asiakirjan tallennuksen tila"
+    "Document save status" : "Asiakirjan tallennuksen tila",
+    "Open link picker" : "Avaa linkkivalitsin"
 },
 "nplurals=2; plural=(n != 1);");
