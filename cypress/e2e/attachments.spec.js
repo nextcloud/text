@@ -82,44 +82,41 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 	const src = `.attachments.${documentId}/${encodedName}`
 
 	cy.log('Check the attachment is visible and well formed', documentId, fileName, fileId, index, encodedName)
-	return new Cypress.Promise((resolve, reject) => {
-		cy.get(`.text-editor__main [data-component="image-view"][data-src="${src}"]`)
-			.find('.image__view') // wait for load finish
-			.within(($el) => {
-				// keep track that we have created this attachment in the attachment dir
-				if (!attachmentFileNameToId[documentId]) {
-					attachmentFileNameToId[documentId] = {}
-				}
+	return cy.get(`.text-editor__main [data-component="image-view"][data-src="${src}"]`)
+		.find('.image__view') // wait for load finish
+		.within(($el) => {
+			// keep track that we have created this attachment in the attachment dir
+			if (!attachmentFileNameToId[documentId]) {
+				attachmentFileNameToId[documentId] = {}
+			}
 
-				attachmentFileNameToId[documentId][fileName] = fileId
+			attachmentFileNameToId[documentId][fileName] = fileId
 
-				if (index > 0) {
-					expect(fileName).include(`(${index + 1})`)
-				}
+			if (index > 0) {
+				expect(fileName).include(`(${index + 1})`)
+			}
 
-				const srcPathEnd = isImage ? 'image' : 'mediaPreview'
-				const srcFileNameParam = isImage ? 'imageFileName' : 'mediaFileName'
+			const srcPathEnd = isImage ? 'image' : 'mediaPreview'
+			const srcFileNameParam = isImage ? 'imageFileName' : 'mediaFileName'
 
-				cy.wrap($el)
+			cy.wrap($el)
+				.should('be.visible')
+				.find('img')
+				.should('have.attr', 'src')
+				.should('contain', 'apps/text/' + srcPathEnd + '?documentId=' + documentId)
+				.should('contain', srcFileNameParam + '=' + encodeURIComponent(fileName))
+
+			return isImage
+				? cy.wrap($el)
+					.find('.image__caption input')
 					.should('be.visible')
-					.find('img')
-					.should('have.attr', 'src')
-					.should('contain', 'apps/text/' + srcPathEnd + '?documentId=' + documentId)
-					.should('contain', srcFileNameParam + '=' + encodeURIComponent(fileName))
+					.should('have.value', fileName)
+				: cy.wrap($el)
+					.find('.metadata .name')
+					.should('be.visible')
+					.should('have.text', fileName)
 
-				return isImage
-					? cy.wrap($el)
-						.find('.image__caption input')
-						.should('be.visible')
-						.should('have.value', fileName)
-					: cy.wrap($el)
-						.find('.metadata .name')
-						.should('be.visible')
-						.should('have.text', fileName)
-
-			})
-			.then(resolve, reject)
-	})
+		})
 }
 
 /**
@@ -280,10 +277,8 @@ describe('Test all attachment insertion methods', () => {
 					assertImage(index).then(resolve, reject)
 				})
 			})
-			.then(() => {
-				return cy.getEditor().find('[data-component="image-view"]')
-					.should('have.length', 3)
-			})
+		return cy.getEditor().find('[data-component="image-view"]')
+			.should('have.length', 3)
 	})
 
 	it('test if attachment files are in the attachment folder', () => {

@@ -43,9 +43,8 @@ describe('Front matter support', function() {
 
 	it('Add front matter', function() {
 		cy.openFile('empty.md').clearContent().then(() => {
-			cy.getContent()
-				.type('---')
-				.type('test')
+			cy.getContent().type('---')
+			cy.getContent().type('test')
 			cy.getContent().find('pre.frontmatter').should(pre => {
 				expect(pre.length === 1)
 				expect(pre[0].text === 'test')
@@ -55,10 +54,9 @@ describe('Front matter support', function() {
 
 	it('Do not add multiple front matter', function() {
 		cy.openFile('empty.md').clearContent().then(() => {
-			cy.getContent()
-				.type('---test')
-				.type('{downArrow}')
-				.type('---test')
+			cy.getContent().type('---test')
+			cy.getContent().type('{downArrow}')
+			cy.getContent().type('---test')
 			cy.getContent().find('pre.frontmatter').should(pre => expect(pre.length === 1))
 			cy.getContent().find('hr').should(hr => expect(hr.length === 1))
 		})
@@ -68,6 +66,7 @@ describe('Front matter support', function() {
 		cy.openFile('frontmatter.md')
 		cy.getContent()
 			.type('{moveToEnd}New line{enter}')
+		cy.getContent()
 			.find('pre.frontmatter').should(pre => {
 				expect(pre.length === 1)
 			})

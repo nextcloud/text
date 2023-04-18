@@ -38,19 +38,17 @@ describe('Hard break support', function() {
 	})
 
 	it('Can create hard breaks with shift+enter', () => {
-		cy.getContent()
-			.type('Hello')
-			.type('{shift+enter}world')
+		cy.getContent().type('Hello')
+		cy.getContent().type('{shift+enter}world')
 		cy.getContent()
 			.find('p br')
 			.should('exist')
 	})
 
 	it('Convert paragraph break into hard break', () => {
-		cy.getContent()
-			.type('Hello')
-			.type('{enter}')
-			.type('world')
+		cy.getContent().type('Hello')
+		cy.getContent().type('{enter}')
+		cy.getContent().type('world')
 		cy.getContent()
 			.find('p')
 			.should('have.length', 2)
@@ -66,9 +64,8 @@ describe('Hard break support', function() {
 	})
 
 	it('Do not create hard breaks within headings', () => {
-		cy.getContent()
-			.type('# Hello')
-			.type('{shift+enter}world')
+		cy.getContent().type('# Hello')
+		cy.getContent().type('{shift+enter}world')
 		cy.getContent()
 			.find('h1 br')
 			.should('not.exist')
