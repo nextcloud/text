@@ -87,6 +87,7 @@ OC.L10N.register(
     "Link to file or folder" : "Lien vers un fichier ou un dossier",
     "Link to website" : "Lien vers un site web",
     "Update link" : "Mettre à jour le lien",
+    "Open the Smart Picker" : "Ouvrir le sélecteur intelligent",
     "Select file or folder to link to" : "Sélectionnez le fichier ou le dossier à lier",
     "_%n word_::_%n words_" : ["%n mot","%n mots","%n mots"],
     "_%n char_::_%n chars_" : ["%n caractère","%n caractères","%n caractères"],

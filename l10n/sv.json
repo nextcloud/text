@@ -84,6 +84,7 @@
     "Link to file or folder" : "Länk till fil eller mapp",
     "Link to website" : "Länk till webbplats",
     "Update link" : "Uppdatera länk",
+    "Open the Smart Picker" : "Öppna smarta väljaren",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tecken","%n tecken"],

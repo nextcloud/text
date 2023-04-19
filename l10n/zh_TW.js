@@ -87,6 +87,7 @@ OC.L10N.register(
     "Link to file or folder" : "連結至檔案或資料夾",
     "Link to website" : "連結至網站",
     "Update link" : "更新連結",
+    "Open the Smart Picker" : "開啟智慧選挑選器",
     "Select file or folder to link to" : "選取要連結的檔案或資料夾",
     "_%n word_::_%n words_" : ["%n 個字"],
     "_%n char_::_%n chars_" : ["%n 個字元"],
