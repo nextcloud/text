@@ -88,6 +88,7 @@ OC.L10N.register(
     "Heading 3" : "Intestazione 3",
     "Heading 4" : "Intestazione 4",
     "Heading 5" : "Intestazione 5",
+    "Callouts" : "Didascalie",
     "Info" : "Info",
     "Success" : "Successo",
     "Warning" : "Attenzione",
