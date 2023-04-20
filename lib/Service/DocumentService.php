@@ -342,7 +342,7 @@ class DocumentService {
 		}
 
 		if (empty($autoSaveDocument)) {
-			$this->logger->debug('Saving empty document', [
+			$this->logger->warning('Saving empty document', [
 				'requestVersion' => $version,
 				'requestAutosaveDocument' => $autoSaveDocument,
 				'requestDocumentState' => $documentState,
