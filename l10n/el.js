@@ -67,6 +67,7 @@ OC.L10N.register(
     "Insert from Files" : "Εισαγωγή από Αρχεία",
     "Remove link" : "Αφαίρεση συνδέσμου",
     "Update link" : "Ενημέρωση συνδέσμου",
+    "Select file or folder to link to" : "Επιλέξτε αρχείο ή φάκελο για σύνδεση",
     "Translate" : "Μετάφραση",
     "Replace" : "Αντικατάσταση",
     "No emoji found" : "Δε βρέθηκε emoji",
