@@ -45,7 +45,7 @@ OC.L10N.register(
     "Saved" : "Збережено",
     "Last saved {lastSave}" : "Востаннє збережено {lastSave}",
     "Unsaved changes" : "Незбережені зміни",
-    "Formatting help" : "Форматування довідки",
+    "Formatting help" : "Допомога",
     "Speed up your writing with simple shortcuts." : "Прискоріть написання за допомогою простих комбінацій клавіш.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Просто введіть синтаксис Markdown або скористайтеся комбінаціями клавіш нижче.",
     "Just type the Markdown syntax from below." : "Просто введіть синтаксис Markdown знизу.",
