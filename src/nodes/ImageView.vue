@@ -78,7 +78,7 @@
 								:value="alt"
 								:disabled="!editable"
 								@blur="updateAlt"
-								@keyup.enter="updateAlt">
+								@keyup="updateAlt">
 							<div v-if="showImageDeleteIcon"
 								class="image__caption__delete">
 								<NcButton :aria-label="t('text', 'Delete this image')"
