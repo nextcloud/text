@@ -58,17 +58,15 @@ export default {
 	methods: {
 		resolveThisVersion() {
 			this.clicked = true
-			this.$syncService.forceSave()
+			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 			this.$editor.setOptions({ editable: !this.readOnly })
-			this.$syncService.startSync()
 		},
 		resolveServerVersion() {
 			this.clicked = true
 			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
 			this.$editor.setOptions({ editable: !this.readOnly })
 			this.$editor.commands.setContent(markdownItHtml)
-			this.$syncService.forceSave()
-			this.$syncService.startSync()
+			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
 }
