@@ -118,6 +118,10 @@ class SyncService {
 		this.backend.connect()
 	}
 
+	syncUp() {
+		this.backend.resetRefetchTimer()
+	}
+
 	_emitError(error) {
 		if (!error.response || error.code === 'ECONNABORTED') {
 			this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
