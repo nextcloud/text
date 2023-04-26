@@ -368,9 +368,22 @@ export default {
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
 				forceRecreate: this.forceRecreate,
-				serialize: this.isRichEditor
-					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
-					: () => serializePlainText(this.$editor),
+				serialize: () => {
+					const saveContent = this.isRichEditor
+						? createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
+						: serializePlainText(this.$editor)
+
+					if (saveContent === '') {
+						console.error('Saving empty content', this.$editor.state.doc)
+						throw new Error('Saving empty content')
+					}
+
+					if (!this.contentLoaded) {
+						throw new Error('Tried to serialize without being fully loaded')
+					}
+
+					return saveContent
+				},
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
