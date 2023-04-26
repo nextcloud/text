@@ -161,7 +161,6 @@ OC.L10N.register(
     "ToDo list" : "Yapılacaklar listesi",
     "Emoji picker" : "Emoji seçici",
     "Insert image" : "Görsel ekle",
-    "Document save status" : "Belge kaydetme durumu",
-    "Open link picker" : "Bağlantı seçiciyi aç"
+    "Document save status" : "Belge kaydetme durumu"
 },
 "nplurals=2; plural=(n > 1);");

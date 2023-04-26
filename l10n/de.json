@@ -85,6 +85,7 @@
     "Link to file or folder" : "Link zu Datei oder Ordner",
     "Link to website" : "Link zu Website",
     "Update link" : "Link aktualisieren",
+    "Open the Smart Picker" : "Smart-Picker öffnen",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
     "_%n char_::_%n chars_" : ["%n Zeichen","%n Zeichen"],
@@ -158,7 +159,6 @@
     "ToDo list" : "To-do-Liste",
     "Emoji picker" : "Emoji-Auswahl",
     "Insert image" : "Bild einfügen",
-    "Document save status" : "Speicherstatus des Dokuments",
-    "Open link picker" : "Linkauswahl öffnen"
+    "Document save status" : "Speicherstatus des Dokuments"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

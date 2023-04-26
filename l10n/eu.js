@@ -160,7 +160,6 @@ OC.L10N.register(
     "ToDo list" : "Egitekoen zerrenda",
     "Emoji picker" : " Emotikono-hautatzailea",
     "Insert image" : "Txertatu irudia",
-    "Document save status" : "Dokumentuaren gordeketa egoera",
-    "Open link picker" : "Ireki esteka-hautatzailea"
+    "Document save status" : "Dokumentuaren gordeketa egoera"
 },
 "nplurals=2; plural=(n != 1);");
