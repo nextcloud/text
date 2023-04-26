@@ -161,7 +161,6 @@ OC.L10N.register(
     "ToDo list" : "Списък със задачи",
     "Emoji picker" : "Инструмент за избор на емотикони",
     "Insert image" : "Вмъкване на изображение",
-    "Document save status" : "Състояние на запис на документа",
-    "Open link picker" : "Отваряне на приложение за избиране на връзки"
+    "Document save status" : "Състояние на запис на документа"
 },
 "nplurals=2; plural=(n != 1);");
