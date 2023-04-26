@@ -160,7 +160,6 @@ OC.L10N.register(
     "ToDo list" : "Llista tasques pendents",
     "Emoji picker" : "Selector d'emojis",
     "Insert image" : "Inserir imatge",
-    "Document save status" : "Estat de desat del document",
-    "Open link picker" : "Obre el selector d'enllaços"
+    "Document save status" : "Estat de desat del document"
 },
 "nplurals=2; plural=(n != 1);");

@@ -83,7 +83,6 @@ OC.L10N.register(
     "Select file to link to" : "Vælg den fil, du vil linke til",
     "ToDo list" : "To-Do liste",
     "Emoji picker" : "Emoji vælger",
-    "Insert image" : "Indsæt billede",
-    "Open link picker" : "Åbn linkvælgeren"
+    "Insert image" : "Indsæt billede"
 },
 "nplurals=2; plural=(n != 1);");

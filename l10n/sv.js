@@ -158,7 +158,6 @@ OC.L10N.register(
     "ToDo list" : "Att göra lista",
     "Emoji picker" : "Emojiväljare",
     "Insert image" : "Infoga bild",
-    "Document save status" : "Dokumentets spara status",
-    "Open link picker" : "Öppna länkväljaren"
+    "Document save status" : "Dokumentets spara status"
 },
 "nplurals=2; plural=(n != 1);");

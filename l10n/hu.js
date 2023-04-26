@@ -160,7 +160,6 @@ OC.L10N.register(
     "ToDo list" : "Teendőlista",
     "Emoji picker" : "Emodzsiválasztó",
     "Insert image" : "Kép beszúrása",
-    "Document save status" : "Dokumentum mentési állapota",
-    "Open link picker" : "Hivatkozásválasztó megnyitása"
+    "Document save status" : "Dokumentum mentési állapota"
 },
 "nplurals=2; plural=(n != 1);");
