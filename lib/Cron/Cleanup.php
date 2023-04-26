@@ -28,8 +28,8 @@ declare(strict_types=1);
 
 namespace OCA\Text\Cron;
 
-use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\AttachmentService;
+use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
@@ -42,10 +42,10 @@ class Cleanup extends TimedJob {
 	private AttachmentService $attachmentService;
 
 	public function __construct(ITimeFactory $time,
-								SessionService $sessionService,
-								DocumentService $documentService,
-								AttachmentService $attachmentService,
-								LoggerInterface $logger) {
+		SessionService $sessionService,
+		DocumentService $documentService,
+		AttachmentService $attachmentService,
+		LoggerInterface $logger) {
 		parent::__construct($time);
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;

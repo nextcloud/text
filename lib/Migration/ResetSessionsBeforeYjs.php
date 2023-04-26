@@ -14,8 +14,8 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 	private DocumentService $documentService;
 
 	public function __construct(IConfig $config,
-								SessionMapper $sessionMapper,
-								DocumentService $documentService) {
+		SessionMapper $sessionMapper,
+		DocumentService $documentService) {
 		$this->config = $config;
 		$this->sessionMapper = $sessionMapper;
 		$this->documentService = $documentService;

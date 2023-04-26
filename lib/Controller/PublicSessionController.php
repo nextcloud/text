@@ -26,12 +26,12 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use OCA\Text\Service\ApiService;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
+use OCP\IRequest;
 use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\IRequest;
 use OCP\Share\IShare;
 
 class PublicSessionController extends PublicShareController {

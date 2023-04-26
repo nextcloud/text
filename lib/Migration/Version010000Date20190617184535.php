@@ -7,8 +7,8 @@ namespace OCA\Text\Migration;
 use Closure;
 use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
-use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
 /**
  * Auto-generated migration step: Please modify to your needs!

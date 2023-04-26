@@ -2,13 +2,13 @@
 
 namespace OCA\Text\Controller;
 
-use OCA\Text\Service\SessionService;
-use OCP\Collaboration\Collaborators\ISearch;
-use OCP\AppFramework\Http\DataResponse;
 use \OCP\IRequest;
+use OCA\Text\Db\Session;
+use OCA\Text\Service\SessionService;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\Collaboration\Collaborators\ISearch;
 use OCP\IUserManager;
 use OCP\IUserSession;
-use OCA\Text\Db\Session;
 use Test\TestCase;
 
 class UserApiControllerTest extends TestCase {
