@@ -161,7 +161,6 @@ OC.L10N.register(
     "ToDo list" : "待辦清單",
     "Emoji picker" : "Emoji 選擇器",
     "Insert image" : "插入圖像",
-    "Document save status" : "文件保存狀態",
-    "Open link picker" : "打開連結選擇器"
+    "Document save status" : "文件保存狀態"
 },
 "nplurals=1; plural=0;");

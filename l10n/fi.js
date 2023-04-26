@@ -135,7 +135,6 @@ OC.L10N.register(
     "ToDo list" : "Tehtävälista",
     "Emoji picker" : "Emoji-valitsin",
     "Insert image" : "Lisää kuva",
-    "Document save status" : "Asiakirjan tallennuksen tila",
-    "Open link picker" : "Avaa linkkivalitsin"
+    "Document save status" : "Asiakirjan tallennuksen tila"
 },
 "nplurals=2; plural=(n != 1);");
