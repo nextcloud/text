@@ -55,12 +55,12 @@ class ApiService {
 	private IL10N $l10n;
 
 	public function __construct(IRequest $request,
-								SessionService $sessionService,
-								DocumentService $documentService,
-								AttachmentService $attachmentService,
-								EncodingService $encodingService,
-								LoggerInterface $logger,
-								IL10N $l10n
+		SessionService $sessionService,
+		DocumentService $documentService,
+		AttachmentService $attachmentService,
+		EncodingService $encodingService,
+		LoggerInterface $logger,
+		IL10N $l10n
 	) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;

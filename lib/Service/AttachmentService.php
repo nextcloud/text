@@ -29,20 +29,20 @@ namespace OCA\Text\Service;
 use OC\User\NoUserException;
 use OCA\Text\Controller\AttachmentController;
 use OCP\Constants;
-use OCP\Files\Folder;
 use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\InvalidPathException;
+use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
 use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
 use OCP\Util;
-use OCP\Files\IRootFolder;
-use OCP\Share\IManager as ShareManager;
 
 class AttachmentService {
 
@@ -64,9 +64,9 @@ class AttachmentService {
 	private $mimeTypeDetector;
 
 	public function __construct(IRootFolder $rootFolder,
-								ShareManager $shareManager,
-								IPreview $previewManager,
-								IMimeTypeDetector $mimeTypeDetector) {
+		ShareManager $shareManager,
+		IPreview $previewManager,
+		IMimeTypeDetector $mimeTypeDetector) {
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
 		$this->previewManager = $previewManager;

@@ -39,7 +39,7 @@ class LoadViewerListener implements IEventListener {
 	private IEventDispatcher $eventDispatcher;
 
 	public function __construct(InitialStateProvider $initialStateProvider,
-								IEventDispatcher $eventDispatcher) {
+		IEventDispatcher $eventDispatcher) {
 		$this->initialStateProvider = $initialStateProvider;
 		$this->eventDispatcher = $eventDispatcher;
 	}

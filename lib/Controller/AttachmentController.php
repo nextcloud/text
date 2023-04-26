@@ -26,11 +26,11 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
-use OCA\Text\Service\SessionService;
 use OCA\Text\Exception\UploadException;
-use OCP\AppFramework\Http;
 use OCA\Text\Service\AttachmentService;
+use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
@@ -73,12 +73,12 @@ class AttachmentController extends Controller {
 	private IMimeTypeDetector $mimeTypeDetector;
 
 	public function __construct(string $appName,
-								IRequest $request,
-								IL10N $l10n,
-								LoggerInterface $logger,
-								IMimeTypeDetector $mimeTypeDetector,
-								AttachmentService $attachmentService,
-								SessionService $sessionService) {
+		IRequest $request,
+		IL10N $l10n,
+		LoggerInterface $logger,
+		IMimeTypeDetector $mimeTypeDetector,
+		AttachmentService $attachmentService,
+		SessionService $sessionService) {
 		parent::__construct($appName, $request);
 		$this->attachmentService = $attachmentService;
 		$this->request = $request;
@@ -205,7 +205,7 @@ class AttachmentController extends Controller {
 	 * @return DataDownloadResponse|DataResponse
 	 */
 	public function getImageFile(int $documentId, int $sessionId, string $sessionToken, string $imageFileName, ?string $shareToken = null,
-								int $preferRawImage = 0) {
+		int $preferRawImage = 0) {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse('', Http::STATUS_FORBIDDEN);
 		}
@@ -325,7 +325,7 @@ class AttachmentController extends Controller {
 	 * @return DataResponse
 	 */
 	public function getMediaFileMetadata(int $documentId, int $sessionId, string $sessionToken,
-										 string $mediaFileName, ?string $shareToken = null): DataResponse {
+		string $mediaFileName, ?string $shareToken = null): DataResponse {
 		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
 			return new DataResponse('', Http::STATUS_FORBIDDEN);
 		}
