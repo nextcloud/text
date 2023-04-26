@@ -95,13 +95,29 @@ class SyncService {
 			this.sessions = sessions
 		})
 
+		console.log('[DEBUG] text SyncService previous state', this.connection?.state)
+
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
 			: this._api.open({ fileId })
-				.catch(error => this._emitError(error))
+				.catch(error => {
+					this._emitError(error)
+					throw error
+				})
 
-		// TODO: Only continue if a connection was made
-		this.connection = await connect
+		const newConnection = await connect
+		if (this.connection && this.connection?.state?.document?.baseVersionEtag !== newConnection?.state?.document?.baseVersionEtag) {
+			// The base etag changed means that the document and y.js state has been reset since the last connection
+			this.connection = newConnection
+			await this.close()
+			return
+		}
+
+		if (this.connection) {
+			await this.close()
+		}
+
+		this.connection = newConnection
 		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
 		this.emit('opened', {
@@ -115,7 +131,9 @@ class SyncService {
 	}
 
 	startSync() {
-		this.backend.connect()
+		if (this.connection) {
+			this.backend?.connect()
+		}
 	}
 
 	syncUp() {
@@ -123,7 +141,7 @@ class SyncService {
 	}
 
 	_emitError(error) {
-		if (!error.response || error.code === 'ECONNABORTED') {
+		if (!error.response || error.code === 'ECONNABORTED' || error.code === 'ERR_NETWORK') {
 			this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 		} else {
 			this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: error.response })
@@ -142,12 +160,10 @@ class SyncService {
 	}
 
 	sendSteps(getSendable) {
-		if (!this.connection || this.sending) {
-			setTimeout(() => {
-				this.sendSteps(getSendable)
-			}, 200)
+		if (!this.connection) {
 			return
 		}
+
 		this.sending = true
 		const data = getSendable()
 		if (data.steps.length > 0) {
@@ -258,18 +274,16 @@ class SyncService {
 	}
 
 	async close() {
-		this.backend?.disconnect()
-		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-		await Promise.any([timeout, this.save()])
-		return this._close()
-	}
-
-	_close() {
 		if (this.connection === null) {
 			return Promise.resolve()
 		}
-		this.backend.disconnect()
-		return this.connection.close()
+		this.autosave.clear()
+		this.backend?.disconnect()
+		const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+		await Promise.any([timeout, this.save()])
+		const close = this.connection.close()
+		this.connection = null
+		return close
 	}
 
 	uploadAttachment(file) {
