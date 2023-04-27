@@ -56,6 +56,7 @@ use OCP\Constants;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -211,10 +212,15 @@ class WorkspaceController extends OCSController {
 		$file = null;
 		foreach ($this->workspaceService->getSupportedFilenames() as $filename) {
 			if ($folder->nodeExists($filename)) {
-				$file = $folder->get($filename);
-				continue;
+				try {
+					$file = $folder->get($filename);
+					if ($file instanceof File) {
+						return $file;
+					}
+				} catch (NotFoundException $e) {
+				}
 			}
 		}
-		return $file;
+		return null;
 	}
 }
