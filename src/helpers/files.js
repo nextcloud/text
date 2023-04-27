@@ -66,6 +66,7 @@ const registerFileCreate = () => {
 				templateName: t('text', 'New text file') + '.' + loadState('text', 'default_file_extension'),
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
+				actionLabel: t('text', 'Create new text file'),
 				actionHandler(name) {
 					fileList.createFile(name).then(function(status, data) {
 						const fileInfoModel = new OCA.Files.FileInfoModel(data)
