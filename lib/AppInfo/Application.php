@@ -80,6 +80,7 @@ class Application extends App implements IBootstrap {
 				$markdownFile->setIconClass('icon-filetype-text');
 				$markdownFile->setRatio(1);
 				$markdownFile->setOrder(10);
+				$markdownFile->setActionLabel($l->t('Create new text file'));
 				return $markdownFile;
 			});
 		});
