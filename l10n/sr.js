@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "New text file" : "Нови текстуални фајл",
+    "Create new text file" : "Креирај нови текст фајл",
     "The file was uploaded" : "Фајл је отпремљен",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Фајл за отпремање премашује upload_max_filesize директиву у php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Отпремани фајл превазилази смерницу MAX_FILE_SIZE наведену у ХТМЛ обрасцу",

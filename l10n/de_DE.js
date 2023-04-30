@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "New text file" : "Neue Textdatei",
+    "Create new text file" : "Neue Textdatei erstellen",
     "The file was uploaded" : "Die Datei wurde hochgeladen",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Die hochgeladene Datei überschreitet die Vorgabe upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Die Datei ist größer als die Vorgabe MAX_FILE_SIZE, die im HTML-Formular angegeben ist",
