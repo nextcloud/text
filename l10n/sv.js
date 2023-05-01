@@ -54,6 +54,7 @@ OC.L10N.register(
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Tangentbordsgenvägar",
     "New paragraph" : "Nytt stycke",
+    "Enter" : "Ange",
     "Hard line break" : "Hård linjebrytning",
     "followed by" : "följd av",
     "Backspace" : "Backsteg",
