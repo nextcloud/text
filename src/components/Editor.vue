@@ -693,7 +693,7 @@ export default {
 		 */
 		emit(event, data) {
 			this.$emit(event, data)
-			this.$parent?.$emit(event, true)
+			this.$parent?.$emit(event, data)
 		},
 
 		/** @param {Event} event The passed event */
