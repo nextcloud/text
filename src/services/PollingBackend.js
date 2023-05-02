@@ -113,20 +113,14 @@ class PollingBackend {
 
 		this.#pollActive = true
 
-		try {
-			logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
-			const response = await this.#connection.sync({
-				version: this.#syncService.version,
-				force: false,
-				manualSave: false,
-			})
-			this._handleResponse(response)
-		} catch (e) {
-			this._handleError(e)
-		} finally {
-			this.#lastPoll = Date.now()
-			this.#pollActive = false
-		}
+		logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
+		await this.#connection.sync({
+			version: this.#syncService.version,
+			force: false,
+			manualSave: false,
+		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
+		this.#lastPoll = Date.now()
+		this.#pollActive = false
 	}
 
 	_handleResponse({ data }) {
