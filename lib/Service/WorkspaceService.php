@@ -12,8 +12,8 @@ class WorkspaceService {
 	private IL10N $l10n;
 
 	private const SUPPORTED_STATIC_FILENAMES = [
-		'README.md',
 		'Readme.md',
+		'README.md',
 		'readme.md'
 	];
 
