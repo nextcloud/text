@@ -210,17 +210,16 @@ describe('Workspace', function() {
 
 				// enable callout
 				cy.getSubmenuEntry('callouts', actionName).click()
-				cy.getSubmenuEntry('callouts', actionName).then(() => {
-					// check content
-					cy.getContent()
-						.find(`.callout.callout--${type}`)
-						.should('contain', 'Callout')
 
-					// disable
-					return cy.getSubmenuEntry('callouts', actionName)
-						.should('have.class', 'is-active')
-						.click()
-				})
+				// check content
+				cy.getContent()
+					.find(`.callout.callout--${type}`)
+					.should('contain', 'Callout')
+
+				// disable
+				cy.getSubmenuEntry('callouts', actionName)
+					.should('have.class', 'is-active')
+					.click()
 			})
 		})
 
