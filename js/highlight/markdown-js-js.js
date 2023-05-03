@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/markdown-js-js"],{11855:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/markdown" instead of "highlight.js/lib/languages/markdown.js"'))}(),e.exports=i(52003)}}]);
-//# sourceMappingURL=markdown-js-js.js.map?v=cadc423a712e6135297a
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/markdown-js-js"],{11855:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/markdown" instead of "highlight.js/lib/languages/markdown.js"'))}(),e.exports=i(52003)}}]);
+//# sourceMappingURL=markdown-js-js.js.map?v=6e56887f843ed916d18d
