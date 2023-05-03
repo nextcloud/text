@@ -74,6 +74,7 @@ describe('Test mentioning users', () => {
 
 		cy.get('.text-editor__content div[contenteditable="true"]')
 			.clear()
+		cy.get('.text-editor__content div[contenteditable="true"]')
 			.type(`@${mention.substring(0, 3)}`)
 
 		return cy.wait(`@${autocompleteReauestAlias}`)
