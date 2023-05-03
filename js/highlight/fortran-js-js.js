@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/fortran-js-js"],{33800:(e,n,i)=>{var t=i(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/fortran" instead of "highlight.js/lib/languages/fortran.js"'))}(),e.exports=i(13532)}}]);
-//# sourceMappingURL=fortran-js-js.js.map?v=2ee1ebe79d8daf35be5d
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/fortran-js-js"],{33800:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/fortran" instead of "highlight.js/lib/languages/fortran.js"'))}(),e.exports=i(13532)}}]);
+//# sourceMappingURL=fortran-js-js.js.map?v=19dac5c8508a024c22c4

@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/python-repl-js-js"],{53693:(e,n,i)=>{var t=i(25108);!function e(){e.warned||(e.warned=!0,t.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/python-repl" instead of "highlight.js/lib/languages/python-repl.js"'))}(),e.exports=i(3722)}}]);
-//# sourceMappingURL=python-repl-js-js.js.map?v=c1a64dbd5a84ff4dbd7f
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/python-repl-js-js"],{53693:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/python-repl" instead of "highlight.js/lib/languages/python-repl.js"'))}(),e.exports=i(3722)}}]);
+//# sourceMappingURL=python-repl-js-js.js.map?v=7a56439ae5c8db2f7554

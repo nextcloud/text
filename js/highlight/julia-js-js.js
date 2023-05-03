@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/julia-js-js"],{34380:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/julia" instead of "highlight.js/lib/languages/julia.js"'))}(),e.exports=n(24629)}}]);
-//# sourceMappingURL=julia-js-js.js.map?v=cb0f2a1d17a9eb34e673
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/julia-js-js"],{34380:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/julia" instead of "highlight.js/lib/languages/julia.js"'))}(),e.exports=n(24629)}}]);
+//# sourceMappingURL=julia-js-js.js.map?v=552dd0d4e896c3936c93

@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/gml-js-js"],{98186:(e,i,n)=>{var s=n(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gml" instead of "highlight.js/lib/languages/gml.js"'))}(),e.exports=n(81921)}}]);
-//# sourceMappingURL=gml-js-js.js.map?v=113e3f45e0d28dcd7418
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/gml-js-js"],{98186:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gml" instead of "highlight.js/lib/languages/gml.js"'))}(),e.exports=n(81921)}}]);
+//# sourceMappingURL=gml-js-js.js.map?v=289c8b3063f8b9245e45
