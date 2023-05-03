@@ -41,19 +41,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
 /*!
  * Vue.js v2.7.14
  * (c) 2014-2022 Evan You
