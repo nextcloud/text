@@ -91,17 +91,22 @@ class SyncService {
 	}
 
 	async open({ fileId, initialSession }) {
-		this.on('change', ({ sessions }) => {
+		const onChange = ({ sessions }) => {
 			this.sessions = sessions
-		})
+		}
+		this.on('change', onChange)
 
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
 			: this._api.open({ fileId })
 				.catch(error => this._emitError(error))
 
-		// TODO: Only continue if a connection was made
 		this.connection = await connect
+		if (!this.connection) {
+			this.off('change', onChange)
+			// Error was already emitted in connect
+			return
+		}
 		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
 		this.emit('opened', {
