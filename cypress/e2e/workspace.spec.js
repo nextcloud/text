@@ -226,30 +226,21 @@ describe('Workspace', function() {
 		it('toggle callouts', () => {
 			const [first, ...rest] = types
 
-			let last = first
-
 			// enable callout
 			cy.getSubmenuEntry('callouts', `callout-${first}`)
 				.click()
 
-			cy.wrap(rest)
-				.each(type => {
-					const actionName = `callout-${type}`
-					cy.getSubmenuEntry('callouts', actionName).click()
-					return cy.getSubmenuEntry('callouts', actionName)
-						.then(() => cy.getContent().find(`.callout.callout--${type}`))
-						.should('contain', 'Callout')
-						.then(() => {
-							last = type
-						})
-				})
-
-			cy.then(() => {
-				cy.getSubmenuEntry('callouts', `callout-${last}`)
-					.click()
-				cy.getMenuEntry('callouts')
-					.should('not.have.class', 'is-active')
+			cy.wrap(rest).each(type => {
+				const actionName = `callout-${type}`
+				cy.getSubmenuEntry('callouts', actionName).click()
+				cy.getContent().find(`.callout.callout--${type}`)
+					.should('contain', 'Callout')
 			})
+
+			cy.getSubmenuEntry('callouts', `callout-${rest.at(-1)}`)
+				.click()
+			cy.getMenuEntry('callouts')
+				.should('not.have.class', 'is-active')
 		})
 	})
 
