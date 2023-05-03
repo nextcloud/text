@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/apache-js-js"],{69773:(e,a,i)=>{var n=i(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/apache" instead of "highlight.js/lib/languages/apache.js"'))}(),e.exports=i(4998)}}]);
-//# sourceMappingURL=apache-js-js.js.map?v=1986f753c6fb7f191c41
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/apache-js-js"],{69773:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/apache" instead of "highlight.js/lib/languages/apache.js"'))}(),e.exports=n(4998)}}]);
+//# sourceMappingURL=apache-js-js.js.map?v=4b02b1e1a2becfe42396

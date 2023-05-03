@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/erlang-js-js"],{84485:(e,n,i)=>{var s=i(25108);!function e(){e.warned||(e.warned=!0,s.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/erlang" instead of "highlight.js/lib/languages/erlang.js"'))}(),e.exports=i(57569)}}]);
-//# sourceMappingURL=erlang-js-js.js.map?v=d1c537cc3d3edd7af264
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/erlang-js-js"],{84485:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/erlang" instead of "highlight.js/lib/languages/erlang.js"'))}(),e.exports=i(57569)}}]);
+//# sourceMappingURL=erlang-js-js.js.map?v=15b3140d23a41be7f920

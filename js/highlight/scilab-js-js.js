@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/scilab-js-js"],{47731:(e,i,s)=>{var n=s(25108);!function e(){e.warned||(e.warned=!0,n.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/scilab" instead of "highlight.js/lib/languages/scilab.js"'))}(),e.exports=s(85149)}}]);
-//# sourceMappingURL=scilab-js-js.js.map?v=f9e298ae5e60f1a66686
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/scilab-js-js"],{47731:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/scilab" instead of "highlight.js/lib/languages/scilab.js"'))}(),e.exports=s(85149)}}]);
+//# sourceMappingURL=scilab-js-js.js.map?v=1d6012b34b18eb483c15
