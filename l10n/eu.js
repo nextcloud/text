@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "New text file" : "Testu-fitxategi berria",
+    "Create new text file" : "Sortu testu fitxategi berria",
     "The file was uploaded" : "Fitxategia kargatu da",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Kargatutako fitxategiak php.ini fitxategiko upload_max_filesize direktiban zehazturikoa gainditzen du",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Kargatutako fitxategiak HTML formularioan ezarritako MAX_FILE_SIZE direktiban zehazturikoa gainditzen du",

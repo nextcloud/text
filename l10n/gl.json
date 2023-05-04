@@ -1,5 +1,6 @@
 { "translations": {
     "New text file" : "Novo ficheiro de texto",
+    "Create new text file" : "Crea un novo ficheiro de texto",
     "The file was uploaded" : "O ficheiro foi enviado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O ficheiro enviado excede a directiva indicada por upload_max_filesize de php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O ficheiro enviado excede da directiva MAX_FILE_SIZE especificada no formulario HTML",
