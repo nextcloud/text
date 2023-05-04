@@ -16,8 +16,7 @@
   "baseBranches": [
     "main",
     "stable26",
-    "stable25",
-    "stable24"
+    "stable25"
   ],
   "enabledManagers": [
     "npm"
@@ -58,7 +57,7 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "matchBaseBranches": ["stable26", "stable25", "stable24"],
+      "matchBaseBranches": ["stable26", "stable25"],
       "enabled": false
     },
     {
@@ -73,20 +72,5 @@
       "matchPackageNames": ["@vue/test-utils"],
       "allowedVersions": "<2"
     },
-    {
-      "matchPackageNames": ["vue", "vue-template-compiler"],
-      "allowedVersions": "<2.7",
-      "matchBaseBranches": ["stable24"]
-    },
-    {
-      "matchPackageNames": ["@nextcloud/eslint-config"],
-      "allowedVersions": "<8.1",
-      "matchBaseBranches": ["stable24"]
-    },
-    {
-      "matchPackageNames": ["@nextcloud/webpack-vue-config"],
-      "allowedVersions": "<5.1",
-      "matchBaseBranches": ["stable24"]
-    }
   ]
 }
