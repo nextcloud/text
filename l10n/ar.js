@@ -23,6 +23,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "إختصارات لوحة المفاتيح",
     "Bold" : "غامق",
     "Italic" : "مائل",
+    "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
     "Translate" : "ترجم",
     "Replace" : "تبديل",
     "Unsupported image type" : "صيغة الصورة غير مقبولة",
