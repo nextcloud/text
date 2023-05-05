@@ -1,5 +1,6 @@
 { "translations": {
     "New text file" : "Nouveau fichier texte",
+    "Create new text file" : "Créer un nouveau fichier texte",
     "The file was uploaded" : "Le fichier a été téléversé",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Le fichier téléversé dépasse la valeur upload_max_filesize spécifiée dans php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Le fichier téléversé dépasse la valeur MAX_FILE_SIZE spécifiée dans le formulaire HTML",
