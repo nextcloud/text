@@ -24,6 +24,7 @@
 	<div id="direct-editor" :class="{'icon-loading': saving}">
 		<Editor ref="editor"
 			:initial-session="initialSession"
+			:file-id="initial.fileId"
 			:active="true"
 			:mime="initial.mimetype"
 			:is-direct-editing="true"
