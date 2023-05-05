@@ -126,7 +126,7 @@ export default {
 				this.getFileInfo()
 			})
 		},
-		getFileInfo() {
+		getFileInfo(autofocus) {
 			this.loaded = false
 			this.autofocus = false
 			this.ready = false
@@ -141,7 +141,7 @@ export default {
 					this.file = data.file
 					this.editing = true
 					this.loaded = true
-					this.autofocus = true
+					this.autofocus = autofocus || false
 					return true
 				})
 				.catch((error) => {
@@ -157,9 +157,9 @@ export default {
 					return false
 				})
 		},
-		showRichWorkspace() {
+		showRichWorkspace(event) {
 			this.enabled = true
-			this.getFileInfo()
+			this.getFileInfo(event?.autofocus || false)
 		},
 		hideRichWorkspace() {
 			this.enabled = false
