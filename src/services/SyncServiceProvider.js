@@ -33,6 +33,10 @@ import { logger } from '../helpers/logger.js'
  * @param {object} options.initialSession - initialSession to start from
  */
 export default function createSyncServiceProvider({ ydoc, syncService, fileId, initialSession }) {
+	if (!fileId) {
+		// We need a file id as a unique identifier for y.js as otherwise state might leak between different files
+		throw new Error('fileId is required')
+	}
 	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
 	const websocketProvider = new WebsocketProvider(
 		'ws://localhost:1234',
