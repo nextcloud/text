@@ -159,7 +159,7 @@ const newRichWorkspaceFileMenuPlugin = {
 			actionHandler() {
 				return window.FileList
 					.createFile(descriptionFile, { scrollTo: false, animate: false })
-					.then(() => emit('Text::showRichWorkspace'))
+					.then(() => emit('Text::showRichWorkspace', { autofocus: true }))
 			},
 			shouldShow() {
 				return !fileList.findFile(descriptionFile)
