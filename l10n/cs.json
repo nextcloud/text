@@ -1,5 +1,6 @@
 { "translations": {
     "New text file" : "Nový textový soubor",
+    "Create new text file" : "Vytvořit nový textový soubor",
     "The file was uploaded" : "Soubor byl nahrán",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Velikost nahrávaného souboru překračuje limit nastavený direktivou upload_max_filesize v php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Velikost nahrávaného souboru překračuje limit nastavený direktivou MAX_FILE_SIZE, zadanou v HTML formuláři",
