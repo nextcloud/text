@@ -133,7 +133,7 @@
     "jest-serializer-vue": "^2.0.2",
     "vite": "^3.2.6",
     "vite-plugin-commonjs": "^0.7.0",
-    "vue-demi": "^0.13.11",
+    "vue-demi": "^0.14.0",
     "vue-template-compiler": "^2.7.14"
   },
   "jest": {
