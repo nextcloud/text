@@ -55,6 +55,7 @@ OC.L10N.register(
     "New paragraph" : "Новий параграф",
     "Enter" : "Ввід",
     "Hard line break" : "Жорсткий розрив",
+    "Backspace" : "Повернутися",
     "Shift" : "Shift",
     "Bold" : "Грубий",
     "Bold text" : "Грубий текст",
