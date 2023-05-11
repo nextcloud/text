@@ -64,6 +64,11 @@ jobs:
         run: |
           git config --local user.email "nextcloud-command@users.noreply.github.com"
           git config --local user.name "nextcloud-command"
+          
+      - name: Automatic Rebase
+        uses: cirrus-actions/rebase@b87d48154a87a85666003575337e27b8cd65f691 # 1.8
+        env:
+          GITHUB_TOKEN: ${{ secrets.COMMAND_BOT_PAT }}
 
       - name: Read package.json node and npm engines version
         uses: skjnldsv/read-package-engines-version-actions@1bdcee71fa343c46b18dc6aceffb4cd1e35209c6 # v1.2
@@ -91,14 +96,14 @@ jobs:
         run: |
           git add ${{ needs.init.outputs.git_path }}
           git commit --signoff -m 'Compile assets'
-          git push origin ${{ needs.init.outputs.head_ref }}
+          git push --force-with-lease origin ${{ needs.init.outputs.head_ref }}
 
       - name: Commit and push fixup
         if: ${{ needs.init.outputs.arg1 == 'fixup' }}
         run: |
           git add ${{ needs.init.outputs.git_path }}
           git commit --fixup=HEAD --signoff
-          git push origin ${{ needs.init.outputs.head_ref }}
+          git push --force-with-lease origin ${{ needs.init.outputs.head_ref }}
 
       - name: Commit and push amend
         if: ${{ needs.init.outputs.arg1 == 'amend' }}
