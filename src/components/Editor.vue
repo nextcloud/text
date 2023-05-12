@@ -873,7 +873,7 @@ export default {
 		// relative position for the alignment of the menububble
 		.text-editor__main {
 			&.draggedOver {
-				background-color: var(--color-primary-light);
+				background-color: var(--color-primary-element-light);
 			}
 			.text-editor__content-wrapper {
 				position: relative;

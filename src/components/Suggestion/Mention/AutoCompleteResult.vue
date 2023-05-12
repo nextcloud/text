@@ -88,7 +88,7 @@ $autocomplete-padding: 10px;
 
 	.highlight & {
 		color: var(--color-main-text);
-		background: var(--color-primary-light);
+		background: var(--color-primary-element-light);
 		&, * {
 			cursor: pointer;
 		}

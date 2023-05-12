@@ -157,7 +157,7 @@ export default {
 		&:focus,
 		&:hover {
 			opacity: 1;
-			background-color: var(--color-primary-light);
+			background-color: var(--color-primary-element-light);
 		}
 	}
 }
