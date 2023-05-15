@@ -93,7 +93,7 @@ export default {
 		width: calc(100% - var(--padding-left));
 
 		a:hover {
-			color: var(--color-primary-hover);
+			color: var(--color-primary-element-hover);
 		}
 
 		&--1 {

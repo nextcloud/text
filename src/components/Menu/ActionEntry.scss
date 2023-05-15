@@ -1,9 +1,9 @@
 %text__is-active-item-btn {
 	opacity: 1;
-	background-color: var(--color-primary-light);
+	background-color: var(--color-primary-element-light);
 	border-radius: 50%;
 	.material-design-icon > svg {
-		fill: var(--color-primary);
+		fill: var(--color-primary-element);
 	}
 }
 
@@ -37,7 +37,7 @@
 		&:active {
 			background-color: var(--color-background-dark);
 			&:not(:disabled) {
-				box-shadow: var(--color-primary);
+				box-shadow: var(--color-primary-element);
 			}
 		}
 
@@ -46,7 +46,7 @@
 			opacity: 1;
 		}
 		&:focus-visible {
-			box-shadow: var(--color-primary);
+			box-shadow: var(--color-primary-element);
 		}
 
 		&.is-active {
@@ -60,7 +60,7 @@
 
 	.entry-action.entry-action-item {
 		&.is-active {
-			background-color: var(--color-primary-light);
+			background-color: var(--color-primary-element-light);
 			border-radius: var(--border-radius-large);
 		}
 	}

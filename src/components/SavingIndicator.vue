@@ -76,15 +76,15 @@ export default defineComponent({
 	}
 
 	&.saving > span {
-		color: var(--color-primary);
+		color: var(--color-primary-element);
 		:deep(svg) {
-			fill: var(--color-primary);
+			fill: var(--color-primary-element);
 		}
 	}
 	&.error > span {
 		color: var(--color-error);
 		:deep(svg) {
-			fill: var(--color-primary);
+			fill: var(--color-primary-element);
 		}
 	}
 }
