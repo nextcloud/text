@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6448ee16a90cb86a0fe49d0822d644c7",
+    "content-hash": "fefd2b4d95bd90f13aeb4c184d0dd322",
     "packages": [],
     "packages-dev": [
         {
@@ -690,16 +690,16 @@
         },
         {
             "name": "nextcloud/ocp",
-            "version": "dev-master",
+            "version": "dev-stable27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "3e2934c13ecf5a8d795c8c5b95d80afc7c6a9b11"
+                "reference": "92f707dc8f36a76ddfed4d52d999d672613a4748"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/3e2934c13ecf5a8d795c8c5b95d80afc7c6a9b11",
-                "reference": "3e2934c13ecf5a8d795c8c5b95d80afc7c6a9b11",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/92f707dc8f36a76ddfed4d52d999d672613a4748",
+                "reference": "92f707dc8f36a76ddfed4d52d999d672613a4748",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +709,6 @@
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -731,7 +730,7 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/master"
             },
-            "time": "2023-04-28T00:36:00+00:00"
+            "time": "2023-05-17T10:58:24+00:00"
         },
         {
             "name": "nikic/php-parser",
