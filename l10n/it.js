@@ -67,6 +67,7 @@ OC.L10N.register(
     "Upload from computer" : "Carica dal computer",
     "Insert from Files" : "Inserisci dai file",
     "Update link" : "Aggiorna collegamento",
+    "Select file or folder to link to" : "Seleziona un file o una cartella da collegare",
     "Translate" : "Traduci",
     "Replace" : "Sostituisci",
     "No emoji found" : "Nessun emoji trovato",
