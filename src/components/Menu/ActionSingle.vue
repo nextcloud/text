@@ -82,6 +82,7 @@ export default {
 			this.$nextTick(() => {
 				this.$emit('trigged', { ...actionEntry })
 			})
+			this.updateState()
 		},
 	},
 
