@@ -67,6 +67,10 @@ export default {
 			return state
 		},
 	},
+
+	mounted() {
+		this.$editor.on("transaction", () => this.updateState());
+	},
 	methods: {
 		runAction() {
 			const { actionEntry } = this
@@ -82,7 +86,6 @@ export default {
 			this.$nextTick(() => {
 				this.$emit('trigged', { ...actionEntry })
 			})
-			this.updateState()
 		},
 	},
 
