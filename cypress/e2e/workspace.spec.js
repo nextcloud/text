@@ -84,16 +84,15 @@ describe('Workspace', function() {
 			.should('be.visible')
 	})
 
-	it('formats text', function() {		
+	it('formats text', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace()
-
-		;const buttons = [
+		const buttons = [
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
 			['strikethrough', 's'],
-		]		
+		]
 		buttons.forEach(([button, tag]) => testButtonUnselected(button, tag))
 		cy.getContent().type('Format me{selectall}')
 		buttons.forEach(([button, tag]) => testButton(button, tag, 'Format me'))
@@ -330,16 +329,18 @@ function testButton(button, tag, content) {
  *
  * @param {string} button Name of the button to click.
  * @param {string} tag Html tag expected to be toggled.
- * @param {string} content Content expected in the element.
  */
 function testButtonUnselected(button, tag) {
-	cy.getMenuEntry(button).click().should('have.class', 'is-active')
+	cy.getMenuEntry(button).click()
+	cy.getMenuEntry(button).should('have.class', 'is-active')
 	cy.getContent().type('Format me{selectall}')
-		.find(`${tag}`)
+	cy.getContent().find(`${tag}`)
 		.should('contain', 'Format me').type('{del}')
-	cy.getMenuEntry(button).click().should('have.class', 'is-active').click().should('not.have.class', 'is-active')
+	cy.getMenuEntry(button).click()
+	cy.getMenuEntry(button).should('have.class', 'is-active').click()
+	cy.getMenuEntry(button).should('not.have.class', 'is-active')
 	cy.getContent().type('Format me{selectall}')
-		.find(`${tag}`)
+	cy.getMenuEntry(button).find(`${tag}`)
 		.should('not.exist')
 	cy.getContent().type('{del}')
 }

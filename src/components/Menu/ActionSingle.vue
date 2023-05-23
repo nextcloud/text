@@ -69,7 +69,7 @@ export default {
 	},
 
 	mounted() {
-		this.$editor.on("transaction", () => this.updateState());
+		this.$editor.on('transaction', () => this.updateState())
 	},
 	methods: {
 		runAction() {
