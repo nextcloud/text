@@ -737,11 +737,6 @@ export default {
 
 .text-editor .text-editor__wrapper.has-conflicts {
 	height: calc(100% - 50px);
-
-	.text-editor__main, #read-only-editor {
-		width: 50%;
-		height: 100%;
-	}
 }
 
 #body-public {
