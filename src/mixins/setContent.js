@@ -1,5 +1,5 @@
 /*
- * @copyright Copyright (c) 2022 Max <max@nextcloud.com>
+ * @copyright Copyright (c) 2023 Max <max@nextcloud.com>
  *
  * @author Max <max@nextcloud.com>
  *
@@ -18,24 +18,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
-*/
+ */
 
-import { Extension } from '@tiptap/core'
+import escapeHtml from 'escape-html'
+import markdownit from './../markdownit/index.js'
 
-/* eslint-disable import/no-named-as-default */
-import CodeBlock from '@tiptap/extension-code-block'
-import Text from '@tiptap/extension-text'
-import PlainTextDocument from './../nodes/PlainTextDocument.js'
+export default {
+	methods: {
+		setContent(content, { isRich, addToHistory = true } = {}) {
+			const html = isRich
+				? markdownit.render(content) + '<p/>'
+				: `<pre>${escapeHtml(content)}</pre>`
+			this.$editor.chain()
+				.setContent(html, addToHistory)
+				.command(({ tr }) => {
+					tr.setMeta('addToHistory', addToHistory)
+					return true
+				})
+				.run()
+		},
 
-export default Extension.create({
-	name: 'PlainText',
-
-	addExtensions() {
-		return [
-			PlainTextDocument,
-			Text,
-			CodeBlock,
-		]
 	},
-
-})
+}
