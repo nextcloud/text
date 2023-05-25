@@ -32,9 +32,13 @@
 </template>
 
 <script>
-import { useEditorMixin, useSyncServiceMixin } from './Editor.provider.js'
+import {
+	useEditorMixin,
+	useIsRichEditorMixin,
+	useSyncServiceMixin
+} from './Editor.provider.js'
 import { NcButton } from '@nextcloud/vue'
-import markdownit from './../markdownit/index.js'
+import setContent from './../mixins/setContent.js'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
@@ -42,6 +46,8 @@ export default {
 	},
 	mixins: [
 		useEditorMixin,
+		useIsRichEditorMixin,
+		setContent,
 		useSyncServiceMixin,
 	],
 	props: {
@@ -62,10 +68,10 @@ export default {
 			this.$editor.setOptions({ editable: !this.readOnly })
 		},
 		resolveServerVersion() {
+			const { outsideChange } = this.syncError.data
 			this.clicked = true
-			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
 			this.$editor.setOptions({ editable: !this.readOnly })
-			this.$editor.commands.setContent(markdownItHtml)
+			this.setContent(outsideChange, { isRich: this.$isRichEditor })
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
