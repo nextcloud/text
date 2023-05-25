@@ -65,6 +65,8 @@
     "Update link" : "Posodobi povezavo",
     "Translate" : "Prevodi",
     "Replace" : "Zamenjaj",
+    "Detect language" : "Zaznava jezika",
+    "Translation failed" : "Prevajanje je spodletelo",
     "No emoji found" : "Ni najdenih izraznih ikon",
     "Unsupported image type" : "Nepodprta vrsta slike",
     "Add row before" : "Dodaj vrstico pred",
