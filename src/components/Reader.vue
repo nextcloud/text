@@ -50,7 +50,6 @@ export default {
 <style lang="scss">
 
 	#read-only-editor {
-		@import './../../css/prosemirror';
 		overflow: scroll;
 	}
 
