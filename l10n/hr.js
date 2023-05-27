@@ -67,13 +67,7 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
-    "Last saved {lastSaved}" : "Posljednje spremljeno {lastSave}",
-    "Enter your name so other users can see who is editing" : "Unesite svoje ime kako bi ostali korisnici vidjeli tko trenutno uređuje",
-    "Insert an image" : "Umetni sliku",
     "Link file" : "Poveznica datoteke",
-    "Select file to link to" : "Odaberi datoteku za povezivanje",
-    "ToDo list" : "Popis zadataka",
-    "Emoji picker" : "Birač emojija",
-    "Insert image" : "Umetni sliku"
+    "Select file to link to" : "Odaberi datoteku za povezivanje"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

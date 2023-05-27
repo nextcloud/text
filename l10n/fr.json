@@ -146,20 +146,11 @@
     "Edit" : "Modifier",
     "Add description" : "Ajouter une description",
     "Front matter" : "Avant-propos",
-    "Last saved {lastSaved}" : "Dernier enregistrement {lastSave}",
-    "Image file format not supported" : "Type d'image non pris en charge",
-    "Enter your name so other users can see who is editing" : "Entrez votre nom pour que les autres utilisateurs puissent savoir qui effectue des modifications",
-    "Todo item" : "Tâche",
-    "Insert an image" : "Insérer une image",
-    "Alt" : "Alternatif",
+    "Document save status" : "Statut de sauvegarde du document",
     "Update Link" : "Mettre à jour le lien",
     "Add Link" : "Insérer un lien",
     "Link file" : "Lier un fichier",
     "Remove Link" : "Supprimer le lien",
-    "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien",
-    "ToDo list" : "Liste des tâches",
-    "Emoji picker" : "Sélecteur d'emoji",
-    "Insert image" : "Insérer une image",
-    "Document save status" : "Statut de sauvegarde du document"
+    "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

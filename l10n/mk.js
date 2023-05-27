@@ -86,17 +86,11 @@ OC.L10N.register(
     "Option" : "Опции",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
-    "Last saved {lastSaved}" : "Последно зачувано {lastSaved}",
-    "Image file format not supported" : "Форматот на датотеката со слика не е поддржан",
-    "Enter your name so other users can see who is editing" : "Напишете го вашето име за да можат другите корисници да знаат кој уредува",
-    "Insert an image" : "Вметни фотографија",
-    "Alt" : "Alt",
+    "Document save status" : "Статус на зачувување на документот",
     "Update Link" : "Ажурирај линк",
     "Add Link" : "Додади линк",
     "Link file" : "Поврзи датотека (Линк)",
     "Remove Link" : "Острани линк",
-    "Select file to link to" : "Изберете датотека за линк до неа",
-    "Insert image" : "Вметни фотографија",
-    "Document save status" : "Статус на зачувување на документот"
+    "Select file to link to" : "Изберете датотека за линк до неа"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Düzenle",
     "Add description" : "Açıklama ekle",
     "Front matter" : "Açılış bölümleri ",
-    "Last saved {lastSaved}" : "Son kaydedilme {lastSaved}",
-    "Image file format not supported" : "Görsel dosya biçimi desteklenmiyor",
-    "Enter your name so other users can see who is editing" : "Adınızı yazın. Böylece diğer kullanıcılar kimin düzenleme yaptığını görebilir",
-    "Todo item" : "Yapılacak iş ögesi",
-    "Insert an image" : "Bir görsel ekle",
-    "Alt" : "Alt",
+    "Document save status" : "Belge kaydetme durumu",
     "Update Link" : "Bağlantıyı güncelle",
     "Add Link" : "Bağlantı ekle",
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
-    "Select file to link to" : "Bağlantı verilecek dosyayı seçin",
-    "ToDo list" : "Yapılacaklar listesi",
-    "Emoji picker" : "Emoji seçici",
-    "Insert image" : "Görsel ekle",
-    "Document save status" : "Belge kaydetme durumu"
+    "Select file to link to" : "Bağlantı verilecek dosyayı seçin"
 },
 "nplurals=2; plural=(n > 1);");

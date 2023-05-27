@@ -24,7 +24,6 @@ OC.L10N.register(
     "Undo" : "Tühista",
     "Info" : "Info",
     "Warning" : "Hoiatus",
-    "Edit" : "Redigeeri",
-    "Last saved {lastSaved}" : "Viimati salvestatud {lastSaved}"
+    "Edit" : "Redigeeri"
 },
 "nplurals=2; plural=(n != 1);");

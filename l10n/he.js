@@ -64,12 +64,7 @@ OC.L10N.register(
     "Control" : "שליטה",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Edit" : "עריכה",
-    "Last saved {lastSaved}" : "שמירה אחרונה: {lastSaved}",
-    "Enter your name so other users can see who is editing" : "נא למלא את שמך כדי שמשתמשים אחרים יוכלו לראות מי עורך",
-    "Insert an image" : "הוספת תמונה",
     "Link file" : "קישור לקובץ",
-    "Select file to link to" : "לבחור קובץ לקשר אליו",
-    "ToDo list" : "רשימת מטלות",
-    "Insert image" : "הוספת תמונה"
+    "Select file to link to" : "לבחור קובץ לקשר אליו"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
