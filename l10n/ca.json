@@ -144,20 +144,11 @@
     "Edit" : "Edició",
     "Add description" : "Afegir descripció",
     "Front matter" : "Matèria frontal",
-    "Last saved {lastSaved}" : "Última actualització {lastSaved}",
-    "Image file format not supported" : "Format de fitxer d'imatge no compatible",
-    "Enter your name so other users can see who is editing" : "Poseu el vostre nom i així els altres usuaris podran veure qui està editant el document",
-    "Todo item" : "Element de tasca pendent",
-    "Insert an image" : "Insereix una imatge",
-    "Alt" : "Alt",
+    "Document save status" : "Estat de desat del document",
     "Update Link" : "Actualitza l'enllaç",
     "Add Link" : "Afegeix un enllaç",
     "Link file" : "Fitxer d'enllaç",
     "Remove Link" : "Suprimeix l'enllaç",
-    "Select file to link to" : "Seleccioneu el fitxer al que enllaça",
-    "ToDo list" : "Llista tasques pendents",
-    "Emoji picker" : "Selector d'emojis",
-    "Insert image" : "Inserir imatge",
-    "Document save status" : "Estat de desat del document"
+    "Select file to link to" : "Seleccioneu el fitxer al que enllaça"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

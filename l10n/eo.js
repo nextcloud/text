@@ -50,8 +50,6 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
-    "Edit" : "Modifi",
-    "Enter your name so other users can see who is editing" : "Entajpu vian nomon, por ke aliuloj videblu, kiu modifas",
-    "Insert image" : "Enmeti bildon"
+    "Edit" : "Modifi"
 },
 "nplurals=2; plural=(n != 1);");

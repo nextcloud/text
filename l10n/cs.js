@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Upravit",
     "Add description" : "Přidat popis",
     "Front matter" : "Front matter",
-    "Last saved {lastSaved}" : "Naposledy uloženo {lastSaved}",
-    "Image file format not supported" : "Nepodporovaný souborový formát obrázku",
-    "Enter your name so other users can see who is editing" : "Zadejte své jméno aby ostatní viděli, kdo upravuje",
-    "Todo item" : "Položka k udělání",
-    "Insert an image" : "Vložit obrázek",
-    "Alt" : "Alt",
+    "Document save status" : "Stav uložení dokumentu",
     "Update Link" : "Aktualizovat odkaz",
     "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",
     "Remove Link" : "Odebrat odkaz",
-    "Select file to link to" : "Vyberte soubor na který odkázat",
-    "ToDo list" : "Seznam úkolů",
-    "Emoji picker" : "Volba emotikony",
-    "Insert image" : "Vložit obrázek",
-    "Document save status" : "Stav uložení dokumentu"
+    "Select file to link to" : "Vyberte soubor na který odkázat"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

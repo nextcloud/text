@@ -89,18 +89,10 @@
     "Control" : "控制",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Edit" : "编辑",
-    "Last saved {lastSaved}" : "最近保存 {lastSave}",
-    "Enter your name so other users can see who is editing" : "输入您的姓名以便他人看到谁在编辑",
-    "Todo item" : "待办事项",
-    "Insert an image" : "插入一张图片",
-    "Alt" : "Alt",
     "Update Link" : "更新链接",
     "Add Link" : "添加链接",
     "Link file" : "链接文件",
     "Remove Link" : "移除链接",
-    "Select file to link to" : "选择文件链接至",
-    "ToDo list" : "待办事项清单",
-    "Emoji picker" : "Emoji 选择器",
-    "Insert image" : "插入图片"
+    "Select file to link to" : "选择文件链接至"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

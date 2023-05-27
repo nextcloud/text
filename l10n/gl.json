@@ -146,20 +146,11 @@
     "Edit" : "Editar",
     "Add description" : "Engadir descrición",
     "Front matter" : "Introducción",
-    "Last saved {lastSaved}" : "Último gardado {lastSaved}",
-    "Image file format not supported" : "O formato de ficheiro de imaxe non é compatible",
-    "Enter your name so other users can see who is editing" : "Introduza o seu nome para que outros usuarios poidan ver quen está a editar",
-    "Todo item" : "Elemento pendente",
-    "Insert an image" : "Inserir unha imaxe",
-    "Alt" : "Alt",
+    "Document save status" : "Estado de gardado do documento",
     "Update Link" : "Actualizar ligazón",
     "Add Link" : "Engadir ligazón",
     "Link file" : "Ligar un ficheiro",
     "Remove Link" : "Retirar ligazón",
-    "Select file to link to" : "Seleccione o ficheiro ao que ligar",
-    "ToDo list" : "Lista «para facer»",
-    "Emoji picker" : "Selector de emojis",
-    "Insert image" : "Inserir unha imaxe",
-    "Document save status" : "Estado de gardado do documento"
+    "Select file to link to" : "Seleccione o ficheiro ao que ligar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

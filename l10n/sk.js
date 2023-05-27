@@ -127,20 +127,11 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
     "Front matter" : "Predná strana",
-    "Last saved {lastSaved}" : "Naposledy uložené {lastSaved}",
-    "Image file format not supported" : "Formát obrázku nie je podporovaný",
-    "Enter your name so other users can see who is editing" : "Zadajte svoje meno, aby ostatní videli, kto práve upravuje",
-    "Todo item" : "Položka úloh",
-    "Insert an image" : "Vložiť obrázok",
-    "Alt" : "Alt",
+    "Document save status" : "Stav uloženia dokumentu",
     "Update Link" : "Aktualizovať odkaz",
     "Add Link" : "Pridať odkaz",
     "Link file" : "Súbor pre odkaz",
     "Remove Link" : "Odstrániť odkaz",
-    "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
-    "ToDo list" : "Zoznam úloh",
-    "Emoji picker" : "Výber emotikonov",
-    "Insert image" : "Vložiť obrázok",
-    "Document save status" : "Stav uloženia dokumentu"
+    "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
