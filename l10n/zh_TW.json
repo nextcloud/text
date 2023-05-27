@@ -146,20 +146,11 @@
     "Edit" : "編輯",
     "Add description" : "新增描述",
     "Front matter" : "前言",
-    "Last saved {lastSaved}" : "上次儲存於 {lastSaved}",
-    "Image file format not supported" : "不支援的圖片檔案格式",
-    "Enter your name so other users can see who is editing" : "輸入您的名稱，這樣其他使用者才能查看是誰在編輯",
-    "Todo item" : "待辦事項",
-    "Insert an image" : "插入圖片",
-    "Alt" : "Alt",
+    "Document save status" : "文件儲存狀態",
     "Update Link" : "更新連結",
     "Add Link" : "新增連結",
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
-    "Select file to link to" : "選擇要連結的檔案",
-    "ToDo list" : "待辦列表",
-    "Emoji picker" : "表情符號挑選器",
-    "Insert image" : "插入影像",
-    "Document save status" : "文件儲存狀態"
+    "Select file to link to" : "選擇要連結的檔案"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

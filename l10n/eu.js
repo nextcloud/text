@@ -147,20 +147,11 @@ OC.L10N.register(
     "Edit" : "Editatu",
     "Add description" : "Gehitu deskribapena",
     "Front matter" : "Aurreko gaia",
-    "Last saved {lastSaved}" : "Azken gordetzea {lastSave}",
-    "Image file format not supported" : "Irudi-fitxategiaren formatua ez da onartzen",
-    "Enter your name so other users can see who is editing" : "Sartu zure izena beste erabiltzaileek nor ari den editatzen ikus dezaten",
-    "Todo item" : "Eginbeharreko elementua",
-    "Insert an image" : "Txertatu irudi bat",
-    "Alt" : "Alt",
+    "Document save status" : "Dokumentuaren gordeketa egoera",
     "Update Link" : "Eguneratu esteka",
     "Add Link" : "Gehitu esteka",
     "Link file" : "Estekatu fitxategia",
     "Remove Link" : "Kendu esteka",
-    "Select file to link to" : "Hautatu fitxategia estekatzeko",
-    "ToDo list" : "Egitekoen zerrenda",
-    "Emoji picker" : " Emotikono-hautatzailea",
-    "Insert image" : "Txertatu irudia",
-    "Document save status" : "Dokumentuaren gordeketa egoera"
+    "Select file to link to" : "Hautatu fitxategia estekatzeko"
 },
 "nplurals=2; plural=(n != 1);");

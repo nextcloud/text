@@ -63,13 +63,7 @@ OC.L10N.register(
     "Control" : "Kiểm soát",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
-    "Last saved {lastSaved}" : "Đã lưu lần cuối {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Nhập tên của bạn để những người dùng khác có thể biết ai đang chỉnh sửa",
-    "Insert an image" : "Chèn ảnh",
     "Link file" : "Liên kết tệp tin",
-    "Select file to link to" : "Chọn tệp để liên kết đến",
-    "ToDo list" : "Cần làm",
-    "Emoji picker" : "Trình chọn emoji",
-    "Insert image" : "Chèn ảnh"
+    "Select file to link to" : "Chọn tệp để liên kết đến"
 },
 "nplurals=1; plural=0;");

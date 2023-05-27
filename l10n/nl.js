@@ -105,19 +105,10 @@ OC.L10N.register(
     "Control" : "Controle",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
-    "Last saved {lastSaved}" : "Laatste opgeslagen {lastSaved}",
-    "Image file format not supported" : "Afbeeldingsbestandsformaat wordt niet ondersteund",
-    "Enter your name so other users can see who is editing" : "Vul je naam in zodat anderen kunnen zien wie aan het bewerken is",
-    "Todo item" : "Te doen onderwerp",
-    "Insert an image" : "Voeg een afbeelding in",
-    "Alt" : "Alt",
     "Update Link" : "Link bijwerken",
     "Add Link" : "Link toevoegen",
     "Link file" : "Link bestand",
     "Remove Link" : "Verwijder Link",
-    "Select file to link to" : "Selecteer een bestand om naar te linken",
-    "ToDo list" : "ToDo overzicht",
-    "Emoji picker" : "Emoji kiezer",
-    "Insert image" : "Invoegen afbeelding"
+    "Select file to link to" : "Selecteer een bestand om naar te linken"
 },
 "nplurals=2; plural=(n != 1);");

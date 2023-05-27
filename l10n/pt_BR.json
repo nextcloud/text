@@ -1,5 +1,6 @@
 { "translations": {
     "New text file" : "Novo arquivo de texto",
+    "Create new text file" : "Criar novo arquivo de texto",
     "The file was uploaded" : "O arquivo foi enviado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O arquivo enviado excede a configuração upload_max_filesize no php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O arquivo enviado excede a configuração MAX_FILE_SIZE que foi especificada no formulário HTML",
@@ -85,6 +86,7 @@
     "Link to file or folder" : "Link para arquivo ou pasta",
     "Link to website" : "Link para o site",
     "Update link" : "Atualizar link",
+    "Open the Smart Picker" : "Abra o seletor inteligente",
     "Select file or folder to link to" : "Selecione o arquivo ou pasta para vincular",
     "_%n word_::_%n words_" : ["%n palavra","%n palavras","%n palavras"],
     "_%n char_::_%n chars_" : ["%n caractere","%n caracteres","%n caractere"],
@@ -144,20 +146,11 @@
     "Edit" : "Editar",
     "Add description" : "Adicionar descrição",
     "Front matter" : "Matéria de frente",
-    "Last saved {lastSaved}" : "Salvo por último {lastSaved}",
-    "Image file format not supported" : "Formato de arquivo de imagem não suportado",
-    "Enter your name so other users can see who is editing" : "Digite seu nome para que outros possam ver quem está editando",
-    "Todo item" : "Todo item",
-    "Insert an image" : "Inserir uma imagem",
-    "Alt" : "Alt",
+    "Document save status" : "Status de salvamento do documento",
     "Update Link" : "Atualizar Link",
     "Add Link" : "Adicionar Link",
     "Link file" : "Vincular um arquivo",
     "Remove Link" : "Remover Link",
-    "Select file to link to" : "Selecione o arquivo a vincular",
-    "ToDo list" : "Lista ToDo",
-    "Emoji picker" : "Selecionador de emoji ",
-    "Insert image" : "Inserir imagem",
-    "Document save status" : "Status de salvamento do documento"
+    "Select file to link to" : "Selecione o arquivo a vincular"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

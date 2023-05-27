@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Редашувати",
     "Add description" : "Додати опис",
     "Front matter" : "Передня справа",
-    "Last saved {lastSaved}" : "Збережено {lastSaved}",
-    "Image file format not supported" : "Формат файлу зображення не підтримується",
-    "Enter your name so other users can see who is editing" : "Зазначте ваше ім'я, щоби користувачі знали, хто редагує",
-    "Todo item" : "Пункт списку завдання",
-    "Insert an image" : "Вставте зображення",
-    "Alt" : "Alt",
+    "Document save status" : "Статус збереження документа",
     "Update Link" : "Оновити посилання",
     "Add Link" : "Додати посилання",
     "Link file" : "Файл посилання",
     "Remove Link" : "Вилучити посилання",
-    "Select file to link to" : "Виберіть файл для посилання",
-    "ToDo list" : "Список завдань",
-    "Emoji picker" : "Вибір емоційки",
-    "Insert image" : "Додати зображення",
-    "Document save status" : "Статус збереження документа"
+    "Select file to link to" : "Виберіть файл для посилання"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

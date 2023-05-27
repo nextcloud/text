@@ -146,20 +146,11 @@
     "Edit" : "Редактировать",
     "Add description" : "Добавить описание",
     "Front matter" : "Передний план",
-    "Last saved {lastSaved}" : "Последнее сохранение {lastSaved}",
-    "Image file format not supported" : "Формат файла изображения не поддерживается",
-    "Enter your name so other users can see who is editing" : "Введите своё имя, чтобы другие пользователи могли видеть, кто редактирует",
-    "Todo item" : "Элемент списка задач",
-    "Insert an image" : "Вставить изображение",
-    "Alt" : "Alt",
+    "Document save status" : "Состояние сохранения документа",
     "Update Link" : "Обновить ссылку",
     "Add Link" : "Добавить ссылку",
     "Link file" : "Добавить ссылку на файл",
     "Remove Link" : "Удалить ссылку",
-    "Select file to link to" : "Выберете файл для создания ссылки",
-    "ToDo list" : "Список задач",
-    "Emoji picker" : "Выбор эмодзи",
-    "Insert image" : "Вставить изображение",
-    "Document save status" : "Состояние сохранения документа"
+    "Select file to link to" : "Выберете файл для создания ссылки"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

@@ -42,12 +42,7 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
     "Edit" : "Wysig",
-    "Last saved {lastSaved}" : "Laas bewaar {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Voer u naam in sodat andere kan weet wie hieraan werk",
-    "Insert an image" : "Voer ’n beeld in",
     "Link file" : "Koppel lêer",
-    "Select file to link to" : "Kies lêer om na te koppel",
-    "ToDo list" : "Moet-doen-lys",
-    "Insert image" : "Voer beeld in"
+    "Select file to link to" : "Kies lêer om na te koppel"
 },
 "nplurals=2; plural=(n != 1);");

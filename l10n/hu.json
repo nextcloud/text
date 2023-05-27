@@ -146,20 +146,11 @@
     "Edit" : "Szerkesztés",
     "Add description" : "Leírás hozzáadása",
     "Front matter" : "Előlap",
-    "Last saved {lastSaved}" : "Legutóbb mentve: {lastSaved}",
-    "Image file format not supported" : "A képfájl nem támogatott",
-    "Enter your name so other users can see who is editing" : "Adja meg a nevét, hogy mások lássák ki szerkeszti",
-    "Todo item" : "Teendő elem ",
-    "Insert an image" : "Egy kép beszúrása",
-    "Alt" : "Alt",
+    "Document save status" : "Dokumentum mentési állapota",
     "Update Link" : "Hivatkozás frissítése",
     "Add Link" : "Hivatkozás hozzáadása",
     "Link file" : "Fájl hivatkozás készítése",
     "Remove Link" : "Hivatkozás eltávolítása",
-    "Select file to link to" : "Válassza ki a hivatkozandó fájlt",
-    "ToDo list" : "Teendőlista",
-    "Emoji picker" : "Emodzsiválasztó",
-    "Insert image" : "Kép beszúrása",
-    "Document save status" : "Dokumentum mentési állapota"
+    "Select file to link to" : "Válassza ki a hivatkozandó fájlt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

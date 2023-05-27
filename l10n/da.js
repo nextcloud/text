@@ -72,17 +72,10 @@ OC.L10N.register(
     "Command" : "Kommando",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
-    "Last saved {lastSaved}" : "Sidst gemt {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Indtast dit navn, så andre brugere kan se, hvem der redigerer",
-    "Insert an image" : "Indsæt et billede",
-    "Alt" : "Alt",
     "Update Link" : "Opdater link",
     "Add Link" : "Tilføj link",
     "Link file" : "Link fil",
     "Remove Link" : "Fjern link",
-    "Select file to link to" : "Vælg den fil, du vil linke til",
-    "ToDo list" : "To-Do liste",
-    "Emoji picker" : "Emoji vælger",
-    "Insert image" : "Indsæt billede"
+    "Select file to link to" : "Vælg den fil, du vil linke til"
 },
 "nplurals=2; plural=(n != 1);");

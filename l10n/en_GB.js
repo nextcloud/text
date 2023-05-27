@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Edit",
     "Add description" : "Add description",
     "Front matter" : "Front matter",
-    "Last saved {lastSaved}" : "Last saved {lastSaved}",
-    "Image file format not supported" : "Image file format not supported",
-    "Enter your name so other users can see who is editing" : "Enter your name so other users can see who is editing",
-    "Todo item" : "Todo item",
-    "Insert an image" : "Insert an image",
-    "Alt" : "Alt",
+    "Document save status" : "Document save status",
     "Update Link" : "Update Link",
     "Add Link" : "Add Link",
     "Link file" : "Link file",
     "Remove Link" : "Remove Link",
-    "Select file to link to" : "Select file to link to",
-    "ToDo list" : "ToDo list",
-    "Emoji picker" : "Emoji picker",
-    "Insert image" : "Insert image",
-    "Document save status" : "Document save status"
+    "Select file to link to" : "Select file to link to"
 },
 "nplurals=2; plural=(n != 1);");

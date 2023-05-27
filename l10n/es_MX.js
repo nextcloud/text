@@ -51,9 +51,6 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
-    "Edit" : "Editar",
-    "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
-    "ToDo list" : "Lista de penditentes",
-    "Insert image" : "Añadir imagen"
+    "Edit" : "Editar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

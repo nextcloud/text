@@ -67,6 +67,7 @@ OC.L10N.register(
     "Upload from computer" : "Carica dal computer",
     "Insert from Files" : "Inserisci dai file",
     "Update link" : "Aggiorna collegamento",
+    "Select file or folder to link to" : "Seleziona un file o una cartella da collegare",
     "Translate" : "Traduci",
     "Replace" : "Sostituisci",
     "No emoji found" : "Nessun emoji trovato",
@@ -100,19 +101,10 @@ OC.L10N.register(
     "Control" : "Controllo",
     "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
     "Edit" : "Modifica",
-    "Last saved {lastSaved}" : "Ultimo salvataggio {lastSave}",
-    "Image file format not supported" : "Formato dell'immagine non supportato",
-    "Enter your name so other users can see who is editing" : "Inserisci il tuo nome in modo che gli altri utenti possano vedere chi sta modificando",
-    "Todo item" : "Elemento da fare",
-    "Insert an image" : "Inserisci un'immagine",
-    "Alt" : "Alt",
     "Update Link" : "Aggiorna collegamento",
     "Add Link" : "Aggiungi collegamento",
     "Link file" : "Collegamento a file",
     "Remove Link" : "Rimuovi collegamento",
-    "Select file to link to" : "Seleziona il file da collegare",
-    "ToDo list" : "Elenco Cose da fare",
-    "Emoji picker" : "Selettore di emoji",
-    "Insert image" : "Inserisci immagine"
+    "Select file to link to" : "Seleziona il file da collegare"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

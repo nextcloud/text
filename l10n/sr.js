@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Измени",
     "Add description" : "Додај опис",
     "Front matter" : "Уводни део",
-    "Last saved {lastSaved}" : "Последње чување {lastSaved}",
-    "Image file format not supported" : "Формат фајла слике није подржан",
-    "Enter your name so other users can see who is editing" : "Унесите ваше име да други могу да виде ко уређује",
-    "Todo item" : "Ставка обавезе",
-    "Insert an image" : "Убаци слику",
-    "Alt" : "Alt",
+    "Document save status" : "Статус чувања документа",
     "Update Link" : "Ажурирај линк",
     "Add Link" : "дај линк",
     "Link file" : "Увежи фајл",
     "Remove Link" : "Уклони линк",
-    "Select file to link to" : "Одаберите фајл на који да направите везу",
-    "ToDo list" : "ToDo листа",
-    "Emoji picker" : "Бирач емођија",
-    "Insert image" : "Убаци слику",
-    "Document save status" : "Статус чувања документа"
+    "Select file to link to" : "Одаберите фајл на који да направите везу"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

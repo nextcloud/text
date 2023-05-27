@@ -147,20 +147,11 @@ OC.L10N.register(
     "Edit" : "Bearbeiten",
     "Add description" : "Beschreibung hinzufügen",
     "Front matter" : "Titelei",
-    "Last saved {lastSaved}" : "Zuletzt gespeichert {lastSaved}",
-    "Image file format not supported" : "Dateiformat des Bildes wird nicht unterstützt",
-    "Enter your name so other users can see who is editing" : "Gib deinen Namen ein, so dass andere Benutzer sehen können, wer bearbeitet",
-    "Todo item" : "Todo-Element",
-    "Insert an image" : "Ein Bild einfügen",
-    "Alt" : "Alt",
+    "Document save status" : "Speicherstatus des Dokuments",
     "Update Link" : "Link aktualisieren",
     "Add Link" : "Link hinzufügen",
     "Link file" : "Datei verknüpfen",
     "Remove Link" : "Link entfernen",
-    "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
-    "ToDo list" : "To-do-Liste",
-    "Emoji picker" : "Emoji-Auswahl",
-    "Insert image" : "Bild einfügen",
-    "Document save status" : "Speicherstatus des Dokuments"
+    "Select file to link to" : "Wähle die zu verknüpfende Datei aus"
 },
 "nplurals=2; plural=(n != 1);");

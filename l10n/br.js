@@ -20,9 +20,6 @@ OC.L10N.register(
     "Warning" : "Kemenadenn",
     "Command" : "Urzh",
     "Edit" : "Cheñch",
-    "Last saved {lastSaved}" : "Enrolladen  divezhañ {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Lakait o anv ma vo posuple d'an implijourien all gwellet piv a zo oc'h embannañ",
-    "Insert an image" : "Lakaat ur skeudenn",
     "Link file" : "Liamm restr",
     "Select file to link to" : "Choaz ur restr da liammañ da"
 },
