@@ -60,12 +60,7 @@
     "Control" : "Stjórnun",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Edit" : "Breyta",
-    "Last saved {lastSaved}" : "Síðast vistað {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Settu inn nafnið þitt svo aðrir notendur geti séð hver sé að breyta hverju",
-    "Insert an image" : "Setja inn mynd",
     "Link file" : "Tengja skrá",
-    "Select file to link to" : "Veldu skrá til að tengja í",
-    "ToDo list" : "Verkefnalisti",
-    "Insert image" : "Setja inn mynd"
+    "Select file to link to" : "Veldu skrá til að tengja í"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

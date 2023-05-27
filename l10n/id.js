@@ -29,8 +29,6 @@ OC.L10N.register(
     "Warning" : "Peringatan",
     "Control" : "Kendali",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
-    "Edit" : "Sunting",
-    "Last saved {lastSaved}" : "Terakhir disimpan {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Tuliskan nama Anda, agar pengguna lain dapat melihat siapa yang sedang mengedit"
+    "Edit" : "Sunting"
 },
 "nplurals=1; plural=0;");

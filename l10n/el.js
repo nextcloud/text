@@ -91,18 +91,10 @@ OC.L10N.register(
     "Control" : "Έλεγχος",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
-    "Last saved {lastSaved}" : "Τελευταία αποθήκευση {lastSave}",
-    "Enter your name so other users can see who is editing" : "Εισάγετε το όνομά σας ώστε οι άλλοι χρήστες να γνωρίζουν ποιος κάνει επεξεργασία",
-    "Todo item" : "Στοιχείο todo",
-    "Insert an image" : "Εισαγωγή εικόνας",
-    "Alt" : "Alt",
     "Update Link" : "Ενημέρωση συνδέσμου",
     "Add Link" : "Προσθήκη Συνδέσμου",
     "Link file" : "Σύνδεσμος αρχείου",
     "Remove Link" : "Αφαίρεση Συνδέσμου",
-    "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
-    "ToDo list" : "ToDo λίστα",
-    "Emoji picker" : "Επιλογέας emoji",
-    "Insert image" : "Εισαγωγή εικόνας"
+    "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου"
 },
 "nplurals=2; plural=(n != 1);");

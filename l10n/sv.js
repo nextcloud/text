@@ -146,20 +146,11 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Edit" : "Redigera",
     "Add description" : "Lägg till beskrivning",
-    "Last saved {lastSaved}" : "Senast sparad {lastSaved}",
-    "Image file format not supported" : "Bildfilformat stöds inte",
-    "Enter your name so other users can see who is editing" : "Ange ditt namn så att andra kan se vem som redigerar",
-    "Todo item" : "Att göra objekt",
-    "Insert an image" : "Infoga en bild",
-    "Alt" : "Alt",
+    "Document save status" : "Dokumentets spara status",
     "Update Link" : "Uppdatera länk",
     "Add Link" : "Lägg till länk",
     "Link file" : "Länka fil",
     "Remove Link" : "Ta bort länk",
-    "Select file to link to" : "Välj fil att länka till",
-    "ToDo list" : "Att göra lista",
-    "Emoji picker" : "Emojiväljare",
-    "Insert image" : "Infoga bild",
-    "Document save status" : "Dokumentets spara status"
+    "Select file to link to" : "Välj fil att länka till"
 },
 "nplurals=2; plural=(n != 1);");

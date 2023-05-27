@@ -63,13 +63,7 @@ OC.L10N.register(
     "Control" : "Controllu",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
-    "Last saved {lastSaved}" : "Ùrtimu sarvatàgiu {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Inserta·nche su nùmene tuo, aici is utentes podent bìdere chie est modifichende",
-    "Insert an image" : "Inserta·nche un'imàgine",
     "Link file" : "Ligòngiu a archìviu",
-    "Select file to link to" : "Seletziona s'archìviu de ligongiare",
-    "ToDo list" : "Cosas de fàghere",
-    "Emoji picker" : "Sèberu de carigheddas",
-    "Insert image" : "Inserta·nche imàgine"
+    "Select file to link to" : "Seletziona s'archìviu de ligongiare"
 },
 "nplurals=2; plural=(n != 1);");

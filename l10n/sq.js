@@ -31,7 +31,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
-    "Edit" : "Përpuno",
-    "Enter your name so other users can see who is editing" : "Vendosni emrin tuaj që përdoruesit e tjerë mund të shikojnë kush është duke bërë ndryshime"
+    "Edit" : "Përpuno"
 },
 "nplurals=2; plural=(n != 1);");

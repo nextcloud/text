@@ -51,13 +51,7 @@ OC.L10N.register(
     "Command" : "Comanda",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligamas…",
     "Edit" : "Modificar",
-    "Last saved {lastSaved}" : "Darrièr enregistrament {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Picatz vòstre nom per que los autres utilizaires vejan qual es a modificar",
-    "Insert an image" : "Inserir un imatge",
     "Link file" : "Ligam fichièr",
-    "Remove Link" : "Suprimir ligam",
-    "ToDo list" : "Lista a far",
-    "Emoji picker" : "Selector emoji",
-    "Insert image" : "Inserir imatge"
+    "Remove Link" : "Suprimir ligam"
 },
 "nplurals=2; plural=(n > 1);");

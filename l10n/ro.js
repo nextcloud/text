@@ -25,7 +25,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",
-    "Edit" : "Editează",
-    "Insert image" : "Introdu imagine"
+    "Edit" : "Editează"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

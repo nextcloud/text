@@ -1,0 +1,11 @@
+{ "translations": {
+    "Offline" : "ອັອບລາຍ",
+    "Saving …" : "ກຳລັງບັນທຶກ",
+    "Translate" : "ແປ",
+    "Replace" : "ປ່ຽນແທນ",
+    "Info" : "ຂໍ້ມຸນ",
+    "Success" : "ຄວາມສໍາເລັດ",
+    "Warning" : "ແຈ້ງເຕືອນ",
+    "Edit" : "ແກ້ໄຂ"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

@@ -148,20 +148,11 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Add description" : "Añadir descripción",
     "Front matter" : "Prefacio",
-    "Last saved {lastSaved}" : "Guardado por última vez: {lastSave}",
-    "Image file format not supported" : "Formato de archivo de imagen no soportado",
-    "Enter your name so other users can see who is editing" : "Introduce tu nombre para que otros usuarios puedan ver quién está editando",
-    "Todo item" : "Elemento a completar",
-    "Insert an image" : "Insertar imagen",
-    "Alt" : "Alt",
+    "Document save status" : "Estado de guardado del documento ",
     "Update Link" : "Actualizar Enlace",
     "Add Link" : "Añadir Enlace",
     "Link file" : "Enlace al archivo",
     "Remove Link" : "Eliminar Enlace",
-    "Select file to link to" : "Selecciona un archivo para enlazar",
-    "ToDo list" : "Lista de Tareas",
-    "Emoji picker" : "Selector de emoji",
-    "Insert image" : "Insertar imagen",
-    "Document save status" : "Estado de guardado del documento "
+    "Select file to link to" : "Selecciona un archivo para enlazar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

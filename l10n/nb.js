@@ -58,10 +58,6 @@ OC.L10N.register(
     "Command" : "Kommando",
     "Control" : "Kontroll",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "Edit" : "Rediger",
-    "Last saved {lastSaved}" : "Sist lagret {lastSaved}",
-    "Enter your name so other users can see who is editing" : "Skriv inn navnet ditt slik at andre brukere kan se hvem som redigerer",
-    "ToDo list" : "Gjøreliste",
-    "Insert image" : "Sett inn bilde"
+    "Edit" : "Rediger"
 },
 "nplurals=2; plural=(n != 1);");
