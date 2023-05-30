@@ -35,7 +35,7 @@
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
-	useSyncServiceMixin
+	useSyncServiceMixin,
 } from './Editor.provider.js'
 import { NcButton } from '@nextcloud/vue'
 import setContent from './../mixins/setContent.js'

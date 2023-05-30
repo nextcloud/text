@@ -23,118 +23,104 @@
 import { initUserAndFiles, randUser } from '../utils/index.js'
 
 const user = randUser()
-const fileName = 'test.md'
 
-describe('Open test.md in viewer', function() {
-	const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts.is-rich-editor')
+const variants = [
+	{ fixture: 'lines.txt', mime: 'text/plain' },
+	{ fixture: 'test.md', mime: 'text/markdown' },
+]
 
-	before(() => {
-		initUserAndFiles(user, fileName)
-	})
+variants.forEach(function({ fixture, mime }) {
+	const fileName = fixture
+	describe(`${mime} (${fileName})`, function() {
+		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
-	beforeEach(function() {
-		cy.login(user)
-		cy.visit('/apps/files')
-	})
+		before(() => {
+			initUserAndFiles(user, fileName)
+		})
 
-	it('displays conflicts', function() {
-		cy.openFile(fileName)
+		beforeEach(function() {
+			cy.login(user)
+			cy.visit('/apps/files')
+		})
 
-		cy.log('Inspect editor')
-		cy.getContent()
-			.type('Hello you cruel conflicting world')
-		cy.uploadFile('test.md', 'text/markdown')
+		it('displays conflicts', function() {
+			cy.openFile(fileName)
 
-		cy.get('#viewer .modal-header button.header-close').click()
-		cy.get('#viewer').should('not.exist')
-		cy.openFile('test.md')
-		cy.get('.text-editor .document-status .icon-error')
-		getWrapper()
-			.get('#read-only-editor h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main')
-			.should('contain', 'cruel conflicting')
-		cy.screenshot()
-	})
+			cy.log('Inspect editor')
+			cy.getContent()
+				.type('Hello you cruel conflicting world')
+			cy.uploadFile(fileName, mime)
 
-	it('resolves conflict using current editing session', function() {
-		cy.openFile(fileName)
+			cy.get('#viewer .modal-header button.header-close').click()
+			cy.get('#viewer').should('not.exist')
+			cy.openFile(fileName)
+			cy.get('.text-editor .document-status .icon-error')
+			getWrapper()
+				.get('#read-only-editor')
+				.should('contain', 'Hello world')
+			getWrapper()
+				.get('.text-editor__main')
+				.should('contain', 'Hello world')
+			getWrapper()
+				.get('.text-editor__main')
+				.should('contain', 'cruel conflicting')
+		})
 
-		cy.log('Inspect editor')
-		cy.getContent()
-			.type('Hello you cruel conflicting world')
-		cy.uploadFile('test.md', 'text/markdown')
+		it('resolves conflict using current editing session', function() {
+			cy.openFile(fileName)
 
-		cy.get('#viewer .modal-header button.header-close').click()
-		cy.get('#viewer').should('not.exist')
-		cy.openFile('test.md')
-		cy.get('.text-editor .document-status .icon-error')
-		getWrapper()
-			.get('#read-only-editor h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main')
-			.should('contain', 'cruel conflicting')
+			cy.log('Inspect editor')
+			cy.getContent()
+				.type('Hello you cruel conflicting world')
+			cy.uploadFile(fileName, mime)
 
-		cy.get('[data-cy="resolveThisVersion"]').click()
+			cy.get('#viewer .modal-header button.header-close').click()
+			cy.get('#viewer').should('not.exist')
+			cy.openFile(fileName)
 
-		getWrapper()
-			.get('#read-only-editor')
-			.should('not.exist')
+			cy.get('[data-cy="resolveThisVersion"]').click()
 
-		cy.get('[data-cy="resolveThisVersion"]')
-			.should('not.exist')
+			getWrapper()
+				.get('#read-only-editor')
+				.should('not.exist')
 
-		cy.get('.text-editor__main h2')
-			.should('contain', 'Hello world')
-		cy.get('.text-editor__main')
-			.should('contain', 'cruel conflicting')
-	})
+			cy.get('[data-cy="resolveThisVersion"]')
+				.should('not.exist')
 
-	it('resolves conflict using server version', function() {
-		cy.openFile(fileName)
+			cy.get('.text-editor__main')
+				.should('contain', 'Hello world')
+			cy.get('.text-editor__main')
+				.should('contain', 'cruel conflicting')
+		})
 
-		cy.log('Inspect editor')
-		cy.getContent()
-			.type('Hello you cruel conflicting world')
-		cy.uploadFile('test.md', 'text/markdown')
+		it('resolves conflict using server version', function() {
+			cy.openFile(fileName)
 
-		cy.get('#viewer .modal-header button.header-close').click()
-		cy.get('#viewer').should('not.exist')
-		cy.openFile('test.md')
-		cy.get('.text-editor .document-status .icon-error')
-		getWrapper()
-			.get('#read-only-editor h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main h2')
-			.should('contain', 'Hello world')
-		getWrapper()
-			.get('.text-editor__main')
-			.should('contain', 'cruel conflicting')
+			cy.log('Inspect editor')
+			cy.getContent()
+				.type('Hello you cruel conflicting world')
+			cy.uploadFile(fileName, mime)
 
-		getWrapper()
-			.get('[data-cy="resolveServerVersion"]')
-			.click()
+			cy.get('#viewer .modal-header button.header-close').click()
+			cy.get('#viewer').should('not.exist')
+			cy.openFile(fileName)
 
-		getWrapper()
-			.get('#read-only-editor')
-			.should('not.exist')
-		cy.get('[data-cy="resolveThisVersion"]')
-			.should('not.exist')
-		cy.get('[data-cy="resolveServerVersion"]')
-			.should('not.exist')
+			getWrapper()
+				.get('[data-cy="resolveServerVersion"]')
+				.click()
 
-		cy.get('.text-editor__main h2')
-			.should('contain', 'Hello world')
-		cy.get('.text-editor__main')
-			.should('not.contain', 'cruel conflicting')
+			getWrapper()
+				.get('#read-only-editor')
+				.should('not.exist')
+			cy.get('[data-cy="resolveThisVersion"]')
+				.should('not.exist')
+			cy.get('[data-cy="resolveServerVersion"]')
+				.should('not.exist')
+
+			cy.get('.text-editor__main')
+				.should('contain', 'Hello world')
+			cy.get('.text-editor__main')
+				.should('not.contain', 'cruel conflicting')
+		})
 	})
 })
