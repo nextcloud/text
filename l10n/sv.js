@@ -88,7 +88,7 @@ OC.L10N.register(
     "Link to file or folder" : "Länk till fil eller mapp",
     "Link to website" : "Länk till webbplats",
     "Update link" : "Uppdatera länk",
-    "Open the Smart Picker" : "Öppna smarta väljaren",
+    "Open the Smart Picker" : "Öppna Smart Picker",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tecken","%n tecken"],
