@@ -1,0 +1,7 @@
+This file contains multiple lines
+
+Hello world
+
+It's a text file so it should not be parsed as markdown
+
+But when it is these would turn into paragraphs.

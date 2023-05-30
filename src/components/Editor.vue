@@ -522,7 +522,7 @@ export default {
 						if (!documentState && documentSource) {
 							this.setContent(documentSource, {
 								isRich: this.isRichEditor,
-								addToHistory: false
+								addToHistory: false,
 							})
 						}
 						this.listenEditorEvents()
