@@ -91,6 +91,7 @@ OC.L10N.register(
     "Control" : "控制",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Edit" : "编辑",
+    "Add description" : "添加描述",
     "Update Link" : "更新链接",
     "Add Link" : "添加链接",
     "Link file" : "链接文件",
