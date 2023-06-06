@@ -141,8 +141,8 @@ export const configureNextcloud = async function() {
 	await runExec(container, ['php', 'occ', 'config:system:set', 'enforce_theme', '--value', 'light'], true)
 
 	// Setup users
-	await runExec(container, ['OC_PASS=1234561', 'php', 'occ', 'user:add', '--password-from-env', 'user1'], true)
-	await runExec(container, ['OC_PASS=1234561', 'php', 'occ', 'user:add', '--password-from-env', 'user2'], true)
+	await runExec(container, ['php', 'occ', 'user:add', '--password-from-env', 'user1'], true, ['OC_PASS=1234561'])
+	await runExec(container, ['php', 'occ', 'user:add', '--password-from-env', 'user2'], true, ['OC_PASS=1234561'])
 
 	// Enable the app and give status
 	await runExec(container, ['php', 'occ', 'app:enable', '--force', 'viewer'], true)
@@ -211,13 +211,15 @@ export const waitOnNextcloud = async function(ip: string) {
 const runExec = async function(
 	container: Docker.Container,
 	command: string[],
-	verbose = false
+	verbose = false,
+	env: string[] = [],
 ) {
 	const exec = await container.exec({
 		Cmd: command,
 		AttachStdout: true,
 		AttachStderr: true,
 		User: 'www-data',
+		Env: env,
 	})
 
 	return new Promise((resolve) => {
