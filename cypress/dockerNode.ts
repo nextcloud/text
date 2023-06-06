@@ -30,7 +30,7 @@ import waitOn from 'wait-on'
 import pkg from '../package.json'
 
 const APP_PATH = path.resolve(__dirname, '../')
-const APP_NAME = pkg.name
+const APP_NAME = pkg.name.replace('@nextcloud/','')
 
 const CONTAINER_NAME = 'nextcloud-cypress-tests-text'
 const SERVER_IMAGE = 'ghcr.io/nextcloud/continuous-integration-shallow-server'
