@@ -45,7 +45,7 @@ class DocumentMapper extends QBMapper {
 		$result = $qb->select('*')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($documentId)))
-			->execute();
+			->executeQuery();
 
 		$data = $result->fetch();
 		$result->closeCursor();
@@ -59,7 +59,7 @@ class DocumentMapper extends QBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())
-			->execute();
+			->executeQuery();
 
 		return $this->findEntities($qb);
 	}

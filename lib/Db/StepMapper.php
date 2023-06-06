@@ -59,7 +59,7 @@ class StepMapper extends QBMapper {
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->setMaxResults(1)
 			->orderBy('version', 'DESC')
-			->execute();
+			->executeQuery();
 
 		$data = $result->fetch();
 		if ($data === false) {
