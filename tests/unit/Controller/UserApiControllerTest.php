@@ -69,6 +69,9 @@ class UserApiControllerTest extends TestCase {
 				'userId' => 'admin',
 				'displayName' => 'admin',
 			]]);
+		$this->userManager->expects($this->once())
+			->method('getDisplayName')
+			->willReturn('Administrator');
 		$this->sessionService
 			->expects($this->once())
 			->method('getSession')->willReturn($session);
