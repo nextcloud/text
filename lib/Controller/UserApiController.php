@@ -41,7 +41,7 @@ class UserApiController extends ApiController {
 			$sessionUserId = $session['userId'];
 			if ($sessionUserId !== null && !isset($users[$sessionUserId])) {
 				$displayName = $this->userManager->getDisplayName($sessionUserId);
-				if (stripos($displayName, $filter) !== false || stripos($sessionUserId, $filter) !== false) {
+				if ($displayName && stripos($displayName, $filter) !== false || stripos($sessionUserId, $filter) !== false) {
 					$users[$sessionUserId] = $displayName;
 				}
 			}
