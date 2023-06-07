@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ruleslanguage-js-js"],{51506:(e,n,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ruleslanguage" instead of "highlight.js/lib/languages/ruleslanguage.js"'))}(),e.exports=s(32192)}}]);
+//# sourceMappingURL=ruleslanguage-js-js.js.map?v=430000984f9523ea7215

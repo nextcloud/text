@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/elixir-js-js"],{40785:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/elixir" instead of "highlight.js/lib/languages/elixir.js"'))}(),e.exports=n(62543)}}]);
+//# sourceMappingURL=elixir-js-js.js.map?v=75d5512dac0a130569a7

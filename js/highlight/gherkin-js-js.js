@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/gherkin-js-js"],{21442:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gherkin" instead of "highlight.js/lib/languages/gherkin.js"'))}(),e.exports=n(16499)}}]);
+//# sourceMappingURL=gherkin-js-js.js.map?v=8550bc693b6abf1262f3

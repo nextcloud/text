@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/armasm-js-js"],{96358:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/armasm" instead of "highlight.js/lib/languages/armasm.js"'))}(),e.exports=i(93138)}}]);
+//# sourceMappingURL=armasm-js-js.js.map?v=70bc986416d1be1c985d

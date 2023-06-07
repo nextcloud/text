@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/wasm-js-js"],{7809:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/wasm" instead of "highlight.js/lib/languages/wasm.js"'))}(),e.exports=i(81533)}}]);
+//# sourceMappingURL=wasm-js-js.js.map?v=898b9596eaaddb3dce82

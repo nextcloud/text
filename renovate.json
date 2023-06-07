@@ -1,0 +1,77 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "timezone": "Europe/Berlin",
+  "schedule": [
+    "before 5am every weekday",
+    "every weekend"
+  ],
+  "reviewers": ["team:office"],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
+  "ignoreUnstable": false,
+  "baseBranches": [
+    "main",
+    "stable27",
+    "stable26",
+    "stable25"
+  ],
+  "enabledManagers": [
+    "npm"
+  ],
+  "ignoreDeps": [
+    "node",
+    "npm"
+  ],
+  "packageRules": [
+    {
+      "groupName": "cypress",
+      "matchPackageNames": [
+        "cypress",
+        "@nextcloud/cypress"
+      ]
+    },
+    {
+      "groupName": "highlight",
+      "matchPackageNames": [
+        "highlight.js",
+        "lowlight"
+      ]
+    },
+    {
+      "groupName": "jest",
+      "matchPackageNames": [
+        "jest",
+        "@vue/vue2-jest",
+        "jest-environment-jsdom"
+      ]
+    },
+    {
+      "groupName": "tiptap",
+      "matchPackagePrefixes": [
+        "@tiptap/",
+        "prosemirror-"
+      ]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "matchBaseBranches": ["stable27", "stable26", "stable25"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["vue"],
+      "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["vuex"],
+      "allowedVersions": "<4"
+    },
+    {
+      "matchPackageNames": ["@vue/test-utils"],
+      "allowedVersions": "<2"
+    },
+  ]
+}

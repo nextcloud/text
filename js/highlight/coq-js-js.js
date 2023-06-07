@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/coq-js-js"],{36768:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/coq" instead of "highlight.js/lib/languages/coq.js"'))}(),e.exports=n(99087)}}]);
+//# sourceMappingURL=coq-js-js.js.map?v=372bf5fdbb43e4c13ccb

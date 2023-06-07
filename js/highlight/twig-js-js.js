@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/twig-js-js"],{73660:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/twig" instead of "highlight.js/lib/languages/twig.js"'))}(),e.exports=n(71973)}}]);
+//# sourceMappingURL=twig-js-js.js.map?v=0278463e366b9279ba4a

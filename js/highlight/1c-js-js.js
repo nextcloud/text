@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/1c-js-js"],{9856:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/1c" instead of "highlight.js/lib/languages/1c.js"'))}(),e.exports=n(30908)}}]);
+//# sourceMappingURL=1c-js-js.js.map?v=5ae0a128efc65ae2102d

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/coffeescript-js-js"],{1493:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/coffeescript" instead of "highlight.js/lib/languages/coffeescript.js"'))}(),e.exports=s(1857)}}]);
+//# sourceMappingURL=coffeescript-js-js.js.map?v=c2357b632897d957a007

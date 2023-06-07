@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/vbscript-js-js"],{55872:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/vbscript" instead of "highlight.js/lib/languages/vbscript.js"'))}(),e.exports=s(4703)}}]);
+//# sourceMappingURL=vbscript-js-js.js.map?v=51c4619186e3a4b7f597

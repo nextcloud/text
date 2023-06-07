@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mathematica-js-js"],{68752:(e,i,a)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mathematica" instead of "highlight.js/lib/languages/mathematica.js"'))}(),e.exports=a(8601)}}]);
+//# sourceMappingURL=mathematica-js-js.js.map?v=1525019847ed970b92f5

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/axapta-js-js"],{5432:(e,a,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/axapta" instead of "highlight.js/lib/languages/axapta.js"'))}(),e.exports=i(52059)}}]);
+//# sourceMappingURL=axapta-js-js.js.map?v=1cc67f17498b45a3702c

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/pony-js-js"],{50864:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/pony" instead of "highlight.js/lib/languages/pony.js"'))}(),e.exports=i(46874)}}]);
+//# sourceMappingURL=pony-js-js.js.map?v=5d8269f6f41729ac6f99

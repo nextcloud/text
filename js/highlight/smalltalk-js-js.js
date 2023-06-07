@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/smalltalk-js-js"],{5229:(e,l,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/smalltalk" instead of "highlight.js/lib/languages/smalltalk.js"'))}(),e.exports=s(17659)}}]);
+//# sourceMappingURL=smalltalk-js-js.js.map?v=745f465bd8a7bf746837

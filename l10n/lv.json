@@ -1,0 +1,28 @@
+{ "translations": {
+    "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Augšupielādētā datne pārsniedz MAX_FILE_SIZE norādi, kas ir norādīta HTML formā",
+    "No file was uploaded" : "Neviena datne netika augšupielādēta",
+    "Missing a temporary folder" : "Trūkst pagaidu mapes",
+    "Text" : "Teksts",
+    "Guest" : "Viesis",
+    "guest" : "viesis",
+    "Offline" : "Bezsaistē",
+    "Saving …" : "Saglabā ...",
+    "Saved" : "Saglabāts",
+    "Keyboard shortcuts" : "Tastatūras saīsnes",
+    "Bold" : "Treknraksts",
+    "Italic" : "Slīpraksts",
+    "Strikethrough" : "Pārsvītrojums",
+    "Remove link" : "Noņemt saiti",
+    "Update link" : "Atjaunināt saiti",
+    "Translate" : "Tulkot",
+    "Replace" : "Aizvietot",
+    "Unsupported image type" : "Neatbalstīts attēla tips",
+    "Undo" : "Atsaukt",
+    "Redo" : "Atcelt atsaukšanu",
+    "Insert link" : "Ievietojiet saiti",
+    "Info" : "Info",
+    "Warning" : "Brīdinājums",
+    "Command" : "Komanda",
+    "Edit" : "Rediģēt"
+},"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
+}

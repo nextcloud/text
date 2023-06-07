@@ -1,0 +1,104 @@
+@media print {
+	@page {
+		size: A4;
+		margin: 2.5cm 2cm 2cm 2.5cm;
+	}
+
+	body {
+		// position: fixed does not support scrolling and as such only prints one page
+		position: absolute;
+		overflow: visible!important;
+	}
+
+	#viewer[data-handler='text'] {
+		// Hide top border
+		border: none;
+		width: 100%!important;
+		// NcModal uses fixed, which will be cropped when printed
+		position: absolute!important;
+
+		.modal-header {
+			// Hide modal header (close button)
+			display: none!important;
+		}
+		.modal-container {
+			// Make sure top aligned as we hided the menubar */
+			top: 0px;
+			height: fit-content;
+		}
+	}
+
+	.text-editor {
+		.text-menubar {
+			// Hide menu bar
+			display: none!important;
+		}
+		.action-item {
+			// Hide table settings
+			display: none!important;
+		}
+		.editor__content {
+			// Margins set by page rule
+			max-width: 100%;
+		}
+		.text-editor__wrapper {
+			height: fit-content;
+			position: unset;
+		}
+
+		div.ProseMirror {
+			h1, h2, h3, h4, h5 {
+				// orphaned headlines are ugly
+				break-after: avoid;
+			}
+			.image, img, table {
+				// try no page breaks within tables or images
+				break-inside: avoid-page;
+				// Some more indention
+				max-width: 90%!important;
+				margin: 5vw auto 5vw 5%!important;
+			}
+
+			// Add some borders below header and between columns
+			th {
+				color: black!important;
+				font-weight: bold!important;
+				border-width: 0 1px 2px 0!important;
+				border-color: gray!important;
+				border-style: none solid solid none!important;
+			}
+			th:last-of-type {
+				border-width: 0 0 2px 0!important;
+			}
+
+			td {
+				border-style: none solid none none!important;
+				border-width: 1px!important;
+				border-color: gray!important;
+			}
+			td:last-of-type {
+				border: none!important;
+			}
+		}
+	}
+
+	.menubar-placeholder, .text-editor--readonly-bar {
+		display: none;
+	}
+
+	.text-editor__content-wrapper {
+		&.--show-outline {
+			display: block;
+		}
+
+		.editor--outline {
+			width: auto;
+			height: auto;
+			overflow: unset;
+			position: relative;
+		}
+		.editor--outline__btn-close {
+			display: none;
+		}
+	}
+}

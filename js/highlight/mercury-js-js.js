@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mercury-js-js"],{64896:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mercury" instead of "highlight.js/lib/languages/mercury.js"'))}(),e.exports=n(44261)}}]);
+//# sourceMappingURL=mercury-js-js.js.map?v=8689c79b51af5705ba28

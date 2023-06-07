@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/tap-js-js"],{17532:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/tap" instead of "highlight.js/lib/languages/tap.js"'))}(),e.exports=n(30422)}}]);
+//# sourceMappingURL=tap-js-js.js.map?v=cbd8fdd2996950d49b20

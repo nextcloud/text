@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/irpf90-js-js"],{78463:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/irpf90" instead of "highlight.js/lib/languages/irpf90.js"'))}(),e.exports=n(60320)}}]);
+//# sourceMappingURL=irpf90-js-js.js.map?v=ea98c87d61ea23ac2af1

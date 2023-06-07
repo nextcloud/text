@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/jboss-cli-js-js"],{28948:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/jboss-cli" instead of "highlight.js/lib/languages/jboss-cli.js"'))}(),e.exports=i(84111)}}]);
+//# sourceMappingURL=jboss-cli-js-js.js.map?v=1bba6b359463efa74428

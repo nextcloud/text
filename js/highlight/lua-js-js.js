@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/lua-js-js"],{58353:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/lua" instead of "highlight.js/lib/languages/lua.js"'))}(),e.exports=n(4981)}}]);
+//# sourceMappingURL=lua-js-js.js.map?v=4505229de8ad6140757b

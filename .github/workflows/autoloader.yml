@@ -1,0 +1,41 @@
+name: Autoload checker
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - stable*
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    name: autoloader
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer
+
+      - name: Set up PHPUnit
+        working-directory: composer
+        run: composer install && composer dump-autoload
+
+      - name: Check difference to committed files
+        run: |
+          bash -c "[[ ! \"`git status --porcelain -- . ':!composer/composer/installed.php'`\" ]] || exit 1"
+
+      - name: Show changes on failure
+        if: failure()
+        run: |
+          git status
+          git --no-pager diff

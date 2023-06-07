@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/haskell-js-js"],{98107:(e,s,l)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/haskell" instead of "highlight.js/lib/languages/haskell.js"'))}(),e.exports=l(67077)}}]);
+//# sourceMappingURL=haskell-js-js.js.map?v=014cd18725704b9e70a6

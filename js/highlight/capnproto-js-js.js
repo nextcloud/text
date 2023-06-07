@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/capnproto-js-js"],{79955:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/capnproto" instead of "highlight.js/lib/languages/capnproto.js"'))}(),e.exports=i(90614)}}]);
+//# sourceMappingURL=capnproto-js-js.js.map?v=ad737a8a0fe66d92179d

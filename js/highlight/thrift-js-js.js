@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/thrift-js-js"],{9377:(e,i,t)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/thrift" instead of "highlight.js/lib/languages/thrift.js"'))}(),e.exports=t(30906)}}]);
+//# sourceMappingURL=thrift-js-js.js.map?v=9b90f85c105969cee994

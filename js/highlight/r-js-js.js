@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/r-js-js"],{26930:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/r" instead of "highlight.js/lib/languages/r.js"'))}(),e.exports=n(54730)}}]);
+//# sourceMappingURL=r-js-js.js.map?v=71a4e820bd16d16a01c9

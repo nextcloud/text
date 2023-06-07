@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/xml-js-js"],{20722:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/xml" instead of "highlight.js/lib/languages/xml.js"'))}(),e.exports=n(4610)}}]);
+//# sourceMappingURL=xml-js-js.js.map?v=3fdca1d843aa64e145a5

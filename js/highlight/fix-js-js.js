@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/fix-js-js"],{29274:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/fix" instead of "highlight.js/lib/languages/fix.js"'))}(),e.exports=n(13146)}}]);
+//# sourceMappingURL=fix-js-js.js.map?v=d3bf40e5f67a4613af62

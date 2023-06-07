@@ -1,0 +1,77 @@
+%text__is-active-item-btn {
+	opacity: 1;
+	background-color: var(--color-primary-element-light);
+	border-radius: 50%;
+	.material-design-icon > svg {
+		fill: var(--color-primary-element);
+	}
+}
+
+.text-menubar, .v-popper__inner {
+	button.entry-action__button {
+		height: 44px;
+		margin: 0;
+		border: 0;
+		// opacity: 0.5;
+		position: relative;
+		color: var(--color-main-text);
+		background-color: transparent;
+		vertical-align: top;
+		box-shadow: none;
+		padding: 0;
+
+		p {
+			padding: 0;
+		}
+
+		&:is(li.entry-action-item button) {
+			padding: 0 0.5em 0 0;
+		}
+
+		&:not(li.entry-action-item button) {
+			width: 44px;
+		}
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: var(--color-background-dark);
+			&:not(:disabled) {
+				box-shadow: var(--color-primary-element);
+			}
+		}
+
+		&:hover,
+		&:focus {
+			opacity: 1;
+		}
+		&:focus-visible {
+			box-shadow: var(--color-primary-element);
+		}
+
+		&.is-active {
+			@extend %text__is-active-item-btn;
+		}
+	}
+
+	.entry-action.is-active:not(.entry-action-item) {
+		@extend %text__is-active-item-btn;
+	}
+
+	.entry-action.entry-action-item {
+		&.is-active {
+			background-color: var(--color-primary-element-light);
+			border-radius: var(--border-radius-large);
+		}
+	}
+
+	.button-vue {
+		svg {
+			fill: var(--color-main-text);
+		}
+	}
+
+	.action-item__menutoggle.action-item__menutoggle--with-icon-slot {
+		opacity: 1;
+	}
+}

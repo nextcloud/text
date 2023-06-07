@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mipsasm-js-js"],{61511:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mipsasm" instead of "highlight.js/lib/languages/mipsasm.js"'))}(),e.exports=i(74807)}}]);
+//# sourceMappingURL=mipsasm-js-js.js.map?v=62a914f3523db5014fb2

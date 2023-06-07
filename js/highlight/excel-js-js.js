@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/excel-js-js"],{72276:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/excel" instead of "highlight.js/lib/languages/excel.js"'))}(),e.exports=n(5817)}}]);
+//# sourceMappingURL=excel-js-js.js.map?v=806f9ba29c1f58ddecb3

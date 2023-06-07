@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/monkey-js-js"],{9724:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/monkey" instead of "highlight.js/lib/languages/monkey.js"'))}(),e.exports=i(9676)}}]);
+//# sourceMappingURL=monkey-js-js.js.map?v=08f8ad0f8fe6c097257b

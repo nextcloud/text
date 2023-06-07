@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="lib/AppInfo/Application.php">
+    <InvalidArgument occurrences="1">
+      <code>RegisterDirectEditorEventListener::class</code>
+    </InvalidArgument>
+    <UndefinedClass occurrences="3">
+      <code>BeforeTemplateRenderedEvent</code>
+      <code>LoadAdditionalScriptsEvent</code>
+      <code>LoadViewer</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/DirectSessionController.php">
+    <UndefinedClass occurrences="1">
+      <code>InvalidTokenException</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/WorkspaceController.php">
+    <InvalidReturnType occurrences="3">
+      <code>DataResponse</code>
+      <code>DataResponse</code>
+      <code>DataResponse</code>
+    </InvalidReturnType>
+    <MissingDependency occurrences="4">
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>open</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/DAV/WorkspacePlugin.php">
+    <UndefinedClass occurrences="1">
+      <code>ServerPlugin</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/DirectEditing/TextDirectEditor.php">
+    <LessSpecificImplementedReturnType occurrences="3">
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+    </LessSpecificImplementedReturnType>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>getToken</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/Listeners/FilesLoadAdditionalScriptsListener.php">
+    <UndefinedClass occurrences="1">
+      <code>LoadAdditionalScriptsEvent</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Listeners/LoadViewerListener.php">
+    <UndefinedClass occurrences="1">
+      <code>LoadViewer</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Service/ApiService.php">
+    <UndefinedDocblockClass occurrences="1"/>
+  </file>
+  <file src="lib/Service/DocumentService.php">
+    <MismatchingDocblockReturnType occurrences="1">
+      <code>Entity</code>
+    </MismatchingDocblockReturnType>
+    <MissingDependency occurrences="3">
+      <code>$this-&gt;rootFolder</code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <UndefinedClass occurrences="1">
+      <code>\OC\User\NoUserException</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Service/AttachmentService.php">
+    <MissingDependency occurrences="6">
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>$this-&gt;rootFolder</code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <UndefinedClass occurrences="3">
+      <code>ClientException</code>
+      <code>ConnectException</code>
+      <code>ServerException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="16">
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+      <code>\OC\User\NoUserException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="vendor/nextcloud/ocp/OCP/BackgroundJob/TimedJob.php">
+    <ImplementedParamTypeMismatch occurrences="1">
+      <code>$jobList</code>
+    </ImplementedParamTypeMismatch>
+  </file>
+</files>

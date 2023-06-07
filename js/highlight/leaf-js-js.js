@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/leaf-js-js"],{10822:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/leaf" instead of "highlight.js/lib/languages/leaf.js"'))}(),e.exports=n(23961)}}]);
+//# sourceMappingURL=leaf-js-js.js.map?v=f8395a0b1b84aadcb8e5

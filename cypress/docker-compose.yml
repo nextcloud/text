@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    nextcloud_cypress:
+        build:
+            context: .
+            network: host
+        restart: always
+        ports:
+            - 8081:80
+        environment:
+            - CYPRESS_baseUrl
+            - APP_SOURCE
+        volumes:
+            - type: bind
+              read_only: true
+              source: ${APP_SOURCE}
+              target: /var/www/html/custom_apps/text

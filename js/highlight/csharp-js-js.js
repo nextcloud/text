@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/csharp-js-js"],{29676:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/csharp" instead of "highlight.js/lib/languages/csharp.js"'))}(),e.exports=i(63707)}}]);
+//# sourceMappingURL=csharp-js-js.js.map?v=595cd85fed360c3d89b5

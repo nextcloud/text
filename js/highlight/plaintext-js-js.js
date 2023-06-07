@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/plaintext-js-js"],{13651:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/plaintext" instead of "highlight.js/lib/languages/plaintext.js"'))}(),e.exports=n(62437)}}]);
+//# sourceMappingURL=plaintext-js-js.js.map?v=e2d085733274e26b51c8

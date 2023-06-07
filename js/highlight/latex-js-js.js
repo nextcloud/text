@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/latex-js-js"],{32429:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/latex" instead of "highlight.js/lib/languages/latex.js"'))}(),e.exports=n(47408)}}]);
+//# sourceMappingURL=latex-js-js.js.map?v=83d00be51c9d79a822a3

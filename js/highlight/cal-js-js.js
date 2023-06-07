@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/cal-js-js"],{65197:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/cal" instead of "highlight.js/lib/languages/cal.js"'))}(),e.exports=n(15762)}}]);
+//# sourceMappingURL=cal-js-js.js.map?v=651efd37fef92effa9c9

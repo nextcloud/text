@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/qml-js-js"],{96012:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/qml" instead of "highlight.js/lib/languages/qml.js"'))}(),e.exports=n(23797)}}]);
+//# sourceMappingURL=qml-js-js.js.map?v=40dbf8feab8e74abf63e

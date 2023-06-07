@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/lsl-js-js"],{64675:(e,s,l)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/lsl" instead of "highlight.js/lib/languages/lsl.js"'))}(),e.exports=l(37034)}}]);
+//# sourceMappingURL=lsl-js-js.js.map?v=a05c55b588a06b3e6c06

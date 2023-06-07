@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/crystal-js-js"],{63882:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/crystal" instead of "highlight.js/lib/languages/crystal.js"'))}(),e.exports=i(83147)}}]);
+//# sourceMappingURL=crystal-js-js.js.map?v=6f0d31f6880684ce7251

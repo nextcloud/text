@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/haxe-js-js"],{43127:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/haxe" instead of "highlight.js/lib/languages/haxe.js"'))}(),e.exports=n(42720)}}]);
+//# sourceMappingURL=haxe-js-js.js.map?v=9bf85d4abf99b5d92485

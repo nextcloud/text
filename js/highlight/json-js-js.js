@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/json-js-js"],{14547:(e,n,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/json" instead of "highlight.js/lib/languages/json.js"'))}(),e.exports=s(40014)}}]);
+//# sourceMappingURL=json-js-js.js.map?v=390834b6cf9d3577962b

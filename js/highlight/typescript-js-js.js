@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/typescript-js-js"],{92373:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/typescript" instead of "highlight.js/lib/languages/typescript.js"'))}(),e.exports=s(28987)}}]);
+//# sourceMappingURL=typescript-js-js.js.map?v=806481ef9858e9509c8c

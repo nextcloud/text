@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/nestedtext-js-js"],{82574:(e,t,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/nestedtext" instead of "highlight.js/lib/languages/nestedtext.js"'))}(),e.exports=n(5384)}}]);
+//# sourceMappingURL=nestedtext-js-js.js.map?v=5880561c232490f9fed3

@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/javascript-js-js"],{14204:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/javascript" instead of "highlight.js/lib/languages/javascript.js"'))}(),e.exports=s(40978)}}]);
+//# sourceMappingURL=javascript-js-js.js.map?v=2e6a042ee7f3d281da95

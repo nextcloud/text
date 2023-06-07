@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/powershell-js-js"],{23003:(e,s,l)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/powershell" instead of "highlight.js/lib/languages/powershell.js"'))}(),e.exports=l(85040)}}]);
+//# sourceMappingURL=powershell-js-js.js.map?v=7324b1b71253f28e545d

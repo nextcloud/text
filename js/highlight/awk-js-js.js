@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/awk-js-js"],{36775:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/awk" instead of "highlight.js/lib/languages/awk.js"'))}(),e.exports=n(44868)}}]);
+//# sourceMappingURL=awk-js-js.js.map?v=d14df2efc1a2d26f478c

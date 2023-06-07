@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/stata-js-js"],{78525:(e,s,t)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/stata" instead of "highlight.js/lib/languages/stata.js"'))}(),e.exports=t(60454)}}]);
+//# sourceMappingURL=stata-js-js.js.map?v=4410990b4b92f2dcb073

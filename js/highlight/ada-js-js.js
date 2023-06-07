@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ada-js-js"],{16880:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/ada" instead of "highlight.js/lib/languages/ada.js"'))}(),e.exports=n(40059)}}]);
+//# sourceMappingURL=ada-js-js.js.map?v=383aaf9715a43e423ea4

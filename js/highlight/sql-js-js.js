@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/sql-js-js"],{43066:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/sql" instead of "highlight.js/lib/languages/sql.js"'))}(),e.exports=i(98935)}}]);
+//# sourceMappingURL=sql-js-js.js.map?v=c63eb0035dfe703af90f

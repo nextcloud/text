@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/dist/style.css" />
+    <style>
+      @import url('https://nextcloud.github.io/server/apps/theming/css/default.css');
+      @import url('https://nextcloud.github.io/server/core/css/server.css');
+      body {
+        position: absolute;
+        height: unset;
+        background-color: var(--color-main-background);
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test the package</title>
+  </head>
+  <body>
+    <div id="app"></div>
+	<script>
+		// mock some required objects
+		function t(app, string) {
+			return string
+		}
+		OC = {
+			webroot: '/dist/OC_WEBROOT',
+			config: {},
+			isUserAdmin() {
+				return true
+			}
+		}
+	</script>
+    <script type="module">
+	    import { RichTextReader, AttachmentResolver, ATTACHMENT_RESOLVER } from './src/package.js'
+		import Vue from 'vue'
+		import content from './src/tests/fixtures/basic.md?raw'
+		const app = new Vue({
+			data() {
+				return {
+					content
+				}
+			},
+			provide() {
+				const val = {}
+				Object.defineProperties(val, {
+					[ATTACHMENT_RESOLVER]: { get: () => this.$attachmentResolver },
+				})
+				return val
+			},
+			render: (h) => h('div', [
+				h('textarea', {
+					style: {
+						width: '100%',
+						height: '20vh',
+						padding: '0px',
+					},
+					on: {
+						input: function (event) {
+							app.content = event.target.value
+						},
+					},
+				}, [app.content]),
+				h(RichTextReader, {
+					props: { content: app.content }
+				}),
+			]),
+			created() {
+				this.$attachmentResolver = new AttachmentResolver({
+					currentDirectory: '/dir/',
+					shareToken: 'SHARE_TOKEN',
+					user: { uid: 'USER_UID' },
+					fileId: '4173',
+				})
+			},
+		})
+	    app.$mount('#app')
+    </script>
+  </body>
+</html>

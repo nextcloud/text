@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/flix-js-js"],{2556:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/flix" instead of "highlight.js/lib/languages/flix.js"'))}(),e.exports=n(93090)}}]);
+//# sourceMappingURL=flix-js-js.js.map?v=c25b052ad9bc26fafb68

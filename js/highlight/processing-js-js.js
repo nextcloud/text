@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/processing-js-js"],{81414:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/processing" instead of "highlight.js/lib/languages/processing.js"'))}(),e.exports=i(25371)}}]);
+//# sourceMappingURL=processing-js-js.js.map?v=3ddaa32a6484af71f28f

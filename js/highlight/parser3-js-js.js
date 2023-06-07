@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/parser3-js-js"],{93773:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/parser3" instead of "highlight.js/lib/languages/parser3.js"'))}(),e.exports=i(43412)}}]);
+//# sourceMappingURL=parser3-js-js.js.map?v=3a594125e60e240932c7

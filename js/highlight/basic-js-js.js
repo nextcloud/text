@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/basic-js-js"],{18080:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/basic" instead of "highlight.js/lib/languages/basic.js"'))}(),e.exports=s(80995)}}]);
+//# sourceMappingURL=basic-js-js.js.map?v=0ad8e94de9c438b17ecb

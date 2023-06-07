@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/xl-js-js"],{66778:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/xl" instead of "highlight.js/lib/languages/xl.js"'))}(),e.exports=n(49338)}}]);
+//# sourceMappingURL=xl-js-js.js.map?v=107a86a91ab740f32a24

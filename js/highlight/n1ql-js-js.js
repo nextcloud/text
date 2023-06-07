@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/n1ql-js-js"],{85334:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/n1ql" instead of "highlight.js/lib/languages/n1ql.js"'))}(),e.exports=i(71414)}}]);
+//# sourceMappingURL=n1ql-js-js.js.map?v=4507b0d6b73115133b3d

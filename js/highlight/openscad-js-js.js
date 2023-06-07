@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/openscad-js-js"],{11393:(e,n,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/openscad" instead of "highlight.js/lib/languages/openscad.js"'))}(),e.exports=s(6277)}}]);
+//# sourceMappingURL=openscad-js-js.js.map?v=f6d30e15948b09b2ec1a

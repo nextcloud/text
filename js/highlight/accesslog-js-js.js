@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/accesslog-js-js"],{36461:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/accesslog" instead of "highlight.js/lib/languages/accesslog.js"'))}(),e.exports=i(35976)}}]);
+//# sourceMappingURL=accesslog-js-js.js.map?v=dd32228ec95b2cdeb6e9

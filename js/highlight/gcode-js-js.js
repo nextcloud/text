@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/gcode-js-js"],{84025:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gcode" instead of "highlight.js/lib/languages/gcode.js"'))}(),e.exports=n(11871)}}]);
+//# sourceMappingURL=gcode-js-js.js.map?v=a1d0757b71ef365ac11e

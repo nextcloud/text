@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/lisp-js-js"],{94091:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/lisp" instead of "highlight.js/lib/languages/lisp.js"'))}(),e.exports=s(91943)}}]);
+//# sourceMappingURL=lisp-js-js.js.map?v=5b02a501367e21ade3ef

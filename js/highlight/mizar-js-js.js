@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mizar-js-js"],{59718:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mizar" instead of "highlight.js/lib/languages/mizar.js"'))}(),e.exports=n(49291)}}]);
+//# sourceMappingURL=mizar-js-js.js.map?v=d312d0bda53914f85beb

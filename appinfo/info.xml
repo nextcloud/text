@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>text</id>
+	<name>Text</name>
+	<summary>📝 Collaborative document editing</summary>
+	<description><![CDATA[** 📝 Collaborative document editing!**
+
+- **📝 Focused writing:** No distractions, only the formatting you need.
+- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!
+- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.
+- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!
+	]]></description>
+	<version>3.9.0</version>
+	<licence>agpl</licence>
+	<author mail="jus@bitgrid.net">Julius Härtl</author>
+	<namespace>Text</namespace>
+	<default_enable/>
+	<types>
+		<dav />
+	</types>
+	<category>office</category>
+	<website>https://github.com/nextcloud/text</website>
+	<bugs>https://github.com/nextcloud/text/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/text.git</repository>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot1.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot2.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/text/main/img/screenshots/screenshot3.gif</screenshot>
+	<dependencies>
+		<nextcloud min-version="28" max-version="28" />
+	</dependencies>
+	<background-jobs>
+		<job>OCA\Text\Cron\Cleanup</job>
+	</background-jobs>
+	<commands>
+		<command>OCA\Text\Command\ResetDocument</command>
+	</commands>
+	<sabre>
+		<plugins>
+			<plugin>OCA\Text\DAV\WorkspacePlugin</plugin>
+		</plugins>
+	</sabre>
+	<repair-steps>
+		<post-migration>
+			<step>OCA\Text\Migration\ResetSessionsBeforeYjs</step>
+		</post-migration>
+	</repair-steps>
+</info>

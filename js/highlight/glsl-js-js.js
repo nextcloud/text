@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/glsl-js-js"],{79958:(e,s,l)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/glsl" instead of "highlight.js/lib/languages/glsl.js"'))}(),e.exports=l(21942)}}]);
+//# sourceMappingURL=glsl-js-js.js.map?v=a9dee5f012d34eb4abb4

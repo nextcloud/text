@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/bash-js-js"],{13574:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/bash" instead of "highlight.js/lib/languages/bash.js"'))}(),e.exports=i(98780)}}]);
+//# sourceMappingURL=bash-js-js.js.map?v=6cb0efcd7c54451e2091

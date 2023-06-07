@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dts-js-js"],{24232:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dts" instead of "highlight.js/lib/languages/dts.js"'))}(),e.exports=i(11729)}}]);
+//# sourceMappingURL=dts-js-js.js.map?v=3d2ca119ed5c34a1a56c

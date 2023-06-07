@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mel-js-js"],{85316:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mel" instead of "highlight.js/lib/languages/mel.js"'))}(),e.exports=n(67739)}}]);
+//# sourceMappingURL=mel-js-js.js.map?v=e5202b30e34e3459f285

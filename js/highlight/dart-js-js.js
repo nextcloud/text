@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dart-js-js"],{86573:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dart" instead of "highlight.js/lib/languages/dart.js"'))}(),e.exports=n(26642)}}]);
+//# sourceMappingURL=dart-js-js.js.map?v=f4935e2257c751dd2a1c

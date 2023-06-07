@@ -1,0 +1,36 @@
+# This workflow is provided via the organization template repository
+#
+# https://github.com/nextcloud/.github
+# https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
+
+name: Block merges during freezes
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened, synchronize]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: block-merge-freeze-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  block-merges-during-freeze:
+    name: Block merges during freezes
+
+    if: github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Register text Git reference
+        run: |
+          server_ref="$(if [ "${{ github.base_ref }}" = "main" ]; then echo -n "master"; else echo -n "${{ github.base_ref }}"; fi)"
+          echo "server_ref=$server_ref" >> $GITHUB_ENV
+      - name: Download version.php from ${{ env.server_ref }}
+        run: curl https://raw.githubusercontent.com/nextcloud/server/${{ env.server_ref }}/version.php --output version.php
+
+      - name: Run check
+        run: cat version.php | grep 'OC_VersionString' | grep -i -v 'RC'

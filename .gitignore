@@ -1,0 +1,12 @@
+build/
+\.idea/
+node_modules/
+vendor/
+img/twemoji/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+.php-cs-fixer.cache
+/tests/clover.xml
+/tests/.phpunit.result.cache
+dist/

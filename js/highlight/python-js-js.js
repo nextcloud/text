@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/python-js-js"],{43720:(e,n,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/python" instead of "highlight.js/lib/languages/python.js"'))}(),e.exports=i(38245)}}]);
+//# sourceMappingURL=python-js-js.js.map?v=bd4a52264290d12d5d8b

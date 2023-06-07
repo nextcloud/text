@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/zephir-js-js"],{64181:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/zephir" instead of "highlight.js/lib/languages/zephir.js"'))}(),e.exports=n(42222)}}]);
+//# sourceMappingURL=zephir-js-js.js.map?v=26a5a14beb2b8bd14b31

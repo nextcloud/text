@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/purebasic-js-js"],{53893:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/purebasic" instead of "highlight.js/lib/languages/purebasic.js"'))}(),e.exports=s(92938)}}]);
+//# sourceMappingURL=purebasic-js-js.js.map?v=af0df7d75b750cf4c38a

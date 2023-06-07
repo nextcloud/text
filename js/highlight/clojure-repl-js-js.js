@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/clojure-repl-js-js"],{21487:(e,l,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/clojure-repl" instead of "highlight.js/lib/languages/clojure-repl.js"'))}(),e.exports=i(42012)}}]);
+//# sourceMappingURL=clojure-repl-js-js.js.map?v=9955d29ca4244eac3182

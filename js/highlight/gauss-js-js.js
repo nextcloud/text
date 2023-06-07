@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/gauss-js-js"],{51715:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/gauss" instead of "highlight.js/lib/languages/gauss.js"'))}(),e.exports=i(45004)}}]);
+//# sourceMappingURL=gauss-js-js.js.map?v=eabc6e02ab92b5d94948

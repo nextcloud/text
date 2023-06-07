@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/dos-js-js"],{5378:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/dos" instead of "highlight.js/lib/languages/dos.js"'))}(),e.exports=i(20605)}}]);
+//# sourceMappingURL=dos-js-js.js.map?v=186b1594da618e41749b

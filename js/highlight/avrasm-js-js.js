@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/avrasm-js-js"],{66522:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/avrasm" instead of "highlight.js/lib/languages/avrasm.js"'))}(),e.exports=i(53105)}}]);
+//# sourceMappingURL=avrasm-js-js.js.map?v=8b93e3132add5021fee2

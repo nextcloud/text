@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/cos-js-js"],{2210:(e,s,i)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/cos" instead of "highlight.js/lib/languages/cos.js"'))}(),e.exports=i(72569)}}]);
+//# sourceMappingURL=cos-js-js.js.map?v=cdc11aa4769884274324

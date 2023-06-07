@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/vala-js-js"],{2239:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/vala" instead of "highlight.js/lib/languages/vala.js"'))}(),e.exports=n(41462)}}]);
+//# sourceMappingURL=vala-js-js.js.map?v=146cd263adcb25c42d0d

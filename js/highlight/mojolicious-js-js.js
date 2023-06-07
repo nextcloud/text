@@ -1,0 +1,2 @@
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mojolicious-js-js"],{54368:(e,i,s)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/mojolicious" instead of "highlight.js/lib/languages/mojolicious.js"'))}(),e.exports=s(8895)}}]);
+//# sourceMappingURL=mojolicious-js-js.js.map?v=2ad6e2655906c9191452
