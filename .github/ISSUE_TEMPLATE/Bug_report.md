@@ -20,31 +20,16 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
+**Server details:**
+- Nextcloud version: [e.g. 26.0.1]
+- PHP Version: [e.g. 8.2]
+- Database: [e.g. MariaDB 10.6]
+
 **Client details:**
- - OS: [e.g. iOS]
- - Browser: [e.g. chrome, safari]
- - Version: [e.g. 22]
+ - OS: [e.g. Windows/macOS/Ubuntu]
+ - Browser: [e.g. Firefox, Chrome]
+ - Browser version: [e.g. 22]
  - Device: [e.g. iPhone6, desktop]
-
-<details>
-<summary>Server details</summary>
-<!--
-You can use the Issue Template application to prefill most of the required information: https://apps.nextcloud.com/apps/issuetemplate
--->
-
-**Text app version:** (see Nextcloud apps page)
-
-**Operating system:**
-
-**Web server:**
-
-**Database:**
-
-**PHP version:**
-
-**Nextcloud version:** (see Nextcloud admin page)
-
-</details>
 
 <details>
 <summary>Logs</summary>
