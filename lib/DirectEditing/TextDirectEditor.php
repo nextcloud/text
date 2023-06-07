@@ -28,12 +28,12 @@ use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\DirectEditing\IEditor;
 use OCP\DirectEditing\IToken;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
-use OCP\IInitialStateService;
 use OCP\IL10N;
 use OCP\Util;
 
@@ -42,13 +42,13 @@ class TextDirectEditor implements IEditor {
 	/** @var IL10N */
 	private $l10n;
 
-	/** @var IInitialStateService */
+	/** @var IInitialState */
 	private $initialStateService;
 
 	/** @var ApiService */
 	private $apiService;
 
-	public function __construct(IL10N $l10n, IInitialStateService $initialStateService, ApiService $apiService) {
+	public function __construct(IL10N $l10n, IInitialState $initialStateService, ApiService $apiService) {
 		$this->l10n = $l10n;
 		$this->initialStateService = $initialStateService;
 		$this->apiService = $apiService;
@@ -153,12 +153,12 @@ class TextDirectEditor implements IEditor {
 		$token->useTokenScope();
 		try {
 			$session = $this->apiService->create($token->getFile()->getId());
-			$this->initialStateService->provideInitialState('text', 'file', [
+			$this->initialStateService->provideInitialState('file', [
 				'fileId' => $token->getFile()->getId(),
 				'mimetype' => $token->getFile()->getMimeType(),
 				'session' => \json_encode($session->getData())
 			]);
-			$this->initialStateService->provideInitialState('text', 'directEditingToken', $token->getToken());
+			$this->initialStateService->provideInitialState('directEditingToken', $token->getToken());
 			Util::addScript('text', 'text-text');
 			return new TemplateResponse('text', 'main', [], 'base');
 		} catch (InvalidPathException $e) {

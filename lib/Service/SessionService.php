@@ -95,7 +95,7 @@ class SessionService {
 		if ($this->userId === null) {
 			$session->setGuestName($guestName);
 		}
-		$session->setLastContact($this->timeFactory->getTime());
+		$session->setLastContact($this->timeFactory->now()->getTimestamp());
 
 		$session = $this->sessionMapper->insert($session);
 		$this->cache->set($session->getToken(), json_encode($session), self::SESSION_VALID_TIME);
@@ -192,7 +192,7 @@ class SessionService {
 			return false;
 		}
 
-		$currentTime = $this->timeFactory->getTime();
+		$currentTime = $this->timeFactory->now()->getTimestamp();
 		if (($currentTime - $session->getLastContact()) >= 30) {
 			/*
 			 * We need to update the timestamp.
@@ -205,7 +205,7 @@ class SessionService {
 				$this->cache->remove($token);
 				return false;
 			}
-			$session->setLastContact($this->timeFactory->getTime());
+			$session->setLastContact($this->timeFactory->now()->getTimestamp());
 			$this->sessionMapper->update($session);
 			$this->cache->set($token, json_encode($session), self::SESSION_VALID_TIME - 30);
 		}
