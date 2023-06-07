@@ -61,7 +61,7 @@ class SessionMapper extends QBMapper {
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($sessionId)))
 			->andWhere($qb->expr()->eq('token', $qb->createNamedParameter($token)))
-			->execute();
+			->executeQuery();
 
 		$data = $result->fetch();
 		$result->closeCursor();
@@ -108,7 +108,7 @@ class SessionMapper extends QBMapper {
 		}
 		$result = $qb
 			->groupBy('session_id')
-			->execute();
+			->executeQuery();
 		$activeSessions = $result->fetchAll(\PDO::FETCH_COLUMN);
 		$result->closeCursor();
 
@@ -119,14 +119,14 @@ class SessionMapper extends QBMapper {
 			$qb->andWhere($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		}
 		$qb->andWhere($qb->expr()->notIn('id', $qb->createNamedParameter($activeSessions, IQueryBuilder::PARAM_INT_ARRAY)));
-		return $qb->execute();
+		return $qb->executeStatement();
 	}
 
 	public function deleteByDocumentId($documentId) {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
-		return $qb->execute();
+		return $qb->executeStatement();
 	}
 
 	public function isUserInDocument($documentId, $userId): bool {

@@ -49,7 +49,7 @@ class NotificationService {
 		;
 
 		if ($this->manager->getCount($notification) === 0) {
-			$notification->setDateTime($this->timeFactory->getDateTime());
+			$notification->setDateTime(\DateTime::createFromImmutable($this->timeFactory->now()));
 			$this->manager->notify($notification);
 			return true;
 		}

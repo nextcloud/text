@@ -15,7 +15,10 @@
     <extraFiles>
         <directory name="vendor/nextcloud/ocp" />
     </extraFiles>
-    	<issueHandlers>
+	<issueHandlers>
+		<DeprecatedMethod>
+			<errorLevel type="error" />
+		</DeprecatedMethod>
 		<UndefinedClass>
 			<errorLevel type="suppress">
 				<referencedClass name="OC" />
