@@ -227,6 +227,7 @@ export default {
 <style lang="scss" scoped>
 	:deep(.modal-wrapper) {
 		.modal-container {
+			width: max-content;
 			padding: 30px 40px 20px;
 			user-select: text;
 		}
@@ -234,7 +235,8 @@ export default {
 		// Remove padding-right on mobile, screen might not be wide enough
 		@media only screen and (max-width: 512px) {
 			.modal-container {
-				padding: 30px 0 20px 40px;
+				width: inherit;
+				padding: 10px 0;
 			}
 		}
 	}
