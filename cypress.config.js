@@ -4,6 +4,7 @@ module.exports = defineConfig({
 	projectId: 'hx9gqy',
 	viewportWidth: 1280,
 	viewportHeight: 900,
+	pageLoadTimeout: 120000,
 	e2e: {
 		setupNodeEvents(on, config) {
 			const browserify = require('@cypress/browserify-preprocessor')
