@@ -259,11 +259,13 @@ export default {
 	}
 
 	#rich-workspace.focus {
+		min-height: 25vh;
 		max-height: 50vh;
 	}
 
-	#rich-workspace:not(.focus) {
-		max-height: 30vh;
+	#rich-workspace:not(.focus), #rich-workspace.icon-loading {
+		min-height: 25vh;
+		max-height: 25vh;
 		position: relative;
 		overflow: hidden;
 	}
