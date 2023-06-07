@@ -14,7 +14,7 @@ concurrency:
 
 env:
   APP_NAME: text
-  CYPRESS_baseUrl: http://localhost:8081/index.php
+  CYPRESS_baseUrl: http://127.0.0.1:8081/index.php
 
 jobs:
   init:
@@ -111,18 +111,19 @@ jobs:
           DB_PORT: 4444
           PHP_CLI_SERVER_WORKERS: 10
         run: |
+          env
           mkdir data
           echo '<?php $CONFIG=["memcache.local"=>"\OC\Memcache\APCu","hashing_default_password"=>true];' > config/config.php
           php occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
           php -f index.php
-          php -S 0.0.0.0:8081 &
+          php -S 127.0.0.1:8081 > /tmp/requestlog 2>&1 &
           export OC_PASS=1234561
           php occ user:add --password-from-env user1
           php occ user:add --password-from-env user2
           php occ app:enable viewer
           php occ app:enable text
           php occ app:list
-          curl -v http://localhost:8081/index.php/login
+          curl -v http://127.0.0.1:8081/index.php/login
           cat data/nextcloud.log
 
       - name: Cypress run
@@ -140,6 +141,12 @@ jobs:
           COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           npm_package_name: ${{ env.APP_NAME }}
+
+      - name: Print logs
+        if: always()
+        run: |
+          cat /tmp/requestlog
+          cat data/nextcloud.log
 
       - name: Upload test failure screenshots
         uses: actions/upload-artifact@v2
