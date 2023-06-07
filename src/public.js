@@ -48,7 +48,6 @@ const loadEditor = ({ sharingToken, mimetype, $el }) => {
 }
 
 documentReady(() => {
-	const mimetype = document.getElementById('mimetype').value
 	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
 
 	if (!sharingToken) {
@@ -66,7 +65,8 @@ documentReady(() => {
 	}
 
 	// single file share
-	if (openMimetypes.indexOf(mimetype) !== -1) {
+	const mimetype = document.getElementById('mimetype')?.value
+	if (mimetype && openMimetypes.indexOf(mimetype) !== -1) {
 		loadEditor({ mimetype, sharingToken, $el: document.getElementById('preview') })
 	}
 })
