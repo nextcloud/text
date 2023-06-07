@@ -109,7 +109,7 @@ jobs:
       - name: Set up Nextcloud
         env:
           DB_PORT: 4444
-          PHP_CLI_SERVER_WORKERS: 10
+          PHP_CLI_SERVER_WORKERS: 20
         run: |
           env
           mkdir data
