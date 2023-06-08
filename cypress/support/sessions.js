@@ -23,9 +23,12 @@
 import SessionApi from '../../src/services/SessionApi.js'
 import { emit } from '@nextcloud/event-bus'
 
-Cypress.Commands.add('prepareSessionApi', (fileId) => {
+Cypress.Commands.add('prepareSessionApi', () => {
 	return cy.request('/csrftoken')
-		.then(({ body }) => emit('csrf-token-update', body))
+		.then(({ body }) => {
+			emit('csrf-token-update', body)
+			return body.token
+		})
 })
 
 Cypress.Commands.add('createTextSession', (fileId, options = {}) => {
