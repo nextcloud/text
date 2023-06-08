@@ -99,7 +99,7 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function deleteInactiveWithoutSteps($documentId = -1) {
+	public function deleteInactiveWithoutSteps(?int $documentId = null) {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('session_id')
 			->from('text_steps');
