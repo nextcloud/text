@@ -39,7 +39,7 @@ describe('Table', () => {
 
 	test('load html table with other structure', () => {
 		const tiptap = editorWithContent(otherStructure.replace(/\n\s*/g, ''))
-		
+
 		expectDocument(tiptap.state.doc,
 			table(
 				thead(
@@ -70,10 +70,11 @@ describe('Table', () => {
 })
 
 function editorWithContent(content) {
-	return createEditor({
-		content,
+	const editor = createEditor({
 		enableRichEditing: true,
 	})
+	editor.commands.setContent(content)
+	return editor
 }
 
 function formatHTML(html) {
