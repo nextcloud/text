@@ -70,7 +70,10 @@
 					</template>
 				</transition>
 				<transition name="fade">
-					<div v-if="!isMediaAttachment" v-show="loaded" class="image__caption">
+					<div v-if="!isMediaAttachment"
+						v-show="loaded"
+						class="image__caption"
+						:title="alt">
 						<figcaption v-if="!editable">
 							{{ alt }}
 						</figcaption>
@@ -389,6 +392,7 @@ export default {
 	}
 	&__delete {
 		display: flex;
+		flex-basis: 20%;
 		align-items: center;
 		width: 20px;
 		height: 20px;
@@ -399,10 +403,11 @@ export default {
 			cursor: pointer;
 		}
 	}
-
+	.image__caption__wrapper {
+		flex-basis: 80%;
+	}
 	input[type='text'] {
-		width: 200px;
-		max-width: 80%;
+		width: 85%;
 		text-align: center;
 		background-color: transparent;
 		border: none !important;
