@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "New text file" : "Uusi tekstitiedosto",
+    "Create new text file" : "Luo uusi tekstitiedosto",
     "The file was uploaded" : "Tiedosto lähetettiin",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Ladattu tiedosto on suurempi kuin php.ini-tiedostossa määritelty upload_max_filesize",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Ladattu tiedosto on suurempi kuin HTML-lomakkeessa määritelty MAX_FILE_SIZE",
