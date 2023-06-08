@@ -215,9 +215,9 @@ describe('Trailing nodes', () => {
 	test('No extra transaction is added after loading', () => {
 		const source = "# My heading\n\n* test\n* test2"
 		const tiptap = createEditor({
-			content: markdownit.render(source),
 			enableRichEditing: true,
 		})
+		tiptap.commands.setContent(markdownit.render(source))
 
 		const jsonBefore = tiptap.getJSON()
 
