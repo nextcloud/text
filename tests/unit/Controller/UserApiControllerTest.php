@@ -52,17 +52,16 @@ class UserApiControllerTest extends TestCase {
 			$this->userManager,
 			$this->userSession
 		);
+
+		$session = new Session();
+		$session->setUserId('admin');
+		$this->userApiController->setSession($session);
 	}
 
 	/**
 	 * @dataProvider dataTestUsersIndex
 	 */
 	public function testUsersIndex(int $documentId, int $sessionId, string $sessionToken, string $filter) {
-		$session = new Session();
-		$session->setUserId('admin');
-		$this->sessionService
-			->expects($this->once())
-			->method('isValidSession')->willReturn(true);
 		$this->sessionService
 			->expects($this->once())
 			->method('getAllSessions')->willReturn([[
@@ -72,9 +71,6 @@ class UserApiControllerTest extends TestCase {
 		$this->userManager->expects($this->once())
 			->method('getDisplayName')
 			->willReturn('Administrator');
-		$this->sessionService
-			->expects($this->once())
-			->method('getSession')->willReturn($session);
 		$this->collaboratorSearch
 			->expects($this->once())
 			->method('search')->willReturn([
@@ -99,9 +95,6 @@ class UserApiControllerTest extends TestCase {
 			]);
 
 		$response = $this->userApiController->index(
-			$documentId,
-			$sessionId,
-			$sessionToken,
 			$filter
 		);
 		$this->assertInstanceOf(DataResponse::class, $response);
