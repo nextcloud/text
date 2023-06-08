@@ -26,7 +26,7 @@
 			<NcButton type="tertiary"
 				@click="onClickSave">
 				<template #icon>
-					<SavingIndicator :saving="saveStatusClass === 'saving'"
+					<NcSavingIndicatorIcon :saving="saveStatusClass === 'saving'"
 						:error="saveStatusClass === 'error'" />
 				</template>
 			</NcButton>
@@ -42,10 +42,9 @@
 
 <script>
 
-import SavingIndicator from '../SavingIndicator.vue'
 import { ERROR_TYPE } from '../../services/SyncService.js'
 import moment from '@nextcloud/moment'
-import { NcButton, Tooltip } from '@nextcloud/vue'
+import { NcButton, NcSavingIndicatorIcon, Tooltip } from '@nextcloud/vue'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
@@ -58,7 +57,7 @@ export default {
 
 	components: {
 		NcButton,
-		SavingIndicator,
+		NcSavingIndicatorIcon,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
 	},
