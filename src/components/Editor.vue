@@ -78,7 +78,6 @@
 <script>
 import Vue, { set } from 'vue'
 import { mapActions, mapState } from 'vuex'
-import escapeHtml from 'escape-html'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -111,6 +110,7 @@ import markdownit from './../markdownit/index.js'
 import { Keymap } from './../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
+import setContent from './../mixins/setContent.js'
 import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
@@ -132,6 +132,7 @@ export default {
 	},
 	mixins: [
 		isMobile,
+		setContent,
 		store,
 	],
 	provide() {
@@ -339,23 +340,6 @@ export default {
 			'setCurrentSession',
 		]),
 
-		setContent(content, { addToHistory = true } = {}) {
-			this.$editor.chain()
-				.setContent(this.parseContent(content), addToHistory)
-				.command(({ tr }) => {
-					tr.setMeta('addToHistory', addToHistory)
-					return true
-				})
-				.run()
-
-		},
-
-		parseContent(documentSource) {
-			return !this.isRichEditor
-				? `<pre>${escapeHtml(documentSource)}</pre>`
-				: markdownit.render(documentSource) + '<p/>'
-		},
-
 		initSession() {
 			if (!this.hasDocumentParameters) {
 				this.emit('error', 'No valid file provided')
@@ -536,7 +520,10 @@ export default {
 						})
 						this.hasEditor = true
 						if (!documentState && documentSource) {
-							this.setContent(documentSource, { addToHistory: false })
+							this.setContent(documentSource, {
+								isRich: this.isRichEditor,
+								addToHistory: false,
+							})
 						}
 						this.listenEditorEvents()
 					} else {
@@ -750,11 +737,6 @@ export default {
 
 .text-editor .text-editor__wrapper.has-conflicts {
 	height: calc(100% - 50px);
-
-	.text-editor__main, #read-only-editor {
-		width: 50%;
-		height: 100%;
-	}
 }
 
 #body-public {
