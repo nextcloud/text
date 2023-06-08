@@ -14,9 +14,9 @@ const escapeHTML = (s) => {
 const plaintextThroughEditor = (markdown) => {
   const content = '<pre>' + escapeHTML(markdown) + '</pre>'
   const tiptap = createEditor({
-    content: content,
     enableRichEditing: false
   })
+  tiptap.commands.setContent(content)
   return serializePlainText(tiptap) || 'failed'
 }
 

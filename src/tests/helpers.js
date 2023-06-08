@@ -23,14 +23,14 @@ export function createCustomEditor({ content, extensions }) {
 /**
  * Ease markdown through TipTap editor and return serialized markdown
  *
- * @param {string} markdown 
+ * @param {string} markdown
  * @returns {string}
  */
 export function markdownThroughEditor(markdown) {
 	const tiptap = createEditor({
-		content: markdownit.render(markdown),
 		enableRichEditing: true
 	})
+	tiptap.commands.setContent(markdownit.render(markdown))
 	const serializer = createMarkdownSerializer(tiptap.schema)
 	return serializer.serialize(tiptap.state.doc)
 }
@@ -38,14 +38,14 @@ export function markdownThroughEditor(markdown) {
 /**
  * Ease HTML as input through the Editor and return the serialized markdown
  *
- * @param {string} html 
+ * @param {string} html
  * @returns {string}
  */
 export function markdownThroughEditorHtml(html) {
 	const tiptap = createEditor({
-		content: html,
 		enableRichEditing: true
 	})
+	tiptap.commands.setContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
 	return serializer.serialize(tiptap.state.doc)
 }

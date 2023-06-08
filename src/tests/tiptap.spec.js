@@ -3,9 +3,9 @@ import markdownit from '../markdownit'
 
 const renderedHTML = ( markdown ) => {
     const editor = createEditor({
-        content: markdownit.render(markdown),
         enableRichEditing: true
     })
+    editor.commands.setContent(markdownit.render(markdown))
     // Remove TrailingNode
     return editor.getHTML().replace(/<p><\/p>$/, '')
 }
