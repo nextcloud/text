@@ -78,6 +78,10 @@ export class Connection {
 		this.closed = false
 	}
 
+	get session() {
+		return this.#session
+	}
+
 	get document() {
 		return this.#document
 	}
