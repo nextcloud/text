@@ -38,6 +38,7 @@ use OCA\Text\Listeners\LoadEditorListener;
 use OCA\Text\Listeners\LoadViewerListener;
 use OCA\Text\Listeners\NodeCopiedListener;
 use OCA\Text\Listeners\RegisterDirectEditorEventListener;
+use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
 use OCA\Text\Service\ConfigService;
 use OCA\TPAssistant\Event\BeforeAssistantNotificationEvent;
@@ -76,6 +77,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(BeforeAssistantNotificationEvent::class, BeforeAssistantNotificationListener::class);
 
 		$context->registerNotifierService(Notifier::class);
+		$context->registerMiddleware(SessionMiddleware::class);
 	}
 
 	public function boot(IBootContext $context): void {
