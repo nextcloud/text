@@ -247,7 +247,13 @@ export default {
 		},
 		showTranslate() {
 			const { from, to } = this.$editor.view.state.selection
-			const selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
+			let selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
+
+			if (!selectedText.trim().length) {
+				this.$editor.commands.selectAll()
+				selectedText = this.$editor.view.state.doc.textContent
+			}
+
 			console.debug('translation click', this.$editor.view.state.selection, selectedText)
 			this.displayTranslate = selectedText ?? ''
 		},
