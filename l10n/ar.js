@@ -32,6 +32,7 @@ OC.L10N.register(
     "Info" : "معلومات",
     "Success" : "نجاح",
     "Warning" : "تحذير",
+    "Table" : "جدول",
     "Command" : "الأمر",
     "Edit" : "تعديل"
 },
