@@ -24,6 +24,7 @@ OC.L10N.register(
     "Shift" : "تغییر مکان",
     "Bold" : "درشت",
     "Italic" : "Italic",
+    "Remove link" : "حذف پیوند",
     "Translate" : "ترجمه",
     "Replace" : "جایگزین کردن",
     "Undo" : "برگرداندن",
