@@ -11,7 +11,7 @@ export default TableRow.extend({
 
 	parseHTML() {
 		return [
-			{ tag: 'tr', priority: 80 },
+			{ tag: 'tr', priority: 70 },
 		]
 	},
 })
