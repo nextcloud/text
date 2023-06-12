@@ -23,7 +23,6 @@
 import { Extension } from '@tiptap/core'
 
 /* eslint-disable import/no-named-as-default */
-import CodeBlock from '@tiptap/extension-code-block'
 import Text from '@tiptap/extension-text'
 import PlainTextDocument from './../nodes/PlainTextDocument.js'
 
@@ -34,7 +33,6 @@ export default Extension.create({
 		return [
 			PlainTextDocument,
 			Text,
-			CodeBlock,
 		]
 	},
 
