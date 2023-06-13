@@ -6,6 +6,7 @@ namespace OCA\Text\Controller;
 
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\SessionService;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
@@ -14,7 +15,9 @@ use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Share\IShare;
 
-class UserApiController extends ASessionAwareController {
+class UserApiController extends ApiController implements ISessionAwareController {
+	use TSessionAwareController;
+
 	public function __construct(
 		string $appName,
 		IRequest $request,

@@ -47,9 +47,8 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
-use OCA\Text\DirectEditing\TextDocumentCreator;
-use OCP\Files\File;
 use OCA\Text\AppInfo\Application;
+use OCA\Text\DirectEditing\TextDocumentCreator;
 use OCA\Text\Service\WorkspaceService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
@@ -60,6 +59,7 @@ use OCP\Constants;
 use OCP\DirectEditing\IManager as IDirectEditingManager;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\EventDispatcher\IEventDispatcher;
+use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -213,7 +213,8 @@ class WorkspaceController extends OCSController {
 				if ($node instanceof File) {
 					$file = $node;
 				}
-			} catch (NotFoundException) {}
+			} catch (NotFoundException) {
+			}
 		}
 		return $file;
 	}

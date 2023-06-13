@@ -2,9 +2,10 @@
 
 namespace OCA\Text\Middleware;
 
-use OCA\Text\Controller\ASessionAwareController;
+use OCA\Text\Controller\ISessionAwareController;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
+use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
@@ -16,6 +17,7 @@ class SessionMiddleware extends \OCP\AppFramework\Middleware {
 	public function __construct(
 		private IRequest $request,
 		private SessionService $sessionService,
+		private DocumentService $documentService,
 	) {
 	}
 
@@ -24,7 +26,7 @@ class SessionMiddleware extends \OCP\AppFramework\Middleware {
 	 * @throws InvalidSessionException
 	 */
 	public function beforeController(Controller $controller, string $methodName) {
-		if (!$controller instanceof ASessionAwareController) {
+		if (!$controller instanceof ISessionAwareController) {
 			return;
 		}
 
@@ -35,7 +37,7 @@ class SessionMiddleware extends \OCP\AppFramework\Middleware {
 		}
 	}
 
-	private function assertDocumentSession(ASessionAwareController $controller): void {
+	private function assertDocumentSession(ISessionAwareController $controller): void {
 		$documentId = (int)$this->request->getParam('documentId');
 		$sessionId = (int)$this->request->getParam('sessionId');
 		$token = (string)$this->request->getParam('sessionToken');
@@ -45,7 +47,13 @@ class SessionMiddleware extends \OCP\AppFramework\Middleware {
 			throw new InvalidSessionException();
 		}
 
+		$document = $this->documentService->getDocument($documentId);
+		if (!$document) {
+			throw new InvalidSessionException();
+		}
+
 		$controller->setSession($session);
+		$controller->setDocument($document);
 	}
 
 	public function afterException($controller, $methodName, \Exception $exception) {

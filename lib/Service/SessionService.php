@@ -115,8 +115,9 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAll($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			if ($session->getUserId() !== null) {
-				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
+			$userId = $session->getUserId();
+			if ($userId !== null) {
+				$result['displayName'] = $this->userManager->getDisplayName($userId);
 			}
 			return $result;
 		}, $sessions);
@@ -126,16 +127,18 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			if ($session->getUserId() !== null) {
-				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
+			$userId = $session->getUserId();
+			if ($userId !== null) {
+				$result['displayName'] = $this->userManager->getDisplayName($userId);
 			}
 			return $result;
 		}, $sessions);
 	}
 
 	public function getNameForSession(Session $session): ?string {
-		if ($session->getUserId() !== null) {
-			return $this->userManager->getDisplayName($session->getUserId());
+		$userId = $session->getUserId();
+		if ($userId !== null) {
+			return $this->userManager->getDisplayName($userId);
 		}
 
 		return $session->getGuestName();
@@ -217,11 +220,10 @@ class SessionService {
 	 * @return Session
 	 * @throws DoesNotExistException
 	 */
-	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): Session {
+	public function updateSession(Session $session, string $guestName): Session {
 		if ($this->userId !== null) {
 			throw new \Exception('Logged in users cannot set a guest name');
 		}
-		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
 		$session->setGuestName($guestName);
 		$session->setColor($this->getColorForGuestName($guestName));
 		return $this->sessionMapper->update($session);
@@ -235,8 +237,7 @@ class SessionService {
 	 * @return Session
 	 * @throws DoesNotExistException
 	 */
-	public function updateSessionAwareness(int $documentId, int $sessionId, string $sessionToken, string $message): Session {
-		$session = $this->sessionMapper->find($documentId, $sessionId, $sessionToken);
+	public function updateSessionAwareness(Session $session, string $message): Session {
 		if (empty($message)) {
 			return $session;
 		}

@@ -25,98 +25,87 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\NotificationService;
 use OCA\Text\Service\SessionService;
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
+use OCP\AppFramework\Http\Attribute\UserRateLimit;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
 
-class SessionController extends Controller {
-	private ApiService $apiService;
-	private SessionService $sessionService;
-	private NotificationService $notificationService;
-	private IUserManager $userManager;
-	private IUserSession $userSession;
+class SessionController extends ApiController implements ISessionAwareController {
+	use TSessionAwareController;
 
 	private bool $restoreUser = false;
 	private ?IUser $userToRestore = null;
 
-	public function __construct(string $appName, IRequest $request, ApiService $apiService, SessionService $sessionService, NotificationService $notificationService, IUserManager $userManager, IUserSession $userSession) {
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private ApiService $apiService,
+		private SessionService $sessionService,
+		private NotificationService $notificationService,
+		private IUserManager $userManager,
+		private IUserSession $userSession) {
 		parent::__construct($appName, $request);
-		$this->apiService = $apiService;
-		$this->sessionService = $sessionService;
-		$this->notificationService = $notificationService;
-		$this->userManager = $userManager;
-		$this->userSession = $userSession;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+	#[NoAdminRequired]
 	public function create(int $fileId = null, string $file = null): DataResponse {
 		return $this->apiService->create($fileId, $file, null, null);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
+	#[NoAdminRequired]
+	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
 		return $this->apiService->close($documentId, $sessionId, $sessionToken);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
-	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness): DataResponse {
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function push(int $version, array $steps, string $awareness): DataResponse {
 		try {
-			$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-			return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness);
+			$this->loginSessionUser();
+			return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness);
 		} finally {
 			$this->restoreSessionUser();
 		}
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
-	public function sync(int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function sync(int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
-			$this->loginSessionUser($documentId, $sessionId, $sessionToken);
-			return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave);
+			$this->loginSessionUser();
+			return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);
 		} finally {
 			$this->restoreSessionUser();
 		}
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 * @UserRateThrottle(limit=5, period=120)
-	 */
-	public function mention(int $documentId, int $sessionId, string $sessionToken, string $mention): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	#[UserRateLimit(limit: 5, period: 120)]
+	public function mention(string $mention): DataResponse {
+		if ($this->getSession()->getUserId() === null && !$this->sessionService->isUserInDocument($this->getDocument()->getId(), $mention)) {
 			return new DataResponse([], 403);
 		}
 
-		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-
-		if ($currentSession->getUserId() === null && !$this->sessionService->isUserInDocument($documentId, $mention)) {
-			return new DataResponse([], 403);
-		}
-
-		return new DataResponse($this->notificationService->mention($documentId, $mention));
+		return new DataResponse($this->notificationService->mention($this->getDocument()->getId(), $mention));
 	}
 
-	private function loginSessionUser(int $documentId, int $sessionId, string $sessionToken) {
-		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		if ($currentSession !== null && !$this->userSession->isLoggedIn()) {
+	private function loginSessionUser() {
+		$currentSession = $this->getSession();
+		if (!$this->userSession->isLoggedIn()) {
 			$user = $this->userManager->get($currentSession->getUserId());
 			if ($user !== null) {
 				$this->restoreUser = true;
