@@ -154,8 +154,17 @@ class DocumentService {
 		$document->setLastSavedVersionTime($file->getFileInfo()->getMtime());
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setBaseVersionEtag($file->getEtag());
-		$document = $this->documentMapper->insert($document);
-		$this->cache->set('document-version-'.$document->getId(), 0);
+		try {
+			$document = $this->documentMapper->insert($document);
+			$this->cache->set('document-version-'.$document->getId(), 0);
+		} catch (Exception $e) {
+			if ($e->getReason() === Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
+				// Document might have been created in the meantime
+				return $this->documentMapper->find($file->getFileInfo()->getId());
+			}
+
+			throw $e;
+		}
 		return $document;
 	}
 
