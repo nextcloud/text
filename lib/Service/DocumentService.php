@@ -158,7 +158,7 @@ class DocumentService {
 		} catch (Exception $e) {
 			if ($e->getReason() === Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
 				// Document might have been created in the meantime
-				return $this->documentMapper->find($file->getFileInfo()->getId());
+				return $this->documentMapper->find($file->getId());
 			}
 
 			throw $e;
@@ -505,7 +505,7 @@ class DocumentService {
 		}
 
 		$node = $share->getNode();
-		if ($node instanceof Folder) {
+		if ($path !== null && $node instanceof Folder) {
 			$node = $node->get($path);
 		}
 		if ($node instanceof File) {
