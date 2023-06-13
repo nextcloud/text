@@ -68,6 +68,10 @@ export class Connection {
 		this.#options = options
 	}
 
+	get session() {
+		return this.#session
+	}
+
 	get document() {
 		return this.#document
 	}

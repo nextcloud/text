@@ -34,7 +34,6 @@ use OCP\Files\Folder;
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
-use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
@@ -75,49 +74,35 @@ class AttachmentService {
 
 	/**
 	 * Get image content or preview from file name
-	 * @param int $documentId
-	 * @param string $imageFileName
-	 * @param string $userId
-	 * @param bool $preferRawImage
-	 * @return File|Node|ISimpleFile|null
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getImageFile(int $documentId, string $imageFileName, string $userId, bool $preferRawImage) {
+	public function getImageFile(int $documentId, string $imageFileName, string $userId, bool $preferRawImage): File|ISimpleFile|null {
 		$textFile = $this->getTextFile($documentId, $userId);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
 	/**
 	 * Get image content or preview from file id in public context
-	 * @param int $documentId
-	 * @param string $imageFileName
-	 * @param string $shareToken
-	 * @param bool $preferRawImage
-	 * @return File|Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken, bool $preferRawImage) {
+	public function getImageFilePublic(int $documentId, string $imageFileName, string $shareToken, bool $preferRawImage): File|ISimpleFile|null {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		return $this->getImageFileContent($imageFileName, $textFile, $preferRawImage);
 	}
 
 	/**
-	 * @param string $imageFileName
-	 * @param File $textFile
-	 * @param bool $preferRawImage
-	 * @return File|Node|ISimpleFile|null
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	private function getImageFileContent(string $imageFileName, File $textFile, bool $preferRawImage) {
+	private function getImageFileContent(string $imageFileName, File $textFile, bool $preferRawImage): File|ISimpleFile|null {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$imageFile = $attachmentFolder->get($imageFileName);
 		if ($imageFile instanceof File && in_array($imageFile->getMimetype(), AttachmentController::IMAGE_MIME_TYPES)) {
@@ -140,39 +125,28 @@ class AttachmentService {
 
 	/**
 	 * Get media file from file name
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $userId
-	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OCP\Files\NotPermittedException
 	 */
-	public function getMediaFile(int $documentId, string $mediaFileName, string $userId) {
+	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): File|null {
 		$textFile = $this->getTextFile($documentId, $userId);
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
 
 	/**
 	 * Get image content or preview from file id in public context
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $shareToken
-	 * @return File|\OCP\Files\Node|ISimpleFile|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
 	 * @throws \OC\User\NoUserException
 	 */
-	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken) {
+	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken): File|null {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
 
 	/**
-	 * @param string $mediaFileName
-	 * @param File $textFile
-	 * @return File|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -188,10 +162,6 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $userId
-	 * @return array|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -202,10 +172,6 @@ class AttachmentService {
 		return $this->getMediaFilePreviewFile($mediaFileName, $textFile);
 	}
 	/**
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $shareToken
-	 * @return array|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -218,9 +184,6 @@ class AttachmentService {
 
 	/**
 	 * Get media preview or mimetype icon address
-	 * @param string $mediaFileName
-	 * @param File $textFile
-	 * @return array|null
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException

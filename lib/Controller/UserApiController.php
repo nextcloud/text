@@ -1,38 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OCA\Text\Controller;
 
+use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\SessionService;
-use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Collaboration\Collaborators\ISearch;
 use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\Share\IShare;
 
-class UserApiController extends ApiController {
-	private ISearch $collaboratorSearch;
-	private IUserManager $userManager;
-	private SessionService $sessionService;
-
-	public function __construct($appName, IRequest $request, SessionService $sessionService, ISearch $ISearch, IUserManager $userManager) {
+class UserApiController extends ASessionAwareController {
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private SessionService $sessionService,
+		private ISearch $collaboratorSearch,
+		private IUserManager $userManager
+	) {
 		parent::__construct($appName, $request);
-
-		$this->sessionService = $sessionService;
-		$this->collaboratorSearch = $ISearch;
-		$this->userManager = $userManager;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
-	public function index(int $documentId, int $sessionId, string $sessionToken, string $filter, int $limit = 5): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 403);
-		}
-
-		$sessions = $this->sessionService->getAllSessions($documentId);
+	#[PublicPage]
+	#[NoAdminRequired]
+	#[RequireDocumentSession]
+	public function index(string $filter = '', int $limit = 5): DataResponse {
+		$sessions = $this->sessionService->getAllSessions($this->getSession()->getDocumentId());
 
 		$users = [];
 
@@ -47,8 +44,7 @@ class UserApiController extends ApiController {
 			}
 		}
 
-		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		if ($currentSession->getUserId() !== null) {
+		if ($this->getSession()->getUserId() !== null) {
 			// Add other users to the autocomplete list
 			[$result] = $this->collaboratorSearch->search($filter, [IShare::TYPE_USER], false, $limit, 0);
 			$userSearch = array_merge($result['users'], $result['exact']['users']);

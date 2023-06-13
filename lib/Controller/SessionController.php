@@ -116,7 +116,7 @@ class SessionController extends Controller {
 
 	private function loginSessionUser(int $documentId, int $sessionId, string $sessionToken) {
 		$currentSession = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		if ($currentSession !== false && !$this->userSession->isLoggedIn()) {
+		if ($currentSession !== null && !$this->userSession->isLoggedIn()) {
 			$user = $this->userManager->get($currentSession->getUserId());
 			if ($user !== null) {
 				$this->restoreUser = true;

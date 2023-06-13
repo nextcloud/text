@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
@@ -43,15 +46,11 @@ class SessionService {
 	private ITimeFactory $timeFactory;
 	private IUserManager $userManager;
 	private IAvatarManager $avatarManager;
+	private ?string $userId;
+	private ICache $cache;
 
-	/** @var string|null */
-	private $userId;
-
-	/** @var Session cache current session in the request */
-	private $session = null;
-
-	/** @var ICache */
-	private $cache;
+	/** @var ?Session cache current session in the request */
+	private ?Session $session = null;
 
 	public function __construct(
 		SessionMapper $sessionMapper,
@@ -112,7 +111,7 @@ class SessionService {
 		}
 	}
 
-	public function getAllSessions($documentId): array {
+	public function getAllSessions(int $documentId): array {
 		$sessions = $this->sessionMapper->findAll($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
@@ -123,7 +122,7 @@ class SessionService {
 		}, $sessions);
 	}
 
-	public function getActiveSessions($documentId): array {
+	public function getActiveSessions(int $documentId): array {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
@@ -146,50 +145,42 @@ class SessionService {
 		return $this->sessionMapper->findAllInactive();
 	}
 
-	public function removeInactiveSessionsWithoutSteps($documentId = -1) {
+	public function removeInactiveSessionsWithoutSteps(?int $documentId = null) {
 		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
 
-	/**
-	 * @return bool|Session
-	 */
-	public function getSession($documentId, $sessionId, $token) {
+	public function getSession(int $documentId, int $sessionId, string $token): ?Session {
 		if ($this->session !== null) {
 			return $this->session;
 		}
 
 		$data = $this->cache->get($token);
 		if ($data !== null) {
-			$session = Session::fromRow(json_decode($data, true));
-			if ($session->getId() !== $sessionId || $session->getDocumentId() !== $documentId) {
+			$this->session = Session::fromRow(json_decode($data, true));
+			if ($this->session->getId() !== $sessionId || $this->session->getDocumentId() !== $documentId) {
 				$this->cache->remove($token);
-				$this->session = false;
-				return false;
+				$this->session = null;
 			}
 
-			return $session;
+			return $this->session;
 		}
 
 		try {
-			$data = $this->sessionMapper->find($documentId, $sessionId, $token);
-			$jsonData = json_encode($data);
-
-			if ($jsonData) {
-				$this->cache->set($token, json_encode($data), self::SESSION_VALID_TIME - 30);
-				return $data;
-			}
+			$this->session = $this->sessionMapper->find($documentId, $sessionId, $token);
+			$this->cache->set($token, json_encode($this->session), self::SESSION_VALID_TIME - 30);
 		} catch (DoesNotExistException $e) {
+			$this->session = null;
+			$this->cache->remove($token);
 		}
 
-		$this->session = false;
-		return false;
+		return $this->session;
 	}
 
-	public function isValidSession($documentId, $sessionId, $token): bool {
+	public function getValidSession(int $documentId, int $sessionId, string $token): ?Session {
 		$session = $this->getSession($documentId, $sessionId, $token);
-		if ($session === false) {
-			return false;
+		if ($session === null) {
+			return null;
 		}
 
 		$currentTime = $this->timeFactory->now()->getTimestamp();
@@ -201,15 +192,21 @@ class SessionService {
 			try {
 				$session = $this->sessionMapper->find($documentId, $sessionId, $token);
 			} catch (DoesNotExistException $e) {
-				$this->session = false;
+				$this->session = null;
 				$this->cache->remove($token);
-				return false;
+				return null;
 			}
 			$session->setLastContact($this->timeFactory->now()->getTimestamp());
 			$this->sessionMapper->update($session);
 			$this->cache->set($token, json_encode($session), self::SESSION_VALID_TIME - 30);
+			$this->session = $session;
 		}
-		return true;
+
+		return $session;
+	}
+
+	public function isValidSession($documentId, $sessionId, $token): bool {
+		return $this->getValidSession($documentId, $sessionId, $token) !== null;
 	}
 
 	/**
