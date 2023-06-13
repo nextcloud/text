@@ -55,6 +55,7 @@ describe('The user mention API', function() {
 			cy.wrap(connection)
 				.its('document.id')
 				.should('equal', fileId)
+
 			const requestData = {
 				method: 'POST',
 				url: '/apps/text/api/v1/users',
@@ -66,43 +67,39 @@ describe('The user mention API', function() {
 				},
 				failOnStatusCode: false,
 			}
+			const invalidRequestData = { ...requestData }
 
 			cy.request(requestData).then(({ status }) => {
 				expect(status).to.eq(200)
-			})
 
-			const invalidRequestData = { ...requestData }
-			cy.wrap(() => {
 				invalidRequestData.body = {
 					...requestData.body,
 					sessionToken: 'invalid',
 				}
 			})
+
 			cy.request(invalidRequestData).then(({ status }) => {
 				expect(status).to.eq(403)
-			})
-
-			cy.wrap(() => {
 				invalidRequestData.body = {
 					...requestData.body,
 					sessionId: 0,
 				}
 			})
+
 			cy.request(invalidRequestData).then(({ status }) => {
 				expect(status).to.eq(403)
-			})
 
-			cy.wrap(() => {
 				invalidRequestData.body = {
 					...requestData.body,
 					documentId: 0,
 				}
 			})
+
 			cy.request(invalidRequestData).then(({ status }) => {
 				expect(status).to.eq(403)
 			})
 
-			cy.wrap(connection.close())
+			cy.wrap(null).then(() => connection.close())
 
 			cy.request(requestData).then(({ status, body }) => {
 				expect(status).to.eq(403)
