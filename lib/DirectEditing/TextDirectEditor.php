@@ -79,7 +79,7 @@ class TextDirectEditor implements IEditor {
 	/**
 	 * A list of mimetypes that should open the editor by default
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getMimetypes(): array {
 		return [

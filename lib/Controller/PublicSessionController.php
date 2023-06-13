@@ -25,7 +25,10 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\PublicShareController;
 use OCP\IRequest;
@@ -34,15 +37,19 @@ use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use OCP\Share\IShare;
 
-class PublicSessionController extends PublicShareController {
-	private ShareManager $shareManager;
-	private ?IShare $share;
-	private ApiService $apiService;
+class PublicSessionController extends PublicShareController implements ISessionAwareController {
+	use TSessionAwareController;
 
-	public function __construct(string $appName, IRequest $request, ISession $session, ShareManager $shareManager, ApiService $apiService) {
+	private IShare $share;
+
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		ISession $session,
+		private ShareManager $shareManager,
+		private ApiService $apiService
+	) {
 		parent::__construct($appName, $request, $session);
-		$this->shareManager = $shareManager;
-		$this->apiService = $apiService;
 	}
 
 	protected function getPasswordHash(): string {
@@ -62,43 +69,36 @@ class PublicSessionController extends PublicShareController {
 		return $this->share->getPassword() !== null;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
+	#[NoAdminRequired]
+	#[PublicPage]
 	public function create(string $token, string $file = null, $guestName = null): DataResponse {
 		return $this->apiService->create(null, $file, $token, $guestName);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
+	#[NoAdminRequired]
+	#[PublicPage]
 	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
 		return $this->apiService->close($documentId, $sessionId, $sessionToken);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
-		return $this->apiService->push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token);
+		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $token);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
 	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
-		return $this->apiService->sync($documentId, $sessionId, $sessionToken, $version, $autosaveContent, $documentState, $force, $manualSave, $token);
+		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 * @PublicPage
-	 */
-	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName) {
-		return $this->apiService->updateSession($documentId, $sessionId, $sessionToken, $guestName);
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function updateSession(string $guestName) {
+		return $this->apiService->updateSession($this->getSession(), $guestName);
 	}
 }
