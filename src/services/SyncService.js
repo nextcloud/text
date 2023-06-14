@@ -161,6 +161,11 @@ class SyncService {
 		return this.connection.push(data)
 			.then((response) => {
 				this.sending = false
+				this.emit('sync', {
+					steps: [],
+					document: this.connection.document,
+					version: this.version,
+				})
 			}).catch(({ response, code }) => {
 				logger.error('failed to apply steps due to collission, retrying')
 				this.sending = false
