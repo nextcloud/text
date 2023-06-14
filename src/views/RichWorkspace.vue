@@ -203,7 +203,7 @@ export default {
 		z-index: 61;
 		position: relative;
 		&.creatable {
-			min-height: 100px;
+			min-height: 150px;
 		}
 	}
 
@@ -259,15 +259,19 @@ export default {
 	}
 
 	#rich-workspace.focus {
-		min-height: 25vh;
+		min-height: 150px;
 		max-height: 50vh;
 	}
 
 	#rich-workspace:not(.focus), #rich-workspace.icon-loading {
-		min-height: 25vh;
-		max-height: 25vh;
+		min-height: 150px;
+		max-height: 150px;
 		position: relative;
 		overflow: hidden;
+
+		:deep([data-text-el="menubar"]) {
+			display: none;
+		}
 	}
 
 	#rich-workspace:not(.focus):not(.icon-loading):not(.empty):after {
@@ -284,11 +288,5 @@ export default {
 
 	#rich-workspace.dark:not(.focus):not(.icon-loading):after {
 		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));
-	}
-
-	@media only screen and (max-width: 1024px) {
-		#rich-workspace:not(.focus) {
-			max-height: 30vh;
-		}
 	}
 </style>
