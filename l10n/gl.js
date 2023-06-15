@@ -136,7 +136,7 @@ OC.L10N.register(
     "Callouts" : "Lendas",
     "Info" : "Información",
     "Success" : "Correcto",
-    "Warning" : "Aviso",
+    "Warning" : "Advertencia",
     "Danger" : "Perigo",
     "Table" : "Táboa",
     "Insert emoji" : "Inserir un «emoji»",
