@@ -101,7 +101,7 @@ export default {
 
 	// Info (default) variables
 	&, &--info {
-		--callout-border: var(--color-primary-element);
+		--callout-border: var(--color-info, #006aa3);
 	}
 
 	// Warn variables
