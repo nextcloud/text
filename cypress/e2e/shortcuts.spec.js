@@ -46,14 +46,9 @@ describe('keyboard shortcuts', () => {
 
 	beforeEach(() => {
 		cy.login(user)
+		cy.uploadTestFile()
 		cy.visit('/apps/files')
-		const path = `/${Cypress.currentTest.title}.md`
-		cy.uploadFile(
-			'empty.md',
-			'text/markdown',
-			path
-		)
-		cy.window().then(win => win.OCA.Viewer.open({ path }))
+		cy.openTestFile()
 	    cy.getContent().type(Cypress.currentTest.title)
 		cy.getContent().type('{selectall}')
 	})
