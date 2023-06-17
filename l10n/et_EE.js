@@ -14,6 +14,7 @@ OC.L10N.register(
     "Use the saved version" : "Kasuta salvestatud versiooni",
     "Guest" : "Külaline",
     "guest" : "külaline",
+    "Offline" : "Offline",
     "Saving …" : "Salvestamine …",
     "Saved" : "Salvestatud",
     "Unsaved changes" : "Salvestamata muutused",
