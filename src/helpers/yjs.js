@@ -22,6 +22,7 @@
 
 import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
 import { Doc, encodeStateAsUpdate, applyUpdate } from 'yjs'
+import * as decoding from 'lib0/decoding.js'
 
 /**
  *
@@ -41,4 +42,32 @@ export function getDocumentState(ydoc) {
 export function applyDocumentState(ydoc, documentState, origin) {
 	const update = decodeArrayBuffer(documentState)
 	applyUpdate(ydoc, update, origin)
+}
+
+/**
+ * Log y.js messages with their type and initiator call stack
+ *
+ * @param {string} step - Y.js message
+ */
+export function logStep(step) {
+	// Create error for stack trace
+	const err = new Error()
+
+	const decoder = decoding.createDecoder(step)
+
+	const messageType = decoding.readVarUint(decoder)
+	const subType = decoding.readVarUint(decoder)
+
+	const encodedStep = encodeArrayBuffer(step)
+	switch (messageType) {
+	case 0:
+		console.debug('y.js message sync', subType, encodedStep, err.stack)
+		break
+	case 3:
+		console.debug('y.js message awareness_query', encodedStep, err.stack)
+		break
+	case 1:
+		console.debug('y.js message awareness', encodedStep, err.stack)
+		break
+	}
 }

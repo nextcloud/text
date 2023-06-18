@@ -327,6 +327,11 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
+		// The following can be useful for debugging ydoc updates
+		// this.$ydoc.on('update', function(update, origin, doc, tr) {
+		//   console.debug('ydoc update', update, origin, doc, tr)
+		//   Y.logUpdate(update)
+		// });
 		this.$providers = []
 		this.$editor = null
 		this.$syncService = null
