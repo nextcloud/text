@@ -464,7 +464,7 @@ export default {
 
 		onLoaded({ documentSource, documentState }) {
 			if (documentState) {
-				applyDocumentState(this.$ydoc, documentState)
+				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
 			}
 
 			this.hasConnectionIssue = false
