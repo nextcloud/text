@@ -121,7 +121,7 @@ OC.L10N.register(
     "Add column after" : "Додайте стовпець після",
     "Delete this column" : "Вилучити цей стовпець",
     "Delete this table" : "Вилучити цю таблицю",
-    "Show rich workspaces" : "Показувати робочі області",
+    "Show rich workspaces" : "Показувати опис каталогу",
     "Hide outline" : "Сховати зміст",
     "Show outline" : "Показати зміст",
     "Undo" : "Скасувати",
