@@ -36,8 +36,9 @@ export function getDocumentState(ydoc) {
  *
  * @param {Doc} ydoc - apply state to this doc
  * @param {string} documentState - base64 encoded doc state
+ * @param {object} origin - initiator object e.g. WebsocketProvider
  */
-export function applyDocumentState(ydoc, documentState) {
+export function applyDocumentState(ydoc, documentState, origin) {
 	const update = decodeArrayBuffer(documentState)
-	applyUpdate(ydoc, update)
+	applyUpdate(ydoc, update, origin)
 }
