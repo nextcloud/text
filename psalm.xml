@@ -23,6 +23,7 @@
 			<errorLevel type="suppress">
 				<referencedClass name="OC" />
 				<referencedClass name="Doctrine\DBAL\Types\Types"/>
+				<referencedClass name="Symfony\Component\Console\Command\Command"/>
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
