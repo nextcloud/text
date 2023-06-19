@@ -339,9 +339,13 @@ class DocumentService {
 		if ($autoSaveDocument === null) {
 			return $document;
 		}
-		// Do not save if version already saved
+		// Do not save if newer version already saved
+		// Note that $version is the version of the steps the client has fetched.
+		// It may have added steps on top of that - so if the versions match we still save.
 		$stepsVersion = $this->stepMapper->getLatestVersion($documentId);
-		if (!$force && ($version <= (string)$document->getLastSavedVersion() || $version > (string)$stepsVersion)) {
+		$savedVersion = $document->getLastSavedVersion();
+		$outdated = $savedVersion > 0 && $savedVersion > $version;
+		if (!$force && ($outdated || $version > (string)$stepsVersion)) {
 			return $document;
 		}
 
