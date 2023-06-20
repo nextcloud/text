@@ -10,7 +10,7 @@
     "Could not write file to disk" : "Non foi posíbel escribir o ficheiro no disco",
     "A PHP extension stopped the file upload" : "Unha extensión PHP detivo o envío de ficheiros",
     "No file uploaded or file size exceeds maximum of %s" : "Non se enviou ningún ficheiro ou o tamaño do ficheiro supera o máximo de %s",
-    "Nextcloud Text" : "Texto do Nextcloud",
+    "Nextcloud Text" : "Texto de Nextcloud",
     "text document" : "documento de texto",
     "{user} has mentioned you in the text document {node}" : "{user} mencionouno a vostede no documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "Non é posíbel amosar este ficheiro por mor de que a descarga está desactivada polo recurso compartido",
