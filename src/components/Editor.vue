@@ -786,11 +786,11 @@ export default {
 </style>
 
 <style lang="scss">
-	@import './../../css/style';
-	@import './../../css/print';
+	@import './../css/style';
+	@import './../css/print';
 
 	.text-editor__wrapper {
-		@import './../../css/prosemirror';
+		@import './../css/prosemirror';
 
 		&:not(.is-rich-editor) .ProseMirror {
 			pre {

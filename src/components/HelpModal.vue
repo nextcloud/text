@@ -296,7 +296,7 @@ export default {
 		}
 	}
 
-	@import '../../css/prosemirror';
+	@import '../css/prosemirror';
 
 	div.ProseMirror {
 		display: inline;
