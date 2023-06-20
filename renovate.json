@@ -62,6 +62,15 @@
       "enabled": false
     },
     {
+      "groupName": "tiptap",
+      "matchBaseBranches": ["stable25"],
+      "matchPackagePrefixes": [
+        "@tiptap/",
+        "prosemirror-"
+      ],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["vue"],
       "allowedVersions": "<3"
     },
