@@ -120,6 +120,7 @@ export default {
 	color: var(--color-main-text);
 	padding: 0;
 	text-decoration: none;
+	max-width: calc(100vw - 56px);
 }
 
 :deep(.widget-default--details) {
