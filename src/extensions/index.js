@@ -20,6 +20,7 @@
  *
  */
 
+import CollaborationCursor from './CollaborationCursor.js'
 import Emoji from './Emoji.js'
 import Keymap from './Keymap.js'
 import UserColor from './UserColor.js'
@@ -30,6 +31,7 @@ import KeepSyntax from './KeepSyntax.js'
 import Mention from './Mention.js'
 
 export {
+	CollaborationCursor,
 	Emoji,
 	Keymap,
 	UserColor,
