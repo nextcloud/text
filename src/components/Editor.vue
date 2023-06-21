@@ -83,7 +83,6 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
-import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
 
@@ -109,7 +108,7 @@ import { createEditor, serializePlainText, loadSyntaxHighlight } from './../Edit
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
-import { Keymap } from './../extensions/index.js'
+import { CollaborationCursor, Keymap } from '../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import store from './../mixins/store.js'
@@ -321,6 +320,7 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
+		this.$ydoc.on('update', this.onYjsUpdate)
 		this.$providers = []
 		this.$editor = null
 		this.$syncService = null
@@ -523,6 +523,8 @@ export default {
 											? session.displayName
 											: (session?.guestName || t('text', 'Guest')),
 										color: session?.color,
+										clientId: this.$ydoc.clientID,
+										lastUpdate: Date.now(),
 									},
 								}),
 								Keymap.configure({
@@ -653,6 +655,13 @@ export default {
 
 		onDeleteImageNode(imageUrl) {
 			this.emit('delete-image-node', imageUrl)
+		},
+
+		onYjsUpdate(_update, origin) {
+			if (origin.key === 'y-sync$') {
+				// Update timestamp of own cursor
+				this.$editor.commands.updateSelf()
+			}
 		},
 
 		async close() {
@@ -812,7 +821,6 @@ export default {
 	width: 100%;
 	background-color: var(--color-main-background);
 }
-
 </style>
 
 <style lang="scss">
@@ -936,6 +944,14 @@ export default {
 		padding: 0.1rem 0.3rem;
 		border-radius: 3px 3px 3px 0;
 		white-space: nowrap;
-	}
+		opacity: 0;
 
+		&.collaboration-cursor__label__active {
+			opacity: 1;
+		}
+
+		&:not(.collaboration-cursor__label__active) {
+			transition: opacity 0.2s 5s;
+		}
+	}
 </style>
