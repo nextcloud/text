@@ -81,6 +81,6 @@
     {
       "matchPackageNames": ["@vue/test-utils"],
       "allowedVersions": "<2"
-    },
+    }
   ]
 }
