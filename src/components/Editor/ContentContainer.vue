@@ -61,7 +61,7 @@ export default {
 
 <style scoped lang="scss">
 	.editor__content {
-		max-width: var(--text-editor-max-width);
+		max-width: min(var(--text-editor-max-width), calc(100vw - 16px));
 		margin: auto;
 		position: relative;
 		width: 100%;
