@@ -29,7 +29,7 @@
 			:mime="initial.mimetype"
 			:is-direct-editing="true"
 			@ready="loaded">
-			<template #header>
+			<template v-if="isMobile" #header>
 				<button class="icon-share" @click="share" />
 				<button class="icon-close" @click="close" />
 			</template>
@@ -102,6 +102,11 @@ export default {
 	computed: {
 		initialSession() {
 			return JSON.parse(this.initial.session) || null
+		},
+		isMobile() {
+			return (window.DirectEditingMobileInterface || (window.webkit
+				&& window.webkit.messageHandlers
+				&& window.webkit.messageHandlers.DirectEditingMobileInterface))
 		},
 	},
 	beforeMount() {

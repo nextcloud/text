@@ -53,68 +53,41 @@ describe('direct editing', function() {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
 
-	it('Open an existing file, edit and close it', () => {
+	it('Open an existing file, edit it', () => {
 		createDirectEditingLink(user, 'empty.md')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
 			})
-		const closeRequestAlias = 'closeRequest'
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 		cy.getContent().type('# This is a headline')
 		cy.getContent().type('{enter}')
 		cy.getContent().type('Some text')
 		cy.getContent().type('{enter}')
-
-		cy.get('button.icon-close').click()
-		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent('empty.md').then((content) => {
-				expect(content).to.equal('# This is a headline\n\nSome text')
-			})
-		})
 	})
 
-	it('Create a file, edit and close it', () => {
+	it('Create a file, edit it', () => {
 		createDirectEditingLinkForNewFile(user, 'newfile.md')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
 			})
-		const closeRequestAlias = 'closeRequest'
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 
 		cy.getContent().type('# This is a headline')
 		cy.getContent().type('{enter}')
 		cy.getContent().type('Some text')
 		cy.getContent().type('{enter}')
-
-		cy.get('button.icon-close').click()
-		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent('newfile.md').then((content) => {
-				expect(content).to.equal('# This is a headline\n\nSome text')
-			})
-		})
 	})
 
-	it('Open an existing plain text file, edit and close it', () => {
+	it('Open an existing plain text file, edit it', () => {
 		createDirectEditingLink(user, 'empty.txt')
 			.then((token) => {
 				cy.logout()
 				cy.visit(token)
 			})
-		const closeRequestAlias = 'closeRequest'
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as(closeRequestAlias)
 
 		cy.getContent().type('# This is a headline')
 		cy.getContent().type('{enter}')
 		cy.getContent().type('Some text')
 		cy.getContent().type('{enter}')
-
-		cy.get('button.icon-close').click()
-		cy.wait(`@${closeRequestAlias}`).then(() => {
-			cy.getFileContent('empty.txt').then((content) => {
-				expect(content).to.equal('# This is a headline\nSome text\n')
-			})
-		})
 	})
 })
