@@ -49,3 +49,18 @@ export function markdownThroughEditorHtml(html) {
 	const serializer = createMarkdownSerializer(tiptap.schema)
 	return serializer.serialize(tiptap.state.doc)
 }
+
+/**
+ * Paste HTML into the Editor and return the serialized markdown
+ *
+ * @param {string} html
+ * @returns {string}
+ */
+export function markdownFromPaste(html) {
+	const tiptap = createEditor({
+		enableRichEditing: true
+	})
+	tiptap.commands.insertContent(html)
+	const serializer = createMarkdownSerializer(tiptap.schema)
+	return serializer.serialize(tiptap.state.doc)
+}

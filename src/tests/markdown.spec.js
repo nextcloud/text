@@ -1,7 +1,11 @@
 import spec from "./fixtures/spec"
 import markdownit from './../markdownit'
 import { typesAvailable } from './../markdownit/callouts'
-import { markdownThroughEditor, markdownThroughEditorHtml } from "./helpers";
+import {
+	markdownThroughEditor,
+	markdownThroughEditorHtml,
+	markdownFromPaste
+} from './helpers.js'
 import { createMarkdownSerializer } from "../extensions/Markdown";
 import createEditor from "../EditorFactory";
 
@@ -195,9 +199,18 @@ describe('Markdown serializer from html', () => {
 		)).toBe(`::: warn\n!warning!\n\n:::`)
 	})
 
+	test('table', () => {
+		expect(markdownThroughEditorHtml('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello |\n')
+	})
+
 	test('table cell escaping', () => {
 		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
 		expect(markdownThroughEditorHtml('<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>')).toBe('| greetings |\n|-----------|\n| hello \\| hallo |\n')
+	})
+
+	test('table pastes (#2708)', () => {
+		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
+		expect(markdownFromPaste('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello |\n')
 	})
 
 	test('front matter', () => {
