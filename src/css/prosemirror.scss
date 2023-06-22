@@ -245,7 +245,7 @@ div.ProseMirror {
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
 		margin-bottom: 1em;
-		+ & {
+		&+ * {
 			margin-top: 1em;
 		}
 
