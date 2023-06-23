@@ -28,10 +28,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: phpunit-oci-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
   phpunit-oci:
     runs-on: ubuntu-22.04
