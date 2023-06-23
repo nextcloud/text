@@ -21,7 +21,6 @@
  */
 
 import { initUserAndFiles, randHash, randUser } from '../utils/index.js'
-import 'cypress-file-upload'
 
 const user = randUser()
 const recipient = randUser()
@@ -41,7 +40,12 @@ function attachFile(name, requestAlias = null) {
 	}
 	return cy.getEditor()
 		.find('input[type="file"][data-text-el="attachment-file-input"]')
-		.attachFile(name)
+		.selectFile([
+			{
+				contents: 'cypress/fixtures/' + name,
+				fileName: name,
+			},
+		], { force: true })
 }
 
 /**
