@@ -74,6 +74,8 @@ OC.L10N.register(
     "Replace" : "替换",
     "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
+    "Hide outline" : "隐藏大纲",
+    "Show outline" : "显示大纲",
     "Undo" : "撤销",
     "Redo" : "重做",
     "Headings" : "标题",
