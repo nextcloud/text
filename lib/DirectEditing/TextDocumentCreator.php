@@ -27,6 +27,7 @@ use OCP\DirectEditing\ACreateEmpty;
 use OCP\IL10N;
 
 class TextDocumentCreator extends ACreateEmpty {
+	public const CREATOR_ID = 'textdocument';
 
 	/**
 	 * @var IL10N
@@ -38,7 +39,7 @@ class TextDocumentCreator extends ACreateEmpty {
 	}
 
 	public function getId(): string {
-		return 'textdocument';
+		return self::CREATOR_ID;
 	}
 
 	public function getName(): string {

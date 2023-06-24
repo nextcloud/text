@@ -26,6 +26,7 @@ namespace OCA\Text\Controller;
 use OCA\Text\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
 use OCP\IRequest;
@@ -46,16 +47,14 @@ class SettingsController extends Controller {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @param string $key
-	 * @param string $value
-	 * @return DataResponse
 	 * @throws \OCP\PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
 	public function updateConfig(string $key, $value) {
 		if (!in_array($key, self::ACCEPTED_KEYS, true)) {
 			return new DataResponse(['message' => 'Invalid config key'], Http::STATUS_BAD_REQUEST);
 		}
+		/** @psalm-suppress PossiblyNullArgument */
 		$this->config->setUserValue($this->userId, Application::APP_NAME, $key, $value);
 		return new DataResponse([
 			$key => $value

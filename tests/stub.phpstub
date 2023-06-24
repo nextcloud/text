@@ -10,6 +10,10 @@ namespace OC\AppFramework\OCS {
 	class BaseResponse {}
 }
 
+namespace OCA\Files\Event {
+	class LoadAdditionalScriptsEvent extends \OCP\EventDispatcher\Event {}
+}
+
 namespace OCA\Viewer\Event {
 	class LoadViewer extends \OCP\EventDispatcher\Event {}
 }

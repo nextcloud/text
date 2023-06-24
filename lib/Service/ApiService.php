@@ -28,9 +28,10 @@ namespace OCA\Text\Service;
 
 use Exception;
 use InvalidArgumentException;
-use OC\Files\Node\File;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\AppInfo\Application;
+use OCA\Text\Db\Document;
+use OCA\Text\Db\Session;
 use OCA\Text\Exception\DocumentSaveConflictException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
@@ -71,9 +72,8 @@ class ApiService {
 		$this->l10n = $l10n;
 	}
 
-	public function create($fileId = null, $filePath = null, $token = null, $guestName = null): DataResponse {
+	public function create($fileId = null, $filePath = null, ?string $token = null, $guestName = null): DataResponse {
 		try {
-			/** @var File $file */
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 
@@ -104,7 +104,8 @@ class ApiService {
 			if ($storage->instanceOfStorage(SharedStorage::class)) {
 				/** @var IShare $share */
 				$share = $storage->getShare();
-				if ($share->getAttributes()->getAttribute('permissions', 'download') === false) {
+				$shareAttribtues = $share->getAttributes();
+				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
 					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 403);
 				}
 			}
@@ -112,7 +113,7 @@ class ApiService {
 			$readOnly = $this->documentService->isReadOnly($file, $token);
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
-			$document = $this->documentService->getDocument($file);
+			$document = $this->documentService->getDocument($file->getId());
 			$freshSession = $document === null;
 
 			if ($freshSession) {
@@ -184,16 +185,9 @@ class ApiService {
 	 * @throws NotFoundException
 	 * @throws DoesNotExistException
 	 */
-	public function push($documentId, $sessionId, $sessionToken, $version, $steps, $awareness, $token = null): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 403);
-		}
-		$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
-		if (!$session) {
-			return new DataResponse([], 403);
-		}
+	public function push(Session $session, Document $document, $version, $steps, $awareness, $token = null): DataResponse {
 		try {
-			$this->sessionService->updateSessionAwareness($documentId, $sessionId, $sessionToken, $awareness);
+			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
 			// Session was removed in the meantime. #3875
 			return new DataResponse([], 403);
@@ -206,7 +200,7 @@ class ApiService {
 			return new DataResponse([], 403);
 		}
 		try {
-			$result = $this->documentService->addStep($documentId, $sessionId, $steps, $version);
+			$result = $this->documentService->addStep($document, $session, $steps, $version);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse($e->getMessage(), 422);
 		} catch (DoesNotExistException $e) {
@@ -216,19 +210,15 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	public function sync($documentId, $sessionId, $sessionToken, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 403);
-		}
-
+	public function sync(Session $session, Document $document, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
+		$documentId = $session->getDocumentId();
 		try {
 			$result = [
 				'steps' => $this->documentService->getSteps($documentId, $version),
 				'sessions' => $this->sessionService->getAllSessions($documentId),
-				'document' => $this->documentService->get($documentId)
+				'document' => $document,
 			];
 
-			$session = $this->sessionService->getSession($documentId, $sessionId, $sessionToken);
 			$file = $this->documentService->getFileForSession($session, $token);
 		} catch (NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
@@ -243,7 +233,7 @@ class ApiService {
 		}
 
 		try {
-			$result['document'] = $this->documentService->autosave($file, $documentId, $version, $autosaveContent, $documentState, $force, $manualSave, $token, $this->request->getParam('filePath'));
+			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $token, $this->request->getParam('filePath'));
 		} catch (DocumentSaveConflictException $e) {
 			try {
 				$result['outsideChange'] = $file->getContent();
@@ -262,15 +252,8 @@ class ApiService {
 		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
 	}
 
-	/**
-	 * @throws DoesNotExistException
-	 */
-	public function updateSession(int $documentId, int $sessionId, string $sessionToken, string $guestName): DataResponse {
-		if (!$this->sessionService->isValidSession($documentId, $sessionId, $sessionToken)) {
-			return new DataResponse([], 403);
-		}
-
-		return new DataResponse($this->sessionService->updateSession($documentId, $sessionId, $sessionToken, $guestName));
+	public function updateSession(Session $session, string $guestName): DataResponse {
+		return new DataResponse($this->sessionService->updateSession($session, $guestName));
 	}
 
 	private function loadContent(\OCP\Files\File $file): ?string {

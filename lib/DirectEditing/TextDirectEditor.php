@@ -79,7 +79,7 @@ class TextDirectEditor implements IEditor {
 	/**
 	 * A list of mimetypes that should open the editor by default
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getMimetypes(): array {
 		return [
@@ -112,7 +112,7 @@ class TextDirectEditor implements IEditor {
 	/**
 	 * A list of mimetypes that can be opened in the editor optionally
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getMimetypesOptional(): array {
 		return [];
@@ -121,7 +121,7 @@ class TextDirectEditor implements IEditor {
 	/**
 	 * Return a list of file creation options to be presented to the user
 	 *
-	 * @return array of ACreateFromTemplate|ACreateEmpty
+	 * @return TextDocumentCreator[]
 	 */
 	public function getCreators(): array {
 		return [

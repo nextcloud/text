@@ -45,12 +45,14 @@ class NodeCopiedListener implements IEventListener {
 		if (!$event instanceof NodeCopiedEvent) {
 			return;
 		}
-		if ($event->getSource() instanceof File
-			&& $event->getSource()->getMimeType() === 'text/markdown'
-			&& $event->getTarget() instanceof File
-			&& $event->getTarget()->getMimeType() === 'text/markdown'
+		$source = $event->getSource();
+		$target = $event->getTarget();
+		if ($source instanceof File
+			&& $source->getMimeType() === 'text/markdown'
+			&& $target instanceof File
+			&& $target->getMimeType() === 'text/markdown'
 		) {
-			$this->attachmentService->copyAttachments($event->getSource(), $event->getTarget());
+			$this->attachmentService->copyAttachments($source, $target);
 		}
 	}
 }
