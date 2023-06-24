@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/c-js-js"],{96991:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/c" instead of "highlight.js/lib/languages/c.js"'))}(),e.exports=n(80612)}}]);
-//# sourceMappingURL=c-js-js.js.map?v=17405655cf47b34bf7e6
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/c-js-js"],{96991:(e,i,n)=>{!function e(){e.warned||(e.warned=!0,console.log('Deprecation (warning): Using file extension in specifier is deprecated, use "highlight.js/lib/languages/c" instead of "highlight.js/lib/languages/c.js"'))}(),e.exports=n(68528)}}]);
+//# sourceMappingURL=c-js-js.js.map?v=857962ebd3843ca3409d
