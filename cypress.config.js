@@ -17,13 +17,13 @@ module.exports = defineConfig({
 		},
 
 		baseUrl: 'http://localhost:8081/index.php/',
-		experimentalSessionAndOrigin: true,
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+		experimentalRunAllSpecs: true,
 	},
 	retries: {
-		runMode: 2,
+		runMode: 0,
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
-	"numTestsKeptInMemory": 5,
+	numTestsKeptInMemory: 5,
 })
