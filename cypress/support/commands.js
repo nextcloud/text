@@ -36,6 +36,9 @@ addCommands()
 // and also to determine paths, urls and the like.
 let auth
 Cypress.Commands.overwrite('login', (login, user) => {
+	cy.window().then((win) => {
+		win.location.href = 'about:blank'
+	})
 	auth = { user: user.userId, password: user.password }
 	login(user)
 })
