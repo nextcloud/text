@@ -410,10 +410,4 @@ describe('Test all attachment insertion methods', () => {
 				}
 			})
 	})
-
-	it('Delete the user', () => {
-		cy.deleteUser(user)
-		cy.deleteUser(recipient)
-	})
-
 })
