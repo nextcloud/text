@@ -14,6 +14,7 @@ import {
 	selectedRect,
 	selectionCell,
 } from '@tiptap/pm/tables'
+import { Node } from '@tiptap/pm/model'
 
 /**
  *
@@ -64,6 +65,50 @@ function findSameCellInNextRow($cell) {
 		}
 		cellStart += rowNode.nodeSize
 	}
+}
+
+/**
+ *
+ * @param {Node} node - Table node
+ */
+function getColumns(node) {
+	const columns = []
+
+	node.content.forEach((row) => {
+		row.content.forEach((cell, offset, columnIndex) => {
+			if (!columns[columnIndex]) {
+				columns[columnIndex] = []
+			}
+			columns[columnIndex].push(cell)
+		})
+	})
+
+	return columns
+}
+
+/**
+ *
+ * @param {Array} columns - Columns of table
+ */
+function calculateColumnWidths(columns) {
+	const widths = []
+
+	columns.forEach((column) => {
+		let maxWidth = 0
+
+		column.forEach((cell) => {
+			let cellWidth = 0
+			cell.content.forEach(node => {
+				cellWidth += (node.text?.length || 6)
+				if (node.text?.includes('|')) cellWidth += 1
+			})
+			maxWidth = Math.max(maxWidth, cellWidth)
+		})
+
+		widths.push(maxWidth)
+	})
+
+	return widths
 }
 
 export default Table.extend({
@@ -178,6 +223,9 @@ export default Table.extend({
 	},
 
 	toMarkdown(state, node) {
+		const columns = getColumns(node)
+		state.options.columnWidths = calculateColumnWidths(columns)
+		state.options.currentHeaderIndex = 0
 		state.renderContent(node)
 		state.closeBlock(node)
 	},

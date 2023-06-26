@@ -13,8 +13,8 @@ This is a table
 
 | Header | other Header |
 |--------|--------------|
-| Cell | other cell |
-| Cell | other cell |
+| Cell   | other cell   |
+| Cell   | other cell   |
 
 ## Create a table
 
@@ -54,40 +54,40 @@ did insertTable
 
 ## Add a new row at the end
 
-|  |  |  |
-|--|--|--|
-|  |  |  |
+|  |  |             |
+|--|--|-------------|
+|  |  |             |
 |  |  | addRowAfter |
 
 
 ---
 
-|  |  |  |
-|--|--|--|
-|  |  |  |
+|  |  |                 |
+|--|--|-----------------|
+|  |  |                 |
 |  |  | did addRowAfter |
-|  |  |  |
+|  |  |                 |
 
 ## Add a new column at the end
 
-|  |  |  |
-|--|--|--|
-|  |  |  |
+|  |  |                |
+|--|--|----------------|
+|  |  |                |
 |  |  | addColumnAfter |
 
 
 ---
 
-|  |  |  |  |
-|--|--|--|--|
-|  |  |  |  |
+|  |  |                    |  |
+|--|--|--------------------|--|
+|  |  |                    |  |
 |  |  | did addColumnAfter |  |
 
 ## Delete row at the end
 
-|  |  |  |
-|--|--|--|
-|  |  |  |
+|  |  |           |
+|--|--|-----------|
+|  |  |           |
 |  |  | deleteRow |
 
 
@@ -99,9 +99,9 @@ did insertTable
 
 ## Delete column at the end
 
-|  |  |  |
-|--|--|--|
-|  |  |  |
+|  |  |              |
+|--|--|--------------|
+|  |  |              |
 |  |  | deleteColumn |
 
 
