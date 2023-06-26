@@ -123,6 +123,7 @@ jobs:
           php -f index.php
           php -S 0.0.0.0:8081 &
           export OC_PASS=1234561
+          php occ background:cron
           php occ user:add --password-from-env user1
           php occ user:add --password-from-env user2
           php occ app:enable viewer
