@@ -23,7 +23,7 @@ jobs:
           require: write
 
       - name: Add reaction on start
-        uses: peter-evans/create-or-update-comment@ca08ebd5dc95aa0cd97021e9708fcd6b87138c9b # v3.0.1
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3.0.2
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
           repository: ${{ github.event.repository.full_name }}
@@ -53,8 +53,14 @@ jobs:
     needs: init
 
     steps:
+      - name: Restore cached git repository
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        with:
+          path: .git
+          key: git-repo
+
       - name: Checkout ${{ needs.init.outputs.head_ref }}
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
           fetch-depth: 0
@@ -66,11 +72,11 @@ jobs:
           git config --local user.name "nextcloud-command"
 
       - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@0ce2ed60f6df073a62a77c0a4958dd0fc68e32e7 # v2.1
+        uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.2
         id: package-engines-versions
         with:
-          fallbackNode: '^16'
-          fallbackNpm: '^7'
+          fallbackNode: '^20'
+          fallbackNpm: '^9'
 
       - name: Set up node ${{ steps.package-engines-versions.outputs.nodeVersion }}
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
@@ -108,7 +114,7 @@ jobs:
           git push --force origin ${{ needs.init.outputs.head_ref }}
 
       - name: Add reaction on failure
-        uses: peter-evans/create-or-update-comment@ca08ebd5dc95aa0cd97021e9708fcd6b87138c9b # v3.0.1
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3.0.2
         if: failure()
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
