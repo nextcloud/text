@@ -7,3 +7,9 @@ import chaiExtension from './chai.js'
 before(() => {
 	chai.use(chaiExtension)
 })
+
+Cypress.on('window:before:load', (win) => {
+	// disable service workers
+	// eslint-disable-next-line
+	delete win.navigator.ServiceWorker
+})
