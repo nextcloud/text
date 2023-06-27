@@ -1,5 +1,4 @@
 import { initUserAndFiles, randUser } from '../../utils/index.js'
-import 'cypress-file-upload'
 
 const user = randUser()
 const mentionMe = randUser()

@@ -36,48 +36,61 @@ addCommands()
 // and also to determine paths, urls and the like.
 let auth
 Cypress.Commands.overwrite('login', (login, user) => {
+	cy.window().then((win) => {
+		win.location.href = 'about:blank'
+	})
 	auth = { user: user.userId, password: user.password }
 	login(user)
 })
 
 Cypress.Commands.add('ocsRequest', (options) => {
-	return cy.request({
-		form: true,
-		auth,
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-		...options,
-	})
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return cy.request({
+				form: true,
+				auth,
+				headers: {
+					'OCS-ApiRequest': 'true',
+					'Content-Type': 'application/x-www-form-urlencoded',
+					requesttoken,
+				},
+				...options,
+			})
+		})
 })
 
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
-	return cy.fixture(fileName, 'base64')
-		.then(Cypress.Blob.base64StringToBlob)
+	return cy.fixture(fileName, 'binary')
+		.then(Cypress.Blob.binaryStringToBlob)
 		.then(blob => {
-			const file = new File([blob], fileName, { type: mimeType })
 			if (typeof target !== 'undefined') {
 				fileName = target
 			}
-			return cy.request('/csrftoken')
-				.then(({ body }) => body.token)
-				.then(requesttoken => {
-					return axios.put(`${url}/remote.php/webdav/${fileName}`, file, {
+			cy.request('/csrftoken')
+				.then(({ body }) => {
+					return cy.wrap(body.token)
+				})
+				.then(async (requesttoken) => {
+					return cy.request({
+						url: `${url}/remote.php/webdav/${fileName}`,
+						method: 'put',
+						body: blob.size > 0 ? blob : '',
+						auth,
 						headers: {
 							requesttoken,
 							'Content-Type': mimeType,
 						},
-					}).then(response => {
-						const fileId = Number(
-							response.headers['oc-fileid']?.split('oc')?.[0]
-						)
-						cy.log(`Uploaded ${fileName}`,
-							response.status,
-							{ fileId }
-						)
-						return fileId
 					})
+				}).then(response => {
+					const fileId = Number(
+						response.headers['oc-fileid']?.split('oc')?.[0]
+					)
+					cy.log(`Uploaded ${fileName}`,
+						response.status,
+						{ fileId }
+					)
+					return cy.wrap(fileId)
 				})
 		})
 })
@@ -95,27 +108,27 @@ Cypress.Commands.add('downloadFile', (fileName) => {
 })
 
 Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown') => {
-	const fileName = target.split('/').pop()
-
 	const blob = new Blob([content], { type: mimeType })
-	const file = new File([blob], fileName, { type: mimeType })
 
-	return cy.window()
-		.then(async win => {
-			const response = await axios.put(`${url}/remote.php/webdav/${target}`, file, {
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return cy.request({
+				url: `${url}/remote.php/webdav/${target}`,
+				method: 'put',
+				body: blob.size > 0 ? blob : '',
+				auth,
 				headers: {
-					requesttoken: win.OC.requestToken,
 					'Content-Type': mimeType,
+					requesttoken,
 				},
+			}).then((response) => {
+				return cy.log(`Uploaded ${target}`, response.status)
 			})
-
-			return cy.log(`Uploaded ${fileName}`, response.status)
 		})
-
 })
 
 Cypress.Commands.add('shareFileToUser', (path, targetUser, shareData = {}) => {
-	cy.clearCookies()
 	cy.ocsRequest({
 		method: 'POST',
 		url: `${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
@@ -212,7 +225,8 @@ Cypress.Commands.add('createFolder', (target) => {
 	return cy.request('/csrftoken')
 		.then(({ body }) => body.token)
 		.then(requesttoken => {
-			return axios.request(`${rootPath}/${dirPath}`, {
+			return cy.request({
+				url: `${rootPath}/${dirPath}`,
 				method: 'MKCOL',
 				auth,
 				headers: {

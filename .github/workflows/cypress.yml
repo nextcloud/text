@@ -75,10 +75,20 @@ jobs:
         node-version: [16]
         containers: [1, 2, 3, 4, 5, 6, 7, 8]
         php-versions: [ '8.1' ]
-        databases: [ 'sqlite' ]
         server-versions: ['stable26']
 
     name: runner ${{ matrix.containers }}
+
+    services:
+      postgres:
+        image: ghcr.io/nextcloud/continuous-integration-postgres-14:latest
+        ports:
+          - 4444:5432/tcp
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: rootpassword
+          POSTGRES_DB: nextcloud
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 2s --health-retries 5
 
     steps:
       - name: Restore context
@@ -101,7 +111,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, iconv, fileinfo, intl, sqlite, pdo_sqlite, zip, gd, apcu
+          extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, pgsql, pdo_pgsql
           ini-values:
             apc.enable_cli=on
           coverage: none
@@ -113,7 +123,7 @@ jobs:
         run: |
           mkdir data
           echo '<?php $CONFIG=["memcache.local"=>"\OC\Memcache\APCu","hashing_default_password"=>true];' > config/config.php
-          php occ maintenance:install --verbose --database=${{ matrix.databases }} --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
+          php occ maintenance:install --verbose --database=pgsql --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
           php -f index.php
           php -S 0.0.0.0:8081 &
           export OC_PASS=1234561
