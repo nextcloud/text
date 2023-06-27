@@ -24,7 +24,7 @@
 	<div id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor"
-		@keydown.esc.stop.prevent="() => {}">
+		@keydown.stop="onKeyDown">
 		<DocumentStatus v-if="displayedStatus"
 			:idle="idle"
 			:lock="lock"
@@ -726,6 +726,18 @@ export default {
 
 		outlineToggled(visible) {
 			this.emit('outline-toggled', visible)
+		},
+
+		onKeyDown(event) {
+			if (event.key === 'Escape') {
+				event.preventDefault()
+				return
+			}
+
+			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+				this.$syncService.save()
+				event.preventDefault()
+			}
 		},
 	},
 }
