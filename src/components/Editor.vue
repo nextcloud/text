@@ -894,12 +894,6 @@ export default {
 		}
 	}
 
-	// Required in order to make the public pages behave the same if talk is enabled or not
-	// as Talk overwrites the public page styles and changes the DOM layout for the sidebar injection
-	#files-public-content {
-		height: 100%;
-	}
-
 	@keyframes spin {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
