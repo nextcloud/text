@@ -15,7 +15,6 @@ describe('Image View', () => {
 	before(() => {
 		cy.createUser(user)
 		cy.login(user)
-		cy.visit('/apps/files')
 
 		// Upload test files to user's storage
 		cy.createFolder('child-folder')

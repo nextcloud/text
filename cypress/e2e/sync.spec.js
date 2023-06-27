@@ -66,26 +66,31 @@ describe('Sync', () => {
 
 	it('recovers from a lost connection', () => {
 		let count = 0
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }, (req) => {
-			if (count < 5) {
-				count++
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
+			.as('createSession')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*' }, (req) => {
+			if (count < 4) {
 				req.destroy()
 				req.alias = 'dead'
+			} else {
+				req.alias = 'alive'
 			}
-		}).as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }, (req) => {
-			if (count < 5) {
-				count++
-				req.destroy()
-				req.alias = 'deadSync'
-			}
-		})
-		cy.get('#editor-container .document-status')
-			.should('contain', 'File could not be loaded', { timeout: 10000 })
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'File could not be loaded')
+		}).as('sessionRequests')
+		cy.wait('@dead', { timeout: 30000 })
+		cy.get('#editor-container .document-status', { timeout: 10000 })
+			.should('contain', 'File could not be loaded')
+			.then(() => {
+				count = 4
+			})
+		cy.wait('@alive', { timeout: 30000 })
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
 			.as('syncAfterRecovery')
+		cy.wait('@syncAfterRecovery', { timeout: 30000 })
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('not.contain', 'File could not be loaded')
+		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
+		cy.wait('@createSession')
+		cy.wait('@syncAfterRecovery')
 		cy.getContent().type('* more content added after the lost connection{enter}')
 		cy.wait('@syncAfterRecovery')
 		cy.closeFile()
