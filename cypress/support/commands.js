@@ -84,11 +84,11 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 					})
 				}).then(response => {
 					const fileId = Number(
-						response.headers['oc-fileid']?.split('oc')?.[0]
+						response.headers['oc-fileid']?.split('oc')?.[0],
 					)
 					cy.log(`Uploaded ${fileName}`,
 						response.status,
-						{ fileId }
+						{ fileId },
 					)
 					return cy.wrap(fileId)
 				})
@@ -194,7 +194,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 			const request = await axios.post(
 				`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
 				{ path, shareType },
-				{ headers }
+				{ headers },
 			)
 			const token = request.data?.ocs?.data?.token
 			const id = request.data?.ocs?.data?.id
@@ -210,7 +210,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 				await axios.put(
 					`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
 					{ permissions },
-					{ headers }
+					{ headers },
 				)
 				cy.log(`Made share ${token} editable.`)
 			}
@@ -237,15 +237,15 @@ Cypress.Commands.add('createFolder', (target) => {
 })
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().move(path, destinationPath))
+	.then(win => win.OC.Files.getClient().move(path, destinationPath)),
 )
 
 Cypress.Commands.add('removeFile', (path) => cy.window()
-	.then(win => win.OC.Files.getClient().remove(path))
+	.then(win => win.OC.Files.getClient().remove(path)),
 )
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
+	.then(win => win.OC.Files.getClient().copy(path, destinationPath)),
 )
 
 Cypress.Commands.add('getFileContent', (path) => {
@@ -285,7 +285,7 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => cy.window()
-	.then(win => win.OCA?.Files?.App?.fileList?.reload())
+	.then(win => win.OCA?.Files?.App?.fileList?.reload()),
 )
 
 Cypress.Commands.add('openFolder', (name) => {
@@ -391,7 +391,7 @@ Cypress.Commands.add('configureText', (key, value) => {
 		return axios.post(
 			`${url}/index.php/apps/text/settings`,
 			{ key, value },
-			{ headers: { requesttoken: win.OC.requestToken } }
+			{ headers: { requesttoken: win.OC.requestToken } },
 		)
 	})
 })

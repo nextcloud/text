@@ -49,7 +49,7 @@ export default function keepSyntax(md) {
 							Object.assign({}, open),
 							Object.assign({}, token, { content: token.content.slice(index, contentNext) }),
 							Object.assign({}, close),
-							Object.assign({}, token, { content: token.content.slice(contentNext) })
+							Object.assign({}, token, { content: token.content.slice(contentNext) }),
 						)
 						j += 3
 					}
