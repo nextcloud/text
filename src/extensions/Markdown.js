@@ -113,7 +113,7 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 	return {
 		serializer: new MarkdownSerializer(
 			{ ...defaultNodes, ...extractToMarkdown(nodes) },
-			{ ...defaultMarks, ...extractToMarkdown(marks) }
+			{ ...defaultMarks, ...extractToMarkdown(marks) },
 		),
 		serialize(content, options) {
 			return this.serializer.serialize(content, { ...options, tightLists: true })
@@ -138,7 +138,7 @@ const convertNames = (object) => {
 	}
 	return Object.fromEntries(
 		Object.entries(object)
-			.map(([name, value]) => [convert(name), value])
+			.map(([name, value]) => [convert(name), value]),
 	)
 }
 
