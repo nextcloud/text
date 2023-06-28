@@ -12,3 +12,4 @@ cypress/downloads/
 /tests/clover.xml
 /tests/.phpunit.result.cache
 dist/
+webpack-stats.json
