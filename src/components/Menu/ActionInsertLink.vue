@@ -139,7 +139,7 @@ export default {
 				true, // modal
 				FilePickerType.Choose, // type
 				true, // directories
-				this.startPath // path
+				this.startPath, // path
 			)
 
 			filePicker.pick().then((file) => {

@@ -51,7 +51,7 @@ describe('keyboard shortcuts', () => {
 		cy.uploadFile(
 			'empty.md',
 			'text/markdown',
-			path
+			path,
 		)
 		cy.window().then(win => win.OCA.Viewer.open({ path }))
 	    cy.getContent().type(Cypress.currentTest.title)
