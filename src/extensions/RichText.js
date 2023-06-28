@@ -21,6 +21,7 @@
  */
 
 import { Extension } from '@tiptap/core'
+import { lowlight } from 'lowlight'
 
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
@@ -86,7 +87,9 @@ export default Extension.create({
 			Blockquote,
 			CharacterCount,
 			Code,
-			CodeBlock,
+			CodeBlock.configure({
+				lowlight,
+			}),
 			BulletList,
 			HorizontalRule,
 			OrderedList,
