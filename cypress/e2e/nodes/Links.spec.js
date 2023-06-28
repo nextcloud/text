@@ -154,7 +154,7 @@ describe('test link marks', function() {
 				cy.getFile(fileName)
 					.then($el => {
 						checkLinkFile(fileName)
-						cy.get('.modal-title').should('include.text', fileName)
+						cy.get('.modal-name').should('include.text', fileName)
 					})
 			})
 			it('with selected text', () => {
@@ -162,7 +162,7 @@ describe('test link marks', function() {
 					.then($el => {
 						cy.getContent().type(`${text}{selectAll}`)
 						checkLinkFile(fileName, text)
-						cy.get('.modal-title').should('include.text', fileName)
+						cy.get('.modal-name').should('include.text', fileName)
 					})
 			})
 			it('link to directory', () => {
