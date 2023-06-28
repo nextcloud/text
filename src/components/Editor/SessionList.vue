@@ -119,7 +119,7 @@ export default {
 		participants() {
 			return Object.values(this.sessions).filter((session) =>
 				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-					&& (session.userId !== null || session.guestName !== null)
+					&& (session.userId !== null || session.guestName !== null),
 			).sort((a, b) => a.lastContact < b.lastContact)
 		},
 		currentSession() {
