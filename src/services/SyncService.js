@@ -250,6 +250,7 @@ class SyncService {
 				manualSave,
 			})
 			this.emit('stateChange', { dirty: false })
+			this.connection.document.lastSavedVersionTime = Date.now() / 1000
 			logger.debug('[SyncService] saved', response)
 			const { document, sessions } = response.data
 			this.emit('save', { document, sessions })
