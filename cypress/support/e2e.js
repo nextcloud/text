@@ -5,7 +5,7 @@ import './sessions.js'
 import chaiExtension from './chai.js'
 
 beforeEach(() => {
-	cy.intercept('GET', '**/preview-service-worker.js', { fixture: 'preview-service-worker.js' })
+	cy.intercept('GET', '**/preview-service-worker.js', { fixture: 'preview-service-worker.txt' })
 })
 
 before(() => {
