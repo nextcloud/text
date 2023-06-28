@@ -49,7 +49,7 @@ const BulletList = TiptapBulletList.extend({
 		return [
 			listInputRule(
 				/^\s*([-+*])\s([^\s[]+)$/,
-				this.type
+				this.type,
 			),
 		]
 	},

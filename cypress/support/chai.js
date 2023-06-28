@@ -10,7 +10,7 @@ export default _chai => {
 			rect.top < height && rect.bottom > 0 && rect.right <= width && rect.left >= 0,
 			'expected #{this} to be in the viewport',
 			'expected #{this} to not be in the viewport',
-			this._obj
+			this._obj,
 		)
 	})
 }
