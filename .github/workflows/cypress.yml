@@ -22,6 +22,10 @@ jobs:
     outputs:
       nodeVersion: ${{ steps.versions.outputs.nodeVersion }}
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
+    strategy:
+      fail-fast: false
+      matrix:
+        server-versions: ['stable27']
 
     steps:
       - name: Checkout server
@@ -72,10 +76,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16]
         containers: [1, 2, 3, 4, 5, 6, 7, 8]
         php-versions: [ '8.1' ]
-        server-versions: ['stable27']
 
     name: runner ${{ matrix.containers }}
 
