@@ -21,7 +21,9 @@
   -->
 
 <template>
-	<div data-text-el="editor-container" class="text-editor">
+	<div data-text-el="editor-container"
+		class="text-editor"
+		@keydown.stop="onKeyDown">
 		<DocumentStatus v-if="displayedStatus"
 			:idle="idle"
 			:lock="lock"
@@ -726,6 +728,13 @@ export default {
 
 		outlineToggled(visible) {
 			this.$parent.$emit('outline-toggled', visible)
+		},
+
+		onKeyDown(event) {
+			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+				this.$syncService.save()
+				event.preventDefault()
+			}
 		},
 	},
 }
