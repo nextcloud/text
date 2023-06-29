@@ -99,27 +99,26 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function deleteInactiveWithoutSteps($documentId = -1) {
-		$qb = $this->db->getQueryBuilder();
-		$qb->select('session_id')
-			->from('text_steps');
+	public function deleteInactiveWithoutSteps(?int $documentId = null): int {
+		$selectSubQuery = $this->db->getQueryBuilder();
+		$selectSubQuery->select('s.id')
+			->from('text_sessions', 's')
+			->leftJoin('s', 'text_steps', 'st', $selectSubQuery->expr()->eq('st.session_id', 's.id'))
+			->where($selectSubQuery->expr()->lt('last_contact', $selectSubQuery->createParameter('lastContact')))
+			->andWhere($selectSubQuery->expr()->isNull('st.id'));
 		if ($documentId !== null) {
-			$qb->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
+			$selectSubQuery->andWhere($selectSubQuery->expr()->eq('s.document_id', $selectSubQuery->createParameter('documentId')));
 		}
-		$result = $qb
-			->groupBy('session_id')
-			->execute();
-		$activeSessions = $result->fetchAll(\PDO::FETCH_COLUMN);
-		$result->closeCursor();
 
 		$qb = $this->db->getQueryBuilder();
-		$qb->delete($this->getTableName());
-		$qb->where($qb->expr()->lt('last_contact', $qb->createNamedParameter(time() - SessionService::SESSION_VALID_TIME)));
-		if ($documentId !== null) {
-			$qb->andWhere($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
-		}
-		$qb->andWhere($qb->expr()->notIn('id', $qb->createNamedParameter($activeSessions, IQueryBuilder::PARAM_INT_ARRAY)));
-		return $qb->execute();
+		$qb->delete($this->getTableName())
+			->where($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
+		$qb->setParameters([
+			'lastContact' => time() - SessionService::SESSION_VALID_TIME,
+			'documentId' => $documentId,
+		]);
+
+		return $qb->executeStatement();
 	}
 
 	public function deleteByDocumentId($documentId) {
