@@ -121,7 +121,7 @@ export default class AttachmentResolver {
 	#getImageAttachmentUrl(imageFileName) {
 		if (!this.#session) {
 			return this.#davUrl(
-				`${this.#attachmentDirectory}/${imageFileName}`
+				`${this.#attachmentDirectory}/${imageFileName}`,
 			)
 		}
 

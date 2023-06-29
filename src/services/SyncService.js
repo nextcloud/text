@@ -135,7 +135,7 @@ class SyncService {
 				// Axios normally tries to parse string responses as json.
 				// Just return the plain content here.
 				transformResponse: [(data) => data],
-			}
+			},
 		).then(response => response.data)
 	}
 
@@ -150,7 +150,7 @@ class SyncService {
 				sessionToken: this.session.token,
 				token: this.options.shareToken,
 				guestName,
-			}
+			},
 		).then(({ data }) => {
 			this.session = data
 			return data

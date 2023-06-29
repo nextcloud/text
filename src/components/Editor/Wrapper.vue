@@ -126,7 +126,7 @@ export default {
 			(enable) => {
 				// make outline state reactive through the provider
 				Object.assign(this.outline, { enable })
-			}
+			},
 		)
 	},
 	methods: {

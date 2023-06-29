@@ -72,7 +72,7 @@ describe('keyboard shortcuts', () => {
 				return cy.uploadFile(
 					'empty.md',
 					'text/markdown',
-					`${Cypress.currentTest.title}.md`
+					`${Cypress.currentTest.title}.md`,
 				)
 			})
 			.then(() => cy.reloadFileList())

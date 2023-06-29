@@ -141,7 +141,7 @@ export default {
 				.then((response) => {
 					this.insertAttachment(
 						response.data?.name, response.data?.id, file.type,
-						position, response.data?.dirname
+						position, response.data?.dirname,
 					)
 				})
 				.catch((error) => {
@@ -170,7 +170,7 @@ export default {
 			return this.$syncService.insertAttachmentFile(filePath).then((response) => {
 				this.insertAttachment(
 					response.data?.name, response.data?.id, response.data?.mimetype,
-					null, response.data?.dirname
+					null, response.data?.dirname,
 				)
 			}).catch((error) => {
 				logger.error('Failed to insert image path', { error })
