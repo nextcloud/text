@@ -27,7 +27,7 @@ describe('test link marks', function() {
 
 			cy.getContent()
 				.find('.widgets--list', { timeout: 10000 })
-				.find('.widget-default--title')
+				.find('.widget-default--name')
 				.contains('Nextcloud - Online collaboration platform')
 		})
 

@@ -22,14 +22,14 @@
 <template>
 	<NcActions class="entry-action entry-action__image-upload"
 		:data-text-action-entry="actionEntry.key"
-		:title="actionEntry.label"
+		:name="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:container="menuIDSelector"
 		role="menu"
 		aria-haspopup>
 		<template #icon>
 			<component :is="icon"
-				:title="actionEntry.label"
+				:name="actionEntry.label"
 				:aria-label="actionEntry.label"
 				aria-haspopup />
 		</template>

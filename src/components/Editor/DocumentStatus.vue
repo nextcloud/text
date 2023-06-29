@@ -22,7 +22,7 @@
 
 <template>
 	<div class="document-status">
-		<NcEmptyContent v-if="isLoadingError" :title="t('text', 'Failed to load file')" :description="syncError.data.data">
+		<NcEmptyContent v-if="isLoadingError" :name="t('text', 'Failed to load file')" :description="syncError.data.data">
 			<template #icon>
 				<AlertOctagonOutline />
 			</template>
