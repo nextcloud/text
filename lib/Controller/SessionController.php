@@ -82,10 +82,22 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function sync(int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function sync(int $version = 0): DataResponse {
 		try {
 			$this->loginSessionUser();
-			return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);
+			return $this->apiService->sync($this->getSession(), $this->getDocument(), $version);
+		} finally {
+			$this->restoreSessionUser();
+		}
+	}
+
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function save(int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+		try {
+			$this->loginSessionUser();
+			return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);
 		} finally {
 			$this->restoreSessionUser();
 		}

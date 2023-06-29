@@ -211,11 +211,6 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	/**
-	 * @param null|string $autosaveContent
-	 * @param null|string $documentState
-	 * @param null|string $token
-	 */
 	public function sync(Session $session, Document $document, int $version = 0, string|null $autosaveContent = null, string|null $documentState = null, bool $force = false, bool $manualSave = false, string|null $token = null): DataResponse {
 		$documentId = $session->getDocumentId();
 		try {
@@ -225,7 +220,26 @@ class ApiService {
 				'document' => $document,
 			];
 
-			$file = $this->documentService->getFileForSession($session, $token);
+			// ensure file is still present and accessible
+			$this->documentService->getFileForSession($session, $shareToken);
+		} catch (NotFoundException $e) {
+			$this->logger->info($e->getMessage(), ['exception' => $e]);
+			return new DataResponse([
+				'message' => 'File not found'
+			], 404);
+		} catch (DoesNotExistException $e) {
+			$this->logger->info($e->getMessage(), ['exception' => $e]);
+			return new DataResponse([
+				'message' => 'Document no longer exists'
+			], 404);
+		}
+
+		return new DataResponse($result, 200);
+	}
+
+	public function save(Session $session, Document $document, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+		try {
+			$file = $this->documentService->getFileForSession($session, $shareToken);
 		} catch (NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
@@ -239,14 +253,14 @@ class ApiService {
 		}
 
 		try {
-			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $token, $this->request->getParam('filePath'));
-		} catch (DocumentSaveConflictException $e) {
+			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken, $this->request->getParam('filePath'));
+		} catch (DocumentSaveConflictException) {
 			try {
 				$result['outsideChange'] = $file->getContent();
-			} catch (LockedException $e) {
+			} catch (LockedException) {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			return new DataResponse([], 404);
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);

@@ -253,7 +253,7 @@ class SyncService {
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
-			const response = await this.connection.sync({
+			const response = await this.connection.save({
 				version: this.version,
 				autosaveContent: this._getContent(),
 				documentState: this.getDocumentState(),

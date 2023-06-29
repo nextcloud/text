@@ -55,6 +55,11 @@ Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 		.then(response => response.data)
 })
 
+Cypress.Commands.add('save', (connection, options = { version: 0 }) => {
+	return connection.save(options)
+		.then(response => response.data)
+})
+
 // Used to test for race conditions between the last push and the close request
 Cypress.Commands.add('pushAndClose', ({ connection, steps, version, awareness = '' }) => {
 	cy.log('Race between push and close')

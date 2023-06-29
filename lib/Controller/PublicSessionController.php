@@ -100,8 +100,15 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
-		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
+	public function sync(string $token, int $version = 0): DataResponse {
+		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $token);
+	}
+
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function save(string $token, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+		return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 
 	/**
