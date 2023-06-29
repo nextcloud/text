@@ -1,7 +1,7 @@
 <template>
 	<NcModal size="normal"
 		data-text-el="formatting-help"
-		:title="t('text', 'Formatting help')"
+		:name="t('text', 'Formatting help')"
 		@close="$emit('close')">
 		<h2>{{ t('text', 'Formatting help') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>

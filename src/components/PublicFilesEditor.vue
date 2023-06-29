@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<NcModal v-if="active" :title="fileName" @close="close">
+	<NcModal v-if="active" :name="fileName" @close="close">
 		<Editor :file-id="fileId"
 			:relative-path="relativePath"
 			:active="active"

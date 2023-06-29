@@ -1,7 +1,7 @@
 <template>
 	<NcModal v-if="show"
 		size="large"
-		:title="currentImage.basename"
+		:name="currentImage.basename"
 		:out-transition="true"
 		:has-next="true"
 		:has-previous="true"

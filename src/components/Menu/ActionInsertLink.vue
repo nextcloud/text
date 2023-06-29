@@ -25,10 +25,10 @@
 		:class="activeClass"
 		:container="menuIDSelector"
 		:data-text-action-entry="actionEntry.key"
-		:title="actionEntry.label">
+		:name="actionEntry.label">
 		<template #icon>
 			<component :is="icon"
-				:title="actionEntry.label"
+				:name="actionEntry.label"
 				:aria-label="actionEntry.label"
 				aria-haspopup />
 		</template>
