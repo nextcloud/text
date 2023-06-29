@@ -39,9 +39,9 @@ jobs:
         id: git-path
         run: |
           if ${{ startsWith(steps.command.outputs.arg1, '/') }}; then
-            echo "path=${{ github.workspace }}${{steps.command.outputs.arg1}}" >> $GITHUB_OUTPUT
+            echo "path=${{steps.command.outputs.arg1}}" >> $GITHUB_OUTPUT
           else
-            echo "path=${{ github.workspace }}${{steps.command.outputs.arg2}}" >> $GITHUB_OUTPUT
+            echo "path=${{steps.command.outputs.arg2}}" >> $GITHUB_OUTPUT
           fi
 
       - name: Init branch
@@ -95,7 +95,7 @@ jobs:
       - name: Commit and push default
         if: ${{ needs.init.outputs.arg1 != 'fixup' && needs.init.outputs.arg1 != 'amend' }}
         run: |
-          git add ${{ needs.init.outputs.git_path }}
+          git add ${{ github.workspace }}${{ needs.init.outputs.git_path }}
           git commit --signoff -m 'chore(assets): Recompile assets'
           git push origin ${{ needs.init.outputs.head_ref }}
 
