@@ -10,6 +10,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Ajutine kausta on puudu",
     "Could not write file to disk" : "Faili kirjutamine kettale ebaõnnestus",
     "A PHP extension stopped the file upload" : "PHP laiendus peatas faili üleslaadimise",
+    "No file uploaded or file size exceeds maximum of %s" : "Faili ei laaditud üles või selle suurus ületab maksimaalse %s",
     "Use current version" : "Kasuta praegust versiooni",
     "Use the saved version" : "Kasuta salvestatud versiooni",
     "Guest" : "Külaline",
@@ -25,6 +26,7 @@ OC.L10N.register(
     "Translation failed" : "Tõlkimine ebaõnnestus",
     "Unsupported image type" : "Pildi tüüp pole toetatud",
     "Undo" : "Tühista",
+    "Headings" : "Pealkirjad",
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri"

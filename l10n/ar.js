@@ -28,6 +28,8 @@ OC.L10N.register(
     "Translate" : "ترجم",
     "Replace" : "تبديل",
     "Unsupported image type" : "صيغة الصورة غير مقبولة",
+    "Hide outline" : "إخفِ قائمة محتويات الصفحة",
+    "Show outline" : "أظهِر قائمة محتويات الصفحة outlines",
     "Undo" : "تراجع",
     "Redo" : "إعادة",
     "Info" : "معلومات",
