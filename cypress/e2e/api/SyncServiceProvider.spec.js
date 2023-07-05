@@ -23,7 +23,7 @@
 import { randUser } from '../../utils/index.js'
 import { SyncService } from '../../../src/services/SyncService.js'
 import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
-import { Doc } from 'yjs'
+import { Doc, applyUpdate, encodeStateAsUpdate, encodeStateVector } from 'yjs'
 
 const user = randUser()
 
@@ -162,6 +162,41 @@ describe('Sync service provider', function() {
 		cy.get('@push.all').its('length').should('be.lessThan', 30)
 		// 2 clients sync fast first and then every 5 seconds -> 2*12 = 24. Actual 32.
 		cy.get('@sync.all').its('length').should('be.lessThan', 60)
+	})
+
+	it.only('applies step in wrong order', function() {
+		const source = new Doc()
+		const target = new Doc()
+		const sourceMap = source.getMap()
+		const targetMap = target.getMap()
+
+		target.on('afterTransaction', (tr, doc) => {
+			// console.log('afterTransaction', tr)
+		})
+
+		// Add keyA to source and apply to target
+		sourceMap.set('keyA', 'valueA')
+		const update0A = encodeStateAsUpdate(source)
+		const sourceVectorA = encodeStateVector(source)
+		applyUpdate(target, update0A)
+		expect(targetMap.get('keyA')).to.be.eq('valueA')
+
+		// Add keyB to source, don't apply to target yet
+		sourceMap.set('keyB', 'valueB')
+		const updateAB = encodeStateAsUpdate(source, sourceVectorA)
+		const sourceVectorB = encodeStateVector(source)
+
+		// Add keyC to source, apply to target
+		sourceMap.set('keyC', 'valueC')
+		const updateBC = encodeStateAsUpdate(source, sourceVectorB)
+		applyUpdate(target, updateBC)
+		expect(targetMap.get('keyB')).to.be.eq(undefined)
+		expect(targetMap.get('keyC')).to.be.eq(undefined)
+
+		// Apply keyB to target
+		applyUpdate(target, updateAB)
+		expect(targetMap.get('keyB')).to.be.eq('valueB')
+		expect(targetMap.get('keyC')).to.be.eq('valueC')
 	})
 
 })
