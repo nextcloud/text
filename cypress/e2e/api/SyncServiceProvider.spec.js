@@ -61,7 +61,34 @@ describe('Sync service provider', function() {
 		})
 	}
 
-	it('creates the provider', function() {
+	it('syncs even when initial state was present', function() {
+		const source = new Doc()
+		const target = new Doc()
+		const sourceProvider = createProvider(source)
+		const targetProvider = createProvider(target)
+		const sourceMap = source.getMap()
+		const targetMap = target.getMap()
+		sourceMap.set('unrelated', 'value')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
+			.as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+			.as('sync')
+		cy.wait('@push')
+		cy.then(() => {
+			sourceMap.set('keyA', 'valueA')
+			expect(targetMap.get('keyA')).to.be.undefined
+		})
+		cy.wait('@sync')
+		cy.wait('@sync')
+		cy.wait(1000)
+		cy.then(() => {
+			expect(targetMap.get('keyA')).to.be.eq('valueA')
+			sourceProvider.destroy()
+			targetProvider.destroy()
+		})
+	})
+
+	it('recovers from a dropped message', function() {
 		const source = new Doc()
 		const target = new Doc()
 		const sourceProvider = createProvider(source)
@@ -82,10 +109,59 @@ describe('Sync service provider', function() {
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
+		})
+		let count = 0
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }, req => {
+			if (count < 2) {
+				req.destroy()
+				req.alias = 'dead'
+				count += 1
+			} else {
+				req.continue()
+				req.alias = 'alive'
+			}
+		})
+		cy.then(() => {
+			sourceMap.set('keyB', 'valueB')
+			expect(targetMap.get('keyB')).to.be.undefined
+		})
+		cy.wait('@dead')
+		cy.wait('@sync')
+		cy.wait('@sync')
+		cy.wait(1000)
+		cy.then(() => {
+			expect(targetMap.get('keyB')).to.be.eq('valueB')
 			sourceProvider.destroy()
 			targetProvider.destroy()
 		})
 	})
 
+	it('is not too chatty', function() {
+		const source = new Doc()
+		const target = new Doc()
+		const sourceProvider = createProvider(source)
+		const targetProvider = createProvider(target)
+		const sourceMap = source.getMap()
+		const targetMap = target.getMap()
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
+			.as('push')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+			.as('sync')
+		cy.wait('@push')
+		cy.then(() => {
+			sourceMap.set('keyA', 'valueA')
+			expect(targetMap.get('keyA')).to.be.undefined
+		})
+		cy.wait(60000)
+		cy.then(() => {
+			expect(targetMap.get('keyA')).to.be.eq('valueA')
+			sourceProvider.destroy()
+			targetProvider.destroy()
+		})
+		// 2 clients push awareness updates every 15 seconds -> 2*5 = 10. Actual 15.
+		cy.get('@push.all').its('length').should('be.lessThan', 30)
+		// 2 clients sync fast first and then every 5 seconds -> 2*12 = 24. Actual 32.
+		cy.get('@sync.all').its('length').should('be.lessThan', 60)
+	})
 
 })

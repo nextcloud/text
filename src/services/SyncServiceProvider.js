@@ -42,7 +42,7 @@ export default function createSyncServiceProvider({ ydoc, syncService, fileId, i
 		'ws://localhost:1234',
 		'file:' + fileId,
 		ydoc,
-		{ WebSocketPolyfill },
+		{ WebSocketPolyfill, disableBc: true },
 	)
 	websocketProvider.on('status', event => logger.debug('status', event))
 	return websocketProvider
