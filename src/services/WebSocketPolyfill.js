@@ -81,9 +81,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 		send(...data) {
 			this.#queue.push(...data)
-			let outbox
+			let outbox = []
 			syncService.sendSteps(() => {
-				outbox = this.#queue
+				outbox = [...this.#queue]
 				const data = {
 					steps: this.#steps,
 					awareness: this.#awareness,
@@ -92,7 +92,8 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				this.#queue = []
 				logger.debug('sending steps ', data)
 				return data
-			})?.catch(() => {
+			})?.catch(err => {
+				logger.error(err)
 				// try to send the steps again
 				this.#queue = [...outbox, ...this.#queue]
 			})

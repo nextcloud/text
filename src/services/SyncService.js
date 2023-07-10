@@ -66,6 +66,8 @@ const ERROR_TYPE = {
 
 class SyncService {
 
+	#sendIntervalId
+
 	constructor({ serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
@@ -84,6 +86,7 @@ class SyncService {
 
 		this.version = null
 		this.sending = false
+		this.#sendIntervalId = null
 
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
 
@@ -142,12 +145,26 @@ class SyncService {
 	}
 
 	sendSteps(getSendable) {
-		if (!this.connection || this.sending) {
-			setTimeout(() => {
-				this.sendSteps(getSendable)
-			}, 200)
+		// If already retrying, do nothing.
+		if (this.#sendIntervalId) {
 			return
 		}
+		if (this.connection && !this.sending) {
+			return this._sendSteps(getSendable)
+		}
+		// If already sending, retry every 200ms.
+		return new Promise((resolve, reject) => {
+			this.#sendIntervalId = setInterval(() => {
+				if (this.connection && !this.sending) {
+					clearInterval(this.#sendIntervalId)
+					this.#sendIntervalId = null
+					this._sendSteps(getSendable).then(resolve).catch(reject)
+				}
+			}, 200)
+		})
+	}
+
+	_sendSteps(getSendable) {
 		this.sending = true
 		const data = getSendable()
 		if (data.steps.length > 0) {
@@ -156,7 +173,8 @@ class SyncService {
 		return this.connection.push(data)
 			.then((response) => {
 				this.sending = false
-			}).catch(({ response, code }) => {
+			}).catch(err => {
+				const { response, code } = err
 				this.sending = false
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
@@ -172,8 +190,7 @@ class SyncService {
 						OC.Notification.showTemporary('Changes could not be sent yet')
 					}
 				}
-				logger.error('Failed to apply steps, retrying...')
-				throw('retry')
+				throw new Error('Failed to apply steps. Retry!', { cause: err })
 			})
 	}
 
@@ -184,7 +201,7 @@ class SyncService {
 			.map(s => {
 				return { step: s.lastAwarenessMessage, clientId: s.clientId }
 			})
-		const newSteps = awareness
+		const newSteps = [...awareness]
 		this.steps = [...this.steps, ...awareness.map(s => s.step)]
 		for (let i = 0; i < steps.length; i++) {
 			const singleSteps = steps[i].data
