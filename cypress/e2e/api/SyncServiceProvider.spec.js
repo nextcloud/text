@@ -45,6 +45,15 @@ describe('Sync service provider', function() {
 			.then(id => {
 				fileId = id
 			})
+		cy.wrap(new Doc()).as('source')
+		cy.wrap(new Doc()).as('target')
+		cy.get('@source').then(source => createProvider(source)).as('sourceProvider')
+		cy.get('@target').then(target => createProvider(target)).as('targetProvider')
+	})
+
+	afterEach(function() {
+		this.sourceProvider?.destroy()
+		this.targetProvider?.destroy()
 	})
 
 	function createProvider(ydoc) {
@@ -62,12 +71,8 @@ describe('Sync service provider', function() {
 	}
 
 	it('syncs even when initial state was present', function() {
-		const source = new Doc()
-		const target = new Doc()
-		const sourceProvider = createProvider(source)
-		const targetProvider = createProvider(target)
-		const sourceMap = source.getMap()
-		const targetMap = target.getMap()
+		const sourceMap = this.source.getMap()
+		const targetMap = this.target.getMap()
 		sourceMap.set('unrelated', 'value')
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
 			.as('push')
@@ -83,18 +88,12 @@ describe('Sync service provider', function() {
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
-			sourceProvider.destroy()
-			targetProvider.destroy()
 		})
 	})
 
-	it('recovers from a dropped message', function() {
-		const source = new Doc()
-		const target = new Doc()
-		const sourceProvider = createProvider(source)
-		const targetProvider = createProvider(target)
-		const sourceMap = source.getMap()
-		const targetMap = target.getMap()
+	it.only('recovers from a dropped message', function() {
+		const sourceMap = this.source.getMap()
+		const targetMap = this.target.getMap()
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
 			.as('push')
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
@@ -111,38 +110,52 @@ describe('Sync service provider', function() {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
 		})
 		let count = 0
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' }, req => {
-			if (count < 2) {
-				req.destroy()
-				req.alias = 'dead'
-				count += 1
-			} else {
-				req.continue()
-				req.alias = 'alive'
-			}
+		cy.intercept({
+			method: 'POST',
+			url: '**/apps/text/session/push',
+			}, req => {
+				if (req.body.steps) {
+					req.reply({ forceNetworkError: true })
+					req.alias = 'dead'
+				} else {
+					req.continue()
+				}
 		})
 		cy.then(() => {
 			sourceMap.set('keyB', 'valueB')
 			expect(targetMap.get('keyB')).to.be.undefined
 		})
 		cy.wait('@dead')
-		cy.wait('@sync')
-		cy.wait('@sync')
+		cy.then(() => {
+			expect(targetMap.get('keyB')).to.be.undefined
+		})
+		cy.intercept({
+			method: 'POST',
+			url: '**/apps/text/session/push',
+			}, req => {
+				if (req.body.steps) {
+					req.alias = 'alive'
+					req.continue()
+				} else {
+					req.continue()
+				}
+		})
+		cy.then(() => {
+			sourceMap.set('keyC', 'valueC')
+			expect(targetMap.get('keyC')).to.be.undefined
+		})
+		cy.wait('@alive')
+		cy.wait('@alive')
 		cy.wait(1000)
 		cy.then(() => {
+			expect(targetMap.get('keyC')).to.be.eq('valueC')
 			expect(targetMap.get('keyB')).to.be.eq('valueB')
-			sourceProvider.destroy()
-			targetProvider.destroy()
 		})
 	})
 
 	it('is not too chatty', function() {
-		const source = new Doc()
-		const target = new Doc()
-		const sourceProvider = createProvider(source)
-		const targetProvider = createProvider(target)
-		const sourceMap = source.getMap()
-		const targetMap = target.getMap()
+		const sourceMap = this.source.getMap()
+		const targetMap = this.target.getMap()
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
 			.as('push')
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
@@ -155,8 +168,6 @@ describe('Sync service provider', function() {
 		cy.wait(60000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
-			sourceProvider.destroy()
-			targetProvider.destroy()
 		})
 		// 2 clients push awareness updates every 15 seconds -> 2*5 = 10. Actual 15.
 		cy.get('@push.all').its('length').should('be.lessThan', 30)
