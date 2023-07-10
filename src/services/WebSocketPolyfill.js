@@ -80,14 +80,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		}
 
 		send(...data) {
-			const sending = this.#queue.length > 0
 			this.#queue.push(...data)
-			if (!sending) {
-				this.#initiateSending()
-			}
-		}
-
-		#initiateSending() {
 			let outbox
 			syncService.sendSteps(() => {
 				outbox = this.#queue
