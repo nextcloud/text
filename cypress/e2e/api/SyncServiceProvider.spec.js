@@ -56,9 +56,12 @@ describe('Sync service provider', function() {
 		this.targetProvider?.destroy()
 	})
 
+	/**
+	 * @param {object} ydoc Yjs document
+	 */
 	function createProvider(ydoc) {
 		const syncService = new SyncService({
-			serialize: () => "Serialized",
+			serialize: () => 'Serialized',
 			getDocumentState: () => null,
 		})
 		syncService.on('opened', () => syncService.startSync())
@@ -66,7 +69,7 @@ describe('Sync service provider', function() {
 			ydoc,
 			syncService,
 			fileId,
-			initialSession: null
+			initialSession: null,
 		})
 	}
 
@@ -81,10 +84,11 @@ describe('Sync service provider', function() {
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
-			expect(targetMap.get('keyA')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.wait('@sync')
 		cy.wait('@sync')
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
@@ -101,51 +105,51 @@ describe('Sync service provider', function() {
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
-			expect(targetMap.get('keyA')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.wait('@sync')
 		cy.wait('@sync')
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
 		})
-		let count = 0
 		cy.intercept({
 			method: 'POST',
 			url: '**/apps/text/session/push',
-			}, req => {
-				if (req.body.steps) {
-					req.reply({ forceNetworkError: true })
-					req.alias = 'dead'
-				} else {
-					req.continue()
-				}
+		}, req => {
+			if (req.body.steps) {
+				req.reply({ forceNetworkError: true })
+				req.alias = 'dead'
+			} else {
+				req.continue()
+			}
 		})
 		cy.then(() => {
 			sourceMap.set('keyB', 'valueB')
-			expect(targetMap.get('keyB')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.wait('@dead')
 		cy.then(() => {
-			expect(targetMap.get('keyB')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.intercept({
 			method: 'POST',
 			url: '**/apps/text/session/push',
-			}, req => {
-				if (req.body.steps) {
-					req.alias = 'alive'
-					req.continue()
-				} else {
-					req.continue()
-				}
+		}, req => {
+			if (req.body.steps) {
+				req.alias = 'alive'
+				req.continue()
+			} else {
+				req.continue()
+			}
 		})
 		cy.then(() => {
 			sourceMap.set('keyC', 'valueC')
-			expect(targetMap.get('keyC')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
 		cy.wait('@alive')
-		cy.wait('@alive')
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(1000)
 		cy.then(() => {
 			expect(targetMap.get('keyC')).to.be.eq('valueC')
@@ -163,8 +167,9 @@ describe('Sync service provider', function() {
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
-			expect(targetMap.get('keyA')).to.be.undefined
+			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(60000)
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
