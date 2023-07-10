@@ -163,7 +163,7 @@ class PollingBackend {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 
 			} else {
 				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
@@ -186,11 +186,11 @@ class PollingBackend {
 			this.disconnect()
 		} else if (e.response.status === 503) {
 			this.increaseRefetchTimer()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 			logger.error('Failed to fetch steps due to unavailable service', { error: e })
 		} else {
 			this.disconnect()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: { retry: false } })
+			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
 
