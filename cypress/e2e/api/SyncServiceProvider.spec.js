@@ -23,7 +23,7 @@
 import { randUser } from '../../utils/index.js'
 import { SyncService } from '../../../src/services/SyncService.js'
 import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
-import { Doc, applyUpdate, encodeStateAsUpdate, encodeStateVector } from 'yjs'
+import { Doc } from 'yjs'
 
 const user = randUser()
 
@@ -74,29 +74,7 @@ describe('Sync service provider', function() {
 		})
 	}
 
-	it('syncs even when initial state was present', function() {
-		const sourceMap = this.source.getMap()
-		const targetMap = this.target.getMap()
-		sourceMap.set('unrelated', 'value')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
-			.as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
-			.as('sync')
-		cy.wait('@push')
-		cy.then(() => {
-			sourceMap.set('keyA', 'valueA')
-			expect(targetMap.get('keyB')).to.be.eq(undefined)
-		})
-		cy.wait('@sync')
-		cy.wait('@sync')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(1000)
-		cy.then(() => {
-			expect(targetMap.get('keyA')).to.be.eq('valueA')
-		})
-	})
-
-	it.only('recovers from a dropped message', function() {
+	it('recovers from a dropped message', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
@@ -158,7 +136,11 @@ describe('Sync service provider', function() {
 		})
 	})
 
-	it('is not too chatty', function() {
+	/*
+	 * Counts the amount of push and sync requests in one minute.
+	 * Skipped per default, useful for comparison before/after changes to SyncProvider or PollingBackend.
+	 */
+	it.skip('is not too chatty', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
@@ -180,40 +162,4 @@ describe('Sync service provider', function() {
 		// 2 clients sync fast first and then every 5 seconds -> 2*12 = 24. Actual 32.
 		cy.get('@sync.all').its('length').should('be.lessThan', 60)
 	})
-
-	it.only('applies step in wrong order', function() {
-		const source = new Doc()
-		const target = new Doc()
-		const sourceMap = source.getMap()
-		const targetMap = target.getMap()
-
-		target.on('afterTransaction', (tr, doc) => {
-			// console.log('afterTransaction', tr)
-		})
-
-		// Add keyA to source and apply to target
-		sourceMap.set('keyA', 'valueA')
-		const update0A = encodeStateAsUpdate(source)
-		const sourceVectorA = encodeStateVector(source)
-		applyUpdate(target, update0A)
-		expect(targetMap.get('keyA')).to.be.eq('valueA')
-
-		// Add keyB to source, don't apply to target yet
-		sourceMap.set('keyB', 'valueB')
-		const updateAB = encodeStateAsUpdate(source, sourceVectorA)
-		const sourceVectorB = encodeStateVector(source)
-
-		// Add keyC to source, apply to target
-		sourceMap.set('keyC', 'valueC')
-		const updateBC = encodeStateAsUpdate(source, sourceVectorB)
-		applyUpdate(target, updateBC)
-		expect(targetMap.get('keyB')).to.be.eq(undefined)
-		expect(targetMap.get('keyC')).to.be.eq(undefined)
-
-		// Apply keyB to target
-		applyUpdate(target, updateAB)
-		expect(targetMap.get('keyB')).to.be.eq('valueB')
-		expect(targetMap.get('keyC')).to.be.eq('valueC')
-	})
-
 })
