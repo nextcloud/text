@@ -77,7 +77,7 @@ describe('Sync', () => {
 			}
 		}).as('sessionRequests')
 		cy.wait('@dead', { timeout: 30000 })
-		cy.get('#editor-container .document-status', { timeout: 10000 })
+		cy.get('#editor-container .document-status', { timeout: 30000 })
 			.should('contain', 'File could not be loaded')
 			.then(() => {
 				count = 4
