@@ -1,4 +1,3 @@
-
 /**
  * @copyright Copyright (c) 2020 Julius Härtl <jus@bitgrid.net>
  *

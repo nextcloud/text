@@ -124,7 +124,7 @@ const registerFileActionFallback = () => {
 					vm.$mount(ViewerRoot)
 				})
 			},
-			t('text', 'Edit')
+			t('text', 'Edit'),
 		)
 
 		for (let i = 0; i < openMimetypes.length; i++) {

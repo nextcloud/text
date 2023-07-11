@@ -185,7 +185,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 			const request = await axios.post(
 				`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
 				{ path, shareType: window.OC.Share.SHARE_TYPE_LINK },
-				{ headers }
+				{ headers },
 			)
 			const token = request.data?.ocs?.data?.token
 			const id = request.data?.ocs?.data?.id
@@ -201,7 +201,7 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 				await axios.put(
 					`${Cypress.env('baseUrl')}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
 					{ permissions },
-					{ headers }
+					{ headers },
 				)
 				cy.log(`Made share ${token} editable.`)
 			}
@@ -213,19 +213,19 @@ Cypress.Commands.add('shareFile', (path, options = {}) => {
 })
 
 Cypress.Commands.add('createFolder', dirName => cy.window()
-	.then(win => win.OC.Files.getClient().createDirectory(dirName))
+	.then(win => win.OC.Files.getClient().createDirectory(dirName)),
 )
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().move(path, destinationPath))
+	.then(win => win.OC.Files.getClient().move(path, destinationPath)),
 )
 
 Cypress.Commands.add('removeFile', (path) => cy.window()
-	.then(win => win.OC.Files.getClient().remove(path))
+	.then(win => win.OC.Files.getClient().remove(path)),
 )
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().copy(path, destinationPath))
+	.then(win => win.OC.Files.getClient().copy(path, destinationPath)),
 )
 
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
@@ -255,7 +255,7 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => cy.window()
-	.then(win => win.OCA?.Files?.App?.fileList?.reload())
+	.then(win => win.OCA?.Files?.App?.fileList?.reload()),
 )
 
 Cypress.Commands.add('openFolder', (name) => {
@@ -335,7 +335,7 @@ Cypress.Commands.add('configureText', (key, value) => {
 		return axios.post(
 			`${Cypress.env('baseUrl')}/index.php/apps/text/settings`,
 			{ key, value },
-			{ headers: { requesttoken: win.OC.requestToken } }
+			{ headers: { requesttoken: win.OC.requestToken } },
 		)
 	})
 })
