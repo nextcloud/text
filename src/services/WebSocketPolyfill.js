@@ -80,17 +80,10 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		}
 
 		send(...data) {
-			const sending = this.#queue.length > 0
 			this.#queue.push(...data)
-			if (!sending) {
-				this.#initiateSending()
-			}
-		}
-
-		#initiateSending() {
-			let outbox
+			let outbox = []
 			syncService.sendSteps(() => {
-				outbox = this.#queue
+				outbox = [...this.#queue]
 				const data = {
 					steps: this.#steps,
 					awareness: this.#awareness,
@@ -99,7 +92,8 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				this.#queue = []
 				logger.debug('sending steps ', data)
 				return data
-			})?.catch(() => {
+			})?.catch(err => {
+				logger.error(err)
 				// try to send the steps again
 				this.#queue = [...outbox, ...this.#queue]
 			})

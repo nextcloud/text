@@ -573,11 +573,7 @@ export default {
 			}
 			if (type === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
 				this.hasConnectionIssue = true
-				// FIXME: ideally we just try to reconnect in the service, so we don't loose steps
-				OC.Notification.showTemporary('Connection failed, reconnecting')
-				if (data.retry !== false) {
-					setTimeout(this.reconnect.bind(this), 5000)
-				}
+				OC.Notification.showTemporary('Connection failed.')
 			}
 			if (type === ERROR_TYPE.SOURCE_NOT_FOUND) {
 				this.hasConnectionIssue = true
