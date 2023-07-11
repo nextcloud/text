@@ -1,7 +1,7 @@
 ---
 name: Markdown related issue
 about: Create a report to help us improve the markdown support
-labels: bug, "formatting: markdown"
+labels: "bug, formatting: markdown"
 ---
 
 ## Short summary of the issue
