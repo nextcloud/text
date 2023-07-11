@@ -121,6 +121,15 @@ describe('Image resolver', () => {
 		expect(candidate.url).toBe('/nc-webroot/apps/files_sharing/publicpreview/SHARE_TOKEN?file=%2FMedia%2Fphoto.jpeg&x=1024&y=1024&a=true')
 	})
 
+	it('handles .attachments urls with special characters', async () => {
+		const src = `.attachments.${session.documentId + 1}/group #1/test #2.jpg`
+		const resolver = new AttachmentResolver({ session, user, currentDirectory: '/myCurrentDir #1' })
+		const [candidate, fallbackCandidate, secondFallback] = await resolver.resolve(src)
+
+		expect(candidate.type).toBe('image')
+		expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/myCurrentDir%20%231/.attachments.4174/group%20%231/test%20%232.jpg')
+	})
+
 	it('handles .attachments urls to different fileId via webdav with text API fallback', async () => {
 		const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
 		const resolver = new AttachmentResolver({ session, user, currentDirectory })
