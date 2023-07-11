@@ -70,6 +70,7 @@ describe('Sync service provider', function() {
 			syncService,
 			fileId,
 			initialSession: null,
+			disableBc: true,
 		})
 	}
 
