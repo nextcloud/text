@@ -232,7 +232,7 @@ export default class AttachmentResolver {
 	#davUrl(src) {
 		if (this.#user) {
 			const uid = this.#user.uid
-			const encoded = encodeURI(this.#filePath(src))
+			const encoded = this.#filePath(src).split('/').map(encodeURIComponent).join('/')
 			return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 		}
 
