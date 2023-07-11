@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace OCA\Text\Service;
 
 use OC\User\NoUserException;
+use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Controller\AttachmentController;
 use OCP\Constants;
 use OCP\Files\Folder;
@@ -181,7 +182,7 @@ class AttachmentService {
 	private function getMediaFullFile(string $mediaFileName, File $textFile): ?File {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File) {
+		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
 			return $mediaFile;
 		}
 		return null;
@@ -229,7 +230,7 @@ class AttachmentService {
 	private function getMediaFilePreviewFile(string $mediaFileName, File $textFile): ?array {
 		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
 		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File) {
+		if ($mediaFile instanceof File && !$this->isDownloadDisabled($mediaFile)) {
 			if ($this->previewManager->isMimeSupported($mediaFile->getMimeType())) {
 				try {
 					return [
@@ -490,11 +491,25 @@ class AttachmentService {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists($filePath)) {
 			$file = $userFolder->get($filePath);
-			if ($file instanceof File) {
+			if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 				return $file;
 			}
 		}
 		return null;
+	}
+
+	private function isDownloadDisabled(File $file): bool {
+		$storage = $file->getStorage();
+		if ($storage->instanceOfStorage(SharedStorage::class)) {
+			/** @var SharedStorage $storage */
+			$share = $storage->getShare();
+			$attributes = $share->getAttributes();
+			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -509,9 +524,10 @@ class AttachmentService {
 	 */
 	private function getTextFile(int $documentId, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
-		$textFile = $userFolder->getById($documentId);
-		if (count($textFile) > 0 && $textFile[0] instanceof File) {
-			return $textFile[0];
+		$files = $userFolder->getById($documentId);
+		$file = array_shift($files);
+		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+			return $file;
 		}
 		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
 	}
@@ -532,15 +548,16 @@ class AttachmentService {
 				// shared file or folder?
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
-					if ($textFile instanceof File) {
+					if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
 						return $textFile;
 					}
 				} elseif ($documentId !== null && $share->getNodeType() === 'folder') {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
 						$textFile = $folder->getById($documentId);
-						if (count($textFile) > 0 && $textFile[0] instanceof File) {
-							return $textFile[0];
+						$textFile = array_shift($textFile);
+						if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
+							return $textFile;
 						}
 					}
 				}
