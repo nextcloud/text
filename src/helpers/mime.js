@@ -61,7 +61,7 @@ const openMimetypesPlainText = [
 	'text/x-shellscript',
 ]
 
-if (!window.oc_appswebroots?.richdocuments && !window.oc_appswebroots?.onlyoffice) {
+if (!OC.appswebroots?.richdocuments && !OC.appswebroots?.onlyoffice) {
 	openMimetypesPlainText.push('text/csv')
 }
 
