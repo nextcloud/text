@@ -17,6 +17,9 @@
 			<errorLevel type="suppress">
 				<referencedClass name="OC" />
 				<referencedClass name="Doctrine\DBAL\Types\Types"/>
+				<referencedClass name="GuzzleHttp\Exception\ConnectException"/>
+				<referencedClass name="GuzzleHttp\Exception\ClientException"/>
+				<referencedClass name="GuzzleHttp\Exception\ServerException"/>
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
