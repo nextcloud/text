@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use Exception;
 use OCA\Text\Controller\ImageController;
+use OCA\Files_Sharing\SharedStorage;
 use OCP\Constants;
 use OCP\Files\Folder;
 use OCP\Files\File;
@@ -328,11 +329,25 @@ class ImageService {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists($filePath)) {
 			$file = $userFolder->get($filePath);
-			if ($file instanceof File) {
+			if ($file instanceof File && !$this->isDownloadDisabled($file)) {
 				return $file;
 			}
 		}
 		return null;
+	}
+
+	private function isDownloadDisabled(File $file): bool {
+		$storage = $file->getStorage();
+		if ($storage->instanceOfStorage(SharedStorage::class)) {
+			/** @var SharedStorage $storage */
+			$share = $storage->getShare();
+			$attributes = $share->getAttributes();
+			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -347,9 +362,10 @@ class ImageService {
 	 */
 	private function getTextFile(int $documentId, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
-		$textFile = $userFolder->getById($documentId);
-		if (count($textFile) > 0 && $textFile[0] instanceof File) {
-			return $textFile[0];
+		$files = $userFolder->getById($documentId);
+		$file = array_shift($files);
+		if ($file instanceof File && !$this->isDownloadDisabled($file)) {
+			return $file;
 		}
 		throw new NotFoundException('Text file with id=' . $documentId . ' was not found in storage of ' . $userId);
 	}
@@ -370,15 +386,16 @@ class ImageService {
 				// shared file or folder?
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
-					if ($textFile instanceof File) {
+					if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
 						return $textFile;
 					}
 				} elseif ($documentId !== null && $share->getNodeType() === 'folder') {
 					$folder = $share->getNode();
 					if ($folder instanceof Folder) {
 						$textFile = $folder->getById($documentId);
-						if (count($textFile) > 0 && $textFile[0] instanceof File) {
-							return $textFile[0];
+						$textFile = array_shift($textFile);
+						if ($textFile instanceof File && !$this->isDownloadDisabled($textFile)) {
+							return $textFile;
 						}
 					}
 				}
