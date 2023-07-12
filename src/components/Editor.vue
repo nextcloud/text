@@ -325,13 +325,17 @@ export default {
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
-	beforeDestroy() {
+	async beforeDestroy() {
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
+		if (this.dirty) {
+			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+			await Promise.any([timeout, this.$syncService.save()])
+		}
 		this.$providers.forEach(p => p.destroy())
 	},
 	methods: {
