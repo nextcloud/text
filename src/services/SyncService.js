@@ -275,6 +275,8 @@ class SyncService {
 	}
 
 	async close() {
+		// Make sure to leave no pending requests behind.
+		this.autosave.clear()
 		this.backend?.disconnect()
 		return this._close()
 	}
