@@ -24,6 +24,7 @@
 	<div class="text-editor__session-list">
 		<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
 			<NcButton type="tertiary"
+				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
 				<template #icon>
 					<NcSavingIndicatorIcon :saving="saveStatusClass === 'saving'"
