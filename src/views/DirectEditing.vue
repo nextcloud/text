@@ -138,6 +138,7 @@ export default {
 		position: fixed;
 		background-color: var(--color-main-background);
 	}
+
 	#content[class=app-public] {
 		margin: 0;
 		margin-top: 0;
