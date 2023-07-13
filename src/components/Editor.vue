@@ -522,10 +522,6 @@ export default {
 									},
 								}),
 								Keymap.configure({
-									'Mod-s': () => {
-										this.$syncService.save()
-										return true
-									},
 									'Shift-Mod-c': ({ editor }) => {
 										if (!navigator?.clipboard) {
 											console.error('Clipboard API is not available')
