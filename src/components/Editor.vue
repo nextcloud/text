@@ -721,6 +721,13 @@ export default {
 				return
 			}
 
+			if (event.key === 'Tab' && !event.shiftKey && !event.ctrlKey && !event.metaKey && this.$editor.isActive('codeBlock')) {
+				this.$editor.commands.insertContent('\t')
+				this.$editor.commands.focus()
+				event.preventDefault()
+				return
+			}
+
 			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
 				this.$syncService.save()
 				event.preventDefault()
