@@ -64,23 +64,22 @@ describe('Sync', () => {
 			.should('include', 'saves the doc state')
 	})
 
-	it('recovers from a lost connection', () => {
-		let count = 0
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
-			.as('createSession')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*' }, (req) => {
-			if (count < 4) {
+	it('recovers from a short lost connection', () => {
+		let reconnect = false
+		cy.intercept('**/apps/text/session/*', (req) => {
+			if (reconnect) {
+				req.continue()
+				req.alias = 'alive'
+			} else {
 				req.destroy()
 				req.alias = 'dead'
-			} else {
-				req.alias = 'alive'
 			}
 		}).as('sessionRequests')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
 			.should('contain', 'File could not be loaded')
 			.then(() => {
-				count = 4
+				reconnect = true
 			})
 		cy.wait('@alive', { timeout: 30000 })
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
@@ -89,10 +88,40 @@ describe('Sync', () => {
 		cy.get('#editor-container .document-status', { timeout: 30000 })
 			.should('not.contain', 'File could not be loaded')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
-		cy.wait('@createSession')
-		cy.wait('@syncAfterRecovery')
+		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.getContent().type('* more content added after the lost connection{enter}')
-		cy.wait('@syncAfterRecovery')
+		cy.wait('@syncAfterRecovery', { timeout: 10000 })
+		cy.closeFile()
+		cy.testName()
+			.then(name => cy.downloadFile(`/${name}.md`))
+			.its('data')
+			.should('include', 'after the lost connection')
+	})
+
+	it('recovers from a lost and closed connection', () => {
+		let reconnect = false
+		cy.intercept('**/apps/text/session/*', (req) => {
+			if (req.url.includes('close') || req.url.includes('create') || reconnect) {
+				req.continue()
+				req.alias = 'syncAfterRecovery'
+				reconnect = true
+			} else {
+				req.destroy()
+			}
+		}).as('sessionRequests')
+
+		cy.wait('@sessionRequests', { timeout: 30000 })
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('contain', 'File could not be loaded')
+
+		cy.wait('@syncAfterRecovery', { timeout: 60000 })
+
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('not.contain', 'File could not be loaded')
+		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
+		cy.wait('@syncAfterRecovery', { timeout: 10000 })
+		cy.getContent().type('* more content added after the lost connection{enter}')
+		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.closeFile()
 		cy.testName()
 			.then(name => cy.downloadFile(`/${name}.md`))
