@@ -31,6 +31,7 @@ return array(
     'OCA\\Text\\Exception\\DocumentSaveConflictException' => $baseDir . '/../lib/Exception/DocumentSaveConflictException.php',
     'OCA\\Text\\Exception\\UploadException' => $baseDir . '/../lib/Exception/UploadException.php',
     'OCA\\Text\\Exception\\VersionMismatchException' => $baseDir . '/../lib/Exception/VersionMismatchException.php',
+    'OCA\\Text\\Listeners\\AddMissingIndicesListener' => $baseDir . '/../lib/Listeners/AddMissingIndicesListener.php',
     'OCA\\Text\\Listeners\\BeforeNodeDeletedListener' => $baseDir . '/../lib/Listeners/BeforeNodeDeletedListener.php',
     'OCA\\Text\\Listeners\\BeforeNodeRenamedListener' => $baseDir . '/../lib/Listeners/BeforeNodeRenamedListener.php',
     'OCA\\Text\\Listeners\\FilesLoadAdditionalScriptsListener' => $baseDir . '/../lib/Listeners/FilesLoadAdditionalScriptsListener.php',
