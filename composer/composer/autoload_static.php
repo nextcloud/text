@@ -49,6 +49,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Exception\\InvalidSessionException' => __DIR__ . '/..' . '/../lib/Exception/InvalidSessionException.php',
         'OCA\\Text\\Exception\\UploadException' => __DIR__ . '/..' . '/../lib/Exception/UploadException.php',
         'OCA\\Text\\Exception\\VersionMismatchException' => __DIR__ . '/..' . '/../lib/Exception/VersionMismatchException.php',
+        'OCA\\Text\\Listeners\\AddMissingIndicesListener' => __DIR__ . '/..' . '/../lib/Listeners/AddMissingIndicesListener.php',
         'OCA\\Text\\Listeners\\BeforeNodeDeletedListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeNodeDeletedListener.php',
         'OCA\\Text\\Listeners\\BeforeNodeRenamedListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeNodeRenamedListener.php',
         'OCA\\Text\\Listeners\\FilesLoadAdditionalScriptsListener' => __DIR__ . '/..' . '/../lib/Listeners/FilesLoadAdditionalScriptsListener.php',
