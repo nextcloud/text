@@ -15,7 +15,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Texto de Nextcloud",
     "text document" : "documento de texto",
     "{user} has mentioned you in the text document {node}" : "{user} mencionouno a Vde. no documento de texto {node}",
-    "This file cannot be displayed as download is disabled by the share" : "Non é posíbel amosar este ficheiro por mor de que a descarga está desactivada polo recurso compartido",
+    "This file cannot be displayed as download is disabled by the share" : "Non é posíbel amosar este ficheiro por mor de que a descarga está desactivada pola compartición",
     "Readme" : "Léeme",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",
