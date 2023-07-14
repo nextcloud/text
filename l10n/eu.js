@@ -88,6 +88,7 @@ OC.L10N.register(
     "Link to file or folder" : "Esteka fitxategira edo karpetara",
     "Link to website" : "Esteka webgunera",
     "Update link" : "Eguneratu esteka",
+    "Open the Smart Picker" : "Ireki hautatzaile adimentsua",
     "Select file or folder to link to" : "Hautatu estekatzeko fitxategia edo karpeta",
     "_%n word_::_%n words_" : ["hitz %n","%n hitz"],
     "_%n char_::_%n chars_" : ["karaktere %n","%n karaktere"],
