@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
     "Active people" : "Pertsona aktiboak",
+    "Save document" : "Gorde dokumentua",
     "Last saved" : "Azken gordetze-data",
     "Offline" : "Lineaz kanpo",
     "Offline, changes will be saved when online" : "Lineaz kanpo, aldaketak gordeko dira konektatzean",
