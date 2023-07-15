@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Прикажи боје аутора",
     "Author colors are only shown until everyone has closed the document." : "Боје аутора се приказују све док сви не затворе документ.",
     "Active people" : "Активне особе",
+    "Save document" : "Сачувај документ",
     "Last saved" : "Последње сачувано",
     "Offline" : "Ван мреже",
     "Offline, changes will be saved when online" : "Ван мреже, измене ће се сачувате када будете на мрежи",
