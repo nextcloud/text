@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
     "Active people" : "Aktiva användare",
+    "Save document" : "Spara dokument",
     "Last saved" : "Senast sparad",
     "Offline" : "Frånkopplad",
     "Offline, changes will be saved when online" : "Offline, ändringar kommer att sparas när du är online",

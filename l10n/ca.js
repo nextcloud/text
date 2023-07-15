@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Mostra els colors de l'autor",
     "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom ha tancat el document.",
     "Active people" : "Persones actives",
+    "Save document" : "Desa el document",
     "Last saved" : "Desat per darrera vegada",
     "Offline" : "Fora de línia",
     "Offline, changes will be saved when online" : "Fora de línia, els canvis es desaran quan us connecteu",

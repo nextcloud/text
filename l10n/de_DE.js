@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
     "Active people" : "Aktive Benutzer",
+    "Save document" : "Dokument speichern",
     "Last saved" : "Zuletzt gespeichert",
     "Offline" : "Offline",
     "Offline, changes will be saved when online" : "Offline. Änderungen werden gespeichert, wenn Sie online sind.",

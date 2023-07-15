@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "إعرض ألوان الكُتّاب",
     "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
     "Active people" : "أشخاص نشطون",
+    "Save document" : "إحفَظِ المُستَنَد",
     "Last saved" : "آخر حفظ",
     "Offline" : "غير متصل",
     "Offline, changes will be saved when online" : "غير متصل. التغييرات سيتم حفظها بمجرد تحقيق الاتصال",

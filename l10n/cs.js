@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
     "Active people" : "Aktivní lidé",
+    "Save document" : "Uložit dokument",
     "Last saved" : "Naposledy uloženo",
     "Offline" : "Offline",
     "Offline, changes will be saved when online" : "Bez připojení – změny budou uloženy po obnovení spojení",

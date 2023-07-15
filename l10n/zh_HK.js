@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
     "Active people" : "活躍的人",
+    "Save document" : "保存文件",
     "Last saved" : "最後保存於",
     "Offline" : "離線",
     "Offline, changes will be saved when online" : "離線，在線時更改將被保存",
