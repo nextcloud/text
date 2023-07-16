@@ -37,6 +37,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Constants;
+use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
@@ -211,8 +212,9 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	public function sync(Session $session, Document $document, int $version = 0, string|null $autosaveContent = null, string|null $documentState = null, bool $force = false, bool $manualSave = false, string|null $token = null): DataResponse {
+	public function sync(Session $session, Document $document, int $version = 0, ?string $shareToken = null): DataResponse {
 		$documentId = $session->getDocumentId();
+		$result = [];
 		try {
 			$result = [
 				'steps' => $this->documentService->getSteps($documentId, $version),
@@ -221,8 +223,9 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$this->documentService->getFileForSession($session, $shareToken);
-		} catch (NotFoundException $e) {
+			$file = $this->documentService->getFileForSession($session, $shareToken);
+			$this->documentService->assertNoOutsideConflict($document, $file);
+		} catch (NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
@@ -232,12 +235,19 @@ class ApiService {
 			return new DataResponse([
 				'message' => 'Document no longer exists'
 			], 404);
+		} catch (DocumentSaveConflictException) {
+			try {
+				/** @psalm-suppress PossiblyUndefinedVariable */
+				$result['outsideChange'] = $file->getContent();
+			} catch (LockedException) {
+				// Ignore locked exception since it might happen due to an autosave action happening at the same time
+			}
 		}
 
-		return new DataResponse($result, 200);
+		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
 	}
 
-	public function save(Session $session, Document $document, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
+	public function save(Session $session, Document $document, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 		} catch (NotFoundException $e) {
@@ -252,8 +262,9 @@ class ApiService {
 			], 404);
 		}
 
+		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken, $this->request->getParam('filePath'));
+			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
 		} catch (DocumentSaveConflictException) {
 			try {
 				$result['outsideChange'] = $file->getContent();

@@ -293,13 +293,34 @@ class DocumentService {
 
 	/**
 	 * @throws DocumentSaveConflictException
+	 * @throws InvalidPathException
+	 * @throws NotFoundException
+	 */
+	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
+		$documentId = $document->getId();
+		$savedEtag = $file->getEtag();
+		$lastMTime = $document->getLastSavedVersionTime();
+
+		if ($lastMTime > 0
+			&& $force === false
+			&& !$this->isReadOnly($file, $shareToken)
+			&& $savedEtag !== $document->getLastSavedVersionEtag()
+			&& $lastMTime !== $file->getMtime()
+			&& !$this->cache->get('document-save-lock-' . $documentId)
+		) {
+			throw new DocumentSaveConflictException('File changed in the meantime from outside');
+		}
+	}
+
+	/**
+	 * @throws DocumentSaveConflictException
 	 * @throws DoesNotExistException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null, ?string $filePath = null): Document {
+	public function autosave(Document $document, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
 		if ($file === null) {
 			throw new NotFoundException();
@@ -309,17 +330,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$savedEtag = $file->getEtag();
-		$lastMTime = $document->getLastSavedVersionTime();
-
-		if ($lastMTime > 0 && $savedEtag !== $document->getLastSavedVersionEtag() && $lastMTime !== $file->getMtime() && $force === false) {
-			if (!$this->cache->get('document-save-lock-' . $documentId)) {
-				throw new DocumentSaveConflictException('File changed in the meantime from outside');
-			} else {
-				// Only return here if the document is locked, otherwise we can continue to save
-				return $document;
-			}
-		}
+		$this->assertNoOutsideConflict($document, $file, $force);
 
 		if ($autoSaveDocument === null) {
 			return $document;
@@ -335,6 +346,7 @@ class DocumentService {
 		}
 
 		// Only save once every AUTOSAVE_MINIMUM_DELAY seconds
+		$lastMTime = $document->getLastSavedVersionTime();
 		if ($file->getMTime() === $lastMTime && $lastMTime > time() - self::AUTOSAVE_MINIMUM_DELAY && $manualSave === false) {
 			return $document;
 		}
