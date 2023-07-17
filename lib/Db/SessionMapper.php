@@ -111,8 +111,13 @@ class SessionMapper extends QBMapper {
 		}
 
 		$qb = $this->db->getQueryBuilder();
-		$qb->delete($this->getTableName())
-			->where($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
+		$qb->delete($this->getTableName());
+		if ($documentId !== null) {
+			$qb->where($selectSubQuery->expr()->eq('document_id', $selectSubQuery->createParameter('documentId')));
+			$qb->andWhere($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
+		} else {
+			$qb->where($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
+		}
 		$qb->setParameters([
 			'lastContact' => time() - SessionService::SESSION_VALID_TIME,
 			'documentId' => $documentId,
