@@ -83,6 +83,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor'
+import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
 
 import {
@@ -493,6 +494,9 @@ export default {
 								})
 							},
 							extensions: [
+								Autofocus.configure({
+									fileId: this.fileId,
+								}),
 								Collaboration.configure({
 									document: this.$ydoc,
 								}),
@@ -587,7 +591,7 @@ export default {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
 					this.$nextTick(() => {
-						this.$editor.commands.focus()
+						this.$editor.commands.autofocus()
 					})
 				}
 				this.emit('ready')
