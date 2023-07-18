@@ -32,6 +32,7 @@
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
 
+		<SkeletonLoading v-if="!contentLoaded" />
 		<Wrapper v-if="displayed"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
@@ -117,10 +118,12 @@ import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
+import SkeletonLoading from './SkeletonLoading.vue'
 
 export default {
 	name: 'Editor',
 	components: {
+		SkeletonLoading,
 		DocumentStatus,
 		Wrapper,
 		MainContainer,
