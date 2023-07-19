@@ -100,30 +100,36 @@ class SessionMapper extends QBMapper {
 	}
 
 	public function deleteInactiveWithoutSteps(?int $documentId = null): int {
-		$selectSubQuery = $this->db->getQueryBuilder();
-		$selectSubQuery->select('s.id')
+		$lastContact = time() - SessionService::SESSION_VALID_TIME;
+
+		$inactiveSessionBuilder = $this->db->getQueryBuilder();
+		$inactiveSessionBuilder->select('s.id')
 			->from('text_sessions', 's')
-			->leftJoin('s', 'text_steps', 'st', $selectSubQuery->expr()->eq('st.session_id', 's.id'))
-			->where($selectSubQuery->expr()->lt('last_contact', $selectSubQuery->createParameter('lastContact')))
-			->andWhere($selectSubQuery->expr()->isNull('st.id'));
+			->leftJoin('s', 'text_steps', 'st', $inactiveSessionBuilder->expr()->eq('st.session_id', 's.id'))
+			->where($inactiveSessionBuilder->expr()->lt('last_contact', $inactiveSessionBuilder->createNamedParameter($lastContact)))
+			->andWhere($inactiveSessionBuilder->expr()->isNull('st.id'));
 		if ($documentId !== null) {
-			$selectSubQuery->andWhere($selectSubQuery->expr()->eq('s.document_id', $selectSubQuery->createParameter('documentId')));
+			$inactiveSessionBuilder->andWhere($inactiveSessionBuilder->expr()->eq('s.document_id', $inactiveSessionBuilder->createNamedParameter($documentId)));
 		}
+		$result = $inactiveSessionBuilder->executeQuery();
+		$documentIds = array_map(function ($row) {
+			return (int)$row['id'];
+		}, $result->fetchAll());
+		$result->closeCursor();
 
-		$qb = $this->db->getQueryBuilder();
-		$qb->delete($this->getTableName());
-		if ($documentId !== null) {
-			$qb->where($selectSubQuery->expr()->eq('document_id', $selectSubQuery->createParameter('documentId')));
-			$qb->andWhere($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
-		} else {
-			$qb->where($qb->expr()->in('id', $qb->createFunction($selectSubQuery->getSQL())));
+		$chunks = array_chunk($documentIds, 500);
+
+		$deleteBuilder = $this->db->getQueryBuilder();
+		$deleteBuilder->delete($this->getTableName())
+			->where($deleteBuilder->expr()->in('id', $deleteBuilder->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY));
+
+		$deletedCount = 0;
+		foreach ($chunks as $ids) {
+			$deleteBuilder->setParameter('ids', $ids, IQueryBuilder::PARAM_INT_ARRAY);
+
+			$deletedCount += $deleteBuilder->executeStatement();
 		}
-		$qb->setParameters([
-			'lastContact' => time() - SessionService::SESSION_VALID_TIME,
-			'documentId' => $documentId,
-		]);
-
-		return $qb->executeStatement();
+		return $deletedCount;
 	}
 
 	public function deleteByDocumentId($documentId) {
