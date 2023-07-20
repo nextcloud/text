@@ -130,7 +130,7 @@ class Version010000Date20190617184535 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['document_id'], 'rd_steps_did_idx');
 			$table->addIndex(['version'], 'rd_steps_version_idx');
-			$table->addIndex(['session_id'], 'ts_session');
+			$table->addIndex(['session_id'], 'textstep_session');
 		}
 		return $schema;
 	}
