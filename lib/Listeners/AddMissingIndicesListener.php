@@ -38,6 +38,6 @@ class AddMissingIndicesListener implements IEventListener {
 			return;
 		}
 
-		$event->addMissingIndex('text_steps', 'ts_session', ['session_id']);
+		$event->addMissingIndex('text_steps', 'textstep_session', ['session_id']);
 	}
 }
