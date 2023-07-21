@@ -30,9 +30,27 @@
       "groupName": "cypress",
       "matchPackageNames": [
         "cypress",
-        "@nextcloud/cypress"
+        "@nextcloud/cypress",
+        "@cypress/"
       ]
     },
+    {
+      "groupName": "vite",
+      "matchPackageNames": [
+        "vite",
+        "vite-plugin-commonjs",
+        "@vitejs/"
+      ]
+    },
+    {
+      "groupName": "yjs",
+      "matchPackageNames": [
+        "yjs",
+        "y-websocket",
+        "@hocuspocus/provider"
+      ]
+    },
+    
     {
       "groupName": "highlight",
       "matchPackageNames": [
