@@ -40,7 +40,7 @@ describe('Sync', () => {
 		}).as('sync')
 		cy.openTestFile()
 		cy.getContent().find('h2').should('contain', 'Hello world')
-		cy.getContent().type('* Saving the doc saves the doc state{enter}')
+		cy.getContent().type('{moveToEnd}* Saving the doc saves the doc state{enter}')
 	})
 
 	it('saves the actual file and document state', () => {
