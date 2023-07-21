@@ -39,6 +39,7 @@ OC.L10N.register(
     "Show author colors" : "Mostrar cores de autoria",
     "Author colors are only shown until everyone has closed the document." : "As cores de autoria só são exibidas até que todas as pessoas tenham fechado o documento. ",
     "Active people" : "Pessoas ativas",
+    "Save document" : "Salvar documento",
     "Last saved" : "Último salvo",
     "Offline" : "Offline",
     "Offline, changes will be saved when online" : "Desligado, as alterações serão salvas quando estiver online",
