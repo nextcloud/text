@@ -424,6 +424,9 @@ class AttachmentService {
 	 */
 	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): Folder {
 		$owner = $textFile->getOwner();
+		if ($owner === null) {
+			throw new NotFoundException('File has no owner');
+		}
 		$ownerId = $owner->getUID();
 		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
 		$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
