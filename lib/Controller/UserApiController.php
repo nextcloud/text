@@ -47,7 +47,7 @@ class UserApiController extends ApiController implements ISessionAwareController
 			}
 		}
 
-		if ($this->getSession()->getUserId() !== null) {
+		if (!$this->getSession()->isGuest()) {
 			// Add other users to the autocomplete list
 			[$result] = $this->collaboratorSearch->search($filter, [IShare::TYPE_USER], false, $limit, 0);
 			$userSearch = array_merge($result['users'], $result['exact']['users']);

@@ -36,7 +36,8 @@ class WorkspaceService {
 		return null;
 	}
 
-	public function getSupportedFilenames() {
+	/** @return string[] */
+	public function getSupportedFilenames(): array {
 		return array_merge([
 			$this->l10n->t('Readme') . '.md'
 		], self::SUPPORTED_STATIC_FILENAMES);

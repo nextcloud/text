@@ -430,7 +430,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getFileForSession(Session $session, ?string $shareToken = null): File {
-		if ($session->getUserId() !== null) {
+		if (!$session->isGuest()) {
 			return $this->getFileById($session->getDocumentId(), $session->getUserId());
 		}
 
@@ -457,7 +457,7 @@ class DocumentService {
 	/**
 	 * @throws NotFoundException
 	 */
-	public function getFileById($fileId, $userId = null): File {
+	public function getFileById(int $fileId, ?string $userId = null): File {
 		$userId = $userId ?? $this->userId;
 
 		// If no user is provided we need to get any file from existing mounts for cleanup jobs

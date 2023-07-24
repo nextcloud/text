@@ -115,9 +115,8 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAll($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			$userId = $session->getUserId();
-			if ($userId !== null) {
-				$result['displayName'] = $this->userManager->getDisplayName($userId);
+			if (!$session->isGuest()) {
+				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
 			}
 			return $result;
 		}, $sessions);
@@ -127,18 +126,16 @@ class SessionService {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
 			$result = $session->jsonSerialize();
-			$userId = $session->getUserId();
-			if ($userId !== null) {
-				$result['displayName'] = $this->userManager->getDisplayName($userId);
+			if (!$session->isGuest()) {
+				$result['displayName'] = $this->userManager->getDisplayName($session->getUserId());
 			}
 			return $result;
 		}, $sessions);
 	}
 
 	public function getNameForSession(Session $session): ?string {
-		$userId = $session->getUserId();
-		if ($userId !== null) {
-			return $this->userManager->getDisplayName($userId);
+		if (!$session->isGuest()) {
+			return $this->userManager->getDisplayName($session->getUserId());
 		}
 
 		return $session->getGuestName();

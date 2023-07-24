@@ -126,9 +126,10 @@ class AttachmentService {
 
 	/**
 	 * Get media file from file name
+	 *
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws NotPermittedException
 	 */
 	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): File|null {
 		$textFile = $this->getTextFile($documentId, $userId);
@@ -444,13 +445,11 @@ class AttachmentService {
 
 	/**
 	 * Get a user file from file ID
-	 * @param string $filePath
-	 * @param string $userId
-	 * @return File|null
+	 *
 	 * @throws NotFoundException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws NotPermittedException
 	 */
-	private function getFileFromPath(string $filePath, string $userId): ?File {
+	private function getFileFromPath(string $filePath, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists($filePath)) {
 			$file = $userFolder->get($filePath);
@@ -458,7 +457,7 @@ class AttachmentService {
 				return $file;
 			}
 		}
-		return null;
+		throw new NotFoundException();
 	}
 
 	private function isDownloadDisabled(File $file): bool {
