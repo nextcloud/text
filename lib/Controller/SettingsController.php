@@ -32,30 +32,26 @@ use OCP\IConfig;
 use OCP\IRequest;
 
 class SettingsController extends Controller {
-	private IConfig $config;
-	private ?string $userId;
-
 	public const ACCEPTED_KEYS = [
 		'workspace_enabled'
 	];
 
-	public function __construct($appName, IRequest $request, IConfig $config, $userId) {
+	public function __construct(string $appName, IRequest $request, private IConfig $config, private ?string $userId) {
 		parent::__construct($appName, $request);
-
-		$this->config = $config;
-		$this->userId = $userId;
 	}
 
 	/**
 	 * @throws \OCP\PreConditionNotMetException
+	 *
+	 * @psalm-return DataResponse<200|400, array{workspace_enabled?: mixed, message?: 'Invalid config key'}, array<never, never>>
 	 */
 	#[NoAdminRequired]
-	public function updateConfig(string $key, $value) {
+	public function updateConfig(string $key, int|string $value): DataResponse {
 		if (!in_array($key, self::ACCEPTED_KEYS, true)) {
 			return new DataResponse(['message' => 'Invalid config key'], Http::STATUS_BAD_REQUEST);
 		}
 		/** @psalm-suppress PossiblyNullArgument */
-		$this->config->setUserValue($this->userId, Application::APP_NAME, $key, $value);
+		$this->config->setUserValue($this->userId, Application::APP_NAME, $key, (string)$value);
 		return new DataResponse([
 			$key => $value
 		]);

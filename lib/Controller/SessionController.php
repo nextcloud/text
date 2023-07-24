@@ -103,7 +103,7 @@ class SessionController extends ApiController implements ISessionAwareController
 		return new DataResponse($this->notificationService->mention($this->getDocument()->getId(), $mention));
 	}
 
-	private function loginSessionUser() {
+	private function loginSessionUser(): void {
 		$currentSession = $this->getSession();
 		if (!$this->userSession->isLoggedIn()) {
 			$user = $this->userManager->get($currentSession->getUserId());

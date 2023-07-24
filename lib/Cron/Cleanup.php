@@ -54,6 +54,10 @@ class Cleanup extends TimedJob {
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
 	}
 
+	/**
+	 * @param array $argument
+	 * @return void
+	 */
 	protected function run($argument) {
 		$this->logger->debug('Run cleanup job for text documents');
 		$documents = $this->documentService->getAll();

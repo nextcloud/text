@@ -33,7 +33,10 @@ class StepMapper extends QBMapper {
 		parent::__construct($db, 'text_steps', Step::class);
 	}
 
-	public function find($documentId, $fromVersion, $lastAckedVersion = null) {
+	/**
+	 * @return Step[]
+	 */
+	public function find(int $documentId, int $fromVersion, int $lastAckedVersion = null): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
@@ -51,7 +54,7 @@ class StepMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function getLatestVersion($documentId): ?int {
+	public function getLatestVersion(int $documentId): ?int {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('version')
@@ -69,22 +72,22 @@ class StepMapper extends QBMapper {
 		return $data['version'];
 	}
 
-	public function deleteAll($documentId): void {
+	public function deleteAll(int $documentId): void {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->executeStatement();
 	}
 
-	public function deleteBeforeVersion($documentId, $version): void {
+	public function deleteBeforeVersion(int $documentId, int $version): int {
 		$qb = $this->db->getQueryBuilder();
-		$qb->delete($this->getTableName())
+		return $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($version)))
 			->executeStatement();
 	}
 
-	public function deleteAfterVersion($documentId, $version): int {
+	public function deleteAfterVersion(int $documentId, int $version): int {
 		$qb = $this->db->getQueryBuilder();
 		return $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))

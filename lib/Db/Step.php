@@ -37,6 +37,7 @@ use OCP\AppFramework\Db\Entity;
  * @method setDocumentId(int $documentId): void
  */
 class Step extends Entity implements JsonSerializable {
+	public $id = null;
 	protected string $data = '';
 	protected int $version = 0;
 	protected int $sessionId = 0;
@@ -55,10 +56,10 @@ class Step extends Entity implements JsonSerializable {
 			throw new \InvalidArgumentException('Failed to parse step data');
 		}
 		return [
-			'id' => $this->id,
+			'id' => $this->getId(),
 			'data' => $jsonData,
-			'version' => $this->version,
-			'sessionId' => $this->sessionId
+			'version' => $this->getVersion(),
+			'sessionId' => $this->getSessionId()
 		];
 	}
 }

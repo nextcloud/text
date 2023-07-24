@@ -53,7 +53,7 @@ class SessionMapper extends QBMapper {
 	 * @return Session
 	 * @throws DoesNotExistException
 	 */
-	public function find($documentId, $sessionId, $token): Session {
+	public function find(int $documentId, int $sessionId, string $token): Session {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
@@ -71,7 +71,12 @@ class SessionMapper extends QBMapper {
 		return Session::fromRow($data);
 	}
 
-	public function findAll($documentId) {
+	/**
+	 * @return Session[]
+	 *
+	 * @psalm-return array<Session>
+	 */
+	public function findAll(int $documentId): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -80,7 +85,12 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function findAllActive($documentId) {
+	/**
+	 * @return Session[]
+	 *
+	 * @psalm-return array<Session>
+	 */
+	public function findAllActive(int $documentId): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -90,7 +100,12 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-	public function findAllInactive() {
+	/**
+	 * @return Session[]
+	 *
+	 * @psalm-return array<Session>
+	 */
+	public function findAllInactive(): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
 			->from($this->getTableName())
@@ -132,14 +147,14 @@ class SessionMapper extends QBMapper {
 		return $deletedCount;
 	}
 
-	public function deleteByDocumentId($documentId): int {
+	public function deleteByDocumentId(int $documentId): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		return $qb->executeStatement();
 	}
 
-	public function isUserInDocument($documentId, $userId): bool {
+	public function isUserInDocument(int $documentId, string $userId): bool {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())

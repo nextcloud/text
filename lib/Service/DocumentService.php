@@ -86,7 +86,7 @@ class DocumentService {
 	private ILockManager $lockManager;
 	private IUserMountCache $userMountCache;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -206,15 +206,10 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $documentId
-	 * @param $sessionId
-	 * @param $steps
-	 * @param $version
-	 * @return array
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
 	 */
-	public function addStep(Document $document, Session $session, $steps, $version): array {
+	public function addStep(Document $document, Session $session, array $steps, int $version): array {
 		$sessionId = $session->getId();
 		$documentId = $session->getDocumentId();
 		$stepsToInsert = [];
@@ -255,17 +250,18 @@ class DocumentService {
 	 * @param $sessionId
 	 * @param $steps
 	 * @param $version
+	 *
 	 * @return int
+	 *
 	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
+	 *
+	 * @psalm-param non-empty-list<mixed> $steps
 	 */
-	private function insertSteps(Document $document, Session $session, $steps, $version): int {
+	private function insertSteps(Document $document, Session $session, array $steps, ?int $version): int {
 		$stepsVersion = null;
 		try {
-			$stepsJson = json_encode($steps);
-			if (!is_array($steps) || $stepsJson === null) {
-				throw new InvalidArgumentException('Failed to encode steps');
-			}
+			$stepsJson = json_encode($steps, JSON_THROW_ON_ERROR);
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
 			$newVersion = $stepsVersion + count($steps);
 			$this->logger->debug("Adding steps to " . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
@@ -288,7 +284,7 @@ class DocumentService {
 		}
 	}
 
-	public function getSteps($documentId, $lastVersion): array {
+	public function getSteps(int $documentId, int $lastVersion): array {
 		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
 			return [];
 		}
@@ -422,7 +418,7 @@ class DocumentService {
 		}
 	}
 
-	public function getAll() {
+	public function getAll(): array {
 		return $this->documentMapper->findAll();
 	}
 
@@ -519,7 +515,7 @@ class DocumentService {
 	}
 
 
-	public function isReadOnly($file, $token) {
+	public function isReadOnly(File $file, string|null $token): bool {
 		$readOnly = true;
 		if ($token) {
 			try {
@@ -543,7 +539,7 @@ class DocumentService {
 		return $readOnly || $lockInfo !== null;
 	}
 
-	public function getLockInfo($file): ?ILock {
+	public function getLockInfo(File $file): ?ILock {
 		try {
 			$locks = $this->lockManager->getLocks($file->getId());
 		} catch (NoLockProviderException|PreConditionNotMetException $e) {
@@ -554,10 +550,14 @@ class DocumentService {
 
 	/**
 	 * @param $shareToken
+	 *
 	 * @return void
+	 *
 	 * @throws NotFoundException|NotPermittedException
+	 *
+	 * @psalm-param 1|2 $permission
 	 */
-	public function checkSharePermissions(string $shareToken, $permission = Constants::PERMISSION_READ): void {
+	public function checkSharePermissions(string $shareToken, int $permission = Constants::PERMISSION_READ): void {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 		} catch (ShareNotFound $e) {
@@ -569,7 +569,7 @@ class DocumentService {
 		}
 	}
 
-	public function hasUnsavedChanges(Document $document) {
+	public function hasUnsavedChanges(Document $document): bool {
 		$stepsVersion = $this->stepMapper->getLatestVersion($document->getId()) ?: 0;
 		$docVersion = $document->getLastSavedVersion();
 		return $stepsVersion !== $docVersion;

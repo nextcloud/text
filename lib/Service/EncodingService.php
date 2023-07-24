@@ -77,7 +77,6 @@ class EncodingService {
 	 */
 	private function getEncodings(): array {
 		$mbOrder = mb_detect_order() ?: [];
-		$mbOrder = is_array($mbOrder) ? $mbOrder : [];
-		return array_merge($mbOrder, self::COMMON_ENCODINGS);
+		return array_merge(is_array($mbOrder) ? $mbOrder : [], self::COMMON_ENCODINGS);
 	}
 }

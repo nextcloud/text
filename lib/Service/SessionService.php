@@ -60,7 +60,7 @@ class SessionService {
 		IAvatarManager $avatarManager,
 		IRequest $request,
 		IManager $directManager,
-		$userId,
+		?string $userId,
 		ICacheFactory $cacheFactory
 	) {
 		$this->sessionMapper = $sessionMapper;
@@ -84,7 +84,7 @@ class SessionService {
 		$this->cache = $cacheFactory->createDistributed('text_sessions');
 	}
 
-	public function initSession($documentId, $guestName = null): Session {
+	public function initSession(int $documentId, string $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
 		$userName = $this->userId ? $this->userId : $guestName;
@@ -92,7 +92,7 @@ class SessionService {
 		$session->setToken($this->secureRandom->generate(64));
 		$session->setColor($this->getColorForGuestName($guestName));
 		if ($this->userId === null) {
-			$session->setGuestName($guestName);
+			$session->setGuestName($guestName ?? '');
 		}
 		$session->setLastContact($this->timeFactory->now()->getTimestamp());
 
@@ -141,11 +141,12 @@ class SessionService {
 		return $session->getGuestName();
 	}
 
-	public function findAllInactive() {
+	/** @return Session[] */
+	public function findAllInactive(): array {
 		return $this->sessionMapper->findAllInactive();
 	}
 
-	public function removeInactiveSessionsWithoutSteps(?int $documentId = null) {
+	public function removeInactiveSessionsWithoutSteps(?int $documentId = null): int {
 		// No need to clear the cache here as we already set a TTL
 		return $this->sessionMapper->deleteInactiveWithoutSteps($documentId);
 	}
@@ -205,16 +206,7 @@ class SessionService {
 		return $session;
 	}
 
-	public function isValidSession($documentId, $sessionId, $token): bool {
-		return $this->getValidSession($documentId, $sessionId, $token) !== null;
-	}
-
 	/**
-	 * @param $documentId
-	 * @param $sessionId
-	 * @param $sessionToken
-	 * @param $guestName
-	 * @return Session
 	 * @throws DoesNotExistException
 	 */
 	public function updateSession(Session $session, string $guestName): Session {
@@ -227,11 +219,6 @@ class SessionService {
 	}
 
 	/**
-	 * @param $documentId
-	 * @param $sessionId
-	 * @param $sessionToken
-	 * @param $message
-	 * @return Session
 	 * @throws DoesNotExistException
 	 */
 	public function updateSessionAwareness(Session $session, string $message): Session {

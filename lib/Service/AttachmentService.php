@@ -272,7 +272,10 @@ class AttachmentService {
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $userId
+	 * @param resource $newFileResource
+	 *
 	 * @return array
+	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -301,7 +304,10 @@ class AttachmentService {
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $shareToken
+	 * @param resource $newFileResource
+	 *
 	 * @return array
+	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
