@@ -20,26 +20,43 @@
   -->
 
 <template>
-	<NcModal @close="$emit('close')">
+	<NcModal size="large" @close="$emit('close')">
 		<div class="translate-dialog">
 			<h2>{{ t('text', 'Translate') }}</h2>
-			<textarea v-model="input" />
-			<div class="language-selector">
-				<label for="fromLanguage">{{ t('text', 'Source language') }}</label>
-				<NcSelect v-model="fromLanguage"
-					input-id="fromLanguage"
-					:options="fromLanguages"
-					:append-to-body="false" />
+			<em>{{ t('text', 'To translate individual parts of the text, select it before using the translate function.') }}</em>
+			<div class="wrapper">
+				<div class="col">
+					<div class="language-selector">
+						<label for="fromLanguage">{{ t('text', 'Translate from') }}</label>
+						<NcSelect v-model="fromLanguage"
+							input-id="fromLanguage"
+							:placeholder="t('text', 'Select language')"
+							:options="fromLanguages"
+							:disabled="disableFromLanguageSelect"
+							:append-to-body="false" />
+					</div>
+					<textarea ref="input"
+						v-model="input"
+						autofocus
+						@input="autosize"
+						@focus="onInputFocus" />
+				</div>
+				<div class="col">
+					<div class="language-selector">
+						<label for="toLanguage">{{ t('text', 'to') }}</label>
+						<NcSelect v-model="toLanguage"
+							input-id="toLanguage"
+							:placeholder="t('text', 'Select language')"
+							:options="toLanguages"
+							:disabled="!fromLanguage"
+							:append-to-body="false" />
+					</div>
+					<textarea ref="result"
+						v-model="result"
+						readonly
+						:class="{'icon-loading': loading }" />
+				</div>
 			</div>
-			<div class="language-selector">
-				<label for="toLanguage">{{ t('text', 'Target language') }}</label>
-				<NcSelect v-model="toLanguage"
-					input-id="toLanguage"
-					:options="toLanguages"
-					:disabled="!fromLanguage"
-					:append-to-body="false" />
-			</div>
-			<textarea v-model="result" readonly :class="{'icon-loading': loading }" />
 			<div class="translate-actions">
 				<NcLoadingIcon v-if="loading" />
 				<NcButton v-if="!result"
@@ -64,6 +81,7 @@ import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
 import { generateOcsUrl } from '@nextcloud/router'
 import { NcModal, NcButton, NcSelect, NcLoadingIcon } from '@nextcloud/vue'
+import { useIsMobileMixin } from '../Editor.provider.js'
 
 const detectLanguageEntry = {
 	id: null,
@@ -78,6 +96,9 @@ export default {
 		NcSelect,
 		NcLoadingIcon,
 	},
+	mixins: [
+		useIsMobileMixin,
+	],
 	props: {
 		content: {
 			type: String,
@@ -94,6 +115,7 @@ export default {
 			canDetect: loadState('text', 'translation_can_detect'),
 			loading: false,
 			error: null,
+			disableFromLanguageSelect: true,
 		}
 	},
 	computed: {
@@ -105,7 +127,7 @@ export default {
 					set.add(item.from)
 					result.push({
 						id: item.from,
-						label: item.fromLabel,
+						label: !this.$isMobile ? item.fromLabel : t('text', 'Translate from {language}', { language: item.fromLabel }),
 					})
 				}
 			}
@@ -129,7 +151,7 @@ export default {
 					set.add(item.to)
 					result.push({
 						id: item.to,
-						label: item.toLabel,
+						label: !this.$isMobile ? item.toLabel : t('text', 'Translate to {language}', { language: item.toLabel }),
 					})
 				}
 			}
@@ -172,6 +194,18 @@ export default {
 		async contentReplace() {
 			this.$emit('replace-content', this.result)
 		},
+		autosize() {
+			this.$refs.input.style.overflowY = 'hidden'
+			this.$refs.input.style.height = 'auto'
+			const height = this.$refs.input.scrollHeight + 10
+			this.$refs.input.style.height = height + 'px'
+			this.$refs.result.style.height = height + 'px'
+			this.$refs.input.style.overflowY = 'auto'
+		},
+		onInputFocus() {
+			this.disableFromLanguageSelect = false
+			this.autosize()
+		},
 	},
 }
 </script>
@@ -179,13 +213,59 @@ export default {
 <style lang="scss" scoped>
 .translate-dialog {
 	margin: 24px;
+
+	.wrapper {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-column-gap: 16px;
+		margin-top: calc(var(--default-grid-baseline) * 6);
+
+		.language-selector {
+			font-weight: bold;
+			flex-wrap: wrap;
+			gap: var(--default-grid-baseline);
+		}
+
+		.col {
+			grid-row: 1/2;
+		}
+	}
 }
 
 textarea {
 	display: block;
 	width: 100%;
 	margin-bottom: 12px;
+	height: auto;
+	resize: none;
+	box-sizing: border-box;
+	overflow-y: auto;
+	max-height: 58vh;
+}
 
+@media (max-width: 670px) {
+	.translate-dialog {
+		.wrapper {
+			display: block;
+		}
+
+		.language-selector {
+			.select {
+				width: 100%;
+			}
+		}
+	}
+
+	textarea {
+		max-height: 20vh;
+	}
+
+	label {
+		&[for="fromLanguage"],
+		&[for="toLanguage"] {
+			display: none;
+		}
+	}
 }
 
 .language-selector {
