@@ -53,6 +53,8 @@ OC.L10N.register(
     "Remove link" : "リンクを削除",
     "Select file or folder to link to" : "リンク先のファイルまたはフォルダを選択",
     "Translate" : "翻訳",
+    "Select language" : "言語を選択する",
+    "to" : "宛先",
     "Replace" : "入り替え",
     "Unsupported image type" : "サポートされていない画像形式です",
     "Show rich workspaces" : "各フォルダのReadmeを表示",

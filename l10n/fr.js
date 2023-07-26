@@ -96,8 +96,9 @@ OC.L10N.register(
     "Editor actions" : "Actions de l'éditeur",
     "Translate" : "Traduire",
     "Remaining actions" : "Actions restantes",
-    "Source language" : "Langue source",
-    "Target language" : "Langue cible",
+    "Translate from" : "Traduire depuis",
+    "Select language" : "Sélectionner la langue",
+    "to" : "à",
     "Replace" : "Remplacer",
     "Insert" : "Insérer",
     "Detect language" : "Détecter la langue",
@@ -153,6 +154,8 @@ OC.L10N.register(
     "Add Link" : "Insérer un lien",
     "Link file" : "Lier un fichier",
     "Remove Link" : "Supprimer le lien",
-    "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien"
+    "Select file to link to" : "Sélectionnez le fichier vers lequel faire le lien",
+    "Source language" : "Langue source",
+    "Target language" : "Langue cible"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

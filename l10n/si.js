@@ -4,6 +4,7 @@ OC.L10N.register(
     "No file was uploaded" : "කිසිදු ගොනුවක් උඩුගත කර නොමැත",
     "Missing a temporary folder" : "තාවකාලික බහාලුමක් අස්ථානගත වී ඇත",
     "Translate" : "පරිවර්තනය",
+    "Select language" : "භාෂාව තෝරන්න",
     "Undo" : "පෙරසේ",
     "Info" : "තොරතුරු",
     "Success" : "සාර්ථකයි",

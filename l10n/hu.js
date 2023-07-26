@@ -96,8 +96,9 @@ OC.L10N.register(
     "Editor actions" : "Szerkesztőműveletek",
     "Translate" : "Lefordítás",
     "Remaining actions" : "Hátralévő műveletek",
-    "Source language" : "Forrásnyelv",
-    "Target language" : "Célnyelv",
+    "Translate from" : "Fordítás a következőről:",
+    "Select language" : "Nyelvválasztás",
+    "to" : "eddig:",
     "Replace" : "Csere",
     "Insert" : "Beillesztés",
     "Detect language" : "Nyelv észlelése",
@@ -153,6 +154,8 @@ OC.L10N.register(
     "Add Link" : "Hivatkozás hozzáadása",
     "Link file" : "Fájl hivatkozás készítése",
     "Remove Link" : "Hivatkozás eltávolítása",
-    "Select file to link to" : "Válassza ki a hivatkozandó fájlt"
+    "Select file to link to" : "Válassza ki a hivatkozandó fájlt",
+    "Source language" : "Forrásnyelv",
+    "Target language" : "Célnyelv"
 },
 "nplurals=2; plural=(n != 1);");

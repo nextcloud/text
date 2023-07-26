@@ -39,6 +39,8 @@ OC.L10N.register(
     "Code block" : "Còdi",
     "Translate" : "Translate",
     "Remaining actions" : "Mai d’accions",
+    "Select language" : "Causir lenga",
+    "to" : "a",
     "Delete this table" : "Suprimir aqueste tablèu",
     "Undo" : "Anullar",
     "Redo" : "Refar",

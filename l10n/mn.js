@@ -4,6 +4,7 @@ OC.L10N.register(
     "Guest" : "Зочин",
     "Saved" : "Хадгалах",
     "Translate" : "Орчуулга",
+    "to" : "Дуусах нь",
     "Replace" : "Солих",
     "Unsupported image type" : "Дэмжигдэхгүй зургийн төрөл байна",
     "Undo" : "буцах",

@@ -18,6 +18,8 @@ OC.L10N.register(
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
     "Translate" : "Traducir",
+    "Select language" : "Selecciona el idioma",
+    "to" : "para",
     "Replace" : "Reemplazar",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",

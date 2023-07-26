@@ -97,8 +97,7 @@ OC.L10N.register(
     "Editor actions" : "إجراءات المُحرّر editor",
     "Translate" : "ترجم",
     "Remaining actions" : "الإجراءات المتبقية",
-    "Source language" : "اللغة الأصلية",
-    "Target language" : "اللغة المطلوبة",
+    "Translate from" : "ترجِم من",
     "Replace" : "إحلال",
     "Insert" : "إدخال",
     "Detect language" : "إكتشف اللغة",
@@ -154,6 +153,8 @@ OC.L10N.register(
     "Add Link" : "أضِف رابطاً",
     "Link file" : "ملف الرابط",
     "Remove Link" : "إحذِف الرابط",
-    "Select file to link to" : "إختر ملفّاً للربط مع"
+    "Select file to link to" : "إختر ملفّاً للربط مع",
+    "Source language" : "اللغة الأصلية",
+    "Target language" : "اللغة المطلوبة"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

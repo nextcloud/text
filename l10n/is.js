@@ -44,6 +44,8 @@ OC.L10N.register(
     "Code block" : "Kóðablokk",
     "Update link" : "Uppfæra tengil",
     "Translate" : "Þýða",
+    "Select language" : "Veldu tungumál",
+    "to" : "til",
     "Replace" : "Skipta út",
     "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",

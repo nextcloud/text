@@ -27,6 +27,8 @@ OC.L10N.register(
     "Italic" : "Italic",
     "Remove link" : "حذف پیوند",
     "Translate" : "ترجمه",
+    "Select language" : "زبان را انتخاب کنید",
+    "to" : "به",
     "Replace" : "جایگزین کردن",
     "Undo" : "برگرداندن",
     "Headings" : "عنوان‌ها",

@@ -77,6 +77,8 @@ OC.L10N.register(
     "Editor actions" : "Redaktoriaus veiksmai",
     "Translate" : "Verskite",
     "Remaining actions" : "Likę veiksmai",
+    "Select language" : "Pasirinkite kalbą",
+    "to" : "iki",
     "Replace" : "Pakeisti",
     "No emoji found" : "Nerasta jokių šypsenėlių",
     "Delete this attachment" : "Ištrinti šį priedą",

@@ -69,6 +69,8 @@ OC.L10N.register(
     "Update link" : "Ενημέρωση συνδέσμου",
     "Select file or folder to link to" : "Επιλέξτε αρχείο ή φάκελο για σύνδεση",
     "Translate" : "Μετάφραση",
+    "Select language" : "Επιλέξτε γλώσσα",
+    "to" : "προς",
     "Replace" : "Αντικατάσταση",
     "No emoji found" : "Δε βρέθηκε emoji",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",

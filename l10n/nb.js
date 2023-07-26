@@ -41,6 +41,8 @@ OC.L10N.register(
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
     "Translate" : "Oversett",
+    "Select language" : "Velg språk",
+    "to" : "til",
     "Replace" : "Erstatt",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde",
