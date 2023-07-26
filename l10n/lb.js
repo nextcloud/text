@@ -7,6 +7,7 @@ OC.L10N.register(
     "guest" : "Gaascht",
     "Saved" : "Gespäichert",
     "Translate" : "Iwwersetzen",
+    "to" : "bis",
     "Info" : "Info",
     "Warning" : "Warnung",
     "Edit" : "Änneren"

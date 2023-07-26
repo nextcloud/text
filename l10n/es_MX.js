@@ -38,6 +38,8 @@ OC.L10N.register(
     "Code block" : "Bloque de código",
     "Remove link" : "Eliminar enlace",
     "Translate" : "Traducir",
+    "Select language" : "Selecciona el idioma",
+    "to" : "para",
     "Replace" : "Reemplazar",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",

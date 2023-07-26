@@ -52,6 +52,8 @@ OC.L10N.register(
     "Link to website" : "Link til internet side",
     "Select file or folder to link to" : "Link til fil eller mappe",
     "Translate" : "Oversæt",
+    "Select language" : "Vælg sprog",
+    "to" : "til",
     "Replace" : "Erstat",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Delete this table" : "Slet denne tabel",

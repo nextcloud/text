@@ -24,6 +24,8 @@ OC.L10N.register(
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
     "Translate" : "Përkthe",
+    "Select language" : "Zgjidh gjuhën",
+    "to" : "te",
     "Replace" : "Mbishkruaj",
     "Unsupported image type" : "Lloj imazhi i pa suportuar",
     "Undo" : "Ktheje pas",

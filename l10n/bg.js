@@ -95,8 +95,6 @@ OC.L10N.register(
     "Editor actions" : "Действия на редактора",
     "Translate" : "Преведи",
     "Remaining actions" : "Оставащи действия",
-    "Source language" : "Език на източника",
-    "Target language" : "Целеви език",
     "Replace" : "Замяна",
     "Insert" : "Вмъкване",
     "Detect language" : "Разпознаване на език",
@@ -152,6 +150,8 @@ OC.L10N.register(
     "Add Link" : "Добавяне на връзка",
     "Link file" : "Файл с връзка",
     "Remove Link" : "Премахване на връзка",
-    "Select file to link to" : "Избор на файл, към които да поставите връзка"
+    "Select file to link to" : "Избор на файл, към които да поставите връзка",
+    "Source language" : "Език на източника",
+    "Target language" : "Целеви език"
 },
 "nplurals=2; plural=(n != 1);");

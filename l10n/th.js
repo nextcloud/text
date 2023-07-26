@@ -16,6 +16,7 @@ OC.L10N.register(
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
     "Translate" : "แปลภาษา",
+    "to" : "ถึง",
     "Replace" : "แทนที่",
     "Undo" : "เลิกทำ",
     "Info" : "ข้อมูล",

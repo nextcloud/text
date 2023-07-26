@@ -46,6 +46,8 @@ OC.L10N.register(
     "Code block" : "מקטע קוד",
     "Update link" : "עדכן את הקישור",
     "Translate" : "תרגום",
+    "Select language" : "בחירת שפה",
+    "to" : "סיום",
     "Replace" : "החלפה",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",

@@ -82,8 +82,9 @@ OC.L10N.register(
     "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
     "Formatting menu bar" : "Muotoiluvalikko",
     "Translate" : "Käännä",
-    "Source language" : "Lähdekieli",
-    "Target language" : "Kohdekieli",
+    "Translate from" : "Lähdekieli",
+    "Select language" : "Valitse kieli",
+    "to" : "päättyen",
     "Replace" : "Korvaa",
     "Detect language" : "Havaitse kieli",
     "Translation failed" : "Kääntäminen epäonnistui",
@@ -129,6 +130,8 @@ OC.L10N.register(
     "Add Link" : "Lisää linkki",
     "Link file" : "Linkitä tiedosto",
     "Remove Link" : "Poista linkki",
-    "Select file to link to" : "Valitse tiedosto johon linkitetään"
+    "Select file to link to" : "Valitse tiedosto johon linkitetään",
+    "Source language" : "Lähdekieli",
+    "Target language" : "Kohdekieli"
 },
 "nplurals=2; plural=(n != 1);");

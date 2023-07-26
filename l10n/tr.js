@@ -97,8 +97,9 @@ OC.L10N.register(
     "Editor actions" : "Düzenleyici işlemleri",
     "Translate" : "Çeviri yapın",
     "Remaining actions" : "Yeniden adlandırma işlemleri",
-    "Source language" : "Kaynak dil",
-    "Target language" : "Hedef dil",
+    "Translate from" : "Kaynak dil",
+    "Select language" : "Dil seçin",
+    "to" : "bitiş",
     "Replace" : "Değiştir",
     "Insert" : "Ekle",
     "Detect language" : "Dili algıla",
@@ -154,6 +155,8 @@ OC.L10N.register(
     "Add Link" : "Bağlantı ekle",
     "Link file" : "Dosya bağla",
     "Remove Link" : "Bağlantıyı kaldır",
-    "Select file to link to" : "Bağlantı verilecek dosyayı seçin"
+    "Select file to link to" : "Bağlantı verilecek dosyayı seçin",
+    "Source language" : "Kaynak dil",
+    "Target language" : "Hedef dil"
 },
 "nplurals=2; plural=(n > 1);");

@@ -86,6 +86,8 @@ OC.L10N.register(
     "Editor actions" : "Akcie editora",
     "Translate" : "Preložiť",
     "Remaining actions" : "Zostávajúce akcie",
+    "Select language" : "Vybrať jazyk",
+    "to" : "do",
     "Replace" : "Nahradiť",
     "No emoji found" : "Nenašli sa žiadne emotikony",
     "No user found" : "Žiadny užívateľ nebol nenájdený",

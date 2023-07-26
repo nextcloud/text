@@ -17,6 +17,8 @@ OC.L10N.register(
     "Remove link" : "Noņemt saiti",
     "Update link" : "Atjaunināt saiti",
     "Translate" : "Tulkot",
+    "Select language" : "Izvēlies valodu",
+    "to" : "kam",
     "Replace" : "Aizvietot",
     "Unsupported image type" : "Neatbalstīts attēla tips",
     "Undo" : "Atsaukt",

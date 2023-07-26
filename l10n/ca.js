@@ -97,8 +97,8 @@ OC.L10N.register(
     "Editor actions" : "Accions de l'editor",
     "Translate" : "Tradueix",
     "Remaining actions" : "Accions restants",
-    "Source language" : "Llengua d'origen",
-    "Target language" : "Llengua de destinació",
+    "Select language" : "Seleccioneu la llengua",
+    "to" : "a",
     "Replace" : "Substitueix",
     "Insert" : "Insereix",
     "Detect language" : "Detecta la llengua",
@@ -154,6 +154,8 @@ OC.L10N.register(
     "Add Link" : "Afegeix un enllaç",
     "Link file" : "Enllaça un fitxer",
     "Remove Link" : "Suprimeix l'enllaç",
-    "Select file to link to" : "Seleccioneu el fitxer que voleu enllaçar"
+    "Select file to link to" : "Seleccioneu el fitxer que voleu enllaçar",
+    "Source language" : "Llengua d'origen",
+    "Target language" : "Llengua de destinació"
 },
 "nplurals=2; plural=(n != 1);");

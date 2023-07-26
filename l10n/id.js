@@ -22,6 +22,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Pintasan keyboard",
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "Translate" : "Terjemahkan",
+    "to" : "untuk",
     "Replace" : "Timpa",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima",
     "Undo" : "Undo",
