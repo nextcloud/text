@@ -97,8 +97,9 @@ OC.L10N.register(
     "Editor actions" : "Editore ekintzak",
     "Translate" : "Itzuli",
     "Remaining actions" : "Gainerako ekintzak",
-    "Source language" : "Jatorrizko hizkuntza",
-    "Target language" : "Helburuko hizkuntza",
+    "Translate from" : "Itzuli honetatik",
+    "Select language" : "Hautatu hizkuntza",
+    "to" : "honi",
     "Replace" : "Ordeztu",
     "Insert" : "Txertatu",
     "Detect language" : "Detektatu hizkuntza",
@@ -154,6 +155,8 @@ OC.L10N.register(
     "Add Link" : "Gehitu esteka",
     "Link file" : "Estekatu fitxategia",
     "Remove Link" : "Kendu esteka",
-    "Select file to link to" : "Hautatu fitxategia estekatzeko"
+    "Select file to link to" : "Hautatu fitxategia estekatzeko",
+    "Source language" : "Jatorrizko hizkuntza",
+    "Target language" : "Helburuko hizkuntza"
 },
 "nplurals=2; plural=(n != 1);");

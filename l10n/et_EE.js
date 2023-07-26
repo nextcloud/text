@@ -21,6 +21,7 @@ OC.L10N.register(
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
     "Translate" : "Tõlgi",
+    "to" : "saaja",
     "Replace" : "Asenda",
     "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",

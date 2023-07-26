@@ -96,8 +96,9 @@ OC.L10N.register(
     "Editor actions" : "История редактирования",
     "Translate" : "Перевести",
     "Remaining actions" : "Оставшиеся действия",
-    "Source language" : "Исходный язык",
-    "Target language" : "Целевой язык",
+    "Translate from" : "Перевод с",
+    "Select language" : "Выбрать язык",
+    "to" : "по",
     "Replace" : "Заменить",
     "Insert" : "Вставить",
     "Detect language" : "Определить язык",
@@ -153,6 +154,8 @@ OC.L10N.register(
     "Add Link" : "Добавить ссылку",
     "Link file" : "Добавить ссылку на файл",
     "Remove Link" : "Удалить ссылку",
-    "Select file to link to" : "Выберете файл для создания ссылки"
+    "Select file to link to" : "Выберете файл для создания ссылки",
+    "Source language" : "Исходный язык",
+    "Target language" : "Целевой язык"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

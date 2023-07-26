@@ -9,6 +9,7 @@ OC.L10N.register(
     "Bold" : "Trwm",
     "Italic" : "Italig",
     "Translate" : "Cyfieithu",
+    "to" : "at",
     "Undo" : "Dadwneud",
     "Info" : "Info",
     "Warning" : "Rhybudd",

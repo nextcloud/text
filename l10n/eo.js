@@ -36,6 +36,7 @@ OC.L10N.register(
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
     "Translate" : "Traduku",
+    "to" : "al",
     "Replace" : "Anstataŭigi",
     "Unsupported image type" : "Nesubtenata bildotipo",
     "Undo" : "Malfari",

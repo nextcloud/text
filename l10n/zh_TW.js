@@ -97,8 +97,9 @@ OC.L10N.register(
     "Editor actions" : "編輯器動作",
     "Translate" : "翻譯",
     "Remaining actions" : "剩餘動作",
-    "Source language" : "來源語言",
-    "Target language" : "目標語言",
+    "Translate from" : "翻譯從",
+    "Select language" : "選擇語言",
+    "to" : "收件者",
     "Replace" : "置換",
     "Insert" : "插入",
     "Detect language" : "偵測語言",
@@ -154,6 +155,8 @@ OC.L10N.register(
     "Add Link" : "新增連結",
     "Link file" : "連結檔案",
     "Remove Link" : "移除連結",
-    "Select file to link to" : "選擇要連結的檔案"
+    "Select file to link to" : "選擇要連結的檔案",
+    "Source language" : "來源語言",
+    "Target language" : "目標語言"
 },
 "nplurals=1; plural=0;");

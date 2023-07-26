@@ -68,6 +68,8 @@ OC.L10N.register(
     "Select file or folder to link to" : "Изберете датотека или папка за линк до",
     "Editor actions" : "Акции на уредникот",
     "Translate" : "Преведи",
+    "Select language" : "Изберете јазик",
+    "to" : "до",
     "Replace" : "Преклопи",
     "No emoji found" : "Не се пронајдени емотикони",
     "Failed to load" : "Неуспешно вчитување",

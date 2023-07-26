@@ -8,6 +8,8 @@ OC.L10N.register(
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Translate" : "Translate",
+    "Select language" : "Vel språk",
+    "to" : "til",
     "Replace" : "Erstatt",
     "Info" : "Info",
     "Warning" : "Åtvaring",

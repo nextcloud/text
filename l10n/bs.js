@@ -8,6 +8,7 @@ OC.L10N.register(
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
     "Translate" : "Translate",
+    "to" : "do",
     "Info" : "Info",
     "Warning" : "Upozorenje",
     "Edit" : "Izmjeni"

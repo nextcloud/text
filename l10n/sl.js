@@ -96,8 +96,9 @@ OC.L10N.register(
     "Editor actions" : "Dejanja urejevalnika",
     "Translate" : "Prevodi",
     "Remaining actions" : "Dejanja preimenovanja",
-    "Source language" : "Izvorni jezik",
-    "Target language" : "Ciljni jezik",
+    "Translate from" : "Prevedi iz",
+    "Select language" : "Izbor jezika",
+    "to" : "do",
     "Replace" : "Zamenjaj",
     "Insert" : "Vstavi",
     "Detect language" : "Zaznava jezika",
@@ -153,6 +154,8 @@ OC.L10N.register(
     "Add Link" : "Dodaj povezavo",
     "Link file" : "Datoteka povezave",
     "Remove Link" : "Odstrani povezavo",
-    "Select file to link to" : "Izbor datoteke za povezavo"
+    "Select file to link to" : "Izbor datoteke za povezavo",
+    "Source language" : "Izvorni jezik",
+    "Target language" : "Ciljni jezik"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

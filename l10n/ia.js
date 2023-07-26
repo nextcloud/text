@@ -9,6 +9,7 @@ OC.L10N.register(
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",
     "Translate" : "Translate",
+    "to" : "a",
     "Undo" : "Disfacer",
     "Info" : "Info",
     "Warning" : "Aviso",

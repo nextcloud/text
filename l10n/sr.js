@@ -97,8 +97,9 @@ OC.L10N.register(
     "Editor actions" : "Акције едитора",
     "Translate" : "Превођење",
     "Remaining actions" : "Преостале акције",
-    "Source language" : "Изворни језик",
-    "Target language" : "Циљни језик",
+    "Translate from" : "Преведи са",
+    "Select language" : "Одаберите језик",
+    "to" : "за",
     "Replace" : "Замени",
     "Insert" : "Уметни",
     "Detect language" : "Откриј језик",
@@ -154,6 +155,8 @@ OC.L10N.register(
     "Add Link" : "дај линк",
     "Link file" : "Увежи фајл",
     "Remove Link" : "Уклони линк",
-    "Select file to link to" : "Одаберите фајл на који да направите везу"
+    "Select file to link to" : "Одаберите фајл на који да направите везу",
+    "Source language" : "Изворни језик",
+    "Target language" : "Циљни језик"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -72,6 +72,8 @@ OC.L10N.register(
     "Insert from Files" : "Invoegen vanuit Bestanden",
     "Update link" : "Bijwerken link",
     "Translate" : "Vertalen",
+    "Select language" : "Kies taal",
+    "to" : "aan",
     "Replace" : "Vervangen",
     "No emoji found" : "Geen emoji gevonden",
     "Failed to load" : "Laden mislukt",
