@@ -6,6 +6,7 @@
 import { logger } from '../helpers/logger.js'
 import { decodeArrayBuffer } from '../helpers/base64.ts'
 import { getSteps, getAwareness } from '../helpers/yjs.js'
+import getNotifyBus from './NotifyService.js'
 
 /**
  *
@@ -26,8 +27,11 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		onclose
 		onopen
 		#handlers
+		#notifyPushBus
 
 		constructor(url) {
+			this.#notifyPushBus = getNotifyBus()
+			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
 			this.url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
 			this.#registerHandlers({
@@ -91,8 +95,20 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			Object.entries(this.#handlers)
 				.forEach(([key, value]) => syncService.off(key, value))
 			this.#handlers = []
+
+			this.#notifyPushBus?.off('notify_push', this.#onNotifyPush.bind(this))
 			this.onclose()
 			logger.debug('Websocket closed')
+		}
+
+		#onNotifyPush({ messageType, messageBody }) {
+			if (messageBody.documentId !== fileId) {
+				return
+			}
+			messageBody.steps.forEach(step => {
+				const data = decodeArrayBuffer(step)
+				this.onmessage({ data })
+			})
 		}
 
 	}
