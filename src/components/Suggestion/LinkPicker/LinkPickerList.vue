@@ -24,8 +24,9 @@
 		:items="items"
 		@select="(item) => $emit('select', item)">
 		<template #default="{ item }">
-			<div class="link-picker__item">
-				<img :src="item.icon">
+			<div class="link-picker__item" :data-key="item.key">
+				<compoent :is="item.icon" v-if="typeof item.icon !== 'string'" />
+				<img v-else :src="item.icon">
 				<div>{{ item.label }}</div>
 			</div>
 		</template>
