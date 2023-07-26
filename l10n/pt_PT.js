@@ -38,6 +38,7 @@ OC.L10N.register(
     "Underline" : "Sublinhado",
     "Underlined text" : "Texto sublinhado",
     "Translate" : "Traduzir",
+    "to" : "Para",
     "Replace" : "Substitua",
     "Unsupported image type" : "Tipo de imagem não suportado",
     "Undo" : "Desfazer",

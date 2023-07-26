@@ -14,6 +14,8 @@ OC.L10N.register(
     "Bold" : "Negrita",
     "Italic" : "Itálico",
     "Translate" : "Traducir",
+    "Select language" : "Seleccionar idioma",
+    "to" : "para",
     "Replace" : "Reemplazar",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",

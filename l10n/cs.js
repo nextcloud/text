@@ -97,8 +97,9 @@ OC.L10N.register(
     "Editor actions" : "Akce editoru",
     "Translate" : "Překládání",
     "Remaining actions" : "Zbývající akce",
-    "Source language" : "Zdrojový jazyk",
-    "Target language" : "Cílový jazyk",
+    "Translate from" : "Přeložit z",
+    "Select language" : "Vyberte jazyk",
+    "to" : "do",
     "Replace" : "Nahradit",
     "Insert" : "Vložit",
     "Detect language" : "Zjistit jazyk",
@@ -154,6 +155,8 @@ OC.L10N.register(
     "Add Link" : "Přidat odkaz",
     "Link file" : "Odkázat na soubor",
     "Remove Link" : "Odebrat odkaz",
-    "Select file to link to" : "Vyberte soubor na který odkázat"
+    "Select file to link to" : "Vyberte soubor na který odkázat",
+    "Source language" : "Zdrojový jazyk",
+    "Target language" : "Cílový jazyk"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

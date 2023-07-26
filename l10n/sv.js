@@ -96,8 +96,8 @@ OC.L10N.register(
     "Formatting menu bar" : "Formatera menyraden",
     "Translate" : "Översätt",
     "Remaining actions" : "Återstående åtgärder",
-    "Source language" : "Källspråk",
-    "Target language" : "Målspråk",
+    "Select language" : "Välj språk",
+    "to" : "till",
     "Replace" : "Ersätt",
     "Insert" : "Infoga",
     "Detect language" : "Upptäck språk",
@@ -152,6 +152,8 @@ OC.L10N.register(
     "Add Link" : "Lägg till länk",
     "Link file" : "Länka fil",
     "Remove Link" : "Ta bort länk",
-    "Select file to link to" : "Välj fil att länka till"
+    "Select file to link to" : "Välj fil att länka till",
+    "Source language" : "Källspråk",
+    "Target language" : "Målspråk"
 },
 "nplurals=2; plural=(n != 1);");

@@ -46,6 +46,8 @@ OC.L10N.register(
     "Quoted text" : "Testu tzitadu",
     "Code block" : "Blocu de còdighe",
     "Translate" : "Borta",
+    "Select language" : "Seletziona una limba",
+    "to" : "a",
     "Replace" : "Càmbia cun àteru",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Undo" : "Iscontza",

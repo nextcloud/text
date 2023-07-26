@@ -44,6 +44,7 @@ OC.L10N.register(
     "Quoted text" : "Văn bản được trích dẫn",
     "Code block" : "Khối mã",
     "Translate" : "Dịch",
+    "to" : "đến",
     "Replace" : "Thay thế",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc",

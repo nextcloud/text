@@ -14,6 +14,8 @@ OC.L10N.register(
     "Formatting help" : "დახმარება ფორმატირებაზე",
     "Keyboard shortcuts" : "კლავიატურის კომბინაციები",
     "Translate" : "გადათარგმნეთ",
+    "Select language" : "აირჩიეთ ენა",
+    "to" : "ვის",
     "Replace" : "ჩანაცვლება",
     "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი",
     "Undo" : "დაბრუნება",
