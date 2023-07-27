@@ -10,7 +10,7 @@ export default TipTapMention.extend({
 				tag: 'span[data-type="user"]',
 				getAttrs: element => {
 					return {
-						id: element.getAttribute('data-id'),
+						id: decodeURIComponent(element.getAttribute('data-id')),
 						label: element.innerText || element.textContent || element.getAttribute('data-label'),
 					}
 				},
@@ -36,7 +36,7 @@ export default TipTapMention.extend({
 
 	toMarkdown(state, node) {
 		state.write(' ')
-		state.write(`@[${node.attrs.label}](mention://user/${node.attrs.id})`)
+		state.write(`@[${node.attrs.label}](mention://user/${encodeURIComponent(node.attrs.id)})`)
 		state.write(' ')
 	},
 })
