@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.12.0@f90118cdeacd0088e7215e64c0c99ceca819e176">
+<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
   <file src="lib/Controller/WorkspaceController.php">
     <UndefinedInterfaceMethod>
       <code>open</code>
@@ -15,9 +15,21 @@
       <code>getToken</code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="vendor/nextcloud/ocp/OCP/BackgroundJob/TimedJob.php">
-    <ImplementedParamTypeMismatch>
-      <code>$jobList</code>
-    </ImplementedParamTypeMismatch>
+  <file src="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php">
+    <MissingClosureParamType>
+      <code>$data</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType>
+      <code>function ($data) {</code>
+    </MissingClosureReturnType>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$data->getData()]]></code>
+    </PossiblyInvalidArgument>
+  </file>
+  <file src="vendor/nextcloud/ocp/OCP/AppFramework/OCSController.php">
+    <MissingClosureParamType>
+      <code>$data</code>
+      <code>$data</code>
+    </MissingClosureParamType>
   </file>
 </files>

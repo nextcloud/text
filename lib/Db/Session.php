@@ -24,10 +24,10 @@
 namespace OCA\Text\Db;
 
 use JsonSerializable;
+use OCA\Text\Exception\InvalidSessionException;
 use OCP\AppFramework\Db\Entity;
 
 /**
- * @method ?string getUserId()
  * @method void setUserId(?string $userId)
  * @method string getToken()
  * @method void setToken(string $token)
@@ -56,6 +56,17 @@ class Session extends Entity implements JsonSerializable {
 		$this->addType('id', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('lastContact', 'integer');
+	}
+
+	public function isGuest(): bool {
+		return $this->userId === null;
+	}
+
+	public function getUserId(): string {
+		if ($this->userId === null) {
+			throw new InvalidSessionException('No user id found');
+		}
+		return $this->userId;
 	}
 
 	public function jsonSerialize(): array {

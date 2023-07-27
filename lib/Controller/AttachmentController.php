@@ -161,13 +161,17 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 
 	/**
 	 * Serve the image files in the editor
+	 *
+	 * @return DataDownloadResponse|DataResponse
+	 *
+	 * @psalm-return DataDownloadResponse<200, string, array<never, never>>|DataResponse<404, '', array<never, never>>
 	 */
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[RequireDocumentSession]
 	public function getImageFile(string $imageFileName, ?string $shareToken = null,
-		int $preferRawImage = 0) {
+		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
 		$documentId = $this->getSession()->getDocumentId();
 
 		try {
@@ -192,12 +196,16 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 
 	/**
 	 * Serve the media files in the editor
+	 *
+	 * @return DataDownloadResponse|DataResponse
+	 *
+	 * @psalm-return DataDownloadResponse<200, string, array<never, never>>|DataResponse<404, '', array<never, never>>
 	 */
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[RequireDocumentSession]
-	public function getMediaFile(string $mediaFileName, ?string $shareToken = null) {
+	public function getMediaFile(string $mediaFileName, ?string $shareToken = null): DataResponse|DataDownloadResponse {
 		$documentId = $this->getSession()->getDocumentId();
 
 		try {

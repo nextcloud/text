@@ -40,7 +40,7 @@ use OCP\Share\IShare;
 class PublicSessionController extends PublicShareController implements ISessionAwareController {
 	use TSessionAwareController;
 
-	private IShare $share;
+	private ?IShare $share = null;
 
 	public function __construct(
 		string $appName,
@@ -52,8 +52,16 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		parent::__construct($appName, $request, $session);
 	}
 
+	private function getShare(): IShare {
+		if ($this->share === null) {
+			throw new \Exception('Share has not been set yet');
+		}
+
+		return $this->share;
+	}
+
 	protected function getPasswordHash(): string {
-		return $this->share->getPassword();
+		return $this->getShare()->getPassword();
 	}
 
 	public function isValidToken(): bool {
@@ -66,12 +74,13 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	}
 
 	protected function isPasswordProtected(): bool {
-		return $this->share->getPassword() !== null;
+		/** @psalm-suppress RedundantConditionGivenDocblockType */
+		return $this->getShare()->getPassword() !== null;
 	}
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function create(string $token, string $file = null, $guestName = null): DataResponse {
+	public function create(string $token, string $file = null, ?string $guestName = null): DataResponse {
 		return $this->apiService->create(null, $file, $token, $guestName);
 	}
 
@@ -95,10 +104,13 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 
+	/**
+	 * @psalm-return DataResponse<int, array|null|object|scalar, array<string, mixed>>
+	 */
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function updateSession(string $guestName) {
+	public function updateSession(string $guestName): DataResponse {
 		return $this->apiService->updateSession($this->getSession(), $guestName);
 	}
 }

@@ -96,14 +96,14 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[RequireDocumentSession]
 	#[UserRateLimit(limit: 5, period: 120)]
 	public function mention(string $mention): DataResponse {
-		if ($this->getSession()->getUserId() === null && !$this->sessionService->isUserInDocument($this->getDocument()->getId(), $mention)) {
+		if ($this->getSession()->isGuest() && !$this->sessionService->isUserInDocument($this->getDocument()->getId(), $mention)) {
 			return new DataResponse([], 403);
 		}
 
 		return new DataResponse($this->notificationService->mention($this->getDocument()->getId(), $mention));
 	}
 
-	private function loginSessionUser() {
+	private function loginSessionUser(): void {
 		$currentSession = $this->getSession();
 		if (!$this->userSession->isLoggedIn()) {
 			$user = $this->userManager->get($currentSession->getUserId());

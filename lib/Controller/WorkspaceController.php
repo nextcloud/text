@@ -145,6 +145,7 @@ class WorkspaceController extends OCSController {
 			if (!($share->getPermissions() & Constants::PERMISSION_READ)) {
 				throw new ShareNotFound();
 			}
+			/** @psalm-suppress RedundantConditionGivenDocblockType */
 			if ($share->getPassword() !== null) {
 				$shareId = $this->session->get('public_link_authenticated');
 				if ($share->getId() !== $shareId) {

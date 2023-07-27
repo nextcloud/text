@@ -126,9 +126,10 @@ class AttachmentService {
 
 	/**
 	 * Get media file from file name
+	 *
 	 * @throws NotFoundException
 	 * @throws \OCP\Files\InvalidPathException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws NotPermittedException
 	 */
 	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): File|null {
 		$textFile = $this->getTextFile($documentId, $userId);
@@ -271,7 +272,10 @@ class AttachmentService {
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $userId
+	 * @param resource $newFileResource
+	 *
 	 * @return array
+	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -300,7 +304,10 @@ class AttachmentService {
 	 * @param string $newFileName
 	 * @param string $newFileContent
 	 * @param string $shareToken
+	 * @param resource $newFileResource
+	 *
 	 * @return array
+	 *
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws \OCP\Files\InvalidPathException
@@ -423,6 +430,9 @@ class AttachmentService {
 	 */
 	private function getAttachmentDirectoryForFile(File $textFile, bool $create = false): Folder {
 		$owner = $textFile->getOwner();
+		if ($owner === null) {
+			throw new NotFoundException('File has no owner');
+		}
 		$ownerId = $owner->getUID();
 		$ownerUserFolder = $this->rootFolder->getUserFolder($ownerId);
 		$ownerTextFile = $ownerUserFolder->getById($textFile->getId());
@@ -444,13 +454,11 @@ class AttachmentService {
 
 	/**
 	 * Get a user file from file ID
-	 * @param string $filePath
-	 * @param string $userId
-	 * @return File|null
+	 *
 	 * @throws NotFoundException
-	 * @throws \OCP\Files\NotPermittedException
+	 * @throws NotPermittedException
 	 */
-	private function getFileFromPath(string $filePath, string $userId): ?File {
+	private function getFileFromPath(string $filePath, string $userId): File {
 		$userFolder = $this->rootFolder->getUserFolder($userId);
 		if ($userFolder->nodeExists($filePath)) {
 			$file = $userFolder->get($filePath);
@@ -458,7 +466,7 @@ class AttachmentService {
 				return $file;
 			}
 		}
-		return null;
+		throw new NotFoundException();
 	}
 
 	private function isDownloadDisabled(File $file): bool {

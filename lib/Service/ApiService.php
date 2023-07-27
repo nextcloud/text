@@ -51,14 +51,12 @@ class ApiService {
 	private SessionService $sessionService;
 	private DocumentService $documentService;
 	private LoggerInterface $logger;
-	private AttachmentService $attachmentService;
 	private EncodingService $encodingService;
 	private IL10N $l10n;
 
 	public function __construct(IRequest $request,
 		SessionService $sessionService,
 		DocumentService $documentService,
-		AttachmentService $attachmentService,
 		EncodingService $encodingService,
 		LoggerInterface $logger,
 		IL10N $l10n
@@ -67,12 +65,11 @@ class ApiService {
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;
 		$this->logger = $logger;
-		$this->attachmentService = $attachmentService;
 		$this->encodingService = $encodingService;
 		$this->l10n = $l10n;
 	}
 
-	public function create($fileId = null, $filePath = null, ?string $token = null, $guestName = null): DataResponse {
+	public function create(?int $fileId = null, ?string $filePath = null, ?string $token = null, ?string $guestName = null): DataResponse {
 		try {
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
@@ -127,6 +124,8 @@ class ApiService {
 			return new DataResponse('Failed to create the document session', 500);
 		}
 
+		/** @var Document $document */
+
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
 		if ($freshSession) {
@@ -171,7 +170,7 @@ class ApiService {
 		]);
 	}
 
-	public function close($documentId, $sessionId, $sessionToken): DataResponse {
+	public function close(int $documentId, int $sessionId, string $sessionToken): DataResponse {
 		$this->sessionService->closeSession($documentId, $sessionId, $sessionToken);
 		$this->sessionService->removeInactiveSessionsWithoutSteps($documentId);
 		$activeSessions = $this->sessionService->getActiveSessions($documentId);
@@ -184,8 +183,10 @@ class ApiService {
 	/**
 	 * @throws NotFoundException
 	 * @throws DoesNotExistException
+	 *
+	 * @param null|string $token
 	 */
-	public function push(Session $session, Document $document, $version, $steps, $awareness, $token = null): DataResponse {
+	public function push(Session $session, Document $document, int $version, array $steps, string $awareness, string|null $token = null): DataResponse {
 		try {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
@@ -210,7 +211,12 @@ class ApiService {
 		return new DataResponse($result);
 	}
 
-	public function sync(Session $session, Document $document, $version = 0, $autosaveContent = null, $documentState = null, bool $force = false, bool $manualSave = false, $token = null): DataResponse {
+	/**
+	 * @param null|string $autosaveContent
+	 * @param null|string $documentState
+	 * @param null|string $token
+	 */
+	public function sync(Session $session, Document $document, int $version = 0, string|null $autosaveContent = null, string|null $documentState = null, bool $force = false, bool $manualSave = false, string|null $token = null): DataResponse {
 		$documentId = $session->getDocumentId();
 		try {
 			$result = [

@@ -41,7 +41,7 @@ use OCP\AppFramework\Db\Entity;
  * @method setBaseVersionEtag(string $etag): void
  */
 class Document extends Entity implements \JsonSerializable {
-	public $id;
+	public $id = null;
 	// TODO: Remove obsolete field `currentVersion`
 	protected int $currentVersion = 0;
 	protected int $lastSavedVersion = 0;
