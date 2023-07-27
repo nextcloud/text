@@ -20,6 +20,13 @@ function showCursorLabel(clientId) {
 	}, 50)
 }
 
+/**
+ * Unix timestamp in seconds.
+ */
+function getTimestamp() {
+	return Math.floor(Date.now() / 1000)
+}
+
 const CollaborationCursor = TiptapCollaborationCursor.extend({
 	addOptions() {
 		return {
@@ -28,7 +35,7 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 				name: null,
 				clientId: null,
 				color: null,
-				lastUpdate: null,
+				lastUpdate: getTimestamp(),
 			},
 			render: user => {
 				const cursor = document.createElement('span')
@@ -61,13 +68,12 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 		})
 	},
 
-	addCommands() {
-		return {
-			...this.parent(),
-			updateSelf: () => ({ editor }) => {
-				const attributes = { ...this.options.user, lastUpdate: Date.now() }
-				return editor.commands.updateUser(attributes)
-			},
+	// Flag own cursor as active on undoable changes to the document state
+	onTransaction({ transaction }) {
+		const { updated, meta } = transaction
+		if (updated && (meta.addToHistory ?? true) && !meta.pointer) {
+			this.options.user.lastUpdate = getTimestamp()
+			this.options.provider.awareness.setLocalStateField('user', this.options.user)
 		}
 	},
 })
