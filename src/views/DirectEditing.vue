@@ -119,7 +119,7 @@ export default {
 		async close() {
 			this.saving = true
 			setTimeout(async () => {
-				await this.$refs.editor.close()
+				await this.$refs.editor.$destroy()
 				callMobileMessage('close')
 			}, 0)
 		},
