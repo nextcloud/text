@@ -7,6 +7,7 @@ OC.L10N.register(
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
     "Translate" : "Translate",
+    "to" : "doğru",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq",
     "Edit" : "Dəyişiklik et"

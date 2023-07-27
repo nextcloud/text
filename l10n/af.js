@@ -32,6 +32,7 @@ OC.L10N.register(
     "Unordered list" : "Ongesorteerde lys",
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
+    "to" : "aan",
     "Unsupported image type" : "Onondersteunde beeldtipe",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
