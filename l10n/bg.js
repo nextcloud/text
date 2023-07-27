@@ -95,6 +95,8 @@ OC.L10N.register(
     "Editor actions" : "Действия на редактора",
     "Translate" : "Преведи",
     "Remaining actions" : "Оставащи действия",
+    "Select language" : "Изберете език",
+    "to" : "до",
     "Replace" : "Замяна",
     "Insert" : "Вмъкване",
     "Detect language" : "Разпознаване на език",
