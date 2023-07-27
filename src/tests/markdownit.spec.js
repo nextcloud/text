@@ -50,6 +50,19 @@ describe('markdownit', () => {
 		))
 	})
 
+	it('renders details summary', () => {
+		const rendered = markdownit.render('<details>\n' +
+			'<summary>Summary</summary>\n' +
+			'\n' +
+			'# Head')
+		expect(stripIndent(rendered)).toBe(stripIndent(`
+			<details>
+			<summary>Summary</summary>
+			<h1>Head</h1>
+			</details>`
+		))
+	})
+
 	describe('callouts', () => {
 		typesAvailable.forEach((type) => {
 			it(`render ${type}`, () => {
