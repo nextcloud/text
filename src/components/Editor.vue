@@ -713,7 +713,7 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.$syncService.options.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
 			logger.debug('markdown, serialized from editor state by prosemirror-markdown')

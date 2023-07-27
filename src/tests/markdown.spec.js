@@ -221,6 +221,7 @@ describe('Markdown serializer from html', () => {
 
 	test('mentions', () => {
 		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe(' @[username](mention://user/id) ')
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>')).toBe(' @[whitespace user](mention://user/whitespace%20user) ')
 	})
 })
 
