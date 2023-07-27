@@ -321,7 +321,6 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
-		this.$ydoc.on('update', this.onYjsUpdate)
 		this.$providers = []
 		this.$editor = null
 		this.$syncService = null
@@ -508,7 +507,6 @@ export default {
 											: (session?.guestName || t('text', 'Guest')),
 										color: session?.color,
 										clientId: this.$ydoc.clientID,
-										lastUpdate: Date.now(),
 									},
 								}),
 								Keymap.configure({
@@ -642,13 +640,6 @@ export default {
 
 		onDeleteImageNode(imageUrl) {
 			this.emit('delete-image-node', imageUrl)
-		},
-
-		onYjsUpdate(_update, origin) {
-			if (origin.key === 'y-sync$') {
-				// Update timestamp of own cursor
-				this.$editor.commands.updateSelf()
-			}
 		},
 
 		async close() {
