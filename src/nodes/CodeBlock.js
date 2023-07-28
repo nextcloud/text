@@ -1,7 +1,7 @@
-import TiptapCodeBlock from '@tiptap/extension-code-block'
+import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 
-const CodeBlock = TiptapCodeBlock.extend({
+const CodeBlock = TiptapCodeBlockLowlight.extend({
 
 	parseHTML() {
 		return [

@@ -821,7 +821,7 @@ export default {
 	.text-editor__wrapper {
 		@import './../../css/prosemirror';
 
-		&:not(.is-rich-editor) .ProseMirror {
+		.ProseMirror {
 			pre {
 				background-color: var(--color-main-background);
 
