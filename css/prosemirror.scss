@@ -198,7 +198,7 @@ div.ProseMirror {
 		position: relative;
 		padding-left: 3px;
 
-		p {
+		p .paragraph-content {
 			margin-bottom: 0.5em;
 		}
 	}
