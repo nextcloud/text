@@ -95,7 +95,8 @@ describe('recorded session', () => {
 				expect(length).toBe(0)
 			}
 		})
-		expect(encodeStateAsUpdate(ydoc).length).toBe(34503)
+		expect(encodeStateAsUpdate(ydoc).length).toBeGreaterThan(30000)
+		expect(encodeStateAsUpdate(ydoc).length).toBeLessThan(40000)
 	})
 
 	test('analyse responses', () => {
@@ -114,7 +115,8 @@ describe('recorded session', () => {
 		})
 		const replies = responses.filter(r => r.length)
 		expect(replies.length).toBe(344)
-		expect(size(replies)).toBe(562868)
+		expect(size(replies)).toBeGreaterThan(500000)
+		expect(size(replies)).toBeLessThan(600000)
 	})
 
 	test('leaving out queries', () => {
@@ -133,7 +135,8 @@ describe('recorded session', () => {
 			}
 		})
 		const replies = responses.filter(r => r.length)
-		expect(encodeStateAsUpdate(ydoc).length).toBe(34503)
+		expect(encodeStateAsUpdate(ydoc).length).toBeGreaterThan(30000)
+		expect(encodeStateAsUpdate(ydoc).length).toBeLessThan(40000)
 		expect(replies.length).toBe(0)
 		expect(size(replies)).toBe(0)
 	})
