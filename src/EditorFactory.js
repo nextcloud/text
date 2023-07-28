@@ -26,7 +26,7 @@ import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
 import { lowlight } from 'lowlight/lib/core.js'
-import hljs from 'highlight.js'
+import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
 import { Mention, PlainText, RichText } from './extensions/index.js'
