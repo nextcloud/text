@@ -150,14 +150,10 @@ class SyncService {
 	}
 
 	sendSteps(getSendable) {
-		// If already retrying, do nothing.
+		// If already waiting to send, do nothing.
 		if (this.#sendIntervalId) {
 			return
 		}
-		if (this.connection && !this.sending) {
-			return this._sendSteps(getSendable)
-		}
-		// If already sending, retry every 200ms.
 		return new Promise((resolve, reject) => {
 			this.#sendIntervalId = setInterval(() => {
 				if (this.connection && !this.sending) {
