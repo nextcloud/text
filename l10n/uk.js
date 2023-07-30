@@ -145,7 +145,7 @@ OC.L10N.register(
     "Control" : "Контроль",
     "Option" : "Варіант",
     "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
-    "Edit" : "Редашувати",
+    "Edit" : "Редагувати",
     "Add description" : "Додати опис",
     "Front matter" : "Передня справа",
     "Document save status" : "Статус збереження документа",
