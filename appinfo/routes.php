@@ -44,6 +44,8 @@ return [
 
 		/** @see Controller\SessionController::create() */
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],
+		/** @see Controller\SessionController::save() */
+		['name' => 'Session#save', 'url' => '/session/save', 'verb' => 'POST'],
 		/** @see Controller\SessionController::sync() */
 		['name' => 'Session#sync', 'url' => '/session/sync', 'verb' => 'POST'],
 		/** @see Controller\SessionController::push() */
@@ -57,6 +59,8 @@ return [
 		['name' => 'PublicSession#create', 'url' => '/public/session/create', 'verb' => 'PUT'],
 		/** @see Controller\PublicSessionController::updateSession() */
 		['name' => 'PublicSession#updateSession', 'url' => '/public/session', 'verb' => 'POST'],
+		/** @see Controller\PublicSessionController::save() */
+		['name' => 'PublicSession#save', 'url' => '/public/session/save', 'verb' => 'POST'],
 		/** @see Controller\PublicSessionController::sync() */
 		['name' => 'PublicSession#sync', 'url' => '/public/session/sync', 'verb' => 'POST'],
 		/** @see Controller\PublicSessionController::push() */

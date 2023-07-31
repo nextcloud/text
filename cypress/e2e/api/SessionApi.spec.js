@@ -171,7 +171,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.downloadFile(filePath)
 				.its('data')
 				.should('eql', '# Heading 1')
@@ -182,7 +182,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, {
+			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,
@@ -245,7 +245,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.login(user)
 			cy.prepareSessionApi()
 			cy.downloadFile('saves.md')
@@ -258,7 +258,7 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('eql', 1)
-			cy.syncSteps(connection, {
+			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,

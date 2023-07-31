@@ -116,8 +116,6 @@ class PollingBackend {
 		logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
 		await this.#connection.sync({
 			version: this.#syncService.version,
-			force: false,
-			manualSave: false,
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this.#lastPoll = Date.now()
 		this.#pollActive = false

@@ -33,11 +33,8 @@ describe('Sync', () => {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 		cy.visit('/apps/files')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }, (req) => {
-			if (req.body.autosaveContent) {
-				req.alias = 'save'
-			}
-		}).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/save' }).as('save')
 		cy.openTestFile()
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.getContent().type('{moveToEnd}* Saving the doc saves the doc state{enter}')
