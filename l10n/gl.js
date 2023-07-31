@@ -83,7 +83,7 @@ OC.L10N.register(
     "Quoted text" : "Texto citado",
     "Code block" : "Bloque de código",
     "Some code" : "Algún código",
-    "Upload from computer" : "Cargar dende o computador",
+    "Upload from computer" : "Enviar dende o computador",
     "Insert from Files" : "Inserir dende ficheiros",
     "Remove link" : "Retirar ligazón",
     "Link to file or folder" : "Ligazón a ficheiro ou cartafol",
