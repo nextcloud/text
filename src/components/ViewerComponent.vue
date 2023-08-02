@@ -29,7 +29,12 @@
 		:share-token="shareToken"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
-	<Component :is="readerComponent" v-else :content="content" />
+	<div v-else
+		id="editor-container"
+		data-text-el="editor-container"
+		class="text-editor source-viewer">
+		<Component :is="readerComponent" :content="content" />
+	</div>
 </template>
 
 <script>
@@ -102,6 +107,9 @@ export default {
 	},
 
 	watch: {
+		source() {
+			this.loadFileContent()
+		},
 		active() {
 			this.loadFileContent()
 		},
@@ -120,7 +128,7 @@ export default {
 
 	methods: {
 		async loadFileContent() {
-			if (!this.isEditable && this.content === '') {
+			if (!this.isEditable) {
 				const response = await axios.get(this.source)
 				this.content = response.data
 				this.contentLoaded = true
@@ -131,15 +139,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.text-editor {
+.text-editor:not(.viewer__file--hidden) {
 	overflow: scroll;
+	top: 0;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	left: 0;
+	margin: 0 auto;
+	position: relative;
+	background-color: var(--color-main-background);
+
+	&.source-viewer {
+		.text-editor__content-wrapper {
+			margin-top: var(--header-height);
+		}
+	}
 }
 </style>
 <style lang="scss">
+@import './../../css/variables';
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
 	.text-editor {
 		top: auto;
 	}
+}
+
+.viewer[data-handler='text'] .modal-wrapper .modal-container {
+	bottom: 0;
 }
 </style>
