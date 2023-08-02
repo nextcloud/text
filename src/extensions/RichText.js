@@ -59,6 +59,8 @@ import TrailingNode from './../nodes/TrailingNode.js'
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
 import { translate as t } from '@nextcloud/l10n'
 
+lowlight.registerAlias('plaintext', 'mermaid')
+
 export default Extension.create({
 	name: 'RichText',
 
@@ -88,6 +90,7 @@ export default Extension.create({
 			Code,
 			CodeBlock.configure({
 				lowlight,
+				defaultLanguage: 'plaintext',
 			}),
 			BulletList,
 			HorizontalRule,
