@@ -35,6 +35,8 @@ import MainContainer from './MainContainer.vue'
 import MenuBar from '../Menu/MenuBar.vue'
 import { useOutlineActions, useOutlineStateMixin } from './Wrapper.provider.js'
 import { Editor } from '@tiptap/core'
+/* eslint-disable import/no-named-as-default */
+import History from '@tiptap/extension-history'
 import { EDITOR, IS_RICH_EDITOR, useLinkClickHook } from '../Editor.provider.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
@@ -112,6 +114,9 @@ export default {
 							},
 						}
 						: undefined,
+					extensions: [
+						History,
+					],
 				}),
 			]
 		},
