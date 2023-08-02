@@ -24,7 +24,6 @@
 	<div class="text-editor__wrapper"
 		:class="{
 			'has-conflicts': hasSyncCollission,
-			'icon-loading': !contentLoaded && !hasConnectionIssue,
 			'is-rich-workspace': $isRichWorkspace,
 			'is-rich-editor': $isRichEditor,
 			'show-color-annotations': showAuthorAnnotations
@@ -158,11 +157,6 @@ export default {
 
 		.ProseMirror {
 			margin-top: 0 !important;
-		}
-		&.icon-loading {
-			.text-editor__main {
-				opacity: 0.3;
-			}
 		}
 	}
 

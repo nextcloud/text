@@ -21,7 +21,8 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'icon-loading': !loaded || !ready, 'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
+	<div v-if="enabled" id="rich-workspace" :class="{'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
+		<SkeletonLoading v-if="!loaded || !ready" />
 		<Editor v-if="file"
 			v-show="ready"
 			:key="file.path"
@@ -44,6 +45,7 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import SkeletonLoading from '../components/SkeletonLoading.vue'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -51,6 +53,7 @@ const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') 
 export default {
 	name: 'RichWorkspace',
 	components: {
+		SkeletonLoading,
 		Editor: () => import(/* webpackChunkName: "editor" */'./../components/Editor.vue'),
 	},
 	props: {
@@ -268,7 +271,7 @@ export default {
 		overflow: hidden;
 	}
 
-	#rich-workspace:not(.focus):not(.icon-loading):not(.empty):after {
+	#rich-workspace:not(.focus):not(.empty):after {
 		content: '';
 		position: absolute;
 		z-index: 1;
@@ -280,7 +283,7 @@ export default {
 		height: 4em;
 	}
 
-	#rich-workspace.dark:not(.focus):not(.icon-loading):after {
+	#rich-workspace.dark:not(.focus):after {
 		background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--color-main-background));
 	}
 
