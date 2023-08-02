@@ -44,8 +44,9 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import { NodeViewWrapper } from '@tiptap/vue-2'
 import { NcActions, NcActionButton } from '@nextcloud/vue'
+import NodeViewContent from '../NodeViewContent.js'
 import { TableSettings, Delete } from '../../components/icons.js'
 
 export default {

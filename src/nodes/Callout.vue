@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import { NodeViewWrapper } from '@tiptap/vue-2'
+import NodeViewContent from './NodeViewContent.js'
 import { Positive, Warn, Danger, Info } from '../components/icons.js'
 
 const ICONS_MAP = {

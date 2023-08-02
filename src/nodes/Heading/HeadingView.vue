@@ -34,7 +34,8 @@
 
 <script>
 import Vue from 'vue'
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import { NodeViewWrapper } from '@tiptap/vue-2'
+import NodeViewContent from '../NodeViewContent.js'
 import { useEditorMixin } from '../../components/Editor.provider.js'
 
 export default Vue.extend({

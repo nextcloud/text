@@ -31,10 +31,11 @@
 </template>
 
 <script>
-import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 import { getCurrentUser } from '@nextcloud/auth'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import debounce from 'debounce'
+import NodeViewContent from './NodeViewContent.js'
 
 export default {
 	name: 'ParagraphView',
