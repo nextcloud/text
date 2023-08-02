@@ -158,6 +158,7 @@
     ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.mjs$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
       "\\.(html|xml|svg|md)$": "<rootDir>/jest-raw-loader.js"
     },
