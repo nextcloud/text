@@ -92,7 +92,7 @@ export default {
 
 	created() {
 		this.$editor = this.createEditor()
-		this.$editor.setOptions({ editable: !this.readOnly })
+		this.$editor.setEditable(!this.readOnly)
 	},
 
 	beforeDestroy() {
