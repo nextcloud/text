@@ -40,6 +40,7 @@ OC.L10N.register(
     "Offline" : "Offline",
     "Saving …" : "Ukladám ...",
     "Saved" : "Uložené",
+    "Last saved {lastSave}" : "Naposledy uložené {lastSave}",
     "Unsaved changes" : "Neuložené zmeny",
     "Formatting help" : "Pomoc pri formátovaní",
     "Speed up your writing with simple shortcuts." : "Zefektívnite svoje písanie pomocou týchto jednoduchých skratiek.",
