@@ -110,16 +110,6 @@ export default {
 		source() {
 			this.loadFileContent()
 		},
-		active() {
-			this.loadFileContent()
-		},
-	},
-
-	beforeMount() {
-		// FIXME Dirty fix to avoid recreating the component on stable16
-		if (typeof this.$parent.$parent !== 'undefined' && this.$parent.$parent.onResize) {
-			window.removeEventListener('resize', this.$parent.$parent.onResize)
-		}
 	},
 
 	mounted() {
