@@ -29,6 +29,7 @@ use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCA\Text\Event\LoadEditor;
 use OCA\Text\Listeners\AddMissingIndicesListener;
+use OCA\Text\Listeners\BeforeAssistantNotificationListener;
 use OCA\Text\Listeners\BeforeNodeDeletedListener;
 use OCA\Text\Listeners\BeforeNodeRenamedListener;
 use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
@@ -40,6 +41,7 @@ use OCA\Text\Listeners\RegisterDirectEditorEventListener;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
 use OCA\Text\Service\ConfigService;
+use OCA\TPAssistant\Event\BeforeAssistantNotificationEvent;
 use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -72,6 +74,8 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
+		$context->registerEventListener(BeforeAssistantNotificationEvent::class, BeforeAssistantNotificationListener::class);
+
 		$context->registerNotifierService(Notifier::class);
 		$context->registerMiddleware(SessionMiddleware::class);
 	}
