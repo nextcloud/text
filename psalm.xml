@@ -7,7 +7,7 @@
     errorBaseline="tests/psalm-baseline.xml"
 >
 	<stubs>
-		<file name="tests/stub.phpstub" preloadClasses="true"/>
+		<file name="tests/stub.php" preloadClasses="true"/>
 	</stubs>
     <projectFiles>
         <directory name="lib" />
