@@ -4,7 +4,6 @@ namespace OCA\Text\Service;
 
 use OCP\AppFramework\Services\IInitialState;
 use OCP\TextProcessing\IManager;
-use OCP\TextProcessing\IProvider;
 use OCP\TextProcessing\ITaskType;
 use OCP\Translation\ITranslationManager;
 
@@ -51,7 +50,7 @@ class InitialStateProvider {
 
 		$this->initialState->provideInitialState(
 			'textprocessing',
-			array_map(function(string $className) {
+			array_map(function (string $className) {
 				/** @var class-string<ITaskType> $className */
 				$type = \OCP\Server::get($className);
 				return [
