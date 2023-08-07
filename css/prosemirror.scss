@@ -10,7 +10,7 @@ div.ProseMirror {
 	font-variant-ligatures: none;
 	padding: 4px 8px 200px 14px;
 	line-height: 150%;
-	font-size: 14px;
+	font-size: var(--default-font-size);
 	outline: none;
 
 	:target {
@@ -28,7 +28,7 @@ div.ProseMirror {
 		opacity: 1;
 		-webkit-user-select: text;
 		user-select: text;
-		font-size: 14px;
+		font-size: var(--default-font-size);
 
 		&:not(.collaboration-cursor__caret) {
 			border: none !important;
@@ -145,7 +145,7 @@ div.ProseMirror {
 	}
 
 	h6 {
-		font-size: 14px;
+		font-size: var(--default-font-size);
 	}
 
 	img {
