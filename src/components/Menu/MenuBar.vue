@@ -71,9 +71,9 @@
 
 <script>
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
-import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import debounce from 'debounce'
+import { useResizeObserver } from '@vueuse/core'
 
 import HelpModal from '../HelpModal.vue'
 import actionsFullEntries from './entries.js'
@@ -130,33 +130,14 @@ export default {
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
 			displayTranslate: false,
-			forceRecompute: 0,
 			isReady: false,
 			isVisible: this.$editor.isFocused,
-			windowWidth: 0,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
+			resize: null,
+			iconsLimit: 4,
 		}
 	},
 	computed: {
-		iconsLimit() {
-			// just force this computed to run again
-			// eslint-disable-next-line no-unused-expressions
-			(
-				this.forceRecompute,
-				this.windowWidth
-			)
-			const { menubar } = this.$refs
-			const menuBarWidth = menubar && menubar.clientWidth > 200
-				? menubar.clientWidth
-				: 200
-
-			// leave some buffer - this is necessary so the bar does not wrap during resizing
-			const spaceToFill = menuBarWidth - 4
-			const slots = Math.floor(spaceToFill / 44)
-
-			// Leave one slot empty for the three dot menu
-			return slots - 1
-		},
 		visibleEntries() {
 			const list = [...actionsFullEntries].filter(({ priority }) => {
 				// if entry do not have priority, we assume it aways will be visible
@@ -178,9 +159,7 @@ export default {
 		},
 	},
 	mounted() {
-		window.addEventListener('resize', this.getWindowWidth)
-		subscribe('files:sidebar:opened', this.redrawAfterTransition)
-		subscribe('files:sidebar:closed', this.redrawAfterTransition)
+		this.resize = useResizeObserver(this.$refs.menubar, this.onResize)
 
 		this.$onFocusChange = () => {
 			this.isVisible = this.$editor.isFocused
@@ -192,51 +171,29 @@ export default {
 		this.$editor.on('focus', this.$onFocusChange)
 		this.$editor.on('blur', this.$onBlurChange)
 
-		this.$checkInterval = setInterval(() => {
-			const { menubar } = this.$refs
-			const isWidthAvailable = (menubar && menubar.clientWidth > 0)
-
-			if (this.$isRichEditor && isWidthAvailable) {
-				this.redrawMenuBar()
-			}
-
-			if (!this.$isRichEditor || isWidthAvailable) {
-				clearInterval(this.$checkInterval)
-			}
-
-			if (isWidthAvailable || !this.$isRichEditor) {
-				this.$nextTick(() => {
-					this.isReady = true
-				})
-			}
-		}, 100)
-
 		this.$nextTick(() => {
+			this.isReady = true
 			this.$emit('update:loaded', true)
 		})
 	},
 	beforeDestroy() {
-		window.removeEventListener('resize', this.getWindowWidth)
-
-		unsubscribe('files:sidebar:opened', this.redrawAfterTransition)
-		unsubscribe('files:sidebar:closed', this.redrawAfterTransition)
+		this.resize?.stop()
 
 		this.$editor.off('focus', this.$onFocusChange)
 		this.$editor.off('blur', this.$onBlurChange)
 	},
 	methods: {
-		getWindowWidth() {
-			this.windowWidth = document.documentElement.clientWidth
-		},
-		redrawAfterTransition() {
-			// wait for transition to complete (100ms)
-			setTimeout(this.redrawMenuBar, 110)
-		},
-		redrawMenuBar() {
-			this.$nextTick(() => {
-				this.getWindowWidth()
-				this.forceRecompute++
-			})
+		onResize(entries) {
+			const entry = entries[0]
+			const { width } = entry.contentRect
+
+			// leave some buffer - this is necessary so the bar does not wrap during resizing
+			const spaceToFill = width - 4
+			const slots = Math.floor(spaceToFill / 44)
+
+			// Leave one slot empty for the three dot menu
+			this.iconsLimit = slots - 1
+			this.isReady = true
 		},
 		showHelp() {
 			this.displayHelp = true
