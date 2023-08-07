@@ -21,21 +21,34 @@
   -->
 
 <template>
-	<Editor :file-id="fileid"
+	<Editor v-if="isEditable"
+		:file-id="fileid"
 		:relative-path="filename"
 		:active="active"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
+	<div v-else
+		id="editor-container"
+		data-text-el="editor-container"
+		class="text-editor source-viewer">
+		<Component :is="readerComponent" :content="content" />
+	</div>
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+import PlainTextReader from './PlainTextReader.vue'
+import RichTextReader from './RichTextReader.vue'
+
 import { getSharingToken } from '../helpers/token.js'
 
 export default {
 	name: 'ViewerComponent',
 	components: {
+		RichTextReader,
+		PlainTextReader,
 		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
 	},
 	props: {
@@ -67,19 +80,83 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		permissions: {
+			type: String,
+			default: '',
+		},
+		source: {
+			type: String,
+			default: undefined,
+		},
+	},
+	data() {
+		return {
+			content: '',
+		}
+	},
+	computed: {
+		/** @return {boolean} */
+		isEditable() {
+			return this.permissions.includes('W')
+		},
+
+		/** @return {boolean} */
+		readerComponent() {
+			return this.mime === 'text/markdown' ? RichTextReader : PlainTextReader
+		},
+	},
+
+	watch: {
+		source() {
+			this.loadFileContent()
+		},
+	},
+
+	mounted() {
+		this.loadFileContent()
+	},
+
+	methods: {
+		async loadFileContent() {
+			if (!this.isEditable) {
+				const response = await axios.get(this.source)
+				this.content = response.data
+				this.contentLoaded = true
+				this.$emit('update:loaded', true)
+			}
+		},
 	},
 }
 </script>
 <style lang="scss" scoped>
-.text-editor {
+.text-editor:not(.viewer__file--hidden) {
 	overflow: scroll;
+	top: 0;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	left: 0;
+	margin: 0 auto;
+	position: relative;
+	background-color: var(--color-main-background);
+
+	&.source-viewer {
+		.text-editor__content-wrapper {
+			margin-top: var(--header-height);
+		}
+	}
 }
 </style>
 <style lang="scss">
+@import './../css/variables';
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
 	.text-editor {
 		top: auto;
 	}
+}
+
+.viewer[data-handler='text'] .modal-wrapper .modal-container {
+	bottom: 0;
 }
 </style>
