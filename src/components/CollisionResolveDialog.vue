@@ -65,12 +65,12 @@ export default {
 		resolveThisVersion() {
 			this.clicked = true
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
 			const { outsideChange } = this.syncError.data
 			this.clicked = true
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 			this.setContent(outsideChange, { isRich: this.$isRichEditor })
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
