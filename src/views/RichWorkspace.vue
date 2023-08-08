@@ -46,6 +46,7 @@ import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import SkeletonLoading from '../components/SkeletonLoading.vue'
+import getEditorInstance from '../components/Editor.singleton.js'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -54,7 +55,7 @@ export default {
 	name: 'RichWorkspace',
 	components: {
 		SkeletonLoading,
-		Editor: () => import(/* webpackChunkName: "editor" */'./../components/Editor.vue'),
+		Editor: getEditorInstance,
 	},
 	props: {
 		path: {
