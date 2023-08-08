@@ -30,6 +30,7 @@ OC.L10N.register(
     "Select language" : "زبان را انتخاب کنید",
     "to" : "به",
     "Replace" : "جایگزین کردن",
+    "Source code" : "کد منبع",
     "Undo" : "برگرداندن",
     "Headings" : "عنوان‌ها",
     "Info" : "اطلاعات",

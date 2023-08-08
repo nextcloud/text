@@ -7,6 +7,7 @@ OC.L10N.register(
     "Italic" : "Kurziv",
     "Translate" : "Prevedi",
     "Replace" : "Zameni postojeću",
+    "Source code" : "Izvorni kôd",
     "Undo" : "Opozovi",
     "Info" : "Info",
     "Warning" : "Upozorenje",

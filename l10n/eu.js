@@ -108,6 +108,7 @@ OC.L10N.register(
     "No command found" : "Ez da komandorik aurkitu",
     "No user found" : "Ez da erabiltzailerik aurkitu",
     "No suggestion found" : "Ez da iradokizunik aurkitu",
+    "Source code" : "Iturburu-kodea",
     "Link to this section" : "Estekatu atal honetara",
     "Delete this attachment" : "Ezabatu eranskin hau",
     "Delete this image" : "Ezabatu irudi hau",

@@ -92,6 +92,7 @@ OC.L10N.register(
     "Replace" : "Nahradiť",
     "No emoji found" : "Nenašli sa žiadne emotikony",
     "No user found" : "Žiadny užívateľ nebol nenájdený",
+    "Source code" : "Zdrojový kód",
     "Link to this section" : "Odkaz na túto sekciu",
     "Delete this attachment" : "Vymazať túto prílohu",
     "Delete this image" : "Vymazať tento obrázok",

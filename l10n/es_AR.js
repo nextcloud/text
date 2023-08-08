@@ -17,6 +17,7 @@ OC.L10N.register(
     "Select language" : "Seleccionar idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
+    "Source code" : "Código fuente",
     "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
     "Info" : "Info",

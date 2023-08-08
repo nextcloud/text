@@ -12,6 +12,7 @@ OC.L10N.register(
     "guest" : "հյուր",
     "Saved" : "Պահված",
     "Translate" : "Թարգմանել",
+    "Source code" : "ծրագրի կոդը",
     "Info" : "Info",
     "Warning" : "Զգուշացում",
     "Edit" : "մշակել"

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Italic" : "Italig",
     "Translate" : "Cyfieithu",
     "to" : "at",
+    "Source code" : "Cod ffynhonnell",
     "Undo" : "Dadwneud",
     "Info" : "Info",
     "Warning" : "Rhybudd",

@@ -95,6 +95,7 @@ OC.L10N.register(
     "No command found" : "Komentoa ei löytynyt",
     "No user found" : "Käyttäjää ei löytynyt",
     "No suggestion found" : "Ehdotusta ei löytynyt",
+    "Source code" : "Lähdekoodi",
     "Link to this section" : "Linkki tähän osioon",
     "Delete this attachment" : "Poista tämä liite",
     "Delete this image" : "Poista tämä kuva",

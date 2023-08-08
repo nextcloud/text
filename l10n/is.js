@@ -47,6 +47,7 @@ OC.L10N.register(
     "Select language" : "Veldu tungumál",
     "to" : "til",
     "Replace" : "Skipta út",
+    "Source code" : "Upprunakóði",
     "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Undo" : "Afturkalla",

@@ -111,6 +111,7 @@ OC.L10N.register(
     "No command found" : "Non se atopou ningunha orde",
     "No user found" : "Non se atopou ningún usuario",
     "No suggestion found" : "Non se atopou ningunha suxestión",
+    "Source code" : "Código fonte",
     "Link to this section" : "Ligazón a esta sección",
     "Delete this attachment" : "Eliminar este anexo",
     "Delete this image" : "Eliminar esta imaxe",
