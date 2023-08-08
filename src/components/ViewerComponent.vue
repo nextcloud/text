@@ -118,7 +118,7 @@ export default {
 
 	methods: {
 		async loadFileContent() {
-			if (!this.isEditable) {
+			if (!this.isEditable && this.source) {
 				const response = await axios.get(this.source)
 				this.content = response.data
 				this.contentLoaded = true
