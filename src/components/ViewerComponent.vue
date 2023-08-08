@@ -43,13 +43,14 @@ import PlainTextReader from './PlainTextReader.vue'
 import RichTextReader from './RichTextReader.vue'
 
 import { getSharingToken } from '../helpers/token.js'
+import getEditorInstance from './Editor.singleton.js'
 
 export default {
 	name: 'ViewerComponent',
 	components: {
 		RichTextReader,
 		PlainTextReader,
-		Editor: () => import(/* webpackChunkName: "editor" */'./Editor.vue'),
+		Editor: getEditorInstance,
 	},
 	props: {
 		filename: {
