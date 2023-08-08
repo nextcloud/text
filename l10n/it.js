@@ -108,6 +108,7 @@ OC.L10N.register(
     "No command found" : "Nessun comando trovato",
     "No user found" : "Nessun utente trovato",
     "No suggestion found" : "Nessun suggerimento trovato",
+    "Source code" : "Codice sorgente",
     "Link to this section" : "Collegamento a questa sezione",
     "Delete this attachment" : "Elimina questo allegato",
     "Delete this image" : "Elimina questa immagine",

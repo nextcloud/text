@@ -111,6 +111,7 @@ OC.L10N.register(
     "No command found" : "Nenalezen žádný příkaz",
     "No user found" : "Nenalezen žádný uživatel",
     "No suggestion found" : "Nenalezeno žádné doporučení",
+    "Source code" : "Zdrojové kódy",
     "Link to this section" : "Odkázat na tuto sekci",
     "Delete this attachment" : "Smazat tuto přílohu",
     "Delete this image" : "Smazat tento obrázek",

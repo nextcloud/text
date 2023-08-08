@@ -107,6 +107,7 @@ OC.L10N.register(
     "No command found" : "Nem található parancs",
     "No user found" : "Nem található felhasználó",
     "No suggestion found" : "Nem található javaslat",
+    "Source code" : "Forráskód",
     "Link to this section" : "Hivatkozás erre a szakaszra",
     "Delete this attachment" : "Melléklet törlése",
     "Delete this image" : "Kép törlése",

@@ -27,6 +27,7 @@ OC.L10N.register(
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
     "Replace" : "Mbishkruaj",
+    "Source code" : "Kodi burim",
     "Unsupported image type" : "Lloj imazhi i pa suportuar",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",

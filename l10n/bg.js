@@ -105,6 +105,7 @@ OC.L10N.register(
     "No command found" : "Няма намерена команда",
     "No user found" : "Няма намерен потребител",
     "No suggestion found" : "Няма намерена препоръка",
+    "Source code" : "Изходен код",
     "Link to this section" : "Връзка към този раздел",
     "Delete this attachment" : "Изтрийте този прикачен файл",
     "Delete this image" : "Изтрийте това изображение",

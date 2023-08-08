@@ -111,6 +111,7 @@ OC.L10N.register(
     "No command found" : "找不到命令",
     "No user found" : "找不到用戶",
     "No suggestion found" : "找不到建議",
+    "Source code" : "原始碼",
     "Link to this section" : "連結到本節",
     "Delete this attachment" : "刪除此附件",
     "Delete this image" : "刪除此圖像",

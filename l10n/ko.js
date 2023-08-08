@@ -56,6 +56,7 @@ OC.L10N.register(
     "Select language" : "언어 선택",
     "to" : "에서",
     "Replace" : "바꾸기",
+    "Source code" : "소스 코드",
     "Unsupported image type" : "지원하지 않는 사진 형식",
     "Hide outline" : "개요 숨기기",
     "Show outline" : "개요 보이기",

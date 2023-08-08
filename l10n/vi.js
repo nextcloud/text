@@ -46,6 +46,7 @@ OC.L10N.register(
     "Translate" : "Dịch",
     "to" : "đến",
     "Replace" : "Thay thế",
+    "Source code" : "Mã nguồn",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Undo" : "Hoàn tác",

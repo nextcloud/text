@@ -110,6 +110,7 @@ OC.L10N.register(
     "No command found" : "Inget kommando hittades",
     "No user found" : "Ingen användare hittades",
     "No suggestion found" : "Inget förslag hittades",
+    "Source code" : "Källkod",
     "Link to this section" : "Länk till detta avsnitt",
     "Delete this attachment" : "Ta bort denna bilaga",
     "Delete this image" : "Ta bort denna bild",

@@ -76,6 +76,7 @@ OC.L10N.register(
     "to" : "aan",
     "Replace" : "Vervangen",
     "No emoji found" : "Geen emoji gevonden",
+    "Source code" : "Broncode",
     "Failed to load" : "Laden mislukt",
     "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Add row before" : "Voeg rij toe voor",

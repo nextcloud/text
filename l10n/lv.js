@@ -20,6 +20,7 @@ OC.L10N.register(
     "Select language" : "Izvēlies valodu",
     "to" : "kam",
     "Replace" : "Aizvietot",
+    "Source code" : "Izejas kods",
     "Unsupported image type" : "Neatbalstīts attēla tips",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",

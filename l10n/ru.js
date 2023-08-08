@@ -111,6 +111,7 @@ OC.L10N.register(
     "No command found" : "Не найдено ни одной команды",
     "No user found" : "Не найдено ни одного пользователя",
     "No suggestion found" : "Не найдено ни одной рекомендации",
+    "Source code" : "Исходный код",
     "Link to this section" : "Ссылка на этот раздел",
     "Delete this attachment" : "Удалить вложение",
     "Delete this image" : "Удалить изображение",
