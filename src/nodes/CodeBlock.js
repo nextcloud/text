@@ -1,5 +1,7 @@
 import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import CodeBlockView from './CodeBlockView.vue'
 
 const CodeBlock = TiptapCodeBlockLowlight.extend({
 
@@ -24,6 +26,10 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 		// @tiptap/pm/markdown uses `params` instead of `language` attribute
 		node.attrs.params = node.attrs.language
 		return defaultMarkdownSerializer.nodes.code_block(state, node, parent, index)
+	},
+
+	addNodeView() {
+		return VueNodeViewRenderer(CodeBlockView)
 	},
 
 })

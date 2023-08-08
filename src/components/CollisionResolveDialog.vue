@@ -59,12 +59,12 @@ export default {
 		resolveThisVersion() {
 			this.clicked = true
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
 			this.clicked = true
 			const markdownItHtml = markdownit.render(this.syncError.data.outsideChange)
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 			this.$editor.commands.setContent(markdownItHtml)
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},

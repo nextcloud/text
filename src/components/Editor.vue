@@ -472,7 +472,7 @@ export default {
 			this.document = document
 			this.readOnly = document.readOnly
 			if (this.$editor) {
-				this.$editor.setOptions({ editable: !this.readOnly })
+				this.$editor.setEditable(!this.readOnly)
 			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
@@ -560,7 +560,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 		},
 
 		onSync({ steps, document }) {
@@ -629,7 +629,7 @@ export default {
 			this.$syncService.close()
 			this.idle = true
 			this.readOnly = true
-			this.$editor.setOptions({ editable: !this.readOnly })
+			this.$editor.setEditable(!this.readOnly)
 
 			this.$nextTick(() => {
 				this.emit('sync-service:idle')
