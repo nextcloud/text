@@ -17,6 +17,7 @@ OC.L10N.register(
     "Select language" : "აირჩიეთ ენა",
     "to" : "ვის",
     "Replace" : "ჩანაცვლება",
+    "Source code" : "კოდი",
     "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",

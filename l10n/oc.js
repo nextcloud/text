@@ -41,6 +41,7 @@ OC.L10N.register(
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",
     "to" : "a",
+    "Source code" : "Còdi font",
     "Delete this table" : "Suprimir aqueste tablèu",
     "Undo" : "Anullar",
     "Redo" : "Refar",

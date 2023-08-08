@@ -49,6 +49,7 @@ OC.L10N.register(
     "Select language" : "בחירת שפה",
     "to" : "סיום",
     "Replace" : "החלפה",
+    "Source code" : "קוד מקור",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Undo" : "ביטול",

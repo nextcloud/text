@@ -55,6 +55,7 @@ OC.L10N.register(
     "Select language" : "Vælg sprog",
     "to" : "til",
     "Replace" : "Erstat",
+    "Source code" : "Kildekode",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Delete this table" : "Slet denne tabel",
     "Show rich workspaces" : "Vis rige arbejdsområder",

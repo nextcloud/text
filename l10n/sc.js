@@ -49,6 +49,7 @@ OC.L10N.register(
     "Select language" : "Seletziona una limba",
     "to" : "a",
     "Replace" : "Càmbia cun àteru",
+    "Source code" : "Còdighe fonte",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Undo" : "Iscontza",
     "Redo" : "Torra a fàghere",

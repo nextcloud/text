@@ -22,6 +22,7 @@ OC.L10N.register(
     "Translate" : "Tradu",
     "to" : "către",
     "Replace" : "Înlocuiește",
+    "Source code" : "Cod sursă",
     "Undo" : "Anulează ultima acțiune",
     "Info" : "Info",
     "Success" : "Succes",

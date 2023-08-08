@@ -40,6 +40,7 @@ OC.L10N.register(
     "Translate" : "Traduzir",
     "to" : "Para",
     "Replace" : "Substitua",
+    "Source code" : "Código fonte",
     "Unsupported image type" : "Tipo de imagem não suportado",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",
