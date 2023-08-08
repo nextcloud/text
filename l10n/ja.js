@@ -56,6 +56,7 @@ OC.L10N.register(
     "Select language" : "言語を選択する",
     "to" : "宛先",
     "Replace" : "入り替え",
+    "Source code" : "ソースコード",
     "Unsupported image type" : "サポートされていない画像形式です",
     "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Undo" : "元に戻す",

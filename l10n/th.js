@@ -18,6 +18,7 @@ OC.L10N.register(
     "Translate" : "แปลภาษา",
     "to" : "ถึง",
     "Replace" : "แทนที่",
+    "Source code" : "โค้ดต้นฉบับ",
     "Undo" : "เลิกทำ",
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",

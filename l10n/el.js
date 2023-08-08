@@ -73,6 +73,7 @@ OC.L10N.register(
     "to" : "προς",
     "Replace" : "Αντικατάσταση",
     "No emoji found" : "Δε βρέθηκε emoji",
+    "Source code" : "Πηγαίος κώδικας",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
     "Undo" : "Aναίρεση",

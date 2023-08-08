@@ -51,6 +51,7 @@ OC.L10N.register(
     "Select language" : "Izaberi jezik",
     "to" : "do",
     "Replace" : "Zamijeni",
+    "Source code" : "Izvorni kod",
     "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline",
     "Undo" : "Poništi",

@@ -111,6 +111,7 @@ OC.L10N.register(
     "No command found" : "Herhangi bir komut bulunamadı",
     "No user found" : "Herhangi bir kullanıcı bulunamadı",
     "No suggestion found" : "Herhangi bir öneri bulunamadı",
+    "Source code" : "Kaynak kodu",
     "Link to this section" : "Bu bölüm bağlantısı",
     "Delete this attachment" : "Bu ek dosyayı sil",
     "Delete this image" : "Bu görseli sil",

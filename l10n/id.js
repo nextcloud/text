@@ -24,6 +24,7 @@ OC.L10N.register(
     "Translate" : "Terjemahkan",
     "to" : "untuk",
     "Replace" : "Timpa",
+    "Source code" : "Kode sumber",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima",
     "Undo" : "Undo",
     "Info" : "Info",

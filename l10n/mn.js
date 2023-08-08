@@ -6,6 +6,7 @@ OC.L10N.register(
     "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
+    "Source code" : "эх үүсвэр талын код",
     "Unsupported image type" : "Дэмжигдэхгүй зургийн төрөл байна",
     "Undo" : "буцах",
     "Info" : "Info",

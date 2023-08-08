@@ -107,6 +107,7 @@ OC.L10N.register(
     "No command found" : "No s'ha trobat cap ordre",
     "No user found" : "No s'ha trobat cap usuari",
     "No suggestion found" : "No s'ha trobat cap suggeriment",
+    "Source code" : "Codi font",
     "Link to this section" : "Enllaç a aquesta secció",
     "Delete this attachment" : "Suprimeix aquest adjunt",
     "Delete this image" : "Suprimeix aquesta imatge",

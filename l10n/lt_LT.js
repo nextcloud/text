@@ -81,6 +81,7 @@ OC.L10N.register(
     "to" : "iki",
     "Replace" : "Pakeisti",
     "No emoji found" : "Nerasta jokių šypsenėlių",
+    "Source code" : "Pradinis kodas",
     "Delete this attachment" : "Ištrinti šį priedą",
     "Delete this image" : "Ištrinti šį paveikslą",
     "Failed to load" : "Nepavyko įkelti",
