@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<Editor v-if="isEditable"
+	<Editor v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active"
@@ -96,8 +96,8 @@ export default {
 	},
 	computed: {
 		/** @return {boolean} */
-		isEditable() {
-			return this.permissions.includes('W')
+		useSourceView() {
+			return this.source && (this.fileVersion || !this.fileid)
 		},
 
 		/** @return {boolean} */
@@ -118,12 +118,12 @@ export default {
 
 	methods: {
 		async loadFileContent() {
-			if (!this.isEditable && this.source) {
+			if (this.useSourceView) {
 				const response = await axios.get(this.source)
 				this.content = response.data
 				this.contentLoaded = true
-				this.$emit('update:loaded', true)
 			}
+			this.$emit('update:loaded', true)
 		},
 	},
 }
