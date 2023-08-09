@@ -148,7 +148,7 @@
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
-      "\\.(css)$": "identity-obj-proxy"
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",

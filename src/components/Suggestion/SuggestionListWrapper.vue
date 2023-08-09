@@ -23,12 +23,17 @@
 <template>
 	<div class="suggestion-list">
 		<template v-if="hasResults">
-			<div v-for="(item, index) in items"
-				:key="index"
-				class="suggestion-list__item"
-				:class="{ 'is-selected': index === selectedIndex }"
-				@click="selectItem(index)">
-				<slot :item="item" :active="index === selectedIndex" />
+			<div v-for="(groupItems, key, groupIndex) in itemGroups" :key="key">
+				<div v-if="hasGroups" class="suggestion-list__group">
+					{{ key }}
+				</div>
+				<div v-for="(item, index) in groupItems"
+					:key="combineIndex(groupIndex, index)"
+					class="suggestion-list__item"
+					:class="{ 'is-selected': combineIndex(groupIndex, index) === selectedIndex }"
+					@click="selectItem(combineIndex(groupIndex, index))">
+					<slot :item="item" :active="combineIndex(groupIndex, index) === selectedIndex" />
+				</div>
 			</div>
 		</template>
 		<div v-else class="suggestion-list__item is-empty">
@@ -56,6 +61,9 @@ export default {
 		}
 	},
 	computed: {
+		hasGroups() {
+			return Object.keys(this.itemGroups).includes(undefined)
+		},
 		hasResults() {
 			return this.items.length > 0
 		},
@@ -67,6 +75,26 @@ export default {
 			// and lower end of item is smaller or equal than scroll bottom
 			return this.selectedIndex * this.itemHeight >= this.$el.scrollTop
 				&& (this.selectedIndex + 1) * this.itemHeight <= this.$el.scrollTop + this.$el.clientHeight
+		},
+		itemGroups() {
+			const groups = {}
+			this.items.forEach((item) => {
+				if (!groups[item.suggestGroup]) {
+					groups[item.suggestGroup] = []
+				}
+				groups[item.suggestGroup].push(item)
+			})
+			return groups
+		},
+		combineIndex() {
+			return (groupIndex, index) => {
+				const previousItemCount = Object.values(this.itemGroups)
+					.slice(0, groupIndex)
+					.reduce((sum, items) => {
+						return sum + items.length
+					}, 0)
+				return previousItemCount + index
+			}
 		},
 	},
 	watch: {
@@ -128,10 +156,25 @@ export default {
 
 	min-width: 200px;
 	max-width: 400px;
+	width: 80vw;
 	padding: 4px;
 	// Show maximum 5 entries and a half to show scroll
 	max-height: 35.5px * 5 + 18px;
 	margin: 5px 0;
+
+	&__group {
+		font-weight: bold;
+		color: var(--color-primary-element);
+		font-size: var(--default-font-size);
+		line-height: 44px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		opacity: .7;
+		box-shadow: none !important;
+		flex-shrink: 0;
+		padding-left: 8px;
+	}
 
 	&__item {
 		border-radius: 8px;
