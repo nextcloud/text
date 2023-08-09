@@ -36,5 +36,6 @@ if (typeof OCA.Viewer === 'undefined') {
 		component: ViewerComponent,
 		group: null,
 		theme: 'default',
+		canCompare: true,
 	})
 }
