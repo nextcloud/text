@@ -105,7 +105,7 @@ OC.L10N.register(
     "No command found" : "Kein Befehl gefunden",
     "No user found" : "Kein Benutzer gefunden",
     "No suggestion found" : "Kein Vorschlag gefunden",
-    "Source code" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Source code" : "Quelltext",
     "Link to this section" : "Verweis zu diesem Abschnitt",
     "Delete this attachment" : "Anhang löschen",
     "Delete this image" : "Bild löschen",
