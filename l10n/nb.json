@@ -14,6 +14,8 @@
     "Readme" : "Lesmeg",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Dokumentredigering med samarbeidspartnere",
+    "Translate" : "Oversett",
+    "Delete task" : "Slett oppgave",
     "Use current version" : "Bruk siste versjon",
     "Use the saved version" : "Bruk lagret versjon",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet har blitt endret utenfor programmet. Endringene kan ikke benyttes. ",
@@ -38,7 +40,6 @@
     "Blockquote" : "Sitat",
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
-    "Translate" : "Oversett",
     "Select language" : "Velg språk",
     "to" : "til",
     "Replace" : "Erstatt",
@@ -58,6 +59,7 @@
     "Insert attachment" : "Legg til vedlegg",
     "Command" : "Kommando",
     "Control" : "Kontroll",
+    "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
