@@ -10,12 +10,12 @@ OC.L10N.register(
     "Could not write file to disk" : "ไม่สามารถเขียนไฟล์ลงดิสก์",
     "A PHP extension stopped the file upload" : "ส่วนขยาย PHP ได้หยุดการอัปโหลดไฟล์",
     "Text" : "ข้อความ",
+    "Translate" : "แปลภาษา",
     "guest" : "ผู้เยี่ยมชม",
     "Offline" : "ออฟไลน์",
     "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
-    "Translate" : "แปลภาษา",
     "to" : "ถึง",
     "Replace" : "แทนที่",
     "Source code" : "โค้ดต้นฉบับ",
@@ -23,6 +23,7 @@ OC.L10N.register(
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน",
+    "Formatting" : "การจัดรูปแบบ",
     "Edit" : "แก้ไข"
 },
 "nplurals=1; plural=0;");

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Nu s-a putut scrie fișierul pe disc",
     "A PHP extension stopped the file upload" : "O extensie PHP a oprit încărcarea fișierelor",
     "Text" : "Text",
+    "Translate" : "Tradu",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",
     "Guest" : "Invitat",
@@ -19,7 +20,6 @@ OC.L10N.register(
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
-    "Translate" : "Tradu",
     "to" : "către",
     "Replace" : "Înlocuiește",
     "Source code" : "Cod sursă",
@@ -27,6 +27,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",
+    "Formatting" : "Formatare",
     "Edit" : "Editează"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

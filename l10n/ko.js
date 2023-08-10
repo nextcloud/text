@@ -15,6 +15,7 @@ OC.L10N.register(
     "text document" : "텍스트 문서",
     "This file cannot be displayed as download is disabled by the share" : "공유에서 다운로드가 비활성화 되었으므로 이 파일을 볼 수 없습니다.",
     "Text" : "텍스트",
+    "Translate" : "번역:",
     "Use current version" : "최근 버젼을 사용하십시오.",
     "Use the saved version" : "이전 버전 사용하기",
     "Failed to load file" : "파일 불러오기 실패",
@@ -51,7 +52,6 @@ OC.L10N.register(
     "Select file or folder to link to" : "링크할 파일이나 폴더 선택",
     "_%n word_::_%n words_" : ["%n개 단어"],
     "_%n char_::_%n chars_" : ["%n개 글자"],
-    "Translate" : "번역:",
     "Translate from" : "다음을 번역",
     "Select language" : "언어 선택",
     "to" : "에서",
@@ -72,6 +72,7 @@ OC.L10N.register(
     "Warning" : "경고",
     "Command" : "명령",
     "Control" : "제어:",
+    "Formatting" : "서식",
     "Edit" : "편집"
 },
 "nplurals=1; plural=0;");

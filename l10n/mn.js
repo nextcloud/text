@@ -1,9 +1,9 @@
 OC.L10N.register(
     "text",
     {
+    "Translate" : "Орчуулга",
     "Guest" : "Зочин",
     "Saved" : "Хадгалах",
-    "Translate" : "Орчуулга",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
     "Source code" : "эх үүсвэр талын код",
