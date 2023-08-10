@@ -12,6 +12,8 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "یک افزونه پی‌اچ‌پی مانع بارگذاری پرونده شد",
     "No file uploaded or file size exceeds maximum of %s" : "پرونده‌ای بارگذاری نشد و یا حجم پرونده بیش از بیشینه مجاز %s بود",
     "Text" : "متن",
+    "Translate" : "ترجمه",
+    "Delete task" : "وظیفه را حذف کنید",
     "Use current version" : "از نسخه فعلی استفاده کنید",
     "Edit guest name" : "ویرایش نام مهمان",
     "Guest" : "مهمان",
@@ -26,7 +28,7 @@ OC.L10N.register(
     "Bold" : "درشت",
     "Italic" : "Italic",
     "Remove link" : "حذف پیوند",
-    "Translate" : "ترجمه",
+    "Select file or folder to link to" : "فایل یا پوشه را برای پیوند انتخاب کنید",
     "Select language" : "زبان را انتخاب کنید",
     "to" : "به",
     "Replace" : "جایگزین کردن",
@@ -37,6 +39,7 @@ OC.L10N.register(
     "Success" : "موفقیت",
     "Warning" : "هشدار",
     "Control" : "کنترل",
+    "Formatting" : "قالب‌بندی",
     "Edit" : "ویرایش"
 },
 "nplurals=2; plural=(n > 1);");
