@@ -33,11 +33,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { useEditorMixin } from '../../components/Editor.provider.js'
 
-export default Vue.extend({
+export default {
 	name: 'HeadingView',
 	components: {
 		NodeViewWrapper,
@@ -72,7 +71,6 @@ export default Vue.extend({
 		linkSymbol() {
 			return this.extension.options.linkSymbol
 		},
-		t: () => window.t,
 	},
 
 	methods: {
@@ -81,7 +79,7 @@ export default Vue.extend({
 			window.location.hash = this.href
 		},
 	},
-})
+}
 </script>
 
 <style lang="scss">
