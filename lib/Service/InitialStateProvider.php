@@ -3,6 +3,8 @@
 namespace OCA\Text\Service;
 
 use OCP\AppFramework\Services\IInitialState;
+use OCP\TextProcessing\IManager;
+use OCP\TextProcessing\ITaskType;
 use OCP\Translation\ITranslationManager;
 
 class InitialStateProvider {
@@ -10,6 +12,7 @@ class InitialStateProvider {
 		private IInitialState $initialState,
 		private ConfigService $configService,
 		private ITranslationManager $translationManager,
+		private IManager $textProcessingManager,
 		private ?string $userId
 	) {
 	}
@@ -43,6 +46,18 @@ class InitialStateProvider {
 		$this->initialState->provideInitialState(
 			'translation_languages',
 			$this->translationManager->getLanguages()
+		);
+
+		$this->initialState->provideInitialState(
+			'textprocessing',
+			array_map(function (string $className) {
+				/** @var class-string<ITaskType> $className */
+				$type = \OCP\Server::get($className);
+				return [
+					'task' => $className,
+					'name' => $type->getName(),
+				];
+			}, $this->textProcessingManager->getAvailableTaskTypes()),
 		);
 	}
 

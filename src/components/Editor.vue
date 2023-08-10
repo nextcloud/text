@@ -73,6 +73,7 @@
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
+		<Assistant v-if="$editor" />
 	</div>
 </template>
 
@@ -119,6 +120,7 @@ import Status from './Editor/Status.vue'
 import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
+import Assistant from './Assistant.vue'
 
 export default {
 	name: 'Editor',
@@ -132,6 +134,7 @@ export default {
 		MenuBar,
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
+		Assistant,
 	},
 	mixins: [
 		isMobile,
