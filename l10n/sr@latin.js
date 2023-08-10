@@ -1,11 +1,11 @@
 OC.L10N.register(
     "text",
     {
+    "Translate" : "Prevedi",
     "Guest" : "Gost",
     "guest" : "gost",
     "Bold" : "Podebljano",
     "Italic" : "Kurziv",
-    "Translate" : "Prevedi",
     "Replace" : "Zameni postojeću",
     "Source code" : "Izvorni kôd",
     "Undo" : "Opozovi",

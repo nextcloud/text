@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "Translate" : "Treiñ",
     "Use current version" : "Implij stumm hiziv",
     "Use the saved version" : "Implij ",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Cheñchet eo bet an diel er maez eus an embanner. N'eo ket posuple lakaat pez a oa bet cheñchet.",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Saving …" : "Orc'h enrolliñ",
     "Saved" : "Enrollet",
     "Unsaved changes" : "Kemmoù n'int ket bet enrollet",
-    "Translate" : "Treiñ",
     "Replace" : "Erlec'hiañ",
     "Info" : "Titouroù",
     "Success" : "Graet",
