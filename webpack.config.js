@@ -48,4 +48,9 @@ webpackConfig.resolve.modules = [
 	'node_modules'
 ]
 
+webpackConfig.resolve.fallback = {
+	buffer: require.resolve('buffer/'),
+	path: require.resolve('path-browserify'),
+}
+
 module.exports = webpackConfig
