@@ -147,6 +147,7 @@ OC.L10N.register(
     "Command" : "Ordre",
     "Control" : "Control",
     "Option" : "Opció",
+    "Formatting" : "Format",
     "Smart picker" : "Selector intel·ligent",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Edit" : "Edita",

@@ -151,6 +151,7 @@ OC.L10N.register(
     "Command" : "Příkaz",
     "Control" : "Kontrola",
     "Option" : "Volba",
+    "Formatting" : "Formátování",
     "Smart picker" : "Inteligentní výběr",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Edit" : "Upravit",
