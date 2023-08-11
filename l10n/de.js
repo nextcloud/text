@@ -145,7 +145,7 @@ OC.L10N.register(
     "Command" : "Befehl",
     "Control" : "Kontrolle",
     "Option" : "Option",
-    "Formatting" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Formatting" : "Formatierung",
     "Smart picker" : "Intelligente Auswahl",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
