@@ -79,11 +79,11 @@
 				<ul v-if="tasks.length > 0">
 					<NcListItem v-for="task in tasks"
 						:key="task.id"
-						:name="task.title"
+						:title="task.title"
 						:bold="false"
 						:force-display-actions="true"
 						@click="() => openResult(task)">
-						<template #subname>
+						<template #subtitle>
 							{{ task.input }}
 						</template>
 						<template #icon>
