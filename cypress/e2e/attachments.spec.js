@@ -178,11 +178,11 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go to sub folder (a)')
-				cy.get('#picker-filestable tr[data-entryname="sub"]').click()
-				cy.get('#picker-filestable tr[data-entryname="a"]').click()
-				cy.get('#picker-filestable tr[data-entryname="a.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="sub"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="a"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="a.png"]').click()
 
-				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -195,10 +195,10 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('#oc-dialog-filepicker-content .dirtree [data-dir="/sub"] a').click()
 
 				cy.log('Go to sub folder (b)')
-				cy.get('#picker-filestable tr[data-entryname="b"]').click()
-				cy.get('#picker-filestable tr[data-entryname="b.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="b"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="b.png"]').click()
 
-				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
@@ -213,9 +213,9 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('#oc-dialog-filepicker-content .dirtree .crumb:first-child').click()
 
 				cy.log('Select the file in the filepicker')
-				cy.get('#picker-filestable tr[data-entryname="github.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="github.png"]').click()
 				cy.log('Click OK in the filepicker')
-				cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})

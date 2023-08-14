@@ -158,10 +158,10 @@ describe.skip('Workspace', function() {
 		cy.getSubmenuEntry('insert-link', 'insert-link-file')
 			.click()
 
-		cy.get('#picker-filestable tr[data-entryname="sub-folder"]').click()
-		cy.get('#picker-filestable tr[data-entryname="alpha"]').click()
-		cy.get('#picker-filestable tr[data-entryname="test.md"]').click()
-		cy.get('.oc-dialog > .oc-dialog-buttonrow button').click()
+		cy.get('.file-picker__main .file-picker__file-name[title="sub-folder"]').click()
+		cy.get('.file-picker__main .file-picker__file-name[title="alpha"]').click()
+		cy.get('.file-picker__main .file-picker__file-name[title="test.md"]').click()
+		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 		cy.getEditor()
 			.find('a')
