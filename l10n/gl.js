@@ -26,7 +26,7 @@ OC.L10N.register(
     "Insert result" : "Inserir o resultado",
     "Show result" : "Amosar o resultado",
     "Delete task" : "Eliminar tarefa",
-    "Nextcloud Assistant result copied" : "Copiouse o resultado do asistente de Nextcloud",
+    "Nextcloud Assistant result copied" : "Copiouse o resultado do Asistente de Nextcloud",
     "Could not copy result to clipboard" : "Non foi posíbel copiar o resultado no portapapeis",
     "Use current version" : "Empregar a versión actual",
     "Use the saved version" : "Empregar a versión gardada",
