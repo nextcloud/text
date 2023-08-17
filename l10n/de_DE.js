@@ -164,7 +164,7 @@ OC.L10N.register(
     "Control" : "Kontrolle",
     "Option" : "Option",
     "Formatting" : "Formatierung",
-    "Smart picker" : "Smart-Picker",
+    "Smart picker" : "Smart Picker",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
     "Add description" : "Beschreibung hinzufügen",
