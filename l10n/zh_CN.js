@@ -17,6 +17,7 @@ OC.L10N.register(
     "Text" : "文本 ",
     "📝 Collaborative document editing" : "文档协作编辑",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 协作式的文档编辑！**\n\n- **📝 专注的写作：** 无干扰，只有您需要的格式化。\n- **🙋 一起工作：** 与朋友和同事共享协作，无论他们是否使用Nextcloud！\n- **💾 开放标准：** 文件将保存为 [Markdown](https://en.wikipedia.org/wiki/Markdown)，所以您也可以使用任何其他文本应用。\n- **✊ 雄厚基础：** 我们使用 [🐈 tiptap](https://tiptap.scrumpy.io) ，它基于 [🦉 ProseMirror](https://prosemirror.net) – 非常感谢它们！",
+    "Nextcloud Assistant" : "Nextcloud助手",
     "Translate" : "翻译",
     "Delete task" : "删除任务",
     "Use current version" : "使用当前版本",
