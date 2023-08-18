@@ -79,12 +79,6 @@ export default () => createSuggestions({
 	},
 	items: ({ editor, query }) => {
 		return [
-			...formattingSuggestions(query)
-				.filter(({ action, isActive }) => {
-					const canRunState = action(editor?.can())
-					const isActiveState = isActive && getIsActive({ isActive }, editor)
-					return canRunState && !isActiveState
-				}),
 			...searchProvider(query)
 				.map(p => {
 					return {
@@ -93,6 +87,12 @@ export default () => createSuggestions({
 						icon: p.icon_url,
 						providerId: p.id,
 					}
+				}),
+			...formattingSuggestions(query)
+				.filter(({ action, isActive }) => {
+					const canRunState = action(editor?.can())
+					const isActiveState = isActive && getIsActive({ isActive }, editor)
+					return canRunState && !isActiveState
 				}),
 		]
 	},
