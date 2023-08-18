@@ -42,7 +42,7 @@
 
 <script>
 import { getCurrentUser } from '@nextcloud/auth'
-import { showError } from '@nextcloud/dialogs'
+import { showError, getFilePickerBuilder } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { logger } from '../../helpers/logger.js'
 
@@ -153,15 +153,18 @@ export default {
 					this.state.isUploadingAttachments = false
 				})
 		},
-		showAttachmentPrompt() {
+		async showAttachmentPrompt() {
 			const currentUser = getCurrentUser()
 			if (!currentUser) {
 				return
 			}
 
-			OC.dialogs.filepicker(t('text', 'Insert an attachment'), (filePath) => {
-				this.insertFromPath(filePath)
-			}, false, [], true, undefined, this.initialFilePath)
+			const path = await getFilePickerBuilder('Pick plain text files')
+				.startAt(this.initialFilePath)
+				.build()
+				.pick()
+
+			this.insertFromPath(path)
 		},
 		insertFromPath(filePath) {
 			this.lastFilePath = getDir(filePath)
