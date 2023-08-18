@@ -44,7 +44,7 @@ describe('Workspace', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.createFolder(`${currentFolder}/subdirectory`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.getFile('README.md').should('contain', 'README.md')
+		cy.getFile('README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 		cy.openFolder('subdirectory')
@@ -56,7 +56,7 @@ describe('Workspace', function() {
 	it('Hides the workspace when switching to another view', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.getFile('README.md').should('contain', 'README.md')
+		cy.getFile('README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 		cy.get('a[href*="/apps/files/recent"]')
@@ -121,7 +121,7 @@ describe('Workspace', function() {
 	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.getFile('README.md').should('contain', 'README.md')
+		cy.getFile('README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 	})
@@ -238,7 +238,7 @@ describe('Workspace', function() {
 			cy.modifyUser(user, 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-			cy.getFile('Anleitung.md').should('contain', 'Anleitung.md')
+			cy.getFile('Anleitung.md')
 			cy.get('#rich-workspace .ProseMirror')
 				.should('contain', 'Hello world')
 		})
@@ -247,7 +247,7 @@ describe('Workspace', function() {
 			cy.modifyUser(user, 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-			cy.getFile('Anleitung.md').should('contain', 'Anleitung.md')
+			cy.getFile('Anleitung.md')
 		})
 	})
 
@@ -291,7 +291,6 @@ describe('Workspace', function() {
 })
 
 const openSidebar = filename => {
-	cy.getFile(filename).should('contain', filename)
 	cy.getFile(filename).find('.files-list__row-mtime').click()
 	cy.get('.app-sidebar-header').should('contain', filename)
 }

@@ -284,8 +284,9 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 		})
 })
 
-// FIXME: proper file list reload only once that is possible with the vue files app
-Cypress.Commands.add('reloadFileList', () => cy.reload())
+Cypress.Commands.add('reloadFileList', () => {
+	return cy.reload()
+})
 
 Cypress.Commands.add('openFolder', (name) => {
 	const url = `**/${encodeURI(name)}`

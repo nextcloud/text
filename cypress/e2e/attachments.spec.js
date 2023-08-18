@@ -360,14 +360,14 @@ describe('Test all attachment insertion methods', () => {
 
 	it('[share] check everything behaves correctly on the share target user side', () => {
 		// check the file list
-		cy.get('test.md')
+		cy.getFile('test.md')
 			.should('contain', 'test.md')
-		cy.get('github.png')
+		cy.getFile('github.png')
 			.should('not.exist')
 		cy.showHiddenFiles()
 
 		// check the attachment folder is not there
-		cy.get('test.md')
+		cy.getFile('test.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
 			.then((documentId) => {
