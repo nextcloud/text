@@ -297,7 +297,7 @@ Cypress.Commands.add('openFolder', (name) => {
 })
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name`).click(params)
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] a[data-cy-files-list-row-name-link]`).click(params)
 })
 
 Cypress.Commands.add('closeFile', (fileName, params = {}) => {
@@ -309,7 +309,8 @@ Cypress.Commands.add('closeFile', (fileName, params = {}) => {
 })
 
 Cypress.Commands.add('getFile', fileName => {
-	return cy.get(`.files-fileList tr[data-file="${fileName}"]`)
+	return cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`)
+
 })
 
 Cypress.Commands.add('deleteFile', fileName => {
@@ -411,7 +412,7 @@ Cypress.Commands.add('createDescription', () => {
 	cy.intercept({ method: 'PUT', url })
 		.as('addDescription')
 
-	cy.get('.files-fileList').should('not.contain', 'Readme.md')
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]`).should('not.exist')
 	cy.get('.files-controls').first().within(() => {
 		cy.get('.button.new').click()
 		cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()
