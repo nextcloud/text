@@ -3,10 +3,6 @@ import { randUser } from '../utils/index.js'
 const user = randUser()
 const fileName = 'empty.md'
 
-const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
-	.last()
-	.click({ force: true })
-
 const clickOutline = () => {
 	cy.getActionEntry('headings')
 		.click()
@@ -110,7 +106,7 @@ describe('Content Sections', () => {
 			cy.openFile(fileName, { force: true })
 			cy.getContent()
 				.type('# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
-			cy.then(refresh)
+			cy.closeFile()
 				.then(() => cy.openFile(fileName, { force: true }))
 				.then(clickOutline)
 

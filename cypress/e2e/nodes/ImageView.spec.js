@@ -2,13 +2,9 @@ import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-const refresh = () => cy.get('.files-controls .crumb:not(.hidden) a')
-	.last()
-	.click({ force: true })
-
 const createMarkdown = (fileName, content) => {
 	return cy.createFile(fileName, content, 'text/markdown')
-		.then(refresh)
+		.then(cy.reload)
 }
 
 describe('Image View', () => {
@@ -85,8 +81,8 @@ describe('Image View', () => {
 		})
 
 		it('with preview', () => {
-			cy.get('.files-fileList tr[data-file="github.png"]')
-				.should('have.attr', 'data-id')
+			cy.getFile('github.png')
+				.should('have.attr', 'data-cy-files-list-row-fileid')
 				.then(imageId => {
 					const fileName = `${Cypress.currentTest.title}.md`
 

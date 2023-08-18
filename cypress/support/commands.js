@@ -284,9 +284,8 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 		})
 })
 
-Cypress.Commands.add('reloadFileList', () => cy.window()
-	.then(win => win.OCA?.Files?.App?.fileList?.reload()),
-)
+// FIXME: proper file list reload only once that is possible with the vue files app
+Cypress.Commands.add('reloadFileList', () => cy.reload())
 
 Cypress.Commands.add('openFolder', (name) => {
 	const url = `**/${encodeURI(name)}`
@@ -314,9 +313,9 @@ Cypress.Commands.add('getFile', fileName => {
 })
 
 Cypress.Commands.add('deleteFile', fileName => {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name .action-menu`).click()
-	cy.get(`.files-fileList tr[data-file="${fileName}"] a.name + .popovermenu .action-delete`).click()
-	cy.get(`.files-fileList tr[data-file="${fileName}"]`).should('not.exist')
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] .files-list__row-actions button`).click()
+	cy.get('.files-list__row-action-delete button').click()
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`).should('not.exist')
 })
 
 Cypress.Commands.add('getModal', () => {
@@ -412,7 +411,7 @@ Cypress.Commands.add('createDescription', () => {
 	cy.intercept({ method: 'PUT', url })
 		.as('addDescription')
 
-	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]`).should('not.exist')
+	cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
 	cy.get('.files-controls').first().within(() => {
 		cy.get('.button.new').click()
 		cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()

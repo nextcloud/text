@@ -44,7 +44,7 @@ describe('Workspace', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.createFolder(`${currentFolder}/subdirectory`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.get('.files-fileList').should('contain', 'README.md')
+		cy.getFile('README.md').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 		cy.openFolder('subdirectory')
@@ -56,7 +56,7 @@ describe('Workspace', function() {
 	it('Hides the workspace when switching to another view', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/README.md`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.get('.files-fileList').should('contain', 'README.md')
+		cy.getFile('README.md').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 		cy.get('a[href*="/apps/files/recent"]')
@@ -66,19 +66,7 @@ describe('Workspace', function() {
 	})
 
 	it('adds a Readme.md', function() {
-		const url = '**/remote.php/dav/files/**'
-		cy.intercept({ method: 'PUT', url })
-			.as('addDescription')
-
-		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.get('.files-fileList').should('not.contain', 'Readme.md')
-
-		cy.get('.files-controls').first().within(() => {
-			cy.get('.button.new').click()
-			cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()
-			cy.wait('@addDescription')
-		})
-
+		cy.createDescription()
 		openSidebar('Readme.md')
 		cy.get('#rich-workspace .text-editor .text-editor__wrapper')
 			.should('be.visible')
@@ -133,7 +121,7 @@ describe('Workspace', function() {
 	it('takes README.md into account', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/README.md`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.get('.files-fileList').should('contain', 'README.md')
+		cy.getFile('README.md').should('contain', 'README.md')
 		cy.get('#rich-workspace .ProseMirror')
 			.should('contain', 'Hello world')
 	})
@@ -250,7 +238,7 @@ describe('Workspace', function() {
 			cy.modifyUser(user, 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-			cy.get('.files-fileList').should('contain', 'Anleitung.md')
+			cy.getFile('Anleitung.md').should('contain', 'Anleitung.md')
 			cy.get('#rich-workspace .ProseMirror')
 				.should('contain', 'Hello world')
 		})
@@ -259,7 +247,7 @@ describe('Workspace', function() {
 			cy.modifyUser(user, 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${Cypress.currentTest.title}/Anleitung.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-			cy.get('.files-fileList').should('contain', 'Anleitung.md')
+			cy.getFile('Anleitung.md').should('contain', 'Anleitung.md')
 		})
 	})
 
@@ -303,10 +291,8 @@ describe('Workspace', function() {
 })
 
 const openSidebar = filename => {
-	cy.get(`.files-fileList tr[data-file="${filename}"]`)
-		.should('contain', filename)
-	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-more`).click()
-	cy.get(`.files-fileList tr[data-file="${filename}"] .icon-details`).click()
+	cy.getFile(filename).should('contain', filename)
+	cy.getFile(filename).find('.files-list__row-mtime').click()
 	cy.get('.app-sidebar-header').should('contain', filename)
 }
 

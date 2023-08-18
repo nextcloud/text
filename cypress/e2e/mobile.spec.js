@@ -50,9 +50,7 @@ describe('Mobile actions', {
 			cy.uploadFile('test.md', 'text/markdown', `${encodeURIComponent(folderName)}/text.md`)
 			cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`)
 
-			cy.get('.files-controls .crumb:not(.hidden) a')
-				.last()
-				.click({ force: true })
+			cy.reload()
 
 			cy.openFile('text.md', { force: true })
 		})
