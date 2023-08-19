@@ -67,7 +67,7 @@ OC.L10N.register(
     "Hard line break" : "Harter Zeilenumbruch",
     "followed by" : "gefolgt von",
     "Backspace" : "Rücktaste",
-    "Shift" : "Verschieben",
+    "Shift" : "Umschalttaste",
     "Bold" : "Fett",
     "Bold text" : "Fetter Text",
     "Ctrl" : "Strg",
