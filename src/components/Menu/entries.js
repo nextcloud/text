@@ -123,7 +123,7 @@ export default [
 	{
 		key: 'strikethrough',
 		label: t('text', 'Strikethrough'),
-		keyChar: 'x',
+		keyChar: 's',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 		icon: FormatStrikethrough,
 		isActive: 'strike',
