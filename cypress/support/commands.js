@@ -375,7 +375,6 @@ Cypress.Commands.add('getTOC', () => {
 Cypress.Commands.add('clearContent', () => {
 	cy.getContent().scrollIntoView()
 	cy.getContent().type('{selectAll}{backspace}')
-	return cy.getContent()
 })
 
 Cypress.Commands.add('openWorkspace', () => {
