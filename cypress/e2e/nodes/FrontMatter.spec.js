@@ -33,33 +33,32 @@ describe('Front matter support', function() {
 	})
 
 	it('Open file with front matter', function() {
-		cy.openFile('frontmatter.md').then(() => {
-			cy.getContent().find('pre.frontmatter').should(pre => {
-				expect(pre.length === 1)
-				expect(pre[0].text === 'some: value\nother: 1.2')
-			})
+		cy.openFile('frontmatter.md')
+		cy.getContent().find('pre.frontmatter').should(pre => {
+			expect(pre.length === 1)
+			expect(pre[0].text === 'some: value\nother: 1.2')
 		})
 	})
 
 	it('Add front matter', function() {
-		cy.openFile('empty.md').clearContent().then(() => {
-			cy.getContent().type('---')
-			cy.getContent().type('test')
-			cy.getContent().find('pre.frontmatter').should(pre => {
-				expect(pre.length === 1)
-				expect(pre[0].text === 'test')
-			})
+		cy.openFile('empty.md')
+		cy.clearContent()
+		cy.getContent().type('---')
+		cy.getContent().type('test')
+		cy.getContent().find('pre.frontmatter').should(pre => {
+			expect(pre.length === 1)
+			expect(pre[0].text === 'test')
 		})
 	})
 
 	it('Do not add multiple front matter', function() {
-		cy.openFile('empty.md').clearContent().then(() => {
-			cy.getContent().type('---test')
-			cy.getContent().type('{downArrow}')
-			cy.getContent().type('---test')
-			cy.getContent().find('pre.frontmatter').should(pre => expect(pre.length === 1))
-			cy.getContent().find('hr').should(hr => expect(hr.length === 1))
-		})
+		cy.openFile('empty.md')
+		cy.clearContent()
+		cy.getContent().type('---test')
+		cy.getContent().type('{downArrow}')
+		cy.getContent().type('---test')
+		cy.getContent().find('pre.frontmatter').should(pre => expect(pre.length === 1))
+		cy.getContent().find('hr').should(hr => expect(hr.length === 1))
 	})
 
 	it('Reopen front matter', function() {

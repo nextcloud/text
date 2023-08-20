@@ -28,38 +28,33 @@ describe('Test the rich text editor menu bar', function() {
 		}
 
 		beforeEach(cy.clearContent)
+
 		it('empty file', () => {
 			cy.getFile(fileName)
-				.then($el => {
-					cy.getActionEntry('remain')
-						.click()
-					getWordCount()
-						.should('include.text', '0 words, 0 chars')
-				})
+			cy.getActionEntry('remain')
+				.click()
+			getWordCount()
+				.should('include.text', '0 words, 0 chars')
 		})
 
 		it('single word', () => {
 			cy.getFile(fileName)
-				.then($el => {
-					cy.clearContent()
-						.type('  Hello  ')
-					cy.getActionEntry('remain')
-						.click()
-					getWordCount()
-						.should('include.text', '1 word, 9 chars')
-				})
+			cy.getContent()
+				.type('  Hello  ')
+			cy.getActionEntry('remain')
+				.click()
+			getWordCount()
+				.should('include.text', '1 word, 9 chars')
 		})
 
 		it('multiple words', () => {
 			cy.getFile(fileName)
-				.then($el => {
-					cy.clearContent()
-						.type('Hello \nworld')
-					cy.getActionEntry('remain')
-						.click()
-					getWordCount()
-						.should('include.text', '2 words, 11 chars')
-				})
+			cy.getContent()
+				.type('Hello \nworld')
+			cy.getActionEntry('remain')
+				.click()
+			getWordCount()
+				.should('include.text', '2 words, 11 chars')
 		})
 	})
 })

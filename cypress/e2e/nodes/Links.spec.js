@@ -49,6 +49,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/apps/files/file-name?fileId=${id}`
 					cy.clearContent()
+					cy.getContent()
 						.type(`${link}{enter}`)
 
 					cy.getContent()
@@ -68,6 +69,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
 					cy.clearContent()
+					cy.getContent()
 						.type(`${link}{enter}`)
 
 					cy.getContent()
@@ -82,6 +84,7 @@ describe('test link marks', function() {
 
 		it('without protocol', () => {
 			cy.clearContent()
+			cy.getContent()
 				.type('google.com{enter}')
 			cy.getContent()
 				.find('a[href*="google.com"]')
@@ -118,7 +121,6 @@ describe('test link marks', function() {
 					.should('have.been.calledWith', url)
 			}
 
-			beforeEach(cy.clearContent)
 			it('Link website without selection', () => {
 				cy.getFile(fileName)
 					.then($el => {
@@ -147,8 +149,6 @@ describe('test link marks', function() {
 					.should('have.text', text === undefined ? filename : text)
 					.click({ force: true })
 			}
-
-			beforeEach(() => cy.clearContent())
 
 			it('without text', () => {
 				cy.getFile(fileName)
