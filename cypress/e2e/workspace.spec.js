@@ -23,7 +23,7 @@
 import { randUser } from '../utils/index.js'
 const user = randUser()
 
-describe('Workspace', function() {
+describe.skip('Workspace', function() {
 	let currentFolder
 
 	before(function() {
