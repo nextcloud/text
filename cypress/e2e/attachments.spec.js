@@ -361,7 +361,7 @@ describe('Test all attachment insertion methods', () => {
 	it('[share] check everything behaves correctly on the share target user side', () => {
 		// check the file list
 		cy.getFile('test.md')
-			.should('contain', 'test.md')
+			.should('exist')
 		cy.getFile('github.png')
 			.should('not.exist')
 		cy.showHiddenFiles()
