@@ -45,11 +45,6 @@ webpackConfig.optimization.splitChunks.cacheGroups = {
 	}
 }
 
-// webpackConfig.resolve.modules = [
-// 	path.resolve(__dirname, 'node_modules'),
-// 	'node_modules'
-// ]
-
 // Fix Buffer issues
 webpackConfig.plugins.push(new webpack.ProvidePlugin({
 	Buffer: ['buffer', 'Buffer'],
@@ -66,5 +61,16 @@ webpackRules.RULE_RAW_SVGS = {
 }
 
 webpackConfig.module.rules = Object.values(webpackRules)
+
+webpackConfig.optimization.splitChunks.minSize = 102400
+
+webpackConfig.optimization.splitChunks.cacheGroups = {
+	mermaid: {
+		test(module) {
+			return module.resource && module.resource.includes(`${path.sep}node_modules${path.sep}mermaid`)
+		},
+		name: 'mermaid',
+	},
+}
 
 module.exports = webpackConfig

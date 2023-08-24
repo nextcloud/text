@@ -33,6 +33,7 @@ if (typeof OCA.Viewer === 'undefined') {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
+		// Would be good to be able to lazyload that
 		component: ViewerComponent,
 		group: null,
 		theme: 'default',

@@ -21,12 +21,9 @@
  */
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
-import Vue from 'vue'
+import { registerFileListHeaders } from '@nextcloud/files'
 
 import { logger } from './helpers/logger.js'
-import { registerFileActionFallback } from './helpers/files.js'
-import FilesSettings from './views/FilesSettings.vue'
-import store from './store/index.js'
 
 __webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
@@ -34,13 +31,18 @@ __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 const workspaceAvailable = loadState('text', 'workspace_available')
 const workspaceEnabled = loadState('text', 'workspace_enabled')
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	if (typeof OCA.Viewer === 'undefined') {
+		const { registerFileActionFallback } = await import('./helpers/files.js')
 		logger.error('Viewer app is not installed')
 		registerFileActionFallback()
 	}
 
 	if (workspaceAvailable && OCA && OCA?.Files?.Settings) {
+		const { default: Vue } = await import('vue')
+		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
+		const { default: store } = await import('./store/index.js')
+
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
 		Vue.prototype.OCA = window.OCA
@@ -54,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		}))
 	}
 
+	if (workspaceAvailable) {
+		const { FilesWorkspaceHeader } = await import('./helpers/files.js')
+		registerFileListHeaders(FilesWorkspaceHeader)
+	}
 })
 
 OCA.Text = {
