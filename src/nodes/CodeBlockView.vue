@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<div :class="{'split-view': showCode && showPreview }">
-			<pre v-show="showCode" class="split-view__code"><NodeViewContent as="code" :contenteditable="editable" /></pre>
+			<pre v-show="showCode" class="split-view__code"><NodeViewContent as="code" :contenteditable="isEditable" /></pre>
 			<div v-show="showPreview"
 				ref="preview"
 				class="split-view__preview"
