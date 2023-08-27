@@ -139,7 +139,8 @@ describe('test link marks', function() {
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkFile = (filename, text) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
-				cy.get(`.file-picker__main .file-picker__file-name[title="${filename}"]`).click()
+				const basename = filename.replace(/(.*)\.[^.]*/, '$1')
+				cy.get(`.file-picker__main .file-picker__file-name[title="${basename}"]`).click()
 				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 				return cy.getContent()
