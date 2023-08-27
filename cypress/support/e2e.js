@@ -7,3 +7,16 @@ import chaiExtension from './chai.js'
 before(() => {
 	chai.use(chaiExtension)
 })
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+	// Old files scripts attempt to iterate through views
+	// which do not exist anymore since 28.
+	// TODO: Remove this once
+	// https://github.com/nextcloud/server/pull/40065
+	// is merged.
+	if (err.message.includes('Cannot read properties of undefined (reading \'views\')')) {
+		return false
+	}
+	// we still want to ensure there are no other unexpected
+	// errors, so we let them fail the test
+})
