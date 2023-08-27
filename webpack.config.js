@@ -48,4 +48,12 @@ webpackConfig.resolve.modules = [
 	'node_modules'
 ]
 
+// Fix Buffer issues
+webpackConfig.plugins.push(new webpack.ProvidePlugin({
+	Buffer: ['buffer', 'Buffer'],
+}))
+webpackConfig.resolve.fallback = {
+	buffer: require.resolve('buffer'),
+}
+
 module.exports = webpackConfig

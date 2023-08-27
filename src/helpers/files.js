@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,12 +20,14 @@
  *
  */
 
-import { loadState } from '@nextcloud/initial-state'
-import { emit, subscribe } from '@nextcloud/event-bus'
-import { openMimetypes } from './mime.js'
-import { getSharingToken } from './token.js'
-import RichWorkspace from '../views/RichWorkspace.vue'
+import { emit } from '@nextcloud/event-bus'
+import { Header } from '@nextcloud/files'
 import { imagePath } from '@nextcloud/router'
+import { loadState } from '@nextcloud/initial-state'
+
+import { getSharingToken } from './token.js'
+import { openMimetypes } from './mime.js'
+import RichWorkspace from '../views/RichWorkspace.vue'
 import store from '../store/index.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
@@ -173,59 +175,46 @@ const addMenuRichWorkspace = () => {
 	OC.Plugins.register('OCA.Files.NewFileMenu', newRichWorkspaceFileMenuPlugin)
 }
 
-const FilesWorkspacePlugin = {
-	el: null,
+let vm = null
 
-	attach(fileList) {
-		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
-			return
-		}
-		this.el = document.createElement('div')
-		fileList.registerHeader({
-			id: 'workspace',
-			el: this.el,
-			render: this.render.bind(this),
-			priority: 10,
-		})
+export const FilesWorkspaceHeader = new Header({
+	id: 'workspace',
+	order: 10,
+
+	enabled(folder, view) {
+		return view.id === 'files'
 	},
 
-	render(fileList) {
-		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
-			return
-		}
+	render(el, folder, view) {
 		addMenuRichWorkspace()
+
 		import('vue').then((module) => {
+			el.id = 'files-workspace-wrapper'
+
+			// Todo: remove this hack
 			const Vue = module.default
-			this.el.id = 'files-workspace-wrapper'
 			Vue.prototype.t = window.t
 			Vue.prototype.n = window.n
 			Vue.prototype.OCA = window.OCA
+
 			const View = Vue.extend(RichWorkspace)
-			const vm = new View({
+			vm = new View({
 				propsData: {
-					path: fileList.getCurrentDirectory(),
+					path: folder.path,
 				},
 				store,
-			}).$mount(this.el)
-			subscribe('files:navigation:changed', () => {
-				// Expose if the default file list is active to the component
-				// to only render the workspace if the file list is actually visible
-				vm.active = OCA.Files.App.getCurrentFileList() === fileList
-			})
-			fileList.$el.on('urlChanged', data => {
-				vm.path = data.dir.toString()
-			})
-			fileList.$el.on('changeDirectory', data => {
-				vm.path = data.dir.toString()
-			})
+			}).$mount(el)
 		})
 	},
-}
+
+	updated(folder, view) {
+		vm.path = folder.path
+	},
+})
 
 export {
 	optimalPath,
 	registerFileActionFallback,
 	registerFileCreate,
-	FilesWorkspacePlugin,
 	FILE_ACTION_IDENTIFIER,
 }

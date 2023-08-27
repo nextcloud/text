@@ -36,7 +36,7 @@ describe('Text and server mimetypes', () => {
 	it('handle plaintext in a pre tag', () => {
 		cy.uploadFile('empty.md', 'text/plain', 'textfile.txt')
 		cy.visit('/apps/files')
-		cy.get('#app-content-files table tr').should('contain', 'textfile.txt')
+		cy.getFile('textfile.txt')
 		cy.openFile('textfile.txt')
 		cy.getContent().find('pre').should('exist')
 	})
@@ -44,7 +44,7 @@ describe('Text and server mimetypes', () => {
 	it('handle asciidoc as plaintext for now', () => {
 		cy.uploadFile('test.adoc', 'text/asciidoc', 'hello.adoc')
 		cy.visit('/apps/files')
-		cy.get('#app-content-files table tr').should('contain', 'hello.adoc')
+		cy.getFile('hello.adoc')
 		cy.openFile('hello.adoc')
 		cy.getContent().find('pre').should('contain', 'Hello world')
 	})
@@ -52,7 +52,7 @@ describe('Text and server mimetypes', () => {
 	it('handle markdown with richtext editor', () => {
 		cy.uploadFile('test.md', 'text/markdown', 'markdown.md')
 		cy.visit('/apps/files')
-		cy.get('#app-content-files table tr').should('contain', 'markdown.md')
+		cy.getFile('markdown.md')
 		cy.openFile('markdown.md')
 		cy.getContent().find('h2').should('contain', 'Hello world')
 	})

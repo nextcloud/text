@@ -1,7 +1,6 @@
 import { loadState } from '@nextcloud/initial-state'
 
 import {
-	FilesWorkspacePlugin,
 	registerFileActionFallback,
 	registerFileCreate,
 } from './helpers/files.js'
@@ -59,7 +58,7 @@ documentReady(() => {
 
 	// list of files - dir sharing
 	if (filesTable) {
-		OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
+		// OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
 		registerFileActionFallback()
 		registerFileCreate()
 		return

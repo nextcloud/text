@@ -36,6 +36,10 @@ jest.mock('@nextcloud/auth', () => ({
 	onRequestTokenUpdate: jest.fn().mockImplementation(() => {}),
 }))
 
+jest.mock('@nextcloud/files', () => ({
+	formatFileSize: (size) => size,
+	Header: class {},
+}))
 
 global.OC = {
 	requestToken: '123',

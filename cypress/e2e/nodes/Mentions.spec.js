@@ -7,16 +7,10 @@ const currentUser = user
 
 const fileName = 'empty.md'
 
-const refresh = () => {
-	cy.get('.files-controls .crumb:not(.hidden) a')
-		.last()
-		.click({ force: true })
-}
-
 const createFileWithMention = (target, userToMention) => {
 	const content = `Hello @[${userToMention}](mention://user/${userToMention})`
 	cy.createFile(target, content)
-		.then(refresh)
+		.then(() => cy.reloadFileList())
 }
 
 describe('Test mentioning users', () => {

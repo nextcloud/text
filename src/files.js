@@ -19,15 +19,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-import Vue from 'vue'
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
+import { registerFileListHeaders } from '@nextcloud/files'
+import Vue from 'vue'
 
-import store from './store/index.js'
-import FilesSettings from './views/FilesSettings.vue'
 import { logger } from './helpers/logger.js'
-import { registerFileActionFallback, FilesWorkspacePlugin } from './helpers/files.js'
+import { registerFileActionFallback, FilesWorkspaceHeader } from './helpers/files.js'
+import FilesSettings from './views/FilesSettings.vue'
+import store from './store/index.js'
 
 __webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 if (workspaceAvailable) {
-	OC.Plugins.register('OCA.Files.FileList', FilesWorkspacePlugin)
+	registerFileListHeaders(FilesWorkspaceHeader)
 }
 
 OCA.Text = {

@@ -112,13 +112,13 @@ describe('Open test.md in viewer', function() {
 				return cy.visit(`/s/${token}`)
 			})
 			.then(() => {
-				cy.get('#rich-workspace').getContent().should('contain', 'Hello world')
-				cy.openFile('test.md')
+				cy.openFileInShare('test.md')
 				cy.getModal().getContent().should('be.visible')
 				cy.getModal().getContent().should('contain', 'Hello world')
 				cy.getModal().getContent().find('h2').should('contain', 'Hello world')
 				cy.getModal().find('.modal-header button.header-close').click()
 				cy.get('.modal-mask').should('not.exist')
+				// cy.get('#rich-workspace').getContent().should('contain', 'Hello world')
 			})
 	})
 
