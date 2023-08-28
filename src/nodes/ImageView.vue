@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<NodeViewWrapper>
+	<NodeViewWrapper contenteditable="true">
 		<figure class="image image-view"
 			data-component="image-view"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
@@ -34,6 +34,7 @@
 				<transition name="fade">
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
+							contenteditable="false"
 							class="media"
 							@click="handleImageClick(src)">
 							<div class="media__wrapper">
@@ -57,7 +58,7 @@
 								</NcButton>
 							</div>
 						</div>
-						<div v-else>
+						<div v-else contenteditable="false">
 							<img v-show="loaded"
 								:src="imageUrl"
 								class="image__main"
@@ -86,6 +87,7 @@
 								@blur="updateAlt"
 								@keyup="updateAlt">
 							<div v-if="showImageDeleteIcon"
+								contenteditable="false"
 								class="image__caption__delete">
 								<NcButton :aria-label="t('text', 'Delete this image')"
 									:title="t('text', 'Delete this image')"
@@ -394,11 +396,11 @@ export default {
 		display: flex;
 		flex-basis: 20%;
 		align-items: center;
-		width: 20px;
+		width: 20px !important;
 		height: 20px;
 		position: absolute;
-		right: -6px;
-		bottom: 10px;
+		bottom: -1px;
+		right: -3px;
 		&, svg {
 			cursor: pointer;
 		}
