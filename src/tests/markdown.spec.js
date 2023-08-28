@@ -200,17 +200,17 @@ describe('Markdown serializer from html', () => {
 	})
 
 	test('table', () => {
-		expect(markdownThroughEditorHtml('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello |\n')
+		expect(markdownThroughEditorHtml('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello     |\n')
 	})
 
 	test('table cell escaping', () => {
 		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
-		expect(markdownThroughEditorHtml('<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>')).toBe('| greetings |\n|-----------|\n| hello \\| hallo |\n')
+		expect(markdownThroughEditorHtml('<table><tr><th>greetings</th></tr><tr><td>hello | hallo</td></tr></table>')).toBe('| greetings      |\n|----------------|\n| hello \\| hallo |\n')
 	})
 
 	test('table pastes (#2708)', () => {
 		// while '|' has no special meaning in commonmark is has to be escaped for GFM tables
-		expect(markdownFromPaste('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello |\n')
+		expect(markdownFromPaste('<table><tbody><tr><th>greetings</th></tr><tr><td>hello</td></tr></tbody></table>')).toBe('| greetings |\n|-----------|\n| hello     |\n')
 	})
 
 	test('front matter', () => {
