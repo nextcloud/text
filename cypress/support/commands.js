@@ -306,7 +306,7 @@ Cypress.Commands.add('openFileInShare', fileName => {
 	cy.wait(250)
 })
 
-Cypress.Commands.add('closeFile', (fileName, params = {}) => {
+Cypress.Commands.add('closeFile', (params = {}) => {
 	cy.intercept({ method: 'POST', url: '**/apps/text/session/close' })
 		.as('close')
 	cy.get('#viewer .modal-header button.header-close').click(params)
