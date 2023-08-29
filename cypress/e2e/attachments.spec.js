@@ -103,6 +103,9 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 			const srcPathEnd = isImage ? 'image' : 'mediaPreview'
 			const srcFileNameParam = isImage ? 'imageFileName' : 'mediaFileName'
 
+			// ensure the image is not hidden behind the menu bar.
+			cy.wrap($el).scrollIntoView({ offset: { top: -50, left: 0 } })
+
 			cy.wrap($el)
 				.should('be.visible')
 				.find('img')
@@ -220,6 +223,7 @@ describe('Test all attachment insertion methods', () => {
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
+		cy.closeFile()
 	})
 
 	it('Upload a local image file (table.png)', () => {
@@ -236,6 +240,7 @@ describe('Test all attachment insertion methods', () => {
 
 				return waitForRequestAndCheckAttachment(requestAlias)
 			})
+		cy.closeFile()
 	})
 
 	it('Upload a local media file (file.txt.gz)', () => {
@@ -252,6 +257,7 @@ describe('Test all attachment insertion methods', () => {
 
 				return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
 			})
+		cy.closeFile()
 	})
 
 	it('Upload image files with the same name', () => {
@@ -280,8 +286,9 @@ describe('Test all attachment insertion methods', () => {
 					assertImage(index).then(resolve, reject)
 				})
 			})
-		return cy.getEditor().find('[data-component="image-view"]')
+		cy.getEditor().find('[data-component="image-view"]')
 			.should('have.length', 3)
+		cy.closeFile()
 	})
 
 	it('test if attachment files are in the attachment folder', () => {

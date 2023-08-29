@@ -306,7 +306,7 @@ Cypress.Commands.add('openFileInShare', fileName => {
 	cy.wait(250)
 })
 
-Cypress.Commands.add('closeFile', (fileName, params = {}) => {
+Cypress.Commands.add('closeFile', (params = {}) => {
 	cy.intercept({ method: 'POST', url: '**/apps/text/session/close' })
 		.as('close')
 	cy.get('#viewer .modal-header button.header-close').click(params)
@@ -321,7 +321,7 @@ Cypress.Commands.add('getFile', fileName => {
 
 Cypress.Commands.add('deleteFile', fileName => {
 	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] .files-list__row-actions button`).click()
-	cy.get('.files-list__row-action-delete button').click()
+	cy.get('.files-list__row-action-delete:visible button').click()
 	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`).should('not.exist')
 })
 
