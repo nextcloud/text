@@ -45,7 +45,7 @@ describe('Front matter support', function() {
 			// Remove language
 			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
 			cy.get('.action-input__text-label').contains('Code block language')
-			cy.get('.input-field__input').clear()
+			cy.get('.input-field__input:visible').clear()
 
 			cy.getContent().find('code').eq(1).click()
 
@@ -54,7 +54,7 @@ describe('Front matter support', function() {
 			// Re-add language
 			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
 			cy.get('.action-input__text-label').contains('Code block language')
-			cy.get('.input-field__input').type('javascript')
+			cy.get('.input-field__input:visible').type('javascript')
 
 			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(0).contains('const')
 			cy.getContent().find('code').eq(1).find('.hljs-string').eq(0).contains('"bar"')
