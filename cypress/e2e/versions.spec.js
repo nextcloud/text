@@ -23,7 +23,7 @@ describe('Versions', () => {
 
 			cy.reloadFileList()
 
-			cy.get('tr[data-file="' + versionFileName + '"] td.date').click()
+			cy.get('[data-cy-files-list-row-name="' + versionFileName + '"] [data-cy-files-list-row-mtime]').click()
 			cy.get('.app-sidebar-header').should('be.visible').should('contain', versionFileName)
 			cy.get('.app-sidebar-tabs__tab[data-id="version_vue"]').click()
 			cy.get('[data-files-versions-versions-list] li > a').should('have.length', 3)
@@ -54,7 +54,7 @@ describe('Versions', () => {
 
 			cy.reloadFileList()
 
-			cy.get('tr[data-file="' + versionFileName + '"] td.date').click()
+			cy.get('[data-cy-files-list-row-name="' + versionFileName + '"] [data-cy-files-list-row-mtime]').click()
 
 			cy.get('.app-sidebar-header').should('be.visible').should('contain', versionFileName)
 
@@ -91,7 +91,7 @@ describe('Versions', () => {
 
 			cy.reloadFileList()
 
-			cy.get('tr[data-file="' + versionFileName + '"] td.date').click()
+			cy.get('[data-cy-files-list-row-name="' + versionFileName + '"] [data-cy-files-list-row-mtime]').click()
 
 			cy.get('.app-sidebar-header').should('be.visible').should('contain', versionFileName)
 
