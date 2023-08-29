@@ -43,10 +43,10 @@ webpackConfig.optimization.splitChunks.cacheGroups = {
 	}
 }
 
-webpackConfig.resolve.modules = [
-	path.resolve(__dirname, 'node_modules'),
-	'node_modules'
-]
+// webpackConfig.resolve.modules = [
+// 	path.resolve(__dirname, 'node_modules'),
+// 	'node_modules'
+// ]
 
 // Fix Buffer issues
 webpackConfig.plugins.push(new webpack.ProvidePlugin({
