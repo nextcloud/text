@@ -69,7 +69,7 @@
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
-						<kbd>X</kbd>
+						<kbd>S</kbd>
 					</td>
 				</tr>
 				<tr>
