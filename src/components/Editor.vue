@@ -629,9 +629,16 @@ export default {
 
 		onFocus() {
 			this.emit('focus')
+
+			// Make sure that the focus trap doesn't catch tab keys while being in the contenteditable
+			window._nc_focus_trap?.[0]?.pause()
 		},
 		onBlur() {
 			this.emit('blur')
+
+			// Hand back focus to the previous trap
+			window._nc_focus_trap?.[0]?.unpause()
+			this.$el.focus()
 		},
 
 		onAddImageNode() {
