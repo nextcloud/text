@@ -54,8 +54,6 @@
 
 /*! Check if previously processed */
 
-/*! For license information please see index.module.js.LICENSE.txt */
-
 /*! Runge-Kutta spring physics function generator. Adapted from Framer.js, copyright Koen Bok. MIT License: http://en.wikipedia.org/wiki/MIT_License */
 
 /*! https://mths.be/punycode v1.3.2 by @mathias */
