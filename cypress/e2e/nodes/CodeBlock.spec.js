@@ -1,0 +1,130 @@
+/**
+ * @copyright Copyright (c) 2022
+ *
+ * @license AGPL-3.0-or-later
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+import { initUserAndFiles, randUser } from '../../utils/index.js'
+
+const user = randUser()
+
+describe('Front matter support', function() {
+	before(function() {
+		initUserAndFiles(user, 'codeblock.md', 'empty.md')
+	})
+
+	beforeEach(function() {
+		cy.login(user)
+	})
+
+	it('See existing code block', function() {
+		cy.isolateTest({ sourceFile: 'codeblock.md' })
+		cy.openFile('codeblock.md').then(() => {
+			// Plain text block
+			cy.getContent().find('code').eq(0).find('.hljs-keyword').should('not.exist')
+
+			// Javascript block
+			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(0).contains('const')
+			cy.getContent().find('code').eq(1).find('.hljs-string').eq(0).contains('"bar"')
+			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(1).contains('function')
+
+			// Remove language
+			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
+			// FIXME: Label behaviour changed, should be back once https://github.com/nextcloud-libraries/nextcloud-vue/pull/4484 is merged
+			// cy.get('.action-input__text-label').contains('Code block language')
+			cy.get('.input-field__input:visible').clear()
+
+			cy.getContent().find('code').eq(1).click()
+
+			cy.getContent().find('code').eq(1).find('.hljs-keyword').should('not.exist')
+
+			// Re-add language
+			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
+			cy.get('.input-field__input:visible').type('javascript')
+
+			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(0).contains('const')
+			cy.getContent().find('code').eq(1).find('.hljs-string').eq(0).contains('"bar"')
+			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(1).contains('function')
+		})
+	})
+
+	it('Add a code block', function() {
+		cy.isolateTest({ sourceFile: 'codeblock.md' })
+		cy.openFile('codeblock.md').then(() => {
+			cy.clearContent()
+			cy.getContent().type('{enter}```javascript{enter}')
+			cy.getContent().type('const foo = "bar"{enter}{enter}{enter}')
+			cy.getContent().find('.hljs-keyword').first().contains('const')
+		})
+	})
+
+	it('See a mermaid diagram', function() {
+		cy.isolateTest({ sourceFile: 'codeblock.md' })
+		cy.openFile('codeblock.md').then(() => {
+			cy.getContent().find('.split-view__preview').find('svg').should('be.visible')
+			cy.get('.code-block').eq(2).find('code').should('not.be.visible')
+			cy.get('.split-view__preview').find('svg title')
+				.contains('Order example')
+		})
+	})
+
+	it('Add an invalid mermaid block', function() {
+		cy.isolateTest()
+		cy.openFile('empty.md').then(() => {
+			cy.getContent().type('```mermaid{enter}')
+			cy.getContent().find('code').should('exist')
+			cy.getContent().get('.split-view__preview').should('be.visible')
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(250)
+			cy.getContent().type('invalid{enter}{enter}')
+
+			cy.get('.split-view__code').find('code').should('be.visible')
+			cy.get('.split-view__preview').find('svg').should('not.exist')
+		})
+	})
+
+	it('Add a valid mermaid block', function() {
+		cy.isolateTest()
+		cy.openFile('empty.md').then(() => {
+			cy.getContent().type('```mermaid{enter}')
+			cy.getContent().find('code').should('exist')
+			cy.getContent().get('.split-view__preview').should('be.visible')
+			// eslint-disable-next-line cypress/no-unnecessary-waiting
+			cy.wait(250)
+			// Tab key does not work in cypress, using spaces instead
+			cy.getContent().type('flowchart LR{enter}    entry{enter}')
+
+			cy.get('.split-view__code').find('code').should('be.visible')
+			cy.get('.split-view__preview').find('svg').should('be.visible')
+
+			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.get('.action-button').eq(0).contains('Source code').click()
+			cy.get('.split-view__code').find('code').should('be.visible')
+			cy.get('.split-view__preview').find('svg').should('not.be.visible')
+
+			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.get('.action-button').eq(1).contains('Diagram').click()
+			cy.get('.split-view__code').find('code').should('not.be.visible')
+			cy.get('.split-view__preview').find('svg').should('be.visible')
+
+			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.get('.action-button').eq(2).contains('Both').click()
+			cy.get('.split-view__code').find('code').should('be.visible')
+			cy.get('.split-view__preview').find('svg').should('be.visible')
+		})
+	})
+})

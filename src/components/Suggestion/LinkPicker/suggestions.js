@@ -87,7 +87,7 @@ export default () => createSuggestions({
 						icon: p.icon_url,
 						providerId: p.id,
 					}
-				}),
+				}).filter(e => e?.label?.toLowerCase?.()?.includes(query.toLowerCase())),
 			...formattingSuggestions(query)
 				.filter(({ action, isActive }) => {
 					const canRunState = action(editor?.can())

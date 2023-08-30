@@ -107,7 +107,7 @@ Cypress.Commands.add('downloadFile', (fileName) => {
 		})
 })
 
-Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown') => {
+Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown', headers = {}) => {
 	const blob = new Blob([content], { type: mimeType })
 
 	return cy.request('/csrftoken')
@@ -121,6 +121,7 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown')
 				headers: {
 					'Content-Type': mimeType,
 					requesttoken,
+					...headers,
 				},
 			}).then((response) => {
 				return cy.log(`Uploaded ${target}`, response.status)
