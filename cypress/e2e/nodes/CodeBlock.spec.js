@@ -62,6 +62,31 @@ describe('Front matter support', function() {
 		})
 	})
 
+	it.only('Show a code block in a public read only link', function() {
+		cy.shareFile('/codeblock.md')
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
+			})
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				// Plain text block
+				cy.getContent().find('code').eq(0).find('.hljs-keyword').should('not.exist')
+
+				// Javascript block
+				cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(0).contains('const')
+				cy.getContent().find('code').eq(1).find('.hljs-string').eq(0).contains('"bar"')
+				cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(1).contains('function')
+
+				// Mermaid diagram
+				cy.get('#app-content').scrollTo('bottom')
+				cy.getContent().find('.split-view__preview').eq(2).should('be.visible')
+				cy.get('.code-block').eq(2).find('code').should('not.be.visible')
+				cy.get('.split-view__preview').find('svg title')
+					.contains('Order example')
+			})
+	})
+
 	it('Add a code block', function() {
 		cy.isolateTest({ sourceFile: 'codeblock.md' })
 		cy.openFile('codeblock.md').then(() => {
