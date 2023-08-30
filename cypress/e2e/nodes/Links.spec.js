@@ -49,6 +49,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/apps/files/file-name?fileId=${id}`
 					cy.clearContent()
+					cy.getContent()
 						.type(`${link}{enter}`)
 
 					cy.getContent()
@@ -68,6 +69,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
 					cy.clearContent()
+					cy.getContent()
 						.type(`${link}{enter}`)
 
 					cy.getContent()
@@ -82,6 +84,7 @@ describe('test link marks', function() {
 
 		it('without protocol', () => {
 			cy.clearContent()
+			cy.getContent()
 				.type('google.com{enter}')
 			cy.getContent()
 				.find('a[href*="google.com"]')

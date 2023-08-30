@@ -42,6 +42,7 @@ describe('Test the rich text editor menu bar', function() {
 			cy.getFile(fileName)
 				.then($el => {
 					cy.clearContent()
+					cy.getContent()
 						.type('  Hello  ')
 					cy.getActionEntry('remain')
 						.click()
@@ -54,6 +55,7 @@ describe('Test the rich text editor menu bar', function() {
 			cy.getFile(fileName)
 				.then($el => {
 					cy.clearContent()
+					cy.getContent()
 						.type('Hello \nworld')
 					cy.getActionEntry('remain')
 						.click()
