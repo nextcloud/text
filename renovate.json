@@ -27,10 +27,24 @@
   ],
   "packageRules": [
     {
+      "groupName": "vueuse",
+      "matchPackagePrefixes": [
+        "@vueuse/"
+      ]
+    },
+    {
+      "groupName": "nextcloud",
+      "matchPackagePrefixes": [
+        "@nextcloud/"
+      ]
+    },
+    {
       "groupName": "cypress",
       "matchPackageNames": [
         "cypress",
-        "@nextcloud/cypress",
+        "@nextcloud/cypress"
+      ],
+      "matchPackagePrefixes": [
         "@cypress/"
       ]
     },
@@ -38,7 +52,9 @@
       "groupName": "vite",
       "matchPackageNames": [
         "vite",
-        "vite-plugin-commonjs",
+        "vite-plugin-commonjs"
+      ],
+      "matchPackagePrefixes": [
         "@vitejs/"
       ]
     },
@@ -50,7 +66,7 @@
         "@hocuspocus/provider"
       ]
     },
-    
+
     {
       "groupName": "highlight",
       "matchPackageNames": [
