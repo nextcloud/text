@@ -63,7 +63,8 @@
       "matchPackageNames": [
         "yjs",
         "y-websocket",
-        "@hocuspocus/provider"
+        "@hocuspocus/provider",
+        "lib0"
       ]
     },
 
