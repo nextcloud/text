@@ -32,6 +32,24 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 		return VueNodeViewRenderer(CodeBlockView)
 	},
 
+	addKeyboardShortcuts() {
+		return {
+			'Mod-a': () => {
+				if (!this.editor.isActive('codeBlock')) {
+					return
+				}
+
+				const nodeSize = this.editor.state.selection.$from.node().nodeSize
+				this.editor.commands.selectParentNode()
+				const from = this.editor.state.selection.$from.pos
+				const to = from + nodeSize
+				this.editor.commands.setTextSelection({ from, to })
+
+				return true
+			},
+		}
+	},
+
 })
 
 export default CodeBlock
