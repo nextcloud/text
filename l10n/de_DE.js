@@ -26,7 +26,7 @@ OC.L10N.register(
     "Insert result" : "Ergebnis einfügen",
     "Show result" : "Ergebnis anzeigen",
     "Delete task" : "Aufgabe löschen",
-    "Nextcloud Assistant result copied" : "Ergbnis des Nextcloud-Assistenten kopiert",
+    "Nextcloud Assistant result copied" : "Ergebnis des Nextcloud-Assistenten kopiert",
     "Could not copy result to clipboard" : "Ergebnis konnte nicht in die Zwischenablage kopiert werden",
     "Use current version" : "Verwende aktuelle Version",
     "Use the saved version" : "Die gespeicherte Version verwenden",
