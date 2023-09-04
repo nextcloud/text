@@ -54,6 +54,14 @@
 
 /*! Check if previously processed */
 
+/*! For license information please see index.module.js.LICENSE.txt */
+
+/*! Hammer.JS - v2.0.7 - 2016-04-22
+ * http://hammerjs.github.io/
+ *
+ * Copyright (c) 2016 Jorik Tangelder;
+ * Licensed under the MIT license */
+
 /*! Runge-Kutta spring physics function generator. Adapted from Framer.js, copyright Koen Bok. MIT License: http://en.wikipedia.org/wiki/MIT_License */
 
 /*! https://mths.be/punycode v1.3.2 by @mathias */
