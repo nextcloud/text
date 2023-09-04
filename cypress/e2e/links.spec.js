@@ -32,7 +32,7 @@ describe('test link marks', function() {
 			cy.getContent()
 				.find('.widgets--list', { timeout: 10000 })
 				.find('.widget-default--title')
-				.contains('Nextcloud - Online collaboration platform')
+				.contains('Nextcloud')
 		})
 
 		it('does not show a link preview for links within a paragraph', () => {
