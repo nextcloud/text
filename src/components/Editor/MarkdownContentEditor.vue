@@ -34,7 +34,6 @@
 import Wrapper from './Wrapper.vue'
 import MainContainer from './MainContainer.vue'
 import MenuBar from '../Menu/MenuBar.vue'
-import { useOutlineActions, useOutlineStateMixin } from './Wrapper.provider.js'
 import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
@@ -48,7 +47,7 @@ import ContentContainer from './ContentContainer.vue'
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
-	mixins: [useOutlineStateMixin, useOutlineActions, useLinkClickHook],
+	mixins: [useLinkClickHook],
 	provide() {
 		const val = {}
 
@@ -83,9 +82,6 @@ export default {
 	computed: {
 		htmlContent() {
 			return this.renderHtml(this.content)
-		},
-		showOutline() {
-			return this.$outlineState.visible
 		},
 	},
 
