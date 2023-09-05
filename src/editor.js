@@ -60,6 +60,13 @@ class TextEditorEmbed {
 		return this
 	}
 
+	onOutlineToggle(onOutlineToggleCallback = () => {}) {
+		this.#vm.$on('outline-toggled', (visible) => {
+			onOutlineToggleCallback(visible)
+		})
+		return this
+	}
+
 	render(el) {
 		el.innerHTML = ''
 		const element = document.createElement('div')
@@ -78,6 +85,11 @@ class TextEditorEmbed {
 		this.#vm.$set(this.#data, 'content', content)
 		// Call setContent for file based Editor
 		this.#vm.$children[0]?.setContent?.(content)
+		return this
+	}
+
+	setShowOutline(value) {
+		this.#vm.$set(this.#data, 'showOutlineOutside', value)
 		return this
 	}
 
@@ -119,6 +131,7 @@ window.OCA.Text.createEditor = async function({
 	readOnly = false,
 
 	onUpdate = ({ markdown }) => {},
+	onOutlineToggle = (visible) => {},
 	onLinkClick = undefined,
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
@@ -128,6 +141,7 @@ window.OCA.Text.createEditor = async function({
 	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
 
 	const data = Vue.observable({
+		showOutlineOutside: false,
 		readOnly,
 		content,
 	})
@@ -161,12 +175,14 @@ window.OCA.Text.createEditor = async function({
 						mime: 'text/markdown',
 						active: true,
 						relativePath: filePath,
+						showOutlineOutside: data.showOutlineOutside,
 					},
 				})
 				: h(MarkdownContentEditor, {
 					props: {
 						content: data.content,
 						readOnly: data.readOnly,
+						showOutlineOutside: data.showOutlineOutside,
 					},
 				})
 		},
@@ -174,5 +190,6 @@ window.OCA.Text.createEditor = async function({
 	})
 	return new TextEditorEmbed(vm, data)
 		.onUpdate(onUpdate)
+		.onOutlineToggle(onOutlineToggle)
 		.render(el)
 }
