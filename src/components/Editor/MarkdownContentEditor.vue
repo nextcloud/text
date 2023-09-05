@@ -20,7 +20,8 @@
   -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :content-loaded="true"
+		:show-outline-outside="showOutlineOutside">
 		<MainContainer>
 			<MenuBar v-if="!readOnly" :autohide="false" />
 			<ReadonlyBar v-else />
@@ -69,6 +70,10 @@ export default {
 			required: true,
 		},
 		readOnly: {
+			type: Boolean,
+			default: false,
+		},
+		showOutlineOutside: {
 			type: Boolean,
 			default: false,
 		},
