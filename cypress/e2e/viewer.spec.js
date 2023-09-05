@@ -94,4 +94,33 @@ describe('Open test.md in viewer', function() {
 		cy.get('#viewer .modal-header button.header-close').click()
 		cy.get('#viewer').should('not.exist')
 	})
+
+	it('Can use tab keys for list in the viewer', function() {
+		// This used to break with the focus trap that the viewer modal has
+		cy.openFile('empty.md')
+
+		cy.getContent()
+			.type('- test{enter}')
+
+		// Cypress does not have native tab key support, though this seems to work
+		// for triggering the key handler of tiptap
+		// https://github.com/cypress-io/cypress/issues/311
+		cy.getContent()
+			.trigger('keydown', { keyCode: 9 })
+		cy.getContent()
+			.trigger('keyup', { keyCode: 9 })
+		cy.getContent()
+			.type('Nested list')
+
+		cy.getContent().find('ul li').should('contain', 'test')
+		cy.getContent().find('ul li ul li').should('contain', 'Nested list')
+
+		cy.getContent()
+			.trigger('keydown', { keyCode: 9, shiftKey: true })
+		cy.getContent()
+			.trigger('keyup', { keyCode: 9, shiftKey: true })
+
+		cy.getContent().find('ul li').eq(0).should('contain', 'test')
+		cy.getContent().find('ul li').eq(1).should('contain', 'Nested list')
+	})
 })

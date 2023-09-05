@@ -46,8 +46,6 @@ div.ProseMirror {
 	.checkbox-item {
 		display: flex;
 		align-items: start;
-		// Left-align with list item text
-		margin-left: -23px;
 
 		input[type=checkbox] {
 			display: none;
@@ -57,7 +55,6 @@ div.ProseMirror {
 			vertical-align: middle;
 			margin: 3px 6px 3px 2px;
 			border: 1px solid var(--color-text-maxcontrast);
-			position: relative;
 			display: block;
 			border-radius: var(--border-radius);
 			height: 14px;
@@ -82,7 +79,6 @@ div.ProseMirror {
 			display: block;
 			flex-grow: 1;
 			max-width: calc(100% - 28px);
-			margin-left: 9px;
 		}
 	}
 
