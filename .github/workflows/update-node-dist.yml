@@ -6,7 +6,6 @@ on:
     branches:
       # implemented since 28, once branched off, add your stable branch here
       - main
-      # - ci/node-dist-workflow
       # - stable28
 
 concurrency:
@@ -16,10 +15,13 @@ concurrency:
 jobs:
   update-node-dist:
     runs-on: ubuntu-latest
+    environment: update-node-dist
 
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Read package.json node and npm engines version
         uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.1
