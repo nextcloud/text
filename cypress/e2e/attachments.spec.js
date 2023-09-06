@@ -149,6 +149,8 @@ describe('Test all attachment insertion methods', () => {
 	before(() => {
 		initUserAndFiles(user, 'test.md', 'empty.md')
 
+		cy.createFolder('.hidden')
+
 		cy.createFolder('sub')
 		cy.createFolder('sub/a')
 		cy.createFolder('sub/b')
@@ -162,17 +164,19 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	beforeEach(() => {
+		cy.showHiddenFiles()
 		cy.login(currentUser)
-		cy.visit('/apps/files')
 	})
 
 	it('See test files in the list and display hidden files', () => {
+		cy.visit('/apps/files')
 		cy.getFile('test.md')
 		cy.getFile('github.png')
-		cy.showHiddenFiles()
+		cy.getFile('.hidden')
 	})
 
 	it('Insert an image file from Files', () => {
+		cy.visit('/apps/files')
 		cy.openFile('test.md')
 
 		clickOnAttachmentAction(ACTION_INSERT_FROM_FILES)
@@ -227,6 +231,7 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Upload a local image file (table.png)', () => {
+		cy.visit('/apps/files')
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
@@ -244,6 +249,7 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Upload a local media file (file.txt.gz)', () => {
+		cy.visit('/apps/files')
 		cy.openFile('test.md')
 		// in this case we almost could just attach the file to the input
 		// BUT we still need to click on the action because otherwise the command
@@ -265,7 +271,7 @@ describe('Test all attachment insertion methods', () => {
 		const filename = randHash() + '.md'
 
 		cy.uploadFile('empty.md', 'text/markdown', filename)
-		cy.reloadFileList()
+		cy.visit('/apps/files')
 		cy.openFile(filename)
 
 		const assertImage = index => {
@@ -292,7 +298,7 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('test if attachment files are in the attachment folder', () => {
-		// check we stored the attachment names/ids
+		cy.visit('/apps/files')
 
 		cy.getFile('test.md')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
@@ -312,7 +318,7 @@ describe('Test all attachment insertion methods', () => {
 
 	it('test if attachment folder is moved with the markdown file', () => {
 		cy.createFolder('subFolder')
-		cy.reloadFileList()
+		cy.visit('/apps/files')
 		cy.moveFile('test.md', 'subFolder/test.md')
 		cy.openFolder('subFolder')
 		cy.getFile('test.md')
@@ -332,7 +338,7 @@ describe('Test all attachment insertion methods', () => {
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
-		cy.reloadFileList()
+		cy.visit('/apps/files')
 
 		cy.getFile('testCopied.md')
 			.should('exist')
@@ -353,6 +359,8 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
+		cy.copyFile('subFolder/test.md', 'testCopied.md')
+		cy.visit('/apps/files')
 		cy.getFile('testCopied.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
@@ -367,6 +375,7 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('[share] check everything behaves correctly on the share target user side', () => {
+		cy.visit('/apps/files')
 		// check the file list
 		cy.getFile('test.md')
 			.should('exist')
