@@ -45,6 +45,7 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 			return;
 		}
 
+		\OCP\Util::addInitScript('text', 'text-init');
 		\OCP\Util::addScript('text', 'text-files');
 
 		$this->initialStateProvider->provideState();

@@ -21,11 +21,10 @@
  */
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
-import { registerFileListHeaders, registerDavProperty } from '@nextcloud/files'
 import Vue from 'vue'
 
 import { logger } from './helpers/logger.js'
-import { registerFileActionFallback, FilesWorkspaceHeader } from './helpers/files.js'
+import { registerFileActionFallback } from './helpers/files.js'
 import FilesSettings from './views/FilesSettings.vue'
 import store from './store/index.js'
 
@@ -34,9 +33,6 @@ __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 const workspaceEnabled = loadState('text', 'workspace_enabled')
-
-registerDavProperty('nc:rich-workspace', { nc: 'http://nextcloud.org/ns' })
-registerDavProperty('nc:rich-workspace-file', { nc: 'http://nextcloud.org/ns' })
 
 document.addEventListener('DOMContentLoaded', () => {
 	if (typeof OCA.Viewer === 'undefined') {
@@ -59,9 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 })
-if (workspaceAvailable) {
-	registerFileListHeaders(FilesWorkspaceHeader)
-}
 
 OCA.Text = {
 	RichWorkspaceEnabled: workspaceEnabled,
