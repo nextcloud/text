@@ -10,7 +10,7 @@ on:
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ !github.head_ref }}
 
 env:
   APP_NAME: text
@@ -83,6 +83,23 @@ jobs:
         containers: [1, 2, 3, 4, 5, 6, 7, 8]
         php-versions: [ '8.1' ]
         server-versions: [ 'master' ]
+        is-pr:
+          - ${{ !!github.head_ref }}
+        exclude:
+          - is-pr: false
+            containers: 2
+          - is-pr: false
+            containers: 3
+          - is-pr: false
+            containers: 4
+          - is-pr: false
+            containers: 5
+          - is-pr: false
+            containers: 6
+          - is-pr: false
+            containers: 7
+          - is-pr: false
+            containers: 8
 
     name: runner ${{ matrix.containers }}
 
@@ -145,12 +162,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          record: true
-          parallel: true
+          record: '${{ !!matrix.is-pr }}' # only on pull requests
+          parallel: '${{ !!matrix.is-pr }}' # only on pull requests
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
           config: defaultCommandTimeout=10000,video=false
-          tag: ${{ github.event_name }}
+          tag: ${{ matrix.is-pr && github.event_name }}
         env:
           # https://github.com/cypress-io/github-action/issues/124
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
