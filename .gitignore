@@ -11,3 +11,6 @@ cypress/downloads/
 /tests/.phpunit.result.cache
 dist/
 webpack-stats.json
+
+# js folder, to be updated wth --force
+/js
