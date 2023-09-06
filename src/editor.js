@@ -131,6 +131,7 @@ window.OCA.Text.createEditor = async function({
 	readOnly = false,
 	autofocus = true,
 
+	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 	onOutlineToggle = (visible) => {},
 	onLinkClick = undefined,
@@ -191,6 +192,7 @@ window.OCA.Text.createEditor = async function({
 		store,
 	})
 	return new TextEditorEmbed(vm, data)
+		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
 		.onOutlineToggle(onOutlineToggle)
 		.render(el)
