@@ -22,10 +22,10 @@
 
 <template>
 	<div v-if="enabled"
-		v-show="file"
+		v-show="hasRichWorkspace"
 		id="rich-workspace"
-		:class="{'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
-		<SkeletonLoading v-if="!loaded || !ready" />
+		:class="{'focus': focus, 'dark': darkTheme }">
+		<RichTextReader v-if="!loaded || !ready" :content="content" class="rich-workspace--preview" />
 		<Editor v-if="file"
 			v-show="ready"
 			:key="file.path"
@@ -48,8 +48,8 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import SkeletonLoading from '../components/SkeletonLoading.vue'
 import getEditorInstance from '../components/Editor.singleton.js'
+import RichTextReader from '../components/RichTextReader.vue'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
@@ -57,10 +57,14 @@ const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') 
 export default {
 	name: 'RichWorkspace',
 	components: {
-		SkeletonLoading,
+		RichTextReader,
 		Editor: getEditorInstance,
 	},
 	props: {
+		content: {
+			type: String,
+			default: '',
+		},
 		path: {
 			type: String,
 			required: true,
@@ -68,6 +72,10 @@ export default {
 		active: {
 			type: Boolean,
 			default: true,
+		},
+		hasRichWorkspace: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -86,9 +94,6 @@ export default {
 	computed: {
 		shareToken() {
 			return document.getElementById('sharingToken')?.value
-		},
-		canCreate() {
-			return !!(this.folder && (this.folder.permissions & OC.PERMISSION_CREATE))
 		},
 	},
 	watch: {
@@ -134,9 +139,12 @@ export default {
 			})
 		},
 		getFileInfo(autofocus) {
-			this.loaded = false
-			this.autofocus = false
+			if (!this.hasRichWorkspace) {
+				return
+			}
 			this.ready = false
+			this.loaded = true
+			this.autofocus = false
 			const params = { path: this.path }
 			if (IS_PUBLIC) {
 				params.shareToken = this.shareToken
@@ -209,9 +217,11 @@ export default {
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
 		z-index: 61;
 		position: relative;
-		&.creatable {
-			min-height: 100px;
-		}
+		min-height: 30vh;
+	}
+
+	.rich-workspace--preview {
+		margin-top: 44px;
 	}
 
 	/* For subfolders, where there are no Recommendations */
