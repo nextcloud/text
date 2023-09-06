@@ -103,7 +103,7 @@ class TextEditorEmbed {
 	}
 
 	focus() {
-		this.#vm.$children[0].$editor.focus()
+		this.#vm.$children[0].$editor.commands.focus()
 	}
 
 	#registerDebug() {
@@ -129,6 +129,7 @@ window.OCA.Text.createEditor = async function({
 	content = '',
 
 	readOnly = false,
+	autofocus = true,
 
 	onUpdate = ({ markdown }) => {},
 	onOutlineToggle = (visible) => {},
@@ -175,6 +176,7 @@ window.OCA.Text.createEditor = async function({
 						mime: 'text/markdown',
 						active: true,
 						relativePath: filePath,
+						autofocus,
 						showOutlineOutside: data.showOutlineOutside,
 					},
 				})
