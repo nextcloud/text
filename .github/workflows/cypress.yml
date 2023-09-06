@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/server
-          ref: ${{ matrix.server-versions }}
+          ref: bugfix/noid/non-existing-node-parent # ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
