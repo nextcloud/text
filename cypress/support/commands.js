@@ -405,14 +405,24 @@ Cypress.Commands.add('configureText', (key, value) => {
 	})
 })
 
-Cypress.Commands.add('showHiddenFiles', () => {
-	cy.get('[data-cy-files-navigation-settings-button]')
-		.click()
-	cy.get('.app-settings__content').should('be.visible')
-	cy.intercept({ method: 'PUT', url: '**/show_hidden' }).as('showHidden')
-	cy.get('.app-settings__content').contains('Show hidden files').closest('label').click()
-	cy.wait('@showHidden')
-	cy.get('.modal-container__close').click()
+Cypress.Commands.add('showHiddenFiles', (value = true) => {
+	return cy.request('/csrftoken')
+		.then(({ body }) => body.token)
+		.then(requesttoken => {
+			return cy.request({
+				url: `${url}/index.php/apps/files/api/v1/config/show_hidden`,
+				method: 'put',
+				body: {
+					value,
+				},
+				auth,
+				headers: {
+					requesttoken,
+				},
+			}).then((response) => {
+				return cy.log(`Set hidden files to ${value}`, response.status)
+			})
+		})
 })
 
 Cypress.Commands.add('createDescription', (folder) => {
