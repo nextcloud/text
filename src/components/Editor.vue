@@ -660,6 +660,10 @@ export default {
 			this.emit('delete-image-node', imageUrl)
 		},
 
+		async save() {
+			await this.$syncService.save()
+		},
+
 		async close() {
 			if (this.currentSession && this.$syncService) {
 				try {

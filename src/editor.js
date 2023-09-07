@@ -88,6 +88,10 @@ class TextEditorEmbed {
 		return this
 	}
 
+	async save() {
+		return this.#vm.$children[0].save?.()
+	}
+
 	setShowOutline(value) {
 		this.#vm.$set(this.#data, 'showOutlineOutside', value)
 		return this
