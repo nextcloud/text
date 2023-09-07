@@ -113,7 +113,6 @@ OC.L10N.register(
     "No command found" : "Ez da komandorik aurkitu",
     "No user found" : "Ez da erabiltzailerik aurkitu",
     "No suggestion found" : "Ez da iradokizunik aurkitu",
-    "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ...",
     "Source code" : "Iturburu-kodea",
     "Diagram" : "Diagrama",
     "Both" : "Biak",
@@ -169,6 +168,7 @@ OC.L10N.register(
     "Remove Link" : "Kendu esteka",
     "Select file to link to" : "Hautatu fitxategia estekatzeko",
     "Source language" : "Jatorrizko hizkuntza",
-    "Target language" : "Helburuko hizkuntza"
+    "Target language" : "Helburuko hizkuntza",
+    "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");

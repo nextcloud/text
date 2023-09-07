@@ -119,7 +119,6 @@ OC.L10N.register(
     "No suggestion found" : "Inget förslag hittades",
     "Code block options" : "Kodblocksalternativ",
     "Code block language" : "Språk för kodblock",
-    "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ...",
     "Source code" : "Källkod",
     "Diagram" : "Diagram",
     "Both" : "Både",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Remove Link" : "Ta bort länk",
     "Select file to link to" : "Välj fil att länka till",
     "Source language" : "Källspråk",
-    "Target language" : "Målspråk"
+    "Target language" : "Målspråk",
+    "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");
