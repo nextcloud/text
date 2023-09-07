@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "Herhangi bir öneri bulunamadı",
     "Code block options" : "Kod engelleme ayarları",
     "Code block language" : "Kod engelleme dili",
-    "e.g. php, javascript, json, ..." : "php, javascript, json gibi...",
     "Source code" : "Kaynak kodu",
     "Diagram" : "Şema",
     "Both" : "İkisi de",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "Bağlantıyı kaldır",
     "Select file to link to" : "Bağlantı verilecek dosyayı seçin",
     "Source language" : "Kaynak dil",
-    "Target language" : "Hedef dil"
+    "Target language" : "Hedef dil",
+    "e.g. php, javascript, json, ..." : "php, javascript, json gibi..."
 },
 "nplurals=2; plural=(n > 1);");

@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "Kein Vorschlag gefunden",
     "Code block options" : "Codeblock-Optionen",
     "Code block language" : "Codeblock-Sprache",
-    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …",
     "Source code" : "Quelltext",
     "Diagram" : "Diagramm",
     "Both" : "Beide",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "Link entfernen",
     "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
     "Source language" : "Ausgangssprache",
-    "Target language" : "Zielsprache"
+    "Target language" : "Zielsprache",
+    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …"
 },
 "nplurals=2; plural=(n != 1);");

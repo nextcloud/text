@@ -118,7 +118,6 @@
     "No suggestion found" : "Није пронађен предлог",
     "Code block options" : "Опције блока кода",
     "Code block language" : "Језик блока кода",
-    "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ...",
     "Source code" : "Изворни кôд",
     "Diagram" : "Дијаграм",
     "Both" : "Оба",
@@ -174,6 +173,7 @@
     "Remove Link" : "Уклони линк",
     "Select file to link to" : "Одаберите фајл на који да направите везу",
     "Source language" : "Изворни језик",
-    "Target language" : "Циљни језик"
+    "Target language" : "Циљни језик",
+    "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ..."
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }
