@@ -125,6 +125,7 @@ window.OCA.Text.createEditor = async function({
 	// File mode is enabled by setting the fileId, otherwise content needs to be provided
 	fileId = undefined,
 	filePath = undefined,
+	shareToken = null,
 
 	content = '',
 
@@ -174,9 +175,10 @@ window.OCA.Text.createEditor = async function({
 				? h(Editor, {
 					props: {
 						fileId,
+						relativePath: filePath,
+						shareToken,
 						mime: 'text/markdown',
 						active: true,
-						relativePath: filePath,
 						autofocus,
 						showOutlineOutside: data.showOutlineOutside,
 					},
