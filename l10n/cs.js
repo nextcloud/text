@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "Nenalezeno žádné doporučení",
     "Code block options" : "Předvolby pro blok kódu",
     "Code block language" : "Jazyk použitý v bloku kódu",
-    "e.g. php, javascript, json, ..." : "např. php, javascript, json, …",
     "Source code" : "Zdrojové kódy",
     "Diagram" : "Diagram",
     "Both" : "Obojí",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "Odebrat odkaz",
     "Select file to link to" : "Vyberte soubor na který odkázat",
     "Source language" : "Zdrojový jazyk",
-    "Target language" : "Cílový jazyk"
+    "Target language" : "Cílový jazyk",
+    "e.g. php, javascript, json, ..." : "např. php, javascript, json, …"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -105,7 +105,6 @@ OC.L10N.register(
     "No suggestion found" : "Ehdotusta ei löytynyt",
     "Code block options" : "Koodilohkon asetukset",
     "Code block language" : "Koodilohkon kieli",
-    "e.g. php, javascript, json, ..." : "esim. php, javascript, json...",
     "Source code" : "Lähdekoodi",
     "Diagram" : "Kaavio",
     "Both" : "Molemmat",
@@ -150,6 +149,7 @@ OC.L10N.register(
     "Remove Link" : "Poista linkki",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
     "Source language" : "Lähdekieli",
-    "Target language" : "Kohdekieli"
+    "Target language" : "Kohdekieli",
+    "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

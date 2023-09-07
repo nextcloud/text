@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "No s'ha trobat cap suggeriment",
     "Code block options" : "Opcions de bloc de codi",
     "Code block language" : "Llengua del bloc de codi",
-    "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…",
     "Source code" : "Codi font",
     "Diagram" : "Diagrama",
     "Both" : "Tots dos",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "Suprimeix l'enllaç",
     "Select file to link to" : "Seleccioneu el fitxer que voleu enllaçar",
     "Source language" : "Llengua d'origen",
-    "Target language" : "Llengua de destinació"
+    "Target language" : "Llengua de destinació",
+    "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…"
 },
 "nplurals=2; plural=(n != 1);");

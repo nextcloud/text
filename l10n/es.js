@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "No se encontró sugerencia",
     "Code block options" : "Opciones de bloque de código",
     "Code block language" : "Lenguaje del bloque de código",
-    "e.g. php, javascript, json, ..." : "p.ej. php, javascript, json, ...",
     "Source code" : "Codigo Fuente",
     "Diagram" : "Diagrama",
     "Both" : "Ambos",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "Eliminar Enlace",
     "Select file to link to" : "Selecciona un archivo para enlazar",
     "Source language" : "Idioma fuente",
-    "Target language" : "Idioma destino"
+    "Target language" : "Idioma destino",
+    "e.g. php, javascript, json, ..." : "p.ej. php, javascript, json, ..."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
