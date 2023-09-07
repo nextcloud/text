@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "找不到建議",
     "Code block options" : "程式碼區塊選項",
     "Code block language" : "程式碼區塊語言",
-    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等",
     "Source code" : "原始碼",
     "Diagram" : "圖表",
     "Both" : "皆是",
@@ -176,6 +175,7 @@ OC.L10N.register(
     "Remove Link" : "移除連結",
     "Select file to link to" : "選擇要連結的檔案",
     "Source language" : "本源語言",
-    "Target language" : "目標語言"
+    "Target language" : "目標語言",
+    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },
 "nplurals=1; plural=0;");

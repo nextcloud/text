@@ -118,7 +118,6 @@
     "No suggestion found" : "No suggestion found",
     "Code block options" : "Code block options",
     "Code block language" : "Code block language",
-    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ...",
     "Source code" : "کد منبع",
     "Diagram" : "Diagram",
     "Both" : "Both",
@@ -174,6 +173,7 @@
     "Remove Link" : "Remove Link",
     "Select file to link to" : "Select file to link to",
     "Source language" : "Source language",
-    "Target language" : "Target language"
+    "Target language" : "Target language",
+    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
