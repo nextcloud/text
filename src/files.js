@@ -21,11 +21,10 @@
  */
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
-import { registerFileListHeaders } from '@nextcloud/files'
 import Vue from 'vue'
 
 import { logger } from './helpers/logger.js'
-import { registerFileActionFallback, FilesWorkspaceHeader } from './helpers/files.js'
+import { registerFileActionFallback } from './helpers/files.js'
 import FilesSettings from './views/FilesSettings.vue'
 import store from './store/index.js'
 
@@ -56,9 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 })
-if (workspaceAvailable) {
-	registerFileListHeaders(FilesWorkspaceHeader)
-}
 
 OCA.Text = {
 	RichWorkspaceEnabled: workspaceEnabled,

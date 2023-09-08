@@ -187,6 +187,7 @@ export const FilesWorkspaceHeader = new Header({
 
 	render(el, folder, view) {
 		addMenuRichWorkspace()
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
 
 		import('vue').then((module) => {
 			el.id = 'files-workspace-wrapper'
@@ -201,6 +202,8 @@ export const FilesWorkspaceHeader = new Header({
 			vm = new View({
 				propsData: {
 					path: folder.path,
+					hasRichWorkspace,
+					content: folder.attributes['rich-workspace'],
 				},
 				store,
 			}).$mount(el)
@@ -208,7 +211,10 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	updated(folder, view) {
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
 		vm.path = folder.path
+		vm.hasRichWorkspace = hasRichWorkspace
+		vm.content = folder.attributes['rich-workspace']
 	},
 })
 

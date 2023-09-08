@@ -32,7 +32,7 @@ const variants = [
 variants.forEach(function({ fixture, mime }) {
 	const fileName = fixture
 	describe(`${mime} (${fileName})`, function() {
-		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
+		const getWrapper = () => cy.get('.viewer__content .text-editor__wrapper.has-conflicts')
 
 		before(() => {
 			initUserAndFiles(user, fileName)
@@ -56,13 +56,13 @@ variants.forEach(function({ fixture, mime }) {
 			cy.openFile(fileName)
 			cy.get('.text-editor .document-status .icon-error')
 			getWrapper()
-				.get('#read-only-editor')
+				.find('#read-only-editor')
 				.should('contain', 'Hello world')
 			getWrapper()
-				.get('.text-editor__main')
+				.find('.text-editor__main')
 				.should('contain', 'Hello world')
 			getWrapper()
-				.get('.text-editor__main')
+				.find('.text-editor__main')
 				.should('contain', 'cruel conflicting')
 		})
 
@@ -81,7 +81,6 @@ variants.forEach(function({ fixture, mime }) {
 			cy.get('[data-cy="resolveThisVersion"]').click()
 
 			getWrapper()
-				.get('#read-only-editor')
 				.should('not.exist')
 
 			cy.get('[data-cy="resolveThisVersion"]')
@@ -105,12 +104,10 @@ variants.forEach(function({ fixture, mime }) {
 			cy.get('#viewer').should('not.exist')
 			cy.openFile(fileName)
 
-			getWrapper()
-				.get('[data-cy="resolveServerVersion"]')
+			cy.get('[data-cy="resolveServerVersion"]')
 				.click()
 
 			getWrapper()
-				.get('#read-only-editor')
 				.should('not.exist')
 			cy.get('[data-cy="resolveThisVersion"]')
 				.should('not.exist')
