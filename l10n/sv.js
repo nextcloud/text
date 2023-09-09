@@ -119,6 +119,7 @@ OC.L10N.register(
     "No suggestion found" : "Inget förslag hittades",
     "Code block options" : "Kodblocksalternativ",
     "Code block language" : "Språk för kodblock",
+    "e.g. php, javascript, json, …" : "t.ex. php, javascript, json, ...",
     "Source code" : "Källkod",
     "Diagram" : "Diagram",
     "Both" : "Både",
