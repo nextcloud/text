@@ -46,6 +46,10 @@ class TextEditorEmbed {
 		return this
 	}
 
+	#getEditorComponent() {
+		return this.#vm.$children[0]
+	}
+
 	onLoaded(onLoadedCallback = () => {}) {
 		this.#vm.$on('ready', () => {
 			onLoadedCallback()
@@ -84,12 +88,12 @@ class TextEditorEmbed {
 		// Update reactive prop for MarkdownContentEditor
 		this.#vm.$set(this.#data, 'content', content)
 		// Call setContent for file based Editor
-		this.#vm.$children[0]?.setContent?.(content)
+		this.#getEditorComponent()?.setContent?.(content)
 		return this
 	}
 
 	async save() {
-		return this.#vm.$children[0].save?.()
+		return this.#getEditorComponent().save?.()
 	}
 
 	setShowOutline(value) {
@@ -103,11 +107,11 @@ class TextEditorEmbed {
 	}
 
 	insertAtCursor(content) {
-		this.#vm.$children[0].$editor.chain().insertContent(content).focus().run()
+		this.#getEditorComponent().$editor.chain().insertContent(content).focus().run()
 	}
 
 	focus() {
-		this.#vm.$children[0].$editor.commands.focus()
+		this.#getEditorComponent().$editor.commands.focus()
 	}
 
 	#registerDebug() {
