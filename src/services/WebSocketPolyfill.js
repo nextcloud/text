@@ -80,6 +80,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		}
 
 		send(...data) {
+			// Useful for debugging what steps are sent and how they were initiated
+			// data.forEach(logStep)
+
 			this.#queue.push(...data)
 			let outbox = []
 			syncService.sendSteps(() => {

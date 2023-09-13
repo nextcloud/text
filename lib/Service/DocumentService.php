@@ -36,6 +36,7 @@ use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
+use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Constants;
 use OCP\DB\Exception;
@@ -217,11 +218,9 @@ class DocumentService {
 		$getStepsSinceVersion = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
-			// Steps are base64 encoded messages of the yjs protocols
-			// https://github.com/yjs/y-protocols
-			// Base64 encoded values smaller than "AAE" belong to sync step 1 messages.
-			// These messages query other participants for their current state.
-			if ($step < "AAE") {
+			$message = YjsMessage::fromBase64($step);
+			// Filter out query steps as they would just trigger clients to send their steps again
+			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
 				array_push($querySteps, $step);
 			} else {
 				array_push($stepsToInsert, $step);
@@ -235,8 +234,9 @@ class DocumentService {
 		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
 		$stepsToReturn = [];
 		foreach ($allSteps as $step) {
-			if ($step < "AAQ") {
-				array_push($stepsToReturn, $step);
+			$message = YjsMessage::fromBase64($step->getData());
+			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_UPDATE) {
+				$stepsToReturn[] = $step;
 			}
 		}
 		return [
@@ -284,6 +284,7 @@ class DocumentService {
 		}
 	}
 
+	/** @return Step[] */
 	public function getSteps(int $documentId, int $lastVersion): array {
 		if ($lastVersion === $this->cache->get('document-version-' . $documentId)) {
 			return [];
