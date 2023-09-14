@@ -171,7 +171,7 @@ describe('Workspace', function() {
 
 		cy.get('.file-picker__main .file-picker__file-name[title="sub-folder"]').click()
 		cy.get('.file-picker__main .file-picker__file-name[title="alpha"]').click()
-		cy.get('.file-picker__main .file-picker__file-name[title="test.md"]').click()
+		cy.get('.file-picker__main .file-picker__file-name[title="test"]').click()
 		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 		cy.getEditor()

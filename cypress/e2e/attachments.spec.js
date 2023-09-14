@@ -182,7 +182,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.log('Go to sub folder (a)')
 				cy.get('.file-picker__main .file-picker__file-name[title="sub"]').click()
 				cy.get('.file-picker__main .file-picker__file-name[title="a"]').click()
-				cy.get('.file-picker__main .file-picker__file-name[title="a.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="a"]').click()
 
 				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
@@ -198,7 +198,7 @@ describe('Test all attachment insertion methods', () => {
 
 				cy.log('Go to sub folder (b)')
 				cy.get('.file-picker__main .file-picker__file-name[title="b"]').click()
-				cy.get('.file-picker__main .file-picker__file-name[title="b.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="b"]').click()
 
 				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
@@ -215,7 +215,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.get('.file-picker__main .breadcrumb__crumbs a').first().click()
 
 				cy.log('Select the file in the filepicker')
-				cy.get('.file-picker__main .file-picker__file-name[title="github.png"]').click()
+				cy.get('.file-picker__main .file-picker__file-name[title="github"]').click()
 				cy.log('Click OK in the filepicker')
 				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
