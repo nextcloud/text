@@ -140,8 +140,9 @@ describe('test link marks', function() {
 		describe('link to local file', function() {
 			// Helper to reduce duplicated code, checking inserting with and without selected text
 			const checkLinkFile = (filename, text) => {
+				const fileDisplayName = filename.replace(/\.[^/.]+$/, '')
 				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
-				cy.get(`.file-picker__main .file-picker__file-name[title="${filename}"]`).click()
+				cy.get(`.file-picker__main .file-picker__file-name[title="${fileDisplayName}"]`).click()
 				cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 				return cy.getContent()
