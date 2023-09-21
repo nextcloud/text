@@ -21,7 +21,10 @@
   -->
 
 <template>
-	<div v-if="enabled" id="rich-workspace" :class="{'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
+	<div v-if="enabled"
+		v-show="file"
+		id="rich-workspace"
+		:class="{'focus': focus, 'dark': darkTheme, 'creatable': canCreate }">
 		<SkeletonLoading v-if="!loaded || !ready" />
 		<Editor v-if="file"
 			v-show="ready"
