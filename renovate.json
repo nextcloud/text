@@ -33,12 +33,6 @@
       ]
     },
     {
-      "groupName": "nextcloud",
-      "matchPackagePrefixes": [
-        "@nextcloud/"
-      ]
-    },
-    {
       "groupName": "cypress",
       "matchPackageNames": [
         "cypress",
