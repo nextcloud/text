@@ -87,7 +87,7 @@
     "debounce": "^1.2.1",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.8.0",
-    "lib0": "^0.2.82",
+    "lib0": "^0.2.86",
     "lowlight": "^2.9.0",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
@@ -105,7 +105,7 @@
     "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2",
     "y-websocket": "^1.5.0",
-    "yjs": "^13.6.7"
+    "yjs": "^13.6.8"
   },
   "engines": {
     "node": "^16.0.0",
