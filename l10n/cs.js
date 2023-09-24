@@ -120,6 +120,7 @@ OC.L10N.register(
     "No suggestion found" : "Nenalezeno žádné doporučení",
     "Code block options" : "Předvolby pro blok kódu",
     "Code block language" : "Jazyk použitý v bloku kódu",
+    "e.g. php, javascript, json, …" : "např. php, javascript, json, …",
     "Source code" : "Zdrojové kódy",
     "Diagram" : "Diagram",
     "Both" : "Obojí",
