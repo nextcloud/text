@@ -22,6 +22,14 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
+export class ConnectionClosedError extends Error {
+
+	constructor(message = 'Close has already been called on the connection', ...rest) {
+		super(message, ...rest)
+	}
+
+}
+
 class SessionApi {
 
 	#options
@@ -50,6 +58,7 @@ class SessionApi {
 export class Connection {
 
 	#content
+	#closed
 	#documentState
 	#document
 	#session
@@ -66,6 +75,7 @@ export class Connection {
 		this.#content = content
 		this.#documentState = documentState
 		this.#options = options
+		this.closed = false
 	}
 
 	get document() {
@@ -95,7 +105,7 @@ export class Connection {
 	}
 
 	sync({ version, autosaveContent, documentState, force, manualSave }) {
-		return axios.post(this.#url('session/sync'), {
+		return this.#post(this.#url('session/sync'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,
@@ -107,7 +117,7 @@ export class Connection {
 	}
 
 	push({ steps, version, awareness }) {
-		return axios.post(this.#url('session/push'), {
+		return this.#post(this.#url('session/push'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			steps,
@@ -118,7 +128,7 @@ export class Connection {
 
 	// TODO: maybe return a new connection here so connections have immutable state
 	update(guestName) {
-		return axios.post(this.#url('session'), {
+		return this.#post(this.#url('session'), {
 			...this.#defaultParams,
 			guestName,
 		}).then(({ data }) => {
@@ -134,7 +144,7 @@ export class Connection {
 			+ '&sessionId=' + encodeURIComponent(this.#session.id)
 			+ '&sessionToken=' + encodeURIComponent(this.#session.token)
 			+ '&shareToken=' + encodeURIComponent(this.#options.shareToken || '')
-		return axios.post(url, formData, {
+		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
 			},
@@ -142,7 +152,7 @@ export class Connection {
 	}
 
 	insertAttachmentFile(filePath) {
-		return axios.post(_endpointUrl('attachment/filepath'), {
+		return this.#post(_endpointUrl('attachment/filepath'), {
 			documentId: this.#document.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
@@ -151,7 +161,16 @@ export class Connection {
 	}
 
 	close() {
-		return axios.post(this.#url('session/close'), this.#defaultParams)
+		const promise = this.#post(this.#url('session/close'), this.#defaultParams)
+		this.closed = true
+		return promise
+	}
+
+	#post(...args) {
+		if (this.closed) {
+			return Promise.reject(new ConnectionClosedError())
+		}
+		return axios.post(...args)
 	}
 
 	#url(endpoint) {
