@@ -124,6 +124,7 @@ OC.L10N.register(
     "Source code" : "Code source",
     "Diagram" : "Diagramme",
     "Both" : "Les deux",
+    "Mermaid documentation" : "Documentation Mermaid",
     "Link to this section" : "Lier vers cette section",
     "Delete this attachment" : "Supprimer cette pièce jointe",
     "Delete this image" : "Supprimer cette image",
