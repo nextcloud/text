@@ -152,16 +152,16 @@ class SyncService {
 		return new Promise((resolve, reject) => {
 			this.#sendIntervalId = setInterval(() => {
 				if (this.connection && !this.sending) {
-					clearInterval(this.#sendIntervalId)
-					this.#sendIntervalId = null
-					this._sendSteps(getSendable).then(resolve).catch(reject)
+					this.sendStepsNow(getSendable).then(resolve).catch(reject)
 				}
 			}, 200)
 		})
 	}
 
-	_sendSteps(getSendable) {
+	sendStepsNow(getSendable) {
 		this.sending = true
+		clearInterval(this.#sendIntervalId)
+		this.#sendIntervalId = null
 		const data = getSendable()
 		if (data.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
