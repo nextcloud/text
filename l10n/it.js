@@ -61,6 +61,7 @@ OC.L10N.register(
     "Syntax" : "Sintassi",
     "Keyboard shortcuts" : "Scorciatoie da tastiera",
     "New paragraph" : "Nuovo paragrafo",
+    "Enter" : "Invio",
     "Hard line break" : "Interruzione di riga",
     "followed by" : "seguito da",
     "Backspace" : "Backspace",
