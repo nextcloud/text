@@ -80,6 +80,7 @@ OC.L10N.register(
     "Detect language" : "检测语言",
     "Translation failed" : "翻译失败",
     "Source code" : "源代码",
+    "Both" : "都是",
     "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区",
     "Hide outline" : "隐藏大纲",
