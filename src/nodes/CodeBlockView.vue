@@ -6,7 +6,7 @@
 					<NcActionInput :label="t('text', 'Code block language')"
 						:value="type"
 						:show-trailing-button="false"
-						:placeholder="t('text', 'e.g. php, javascript, json …')"
+						:placeholder="t('text', 'e.g. php, javascript, json…')"
 						@input="updateLanguage">
 						<template #icon>
 							<MarkerIcon :size="20" />
