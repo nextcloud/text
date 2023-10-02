@@ -21,7 +21,8 @@
 
 <template>
 	<Wrapper :content-loaded="true"
-		:show-outline-outside="showOutlineOutside">
+		:show-outline-outside="showOutlineOutside"
+		@outline-toggled="outlineToggled">
 		<MainContainer>
 			<MenuBar v-if="!readOnly" :autohide="false" />
 			<ReadonlyBar v-else />
@@ -137,6 +138,11 @@ export default {
 
 		updateContent() {
 			this.$editor.commands.setContent(this.htmlContent, true)
+		},
+
+		outlineToggled(visible) {
+			this.$emit('outline-toggled', visible)
+			this.$parent.$emit('outline-toggled', visible)
 		},
 	},
 }
