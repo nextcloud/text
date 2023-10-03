@@ -132,6 +132,7 @@ OC.L10N.register(
     "Formatting" : "Formátovanie",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
+    "Add description" : "Pridať popis",
     "Front matter" : "Predná strana",
     "Document save status" : "Stav uloženia dokumentu",
     "Update Link" : "Aktualizovať odkaz",
