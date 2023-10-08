@@ -37,7 +37,7 @@ OC.L10N.register(
     "guest" : "hosť",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
-    "Active people" : "Aktívny ľudia",
+    "Active people" : "Aktívni ľudia",
     "Last saved" : "Naposledy uložené",
     "Offline" : "Offline",
     "Saving …" : "Ukladám ...",
