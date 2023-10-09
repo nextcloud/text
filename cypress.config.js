@@ -1,29 +1,55 @@
+// Importing the defineConfig function from the 'cypress' package.
 const { defineConfig } = require('cypress')
 
+// Exporting a configuration object for Cypress tests.
 module.exports = defineConfig({
-	projectId: 'hx9gqy',
-	viewportWidth: 1280,
-	viewportHeight: 900,
-	e2e: {
-		setupNodeEvents(on, config) {
-			const browserify = require('@cypress/browserify-preprocessor')
-			const webpack = require('@cypress/webpack-preprocessor')
-			const webpackOptions = require('@nextcloud/webpack-vue-config')
+  // Unique identifier for the project.
+  projectId: 'hx9gqy',
 
-			webpackOptions.module.rules.push({ test: /\.md/, type: 'asset/source' })
+  // Default viewport width for the tests.
+  viewportWidth: 1280,
 
-			on('file:preprocessor', browserify())
-			on('file:preprocessor', webpack({ webpackOptions }))
-		},
+  // Default viewport height for the tests.
+  viewportHeight: 900,
 
-		baseUrl: 'http://localhost:8081/index.php/',
-		experimentalSessionAndOrigin: true,
-		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-	},
-	retries: {
-		runMode: 2,
-		// do not retry in `cypress open`
-		openMode: 0,
-	},
-	"numTestsKeptInMemory": 5,
+  // Configuration specific to end-to-end (E2E) tests.
+  e2e: {
+
+    // Setting up custom Node events.
+    setupNodeEvents(on, config) {
+      const browserify = require('@cypress/browserify-preprocessor')
+      const webpack = require('@cypress/webpack-preprocessor')
+      const webpackOptions = require('@nextcloud/webpack-vue-config')
+
+      // Adding a rule to handle Markdown files.
+      webpackOptions.module.rules.push({ test: /\.md/, type: 'asset/source' })
+
+      // Applying Browserify preprocessor.
+      on('file:preprocessor', browserify())
+
+      // Applying Webpack preprocessor with specified options.
+      on('file:preprocessor', webpack({ webpackOptions }))
+    },
+
+    // Base URL for the application under test.
+    baseUrl: 'http://localhost:8081/index.php/',
+
+    // Enabling experimental session and origin features.
+    experimentalSessionAndOrigin: true,
+
+    // Pattern for locating test files (JavaScript and TypeScript).
+    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+  },
+
+  // Configuration for test retries.
+  retries: {
+    // Number of retries in run mode.
+    runMode: 2,
+
+    // Disabling retries in 'cypress open' mode.
+    openMode: 0,
+  },
+
+  // Number of tests to keep in memory.
+  "numTestsKeptInMemory": 5,
 })
