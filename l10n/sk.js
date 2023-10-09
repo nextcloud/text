@@ -139,6 +139,8 @@ OC.L10N.register(
     "Add Link" : "Pridať odkaz",
     "Link file" : "Súbor pre odkaz",
     "Remove Link" : "Odstrániť odkaz",
-    "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz"
+    "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
+    "Source language" : "Zdrojový jazyk prekladu",
+    "Target language" : "Cieľový jazyk"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
