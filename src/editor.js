@@ -139,6 +139,10 @@ window.OCA.Text.createEditor = async function({
 
 	readOnly = false,
 	autofocus = true,
+	readonlyBar = {
+		component: null,
+		props: null,
+	},
 
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
@@ -179,6 +183,16 @@ window.OCA.Text.createEditor = async function({
 			return data
 		},
 		render: h => {
+			const scopedSlots = readonlyBar?.component
+				? {
+					readonlyBar: () => {
+						return h(readonlyBar.component, {
+							props: readonlyBar.props,
+						})
+					},
+				}
+				: {}
+
 			return fileId
 				? h(Editor, {
 					props: {
@@ -190,6 +204,7 @@ window.OCA.Text.createEditor = async function({
 						autofocus,
 						showOutlineOutside: data.showOutlineOutside,
 					},
+					scopedSlots,
 				})
 				: h(MarkdownContentEditor, {
 					props: {
@@ -197,6 +212,7 @@ window.OCA.Text.createEditor = async function({
 						readOnly: data.readOnly,
 						showOutlineOutside: data.showOutlineOutside,
 					},
+					scopedSlots,
 				})
 		},
 		store,
