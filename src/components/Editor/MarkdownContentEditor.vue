@@ -25,7 +25,9 @@
 		@outline-toggled="outlineToggled">
 		<MainContainer>
 			<MenuBar v-if="!readOnly" :autohide="false" />
-			<ReadonlyBar v-else />
+			<slot v-else name="readonlyBar">
+				<ReadonlyBar />
+			</slot>
 			<ContentContainer />
 		</MainContainer>
 	</Wrapper>
