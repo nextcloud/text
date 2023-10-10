@@ -42,13 +42,15 @@
 			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
 				<div v-if="readOnly" class="text-editor--readonly-bar">
-					<ReadonlyBar>
-						<Status :document="document"
-							:dirty="dirty"
-							:sessions="filteredSessions"
-							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue" />
-					</ReadonlyBar>
+					<slot name="readonlyBar">
+						<ReadonlyBar>
+							<Status :document="document"
+								:dirty="dirty"
+								:sessions="filteredSessions"
+								:sync-error="syncError"
+								:has-connection-issue="hasConnectionIssue" />
+						</ReadonlyBar>
+					</slot>
 				</div>
 				<!-- Rich Menu -->
 				<template v-else>
@@ -647,6 +649,10 @@ export default {
 
 		onDeleteImageNode(imageUrl) {
 			this.emit('delete-image-node', imageUrl)
+		},
+
+		async save() {
+			await this.$syncService.save()
 		},
 
 		async close() {

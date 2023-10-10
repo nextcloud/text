@@ -20,10 +20,14 @@
   -->
 
 <template>
-	<Wrapper :content-loaded="true">
+	<Wrapper :content-loaded="true"
+		:show-outline-outside="showOutlineOutside"
+		@outline-toggled="outlineToggled">
 		<MainContainer>
 			<MenuBar v-if="!readOnly" :autohide="false" />
-			<ReadonlyBar v-else />
+			<slot v-else name="readonlyBar">
+				<ReadonlyBar />
+			</slot>
 			<ContentContainer />
 		</MainContainer>
 	</Wrapper>
@@ -33,7 +37,6 @@
 import Wrapper from './Wrapper.vue'
 import MainContainer from './MainContainer.vue'
 import MenuBar from '../Menu/MenuBar.vue'
-import { useOutlineActions, useOutlineStateMixin } from './Wrapper.provider.js'
 import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
@@ -47,7 +50,7 @@ import ContentContainer from './ContentContainer.vue'
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
-	mixins: [useOutlineStateMixin, useOutlineActions, useLinkClickHook],
+	mixins: [useLinkClickHook],
 	provide() {
 		const val = {}
 
@@ -72,15 +75,16 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		showOutlineOutside: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['update:content'],
 
 	computed: {
 		htmlContent() {
 			return this.renderHtml(this.content)
-		},
-		showOutline() {
-			return this.$outlineState.visible
 		},
 	},
 
@@ -136,6 +140,11 @@ export default {
 
 		updateContent() {
 			this.$editor.commands.setContent(this.htmlContent, true)
+		},
+
+		outlineToggled(visible) {
+			this.$emit('outline-toggled', visible)
+			this.$parent.$emit('outline-toggled', visible)
 		},
 	},
 }
