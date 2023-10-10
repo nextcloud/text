@@ -46,6 +46,10 @@ class TextEditorEmbed {
 		return this
 	}
 
+	#getEditorComponent() {
+		return this.#vm.$children[0]
+	}
+
 	onLoaded(onLoadedCallback = () => {}) {
 		this.#vm.$on('ready', () => {
 			onLoadedCallback()
@@ -56,6 +60,13 @@ class TextEditorEmbed {
 	onUpdate(onUpdateCallback = () => {}) {
 		this.#vm.$on('update:content', (content) => {
 			onUpdateCallback(content)
+		})
+		return this
+	}
+
+	onOutlineToggle(onOutlineToggleCallback = () => {}) {
+		this.#vm.$on('outline-toggled', (visible) => {
+			onOutlineToggleCallback(visible)
 		})
 		return this
 	}
@@ -77,7 +88,16 @@ class TextEditorEmbed {
 		// Update reactive prop for MarkdownContentEditor
 		this.#vm.$set(this.#data, 'content', content)
 		// Call setContent for file based Editor
-		this.#vm.$children[0]?.setContent?.(content)
+		this.#getEditorComponent()?.setContent?.(content)
+		return this
+	}
+
+	async save() {
+		return this.#getEditorComponent().save?.()
+	}
+
+	setShowOutline(value) {
+		this.#vm.$set(this.#data, 'showOutlineOutside', value)
 		return this
 	}
 
@@ -87,11 +107,11 @@ class TextEditorEmbed {
 	}
 
 	insertAtCursor(content) {
-		this.#vm.$children[0].$editor.chain().insertContent(content).focus().run()
+		this.#getEditorComponent().$editor.chain().insertContent(content).focus().run()
 	}
 
 	focus() {
-		this.#vm.$children[0].$editor.focus()
+		this.#getEditorComponent().$editor.commands.focus()
 	}
 
 	#registerDebug() {
@@ -113,12 +133,20 @@ window.OCA.Text.createEditor = async function({
 	// File mode is enabled by setting the fileId, otherwise content needs to be provided
 	fileId = undefined,
 	filePath = undefined,
+	shareToken = null,
 
 	content = '',
 
 	readOnly = false,
+	autofocus = true,
+	readonlyBar = {
+		component: null,
+		props: null,
+	},
 
+	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
+	onOutlineToggle = (visible) => {},
 	onLinkClick = undefined,
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
@@ -128,6 +156,7 @@ window.OCA.Text.createEditor = async function({
 	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
 
 	const data = Vue.observable({
+		showOutlineOutside: false,
 		readOnly,
 		content,
 	})
@@ -154,25 +183,43 @@ window.OCA.Text.createEditor = async function({
 			return data
 		},
 		render: h => {
+			const scopedSlots = readonlyBar?.component
+				? {
+					readonlyBar: () => {
+						return h(readonlyBar.component, {
+							props: readonlyBar.props,
+						})
+					},
+				}
+				: {}
+
 			return fileId
 				? h(Editor, {
 					props: {
 						fileId,
+						relativePath: filePath,
+						shareToken,
 						mime: 'text/markdown',
 						active: true,
-						relativePath: filePath,
+						autofocus,
+						showOutlineOutside: data.showOutlineOutside,
 					},
+					scopedSlots,
 				})
 				: h(MarkdownContentEditor, {
 					props: {
 						content: data.content,
 						readOnly: data.readOnly,
+						showOutlineOutside: data.showOutlineOutside,
 					},
+					scopedSlots,
 				})
 		},
 		store,
 	})
 	return new TextEditorEmbed(vm, data)
+		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
+		.onOutlineToggle(onOutlineToggle)
 		.render(el)
 }
