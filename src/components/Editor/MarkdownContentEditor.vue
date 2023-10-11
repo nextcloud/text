@@ -40,8 +40,10 @@ import MenuBar from '../Menu/MenuBar.vue'
 import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
-import { EDITOR, IS_RICH_EDITOR, useLinkClickHook } from '../Editor.provider.js'
+import { getCurrentUser } from '@nextcloud/auth'
+import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR, useLinkClickHook } from '../Editor.provider.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
 import { RichText } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
@@ -55,11 +57,14 @@ export default {
 		const val = {}
 
 		Object.defineProperties(val, {
-			[IS_RICH_EDITOR]: {
-				get: () => true,
-			},
 			[EDITOR]: {
 				get: () => this.$editor,
+			},
+			[ATTACHMENT_RESOLVER]: {
+				get: () => this.$attachmentResolver,
+			},
+			[IS_RICH_EDITOR]: {
+				get: () => true,
 			},
 		})
 
@@ -74,6 +79,14 @@ export default {
 		readOnly: {
 			type: Boolean,
 			default: false,
+		},
+		relativePath: {
+			type: String,
+			default: '',
+		},
+		shareToken: {
+			type: String,
+			default: null,
 		},
 		showOutlineOutside: {
 			type: Boolean,
@@ -97,6 +110,11 @@ export default {
 	created() {
 		this.$editor = this.createEditor()
 		this.$editor.setEditable(!this.readOnly)
+		this.$attachmentResolver = new AttachmentResolver({
+			currentDirectory: this.relativePath?.match(/.*\//),
+			user: getCurrentUser(),
+			shareToken: this.shareToken,
+		})
 	},
 
 	beforeDestroy() {
