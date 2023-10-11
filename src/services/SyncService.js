@@ -268,6 +268,7 @@ class SyncService {
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
+			throw e
 		}
 	}
 
