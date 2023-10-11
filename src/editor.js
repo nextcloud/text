@@ -27,6 +27,8 @@ import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provi
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
+const apiVersion = '1.0'
+
 Vue.prototype.t = window.t
 Vue.prototype.n = window.n
 Vue.prototype.OCA = window.OCA
@@ -126,6 +128,7 @@ class TextEditorEmbed {
 
 }
 
+window.OCA.Text.apiVersion = apiVersion
 window.OCA.Text.createEditor = async function({
 	// Element to render the editor to
 	el,
