@@ -212,6 +212,8 @@ window.OCA.Text.createEditor = async function({
 				: h(MarkdownContentEditor, {
 					props: {
 						content: data.content,
+						relativePath: filePath,
+						shareToken,
 						readOnly: data.readOnly,
 						showOutlineOutside: data.showOutlineOutside,
 					},
