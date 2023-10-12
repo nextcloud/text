@@ -84,7 +84,7 @@ jobs:
         php-versions: [ '8.1' ]
         server-versions: [ 'master' ]
         run-in-parallel:
-          - false # only for PRs: ${{ !!github.head_ref }}
+          - ${{ !!github.head_ref }}
         exclude:
           - run-in-parallel: false
             containers: 2
