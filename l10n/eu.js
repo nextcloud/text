@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "Ez da iradokizunik aurkitu",
     "Code block options" : "Kode-bloke aukerak",
     "Code block language" : "Kode-bloke lengoaia",
-    "e.g. php, javascript, json, …" : "adib. php, javascript, json, …",
     "Source code" : "Iturburu-kodea",
     "Diagram" : "Diagrama",
     "Both" : "Biak",
