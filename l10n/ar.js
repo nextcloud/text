@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "لا توجد أي مقترحات",
     "Code block options" : "خيارات الكتلة البرمجية",
     "Code block language" : "لغة الكتلة البرمجية",
-    "e.g. php, javascript, json, …" : "مثل php, javascript, json, …",
     "Source code" : "الكود المصدري",
     "Diagram" : "شكل",
     "Both" : "كلاهما",

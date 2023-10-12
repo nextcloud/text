@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "Herhangi bir öneri bulunamadı",
     "Code block options" : "Kod engelleme ayarları",
     "Code block language" : "Kod engelleme dili",
-    "e.g. php, javascript, json, …" : "php, javascript, json gibi…",
     "Source code" : "Kaynak kodu",
     "Diagram" : "Şema",
     "Both" : "İkisi de",
