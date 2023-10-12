@@ -62,7 +62,7 @@ describe('Front matter support', function() {
 		})
 	})
 
-	it.only('Show a code block in a public read only link', function() {
+	it('Show a code block in a public read only link', function() {
 		cy.shareFile('/codeblock.md')
 			.then((token) => {
 				cy.logout()
