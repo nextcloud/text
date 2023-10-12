@@ -120,7 +120,6 @@ OC.L10N.register(
     "No suggestion found" : "No suggestion found",
     "Code block options" : "Code block options",
     "Code block language" : "Code block language",
-    "e.g. php, javascript, json, …" : "e.g. php, javascript, json, …",
     "Source code" : "Source code",
     "Diagram" : "Diagram",
     "Both" : "Both",
