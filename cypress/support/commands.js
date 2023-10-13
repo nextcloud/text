@@ -387,8 +387,8 @@ Cypress.Commands.add('clearContent', () => {
 	cy.getContent()
 })
 
-Cypress.Commands.add('openWorkspace', () => {
-	cy.createDescription()
+Cypress.Commands.add('openWorkspace', (folder) => {
+	cy.createDescription(folder)
 	cy.get('#rich-workspace .editor__content').click({ force: true })
 	cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click({ force: true })
 
@@ -415,17 +415,9 @@ Cypress.Commands.add('showHiddenFiles', () => {
 	cy.get('.modal-container__close').click()
 })
 
-Cypress.Commands.add('createDescription', () => {
-	const url = '**/remote.php/dav/files/**'
-	cy.intercept({ method: 'PUT', url })
-		.as('addDescription')
-
-	cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
-	cy.get('.files-controls').first().within(() => {
-		cy.get('.button.new').click()
-		cy.get('.newFileMenu a.menuitem[data-action="rich-workspace-init"]').click()
-	})
-	cy.wait('@addDescription')
+Cypress.Commands.add('createDescription', (folder) => {
+	cy.uploadFile('empty.md', 'text/markdown', `${folder}/Readme.md`)
+	cy.visit(`apps/files?dir=/${encodeURIComponent(folder)}`)
 })
 
 Cypress.on(
