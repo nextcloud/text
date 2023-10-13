@@ -120,6 +120,7 @@ OC.L10N.register(
     "No suggestion found" : "Није пронађен предлог",
     "Code block options" : "Опције блока кода",
     "Code block language" : "Језик блока кода",
+    "e.g. php, javascript, json…" : "нпр. php, javascript, json…",
     "Source code" : "Изворни кôд",
     "Diagram" : "Дијаграм",
     "Both" : "Оба",
