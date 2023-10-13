@@ -120,6 +120,7 @@ OC.L10N.register(
     "No suggestion found" : "找不到建議",
     "Code block options" : "程式碼區塊選項",
     "Code block language" : "程式碼區塊語言",
+    "e.g. php, javascript, json…" : "例如 php、javascript、json……",
     "Source code" : "原始碼",
     "Diagram" : "圖表",
     "Both" : "皆是",
