@@ -85,21 +85,6 @@ jobs:
         server-versions: [ 'master' ]
         run-in-parallel:
           - false # only for PRs: ${{ !!github.head_ref }}
-        exclude:
-          - run-in-parallel: false
-            containers: 2
-          - run-in-parallel: false
-            containers: 3
-          - run-in-parallel: false
-            containers: 4
-          - run-in-parallel: false
-            containers: 5
-          - run-in-parallel: false
-            containers: 6
-          - run-in-parallel: false
-            containers: 7
-          - run-in-parallel: false
-            containers: 8
 
     name: runner ${{ matrix.containers }}
 
@@ -174,6 +159,9 @@ jobs:
           COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           npm_package_name: ${{ env.APP_NAME }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
+
 
       - name: Upload test failure screenshots
         uses: actions/upload-artifact@v2
