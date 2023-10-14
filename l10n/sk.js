@@ -51,6 +51,7 @@ OC.L10N.register(
     "Style" : "Štýl",
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Klávesové skratky",
+    "New paragraph" : "Nový odstavec",
     "Backspace" : "Spätná lomka",
     "Shift" : "Shift",
     "Bold" : "Tučné",
