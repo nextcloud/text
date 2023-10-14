@@ -23,7 +23,7 @@
 import { randUser } from '../utils/index.js'
 const user = randUser()
 
-describe.skip('Workspace', function() {
+describe('Workspace', function() {
 	let currentFolder
 
 	before(function() {
@@ -49,7 +49,6 @@ describe.skip('Workspace', function() {
 			.should('contain', 'Hello world')
 		cy.openFolder('subdirectory')
 		cy.get('#rich-workspace')
-			.get('.ProseMirror')
 			.should('not.exist')
 	})
 
@@ -66,7 +65,7 @@ describe.skip('Workspace', function() {
 	})
 
 	it('adds a Readme.md', function() {
-		cy.createDescription()
+		cy.createDescription(currentFolder)
 		openSidebar('Readme.md')
 		cy.get('#rich-workspace .text-editor .text-editor__wrapper')
 			.should('be.visible')
@@ -74,13 +73,14 @@ describe.skip('Workspace', function() {
 
 	it('formats text', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace()
+		cy.openWorkspace(currentFolder)
 		const buttons = [
 			['bold', 'strong'],
 			['italic', 'em'],
 			['underline', 'u'],
 			['strikethrough', 's'],
 		]
+		cy.getContent().click()
 		buttons.forEach(([button, tag]) => testButtonUnselected(button, tag))
 		cy.getContent().type('Format me{selectall}')
 		buttons.forEach(([button, tag]) => testButton(button, tag, 'Format me'))
@@ -88,7 +88,7 @@ describe.skip('Workspace', function() {
 
 	it('creates headings via submenu', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace().type('Heading')
+		cy.openWorkspace(currentFolder).type('Heading')
 		cy.getContent().type('{selectall}')
 		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
 			const actionName = `headings-${heading}`
@@ -109,7 +109,7 @@ describe.skip('Workspace', function() {
 
 	it('creates lists', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace().type('List me')
+		cy.openWorkspace(currentFolder).type('List me')
 		cy.getContent().type('{selectall}')
 		;[
 			['unordered-list', 'ul'],
@@ -128,7 +128,7 @@ describe.skip('Workspace', function() {
 
 	it('emoji picker', () => {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-		cy.openWorkspace()
+		cy.openWorkspace(currentFolder)
 			.type('# Let\'s smile together{enter}## ')
 
 		cy.getMenuEntry('emoji-picker')
@@ -150,7 +150,7 @@ describe.skip('Workspace', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${currentFolder}/sub-folder/alpha/test.md`)
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 
-		cy.openWorkspace()
+		cy.openWorkspace(currentFolder)
 			.type('link me')
 		cy.getContent()
 			.type('{selectall}')
@@ -160,7 +160,7 @@ describe.skip('Workspace', function() {
 
 		cy.get('.file-picker__main .file-picker__file-name[title="sub-folder"]').click()
 		cy.get('.file-picker__main .file-picker__file-name[title="alpha"]').click()
-		cy.get('.file-picker__main .file-picker__file-name[title="test.md"]').click()
+		cy.get('.file-picker__main .file-picker__file-name[title="test"]').click()
 		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 		cy.getEditor()
@@ -188,7 +188,7 @@ describe.skip('Workspace', function() {
 
 		beforeEach(function() {
 			cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
-			cy.openWorkspace().type('Callout')
+			cy.openWorkspace(currentFolder).type('Callout')
 		})
 		// eslint-disable-next-line cypress/no-async-tests
 		it('create callout', () => {
@@ -266,17 +266,17 @@ describe.skip('Workspace', function() {
 		})
 
 		it('click', () => {
-			cy.openWorkspace().click()
+			cy.openWorkspace(currentFolder).click()
 			checkContent()
 		})
 
 		it('enter', () => {
-			cy.openWorkspace().type('{enter}')
+			cy.openWorkspace(currentFolder).type('{enter}')
 			checkContent()
 		})
 
 		it('spacebar', () => {
-			cy.openWorkspace()
+			cy.openWorkspace(currentFolder)
 				.trigger('keyup', {
 					keyCode: 32,
 					which: 32,
