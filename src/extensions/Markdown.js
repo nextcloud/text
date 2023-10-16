@@ -93,8 +93,13 @@ const Markdown = Extension.create({
 						const doc = document.cloneNode(false)
 						const dom = doc.createElement('div')
 						if (shiftKey) {
-							// Treat single newlines as linebreaks and double newlines as paragraph breaks when pasting as plaintext
-							dom.innerHTML = '<p>' + str.replaceAll('\n', '<br />').replaceAll('<br /><br />', '</p><p>') + '</p>'
+							// Treat double newlines as paragraph breaks when pasting as plaintext
+							for (const part of str.split('\n\n')) {
+								const para = doc.createElement('p')
+								// Treat single newlines as linebreaks
+								para.innerText = part
+								dom.append(para)
+							}
 						} else {
 							dom.innerHTML = markdownit.render(str)
 						}
