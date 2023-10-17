@@ -41,8 +41,9 @@
 import { Extension, getExtensionField } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { MarkdownSerializer, defaultMarkdownSerializer } from '@tiptap/pm/markdown'
-import markdownit from '../markdownit/index.js'
 import { DOMParser } from '@tiptap/pm/model'
+import markdownit from '../markdownit/index.js'
+import transformPastedHTML from './transformPastedHTML.js'
 
 const Markdown = Extension.create({
 
@@ -106,6 +107,7 @@ const Markdown = Extension.create({
 
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
 					},
+					transformPastedHTML,
 				},
 			}),
 		]
