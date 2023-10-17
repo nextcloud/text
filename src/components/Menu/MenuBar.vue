@@ -25,8 +25,8 @@
 	<div :id="randomID"
 		class="text-menubar"
 		data-text-el="menubar"
-		role="menubar"
-		:aria-label="t('text', 'Formatting menu bar')"
+		role="region"
+		:aria-label="t('text', 'Editor actions')"
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--show': isVisible,
@@ -42,14 +42,26 @@
 
 		<div v-if="$isRichEditor"
 			ref="menubar"
-			role="group"
+			role="toolbar"
 			class="text-menubar__entries"
-			:aria-label="t('text', 'Editor actions')">
-			<ActionEntry v-for="actionEntry of visibleEntries"
-				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`" />
-			<ActionList key="text-action--remain"
-				:action-entry="hiddenEntries">
+			:aria-label="t('text', 'Formatting menu bar')"
+			@keydown.left.stop="handleToolbarNavigation"
+			@keydown.right.stop="handleToolbarNavigation">
+			<!-- The visible inline actions -->
+			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
+				v-for="actionEntry, index of visibleEntries"
+				ref="menuEntries"
+				:key="actionEntry.key"
+				:action-entry="actionEntry"
+				:can-be-focussed="activeMenuEntry === index"
+				@disabled="disableMenuEntry(actionEntry.key, $event)"
+				@click="activeMenuEntry = index" />
+
+			<!-- The remaining actions -->
+			<ActionList ref="remainingEntries"
+				:action-entry="hiddenEntries"
+				:can-be-focussed="activeMenuEntry === visibleEntries.length"
+				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
 					<NcActionButton @click="showTranslate">
 						<template #icon>
@@ -75,27 +87,28 @@ import { loadState } from '@nextcloud/initial-state'
 import debounce from 'debounce'
 import { useResizeObserver } from '@vueuse/core'
 
-import HelpModal from '../HelpModal.vue'
-import actionsFullEntries from './entries.js'
-import ActionEntry from './ActionEntry.js'
-import { MENU_ID } from './MenuBar.provider.js'
+import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
+import ActionSingle from './ActionSingle.vue'
+import CharacterCount from './CharacterCount.vue'
+import HelpModal from '../HelpModal.vue'
+import ToolBarLogic from './ToolBarLogic.js'
+import Translate from './../Modal/Translate.vue'
+import actionsFullEntries from './entries.js'
+import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
-import ActionFormattingHelp from './ActionFormattingHelp.vue'
-import CharacterCount from './CharacterCount.vue'
-import Translate from './../Modal/Translate.vue'
 
 export default {
 	name: 'MenuBar',
 	components: {
-		ActionEntry,
 		ActionFormattingHelp,
 		ActionList,
+		ActionSingle,
 		HelpModal,
 		NcActionSeparator,
 		NcActionButton,
@@ -103,6 +116,7 @@ export default {
 		TranslateVariant,
 		Translate,
 	},
+	extends: ToolBarLogic,
 	mixins: [
 		useEditorMixin,
 		useIsRichEditorMixin,
@@ -127,6 +141,7 @@ export default {
 	},
 	data() {
 		return {
+			entries: [...actionsFullEntries],
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
 			displayTranslate: false,
@@ -139,7 +154,7 @@ export default {
 	},
 	computed: {
 		visibleEntries() {
-			const list = [...actionsFullEntries].filter(({ priority }) => {
+			const list = this.entries.filter(({ priority }) => {
 				// if entry do not have priority, we assume it aways will be visible
 				return priority === undefined || priority <= this.iconsLimit
 			})
@@ -151,7 +166,7 @@ export default {
 				key: 'remain',
 				label: this.t('text', 'Remaining actions'),
 				icon: DotsHorizontal,
-				children: [...actionsFullEntries].filter(({ priority }) => {
+				children: this.entries.filter(({ priority }) => {
 					// reverse logic from visibleEntries
 					return priority !== undefined && priority > this.iconsLimit
 				}),
