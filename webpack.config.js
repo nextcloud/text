@@ -57,4 +57,13 @@ webpackConfig.resolve.fallback = {
 	buffer: require.resolve('buffer'),
 }
 
+webpackConfig.module.rules.push({
+	test: /\.svg$/,
+	use: [
+		{
+			loader: 'raw-loader'
+		},
+	],
+})
+
 module.exports = webpackConfig
