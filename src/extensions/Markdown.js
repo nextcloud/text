@@ -78,8 +78,13 @@ const Markdown = Extension.create({
 						const parser = DOMParser.fromSchema(view.state.schema)
 						const doc = document.cloneNode(false)
 						const dom = doc.createElement('div')
-						// Treat single newlines as linebreaks and double newlines as paragraph breaks when pasting as plaintext
-						dom.innerHTML = '<p>' + str.replaceAll('\n', '<br />').replaceAll('<br /><br />', '</p><p>') + '</p>'
+						// Treat double newlines as paragraph breaks when pasting as plaintext
+						for (const part of str.split('\n\n')) {
+							const para = doc.createElement('p')
+							// Treat single newlines as linebreaks
+							para.innerText = part
+							dom.append(para)
+						}
 
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
 					},
