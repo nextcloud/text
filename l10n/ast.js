@@ -7,6 +7,7 @@ OC.L10N.register(
     "The file was only partially uploaded" : "El ficheru xubióse parcialmente",
     "No file was uploaded" : "Nun se xubió nengún ficheru",
     "Saving …" : "Guardando…",
+    "Keyboard shortcuts" : "Atayos del tecláu",
     "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos",
     "Info" : "Información",
     "Source language" : "Llingua d'orixe",
