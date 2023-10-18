@@ -45,6 +45,7 @@ describe('Text PROPFIND extension ', function() {
 		// Android app relies on this to detect rich workspace availability
 		it('always adds rich workspace property', function() {
 			cy.uploadFile('empty.md', 'text/markdown', '/Readme.md')
+			cy.visit('/apps/files')
 			cy.propfindFolder('/')
 				.should('have.property', richWorkspace, '')
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
@@ -58,6 +59,7 @@ describe('Text PROPFIND extension ', function() {
 		// Android app relies on this when navigating nested folders
 		it('adds rich workspace property to nested folders', function() {
 			cy.createFolder('/workspace')
+			cy.visit('/apps/files')
 			cy.propfindFolder('/', 1)
 				.then(results => results.pop().propStat[0].properties)
 				.should('have.property', richWorkspace, '')
@@ -76,6 +78,7 @@ describe('Text PROPFIND extension ', function() {
 		})
 
 		it('does not return a rich workspace property', function() {
+			cy.visit('/apps/files')
 			cy.propfindFolder('/')
 				.should('not.have.property', richWorkspace)
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
