@@ -27,6 +27,7 @@ OC.L10N.register(
     "Show result" : "Eredmény mutatása",
     "Delete task" : "Feladat törlése",
     "Nextcloud Assistant result copied" : "Nextcloud Asszisztens eredmény másolva",
+    "Could not copy result to clipboard" : "Nem sikerült az eredményt a vágólapra másolni",
     "Use current version" : "Jelenlegi verzió használata",
     "Use the saved version" : "A mentett verzió használata",
     "Failed to load file" : "A fájl betöltése sikertelen",
