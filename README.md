@@ -28,7 +28,8 @@ occ config:app:set text workspace_available --value=0
 
 ## 🏗 Development setup
 
-Currently, this app requires the main branch of the [Viewer app](https://github.com/nextcloud/viewer).
+This app requires the main branch of the [Viewer app](https://github.com/nextcloud/viewer) to be installed and enabled.
+Follow its development setup and then continue here.
 
 1. ☁ Clone this app into the `apps` folder of your Nextcloud: `git clone https://github.com/nextcloud/text.git`
 2. 👩‍💻 In the folder of the app, run the command `make` to install dependencies and build the Javascript.
