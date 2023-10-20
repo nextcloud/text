@@ -45,6 +45,10 @@ const BaseActionEntry = {
 			type: Object,
 			required: true,
 		},
+		canBeFocussed: {
+			type: Boolean,
+			default: null,
+		},
 	},
 	data() {
 		return {
@@ -72,10 +76,20 @@ const BaseActionEntry = {
 			].join(' ')
 		},
 	},
+	watch: {
+		/** Handle tabindex for menu toolbar */
+		canBeFocussed() {
+			this.setTabIndexOnButton()
+		},
+	},
 	mounted() {
 		this.$_updateState = debounce(this.updateState.bind(this), 50)
 		this.$editor.on('update', this.$_updateState)
 		this.$editor.on('selectionUpdate', this.$_updateState)
+		// Initially emit the disabled event to set the state in parent
+		this.$emit('disabled', this.state.disabled)
+		// Initially set the tabindex
+		this.setTabIndexOnButton()
 	},
 	beforeDestroy() {
 		this.$editor.off('update', this.$_updateState)
@@ -84,6 +98,25 @@ const BaseActionEntry = {
 	methods: {
 		updateState() {
 			this.state = getActionState(this.actionEntry, this.$editor)
+			this.$emit('disabled', this.state.disabled)
+		},
+		setTabIndexOnButton() {
+			/** @type {HTMLButtonElement} */
+			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+
+			if (this.canBeFocussed === null) {
+				button.removeAttribute('tabindex')
+			} else {
+				button.setAttribute('tabindex', this.canBeFocussed ? '0' : '-1')
+			}
+		},
+		/**
+		 * Focus the inner button of this action
+		 */
+		focusButton() {
+			/** @type {HTMLButtonElement} */
+			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+			button.focus()
 		},
 	},
 }

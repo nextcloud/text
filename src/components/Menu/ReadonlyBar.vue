@@ -1,12 +1,16 @@
 <template>
 	<div data-text-el="readonly-bar" class="text-readonly-bar">
 		<div ref="menubar"
-			role="group"
+			role="toolbar"
 			class="text-readonly-bar__entries"
 			:aria-label="t('text', 'Editor actions')">
-			<ActionEntry v-for="actionEntry of visibleEntries"
-				v-bind="{ actionEntry }"
-				:key="`text-action--${actionEntry.key}`" />
+			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
+				v-for="actionEntry, index of visibleEntries"
+				ref="menuEntries"
+				:key="actionEntry.key"
+				:action-entry="actionEntry"
+				:can-be-focussed="activeMenuEntry === index"
+				@disabled="disableMenuEntry(actionEntry.key, $event)" />
 		</div>
 		<div class="text-menubar__slot">
 			<slot />
@@ -17,14 +21,21 @@
 <script>
 import { defineComponent } from 'vue'
 import { ReadonlyEntries as entries } from './entries.js'
-import ActionEntry from './ActionEntry.js'
+
+import ActionList from './ActionList.vue'
+import ActionSingle from './ActionSingle.vue'
+import ToolBarLogic from './ToolBarLogic.js'
 
 export default defineComponent({
 	name: 'ReadonlyBar',
-	components: { ActionEntry },
-	setup() {
+	components: {
+		ActionList,
+		ActionSingle,
+	},
+	extends: ToolBarLogic,
+	data() {
 		return {
-			visibleEntries: entries,
+			entries,
 		}
 	},
 })
