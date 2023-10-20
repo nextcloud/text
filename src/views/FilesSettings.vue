@@ -26,7 +26,7 @@
 			class="checkbox"
 			type="checkbox"
 			@change="toggle">
-		<label for="showRichWorkspacesToggle">{{ t('text', 'Show rich workspaces') }}</label>
+		<label for="showRichWorkspacesToggle">{{ t('text', 'Show folder description') }}</label>
 	</div>
 </template>
 
