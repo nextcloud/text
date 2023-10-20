@@ -27,6 +27,7 @@
 		v-bind="state"
 		:container="menuIDSelector"
 		:aria-label="actionEntry.label"
+		:aria-activedescendant="currentChild ? `${$menuID}-child-${currentChild.key}` : null"
 		:force-menu="true"
 		:name="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
@@ -37,6 +38,7 @@
 		</template>
 		<ActionSingle v-for="child in children"
 			:key="`child-${child.key}`"
+			:id="`${$menuID}-child-${child.key}`"
 			is-item
 			:action-entry="child"
 			v-on="$listeners"

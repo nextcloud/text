@@ -75,6 +75,7 @@ const getActionState = (actionEntry, $editor) => {
 		disabled: isDisabled(actionEntry, $editor),
 		class: getEntryClasses(actionEntry, active),
 		active,
+		'aria-selected': active,
 	}
 }
 
