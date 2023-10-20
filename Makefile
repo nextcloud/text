@@ -2,6 +2,8 @@
 # later. See the COPYING file.
 app_name=$(notdir $(CURDIR))
 
+.NOTPARALLEL:
+
 all: dev-setup lint build-js-production
 
 # Dev env management
