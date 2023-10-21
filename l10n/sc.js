@@ -51,7 +51,6 @@ OC.L10N.register(
     "to" : "a",
     "Replace" : "Càmbia cun àteru",
     "Source code" : "Còdighe fonte",
-    "Show rich workspaces" : "Mustra àreas de traballu avantzadas",
     "Undo" : "Iscontza",
     "Redo" : "Torra a fàghere",
     "Headings" : "Intestatziones",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
     "Link file" : "Ligòngiu a archìviu",
-    "Select file to link to" : "Seletziona s'archìviu de ligongiare"
+    "Select file to link to" : "Seletziona s'archìviu de ligongiare",
+    "Show rich workspaces" : "Mustra àreas de traballu avantzadas"
 },
 "nplurals=2; plural=(n != 1);");

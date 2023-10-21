@@ -92,8 +92,8 @@
     "Select file or folder to link to" : "Izbor datoteke ali mape za povezavo",
     "_%n word_::_%n words_" : ["%n beseda","%n besedi","%n besede","%n besed"],
     "_%n char_::_%n chars_" : ["%n znak","%n znaka","%n znaki","%n znakov"],
-    "Formatting menu bar" : "Orodna vrstica oblikovanja",
     "Editor actions" : "Dejanja urejevalnika",
+    "Formatting menu bar" : "Orodna vrstica oblikovanja",
     "Remaining actions" : "Dejanja preimenovanja",
     "Translate from" : "Prevedi iz",
     "Select language" : "Izbor jezika",
@@ -122,7 +122,6 @@
     "Add column after" : "Dodaj stolpec za",
     "Delete this column" : "Izbriši stolpec",
     "Delete this table" : "Izbriši razpredelnico",
-    "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Hide outline" : "Skrij obris",
     "Show outline" : "Pokaži obris",
     "Undo" : "Razveljavi",
@@ -156,6 +155,7 @@
     "Link file" : "Datoteka povezave",
     "Remove Link" : "Odstrani povezavo",
     "Select file to link to" : "Izbor datoteke za povezavo",
+    "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Source language" : "Izvorni jezik",
     "Target language" : "Ciljni jezik"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"

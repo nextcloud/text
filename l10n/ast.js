@@ -8,8 +8,8 @@ OC.L10N.register(
     "No file was uploaded" : "Nun se xubió nengún ficheru",
     "Saving …" : "Guardando…",
     "Keyboard shortcuts" : "Atayos del tecláu",
-    "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos",
     "Info" : "Información",
+    "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos",
     "Source language" : "Llingua d'orixe",
     "Target language" : "Llingua de destín"
 },

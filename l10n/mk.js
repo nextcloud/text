@@ -83,7 +83,6 @@ OC.L10N.register(
     "Add column after" : "Додади колона после",
     "Delete this column" : "Избриши ја оваа колона",
     "Delete this table" : "Избриши ја оваа табела",
-    "Show rich workspaces" : "Прикажи збогатен работен простор",
     "Undo" : "Назад",
     "Redo" : "Напред",
     "Headings" : "Заглавија",
@@ -107,6 +106,7 @@ OC.L10N.register(
     "Add Link" : "Додади линк",
     "Link file" : "Поврзи датотека (Линк)",
     "Remove Link" : "Острани линк",
-    "Select file to link to" : "Изберете датотека за линк до неа"
+    "Select file to link to" : "Изберете датотека за линк до неа",
+    "Show rich workspaces" : "Прикажи збогатен работен простор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

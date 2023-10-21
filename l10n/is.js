@@ -49,7 +49,6 @@ OC.L10N.register(
     "Replace" : "Skipta út",
     "Source code" : "Upprunakóði",
     "Unsupported image type" : "Óstudd gerð myndar",
-    "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "Undo" : "Afturkalla",
     "Redo" : "Endurtaka",
     "Headings" : "Fyrirsagnir",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Edit" : "Breyta",
     "Link file" : "Tengja skrá",
-    "Select file to link to" : "Veldu skrá til að tengja í"
+    "Select file to link to" : "Veldu skrá til að tengja í",
+    "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

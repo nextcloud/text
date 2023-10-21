@@ -59,7 +59,6 @@ OC.L10N.register(
     "Source code" : "Kildekode",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Delete this table" : "Slet denne tabel",
-    "Show rich workspaces" : "Vis rige arbejdsområder",
     "Hide outline" : "Skjul outline",
     "Show outline" : "Vis outline",
     "Undo" : "Fortryd",
@@ -81,6 +80,7 @@ OC.L10N.register(
     "Add Link" : "Tilføj link",
     "Link file" : "Link fil",
     "Remove Link" : "Fjern link",
-    "Select file to link to" : "Vælg den fil, du vil linke til"
+    "Select file to link to" : "Vælg den fil, du vil linke til",
+    "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

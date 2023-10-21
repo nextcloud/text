@@ -50,7 +50,6 @@ OC.L10N.register(
     "Replace" : "Thay thế",
     "Source code" : "Mã nguồn",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
-    "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Undo" : "Hoàn tác",
     "Redo" : "Làm lại",
     "Headings" : "Đầu đề",
@@ -69,6 +68,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
     "Link file" : "Liên kết tệp tin",
-    "Select file to link to" : "Chọn tệp để liên kết đến"
+    "Select file to link to" : "Chọn tệp để liên kết đến",
+    "Show rich workspaces" : "Hiển thị không gian làm việc"
 },
 "nplurals=1; plural=0;");
