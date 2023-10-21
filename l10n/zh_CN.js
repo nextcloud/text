@@ -82,7 +82,6 @@ OC.L10N.register(
     "Source code" : "源代码",
     "Both" : "都是",
     "Unsupported image type" : "不支持图片格式",
-    "Show rich workspaces" : "显示富文本编辑区",
     "Hide outline" : "隐藏大纲",
     "Show outline" : "显示大纲",
     "Undo" : "撤销",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "Add Link" : "添加链接",
     "Link file" : "链接文件",
     "Remove Link" : "移除链接",
-    "Select file to link to" : "选择文件链接至"
+    "Select file to link to" : "选择文件链接至",
+    "Show rich workspaces" : "显示富文本编辑区"
 },
 "nplurals=1; plural=0;");

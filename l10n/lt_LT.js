@@ -75,8 +75,8 @@ OC.L10N.register(
     "Update link" : "Atnaujinti nuorodą",
     "_%n word_::_%n words_" : ["%n žodis","%n žodžiai","%n žodžių","%n žodis"],
     "_%n char_::_%n chars_" : ["%n simbolis","%n simboliai","%n simbolių","%n simbolis"],
-    "Formatting menu bar" : "Formatavimo meniu juosta",
     "Editor actions" : "Redaktoriaus veiksmai",
+    "Formatting menu bar" : "Formatavimo meniu juosta",
     "Remaining actions" : "Likę veiksmai",
     "Select language" : "Pasirinkite kalbą",
     "to" : "iki",
@@ -94,7 +94,6 @@ OC.L10N.register(
     "Add column after" : "Pridėti stulpelį dešinėje",
     "Delete this column" : "Ištrinti šį stulpelį",
     "Delete this table" : "Ištrinti šią lentelę",
-    "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis",
     "Undo" : "Atšaukti",
     "Redo" : "Grąžinti",
     "Headings" : "Antraštės",
@@ -122,6 +121,7 @@ OC.L10N.register(
     "Add Link" : "Pridėti nuorodą",
     "Link file" : "Susieti failą",
     "Remove Link" : "Šalinti nuorodą",
-    "Select file to link to" : "Pasirinkite failą su kuriuo susieti"
+    "Select file to link to" : "Pasirinkite failą su kuriuo susieti",
+    "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
