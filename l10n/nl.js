@@ -87,7 +87,6 @@ OC.L10N.register(
     "Add column after" : "Voeg kolom toe na",
     "Delete this column" : "Verwijder deze kolom",
     "Delete this table" : "Verwijder deze tabel",
-    "Show rich workspaces" : "Toon rijke werkplekken",
     "Hide outline" : "Overzicht verbergen",
     "Show outline" : "Overzicht tonen",
     "Undo" : "Ongedaan maken",
@@ -114,6 +113,7 @@ OC.L10N.register(
     "Add Link" : "Link toevoegen",
     "Link file" : "Link bestand",
     "Remove Link" : "Verwijder Link",
-    "Select file to link to" : "Selecteer een bestand om naar te linken"
+    "Select file to link to" : "Selecteer een bestand om naar te linken",
+    "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

@@ -118,7 +118,6 @@
     "Add column after" : "Lisää sarake jälkeen",
     "Delete this column" : "Poista tämä sarake",
     "Delete this table" : "Poista tämä taulu",
-    "Show rich workspaces" : "Näytä rikastetut työtilat",
     "Undo" : "Kumoa",
     "Redo" : "Tee uudelleen",
     "Headings" : "Otsikot",
@@ -146,6 +145,7 @@
     "Link file" : "Linkitä tiedosto",
     "Remove Link" : "Poista linkki",
     "Select file to link to" : "Valitse tiedosto johon linkitetään",
+    "Show rich workspaces" : "Näytä rikastetut työtilat",
     "Source language" : "Lähdekieli",
     "Target language" : "Kohdekieli",
     "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."

@@ -46,7 +46,6 @@
     "Replace" : "Erstatt",
     "Source code" : "Kildekode",
     "Unsupported image type" : "Filtypen støttes ikke",
-    "Show rich workspaces" : "Vis arbeidsområde",
     "Undo" : "Angre",
     "Redo" : "Gjør om",
     "Headings" : "Overskrifter",
@@ -63,6 +62,7 @@
     "Control" : "Kontroll",
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "Edit" : "Rediger"
+    "Edit" : "Rediger",
+    "Show rich workspaces" : "Vis arbeidsområde"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
