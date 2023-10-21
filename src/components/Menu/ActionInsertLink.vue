@@ -18,14 +18,15 @@
   -
   -->
 <template>
-	<NcActions ref="menu"
-		class="entry-action entry-action__insert-link"
+	<NcActions class="entry-action entry-action__insert-link"
 		aria-haspopup
 		:aria-label="actionEntry.label"
 		:class="activeClass"
 		:container="menuIDSelector"
 		:data-text-action-entry="actionEntry.key"
-		:name="actionEntry.label">
+		:name="actionEntry.label"
+		:open="menuOpen"
+		@update:open="(open) => { menuOpen = menuOpen || open }">
 		<template #icon>
 			<component :is="icon"
 				:name="actionEntry.label"
@@ -33,7 +34,6 @@
 				aria-haspopup />
 		</template>
 		<NcActionButton v-if="state.active"
-			close-after-click
 			:data-text-action-entry="`${actionEntry.key}-remove`"
 			@click="removeLink">
 			<template #icon>
@@ -41,7 +41,7 @@
 			</template>
 			{{ t('text', 'Remove link') }}
 		</NcActionButton>
-		<NcActionButton close-after-click
+		<NcActionButton ref="buttonFile"
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
 			<template #icon>
@@ -80,7 +80,7 @@
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { FilePicker, FilePickerType } from '@nextcloud/dialogs'
+import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
@@ -112,6 +112,8 @@ export default {
 			href: null,
 			isInputMode: false,
 			startPath: null,
+			/** Open state of the actions menu */
+			menuOpen: false,
 		}
 	},
 	computed: {
@@ -132,26 +134,29 @@ export default {
 				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
 			}
 
-			const filePicker = new FilePicker(
-				t('text', 'Select file or folder to link to'),
-				false, // multiselect
-				[], // mime filter
-				true, // modal
-				FilePickerType.Choose, // type
-				true, // directories
-				this.startPath, // path
-			)
+			const filePicker = getFilePickerBuilder(t('text', 'Select file or folder to link to'))
+				.startAt(this.startPath)
+				.allowDirectories(true)
+				.setMultiSelect(false)
+				.setType(FilePickerType.Choose)
+				.build()
 
-			filePicker.pick().then((file) => {
-				const client = OC.Files.getClient()
-				client.getFileInfo(file).then((_status, fileInfo) => {
-					const path = optimalPath(this.relativePath, `${fileInfo.path}/${fileInfo.name}`)
-					const encodedPath = path.split('/').map(encodeURIComponent).join('/') + (fileInfo.type === 'dir' ? '/' : '')
-					const href = `${encodedPath}?fileId=${fileInfo.id}`
-					this.setLink(href, fileInfo.name)
-					this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
+			filePicker.pick()
+				.then((file) => {
+					const client = OC.Files.getClient()
+					client.getFileInfo(file).then((_status, fileInfo) => {
+						const path = optimalPath(this.relativePath, `${fileInfo.path}/${fileInfo.name}`)
+						const encodedPath = path.split('/').map(encodeURIComponent).join('/') + (fileInfo.type === 'dir' ? '/' : '')
+						const href = `${encodedPath}?fileId=${fileInfo.id}`
+						this.setLink(href, fileInfo.name)
+						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
+					})
+					this.menuOpen = false
 				})
-			})
+				.catch(() => {
+					// do not close menu but keep focus
+					this.$refs.buttonFile.$el.focus()
+				})
 		},
 		/**
 		 * Allow user to enter an URL manually
@@ -162,8 +167,7 @@ export default {
 		linkWebsite(event) {
 			if (event?.type === 'submit') {
 				const href = [...event.target.elements].filter(e => e?.type === 'text')[0].value
-				// Close menu manually as autoclose does not work form ActionInput
-				this.$refs.menu.closeMenu()
+				this.menuOpen = false
 				this.isInputMode = false
 				this.href = null
 				return this.setLink(href, href)
@@ -225,6 +229,7 @@ export default {
 		 */
 		removeLink() {
 			this.$editor.chain().unsetLink().focus().run()
+			this.menuOpen = false
 		},
 		linkPicker() {
 			getLinkWithPicker(null, true)
