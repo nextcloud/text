@@ -52,7 +52,6 @@ OC.L10N.register(
     "Replace" : "החלפה",
     "Source code" : "קוד מקור",
     "Unsupported image type" : "סוג התמונה לא נתמך",
-    "Show rich workspaces" : "הצגת סביבות עבודה עשירות",
     "Undo" : "ביטול",
     "Redo" : "שחזור",
     "Headings" : "כותרות",
@@ -70,6 +69,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Edit" : "עריכה",
     "Link file" : "קישור לקובץ",
-    "Select file to link to" : "לבחור קובץ לקשר אליו"
+    "Select file to link to" : "לבחור קובץ לקשר אליו",
+    "Show rich workspaces" : "הצגת סביבות עבודה עשירות"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

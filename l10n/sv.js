@@ -139,7 +139,6 @@ OC.L10N.register(
     "Add column after" : "Lägg till kolumn efter",
     "Delete this column" : "Ta bort denna kolumn",
     "Delete this table" : "Ta bort denna tabell",
-    "Show rich workspaces" : "Visa utökade arbetsytor",
     "Hide outline" : "Göm översikt",
     "Show outline" : "Visa översikt",
     "Undo" : "Ångra",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Link file" : "Länka fil",
     "Remove Link" : "Ta bort länk",
     "Select file to link to" : "Välj fil att länka till",
+    "Show rich workspaces" : "Visa utökade arbetsytor",
     "Source language" : "Källspråk",
     "Target language" : "Målspråk",
     "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ..."

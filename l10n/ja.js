@@ -59,7 +59,6 @@ OC.L10N.register(
     "Replace" : "入り替え",
     "Source code" : "ソースコード",
     "Unsupported image type" : "サポートされていない画像形式です",
-    "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Undo" : "元に戻す",
     "Redo" : "やり直し",
     "Headings" : "見出し",
@@ -80,6 +79,7 @@ OC.L10N.register(
     "Add Link" : "リンクを追加",
     "Link file" : "ファイルをリンク",
     "Remove Link" : "リンクを削除",
-    "Select file to link to" : "リンク先のファイルを選択"
+    "Select file to link to" : "リンク先のファイルを選択",
+    "Show rich workspaces" : "各フォルダのReadmeを表示"
 },
 "nplurals=1; plural=0;");

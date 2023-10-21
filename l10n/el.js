@@ -77,7 +77,6 @@ OC.L10N.register(
     "No emoji found" : "Δε βρέθηκε emoji",
     "Source code" : "Πηγαίος κώδικας",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
-    "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
     "Undo" : "Aναίρεση",
     "Redo" : "Επανάληψη",
     "Headings" : "Επικεφαλίδες",
@@ -101,6 +100,7 @@ OC.L10N.register(
     "Add Link" : "Προσθήκη Συνδέσμου",
     "Link file" : "Σύνδεσμος αρχείου",
     "Remove Link" : "Αφαίρεση Συνδέσμου",
-    "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου"
+    "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
+    "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");

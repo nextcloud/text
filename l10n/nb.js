@@ -48,7 +48,6 @@ OC.L10N.register(
     "Replace" : "Erstatt",
     "Source code" : "Kildekode",
     "Unsupported image type" : "Filtypen støttes ikke",
-    "Show rich workspaces" : "Vis arbeidsområde",
     "Undo" : "Angre",
     "Redo" : "Gjør om",
     "Headings" : "Overskrifter",
@@ -65,6 +64,7 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "Edit" : "Rediger"
+    "Edit" : "Rediger",
+    "Show rich workspaces" : "Vis arbeidsområde"
 },
 "nplurals=2; plural=(n != 1);");
