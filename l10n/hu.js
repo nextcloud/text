@@ -139,6 +139,7 @@ OC.L10N.register(
     "Add column after" : "Oszlop hozzáadása utána",
     "Delete this column" : "Oszlop törlése",
     "Delete this table" : "Táblázat törlése",
+    "Show folder description" : "Mappa leírása",
     "Hide outline" : "Vázlat elrejtése",
     "Show outline" : "Vázlat megjelenítése",
     "Undo" : "Visszavonás",

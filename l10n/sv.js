@@ -139,6 +139,7 @@ OC.L10N.register(
     "Add column after" : "Lägg till kolumn efter",
     "Delete this column" : "Ta bort denna kolumn",
     "Delete this table" : "Ta bort denna tabell",
+    "Show folder description" : "Visa mappbeskrivning",
     "Hide outline" : "Göm översikt",
     "Show outline" : "Visa översikt",
     "Undo" : "Ångra",
