@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "أضِف عموداُ بعدَ",
     "Delete this column" : "إحذف هذا العمود",
     "Delete this table" : "إحذف هذا الجدول",
+    "Show folder description" : "أظهِر وصف المجلد",
     "Hide outline" : "إخفِ قائمة المحتويات outline",
     "Show outline" : "أظهِر قائمة المحتويات outline",
     "Undo" : "تراجع",
