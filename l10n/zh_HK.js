@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "在後面添加縱列",
     "Delete this column" : "删除此縱列",
     "Delete this table" : "删除此表",
+    "Show folder description" : "顯示資料夾描述",
     "Hide outline" : "隱藏大綱",
     "Show outline" : "顯示大綱",
     "Undo" : "復原",
