@@ -142,6 +142,7 @@ jobs:
           php occ app:enable text
           php occ app:list
           php occ background:cron
+          php occ config:system:set session_keepalive --value=false --type=boolean
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
 
