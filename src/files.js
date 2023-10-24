@@ -29,6 +29,7 @@ __webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 const workspaceEnabled = loadState('text', 'workspace_enabled')
+const openReadOnlyEnabled = loadState('text', 'open_read_only_enabled')
 
 document.addEventListener('DOMContentLoaded', async () => {
 	if (typeof OCA.Viewer === 'undefined') {
@@ -58,4 +59,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 OCA.Text = {
 	RichWorkspaceEnabled: workspaceEnabled,
+	OpenReadOnlyEnabled: openReadOnlyEnabled,
 }

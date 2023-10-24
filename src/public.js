@@ -157,4 +157,5 @@ documentReady(() => {
 
 OCA.Text = {
 	RichWorkspaceEnabled: loadState('text', 'workspace_available'),
+	OpenReadOnlyEnabled: loadState('text', 'open_read_only_enabled'),
 }
