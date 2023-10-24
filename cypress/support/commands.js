@@ -22,6 +22,7 @@
 
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/cypress'
+import 'cypress-if'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
@@ -43,10 +44,42 @@ Cypress.Commands.overwrite('login', (login, user) => {
 	login(user)
 })
 
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+	// Make sure that each visit call that triggers a page load will update the stored requesttoken
+	return originalFn(url, options).then((result) => {
+		cy.window()
+			.then((win) => cy.wrap(win?.OC?.requestToken))
+			.as('requesttoken')
+	})
+})
+
+Cypress.Commands.add('getRequestToken', () => {
+	cy.get('@requesttoken')
+		.if((token) => !token)
+		.then(() => {
+			cy.window()
+				.then((win) => cy.wrap(win?.OC?.requestToken))
+				.if((token) => !!token)
+				.then((token) => {
+					cy.log('Request token from window', token)
+				})
+				.as('requesttoken')
+				.else()
+				.then((token) => {
+					cy.log('Request token fetching', token)
+					return cy.request('/csrftoken')
+						.then(({ body }) => {
+							return body.token
+						})
+				}).as('requesttoken')
+		})
+
+	return cy.get('@requesttoken')
+})
+
 Cypress.Commands.add('ocsRequest', (options) => {
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
-		.then(requesttoken => {
+	return cy.getRequestToken()
+		.then((requesttoken) => {
 			return cy.request({
 				form: true,
 				auth,
@@ -67,10 +100,7 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 			if (typeof target !== 'undefined') {
 				fileName = target
 			}
-			cy.request('/csrftoken')
-				.then(({ body }) => {
-					return cy.wrap(body.token)
-				})
+			cy.getRequestToken()
 				.then(async (requesttoken) => {
 					return cy.request({
 						url: `${url}/remote.php/webdav/${fileName}`,
@@ -96,8 +126,7 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 })
 
 Cypress.Commands.add('downloadFile', (fileName) => {
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
+	return cy.getRequestToken()
 		.then(requesttoken => {
 			return axios.get(`${url}/remote.php/webdav/${fileName}`, {
 				headers: {
@@ -110,8 +139,7 @@ Cypress.Commands.add('downloadFile', (fileName) => {
 Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown', headers = {}) => {
 	const blob = new Blob([content], { type: mimeType })
 
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
+	return cy.getRequestToken()
 		.then(requesttoken => {
 			return cy.request({
 				url: `${url}/remote.php/webdav/${target}`,
@@ -187,8 +215,7 @@ Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = nul
 })
 
 Cypress.Commands.add('shareFile', (path, options = {}) => {
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
+	return cy.getRequestToken()
 		.then(async requesttoken => {
 			const headers = { requesttoken }
 			const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
@@ -223,8 +250,7 @@ Cypress.Commands.add('createFolder', (target) => {
 	const rootPath = `${Cypress.env('baseUrl')}/remote.php/dav/files/${encodeURIComponent(auth.user)}`
 	const dirPath = target.split('/').map(encodeURIComponent).join('/')
 
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
+	return cy.getRequestToken()
 		.then(requesttoken => {
 			return cy.request({
 				url: `${rootPath}/${dirPath}`,
@@ -406,8 +432,7 @@ Cypress.Commands.add('configureText', (key, value) => {
 })
 
 Cypress.Commands.add('showHiddenFiles', (value = true) => {
-	return cy.request('/csrftoken')
-		.then(({ body }) => body.token)
+	return cy.getRequestToken()
 		.then(requesttoken => {
 			return cy.request({
 				url: `${url}/index.php/apps/files/api/v1/config/show_hidden`,

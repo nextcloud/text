@@ -23,6 +23,7 @@
 import { randUser } from '../utils/index.js'
 const user = randUser()
 
+const modKey = Cypress.platform === 'darwin' ? '{cmd}' : '{ctrl}'
 const testShortcut = (shortcut, tag) => {
 	cy.getContent()
 		.type(shortcut)
@@ -35,7 +36,7 @@ const testShortcut = (shortcut, tag) => {
 }
 
 const testHeading = (num) => {
-	testShortcut(`{ctrl}{shift}${num}`, `h${num}`)
+	testShortcut(`${modKey}{shift}${num}`, `h${num}`)
 }
 
 describe('keyboard shortcuts', () => {
@@ -53,15 +54,15 @@ describe('keyboard shortcuts', () => {
 		cy.getContent().type('{selectall}')
 	})
 
-	it('bold', () => testShortcut('{ctrl}b', 'strong'))
-	it('italic', () => testShortcut('{ctrl}i', 'em'))
-	it('underline', () => testShortcut('{ctrl}u', 'u'))
-	it('strikethrough', () => testShortcut('{ctrl}{shift}s', 's'))
-	it('blockquote', () => testShortcut('{ctrl}{shift}b', 'blockquote'))
-	it('codeblock', () => testShortcut('{ctrl}{alt}c', 'pre'))
-	it('ordered-list', () => testShortcut('{ctrl}{shift}7', 'ol'))
-	it('unordered-list', () => testShortcut('{ctrl}{shift}8', 'ul'))
-	it('task-list', () => testShortcut('{ctrl}{shift}9', 'ul[data-type="taskList"]'))
+	it('bold', () => testShortcut(`${modKey}b`, 'strong'))
+	it('italic', () => testShortcut(`${modKey}i`, 'em'))
+	it('underline', () => testShortcut(`${modKey}u`, 'u'))
+	it('strikethrough', () => testShortcut(`${modKey}{shift}s`, 's'))
+	it('blockquote', () => testShortcut(`${modKey}{shift}b`, 'blockquote'))
+	it('codeblock', () => testShortcut(`${modKey}{alt}c`, 'pre'))
+	it('ordered-list', () => testShortcut(`${modKey}{shift}7`, 'ol'))
+	it('unordered-list', () => testShortcut(`${modKey}{shift}8`, 'ul'))
+	it('task-list', () => testShortcut(`${modKey}{shift}9`, 'ul[data-type="taskList"]'))
 
 	// Headings
 	const levels = [1, 2, 3, 4, 5, 6]

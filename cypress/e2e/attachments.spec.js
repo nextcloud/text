@@ -164,8 +164,8 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	beforeEach(() => {
-		cy.showHiddenFiles()
 		cy.login(currentUser)
+		cy.showHiddenFiles()
 	})
 
 	it('See test files in the list and display hidden files', () => {

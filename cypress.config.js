@@ -31,7 +31,6 @@ module.exports = defineConfig({
 		},
 
 		baseUrl: 'http://localhost:8081/index.php/',
-		experimentalSessionAndOrigin: true,
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 	},
 	retries: {
