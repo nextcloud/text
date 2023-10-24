@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "Додај колону иза",
     "Delete this column" : "Обриши ову колону",
     "Delete this table" : "Обриши ову табелу",
+    "Show folder description" : "Прикажи опис фолдера",
     "Hide outline" : "Сакриј контуру",
     "Show outline" : "Прикажи контуру",
     "Undo" : "Поништи",
