@@ -46,6 +46,7 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Quoted text" : "Văn bản được trích dẫn",
     "Code block" : "Khối mã",
+    "Select file or folder to link to" : "Chọn tập tin hoặc thư mục để liên kết đến",
     "to" : "đến",
     "Replace" : "Thay thế",
     "Source code" : "Mã nguồn",
