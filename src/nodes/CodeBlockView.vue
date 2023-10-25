@@ -150,7 +150,9 @@ export default {
 				this.$refs.preview.innerHTML = svg
 			} catch (e) {
 				console.debug('Invalid mermaid source', e)
-				this.viewMode = this.isEditable ? 'side-by-side' : 'code'
+				if (this.viewMode === 'preview') {
+					this.viewMode = this.isEditable ? 'side-by-side' : 'code'
+				}
 			}
 		}, 250)
 
