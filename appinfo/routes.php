@@ -29,6 +29,8 @@ use OCA\Text\Controller;
 
 return [
 	'routes' => [
+		/** @see Controller\AttachmentController::getAttachmentFile() */
+		['name' => 'Attachment#getAttachmentList', 'url' => '/attachments', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::insertAttachmentFile() */
 		['name' => 'Attachment#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::uploadAttachment() */

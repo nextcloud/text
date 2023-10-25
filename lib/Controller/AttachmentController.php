@@ -84,6 +84,20 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
+	public function getAttachmentList(?string $shareToken = null): DataResponse {
+		$documentId = $this->getSession()->getDocumentId();
+		if ($shareToken) {
+			$attachments = $this->attachmentService->getAttachmentList($documentId, null, $this->getSession(), $shareToken);
+		} else {
+			$userId = $this->getSession()->getUserId();
+			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $this->getSession(), null);
+		}
+		return new DataResponse($attachments);
+	}
+
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
 	public function insertAttachmentFile(string $filePath): DataResponse {
 		$userId = $this->getSession()->getUserId();
 
