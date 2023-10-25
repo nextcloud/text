@@ -29,6 +29,7 @@ namespace OCA\Text\Service;
 use OC\User\NoUserException;
 use OCA\Files_Sharing\SharedStorage;
 use OCA\Text\Controller\AttachmentController;
+use OCA\Text\Db\Session;
 use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -39,6 +40,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
+use OCP\IURLGenerator;
 use OCP\Lock\LockedException;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
@@ -49,7 +51,8 @@ class AttachmentService {
 	public function __construct(private IRootFolder $rootFolder,
 		private ShareManager $shareManager,
 		private IPreview $previewManager,
-		private IMimeTypeDetector $mimeTypeDetector) {
+		private IMimeTypeDetector $mimeTypeDetector,
+		private IURLGenerator $urlGenerator) {
 	}
 
 	/**
@@ -251,6 +254,66 @@ class AttachmentService {
 			];
 		}
 		return null;
+	}
+
+	/**
+	 * @param int          $documentId
+	 * @param string|null  $userId
+	 * @param Session|null $session
+	 * @param string|null  $shareToken
+	 *
+	 * @return array
+	 * @throws InvalidPathException
+	 * @throws NoUserException
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 */
+	public function getAttachmentList(int $documentId, ?string $userId = null, ?Session $session = null, ?string $shareToken = null): array {
+		if ($shareToken) {
+			$textFile = $this->getTextFilePublic($documentId, $shareToken);
+		} elseif ($userId) {
+			$textFile = $this->getTextFile($documentId, $userId);
+		} else {
+			throw new NotPermittedException('Unable to read document');
+		}
+
+		try {
+			$attachmentDir = $this->getAttachmentDirectoryForFile($textFile);
+		} catch (NotFoundException) {
+			return [];
+		}
+
+		$shareTokenUrlString = $shareToken
+			? '&shareToken=' . urlencode($shareToken)
+			: '';
+		// TODO: session might be null
+		$sessionUrlParamsBase = '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . urlencode($session->getToken()) . $shareTokenUrlString;
+
+		$attachments = [];
+		foreach ($attachmentDir->getDirectoryListing() as $node) {
+			if (!($node instanceof File)) {
+				// Ignore anything but files
+				continue;
+			}
+			$isImage = in_array($node->getMimetype(), AttachmentController::IMAGE_MIME_TYPES, true);
+			$name = $node->getName();
+			$attachments[] = [
+				'fileId' => $node->getId(),
+				'name' => $name,
+				'size' => Util::humanFileSize($node->getSize()),
+				'mimetype' => $node->getMimeType(),
+				'mtime' => $node->getMTime(),
+				'isImage' => $isImage,
+				'fullUrl' => $isImage
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $sessionUrlParamsBase . '&imageFileName=' . urlencode($name) . '&preferRawImage=1'
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $sessionUrlParamsBase . '&mediaFileName=' . urlencode($name),
+				'previewUrl' => $isImage
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $sessionUrlParamsBase . '&imageFileName=' . urlencode($name)
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $sessionUrlParamsBase . '&mediaFileName=' . urlencode($name),
+			];
+		}
+
+		return $attachments;
 	}
 
 	/**
