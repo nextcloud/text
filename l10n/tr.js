@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "Arkasına sütun ekle",
     "Delete this column" : "Bu sütunu sil",
     "Delete this table" : "Bu tabloyu sil",
+    "Show folder description" : "Klasör açıklamasını görüntüle",
     "Hide outline" : "Özeti gizle",
     "Show outline" : "Özeti görüntüle",
     "Undo" : "Geri al",
