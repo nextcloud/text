@@ -4,6 +4,16 @@ import './commands.js'
 import './sessions.js'
 import chaiExtension from './chai.js'
 
+beforeEach(() => {
+	cy.intercept('GET', '**/preview-service-worker.js', { fixture: 'preview-service-worker.txt' })
+})
+
+Cypress.on('window:before:load', (win) => {
+	// disable service workers
+	// eslint-disable-next-line
+	delete win.navigator.ServiceWorker
+})
+
 before(() => {
 	chai.use(chaiExtension)
 

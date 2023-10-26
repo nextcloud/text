@@ -12,7 +12,6 @@ describe('Test the rich text editor menu bar', function() {
 			onBeforeLoad(win) {
 				cy.stub(win, 'open')
 					.as('winOpen')
-
 			},
 		})
 

@@ -62,8 +62,6 @@ describe('Open test.md in viewer', function() {
 		cy.log('Inspect menubar')
 		cy.getActionEntry('undo').should('be.visible')
 		cy.getActionEntry('bold').should('be.visible')
-
-		cy.screenshot()
 	})
 
 	it('Open an empty file', function() {
@@ -85,8 +83,6 @@ describe('Open test.md in viewer', function() {
 		cy.log('Inspect menubar')
 		cy.getActionEntry('undo').should('be.visible')
 		cy.getActionEntry('bold').should('be.visible')
-
-		cy.screenshot()
 	})
 
 	it('Closes the editor', function() {

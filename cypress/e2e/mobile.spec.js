@@ -48,10 +48,8 @@ describe('Mobile actions', {
 				: Cypress.currentTest.title
 			cy.createFolder(folderName)
 			cy.uploadFile('test.md', 'text/markdown', `${encodeURIComponent(folderName)}/text.md`)
+
 			cy.visit(`apps/files?dir=/${encodeURIComponent(folderName)}`)
-
-			cy.reload()
-
 			cy.openFile('text.md', { force: true })
 		})
 	})
