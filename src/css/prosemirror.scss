@@ -70,7 +70,7 @@ div.ProseMirror {
 				background-color: var(--color-primary-element);
 				border-color: var(--color-primary-element);
 			}
-			label {
+			> label > p {
 				color: var(--color-text-maxcontrast);
 				text-decoration: line-through;
 			}
