@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "Přidat sloupec za",
     "Delete this column" : "Smazat tento sloupec",
     "Delete this table" : "Smazat tuto tabulku",
+    "Show folder description" : "Zobrazit popis složky",
     "Hide outline" : "Skrýt ohraničení",
     "Show outline" : "Zobrazit ohraničení",
     "Undo" : "Zpět",
