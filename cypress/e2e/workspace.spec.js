@@ -90,7 +90,7 @@ describe('Workspace', function() {
 		cy.visit(`apps/files?dir=/${encodeURIComponent(currentFolder)}`)
 		cy.openWorkspace(currentFolder).type('Heading')
 		cy.getContent().type('{selectall}')
-		;['h1', 'h2', 'h3'].forEach((heading) => {
+		;['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach((heading) => {
 			const actionName = `headings-${heading}`
 
 			cy.getSubmenuEntry('headings', actionName).click()
