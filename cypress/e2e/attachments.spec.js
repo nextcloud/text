@@ -336,7 +336,7 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it.skip('test if attachment folder is copied when copying a markdown file', () => {
+	it('test if attachment folder is copied when copying a markdown file', () => {
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
 		cy.visit('/apps/files')
 
@@ -358,7 +358,7 @@ describe('Test all attachment insertion methods', () => {
 			})
 	})
 
-	it.skip('test if attachment folder is deleted after having deleted a markdown file', () => {
+	it('test if attachment folder is deleted after having deleted a markdown file', () => {
 		cy.copyFile('subFolder/test.md', 'testCopied.md')
 		cy.visit('/apps/files')
 		cy.getFile('testCopied.md')
@@ -374,7 +374,7 @@ describe('Test all attachment insertion methods', () => {
 		currentUser = recipient
 	})
 
-	it.skip('[share] check everything behaves correctly on the share target user side', () => {
+	it('[share] check everything behaves correctly on the share target user side', () => {
 		cy.visit('/apps/files')
 		// check the file list
 		cy.getFile('test.md')
