@@ -53,6 +53,7 @@ import RichTextReader from '../components/RichTextReader.vue'
 
 const IS_PUBLIC = !!(document.getElementById('isPublic'))
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
+const SUPPORTED_STATIC_FILENAMES = ['Readme.md', 'README.md', 'readme.md']
 
 export default {
 	name: 'RichWorkspace',
@@ -112,6 +113,8 @@ export default {
 		}
 		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		subscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+		subscribe('files:node:deleted', this.onFileDeleted)
+		subscribe('files:node:renamed', this.onFileRenamed)
 
 		this.listenKeydownEvents()
 
@@ -119,6 +122,8 @@ export default {
 	beforeDestroy() {
 		unsubscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		unsubscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
+		unsubscribe('files:node:deleted', this.onFileDeleted)
+		unsubscribe('files:node:renamed', this.onFileRenamed)
 
 		this.unlistenKeydownEvents()
 	},
@@ -202,6 +207,18 @@ export default {
 
 			// schedule to normal behaviour
 			this.$_timeoutAutohide = setTimeout(this.onTimeoutAutohide, 7000) // 7s
+		},
+		onFileDeleted(node) {
+			if (node.path === this.file.path) {
+				this.hideRichWorkspace()
+			}
+		},
+		onFileRenamed(node) {
+			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
+				this.showRichWorkspace()
+			} else if (node.fileid === this.file?.id && node.path !== this.file?.path) {
+				this.hideRichWorkspace()
+			}
 		},
 	},
 }
