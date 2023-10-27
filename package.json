@@ -102,7 +102,7 @@
     "slug": "^8.2.3",
     "tippy.js": "^6.3.7",
     "uuid": "^9.0.1",
-    "vue": "^2.7.14",
+    "vue": "^2.7.15",
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2",
@@ -138,7 +138,7 @@
     "vite": "^4.5.0",
     "vite-plugin-commonjs": "^0.10.0",
     "vue-demi": "^0.14.6",
-    "vue-template-compiler": "^2.7.14"
+    "vue-template-compiler": "^2.7.15"
   },
   "jest": {
     "verbose": true,
