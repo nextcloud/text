@@ -10,7 +10,7 @@ on:
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ !github.head_ref }}
 
 env:
   APP_NAME: text
@@ -29,26 +29,26 @@ jobs:
 
     steps:
       - name: Checkout server
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/viewer
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
       - name: Checkout app
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           path: apps/${{ env.APP_NAME }}
 
       - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@0ce2ed60f6df073a62a77c0a4958dd0fc68e32e7 # v2.1
+        uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.2
         id: versions
         with:
           fallbackNode: "^20"
@@ -85,6 +85,23 @@ jobs:
       matrix:
         containers: [1, 2, 3, 4, 5, 6, 7, 8]
         php-versions: [ '8.1' ]
+        run-in-parallel:
+          - false # only for PRs: ${{ !!github.head_ref }}
+        exclude:
+          - run-in-parallel: false
+            containers: 2
+          - run-in-parallel: false
+            containers: 3
+          - run-in-parallel: false
+            containers: 4
+          - run-in-parallel: false
+            containers: 5
+          - run-in-parallel: false
+            containers: 6
+          - run-in-parallel: false
+            containers: 7
+          - run-in-parallel: false
+            containers: 8
 
     name: runner ${{ matrix.containers }}
 
@@ -117,7 +134,7 @@ jobs:
         run: npm i -g npm@"${{ needs.init.outputs.npmVersion }}"
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@4bd44f22a98a19e0950cbad5f31095157cc9621b # v2
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, pgsql, pdo_pgsql
@@ -147,12 +164,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          record: true
-          parallel: true
+          record: '${{ !!matrix.run-in-parallel }}' # only on pull requests
+          parallel: '${{ !!matrix.run-in-parallel }}' # only on pull requests
           wait-on: '${{ env.CYPRESS_baseUrl }}'
           working-directory: 'apps/${{ env.APP_NAME }}'
           config: defaultCommandTimeout=10000,video=false
-          tag: ${{ github.event_name }}
+          tag: ${{ matrix.run-in-parallel && github.event_name }}
         env:
           # https://github.com/cypress-io/github-action/issues/124
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
