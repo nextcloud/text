@@ -118,7 +118,7 @@
     "@nextcloud/browserslist-config": "^2.3.0",
     "@nextcloud/cypress": "^1.0.0-beta.2",
     "@nextcloud/dialogs": "^4.2.1",
-    "@nextcloud/eslint-config": "^8.3.0-beta.2",
+    "@nextcloud/eslint-config": "^8.3.0",
     "@nextcloud/stylelint-config": "^2.3.1",
     "@nextcloud/webpack-vue-config": "^6.0.0",
     "@vitejs/plugin-vue2": "^2.2.0",
