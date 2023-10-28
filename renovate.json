@@ -16,7 +16,6 @@
     "main",
     "stable27",
     "stable26",
-    "stable25"
   ],
   "enabledManagers": [
     "npm"
