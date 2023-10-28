@@ -140,6 +140,7 @@ OC.L10N.register(
     "Add column after" : "Aggiungi colonna dopo",
     "Delete this column" : "Elimina colonna",
     "Delete this table" : "Elimina tabella",
+    "Show folder description" : "Mostra descrizione cartella",
     "Hide outline" : "Nascondi indice",
     "Show outline" : "Mostra indice",
     "Undo" : "Annulla",
