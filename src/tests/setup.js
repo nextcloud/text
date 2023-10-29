@@ -40,6 +40,10 @@ jest.mock('@nextcloud/files', () => ({
 	formatFileSize: (size) => size,
 	Header: class {},
 }))
+jest.mock('@nextcloud/dialogs', () => ({
+	FilePickerType: {},
+	getFilePickerBuilder: () => {},
+}))
 
 global.OC = {
 	requestToken: '123',
