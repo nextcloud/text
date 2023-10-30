@@ -36,19 +36,16 @@ class StepMapper extends QBMapper {
 	/**
 	 * @return Step[]
 	 */
-	public function find(int $documentId, int $fromVersion, int $lastAckedVersion = null): array {
+	public function find(int $documentId, int $fromVersion): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($fromVersion)));
-		if ($lastAckedVersion) {
-			$qb->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($lastAckedVersion)));
-		}
+			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($fromVersion)))
+			->andWhere($qb->expr()->gt('id', $qb->createNamedParameter($fromVersion)));
 		$qb
 			->setMaxResults(1000)
-			->orderBy('version')
 			->orderBy('id');
 
 		return $this->findEntities($qb);
@@ -57,11 +54,11 @@ class StepMapper extends QBMapper {
 	public function getLatestVersion(int $documentId): ?int {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$result = $qb->select('version')
+		$result = $qb->select('id')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->setMaxResults(1)
-			->orderBy('version', 'DESC')
+			->orderBy('id', 'DESC')
 			->executeQuery();
 
 		$data = $result->fetch();
@@ -69,7 +66,7 @@ class StepMapper extends QBMapper {
 			return null;
 		}
 
-		return $data['version'];
+		return $data['id'];
 	}
 
 	public function deleteAll(int $documentId): void {
@@ -79,11 +76,12 @@ class StepMapper extends QBMapper {
 			->executeStatement();
 	}
 
+	// not in use right now
 	public function deleteBeforeVersion(int $documentId, int $version): int {
 		$qb = $this->db->getQueryBuilder();
 		return $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
-			->andWhere($qb->expr()->lte('version', $qb->createNamedParameter($version)))
+			->andWhere($qb->expr()->lte('id', $qb->createNamedParameter($version)))
 			->executeStatement();
 	}
 
@@ -92,6 +90,7 @@ class StepMapper extends QBMapper {
 		return $qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)))
 			->andWhere($qb->expr()->gt('version', $qb->createNamedParameter($version)))
+			->andWhere($qb->expr()->gt('id', $qb->createNamedParameter($version)))
 			->executeStatement();
 	}
 }

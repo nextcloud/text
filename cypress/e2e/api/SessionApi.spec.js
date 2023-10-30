@@ -115,7 +115,7 @@ describe('The session Api', function() {
 					const version = 0
 					cy.pushSteps({ connection, steps, version })
 						.its('version')
-						.should('eql', 1)
+						.should('be.at.least', 1)
 					cy.syncSteps(connection)
 						.its('steps[0].data')
 						.should('eql', steps)
@@ -173,7 +173,7 @@ describe('The session Api', function() {
 		it('saves', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.downloadFile(filePath)
 				.its('data')
@@ -184,7 +184,7 @@ describe('The session Api', function() {
 			const documentState = 'Base64 encoded string'
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
@@ -247,7 +247,7 @@ describe('The session Api', function() {
 		it('saves public', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.login(user)
 			cy.prepareSessionApi()
@@ -260,7 +260,7 @@ describe('The session Api', function() {
 			const documentState = 'Base64 encoded string'
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.save(connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
@@ -331,7 +331,7 @@ describe('The session Api', function() {
 			let joining
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.createTextSession(undefined, { filePath: '', shareToken })
 				.then(con => {
 					joining = con
@@ -348,7 +348,7 @@ describe('The session Api', function() {
 			cy.log('Initial user pushes steps')
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
-				.should('eql', 1)
+				.should('be.at.least', 1)
 			cy.log('Other user creates session')
 			cy.createTextSession(undefined, { filePath: '', shareToken })
 				.then(con => {
