@@ -274,15 +274,14 @@ class DocumentService {
 				throw new InvalidArgumentException('Failed to encode steps');
 			}
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
-			$newVersion = $stepsVersion + count($steps);
-			$this->logger->debug("Adding steps to $documentId: bumping version from $stepsVersion to $newVersion");
-			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			$step = new Step();
 			$step->setData($stepsJson);
 			$step->setSessionId($sessionId);
 			$step->setDocumentId($documentId);
-			$step->setVersion($newVersion);
-			$this->stepMapper->insert($step);
+			$step = $this->stepMapper->insert($step);
+			$newVersion = $step->getId();
+			$this->logger->debug("Adding steps to " . $documentId . ": bumping version from $stepsVersion to $newVersion");
+			$this->cache->set('document-version-' . $documentId, $newVersion);
 			// TODO write steps to cache for quicker reading
 			return $newVersion;
 		} catch (DoesNotExistException $e) {
