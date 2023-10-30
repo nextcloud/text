@@ -152,7 +152,9 @@
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
-      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+      "^.+\\.svg(\\?raw)?$": "<rootDir>/src/tests/__mocks__/svg.js",
+      "^.+\\.s?css(\\?raw)?$": "<rootDir>/src/tests/__mocks__/css.js"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",
@@ -163,7 +165,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.mjs$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-      "\\.(html|xml|svg|md)$": "<rootDir>/jest-raw-loader.js"
+      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.js"
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
