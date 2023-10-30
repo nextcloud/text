@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const webpackConfig = require('@nextcloud/webpack-vue-config')
+const webpackRules = require('@nextcloud/webpack-vue-config/rules')
 
 webpackConfig.entry = {
 	text: path.join(__dirname, 'src', 'main.js'),
@@ -57,13 +58,13 @@ webpackConfig.resolve.fallback = {
 	buffer: require.resolve('buffer'),
 }
 
-webpackConfig.module.rules.push({
+// Load raw SVGs to be able to inject them via v-html
+webpackRules.RULE_ASSETS.test = /\.(png|jpe?g|gif|woff2?|eot|ttf)$/
+webpackRules.RULE_RAW_SVGS = {
 	test: /\.svg$/,
-	use: [
-		{
-			loader: 'raw-loader'
-		},
-	],
-})
+	type: 'asset/source',
+}
+
+webpackConfig.module.rules = Object.values(webpackRules)
 
 module.exports = webpackConfig

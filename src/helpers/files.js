@@ -33,8 +33,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 
-// eslint-disable-next-line import/no-webpack-loader-syntax,import/no-unresolved
-import FilePlusSvg from '!!raw-loader!@mdi/svg/svg/file-plus.svg'
+import FilePlusSvg from '@mdi/svg/svg/file-plus.svg'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -153,10 +152,8 @@ const addMenuRichWorkspace = () => {
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add description'),
-		if: (context) => {
-			if (Number(context.attributes['rich-workspace-file'])
-				|| context.owner !== getCurrentUser()?.uid
-				|| (window.FileList.id !== 'files' && window.FileList.id !== 'files.public')) {
+		enabled(context) {
+			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
 			}
 			return (context.permissions & Permission.CREATE) !== 0
