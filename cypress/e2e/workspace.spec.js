@@ -60,8 +60,8 @@ describe('Workspace', function() {
 			.should('contain', 'Hello world')
 		cy.get('a[href*="/apps/files/recent"]')
 			.click()
-		cy.get('#rich-workspace .ProseMirror')
-			.should('not.visible')
+		cy.get('#rich-workspace')
+			.should('not.exist')
 	})
 
 	it('adds a Readme.md', function() {

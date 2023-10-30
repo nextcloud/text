@@ -21,7 +21,7 @@
  */
 
 import { emit } from '@nextcloud/event-bus'
-import { Header } from '@nextcloud/files'
+import { Header, addNewFileMenuEntry, Permission, File } from '@nextcloud/files'
 import { imagePath } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -29,6 +29,11 @@ import { getSharingToken } from './token.js'
 import { openMimetypes } from './mime.js'
 import RichWorkspace from '../views/RichWorkspace.vue'
 import store from '../store/index.js'
+import { getCurrentUser } from '@nextcloud/auth'
+import { showSuccess, showError } from '@nextcloud/dialogs'
+import axios from '@nextcloud/axios'
+
+import FilePlusSvg from '@mdi/svg/svg/file-plus.svg'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -142,37 +147,51 @@ const registerFileActionFallback = () => {
 
 }
 
-const newRichWorkspaceFileMenuPlugin = {
-	attach(menu) {
-		const fileList = menu.fileList
-		const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
-		// only attach to main file list, public view is not supported yet
-		if (fileList.id !== 'files' && fileList.id !== 'files.public') {
-			return
-		}
-
-		// register the new menu entry
-		menu.addMenuEntry({
-			id: 'rich-workspace-init',
-			displayName: t('text', 'Add description'),
-			templateName: descriptionFile,
-			iconClass: 'icon-rename',
-			fileType: 'file',
-			useInput: false,
-			actionHandler() {
-				return window.FileList
-					.createFile(descriptionFile, { scrollTo: false, animate: false })
-					.then(() => emit('Text::showRichWorkspace', { autofocus: true }))
-			},
-			shouldShow() {
-				return !fileList.findFile(descriptionFile)
-			},
-		})
-	},
-}
-
 const addMenuRichWorkspace = () => {
-	OC.Plugins.register('OCA.Files.NewFileMenu', newRichWorkspaceFileMenuPlugin)
+	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+	addNewFileMenuEntry({
+		id: 'rich-workspace-init',
+		displayName: t('text', 'Add description'),
+		enabled(context) {
+			if (Number(context.attributes['rich-workspace-file'])) {
+				return false
+			}
+			return (context.permissions & Permission.CREATE) !== 0
+		},
+		iconSvgInline: FilePlusSvg,
+		async handler(context, content) {
+			const contentNames = content.map((node) => node.basename)
+
+			if (contentNames.includes(descriptionFile)) {
+				showError(t('text', '"{name}" already exist!', { name: descriptionFile }))
+				return
+			}
+
+			const source = context.encodedSource + '/' + encodeURIComponent(descriptionFile)
+			const response = await axios({
+				method: 'PUT',
+				url: source,
+				headers: {
+					Overwrite: 'F',
+				},
+			})
+			const fileid = parseInt(response.headers['oc-fileid'])
+			const file = new File({
+				source,
+				id: fileid,
+				mtime: new Date(),
+				mime: 'text/markdown',
+				owner: getCurrentUser()?.uid || null,
+				permissions: Permission.ALL,
+				root: context?.root || '/files/' + getCurrentUser()?.uid,
+			})
+			context._children.push(file.fileid)
+
+			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
+			emit('files:node:created', file)
+			emit('Text::showRichWorkspace', { autofocus: true })
+		},
+	})
 }
 
 let vm = null

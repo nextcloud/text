@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "@hedgedoc/markdown-it-task-lists": "^2.0.1",
+    "@mdi/svg": "^7.3.67",
     "@nextcloud/auth": "^2.2.1",
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/browser-storage": "^0.3.0",
@@ -135,6 +136,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-serializer-vue": "^3.1.0",
     "prosemirror-test-builder": "^1.1.1",
+    "raw-loader": "^4.0.2",
     "vite": "^4.5.0",
     "vite-plugin-commonjs": "^0.10.0",
     "vue-demi": "^0.14.6",
@@ -151,7 +153,9 @@
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
-      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+      "^.+\\.svg(\\?raw)?$": "<rootDir>/src/tests/__mocks__/svg.js",
+      "^.+\\.s?css(\\?raw)?$": "<rootDir>/src/tests/__mocks__/css.js"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",
@@ -162,7 +166,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.mjs$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-      "\\.(html|xml|svg|md)$": "<rootDir>/jest-raw-loader.js"
+      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.js"
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
