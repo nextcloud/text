@@ -77,3 +77,27 @@ Vue.prototype.t = global.t
 Vue.prototype.n = global.n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA
+
+// Mock ClipboardEvent and DragEvent as long as jsdom is used
+// https://github.com/ueberdosis/tiptap/issues/4455
+class ClipboardEventMock extends Event {
+  constructor(type, eventInitDict) {
+    super(type, eventInitDict);
+    this.clipboardData = {
+      getData: jest.fn(),
+      setData: jest.fn(),
+    };
+  }
+}
+global.ClipboardEvent = ClipboardEventMock;
+
+class DragEventMock extends Event {
+  constructor(type, eventInitDict) {
+    super(type, eventInitDict);
+    this.dataTransfer = {
+      getData: jest.fn(),
+      setData: jest.fn(),
+    };
+  }
+}
+global.DragEvent = DragEventMock;
