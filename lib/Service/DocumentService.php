@@ -211,19 +211,17 @@ class DocumentService {
 	 * @throws InvalidArgumentException
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version): array {
-		$sessionId = $session->getId();
 		$documentId = $session->getDocumentId();
 		$stepsToInsert = [];
 		$querySteps = [];
-		$getStepsSinceVersion = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
 			// Filter out query steps as they would just trigger clients to send their steps again
 			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
-				array_push($querySteps, $step);
+				$querySteps[] = $step;
 			} else {
-				array_push($stepsToInsert, $step);
+				$stepsToInsert[] = $step;
 			}
 		}
 		if (sizeof($stepsToInsert) > 0) {
