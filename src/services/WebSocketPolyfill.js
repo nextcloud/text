@@ -85,7 +85,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 			this.#queue.push(...data)
 			let outbox = []
-			syncService.sendSteps(() => {
+			return syncService.sendSteps(() => {
 				outbox = [...this.#queue]
 				const data = {
 					steps: this.#steps,
@@ -112,7 +112,8 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				.findLast(s => s > 'AQ') || ''
 		}
 
-		close() {
+		async close() {
+			await this.#sendRemainingSteps()
 			Object.entries(this.#handlers)
 				.forEach(([key, value]) => syncService.off(key, value))
 			this.#handlers = []
@@ -120,6 +121,23 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				this.onclose()
 			})
 			logger.debug('Websocket closed')
+		}
+
+		#sendRemainingSteps() {
+			if (this.#queue.length) {
+				return syncService.sendStepsNow(() => {
+					const data = {
+						steps: this.#steps,
+						awareness: this.#awareness,
+						version: this.#version,
+					}
+					this.#queue = []
+					logger.debug('sending final steps ', data)
+					return data
+				})?.catch(err => {
+					logger.error(err)
+				})
+			}
 		}
 
 	}

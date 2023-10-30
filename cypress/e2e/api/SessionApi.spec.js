@@ -301,6 +301,19 @@ describe('The session Api', function() {
 			})
 		})
 
+		it('signals closing connection', function() {
+			cy.then(() => {
+				return new Promise((resolve, reject) => {
+					connection.close()
+					connection.push({ steps: [messages.update], version, awareness: '' })
+						.then(
+							() => reject(new Error('Push should have thrown ConnectionClosed()')),
+							resolve,
+						)
+				})
+			})
+		})
+
 		it('sends initial content if other session is alive but did not push any steps', function() {
 			let joining
 			cy.createTextSession(undefined, { filePath: '', shareToken })
