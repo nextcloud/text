@@ -260,16 +260,16 @@ class DocumentService {
 		$stepsVersion = null;
 		try {
 			$stepsJson = json_encode($steps, JSON_THROW_ON_ERROR);
-			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
-			$newVersion = $stepsVersion + count($steps);
-			$this->logger->debug("Adding steps to " . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
-			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			$step = new Step();
 			$step->setData($stepsJson);
 			$step->setSessionId($session->getId());
 			$step->setDocumentId($document->getId());
-			$step->setVersion($newVersion);
-			$this->stepMapper->insert($step);
+			$stepCount = count($steps);
+			$insertedStep = $this->stepMapper->insertSteps($step, $stepCount);
+			$newVersion = $insertedStep->getVersion();
+			$oldVersion = $newVersion - $stepCount;
+			$this->logger->debug("Added steps to " . $document->getId() . ": bumping version from $oldVersion to $newVersion");
+			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			// TODO write steps to cache for quicker reading
 			return $newVersion;
 		} catch (\Throwable $e) {

@@ -55,7 +55,6 @@ class StepMapper extends QBMapper {
 	}
 
 	public function getLatestVersion(int $documentId): ?int {
-		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('version')
 			->from($this->getTableName())
@@ -70,6 +69,35 @@ class StepMapper extends QBMapper {
 		}
 
 		return $data['version'];
+	}
+
+	/**
+	 * @param Step $step
+	 * @param int  $count
+	 *
+	 * @return Step
+	 */
+	public function insertSteps(Step $step, int $count): Step {
+		$qbMaxVersion = $this->db->getQueryBuilder();
+		$maxVersionSelect = $qbMaxVersion->select($qbMaxVersion->createFunction('MAX(' . $qbMaxVersion->getColumnName('version') . ') + ' . $count . ' '))
+			->from($this->getTableName(), 'ts')
+			->where($qbMaxVersion->expr()->eq('document_id', $qbMaxVersion->createNamedParameter($step->getDocumentId())));
+
+		$qb = $this->db->getQueryBuilder();
+		$qb->insert($this->getTableName())
+			->setValue('document_id', $qb->createNamedParameter($step->getDocumentId()))
+			->setValue('session_id', $qb->createNamedParameter($step->getSessionId()))
+			->setValue('data', $qb->createNamedParameter($step->getData()))
+			->setValue('version', $qb->createFunction('(' . $maxVersionSelect->getSQL() . ')'));
+		$qb->executeStatement();
+		$lastInsertId = $qb->getLastInsertId();
+
+		$qbInsertedVersion = $this->db->getQueryBuilder();
+		$qbInsertedVersion->select('*')
+			->from($this->getTableName())
+			->where($qbInsertedVersion->expr()->eq('id', $qbInsertedVersion->createNamedParameter($lastInsertId)));
+		/** @var Step */
+		return $this->findEntity($qbInsertedVersion);
 	}
 
 	public function deleteAll(int $documentId): void {
