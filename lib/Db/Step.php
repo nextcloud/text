@@ -37,8 +37,17 @@ use OCP\AppFramework\Db\Entity;
  * @method setDocumentId(int $documentId): void
  */
 class Step extends Entity implements JsonSerializable {
+
+	/*
+	 * Transition: We now use the auto-incrementing id as the version.
+	 * To ensure that new steps always have a larger version than those that
+	 * used the version field, use the largest possible value for BIGINT.
+	 */
+	public const VERSION_STORED_IN_ID = 18446744073709551615;
+
+	public $id = null;
 	protected string $data = '';
-	protected int $version = 0;
+	protected int $version = self::VERSION_STORED_IN_ID;
 	protected int $sessionId = 0;
 	protected int $documentId = 0;
 
@@ -54,10 +63,13 @@ class Step extends Entity implements JsonSerializable {
 		if (\json_last_error() !== JSON_ERROR_NONE) {
 			throw new \InvalidArgumentException('Failed to parse step data');
 		}
+		$version = $this->version === self::VERSION_STORED_IN_ID
+			? $this->id
+			: $this->getVersion();
 		return [
 			'id' => $this->id,
 			'data' => $jsonData,
-			'version' => $this->version,
+			'version' => $version,
 			'sessionId' => $this->sessionId
 		];
 	}
