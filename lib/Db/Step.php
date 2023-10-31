@@ -41,13 +41,13 @@ class Step extends Entity implements JsonSerializable {
 	/*
 	 * Transition: We now use the auto-incrementing id as the version.
 	 * To ensure that new steps always have a larger version than those that
-	 * used the version field, use the largest possible value for BIGINT.
+	 * used the version field, use the largest possible 32-bit integer value.
 	 */
-	public const VERSION_STORED_IN_ID = 18446744073709551615;
+	public const VERSION_STORED_IN_ID = 2147483647;
 
 	public $id = null;
 	protected string $data = '';
-	protected int $version = self::VERSION_STORED_IN_ID;
+	protected int $version = 0;
 	protected int $sessionId = 0;
 	protected int $documentId = 0;
 

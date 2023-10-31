@@ -263,6 +263,7 @@ class DocumentService {
 			$step->setData($stepsJson);
 			$step->setSessionId($session->getId());
 			$step->setDocumentId($document->getId());
+			$step->setVersion(Step::VERSION_STORED_IN_ID);
 			$step = $this->stepMapper->insert($step);
 			$newVersion = $step->getId();
 			$this->logger->debug("Adding steps to " . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
