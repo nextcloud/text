@@ -56,14 +56,6 @@ export default class AttachmentResolver {
 	 * Currently returns either one or two urls.
 	 */
 	async resolve(src, preferRawImage = false) {
-		if (this.#session && src.startsWith('text://')) {
-			const imageFileName = getQueryVariable(src, 'imageFileName')
-			return [{
-				type: this.ATTACHMENT_TYPE_IMAGE,
-				url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
-			}]
-		}
-
 		// Has session and URL points to attachment from current document
 		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
 			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
@@ -253,13 +245,6 @@ export default class AttachmentResolver {
 	 * @param {string} src - url to extract path from
 	 */
 	#relativePath(src) {
-		if (src.startsWith('text://')) {
-			return [
-				this.#attachmentDirectory,
-				getQueryVariable(src, 'imageFileName'),
-			].join('/')
-		}
-
 		return decodeURI(src.split('?')[0])
 	}
 

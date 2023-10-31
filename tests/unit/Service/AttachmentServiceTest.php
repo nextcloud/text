@@ -26,23 +26,6 @@ class AttachmentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->assertEquals('text', $app::APP_NAME);
 	}
 
-	public function testGetOldAttachmentNamesFromContent() {
-		$content = "some content\n";
-		foreach (self::$attachmentNames as $name) {
-			// this is how it's generated in MenuBar.vue
-			$linkText = preg_replace('/[[\]]/', '', $name);
-			$encodedName = urlencode($name);
-			$content .= '![' . $linkText . '](text://image?imageFileName=' . $encodedName . ")\n";
-		}
-		$content .= 'some content';
-
-		$computedNames = AttachmentService::getAttachmentNamesFromContent($content, 33);
-		foreach (self::$attachmentNames as $contentName) {
-			$this->assertContains($contentName, $computedNames);
-		}
-	}
-
-
 	public function testGetAttachmentNamesFromContent() {
 		$content = "some content\n";
 		foreach (self::$attachmentNames as $name) {
