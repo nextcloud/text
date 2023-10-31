@@ -139,6 +139,7 @@ OC.L10N.register(
     "Add column after" : "Добавить столбец справа",
     "Delete this column" : "Удалить столбец",
     "Delete this table" : "Удалить таблицу",
+    "Show folder description" : "Показать описание папки",
     "Hide outline" : "Скрыть обрамление",
     "Show outline" : "Показать обрамление",
     "Undo" : "Отменить",
