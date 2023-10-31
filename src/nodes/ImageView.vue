@@ -43,7 +43,7 @@
 									@load="onLoaded">
 								<div class="metadata">
 									<span class="name">{{ alt }}</span>
-									<span class="size">{{ attachmentMetadata.size }}</span>
+									<span class="size">{{ attachmentSize }}</span>
 								</div>
 							</div>
 							<div v-if="showDeleteIcon"
@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
 import ClickOutside from 'vue-click-outside'
 import { NcButton } from '@nextcloud/vue'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
@@ -142,7 +141,6 @@ import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
-import { logger } from '../helpers/logger.js'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 
 const getQueryVariable = (src, variable) => {
@@ -198,7 +196,7 @@ export default {
 			imageUrl: null,
 			errorMessage: null,
 			attachmentType: null,
-			attachmentMetadata: {},
+			attachmentSize: null,
 			showImageModal: false,
 			embeddedImagesList: [],
 			imageIndex: null,
@@ -259,9 +257,6 @@ export default {
 				})
 			},
 		},
-		t() {
-			return (a, s) => window.t(a, s)
-		},
 		token() {
 			return document.getElementById('sharingToken')
 				&& document.getElementById('sharingToken').value
@@ -290,7 +285,7 @@ export default {
 		},
 		async load(candidates) {
 			const [candidate, ...fallbacks] = candidates
-			return this.loadImage(candidate.url, candidate.type, candidate.name, candidate.metadata).catch((e) => {
+			return this.loadPreview(candidate).catch((e) => {
 				if (fallbacks.length > 0) {
 					return this.load(fallbacks)
 					// TODO if fallback works, rewrite the url with correct document ID
@@ -298,33 +293,21 @@ export default {
 				return Promise.reject(e)
 			})
 		},
-		async loadImage(imageUrl, attachmentType, name = null, metadata = null) {
+		async loadPreview(candidate) {
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
-					this.imageUrl = imageUrl
+					this.imageUrl = candidate.previewUrl
 					this.imageLoaded = true
 					this.loaded = true
-					this.attachmentType = attachmentType
-					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA && metadata) {
-						this.attachmentMetadata = metadata
-					} else if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
-						await this.loadMediaMetadata(name)
-					}
-					resolve(imageUrl)
+					this.attachmentType = candidate.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+					this.attachmentSize = candidate.size
+					resolve(candidate.previewUrl)
 				}
 				img.onerror = (e) => {
-					reject(new LoadImageError(e, imageUrl))
+					reject(new LoadImageError(e, candidate.previewUrl))
 				}
-				img.src = imageUrl
-			})
-		},
-		loadMediaMetadata(name) {
-			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
-			return axios.get(metadataUrl).then((response) => {
-				this.attachmentMetadata = response.data
-			}).catch((error) => {
-				logger.error('Failed to load media metadata', { error })
+				img.src = candidate.previewUrl
 			})
 		},
 		onImageLoadFailure(err) {
