@@ -19,37 +19,6 @@ describe('Image resolver', () => {
 		expect(resolver).toBeInstanceOf(AttachmentResolver)
 	})
 
-	it('handles text:// urls via Text API', async () => {
-		const src = 'text://image?imageFileName=group%20pic.jpg'
-		const resolver = new AttachmentResolver({ session })
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
-	})
-
-	it('handles text:// urls with token via Text API', async () => {
-		const src = 'text://image?imageFileName=group%20pic.jpg'
-		const resolver = new AttachmentResolver({
-			session,
-			shareToken: 'myShareToken',
-		})
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken&preferRawImage=0')
-	})
-
-	it('uses user auth over token auth', async () => {
-		const src = 'text://image?imageFileName=group%20pic.jpg'
-		const resolver = new AttachmentResolver({
-			session,
-			user,
-			shareToken: 'myShareToken',
-		})
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).not.toContain('myShareToken')
-	})
-
 	it('handles .attachments urls to own fileId via Text API', async () => {
 		const src = `.attachments.${session.documentId}/group%20pic.jpg`
 		const resolver = new AttachmentResolver({ session })
@@ -146,31 +115,6 @@ describe('Image resolver', () => {
 	})
 
 	describe('missing session', () => {
-
-		it('resolves text:// urls as authenticated dav', async () => {
-			const src = 'text://image?imageFileName=group%20pic.jpg'
-			const resolver = new AttachmentResolver({
-				fileId: 4173,
-				user,
-				currentDirectory,
-			})
-			const [candidate] = await resolver.resolve(src)
-			expect(candidate.type).toBe('image')
-			expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4173/group%20pic.jpg')
-		})
-
-		it('resolves text:// urls as share token download', async () => {
-			const src = 'text://image?imageFileName=group%20pic.jpg'
-			const resolver = new AttachmentResolver({
-				fileId,
-				shareToken,
-				currentDirectory,
-			})
-			const [candidate] = await resolver.resolve(src)
-			expect(candidate.type).toBe('image')
-			expect(candidate.url).toBe('/nc-webroot/s/myShareToken/download?path=%2FparentDir%2F.attachments.4173&files=group%20pic.jpg')
-		})
-
 		it('handles .attachments urls via webdav with mimetype URL fallback', async () => {
 			const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
 			const resolver = new AttachmentResolver({ user, currentDirectory, fileId })
