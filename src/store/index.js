@@ -23,12 +23,15 @@
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 import { getBuilder } from '@nextcloud/browser-storage'
+import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 
 import {
 	SET_SHOW_AUTHOR_ANNOTATIONS,
 	SET_CURRENT_SESSION,
 	SET_VIEW_WIDTH,
 	SET_HEADINGS,
+	SET_ATTACHMENT_LIST,
 } from './mutation-types.js'
 import plugin, { getClientWidth } from './plugin.js'
 
@@ -42,6 +45,10 @@ export const textModule = {
 		currentSession: persistentStorage.getItem('currentSession'),
 		viewWidth: getClientWidth(),
 		headings: Object.freeze([]),
+		attachmentList: [],
+	},
+	getters: {
+		findAttachment: (state) => (fileName) => state.attachmentList.find(a => a.name === fileName),
 	},
 	mutations: {
 		[SET_VIEW_WIDTH](state, value) {
@@ -74,6 +81,9 @@ export const textModule = {
 
 			state.headings = Object.freeze(headings)
 		},
+		[SET_ATTACHMENT_LIST](state, value) {
+			state.attachmentList = value
+		},
 	},
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
@@ -84,6 +94,16 @@ export const textModule = {
 		},
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)
+		},
+		async setAttachmentList({ commit, state }, { documentId, shareToken }) {
+			const response = await axios.post(generateUrl('/apps/text/attachments'), {
+				documentId: state.currentSession?.documentId ?? documentId,
+				sessionId: state.currentSession?.id,
+				sessionToken: state.currentSession?.token,
+				shareToken,
+			})
+
+			commit(SET_ATTACHMENT_LIST, response.data)
 		},
 	},
 }
