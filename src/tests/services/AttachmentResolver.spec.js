@@ -28,8 +28,6 @@ describe('Image resolver', () => {
 		expect(fallbackCandidate.type).toBe('media')
 		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 		expect(fallbackCandidate.name).toBe('group pic.jpg')
-		const metadataUrl = resolver.getMediaMetadataUrl(fallbackCandidate.name)
-		expect(metadataUrl).toBe('/nc-webroot/apps/text/mediaMetadata?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 	})
 
 	it('handles .attachments urls to own fileId with token via Text API', async () => {
@@ -44,8 +42,6 @@ describe('Image resolver', () => {
 		expect(fallbackCandidate.type).toBe('media')
 		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg&shareToken=myShareToken')
 		expect(fallbackCandidate.name).toBe('group pic.jpg')
-		const metadataUrl = resolver.getMediaMetadataUrl(fallbackCandidate.name)
-		expect(metadataUrl).toBe('/nc-webroot/apps/text/mediaMetadata?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg&shareToken=myShareToken')
 	})
 
 	it('leaves urls unchanged if they can be loaded directly', async () => {
@@ -110,8 +106,6 @@ describe('Image resolver', () => {
 		expect(secondFallback.type).toBe('media')
 		expect(secondFallback.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 		expect(secondFallback.name).toBe('group pic.jpg')
-		const metadataUrl = resolver.getMediaMetadataUrl(secondFallback.name)
-		expect(metadataUrl).toBe('/nc-webroot/apps/text/mediaMetadata?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
 	})
 
 	describe('missing session', () => {
