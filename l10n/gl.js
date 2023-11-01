@@ -168,6 +168,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Edit" : "Editar",
     "Add description" : "Engadir descrición",
+    "\"{name}\" already exist!" : "Xa existe «{name}»!",
+    "Created \"{name}\"" : "Creouse «{name}»",
     "Front matter" : "Preliminar ",
     "Document save status" : "Estado de gardado do documento",
     "Update Link" : "Actualizar ligazón",
