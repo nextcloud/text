@@ -168,6 +168,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Edit" : "Upravit",
     "Add description" : "Přidat popis",
+    "\"{name}\" already exist!" : "„{name}“ už existuje!",
+    "Created \"{name}\"" : "Vytvořeno „{name}“",
     "Front matter" : "Front matter",
     "Document save status" : "Stav uložení dokumentu",
     "Update Link" : "Aktualizovat odkaz",

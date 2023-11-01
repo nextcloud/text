@@ -166,6 +166,8 @@
     "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Edit" : "تحرير",
     "Add description" : "أضِف وصفاً",
+    "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
+    "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
     "Front matter" : "المادة التقديمية front matter",
     "Document save status" : "حالة حفظ المستتند",
     "Update Link" : "تحديث الرابط",

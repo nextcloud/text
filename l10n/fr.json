@@ -166,6 +166,8 @@
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
     "Edit" : "Modifier",
     "Add description" : "Ajouter une description",
+    "\"{name}\" already exist!" : "« {name} » existe déjà !",
+    "Created \"{name}\"" : "« {name} » créé",
     "Front matter" : "Avant-propos",
     "Document save status" : "Statut de sauvegarde du document",
     "Update Link" : "Mettre à jour le lien",
