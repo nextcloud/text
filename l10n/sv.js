@@ -167,6 +167,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Edit" : "Redigera",
     "Add description" : "Lägg till beskrivning",
+    "\"{name}\" already exist!" : "\"{name}\" finns redan!",
+    "Created \"{name}\"" : "Skapade \"{name}\"",
     "Document save status" : "Dokumentets spara status",
     "Update Link" : "Uppdatera länk",
     "Add Link" : "Lägg till länk",

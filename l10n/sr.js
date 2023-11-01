@@ -168,6 +168,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Edit" : "Измени",
     "Add description" : "Додај опис",
+    "\"{name}\" already exist!" : "„{name}” већ постоји!",
+    "Created \"{name}\"" : "„{name}” је креирано",
     "Front matter" : "Уводни део",
     "Document save status" : "Статус чувања документа",
     "Update Link" : "Ажурирај линк",
