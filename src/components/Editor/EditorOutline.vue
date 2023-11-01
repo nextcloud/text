@@ -61,10 +61,14 @@ export default {
 	// 204px = 50px nc header + 60px collectives titlebar + 44px menubar + 50px bottom margin
 	max-height: calc(100% - 204px);
 
+	border-radius: var(--border-radius-large);
+	box-shadow: 0 1px 10px var(--color-box-shadow);
+	background-color: var(--color-main-background);
+	z-index: 10021;
+
 	&-mobile {
 		box-shadow: 8px 0 17px -19px var(--color-box-shadow);
 		background-color: var(--color-main-background-translucent);
-		z-index: 1;
 	}
 
 	&__header {
