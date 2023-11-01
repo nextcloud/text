@@ -49,7 +49,7 @@
 			@keydown.right.stop="handleToolbarNavigation">
 			<!-- The visible inline actions -->
 			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
-				v-for="actionEntry, index of visibleEntries"
+				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
 				:action-entry="actionEntry"
@@ -155,7 +155,7 @@ export default {
 	computed: {
 		visibleEntries() {
 			const list = this.entries.filter(({ priority }) => {
-				// if entry do not have priority, we assume it aways will be visible
+				// if entry has no priority, we assume it always will be visible
 				return priority === undefined || priority <= this.iconsLimit
 			})
 
