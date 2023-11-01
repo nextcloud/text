@@ -168,6 +168,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Edit" : "Edita",
     "Add description" : "Afegeix una descripció",
+    "\"{name}\" already exist!" : "«{name}» ja existeix!",
+    "Created \"{name}\"" : "S'ha creat «{name}»",
     "Front matter" : "Text preliminar",
     "Document save status" : "Estat de desament del document",
     "Update Link" : "Actualitza l'enllaç",

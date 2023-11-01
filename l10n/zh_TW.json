@@ -166,6 +166,8 @@
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Edit" : "編輯",
     "Add description" : "新增描述",
+    "\"{name}\" already exist!" : "「{name}」已存在！",
+    "Created \"{name}\"" : "已建立「{name}」",
     "Front matter" : "前言",
     "Document save status" : "文件儲存狀態",
     "Update Link" : "更新連結",

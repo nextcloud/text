@@ -168,6 +168,8 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Edit" : "Düzenle",
     "Add description" : "Açıklama ekle",
+    "\"{name}\" already exist!" : "\"{name}\" zaten var!",
+    "Created \"{name}\"" : "\"{name}\" oluşturuldu",
     "Front matter" : "Açılış bölümleri ",
     "Document save status" : "Belge kaydetme durumu",
     "Update Link" : "Bağlantıyı güncelle",
