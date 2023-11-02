@@ -605,6 +605,7 @@ export default {
 				if (this.autofocus && !this.readOnly) {
 					this.$nextTick(() => {
 						this.$editor.commands.autofocus()
+						this.$editor.commands.setTrackChangeStatus(true)
 					})
 				}
 				this.emit('ready')

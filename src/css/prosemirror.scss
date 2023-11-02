@@ -244,6 +244,15 @@ div.ProseMirror {
 		padding: .1em .3em;
 	}
 
+	insertion, insert {
+		color: var(--color-success-text);
+		text-decoration: underline;
+	}
+	deletion, delete {
+		color: var(--color-text-maxcontrast);
+		text-decoration: line-through;
+	}
+
 	li {
 		position: relative;
 		padding-left: 3px;

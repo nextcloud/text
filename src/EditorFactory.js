@@ -32,6 +32,7 @@ import { logger } from './helpers/logger.js'
 import { Mention, PlainText, RichText } from './extensions/index.js'
 // eslint-disable-next-line import/no-named-as-default
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import TrackChangeExtension from './extensions/track.ts'
 
 const loadSyntaxHighlight = async (language) => {
 	const list = hljs.listLanguages()
@@ -63,6 +64,11 @@ const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, ena
 						}),
 					}),
 				],
+			}),
+			TrackChangeExtension.configure({
+				enabled: false,
+				dataOpUserId: session.id, // set the op userId
+				dataOpUserNickname: session.userId, // set the op user nickname
 			}),
 		]
 	} else {
