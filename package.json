@@ -39,7 +39,7 @@
     "@nextcloud/auth": "^2.2.1",
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/browser-storage": "^0.3.0",
-    "@nextcloud/dialogs": "^4.1.0",
+    "@nextcloud/dialogs": "^4.2.1",
     "@nextcloud/event-bus": "^3.1.0",
     "@nextcloud/files": "^3.0.0-beta.11",
     "@nextcloud/initial-state": "^2.1.0",
@@ -148,7 +148,9 @@
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
-      "\\.(css)$": "identity-obj-proxy"
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+      "^.+\\.svg(\\?raw)?$": "<rootDir>/src/tests/__mocks__/svg.js",
+      "^.+\\.s?css(\\?raw)?$": "<rootDir>/src/tests/__mocks__/css.js"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/src/tests/fixtures/",
@@ -158,7 +160,7 @@
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-      "\\.(html|xml|svg|md)$": "<rootDir>/jest-raw-loader.js"
+      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.js"
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
