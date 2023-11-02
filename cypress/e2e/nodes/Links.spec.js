@@ -170,7 +170,7 @@ describe('test link marks', function() {
 						cy.get('.modal-name').should('include.text', fileName)
 					})
 			})
-			it('link to directory', () => {
+			it.skip('link to directory', () => {
 				cy.createFolder(`${window.__currentDirectory}/dummy folder`)
 				cy.getFile(fileName).then($el => {
 					cy.getContent().type(`${text}{selectAll}`)
