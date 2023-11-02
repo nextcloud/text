@@ -5,7 +5,7 @@ import {Extension, Mark, getMarkRange, getMarksBetween, isMarkActive, mergeAttri
 import type { CommandProps, Editor, MarkRange} from '@tiptap/core'
 import type { Transaction } from '@tiptap/pm/state'
 
-const LOG_ENABLED = true
+const LOG_ENABLED = false
 
 export const MARK_DELETION = 'deletion'
 export const MARK_INSERTION = 'insertion'
@@ -81,7 +81,13 @@ export const InsertionMark = Mark.create({
   },
   renderHTML ({ HTMLAttributes }) {
     return ['insert', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
-  }
+  },
+	toMarkdown: {
+		open: '',
+		close: '',
+		mixable: true,
+		expelEnclosingWhitespace: true,
+	},
 })
 
 // delete mark
@@ -110,7 +116,13 @@ export const DeletionMark = Mark.create({
   },
   renderHTML ({ HTMLAttributes }) {
     return ['delete', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
-  }
+  },
+	toMarkdown: {
+		open: '',
+		close: '',
+		mixable: true,
+		expelEnclosingWhitespace: true,
+	},
 })
 
 // save the ime-mode status, when input chinese char, the extension needs to deal the change with a special strategy 
@@ -342,7 +354,7 @@ export const TrackChangeExtension = Extension.create<{ enabled: boolean, onStatu
     const isThisTrApplied = transaction.before !== editor.state.tr.doc
     const thisExtension = getSelfExt(editor)
     const trackChangeEnabled = thisExtension.options.enabled
-    LOG_ENABLED && console.warn('内容变化，执行跟踪修订相关逻辑', transaction.steps.length, transaction)
+    LOG_ENABLED && console.warn('Content changes, execute tracking revision related logic', transaction.steps.length, transaction)
     /**
      * Two main process
      *
