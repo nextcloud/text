@@ -46,7 +46,7 @@
     "@nextcloud/l10n": "^2.2.0",
     "@nextcloud/logger": "^2.7.0",
     "@nextcloud/moment": "^1.2.2",
-    "@nextcloud/router": "^2.1.2",
+    "@nextcloud/router": "^2.2.0",
     "@nextcloud/vue": "^7.12.6",
     "@quartzy/markdown-it-mentions": "^0.2.0",
     "@tiptap/core": "^2.1.12",
