@@ -59,7 +59,6 @@ use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICache;
 use OCP\ICacheFactory;
 use OCP\IRequest;
-use OCP\Lock\ILockingProvider;
 use OCP\Lock\LockedException;
 use OCP\PreConditionNotMetException;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -83,11 +82,10 @@ class DocumentService {
 	private IRootFolder $rootFolder;
 	private ICache $cache;
 	private IAppData $appData;
-	private ILockingProvider $lockingProvider;
 	private ILockManager $lockManager;
 	private IUserMountCache $userMountCache;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockManager $lockManager, IUserMountCache $userMountCache) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -97,7 +95,6 @@ class DocumentService {
 		$this->cache = $cacheFactory->createDistributed('text');
 		$this->logger = $logger;
 		$this->shareManager = $shareManager;
-		$this->lockingProvider = $lockingProvider;
 		$this->lockManager = $lockManager;
 		$this->userMountCache = $userMountCache;
 		$token = $request->getParam('token');
@@ -154,6 +151,7 @@ class DocumentService {
 		$document->setLastSavedVersionEtag($file->getEtag());
 		$document->setBaseVersionEtag($file->getEtag());
 		try {
+			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
 			$this->cache->set('document-version-'.$document->getId(), 0);
 		} catch (Exception $e) {
@@ -173,7 +171,7 @@ class DocumentService {
 	 * @throws NotFoundException
 	 */
 	public function getStateFile(int $documentId): ISimpleFile {
-		$filename = (string)$documentId . '.yjs';
+		$filename = $documentId . '.yjs';
 		if (!$this->ensureDocumentsFolder()) {
 			throw new NotFoundException('No app data folder present for text documents');
 		}
@@ -182,11 +180,12 @@ class DocumentService {
 
 	/**
 	 * @param int $documentId
+	 *
 	 * @return ISimpleFile
 	 * @throws NotPermittedException
 	 */
 	public function createStateFile(int $documentId): ISimpleFile {
-		$filename = (string)$documentId . '.yjs';
+		$filename = $documentId . '.yjs';
 		return $this->appData->getFolder('documents')->newFile($filename);
 	}
 
@@ -211,23 +210,21 @@ class DocumentService {
 	 * @throws InvalidArgumentException
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version): array {
-		$sessionId = $session->getId();
 		$documentId = $session->getDocumentId();
 		$stepsToInsert = [];
 		$querySteps = [];
-		$getStepsSinceVersion = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
 			// Filter out query steps as they would just trigger clients to send their steps again
 			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
-				array_push($querySteps, $step);
+				$querySteps[] = $step;
 			} else {
-				array_push($stepsToInsert, $step);
+				$stepsToInsert[] = $step;
 			}
 		}
-		if (sizeof($stepsToInsert) > 0) {
-			$newVersion = $this->insertSteps($document, $session, $stepsToInsert, $version);
+		if (count($stepsToInsert) > 0) {
+			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
 		}
 		// If there were any queries in the steps send the entire history
 		$getStepsSinceVersion = count($querySteps) > 0 ? 0 : $version;
@@ -246,10 +243,9 @@ class DocumentService {
 	}
 
 	/**
-	 * @param $documentId
-	 * @param $sessionId
-	 * @param $steps
-	 * @param $version
+	 * @param Document $document
+	 * @param Session  $session
+	 * @param Step[]   $steps
 	 *
 	 * @return int
 	 *
@@ -258,7 +254,7 @@ class DocumentService {
 	 *
 	 * @psalm-param non-empty-list<mixed> $steps
 	 */
-	private function insertSteps(Document $document, Session $session, array $steps, ?int $version): int {
+	private function insertSteps(Document $document, Session $session, array $steps): int {
 		$stepsVersion = null;
 		try {
 			$stepsJson = json_encode($steps, JSON_THROW_ON_ERROR);
@@ -275,7 +271,7 @@ class DocumentService {
 			// TODO write steps to cache for quicker reading
 			return $newVersion;
 		} catch (\Throwable $e) {
-			if ($document !== null && $stepsVersion !== null) {
+			if ($stepsVersion !== null) {
 				$this->logger->error('This should never happen. An error occurred when storing the version, trying to recover the last stable one', ['exception' => $e]);
 				$this->cache->set('document-version-' . $document->getId(), $stepsVersion);
 				$this->stepMapper->deleteAfterVersion($document->getId(), $stepsVersion);
@@ -359,10 +355,10 @@ class DocumentService {
 				'requestDocumentState' => $documentState,
 				'document' => $document->jsonSerialize(),
 				'fileSizeBeforeSave' => $file->getSize(),
-				'steps' => array_map(function (Step $step) {
+				'steps' => array_map(static function (Step $step) {
 					return $step->jsonSerialize();
 				}, $this->stepMapper->find($documentId, 0)),
-				'sessions' => array_map(function (Session $session) {
+				'sessions' => array_map(static function (Session $session) {
 					return $session->jsonSerialize();
 				}, $this->sessionMapper->findAll($documentId))
 			]);
@@ -492,9 +488,9 @@ class DocumentService {
 			throw new NotFoundException();
 		}
 
-		// Workaround to always open files with edit permissions if multiple occurences of
+		// Workaround to always open files with edit permissions if multiple occurrences of
 		// the same file id are in the user home, ideally we should also track the path of the file when opening
-		usort($files, function (Node $a, Node $b) {
+		usort($files, static function (Node $a, Node $b) {
 			return ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE);
 		});
 
