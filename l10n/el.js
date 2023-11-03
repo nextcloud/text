@@ -74,6 +74,7 @@ OC.L10N.register(
     "Select language" : "Επιλέξτε γλώσσα",
     "to" : "προς",
     "Replace" : "Αντικατάσταση",
+    "Insert" : "Εισαγωγή",
     "No emoji found" : "Δε βρέθηκε emoji",
     "Source code" : "Πηγαίος κώδικας",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
