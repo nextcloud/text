@@ -451,8 +451,16 @@ Cypress.Commands.add('showHiddenFiles', (value = true) => {
 })
 
 Cypress.Commands.add('createDescription', (folder) => {
-	cy.uploadFile('empty.md', 'text/markdown', `${folder}/Readme.md`)
+	const url = '**/remote.php/dav/files/**'
+	cy.intercept({ method: 'PUT', url })
+		.as('addDescription')
+
 	cy.visit(`apps/files?dir=/${encodeURIComponent(folder)}`)
+	cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
+	cy.get('[data-cy-upload-picker] button.action-item__menutoggle').click()
+	cy.get('li.upload-picker__menu-entry button').contains('Add description').click()
+
+	cy.wait('@addDescription')
 })
 
 Cypress.on(

@@ -147,7 +147,7 @@ const registerFileActionFallback = () => {
 
 }
 
-const addMenuRichWorkspace = () => {
+export const addMenuRichWorkspace = () => {
 	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
@@ -177,7 +177,7 @@ const addMenuRichWorkspace = () => {
 			})
 			const fileid = parseInt(response.headers['oc-fileid'])
 			const file = new File({
-				source,
+				source: context.source + '/' + encodeURIComponent(descriptionFile),
 				id: fileid,
 				mtime: new Date(),
 				mime: 'text/markdown',
@@ -185,11 +185,13 @@ const addMenuRichWorkspace = () => {
 				permissions: Permission.ALL,
 				root: context?.root || '/files/' + getCurrentUser()?.uid,
 			})
-			context._children.push(file.fileid)
 
 			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
+
 			emit('files:node:created', file)
-			emit('Text::showRichWorkspace', { autofocus: true })
+			setTimeout(() => {
+				emit('Text::showRichWorkspace', { autofocus: true })
+			}, 200)
 		},
 	})
 }
@@ -205,7 +207,6 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	render(el, folder, view) {
-		addMenuRichWorkspace()
 		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
 
 		import('vue').then((module) => {

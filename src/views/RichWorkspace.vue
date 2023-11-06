@@ -22,7 +22,6 @@
 
 <template>
 	<div v-if="enabled"
-		v-show="hasRichWorkspace"
 		id="rich-workspace"
 		:class="{'focus': focus, 'dark': darkTheme }">
 		<RichTextReader v-if="!loaded || !ready" :content="content" class="rich-workspace--preview" />
@@ -89,7 +88,7 @@ export default {
 			autofocus: false,
 			autohide: true,
 			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
-			enabled: OCA.Text.RichWorkspaceEnabled,
+			enabled: OCA.Text.RichWorkspaceEnabled && this.hasRichWorkspace,
 		}
 	},
 	computed: {
@@ -144,9 +143,10 @@ export default {
 			})
 		},
 		getFileInfo(autofocus) {
-			if (!this.hasRichWorkspace) {
+			if (!this.enabled) {
 				return
 			}
+			this.file = null
 			this.ready = false
 			this.loaded = true
 			this.autofocus = false
