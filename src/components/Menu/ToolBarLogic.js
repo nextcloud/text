@@ -16,7 +16,7 @@ export default defineComponent({
 	watch: {
 		visibleEntries() {
 			this.$nextTick(() => {
-				if (this.activeMenuEntry > this.visibleEntries.length || this.visibleEntries[this.activeMenuEntry].disabled) {
+				if (this.activeMenuEntry > this.visibleEntries.length || this.visibleEntries[this.activeMenuEntry]?.disabled) {
 					this.setNextMenuEntry()
 				}
 			})
