@@ -5,7 +5,7 @@
 			class="text-readonly-bar__entries"
 			:aria-label="t('text', 'Editor actions')">
 			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
-				v-for="actionEntry, index of visibleEntries"
+				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
 				:action-entry="actionEntry"
