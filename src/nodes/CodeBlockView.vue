@@ -116,6 +116,13 @@ export default {
 		showPreview() {
 			return this.supportPreview && (this.viewMode === 'preview' || this.viewMode === 'side-by-side')
 		},
+		defaultMode() {
+			if (this.isEditable) {
+				return 'side-by-side'
+			} else {
+				return this.supportPreview() ? 'code' : 'preview'
+			}
+		},
 	},
 	watch: {
 		'node.textContent'() {
@@ -135,7 +142,7 @@ export default {
 
 			const textContent = this.node?.textContent || ''
 			if (textContent.trim() === '') {
-				this.viewMode = this.isEditable ? 'side-by-side' : 'code'
+				this.viewMode = this.defaultMode
 				this.$refs.preview.innerHTML = ''
 			}
 
