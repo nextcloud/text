@@ -147,7 +147,7 @@ jobs:
           cat data/nextcloud.log
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           record: '${{ !!matrix.run-in-parallel }}' # only on pull requests
           parallel: '${{ !!matrix.run-in-parallel }}' # only on pull requests
@@ -160,7 +160,6 @@ jobs:
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
           COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          npm_package_name: ${{ env.APP_NAME }}
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
