@@ -166,6 +166,8 @@
     "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
     "Edit" : "Редагувати",
     "Add description" : "Додати опис",
+    "\"{name}\" already exist!" : "\"{name}\" вже присутній!",
+    "Created \"{name}\"" : "Створено \"{name}\"",
     "Front matter" : "Передня справа",
     "Document save status" : "Статус збереження документа",
     "Update Link" : "Оновити посилання",
