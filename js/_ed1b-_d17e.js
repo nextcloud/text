@@ -1,1 +1,0 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["_ed1b-_d17e"],{52361:()=>{},94616:()=>{}}]);
