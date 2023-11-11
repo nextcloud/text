@@ -58,7 +58,7 @@ describe('Mobile actions', {
 		getRemainItem('formatting-help').click()
 
 		cy.get('[data-text-el="formatting-help"]').should('be.visible')
-		cy.get('[data-text-el="formatting-help"]').find('button[aria-label="Close modal"]').click()
+		cy.get('[data-text-el="formatting-help"]').find('button.modal-container__close').click()
 		cy.get('[data-text-el="formatting-help"]').should('not.exist')
 	})
 })
