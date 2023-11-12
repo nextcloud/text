@@ -176,6 +176,6 @@ OC.L10N.register(
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Source language" : "Ausgangssprache",
     "Target language" : "Zielsprache",
-    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …"
+    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json …"
 },
 "nplurals=2; plural=(n != 1);");
