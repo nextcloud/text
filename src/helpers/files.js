@@ -32,6 +32,7 @@ import store from '../store/index.js'
 import { getCurrentUser } from '@nextcloud/auth'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
+import { dirname } from 'path'
 
 import FilePlusSvg from '@mdi/svg/svg/file-plus.svg'
 
@@ -147,6 +148,8 @@ const registerFileActionFallback = () => {
 
 }
 
+let newWorkspaceCreated = false
+
 export const addMenuRichWorkspace = () => {
 	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
@@ -188,9 +191,12 @@ export const addMenuRichWorkspace = () => {
 
 			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
 
-			// We need a timeout as an empty file list does not render the header RichWorkspace component
-			// so it is not catching the event that early
-			setTimeout(() => emit('files:node:created', file), 200)
+			if (contentNames.length === 0) {
+				// We currently have no way to reliably trigger the filelist header rendering
+				// When starting off in a new empty folder the header will only be rendered on a new PROPFIND
+				newWorkspaceCreated = file
+			}
+			emit('files:node:created', file)
 		},
 	})
 }
@@ -206,7 +212,9 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	render(el, folder, view) {
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
+		const path = newWorkspaceCreated ? dirname(newWorkspaceCreated.path) : folder.path
+		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
 
 		import('vue').then((module) => {
 			el.id = 'files-workspace-wrapper'
@@ -220,9 +228,9 @@ export const FilesWorkspaceHeader = new Header({
 			const View = Vue.extend(RichWorkspace)
 			vm = new View({
 				propsData: {
-					path: folder.path,
+					path,
 					hasRichWorkspace,
-					content: folder.attributes['rich-workspace'],
+					content,
 				},
 				store,
 			}).$mount(el)
@@ -230,6 +238,7 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	updated(folder, view) {
+		newWorkspaceCreated = false
 		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
 		vm.path = folder.path
 		vm.hasRichWorkspace = hasRichWorkspace
