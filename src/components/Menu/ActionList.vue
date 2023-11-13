@@ -37,8 +37,8 @@
 			<component :is="icon" :key="iconKey" />
 		</template>
 		<ActionSingle v-for="child in children"
-			:key="`child-${child.key}`"
 			:id="`${$menuID}-child-${child.key}`"
+			:key="`child-${child.key}`"
 			is-item
 			:action-entry="child"
 			v-on="$listeners"

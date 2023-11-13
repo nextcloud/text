@@ -188,10 +188,9 @@ export const addMenuRichWorkspace = () => {
 
 			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
 
-			emit('files:node:created', file)
-			setTimeout(() => {
-				emit('Text::showRichWorkspace', { autofocus: true })
-			}, 200)
+			// We need a timeout as an empty file list does not render the header RichWorkspace component
+			// so it is not catching the event that early
+			setTimeout(() => emit('files:node:created', file), 200)
 		},
 	})
 }
