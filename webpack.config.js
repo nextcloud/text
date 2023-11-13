@@ -61,7 +61,7 @@ webpackConfig.resolve.fallback = {
 // Load raw SVGs to be able to inject them via v-html
 webpackRules.RULE_ASSETS.test = /\.(png|jpe?g|gif|woff2?|eot|ttf)$/
 webpackRules.RULE_RAW_SVGS = {
-	test: /\.svg$/,
+	test: /@mdi\/svg/,
 	type: 'asset/source',
 }
 
