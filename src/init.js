@@ -1,6 +1,6 @@
 import { registerFileListHeaders, registerDavProperty } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
-import { FilesWorkspaceHeader } from './helpers/files.js'
+import { addMenuRichWorkspace, FilesWorkspaceHeader } from './helpers/files.js'
 import { linkTo } from '@nextcloud/router'
 
 __webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
@@ -12,5 +12,6 @@ registerDavProperty('nc:rich-workspace', { nc: 'http://nextcloud.org/ns' })
 registerDavProperty('nc:rich-workspace-file', { nc: 'http://nextcloud.org/ns' })
 
 if (workspaceAvailable) {
+	addMenuRichWorkspace()
 	registerFileListHeaders(FilesWorkspaceHeader)
 }
