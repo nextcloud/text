@@ -279,32 +279,6 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	}
 
 	/**
-	 * Serve the media files metadata in the editor
-	 */
-	#[NoAdminRequired]
-	#[PublicPage]
-	#[NoCSRFRequired]
-	#[RequireDocumentSession]
-	public function getMediaFileMetadata(string $mediaFileName, ?string $shareToken = null): DataResponse {
-		$documentId = $this->getSession()->getDocumentId();
-		try {
-			if ($shareToken) {
-				$metadata = $this->attachmentService->getMediaFileMetadataPublic($documentId, $mediaFileName, $shareToken);
-			} else {
-				$userId = $this->getSession()->getUserId();
-				$metadata = $this->attachmentService->getMediaFileMetadataPrivate($documentId, $mediaFileName, $userId);
-			}
-			if ($metadata === null) {
-				return new DataResponse('', Http::STATUS_NOT_FOUND);
-			}
-			return new DataResponse($metadata);
-		} catch (Exception $e) {
-			$this->logger->error('getMediaFileMetadata error', ['exception' => $e]);
-			return new DataResponse('', Http::STATUS_NOT_FOUND);
-		}
-	}
-
-	/**
 	 * Allow all supported mimetypes
 	 * Use mimetype detector for the other ones
 	 *
