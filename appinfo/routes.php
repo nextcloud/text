@@ -41,8 +41,6 @@ return [
 		['name' => 'Attachment#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
 		/** @see Controller\AttachmentController::getMediaFilePreview() */
 		['name' => 'Attachment#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
-		/** @see Controller\AttachmentController::getMediaFileMetadata() */
-		['name' => 'Attachment#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
 
 		/** @see Controller\SessionController::create() */
 		['name' => 'Session#create', 'url' => '/session/{documentId}/create', 'verb' => 'PUT'],
