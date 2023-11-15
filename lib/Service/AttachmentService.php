@@ -202,60 +202,6 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $userId
-	 *
-	 * @return array|null
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws InvalidPathException
-	 * @throws NoUserException
-	 */
-	public function getMediaFileMetadataPrivate(int $documentId, string $mediaFileName, string $userId): ?array {
-		$textFile = $this->getTextFile($documentId, $userId);
-		return $this->getMediaFileMetadata($mediaFileName, $textFile);
-	}
-
-	/**
-	 * @param int $documentId
-	 * @param string $mediaFileName
-	 * @param string $shareToken
-	 *
-	 * @return array|null
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws InvalidPathException
-	 * @throws NoUserException
-	 */
-	public function getMediaFileMetadataPublic(int $documentId, string $mediaFileName, string $shareToken): ?array {
-		$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		return $this->getMediaFileMetadata($mediaFileName, $textFile);
-	}
-
-	/**
-	 * @param string $mediaFileName
-	 * @param File $textFile
-	 *
-	 * @return array|null
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 * @throws InvalidPathException
-	 * @throws NoUserException
-	 */
-	private function getMediaFileMetadata(string $mediaFileName, File $textFile): ?array {
-		$attachmentFolder = $this->getAttachmentDirectoryForFile($textFile, true);
-		$mediaFile = $attachmentFolder->get($mediaFileName);
-		if ($mediaFile instanceof File) {
-			return [
-				'size' => Util::humanFileSize($mediaFile->getSize()),
-				'mtime' => $mediaFile->getMTime(),
-			];
-		}
-		return null;
-	}
-
-	/**
 	 * @param int          $documentId
 	 * @param string|null  $userId
 	 * @param Session|null $session
