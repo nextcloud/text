@@ -277,39 +277,26 @@ export default {
 			this.errorMessage = t('text', 'Unsupported image type')
 			return
 		}
-		this.init()
+		this.loadPreview()
 			.catch(this.onImageLoadFailure)
 	},
 	methods: {
-		async init() {
-			const candidates = await this.$attachmentResolver.resolve(this.src)
-			return this.load(candidates)
-		},
-		async load(candidates) {
-			const [candidate, ...fallbacks] = candidates
-			return this.loadPreview(candidate).catch((e) => {
-				if (fallbacks.length > 0) {
-					return this.load(fallbacks)
-					// TODO if fallback works, rewrite the url with correct document ID
-				}
-				return Promise.reject(e)
-			})
-		},
-		async loadPreview(candidate) {
+		async loadPreview() {
+			const attachment = await this.$attachmentResolver.resolve(this.src)
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
-					this.imageUrl = candidate.previewUrl
+					this.imageUrl = attachment.previewUrl
 					this.imageLoaded = true
 					this.loaded = true
-					this.attachmentType = candidate.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
-					this.attachmentSize = candidate.size
-					resolve(candidate.previewUrl)
+					this.attachmentType = attachment.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+					this.attachmentSize = attachment.size
+					resolve(attachment.previewUrl)
 				}
 				img.onerror = (e) => {
-					reject(new LoadImageError(e, candidate.previewUrl))
+					reject(new LoadImageError(e, attachment.previewUrl))
 				}
-				img.src = candidate.previewUrl
+				img.src = attachment.previewUrl
 			})
 		},
 		onImageLoadFailure(err) {

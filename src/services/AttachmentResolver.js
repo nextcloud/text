@@ -87,31 +87,31 @@ export default class AttachmentResolver {
 		}
 
 		if (attachment) {
-			return [attachment]
+			return attachment
 		}
 
 		if (isDirectUrl(src)) {
-			return [{
+			return {
 				isImage: true,
 				previewUrl: src,
 				fullUrl: src,
-			}]
+			}
 		}
 
 		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
-			return [{
+			return {
 				isImage: true,
 				previewUrl: this.#previewUrl(src),
 				fullUrl: src,
-			}]
+			}
 		}
 
 		// Fallback: Return DAV url
-		return [{
+		return {
 			isImage: true,
 			previewUrl: this.#davUrl(src),
 			fullUrl: this.#davUrl(src),
-		}]
+		}
 	}
 
 	#textApiParams() {
