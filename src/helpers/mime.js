@@ -20,18 +20,6 @@
  *
  */
 
-const mimetypesImages = [
-	'image/png',
-	'image/jpeg',
-	'image/jpg',
-	'image/gif',
-	'image/x-xbitmap',
-	'image/x-ms-bmp',
-	'image/bmp',
-	'image/svg+xml',
-	'image/webp',
-]
-
 const openMimetypesMarkdown = [
 	'text/markdown',
 ]
@@ -68,7 +56,6 @@ if (!OC.appswebroots?.richdocuments && !OC.appswebroots?.onlyoffice) {
 const openMimetypes = [...openMimetypesMarkdown, ...openMimetypesPlainText]
 
 export {
-	mimetypesImages,
 	openMimetypes,
 	openMimetypesMarkdown,
 	openMimetypesPlainText,
