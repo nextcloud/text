@@ -22,10 +22,7 @@
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
-import axios from '@nextcloud/axios'
-import { formatFileSize } from '@nextcloud/files'
 
-import { logger } from '../helpers/logger.js'
 import store from '../store/index.js'
 
 const setAttachmentList = (val) => store.dispatch('text/setAttachmentList', val)
@@ -80,13 +77,6 @@ export default class AttachmentResolver {
 				attachment = findAttachment(imageFileName)
 			}
 
-			if (!attachment) {
-				// Native attachment not found. Let's stop here.
-				return []
-			}
-		}
-
-		if (attachment) {
 			return attachment
 		}
 
@@ -98,54 +88,12 @@ export default class AttachmentResolver {
 			}
 		}
 
-		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
-			return {
-				isImage: true,
-				previewUrl: this.#previewUrl(src),
-				fullUrl: src,
-			}
-		}
-
 		// Fallback: Return DAV url
 		return {
 			isImage: true,
 			previewUrl: this.#davUrl(src),
 			fullUrl: this.#davUrl(src),
 		}
-	}
-
-	#textApiParams() {
-		if (this.#session) {
-			return {
-				documentId: this.#session.documentId,
-				sessionId: this.#session.id,
-				sessionToken: this.#session.token,
-			}
-		}
-
-		return {}
-	}
-
-	#previewUrl(src) {
-		const imageFileId = getQueryVariable(src, 'fileId')
-		const path = this.#filePath(src)
-		const fileQuery = `file=${encodeURIComponent(path)}`
-		const query = fileQuery + '&x=1024&y=1024&a=true'
-
-		if (this.#user && imageFileId) {
-			return generateUrl(`/core/preview?fileId=${imageFileId}&${query}`)
-		}
-
-		if (this.#user) {
-			return generateUrl(`/core/preview.png?${query}`)
-		}
-
-		if (this.#shareToken) {
-			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}?${query}`)
-		}
-
-		logger.error('No way to authenticate image retrival - need to be logged in or provide a token')
-		return src
 	}
 
 	#davUrl(src) {
@@ -184,17 +132,6 @@ export default class AttachmentResolver {
 		return pathNormalize(f)
 	}
 
-	async getMetadata(src) {
-		const headResponse = await axios.head(src)
-		const mimeType = headResponse.headers['content-type']
-		const size = formatFileSize(headResponse.headers['content-length'])
-		return { mimeType, size }
-	}
-
-	getMimeUrl(mimeType) {
-		return mimeType ? OC.MimeType.getIconUrl(mimeType) : null
-	}
-
 }
 
 /**
@@ -211,40 +148,4 @@ function isDirectUrl(src) {
 		|| src.startsWith('data:')
 		|| src.match(/^(\/index.php)?\/core\/preview/)
 		|| src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
-}
-
-/**
- * Check if the given url has a preview
- *
- * @param {string} src - the url to check
- */
-function hasPreview(src) {
-	return getQueryVariable(src, 'hasPreview') === 'true'
-}
-
-/**
- * Extract the value of a query variable from the given url
- *
- * @param {string} src - the url to extract query variable from
- * @param {string} variable - name of the variable to read out
- */
-function getQueryVariable(src, variable) {
-	const query = src.split('?')[1]
-
-	if (typeof query === 'undefined') {
-		return
-	}
-
-	const vars = query.split(/[&#]/)
-
-	if (typeof vars === 'undefined') {
-		return
-	}
-
-	for (let i = 0; i < vars.length; i++) {
-		const pair = vars[i].split('=')
-		if (decodeURIComponent(pair[0]) === variable) {
-			return decodeURIComponent(pair[1])
-		}
-	}
 }

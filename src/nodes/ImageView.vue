@@ -109,13 +109,6 @@
 			</div>
 			<div v-else class="image-view__cant_display">
 				<transition name="fade">
-					<div v-show="loaded">
-						<a :href="internalLinkOrImage" target="_blank">
-							<span v-if="!isSupportedImage">{{ alt }}</span>
-						</a>
-					</div>
-				</transition>
-				<transition v-if="isSupportedImage" name="fade">
 					<div v-show="loaded" class="image__caption">
 						<input ref="altInput"
 							type="text"
@@ -141,12 +134,11 @@ import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import store from '../mixins/store.js'
 import { useAttachmentResolver } from '../components/Editor.provider.js'
-import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 import { emit } from '@nextcloud/event-bus'
-import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 
+/*
 const getQueryVariable = (src, variable) => {
 	const query = src.split('?')[1]
 	if (typeof query === 'undefined') {
@@ -163,6 +155,7 @@ const getQueryVariable = (src, variable) => {
 		}
 	}
 }
+ */
 
 class LoadImageError extends Error {
 
@@ -221,22 +214,15 @@ export default {
 			return this.showDeleteIcon && !this.isMediaAttachment
 		},
 		canDisplayImage() {
-			if (!this.isSupportedImage) {
-				return false
-			}
-
 			if (this.failed && this.loaded) {
 				return true
 			}
 
 			return this.loaded && this.imageLoaded
 		},
+		/*
 		imageFileId() {
 			return getQueryVariable(this.src, 'fileId')
-		},
-		isSupportedImage() {
-			return typeof this.mime === 'undefined'
-				|| IMAGE_MIMES.indexOf(this.mime) !== -1
 		},
 		internalLinkOrImage() {
 			if (this.imageFileId) {
@@ -244,6 +230,7 @@ export default {
 			}
 			return this.src
 		},
+		 */
 		src: {
 			get() {
 				return this.node.attrs.src || ''
@@ -274,14 +261,6 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
-		if (!this.isSupportedImage) {
-			// TODO check if hasPreview and render a file preview if available
-			this.failed = true
-			this.imageLoaded = false
-			this.loaded = true
-			this.errorMessage = t('text', 'Unsupported image type')
-			return
-		}
 		this.loadPreview()
 			.catch(this.onImageLoadFailure)
 	},

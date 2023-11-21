@@ -79,23 +79,6 @@ describe('Image View', () => {
 				.should('have.attr', 'src')
 				.should('contain', `/dav/files/${user.userId}/github.png`)
 		})
-
-		it('with preview', () => {
-			cy.getFile('github.png')
-				.should('have.attr', 'data-cy-files-list-row-fileid')
-				.then(imageId => {
-					const fileName = `${Cypress.currentTest.title}.md`
-
-					createMarkdown(fileName, `# from image id\n\n ![${imageId}](github.png?fileId=${imageId}&hasPreview=true)`)
-
-					cy.openFile(fileName, { force: true })
-
-					cy.getContent()
-						.find('[data-component="image-view"] img')
-						.should('have.attr', 'src')
-						.should('contains', `core/preview?fileId=${imageId}&file=${encodeURIComponent('/github.png')}`, { timeout: 5000 })
-				})
-		})
 	})
 
 	describe('fail to load', () => {
