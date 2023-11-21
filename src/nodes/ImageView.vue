@@ -35,7 +35,7 @@
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
 							class="media"
-							@click="handleImageClick(src)">
+							@click="handleImageClick">
 							<div class="media__wrapper">
 								<img v-show="loaded"
 									:src="imageUrl"
@@ -61,7 +61,7 @@
 							<img v-show="loaded"
 								:src="imageUrl"
 								class="image__main"
-								@click="handleImageClick(src)"
+								@click="handleImageClick"
 								@load="onLoaded">
 						</div>
 					</template>
@@ -99,7 +99,7 @@
 					</div>
 				</transition>
 				<div class="image__modal">
-					<ShowImageModal :images="embeddedImagesList"
+					<ShowImageModal :images="imageAttachments"
 						:start-index="imageIndex"
 						:show="showImageModal"
 						@close="showImageModal=false" />
@@ -133,7 +133,9 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
+import { mapGetters } from 'vuex'
 import { NcButton } from '@nextcloud/vue'
+import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import store from '../mixins/store.js'
 import { useAttachmentResolver } from '../components/Editor.provider.js'
@@ -189,6 +191,7 @@ export default {
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
 		return {
+			attachment: null,
 			imageLoaded: false,
 			loaded: false,
 			failed: false,
@@ -198,12 +201,14 @@ export default {
 			attachmentType: null,
 			attachmentSize: null,
 			showImageModal: false,
-			embeddedImagesList: [],
 			imageIndex: null,
 			isEditable: false,
 		}
 	},
 	computed: {
+		...mapGetters({
+			imageAttachments: 'text/imageAttachments',
+		}),
 		isMediaAttachment() {
 			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 		},
@@ -280,21 +285,21 @@ export default {
 	},
 	methods: {
 		async loadPreview() {
-			const attachment = await this.$attachmentResolver.resolve(this.src)
+			this.attachment = await this.$attachmentResolver.resolve(this.src)
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
-					this.imageUrl = attachment.previewUrl
+					this.imageUrl = this.attachment.previewUrl
 					this.imageLoaded = true
 					this.loaded = true
-					this.attachmentType = attachment.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
-					this.attachmentSize = attachment.size
-					resolve(attachment.previewUrl)
+					this.attachmentType = this.attachment.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+					this.attachmentSize = this.attachment.size
+					resolve(this.attachment.previewUrl)
 				}
 				img.onerror = (e) => {
-					reject(new LoadImageError(e, attachment.previewUrl))
+					reject(new LoadImageError(e, this.attachment.previewUrl))
 				}
-				img.src = attachment.previewUrl
+				img.src = this.attachment.previewUrl
 			})
 		},
 		onImageLoadFailure(err) {
@@ -317,23 +322,14 @@ export default {
 		onLoaded() {
 			this.loaded = true
 		},
-		async handleImageClick(src) {
-			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"].image-view'))
-			let basename, relativePath
-
-			for (const imgv of imageViews) {
-				relativePath = imgv.getAttribute('data-src')
-				basename = relativePath.split('/').slice(-1).join()
-				const response = await this.$attachmentResolver.resolve(relativePath, true)
-				const { url: source } = response.shift()
-				this.embeddedImagesList.push({
-					source,
-					basename,
-					relativePath,
-				})
+		async handleImageClick() {
+			this.imageIndex = this.imageAttachments.findIndex(i => (i.isImage && i.fileId === this.attachment.fileId))
+			if (this.imageIndex !== -1) {
+				this.showImageModal = true
+			} else {
+				console.error('Could not find image in attachments list', this.attachment)
+				showError(t('text', 'Could not find image in attachments list.'))
 			}
-			this.imageIndex = this.embeddedImagesList.findIndex(image => image.relativePath === src)
-			this.showImageModal = true
 		},
 		onDelete() {
 			emit('text:image-node:delete', this.imageUrl)
