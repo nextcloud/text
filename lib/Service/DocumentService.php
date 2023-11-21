@@ -436,7 +436,11 @@ class DocumentService {
 	 */
 	public function getFileForSession(Session $session, ?string $shareToken = null): File {
 		if (!$session->isGuest()) {
-			return $this->getFileById($session->getDocumentId(), $session->getUserId());
+			try {
+				return $this->getFileById($session->getDocumentId(), $session->getUserId());
+			} catch (NotFoundException) {
+				// We may still have a user session but on a public share link so move on
+			}
 		}
 
 		if ($shareToken === null) {
