@@ -48,6 +48,7 @@ export const textModule = {
 		attachmentList: [],
 	},
 	getters: {
+		imageAttachments: (state) => state.attachmentList.filter(a => a.isImage),
 		findAttachment: (state) => (fileName) => state.attachmentList.find(a => a.name === fileName),
 	},
 	mutations: {
