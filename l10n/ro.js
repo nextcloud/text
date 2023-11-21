@@ -20,6 +20,8 @@ OC.L10N.register(
     "Saved" : "Salvat",
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
+    "Quoted text" : "Text citat",
+    "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
     "to" : "către",
     "Replace" : "Înlocuiește",
     "Source code" : "Cod sursă",
