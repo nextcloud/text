@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<NodeViewWrapper>
+	<NodeViewWrapper :contenteditable="isEditable">
 		<figure class="image image-view"
 			data-component="image-view"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
@@ -74,7 +74,7 @@
 						v-show="loaded"
 						class="image__caption"
 						:title="alt">
-						<figcaption v-if="!editable">
+						<figcaption v-if="!isEditable">
 							{{ alt }}
 						</figcaption>
 						<div v-else class="image__caption__wrapper">
@@ -118,7 +118,7 @@
 						<input ref="altInput"
 							type="text"
 							:value="alt"
-							:disabled="!editable"
+							:disabled="!isEditable"
 							@blur="updateAlt"
 							@keyup.enter="updateAlt">
 					</div>
@@ -202,17 +202,15 @@ export default {
 			showImageModal: false,
 			embeddedImagesList: [],
 			imageIndex: null,
+			isEditable: false,
 		}
 	},
 	computed: {
 		isMediaAttachment() {
 			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 		},
-		editable() {
-			return this.editor.isEditable
-		},
 		showDeleteIcon() {
-			return this.editable && this.showIcons
+			return this.isEditable && this.showIcons
 		},
 		showImageDeleteIcon() {
 			return this.showDeleteIcon && !this.isMediaAttachment
@@ -270,6 +268,10 @@ export default {
 		},
 	},
 	beforeMount() {
+		this.isEditable = this.editor.isEditable
+		this.editor.on('update', ({ editor }) => {
+			this.isEditable = editor.isEditable
+		})
 		if (!this.isSupportedImage) {
 			// TODO check if hasPreview and render a file preview if available
 			this.failed = true
