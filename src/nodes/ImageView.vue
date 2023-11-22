@@ -36,7 +36,7 @@
 						<div v-if="isMediaAttachment"
 							contenteditable="false"
 							class="media"
-							@click="handleImageClick">
+							@click="handleAttachmentClick">
 							<div class="media__wrapper">
 								<img v-show="loaded"
 									:src="imageUrl"
@@ -201,14 +201,6 @@ export default {
 
 			return this.loaded && this.imageLoaded
 		},
-		/*
-		internalLinkOrImage() {
-			if (this.attachment.fileId) {
-				return generateUrl('/f/' + this.attachment.fileId)
-			}
-			return this.src
-		},
-		 */
 		src: {
 			get() {
 				return this.node.attrs.src || ''
@@ -276,6 +268,25 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
+		},
+		async handleAttachmentClick() {
+			// Open in viewer if possible
+			if (OCA.Viewer
+				// Viewer is not in use
+				&& !OCA.Viewer.file
+				// Viewer supports mimetype
+				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
+				// Attachment has davPath (i.e. is native attachment)
+				&& this.attachment.davPath
+				// Not in share (in public share we probably don't have DAV access)
+				&& !this.attachment.shareToken) {
+				// Viewer exists, is not in use and supports mimetype
+				OCA.Viewer.open({ path: this.attachment.davPath })
+				return
+			}
+
+			// Download file
+			window.location.assign(this.attachment.fullUrl)
 		},
 		async handleImageClick() {
 			this.imageIndex = this.imageAttachments.findIndex(i => (i.isImage && i.fileId === this.attachment.fileId))

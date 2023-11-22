@@ -76,7 +76,10 @@ export default class AttachmentResolver {
 				attachment = findAttachment(imageFileName)
 			}
 
-			return attachment
+			if (attachment) {
+				return attachment
+			}
+
 		}
 
 		// Direct URLs
