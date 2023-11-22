@@ -251,17 +251,14 @@ class AttachmentService {
 				'mimetype' => $node->getMimeType(),
 				'mtime' => $node->getMTime(),
 				'isImage' => $isImage,
+				'shareToken' => $shareToken,
+				'davPath' => '/' . implode('/', array_slice(explode('/', $node->getPath()), 3)),
 				'fullUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name) . '&preferRawImage=1'
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
 				'previewUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name)
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
-				/*
-					: ($isImage
-						? $this->urlGenerator->linkTo('', 'remote.php') . '/dav/files/' . $userId . '/' . implode('/', array_map('rawurlencode', array_slice(explode('/', $node->getPath()), 3)))
-						: ''),
-				*/
 			];
 		}
 
