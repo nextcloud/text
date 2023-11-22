@@ -11,6 +11,7 @@ use OCA\Text\Exception\InvalidSessionException;
 trait TSessionAwareController {
 	private ?Session $textSession = null;
 	private ?Document $document = null;
+	private ?string $userId = null;
 
 	public function setSession(?Session $session): void {
 		$this->textSession = $session;
@@ -18,6 +19,10 @@ trait TSessionAwareController {
 
 	public function setDocument(?Document $document): void {
 		$this->document = $document;
+	}
+
+	public function setUserId(?string $userId): void {
+		$this->userId = $userId;
 	}
 
 	public function getSession(): Session {
@@ -36,4 +41,11 @@ trait TSessionAwareController {
 		return $this->document;
 	}
 
+	public function getUserId(): string {
+		if ($this->userId === null) {
+			throw new InvalidSessionException();
+		}
+
+		return $this->userId;
+	}
 }

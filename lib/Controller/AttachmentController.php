@@ -26,8 +26,10 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
+use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
+use OCA\Text\Middleware\Attribute\RequireDocumentSessionUserOrShareToken;
 use OCA\Text\Service\AttachmentService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
@@ -83,15 +85,22 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionUserOrShareToken]
 	public function getAttachmentList(?string $shareToken = null): DataResponse {
-		$documentId = $this->getSession()->getDocumentId();
-		if ($shareToken) {
-			$attachments = $this->attachmentService->getAttachmentList($documentId, null, $this->getSession(), $shareToken);
-		} else {
-			$userId = $this->getSession()->getUserId();
-			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $this->getSession(), null);
+		$documentId = $this->getDocument()->getId();
+		try {
+			$session = $this->getSession();
+		} catch (InvalidSessionException) {
+			$session = null;
 		}
+
+		if ($shareToken) {
+			$attachments = $this->attachmentService->getAttachmentList($documentId, null, $session, $shareToken);
+		} else {
+			$userId = $this->getUserId();
+			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $session, null);
+		}
+
 		return new DataResponse($attachments);
 	}
 
@@ -183,16 +192,16 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionUserOrShareToken]
 	public function getImageFile(string $imageFileName, ?string $shareToken = null,
 		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
-		$documentId = $this->getSession()->getDocumentId();
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$imageFile = $this->attachmentService->getImageFilePublic($documentId, $imageFileName, $shareToken, $preferRawImage === 1);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId, $preferRawImage === 1);
 			}
 			return $imageFile !== null
@@ -218,15 +227,15 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionUserOrShareToken]
 	public function getMediaFile(string $mediaFileName, ?string $shareToken = null): DataResponse|DataDownloadResponse {
-		$documentId = $this->getSession()->getDocumentId();
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$mediaFile = $this->attachmentService->getMediaFilePublic($documentId, $mediaFileName, $shareToken);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$mediaFile = $this->attachmentService->getMediaFile($documentId, $mediaFileName, $userId);
 			}
 			return $mediaFile !== null
@@ -249,15 +258,15 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionUserOrShareToken]
 	public function getMediaFilePreview(string $mediaFileName, ?string $shareToken = null) {
-		$documentId = $this->getSession()->getDocumentId();
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$preview = $this->attachmentService->getMediaFilePreviewPublic($documentId, $mediaFileName, $shareToken);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$preview = $this->attachmentService->getMediaFilePreview($documentId, $mediaFileName, $userId);
 			}
 			if ($preview === null) {
