@@ -255,6 +255,10 @@ export default {
 
 	.rich-workspace--preview {
 		margin-top: 44px;
+
+		&:deep(div[contenteditable='false']) {
+			margin: 0;
+		}
 	}
 
 	/* For subfolders, where there are no Recommendations */
