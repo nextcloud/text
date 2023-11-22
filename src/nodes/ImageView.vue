@@ -138,25 +138,6 @@ import { emit } from '@nextcloud/event-bus'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 
-/*
-const getQueryVariable = (src, variable) => {
-	const query = src.split('?')[1]
-	if (typeof query === 'undefined') {
-		return
-	}
-	const vars = query.split(/[&#]/)
-	if (typeof vars === 'undefined') {
-		return
-	}
-	for (let i = 0; i < vars.length; i++) {
-		const pair = vars[i].split('=')
-		if (decodeURIComponent(pair[0]) === variable) {
-			return decodeURIComponent(pair[1])
-		}
-	}
-}
- */
-
 class LoadImageError extends Error {
 
 	constructor(reason, imageUrl) {
@@ -221,12 +202,9 @@ export default {
 			return this.loaded && this.imageLoaded
 		},
 		/*
-		imageFileId() {
-			return getQueryVariable(this.src, 'fileId')
-		},
 		internalLinkOrImage() {
-			if (this.imageFileId) {
-				return generateUrl('/f/' + this.imageFileId)
+			if (this.attachment.fileId) {
+				return generateUrl('/f/' + this.attachment.fileId)
 			}
 			return this.src
 		},
@@ -250,10 +228,6 @@ export default {
 					alt,
 				})
 			},
-		},
-		token() {
-			return document.getElementById('sharingToken')
-				&& document.getElementById('sharingToken').value
 		},
 	},
 	beforeMount() {
