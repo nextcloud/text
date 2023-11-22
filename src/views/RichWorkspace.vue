@@ -250,7 +250,6 @@ export default {
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
 		z-index: 61;
 		position: relative;
-		min-height: 30vh;
 	}
 
 	.rich-workspace--preview {
