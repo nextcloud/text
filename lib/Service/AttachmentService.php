@@ -231,8 +231,9 @@ class AttachmentService {
 		$shareTokenUrlString = $shareToken
 			? '&shareToken=' . urlencode($shareToken)
 			: '';
-		// TODO: session might be null
-		$sessionUrlParamsBase = '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . urlencode($session->getToken()) . $shareTokenUrlString;
+		$urlParamsBase = $session
+			? '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . urlencode($session->getToken()) . $shareTokenUrlString
+			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
 		foreach ($attachmentDir->getDirectoryListing() as $node) {
@@ -250,11 +251,16 @@ class AttachmentService {
 				'mtime' => $node->getMTime(),
 				'isImage' => $isImage,
 				'fullUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $sessionUrlParamsBase . '&imageFileName=' . urlencode($name) . '&preferRawImage=1'
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $sessionUrlParamsBase . '&mediaFileName=' . urlencode($name),
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name) . '&preferRawImage=1'
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
 				'previewUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $sessionUrlParamsBase . '&imageFileName=' . urlencode($name)
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $sessionUrlParamsBase . '&mediaFileName=' . urlencode($name),
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name)
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
+				/*
+					: ($isImage
+						? $this->urlGenerator->linkTo('', 'remote.php') . '/dav/files/' . $userId . '/' . implode('/', array_map('rawurlencode', array_slice(explode('/', $node->getPath()), 3)))
+						: ''),
+				*/
 			];
 		}
 

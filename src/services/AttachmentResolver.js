@@ -34,7 +34,6 @@ export default class AttachmentResolver {
 	#user
 	#shareToken
 	#currentDirectory
-	#attachmentDirectory
 	#documentId
 	#initAttachmentListPromise
 
@@ -47,7 +46,6 @@ export default class AttachmentResolver {
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
 		this.#documentId = fileId ?? session?.documentId
-		this.#attachmentDirectory = `.attachments.${this.#documentId}`
 		this.#initAttachmentListPromise = this.#updateAttachmentList()
 	}
 
@@ -64,8 +62,9 @@ export default class AttachmentResolver {
 		let attachment
 
 		// Native attachment
-		if (src.match(/^\.attachments\.\d+\//)) {
-			const imageFileName = decodeURIComponent(src.replace(`${this.#attachmentDirectory}/`, '').split('?')[0])
+		const directoryRegexp = /^\.attachments\.\d+\//
+		if (src.match(directoryRegexp)) {
+			const imageFileName = decodeURIComponent(src.replace(directoryRegexp, '').split('?')[0])
 
 			// Wait until attachment list got fetched (initialized by constructor)
 			await this.#initAttachmentListPromise
