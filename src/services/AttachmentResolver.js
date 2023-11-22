@@ -79,6 +79,7 @@ export default class AttachmentResolver {
 			return attachment
 		}
 
+		// Direct URLs
 		if (isDirectUrl(src)) {
 			return {
 				isImage: true,
@@ -87,7 +88,7 @@ export default class AttachmentResolver {
 			}
 		}
 
-		// Fallback: Return DAV url
+		// Fallback: Return DAV url (e.g. for relative paths to images)
 		return {
 			isImage: true,
 			previewUrl: this.#davUrl(src),
@@ -134,10 +135,8 @@ export default class AttachmentResolver {
 }
 
 /**
- * Check if a url can be loaded directly - i.e. is one of
- * - remote url
- * - data url
- * - preview url
+ * Check if src is a direct URL.
+ * Full URLs only work for images on the same Nextcloud instance (due to CORS restrictions).
  *
  * @param {string} src - the url to check
  */
@@ -145,6 +144,4 @@ function isDirectUrl(src) {
 	return src.startsWith('http://')
 		|| src.startsWith('https://')
 		|| src.startsWith('data:')
-		|| src.match(/^(\/index.php)?\/core\/preview/)
-		|| src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
 }
