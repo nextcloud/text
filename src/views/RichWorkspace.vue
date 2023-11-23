@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<div v-if="enabled && file !== null"
+	<div v-if="enabled && localHasRichWorkspace"
 		id="rich-workspace"
 		:class="{'focus': focus, 'dark': darkTheme }">
 		<RichTextReader v-if="!loaded || !ready" :content="content" class="rich-workspace--preview" />
@@ -80,6 +80,8 @@ export default {
 	},
 	data() {
 		return {
+			// Keep track of a local copy of the hasRichWorkspace state as it might change after intitial rendering (e.g. when adding/removing the readme)
+			localHasRichWorkspace: false,
 			focus: false,
 			folder: null,
 			file: null,
@@ -105,8 +107,12 @@ export default {
 				document.querySelector('#rich-workspace .text-editor__main').scrollTo(0, 0)
 			}
 		},
+		hasRichWorkspace(value) {
+			this.localHasRichWorkspace = value
+		},
 	},
 	mounted() {
+		this.localHasRichWorkspace = this.hasRichWorkspace
 		if (this.enabled && this.hasRichWorkspace) {
 			this.getFileInfo()
 		}
@@ -137,6 +143,7 @@ export default {
 			this.unlistenKeydownEvents()
 		},
 		reset() {
+			this.localHasRichWorkspace = false
 			this.file = null
 			this.focus = false
 			this.$nextTick(() => {
@@ -164,6 +171,7 @@ export default {
 					this.editing = true
 					this.loaded = true
 					this.autofocus = autofocus || false
+					this.localHasRichWorkspace = true
 					return true
 				})
 				.catch((error) => {
@@ -212,19 +220,20 @@ export default {
 		},
 		onFileCreated(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
-				this.showRichWorkspace()
+				this.localHasRichWorkspace = true
+				this.getFileInfo(true)
 			}
 		},
 		onFileDeleted(node) {
 			if (node.path === this.file.path) {
-				this.hideRichWorkspace()
+				this.localHasRichWorkspace = false
 			}
 		},
 		onFileRenamed(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
-				this.showRichWorkspace()
+				this.localHasRichWorkspace = true
 			} else if (node.fileid === this.file?.id && node.path !== this.file?.path) {
-				this.hideRichWorkspace()
+				this.localHasRichWorkspace = false
 			}
 		},
 	},
@@ -241,11 +250,14 @@ export default {
 		transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
 		z-index: 61;
 		position: relative;
-		min-height: 30vh;
 	}
 
 	.rich-workspace--preview {
 		margin-top: 44px;
+
+		&:deep(div[contenteditable='false']) {
+			margin: 0;
+		}
 	}
 
 	/* For subfolders, where there are no Recommendations */

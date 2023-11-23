@@ -212,9 +212,16 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	render(el, folder, view) {
+		if (vm) {
+			// Enforce destroying of the old rendering and rerender as the FilesListHeader calls render on every folder change
+			vm.$destroy()
+			vm = null
+		}
 		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
 		const path = newWorkspaceCreated ? dirname(newWorkspaceCreated.path) : folder.path
 		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
+
+		newWorkspaceCreated = false
 
 		import('vue').then((module) => {
 			el.id = 'files-workspace-wrapper'
@@ -239,6 +246,11 @@ export const FilesWorkspaceHeader = new Header({
 
 	updated(folder, view) {
 		newWorkspaceCreated = false
+
+		// Currently there is not much use in updating the vue instance props since render is called on every folder change
+		// removing the rendered element from the DOM
+		// This is only relevant if switching to a folder that has no content as then the render function is not called
+
 		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
 		vm.path = folder.path
 		vm.hasRichWorkspace = hasRichWorkspace
