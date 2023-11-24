@@ -78,11 +78,6 @@ OC.L10N.register(
     "Smart picker" : "Smart Vælger",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
-    "Update Link" : "Opdater link",
-    "Add Link" : "Tilføj link",
-    "Link file" : "Link fil",
-    "Remove Link" : "Fjern link",
-    "Select file to link to" : "Vælg den fil, du vil linke til",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

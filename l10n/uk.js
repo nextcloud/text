@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "\"{name}\" вже присутній!",
     "Created \"{name}\"" : "Створено \"{name}\"",
     "Front matter" : "Передня справа",
-    "Document save status" : "Статус збереження документа",
-    "Update Link" : "Оновити посилання",
-    "Add Link" : "Додати посилання",
-    "Link file" : "Файл посилання",
-    "Remove Link" : "Вилучити посилання",
-    "Select file to link to" : "Виберіть файл для посилання",
-    "Show rich workspaces" : "Показувати опис каталогу",
     "Source language" : "Мова оригіналу",
     "Target language" : "Цільова мова",
+    "Show rich workspaces" : "Показувати опис каталогу",
     "e.g. php, javascript, json, ..." : "напр., PHP, JavaScript, JSON ..."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

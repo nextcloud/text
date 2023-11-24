@@ -169,15 +169,9 @@
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
     "Front matter" : "前言",
-    "Document save status" : "文件儲存狀態",
-    "Update Link" : "更新連結",
-    "Add Link" : "新增連結",
-    "Link file" : "連結檔案",
-    "Remove Link" : "移除連結",
-    "Select file to link to" : "選擇要連結的檔案",
-    "Show rich workspaces" : "顯示較多功能的工作區",
     "Source language" : "來源語言",
     "Target language" : "目標語言",
+    "Show rich workspaces" : "顯示較多功能的工作區",
     "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

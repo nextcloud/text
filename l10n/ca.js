@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "«{name}» ja existeix!",
     "Created \"{name}\"" : "S'ha creat «{name}»",
     "Front matter" : "Text preliminar",
-    "Document save status" : "Estat de desament del document",
-    "Update Link" : "Actualitza l'enllaç",
-    "Add Link" : "Afegeix un enllaç",
-    "Link file" : "Enllaça un fitxer",
-    "Remove Link" : "Suprimeix l'enllaç",
-    "Select file to link to" : "Seleccioneu el fitxer que voleu enllaçar",
-    "Show rich workspaces" : "Mostra els espais de treball enriquits",
     "Source language" : "Llengua d'origen",
     "Target language" : "Llengua de destinació",
+    "Show rich workspaces" : "Mostra els espais de treball enriquits",
     "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…"
 },
 "nplurals=2; plural=(n != 1);");

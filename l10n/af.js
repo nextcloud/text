@@ -42,8 +42,6 @@ OC.L10N.register(
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
-    "Edit" : "Wysig",
-    "Link file" : "Koppel lêer",
-    "Select file to link to" : "Kies lêer om na te koppel"
+    "Edit" : "Wysig"
 },
 "nplurals=2; plural=(n != 1);");

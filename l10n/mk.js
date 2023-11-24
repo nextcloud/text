@@ -101,12 +101,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Add description" : "Додади опис",
-    "Document save status" : "Статус на зачувување на документот",
-    "Update Link" : "Ажурирај линк",
-    "Add Link" : "Додади линк",
-    "Link file" : "Поврзи датотека (Линк)",
-    "Remove Link" : "Острани линк",
-    "Select file to link to" : "Изберете датотека за линк до неа",
     "Show rich workspaces" : "Прикажи збогатен работен простор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

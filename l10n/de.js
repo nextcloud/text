@@ -167,15 +167,9 @@ OC.L10N.register(
     "Edit" : "Bearbeiten",
     "Add description" : "Beschreibung hinzufügen",
     "Front matter" : "Titelei",
-    "Document save status" : "Speicherstatus des Dokuments",
-    "Update Link" : "Link aktualisieren",
-    "Add Link" : "Link hinzufügen",
-    "Link file" : "Datei verknüpfen",
-    "Remove Link" : "Link entfernen",
-    "Select file to link to" : "Wähle die zu verknüpfende Datei aus",
-    "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Source language" : "Ausgangssprache",
     "Target language" : "Zielsprache",
+    "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "e.g. php, javascript, json, ..." : "z. B. php, javascript, json …"
 },
 "nplurals=2; plural=(n != 1);");

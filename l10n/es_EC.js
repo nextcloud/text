@@ -153,14 +153,8 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Add description" : "Agregar descripción",
     "Front matter" : "Materias principales",
-    "Document save status" : "Estado de guardado del documento",
-    "Update Link" : "Actualizar enlace",
-    "Add Link" : "Agregar enlace",
-    "Link file" : "Enlazar archivo",
-    "Remove Link" : "Eliminar enlace",
-    "Select file to link to" : "Seleccionar archivo para enlazar",
-    "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos",
     "Source language" : "Lenguaje de origen",
-    "Target language" : "Lenguaje de destino"
+    "Target language" : "Lenguaje de destino",
+    "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
