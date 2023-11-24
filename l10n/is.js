@@ -64,8 +64,6 @@ OC.L10N.register(
     "Control" : "Stjórnun",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Edit" : "Breyta",
-    "Link file" : "Tengja skrá",
-    "Select file to link to" : "Veldu skrá til að tengja í",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

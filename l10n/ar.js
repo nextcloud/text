@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
     "Front matter" : "المادة التقديمية front matter",
-    "Document save status" : "حالة حفظ المستتند",
-    "Update Link" : "تحديث الرابط",
-    "Add Link" : "أضِف رابطاً",
-    "Link file" : "ملف الرابط",
-    "Remove Link" : "إحذِف الرابط",
-    "Select file to link to" : "إختر ملفّاً للربط مع",
-    "Show rich workspaces" : "عرض توصيف مساحة العمل rich workspaces",
     "Source language" : "اللغة الأصلية",
     "Target language" : "اللغة المطلوبة",
+    "Show rich workspaces" : "عرض توصيف مساحة العمل rich workspaces",
     "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ..."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

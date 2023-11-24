@@ -141,15 +141,9 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Edit" : "Muokkaa",
     "Add description" : "Lisää kuvaus",
-    "Document save status" : "Asiakirjan tallennuksen tila",
-    "Update Link" : "Päivitä linkki",
-    "Add Link" : "Lisää linkki",
-    "Link file" : "Linkitä tiedosto",
-    "Remove Link" : "Poista linkki",
-    "Select file to link to" : "Valitse tiedosto johon linkitetään",
-    "Show rich workspaces" : "Näytä rikastetut työtilat",
     "Source language" : "Lähdekieli",
     "Target language" : "Kohdekieli",
+    "Show rich workspaces" : "Näytä rikastetut työtilat",
     "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

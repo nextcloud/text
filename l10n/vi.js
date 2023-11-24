@@ -93,8 +93,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
     "Add description" : "Thêm mô tả",
-    "Link file" : "Liên kết tệp tin",
-    "Select file to link to" : "Chọn tệp để liên kết đến",
     "Show rich workspaces" : "Hiển thị không gian làm việc"
 },
 "nplurals=1; plural=0;");

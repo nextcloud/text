@@ -69,8 +69,6 @@
     "Formatting" : "Oblikovanje",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
-    "Link file" : "Poveznica datoteke",
-    "Select file to link to" : "Odaberi datoteku za povezivanje",
     "Show rich workspaces" : "Prikaži bogate radne okoline"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

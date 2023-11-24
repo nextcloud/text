@@ -167,15 +167,9 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Add description" : "Adicionar descrição",
     "Front matter" : "Matéria de frente",
-    "Document save status" : "Status de salvamento do documento",
-    "Update Link" : "Atualizar Link",
-    "Add Link" : "Adicionar Link",
-    "Link file" : "Vincular um arquivo",
-    "Remove Link" : "Remover Link",
-    "Select file to link to" : "Selecione o arquivo a vincular",
-    "Show rich workspaces" : "Mostrar espaços de trabalho avançados",
     "Source language" : "Source language",
     "Target language" : "Target language",
+    "Show rich workspaces" : "Mostrar espaços de trabalho avançados",
     "e.g. php, javascript, json, ..." : "por exemplo. php, javascript, json,..."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "\"{name}\" zaten var!",
     "Created \"{name}\"" : "\"{name}\" oluşturuldu",
     "Front matter" : "Açılış bölümleri ",
-    "Document save status" : "Belge kaydetme durumu",
-    "Update Link" : "Bağlantıyı güncelle",
-    "Add Link" : "Bağlantı ekle",
-    "Link file" : "Dosya bağla",
-    "Remove Link" : "Bağlantıyı kaldır",
-    "Select file to link to" : "Bağlantı verilecek dosyayı seçin",
-    "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Source language" : "Kaynak dil",
     "Target language" : "Hedef dil",
+    "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "e.g. php, javascript, json, ..." : "php, javascript, json gibi..."
 },
 "nplurals=2; plural=(n > 1);");

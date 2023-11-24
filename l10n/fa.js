@@ -167,15 +167,9 @@ OC.L10N.register(
     "Edit" : "ویرایش",
     "Add description" : "Add description",
     "Front matter" : "Front matter",
-    "Document save status" : "Document save status",
-    "Update Link" : "Update Link",
-    "Add Link" : "Add Link",
-    "Link file" : "Link file",
-    "Remove Link" : "Remove Link",
-    "Select file to link to" : "Select file to link to",
-    "Show rich workspaces" : "Show rich workspaces",
     "Source language" : "Source language",
     "Target language" : "Target language",
+    "Show rich workspaces" : "Show rich workspaces",
     "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n > 1);");

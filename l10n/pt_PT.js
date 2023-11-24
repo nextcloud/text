@@ -55,8 +55,6 @@ OC.L10N.register(
     "Control" : "Controle",
     "Formatting" : "Formação ",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
-    "Edit" : "Editar",
-    "Remove Link" : "Remover hiperligação",
-    "Select file to link to" : "Selecione o ficheiro a vincular a"
+    "Edit" : "Editar"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
