@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-      # implemented since 28, once branched off, add your stable branch here
       - main
-      # - stable28
+      - stable28
 
 concurrency:
   group: update-node-dist-${{ github.head_ref || github.ref || github.run_id }}
