@@ -168,15 +168,9 @@ OC.L10N.register(
     "Edit" : "Szerkesztés",
     "Add description" : "Leírás hozzáadása",
     "Front matter" : "Előlap",
-    "Document save status" : "Dokumentum mentési állapota",
-    "Update Link" : "Hivatkozás frissítése",
-    "Add Link" : "Hivatkozás hozzáadása",
-    "Link file" : "Fájl hivatkozás készítése",
-    "Remove Link" : "Hivatkozás eltávolítása",
-    "Select file to link to" : "Válassza ki a hivatkozandó fájlt",
-    "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
     "Source language" : "Forrásnyelv",
     "Target language" : "Célnyelv",
+    "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
     "e.g. php, javascript, json, ..." : "pl. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",
     "Front matter" : "Wstęp",
-    "Document save status" : "Status zapisywania dokumentu",
-    "Update Link" : "Aktualizuj link",
-    "Add Link" : "Dodaj link",
-    "Link file" : "Link pliku",
-    "Remove Link" : "Usuń link",
-    "Select file to link to" : "Wybierz plik dla linku",
-    "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Source language" : "Język źródłowy",
     "Target language" : "Język docelowy",
+    "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "e.g. php, javascript, json, ..." : "np. php, javascript, json, …"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

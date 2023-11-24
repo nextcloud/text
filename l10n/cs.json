@@ -169,15 +169,9 @@
     "\"{name}\" already exist!" : "„{name}“ už existuje!",
     "Created \"{name}\"" : "Vytvořeno „{name}“",
     "Front matter" : "Front matter",
-    "Document save status" : "Stav uložení dokumentu",
-    "Update Link" : "Aktualizovat odkaz",
-    "Add Link" : "Přidat odkaz",
-    "Link file" : "Odkázat na soubor",
-    "Remove Link" : "Odebrat odkaz",
-    "Select file to link to" : "Vyberte soubor na který odkázat",
-    "Show rich workspaces" : "Zobrazit rich workspaces",
     "Source language" : "Zdrojový jazyk",
     "Target language" : "Cílový jazyk",
+    "Show rich workspaces" : "Zobrazit rich workspaces",
     "e.g. php, javascript, json, ..." : "např. php, javascript, json, …"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

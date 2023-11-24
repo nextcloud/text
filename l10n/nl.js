@@ -109,11 +109,6 @@ OC.L10N.register(
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
-    "Update Link" : "Link bijwerken",
-    "Add Link" : "Link toevoegen",
-    "Link file" : "Link bestand",
-    "Remove Link" : "Verwijder Link",
-    "Select file to link to" : "Selecteer een bestand om naar te linken",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

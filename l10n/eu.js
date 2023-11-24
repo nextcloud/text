@@ -167,15 +167,9 @@ OC.L10N.register(
     "Edit" : "Editatu",
     "Add description" : "Gehitu deskribapena",
     "Front matter" : "Aurreko gaia",
-    "Document save status" : "Dokumentuaren gordeketa egoera",
-    "Update Link" : "Eguneratu esteka",
-    "Add Link" : "Gehitu esteka",
-    "Link file" : "Estekatu fitxategia",
-    "Remove Link" : "Kendu esteka",
-    "Select file to link to" : "Hautatu fitxategia estekatzeko",
-    "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Source language" : "Jatorrizko hizkuntza",
     "Target language" : "Helburuko hizkuntza",
+    "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");

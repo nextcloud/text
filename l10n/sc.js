@@ -67,8 +67,6 @@ OC.L10N.register(
     "Formatting" : "Formatatzione",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
-    "Link file" : "Ligòngiu a archìviu",
-    "Select file to link to" : "Seletziona s'archìviu de ligongiare",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas"
 },
 "nplurals=2; plural=(n != 1);");

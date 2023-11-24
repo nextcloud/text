@@ -166,15 +166,9 @@
     "Edit" : "Редактировать",
     "Add description" : "Добавить описание",
     "Front matter" : "Передний план",
-    "Document save status" : "Состояние сохранения документа",
-    "Update Link" : "Обновить ссылку",
-    "Add Link" : "Добавить ссылку",
-    "Link file" : "Добавить ссылку на файл",
-    "Remove Link" : "Удалить ссылку",
-    "Select file to link to" : "Выберете файл для создания ссылки",
-    "Show rich workspaces" : "Показывать дополнительные сведения",
     "Source language" : "Исходный язык",
     "Target language" : "Целевой язык",
+    "Show rich workspaces" : "Показывать дополнительные сведения",
     "e.g. php, javascript, json, ..." : "например, php, javascript, json, ..."
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

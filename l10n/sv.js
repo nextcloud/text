@@ -169,15 +169,9 @@ OC.L10N.register(
     "Add description" : "Lägg till beskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",
-    "Document save status" : "Dokumentets spara status",
-    "Update Link" : "Uppdatera länk",
-    "Add Link" : "Lägg till länk",
-    "Link file" : "Länka fil",
-    "Remove Link" : "Ta bort länk",
-    "Select file to link to" : "Välj fil att länka till",
-    "Show rich workspaces" : "Visa utökade arbetsytor",
     "Source language" : "Källspråk",
     "Target language" : "Målspråk",
+    "Show rich workspaces" : "Visa utökade arbetsytor",
     "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");

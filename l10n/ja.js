@@ -76,10 +76,6 @@ OC.L10N.register(
     "Formatting" : "フォーマット",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Edit" : "編集",
-    "Add Link" : "リンクを追加",
-    "Link file" : "ファイルをリンク",
-    "Remove Link" : "リンクを削除",
-    "Select file to link to" : "リンク先のファイルを選択",
     "Show rich workspaces" : "各フォルダのReadmeを表示"
 },
 "nplurals=1; plural=0;");

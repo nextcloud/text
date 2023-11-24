@@ -13,8 +13,8 @@ OC.L10N.register(
     "Redo" : "Refacer",
     "Info" : "Información",
     "Edit" : "Editar",
-    "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos",
     "Source language" : "Llingua d'orixe",
-    "Target language" : "Llingua de destín"
+    "Target language" : "Llingua de destín",
+    "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos"
 },
 "nplurals=2; plural=(n != 1);");
