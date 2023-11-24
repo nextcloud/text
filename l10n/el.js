@@ -97,11 +97,6 @@ OC.L10N.register(
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
-    "Update Link" : "Ενημέρωση συνδέσμου",
-    "Add Link" : "Προσθήκη Συνδέσμου",
-    "Link file" : "Σύνδεσμος αρχείου",
-    "Remove Link" : "Αφαίρεση Συνδέσμου",
-    "Select file to link to" : "Επιλέξτε αρχείο για δημιουργία συνδέσμου",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");

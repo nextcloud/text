@@ -104,11 +104,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Edit" : "编辑",
     "Add description" : "添加描述",
-    "Update Link" : "更新链接",
-    "Add Link" : "添加链接",
-    "Link file" : "链接文件",
-    "Remove Link" : "移除链接",
-    "Select file to link to" : "选择文件链接至",
     "Show rich workspaces" : "显示富文本编辑区"
 },
 "nplurals=1; plural=0;");

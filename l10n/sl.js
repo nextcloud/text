@@ -151,14 +151,8 @@ OC.L10N.register(
     "Edit" : "Uredi",
     "Add description" : "Dodaj opis",
     "Front matter" : "Uvodne strani",
-    "Document save status" : "Stanje shranjevanja dokumenta",
-    "Update Link" : "Posodobi povezavo",
-    "Add Link" : "Dodaj povezavo",
-    "Link file" : "Datoteka povezave",
-    "Remove Link" : "Odstrani povezavo",
-    "Select file to link to" : "Izbor datoteke za povezavo",
-    "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Source language" : "Izvorni jezik",
-    "Target language" : "Ciljni jezik"
+    "Target language" : "Ciljni jezik",
+    "Show rich workspaces" : "Pokaži obogaten delovni prostor"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

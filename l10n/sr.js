@@ -171,15 +171,9 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
     "Front matter" : "Уводни део",
-    "Document save status" : "Статус чувања документа",
-    "Update Link" : "Ажурирај линк",
-    "Add Link" : "дај линк",
-    "Link file" : "Увежи фајл",
-    "Remove Link" : "Уклони линк",
-    "Select file to link to" : "Одаберите фајл на који да направите везу",
-    "Show rich workspaces" : "Прикажи обогаћена радна места",
     "Source language" : "Изворни језик",
     "Target language" : "Циљни језик",
+    "Show rich workspaces" : "Прикажи обогаћена радна места",
     "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ..."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

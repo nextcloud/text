@@ -138,14 +138,8 @@ OC.L10N.register(
     "Edit" : "Upraviť",
     "Add description" : "Pridať popis",
     "Front matter" : "Predná strana",
-    "Document save status" : "Stav uloženia dokumentu",
-    "Update Link" : "Aktualizovať odkaz",
-    "Add Link" : "Pridať odkaz",
-    "Link file" : "Súbor pre odkaz",
-    "Remove Link" : "Odstrániť odkaz",
-    "Select file to link to" : "Vyberte súbor na ktorý poslať odkaz",
-    "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Source language" : "Zdrojový jazyk prekladu",
-    "Target language" : "Cieľový jazyk"
+    "Target language" : "Cieľový jazyk",
+    "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

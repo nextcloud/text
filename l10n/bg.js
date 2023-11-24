@@ -150,14 +150,8 @@ OC.L10N.register(
     "Edit" : "Променяне",
     "Add description" : "Добавяне на описание",
     "Front matter" : "Предно съдържание",
-    "Document save status" : "Състояние на запис на документа",
-    "Update Link" : "Актуализиране на връзка",
-    "Add Link" : "Добавяне на връзка",
-    "Link file" : "Файл с връзка",
-    "Remove Link" : "Премахване на връзка",
-    "Select file to link to" : "Избор на файл, към които да поставите връзка",
-    "Show rich workspaces" : "Показване  на обогатени работни пространства",
     "Source language" : "Език на източника",
-    "Target language" : "Целеви език"
+    "Target language" : "Целеви език",
+    "Show rich workspaces" : "Показване  на обогатени работни пространства"
 },
 "nplurals=2; plural=(n != 1);");

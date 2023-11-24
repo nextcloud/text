@@ -167,15 +167,9 @@
     "Edit" : "Modifica",
     "Add description" : "Aggiungi descrizione",
     "Front matter" : "Frontespizio",
-    "Document save status" : "Stato salvataggio documento",
-    "Update Link" : "Aggiorna collegamento",
-    "Add Link" : "Aggiungi collegamento",
-    "Link file" : "Collegamento a file",
-    "Remove Link" : "Rimuovi collegamento",
-    "Select file to link to" : "Seleziona il file da collegare",
-    "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Source language" : "Lingua di origine",
     "Target language" : "Lingua di destinazione",
+    "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "e.g. php, javascript, json, ..." : "es. php, javascript, json, ..."
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
