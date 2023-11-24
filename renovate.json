@@ -14,6 +14,7 @@
   "ignoreUnstable": false,
   "baseBranches": [
     "main",
+    "stable28",
     "stable27",
     "stable26"
   ],
@@ -85,16 +86,7 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "matchBaseBranches": ["stable27", "stable26", "stable25"],
-      "enabled": false
-    },
-    {
-      "groupName": "tiptap",
-      "matchBaseBranches": ["stable25"],
-      "matchPackagePrefixes": [
-        "@tiptap/",
-        "prosemirror-"
-      ],
+      "matchBaseBranches": ["stable28", "stable27", "stable26"],
       "enabled": false
     },
     {
