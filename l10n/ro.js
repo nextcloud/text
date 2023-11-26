@@ -28,6 +28,7 @@ OC.L10N.register(
     "Replace" : "Înlocuiește",
     "Source code" : "Cod sursă",
     "Undo" : "Anulează ultima acțiune",
+    "Redo" : "Repetă",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",
