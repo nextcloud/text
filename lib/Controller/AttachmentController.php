@@ -207,7 +207,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			return $imageFile !== null
 				? new DataDownloadResponse(
 					$imageFile->getContent(),
-					(string) Http::STATUS_OK,
+					$imageFile->getName(),
 					$this->getSecureMimeType($imageFile->getMimeType())
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
@@ -241,7 +241,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			return $mediaFile !== null
 				? new DataDownloadResponse(
 					$mediaFile->getContent(),
-					(string) Http::STATUS_OK,
+					$mediaFile->getName(),
 					$this->getSecureMimeType($mediaFile->getMimeType())
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
@@ -275,7 +275,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			if ($preview['type'] === 'file') {
 				return new DataDownloadResponse(
 					$preview['file']->getContent(),
-					(string) Http::STATUS_OK,
+					$mediaFileName,
 					$this->getSecureMimeType($preview['file']->getMimeType())
 				);
 			} elseif ($preview['type'] === 'icon') {
