@@ -229,10 +229,10 @@ class AttachmentService {
 		}
 
 		$shareTokenUrlString = $shareToken
-			? '&shareToken=' . urlencode($shareToken)
+			? '&shareToken=' . rawurlencode($shareToken)
 			: '';
 		$urlParamsBase = $session
-			? '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . urlencode($session->getToken()) . $shareTokenUrlString
+			? '?documentId=' . $documentId . '&sessionId=' . $session->getId() . '&sessionToken=' . rawurlencode($session->getToken()) . $shareTokenUrlString
 			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
@@ -253,11 +253,11 @@ class AttachmentService {
 				'shareToken' => $shareToken,
 				'davPath' => '/' . implode('/', array_slice(explode('/', $node->getPath()), 3)),
 				'fullUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name) . '&preferRawImage=1'
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
 				'previewUrl' => $isImage
-					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . urlencode($name)
-					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . urlencode($name),
+					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name)
+					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFilePreview') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
 			];
 		}
 

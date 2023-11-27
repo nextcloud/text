@@ -108,7 +108,7 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
 				.find('img')
 				.should('have.attr', 'src')
 				.should('contain', 'apps/text/' + srcPathEnd + '?documentId=' + documentId)
-				.should('contain', srcFileNameParam + '=' + encodeURIComponent(fileName))
+				.should('contain', srcFileNameParam + '=' + fixedEncodeURIComponent(fileName))
 
 			return isImage
 				? cy.wrap($el)
