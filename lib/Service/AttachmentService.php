@@ -237,6 +237,7 @@ class AttachmentService {
 			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
+		$userFolder = $userId ? $this->rootFolder->getUserFolder($userId) : null;
 		foreach ($attachmentDir->getDirectoryListing() as $node) {
 			if (!($node instanceof File)) {
 				// Ignore anything but files
@@ -251,8 +252,7 @@ class AttachmentService {
 				'mimetype' => $node->getMimeType(),
 				'mtime' => $node->getMTime(),
 				'isImage' => $isImage,
-				'shareToken' => $shareToken,
-				'davPath' => '/' . implode('/', array_slice(explode('/', $node->getPath()), 3)),
+				'davPath' => $userFolder?->getRelativePath($node->getPath()),
 				'fullUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
