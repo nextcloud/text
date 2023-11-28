@@ -77,9 +77,9 @@ describe('Sync service provider', function() {
 	it('recovers from a dropped message', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' })
 			.as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
 			.as('sync')
 		cy.wait('@push')
 		cy.then(() => {
@@ -95,7 +95,7 @@ describe('Sync service provider', function() {
 		})
 		cy.intercept({
 			method: 'POST',
-			url: '**/apps/text/session/push',
+			url: '**/apps/text/session/*/push',
 		}, req => {
 			if (req.body.steps) {
 				req.reply({ forceNetworkError: true })
@@ -114,7 +114,7 @@ describe('Sync service provider', function() {
 		})
 		cy.intercept({
 			method: 'POST',
-			url: '**/apps/text/session/push',
+			url: '**/apps/text/session/*/push',
 		}, req => {
 			if (req.body.steps) {
 				req.alias = 'alive'
@@ -143,9 +143,9 @@ describe('Sync service provider', function() {
 	it.skip('is not too chatty', function() {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/push' })
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' })
 			.as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
 			.as('sync')
 		cy.wait('@push')
 		cy.then(() => {

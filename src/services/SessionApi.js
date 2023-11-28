@@ -39,7 +39,7 @@ class SessionApi {
 	}
 
 	open({ fileId }) {
-		return axios.put(this.#url('session/create'), {
+		return axios.put(this.#url(`session/${fileId}/create`), {
 			fileId,
 			filePath: this.#options.filePath,
 			token: this.#options.shareToken,
@@ -109,7 +109,7 @@ export class Connection {
 	}
 
 	sync({ version }) {
-		return this.#post(this.#url('session/sync'), {
+		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,
@@ -117,7 +117,7 @@ export class Connection {
 	}
 
 	save({ version, autosaveContent, documentState, force, manualSave }) {
-		return this.#post(this.#url('session/save'), {
+		return this.#post(this.#url(`session/${this.#document.id}/save`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			version,
@@ -129,7 +129,7 @@ export class Connection {
 	}
 
 	push({ steps, version, awareness }) {
-		return this.#post(this.#url('session/push'), {
+		return this.#post(this.#url(`session/${this.#document.id}/push`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			steps,
@@ -140,7 +140,7 @@ export class Connection {
 
 	// TODO: maybe return a new connection here so connections have immutable state
 	update(guestName) {
-		return this.#post(this.#url('session'), {
+		return this.#post(this.#url(`session/${this.#document.id}/session`), {
 			...this.#defaultParams,
 			guestName,
 		}).then(({ data }) => {
@@ -173,7 +173,7 @@ export class Connection {
 	}
 
 	close() {
-		const promise = this.#post(this.#url('session/close'), this.#defaultParams)
+		const promise = this.#post(this.#url(`session/${this.#document.id}/close`), this.#defaultParams)
 		this.closed = true
 		return promise
 	}
