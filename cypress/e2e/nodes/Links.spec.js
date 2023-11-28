@@ -140,11 +140,12 @@ describe('test link marks', function() {
 
 		describe('link to local file', function() {
 			// Helper to reduce duplicated code, checking inserting with and without selected text
-			const checkLinkFile = (filename, text) => {
+			const checkLinkFile = (filename, text, isFolder = false) => {
 				cy.getSubmenuEntry('insert-link', 'insert-link-file').click()
 				cy.get('.file-picker').within(() => {
-					cy.get(`[data-testid="file-list-row"][data-filename="${fileName}"]`).click()
-					cy.contains('button', `Choose ${fileName}`).click()
+					cy.get(`[data-testid="file-list-row"][data-filename="${filename}"]`).click()
+					cy.get(isFolder ? '.empty-content__name' : '.file-picker__files')
+					cy.contains('button', isFolder ? 'Choose' : `Choose ${filename}`).click()
 				})
 
 				return cy.getContent()
@@ -170,11 +171,11 @@ describe('test link marks', function() {
 						cy.get('.modal-name').should('include.text', fileName)
 					})
 			})
-			it.skip('link to directory', () => {
+			it('link to directory', () => {
 				cy.createFolder(`${window.__currentDirectory}/dummy folder`)
 				cy.getFile(fileName).then($el => {
 					cy.getContent().type(`${text}{selectAll}`)
-					checkLinkFile('dummy folder', text)
+					checkLinkFile('dummy folder', text, true)
 					cy.get('@winOpen')
 						.should('have.been.calledOnce')
 				})
