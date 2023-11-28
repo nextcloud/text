@@ -1,12 +1,44 @@
 import AttachmentResolver from './../../services/AttachmentResolver.js'
+import axios from '@nextcloud/axios'
+
+const fileId = 4173
+const sessionId = 456
+const sessionToken = 'mySessionToken'
+const a1name = 'group pic.jpg'
+const a1nameEncoded = 'group%20pic.jpg'
+const a2name = 'archive.tar.gz'
+function initAttachmentResolver(args) {
+	const attachmentList = [{
+		fileId: 1234,
+		name: a1name,
+		size: '1 KB',
+		mimetype: 'image/jpg',
+		mtime: 1,
+		isImage: true,
+		fullUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}&preferRawImage=1"`,
+		previewUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}"`
+	}, {
+		fileId: 1236,
+		name: a2name,
+		size: '1 KB',
+		mimetype: 'application/gzip',
+		mtime: 1,
+		isImage: false,
+		fullUrl: `http://nextcloud.local/apps/text/media?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
+		previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`
+	}]
+	const axiosSpy = jest.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
+	const resolver = new AttachmentResolver(args)
+	expect(axiosSpy).toHaveBeenCalled()
+	return resolver
+}
 
 describe('Image resolver', () => {
 
-	const fileId = 4173
 	const session = {
 		documentId: fileId,
-		id: 456,
-		token: 'mySessionToken',
+		id: sessionId,
+		token: sessionToken,
 	}
 	const user = {
 		uid: 'user-uid',
@@ -20,28 +52,11 @@ describe('Image resolver', () => {
 	})
 
 	it('handles .attachments urls to own fileId via Text API', async () => {
-		const src = `.attachments.${session.documentId}/group%20pic.jpg`
-		const resolver = new AttachmentResolver({ session })
-		const [candidate, fallbackCandidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
-		expect(fallbackCandidate.type).toBe('media')
-		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
-		expect(fallbackCandidate.name).toBe('group pic.jpg')
-	})
-
-	it('handles .attachments urls to own fileId with token via Text API', async () => {
-		const src = `.attachments.${session.documentId}/group%20pic.jpg`
-		const resolver = new AttachmentResolver({
-			session,
-			shareToken,
-		})
-		const [candidate, fallbackCandidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&shareToken=myShareToken&preferRawImage=0')
-		expect(fallbackCandidate.type).toBe('media')
-		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg&shareToken=myShareToken')
-		expect(fallbackCandidate.name).toBe('group pic.jpg')
+		const src = `.attachments.${session.documentId}/${a1name}`
+		const resolver = initAttachmentResolver({ session })
+		const attachment = await resolver.resolve(src)
+		expect(attachment.isImage).toBe(true)
+		expect(attachment.name).toBe(a1name)
 	})
 
 	it('leaves urls unchanged if they can be loaded directly', async () => {
@@ -49,79 +64,30 @@ describe('Image resolver', () => {
 			'http://nextcloud.com/pic.jpg',
 			'https://nextcloud.com/pic.jpg',
 			'data:4173456789ASDF',
-			'/core/preview.png?file=pic.jpg&x=1024&y=1024&a=true',
-			'/apps/files_sharing/publicpreview/ASDFWERASDF?x=1024&y=1024&a=true',
 		]
-		const resolver = new AttachmentResolver({ })
+		const resolver = initAttachmentResolver({ })
 		for (const src of sources) {
-			const [candidate] = await resolver.resolve(src)
-			expect(candidate.type).toBe('image')
-			expect(candidate.url).toBe(src)
+			const attachment = await resolver.resolve(src)
+			expect(attachment.isImage).toBe(true)
+			expect(attachment.previewUrl).toBe(src)
+			expect(attachment.fullUrl).toBe(src)
 		}
 	})
 
-	it('uses fileId for preview', async () => {
-		const src = '/Media/photo.jpeg?fileId=7#mimetype=image%2Fjpeg&hasPreview=true'
-		const resolver = new AttachmentResolver({ user })
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toContain('/core/preview?fileId=7')
-	})
-
-	it('uses .png endpoint if no fileId is given', async () => {
-		const src = '/Media/photo.jpeg?mimetype=image%2Fjpeg&hasPreview=true'
-		const resolver = new AttachmentResolver({ user })
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/core/preview.png?file=%2FMedia%2Fphoto.jpeg&x=1024&y=1024&a=true')
-	})
-
-	it('retrieves public preview by path', async () => {
-		const src = '/Media/photo.jpeg?fileId=7#mimetype=image%2Fjpeg&hasPreview=true'
-		const resolver = new AttachmentResolver({
-			shareToken: 'SHARE_TOKEN'
-		})
-		const [candidate] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('/nc-webroot/apps/files_sharing/publicpreview/SHARE_TOKEN?file=%2FMedia%2Fphoto.jpeg&x=1024&y=1024&a=true')
-	})
-
-	it('handles .attachments urls with special characters', async () => {
-		const src = `.attachments.${session.documentId + 1}/group #1/test #2.jpg`
-		const resolver = new AttachmentResolver({ session, user, currentDirectory: '/myCurrentDir #1' })
-		const [candidate, fallbackCandidate, secondFallback] = await resolver.resolve(src)
-
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/myCurrentDir%20%231/.attachments.4174/group%20%231/test%20%232.jpg')
-	})
-
 	it('handles .attachments urls to different fileId via webdav with text API fallback', async () => {
-		const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
-		const resolver = new AttachmentResolver({ session, user, currentDirectory })
-		const [candidate, fallbackCandidate, secondFallback] = await resolver.resolve(src)
-		expect(candidate.type).toBe('image')
-		expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4174/group%20pic.jpg')
-		expect(fallbackCandidate.type).toBe('image')
-		expect(fallbackCandidate.url).toBe('/nc-webroot/apps/text/image?documentId=4173&sessionId=456&sessionToken=mySessionToken&imageFileName=group%20pic.jpg&preferRawImage=0')
-		expect(secondFallback.type).toBe('media')
-		expect(secondFallback.url).toBe('/nc-webroot/apps/text/mediaPreview?documentId=4173&sessionId=456&sessionToken=mySessionToken&mediaFileName=group%20pic.jpg')
-		expect(secondFallback.name).toBe('group pic.jpg')
+		const src = `.attachments.${session.documentId + 1}/${a2name}`
+		const resolver = initAttachmentResolver({ session })
+		const attachment = await resolver.resolve(src)
+		expect(attachment.isImage).toBe(false)
+		expect(attachment.name).toBe(a2name)
 	})
 
-	describe('missing session', () => {
-		it('handles .attachments urls via webdav with mimetype URL fallback', async () => {
-			const src = `.attachments.${session.documentId + 1}/group%20pic.jpg`
-			const resolver = new AttachmentResolver({ user, currentDirectory, fileId })
-
-			jest.spyOn(resolver, 'getMetadata').mockReturnValue({mimetype: 'application/pdf', size: '1 KB'})
-			jest.spyOn(resolver, 'getMimeUrl').mockReturnValue('/nc-webroot/apps/theming/img/core/filetypes/application-pdf.svg')
-			const [candidate, fallbackCandidate] = await resolver.resolve(src)
-			expect(candidate.type).toBe('image')
-			expect(candidate.url).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/.attachments.4174/group%20pic.jpg')
-			expect(fallbackCandidate.type).toBe('media')
-			expect(fallbackCandidate.url).toBe('/nc-webroot/apps/theming/img/core/filetypes/application-pdf.svg')
-		})
-
+	it('handles non-native urls wia webdav', async () => {
+		const src = `/path/to/some image.png`
+		const resolver = new AttachmentResolver({ user, currentDirectory })
+		const attachment = await resolver.resolve(src)
+		expect(attachment.isImage).toBe(true)
+		expect(attachment.previewUrl).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
 	})
 
 })
