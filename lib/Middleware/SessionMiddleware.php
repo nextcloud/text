@@ -5,7 +5,7 @@ namespace OCA\Text\Middleware;
 use OCA\Text\Controller\ISessionAwareController;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
-use OCA\Text\Middleware\Attribute\RequireDocumentSessionUserOrShareToken;
+use OCA\Text\Middleware\Attribute\RequireDocumentSessionOrUserOrShareToken;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Controller;
@@ -36,7 +36,7 @@ class SessionMiddleware extends \OCP\AppFramework\Middleware {
 
 		$reflectionMethod = new \ReflectionMethod($controller, $methodName);
 
-		if (!empty($reflectionMethod->getAttributes(RequireDocumentSessionUserOrShareToken::class))) {
+		if (!empty($reflectionMethod->getAttributes(RequireDocumentSessionOrUserOrShareToken::class))) {
 			try {
 				$this->assertDocumentSession($controller);
 			} catch (InvalidSessionException) {

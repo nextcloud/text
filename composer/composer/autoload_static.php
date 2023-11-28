@@ -60,7 +60,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Listeners\\NodeCopiedListener' => __DIR__ . '/..' . '/../lib/Listeners/NodeCopiedListener.php',
         'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
         'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSession' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentSession.php',
-        'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSessionUserOrShareToken' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentSessionUserOrShareToken.php',
+        'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSessionOrUserOrShareToken' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentSessionOrUserOrShareToken.php',
         'OCA\\Text\\Middleware\\SessionMiddleware' => __DIR__ . '/..' . '/../lib/Middleware/SessionMiddleware.php',
         'OCA\\Text\\Migration\\ResetSessionsBeforeYjs' => __DIR__ . '/..' . '/../lib/Migration/ResetSessionsBeforeYjs.php',
         'OCA\\Text\\Migration\\Version010000Date20190617184535' => __DIR__ . '/..' . '/../lib/Migration/Version010000Date20190617184535.php',

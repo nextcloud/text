@@ -29,7 +29,7 @@ use Exception;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
-use OCA\Text\Middleware\Attribute\RequireDocumentSessionUserOrShareToken;
+use OCA\Text\Middleware\Attribute\RequireDocumentSessionOrUserOrShareToken;
 use OCA\Text\Service\AttachmentService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
@@ -85,7 +85,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	#[RequireDocumentSessionUserOrShareToken]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getAttachmentList(?string $shareToken = null): DataResponse {
 		$documentId = $this->getDocument()->getId();
 		try {
@@ -192,7 +192,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSessionUserOrShareToken]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getImageFile(string $imageFileName, ?string $shareToken = null,
 		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
 		$documentId = $this->getDocument()->getId();
@@ -227,7 +227,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSessionUserOrShareToken]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFile(string $mediaFileName, ?string $shareToken = null): DataResponse|DataDownloadResponse {
 		$documentId = $this->getDocument()->getId();
 
@@ -258,7 +258,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSessionUserOrShareToken]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFilePreview(string $mediaFileName, ?string $shareToken = null) {
 		$documentId = $this->getDocument()->getId();
 
