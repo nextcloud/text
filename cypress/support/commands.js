@@ -323,6 +323,11 @@ Cypress.Commands.add('openFolder', (name) => {
 	cy.wait(`@open-${name}`)
 })
 
+Cypress.Commands.add('getFileId', (fileName, params = {}) => {
+	return cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`)
+		.invoke('attr', 'data-cy-files-list-row-fileid')
+})
+
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] a[data-cy-files-list-row-name-link]`).click(params)
 })
