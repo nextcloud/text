@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2023 Julius Härtl <jus@bitgrid.net>
  *
- * @authorJulius Härtl <jus@bitgrid.net>
+ * @author Julius Härtl <jus@bitgrid.net>
  *
  * @license GNU AGPL version 3 or any later version
  *
