@@ -135,7 +135,7 @@ describe('Open test.md in viewer', function() {
 	})
 
 	it('makes use of the file id', function() {
-		cy.intercept({ method: 'PUT', url: '**/apps/text/public/session/create' })
+		cy.intercept({ method: 'PUT', url: '**/apps/text/public/session/*/create' })
 			.as('create')
 		cy.shareFile('/test2.md', { edit: true })
 			.then((token) => {

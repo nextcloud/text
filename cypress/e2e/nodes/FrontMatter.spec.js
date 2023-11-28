@@ -69,7 +69,7 @@ describe('Front matter support', function() {
 				expect(pre.length === 1)
 			})
 		cy.closeFile()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
 		cy.openFile('frontmatter.md')
 		cy.wait('@sync')
 		cy.wait('@sync')
