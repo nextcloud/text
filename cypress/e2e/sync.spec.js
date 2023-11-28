@@ -33,8 +33,8 @@ describe('Sync', () => {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 		cy.visit('/apps/files')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' }).as('sync')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/save' }).as('save')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as('save')
 		cy.openTestFile()
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.getContent().type('{moveToEnd}* Saving the doc saves the doc state{enter}')
@@ -63,7 +63,7 @@ describe('Sync', () => {
 
 	it('recovers from a short lost connection', () => {
 		let reconnect = false
-		cy.intercept('**/apps/text/session/*', (req) => {
+		cy.intercept('**/apps/text/session/*/*', (req) => {
 			if (reconnect) {
 				req.continue()
 				req.alias = 'alive'
@@ -79,7 +79,7 @@ describe('Sync', () => {
 				reconnect = true
 			})
 		cy.wait('@alive', { timeout: 30000 })
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/sync' })
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
 			.as('syncAfterRecovery')
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
@@ -97,7 +97,7 @@ describe('Sync', () => {
 
 	it('recovers from a lost and closed connection', () => {
 		let reconnect = false
-		cy.intercept('**/apps/text/session/*', (req) => {
+		cy.intercept('**/apps/text/session/*/*', (req) => {
 			if (req.url.includes('close') || req.url.includes('create') || reconnect) {
 				req.continue()
 				req.alias = 'syncAfterRecovery'
@@ -128,7 +128,7 @@ describe('Sync', () => {
 
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/create' })
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' })
 			.as('create')
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
