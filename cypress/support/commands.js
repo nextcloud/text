@@ -334,7 +334,7 @@ Cypress.Commands.add('openFileInShare', fileName => {
 })
 
 Cypress.Commands.add('closeFile', (params = {}) => {
-	cy.intercept({ method: 'POST', url: '**/apps/text/session/close' })
+	cy.intercept({ method: 'POST', url: '**/apps/text/session/*/close' })
 		.as('close')
 	cy.get('#viewer .modal-header button.header-close').click(params)
 	cy.get('#viewer .modal-header').should('not.exist')

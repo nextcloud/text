@@ -62,9 +62,9 @@ describe('direct editing', function() {
 	})
 
 	it('Open an existing file, edit it', () => {
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as('closeRequest')
-		cy.intercept({ method: 'POST', url: '**/session/push' }).as('push')
-		cy.intercept({ method: 'POST', url: '**/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/session/*/close' }).as('closeRequest')
+		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
 
 		createDirectEditingLink(user, 'empty.md')
 			.then((token) => {
@@ -90,9 +90,9 @@ describe('direct editing', function() {
 	})
 
 	it('Create a file, edit it', () => {
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as('closeRequest')
-		cy.intercept({ method: 'POST', url: '**/session/push' }).as('push')
-		cy.intercept({ method: 'POST', url: '**/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/session/*/close' }).as('closeRequest')
+		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
 
 		createDirectEditingLinkForNewFile(user, 'newfile.md')
 			.then((token) => {
@@ -119,9 +119,9 @@ describe('direct editing', function() {
 	})
 
 	it('Open an existing plain text file, edit it', () => {
-		cy.intercept({ method: 'POST', url: '**/session/close' }).as('closeRequest')
-		cy.intercept({ method: 'POST', url: '**/session/push' }).as('push')
-		cy.intercept({ method: 'POST', url: '**/session/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/session/*/close' }).as('closeRequest')
+		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
 
 		createDirectEditingLink(user, 'empty.txt')
 			.then((token) => {
