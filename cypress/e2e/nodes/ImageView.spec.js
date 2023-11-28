@@ -110,4 +110,46 @@ describe('Image View', () => {
 				.should('have.value', 'yaha')
 		})
 	})
+
+	describe('native attachments', () => {
+		before(() => {
+			cy.login(user)
+			cy.visit('/apps/files')
+			const fileName = 'native attachments.md'
+			createMarkdown(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)')
+
+			cy.getFileId(fileName).then((fileId) => {
+				const attachmentsFolder = `.attachments.${fileId}`
+				cy.createFolder(attachmentsFolder)
+				cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+				cy.uploadFile('file.txt.gz', 'application/gzip', `${attachmentsFolder}/file.txt.gz`)
+			})
+		})
+
+		it('open image in modal', () => {
+			const fileName = 'native attachments.md'
+			cy.openFile(fileName)
+
+			cy.getContent()
+				.find('[data-component="image-view"][data-src=".attachments.123/github.png"] img')
+				.click()
+
+			cy.get('.modal__content img')
+				.should('have.attr', 'src')
+				.should('contain', 'imageFileName=github.png')
+		})
+
+		it('download non-image gzip attachment', () => {
+			const fileName = 'native attachments.md'
+			cy.openFile(fileName)
+
+			cy.getContent()
+				.find('[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img')
+				.click()
+
+			const downloadsFolder = Cypress.config('downloadsFolder')
+			cy.log(`downloadsFolder: ${downloadsFolder}`)
+			cy.readFile(`${downloadsFolder}/file.txt.gz`)
+		})
+	})
 })
