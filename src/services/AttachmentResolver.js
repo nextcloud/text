@@ -86,6 +86,7 @@ export default class AttachmentResolver {
 		if (isDirectUrl(src)) {
 			return {
 				isImage: true,
+				name: this.#name(src),
 				previewUrl: src,
 				fullUrl: src,
 			}
@@ -94,9 +95,14 @@ export default class AttachmentResolver {
 		// Fallback: Return DAV url (e.g. for relative paths to images)
 		return {
 			isImage: true,
+			name: this.#name(src),
 			previewUrl: this.#davUrl(src),
 			fullUrl: this.#davUrl(src),
 		}
+	}
+
+	#name(src) {
+		return src.split('/').pop()
 	}
 
 	#davUrl(src) {

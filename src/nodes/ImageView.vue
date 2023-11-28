@@ -24,6 +24,7 @@
 	<NodeViewWrapper :contenteditable="isEditable">
 		<figure class="image image-view"
 			data-component="image-view"
+			:data-attachment-type="attachmentType"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
 			:data-src="src">
 			<div v-if="canDisplayImage"
@@ -99,7 +100,7 @@
 					</div>
 				</transition>
 				<div class="image__modal">
-					<ShowImageModal :images="imageAttachments"
+					<ShowImageModal :images="embeddedImageList"
 						:start-index="imageIndex"
 						:show="showImageModal"
 						@close="showImageModal=false" />
@@ -177,6 +178,7 @@ export default {
 			showImageModal: false,
 			imageIndex: null,
 			isEditable: false,
+			embeddedImageList: [],
 		}
 	},
 	computed: {
@@ -239,7 +241,6 @@ export default {
 					this.loaded = true
 					this.attachmentType = this.attachment.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 					this.attachmentSize = this.attachment.size
-					resolve(this.attachment.previewUrl)
 				}
 				img.onerror = (e) => {
 					reject(new LoadImageError(e, this.attachment.previewUrl))
@@ -267,7 +268,23 @@ export default {
 		onLoaded() {
 			this.loaded = true
 		},
-		async handleAttachmentClick() {
+		async updateEmbeddedImageList() {
+			this.embeddedImageList = []
+			// Get all images that succeeded to load
+			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view'))
+			for (const imgv of imageViews) {
+				const src = imgv.getAttribute('data-src')
+				if (!this.embeddedImageList.find(i => i.src === src)) {
+					// Don't add duplicates (e.g. when several editors are loaded in HTML document)
+					const attachment = await this.$attachmentResolver.resolve(imgv.getAttribute('data-src'))
+					this.embeddedImageList.push({
+						src,
+						...attachment,
+					})
+				}
+			}
+		},
+		handleAttachmentClick() {
 			// Open in viewer if possible
 			if (OCA.Viewer
 				// Viewer is not in use
@@ -286,7 +303,8 @@ export default {
 			window.location.assign(this.attachment.fullUrl)
 		},
 		async handleImageClick() {
-			this.imageIndex = this.imageAttachments.findIndex(i => (i.isImage && i.fileId === this.attachment.fileId))
+			await this.updateEmbeddedImageList()
+			this.imageIndex = this.embeddedImageList.findIndex(i => (i.src === this.src))
 			if (this.imageIndex !== -1) {
 				this.showImageModal = true
 			} else {
