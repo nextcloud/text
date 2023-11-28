@@ -274,10 +274,9 @@ export default {
 				&& !OCA.Viewer.file
 				// Viewer supports mimetype
 				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
-				// Attachment has davPath (i.e. is native attachment)
-				&& this.attachment.davPath
-				// Not in share (in public share we probably don't have DAV access)
-				&& !this.attachment.shareToken) {
+				// Attachment has davPath, i.e. is native attachment and not in public share
+				//  (in public share we probably don't have DAV access)
+				&& this.attachment.davPath) {
 				// Viewer exists, is not in use and supports mimetype
 				OCA.Viewer.open({ path: this.attachment.davPath })
 				return
