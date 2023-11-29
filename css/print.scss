@@ -46,6 +46,11 @@
 			position: unset;
 
 			div.ProseMirror {
+				margin-top: 0;
+				margin-bottom: 0;
+				padding-top: 0;
+				padding-bottom: 0;
+
 				h1, h2, h3, h4, h5 {
 					// orphaned headlines are ugly
 					break-after: avoid;
