@@ -23,9 +23,12 @@
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/cypress'
 import 'cypress-if'
+import compareSnapshotCommand from 'cypress-visual-regression/dist/command.js'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
+
+compareSnapshotCommand()
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
@@ -466,6 +469,16 @@ Cypress.Commands.add('createDescription', (folder) => {
 	cy.get('li.upload-picker__menu-entry button').contains('Add description').click()
 
 	cy.wait('@addDescription')
+})
+
+Cypress.Commands.add('setCssMedia', (media) => {
+	cy.log(`Setting CSS media to ${media}`)
+	Cypress.automation('remote:debugger:protocol', {
+		command: 'Emulation.setEmulatedMedia',
+		params: {
+			media,
+		},
+	})
 })
 
 Cypress.on(
