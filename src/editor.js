@@ -27,7 +27,7 @@ import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provi
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
-const apiVersion = '1.0'
+const apiVersion = '1.1'
 
 Vue.prototype.t = window.t
 Vue.prototype.n = window.n
@@ -133,8 +133,10 @@ window.OCA.Text.createEditor = async function({
 	// Element to render the editor to
 	el,
 
-	// File mode is enabled by setting the fileId, otherwise content needs to be provided
+	// Session editor with file mode is enabled by setting the fileId and useSession.
+	// Otherwise, content needs to be provided.
 	fileId = undefined,
+	useSession = true,
 	filePath = undefined,
 	shareToken = null,
 
@@ -164,14 +166,16 @@ window.OCA.Text.createEditor = async function({
 		content,
 	})
 
+	const sessionEditor = fileId && useSession
+
 	const vm = new Vue({
 		provide() {
 			return {
 				[HOOK_LINK_CLICK]: onLinkClick,
 				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
-				[EDITOR_UPLOAD]: !!fileId,
-				[HOOK_MENTION_SEARCH]: fileId ? true : onMentionSearch,
-				[HOOK_MENTION_INSERT]: fileId ? true : onMentionInsert,
+				[EDITOR_UPLOAD]: !!sessionEditor,
+				[HOOK_MENTION_SEARCH]: sessionEditor ? true : onMentionSearch,
+				[HOOK_MENTION_INSERT]: sessionEditor ? true : onMentionInsert,
 				[ATTACHMENT_RESOLVER]: {
 					resolve(src, preferRaw) {
 						return [{
@@ -196,7 +200,7 @@ window.OCA.Text.createEditor = async function({
 				}
 				: {}
 
-			return fileId
+			return sessionEditor
 				? h(Editor, {
 					props: {
 						fileId,
@@ -211,6 +215,7 @@ window.OCA.Text.createEditor = async function({
 				})
 				: h(MarkdownContentEditor, {
 					props: {
+						fileId,
 						content: data.content,
 						relativePath: filePath,
 						shareToken,
