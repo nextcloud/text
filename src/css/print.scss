@@ -49,10 +49,12 @@
 				h1, h2, h3, h4, h5 {
 					// orphaned headlines are ugly
 					break-after: avoid;
+					page-break-after: avoid;
 				}
 				.image, img, table {
 					// try no page breaks within tables or images
 					break-inside: avoid-page;
+					page-break-inside: avoid;
 					// Some more indention
 					max-width: 90%!important;
 					margin: 5vw auto 5vw 5%!important;
