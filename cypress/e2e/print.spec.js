@@ -27,18 +27,40 @@ const user = randUser()
 describe('Open print.md and compare print view', function() {
 	before(function() {
 		initUserAndFiles(user, 'print.md')
+	})
+	beforeEach(function() {
 		cy.login(user)
 		cy.visit('/apps/files')
 	})
 
-	it('Renders print view', function() {
+	it('Renders print view in viewer', function() {
 		cy.openFile('print.md')
 		cy.setCssMedia('print')
 
+		cy.getEditor().should('be.visible')
 		cy.getContent()
-			.get('h1').should('contain', 'Print test')
+			.get('h1:not(.hidden-visually)').should('contain', 'Print test')
 			.should('be.visible')
 
-		cy.compareSnapshot('print.md', { capture: 'fullPage' })
+		cy.compareSnapshot('print view in viewer', { capture: 'fullPage' })
+		cy.setCssMedia('screen')
+	})
+
+	it('Renders print view in single-file share', function() {
+		cy.shareFile('/print.md', { edit: true })
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
+				cy.setCssMedia('print')
+			})
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				cy.getContent()
+					.get('h1:not(.hidden-visually)').should('contain', 'Print test')
+					.should('be.visible')
+
+				cy.compareSnapshot('print view in single-file share', { capture: 'fullPage' })
+				cy.setCssMedia('screen')
+			})
 	})
 })
