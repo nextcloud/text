@@ -20,7 +20,6 @@
  *
  */
 
-import ViewerComponent from './components/ViewerComponent.vue'
 import { logger } from './helpers/logger.js'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
 
@@ -33,7 +32,7 @@ if (typeof OCA.Viewer === 'undefined') {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: ViewerComponent,
+		component: () => import('./components/ViewerComponent.vue'),
 		group: null,
 		theme: 'default',
 		canCompare: true,

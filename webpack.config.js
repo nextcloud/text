@@ -36,19 +36,12 @@ Object.assign(webpackConfig.output, {
 
 webpackConfig.optimization.chunkIds = 'named'
 webpackConfig.optimization.splitChunks.cacheGroups = {
-	defaultVendors: {
-		test(module) {
-			return module.resource && module.resource.includes(`${path.sep}node_modules${path.sep}`) &&
-				!module.resource.includes(`${path.sep}highlight.js${path.sep}`)
-		},
-		name: 'vendors',
-	}
+	mermaid: {
+		test: /[\\/]node_modules[\\/](mermaid)[\\/]/,
+		name: 'mermaid',
+	},
 }
-
-// webpackConfig.resolve.modules = [
-// 	path.resolve(__dirname, 'node_modules'),
-// 	'node_modules'
-// ]
+webpackConfig.optimization.splitChunks.minSize = 102400
 
 // Fix Buffer issues
 webpackConfig.plugins.push(new webpack.ProvidePlugin({

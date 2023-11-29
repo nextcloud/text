@@ -27,7 +27,6 @@ import { loadState } from '@nextcloud/initial-state'
 
 import { getSharingToken } from './token.js'
 import { openMimetypes } from './mime.js'
-import RichWorkspace from '../views/RichWorkspace.vue'
 import store from '../store/index.js'
 import { getCurrentUser } from '@nextcloud/auth'
 import { showSuccess, showError } from '@nextcloud/dialogs'
@@ -211,7 +210,7 @@ export const FilesWorkspaceHeader = new Header({
 		return view.id === 'files'
 	},
 
-	render(el, folder, view) {
+	async render(el, folder, view) {
 		if (vm) {
 			// Enforce destroying of the old rendering and rerender as the FilesListHeader calls render on every folder change
 			vm.$destroy()
@@ -222,6 +221,8 @@ export const FilesWorkspaceHeader = new Header({
 		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
 
 		newWorkspaceCreated = false
+
+		const { default: RichWorkspace } = await import('./../views/RichWorkspace.vue')
 
 		import('vue').then((module) => {
 			el.id = 'files-workspace-wrapper'
