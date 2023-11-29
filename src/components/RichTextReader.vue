@@ -81,11 +81,4 @@ export default {
 <style lang="scss">
 	@import './../../css/prosemirror';
 	@import './../../css/print';
-
-	@media print {
-		// Hide Content behind modal, this also hides the sidebar if open
-		#content {
-			display: none;
-		}
-	}
 </style>
