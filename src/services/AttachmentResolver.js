@@ -37,9 +37,6 @@ export default class AttachmentResolver {
 	#documentId
 	#initAttachmentListPromise
 
-	ATTACHMENT_TYPE_IMAGE = 'image'
-	ATTACHMENT_TYPE_MEDIA = 'media'
-
 	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
 		this.#user = user

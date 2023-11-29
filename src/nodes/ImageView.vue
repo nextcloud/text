@@ -173,7 +173,6 @@ export default {
 			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
-			attachmentType: null,
 			attachmentSize: null,
 			showImageModal: false,
 			imageIndex: null,
@@ -185,8 +184,15 @@ export default {
 		...mapGetters({
 			imageAttachments: 'text/imageAttachments',
 		}),
+		attachmentType() {
+			if (this.attachment) {
+				return this.attachment.isImage ? 'image' : 'media'
+			} else {
+				return null
+			}
+		},
 		isMediaAttachment() {
-			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+			return this.attachmentType === 'media'
 		},
 		showDeleteIcon() {
 			return this.isEditable && this.showIcons
@@ -239,7 +245,6 @@ export default {
 					this.imageUrl = this.attachment.previewUrl
 					this.imageLoaded = true
 					this.loaded = true
-					this.attachmentType = this.attachment.isImage ? this.$attachmentResolver.ATTACHMENT_TYPE_IMAGE : this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
 					this.attachmentSize = this.attachment.size
 				}
 				img.onerror = (e) => {
