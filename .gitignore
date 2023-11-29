@@ -4,6 +4,8 @@ node_modules/
 vendor/
 img/twemoji/
 cypress/screenshots/
+cypress/snapshots/actual
+cypress/snapshots/diff
 cypress/videos/
 cypress/downloads/
 .php-cs-fixer.cache
