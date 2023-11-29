@@ -47,7 +47,7 @@ describe('Image resolver', () => {
 	const shareToken = 'myShareToken'
 
 	it('is a class with one constructor argument', () => {
-		const resolver = new AttachmentResolver({})
+		const resolver = new AttachmentResolver({ fileId })
 		expect(resolver).toBeInstanceOf(AttachmentResolver)
 	})
 
@@ -65,7 +65,7 @@ describe('Image resolver', () => {
 			'https://nextcloud.com/pic.jpg',
 			'data:4173456789ASDF',
 		]
-		const resolver = initAttachmentResolver({ })
+		const resolver = initAttachmentResolver({ fileId })
 		for (const src of sources) {
 			const attachment = await resolver.resolve(src)
 			expect(attachment.isImage).toBe(true)
@@ -84,7 +84,7 @@ describe('Image resolver', () => {
 
 	it('handles non-native urls wia webdav', async () => {
 		const src = `/path/to/some image.png`
-		const resolver = new AttachmentResolver({ user, currentDirectory })
+		const resolver = new AttachmentResolver({ fileId, user, currentDirectory })
 		const attachment = await resolver.resolve(src)
 		expect(attachment.isImage).toBe(true)
 		expect(attachment.previewUrl).toBe('http://localhost/nc-webroot/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
