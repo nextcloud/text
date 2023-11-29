@@ -22,10 +22,11 @@
 
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
-import axios from '@nextcloud/axios'
-import { formatFileSize } from '@nextcloud/files'
 
-import { logger } from '../helpers/logger.js'
+import store from '../store/index.js'
+
+const setAttachmentList = (val) => store.dispatch('text/setAttachmentList', val)
+const findAttachment = store.getters['text/findAttachment']
 
 export default class AttachmentResolver {
 
@@ -33,200 +34,72 @@ export default class AttachmentResolver {
 	#user
 	#shareToken
 	#currentDirectory
-	#attachmentDirectory
-
-	ATTACHMENT_TYPE_IMAGE = 'image'
-	ATTACHMENT_TYPE_MEDIA = 'media'
+	#documentId
+	#initAttachmentListPromise
 
 	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
 		this.#user = user
 		this.#shareToken = shareToken
 		this.#currentDirectory = currentDirectory
-		fileId ||= session?.documentId
-		this.#attachmentDirectory = `.attachments.${fileId}`
+		this.#documentId = fileId ?? session.documentId
+		this.#initAttachmentListPromise = this.#updateAttachmentList()
+	}
+
+	async #updateAttachmentList() {
+		return setAttachmentList({ documentId: this.#documentId, shareToken: this.#shareToken })
 	}
 
 	/*
-	 * Resolve a given src.
-	 * @param { string } the original src in the node.
-	 * @param { bool } choose to fetch the raw image or a preview | default = false
-	 * @returns { Array<Object> } - resolved candidates to try.
-	 *
-	 * Currently returns either one or two urls.
+	 * Resolve a given image/attachment src.
+	 * @param { string } src - the original src in the node.
+	 * @param { bool } fallback - fetch again attachmentsList if not found | defaul = true
 	 */
-	async resolve(src, preferRawImage = false) {
-		if (this.#session && src.startsWith('text://')) {
-			const imageFileName = getQueryVariable(src, 'imageFileName')
-			return [{
-				type: this.ATTACHMENT_TYPE_IMAGE,
-				url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
-			}]
+	async resolve(src, fallback = true) {
+		let attachment
+
+		// Native attachment
+		const directoryRegexp = /^\.attachments\.\d+\//
+		if (src.match(directoryRegexp)) {
+			const imageFileName = decodeURIComponent(src.replace(directoryRegexp, '').split('?')[0])
+
+			// Wait until attachment list got fetched (initialized by constructor)
+			await this.#initAttachmentListPromise
+			attachment = findAttachment(imageFileName)
+
+			if (fallback && !attachment) {
+				// Update attachments list. Needed if attachments gets added to the session
+				await this.#updateAttachmentList()
+				attachment = findAttachment(imageFileName)
+			}
+
+			if (attachment) {
+				return attachment
+			}
+
 		}
 
-		// Has session and URL points to attachment from current document
-		if (this.#session && src.startsWith(`.attachments.${this.#session?.documentId}/`)) {
-			const imageFileName = decodeURIComponent(src.replace(`.attachments.${this.#session?.documentId}/`, '').split('?')[0])
-			return [
-				{
-					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
-				},
-				{
-					type: this.ATTACHMENT_TYPE_MEDIA,
-					url: this.#getMediaPreviewUrl(imageFileName),
-					name: imageFileName,
-				},
-			]
-		}
-
+		// Direct URLs
 		if (isDirectUrl(src)) {
-			return [{
-				type: this.ATTACHMENT_TYPE_IMAGE,
-				url: src,
-			}]
-		}
-
-		if (hasPreview(src)) { // && this.#mime !== 'image/gif') {
-			return [{
-				type: this.ATTACHMENT_TYPE_IMAGE,
-				url: this.#previewUrl(src),
-			}]
-		}
-
-		//  Has session and URL points to attachment from a (different) text document
-		if (this.#session && src.match(/^\.attachments\.\d+\//)) {
-			const imageFileName = this.#relativePath(src)
-				.replace(/\.attachments\.\d+\//, '')
-			// Try webdav URL, use attachment API as fallback
-			return [
-				{
-					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#davUrl(src),
-				},
-				{
-					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#getImageAttachmentUrl(imageFileName, preferRawImage),
-				},
-				{
-					type: this.ATTACHMENT_TYPE_MEDIA,
-					url: this.#getMediaPreviewUrl(imageFileName),
-					name: imageFileName,
-				},
-			]
-		}
-
-		// Doesn't have session and URL points to attachment from (current or different) text document
-		if (!this.#session && src.match(/^\.attachments\.\d+\//)) {
-			const imageFileName = this.#relativePath(src)
-				.replace(/\.attachments\.\d+\//, '')
-			const { mimeType, size } = await this.getMetadata(this.#davUrl(src))
-			// Without session, use webdav URL for images and mimetype icon for media attachments
-			return [
-				{
-					type: this.ATTACHMENT_TYPE_IMAGE,
-					url: this.#davUrl(src),
-				},
-				{
-					type: this.ATTACHMENT_TYPE_MEDIA,
-					url: this.getMimeUrl(mimeType),
-					metadata: { size },
-					name: imageFileName,
-				},
-			]
-		}
-
-		return [{
-			type: this.ATTACHMENT_TYPE_IMAGE,
-			url: this.#davUrl(src),
-		}]
-	}
-
-	#getImageAttachmentUrl(imageFileName, preferRawImage = false) {
-		if (!this.#session) {
-			return this.#davUrl(
-				`${this.#attachmentDirectory}/${imageFileName}`,
-			)
-		}
-
-		if (this.#user || !this.#shareToken) {
-			return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&preferRawImage={preferRawImage}', {
-				...this.#textApiParams(),
-				imageFileName,
-				preferRawImage: preferRawImage ? 1 : 0,
-			})
-		}
-
-		return generateUrl('/apps/text/image?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&imageFileName={imageFileName}&shareToken={shareToken}&preferRawImage={preferRawImage}', {
-			...this.#textApiParams(),
-			imageFileName,
-			shareToken: this.#shareToken,
-			preferRawImage: preferRawImage ? 1 : 0,
-		})
-	}
-
-	#getMediaPreviewUrl(mediaFileName) {
-		if (this.#user || !this.#shareToken) {
-			return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
-				...this.#textApiParams(),
-				mediaFileName,
-			})
-		}
-
-		return generateUrl('/apps/text/mediaPreview?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
-			...this.#textApiParams(),
-			mediaFileName,
-			shareToken: this.#shareToken,
-		})
-	}
-
-	getMediaMetadataUrl(mediaFileName) {
-		if (this.#user || !this.#shareToken) {
-			return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}', {
-				...this.#textApiParams(),
-				mediaFileName,
-			})
-		}
-
-		return generateUrl('/apps/text/mediaMetadata?documentId={documentId}&sessionId={sessionId}&sessionToken={sessionToken}&mediaFileName={mediaFileName}&shareToken={shareToken}', {
-			...this.#textApiParams(),
-			mediaFileName,
-			shareToken: this.#shareToken,
-		})
-	}
-
-	#textApiParams() {
-		if (this.#session) {
 			return {
-				documentId: this.#session.documentId,
-				sessionId: this.#session.id,
-				sessionToken: this.#session.token,
+				isImage: true,
+				name: this.#name(src),
+				previewUrl: src,
+				fullUrl: src,
 			}
 		}
 
-		return {}
+		// Fallback: Return DAV url (e.g. for relative paths to images)
+		return {
+			isImage: true,
+			name: this.#name(src),
+			previewUrl: this.#davUrl(src),
+			fullUrl: this.#davUrl(src),
+		}
 	}
 
-	#previewUrl(src) {
-		const imageFileId = getQueryVariable(src, 'fileId')
-		const path = this.#filePath(src)
-		const fileQuery = `file=${encodeURIComponent(path)}`
-		const query = fileQuery + '&x=1024&y=1024&a=true'
-
-		if (this.#user && imageFileId) {
-			return generateUrl(`/core/preview?fileId=${imageFileId}&${query}`)
-		}
-
-		if (this.#user) {
-			return generateUrl(`/core/preview.png?${query}`)
-		}
-
-		if (this.#shareToken) {
-			return generateUrl(`/apps/files_sharing/publicpreview/${this.#shareToken}?${query}`)
-		}
-
-		logger.error('No way to authenticate image retrival - need to be logged in or provide a token')
-		return src
+	#name(src) {
+		return src.split('/').pop()
 	}
 
 	#davUrl(src) {
@@ -253,13 +126,6 @@ export default class AttachmentResolver {
 	 * @param {string} src - url to extract path from
 	 */
 	#relativePath(src) {
-		if (src.startsWith('text://')) {
-			return [
-				this.#attachmentDirectory,
-				getQueryVariable(src, 'imageFileName'),
-			].join('/')
-		}
-
 		return decodeURI(src.split('?')[0])
 	}
 
@@ -272,24 +138,11 @@ export default class AttachmentResolver {
 		return pathNormalize(f)
 	}
 
-	async getMetadata(src) {
-		const headResponse = await axios.head(src)
-		const mimeType = headResponse.headers['content-type']
-		const size = formatFileSize(headResponse.headers['content-length'])
-		return { mimeType, size }
-	}
-
-	getMimeUrl(mimeType) {
-		return mimeType ? OC.MimeType.getIconUrl(mimeType) : null
-	}
-
 }
 
 /**
- * Check if a url can be loaded directly - i.e. is one of
- * - remote url
- * - data url
- * - preview url
+ * Check if src is a direct URL.
+ * Full URLs only work for images on the same Nextcloud instance (due to CORS restrictions).
  *
  * @param {string} src - the url to check
  */
@@ -297,42 +150,4 @@ function isDirectUrl(src) {
 	return src.startsWith('http://')
 		|| src.startsWith('https://')
 		|| src.startsWith('data:')
-		|| src.match(/^(\/index.php)?\/core\/preview/)
-		|| src.match(/^(\/index.php)?\/apps\/files_sharing\/publicpreview\//)
-}
-
-/**
- * Check if the given url has a preview
- *
- * @param {string} src - the url to check
- */
-function hasPreview(src) {
-	return getQueryVariable(src, 'hasPreview') === 'true'
-}
-
-/**
- * Extract the value of a query variable from the given url
- *
- * @param {string} src - the url to extract query variable from
- * @param {string} variable - name of the variable to read out
- */
-function getQueryVariable(src, variable) {
-	const query = src.split('?')[1]
-
-	if (typeof query === 'undefined') {
-		return
-	}
-
-	const vars = query.split(/[&#]/)
-
-	if (typeof vars === 'undefined') {
-		return
-	}
-
-	for (let i = 0; i < vars.length; i++) {
-		const pair = vars[i].split('=')
-		if (decodeURIComponent(pair[0]) === variable) {
-			return decodeURIComponent(pair[1])
-		}
-	}
 }

@@ -10,4 +10,6 @@ interface ISessionAwareController {
 	public function setSession(Session $session): void;
 	public function getDocument(): Document;
 	public function setDocument(Document $document): void;
+	public function getUserId(): string;
+	public function setUserId(string $userId): void;
 }
