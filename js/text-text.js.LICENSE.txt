@@ -1,4 +1,11 @@
 /*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*!
  * Vue.js v2.7.15
  * (c) 2014-2023 Evan You
  * Released under the MIT License.
@@ -9,6 +16,8 @@
  * (c) 2021 Evan You
  * @license MIT
  */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
