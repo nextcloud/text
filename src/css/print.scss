@@ -29,6 +29,8 @@
 	}
 
 	.text-editor {
+		height: fit-content!important;
+
 		.text-menubar {
 			// Hide menu bar
 			display: none!important;
