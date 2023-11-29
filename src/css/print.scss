@@ -10,6 +10,23 @@
 		overflow: visible!important;
 	}
 
+	#header {
+		display: none!important;
+	}
+
+	#content {
+		display: block!important;
+		position: relative!important;
+		border-radius: 0;
+		margin: 0;
+		width: 100%;
+		height: fit-content;
+	}
+
+	footer {
+		display: none!important;
+	}
+
 	#viewer[data-handler='text'] {
 		// Hide top border
 		border: none;
