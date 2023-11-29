@@ -22,6 +22,9 @@ jobs:
     outputs:
       nodeVersion: ${{ steps.versions.outputs.nodeVersion }}
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
+    strategy:
+      matrix:
+        server-versions: [ 'master' ]
 
     steps:
       - name: Checkout server
@@ -82,7 +85,6 @@ jobs:
         node-version: [16]
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         php-versions: [ '8.1' ]
-        server-versions: [ 'master' ]
         run-in-parallel:
           - false # only for PRs: ${{ !!github.head_ref }}
 
