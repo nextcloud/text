@@ -24,7 +24,7 @@ import { initUserAndFiles, randHash, randUser } from '../utils/index.js'
 
 const user = randUser()
 const recipient = randUser()
-let currentUser = user
+const currentUser = user
 const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
@@ -160,7 +160,6 @@ describe('Test all attachment insertion methods', () => {
 		cy.uploadFile('github.png', 'image/png', 'sub/b/b.png')
 
 		cy.createUser(recipient)
-		cy.shareFileToUser('test.md', recipient)
 	})
 
 	beforeEach(() => {
@@ -317,9 +316,16 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('test if attachment folder is moved with the markdown file', () => {
+		const fileName = 'moveSource.md'
 		cy.createFolder('subFolder')
+		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+			const attachmentsFolder = `.attachments.${fileId}`
+			cy.createFolder(attachmentsFolder)
+			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+			cy.moveFile(fileName, 'subFolder/test.md')
+		})
+
 		cy.visit('/apps/files')
-		cy.moveFile('test.md', 'subFolder/test.md')
 		cy.openFolder('subFolder')
 		cy.getFile('test.md')
 			.should('exist')
@@ -337,9 +343,16 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('test if attachment folder is copied when copying a markdown file', () => {
-		cy.copyFile('subFolder/test.md', 'testCopied.md')
-		cy.visit('/apps/files')
+		const fileName = 'copySource.md'
+		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+			const attachmentsFolder = `.attachments.${fileId}`
+			cy.createFolder(attachmentsFolder)
+			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+		})
 
+		cy.copyFile(fileName, 'testCopied.md')
+
+		cy.visit('/apps/files')
 		cy.getFile('testCopied.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
@@ -359,32 +372,46 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('test if attachment folder is deleted after having deleted a markdown file', () => {
-		cy.copyFile('subFolder/test.md', 'testCopied.md')
+		const fileName = 'deleteSource.md'
+		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+			const attachmentsFolder = `.attachments.${fileId}`
+			cy.createFolder(attachmentsFolder)
+			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+		})
+
 		cy.visit('/apps/files')
-		cy.getFile('testCopied.md')
+		cy.getFile(fileName)
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
 			.then((documentId) => {
-				cy.deleteFile('testCopied.md')
+				cy.deleteFile(fileName)
 				cy.reloadFileList()
 				cy.getFile('.attachments.' + documentId)
 					.should('not.exist')
 			})
-		// change the current user for next tests
-		currentUser = recipient
 	})
 
 	it('[share] check everything behaves correctly on the share target user side', () => {
+		const fileName = 'testShared.md'
+		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
+			const attachmentsFolder = `.attachments.${fileId}`
+			cy.createFolder(attachmentsFolder)
+			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
+			cy.shareFileToUser(fileName, recipient)
+		})
+
+		cy.login(recipient)
+
 		cy.visit('/apps/files')
 		// check the file list
-		cy.getFile('test.md')
+		cy.getFile('testShared.md')
 			.should('exist')
 		cy.getFile('github.png')
 			.should('not.exist')
 		cy.showHiddenFiles()
 
 		// check the attachment folder is not there
-		cy.getFile('test.md')
+		cy.getFile('testShared.md')
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
 			.then((documentId) => {
@@ -393,7 +420,7 @@ describe('Test all attachment insertion methods', () => {
 			})
 
 		// move the file and check the attachment folder is still not there
-		cy.moveFile('test.md', 'testMoved.md')
+		cy.moveFile('testShared.md', 'testMoved.md')
 		cy.reloadFileList()
 		cy.getFile('testMoved.md')
 			.should('exist')
