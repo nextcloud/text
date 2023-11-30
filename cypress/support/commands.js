@@ -155,8 +155,22 @@ Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown',
 					...headers,
 				},
 			}).then((response) => {
-				return cy.log(`Uploaded ${target}`, response.status)
+				cy.log(`Uploaded ${target}`, response.status)
+				const fileId = Number(
+					response.headers['oc-fileid']?.split('oc')?.[0],
+				)
+				return cy.wrap(fileId)
 			})
+		})
+})
+
+Cypress.Commands.add('createMarkdown', (fileName, content, reload = true) => {
+	return cy.createFile(fileName, content, 'text/markdown')
+		.then((fileId) => {
+			if (reload) {
+				cy.reloadFileList()
+			}
+			return cy.wrap(fileId)
 		})
 })
 
@@ -266,17 +280,53 @@ Cypress.Commands.add('createFolder', (target) => {
 		})
 })
 
-Cypress.Commands.add('moveFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().move(path, destinationPath)),
-)
+Cypress.Commands.add('moveFile', (path, destinationPath) => {
+	return cy.getRequestToken()
+		.then(requesttoken => {
+			return cy.request({
+				method: 'MOVE',
+				url: `${url}/remote.php/webdav/${path}`,
+				auth,
+				headers: {
+					requesttoken,
+					Destination: `${url}/remote.php/webdav/${destinationPath}`,
+				},
+			}).then(response => {
+				cy.wrap(response.body)
+			})
+		})
+})
 
-Cypress.Commands.add('removeFile', (path) => cy.window()
-	.then(win => win.OC.Files.getClient().remove(path)),
-)
+Cypress.Commands.add('removeFile', (path) => {
+	return cy.getRequestToken()
+		.then(requesttoken => {
+			return cy.request({
+				url: `${url}/remote.php/webdav/${path}`,
+				method: 'DELETE',
+				auth,
+				headers: {
+					requesttoken,
+				},
+			})
+		})
+})
 
-Cypress.Commands.add('copyFile', (path, destinationPath) => cy.window()
-	.then(win => win.OC.Files.getClient().copy(path, destinationPath)),
-)
+Cypress.Commands.add('copyFile', (path, destinationPath) => {
+	return cy.getRequestToken()
+		.then(requesttoken => {
+			return cy.request({
+				method: 'COPY',
+				url: `${url}/remote.php/webdav/${path}`,
+				auth,
+				headers: {
+					requesttoken,
+					Destination: `${url}/remote.php/webdav/${destinationPath}`,
+				},
+			}).then(response => {
+				cy.wrap(response.body)
+			})
+		})
+})
 
 Cypress.Commands.add('getFileContent', (path) => {
 	return cy.request({
@@ -315,7 +365,7 @@ Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
 })
 
 Cypress.Commands.add('reloadFileList', () => {
-	return cy.reload()
+	return cy.get('.vue-crumb:last-child a').click()
 })
 
 Cypress.Commands.add('openFolder', (name) => {
@@ -355,9 +405,19 @@ Cypress.Commands.add('getFile', fileName => {
 })
 
 Cypress.Commands.add('deleteFile', fileName => {
-	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] .files-list__row-actions .action-item__menutoggle`).click()
-	cy.get('.files-list__row-action-delete:visible button').click()
-	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`).should('not.exist')
+	return cy.getRequestToken()
+		.then(requesttoken => {
+			return cy.request({
+				method: 'DELETE',
+				url: `${url}/remote.php/webdav/${fileName}`,
+				auth,
+				headers: {
+					requesttoken,
+				},
+			}).then(response => {
+				cy.wrap(response.body)
+			})
+		})
 })
 
 Cypress.Commands.add('getModal', () => {
