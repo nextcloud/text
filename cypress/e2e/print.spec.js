@@ -39,6 +39,8 @@ describe('Open print.md and compare print view', function() {
 
 		cy.getEditor().should('be.visible')
 		cy.getContent()
+			// Ensure cursor is not displayed to prevent flaky tests (flashing input cursor)
+			.invoke('css', 'caret-color', 'transparent')
 			.get('h1:not(.hidden-visually)').should('contain', 'Print test')
 			.should('be.visible')
 
@@ -56,6 +58,8 @@ describe('Open print.md and compare print view', function() {
 			.then(() => {
 				cy.getEditor().should('be.visible')
 				cy.getContent()
+					// Ensure cursor is not displayed to prevent flaky tests (flashing input cursor)
+					.invoke('css', 'caret-color', 'transparent')
 					.get('h1:not(.hidden-visually)').should('contain', 'Print test')
 					.should('be.visible')
 
