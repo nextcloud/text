@@ -58,7 +58,6 @@ OC.L10N.register(
     "to" : "til",
     "Replace" : "Erstat",
     "Source code" : "Kildekode",
-    "Unsupported image type" : "Ikke-understøttet billede format",
     "Delete this table" : "Slet denne tabel",
     "Hide outline" : "Skjul outline",
     "Show outline" : "Vis outline",
@@ -78,6 +77,7 @@ OC.L10N.register(
     "Smart picker" : "Smart Vælger",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
+    "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

@@ -75,7 +75,6 @@ OC.L10N.register(
     "No emoji found" : "Не се пронајдени емотикони",
     "Source code" : "Изворен код",
     "Failed to load" : "Неуспешно вчитување",
-    "Unsupported image type" : "Неподржан вид на слика",
     "Add row before" : "Додади ред пред",
     "Add row after" : "Додади ред после",
     "Delete this row" : "Избриши го овој ред",
@@ -101,6 +100,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Add description" : "Додади опис",
+    "Unsupported image type" : "Неподржан вид на слика",
     "Show rich workspaces" : "Прикажи збогатен работен простор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

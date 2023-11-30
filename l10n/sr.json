@@ -127,7 +127,6 @@
     "Delete this attachment" : "Обриши овај прилог",
     "Delete this image" : "Обриши ову слику",
     "Failed to load" : "Учитавање није успело",
-    "Unsupported image type" : "Неподржани тип слике",
     "Add row before" : "Додај ред испред",
     "Add row after" : "Додај ред након",
     "Delete this row" : "Обриши овај ред",
@@ -171,6 +170,7 @@
     "Front matter" : "Уводни део",
     "Source language" : "Изворни језик",
     "Target language" : "Циљни језик",
+    "Unsupported image type" : "Неподржани тип слике",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ..."
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

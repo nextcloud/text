@@ -79,7 +79,6 @@ OC.L10N.register(
     "No emoji found" : "Geen emoji gevonden",
     "Source code" : "Broncode",
     "Failed to load" : "Laden mislukt",
-    "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Add row before" : "Voeg rij toe voor",
     "Add row after" : "Voeg rij to na",
     "Delete this row" : "Verwijder deze rij",
@@ -109,6 +108,7 @@ OC.L10N.register(
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
+    "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

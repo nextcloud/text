@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Usuń ten załącznik",
     "Delete this image" : "Usuń ten obraz",
     "Failed to load" : "Nie udało się wczytać",
-    "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Add row before" : "Dodaj wiersz przed",
     "Add row after" : "Dodaj wiersz po",
     "Delete this row" : "Usuń ten wiersz",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Wstęp",
     "Source language" : "Język źródłowy",
     "Target language" : "Język docelowy",
+    "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "e.g. php, javascript, json, ..." : "np. php, javascript, json, …"
 },

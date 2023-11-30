@@ -16,11 +16,11 @@
     "to" : "para",
     "Replace" : "Reemplazar",
     "Source code" : "Código fuente",
-    "Unsupported image type" : "Tipo de imagen no soportado",
     "Undo" : "Deshacer",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
-    "Edit" : "Editar"
+    "Edit" : "Editar",
+    "Unsupported image type" : "Tipo de imagen no soportado"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

@@ -53,7 +53,6 @@ OC.L10N.register(
     "to" : "do",
     "Replace" : "Zamijeni",
     "Source code" : "Izvorni kod",
-    "Unsupported image type" : "Nepodržana vrsta slike",
     "Undo" : "Poništi",
     "Redo" : "Ponovno",
     "Headings" : "Naslovi",
@@ -71,6 +70,7 @@ OC.L10N.register(
     "Formatting" : "Oblikovanje",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
+    "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

@@ -25,11 +25,11 @@ OC.L10N.register(
     "Replace" : "Asenda",
     "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",
-    "Unsupported image type" : "Pildi tüüp pole toetatud",
     "Undo" : "Tühista",
     "Headings" : "Pealkirjad",
     "Info" : "Info",
     "Warning" : "Hoiatus",
-    "Edit" : "Redigeeri"
+    "Edit" : "Redigeeri",
+    "Unsupported image type" : "Pildi tüüp pole toetatud"
 },
 "nplurals=2; plural=(n != 1);");

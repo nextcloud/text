@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Delete this attachment",
     "Delete this image" : "Delete this image",
     "Failed to load" : "Failed to load",
-    "Unsupported image type" : "Unsupported image type",
     "Add row before" : "Add row before",
     "Add row after" : "Add row after",
     "Delete this row" : "Delete this row",
@@ -169,6 +168,7 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Source language" : "Source language",
     "Target language" : "Target language",
+    "Unsupported image type" : "Unsupported image type",
     "Show rich workspaces" : "Show rich workspaces",
     "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
 },

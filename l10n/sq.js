@@ -28,12 +28,12 @@ OC.L10N.register(
     "to" : "te",
     "Replace" : "Mbishkruaj",
     "Source code" : "Kodi burim",
-    "Unsupported image type" : "Lloj imazhi i pa suportuar",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
-    "Edit" : "Përpuno"
+    "Edit" : "Përpuno",
+    "Unsupported image type" : "Lloj imazhi i pa suportuar"
 },
 "nplurals=2; plural=(n != 1);");
