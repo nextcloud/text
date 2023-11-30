@@ -2,11 +2,6 @@ import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-const createMarkdown = (fileName, content) => {
-	return cy.createFile(fileName, content, 'text/markdown')
-		.then(cy.reload)
-}
-
 describe('Image View', () => {
 	before(() => {
 		cy.createUser(user)
@@ -27,7 +22,7 @@ describe('Image View', () => {
 		it('from root', () => {
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			createMarkdown(fileName, '# from root\n\n ![git](/github.png)')
+			cy.createMarkdown(fileName, '# from root\n\n ![git](/github.png)')
 
 			cy.openFile(fileName)
 
@@ -45,7 +40,7 @@ describe('Image View', () => {
 		it('from child folder', () => {
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			createMarkdown(fileName, '# from child\n\n ![git](child-folder/github.png)')
+			cy.createMarkdown(fileName, '# from child\n\n ![git](child-folder/github.png)')
 
 			cy.openFile(fileName)
 
@@ -65,7 +60,7 @@ describe('Image View', () => {
 
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			createMarkdown(`/child-folder/${fileName}`, '# from parent\n\n ![git](../github.png)')
+			cy.createMarkdown(`/child-folder/${fileName}`, '# from parent\n\n ![git](../github.png)')
 
 			cy.openFile(fileName, { force: true })
 
@@ -85,7 +80,7 @@ describe('Image View', () => {
 		it('direct access', () => {
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			createMarkdown(fileName, '# from root\n\n ![yaha](/yaha.png)')
+			cy.createMarkdown(fileName, '# from root\n\n ![yaha](/yaha.png)')
 
 			cy.openFile(fileName)
 
@@ -112,7 +107,7 @@ describe('Image View', () => {
 			cy.login(user)
 			cy.visit('/apps/files')
 			const fileName = 'native attachments.md'
-			createMarkdown(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)')
+			cy.createMarkdown(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)')
 
 			cy.getFileId(fileName).then((fileId) => {
 				const attachmentsFolder = `.attachments.${fileId}`
