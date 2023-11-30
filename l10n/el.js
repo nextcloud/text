@@ -77,7 +77,6 @@ OC.L10N.register(
     "Insert" : "Εισαγωγή",
     "No emoji found" : "Δε βρέθηκε emoji",
     "Source code" : "Πηγαίος κώδικας",
-    "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Undo" : "Aναίρεση",
     "Redo" : "Επανάληψη",
     "Headings" : "Επικεφαλίδες",
@@ -97,6 +96,7 @@ OC.L10N.register(
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
+    "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");

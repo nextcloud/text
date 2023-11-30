@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "刪除此附件",
     "Delete this image" : "刪除此圖像",
     "Failed to load" : "加載失敗",
-    "Unsupported image type" : "不支援的圖片類型",
     "Add row before" : "在前面添加行",
     "Add row after" : "在後面添加行",
     "Delete this row" : "刪除此行",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "前言",
     "Source language" : "本源語言",
     "Target language" : "目標語言",
+    "Unsupported image type" : "不支援的圖片類型",
     "Show rich workspaces" : "顯示較多功能的工作區",
     "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },

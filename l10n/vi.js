@@ -73,7 +73,6 @@ OC.L10N.register(
     "to" : "đến",
     "Replace" : "Thay thế",
     "Source code" : "Mã nguồn",
-    "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show folder description" : "Hiển thị mô tả thư mục",
     "Undo" : "Hoàn tác",
     "Redo" : "Làm lại",
@@ -93,6 +92,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
     "Add description" : "Thêm mô tả",
+    "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc"
 },
 "nplurals=1; plural=0;");

@@ -124,7 +124,6 @@
     "Delete this attachment" : "この添付ファイルを削除する",
     "Delete this image" : "この画像を削除する",
     "Failed to load" : "読込に失敗しました",
-    "Unsupported image type" : "サポートされていない画像形式です",
     "Add row before" : "行を上に追加する",
     "Add row after" : "行を下に追加する",
     "Delete this row" : "この行を削除する",
@@ -168,6 +167,7 @@
     "Front matter" : "Front matter",
     "Source language" : "原文の言語",
     "Target language" : "訳文の言語",
+    "Unsupported image type" : "サポートされていない画像形式です",
     "Show rich workspaces" : "各フォルダのReadmeを表示",
     "e.g. php, javascript, json, ..." : "例えば php, javascript, json等･･･"
 },"pluralForm" :"nplurals=1; plural=0;"

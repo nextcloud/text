@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Вилучити цей вкладений файл",
     "Delete this image" : "Вилучити це зображення",
     "Failed to load" : "Не вдалося завантажити",
-    "Unsupported image type" : "Цей тип зображення не підтримується",
     "Add row before" : "Додати рядок перед",
     "Add row after" : "Додати рядок після",
     "Delete this row" : "Вилучити цей рядок",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Передня справа",
     "Source language" : "Мова оригіналу",
     "Target language" : "Цільова мова",
+    "Unsupported image type" : "Цей тип зображення не підтримується",
     "Show rich workspaces" : "Показувати опис каталогу",
     "e.g. php, javascript, json, ..." : "напр., PHP, JavaScript, JSON ..."
 },

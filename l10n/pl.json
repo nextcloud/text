@@ -127,7 +127,6 @@
     "Delete this attachment" : "Usuń ten załącznik",
     "Delete this image" : "Usuń ten obraz",
     "Failed to load" : "Nie udało się wczytać",
-    "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Add row before" : "Dodaj wiersz przed",
     "Add row after" : "Dodaj wiersz po",
     "Delete this row" : "Usuń ten wiersz",
@@ -171,6 +170,7 @@
     "Front matter" : "Wstęp",
     "Source language" : "Język źródłowy",
     "Target language" : "Język docelowy",
+    "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "e.g. php, javascript, json, ..." : "np. php, javascript, json, …"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
