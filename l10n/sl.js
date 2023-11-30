@@ -113,7 +113,6 @@ OC.L10N.register(
     "Delete this attachment" : "Izbriši to prilogo",
     "Delete this image" : "Izbriši sliko",
     "Failed to load" : "Nalaganje je spodletelo",
-    "Unsupported image type" : "Nepodprta vrsta slike",
     "Add row before" : "Dodaj vrstico pred",
     "Add row after" : "Dodaj vrstico za",
     "Delete this row" : "Izbriši vrstico",
@@ -153,6 +152,7 @@ OC.L10N.register(
     "Front matter" : "Uvodne strani",
     "Source language" : "Izvorni jezik",
     "Target language" : "Ciljni jezik",
+    "Unsupported image type" : "Nepodprta vrsta slike",
     "Show rich workspaces" : "Pokaži obogaten delovni prostor"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

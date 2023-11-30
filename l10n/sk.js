@@ -103,7 +103,6 @@ OC.L10N.register(
     "Delete this attachment" : "Vymazať túto prílohu",
     "Delete this image" : "Vymazať tento obrázok",
     "Failed to load" : "Nepodarilo sa načítať",
-    "Unsupported image type" : "Typ obrázka nie je podporovaný",
     "Add row before" : "Pridať riadok pred",
     "Add row after" : "Pridať riadok za",
     "Delete this row" : "Zmazať tento riadok",
@@ -140,6 +139,7 @@ OC.L10N.register(
     "Front matter" : "Predná strana",
     "Source language" : "Zdrojový jazyk prekladu",
     "Target language" : "Cieľový jazyk",
+    "Unsupported image type" : "Typ obrázka nie je podporovaný",
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

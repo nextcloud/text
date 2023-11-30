@@ -38,7 +38,6 @@ OC.L10N.register(
     "Code block" : "Kodbloko",
     "to" : "al",
     "Replace" : "Anstataŭigi",
-    "Unsupported image type" : "Nesubtenata bildotipo",
     "Undo" : "Malfari",
     "Redo" : "Refari",
     "Headings" : "Titolaro",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
-    "Edit" : "Modifi"
+    "Edit" : "Modifi",
+    "Unsupported image type" : "Nesubtenata bildotipo"
 },
 "nplurals=2; plural=(n != 1);");

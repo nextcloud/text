@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Bu ek dosyayı sil",
     "Delete this image" : "Bu görseli sil",
     "Failed to load" : "Yüklenmemedi",
-    "Unsupported image type" : "Görsel türü desteklenmiyor",
     "Add row before" : "Üste satır ekle",
     "Add row after" : "Alta satır ekle",
     "Delete this row" : "Bu satırı sil",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Açılış bölümleri ",
     "Source language" : "Kaynak dil",
     "Target language" : "Hedef dil",
+    "Unsupported image type" : "Görsel türü desteklenmiyor",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "e.g. php, javascript, json, ..." : "php, javascript, json gibi..."
 },

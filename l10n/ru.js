@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Удалить вложение",
     "Delete this image" : "Удалить изображение",
     "Failed to load" : "Ошибка загрузки",
-    "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Add row before" : "Добавить строку выше",
     "Add row after" : "Добавить строку ниже",
     "Delete this row" : "Удалить строку",
@@ -170,6 +169,7 @@ OC.L10N.register(
     "Front matter" : "Передний план",
     "Source language" : "Исходный язык",
     "Target language" : "Целевой язык",
+    "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Show rich workspaces" : "Показывать дополнительные сведения",
     "e.g. php, javascript, json, ..." : "например, php, javascript, json, ..."
 },

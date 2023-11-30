@@ -111,7 +111,6 @@ OC.L10N.register(
     "Delete this attachment" : "Изтрийте този прикачен файл",
     "Delete this image" : "Изтрийте това изображение",
     "Failed to load" : "Неуспешно зареждане",
-    "Unsupported image type" : "Неподдържан тип изображение",
     "Add row before" : "Добавяне на ред преди",
     "Add row after" : "Добавяне на ред след",
     "Delete this row" : "Изтриване на този ред",
@@ -152,6 +151,7 @@ OC.L10N.register(
     "Front matter" : "Предно съдържание",
     "Source language" : "Език на източника",
     "Target language" : "Целеви език",
+    "Unsupported image type" : "Неподдържан тип изображение",
     "Show rich workspaces" : "Показване  на обогатени работни пространства"
 },
 "nplurals=2; plural=(n != 1);");

@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "حذف المُرفَق",
     "Delete this image" : "إحذف هذه الصورة",
     "Failed to load" : "فشل في التحميل",
-    "Unsupported image type" : "هذا النوع من الصور غير مدعوم هنا",
     "Add row before" : "أضِف صفّاً قبلَ",
     "Add row after" : "أضِف صفّاً بعدَ",
     "Delete this row" : "إحذف هذا الصفّ",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "المادة التقديمية front matter",
     "Source language" : "اللغة الأصلية",
     "Target language" : "اللغة المطلوبة",
+    "Unsupported image type" : "هذا النوع من الصور غير مدعوم هنا",
     "Show rich workspaces" : "عرض توصيف مساحة العمل rich workspaces",
     "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ..."
 },

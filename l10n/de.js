@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Anhang löschen",
     "Delete this image" : "Bild löschen",
     "Failed to load" : "Fehler beim Laden",
-    "Unsupported image type" : "Nicht unterstütztes Bild-Format",
     "Add row before" : "Zeile davor hinzufügen",
     "Add row after" : "Zeile danach hinzufügen",
     "Delete this row" : "Diese Zeile löschen",
@@ -169,6 +168,7 @@ OC.L10N.register(
     "Front matter" : "Titelei",
     "Source language" : "Ausgangssprache",
     "Target language" : "Zielsprache",
+    "Unsupported image type" : "Nicht unterstütztes Bild-Format",
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "e.g. php, javascript, json, ..." : "z. B. php, javascript, json …"
 },

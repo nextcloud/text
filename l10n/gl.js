@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Eliminar este anexo",
     "Delete this image" : "Eliminar esta imaxe",
     "Failed to load" : "Produciuse un fallo ao cargar",
-    "Unsupported image type" : "Tipo de imaxe non admitido",
     "Add row before" : "Engadir fila antes",
     "Add row after" : "Engadir fila após",
     "Delete this row" : "Eliminar esta fila",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Preliminar ",
     "Source language" : "idioma de orixe",
     "Target language" : "Idioma de destino",
+    "Unsupported image type" : "Tipo de imaxe non admitido",
     "Show rich workspaces" : "Amosar espazos de traballo mellorados",
     "e.g. php, javascript, json, ..." : "p. ex. php, javascript, json, …"
 },

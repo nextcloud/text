@@ -86,7 +86,6 @@ OC.L10N.register(
     "Delete this attachment" : "Ištrinti šį priedą",
     "Delete this image" : "Ištrinti šį paveikslą",
     "Failed to load" : "Nepavyko įkelti",
-    "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Add row before" : "Pridėti eilutę aukščiau",
     "Add row after" : "Pridėti eilutę žemiau",
     "Delete this row" : "Ištrinti šią eilutę",
@@ -116,6 +115,7 @@ OC.L10N.register(
     "Formatting" : "Formatavimas",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Edit" : "Taisyti",
+    "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

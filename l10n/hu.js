@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Melléklet törlése",
     "Delete this image" : "Kép törlése",
     "Failed to load" : "A betöltés sikertelen",
-    "Unsupported image type" : "Nem támogatott képtípus",
     "Add row before" : "Sor hozzáadása elé",
     "Add row after" : "Sor hozzáadása utána",
     "Delete this row" : "Sor törlése",
@@ -170,6 +169,7 @@ OC.L10N.register(
     "Front matter" : "Előlap",
     "Source language" : "Forrásnyelv",
     "Target language" : "Célnyelv",
+    "Unsupported image type" : "Nem támogatott képtípus",
     "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
     "e.g. php, javascript, json, ..." : "pl. php, javascript, json..."
 },

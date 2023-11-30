@@ -113,7 +113,6 @@ OC.L10N.register(
     "Delete this attachment" : "Poista tämä liite",
     "Delete this image" : "Poista tämä kuva",
     "Failed to load" : "Lataaminen epäonnistui",
-    "Unsupported image type" : "Ei-tuettu kuvatiedostomuoto",
     "Add row before" : "Lisää rivi ennen",
     "Add row after" : "Lisää rivi jälkeen",
     "Delete this row" : "Poista tämä rivi",
@@ -147,6 +146,7 @@ OC.L10N.register(
     "Created \"{name}\"" : "Luotu \"{name}\"",
     "Source language" : "Lähdekieli",
     "Target language" : "Kohdekieli",
+    "Unsupported image type" : "Ei-tuettu kuvatiedostomuoto",
     "Show rich workspaces" : "Näytä rikastetut työtilat",
     "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."
 },

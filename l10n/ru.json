@@ -126,7 +126,6 @@
     "Delete this attachment" : "Удалить вложение",
     "Delete this image" : "Удалить изображение",
     "Failed to load" : "Ошибка загрузки",
-    "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Add row before" : "Добавить строку выше",
     "Add row after" : "Добавить строку ниже",
     "Delete this row" : "Удалить строку",
@@ -168,6 +167,7 @@
     "Front matter" : "Передний план",
     "Source language" : "Исходный язык",
     "Target language" : "Целевой язык",
+    "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Show rich workspaces" : "Показывать дополнительные сведения",
     "e.g. php, javascript, json, ..." : "например, php, javascript, json, ..."
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"

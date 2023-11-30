@@ -125,7 +125,6 @@ OC.L10N.register(
     "Delete this attachment" : "Eyða þessu viðhengi",
     "Delete this image" : "Eyða þessari mynd",
     "Failed to load" : "Mistókst að hlaða inn",
-    "Unsupported image type" : "Óstudd gerð myndar",
     "Add row before" : "Bæta við röð á undan",
     "Add row after" : "Bæta við röð á eftir",
     "Delete this row" : "Eyða þessari röð",
@@ -168,6 +167,7 @@ OC.L10N.register(
     "Created \"{name}\"" : "Bjó til \"{name}\"",
     "Source language" : "Upprunatungumál",
     "Target language" : "Marktungumál:",
+    "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
     "e.g. php, javascript, json, ..." : "t.d. php, javascript, json, ..."
 },
