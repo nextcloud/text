@@ -10,6 +10,23 @@
 		overflow: visible!important;
 	}
 
+	#header {
+		display: none!important;
+	}
+
+	#content {
+		display: block!important;
+		position: relative!important;
+		border-radius: 0;
+		margin: 0;
+		width: 100%;
+		height: fit-content;
+	}
+
+	footer {
+		display: none!important;
+	}
+
 	#viewer[data-handler='text'] {
 		// Hide top border
 		border: none;
@@ -29,6 +46,8 @@
 	}
 
 	.text-editor {
+		height: fit-content!important;
+
 		.text-menubar {
 			// Hide menu bar
 			display: none!important;
@@ -44,40 +63,47 @@
 		.text-editor__wrapper {
 			height: fit-content;
 			position: unset;
-		}
 
-		div.ProseMirror {
-			h1, h2, h3, h4, h5 {
-				// orphaned headlines are ugly
-				break-after: avoid;
-			}
-			.image, img, table {
-				// try no page breaks within tables or images
-				break-inside: avoid-page;
-				// Some more indention
-				max-width: 90%!important;
-				margin: 5vw auto 5vw 5%!important;
-			}
+			div.ProseMirror {
+				margin-top: 0;
+				margin-bottom: 0;
+				padding-top: 0;
+				padding-bottom: 0;
 
-			// Add some borders below header and between columns
-			th {
-				color: black!important;
-				font-weight: bold!important;
-				border-width: 0 1px 2px 0!important;
-				border-color: gray!important;
-				border-style: none solid solid none!important;
-			}
-			th:last-of-type {
-				border-width: 0 0 2px 0!important;
-			}
+				h1, h2, h3, h4, h5 {
+					// orphaned headlines are ugly
+					break-after: avoid;
+					page-break-after: avoid;
+				}
+				.image, img, table {
+					// try no page breaks within tables or images
+					break-inside: avoid-page;
+					page-break-inside: avoid;
+					// Some more indention
+					max-width: 90%!important;
+					margin: 5vw auto 5vw 5%!important;
+				}
 
-			td {
-				border-style: none solid none none!important;
-				border-width: 1px!important;
-				border-color: gray!important;
-			}
-			td:last-of-type {
-				border: none!important;
+				// Add some borders below header and between columns
+				th {
+					color: black!important;
+					font-weight: bold!important;
+					border-width: 0 1px 2px 0!important;
+					border-color: gray!important;
+					border-style: none solid solid none!important;
+				}
+				th:last-of-type {
+					border-width: 0 0 2px 0!important;
+				}
+
+				td {
+					border-style: none solid none none!important;
+					border-width: 1px!important;
+					border-color: gray!important;
+				}
+				td:last-of-type {
+					border: none!important;
+				}
 			}
 		}
 	}
@@ -100,5 +126,10 @@
 		.editor--outline__btn-close {
 			display: none;
 		}
+	}
+
+	.collaboration-cursor__caret,
+	.collaboration-cursor__label {
+		display: none;
 	}
 }
