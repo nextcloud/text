@@ -18,11 +18,11 @@ OC.L10N.register(
     "to" : "ვის",
     "Replace" : "ჩანაცვლება",
     "Source code" : "კოდი",
-    "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება"
+    "Edit" : "ცვლილება",
+    "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი"
 },
 "nplurals=2; plural=(n!=1);");

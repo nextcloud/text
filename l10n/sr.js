@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Обриши овај прилог",
     "Delete this image" : "Обриши ову слику",
     "Failed to load" : "Учитавање није успело",
-    "Unsupported image type" : "Неподржани тип слике",
     "Add row before" : "Додај ред испред",
     "Add row after" : "Додај ред након",
     "Delete this row" : "Обриши овај ред",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Уводни део",
     "Source language" : "Изворни језик",
     "Target language" : "Циљни језик",
+    "Unsupported image type" : "Неподржани тип слике",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
     "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ..."
 },

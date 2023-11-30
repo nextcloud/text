@@ -33,7 +33,6 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
     "to" : "aan",
-    "Unsupported image type" : "Onondersteunde beeldtipe",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
     "Heading 3" : "Kop 3",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
-    "Edit" : "Wysig"
+    "Edit" : "Wysig",
+    "Unsupported image type" : "Onondersteunde beeldtipe"
 },
 "nplurals=2; plural=(n != 1);");

@@ -127,7 +127,6 @@
     "Delete this attachment" : "Вилучити цей вкладений файл",
     "Delete this image" : "Вилучити це зображення",
     "Failed to load" : "Не вдалося завантажити",
-    "Unsupported image type" : "Цей тип зображення не підтримується",
     "Add row before" : "Додати рядок перед",
     "Add row after" : "Додати рядок після",
     "Delete this row" : "Вилучити цей рядок",
@@ -171,6 +170,7 @@
     "Front matter" : "Передня справа",
     "Source language" : "Мова оригіналу",
     "Target language" : "Цільова мова",
+    "Unsupported image type" : "Цей тип зображення не підтримується",
     "Show rich workspaces" : "Показувати опис каталогу",
     "e.g. php, javascript, json, ..." : "напр., PHP, JavaScript, JSON ..."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"

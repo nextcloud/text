@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Smazat tuto přílohu",
     "Delete this image" : "Smazat tento obrázek",
     "Failed to load" : "Nepodařilo se načíst",
-    "Unsupported image type" : "Nepodporovaný typ obrázku",
     "Add row before" : "Přidat řádek před",
     "Add row after" : "Předat řádek za",
     "Delete this row" : "Smazat tento řádek",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Source language" : "Zdrojový jazyk",
     "Target language" : "Cílový jazyk",
+    "Unsupported image type" : "Nepodporovaný typ obrázku",
     "Show rich workspaces" : "Zobrazit rich workspaces",
     "e.g. php, javascript, json, ..." : "např. php, javascript, json, …"
 },

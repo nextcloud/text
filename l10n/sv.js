@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Ta bort denna bilaga",
     "Delete this image" : "Ta bort denna bild",
     "Failed to load" : "Kunde inte ladda",
-    "Unsupported image type" : "Filtyp stöds inte",
     "Add row before" : "Lägg till rad innan",
     "Add row after" : "Lägg till rad efter",
     "Delete this row" : "Ta bort denna rad",
@@ -171,6 +170,7 @@ OC.L10N.register(
     "Created \"{name}\"" : "Skapade \"{name}\"",
     "Source language" : "Källspråk",
     "Target language" : "Målspråk",
+    "Unsupported image type" : "Filtyp stöds inte",
     "Show rich workspaces" : "Visa utökade arbetsytor",
     "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ..."
 },

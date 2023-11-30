@@ -25,12 +25,12 @@ OC.L10N.register(
     "to" : "untuk",
     "Replace" : "Timpa",
     "Source code" : "Kode sumber",
-    "Unsupported image type" : "Tipe gambar tidak bisa diterima",
     "Undo" : "Undo",
     "Info" : "Info",
     "Warning" : "Peringatan",
     "Control" : "Kendali",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
-    "Edit" : "Sunting"
+    "Edit" : "Sunting",
+    "Unsupported image type" : "Tipe gambar tidak bisa diterima"
 },
 "nplurals=1; plural=0;");

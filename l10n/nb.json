@@ -45,7 +45,6 @@
     "to" : "til",
     "Replace" : "Erstatt",
     "Source code" : "Kildekode",
-    "Unsupported image type" : "Filtypen støttes ikke",
     "Undo" : "Angre",
     "Redo" : "Gjør om",
     "Headings" : "Overskrifter",
@@ -63,6 +62,7 @@
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
+    "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

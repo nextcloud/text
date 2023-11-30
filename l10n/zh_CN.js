@@ -81,7 +81,6 @@ OC.L10N.register(
     "Translation failed" : "翻译失败",
     "Source code" : "源代码",
     "Both" : "都是",
-    "Unsupported image type" : "不支持图片格式",
     "Hide outline" : "隐藏大纲",
     "Show outline" : "显示大纲",
     "Undo" : "撤销",
@@ -104,6 +103,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Edit" : "编辑",
     "Add description" : "添加描述",
+    "Unsupported image type" : "不支持图片格式",
     "Show rich workspaces" : "显示富文本编辑区"
 },
 "nplurals=1; plural=0;");

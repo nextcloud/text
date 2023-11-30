@@ -128,7 +128,6 @@ OC.L10N.register(
     "Delete this attachment" : "Ezabatu eranskin hau",
     "Delete this image" : "Ezabatu irudi hau",
     "Failed to load" : "Kargatzeak huts egin du",
-    "Unsupported image type" : "Irudi mota ez da onartzen",
     "Add row before" : "Gehitu errenkada aurrerago",
     "Add row after" : "Gehitu errenkada ostean",
     "Delete this row" : "Ezabatu errenkada hau",
@@ -169,6 +168,7 @@ OC.L10N.register(
     "Front matter" : "Aurreko gaia",
     "Source language" : "Jatorrizko hizkuntza",
     "Target language" : "Helburuko hizkuntza",
+    "Unsupported image type" : "Irudi mota ez da onartzen",
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ..."
 },

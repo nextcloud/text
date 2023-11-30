@@ -39,7 +39,6 @@
     "to" : "Para",
     "Replace" : "Substitua",
     "Source code" : "Código fonte",
-    "Unsupported image type" : "Tipo de imagem não suportado",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",
     "Headings" : "Títulos",
@@ -53,6 +52,7 @@
     "Control" : "Controle",
     "Formatting" : "Formação ",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
-    "Edit" : "Editar"
+    "Edit" : "Editar",
+    "Unsupported image type" : "Tipo de imagem não suportado"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

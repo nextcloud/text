@@ -129,7 +129,6 @@ OC.L10N.register(
     "Delete this attachment" : "Suprimeix aquest adjunt",
     "Delete this image" : "Suprimeix aquesta imatge",
     "Failed to load" : "No s'ha pogut carregar",
-    "Unsupported image type" : "Tipus d'imatge no compatible",
     "Add row before" : "Afegeix una fila abans",
     "Add row after" : "Afegeix una fila després",
     "Delete this row" : "Suprimeix aquesta fila",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Front matter" : "Text preliminar",
     "Source language" : "Llengua d'origen",
     "Target language" : "Llengua de destinació",
+    "Unsupported image type" : "Tipus d'imatge no compatible",
     "Show rich workspaces" : "Mostra els espais de treball enriquits",
     "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…"
 },
