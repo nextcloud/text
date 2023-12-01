@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Обриши овај прилог",
     "Delete this image" : "Обриши ову слику",
     "Failed to load" : "Учитавање није успело",
+    "Could not find image in attachments list." : "Слика није могла да се пронађе у листи прилога.",
     "Add row before" : "Додај ред испред",
     "Add row after" : "Додај ред након",
     "Delete this row" : "Обриши овај ред",
