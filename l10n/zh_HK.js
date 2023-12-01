@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "刪除此附件",
     "Delete this image" : "刪除此圖像",
     "Failed to load" : "加載失敗",
+    "Could not find image in attachments list." : "在附件清單中找不到影像。",
     "Add row before" : "在前面添加行",
     "Add row after" : "在後面添加行",
     "Delete this row" : "刪除此行",

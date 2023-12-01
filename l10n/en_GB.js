@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Delete this attachment",
     "Delete this image" : "Delete this image",
     "Failed to load" : "Failed to load",
+    "Could not find image in attachments list." : "Could not find image in attachments list.",
     "Add row before" : "Add row before",
     "Add row after" : "Add row after",
     "Delete this row" : "Delete this row",
