@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "حذف المُرفَق",
     "Delete this image" : "إحذف هذه الصورة",
     "Failed to load" : "فشل في التحميل",
+    "Could not find image in attachments list." : "تعذّر إيجاد صورة في قائمة المرفقات.",
     "Add row before" : "أضِف صفّاً قبلَ",
     "Add row after" : "أضِف صفّاً بعدَ",
     "Delete this row" : "إحذف هذا الصفّ",

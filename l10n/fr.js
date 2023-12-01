@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Supprimer cette pièce jointe",
     "Delete this image" : "Supprimer cette image",
     "Failed to load" : "Le chargement a échoué",
+    "Could not find image in attachments list." : "Impossible de trouver l'image dans la liste des pièces jointes.",
     "Add row before" : "Ajouter une ligne avant",
     "Add row after" : "Ajouter une ligne après",
     "Delete this row" : "Supprimer cette ligne",

@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Bu ek dosyayı sil",
     "Delete this image" : "Bu görseli sil",
     "Failed to load" : "Yüklenmemedi",
+    "Could not find image in attachments list." : "Ek dosya listesinde görsel bulunamadı.",
     "Add row before" : "Üste satır ekle",
     "Add row after" : "Alta satır ekle",
     "Delete this row" : "Bu satırı sil",
