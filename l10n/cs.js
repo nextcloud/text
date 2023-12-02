@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Smazat tuto přílohu",
     "Delete this image" : "Smazat tento obrázek",
     "Failed to load" : "Nepodařilo se načíst",
+    "Could not find image in attachments list." : "V seznamu příloh se nepodařilo nalézt obrázek.",
     "Add row before" : "Přidat řádek před",
     "Add row after" : "Předat řádek za",
     "Delete this row" : "Smazat tento řádek",
