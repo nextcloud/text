@@ -87,7 +87,7 @@ OC.L10N.register(
     "First item" : "Primeiro elemento",
     "Checklist" : "Lista de verificación",
     "To-Do item" : "Elemento de tarefas pendentes",
-    "Blockquote" : "Cita",
+    "Blockquote" : "Cita de bloque",
     "Quoted text" : "Texto citado",
     "Code block" : "Bloque de código",
     "Some code" : "Algún código",
