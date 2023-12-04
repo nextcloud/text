@@ -111,7 +111,12 @@ class SyncService {
 			return
 		}
 		this.backend = new PollingBackend(this, this.connection)
-		this.version = this.connection.docStateVersion
+
+		// If we reconnect we may already have a version set so we should keep that
+		if (this.version === null) {
+			this.version = this.connection.docStateVersion
+		}
+
 		this.emit('opened', {
 			...this.connection.state,
 			version: this.version,

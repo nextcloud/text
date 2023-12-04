@@ -377,6 +377,7 @@ export default {
 
 			this.listenSyncServiceEvents()
 
+			this.$providers.forEach(p => p?.destroy())
 			const syncServiceProvider = createSyncServiceProvider({
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
