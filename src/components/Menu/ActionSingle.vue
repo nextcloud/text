@@ -128,11 +128,14 @@ export default {
 			class: classes,
 			attrs: {
 				title,
-				type: 'tertiary',
+				type: attrs.active ? 'primary' : 'tertiary',
 				role: 'menuitem',
 				'data-text-action-entry': actionEntry.key,
 				...attrs,
 			},
+			props: isItem
+				? { pressed: attrs.active }
+				: {},
 			on: {
 				...$listeners,
 				click: runAction,
