@@ -29,6 +29,7 @@ use Exception;
 use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\AttachmentService;
+use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
@@ -42,7 +43,8 @@ use OCP\IRequest;
 use OCP\Util;
 use Psr\Log\LoggerInterface;
 
-class AttachmentController extends ASessionAwareController {
+class AttachmentController extends ApiController implements ISessionAwareController {
+	use TSessionAwareController;
 	public const IMAGE_MIME_TYPES = [
 		'image/png',
 		'image/jpeg',
