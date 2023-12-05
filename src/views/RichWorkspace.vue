@@ -80,7 +80,7 @@ export default {
 	},
 	data() {
 		return {
-			// Keep track of a local copy of the hasRichWorkspace state as it might change after intitial rendering (e.g. when adding/removing the readme)
+			// Keep track of a local copy of the hasRichWorkspace state as it might change after initial rendering (e.g. when adding/removing the readme)
 			localHasRichWorkspace: false,
 			focus: false,
 			folder: null,
@@ -225,7 +225,7 @@ export default {
 			}
 		},
 		onFileDeleted(node) {
-			if (node.path === this.file.path) {
+			if (node.path === this.file?.path) {
 				this.localHasRichWorkspace = false
 			}
 		},
