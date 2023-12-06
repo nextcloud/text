@@ -29,6 +29,8 @@ use OCA\Text\Controller;
 
 return [
 	'routes' => [
+		/** @see Controller\AttachmentController::getAttachmentFile() */
+		['name' => 'Attachment#getAttachmentList', 'url' => '/attachments', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::insertAttachmentFile() */
 		['name' => 'Attachment#insertAttachmentFile', 'url' => '/attachment/filepath', 'verb' => 'POST'],
 		/** @see Controller\AttachmentController::uploadAttachment() */
@@ -39,8 +41,6 @@ return [
 		['name' => 'Attachment#getMediaFile', 'url' => '/media', 'verb' => 'GET'],
 		/** @see Controller\AttachmentController::getMediaFilePreview() */
 		['name' => 'Attachment#getMediaFilePreview', 'url' => '/mediaPreview', 'verb' => 'GET'],
-		/** @see Controller\AttachmentController::getMediaFileMetadata() */
-		['name' => 'Attachment#getMediaFileMetadata', 'url' => '/mediaMetadata', 'verb' => 'GET'],
 
 		/** @see Controller\SessionController::create() */
 		['name' => 'Session#create', 'url' => '/session/create', 'verb' => 'PUT'],

@@ -1,7 +1,7 @@
 <template>
 	<NcModal v-if="show"
 		size="large"
-		:title="currentImage.basename"
+		:name="currentImage.name"
 		:out-transition="true"
 		:has-next="true"
 		:has-previous="true"
@@ -11,7 +11,7 @@
 		@previous="showPreviousImage"
 		@close="$emit('close')">
 		<div class="modal__content">
-			<img :src="currentImage.source">
+			<img :src="currentImage.previewUrl">
 		</div>
 	</NcModal>
 </template>
@@ -27,14 +27,7 @@ export default {
 	props: {
 		images: {
 			type: Array,
-			default() {
-				return []
-			},
-			validator(imagesList) {
-				return (imagesList.length === 0)
-					? true
-					: imagesList.every(image => image.basename && image.source)
-			},
+			required: true,
 		},
 		startIndex: {
 			type: Number,
@@ -56,20 +49,18 @@ export default {
 		},
 	},
 	watch: {
-		startIndex(val) {
+		'startIndex'(val) {
 			this.currentImageIndex = val
 		},
 	},
 	methods: {
 		showNextImage() {
 			this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length
-			this.currentImage = this.images[this.currentImageIndex]
 		},
 		showPreviousImage() {
 			this.currentImageIndex = this.currentImageIndex <= 0
 				? this.images.length - 1
 				: this.currentImageIndex - 1
-			this.currentImage = this.images[this.currentImageIndex]
 		},
 	},
 }

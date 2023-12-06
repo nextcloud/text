@@ -26,8 +26,10 @@ declare(strict_types=1);
 namespace OCA\Text\Controller;
 
 use Exception;
+use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Exception\UploadException;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
+use OCA\Text\Middleware\Attribute\RequireDocumentSessionOrUserOrShareToken;
 use OCA\Text\Service\AttachmentService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http;
@@ -79,6 +81,27 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		private AttachmentService $attachmentService
 	) {
 		parent::__construct($appName, $request);
+	}
+
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSessionOrUserOrShareToken]
+	public function getAttachmentList(?string $shareToken = null): DataResponse {
+		$documentId = $this->getDocument()->getId();
+		try {
+			$session = $this->getSession();
+		} catch (InvalidSessionException) {
+			$session = null;
+		}
+
+		if ($shareToken) {
+			$attachments = $this->attachmentService->getAttachmentList($documentId, null, $session, $shareToken);
+		} else {
+			$userId = $this->getUserId();
+			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $session, null);
+		}
+
+		return new DataResponse($attachments);
 	}
 
 	#[NoAdminRequired]
@@ -165,22 +188,22 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getImageFile(string $imageFileName, ?string $shareToken = null,
-		int $preferRawImage = 0) {
-		$documentId = $this->getSession()->getDocumentId();
+		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$imageFile = $this->attachmentService->getImageFilePublic($documentId, $imageFileName, $shareToken, $preferRawImage === 1);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId, $preferRawImage === 1);
 			}
 			return $imageFile !== null
 				? new DataDownloadResponse(
 					$imageFile->getContent(),
-					(string) Http::STATUS_OK,
+					$imageFile->getName(),
 					$this->getSecureMimeType($imageFile->getMimeType())
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
@@ -196,21 +219,21 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
-	public function getMediaFile(string $mediaFileName, ?string $shareToken = null) {
-		$documentId = $this->getSession()->getDocumentId();
+	#[RequireDocumentSessionOrUserOrShareToken]
+	public function getMediaFile(string $mediaFileName, ?string $shareToken = null): DataResponse|DataDownloadResponse {
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$mediaFile = $this->attachmentService->getMediaFilePublic($documentId, $mediaFileName, $shareToken);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$mediaFile = $this->attachmentService->getMediaFile($documentId, $mediaFileName, $userId);
 			}
 			return $mediaFile !== null
 				? new DataDownloadResponse(
 					$mediaFile->getContent(),
-					(string) Http::STATUS_OK,
+					$mediaFile->getName(),
 					$this->getSecureMimeType($mediaFile->getMimeType())
 				)
 				: new DataResponse('', Http::STATUS_NOT_FOUND);
@@ -227,15 +250,15 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[NoCSRFRequired]
-	#[RequireDocumentSession]
+	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFilePreview(string $mediaFileName, ?string $shareToken = null) {
-		$documentId = $this->getSession()->getDocumentId();
+		$documentId = $this->getDocument()->getId();
 
 		try {
 			if ($shareToken) {
 				$preview = $this->attachmentService->getMediaFilePreviewPublic($documentId, $mediaFileName, $shareToken);
 			} else {
-				$userId = $this->getSession()->getUserId();
+				$userId = $this->getUserId();
 				$preview = $this->attachmentService->getMediaFilePreview($documentId, $mediaFileName, $userId);
 			}
 			if ($preview === null) {
@@ -244,7 +267,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			if ($preview['type'] === 'file') {
 				return new DataDownloadResponse(
 					$preview['file']->getContent(),
-					(string) Http::STATUS_OK,
+					$mediaFileName,
 					$this->getSecureMimeType($preview['file']->getMimeType())
 				);
 			} elseif ($preview['type'] === 'icon') {
@@ -254,32 +277,6 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			$this->logger->error('getMediaFilePreview error', ['exception' => $e]);
 		}
 		return new DataResponse('', Http::STATUS_NOT_FOUND);
-	}
-
-	/**
-	 * Serve the media files metadata in the editor
-	 */
-	#[NoAdminRequired]
-	#[PublicPage]
-	#[NoCSRFRequired]
-	#[RequireDocumentSession]
-	public function getMediaFileMetadata(string $mediaFileName, ?string $shareToken = null): DataResponse {
-		$documentId = $this->getSession()->getDocumentId();
-		try {
-			if ($shareToken) {
-				$metadata = $this->attachmentService->getMediaFileMetadataPublic($documentId, $mediaFileName, $shareToken);
-			} else {
-				$userId = $this->getSession()->getUserId();
-				$metadata = $this->attachmentService->getMediaFileMetadataPrivate($documentId, $mediaFileName, $userId);
-			}
-			if ($metadata === null) {
-				return new DataResponse('', Http::STATUS_NOT_FOUND);
-			}
-			return new DataResponse($metadata);
-		} catch (Exception $e) {
-			$this->logger->error('getMediaFileMetadata error', ['exception' => $e]);
-			return new DataResponse('', Http::STATUS_NOT_FOUND);
-		}
 	}
 
 	/**

@@ -24,6 +24,7 @@
 	<NodeViewWrapper :contenteditable="isEditable">
 		<figure class="image image-view"
 			data-component="image-view"
+			:data-attachment-type="attachmentType"
 			:class="{'icon-loading': !loaded, 'image-view--failed': failed}"
 			:data-src="src">
 			<div v-if="canDisplayImage"
@@ -35,7 +36,7 @@
 					<template v-if="!failed">
 						<div v-if="isMediaAttachment"
 							class="media"
-							@click="handleImageClick(src)">
+							@click="handleAttachmentClick">
 							<div class="media__wrapper">
 								<img v-show="loaded"
 									:src="imageUrl"
@@ -43,7 +44,7 @@
 									@load="onLoaded">
 								<div class="metadata">
 									<span class="name">{{ alt }}</span>
-									<span class="size">{{ attachmentMetadata.size }}</span>
+									<span class="size">{{ attachmentSize }}</span>
 								</div>
 							</div>
 							<div v-if="showDeleteIcon"
@@ -61,7 +62,7 @@
 							<img v-show="loaded"
 								:src="imageUrl"
 								class="image__main"
-								@click="handleImageClick(src)"
+								@click="handleImageClick"
 								@load="onLoaded">
 						</div>
 					</template>
@@ -99,7 +100,7 @@
 					</div>
 				</transition>
 				<div class="image__modal">
-					<ShowImageModal :images="embeddedImagesList"
+					<ShowImageModal :images="embeddedImageList"
 						:start-index="imageIndex"
 						:show="showImageModal"
 						@close="showImageModal=false" />
@@ -107,13 +108,6 @@
 			</div>
 			<div v-else class="image-view__cant_display">
 				<transition name="fade">
-					<div v-show="loaded">
-						<a :href="internalLinkOrImage" target="_blank">
-							<span v-if="!isSupportedImage">{{ alt }}</span>
-						</a>
-					</div>
-				</transition>
-				<transition v-if="isSupportedImage" name="fade">
 					<div v-show="loaded" class="image__caption">
 						<input ref="altInput"
 							type="text"
@@ -132,35 +126,16 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
 import ClickOutside from 'vue-click-outside'
+import { mapGetters } from 'vuex'
 import { NcButton } from '@nextcloud/vue'
+import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import store from '../mixins/store.js'
 import { useAttachmentResolver } from '../components/Editor.provider.js'
-import { mimetypesImages as IMAGE_MIMES } from '../helpers/mime.js'
 import { emit } from '@nextcloud/event-bus'
-import { generateUrl } from '@nextcloud/router'
 import { NodeViewWrapper } from '@tiptap/vue-2'
-import { logger } from '../helpers/logger.js'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
-
-const getQueryVariable = (src, variable) => {
-	const query = src.split('?')[1]
-	if (typeof query === 'undefined') {
-		return
-	}
-	const vars = query.split(/[&#]/)
-	if (typeof vars === 'undefined') {
-		return
-	}
-	for (let i = 0; i < vars.length; i++) {
-		const pair = vars[i].split('=')
-		if (decodeURIComponent(pair[0]) === variable) {
-			return decodeURIComponent(pair[1])
-		}
-	}
-}
 
 class LoadImageError extends Error {
 
@@ -191,23 +166,33 @@ export default {
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
 	data() {
 		return {
+			attachment: null,
 			imageLoaded: false,
 			loaded: false,
 			failed: false,
 			showIcons: false,
 			imageUrl: null,
 			errorMessage: null,
-			attachmentType: null,
-			attachmentMetadata: {},
+			attachmentSize: null,
 			showImageModal: false,
-			embeddedImagesList: [],
 			imageIndex: null,
 			isEditable: false,
+			embeddedImageList: [],
 		}
 	},
 	computed: {
+		...mapGetters({
+			imageAttachments: 'text/imageAttachments',
+		}),
+		attachmentType() {
+			if (this.attachment) {
+				return this.attachment.isImage ? 'image' : 'media'
+			} else {
+				return null
+			}
+		},
 		isMediaAttachment() {
-			return this.attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA
+			return this.attachmentType === 'media'
 		},
 		showDeleteIcon() {
 			return this.isEditable && this.showIcons
@@ -216,28 +201,11 @@ export default {
 			return this.showDeleteIcon && !this.isMediaAttachment
 		},
 		canDisplayImage() {
-			if (!this.isSupportedImage) {
-				return false
-			}
-
 			if (this.failed && this.loaded) {
 				return true
 			}
 
 			return this.loaded && this.imageLoaded
-		},
-		imageFileId() {
-			return getQueryVariable(this.src, 'fileId')
-		},
-		isSupportedImage() {
-			return typeof this.mime === 'undefined'
-				|| IMAGE_MIMES.indexOf(this.mime) !== -1
-		},
-		internalLinkOrImage() {
-			if (this.imageFileId) {
-				return generateUrl('/f/' + this.imageFileId)
-			}
-			return this.src
 		},
 		src: {
 			get() {
@@ -259,72 +227,30 @@ export default {
 				})
 			},
 		},
-		t() {
-			return (a, s) => window.t(a, s)
-		},
-		token() {
-			return document.getElementById('sharingToken')
-				&& document.getElementById('sharingToken').value
-		},
 	},
 	beforeMount() {
 		this.isEditable = this.editor.isEditable
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
-		if (!this.isSupportedImage) {
-			// TODO check if hasPreview and render a file preview if available
-			this.failed = true
-			this.imageLoaded = false
-			this.loaded = true
-			this.errorMessage = t('text', 'Unsupported image type')
-			return
-		}
-		this.init()
+		this.loadPreview()
 			.catch(this.onImageLoadFailure)
 	},
 	methods: {
-		async init() {
-			const candidates = await this.$attachmentResolver.resolve(this.src)
-			return this.load(candidates)
-		},
-		async load(candidates) {
-			const [candidate, ...fallbacks] = candidates
-			return this.loadImage(candidate.url, candidate.type, candidate.name, candidate.metadata).catch((e) => {
-				if (fallbacks.length > 0) {
-					return this.load(fallbacks)
-					// TODO if fallback works, rewrite the url with correct document ID
-				}
-				return Promise.reject(e)
-			})
-		},
-		async loadImage(imageUrl, attachmentType, name = null, metadata = null) {
+		async loadPreview() {
+			this.attachment = await this.$attachmentResolver.resolve(this.src)
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
-					this.imageUrl = imageUrl
+					this.imageUrl = this.attachment.previewUrl
 					this.imageLoaded = true
 					this.loaded = true
-					this.attachmentType = attachmentType
-					if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA && metadata) {
-						this.attachmentMetadata = metadata
-					} else if (attachmentType === this.$attachmentResolver.ATTACHMENT_TYPE_MEDIA) {
-						await this.loadMediaMetadata(name)
-					}
-					resolve(imageUrl)
+					this.attachmentSize = this.attachment.size
 				}
 				img.onerror = (e) => {
-					reject(new LoadImageError(e, imageUrl))
+					reject(new LoadImageError(e, this.attachment.previewUrl))
 				}
-				img.src = imageUrl
-			})
-		},
-		loadMediaMetadata(name) {
-			const metadataUrl = this.$attachmentResolver.getMediaMetadataUrl(name)
-			return axios.get(metadataUrl).then((response) => {
-				this.attachmentMetadata = response.data
-			}).catch((error) => {
-				logger.error('Failed to load media metadata', { error })
+				img.src = this.attachment.previewUrl
 			})
 		},
 		onImageLoadFailure(err) {
@@ -347,23 +273,49 @@ export default {
 		onLoaded() {
 			this.loaded = true
 		},
-		async handleImageClick(src) {
-			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"].image-view'))
-			let basename, relativePath
-
+		async updateEmbeddedImageList() {
+			this.embeddedImageList = []
+			// Get all images that succeeded to load
+			const imageViews = Array.from(document.querySelectorAll('figure[data-component="image-view"][data-attachment-type="image"]:not(.image-view--failed).image-view'))
 			for (const imgv of imageViews) {
-				relativePath = imgv.getAttribute('data-src')
-				basename = relativePath.split('/').slice(-1).join()
-				const response = await this.$attachmentResolver.resolve(relativePath, true)
-				const { url: source } = response.shift()
-				this.embeddedImagesList.push({
-					source,
-					basename,
-					relativePath,
-				})
+				const src = imgv.getAttribute('data-src')
+				if (!this.embeddedImageList.find(i => i.src === src)) {
+					// Don't add duplicates (e.g. when several editors are loaded in HTML document)
+					const attachment = await this.$attachmentResolver.resolve(imgv.getAttribute('data-src'))
+					this.embeddedImageList.push({
+						src,
+						...attachment,
+					})
+				}
 			}
-			this.imageIndex = this.embeddedImagesList.findIndex(image => image.relativePath === src)
-			this.showImageModal = true
+		},
+		handleAttachmentClick() {
+			// Open in viewer if possible
+			if (OCA.Viewer
+				// Viewer is not in use
+				&& !OCA.Viewer.file
+				// Viewer supports mimetype
+				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
+				// Attachment has davPath, i.e. is native attachment and not in public share
+				//  (in public share we probably don't have DAV access)
+				&& this.attachment.davPath) {
+				// Viewer exists, is not in use and supports mimetype
+				OCA.Viewer.open({ path: this.attachment.davPath })
+				return
+			}
+
+			// Download file
+			window.location.assign(this.attachment.fullUrl)
+		},
+		async handleImageClick() {
+			await this.updateEmbeddedImageList()
+			this.imageIndex = this.embeddedImageList.findIndex(i => (i.src === this.src))
+			if (this.imageIndex !== -1) {
+				this.showImageModal = true
+			} else {
+				console.error('Could not find image in attachments list', this.attachment)
+				showError(t('text', 'Could not find image in attachments list.'))
+			}
 		},
 		onDelete() {
 			emit('text:image-node:delete', this.imageUrl)

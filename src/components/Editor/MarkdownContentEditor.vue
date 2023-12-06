@@ -61,7 +61,7 @@ export default {
 				get: () => this.$editor,
 			},
 			[ATTACHMENT_RESOLVER]: {
-				get: () => this.$attachmentResolver,
+				get: () => this.$attachmentResolver ?? null,
 			},
 			[IS_RICH_EDITOR]: {
 				get: () => true,
@@ -72,6 +72,10 @@ export default {
 	},
 
 	props: {
+		fileId: {
+			type: Number,
+			default: null,
+		},
 		content: {
 			type: String,
 			required: true,
@@ -110,11 +114,14 @@ export default {
 	created() {
 		this.$editor = this.createEditor()
 		this.$editor.setEditable(!this.readOnly)
-		this.$attachmentResolver = new AttachmentResolver({
-			currentDirectory: this.relativePath?.match(/.*\//),
-			user: getCurrentUser(),
-			shareToken: this.shareToken,
-		})
+		if (this.fileId) {
+			this.$attachmentResolver = new AttachmentResolver({
+				currentDirectory: this.relativePath?.match(/.*\//),
+				user: getCurrentUser(),
+				shareToken: this.shareToken,
+				fileId: this.fileId,
+			})
+		}
 	},
 
 	beforeDestroy() {
