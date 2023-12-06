@@ -32,24 +32,25 @@ import Code from '@tiptap/extension-code'
 import CodeBlock from './../nodes/CodeBlock.js'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
+import EditableTable from './../nodes/EditableTable.js'
 import Emoji from './Emoji.js'
 import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
 import FrontMatter from './../nodes/FrontMatter.js'
-import Paragraph from './../nodes/Paragraph.js'
+import Gapcursor from '@tiptap/extension-gapcursor'
 import HardBreak from './../nodes/HardBreak.js'
 import Heading from '../nodes/Heading/index.js'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
+import LinkPicker from './../extensions/LinkPicker.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
-import LinkPicker from './../extensions/LinkPicker.js'
 import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from './../nodes/Paragraph.js'
 import Placeholder from '@tiptap/extension-placeholder'
 import Table from './../nodes/Table.js'
-import EditableTable from './../nodes/EditableTable.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
@@ -104,6 +105,7 @@ export default Extension.create({
 			Image,
 			ImageInline,
 			Dropcursor,
+			Gapcursor,
 			KeepSyntax,
 			FrontMatter,
 			Mention,
