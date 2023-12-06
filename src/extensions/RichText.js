@@ -36,6 +36,7 @@ import EditableTable from './../nodes/EditableTable.js'
 import Emoji from './Emoji.js'
 import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
 import FrontMatter from './../nodes/FrontMatter.js'
+import Gapcursor from '@tiptap/extension-gapcursor'
 import HardBreak from './../nodes/HardBreak.js'
 import Heading from '../nodes/Heading/index.js'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
@@ -104,6 +105,7 @@ export default Extension.create({
 			Image,
 			ImageInline,
 			Dropcursor,
+			Gapcursor,
 			KeepSyntax,
 			FrontMatter,
 			Mention,
