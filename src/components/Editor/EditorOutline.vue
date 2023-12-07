@@ -23,6 +23,10 @@ import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
 import useStore from '../../mixins/store.js'
 
+const onResize = debounce((context) => {
+	context.mobile = context.$el.parentElement.clientWidth < 320
+}, 10)
+
 export default {
 	name: 'EditorOutline',
 	components: {
@@ -35,9 +39,9 @@ export default {
 		mobile: false,
 	}),
 	mounted() {
-		this.$onResize = debounce(() => {
-			this.mobile = this.$el.parentElement.clientWidth < 320
-		}, 10)
+		this.$onResize = () => {
+			onResize(this)
+		}
 
 		this.$resizeObserver = new ResizeObserver(this.$onResize)
 		this.$resizeObserver.observe(this.$el.parentElement)
