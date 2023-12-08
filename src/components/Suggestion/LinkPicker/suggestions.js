@@ -24,6 +24,7 @@ import LinkPickerList from './LinkPickerList.vue'
 import { searchProvider, getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import menuEntries from './../../Menu/entries.js'
 import { getIsActive } from '../../Menu/utils.js'
+import markdownit from '../../../markdownit/index.js'
 
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
@@ -33,6 +34,31 @@ const filterOut = (e) => {
 }
 
 const important = ['task-list', 'table']
+
+const hasMarkdownSyntax = (content) => {
+	// Regular expressions for common Markdown patterns
+	const markdownPatterns = [
+		/\*\*.*?\*\*/, // Bold: **text**
+		/\*.*?\*/, // Italics: *text*
+		/\[.*?\(.*?\)/, // Links: [text](url)
+		/^#{1,6}\s.*$/, // Headings: # text
+		/^\s*[-+*]\s.*/m, // Unordered list: - item
+		/^\s\d\..*/m, // Ordered list: 1. item
+		/^>+\s.*/, // Blockquote: > text
+		/`.*?`/, // Code: `code`
+	]
+
+	return markdownPatterns.some(pattern => pattern.test(content))
+}
+
+const isValidMarkdown = (content) => {
+	try {
+		markdownit.parse(content)
+		return true
+	} catch (e) {
+		return false
+	}
+}
 
 const sortImportantFirst = (list) => {
 	return [
@@ -67,10 +93,16 @@ export default () => createSuggestions({
 		}
 		getLinkWithPicker(props.providerId, true)
 			.then(link => {
+				let content = link
+
+				if (hasMarkdownSyntax(content) && isValidMarkdown(content)) {
+					content = markdownit.render(content)
+				}
+
 				editor
 					.chain()
 					.focus()
-					.insertContentAt(range, link + ' ')
+					.insertContentAt(range, content + ' ')
 					.run()
 			})
 			.catch(error => {
