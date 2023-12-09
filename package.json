@@ -94,7 +94,7 @@
     "lib0": "^0.2.88",
     "lowlight": "^2.9.0",
     "markdown-it": "^13.0.2",
-    "markdown-it-container": "^3.0.0",
+    "markdown-it-container": "^4.0.0",
     "markdown-it-front-matter": "^0.2.3",
     "markdown-it-image-figures": "^2.1.1",
     "mermaid": "^10.6.1",
