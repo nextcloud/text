@@ -329,6 +329,7 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
+		this.$queue = []
 		this.$providers = []
 		this.$editor = null
 		this.$syncService = null
@@ -376,6 +377,7 @@ export default {
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
 				fileId: this.fileId,
+				queue: this.$queue,
 				initialSession: this.initialSession,
 			})
 			this.$providers.push(syncServiceProvider)
