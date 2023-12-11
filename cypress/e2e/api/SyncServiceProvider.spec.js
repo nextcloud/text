@@ -60,6 +60,7 @@ describe('Sync service provider', function() {
 	 * @param {object} ydoc Yjs document
 	 */
 	function createProvider(ydoc) {
+		const queue = []
 		const syncService = new SyncService({
 			serialize: () => 'Serialized',
 			getDocumentState: () => null,
@@ -70,6 +71,7 @@ describe('Sync service provider', function() {
 			syncService,
 			fileId,
 			initialSession: null,
+			queue,
 			disableBc: true,
 		})
 	}
