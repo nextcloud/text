@@ -125,7 +125,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 		#sendRemainingSteps() {
 			if (this.#queue.length) {
+				let outbox = []
 				return syncService.sendStepsNow(() => {
+					outbox = [...this.#queue]
 					const data = {
 						steps: this.#steps,
 						awareness: this.#awareness,
@@ -136,6 +138,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					return data
 				})?.catch(err => {
 					logger.error(err)
+					this.#queue = [...outbox, ...this.#queue]
 				})
 			}
 		}
