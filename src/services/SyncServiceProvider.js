@@ -30,16 +30,15 @@ import { logger } from '../helpers/logger.js'
  * @param {object} options.ydoc - the Ydoc
  * @param {object} options.syncService - sync service to build upon
  * @param {number} options.fileId - file id of the file to open
- * @param {number} options.queue - queue for outgoing steps
  * @param {object} options.initialSession - initialSession to start from
  * @param {boolean} options.disableBc - disable broadcast channel synchronization (default: disabled in debug mode, enabled otherwise)
  */
-export default function createSyncServiceProvider({ ydoc, syncService, fileId, initialSession, queue, disableBc }) {
+export default function createSyncServiceProvider({ ydoc, syncService, fileId, initialSession, disableBc }) {
 	if (!fileId) {
 		// We need a file id as a unique identifier for y.js as otherwise state might leak between different files
 		throw new Error('fileId is required')
 	}
-	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId, initialSession, queue)
+	const WebSocketPolyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
 	disableBc = disableBc ?? !!window?._oc_debug
 	const websocketProvider = new WebsocketProvider(
 		'ws://localhost:1234',
