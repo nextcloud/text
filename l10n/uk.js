@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Вилучити цей вкладений файл",
     "Delete this image" : "Вилучити це зображення",
     "Failed to load" : "Не вдалося завантажити",
+    "Could not find image in attachments list." : "Не вдалося знайти зображення у списку вкладень.",
     "Add row before" : "Додати рядок перед",
     "Add row after" : "Додати рядок після",
     "Delete this row" : "Вилучити цей рядок",
