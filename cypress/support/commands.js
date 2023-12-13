@@ -22,7 +22,6 @@
 
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/cypress'
-import 'cypress-if'
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command.js'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
@@ -57,27 +56,16 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 })
 
 Cypress.Commands.add('getRequestToken', () => {
-	cy.get('@requesttoken')
-		.if((token) => !token)
-		.then(() => {
-			cy.window()
-				.then((win) => cy.wrap(win?.OC?.requestToken))
-				.if((token) => !!token)
-				.then((token) => {
-					cy.log('Request token from window', token)
-				})
+	cy.then(function() {
+		if (this.requesttoken) {
+			return this.requesttoken
+		} else {
+			cy.log('Fetching request token')
+			return cy.request('/csrftoken')
+				.its('body.token')
 				.as('requesttoken')
-				.else()
-				.then((token) => {
-					cy.log('Request token fetching', token)
-					return cy.request('/csrftoken')
-						.then(({ body }) => {
-							return body.token
-						})
-				}).as('requesttoken')
-		})
-
-	return cy.get('@requesttoken')
+		}
+	})
 })
 
 Cypress.Commands.add('ocsRequest', (options) => {
