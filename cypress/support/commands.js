@@ -43,6 +43,7 @@ Cypress.Commands.overwrite('login', (login, user) => {
 		win.location.href = 'about:blank'
 	})
 	auth = { user: user.userId, password: user.password }
+	cy.wrap(null).as('requesttoken')
 	login(user)
 })
 
