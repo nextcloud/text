@@ -31,6 +31,7 @@ compareSnapshotCommand()
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
+const silent = { log: false }
 
 addCommands()
 
@@ -39,7 +40,7 @@ addCommands()
 // and also to determine paths, urls and the like.
 let auth
 Cypress.Commands.overwrite('login', (login, user) => {
-	cy.window().then((win) => {
+	cy.window(silent).then((win) => {
 		win.location.href = 'about:blank'
 	})
 	auth = { user: user.userId, password: user.password }
@@ -50,9 +51,11 @@ Cypress.Commands.overwrite('login', (login, user) => {
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 	// Make sure that each visit call that triggers a page load will update the stored requesttoken
 	return originalFn(url, options).then((result) => {
-		cy.window()
-			.then((win) => cy.wrap(win?.OC?.requestToken))
-			.as('requesttoken')
+		cy.window(silent)
+			.then((win) => {
+				cy.wrap(win?.OC?.requestToken)
+					.as('requesttoken')
+			})
 	})
 })
 
@@ -328,7 +331,7 @@ Cypress.Commands.add('getFileContent', (path) => {
 })
 
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
-	return cy.window()
+	return cy.window(silent)
 		.then(win => {
 			const files = win.OC.Files
 			const PROPERTY_WORKSPACE_FILE
@@ -479,7 +482,7 @@ Cypress.Commands.add('openWorkspace', () => {
 })
 
 Cypress.Commands.add('configureText', (key, value) => {
-	return cy.window().then(win => {
+	return cy.window(silent).then(win => {
 		return axios.post(
 			`${url}/index.php/apps/text/settings`,
 			{ key, value },
