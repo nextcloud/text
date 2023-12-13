@@ -22,7 +22,6 @@
 
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/cypress'
-import 'cypress-if'
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command.js'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
@@ -32,6 +31,7 @@ compareSnapshotCommand()
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
+const silent = { log: false }
 
 addCommands()
 
@@ -40,44 +40,36 @@ addCommands()
 // and also to determine paths, urls and the like.
 let auth
 Cypress.Commands.overwrite('login', (login, user) => {
-	cy.window().then((win) => {
+	cy.window(silent).then((win) => {
 		win.location.href = 'about:blank'
 	})
 	auth = { user: user.userId, password: user.password }
+	cy.wrap(null).as('requesttoken')
 	login(user)
 })
 
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 	// Make sure that each visit call that triggers a page load will update the stored requesttoken
 	return originalFn(url, options).then((result) => {
-		cy.window()
-			.then((win) => cy.wrap(win?.OC?.requestToken))
-			.as('requesttoken')
+		cy.window(silent)
+			.then((win) => {
+				cy.wrap(win?.OC?.requestToken)
+					.as('requesttoken')
+			})
 	})
 })
 
 Cypress.Commands.add('getRequestToken', () => {
-	cy.get('@requesttoken')
-		.if((token) => !token)
-		.then(() => {
-			cy.window()
-				.then((win) => cy.wrap(win?.OC?.requestToken))
-				.if((token) => !!token)
-				.then((token) => {
-					cy.log('Request token from window', token)
-				})
+	cy.then(function() {
+		if (this.requesttoken) {
+			return this.requesttoken
+		} else {
+			cy.log('Fetching request token')
+			return cy.request('/csrftoken')
+				.its('body.token')
 				.as('requesttoken')
-				.else()
-				.then((token) => {
-					cy.log('Request token fetching', token)
-					return cy.request('/csrftoken')
-						.then(({ body }) => {
-							return body.token
-						})
-				}).as('requesttoken')
-		})
-
-	return cy.get('@requesttoken')
+		}
+	})
 })
 
 Cypress.Commands.add('ocsRequest', (options) => {
@@ -339,7 +331,7 @@ Cypress.Commands.add('getFileContent', (path) => {
 })
 
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
-	return cy.window()
+	return cy.window(silent)
 		.then(win => {
 			const files = win.OC.Files
 			const PROPERTY_WORKSPACE_FILE
@@ -490,7 +482,7 @@ Cypress.Commands.add('openWorkspace', (folder) => {
 })
 
 Cypress.Commands.add('configureText', (key, value) => {
-	return cy.window().then(win => {
+	return cy.window(silent).then(win => {
 		return axios.post(
 			`${url}/index.php/apps/text/settings`,
 			{ key, value },
