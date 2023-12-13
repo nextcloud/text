@@ -181,7 +181,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: Upload nextcloud log
+          name: cypress-${{ matrix.containers }}.log
           path: data/nextcloud.log
           retention-days: 5
 
