@@ -402,6 +402,7 @@ describe('Test all attachment insertion methods', () => {
 		})
 
 		cy.login(recipient)
+		cy.showHiddenFiles()
 
 		cy.visit('/apps/files')
 		// check the file list
@@ -409,7 +410,6 @@ describe('Test all attachment insertion methods', () => {
 			.should('exist')
 		cy.getFile('github.png')
 			.should('not.exist')
-		cy.showHiddenFiles()
 
 		// check the attachment folder is not there
 		cy.getFile('testShared.md')
