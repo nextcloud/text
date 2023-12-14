@@ -83,7 +83,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [16]
-        containers: [1, 2 ]
+        containers: [1]
         php-versions: [ '8.1' ]
         server-versions: [ 'stable28' ]
         run-in-parallel:
@@ -134,7 +134,7 @@ jobs:
           PHP_CLI_SERVER_WORKERS: 10
         run: |
           mkdir data
-          echo '<?php $CONFIG=["memcache.local"=>"\OC\Memcache\APCu","hashing_default_password"=>true];' > config/config.php
+          echo '<?php $CONFIG=["memcache.local"=>"\OC\Memcache\APCu","hashing_default_password"=>true,"loglevel"=>0];' > config/config.php
           php occ maintenance:install --verbose --database=pgsql --database-name=nextcloud --database-host=127.0.0.1 --database-port=$DB_PORT --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
           php -f index.php
           php -S 0.0.0.0:8081 &
