@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/server
-          ref: ab7830972edc3beb410b773cfe519ec3f85106eb
+          ref: 1d568a89a45456d9405f347d57b2caf9a80ad179
           submodules: true
 
       - name: Checkout viewer
