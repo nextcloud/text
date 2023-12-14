@@ -44,7 +44,7 @@ module.exports = defineConfig({
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 	},
 	retries: {
-		runMode: 2,
+		runMode: 0,
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
