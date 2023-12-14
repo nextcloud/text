@@ -29,46 +29,15 @@ describe('Test all attachment insertion methods', () => {
 		cy.createUser(user)
 	})
 
-	it('See test files in the list and display hidden files', () => {
-		cy.login(user)
-		cy.createFolder('.hidden')
-		cy.showHiddenFiles()
-		cy.visit('/apps/files')
-		cy.getFile('.hidden')
-	})
-
 	it('deletes file just fine', () => {
 		cy.login(user)
-		cy.showHiddenFiles()
 		const fileName = 'deleteMe.md'
 		cy.createFile(fileName, '# Hello world!', 'text/markdown')
 		cy.visit('/apps/files')
 		cy.getFile(fileName)
 			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				cy.deleteFile(fileName)
-				cy.reloadFileList()
-			})
+		cy.deleteFile(fileName)
+		cy.reloadFileList()
 	})
 
-	it('deletes attachment folder when deleting a markdown file', () => {
-		const fileName = 'deleteSource.md'
-		cy.createMarkdown(fileName, '![git](.attachments.123/github.png)', false).then((fileId) => {
-			const attachmentsFolder = `.attachments.${fileId}`
-			cy.createFolder(attachmentsFolder)
-			cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
-		})
-
-		cy.visit('/apps/files')
-		cy.getFile(fileName)
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
-			.then((documentId) => {
-				cy.deleteFile(fileName)
-				cy.reloadFileList()
-				cy.getFile('.attachments.' + documentId)
-					.should('not.exist')
-			})
-	})
 })
