@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/server
-          ref: 1d568a89a45456d9405f347d57b2caf9a80ad179
+          ref: ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
@@ -143,6 +143,7 @@ jobs:
           php occ user:add --password-from-env user2
           php occ app:enable viewer
           php occ app:enable text
+          php occ app:disable files_reminders
           php occ app:list
           php occ background:cron
           php occ config:system:set session_keepalive --value=false --type=boolean
