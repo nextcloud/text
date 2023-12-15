@@ -80,21 +80,20 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 		send(...data) {
 			queue.push(...data)
-			let outbox = []
+			let outbox
 			return syncService.sendSteps(() => {
-				outbox = [...queue]
 				const data = {
 					steps: this.#steps,
 					awareness: this.#awareness,
 					version: this.#version,
 				}
-				queue = []
+				outbox = queue.splice(0, queue.length)
 				logger.debug('sending steps ', data)
 				return data
 			})?.catch(err => {
 				logger.error(err)
-				// try to send the steps again
-				queue = [...outbox, ...queue]
+				// Prefix the queue with the steps in outbox to send them again
+				queue.splice(0, 0, ...outbox)
 			})
 		}
 
@@ -123,18 +122,18 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			if (queue.length) {
 				let outbox = []
 				return syncService.sendStepsNow(() => {
-					outbox = [...queue]
 					const data = {
 						steps: this.#steps,
 						awareness: this.#awareness,
 						version: this.#version,
 					}
-					queue = []
+					outbox = queue.splice(0, queue.length)
 					logger.debug('sending final steps ', data)
 					return data
 				})?.catch(err => {
 					logger.error(err)
-					queue = [...outbox, ...queue]
+					// Prefix the queue with the steps in outbox to send them again
+					queue.splice(0, 0, ...outbox)
 				})
 			}
 		}
