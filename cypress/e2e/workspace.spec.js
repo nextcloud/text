@@ -32,6 +32,9 @@ describe('Workspace', function() {
 
 	beforeEach(function() {
 		cy.login(user)
+		// Some tests modify the language.
+		// Make sure it's the default otherwise.
+		cy.modifyUser(user, 'language', 'en')
 		// isolate tests - each happens in its own folder
 		const retry = cy.state('test').currentRetry()
 		currentFolder = retry
