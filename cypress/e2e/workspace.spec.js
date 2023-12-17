@@ -26,7 +26,7 @@ const user = randUser()
 describe('Workspace', function() {
 
 	before(function() {
-		cy.createUser(user, 'password')
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
@@ -125,7 +125,7 @@ describe('Workspace', function() {
 			.should('contain', 'Hello world')
 	})
 
-	it('emoji picker', () => {
+	it('emoji picker', function() {
 		cy.visitTestFolder()
 		cy.openWorkspace()
 			.type('# Let\'s smile together{enter}## ')
@@ -142,7 +142,7 @@ describe('Workspace', function() {
 			.contains('😀')
 	})
 
-	it('relative folder links', () => {
+	it('relative folder links', function() {
 		cy.createFolder(`${this.testFolder}/sub-folder`)
 		cy.createFolder(`${this.testFolder}/sub-folder/alpha`)
 
@@ -182,7 +182,7 @@ describe('Workspace', function() {
 		cy.getModal().find('button.header-close').click()
 	})
 
-	describe('callouts', () => {
+	describe('callouts', function() {
 		const types = ['info', 'warn', 'error', 'success']
 
 		beforeEach(function() {
@@ -190,7 +190,7 @@ describe('Workspace', function() {
 			cy.openWorkspace().type('Callout')
 		})
 		// eslint-disable-next-line cypress/no-async-tests
-		it('create callout', () => {
+		it('create callout', function() {
 			cy.wrap(types).each((type) => {
 				cy.log(`creating ${type} callout`)
 
@@ -211,7 +211,7 @@ describe('Workspace', function() {
 			})
 		})
 
-		it('toggle callouts', () => {
+		it('toggle callouts', function() {
 			const [first, ...rest] = types
 
 			// enable callout
@@ -232,7 +232,7 @@ describe('Workspace', function() {
 		})
 	})
 
-	describe('localize', () => {
+	describe('localize', function() {
 		it('takes localized file name into account', function() {
 			cy.modifyUser(user, 'language', 'de_DE')
 			cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/Anleitung.md`)
@@ -247,11 +247,13 @@ describe('Workspace', function() {
 			cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/Anleitung.md`)
 			cy.visitTestFolder()
 			cy.getFile('Anleitung.md')
+			cy.get('#rich-workspace .ProseMirror')
+				.should('not.exist')
 		})
 	})
 
-	describe('create Readme.md', () => {
-		const checkContent = () => {
+	describe('create Readme.md', function() {
+		const checkContent = function() {
 			const txt = Cypress.currentTest.title
 
 			cy.getEditor().find('[data-text-el="editor-content-wrapper"]').click()
@@ -260,21 +262,21 @@ describe('Workspace', function() {
 			cy.getContent().should('contain', txt)
 		}
 
-		beforeEach(() => {
+		beforeEach(function() {
 			cy.visitTestFolder()
 		})
 
-		it('click', () => {
+		it('click', function() {
 			cy.openWorkspace().click()
 			checkContent()
 		})
 
-		it('enter', () => {
+		it('enter', function() {
 			cy.openWorkspace().type('{enter}')
 			checkContent()
 		})
 
-		it('spacebar', () => {
+		it('spacebar', function() {
 			cy.openWorkspace()
 				.trigger('keyup', {
 					keyCode: 32,
