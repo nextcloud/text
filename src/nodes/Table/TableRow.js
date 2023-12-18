@@ -2,6 +2,7 @@ import { TableRow } from '@tiptap/extension-table-row'
 
 export default TableRow.extend({
 	content: 'tableCell*',
+	allowGapCursor: false,
 
 	toMarkdown(state, node) {
 		state.write('|')
