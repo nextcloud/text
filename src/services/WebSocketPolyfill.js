@@ -80,21 +80,24 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 		send(...data) {
 			queue.push(...data)
-			let outbox
+			let outbox = []
 			return syncService.sendSteps(() => {
 				const data = {
 					steps: this.#steps,
 					awareness: this.#awareness,
 					version: this.#version,
 				}
-				outbox = queue.splice(0, queue.length)
+				outbox = [...queue]
 				logger.debug('sending steps ', data)
 				return data
-			})?.catch(err => {
-				logger.error(err)
-				// Prefix the queue with the steps in outbox to send them again
-				queue.splice(0, 0, ...outbox)
-			})
+			})?.then(ret => {
+				// only keep the steps that were not send yet
+				queue.splice(0,
+					queue.length,
+					...queue.filter(s => !outbox.includes(s)),
+				)
+				return ret
+			}, err => logger.error(err))
 		}
 
 		get #steps() {
@@ -127,14 +130,16 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 						awareness: this.#awareness,
 						version: this.#version,
 					}
-					outbox = queue.splice(0, queue.length)
+					outbox = [...queue]
 					logger.debug('sending final steps ', data)
 					return data
-				})?.catch(err => {
-					logger.error(err)
-					// Prefix the queue with the steps in outbox to send them again
-					queue.splice(0, 0, ...outbox)
-				})
+				})?.then(() => {
+					// only keep the steps that were not send yet
+					queue.splice(0,
+						queue.length,
+						...queue.filter(s => !outbox.includes(s)),
+					)
+				}, err => logger.error(err))
 			}
 		}
 
