@@ -11,3 +11,6 @@ updates:
   labels:
   - 3. to review
   - dependencies
+  reviewers:
+  - max-nextcloud
+  - mejo-
