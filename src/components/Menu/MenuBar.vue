@@ -99,6 +99,7 @@ import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
 	useEditorMixin,
+	useIsMobileMixin,
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
 } from '../Editor.provider.js'
@@ -119,6 +120,7 @@ export default {
 	extends: ToolBarLogic,
 	mixins: [
 		useEditorMixin,
+		useIsMobileMixin,
 		useIsRichEditorMixin,
 		useIsRichWorkspaceMixin,
 	],
@@ -204,7 +206,8 @@ export default {
 
 			// leave some buffer - this is necessary so the bar does not wrap during resizing
 			const spaceToFill = width - 4
-			const slots = Math.floor(spaceToFill / 44)
+			const spacePerSlot = this.$isMobile ? 44 : 46
+			const slots = Math.floor(spaceToFill / spacePerSlot)
 
 			// Leave one slot empty for the three dot menu
 			this.iconsLimit = slots - 1

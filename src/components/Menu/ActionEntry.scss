@@ -45,6 +45,12 @@
 		margin-right: 2px;
 	}
 
+	@media only screen and (max-width: 767px) {
+		.button-vue {
+			margin-right: 0;
+		}
+	}
+
 	.action-item__menutoggle.action-item__menutoggle--with-icon-slot {
 		opacity: 1;
 	}
