@@ -28,8 +28,9 @@ import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
  * @param {object} syncService - the sync service to build upon
  * @param {number} fileId - id of the file to open
  * @param {object} initialSession - initial session to open
+ * @param {object[]} queue - queue for the outgoing steps
  */
-export default function initWebSocketPolyfill(syncService, fileId, initialSession) {
+export default function initWebSocketPolyfill(syncService, fileId, initialSession, queue) {
 	return class WebSocketPolyfill {
 
 		#url
@@ -41,11 +42,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		onclose
 		onopen
 		#handlers
-		#queue
 
 		constructor(url) {
 			this.url = url
-			this.#queue = []
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
@@ -83,32 +82,34 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			// Useful for debugging what steps are sent and how they were initiated
 			// data.forEach(logStep)
 
-			this.#queue.push(...data)
+			queue.push(...data)
 			let outbox = []
 			return syncService.sendSteps(() => {
-				outbox = [...this.#queue]
 				const data = {
 					steps: this.#steps,
 					awareness: this.#awareness,
 					version: this.#version,
 				}
-				this.#queue = []
+				outbox = [...queue]
 				logger.debug('sending steps ', data)
 				return data
-			})?.catch(err => {
-				logger.error(err)
-				// try to send the steps again
-				this.#queue = [...outbox, ...this.#queue]
-			})
+			})?.then(ret => {
+				// only keep the steps that were not send yet
+				queue.splice(0,
+					queue.length,
+					...queue.filter(s => !outbox.includes(s)),
+				)
+				return ret
+			}, err => logger.error(err))
 		}
 
 		get #steps() {
-			return this.#queue.map(s => encodeArrayBuffer(s))
+			return queue.map(s => encodeArrayBuffer(s))
 				.filter(s => s < 'AQ')
 		}
 
 		get #awareness() {
-			return this.#queue.map(s => encodeArrayBuffer(s))
+			return queue.map(s => encodeArrayBuffer(s))
 				.findLast(s => s > 'AQ') || ''
 		}
 
@@ -124,19 +125,24 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		}
 
 		#sendRemainingSteps() {
-			if (this.#queue.length) {
+			if (queue.length) {
+				let outbox = []
 				return syncService.sendStepsNow(() => {
 					const data = {
 						steps: this.#steps,
 						awareness: this.#awareness,
 						version: this.#version,
 					}
-					this.#queue = []
+					outbox = [...queue]
 					logger.debug('sending final steps ', data)
 					return data
-				})?.catch(err => {
-					logger.error(err)
-				})
+				})?.then(() => {
+					// only keep the steps that were not send yet
+					queue.splice(0,
+						queue.length,
+						...queue.filter(s => !outbox.includes(s)),
+					)
+				}, err => logger.error(err))
 			}
 		}
 

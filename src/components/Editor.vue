@@ -329,6 +329,7 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
+		this.$queue = []
 		// The following can be useful for debugging ydoc updates
 		// this.$ydoc.on('update', function(update, origin, doc, tr) {
 		//   console.debug('ydoc update', update, origin, doc, tr)
@@ -377,10 +378,13 @@ export default {
 
 			this.listenSyncServiceEvents()
 
+			this.$providers.forEach(p => p?.destroy())
+			this.$providers = []
 			const syncServiceProvider = createSyncServiceProvider({
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
 				fileId: this.fileId,
+				queue: this.$queue,
 				initialSession: this.initialSession,
 			})
 			this.$providers.push(syncServiceProvider)
