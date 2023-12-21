@@ -3,6 +3,7 @@ import TableRow from './TableRow.js'
 export default TableRow.extend({
 	name: 'tableHeadRow',
 	content: 'tableHeader*',
+	allowGapCursor: false,
 
 	toMarkdown(state, node) {
 		state.write('|')

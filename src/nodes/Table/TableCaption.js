@@ -9,6 +9,7 @@ import { Node } from '@tiptap/core'
 export default Node.create({
 	name: 'tableCaption',
 	content: 'inline*',
+	allowGapCursor: false,
 	addAttributes() {
 		return {}
 	},
