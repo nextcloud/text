@@ -44,6 +44,7 @@ import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
 import LinkPicker from './../extensions/LinkPicker.js'
+import LinkBubble from './../extensions/LinkBubble.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
@@ -113,6 +114,7 @@ export default Extension.create({
 				suggestion: EmojiSuggestion(),
 			}),
 			LinkPicker,
+			LinkBubble,
 			this.options.editing
 				? Placeholder.configure({
 					emptyNodeClass: 'is-empty',
