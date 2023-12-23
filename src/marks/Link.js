@@ -69,7 +69,7 @@ const Link = TipTapLink.extend({
 
 	addProseMirrorPlugins() {
 		const plugins = this.parent()
-			// remove original handle click
+			// remove upstream link click handle plugin
 			.filter(({ key }) => {
 				return !key.startsWith('handleClickLink')
 			})
@@ -78,7 +78,7 @@ const Link = TipTapLink.extend({
 			return plugins
 		}
 
-		// add custom click handler
+		// add custom click handle plugin
 		return [
 			...plugins,
 			clickHandler({
