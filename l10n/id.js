@@ -25,6 +25,7 @@ OC.L10N.register(
     "to" : "untuk",
     "Replace" : "Timpa",
     "Source code" : "Kode sumber",
+    "Both" : "Keduanya",
     "Undo" : "Undo",
     "Info" : "Info",
     "Warning" : "Peringatan",
