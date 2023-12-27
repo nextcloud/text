@@ -1,28 +1,5 @@
 [package]
-exclude = [
-	"src",
-	".git",
-	"tests",
-	"node_modules",
-	".codecov.yml",
-	"composer.json",
-	"composer.lock",
-	"_config.yml",
-	".drone.yml",
-	".travis.yml",
-	".eslintignore",
-	".eslintrc.yml",
-	".gitignore",
-	"issue_template.md",
-	"krankerl.toml",
-	"Makefile",
-	"mkdocs.yml",
-	"run-eslint.sh",
-	"webpack.*",
-	"img/screenshots"
-]
-
 before_cmds = [
-	"npm install",
-	"npm run build"
+	'npm ci',
+	'npm run build'
 ]
