@@ -18,13 +18,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        branches: ['main', 'master', 'stable28', 'stable27', 'stable26']
+        branches: ["main", "stable27", "stable26", "stable25", "stable24"]
 
     name: npm-audit-fix-${{ matrix.branches }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ matrix.branches }}
 
@@ -36,7 +36,7 @@ jobs:
           fallbackNpm: '^9'
 
       - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: ${{ steps.versions.outputs.nodeVersion }}
 
@@ -48,15 +48,11 @@ jobs:
           npm audit fix
 
       - name: Run npm ci and npm run build
-        if: always()
-        env:
-          CYPRESS_INSTALL_BINARY: 0
         run: |
           npm ci
           npm run build --if-present
 
       - name: Create Pull Request
-        if: always()
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
           token: ${{ secrets.COMMAND_BOT_PAT }}
