@@ -81,7 +81,13 @@ describe('Workspace', function() {
 		]
 		cy.getContent().click()
 		buttons.forEach(([button, tag]) => testButtonUnselected(button, tag))
-		cy.getContent().type('Format me{selectall}')
+		// format is gone when text is gone
+		cy.getContent().type('Format me')
+		cy.getContent().find('s')
+			.should('not.exist')
+		cy.getContent()
+			.should('contain', 'Format me')
+		cy.getContent().type('{selectall}')
 		buttons.forEach(([button, tag]) => testButton(button, tag, 'Format me'))
 	})
 
@@ -303,13 +309,15 @@ const openSidebar = filename => {
  * @param {string} content Content expected in the element.
  */
 function testButton(button, tag, content) {
-	cy.getMenuEntry(button).click()
-	cy.getMenuEntry(button).should('have.class', 'is-active')
+	cy.getMenuEntry(button)
+		.should('not.have.class', 'is-active')
+		.click()
 	cy.getContent()
 		.find(`${tag}`)
 		.should('contain', content)
-	cy.getMenuEntry(button).click()
-	cy.getMenuEntry(button).should('not.have.class', 'is-active')
+	cy.getMenuEntry(button)
+		.should('have.class', 'is-active')
+		.click()
 }
 
 /**
@@ -318,16 +326,11 @@ function testButton(button, tag, content) {
  * @param {string} tag Html tag expected to be toggled.
  */
 function testButtonUnselected(button, tag) {
-	cy.getMenuEntry(button).click()
-	cy.getMenuEntry(button).should('have.class', 'is-active')
-	cy.getContent().type('Format me{selectall}')
+	cy.getMenuEntry(button)
+		.should('not.have.class', 'is-active')
+		.click()
+	cy.getContent().type('Format me')
 	cy.getContent().find(`${tag}`)
-		.should('contain', 'Format me').type('{del}')
-	cy.getMenuEntry(button).click()
-	cy.getMenuEntry(button).should('have.class', 'is-active').click()
-	cy.getMenuEntry(button).should('not.have.class', 'is-active')
-	cy.getContent().type('Format me{selectall}')
-	cy.getMenuEntry(button).find(`${tag}`)
-		.should('not.exist')
-	cy.getContent().type('{del}')
+		.should('contain', 'Format me')
+	cy.getContent().type('{selectall}{del}')
 }
