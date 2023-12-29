@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<NcActions v-tooltip="tooltip"
+	<NcActions :title="tooltip"
 		class="entry-list-action entry-action"
 		role="menu"
 		v-bind="state"

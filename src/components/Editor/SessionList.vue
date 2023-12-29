@@ -22,17 +22,17 @@
 
 <template>
 	<NcPopover class="session-list" placement="bottom">
-		<button slot="trigger"
-			v-tooltip.bottom="label"
-			:title="label"
-			:aria-label="label"
-			class="avatar-list">
-			<div class="avatardiv icon-group" />
-			<AvatarWrapper v-for="session in sessionsVisible"
-				:key="session.id"
-				:session="session"
-				:size="40" />
-		</button>
+		<div slot="trigger">
+			<button :title="label"
+				:aria-label="label"
+				class="avatar-list">
+				<div class="avatardiv icon-group" />
+				<AvatarWrapper v-for="session in sessionsVisible"
+					:key="session.id"
+					:session="session"
+					:size="40" />
+			</button>
+		</div>
 		<template #default>
 			<div class="session-menu">
 				<slot name="lastSaved" />
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { NcPopover, Tooltip } from '@nextcloud/vue'
+import { NcPopover } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { mapActions, mapState } from 'vuex'
 import store from '../../mixins/store.js'
@@ -75,9 +75,6 @@ export default {
 	components: {
 		AvatarWrapper,
 		NcPopover,
-	},
-	directives: {
-		tooltip: Tooltip,
 	},
 	mixins: [store],
 	props: {

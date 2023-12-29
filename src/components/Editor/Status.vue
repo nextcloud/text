@@ -22,7 +22,7 @@
 
 <template>
 	<div class="text-editor__session-list">
-		<div v-tooltip="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
+		<div :title="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
 			<NcButton type="tertiary"
 				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
@@ -45,7 +45,7 @@
 
 import { ERROR_TYPE } from '../../services/SyncService.js'
 import moment from '@nextcloud/moment'
-import { NcButton, NcSavingIndicatorIcon, Tooltip } from '@nextcloud/vue'
+import { NcButton, NcSavingIndicatorIcon } from '@nextcloud/vue'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
@@ -61,10 +61,6 @@ export default {
 		NcSavingIndicatorIcon,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
 		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
-	},
-
-	directives: {
-		Tooltip,
 	},
 
 	mixins: [
@@ -117,7 +113,7 @@ export default {
 			if (this.dirty || this.hasUnsavedChanges) {
 				message += ' - ' + t('text', 'Unsaved changes')
 			}
-			return { content: message, placement: 'bottom' }
+			return message
 		},
 
 		hasUnsavedChanges() {
