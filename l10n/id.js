@@ -11,6 +11,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Tidak dapat menulis berkas ke diska",
     "A PHP extension stopped the file upload" : "Ekstensi PHP menghentikan proses unggah berkas",
     "No file uploaded or file size exceeds maximum of %s" : "Gagal unggah berkas atau ukuran melampaui batas maksimum %s",
+    "Text" : "Teks",
     "Translate" : "Terjemahkan",
     "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda.",
     "Edit guest name" : "Edit nama tamu",
@@ -30,6 +31,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Peringatan",
     "Control" : "Kendali",
+    "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima"
