@@ -33,7 +33,7 @@
 			:share-token="shareToken"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
-			:autohide="autohide"
+			:hide-menu="hideMenu"
 			active
 			rich-workspace
 			@ready="ready=true"
@@ -87,7 +87,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
-			autohide: true,
+			hideMenu: true,
 			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
@@ -136,7 +136,7 @@ export default {
 	methods: {
 		onFocus() {
 			this.focus = true
-			this.autohide = false
+			this.hideMenu = false
 			this.unlistenKeydownEvents()
 		},
 		reset() {
@@ -199,7 +199,7 @@ export default {
 		},
 		onKeydown(e) {
 			if (e.key === 'Tab') {
-				this.autohide = false
+				this.hideMenu = false
 			}
 		},
 		onFileCreated(node) {
