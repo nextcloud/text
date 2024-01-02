@@ -7,6 +7,7 @@ OC.L10N.register(
     "The file was only partially uploaded" : "El ficheru xubióse parcialmente",
     "No file was uploaded" : "Nun se xubió nengún ficheru",
     "Text" : "Testu",
+    "Offline" : "Desconectáu",
     "Saving …" : "Guardando…",
     "Unsaved changes" : "Cambeos ensin guardar",
     "Keyboard shortcuts" : "Atayos del tecláu",
@@ -14,6 +15,7 @@ OC.L10N.register(
     "Redo" : "Refacer",
     "Info" : "Información",
     "Edit" : "Editar",
+    "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
     "Source language" : "Llingua d'orixe",
     "Target language" : "Llingua de destín",
     "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos"
