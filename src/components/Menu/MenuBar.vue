@@ -30,7 +30,7 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--show': isVisible,
-			'text-menubar--autohide': autohide,
+			'text-menubar--hide': isHidden,
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
@@ -136,7 +136,7 @@ export default {
 		return val
 	},
 	props: {
-		autohide: {
+		isHidden: {
 			type: Boolean,
 			default: false,
 		},
@@ -274,13 +274,13 @@ export default {
 		justify-content: flex-end;
 		align-items: center;
 
-		&.text-menubar--ready:not(.text-menubar--autohide) {
+		&.text-menubar--ready:not(.text-menubar--hide) {
 			visibility: visible;
 			animation-name: fadeInDown;
 			animation-duration: 0.3s;
 		}
 
-		&.text-menubar--autohide {
+		&.text-menubar--hide {
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
 			&.text-menubar--show {
