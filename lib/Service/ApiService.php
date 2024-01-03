@@ -93,7 +93,12 @@ class ApiService {
 					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 404);
 				}
 			} elseif ($fileId) {
-				$file = $this->documentService->getFileById($fileId);
+				try {
+					$file = $this->documentService->getFileById($fileId);
+				} catch (NotFoundException|NotPermittedException $e) {
+					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+					return new DataResponse($this->l10n->t('No permission to access this file.'), Http::STATUS_NOT_FOUND);
+				}
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
