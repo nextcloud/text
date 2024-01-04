@@ -57,7 +57,7 @@
 				<template v-else>
 					<MenuBar v-if="renderMenus"
 						ref="menubar"
-						:autohide="autohide"
+						:is-hidden="hideMenu"
 						:loaded.sync="menubarLoaded">
 						<Status :document="document"
 							:dirty="dirty"
@@ -213,7 +213,7 @@ export default {
 			type: String,
 			default: null,
 		},
-		autohide: {
+		hideMenu: {
 			type: Boolean,
 			default: false,
 		},

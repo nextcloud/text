@@ -33,12 +33,11 @@
 			:share-token="shareToken"
 			:mime="file.mimetype"
 			:autofocus="autofocus"
-			:autohide="autohide"
+			:hide-menu="hideMenu"
 			active
 			rich-workspace
 			@ready="ready=true"
 			@focus="onFocus"
-			@blur="onBlur"
 			@error="reset" />
 	</div>
 </template>
@@ -88,7 +87,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
-			autohide: true,
+			hideMenu: true,
 			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
 			enabled: OCA.Text.RichWorkspaceEnabled,
 		}
@@ -135,11 +134,9 @@ export default {
 		this.unlistenKeydownEvents()
 	},
 	methods: {
-		onBlur() {
-			this.listenKeydownEvents()
-		},
 		onFocus() {
 			this.focus = true
+			this.hideMenu = false
 			this.unlistenKeydownEvents()
 		},
 		reset() {
@@ -198,25 +195,12 @@ export default {
 			window.addEventListener('keydown', this.onKeydown)
 		},
 		unlistenKeydownEvents() {
-			clearInterval(this.$_timeoutAutohide)
-
 			window.removeEventListener('keydown', this.onKeydown)
 		},
-		onTimeoutAutohide() {
-			this.autohide = true
-		},
 		onKeydown(e) {
-			if (e.key !== 'Tab') {
-				return
+			if (e.key === 'Tab') {
+				this.hideMenu = false
 			}
-
-			// remove previous timeout
-			clearInterval(this.$_timeoutAutohide)
-
-			this.autohide = false
-
-			// schedule to normal behaviour
-			this.$_timeoutAutohide = setTimeout(this.onTimeoutAutohide, 7000) // 7s
 		},
 		onFileCreated(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
