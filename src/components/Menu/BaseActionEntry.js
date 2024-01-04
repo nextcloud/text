@@ -22,7 +22,6 @@
 
 /* eslint-disable jsdoc/valid-types */
 
-import { Tooltip } from '@nextcloud/vue'
 import debounce from 'debounce'
 
 import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
@@ -36,9 +35,6 @@ import './ActionEntry.scss'
  * @type {import("vue").ComponentOptions} BaseActionEntry
  */
 const BaseActionEntry = {
-	directives: {
-		Tooltip,
-	},
 	mixins: [useEditorMixin, useIsMobileMixin, useStore, useOutlineActions, useOutlineStateMixin],
 	props: {
 		actionEntry: {

@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<form v-tooltip="t('text', 'Enter your name so other people can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
+	<form :title="t('text', 'Enter your name so other people can see who is editing')" class="guest-name-dialog" @submit.prevent="setGuestName()">
 		<label><AvatarWrapper :session="session" :size="32" /></label>
 		<input v-model="guestName"
 			type="text"
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { Tooltip } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { useSyncServiceMixin } from '../Editor.provider.js'
@@ -44,9 +43,6 @@ export default {
 	name: 'GuestNameDialog',
 	components: {
 		AvatarWrapper,
-	},
-	directives: {
-		tooltip: Tooltip,
 	},
 	mixins: [
 		useSyncServiceMixin,

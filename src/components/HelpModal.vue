@@ -179,16 +179,13 @@
 </template>
 
 <script>
-import { NcModal, Tooltip } from '@nextcloud/vue'
+import { NcModal } from '@nextcloud/vue'
 import { isMobilePlatform } from '../helpers/platform.js'
 
 export default {
 	name: 'HelpModal',
 	components: {
 		NcModal,
-	},
-	directives: {
-		Tooltip,
 	},
 	data() {
 		return {
