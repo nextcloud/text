@@ -29,8 +29,7 @@
 		:aria-label="t('text', 'Editor actions')"
 		:class="{
 			'text-menubar--ready': isReady,
-			'text-menubar--show': isVisible,
-			'text-menubar--autohide': autohide,
+			'text-menubar--hide': isHidden,
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
@@ -84,7 +83,6 @@
 <script>
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
-import debounce from 'debounce'
 import { useResizeObserver } from '@vueuse/core'
 
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
@@ -136,7 +134,7 @@ export default {
 		return val
 	},
 	props: {
-		autohide: {
+		isHidden: {
 			type: Boolean,
 			default: false,
 		},
@@ -148,7 +146,6 @@ export default {
 			displayHelp: false,
 			displayTranslate: false,
 			isReady: false,
-			isVisible: this.$editor.isFocused,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 			resize: null,
 			iconsLimit: 4,
@@ -178,16 +175,6 @@ export default {
 	mounted() {
 		this.resize = useResizeObserver(this.$refs.menubar, this.onResize)
 
-		this.$onFocusChange = () => {
-			this.isVisible = this.$editor.isFocused
-		}
-		this.$onBlurChange = debounce(() => {
-			this.isVisible = this.$editor.isFocused
-		}, 3000) // 3s
-
-		this.$editor.on('focus', this.$onFocusChange)
-		this.$editor.on('blur', this.$onBlurChange)
-
 		this.$nextTick(() => {
 			this.isReady = true
 			this.$emit('update:loaded', true)
@@ -195,9 +182,6 @@ export default {
 	},
 	beforeDestroy() {
 		this.resize?.stop()
-
-		this.$editor.off('focus', this.$onFocusChange)
-		this.$editor.off('blur', this.$onBlurChange)
 	},
 	methods: {
 		onResize(entries) {
@@ -274,19 +258,15 @@ export default {
 		justify-content: flex-end;
 		align-items: center;
 
-		&.text-menubar--ready:not(.text-menubar--autohide) {
+		&.text-menubar--ready:not(.text-menubar--hide) {
 			visibility: visible;
 			animation-name: fadeInDown;
 			animation-duration: 0.3s;
 		}
 
-		&.text-menubar--autohide {
+		&.text-menubar--hide {
 			opacity: 0;
 			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
-			&.text-menubar--show {
-				visibility: visible;
-				opacity: 1;
-			}
 		}
 		.text-menubar__entries {
 			display: flex;
