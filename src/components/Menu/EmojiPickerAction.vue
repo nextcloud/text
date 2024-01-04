@@ -24,16 +24,17 @@
 		:data-text-action-entry="actionEntry.key"
 		:container="menuIDSelector"
 		@select-data="addEmoji">
-		<NcButton v-tooltip="actionEntry.label"
-			class="entry-action__button"
-			role="menu"
-			:title="actionEntry.label"
-			:aria-label="actionEntry.label"
-			:aria-haspopup="true">
-			<template #icon>
-				<component :is="icon" />
-			</template>
-		</NcButton>
+		<div>
+			<NcButton class="entry-action__button"
+				role="menu"
+				:title="actionEntry.label"
+				:aria-label="actionEntry.label"
+				:aria-haspopup="true">
+				<template #icon>
+					<component :is="icon" />
+				</template>
+			</NcButton>
+		</div>
 	</NcEmojiPicker>
 </template>
 

@@ -23,6 +23,7 @@
 	<NcActions class="entry-action entry-action__image-upload"
 		:data-text-action-entry="actionEntry.key"
 		:name="actionEntry.label"
+		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:container="menuIDSelector"
 		role="menu"

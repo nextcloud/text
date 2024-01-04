@@ -20,6 +20,7 @@
 <template>
 	<NcActions class="entry-action entry-action__insert-link"
 		aria-haspopup
+		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:class="activeClass"
 		:container="menuIDSelector"
