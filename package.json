@@ -116,7 +116,7 @@
     "@cypress/webpack-preprocessor": "^6.0.1",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^2.3.0",
-    "@nextcloud/cypress": "^1.0.0-beta.6",
+    "@nextcloud/cypress": "^1.0.0-beta.7",
     "@nextcloud/dialogs": "^4.2.2",
     "@nextcloud/eslint-config": "^8.3.0",
     "@nextcloud/stylelint-config": "^2.3.1",
