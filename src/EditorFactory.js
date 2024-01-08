@@ -80,24 +80,8 @@ const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, ena
 	})
 }
 
-const SerializeException = function(message) {
-	this.message = message
-}
-
-const serializePlainText = (tiptap) => {
-	const doc = tiptap.getJSON()
-
-	if (doc.content.length !== 1 || typeof doc.content[0].content === 'undefined' || doc.content[0].content.length !== 1) {
-		if (doc.content[0].type === 'codeBlock' && typeof doc.content[0].content === 'undefined') {
-			return ''
-		}
-		throw new SerializeException('Failed to serialize document to plain text')
-	}
-	const codeBlock = doc.content[0].content[0]
-	if (codeBlock.type !== 'text') {
-		throw new SerializeException('Failed to serialize document to plain text')
-	}
-	return codeBlock.text
+const serializePlainText = (doc) => {
+	return doc.textContent
 }
 
 export default createEditor
