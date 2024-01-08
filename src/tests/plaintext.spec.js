@@ -17,7 +17,7 @@ const plaintextThroughEditor = (markdown) => {
     enableRichEditing: false
   })
   tiptap.commands.setContent(content)
-  return serializePlainText(tiptap) || 'failed'
+  return serializePlainText(tiptap.state.doc) || 'failed'
 }
 
 describe('commonmark as plaintext', () => {
