@@ -44,6 +44,7 @@ import { MarkdownSerializer, defaultMarkdownSerializer } from '@tiptap/pm/markdo
 import { DOMParser } from '@tiptap/pm/model'
 import markdownit from '../markdownit/index.js'
 import transformPastedHTML from './transformPastedHTML.js'
+import { isValidUrl } from '../helpers/links.js'
 
 const Markdown = Extension.create({
 
@@ -102,7 +103,11 @@ const Markdown = Extension.create({
 								dom.append(para)
 							}
 						} else {
-							dom.innerHTML = markdownit.render(str)
+							if (isValidUrl(str)) {
+								dom.innerText = str
+							} else {
+								dom.innerHTML = markdownit.render(str)
+							}
 						}
 
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })

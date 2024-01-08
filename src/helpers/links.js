@@ -20,7 +20,8 @@
  *
  */
 
-import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 import { logger } from '../helpers/logger.js'
 import markdownit from './../markdownit/index.js'
@@ -132,8 +133,42 @@ const openLink = function(event, _attrs) {
 	return true
 }
 
+const isValidUrl = (text) => {
+	try {
+		return Boolean(new URL(text))
+	} catch (e) {
+		return false
+	}
+}
+
+const resolveLink = async (url) => {
+	try {
+		const result = await axios.get(generateOcsUrl('references/resolve', 2), {
+			params: {
+				reference: url,
+			},
+		})
+		return result.data.ocs.data.references[url]
+	} catch (e) {
+		console.error('Error resolving a reference', e)
+	}
+}
+
+const insertLink = async (link) => {
+	const result = await this.resolveLink(link)
+	const openGraphObject = result?.openGraphObject
+	let content = link + ' '
+	if (openGraphObject) {
+		content = `<a href="${link}">${openGraphObject.name}</a> `
+	}
+	return content
+}
+
 export {
 	domHref,
 	parseHref,
 	openLink,
+	isValidUrl,
+	resolveLink,
+	insertLink,
 }

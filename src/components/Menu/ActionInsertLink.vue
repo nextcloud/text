@@ -79,9 +79,11 @@
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
+import { generateOcsUrl } from '@nextcloud/router'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
@@ -234,16 +236,37 @@ export default {
 		},
 		linkPicker() {
 			getLinkWithPicker(null, true)
-				.then(link => {
+				.then(async (link) => {
+					const result = await this.resolveLink(link)
+					const openGraphObject = result?.openGraphObject
+					let content = link + ' '
+					if (openGraphObject) {
+						content = `<a href="${link}">${openGraphObject.name}</a> `
+					}
+
 					this.$editor
 						.chain()
 						.focus()
-						.insertContent(link + ' ')
+						.insertContent(content)
 						.run()
 				})
 				.catch(error => {
 					console.error('Smart picker promise rejected', error)
 				})
+		},
+		async resolveLink(url) {
+			try {
+				const result = await axios.get(generateOcsUrl('references/resolve', 2), {
+					params: {
+						reference: url,
+					},
+				})
+				const resolvedLink = result.data.ocs.data.references[url]
+
+				return resolvedLink
+			} catch (e) {
+				console.error('Error resolving a reference', e)
+			}
 		},
 	},
 }
