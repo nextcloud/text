@@ -93,7 +93,7 @@ const parseHref = function(dom) {
 	return ref
 }
 
-const openLink = function(event, _attrs) {
+const openLink = function(event, target = '_self') {
 	const linkElement = event.target.closest('a')
 	const htmlHref = linkElement.href
 	const query = OC.parseQueryString(htmlHref)
@@ -128,7 +128,7 @@ const openLink = function(event, _attrs) {
 			return
 		}
 	}
-	window.open(htmlHref)
+	window.open(htmlHref, target)
 	return true
 }
 

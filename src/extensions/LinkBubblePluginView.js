@@ -40,8 +40,8 @@ class LinkBubblePluginView {
 	// Required for read-only mode on Firefox. For some reason, editor selection doesn't get
 	// updated when clicking a link in read-only mode on Firefox.
 	clickHandler = (event) => {
-		// Only regard left clicks without Ctrl
-		if (event.button !== 0 || event.ctrlKey) {
+		// Only regard left clicks without Ctrl/Meta
+		if (event.button !== 0 || event.ctrlKey || event.metaKey) {
 			return false
 		}
 
