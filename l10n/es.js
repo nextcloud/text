@@ -129,6 +129,7 @@ OC.L10N.register(
     "Delete this attachment" : "Eliminar este adjunto",
     "Delete this image" : "Eliminar esta imágen",
     "Failed to load" : "Fallo al cargar",
+    "Could not find image in attachments list." : "No se pudo conseguir la imagen en la lista de adjuntos.",
     "Add row before" : "Añadir fila antes",
     "Add row after" : "Añadir fila después",
     "Delete this row" : "Eliminar esta fila",
