@@ -23,7 +23,6 @@
 <template>
 	<NcActions :title="tooltip"
 		class="entry-list-action entry-action"
-		role="menu"
 		v-bind="state"
 		:container="menuIDSelector"
 		:aria-label="actionEntry.label"
