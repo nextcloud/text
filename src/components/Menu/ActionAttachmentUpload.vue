@@ -26,7 +26,6 @@
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:container="menuIDSelector"
-		role="menu"
 		aria-haspopup>
 		<template #icon>
 			<component :is="icon"
