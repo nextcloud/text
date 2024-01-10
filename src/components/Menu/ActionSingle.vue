@@ -24,11 +24,11 @@
 <template>
 	<component :is="component"
 		class="entry-single-action entry-action"
-		:title="isItem ? undefined : tooltip"
-		:type="state.active ? 'primary' : 'tertiary'"
+		:class="[state.class, { 'entry-action-item': isItem }]"
+		:disabled="state.disabled"
+		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:pressed="isItem ? state.active : undefined"
-		v-bind="bindState"
+		v-bind="componentSpecificParams"
 		v-on="$listeners"
 		@click="runAction">
 		<template #icon>
@@ -62,30 +62,23 @@ export default {
 				? NcActionButton
 				: NcButton
 		},
-		bindState() {
-			const { keyshortcuts } = this
+		componentSpecificParams() {
+			const ncActionButtonParams = {
+				type: this.state.type,
+				modelValue: this.state.type !== 'button' ? this.state.active : undefined,
+				closeAfterClick: true,
+			}
 
-			const state = {
-				...this.state,
+			const ncButtonParams = {
 				ariaLabel: this.label,
+				title: this.tooltip,
+				type: 'tertiary',
+				pressed: this.state.type !== 'button' ? this.state.active : undefined,
 			}
 
-			state.class = {
-				...state.class,
-				// inject a extra class
-				'entry-action-item': this.isItem,
-			}
-
-			if (keyshortcuts) {
-				state['aria-keyshortcuts'] = keyshortcuts
-			}
-
-			// item list behaviour
-			if (this.isItem) {
-				state.closeAfterClick = true
-			}
-
-			return state
+			return this.isItem
+				? ncActionButtonParams
+				: ncButtonParams
 		},
 	},
 
