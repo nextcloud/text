@@ -308,7 +308,7 @@ export default [
 				},
 			},
 		],
-		priority: 3,
+		priority: 6,
 	},
 	{
 		key: 'code-block',
@@ -340,13 +340,13 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 5,
+		priority: 3,
 	},
 	{
 		key: 'insert-attachment',
 		label: t('text', 'Insert attachment'),
 		icon: Images,
 		component: ActionAttachmentUpload,
-		priority: 4,
+		priority: 1,
 	},
 ]

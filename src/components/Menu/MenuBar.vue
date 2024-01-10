@@ -161,14 +161,20 @@ export default {
 			return list
 		},
 		hiddenEntries() {
+			const entries = this.entries.filter(({ priority }) => {
+				// reverse logic from visibleEntries
+				return priority !== undefined && priority > this.iconsLimit
+			}).reduce((acc, entry) => {
+				// If entry has children, merge them into list. Otherwise keep entry itself.
+				const children = entry.children ?? [entry]
+				return [...acc, ...children]
+			}, [])
+
 			return {
 				key: 'remain',
 				label: this.t('text', 'Remaining actions'),
 				icon: DotsHorizontal,
-				children: this.entries.filter(({ priority }) => {
-					// reverse logic from visibleEntries
-					return priority !== undefined && priority > this.iconsLimit
-				}),
+				children: entries,
 			}
 		},
 	},
