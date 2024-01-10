@@ -24,6 +24,7 @@
 	<div id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor"
+		tabindex="-1"
 		@keydown.stop="onKeyDown">
 		<DocumentStatus v-if="displayedStatus"
 			:idle="idle"
