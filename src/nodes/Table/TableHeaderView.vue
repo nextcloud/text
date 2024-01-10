@@ -27,7 +27,7 @@
 			<NcActions v-if="editor.isEditable"
 				ref="menu"
 				data-text-table-actions="header">
-				<InlineActionsContainer>
+				<NcActionButtonGroup>
 					<NcActionButton data-text-table-action="align-column-left"
 						:aria-label="t('text', 'Left align column')"
 						@click="alignLeft">
@@ -49,7 +49,7 @@
 							<AlignHorizontalRight />
 						</template>
 					</NcActionButton>
-				</InlineActionsContainer>
+				</NcActionButtonGroup>
 				<NcActionButton data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
@@ -81,8 +81,7 @@
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton } from '@nextcloud/vue'
-import InlineActionsContainer from '../../components/InlineActionsContainer.vue'
+import { NcActions, NcActionButton, NcActionButtonGroup } from '@nextcloud/vue'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
@@ -99,8 +98,8 @@ export default {
 		AlignHorizontalLeft,
 		AlignHorizontalRight,
 		Delete,
-		InlineActionsContainer,
 		NcActionButton,
+		NcActionButtonGroup,
 		NcActions,
 		NodeViewWrapper,
 		NodeViewContent,
