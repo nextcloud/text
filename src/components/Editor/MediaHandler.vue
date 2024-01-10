@@ -29,6 +29,7 @@
 		@dragleave.prevent.stop="setDraggedOver(false)"
 		@file-drop="onEditorDrop">
 		<input ref="attachmentFileInput"
+			tabindex="-1"
 			data-text-el="attachment-file-input"
 			type="file"
 			accept="*/*"
