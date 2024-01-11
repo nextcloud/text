@@ -28,13 +28,11 @@
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
 		@file-drop="onEditorDrop">
-		<input ref="attachmentFileInput"
-			tabindex="-1"
+		<input v-show="false"
+			ref="attachmentFileInput"
 			data-text-el="attachment-file-input"
 			type="file"
 			accept="*/*"
-			aria-hidden="true"
-			class="hidden-visually"
 			multiple
 			@change="onAttachmentUploadFilePicked">
 		<slot />
