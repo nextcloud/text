@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -25,11 +26,9 @@
 		class="entry-list-action entry-action"
 		v-bind="state"
 		:container="menuIDSelector"
-		:aria-label="actionEntry.label"
-		:aria-pressed="state.active"
+		:aria-label="labelWithSelected"
 		:type="state.active ? 'primary': 'tertiary'"
 		:force-menu="true"
-		:name="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
 		@update:open="onOpenChange">
@@ -106,6 +105,17 @@ export default {
 					? visible(this)
 					: visible
 			})
+		},
+		labelWithSelected() {
+			if (this.currentChild) {
+				// TRANSLATORS: examples - Headings, "Heading 1" is selected - Callouts, "Info" is selected
+				return t('text', '{menuItemName}, "{selectedSubMenuItemName}" is selected', {
+					menuItemName: this.actionEntry.label,
+					selectedSubMenuItemName: this.currentChild.label,
+				})
+			}
+
+			return this.actionEntry.label
 		},
 	},
 	methods: {
