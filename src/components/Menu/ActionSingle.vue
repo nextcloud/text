@@ -104,18 +104,10 @@ export default {
 
 		const { class: classes, ...attrs } = bindState
 
-		// do not use tooltip if is a item of action list
-		const directives = isItem
-			? []
-			: [{
-				name: 'tooltip',
-				value: tooltip,
-			}]
-
 		const children = [h(icon, { slot: 'icon' })]
 
 		// do not use title if is a item of action list
-		const title = isItem ? undefined : label
+		const title = isItem ? undefined : tooltip
 
 		if (isItem || actionEntry.forceLabel) {
 			// add label
@@ -123,7 +115,6 @@ export default {
 		}
 
 		return h(component, {
-			directives,
 			staticClass: 'entry-single-action entry-action',
 			class: classes,
 			attrs: {
