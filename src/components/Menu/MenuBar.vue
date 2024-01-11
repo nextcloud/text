@@ -51,7 +51,7 @@
 			<ActionList key="text-action--remain"
 				:action-entry="hiddenEntries">
 				<template #lastAction="{ visible }">
-					<NcActionButton @click="showTranslate">
+					<NcActionButton v-if="canTranslate" @click="showTranslate">
 						<template #icon>
 							<TranslateVariant />
 						</template>
