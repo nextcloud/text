@@ -35,10 +35,12 @@
 							:disabled="disableFromLanguageSelect"
 							:append-to-body="false" />
 					</div>
-					<textarea ref="input"
-						v-model="input"
+					<NcTextArea ref="input"
+						:value.sync="input"
+						:label="t('text', 'Text to translate from')"
 						autofocus
-						@input="autosize"
+						input-class="translate-textarea"
+						resize="none"
 						@focus="onInputFocus" />
 				</div>
 				<div class="col">
@@ -51,9 +53,12 @@
 							:disabled="!fromLanguage"
 							:append-to-body="false" />
 					</div>
-					<textarea ref="result"
-						v-model="result"
+					<NcTextArea ref="result"
+						:value.sync="result"
+						:label="t('text', 'Translated text result')"
 						readonly
+						input-class="translate-textarea"
+						resize="none"
 						:class="{'icon-loading': loading }" />
 				</div>
 			</div>
@@ -80,7 +85,7 @@
 import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
 import { generateOcsUrl } from '@nextcloud/router'
-import { NcModal, NcButton, NcSelect, NcLoadingIcon } from '@nextcloud/vue'
+import { NcModal, NcButton, NcSelect, NcLoadingIcon, NcTextArea } from '@nextcloud/vue'
 import { useIsMobileMixin } from '../Editor.provider.js'
 
 const detectLanguageEntry = {
@@ -95,6 +100,7 @@ export default {
 		NcButton,
 		NcSelect,
 		NcLoadingIcon,
+		NcTextArea,
 	},
 	mixins: [
 		useIsMobileMixin,
@@ -162,6 +168,7 @@ export default {
 		input() {
 			this.result = null
 			this.error = null
+			this.autosize()
 		},
 		toLanguage() {
 			this.result = null
@@ -195,12 +202,12 @@ export default {
 			this.$emit('replace-content', this.result)
 		},
 		autosize() {
-			this.$refs.input.style.overflowY = 'hidden'
-			this.$refs.input.style.height = 'auto'
-			const height = this.$refs.input.scrollHeight + 10
-			this.$refs.input.style.height = height + 'px'
-			this.$refs.result.style.height = height + 'px'
-			this.$refs.input.style.overflowY = 'auto'
+			this.$refs.input.$refs.input.style.overflowY = 'hidden'
+			this.$refs.input.$refs.input.style.height = 'auto'
+			const height = this.$refs.input.$refs.input.scrollHeight + 10
+			this.$refs.input.$refs.input.style.height = height + 'px'
+			this.$refs.result.$refs.input.style.height = height + 'px'
+			this.$refs.input.$refs.input.style.overflowY = 'auto'
 		},
 		onInputFocus() {
 			this.disableFromLanguageSelect = false
@@ -230,17 +237,17 @@ export default {
 			grid-row: 1/2;
 		}
 	}
-}
 
-textarea {
-	display: block;
-	width: 100%;
-	margin-bottom: 12px;
-	height: auto;
-	resize: none;
-	box-sizing: border-box;
-	overflow-y: auto;
-	max-height: 58vh;
+	:deep(.translate-textarea) {
+		display: block;
+		width: 100%;
+		margin-bottom: 12px;
+		height: auto;
+		resize: none;
+		box-sizing: border-box;
+		overflow-y: auto;
+		max-height: 58vh;
+	}
 }
 
 @media (max-width: 670px) {
@@ -254,10 +261,10 @@ textarea {
 				width: 100%;
 			}
 		}
-	}
 
-	textarea {
-		max-height: 20vh;
+		:deep(.translate-textarea) {
+			max-height: 20vh;
+		}
 	}
 
 	label {
