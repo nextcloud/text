@@ -68,9 +68,6 @@ export default {
 			required: true,
 		},
 	},
-	computed: {
-		t: () => window.t,
-	},
 }
 </script>
 
