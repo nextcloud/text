@@ -82,7 +82,6 @@ export default {
 		},
 	},
 	computed: {
-		t: () => window.t,
 		textAlign() {
 			return { 'text-align': this.node.attrs.textAlign }
 		},
