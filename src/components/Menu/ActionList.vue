@@ -28,7 +28,6 @@
 		:aria-label="actionEntry.label"
 		:aria-pressed="state.active"
 		:type="state.active ? 'primary': 'tertiary'"
-		:aria-activedescendant="currentChild ? `${$menuID}-child-${currentChild.key}` : null"
 		:force-menu="true"
 		:name="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
@@ -38,7 +37,6 @@
 			<component :is="icon" :key="iconKey" />
 		</template>
 		<ActionSingle v-for="child in children"
-			:id="`${$menuID}-child-${child.key}`"
 			:key="`child-${child.key}`"
 			:active="currentChild?.key === child.key"
 			is-item
