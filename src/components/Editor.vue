@@ -112,7 +112,7 @@ import { createEditor, serializePlainText, loadSyntaxHighlight } from './../Edit
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
-import { CollaborationCursor, Keymap } from '../extensions/index.js'
+import { CollaborationCursor } from '../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import setContent from './../mixins/setContent.js'
@@ -372,8 +372,8 @@ export default {
 				filePath: this.relativePath,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
-					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
-					: () => serializePlainText(this.$editor),
+					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
+					: (content) => serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
@@ -525,16 +525,6 @@ export default {
 											: (session?.guestName || t('text', 'Guest')),
 										color: session?.color,
 										clientId: this.$ydoc.clientID,
-									},
-								}),
-								Keymap.configure({
-									'Shift-Mod-c': ({ editor }) => {
-										if (!navigator?.clipboard) {
-											console.error('Clipboard API is not available')
-										}
-
-										const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-										navigator.clipboard.writeText(proseMirrorMarkdown)
 									},
 								}),
 							],
