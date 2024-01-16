@@ -39,7 +39,7 @@ namespace OCA\Files_Sharing {
 	}
 }
 
-namespace OCA\TPAssistant\Event {
+namespace OCA\TpAssistant\Event {
 
 	use OCP\TextProcessing\Task;
 

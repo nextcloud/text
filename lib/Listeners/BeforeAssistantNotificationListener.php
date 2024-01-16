@@ -3,7 +3,7 @@
 namespace OCA\Text\Listeners;
 
 use OCA\Text\AppInfo\Application;
-use OCA\TPAssistant\Event\BeforeAssistantNotificationEvent;
+use OCA\TpAssistant\Event\BeforeAssistantNotificationEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IURLGenerator;

@@ -154,6 +154,7 @@ import {
 } from './Editor.provider.js'
 import { FloatingMenu } from '@tiptap/vue-2'
 import Translate from './Modal/Translate.vue'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
@@ -213,7 +214,7 @@ export default {
 	},
 	computed: {
 		showAssistant() {
-			return !this.$isRichWorkspace && !this.$isPublic && window?.OCA?.TPAssistant?.openAssistantForm
+			return !this.$isRichWorkspace && !this.$isPublic && window?.OCA?.TpAssistant?.openAssistantForm
 		},
 		identifier() {
 			return 'text-file:' + this.$file.fileId
@@ -241,7 +242,7 @@ export default {
 
 		this.$editor.on('selectionUpdate', this.onSelection)
 		this.fetchTasks()
-		this.$interval = setInterval(() => this.fetchTasks(), 60 * 1000)
+		subscribe('notifications:notification:received', this.checkNotification)
 	},
 	beforeDestroy() {
 		if (!this.showAssistant) {
@@ -249,7 +250,7 @@ export default {
 		}
 
 		this.$editor.off('selectionUpdate', this.onSelection)
-		clearInterval(this.$interval)
+		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
 	methods: {
 		async fetchTasks() {
@@ -268,19 +269,36 @@ export default {
 				}
 			}).sort((a, b) => b.id - a.id)
 		},
+		async checkNotification(event) {
+			if (event.notification.app !== 'assistant' || event.notification.actions[0].type !== 'WEB') {
+				return
+			}
+			await this.fetchTasks()
+		},
 		onSelection() {
 			const { state } = this.$editor
 			const { from, to } = state.selection
 			this.selection = state.doc.textBetween(from, to, ' ')
 		},
 		async openAssistantForm(taskType = null) {
-			await window.OCA.TPAssistant.openAssistantForm(
+			await window.OCA.TpAssistant.openAssistantForm(
 				{
 					appId: 'text',
 					identifier: this.identifier,
 					taskType,
 					input: this.selection,
 					isInsideViewer: true,
+					closeOnResult: false,
+					actionButtons: [
+						{
+							type: 'primary',
+							title: t('text', 'Insert result'),
+							label: t('text', 'Insert result'),
+							onClick: (lastTask) => {
+								this.insertResult(lastTask)
+							},
+						},
+					],
 				})
 			await this.fetchTasks()
 		},
@@ -308,7 +326,7 @@ export default {
 			this.displayTranslate = false
 		},
 		async openResult(task) {
-			window.OCA?.TPAssistant.openAssistantResult(task)
+			window.OCA?.TpAssistant.openAssistantResult(task)
 		},
 		async insertResult(task) {
 			this.$editor.commands.insertContent(task.output)
@@ -344,11 +362,23 @@ export default {
 				getReferenceClientRect: () => {
 					const editorRect = this.$parent.$el.querySelector('.ProseMirror').getBoundingClientRect()
 					const pos = posToDOMRect(this.$editor.view, this.$editor.state.selection.from, this.$editor.state.selection.to)
+					let rightSpacing = 0
+					let addTopSpacing = 0
+
+					if (editorRect.width < 670) {
+						rightSpacing = 20
+					}
+
+					if (editorRect.width < 425) {
+						rightSpacing = 66
+						addTopSpacing = 30
+					}
+
 					return {
 						...pos,
-						width: editorRect.width,
+						width: editorRect.width - rightSpacing,
 						height: limitInRange(pos.height, buttonSize, window.innerHeight),
-						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing),
+						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing) + addTopSpacing,
 						left: editorRect.left,
 						right: editorRect.right,
 						bottom: limitInRange(pos.top + buttonSize, bottomSpacing, window.innerHeight - topSpacing) + 22,
