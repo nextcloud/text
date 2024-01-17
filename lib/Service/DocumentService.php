@@ -465,6 +465,7 @@ class DocumentService {
 
 	/**
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 */
 	public function getFileById(int $fileId, ?string $userId = null): File {
 		$userId = $userId ?? $this->userId;
@@ -502,6 +503,10 @@ class DocumentService {
 
 		if (!$file instanceof File) {
 			throw new NotFoundException();
+		}
+
+		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
+			throw new NotPermittedException();
 		}
 
 		return $file;

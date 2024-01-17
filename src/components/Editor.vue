@@ -33,7 +33,7 @@
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
 
-		<SkeletonLoading v-if="!contentLoaded" />
+		<SkeletonLoading v-if="!contentLoaded && !displayedStatus" />
 		<Wrapper v-if="displayed"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
