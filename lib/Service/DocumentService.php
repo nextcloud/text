@@ -395,6 +395,7 @@ class DocumentService {
 
 	/**
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 */
 	public function getFileById($fileId, $userId = null): Node {
 		$userId = $userId ?? $this->userId;
@@ -428,7 +429,17 @@ class DocumentService {
 			return ($b->getPermissions() & Constants::PERMISSION_UPDATE) <=> ($a->getPermissions() & Constants::PERMISSION_UPDATE);
 		});
 
-		return array_shift($files);
+		$file = array_shift($files);
+
+		if (!$file instanceof File) {
+			throw new NotFoundException();
+		}
+
+		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
+			throw new NotPermittedException();
+		}
+
+		return $file;
 	}
 
 	/**
