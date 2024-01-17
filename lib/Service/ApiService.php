@@ -83,7 +83,12 @@ class ApiService {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				}
 			} elseif ($fileId) {
-				$file = $this->documentService->getFileById($fileId);
+				try {
+					$file = $this->documentService->getFileById($fileId);
+				} catch (NotFoundException $e) {
+					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+					return new DataResponse('No permission to access this file.', Http::STATUS_NOT_FOUND);
+				}
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}
