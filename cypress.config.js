@@ -20,6 +20,12 @@ module.exports = defineConfig({
 		experimentalSessionAndOrigin: true,
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 	},
+	component: {
+		devServer: {
+			framework: "vue",
+			bundler: "webpack",
+		},
+	},
 	retries: {
 		runMode: 2,
 		// do not retry in `cypress open`
