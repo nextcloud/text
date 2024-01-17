@@ -81,8 +81,13 @@ class ApiService {
 				} catch (NotFoundException $e) {
 				}
 			} elseif ($fileId) {
-				$file = $this->documentService->getFileById($fileId);
-				$readOnly = !$file->isUpdateable();
+				try {
+					$file = $this->documentService->getFileById($fileId);
+					$readOnly = !$file->isUpdateable();
+				} catch (NotFoundException $e) {
+					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
+					return new DataResponse('No permission to access this file.', Http::STATUS_NOT_FOUND);
+				}
 			} else {
 				return new DataResponse('No valid file argument provided', 500);
 			}

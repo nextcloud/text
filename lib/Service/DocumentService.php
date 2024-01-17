@@ -33,7 +33,7 @@ use OCP\DirectEditing\IManager;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
 use function json_encode;
-use OC\Files\Node\File;
+use OCP\Files\File;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
 use OCA\Text\Db\Step;
@@ -395,6 +395,7 @@ class DocumentService {
 
 	/**
 	 * @throws NotFoundException
+	 * @throws NotPermittedException
 	 */
 	public function getFileById($fileId, $userId = null): Node {
 		try {
@@ -415,7 +416,17 @@ class DocumentService {
 			return ($a->getPermissions() & Constants::PERMISSION_UPDATE) < ($b->getPermissions() & Constants::PERMISSION_UPDATE);
 		});
 
-		return array_shift($files);
+		$file = array_shift($files);
+
+		if (!$file instanceof File) {
+			throw new NotFoundException();
+		}
+
+		if (($file->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
+			throw new NotFoundException();
+		}
+
+		return $file;
 	}
 
 	/**
