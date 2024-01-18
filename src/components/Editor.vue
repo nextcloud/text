@@ -478,6 +478,7 @@ export default {
 				// distribute additional state that may exist locally
 				const updateMessage = getUpdateMessage(this.$ydoc, documentState)
 				if (updateMessage) {
+					logger.debug('onLoaded: Pushing local changes to server')
 					this.$queue.push(updateMessage)
 				}
 			}
