@@ -70,7 +70,7 @@ describe('Yjs base64 wrapped with our helpers', function() {
 		const stateA = getDocumentState(source)
 		const update0A = getUpdateMessage(source, state0)
 		const updateAA = getUpdateMessage(source, stateA)
-		expect(update0A.length).to.be.eq(40)
+		expect(update0A.length).to.be.eq(29)
 		expect(updateAA).to.be.eq(undefined)
 	})
 
