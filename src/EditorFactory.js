@@ -29,7 +29,7 @@ import { lowlight } from 'lowlight/lib/core.js'
 import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
-import { Mention, PlainText, RichText } from './extensions/index.js'
+import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
 // eslint-disable-next-line import/no-named-as-default
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
@@ -64,6 +64,7 @@ const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, ena
 					}),
 				],
 			}),
+			FocusTrap,
 		]
 	} else {
 		defaultExtensions = [PlainText, CodeBlockLowlight.configure({ lowlight, defaultLanguage: language })]
