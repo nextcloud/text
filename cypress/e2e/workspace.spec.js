@@ -174,8 +174,13 @@ describe('Workspace', function() {
 			.and('contains', `dir=/${this.testFolder}/sub-folder/alpha`)
 			.and('contains', '#relPath=sub-folder/alpha/test.md')
 
-		cy.getEditor()
-			.find('a').click()
+		cy.getContent()
+			.type('{leftArrow}')
+
+		cy.get('.link-view-bubble .widget-file', { timeout: 10000 })
+			.find('.widget-file--title')
+			.contains('test.md')
+			.click({ force: true })
 
 		cy.getModal()
 			.find('.modal-header')
