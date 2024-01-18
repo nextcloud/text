@@ -28,6 +28,7 @@ import { Doc, encodeStateAsUpdate, applyUpdate } from 'yjs'
  *
  * Used to store yjs state on the server.
  * @param {Y.Doc} ydoc - encode state of this doc
+ * @return {string}
  */
 export function getDocumentState(ydoc) {
 	const update = Y.encodeStateAsUpdate(ydoc)
@@ -50,6 +51,7 @@ export function applyDocumentState(ydoc, documentState, origin) {
  *
  * @param {Y.Doc} ydoc - encode state of this doc
  * @param {string} encodedBaseUpdate - base64 encoded doc update to build upon
+ * @return {string|undefined}
  */
 export function getUpdateMessage(ydoc, encodedBaseUpdate) {
 	const baseUpdate = decodeArrayBuffer(encodedBaseUpdate)
