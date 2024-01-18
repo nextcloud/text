@@ -55,7 +55,7 @@ export function applyDocumentState(ydoc, documentState, origin) {
  *
  * @param {Y.Doc} ydoc - encode state of this doc
  * @param {string} encodedBaseUpdate - base64 encoded doc update to build upon
- * @return {string|undefined}
+ * @return {Uint8Array|undefined}
  */
 export function getUpdateMessage(ydoc, encodedBaseUpdate) {
 	const baseUpdate = decodeArrayBuffer(encodedBaseUpdate)
@@ -69,8 +69,7 @@ export function getUpdateMessage(ydoc, encodedBaseUpdate) {
 	encoding.writeVarUint(encoder, messageSync)
 	const update = Y.encodeStateAsUpdate(ydoc, baseStateVector)
 	syncProtocol.writeUpdate(encoder, update)
-	const buf = encoding.toUint8Array(encoder)
-	return encodeArrayBuffer(buf)
+	return encoding.toUint8Array(encoder)
 }
 
 /**
@@ -78,12 +77,11 @@ export function getUpdateMessage(ydoc, encodedBaseUpdate) {
  *
  * Only used in tests right now.
  * @param {Y.Doc} ydoc - encode state of this doc
- * @param {string} updateMessage - base64 encoded y-websocket sync message with update
+ * @param {Uint8Array} updateMessage - y-websocket sync message with update
  * @param {object} origin - initiator object e.g. WebsocketProvider
  */
 export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
-	const updateBuffer = decodeArrayBuffer(updateMessage)
-	const decoder = decoding.createDecoder(updateBuffer)
+	const decoder = decoding.createDecoder(updateMessage)
 	const messageType = decoding.readVarUint(decoder)
 	if (messageType !== messageSync) {
 		console.error('y.js update message with invalid type', messageType)
