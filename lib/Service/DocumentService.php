@@ -411,7 +411,9 @@ class DocumentService {
 			$this->sessionMapper->deleteByDocumentId($documentId);
 			$this->documentMapper->delete($document);
 
-			$this->getStateFile($documentId)->delete();
+			if ($force) {
+				$this->getStateFile($documentId)->delete();
+			}
 			$this->logger->debug('document reset for ' . $documentId);
 		} catch (DoesNotExistException|NotFoundException $e) {
 			// Ignore if document not found or state file not found
