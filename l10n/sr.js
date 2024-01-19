@@ -16,6 +16,7 @@ OC.L10N.register(
     "text document" : "текстуални документ",
     "{user} has mentioned you in the text document {node}" : "{user} вас је поменуо у текст документу {node}",
     "This file cannot be displayed as download is disabled by the share" : "Овај фајл не може да се прикаже јер дељење спречава преузимање",
+    "No permission to access this file." : "Нема дозвола за приступ овом фајлу.",
     "Readme" : "Прочитај ме",
     "Text" : "Текст",
     "📝 Collaborative document editing" : "📝 Заједничко уређивање докумената",
