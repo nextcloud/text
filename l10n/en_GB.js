@@ -16,6 +16,7 @@ OC.L10N.register(
     "text document" : "text document",
     "{user} has mentioned you in the text document {node}" : "{user} has mentioned you in the text document {node}",
     "This file cannot be displayed as download is disabled by the share" : "This file cannot be displayed as download is disabled by the share",
+    "No permission to access this file." : "No permission to access this file.",
     "Readme" : "Readme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Collaborative document editing",

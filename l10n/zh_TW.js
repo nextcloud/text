@@ -16,6 +16,7 @@ OC.L10N.register(
     "text document" : "文字文件",
     "{user} has mentioned you in the text document {node}" : "{user} 在文字文件 {node} 中提到您",
     "This file cannot be displayed as download is disabled by the share" : "此檔案無法顯示，因為分享時已停用下載",
+    "No permission to access this file." : "無權存取此檔案。",
     "Readme" : "說明",
     "Text" : "文字編輯器",
     "📝 Collaborative document editing" : "📝 協作文件編輯",

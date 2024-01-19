@@ -14,6 +14,7 @@
     "text document" : "documento de texto",
     "{user} has mentioned you in the text document {node}" : "{user} le ha mencionado en el documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "Este archivo no puede ser mostrado ya que la descarga está deshabilitada por el recurso compartido",
+    "No permission to access this file." : "No tiene permisos para acceder a este archivo.",
     "Readme" : "Léeme",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",
