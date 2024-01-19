@@ -3,15 +3,6 @@ const cypressSplit = require('cypress-split')
 const getCompareSnapshotsPlugin = require('cypress-visual-regression/dist/plugin.js')
 
 module.exports = defineConfig({
-	e2e: {
-		setupNodeEvents(on, config) {
-			// IMPORTANT: return the config object
-			return config
-		},
-	},
-})
-
-module.exports = defineConfig({
 	projectId: 'hx9gqy',
 	viewportWidth: 1280,
 	viewportHeight: 900,
@@ -42,6 +33,12 @@ module.exports = defineConfig({
 
 		baseUrl: 'http://localhost:8081/index.php/',
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+	},
+	component: {
+		devServer: {
+			framework: "vue",
+			bundler: "webpack",
+		},
 	},
 	retries: {
 		runMode: 2,
