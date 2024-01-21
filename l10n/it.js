@@ -153,7 +153,7 @@ OC.L10N.register(
     "To-Do list" : "Elenco cose da fare",
     "Insert link" : "Inserisci collegamento",
     "Callouts" : "Didascalie",
-    "Info" : "Info",
+    "Info" : "Informazioni",
     "Success" : "Successo",
     "Warning" : "Attenzione",
     "Danger" : "Pericolo",
