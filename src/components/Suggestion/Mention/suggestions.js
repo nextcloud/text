@@ -6,8 +6,9 @@ import createSuggestions from '../suggestions.js'
 const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
 const emitMention = ({ session, props }) => {
-	axios.put(generateUrl('apps/text/session/mention'), {
-		documentId: session.documentId,
+	const documentId = session.documentId
+	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
+		documentId,
 		sessionId: session.id,
 		sessionToken: session.token,
 		mention: props.id,
