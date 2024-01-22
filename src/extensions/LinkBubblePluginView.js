@@ -7,6 +7,7 @@ class LinkBubblePluginView {
 
 	component = null
 	preventHide = false
+	hadUpdateFromClick = false
 	updateDebounceTimer = undefined
 	updateDelay = 250
 
@@ -128,6 +129,11 @@ class LinkBubblePluginView {
 	}
 
 	updateFromSelection(view) {
+		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
+		if (this.hadUpdateFromClick) {
+			return
+		}
+
 		const { state } = view
 		const { selection } = state
 
@@ -153,6 +159,10 @@ class LinkBubblePluginView {
 
 		const shouldShow = linkNode?.marks.some(m => m.type.name === 'link')
 
+		this.hadUpdateFromClick = true
+		setTimeout(() => {
+			this.hadUpdateFromClick = false
+		}, 200)
 		this.updateTooltip(this.editor.view, shouldShow, linkNode, nodeStart)
 	}
 
