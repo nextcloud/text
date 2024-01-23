@@ -22,17 +22,20 @@
 
 <template>
 	<NcPopover class="session-list" placement="bottom">
-		<div slot="trigger">
-			<button :title="label"
-				:aria-label="label"
-				class="avatar-list">
-				<div class="avatardiv icon-group" />
-				<AvatarWrapper v-for="session in sessionsVisible"
-					:key="session.id"
-					:session="session"
-					:size="40" />
-			</button>
-		</div>
+		<template #trigger="{ attrs }">
+			<div>
+				<button :title="label"
+					:aria-label="label"
+					class="avatar-list"
+					v-bind="attrs">
+					<div class="avatardiv icon-group" />
+					<AvatarWrapper v-for="session in sessionsVisible"
+						:key="session.id"
+						:session="session"
+						:size="40" />
+				</button>
+			</div>
+		</template>
 		<template #default>
 			<div class="session-menu">
 				<slot name="lastSaved" />
