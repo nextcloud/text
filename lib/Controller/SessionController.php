@@ -58,7 +58,7 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	public function create(int $fileId = null, string $file = null): DataResponse {
-		return $this->apiService->create($fileId, $file, null, null);
+		return $this->apiService->create($fileId, $file);
 	}
 
 	#[NoAdminRequired]

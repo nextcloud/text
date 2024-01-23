@@ -236,8 +236,8 @@ class SessionService {
 		return $this->sessionMapper->update($session);
 	}
 
-	private function getColorForGuestName(string $guestName = null): string {
-		$guestName = $this->userId ?? $guestName;
+	private function getColorForGuestName(string $guestName = ''): string {
+		$guestName = $this->userId ? $guestName : '';
 		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();
