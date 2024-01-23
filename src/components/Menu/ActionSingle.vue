@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -19,6 +20,26 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
+
+<template>
+	<component :is="component"
+		class="entry-single-action entry-action"
+		:title="isItem ? undefined : tooltip"
+		:type="state.active ? 'primary' : 'tertiary'"
+		:data-text-action-entry="actionEntry.key"
+		:pressed="isItem ? state.active : undefined"
+		v-bind="bindState"
+		v-on="$listeners"
+		@click="runAction">
+		<template #icon>
+			<component :is="icon" />
+		</template>
+
+		<template v-if="isItem || actionEntry.forceLabel" #default>
+			{{ label }}
+		</template>
+	</component>
+</template>
 
 <script>
 import { NcButton, NcActionButton } from '@nextcloud/vue'
@@ -71,6 +92,7 @@ export default {
 	mounted() {
 		this.$editor.on('transaction', () => this.updateState())
 	},
+
 	methods: {
 		runAction() {
 			const { actionEntry } = this
@@ -87,50 +109,6 @@ export default {
 				this.$emit('trigged', { ...actionEntry })
 			})
 		},
-	},
-
-	render(h) {
-		const {
-			$listeners,
-			actionEntry,
-			bindState,
-			component,
-			icon,
-			isItem,
-			runAction,
-			tooltip,
-			label,
-		} = this
-
-		const { class: classes, ...attrs } = bindState
-
-		const children = [h(icon, { slot: 'icon' })]
-
-		// do not use title if is a item of action list
-		const title = isItem ? undefined : tooltip
-
-		if (isItem || actionEntry.forceLabel) {
-			// add label
-			children.push(label)
-		}
-
-		return h(component, {
-			staticClass: 'entry-single-action entry-action',
-			class: classes,
-			attrs: {
-				title,
-				type: attrs.active ? 'primary' : 'tertiary',
-				'data-text-action-entry': actionEntry.key,
-				...attrs,
-			},
-			props: isItem
-				? { pressed: attrs.active }
-				: {},
-			on: {
-				...$listeners,
-				click: runAction,
-			},
-		}, children)
 	},
 }
 </script>
