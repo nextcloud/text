@@ -69,7 +69,6 @@ export default Extension.create({
 	addOptions() {
 		return {
 			editing: true,
-			link: {},
 			extensions: [],
 			component: null,
 			relativePath: null,
@@ -115,7 +114,6 @@ export default Extension.create({
 			}),
 			LinkPicker,
 			Link.configure({
-				...this.options.link,
 				openOnClick: true,
 				validate: href => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,

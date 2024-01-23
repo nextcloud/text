@@ -22,9 +22,6 @@
 
 import { generateUrl } from '@nextcloud/router'
 
-import { logger } from '../helpers/logger.js'
-import markdownit from './../markdownit/index.js'
-
 const absolutePath = function(base, rel) {
 	if (!rel) {
 		return base
@@ -93,47 +90,7 @@ const parseHref = function(dom) {
 	return ref
 }
 
-const openLink = function(event, target = '_self') {
-	const linkElement = event.target.closest('a')
-	const htmlHref = linkElement.href
-	const query = OC.parseQueryString(htmlHref)
-	const fragment = htmlHref.split('#').pop()
-	const fragmentQuery = OC.parseQueryString(fragment)
-	if (query?.dir && fragmentQuery?.relPath) {
-		const filename = fragmentQuery.relPath.split('/').pop()
-		const path = `${query.dir}/${filename}`
-		document.title = `${filename} - ${OC.theme.title}`
-		if (window.location.pathname.match(/apps\/files\/$/)) {
-			// The files app still lacks a popState handler
-			// to allow for using the back button
-			// OC.Util.History.pushState('', htmlHref)
-		}
-		OCA.Viewer.open({ path })
-		return
-	}
-	if (htmlHref.match(/apps\/files\//) && query?.fileId) {
-		// open the direct file link
-		window.open(generateUrl(`/f/${query.fileId}`), '_self')
-		return
-	}
-	if (!markdownit.validateLink(htmlHref)) {
-		logger.error('Invalid link', { htmlHref })
-		return false
-	}
-	if (fragment) {
-		const el = document.getElementById(fragment)
-		if (el) {
-			el.scrollIntoView()
-			window.location.hash = fragment
-			return
-		}
-	}
-	window.open(htmlHref, target)
-	return true
-}
-
 export {
 	domHref,
 	parseHref,
-	openLink,
 }
