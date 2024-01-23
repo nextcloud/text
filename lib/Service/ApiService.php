@@ -73,7 +73,7 @@ class ApiService {
 
 	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
 		try {
-			if ($token) {
+			if ($token !== null) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
 
 				/*
@@ -87,7 +87,7 @@ class ApiService {
 				} catch (NotPermittedException $e) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], 404);
 				}
-			} elseif ($fileId) {
+			} elseif ($fileId !== null) {
 				try {
 					$file = $this->documentService->getFileById($fileId);
 				} catch (NotFoundException|NotPermittedException $e) {
@@ -115,7 +115,7 @@ class ApiService {
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$document = $this->documentService->getDocument($file->getId());
 			$freshSession = $document === null;
-			if ($baseVersionEtag && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
+			if ($baseVersionEtag !== null && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
 				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 			}
 

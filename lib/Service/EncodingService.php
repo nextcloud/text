@@ -38,7 +38,7 @@ class EncodingService {
 
 	public function encodeToUtf8(string $string): ?string {
 		$encoding = $this->detectEncoding($string);
-		if (!$encoding) {
+		if ($encoding === null) {
 			return null;
 		}
 
@@ -48,7 +48,7 @@ class EncodingService {
 
 	public function detectEncoding(string $string): ?string {
 		$bomDetect = $this->detectUtfBom($string);
-		if ($bomDetect) {
+		if ($bomDetect !== null) {
 			return $bomDetect;
 		}
 

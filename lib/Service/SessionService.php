@@ -88,10 +88,10 @@ class SessionService {
 	public function initSession(int $documentId, ?string $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
-		$userName = $this->userId ? $this->userId : $guestName;
+		$userName = $this->userId ?? $guestName;
 		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
-		$session->setColor($this->getColorForGuestName($guestName));
+		$session->setColor($this->getColorForGuestName($guestName ?? ''));
 		if ($this->userId === null) {
 			$session->setGuestName($guestName ?? '');
 		}
@@ -236,8 +236,8 @@ class SessionService {
 		return $this->sessionMapper->update($session);
 	}
 
-	private function getColorForGuestName(?string $guestName = null): string {
-		$guestName = $this->userId ?? $guestName;
+	private function getColorForGuestName(string $guestName = ''): string {
+		$guestName = $this->userId !== null ? $guestName : '';
 		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();

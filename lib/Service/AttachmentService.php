@@ -203,21 +203,15 @@ class AttachmentService {
 	}
 
 	/**
-	 * @param int          $documentId
-	 * @param string|null  $userId
-	 * @param Session|null $session
-	 * @param string|null  $shareToken
-	 *
-	 * @return array
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
 	public function getAttachmentList(int $documentId, ?string $userId = null, ?Session $session = null, ?string $shareToken = null): array {
-		if ($shareToken) {
+		if ($shareToken !== null) {
 			$textFile = $this->getTextFilePublic($documentId, $shareToken);
-		} elseif ($userId) {
+		} elseif ($userId !== null) {
 			$textFile = $this->getTextFile($documentId, $userId);
 		} else {
 			throw new NotPermittedException('Unable to read document');
@@ -229,7 +223,7 @@ class AttachmentService {
 			return [];
 		}
 
-		$shareTokenUrlString = $shareToken
+		$shareTokenUrlString = $shareToken !== null
 			? '&shareToken=' . rawurlencode($shareToken)
 			: '';
 		$urlParamsBase = $session
@@ -237,7 +231,7 @@ class AttachmentService {
 			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
-		$userFolder = $userId ? $this->rootFolder->getUserFolder($userId) : null;
+		$userFolder = $userId !== null ? $this->rootFolder->getUserFolder($userId) : null;
 		foreach ($attachmentDir->getDirectoryListing() as $node) {
 			if (!($node instanceof File)) {
 				// Ignore anything but files
