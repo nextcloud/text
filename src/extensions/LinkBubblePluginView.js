@@ -3,19 +3,20 @@ import tippy from 'tippy.js'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 
+const updateDelay = 250
+
 class LinkBubblePluginView {
 
-	component = null
-	preventHide = false
-	hadUpdateFromClick = false
-	updateDebounceTimer = undefined
-	updateDelay = 250
+	#component = null
+	#preventHide = false
+	#hadUpdateFromClick = false
+	#updateDebounceTimer = undefined
 
 	constructor({ editor, view }) {
 		this.editor = editor
 		this.view = view
 
-		this.component = new VueRenderer(LinkBubbleView, {
+		this.#component = new VueRenderer(LinkBubbleView, {
 			parent: this.editor.contentComponent,
 			propsData: {
 				editor: this.editor,
@@ -35,7 +36,7 @@ class LinkBubblePluginView {
 	}
 
 	pointerdownHandler = () => {
-		this.preventHide = true
+		this.#preventHide = true
 	}
 
 	// Required for read-only mode on Firefox. For some reason, editor selection doesn't get
@@ -66,12 +67,12 @@ class LinkBubblePluginView {
 	}
 
 	blurHandler = ({ event }) => {
-		if (this.preventHide) {
-			this.preventHide = false
+		if (this.#preventHide) {
+			this.#preventHide = false
 			return
 		}
 
-		if (event?.relatedTarget && this.component.element.parentNode?.contains(event.relatedTarget)) {
+		if (event?.relatedTarget && this.#component.element.parentNode?.contains(event.relatedTarget)) {
 			return
 		}
 
@@ -93,7 +94,7 @@ class LinkBubblePluginView {
 		this.tippy = tippy(editorElement, {
 			duration: 100,
 			getReferenceClientRect: null,
-			content: this.component.element,
+			content: this.#component.element,
 			interactive: true,
 			trigger: 'manual',
 			placement: 'bottom',
@@ -119,18 +120,18 @@ class LinkBubblePluginView {
 			return
 		}
 
-		if (this.updateDebounceTimer) {
-			clearTimeout(this.updateDebounceTimer)
+		if (this.#updateDebounceTimer) {
+			clearTimeout(this.#updateDebounceTimer)
 		}
 
-		this.updateDebounceTimer = window.setTimeout(() => {
+		this.#updateDebounceTimer = window.setTimeout(() => {
 			this.updateFromSelection(view)
-		}, this.updateDelay)
+		}, updateDelay)
 	}
 
 	updateFromSelection(view) {
 		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
-		if (this.hadUpdateFromClick) {
+		if (this.#hadUpdateFromClick) {
 			return
 		}
 
@@ -146,7 +147,7 @@ class LinkBubblePluginView {
 		const linkNode = this.linkNodeFromSelection(view)
 
 		const isLink = linkNode?.marks.some(m => m.type.name === 'link')
-		const hasBubbleFocus = this.component.element.contains(document.activeElement)
+		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
 		const shouldShow = isLink && hasEditorFocus
 
@@ -159,9 +160,9 @@ class LinkBubblePluginView {
 
 		const shouldShow = linkNode?.marks.some(m => m.type.name === 'link')
 
-		this.hadUpdateFromClick = true
+		this.#hadUpdateFromClick = true
 		setTimeout(() => {
-			this.hadUpdateFromClick = false
+			this.#hadUpdateFromClick = false
 		}, 200)
 		this.updateTooltip(this.editor.view, shouldShow, linkNode, nodeStart)
 	}
@@ -180,7 +181,7 @@ class LinkBubblePluginView {
 		}
 		const clientRect = referenceEl?.getBoundingClientRect()
 
-		this.component.updateProps({
+		this.#component.updateProps({
 			href: domHref(linkNode.marks.find(m => m.type.name === 'link')),
 		})
 
@@ -192,12 +193,12 @@ class LinkBubblePluginView {
 	}
 
 	show() {
-		this.component.element.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
+		this.#component.element.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.show()
 	}
 
 	hide() {
-		this.component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
+		this.#component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.hide()
 	}
 
@@ -206,7 +207,7 @@ class LinkBubblePluginView {
 			(this.tippy.popper.firstChild).removeEventListener('blur', this.tippyBlurHandler)
 		}
 		this.tippy?.destroy()
-		this.component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
+		this.#component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.removeEventListener('click', this.clickHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
