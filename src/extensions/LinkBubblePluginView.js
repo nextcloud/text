@@ -72,15 +72,15 @@ class LinkBubblePluginView {
 			return
 		}
 
-		if (event?.relatedTarget && this.#component.element.parentNode?.contains(event.relatedTarget)) {
+		if (event?.relatedTarget && this.tippy?.popper.firstChild.contains(event.relatedTarget)) {
 			return
 		}
 
 		this.hide()
 	}
 
-	tippyBlurHandler = (event) => {
-		this.blurHandler({ event })
+	tippyBlurHandler = () => {
+		this.hide()
 	}
 
 	createTooltip() {
@@ -104,10 +104,9 @@ class LinkBubblePluginView {
 			},
 		})
 
-		// maybe we have to hide tippy on its own blur event as well
-		if (this.tippy.popper.firstChild) {
-			(this.tippy.popper.firstChild).addEventListener('blur', this.tippyBlurHandler)
-		}
+		this.tippy.popper.firstChild?.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
+		// Hide tippy on its own blur event as well
+		this.tippy.popper.firstChild?.addEventListener('blur', this.tippyBlurHandler)
 	}
 
 	update(view, oldState) {
@@ -146,7 +145,7 @@ class LinkBubblePluginView {
 		const nodeStart = resolved.pos - resolved.textOffset
 		const linkNode = this.linkNodeFromSelection(view)
 
-		const isLink = linkNode?.marks.some(m => m.type.name === 'link')
+		const isLink = !!linkNode?.marks.some(m => m.type.name === 'link')
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
 		const shouldShow = isLink && hasEditorFocus
@@ -193,21 +192,17 @@ class LinkBubblePluginView {
 	}
 
 	show() {
-		this.#component.element.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.show()
 	}
 
 	hide() {
-		this.#component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.hide()
 	}
 
 	destroy() {
-		if (this.tippy?.popper.firstChild) {
-			(this.tippy.popper.firstChild).removeEventListener('blur', this.tippyBlurHandler)
-		}
+		this.tippy?.popper.firstChild?.removeEventListener('blur', this.tippyBlurHandler)
+		this.tippy?.popper.firstChild?.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.destroy()
-		this.#component.element.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.removeEventListener('click', this.clickHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
