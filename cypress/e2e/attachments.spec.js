@@ -198,7 +198,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back from home to sub folder')
-				cy.get('.file-picker__breadcrumbs a[title="Home"]').click()
+				cy.get('.file-picker__breadcrumbs button[title="Home"]').click()
 				cy.get('.file-picker__main .file-picker__file-name[title="sub"]').click()
 
 				cy.log('Go to sub folder (b)')
@@ -217,7 +217,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back to home')
-				cy.get('.file-picker__breadcrumbs a[title="Home"]').click()
+				cy.get('.file-picker__breadcrumbs button[title="Home"]').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('.file-picker__main .file-picker__file-name[title="github"]').click()
