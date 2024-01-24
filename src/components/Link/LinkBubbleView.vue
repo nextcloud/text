@@ -207,7 +207,19 @@ export default {
 		},
 
 		setLinkUrl(href) {
-			this.editor.chain().extendMarkRange('link').setLink({ href }).focus().run()
+			// Store current selection to restore it after setLink
+			const selection = { ...this.editor.view.state.selection }
+			const { ranges } = selection
+			const from = Math.min(...ranges.map(range => range.$from.pos))
+			const to = Math.max(...ranges.map(range => range.$to.pos))
+
+			console.debug('selection', selection)
+			this.editor.chain()
+				.extendMarkRange('link')
+				.setLink({ href })
+				.setTextSelection({ from, to })
+				.focus()
+				.run()
 		},
 
 		removeLink() {
