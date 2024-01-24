@@ -26,13 +26,23 @@ import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
+/**
+ * Wrapper for async registration of ViewerComponent.
+ * Note: it should be named function - the name is used for component registration.
+ *
+ * @return {Promise<import('./components/ViewerComponent.vue')>} ViewerComponent
+ */
+function AsyncTextViewerComponent() {
+	return import('./components/ViewerComponent.vue')
+}
+
 if (typeof OCA.Viewer === 'undefined') {
 	logger.error('Viewer app is not installed')
 } else {
 	OCA.Viewer.registerHandler({
 		id: 'text',
 		mimes: [...openMimetypesMarkdown, ...openMimetypesPlainText],
-		component: () => import('./components/ViewerComponent.vue'),
+		component: AsyncTextViewerComponent,
 		group: null,
 		theme: 'default',
 		canCompare: true,
