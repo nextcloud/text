@@ -64,4 +64,12 @@ class InitialStateProvider {
 	public function provideFileId(int $fileId): void {
 		$this->initialState->provideInitialState('file_id', $fileId);
 	}
+
+	public function provideFile(array $fileData): void {
+		$this->initialState->provideInitialState('file', $fileData);
+	}
+
+	public function provideDirectEditToken(string $token): void {
+		$this->initialState->provideInitialState('directEditingToken', $token);
+	}
 }
