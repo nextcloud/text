@@ -4,16 +4,16 @@ namespace OCA\Text\Migration;
 
 use OCA\Text\Db\SessionMapper;
 use OCA\Text\Service\DocumentService;
-use OCP\IConfig;
+use OCP\IAppConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class ResetSessionsBeforeYjs implements IRepairStep {
-	private IConfig $config;
+	private IAppConfig $config;
 	private SessionMapper $sessionMapper;
 	private DocumentService $documentService;
 
-	public function __construct(IConfig $config,
+	public function __construct(IAppConfig $config,
 		SessionMapper $sessionMapper,
 		DocumentService $documentService) {
 		$this->config = $config;
@@ -34,7 +34,7 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 	 * @return void
 	 */
 	public function run(IOutput $output): void {
-		$appVersion = $this->config->getAppValue('text', 'installed_version');
+		$appVersion = $this->config->getValueString('text', 'installed_version');
 
 		if (!$appVersion || version_compare($appVersion, '3.7.2') !== -1) {
 			return;
