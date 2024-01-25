@@ -100,16 +100,17 @@ const Link = TipTapLink.extend({
 								event.stopImmediatePropagation()
 							}
 						},
-						// Prevent open link on left click (required for read-only mode)
+						// Prevent open link (except anchor links) on left click (required for read-only mode)
 						// Open link in new tab on Ctrl/Cmd + left click
 						click: (view, event) => {
-							if (event.target.closest('a')) {
-								if (event.button === 0) {
-									event.preventDefault()
-									if (event.ctrlKey || event.metaKey) {
-										const linkElement = event.target.closest('a')
-										window.open(linkElement.href, '_blank')
-									}
+							const linkEl = event.target.closest('a')
+							if (event.button === 0 && linkEl) {
+								event.preventDefault()
+								if (linkEl.attributes.href?.value?.startsWith('#')) {
+									// Open anchor links directly
+									location.href = linkEl.attributes.href.value
+								} else if (event.ctrlKey || event.metaKey) {
+									window.open(linkEl.href, '_blank')
 								}
 							}
 						},

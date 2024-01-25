@@ -145,25 +145,24 @@ class LinkBubblePluginView {
 		const nodeStart = resolved.pos - resolved.textOffset
 		const linkNode = this.linkNodeFromSelection(view)
 
-		const isLink = !!linkNode?.marks.some(m => m.type.name === 'link')
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
-		const shouldShow = isLink && hasEditorFocus
+
+		const shouldShow = !!linkNode && hasEditorFocus
 
 		this.updateTooltip(view, shouldShow, linkNode, nodeStart)
 	}
 
 	updateFromClick(view, clickedLinkPos) {
 		const nodeStart = clickedLinkPos.pos - clickedLinkPos.textOffset
-		const linkNode = clickedLinkPos.parent.maybeChild(clickedLinkPos.index())
-
-		const shouldShow = linkNode?.marks.some(m => m.type.name === 'link')
+		const clickedNode = clickedLinkPos.parent.maybeChild(clickedLinkPos.index())
+		const shouldShow = this.isLinkNode(clickedNode)
 
 		this.#hadUpdateFromClick = true
 		setTimeout(() => {
 			this.#hadUpdateFromClick = false
 		}, 200)
-		this.updateTooltip(this.editor.view, shouldShow, linkNode, nodeStart)
+		this.updateTooltip(this.editor.view, shouldShow, clickedNode, nodeStart)
 	}
 
 	updateTooltip = (view, shouldShow, linkNode, nodeStart) => {
@@ -229,12 +228,21 @@ class LinkBubblePluginView {
 			return
 		}
 
-		if (!node?.isText || !node.marks.some(m => m.type.name === 'link')) {
-			// Selected node is not a text node with link mark
-			return
+		return this.isLinkNode(node) ? node : null
+	}
+
+	isLinkNode(node) {
+		const linkMark = node?.marks.find(m => m.type.name === 'link')
+		if (!linkMark) {
+			return false
 		}
 
-		return node
+		// Don't open link bubble for anchor links
+		if (linkMark.attrs.href.startsWith('#')) {
+			return false
+		}
+
+		return true
 	}
 
 }
