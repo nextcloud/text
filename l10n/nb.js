@@ -44,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
+    "Translate from" : "Oversett fra",
     "Select language" : "Velg språk",
     "to" : "til",
     "Replace" : "Erstatt",
