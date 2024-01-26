@@ -72,8 +72,11 @@ describe('Test mentioning users', () => {
 
 		return cy.wait(`@${autocompleteReauestAlias}`)
 			.then(() => {
+				cy.intercept({ method: 'PUT', url: '**/mention' }).as('putMention')
 				cy.get('.tippy-box .suggestion-list').contains(mention).click()
 				cy.get('span.mention').contains(mention).should('be.visible')
+				cy.wait('@putMention')
+					.its('response.statusCode').should('eq', 200)
 			})
 	})
 
