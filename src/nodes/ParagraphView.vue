@@ -26,6 +26,7 @@
 		<NcReferenceList v-if="isLoggedIn && text"
 			:text="text"
 			:limit="1"
+			:interactive="true"
 			contenteditable="false" />
 	</NodeViewWrapper>
 </template>
