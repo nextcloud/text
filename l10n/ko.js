@@ -50,6 +50,7 @@ OC.L10N.register(
     "Heading 6" : "제목 6",
     "Heading level 6" : "제목 단계 6",
     "Quoted text" : "인용문",
+    "Open the Smart Picker" : "스마트 피커 열기",
     "Select file or folder to link to" : "링크할 파일이나 폴더 선택",
     "_%n word_::_%n words_" : ["%n개 단어"],
     "_%n char_::_%n chars_" : ["%n개 글자"],
@@ -76,6 +77,7 @@ OC.L10N.register(
     "Command" : "명령",
     "Control" : "제어:",
     "Formatting" : "서식",
+    "Smart picker" : "스마트 피커",
     "Edit" : "편집",
     "Unsupported image type" : "지원하지 않는 사진 형식"
 },
