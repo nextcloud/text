@@ -4,6 +4,7 @@ import markdownitMentions from '@quartzy/markdown-it-mentions'
 import underline from './underline.js'
 import splitMixedLists from './splitMixedLists.js'
 import callouts from './callouts.js'
+import preview from './preview.js'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
 import frontMatter from 'markdown-it-front-matter'
@@ -15,10 +16,11 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('table')
 	.use(taskLists, { enable: true, labelAfter: true })
 	.use(frontMatter, (fm) => {})
-	.use(splitMixedLists)
+	.use(splitMixedLists) // needs task Lists to be used first.
 	.use(underline)
 	.use(hardbreak)
 	.use(callouts)
+	.use(preview)
 	.use(keepSyntax)
 	.use(markdownitMentions)
 	.use(implicitFigures)

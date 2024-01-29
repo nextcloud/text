@@ -26,7 +26,7 @@ import { lowlight } from 'lowlight'
 /* eslint-disable import/no-named-as-default */
 import Blockquote from '@tiptap/extension-blockquote'
 import BulletList from './../nodes/BulletList.js'
-import Callout from './../nodes/Callouts.js'
+import Callouts from './../nodes/Callouts.js'
 import CharacterCount from '@tiptap/extension-character-count'
 import Code from '@tiptap/extension-code'
 import CodeBlock from './../nodes/CodeBlock.js'
@@ -51,6 +51,7 @@ import Mention from './../extensions/Mention.js'
 import OrderedList from '@tiptap/extension-ordered-list'
 import Paragraph from './../nodes/Paragraph.js'
 import Placeholder from '@tiptap/extension-placeholder'
+import Preview from './../nodes/Preview.js'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
@@ -100,7 +101,8 @@ export default Extension.create({
 			this.options.editing ? EditableTable : Table,
 			TaskList,
 			TaskItem,
-			Callout,
+			Callouts,
+			Preview,
 			Underline,
 			Image,
 			ImageInline,
