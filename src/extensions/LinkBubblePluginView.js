@@ -204,7 +204,9 @@ class LinkBubblePluginView {
 
 	hide() {
 		this.view.dom.removeEventListener('keydown', this.keydownHandler)
-		this.tippy?.hide()
+		setTimeout(() => {
+			this.tippy?.hide()
+		}, 100)
 	}
 
 	destroy() {
