@@ -16,10 +16,11 @@
   "module": "dist/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "NODE_ENV=development webpack --config webpack.js",
+    "build": "webpack --node-env production --progress",
     "dev:package": "vite",
-    "watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
-    "build": "NODE_ENV=production webpack --progress --config webpack.js",
+    "dev": "webpack --node-env development --progress",
+    "watch": "webpack --node-env development --progress --watch",
+    "stats": "webpack --node-env production --json webpack-stats.json",
     "build:package": "vite build",
     "lint": "eslint --ext .js,.vue src cypress",
     "lint:fix": "eslint --ext .js,.vue src cypress --fix",
@@ -104,6 +105,7 @@
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2",
+    "y-protocols": "^1.0.6",
     "y-websocket": "^1.5.1",
     "yjs": "^13.6.10"
   },
