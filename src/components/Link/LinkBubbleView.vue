@@ -260,16 +260,24 @@ export default {
 	}
 
 	&__reference-list {
-		padding-right: 4px;
+		padding: 4px;
+		padding-top: 0;
 
 		:deep(a.widget-default) {
 			margin: 0;
 			border: 0;
 			border-radius: unset;
 		}
+
+		:deep(img.widget-default--image) {
+			border-radius: var(--border-radius-large);
+		}
 	}
 
 	&__edit {
+		padding: 4px;
+		padding-top: 0;
+
 		.input-field {
 			margin-bottom: 12px;
 		}
