@@ -44,6 +44,7 @@ import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
 import LinkPicker from './../extensions/LinkPicker.js'
+import LinkBubble from './../extensions/LinkBubble.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
@@ -68,7 +69,6 @@ export default Extension.create({
 	addOptions() {
 		return {
 			editing: true,
-			link: {},
 			extensions: [],
 			component: null,
 			relativePath: null,
@@ -113,6 +113,12 @@ export default Extension.create({
 				suggestion: EmojiSuggestion(),
 			}),
 			LinkPicker,
+			Link.configure({
+				openOnClick: true,
+				validate: href => /^https?:\/\//.test(href),
+				relativePath: this.options.relativePath,
+			}),
+			LinkBubble,
 			this.options.editing
 				? Placeholder.configure({
 					emptyNodeClass: 'is-empty',
@@ -122,14 +128,6 @@ export default Extension.create({
 				: null,
 			TrailingNode,
 		]
-		if (this.options.link !== false) {
-			defaultExtensions.push(Link.configure({
-				...this.options.link,
-				openOnClick: true,
-				validate: href => /^https?:\/\//.test(href),
-				relativePath: this.options.relativePath,
-			}))
-		}
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)
 		return [
 			...defaultExtensions.filter(e => e && !additionalExtensionNames.includes(e.name)),

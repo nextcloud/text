@@ -21,7 +21,7 @@
 
 import Vue from 'vue'
 import store from './store/index.js'
-import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, HOOK_LINK_CLICK, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
+import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 
 __webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
@@ -152,7 +152,6 @@ window.OCA.Text.createEditor = async function({
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 	onOutlineToggle = (visible) => {},
-	onLinkClick = undefined,
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
@@ -171,7 +170,6 @@ window.OCA.Text.createEditor = async function({
 	const vm = new Vue({
 		provide() {
 			return {
-				[HOOK_LINK_CLICK]: onLinkClick,
 				[ACTION_ATTACHMENT_PROMPT]: onFileInsert,
 				[EDITOR_UPLOAD]: !!sessionEditor,
 				[HOOK_MENTION_SEARCH]: sessionEditor ? true : onMentionSearch,

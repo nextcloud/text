@@ -31,7 +31,6 @@ export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
 export const IS_RICH_WORKSPACE = Symbol('editor:is-rich-woskapace')
 export const SYNC_SERVICE = Symbol('sync:service')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
-export const HOOK_LINK_CLICK = Symbol('hook:link-click')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
 
@@ -114,14 +113,6 @@ export const useMentionHook = {
 		$mentionHookSearch: {
 			from: HOOK_MENTION_SEARCH,
 			default: true,
-		},
-	},
-}
-export const useLinkClickHook = {
-	inject: {
-		$linkHookClick: {
-			from: HOOK_LINK_CLICK,
-			default: null,
 		},
 	},
 }

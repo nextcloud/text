@@ -41,7 +41,7 @@ import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
-import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR, useLinkClickHook } from '../Editor.provider.js'
+import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR } from '../Editor.provider.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
@@ -52,7 +52,6 @@ import ContentContainer from './ContentContainer.vue'
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
-	mixins: [useLinkClickHook],
 	provide() {
 		const val = {}
 
@@ -136,13 +135,6 @@ export default {
 			return [
 				RichText.configure({
 					component: this,
-					link: this?.$linkHookClick
-						? {
-							onClick: (event, attrs) => {
-								return this?.$linkHookClick?.(event, attrs)
-							},
-						}
-						: undefined,
 					extensions: [
 						History,
 					],

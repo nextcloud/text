@@ -20,24 +20,85 @@ describe('test link marks', function() {
 		cy.openFile(fileName, { force: true })
 	})
 
-	describe('link preview', function() {
-		it('shows a link preview', () => {
-			cy.getContent().type('https://nextcloud.com')
-			cy.getContent().type('{enter}')
+	describe('link bubble', function() {
+		it('shows a link preview in the bubble after clicking link', () => {
+			const link = 'https://nextcloud.com/'
+			cy.getContent()
+				.type(`${link}{enter}`)
 
 			cy.getContent()
-				.find('.widgets--list', { timeout: 10000 })
+				.find(`a[href*="${link}"]`)
+				.click()
+
+			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
+				.find('.widget-default--name')
+				.contains('Nextcloud')
+				.click({ force: true })
+		})
+
+		it('shows a link preview in the bubble after browsing to link', () => {
+			const link = 'https://nextcloud.com/'
+			cy.getContent()
+				.type(`${link}{enter}`)
+			cy.getContent()
+				.type('{upArrow}')
+
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
+
+			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
 		})
 
-		it('does not show a link preview for links within a paragraph', () => {
-			cy.getContent().type('Please visit https://nextcloud.com')
-			cy.getContent().type('{enter}')
+		it('allows to edit a link in the bubble', () => {
+			cy.getContent()
+				.type('https://example.org{enter}')
+			cy.getContent()
+				.type('{upArrow}{rightArrow}')
+
+			cy.get('.link-view-bubble button[title="Edit link"]')
+				.click()
+
+			cy.get('.link-view-bubble input')
+				.type('{selectAll}https://nextcloud.com')
+
+			cy.get('.link-view-bubble button[title="Save changes"]')
+				.click()
 
 			cy.getContent()
-				.find('.widgets--list', { timeout: 10000 })
+				.find('a[href*="https://nextcloud.com"]')
+
+		})
+
+		it('allows to remove a link in the bubble', () => {
+			const link = 'https://nextcloud.com'
+			cy.getContent()
+				.type(`${link}{enter}`)
+			cy.getContent()
+				.type('{upArrow}{rightArrow}')
+
+			cy.get('.link-view-bubble button[title="Remove link"]')
+				.click()
+
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
 				.should('not.exist')
+
+		})
+
+		it('Ctrl-click on a link opens a new tab', () => {
+			const link = 'https://nextcloud.com/'
+			cy.getContent()
+				.type(`${link}{enter}`)
+
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
+				.click({ ctrlKey: true })
+
+			cy.get('@winOpen')
+				.should('have.been.calledOnce')
+				.should('have.been.calledWith', link)
 		})
 	})
 
@@ -45,40 +106,15 @@ describe('test link marks', function() {
 		it('with protocol to files app and fileId', () => {
 			cy.getFile(fileName)
 				.then($el => {
-					const id = $el.data('id')
+					const id = $el.data('cyFilesListRowFileid')
 
-					const link = `${Cypress.env('baseUrl')}/apps/files/file-name?fileId=${id}`
+					const link = `${Cypress.env('baseUrl')}/apps/files/?dir=/&openfile=${id}#relPath=/${fileName}`
 					cy.clearContent()
 					cy.getContent()
 						.type(`${link}{enter}`)
 
 					cy.getContent()
 						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
-						.click({ force: true })
-
-					cy.get('@winOpen')
-						.should('have.been.calledOnce')
-						.should('have.been.calledWithMatch', new RegExp(`/f/${id}$`))
-				})
-		})
-
-		it('with protocol and fileId', () => {
-			cy.getFile(fileName)
-				.then($el => {
-					const id = $el.data('id')
-
-					const link = `${Cypress.env('baseUrl')}/file-name?fileId=${id}`
-					cy.clearContent()
-					cy.getContent()
-						.type(`${link}{enter}`)
-
-					cy.getContent()
-						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
-						.click({ force: true })
-
-					cy.get('@winOpen')
-						.should('have.been.calledOnce')
-						.should('have.been.calledWithMatch', new RegExp(`${Cypress.env('baseUrl')}/file-name\\?fileId=${id}$`))
 				})
 		})
 
@@ -115,10 +151,6 @@ describe('test link marks', function() {
 					.get(`a[href*="${url}"]`)
 					.should('have.text', text) // ensure correct text used
 					.click({ force: true })
-
-				cy.get('@winOpen')
-					.should('have.been.calledOnce')
-					.should('have.been.calledWith', url)
 			}
 
 			beforeEach(cy.clearContent)
@@ -151,7 +183,6 @@ describe('test link marks', function() {
 				return cy.getContent()
 					.find(`a[href*="${encodeURIComponent(filename)}"]`)
 					.should('have.text', text === undefined ? filename : text)
-					.click({ force: true })
 			}
 
 			beforeEach(() => cy.clearContent())
@@ -176,8 +207,6 @@ describe('test link marks', function() {
 				cy.getFile(fileName).then($el => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile('dummy folder', text, true)
-					cy.get('@winOpen')
-						.should('have.been.calledOnce')
 				})
 			})
 		})
