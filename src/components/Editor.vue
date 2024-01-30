@@ -26,56 +26,58 @@
 		class="text-editor"
 		tabindex="-1"
 		@keydown.stop="onKeyDown">
-		<DocumentStatus v-if="displayedStatus"
-			:idle="idle"
-			:lock="lock"
-			:sync-error="syncError"
-			:has-connection-issue="hasConnectionIssue"
-			@reconnect="reconnect" />
+		<div id="flex-container">
+			<DocumentStatus v-if="displayedStatus"
+				:idle="idle"
+				:lock="lock"
+				:sync-error="syncError"
+				:has-connection-issue="hasConnectionIssue"
+				@reconnect="reconnect" />
 
-		<SkeletonLoading v-if="!contentLoaded && !displayedStatus" />
-		<Wrapper v-if="displayed"
-			:sync-error="syncError"
-			:has-connection-issue="hasConnectionIssue"
-			:content-loaded="contentLoaded"
-			:show-author-annotations="showAuthorAnnotations"
-			:show-outline-outside="showOutlineOutside"
-			@outline-toggled="outlineToggled">
-			<MainContainer v-if="hasEditor">
-				<!-- Readonly -->
-				<div v-if="readOnly" class="text-editor--readonly-bar">
-					<slot name="readonlyBar">
-						<ReadonlyBar>
+			<SkeletonLoading v-if="!contentLoaded && !displayedStatus" />
+			<Wrapper v-if="displayed"
+				:sync-error="syncError"
+				:has-connection-issue="hasConnectionIssue"
+				:content-loaded="contentLoaded"
+				:show-author-annotations="showAuthorAnnotations"
+				:show-outline-outside="showOutlineOutside"
+				@outline-toggled="outlineToggled">
+				<MainContainer v-if="hasEditor">
+					<!-- Readonly -->
+					<div v-if="readOnly" class="text-editor--readonly-bar">
+						<slot name="readonlyBar">
+							<ReadonlyBar>
+								<Status :document="document"
+									:dirty="dirty"
+									:sessions="filteredSessions"
+									:sync-error="syncError"
+									:has-connection-issue="hasConnectionIssue" />
+							</ReadonlyBar>
+						</slot>
+					</div>
+					<!-- Rich Menu -->
+					<template v-else>
+						<MenuBar v-if="renderMenus"
+							ref="menubar"
+							:is-hidden="hideMenu"
+							:loaded.sync="menubarLoaded">
 							<Status :document="document"
 								:dirty="dirty"
 								:sessions="filteredSessions"
 								:sync-error="syncError"
 								:has-connection-issue="hasConnectionIssue" />
-						</ReadonlyBar>
-					</slot>
-				</div>
-				<!-- Rich Menu -->
-				<template v-else>
-					<MenuBar v-if="renderMenus"
-						ref="menubar"
-						:is-hidden="hideMenu"
-						:loaded.sync="menubarLoaded">
-						<Status :document="document"
-							:dirty="dirty"
-							:sessions="filteredSessions"
-							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue" />
-						<slot name="header" />
-					</MenuBar>
-					<div v-else class="menubar-placeholder" />
-				</template>
-				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper" />
-			</MainContainer>
-			<Reader v-if="hasSyncCollission"
-				:content="syncError.data.outsideChange"
-				:is-rich-editor="isRichEditor" />
-		</Wrapper>
+							<slot name="header" />
+						</MenuBar>
+						<div v-else class="menubar-placeholder" />
+					</template>
+					<ContentContainer v-show="contentLoaded"
+						ref="contentWrapper" />
+				</MainContainer>
+				<Reader v-if="hasSyncCollission"
+					:content="syncError.data.outsideChange"
+					:is-rich-editor="isRichEditor" />
+			</Wrapper>
+		</div>
 		<Assistant v-if="$editor" />
 	</div>
 </template>
@@ -767,9 +769,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+#flex-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
 .modal-container .text-editor {
 	top: 0;
 	height: calc(100vh - var(--header-height));
+}
+
+.text-editor__wrapper {
+	overflow: scroll;
 }
 
 .text-editor {
