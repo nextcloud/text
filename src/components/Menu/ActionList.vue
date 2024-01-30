@@ -35,19 +35,22 @@
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
-		<ActionListItem v-for="child in children"
-			:key="`child-${child.key}`"
-			:active="currentChild?.key === child.key"
-			is-item
-			:action-entry="child"
-			v-on="$listeners"
-			@trigged="onTrigger" />
+		<template v-for="child in children">
+			<NcActionSeparator v-if="child.isSeparator" :key="`child-${child.key}`" />
+			<ActionListItem v-else
+				:key="`child-${child.key}`"
+				:active="currentChild?.key === child.key"
+				is-item
+				:action-entry="child"
+				v-on="$listeners"
+				@trigged="onTrigger" />
+		</template>
 		<slot v-bind="{ visible }" name="lastAction" />
 	</NcActions>
 </template>
 
 <script>
-import { NcActions } from '@nextcloud/vue'
+import { NcActions, NcActionSeparator } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionListItem from './ActionListItem.vue'
 import { getIsActive } from './utils.js'
@@ -59,6 +62,7 @@ export default {
 	name: 'ActionList',
 	components: {
 		NcActions,
+		NcActionSeparator,
 		ActionListItem,
 	},
 	extends: BaseActionEntry,
