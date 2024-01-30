@@ -35,7 +35,7 @@
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
-		<ActionSingle v-for="child in children"
+		<ActionListItem v-for="child in children"
 			:key="`child-${child.key}`"
 			:active="currentChild?.key === child.key"
 			is-item
@@ -49,7 +49,7 @@
 <script>
 import { NcActions } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
-import ActionSingle from './ActionSingle.vue'
+import ActionListItem from './ActionListItem.vue'
 import { getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
@@ -59,7 +59,7 @@ export default {
 	name: 'ActionList',
 	components: {
 		NcActions,
-		ActionSingle,
+		ActionListItem,
 	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
