@@ -22,46 +22,40 @@
   -->
 
 <template>
-	<NcButton class="entry-single-action entry-action"
+	<NextcloudVueNcActionButton class="entry-single-action entry-action entry-action-item"
 		:class="state.class"
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
 		:data-text-action-entry="actionEntry.key"
-		:aria-label="label"
-		:title="tooltip"
-		type="tertiary"
-		:pressed="state.type !== 'button' ? state.active : undefined"
+		:type="state.type"
+		:model-value="state.type !== 'button' ? state.active : undefined"
+		close-after-click
 		v-on="$listeners"
 		@click="runAction">
 		<template #icon>
 			<component :is="icon" />
 		</template>
-
-		<template v-if="actionEntry.forceLabel" #default>
-			{{ label }}
-		</template>
-	</NcButton>
+		{{ label }}
+	</NextcloudVueNcActionButton>
 </template>
 
 <script>
-import { NcButton } from '@nextcloud/vue'
+import { NcActionButton as NextcloudVueNcActionButton } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {
-	name: 'ActionSingle',
+	// This component is used as a direct child of NcActions.
+	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
+	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
+	// Hotfix - rename the component to NcActionButton because it represents and renders it.
+	// eslint-disable-next-line vue/match-component-file-name
+	name: 'NcActionButton',
 
 	components: {
-		NcButton,
+		NextcloudVueNcActionButton,
 	},
 
 	extends: BaseActionEntry,
-
-	props: {
-		isItem: {
-			type: Boolean,
-			default: false,
-		},
-	},
 
 	mounted() {
 		this.$editor.on('transaction', () => this.updateState())
