@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Max <max@nextcloud.com>
   -
   - @author Max <max@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -30,6 +31,9 @@
 				<NcActionButtonGroup>
 					<NcActionButton data-text-table-action="align-column-left"
 						:aria-label="t('text', 'Left align column')"
+						type="radio"
+						value="left"
+						:model-value="node.attrs.textAlign"
 						@click="alignLeft">
 						<template #icon>
 							<AlignHorizontalLeft />
@@ -37,6 +41,9 @@
 					</NcActionButton>
 					<NcActionButton data-text-table-action="align-column-center"
 						:aria-label="t('text', 'Center align column')"
+						type="radio"
+						value="center"
+						:model-value="node.attrs.textAlign"
 						@click="alignCenter">
 						<template #icon>
 							<AlignHorizontalCenter />
@@ -44,6 +51,9 @@
 					</NcActionButton>
 					<NcActionButton data-text-table-action="align-column-right"
 						:aria-label="t('text', 'Right align column')"
+						type="radio"
+						value="right"
+						:model-value="node.attrs.textAlign"
 						@click="alignRight">
 						<template #icon>
 							<AlignHorizontalRight />
