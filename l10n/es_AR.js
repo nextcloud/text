@@ -14,6 +14,8 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Atajos de teclado",
     "Bold" : "Negrita",
     "Italic" : "Itálico",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente",
     "Select language" : "Seleccionar idioma",
     "to" : "para",
     "Replace" : "Reemplazar",

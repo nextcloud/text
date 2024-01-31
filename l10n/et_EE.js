@@ -21,6 +21,9 @@ OC.L10N.register(
     "Saved" : "Salvestatud",
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
+    "Cancel" : "Tühista",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Ei saa kopeerida, palun kopeeri link käsitsi",
     "to" : "saaja",
     "Replace" : "Asenda",
     "Detect language" : "Tuvasta keel",
@@ -30,6 +33,7 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri",
+    "Link copied" : "Link kopeeritud",
     "Unsupported image type" : "Pildi tüüp pole toetatud"
 },
 "nplurals=2; plural=(n != 1);");

@@ -36,6 +36,8 @@ OC.L10N.register(
     "Ordered list" : "Ordigita listo",
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
+    "URL" : "Retadreso",
+    "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane.",
     "to" : "al",
     "Replace" : "Anstataŭigi",
     "Undo" : "Malfari",

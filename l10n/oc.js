@@ -40,6 +40,10 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
+    "Edit link" : "Modificar lo ligam",
+    "Save changes" : "Salvar modificacions",
+    "Cancel" : "Anullar",
+    "URL" : "URL",
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",
     "to" : "a",
@@ -61,6 +65,7 @@ OC.L10N.register(
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",
-    "Edit" : "Modificar"
+    "Edit" : "Modificar",
+    "Link copied" : "Ligam copiat"
 },
 "nplurals=2; plural=(n > 1);");

@@ -7,6 +7,8 @@ OC.L10N.register(
     "Translate" : "Iwwersetzen",
     "guest" : "Gaascht",
     "Saved" : "Gespäichert",
+    "Save changes" : "Ännerunge späicheren",
+    "URL" : "URL",
     "to" : "bis",
     "Info" : "Info",
     "Warning" : "Warnung",

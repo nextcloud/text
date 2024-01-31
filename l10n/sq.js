@@ -24,6 +24,8 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Shkurtoret e tastierës",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
+    "Cancel" : "Anuloje",
+    "URL" : "URL",
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
     "Replace" : "Mbishkruaj",
@@ -34,6 +36,7 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Kujdes",
     "Edit" : "Përpuno",
+    "Link copied" : "Linku u kopjua",
     "Unsupported image type" : "Lloj imazhi i pa suportuar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -23,6 +23,9 @@ OC.L10N.register(
     "Formatting help" : "Ajutor pentru formatare",
     "Keyboard shortcuts" : "Scurtături din tastatură",
     "Quoted text" : "Text citat",
+    "Edit link" : "Editare link",
+    "Cancel" : "Anulare",
+    "URL" : "URL",
     "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
     "to" : "către",
     "Replace" : "Înlocuiește",
@@ -33,6 +36,7 @@ OC.L10N.register(
     "Success" : "Succes",
     "Warning" : "Atenție",
     "Formatting" : "Formatare",
-    "Edit" : "Editează"
+    "Edit" : "Editează",
+    "Link copied" : "Link copiat"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

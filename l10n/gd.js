@@ -10,9 +10,11 @@ OC.L10N.register(
     "Could not write file to disk" : "Cha b’ urrainn dhuinn am faidhle a sgrìobhadh dhan diosg",
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
     "Translate" : "Eadar-theangaich",
+    "Cancel" : "Sguir dheth",
     "Replace" : "Cuir ’na àite",
     "Source code" : "Bun-tùs",
     "Undo" : "Neo-dhèan",
-    "Edit" : "Deasaich"
+    "Edit" : "Deasaich",
+    "Link copied" : "Chaidh lethbhreac dhen cheangal a dhèanamh"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");
