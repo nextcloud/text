@@ -1,5 +1,7 @@
 import { Extension } from '@tiptap/core'
 
+let ownPaused = false
+
 const toggleFocusTrap = ({ editor }) => {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
@@ -10,8 +12,12 @@ const toggleFocusTrap = ({ editor }) => {
 
 	if (possibleEditorTabCommand) {
 		activeTrap?.pause()
+		ownPaused = true
 	} else {
-		activeTrap?.unpause()
+		if (ownPaused) {
+			ownPaused = false
+			activeTrap?.unpause()
+		}
 	}
 }
 
