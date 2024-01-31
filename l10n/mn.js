@@ -4,6 +4,8 @@ OC.L10N.register(
     "Translate" : "Орчуулга",
     "Guest" : "Зочин",
     "Saved" : "Хадгалах",
+    "Cancel" : "Цуцлах",
+    "URL" : "URL",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
     "Source code" : "эх үүсвэр талын код",

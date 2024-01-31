@@ -38,6 +38,9 @@ OC.L10N.register(
     "Strikethrough" : "Rasurado",
     "Underline" : "Sublinhado",
     "Underlined text" : "Texto sublinhado",
+    "Cancel" : "Cancelar",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente",
     "to" : "Para",
     "Replace" : "Substitua",
     "Source code" : "Código fonte",
@@ -55,6 +58,7 @@ OC.L10N.register(
     "Formatting" : "Formação ",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
     "Edit" : "Editar",
+    "Link copied" : "Hiperligação copiada",
     "Unsupported image type" : "Tipo de imagem não suportado"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

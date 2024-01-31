@@ -24,6 +24,10 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Ctrl" : "Ctrl",
     "Quoted text" : "Quoted text",
+    "Save changes" : "Save changes",
+    "Cancel" : "Cancel",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Cannot copy, please copy the link manually",
     "Select file or folder to link to" : "Select file or folder to link to",
     "Translate from" : "Translate from",
     "Select language" : "Select language",
@@ -37,6 +41,7 @@ OC.L10N.register(
     "Command" : "Command",
     "Formatting" : "Formatting",
     "Smart picker" : "Smart picker",
-    "Edit" : "Edit"
+    "Edit" : "Edit",
+    "Link copied" : "Link copied"
 },
 "nplurals=2; plural=(n!=1);");

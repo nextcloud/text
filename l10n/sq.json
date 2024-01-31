@@ -22,6 +22,8 @@
     "Keyboard shortcuts" : "Shkurtoret e tastierës",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
+    "Cancel" : "Anuloje",
+    "URL" : "URL",
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
     "Replace" : "Mbishkruaj",
@@ -32,6 +34,7 @@
     "Success" : "Sukses",
     "Warning" : "Kujdes",
     "Edit" : "Përpuno",
+    "Link copied" : "Linku u kopjua",
     "Unsupported image type" : "Lloj imazhi i pa suportuar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

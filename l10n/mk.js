@@ -65,6 +65,10 @@ OC.L10N.register(
     "Ordered list" : "Подредена листа",
     "Quoted text" : "Цитиран текст",
     "Some code" : "Некој код",
+    "Save changes" : "Зачувај ги промените",
+    "Cancel" : "Откажи",
+    "URL" : "Адреса",
+    "Cannot copy, please copy the link manually" : "Неможе да се копира, копирајте го линкот рачно",
     "Upload from computer" : "Прикачи од компјутер",
     "Insert from Files" : "Вметни од датотеките",
     "Select file or folder to link to" : "Изберете датотека или папка за линк до",
@@ -100,6 +104,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Add description" : "Додади опис",
+    "Link copied" : "Линкот е копиран",
     "Unsupported image type" : "Неподржан вид на слика",
     "Show rich workspaces" : "Прикажи збогатен работен простор"
 },

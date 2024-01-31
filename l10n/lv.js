@@ -16,6 +16,7 @@ OC.L10N.register(
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
     "Remove link" : "Noņemt saiti",
+    "URL" : "URL",
     "Update link" : "Atjaunināt saiti",
     "Select language" : "Izvēlies valodu",
     "to" : "kam",
@@ -28,6 +29,7 @@ OC.L10N.register(
     "Warning" : "Brīdinājums",
     "Command" : "Komanda",
     "Edit" : "Rediģēt",
+    "Link copied" : "Saite nokopēta",
     "Unsupported image type" : "Neatbalstīts attēla tips"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

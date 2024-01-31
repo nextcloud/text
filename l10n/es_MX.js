@@ -38,6 +38,8 @@ OC.L10N.register(
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
     "Remove link" : "Eliminar enlace",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copia el enlace manualmente",
     "Select language" : "Selecciona el idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
@@ -54,6 +56,7 @@ OC.L10N.register(
     "Warning" : "Advertencia",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
     "Edit" : "Editar",
+    "Link copied" : "Enlace copiado",
     "Unsupported image type" : "Tipo de imagen no soportado"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
