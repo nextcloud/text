@@ -8,11 +8,13 @@ OC.L10N.register(
     "Guest" : "Gjest",
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
+    "URL" : "URL",
     "Select language" : "Vel språk",
     "to" : "til",
     "Replace" : "Erstatt",
     "Info" : "Info",
     "Warning" : "Åtvaring",
-    "Edit" : "Endra"
+    "Edit" : "Endra",
+    "Link copied" : "Lenkje kopiert"
 },
 "nplurals=2; plural=(n != 1);");

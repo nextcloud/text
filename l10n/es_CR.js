@@ -18,6 +18,7 @@ OC.L10N.register(
     "Unsaved changes" : "Cambios no guardados",
     "Formatting help" : "Ayuda de formato",
     "Keyboard shortcuts" : "Atajos del teclado",
+    "Save changes" : "Guardar cambios",
     "Select language" : "Selecciona el idioma",
     "to" : "para",
     "Replace" : "Reemplazar",

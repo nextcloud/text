@@ -12,6 +12,8 @@ OC.L10N.register(
     "Translate" : "Թարգմանել",
     "guest" : "հյուր",
     "Saved" : "Պահված",
+    "Cancel" : "չեղարկել",
+    "URL" : "URL",
     "Source code" : "ծրագրի կոդը",
     "Info" : "Info",
     "Warning" : "Զգուշացում",
