@@ -28,8 +28,7 @@
 			<NcButton class="entry-action__button"
 				role="menu"
 				:title="actionEntry.label"
-				:aria-label="actionEntry.label"
-				:aria-haspopup="true">
+				:aria-label="actionEntry.label">
 				<template #icon>
 					<component :is="icon" />
 				</template>

@@ -25,13 +25,11 @@
 		:name="actionEntry.label"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
-		:container="menuIDSelector"
-		aria-haspopup>
+		:container="menuIDSelector">
 		<template #icon>
 			<component :is="icon"
 				:name="actionEntry.label"
-				:aria-label="actionEntry.label"
-				aria-haspopup />
+				:aria-label="actionEntry.label" />
 		</template>
 		<NcActionButton v-if="$editorUpload"
 			close-after-click
