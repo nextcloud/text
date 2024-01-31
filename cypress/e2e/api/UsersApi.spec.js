@@ -32,8 +32,8 @@ describe('The user mention API', function() {
 		cy.createUser(user)
 		window.OC = {
 			config: { modRewriteWorking: false },
-			webroot: '',
 		}
+		window._oc_webroot = ''
 	})
 
 	let fileId

@@ -8,8 +8,9 @@ global.OCA = {
 
 global.OC = {
 	config: {modRewriteWorking: true},
-	webroot: ''
 }
+
+global._oc_webroot = ''
 
 describe('Preparing href attributes for the DOM', () => {
 

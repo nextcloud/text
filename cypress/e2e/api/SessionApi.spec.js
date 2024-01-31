@@ -38,6 +38,7 @@ describe('The session Api', function() {
 			config: { modRewriteWorking: false },
 			webroot: '',
 		}
+		window._oc_webroot = ''
 	})
 
 	beforeEach(function() {
