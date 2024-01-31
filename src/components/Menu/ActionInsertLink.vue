@@ -19,7 +19,6 @@
   -->
 <template>
 	<NcActions class="entry-action entry-action__insert-link"
-		aria-haspopup
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:class="activeClass"
@@ -31,8 +30,7 @@
 		<template #icon>
 			<component :is="icon"
 				:name="actionEntry.label"
-				:aria-label="actionEntry.label"
-				aria-haspopup />
+				:aria-label="actionEntry.label" />
 		</template>
 		<NcActionButton v-if="state.active"
 			:data-text-action-entry="`${actionEntry.key}-remove`"
