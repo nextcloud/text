@@ -68,6 +68,11 @@
     "Quoted text" : "Geciteerde tekst",
     "Code block" : "Code blok",
     "Some code" : "Wat code",
+    "Save changes" : "Wijzigingen opslaan",
+    "Cancel" : "Annuleren",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Kopiëren niet mogelijk, kopieer de link handmatig",
+    "Copy link to clipboard" : "Kopieer link naar klembord",
     "Upload from computer" : "Uploaden vanaf computer",
     "Insert from Files" : "Invoegen vanuit Bestanden",
     "Update link" : "Bijwerken link",
@@ -106,6 +111,8 @@
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
+    "Link copied" : "Link gekopieerd",
+    "Could not copy link to the clipboard:" : "Kan link niet naar het klembord kopiëren:",
     "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

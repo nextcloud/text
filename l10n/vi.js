@@ -71,6 +71,10 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Quoted text" : "Văn bản được trích dẫn",
     "Code block" : "Khối mã",
+    "Save changes" : "Lưu thay đổi",
+    "Cancel" : "Hủy",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Không thể sao chép, vui lòng sao chép liên kết bằng tay",
     "Select file or folder to link to" : "Chọn tập tin hoặc thư mục để liên kết đến",
     "to" : "đến",
     "Replace" : "Thay thế",
@@ -94,6 +98,7 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
     "Add description" : "Thêm mô tả",
+    "Link copied" : "Đã sao chép liên kết",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc"
 },

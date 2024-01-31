@@ -44,6 +44,11 @@
     "Ordered list" : "רשימה ממוינת",
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
+    "Save changes" : "שמירת השינויים",
+    "Cancel" : "ביטול",
+    "URL" : "כתובת",
+    "Cannot copy, please copy the link manually" : "לא ניתן להעתיק, נא להעתיק את הקישור ידנית",
+    "Copy link to clipboard" : "העתקת קישור ללוח הגזירים",
     "Update link" : "עדכן את הקישור",
     "Select language" : "בחירת שפה",
     "to" : "סיום",
@@ -65,6 +70,7 @@
     "Formatting" : "עיצוב",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Edit" : "עריכה",
+    "Link copied" : "הקישור הועתק",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"

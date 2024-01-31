@@ -22,6 +22,8 @@ OC.L10N.register(
     "Saved" : "Disimpan",
     "Formatting help" : "Bantuan pemformatan",
     "Keyboard shortcuts" : "Pintasan keyboard",
+    "Cancel" : "Batal",
+    "URL" : "URL",
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "to" : "untuk",
     "Replace" : "Timpa",
@@ -34,6 +36,7 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
+    "Link copied" : "Link tersalin",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima"
 },
 "nplurals=1; plural=0;");

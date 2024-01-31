@@ -44,6 +44,10 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
+    "Cancel" : "Avbryt",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier lenken manuelt",
+    "Copy link to clipboard" : "Kopier lenke til utklippstavlen",
     "Translate from" : "Oversett fra",
     "Select language" : "Velg språk",
     "to" : "til",
@@ -67,6 +71,7 @@ OC.L10N.register(
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
+    "Link copied" : "Lenke kopiert",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde"
 },

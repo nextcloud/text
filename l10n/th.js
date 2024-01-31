@@ -16,6 +16,10 @@ OC.L10N.register(
     "Saving …" : "กำลังบันทึก …",
     "Saved" : "บันทึกแล้ว",
     "Keyboard shortcuts" : "แป้นพิมพ์ลัด",
+    "Save changes" : "บันทึกการเปลี่ยนแปลง",
+    "Cancel" : "ยกเลิก",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "ไม่สามารถคัดลอก กรุณาคัดลอกลิงก์เอง",
     "to" : "ถึง",
     "Replace" : "แทนที่",
     "Source code" : "โค้ดต้นฉบับ",
@@ -24,6 +28,7 @@ OC.L10N.register(
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน",
     "Formatting" : "การจัดรูปแบบ",
-    "Edit" : "แก้ไข"
+    "Edit" : "แก้ไข",
+    "Link copied" : "คัดลอกลิงก์แล้ว"
 },
 "nplurals=1; plural=0;");

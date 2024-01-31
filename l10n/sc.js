@@ -47,6 +47,11 @@ OC.L10N.register(
     "Blockquote" : "Mentovu",
     "Quoted text" : "Testu tzitadu",
     "Code block" : "Blocu de còdighe",
+    "Save changes" : "Sarva càmbios",
+    "Cancel" : "Annulla",
+    "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "No at fatu a copiare, copia su ligòngiu a manu",
+    "Copy link to clipboard" : "Còpia su ligòngiu in punta de billete",
     "Select file or folder to link to" : "Seletziona un'archìviu o una cartella de ligongiare",
     "Select language" : "Seletziona una limba",
     "to" : "a",
@@ -68,6 +73,7 @@ OC.L10N.register(
     "Formatting" : "Formatatzione",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Edit" : "Modìfica ",
+    "Link copied" : "Ligòngiu copiadu",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas"
 },
 "nplurals=2; plural=(n != 1);");
