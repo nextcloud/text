@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -20,57 +21,52 @@
   -
   -->
 
+<template>
+	<NcButton class="entry-single-action entry-action"
+		:class="state.class"
+		:disabled="state.disabled"
+		:aria-keyshortcuts="keyshortcuts || undefined"
+		:data-text-action-entry="actionEntry.key"
+		:aria-label="label"
+		:title="tooltip"
+		type="tertiary"
+		:pressed="state.type !== 'button' ? state.active : undefined"
+		v-on="$listeners"
+		@click="runAction">
+		<template #icon>
+			<component :is="icon" />
+		</template>
+
+		<template v-if="actionEntry.forceLabel" #default>
+			{{ label }}
+		</template>
+	</NcButton>
+</template>
+
 <script>
-import { NcButton, NcActionButton } from '@nextcloud/vue'
+import { NcButton } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 
 export default {
 	name: 'ActionSingle',
+
+	components: {
+		NcButton,
+	},
+
 	extends: BaseActionEntry,
+
 	props: {
 		isItem: {
 			type: Boolean,
 			default: false,
 		},
 	},
-	computed: {
-		component() {
-			// Button and NcActionButton shares styles and behaviours
-			// to keep it simple, this component handle the small differences
-			return this.isItem
-				? NcActionButton
-				: NcButton
-		},
-		bindState() {
-			const { keyshortcuts } = this
-
-			const state = {
-				...this.state,
-				ariaLabel: this.label,
-			}
-
-			state.class = {
-				...state.class,
-				// inject a extra class
-				'entry-action-item': this.isItem,
-			}
-
-			if (keyshortcuts) {
-				state['aria-keyshortcuts'] = keyshortcuts
-			}
-
-			// item list behaviour
-			if (this.isItem) {
-				state.closeAfterClick = true
-			}
-
-			return state
-		},
-	},
 
 	mounted() {
 		this.$editor.on('transaction', () => this.updateState())
 	},
+
 	methods: {
 		runAction() {
 			const { actionEntry } = this
@@ -87,51 +83,6 @@ export default {
 				this.$emit('trigged', { ...actionEntry })
 			})
 		},
-	},
-
-	render(h) {
-		const {
-			$listeners,
-			actionEntry,
-			bindState,
-			component,
-			icon,
-			isItem,
-			runAction,
-			tooltip,
-			label,
-		} = this
-
-		const { class: classes, ...attrs } = bindState
-
-		const children = [h(icon, { slot: 'icon' })]
-
-		// do not use title if is a item of action list
-		const title = isItem ? undefined : tooltip
-
-		if (isItem || actionEntry.forceLabel) {
-			// add label
-			children.push(label)
-		}
-
-		return h(component, {
-			staticClass: 'entry-single-action entry-action',
-			class: classes,
-			attrs: {
-				title,
-				type: attrs.active ? 'primary' : 'tertiary',
-				role: 'menuitem',
-				'data-text-action-entry': actionEntry.key,
-				...attrs,
-			},
-			props: isItem
-				? { pressed: attrs.active }
-				: {},
-			on: {
-				...$listeners,
-				click: runAction,
-			},
-		}, children)
 	},
 }
 </script>

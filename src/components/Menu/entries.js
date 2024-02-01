@@ -2,6 +2,7 @@
  * @copyright Copyright (c) 2019 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
+ * @author Grigorii K. Shartsev <me@shgk.me>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -192,6 +193,13 @@ export default [
 				icon: FormatHeader6,
 				action: (command) => {
 					return command.toggleHeading({ level: 6 })
+				},
+			},
+			{
+				key: 'headings-separator',
+				isSeparator: true,
+				visible: ({ $outlineState }) => {
+					return $outlineState.enable
 				},
 			},
 			{

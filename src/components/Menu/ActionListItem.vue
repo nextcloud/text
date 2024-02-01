@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -19,32 +20,63 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
+
 <template>
-	<NextcloudVueNcActionButton close-after-click
-		data-text-action-entry="formatting-help"
-		v-on="$listeners">
+	<NextcloudVueNcActionButton class="entry-single-action entry-action entry-action-item"
+		:class="state.class"
+		:disabled="state.disabled"
+		:aria-keyshortcuts="keyshortcuts || undefined"
+		:data-text-action-entry="actionEntry.key"
+		:type="state.type"
+		:model-value="state.type !== 'button' ? state.active : undefined"
+		close-after-click
+		v-on="$listeners"
+		@click="runAction">
 		<template #icon>
-			<Help />
+			<component :is="icon" />
 		</template>
-		{{ t('text', 'Formatting help') }}
+		{{ label }}
 	</NextcloudVueNcActionButton>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
 import { NcActionButton as NextcloudVueNcActionButton } from '@nextcloud/vue'
-import { Help } from '../icons.js'
+import { BaseActionEntry } from './BaseActionEntry.js'
 
-export default defineComponent({
+export default {
 	// This component is used as a direct child of NcActions.
 	// Even if it actually renders NcActionButton, NcActions cannot see it due to rendering limitations in Vue.
 	// Though it works in general, NcActions doesn't handle it correctly. See NcActions docs for details.
 	// Hotfix - rename the component to NcActionButton because it represents and renders it.
 	// eslint-disable-next-line vue/match-component-file-name
 	name: 'NcActionButton',
+
 	components: {
 		NextcloudVueNcActionButton,
-		Help,
 	},
-})
+
+	extends: BaseActionEntry,
+
+	mounted() {
+		this.$editor.on('transaction', () => this.updateState())
+	},
+
+	methods: {
+		runAction() {
+			const { actionEntry } = this
+
+			if (actionEntry.click) {
+				actionEntry.click(this)
+			} else {
+				// Some actions run themselves.
+				// others still need to have .run() called upon them.
+				actionEntry.action(this.$editor.chain().focus())?.run()
+			}
+
+			this.$nextTick(() => {
+				this.$emit('trigged', { ...actionEntry })
+			})
+		},
+	},
+}
 </script>
