@@ -30,8 +30,7 @@
 			<EditorOutline />
 		</div>
 		<slot />
-		<EditorContent tabindex="0"
-			role="document"
+		<EditorContent role="document"
 			class="editor__content text-editor__content"
 			:editor="$editor" />
 		<div class="text-editor__content-wrapper__right" />
