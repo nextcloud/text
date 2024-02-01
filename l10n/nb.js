@@ -52,6 +52,7 @@ OC.L10N.register(
     "Select language" : "Velg språk",
     "to" : "til",
     "Replace" : "Erstatt",
+    "Insert" : "Sett inn",
     "Source code" : "Kildekode",
     "Both" : "Begge",
     "Undo" : "Angre",

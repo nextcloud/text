@@ -11,6 +11,8 @@ OC.L10N.register(
     "Saving …" : "Guardando…",
     "Unsaved changes" : "Cambeos ensin guardar",
     "Keyboard shortcuts" : "Atayos del tecláu",
+    "Cancel" : "Encaboxar",
+    "URL" : "URL",
     "Undo" : "Desfacer",
     "Redo" : "Refacer",
     "Info" : "Información",

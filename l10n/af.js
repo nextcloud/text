@@ -42,6 +42,7 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
     "Edit" : "Wysig",
+    "Link copied" : "Skakel gekopieer",
     "Unsupported image type" : "Onondersteunde beeldtipe"
 },
 "nplurals=2; plural=(n != 1);");
