@@ -2,6 +2,7 @@
  * @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
  *
  * @author Vinicius Reis <vinicius@nextcloud.com>
+ * @author Grigorii K. Shartsev <me@shgk.me>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -68,6 +69,24 @@ const getIsActive = ({ isActive }, $editor) => {
 	return $editor.isActive(...args)
 }
 
+const getType = (actionEntry) => {
+	// isActive stores the value changing on active state change (on click)
+
+	// If it is an array, the button is one of the list of alternative values for a specific option
+	// Like ['heading', { level: 1 }]
+	if (Array.isArray(actionEntry.isActive)) {
+		return 'radio'
+	}
+
+	// If it is a string, it toggles a specific option like a checkbox
+	if (typeof actionEntry.isActive === 'string') {
+		return 'checkbox'
+	}
+
+	// Otherwise it is just a button
+	return 'button'
+}
+
 const getActionState = (actionEntry, $editor) => {
 	const active = getIsActive(actionEntry, $editor)
 
@@ -75,7 +94,7 @@ const getActionState = (actionEntry, $editor) => {
 		disabled: isDisabled(actionEntry, $editor),
 		class: getEntryClasses(actionEntry, active),
 		active,
-		'aria-selected': active,
+		type: getType(actionEntry),
 	}
 }
 

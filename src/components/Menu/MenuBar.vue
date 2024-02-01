@@ -3,6 +3,7 @@
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
   - @author Julius Härtl <jus@bitgrid.net>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license AGPL-3.0-or-later
   -
@@ -161,12 +162,23 @@ export default {
 			return list
 		},
 		hiddenEntries() {
-			const entries = this.entries.filter(({ priority }) => {
+			const remainingEntries = this.entries.filter(({ priority }) => {
 				// reverse logic from visibleEntries
 				return priority !== undefined && priority > this.iconsLimit
-			}).reduce((acc, entry) => {
+			})
+			const entries = remainingEntries.reduce((acc, entry, index) => {
 				// If entry has children, merge them into list. Otherwise keep entry itself.
 				const children = entry.children ?? [entry]
+				// If this block has menu entries, it should be separated for better visibility and a11y (menu item radio grouping)
+				if (children.length > 1) {
+					const hasPreviousItem = acc.length && !acc.at(-1).isSeparator
+					const separatorBefore = hasPreviousItem ? [{ key: `separator-before-${entry.id}`, isSeparator: true }] : []
+
+					const hasNextItem = index !== remainingEntries.length - 1
+					const separatorAfter = hasNextItem ? [{ key: `separator-after-${entry.id}`, isSeparator: true }] : []
+
+					return [...acc, ...separatorBefore, ...children, ...separatorAfter]
+				}
 				return [...acc, ...children]
 			}, [])
 

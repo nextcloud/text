@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
   -
   - @author Vinicius Reis <vinicius@nextcloud.com>
+  - @author Grigorii K. Shartsev <me@shgk.me>
   -
   - @license GNU AGPL version 3 or any later version
   -
@@ -23,37 +24,35 @@
 <template>
 	<NcActions :title="tooltip"
 		class="entry-list-action entry-action"
-		role="menu"
 		v-bind="state"
 		:container="menuIDSelector"
-		:aria-label="actionEntry.label"
-		:aria-pressed="state.active"
+		:aria-label="labelWithSelected"
 		:type="state.active ? 'primary': 'tertiary'"
-		:aria-activedescendant="currentChild ? `${$menuID}-child-${currentChild.key}` : null"
 		:force-menu="true"
-		:name="actionEntry.label"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
 		@update:open="onOpenChange">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
 		</template>
-		<ActionSingle v-for="child in children"
-			:id="`${$menuID}-child-${child.key}`"
-			:key="`child-${child.key}`"
-			:active="currentChild?.key === child.key"
-			is-item
-			:action-entry="child"
-			v-on="$listeners"
-			@trigged="onTrigger" />
+		<template v-for="child in children">
+			<NcActionSeparator v-if="child.isSeparator" :key="`child-${child.key}`" />
+			<ActionListItem v-else
+				:key="`child-${child.key}`"
+				:active="currentChild?.key === child.key"
+				is-item
+				:action-entry="child"
+				v-on="$listeners"
+				@trigged="onTrigger" />
+		</template>
 		<slot v-bind="{ visible }" name="lastAction" />
 	</NcActions>
 </template>
 
 <script>
-import { NcActions } from '@nextcloud/vue'
+import { NcActions, NcActionSeparator } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
-import ActionSingle from './ActionSingle.vue'
+import ActionListItem from './ActionListItem.vue'
 import { getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
@@ -63,7 +62,8 @@ export default {
 	name: 'ActionList',
 	components: {
 		NcActions,
-		ActionSingle,
+		NcActionSeparator,
+		ActionListItem,
 	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
@@ -109,6 +109,17 @@ export default {
 					? visible(this)
 					: visible
 			})
+		},
+		labelWithSelected() {
+			if (this.currentChild) {
+				// TRANSLATORS: examples - Headings, "Heading 1" is selected - Callouts, "Info" is selected
+				return t('text', '{menuItemName}, "{selectedSubMenuItemName}" is selected', {
+					menuItemName: this.actionEntry.label,
+					selectedSubMenuItemName: this.currentChild.label,
+				})
+			}
+
+			return this.actionEntry.label
 		},
 	},
 	methods: {
