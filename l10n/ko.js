@@ -51,6 +51,7 @@ OC.L10N.register(
     "Heading level 6" : "제목 단계 6",
     "Quoted text" : "인용문",
     "Edit link" : "링크 수정",
+    "Save changes" : "설정 저장",
     "Cancel" : "취소",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "복사할 수 없습니다, 링크를 수동으로 복사하세요.",

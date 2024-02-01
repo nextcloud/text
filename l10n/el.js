@@ -66,8 +66,10 @@ OC.L10N.register(
     "Quoted text" : "Αναφερόμενο κείμενο",
     "Code block" : "Μπλοκ κώδικα",
     "Some code" : "Κώδικας",
+    "Save changes" : "Αποθήκευσε τις αλλαγές",
     "Remove link" : "Αφαίρεση συνδέσμου",
     "Cancel" : "Ακύρωση",
+    "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Δεν μπορεί να αντιγραφεί, παρακαλώ αντιγράψτε χειροκίνητα",
     "Copy link to clipboard" : "Αντιγραφή συνδέσμου στο πρόχειρο",
     "Upload from computer" : "Μεταφόρτωση από υπολογιστή",
@@ -99,6 +101,7 @@ OC.L10N.register(
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
+    "Link copied" : "Ο σύνδεσμος αντιγράφηκε",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
