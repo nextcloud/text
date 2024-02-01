@@ -12,10 +12,13 @@ OC.L10N.register(
     "Translate" : "Translate",
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
+    "Save changes" : "Dəyişiklikləri yaddaşa ver",
+    "URL" : "URL",
     "to" : "doğru",
     "Replace" : "Əvəz edin",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq",
-    "Edit" : "Dəyişiklik et"
+    "Edit" : "Dəyişiklik et",
+    "Link copied" : "Link kopyalandı"
 },
 "nplurals=2; plural=(n != 1);");

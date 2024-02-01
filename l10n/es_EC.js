@@ -156,6 +156,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Add description" : "Agregar descripción",
     "Link copied" : "Enlace copiado",
+    "Could not copy link to the clipboard:" : "No se pudo copiar el enlace al portapapeles:",
     "Front matter" : "Materias principales",
     "Source language" : "Lenguaje de origen",
     "Target language" : "Lenguaje de destino",
