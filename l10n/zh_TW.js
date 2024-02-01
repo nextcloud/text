@@ -180,6 +180,7 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
     "Link copied" : "已複製連結",
+    "Could not copy link to the clipboard:" : "無法複製連結至剪貼簿：",
     "Front matter" : "前言",
     "Source language" : "來源語言",
     "Target language" : "目標語言",

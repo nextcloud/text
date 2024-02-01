@@ -46,8 +46,10 @@
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
+    "Edit link" : "Redigér link",
     "Remove link" : "Fjern link",
     "Cancel" : "Annullér",
+    "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier venligst linket manuelt",
     "Upload from computer" : "Upload fra computer",
     "Link to file or folder" : "Link til fil eller mappe",
@@ -77,6 +79,8 @@
     "Smart picker" : "Smart Vælger",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
+    "Link copied" : "Link kopieret",
+    "Could not copy link to the clipboard:" : "Kunne ikke kopiere linket til udklipsholderen:",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
