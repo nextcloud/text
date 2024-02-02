@@ -38,6 +38,15 @@ describe('Workspace', function() {
 		cy.createTestFolder().as('testFolder')
 	})
 
+	it('Initializes the workspace without errors', function() {
+		cy.visitTestFolder({
+			onBeforeLoad: win => cy.spy(win.console, 'error').as('consoleError'),
+		})
+		cy.then(() => {
+			expect(this.consoleError).to.not.have.been.calledWithMatch('workspace')
+		})
+	})
+
 	it('Hides the workspace when switching to another folder', function() {
 		cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/README.md`)
 		cy.createFolder(`${this.testFolder}/subdirectory`)
