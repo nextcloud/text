@@ -25,6 +25,7 @@ OC.L10N.register(
     "Warning" : "Advertencia",
     "Table" : "Tabla",
     "Edit" : "Editar",
+    "Link copied" : "Link copiado",
     "Unsupported image type" : "Tipo de imagen no soportado"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
