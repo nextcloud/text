@@ -33,6 +33,7 @@
     "Offline" : "离线",
     "Saving …" : "保存中 …",
     "Saved" : "已保存",
+    "Last saved {lastSave}" : "最近保存 {lastSave}",
     "Unsaved changes" : "未保存的更改",
     "Formatting help" : "排版帮助",
     "Speed up your writing with simple shortcuts." : "利用简单快捷键加速写作",
@@ -109,7 +110,9 @@
     "Add description" : "添加描述",
     "Link copied" : "已复制链接",
     "Could not copy link to the clipboard:" : "无法将链接复制到剪贴板：",
+    "Target language" : "目标语言",
     "Unsupported image type" : "不支持图片格式",
-    "Show rich workspaces" : "显示富文本编辑区"
+    "Show rich workspaces" : "显示富文本编辑区",
+    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
