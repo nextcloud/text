@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "Mettre à jour le lien",
     "Open the Smart Picker" : "Ouvrir le sélecteur intelligent",
     "Select file or folder to link to" : "Sélectionnez le fichier ou le dossier à lier",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, « {selectedSubMenuItemName}  est sélectionné",
     "_%n word_::_%n words_" : ["%n mot","%n mots","%n mots"],
     "_%n char_::_%n chars_" : ["%n caractère","%n caractères","%n caractères"],
     "Editor actions" : "Actions de l'éditeur",

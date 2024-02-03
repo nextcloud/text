@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "更新鏈接",
     "Open the Smart Picker" : "打開智能選擇器",
     "Select file or folder to link to" : "選擇要連結的檔案或資料夾",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}，已選取「{selectedSubMenuItemName}」",
     "_%n word_::_%n words_" : ["%n 個單詞"],
     "_%n char_::_%n chars_" : ["%n 個字母"],
     "Editor actions" : "編輯器操作",

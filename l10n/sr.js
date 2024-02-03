@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "Ажурирај везу",
     "Open the Smart Picker" : "Отвори Паметни бирач",
     "Select file or folder to link to" : "Изаберите фајл или фордер на који показује линк",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "Изабрано је {menuItemName}, „{selectedSubMenuItemName}”",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
     "_%n char_::_%n chars_" : ["%n карактер","%n карактера","%n карактера"],
     "Editor actions" : "Акције едитора",
