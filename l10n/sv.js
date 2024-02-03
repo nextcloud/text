@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "Uppdatera länk",
     "Open the Smart Picker" : "Öppna Smart Picker",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{text_to_translate} \"{selectedSubMenuItemName}\" är vald",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tecken","%n tecken"],
     "Editor actions" : "Redigeringsåtgärder",

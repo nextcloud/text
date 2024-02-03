@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "Bağlantıyı güncelle",
     "Open the Smart Picker" : "Akıllı seçiciyi aç",
     "Select file or folder to link to" : "Bağlantı verilecek dosya ya da klasörü seçin",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" seçilmiş",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
     "_%n char_::_%n chars_" : ["%n karakter","%n karakter"],
     "Editor actions" : "Düzenleyici işlemleri",

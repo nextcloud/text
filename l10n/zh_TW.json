@@ -104,6 +104,7 @@
     "Update link" : "更新連結",
     "Open the Smart Picker" : "開啟智慧型挑選器",
     "Select file or folder to link to" : "選取要連結的檔案或資料夾",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}，已選取「{selectedSubMenuItemName}」",
     "_%n word_::_%n words_" : ["%n 個字"],
     "_%n char_::_%n chars_" : ["%n 個字元"],
     "Editor actions" : "編輯器動作",

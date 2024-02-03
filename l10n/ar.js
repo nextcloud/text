@@ -106,6 +106,7 @@ OC.L10N.register(
     "Update link" : "تحديث الرابط",
     "Open the Smart Picker" : "إفتح اللاقط الذكي smart picker",
     "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تمّ اختياره",
     "_%n word_::_%n words_" : ["%n كلمات","%n كلمة","%n كلمات","%n كلمات","%n كلمات","%n كلمات"],
     "_%n char_::_%n chars_" : ["%n حروف","%n حرف","%n حروف","%n حروف","%n حروف","%n حروف"],
     "Editor actions" : "إجراءات المُحرّر editor",
