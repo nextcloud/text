@@ -141,7 +141,7 @@
     "raw-loader": "^4.0.2",
     "vite": "^5.0.12",
     "vite-plugin-commonjs": "^0.10.1",
-    "vue-demi": "^0.14.6",
+    "vue-demi": "^0.14.7",
     "vue-template-compiler": "^2.7.16"
   },
   "jest": {
