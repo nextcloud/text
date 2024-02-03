@@ -91,7 +91,7 @@ OC.L10N.register(
     "Quoted text" : "Texto citado",
     "Code block" : "Bloque de código",
     "Some code" : "Algún código",
-    "Edit link" : "Editar ligazón",
+    "Edit link" : "Editar a ligazón",
     "Save changes" : "Gardar os cambios",
     "Remove link" : "Retirar ligazón",
     "Cancel" : "Cancelar",

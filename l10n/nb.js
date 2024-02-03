@@ -44,6 +44,7 @@ OC.L10N.register(
     "Blockquote" : "Sitat",
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
+    "Save changes" : "Lagre endringer",
     "Cancel" : "Avbryt",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier lenken manuelt",
