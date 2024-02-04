@@ -163,9 +163,9 @@ describe('Workspace', function() {
 		cy.getSubmenuEntry('insert-link', 'insert-link-file')
 			.click()
 
-		cy.get('.file-picker__main .file-picker__file-name[title="sub-folder"]').click()
-		cy.get('.file-picker__main .file-picker__file-name[title="alpha"]').click()
-		cy.get('.file-picker__main .file-picker__file-name[title="test"]').click()
+		cy.get('.file-picker [data-filename="sub-folder"]').click()
+		cy.get('.file-picker [data-filename="alpha"]').click()
+		cy.get('.file-picker [data-filename="test.md"]').click()
 		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 		cy.getEditor()
