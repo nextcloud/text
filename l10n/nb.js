@@ -54,6 +54,8 @@ OC.L10N.register(
     "to" : "til",
     "Replace" : "Erstatt",
     "Insert" : "Sett inn",
+    "Detect language" : "Oppdag språk",
+    "Translation failed" : "Oversettelse feilet",
     "Source code" : "Kildekode",
     "Both" : "Begge",
     "Undo" : "Angre",
