@@ -16,13 +16,13 @@ concurrency:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
 
     outputs:
       src: ${{ steps.changes.outputs.src}}
 
     steps:
-      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+      - uses: dorny/paths-filter@0bc4621a3135347011ad047f9ecf449bf72ce2bd # v3.0.0
         id: changes
         continue-on-error: true
         with:
@@ -54,10 +54,10 @@ jobs:
         id: versions
         with:
           fallbackNode: '^20'
-          fallbackNpm: '^9'
+          fallbackNpm: '^10'
 
       - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v3
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v3
         with:
           node-version: ${{ steps.versions.outputs.nodeVersion }}
 
@@ -71,19 +71,22 @@ jobs:
         run: |
           npm ci
           npm run build --if-present
-          npm run stats --if-present
 
-      - name: Send bundle stats to RelativeCI
-        uses: relative-ci/agent-action@e92b0c712e5ad0a039faf1026cbe438b8e7fed16 # v2
-        with:
-          webpackStatsFile: ./webpack-stats.json
-          key: ${{ secrets.RELATIVE_CI_KEY }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check webpack build changes
+        run: |
+          bash -c "[[ ! \"`git status --porcelain `\" ]] || (echo 'Please recompile and commit the assets, see the section \"Show changes on failure\" for details' && exit 1)"
+
+      - name: Show changes on failure
+        if: failure()
+        run: |
+          git status
+          git --no-pager diff
+          exit 1 # make it red to grab attention
 
   summary:
     permissions:
       contents: none
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
     needs: [changes, build]
 
     if: always()
