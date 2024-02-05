@@ -22,10 +22,10 @@ jobs:
 
     if: github.event.pull_request.draft == false
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
 
     steps:
-      - name: Register text Git reference
+      - name: Register server reference to fallback to master branch
         run: |
           server_ref="$(if [ "${{ github.base_ref }}" = "main" ]; then echo -n "master"; else echo -n "${{ github.base_ref }}"; fi)"
           echo "server_ref=$server_ref" >> $GITHUB_ENV
