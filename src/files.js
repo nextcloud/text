@@ -21,7 +21,6 @@
  */
 import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
-import { registerFileListHeaders } from '@nextcloud/files'
 
 import { logger } from './helpers/logger.js'
 
@@ -54,11 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 		OCA.Files.Settings.register(new OCA.Files.Settings.Setting('text', {
 			el: () => { return el },
 		}))
-	}
-
-	if (workspaceAvailable) {
-		const { FilesWorkspaceHeader } = await import('./helpers/files.js')
-		registerFileListHeaders(FilesWorkspaceHeader)
 	}
 })
 
