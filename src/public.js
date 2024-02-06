@@ -1,4 +1,6 @@
 import { loadState } from '@nextcloud/initial-state'
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 import {
 	registerFileActionFallback,
@@ -10,9 +12,6 @@ import { documentReady } from './helpers/index.js'
 import store from './store/index.js'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import RichWorkspace from './views/RichWorkspace.vue'
-
-__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
 
 const newRichWorkspaceFileMenuPlugin = {
 	attach(menu) {

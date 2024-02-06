@@ -1,7 +1,6 @@
 import store from './store/index.js'
-
-__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('text', 'js/') // eslint-disable-line
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 if (document.getElementById('app-content')) {
 	Promise.all([

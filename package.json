@@ -1,5 +1,5 @@
 {
-  "name": "@nextcloud/text",
+  "name": "text",
   "description": "Collaborative document editing",
   "version": "4.0.0",
   "authors": [
@@ -10,18 +10,16 @@
     }
   ],
   "license": "agpl",
+  "type": "module",
   "files": [
     "dist"
   ],
   "module": "dist/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --node-env production --progress",
-    "dev:package": "vite",
-    "dev": "webpack --node-env development --progress",
-    "watch": "webpack --node-env development --progress --watch",
-    "stats": "webpack --node-env production --json webpack-stats.json",
-    "build:package": "vite build",
+    "build": "vite --mode production build",
+    "dev": "vite --mode development build",
+    "watch": "vite --mode development build --watch",
     "lint": "eslint --ext .js,.vue src cypress",
     "lint:fix": "eslint --ext .js,.vue src cypress --fix",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css css/*.scss",
@@ -125,7 +123,7 @@
     "@nextcloud/cypress": "^1.0.0-beta.8",
     "@nextcloud/eslint-config": "^8.3.0",
     "@nextcloud/stylelint-config": "^3.0.1",
-    "@nextcloud/webpack-vue-config": "^6.0.1",
+    "@nextcloud/vite-config": "^1.2.1",
     "@vitejs/plugin-vue2": "^2.3.1",
     "@vue/test-utils": "^1.3.0 <2",
     "@vue/tsconfig": "^0.5.1",
@@ -141,6 +139,8 @@
     "jest-serializer-vue": "^3.1.0",
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
+    "rollup-plugin-webpack-stats": "^0.2.4",
+    "typescript": "^5.3.3",
     "vite": "^5.2.11",
     "vite-plugin-commonjs": "^0.10.1",
     "vue-demi": "^0.14.7",
@@ -170,14 +170,17 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.mjs$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.js"
+      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.cjs"
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/tests/setup.js"
+      "<rootDir>/src/tests/setup.mjs"
     ],
     "transformIgnorePatterns": []
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.10.0"
   }
 }
