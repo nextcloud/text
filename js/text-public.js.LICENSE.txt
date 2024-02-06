@@ -351,6 +351,8 @@
 
 /*! Check if previously processed */
 
+/*! For license information please see index.js.LICENSE.txt */
+
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
