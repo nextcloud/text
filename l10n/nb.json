@@ -47,6 +47,7 @@
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier lenken manuelt",
     "Copy link to clipboard" : "Kopier lenke til utklippstavlen",
+    "Select file or folder to link to" : "Velg fil eller mappe å koble til",
     "Translate from" : "Oversett fra",
     "Select language" : "Velg språk",
     "to" : "til",
@@ -56,6 +57,8 @@
     "Translation failed" : "Oversettelse feilet",
     "Source code" : "Kildekode",
     "Both" : "Begge",
+    "Hide outline" : "Skjul omriss",
+    "Show outline" : "Vis omriss",
     "Undo" : "Angre",
     "Redo" : "Gjør om",
     "Headings" : "Overskrifter",
@@ -75,6 +78,7 @@
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
     "Link copied" : "Lenke kopiert",
+    "Could not copy link to the clipboard:" : "Kunne ikke kopiere koblingen til utklippstavlen:",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
