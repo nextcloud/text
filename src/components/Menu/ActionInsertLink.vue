@@ -108,7 +108,7 @@ export default {
 	],
 	data: () => {
 		return {
-			href: null,
+			href: '',
 			isInputMode: false,
 			startPath: null,
 			/** Open state of the actions menu */
@@ -168,7 +168,7 @@ export default {
 				const href = [...event.target.elements].filter(e => e?.type === 'text')[0].value
 				this.menuOpen = false
 				this.isInputMode = false
-				this.href = null
+				this.href = ''
 				return this.setLink(href, href)
 			}
 
