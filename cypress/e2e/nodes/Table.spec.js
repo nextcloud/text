@@ -40,9 +40,9 @@ describe('table plugin', () => {
 			.should('contain', 'content')
 
 		cy.getContent()
-			.find('[data-text-table-actions="settings"]').click()
+			.find('[data-text-table-actions="settings"] [aria-label="Actions"]').click()
 
-		cy.get('[data-text-table-action="delete"]').click()
+		cy.get('[data-text-table-action="delete"] [role="menuitem"]').click()
 		cy.getContent()
 			.should('not.contain', 'content')
 	})
@@ -80,7 +80,7 @@ describe('table plugin', () => {
 			cy.getContent()
 				.find('table tr:first-child th:first-child button')
 				.click()
-			cy.get(`[data-text-table-action="align-column-${align}"]`)
+			cy.get(`[data-text-table-action="align-column-${align}"] [role="menuitemradio"]`)
 				.click()
 			// Check header has correct text align and text is preserved
 			cy.getContent()
@@ -101,7 +101,7 @@ describe('table plugin', () => {
 		cy.getContent()
 			.find('table tr:first-child th:first-child button')
 			.click()
-		cy.get('[data-text-table-action="align-column-center"]')
+		cy.get('[data-text-table-action="align-column-center"] [role="menuitemradio"]')
 			.click()
 
 		// Test before adding a row

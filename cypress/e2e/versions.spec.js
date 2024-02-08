@@ -26,19 +26,19 @@ describe('Versions', () => {
 			cy.get('[data-cy-files-list-row-name="' + versionFileName + '"] [data-cy-files-list-row-mtime]').click()
 			cy.get('.app-sidebar-header').should('be.visible').should('contain', versionFileName)
 			cy.get('.app-sidebar-tabs__tab:contains("Versions")').click()
-			cy.get('[data-files-versions-versions-list] li > a').should('have.length', 3)
+			cy.get('[data-files-versions-versions-list] li a').should('have.length', 3)
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(1).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
 			cy.get('.viewer__content #read-only-editor')
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V2')
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(2).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
 			cy.get('.viewer__content #read-only-editor')
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V1')
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(0).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(0).click()
 			cy.getContent()
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V3')
@@ -60,19 +60,19 @@ describe('Versions', () => {
 
 			cy.get('.app-sidebar-tabs__tab:contains("Versions")').click()
 
-			cy.get('[data-files-versions-versions-list] li > a').should('have.length', 3)
+			cy.get('[data-files-versions-versions-list] li a').should('have.length', 3)
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(1).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
 			cy.get('.viewer__content #read-only-editor')
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V2')
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(2).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
 			cy.get('.viewer__content #read-only-editor')
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V1')
 
-			cy.get('[data-files-versions-versions-list] li > a').eq(0).click()
+			cy.get('[data-files-versions-versions-list] li a').eq(0).click()
 			cy.getContent()
 				.find('h1 [data-node-view-content]')
 				.should('have.text', 'V3')
@@ -97,7 +97,7 @@ describe('Versions', () => {
 
 			cy.get('.app-sidebar-tabs__tab:contains("Versions")').click()
 
-			cy.get('[data-files-versions-versions-list] li > a').should('have.length', 3)
+			cy.get('[data-files-versions-versions-list] li a').should('have.length', 3)
 
 			cy.get('[data-files-versions-versions-list] li').eq(2)
 				.find('button.action-item__menutoggle').first().click({ force: true })
