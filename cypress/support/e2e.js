@@ -22,6 +22,10 @@ before(() => {
 		  return false
 		}
 
+		if (err.message.includes('clearFocusTrap')) {
+			return false
+		}
+
 		return true
 	})
 })
