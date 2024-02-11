@@ -37,7 +37,7 @@ describe('The user mention API', function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md').as('fileId')
 			.then(cy.createTextSession).as('connection')
-		cy.getRequestToken().as('requesttoken')
+		cy.getRequestToken()
 	})
 
 	afterEach(function() {
@@ -51,53 +51,29 @@ describe('The user mention API', function() {
 	})
 
 	it('fetches users with valid session', function() {
-		const body = {
-			documentId: this.connection.document.id,
-			sessionId: this.connection.session.id,
-			sessionToken: this.connection.session.token,
-			requesttoken: this.requesttoken,
-		}
-		const requestData = {
-			method: 'POST',
-			url: '/apps/text/api/v1/users',
-			body,
-			failOnStatusCode: false,
-		}
-		const invalidRequestData = { ...requestData }
 
-		cy.request(requestData).then(({ status }) => {
+		cy.sessionUsers(this.connection).then(({ status }) => {
 			expect(status).to.eq(200)
-
-			invalidRequestData.body = {
-				...requestData.body,
-				sessionToken: 'invalid',
-			}
 		})
 
-		cy.request(invalidRequestData).then(({ status }) => {
+		cy.sessionUsers(this.connection, { sessionToken: 'invalid' })
+			.then(({ status }) => {
 			expect(status).to.eq(403)
-			invalidRequestData.body = {
-				...requestData.body,
-				sessionId: 0,
-			}
 		})
 
-		cy.request(invalidRequestData).then(({ status }) => {
+		cy.sessionUsers(this.connection, { sessionId: 0 })
+			.then(({ status }) => {
 			expect(status).to.eq(403)
-
-			invalidRequestData.body = {
-				...requestData.body,
-				documentId: 0,
-			}
 		})
 
-		cy.request(invalidRequestData).then(({ status }) => {
+		cy.sessionUsers(this.connection, { documentId: 0 })
+			.then(({ status }) => {
 			expect(status).to.eq(403)
 		})
 
 		cy.then(() => this.connection.close())
 
-		cy.request(requestData).then(({ status, body }) => {
+		cy.sessionUsers(this.connection).then(({ status }) => {
 			expect(status).to.eq(403)
 		})
 	})

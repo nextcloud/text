@@ -88,6 +88,22 @@ Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
 		}, (err) => err.response)
 })
 
+Cypress.Commands.add('sessionUsers', function(connection, bodyOptions = {}) {
+	const body = {
+		documentId: connection.document.id,
+		sessionId: connection.session.id,
+		sessionToken: connection.session.token,
+		requesttoken: this.requesttoken,
+		...bodyOptions,
+	}
+	cy.request({
+		method: 'POST',
+		url: '/apps/text/api/v1/users',
+		body,
+		failOnStatusCode: false,
+	})
+})
+
 // Used to test for race conditions between the last push and the close request
 Cypress.Commands.add('pushAndClose', ({ connection, steps, version, awareness = '' }) => {
 	cy.log('Race between push and close')
