@@ -23,6 +23,14 @@
 import SessionApi from '../../src/services/SessionApi.js'
 import { emit } from '@nextcloud/event-bus'
 
+Cypress.Commands.add('prepareWindowForSessionApi', () => {
+	window.OC = {
+		config: { modRewriteWorking: false },
+	}
+	// Prevent @nextcloud/router from reading window.location
+	window._oc_webroot = ''
+})
+
 Cypress.Commands.add('prepareSessionApi', () => {
 	return cy.request('/csrftoken')
 		.then(({ body }) => {

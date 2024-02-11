@@ -30,10 +30,7 @@ describe('The user mention API', function() {
 
 	before(function() {
 		cy.createUser(user)
-		window.OC = {
-			config: { modRewriteWorking: false },
-		}
-		window._oc_webroot = ''
+		cy.prepareWindowForSessionApi()
 	})
 
 	let fileId
