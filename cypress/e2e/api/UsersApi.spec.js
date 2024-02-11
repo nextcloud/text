@@ -51,30 +51,22 @@ describe('The user mention API', function() {
 	})
 
 	it('fetches users with valid session', function() {
+		cy.sessionUsers(this.connection)
+			.its('status').should('eq', 200)
+	})
 
-		cy.sessionUsers(this.connection).then(({ status }) => {
-			expect(status).to.eq(200)
-		})
-
+	it('rejects invalid sessions', function() {
 		cy.sessionUsers(this.connection, { sessionToken: 'invalid' })
-			.then(({ status }) => {
-			expect(status).to.eq(403)
-		})
-
+			.its('status').should('eq', 403)
 		cy.sessionUsers(this.connection, { sessionId: 0 })
-			.then(({ status }) => {
-			expect(status).to.eq(403)
-		})
-
+			.its('status').should('eq', 403)
 		cy.sessionUsers(this.connection, { documentId: 0 })
-			.then(({ status }) => {
-			expect(status).to.eq(403)
-		})
+			.its('status').should('eq', 403)
+	})
 
+	it('rejects closed sessions', function() {
 		cy.then(() => this.connection.close())
-
-		cy.sessionUsers(this.connection).then(({ status }) => {
-			expect(status).to.eq(403)
-		})
+		cy.sessionUsers(this.connection)
+			.its('status').should('eq', 403)
 	})
 })
