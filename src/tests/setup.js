@@ -73,8 +73,8 @@ global.OC = {
 	}
 }
 
-global._oc_webroot = '/nc-webroot'
 global.OCA = {}
+global._oc_webroot = ''
 
 
 Vue.prototype.t = global.t
