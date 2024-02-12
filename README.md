@@ -29,6 +29,11 @@ The rich workspaces in the file list can be disabled either by the users in the 
 occ config:app:set text workspace_available --value=0
 ```
 
+The app can be configured to open files read-only by default. This setting is globally valid and can be set by the admin with the following command:
+
+```bash
+occ config:app:set text open_read_only_enabled --value=1
+```
 
 ## 🏗 Development setup
 
