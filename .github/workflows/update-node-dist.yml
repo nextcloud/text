@@ -53,10 +53,14 @@ jobs:
         id: changes
         continue-on-error: true
         run: |
-          bash -c "[[ ! \"`git status --porcelain `\" ]] || (echo 'Please recompile and commit the assets, see the section \"Show changes on failure\" for details' && exit 1)"
+          {
+            echo 'CHANGED<<EOF'
+            git status --porcelain
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
 
       - name: Add and commit
-        if: steps.changes.outcome == 'failure'
+        if: steps.changes.outputs.CHANGED != ''
         run: |
           git add --force js/
           git commit --signoff -m 'chore(assets): recompile assets'
