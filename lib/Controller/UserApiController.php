@@ -39,11 +39,12 @@ class UserApiController extends ApiController implements ISessionAwareController
 		// Add joined users to the autocomplete list
 		foreach ($sessions as $session) {
 			$sessionUserId = $session['userId'];
-			if ($sessionUserId !== null && !isset($users[$sessionUserId])) {
-				$displayName = $this->userManager->getDisplayName($sessionUserId);
-				if ($displayName && stripos($displayName, $filter) !== false || stripos($sessionUserId, $filter) !== false) {
-					$users[$sessionUserId] = $displayName;
-				}
+			if ($sessionUserId === null || isset($users[$sessionUserId])) {
+				continue;
+			}
+			$displayName = $this->userManager->getDisplayName($sessionUserId) ?: '';
+			if (stripos($displayName, $filter) !== false || stripos($sessionUserId, $filter) !== false) {
+				$users[$sessionUserId] = $displayName;
 			}
 		}
 

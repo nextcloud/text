@@ -204,9 +204,9 @@ class AttachmentService {
 
 	/**
 	 * @param int          $documentId
-	 * @param string|null  $userId
+	 * @param string       $userId or empty string if there is none.
 	 * @param Session|null $session
-	 * @param string|null  $shareToken
+	 * @param string       $shareToken or empty string if there is none.
 	 *
 	 * @return array
 	 * @throws InvalidPathException
@@ -214,7 +214,7 @@ class AttachmentService {
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 */
-	public function getAttachmentList(int $documentId, ?string $userId = null, ?Session $session = null, ?string $shareToken = null): array {
+	public function getAttachmentList(int $documentId, string $userId = '', ?Session $session = null, string $shareToken = ''): array {
 		if ($shareToken) {
 			$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		} elseif ($userId) {

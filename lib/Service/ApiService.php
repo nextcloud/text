@@ -70,7 +70,7 @@ class ApiService {
 		$this->l10n = $l10n;
 	}
 
-	public function create(?int $fileId = null, ?string $filePath = null, ?string $token = null, ?string $guestName = null): DataResponse {
+	public function create(?int $fileId = null, ?string $filePath = null, string $token = '', ?string $guestName = null): DataResponse {
 		try {
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
@@ -86,7 +86,7 @@ class ApiService {
 				} catch (NotPermittedException $e) {
 					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 404);
 				}
-			} elseif ($fileId) {
+			} elseif ($fileId !== null) {
 				try {
 					$file = $this->documentService->getFileById($fileId);
 				} catch (NotFoundException|NotPermittedException $e) {

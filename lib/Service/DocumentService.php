@@ -130,7 +130,7 @@ class DocumentService {
 			// Do not hard reset if changed from outside since this will throw away possible steps
 			// This way the user can still resolve conflicts in the editor view
 			$stepsVersion = $this->stepMapper->getLatestVersion($document->getId());
-			if ($stepsVersion && ($document->getLastSavedVersion() !== $stepsVersion)) {
+			if ($stepsVersion !== null && ($document->getLastSavedVersion() !== $stepsVersion)) {
 				$this->logger->debug('Unsaved steps, continue collaborative editing');
 				return $document;
 			}
@@ -335,7 +335,7 @@ class DocumentService {
 		// Do not save if newer version already saved
 		// Note that $version is the version of the steps the client has fetched.
 		// It may have added steps on top of that - so if the versions match we still save.
-		$stepsVersion = $this->stepMapper->getLatestVersion($documentId)?: 0;
+		$stepsVersion = $this->stepMapper->getLatestVersion($documentId) ?? 0;
 		$savedVersion = $document->getLastSavedVersion();
 		$outdated = $savedVersion > 0 && $savedVersion > $version;
 		if (!$force && ($outdated || $version > (string)$stepsVersion)) {

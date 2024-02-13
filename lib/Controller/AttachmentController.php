@@ -86,7 +86,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSessionOrUserOrShareToken]
-	public function getAttachmentList(?string $shareToken = null): DataResponse {
+	public function getAttachmentList(string $shareToken = ''): DataResponse {
 		$documentId = $this->getDocument()->getId();
 		try {
 			$session = $this->getSession();
@@ -98,7 +98,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 			$attachments = $this->attachmentService->getAttachmentList($documentId, null, $session, $shareToken);
 		} else {
 			$userId = $this->getUserId();
-			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $session, null);
+			$attachments = $this->attachmentService->getAttachmentList($documentId, $userId, $session);
 		}
 
 		return new DataResponse($attachments);
@@ -126,7 +126,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function uploadAttachment(?string $shareToken = null): DataResponse {
+	public function uploadAttachment(string $shareToken = ''): DataResponse {
 		$documentId = $this->getSession()->getDocumentId();
 
 		try {
@@ -193,7 +193,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
-	public function getImageFile(string $imageFileName, ?string $shareToken = null,
+	public function getImageFile(string $imageFileName, string $shareToken = '',
 		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
 		$documentId = $this->getDocument()->getId();
 
@@ -228,7 +228,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
-	public function getMediaFile(string $mediaFileName, ?string $shareToken = null): DataResponse|DataDownloadResponse {
+	public function getMediaFile(string $mediaFileName, string $shareToken = ''): DataResponse|DataDownloadResponse {
 		$documentId = $this->getDocument()->getId();
 
 		try {
@@ -259,7 +259,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
-	public function getMediaFilePreview(string $mediaFileName, ?string $shareToken = null) {
+	public function getMediaFilePreview(string $mediaFileName, string $shareToken = '') {
 		$documentId = $this->getDocument()->getId();
 
 		try {
