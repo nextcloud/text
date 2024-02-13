@@ -30,6 +30,8 @@ import {
 	Info,
 	LinkIcon,
 	Paperclip,
+	Pencil,
+	PencilOff,
 	Positive,
 	Table,
 	UnfoldMoreHorizontal,
@@ -41,7 +43,7 @@ import ActionInsertLink from './ActionInsertLink.vue'
 
 import { MODIFIERS } from './keys.js'
 
-export const ReadonlyEntries = [{
+export const OutlineEntries = [{
 	key: 'outline',
 	forceLabel: true,
 	icon: FormatListBulleted,
@@ -53,7 +55,23 @@ export const ReadonlyEntries = [{
 	},
 }]
 
-export default [
+export const ReadOnlyEditEntries = [{
+	key: 'edit',
+	label: t('text', 'Edit'),
+	forceLabel: true,
+	icon: Pencil,
+	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
+}]
+
+export const ReadOnlyDoneEntries = [{
+	key: 'done',
+	label: t('text', 'Done'),
+	keyChar: 'esc',
+	icon: PencilOff,
+	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
+}]
+
+export const MenuEntries = [
 	{
 		key: 'undo',
 		label: t('text', 'Undo'),

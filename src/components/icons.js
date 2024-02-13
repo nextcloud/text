@@ -46,6 +46,8 @@ import MDI_LinkVariantPlus from 'vue-material-design-icons/LinkVariantPlus.vue'
 import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
 import MDI_Paperclip from 'vue-material-design-icons/Paperclip.vue'
+import MDI_Pencil from 'vue-material-design-icons/Pencil.vue'
+import MDI_PencilOff from 'vue-material-design-icons/PencilOff.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
 import MDI_Shape from 'vue-material-design-icons/Shape.vue'
@@ -128,6 +130,8 @@ export const LinkOff = makeIcon(MDI_LinkOff)
 export const LinkVariantPlus = makeIcon(MDI_LinkVariantPlus)
 export const Lock = makeIcon(MDI_Lock)
 export const Paperclip = makeIcon(MDI_Paperclip)
+export const Pencil = makeIcon(MDI_Pencil)
+export const PencilOff = makeIcon(MDI_PencilOff)
 export const Positive = makeIcon(MDI_Positive)
 export const Redo = makeIcon(MDI_Redo)
 export const Shape = makeIcon(MDI_Shape)
