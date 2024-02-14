@@ -57,7 +57,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	}
 
 	#[NoAdminRequired]
-	public function create(int $fileId = null, string $file = null): DataResponse {
+	public function create(?int $fileId = null, ?string $file = null): DataResponse {
 		return $this->apiService->create($fileId, $file, null, null);
 	}
 
@@ -94,7 +94,7 @@ class SessionController extends ApiController implements ISessionAwareController
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function save(int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function save(int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		try {
 			$this->loginSessionUser();
 			return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave);

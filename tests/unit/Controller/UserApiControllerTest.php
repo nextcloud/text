@@ -2,11 +2,11 @@
 
 namespace OCA\Text\Controller;
 
-use \OCP\IRequest;
 use OCA\Text\Db\Session;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Collaboration\Collaborators\ISearch;
+use OCP\IRequest;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use Test\TestCase;
