@@ -54,6 +54,7 @@ jobs:
         run: |
           npm ci
           npm run build --if-present
+          git checkout -- js/
 
       - name: Create Pull Request
         if: always()
