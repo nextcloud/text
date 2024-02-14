@@ -80,7 +80,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function create(string $token, string $file = null, ?string $guestName = null): DataResponse {
+	public function create(string $token, ?string $file = null, ?string $guestName = null): DataResponse {
 		return $this->apiService->create(null, $file, $token, $guestName);
 	}
 
@@ -107,7 +107,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function save(string $token, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
+	public function save(string $token, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 

@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Service;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\DocumentMapper;
