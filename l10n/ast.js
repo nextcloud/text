@@ -12,6 +12,7 @@ OC.L10N.register(
     "Text" : "Testu",
     "Offline" : "Desconectáu",
     "Saving …" : "Guardando…",
+    "Saved" : "Guardóse",
     "Unsaved changes" : "Cambeos ensin guardar",
     "Keyboard shortcuts" : "Atayos del tecláu",
     "Cancel" : "Encaboxar",
