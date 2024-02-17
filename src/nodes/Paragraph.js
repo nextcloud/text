@@ -1,13 +1,11 @@
 import TiptapParagraph from '@tiptap/extension-paragraph'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import ParagraphView from './ParagraphView.vue'
 
 const Paragraph = TiptapParagraph.extend({
 
-	addOptions() {
-		return {
-			HTMLAttributes: {
-				class: 'paragraph-content',
-			},
-		}
+	addNodeView() {
+		return VueNodeViewRenderer(ParagraphView)
 	},
 
 	parseHTML() {

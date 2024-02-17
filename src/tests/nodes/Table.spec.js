@@ -78,5 +78,5 @@ function editorWithContent(content) {
 }
 
 function formatHTML(html) {
-	return html.replaceAll('><', '>\n<').replace(/\n$/, '').replace('<p>', '<p class="paragraph-content">')
+	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
 }
