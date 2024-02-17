@@ -41,6 +41,7 @@ OC.L10N.register(
     "Remove link" : "Eliminar enlace",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copia el enlace manualmente",
+    "Select file or folder to link to" : "Seleccionar archivo o carpeta para enlazar.",
     "Select language" : "Selecciona el idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
