@@ -63,6 +63,7 @@
 						<div v-else contenteditable="false">
 							<img v-show="loaded"
 								:src="imageUrl"
+								:alt="alt"
 								class="image__main"
 								@click="handleImageClick"
 								@load="onLoaded">
