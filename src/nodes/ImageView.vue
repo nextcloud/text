@@ -41,6 +41,7 @@
 							<div class="media__wrapper">
 								<img v-show="loaded"
 									:src="imageUrl"
+									:alt="alt"
 									class="image__main"
 									@load="onLoaded">
 								<div class="metadata">
