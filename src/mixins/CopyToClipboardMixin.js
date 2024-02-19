@@ -10,23 +10,23 @@ export default {
 	},
 
 	methods: {
-		async copyToClipboard(url) {
+		async copyToClipboard(content) {
 			// change to loading status
 			this.copyLoading = true
 
 			// copy link to clipboard
 			try {
-				await navigator.clipboard.writeText(url)
+				await navigator.clipboard.writeText(content)
 				this.copySuccess = true
 				this.copied = true
 
 				// Notify success
-				showSuccess(t('collectives', 'Link copied'))
+				showSuccess(t('text', 'Copied to the clipboard'))
 			} catch (error) {
 				this.copySuccess = false
 				this.copied = true
 				showError(
-					`<div>${t('collectives', 'Could not copy link to the clipboard:')}</div><div>${url}</div>`,
+					`<div>${t('text', 'Could not copy to the clipboard')}</div>`,
 					{ isHTML: true })
 			} finally {
 				this.copyLoading = false
