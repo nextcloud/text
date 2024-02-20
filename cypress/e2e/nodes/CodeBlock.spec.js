@@ -46,14 +46,14 @@ describe('Front matter support', function() {
 
 			// Copy code to clipboard
 			cy.getContent().find('code').eq(1).invoke('text')
-			.then(code =>
-				cy.window().then(win => {
-					win.navigator.clipboard.readText()
-					.then(copiedCode => {
-						expect(copiedCode).to.equal(code)
-					})
-				})
-			)
+				.then(code =>
+					cy.window().then(win => {
+						win.navigator.clipboard.readText()
+							.then(copiedCode => {
+								expect(copiedCode).to.equal(code)
+							})
+					}),
+				)
 
 			// Remove language
 			cy.getContent().find('.code-block').eq(1).find('.view-switch div div button').click()

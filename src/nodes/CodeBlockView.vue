@@ -126,7 +126,7 @@ export default {
 	},
 	computed: {
 		hasCode() {
-			return this.node.textContent
+			return this.node?.textContent
 		},
 		type() {
 			return this.node?.attrs?.language || ''
