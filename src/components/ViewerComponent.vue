@@ -45,6 +45,8 @@ import RichTextReader from './RichTextReader.vue'
 import { getSharingToken } from '../helpers/token.js'
 import getEditorInstance from './Editor.singleton.js'
 
+import { setViewerVue } from '../ViewerVue.js'
+
 export default {
 	name: 'ViewerComponent',
 	components: {
@@ -111,6 +113,14 @@ export default {
 		source() {
 			this.loadFileContent()
 		},
+	},
+
+	beforeCreate() {
+		// This component is rendered in the Viewer app
+		// Get Vue constructor from the Viewer app
+		// To reuse later as Vue constructor and not mix Text's Vue constructor and Viewer's Vue constructor in a single Virtual DOM
+		// Which is not fully supported by Vue
+		setViewerVue(this.$options._base)
 	},
 
 	mounted() {
