@@ -20,6 +20,7 @@
  *
  */
 
+import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 
 const absolutePath = function(base, rel) {
@@ -59,6 +60,10 @@ const domHref = function(node, relativePath) {
 		return ref
 	}
 	if (ref.startsWith('#')) {
+		return ref
+	}
+	// Don't rewrite URL in Collectives context
+	if (loadState('core', 'active-app') === 'collectives') {
 		return ref
 	}
 
