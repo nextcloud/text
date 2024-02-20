@@ -42,8 +42,21 @@ describe('Front matter support', function() {
 			cy.getContent().find('code').eq(1).find('.hljs-string').eq(0).contains('"bar"')
 			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(1).contains('function')
 
+			cy.getContent().find('.code-block').eq(1).find('.view-switch > button').click()
+
+			// Copy code to clipboard
+			cy.getContent().find('code').eq(1).invoke('text')
+			.then(code =>
+				cy.window().then(win => {
+					win.navigator.clipboard.readText()
+					.then(copiedCode => {
+						expect(copiedCode).to.equal(code)
+					})
+				})
+			)
+
 			// Remove language
-			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
+			cy.getContent().find('.code-block').eq(1).find('.view-switch div div button').click()
 			// FIXME: Label behaviour changed, should be back once https://github.com/nextcloud-libraries/nextcloud-vue/pull/4484 is merged
 			// cy.get('.action-input__text-label').contains('Code block language')
 			cy.get('.input-field__input:visible').clear()
@@ -53,7 +66,7 @@ describe('Front matter support', function() {
 			cy.getContent().find('code').eq(1).find('.hljs-keyword').should('not.exist')
 
 			// Re-add language
-			cy.getContent().find('.code-block').eq(1).find('.view-switch button').click()
+			cy.getContent().find('.code-block').eq(1).find('.view-switch div div button').click()
 			cy.get('.input-field__input:visible').type('javascript')
 
 			cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(0).contains('const')
@@ -136,17 +149,17 @@ describe('Front matter support', function() {
 			cy.get('.split-view__code').find('code').should('be.visible')
 			cy.get('.split-view__preview').find('svg').should('be.visible')
 
-			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.getContent().find('.code-block').eq(0).find('.view-switch div div button').click()
 			cy.get('.action-button').eq(0).contains('Source code').click()
 			cy.get('.split-view__code').find('code').should('be.visible')
 			cy.get('.split-view__preview').find('svg').should('not.be.visible')
 
-			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.getContent().find('.code-block').eq(0).find('.view-switch div div button').click()
 			cy.get('.action-button').eq(1).contains('Diagram').click()
 			cy.get('.split-view__code').find('code').should('not.be.visible')
 			cy.get('.split-view__preview').find('svg').should('be.visible')
 
-			cy.getContent().find('.code-block').eq(0).find('.view-switch button').click()
+			cy.getContent().find('.code-block').eq(0).find('.view-switch div div button').click()
 			cy.get('.action-button').eq(2).contains('Both').click()
 			cy.get('.split-view__code').find('code').should('be.visible')
 			cy.get('.split-view__preview').find('svg').should('be.visible')
