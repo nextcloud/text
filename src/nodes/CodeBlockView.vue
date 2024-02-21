@@ -1,8 +1,24 @@
 <template>
 	<NodeViewWrapper as="div" :data-mode="viewMode" class="code-block">
-		<div v-if="isEditable" class="code-block-header">
+		<div class="code-block-header">
 			<div class="view-switch">
-				<NcActions :aria-label="t('text', 'Code block options')">
+				<NcActions :aria-label="t('text', 'Copy code block')">
+					<NcActionButton v-if="hasCode"
+						data-cy="copy-code"
+						:aria-label="t('text', 'Copy code')"
+						:close-after-click="false"
+						@click="copyCode">
+						<template #icon>
+							<Check v-if="copySuccess" :size="20" />
+							<NcLoadingIcon v-else-if="copyLoading" :size="20" />
+							<ContentCopy v-else :size="20" />
+						</template>
+					</NcActionButton>
+				</NcActions>
+
+				<NcActions v-if="isEditable"
+					data-cy="code-action-group"
+					:aria-label="t('text', 'Code block options')">
 					<NcActionInput :label="t('text', 'Code block language')"
 						:value="type"
 						:show-trailing-button="false"
@@ -59,7 +75,7 @@
 <script>
 import debounce from 'debounce'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcActionInput, NcActionLink, NcActionSeparator } from '@nextcloud/vue'
+import { NcActions, NcActionButton, NcActionInput, NcActionLink, NcActionSeparator, NcLoadingIcon } from '@nextcloud/vue'
 import mermaid from 'mermaid'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -68,13 +84,19 @@ import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
 import Eye from 'vue-material-design-icons/Eye.vue'
 import MarkerIcon from 'vue-material-design-icons/Marker.vue'
 import Help from 'vue-material-design-icons/Help.vue'
+import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
+import Check from 'vue-material-design-icons/Check.vue'
+
+import CopyToClipboardMixin from '../mixins/CopyToClipboardMixin.js'
 
 export default {
 	// eslint-disable-next-line vue/match-component-file-name
 	name: 'CodeBlockView',
 	components: {
 		MarkerIcon,
+		ContentCopy,
 		Help,
+		Check,
 		Eye,
 		ViewSplitVertical,
 		CodeBraces,
@@ -83,9 +105,11 @@ export default {
 		NcActionInput,
 		NcActionLink,
 		NcActionSeparator,
+		NcLoadingIcon,
 		NodeViewWrapper,
 		NodeViewContent,
 	},
+	mixins: [CopyToClipboardMixin],
 	props: {
 		node: {
 			type: Object,
@@ -104,6 +128,9 @@ export default {
 		}
 	},
 	computed: {
+		hasCode() {
+			return this.node?.textContent
+		},
 		type() {
 			return this.node?.attrs?.language || ''
 		},
@@ -169,6 +196,9 @@ export default {
 		})
 	},
 	methods: {
+		async copyCode() {
+			await this.copyToClipboard(this.node?.textContent)
+		},
 		updateLanguage(event) {
 			this.updateAttributes({
 				language: event.target.value,
@@ -180,6 +210,7 @@ export default {
 	},
 }
 </script>
+
 <style lang="scss" scoped>
 .code-block {
 	background-color: var(--color-background-dark);
