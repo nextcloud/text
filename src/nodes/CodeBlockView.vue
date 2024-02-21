@@ -4,6 +4,7 @@
 			<div class="view-switch">
 				<NcActions :aria-label="t('text', 'Copy code block')">
 					<NcActionButton v-if="hasCode"
+						data-cy="copy-code"
 						:aria-label="t('text', 'Copy code')"
 						:close-after-click="false"
 						@click="copyCode">
@@ -15,8 +16,11 @@
 					</NcActionButton>
 				</NcActions>
 
-				<NcActions v-if="isEditable" :aria-label="t('text', 'Code block options')">
-					<NcActionInput :label="t('text', 'Code block language')"
+				<NcActions v-if="isEditable"
+					data-cy="code-action-group"
+					:aria-label="t('text', 'Code block options')">
+					<NcActionInput
+						:label="t('text', 'Code block language')"
 						:value="type"
 						:show-trailing-button="false"
 						:placeholder="t('text', 'e.g. php, javascript, json…')"
