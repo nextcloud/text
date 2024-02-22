@@ -54,7 +54,6 @@ OC.L10N.register(
     "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
     "Edit" : "Modifi",
-    "Link copied" : "Ligilo kopiita",
     "Unsupported image type" : "Nesubtenata bildotipo"
 },
 "nplurals=2; plural=(n != 1);");

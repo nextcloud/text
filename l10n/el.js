@@ -101,7 +101,6 @@ OC.L10N.register(
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
-    "Link copied" : "Ο σύνδεσμος αντιγράφηκε",
     "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },

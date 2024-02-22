@@ -36,7 +36,6 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
-    "Link copied" : "Link tersalin",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima"
 },
 "nplurals=1; plural=0;");

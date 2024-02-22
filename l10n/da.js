@@ -81,8 +81,6 @@ OC.L10N.register(
     "Smart picker" : "Smart Vælger",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
-    "Link copied" : "Link kopieret",
-    "Could not copy link to the clipboard:" : "Kunne ikke kopiere linket til udklipsholderen:",
     "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
