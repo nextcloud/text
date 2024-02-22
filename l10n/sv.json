@@ -178,8 +178,6 @@
     "Add description" : "Lägg till beskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",
-    "Link copied" : "Länken har kopierats",
-    "Could not copy link to the clipboard:" : "Kunde inte kopiera länken till urklipp:",
     "Front matter" : "Förtexter",
     "Source language" : "Källspråk",
     "Target language" : "Målspråk",

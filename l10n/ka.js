@@ -33,6 +33,7 @@ OC.L10N.register(
     "Select language" : "Select language",
     "to" : "to",
     "Replace" : "Replace",
+    "Copy code block" : "Copy code block",
     "Source code" : "Source code",
     "Undo" : "Undo",
     "Headings" : "Headings",
@@ -41,7 +42,6 @@ OC.L10N.register(
     "Command" : "Command",
     "Formatting" : "Formatting",
     "Smart picker" : "Smart picker",
-    "Edit" : "Edit",
-    "Link copied" : "Link copied"
+    "Edit" : "Edit"
 },
 "nplurals=2; plural=(n!=1);");

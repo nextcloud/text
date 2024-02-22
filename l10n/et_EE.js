@@ -33,7 +33,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Hoiatus",
     "Edit" : "Redigeeri",
-    "Link copied" : "Link kopeeritud",
     "Unsupported image type" : "Pildi tüüp pole toetatud"
 },
 "nplurals=2; plural=(n != 1);");

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน",
     "Formatting" : "การจัดรูปแบบ",
-    "Edit" : "แก้ไข",
-    "Link copied" : "คัดลอกลิงก์แล้ว"
+    "Edit" : "แก้ไข"
 },
 "nplurals=1; plural=0;");

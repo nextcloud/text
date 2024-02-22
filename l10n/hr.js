@@ -75,7 +75,6 @@ OC.L10N.register(
     "Formatting" : "Oblikovanje",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
-    "Link copied" : "Poveznica je kopirana",
     "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline"
 },

@@ -36,7 +36,6 @@ OC.L10N.register(
     "Success" : "Sukses",
     "Warning" : "Kujdes",
     "Edit" : "Përpuno",
-    "Link copied" : "Linku u kopjua",
     "Unsupported image type" : "Lloj imazhi i pa suportuar"
 },
 "nplurals=2; plural=(n != 1);");
