@@ -154,8 +154,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
     "Edit" : "Променяне",
     "Add description" : "Добавяне на описание",
-    "Link copied" : "Връзката е копирана",
-    "Could not copy link to the clipboard:" : "Неуспешно копиране на връзката в клипборда:",
     "Front matter" : "Предно съдържание",
     "Source language" : "Език на източника",
     "Target language" : "Целеви език",

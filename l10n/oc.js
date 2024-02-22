@@ -65,7 +65,6 @@ OC.L10N.register(
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",
-    "Edit" : "Modificar",
-    "Link copied" : "Ligam copiat"
+    "Edit" : "Modificar"
 },
 "nplurals=2; plural=(n > 1);");

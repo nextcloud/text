@@ -141,8 +141,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
     "Add description" : "Pridať popis",
-    "Link copied" : "Odkaz skopírovaný",
-    "Could not copy link to the clipboard:" : "Odkaz sa nepodarilo skopírovať do schránky:",
     "Front matter" : "Predná strana",
     "Source language" : "Zdrojový jazyk prekladu",
     "Target language" : "Cieľový jazyk",

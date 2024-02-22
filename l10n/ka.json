@@ -31,6 +31,7 @@
     "Select language" : "Select language",
     "to" : "to",
     "Replace" : "Replace",
+    "Copy code block" : "Copy code block",
     "Source code" : "Source code",
     "Undo" : "Undo",
     "Headings" : "Headings",
@@ -39,7 +40,6 @@
     "Command" : "Command",
     "Formatting" : "Formatting",
     "Smart picker" : "Smart picker",
-    "Edit" : "Edit",
-    "Link copied" : "Link copied"
+    "Edit" : "Edit"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

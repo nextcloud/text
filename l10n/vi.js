@@ -98,7 +98,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
     "Add description" : "Thêm mô tả",
-    "Link copied" : "Đã sao chép liên kết",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc"
 },

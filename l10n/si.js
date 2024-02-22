@@ -11,7 +11,6 @@ OC.L10N.register(
     "Info" : "තොරතුරු",
     "Success" : "සාර්ථකයි",
     "Warning" : "අවවාදයයි",
-    "Edit" : "සංස්කරණය",
-    "Link copied" : "සබැඳිය පිටපත් කළා"
+    "Edit" : "සංස්කරණය"
 },
 "nplurals=2; plural=(n != 1);");

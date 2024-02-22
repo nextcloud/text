@@ -169,7 +169,6 @@ OC.L10N.register(
     "Add description" : "Bæta við lýsingu",
     "\"{name}\" already exist!" : "\"{name}\" er þegar til staðar!",
     "Created \"{name}\"" : "Bjó til \"{name}\"",
-    "Link copied" : "Tengill afritaður",
     "Source language" : "Upprunatungumál",
     "Target language" : "Marktungumál:",
     "Unsupported image type" : "Óstudd gerð myndar",

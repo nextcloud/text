@@ -113,8 +113,6 @@ OC.L10N.register(
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
-    "Link copied" : "Link gekopieerd",
-    "Could not copy link to the clipboard:" : "Kan link niet naar het klembord kopiëren:",
     "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },

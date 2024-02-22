@@ -180,8 +180,6 @@ OC.L10N.register(
     "Add description" : "أضِف وصفاً",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
-    "Link copied" : "تمّ نَسْخ الرابط",
-    "Could not copy link to the clipboard:" : "تعذّر نسخ الرابط إلى الحافظة",
     "Front matter" : "المادة التقديمية front matter",
     "Source language" : "اللغة الأصلية",
     "Target language" : "اللغة المطلوبة",

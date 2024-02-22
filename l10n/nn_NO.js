@@ -14,7 +14,6 @@ OC.L10N.register(
     "Replace" : "Erstatt",
     "Info" : "Info",
     "Warning" : "Åtvaring",
-    "Edit" : "Endra",
-    "Link copied" : "Lenkje kopiert"
+    "Edit" : "Endra"
 },
 "nplurals=2; plural=(n != 1);");
