@@ -66,6 +66,7 @@ OC.L10N.register(
     "Insert" : "삽입",
     "Detect language" : "언어 감지",
     "Translation failed" : "번역 실패",
+    "Copy code block" : "코드 블록 복사",
     "Source code" : "소스 코드",
     "Hide outline" : "개요 숨기기",
     "Show outline" : "개요 보이기",
@@ -84,7 +85,6 @@ OC.L10N.register(
     "Formatting" : "서식",
     "Smart picker" : "스마트 피커",
     "Edit" : "편집",
-    "Link copied" : "링크 복사됨",
     "Unsupported image type" : "지원하지 않는 사진 형식"
 },
 "nplurals=1; plural=0;");

@@ -72,7 +72,6 @@ OC.L10N.register(
     "Formatting" : "עיצוב",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
     "Edit" : "עריכה",
-    "Link copied" : "הקישור הועתק",
     "Unsupported image type" : "סוג התמונה לא נתמך",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות"
 },

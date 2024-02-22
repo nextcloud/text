@@ -175,8 +175,6 @@ OC.L10N.register(
     "Add description" : "Aggiungi descrizione",
     "\"{name}\" already exist!" : "\"{name}\" esiste già!",
     "Created \"{name}\"" : "Creato \"{name}\"",
-    "Link copied" : "Collegamento copiato",
-    "Could not copy link to the clipboard:" : "Impossibile copiare negli appunti il collegamento:",
     "Front matter" : "Frontespizio",
     "Source language" : "Lingua di origine",
     "Target language" : "Lingua di destinazione",

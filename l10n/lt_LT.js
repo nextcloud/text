@@ -121,8 +121,6 @@ OC.L10N.register(
     "Formatting" : "Formatavimas",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Edit" : "Taisyti",
-    "Link copied" : "Nuoroda nukopijuota",
-    "Could not copy link to the clipboard:" : "Nepavyko nukopijuoti nuorodos į iškarpinę:",
     "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },

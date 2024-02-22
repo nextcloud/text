@@ -11,7 +11,6 @@ OC.L10N.register(
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
     "Warning" : "Alɣu",
-    "Edit" : "Ẓreg",
-    "Link copied" : "Aseɣwen yettwanɣel"
+    "Edit" : "Ẓreg"
 },
 "nplurals=2; plural=(n != 1);");

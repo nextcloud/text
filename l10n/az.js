@@ -18,7 +18,6 @@ OC.L10N.register(
     "Replace" : "Əvəz edin",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq",
-    "Edit" : "Dəyişiklik et",
-    "Link copied" : "Link kopyalandı"
+    "Edit" : "Dəyişiklik et"
 },
 "nplurals=2; plural=(n != 1);");
