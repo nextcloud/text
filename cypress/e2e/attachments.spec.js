@@ -198,7 +198,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back from home to sub folder')
-				cy.get('.file-picker nav [aria-label="Home"]').click()
+				cy.get('.file-picker nav [title="Home"]').click()
 				cy.get('.file-picker [data-filename="sub"]').click()
 
 				cy.log('Go to sub folder (b)')
@@ -217,7 +217,7 @@ describe('Test all attachment insertion methods', () => {
 				cy.intercept({ method: 'POST', url: '**/filepath' }).as(requestAlias)
 
 				cy.log('Go back to home')
-				cy.get('.file-picker nav [aria-label="Home"]').click()
+				cy.get('.file-picker nav [title="Home"]').click()
 
 				cy.log('Select the file in the filepicker')
 				cy.get('.file-picker [data-filename="github.png"]').click()
