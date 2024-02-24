@@ -37,25 +37,6 @@ import FilePlusSvg from '@mdi/svg/svg/file-plus.svg'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
-const optimalPath = function(from, to) {
-	const current = from.split('/')
-	const target = to.split('/')
-	current.pop() // ignore filename
-	while (current[0] === target[0]) {
-		current.shift()
-		target.shift()
-		// Handle case where target is the current directory
-		if (current.length === 0 && target.length === 0) {
-			return '.'
-		}
-	}
-	const relativePath = current.fill('..').concat(target)
-	const absolutePath = to.split('/')
-	return relativePath.length < absolutePath.length
-		? relativePath.join('/')
-		: to
-}
-
 const registerFileCreate = () => {
 	const newFileMenuPlugin = {
 		attach(menu) {
@@ -260,7 +241,6 @@ export const FilesWorkspaceHeader = new Header({
 })
 
 export {
-	optimalPath,
 	registerFileActionFallback,
 	registerFileCreate,
 	FILE_ACTION_IDENTIFIER,

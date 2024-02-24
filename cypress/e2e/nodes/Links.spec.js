@@ -181,13 +181,18 @@ describe('test link marks', function() {
 				})
 
 				return cy.getContent()
-					.find(`a[href*="${encodeURIComponent(filename)}"]`)
+					.find(`a[href*="/index.php/f/${fileId}"]`)
 					.should('have.text', text === undefined ? filename : text)
 			}
+
+			let fileId = null
 
 			beforeEach(() => cy.clearContent())
 
 			it('without text', () => {
+				cy.getFileId(fileName).then((id) => {
+					fileId = id
+				})
 				cy.getFile(fileName)
 					.then($el => {
 						checkLinkFile(fileName)
@@ -195,6 +200,9 @@ describe('test link marks', function() {
 					})
 			})
 			it('with selected text', () => {
+				cy.getFileId(fileName).then((id) => {
+					fileId = id
+				})
 				cy.getFile(fileName)
 					.then($el => {
 						cy.getContent().type(`${text}{selectAll}`)
@@ -203,7 +211,9 @@ describe('test link marks', function() {
 					})
 			})
 			it('link to directory', () => {
-				cy.createFolder(`${window.__currentDirectory}/dummy folder`)
+				cy.createFolder(`${window.__currentDirectory}/dummy folder`).then((folderId) => {
+					fileId = folderId
+				})
 				cy.getFile(fileName).then($el => {
 					cy.getContent().type(`${text}{selectAll}`)
 					checkLinkFile('dummy folder', text, true)

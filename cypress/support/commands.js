@@ -261,13 +261,15 @@ Cypress.Commands.add('createFolder', (target) => {
 
 	return cy.getRequestToken()
 		.then(requesttoken => {
-			return cy.request({
+			cy.request({
 				url: `${rootPath}/${dirPath}`,
 				method: 'MKCOL',
 				auth,
 				headers: {
 					requesttoken,
 				},
+			}).then((response) => {
+				return parseInt(response.headers['oc-fileid'])
 			})
 		})
 })
