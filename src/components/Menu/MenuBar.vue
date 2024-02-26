@@ -71,7 +71,7 @@ import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
 import HelpModal from '../HelpModal.vue'
 import ToolBarLogic from './ToolBarLogic.js'
-import actionsFullEntries from './entries.js'
+import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
@@ -116,6 +116,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		openReadOnly: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup() {
@@ -126,7 +130,7 @@ export default {
 
 	data() {
 		return {
-			entries: [...actionsFullEntries],
+			entries: this.openReadOnly ? [...ReadOnlyDoneEntries, ...MenuEntries] : [...MenuEntries],
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
