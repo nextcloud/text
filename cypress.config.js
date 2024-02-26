@@ -1,6 +1,6 @@
 const { defineConfig } = require('cypress')
 const cypressSplit = require('cypress-split')
-const getCompareSnapshotsPlugin = require('cypress-visual-regression/dist/plugin.js')
+const { configureVisualRegression } = require('cypress-visual-regression/dist/plugin.js')
 
 module.exports = defineConfig({
 	projectId: 'hx9gqy',
@@ -15,9 +15,12 @@ module.exports = defineConfig({
 		SNAPSHOT_DIFF_DIRECTORY: './cypress/snapshots/diff',
 	},
 	e2e: {
+		env: {
+			visualRegressionType: 'regression',
+		},
 		setupNodeEvents(on, config) {
 			cypressSplit(on, config)
-			getCompareSnapshotsPlugin(on, config)
+			configureVisualRegression(on)
 
 			const browserify = require('@cypress/browserify-preprocessor')
 			const webpack = require('@cypress/webpack-preprocessor')
