@@ -25,7 +25,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { ReadonlyEntries as entries } from './entries.js'
+import { ReadOnlyEditEntries, OutlineEntries } from './entries.js'
 
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
@@ -38,9 +38,15 @@ export default defineComponent({
 		ActionSingle,
 	},
 	extends: ToolBarLogic,
+	props: {
+		openReadOnly: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	data() {
 		return {
-			entries,
+			entries: this.openReadOnly ? [...ReadOnlyEditEntries, ...OutlineEntries] : [...OutlineEntries],
 		}
 	},
 })
