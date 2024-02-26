@@ -22,12 +22,12 @@
 
 import axios from '@nextcloud/axios'
 import { addCommands } from '@nextcloud/cypress'
-import compareSnapshotCommand from 'cypress-visual-regression/dist/command.js'
+import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command.js'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
 
-compareSnapshotCommand()
+addCompareSnapshotCommand()
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
