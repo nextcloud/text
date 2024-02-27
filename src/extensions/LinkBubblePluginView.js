@@ -38,7 +38,7 @@ class LinkBubblePluginView {
 	}
 
 	dragOrScrollHandler = () => {
-		this.hide()
+		// this.hide()
 	}
 
 	pointerdownHandler = () => {
@@ -149,6 +149,7 @@ class LinkBubblePluginView {
 
 		const { state } = view
 		const { selection } = state
+		console.info({ head: selection.head, anchor: selection.anchor })
 
 		// support for CellSelections
 		const { ranges } = selection
@@ -182,6 +183,7 @@ class LinkBubblePluginView {
 		this.createTooltip()
 
 		if (!shouldShow || !linkNode) {
+			// Here it seems to fail
 			this.hide()
 			return
 		}
