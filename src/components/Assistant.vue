@@ -24,7 +24,8 @@
 			:editor="$editor"
 			:tippy-options="floatingOptions()"
 			:should-show="floatingShow"
-			class="floating-menu">
+			class="floating-menu"
+			data-cy="assistantMenu">
 			<NcActions :title="t('text', 'Nextcloud Assistant')" :type="'secondary'">
 				<template #icon>
 					<CreationIcon :size="20" class="icon" />
@@ -214,7 +215,7 @@ export default {
 	},
 	computed: {
 		showAssistant() {
-			return !this.$isRichWorkspace && !this.$isPublic && window?.OCA?.TpAssistant?.openAssistantForm
+			return !this.$isRichWorkspace && !this.$isPublic && window?.OCA?.TPAssistant?.openAssistantForm
 		},
 		identifier() {
 			return 'text-file:' + this.$file.fileId
@@ -281,7 +282,7 @@ export default {
 			this.selection = state.doc.textBetween(from, to, ' ')
 		},
 		async openAssistantForm(taskType = null) {
-			await window.OCA.TpAssistant.openAssistantForm(
+			await window.OCA.TPAssistant.openAssistantForm(
 				{
 					appId: 'text',
 					identifier: this.identifier,
@@ -326,7 +327,7 @@ export default {
 			this.displayTranslate = false
 		},
 		async openResult(task) {
-			window.OCA?.TpAssistant.openAssistantResult(task)
+			window.OCA?.TPAssistant.openAssistantResult(task)
 		},
 		async insertResult(task) {
 			this.$editor.commands.insertContent(task.output)

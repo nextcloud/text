@@ -23,10 +23,10 @@ describe('Assistant', () => {
 		cy.getContent()
 			.click({ force: true })
 
-		cy.get('.floating-menu')
+		cy.get('[data-cy="assistantMenu"]')
 			.should('be.visible')
 
-		cy.get('.floating-menu')
+		cy.get('[data-cy="assistantMenu"]')
 			.click()
 
 		cy.get('.action-item__popper ul').children().should(($children) => {
@@ -46,22 +46,25 @@ describe('Assistant', () => {
 
 		cy.getContent()
 			.click({ force: true })
-		cy.get('.floating-menu')
+		cy.get('[data-cy="assistantMenu"]')
 			.click()
 		cy.get('.action-item__popper ul li').first()
 			.click()
 
-		cy.get('.assistant-modal--content #assistant-input')
+		cy.get('.assistant-modal--content #input-prompt')
 			.should('be.visible')
 
-		cy.get('.assistant-modal--content #assistant-input')
+		cy.get('.assistant-modal--content #input-prompt')
 			.type('Hello World')
 		cy.get('.assistant-modal--content .submit-button')
 			.click()
 
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(2000)
+
 		cy.get('.assistant-modal--content .close-button')
 			.click()
-		cy.get('.floating-menu')
+		cy.get('[data-cy="assistantMenu"]')
 			.click()
 		cy.get('.action-item__popper ul li').last()
 			.click()
