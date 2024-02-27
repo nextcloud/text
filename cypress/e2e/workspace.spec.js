@@ -157,7 +157,7 @@ describe('Workspace', function() {
 			.contains('😀')
 	})
 
-	it('relative folder links', function() {
+	it('file links', function() {
 		cy.createFolder(`${this.testFolder}/sub-folder`)
 		cy.createFolder(`${this.testFolder}/sub-folder/alpha`)
 
@@ -179,9 +179,6 @@ describe('Workspace', function() {
 
 		cy.getEditor()
 			.find('a')
-			.should('have.attr', 'href')
-			.and('contains', `dir=/${this.testFolder}/sub-folder/alpha`)
-			.and('contains', '#relPath=sub-folder/alpha/test.md')
 
 		cy.getContent()
 			.type('{leftArrow}')

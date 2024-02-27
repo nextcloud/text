@@ -106,9 +106,9 @@ export default {
 			const linkMark = textNode?.marks.find((m) => m.type.name === 'link')
 			const href = linkMark?.attrs?.href
 
-			const PATTERN = /(^)(https?:\/\/)((?:[-A-Z0-9+_]+\.)+[-A-Z]+(?:\/[-A-Z0-9+&@#%?=~_|!:,.;()]*)*)($)/ig
-			if ((new RegExp(PATTERN)).test(href)) {
-				return href
+			if (href) {
+				const url = new URL(href, window.location)
+				return url.href
 			}
 
 			return null

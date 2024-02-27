@@ -80,12 +80,12 @@
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
+import { generateUrl } from '@nextcloud/router'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
-import { optimalPath } from '../../helpers/files.js'
 import { useFileMixin } from '../Editor.provider.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
@@ -144,9 +144,7 @@ export default {
 				.then((file) => {
 					const client = OC.Files.getClient()
 					client.getFileInfo(file).then((_status, fileInfo) => {
-						const path = optimalPath(this.relativePath, `${fileInfo.path}/${fileInfo.name}`)
-						const encodedPath = path.split('/').map(encodeURIComponent).join('/') + (fileInfo.type === 'dir' ? '/' : '')
-						const href = `${encodedPath}?fileId=${fileInfo.id}`
+						const href = generateUrl(`/f/${fileInfo.id}`)
 						this.setLink(href, fileInfo.name)
 						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 					})

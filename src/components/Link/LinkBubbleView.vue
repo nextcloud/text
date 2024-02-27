@@ -149,9 +149,8 @@ export default {
 		 * NcReferenceList only accepts full URLs with origin.
 		 */
 		sanitizedHref() {
-			return this.href?.startsWith('/')
-				? location.origin + this.href
-				: this.href
+			const url = new URL(this.href, window.location)
+			return url.href
 		},
 
 		title() {

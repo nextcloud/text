@@ -20,33 +20,7 @@
  *
  */
 
-import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
-
-const absolutePath = function(base, rel) {
-	if (!rel) {
-		return base
-	}
-	if (rel[0] === '/') {
-		return rel
-	}
-	base = base.split('/')
-	rel = rel.split('/')
-	while (rel[0] === '..' || rel[0] === '.') {
-		if (rel[0] === '..') {
-			base.pop()
-		}
-		rel.shift()
-	}
-	return base.concat(rel).join('/')
-}
-
-const basedir = function(file) {
-	const end = file.lastIndexOf('/')
-	return (end > 0)
-		? file.slice(0, end)
-		: file.slice(0, end + 1) // basedir('/toplevel') should return '/'
-}
 
 const domHref = function(node, relativePath) {
 	const ref = node.attrs.href
@@ -62,22 +36,16 @@ const domHref = function(node, relativePath) {
 	if (ref.startsWith('#')) {
 		return ref
 	}
-	// Don't rewrite URL in Collectives context
-	if (loadState('core', 'active-app') === 'collectives') {
+	// Don't rewrite links to the collectives app
+	if (ref.includes('/apps/collectives/')) {
 		return ref
 	}
 
+	// Rewrite links with old format from file picker to `/f/<fileId>`
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
-		const [, relPath, id] = match
-		const currentDir = basedir(relativePath || OCA.Viewer?.file || '/')
-		const dir = absolutePath(currentDir, basedir(relPath))
-		if (relPath.length > 1 && relPath.endsWith('/')) {
-			// is directory
-			return generateUrl(`/apps/files/?dir=${dir}&fileId=${id}`)
-		} else {
-			return generateUrl(`/apps/files/?dir=${dir}&openfile=${id}#relPath=${relPath}`)
-		}
+		const [, , id] = match
+		return generateUrl(`/f/${id}`)
 	}
 	return ref
 }
@@ -89,8 +57,8 @@ const parseHref = function(dom) {
 	}
 	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
-		const [, , id, path] = match
-		return `${path}?fileId=${id}`
+		const [, , id] = match
+		return generateUrl(`/f/${id}`)
 	}
 	return ref
 }

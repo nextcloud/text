@@ -1,5 +1,4 @@
 import { domHref, parseHref } from '../../helpers/links'
-import { loadState } from '@nextcloud/initial-state'
 
 global.OCA = {
 	Viewer: {
@@ -12,9 +11,6 @@ global.OC = {
 }
 
 global._oc_webroot = ''
-
-jest.mock('@nextcloud/initial-state')
-loadState.mockImplementation((app, key) => 'files')
 
 describe('Preparing href attributes for the DOM', () => {
 
@@ -36,24 +32,24 @@ describe('Preparing href attributes for the DOM', () => {
 			.toBe('mailTo:test@mail.example')
 	})
 
-	test('relative link with fileid', () => {
+	test('relative link with fileid (old format from file picker)', () => {
 		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
-			.toBe('/apps/files/?dir=/Wiki&openfile=123#relPath=otherfile')
+			.toBe('/f/123')
 	})
 
-	test('relative path with ../', () => {
+	test('relative path with ../ (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '../other/otherfile?fileId=123'}}))
-			.toBe('/apps/files/?dir=/other&openfile=123#relPath=../other/otherfile')
+			.toBe('/f/123')
 	})
 
-	test('absolute path', () => {
+	test('absolute path (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '/other/otherfile?fileId=123'}}))
-			.toBe('/apps/files/?dir=/other&openfile=123#relPath=/other/otherfile')
+			.toBe('/f/123')
 	})
 
-	test('absolute path', () => {
+	test('absolute path (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '/otherfile?fileId=123'}}))
-			.toBe('/apps/files/?dir=/&openfile=123#relPath=/otherfile')
+			.toBe('/f/123')
 	})
 
 })
@@ -74,9 +70,9 @@ describe('Extracting short urls from the DOM', () => {
 		expect(parseHref(domStub())).toBe(undefined)
 	})
 
-	test('relative link with fileid', () => {
+	test('relative link with fileid (old format from file picker)', () => {
 		expect(parseHref(domStub('?dir=/other&openfile=123#relPath=../other/otherfile')))
-			.toBe('../other/otherfile?fileId=123')
+			.toBe('/f/123')
 	})
 
 })
@@ -101,20 +97,29 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 		expect(insertAndExtract({})).toBe(undefined)
 	})
 
-	test('default relative link format is unchanged', () => {
+	test('old relative link format (from file picker) is rewritten', () => {
 		expect(insertAndExtract({href: 'otherfile?fileId=123'}))
-			.toBe('otherfile?fileId=123')
+			.toBe('/f/123')
 	})
 
-})
-
-describe('Preparing href attributes for the DOM in Collectives app', () => {
-	beforeAll(() => {
-		loadState.mockImplementation((app, key) => 'collectives')
+	test('old relative link format with ../ (from file picker) is rewritten', () => {
+		expect(insertAndExtract({href: '../otherfile?fileId=123'}))
+			.toBe('/f/123')
 	})
 
-	test('relative link with fileid in Collectives', () => {
-		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
-			.toBe('otherfile?fileId=123')
+	test('old absolute link format (from file picker) is rewritten', () => {
+		expect(insertAndExtract({href: '/otherfile?fileId=123'}))
+			.toBe('/f/123')
 	})
+
+	test('default absolute link format is unchanged', () => {
+		expect(insertAndExtract({href: '/f/123'}))
+			.toBe('/f/123')
+	})
+
+	test('absolute link to collectives page is unchanged', () => {
+		expect(insertAndExtract({href: '/apps/collectives/page?fileId=123'}))
+			.toBe('/apps/collectives/page?fileId=123')
+	})
+
 })
