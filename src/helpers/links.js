@@ -45,7 +45,7 @@ const domHref = function(node, relativePath) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, , id] = match
-		return generateUrl(`/f/${id}`)
+		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
 	}
 	return ref
 }
@@ -58,7 +58,7 @@ const parseHref = function(dom) {
 	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
 		const [, , id] = match
-		return generateUrl(`/f/${id}`)
+		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
 	}
 	return ref
 }

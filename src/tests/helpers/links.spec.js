@@ -34,22 +34,22 @@ describe('Preparing href attributes for the DOM', () => {
 
 	test('relative link with fileid (old format from file picker)', () => {
 		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 	test('relative path with ../ (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '../other/otherfile?fileId=123'}}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute path (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '/other/otherfile?fileId=123'}}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute path (old format from file picker)', () => {
 		expect(domHref({attrs: {href: '/otherfile?fileId=123'}}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 })
@@ -72,7 +72,7 @@ describe('Extracting short urls from the DOM', () => {
 
 	test('relative link with fileid (old format from file picker)', () => {
 		expect(parseHref(domStub('?dir=/other&openfile=123#relPath=../other/otherfile')))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 })
@@ -99,22 +99,22 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 
 	test('old relative link format (from file picker) is rewritten', () => {
 		expect(insertAndExtract({href: 'otherfile?fileId=123'}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 	test('old relative link format with ../ (from file picker) is rewritten', () => {
 		expect(insertAndExtract({href: '../otherfile?fileId=123'}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
 	test('old absolute link format (from file picker) is rewritten', () => {
 		expect(insertAndExtract({href: '/otherfile?fileId=123'}))
-			.toBe('/f/123')
+			.toBe('http://localhost/f/123')
 	})
 
-	test('default absolute link format is unchanged', () => {
-		expect(insertAndExtract({href: '/f/123'}))
-			.toBe('/f/123')
+	test('default full URL link format is unchanged', () => {
+		expect(insertAndExtract({href: 'http://localhost/f/123'}))
+			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute link to collectives page is unchanged', () => {
