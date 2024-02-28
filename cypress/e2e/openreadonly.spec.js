@@ -4,9 +4,9 @@ import { randUser } from '../utils/index.js'
 const admin = new User('admin', 'admin')
 const user = randUser()
 
-describe('Open read-only mode', function () {
+describe('Open read-only mode', function() {
 
-	const setReadOnlyMode = function (mode) {
+	const setReadOnlyMode = function(mode) {
 		cy.login(admin)
 		cy.ocsRequest({
 			method: 'POST',
@@ -18,13 +18,13 @@ describe('Open read-only mode', function () {
 		cy.logout()
 	}
 
-	describe('Disabled', function () {
-		const checkMenubar = function () {
+	describe('Disabled', function() {
+		const checkMenubar = function() {
 			cy.get('.text-editor--readonly-bar').should('not.exist')
 			cy.get('.text-menubar').getActionEntry('done').should('not.exist')
 		}
 
-		beforeEach(function () {
+		beforeEach(function() {
 			setReadOnlyMode(0)
 
 			cy.createUser(user)
@@ -36,29 +36,29 @@ describe('Open read-only mode', function () {
 			cy.visit('/apps/files')
 		})
 
-		it('Test writable markdown file', function () {
+		it('Test writable markdown file', function() {
 			cy.openFile('test.md')
 			checkMenubar()
 		})
 
-		it('Test writable text file', function () {
+		it('Test writable text file', function() {
 			cy.openFile('test.txt')
 			checkMenubar()
 		})
 	})
 
-	describe('Enabled', function () {
-		const requireReadOnlyBar = function () {
+	describe('Enabled', function() {
+		const requireReadOnlyBar = function() {
 			cy.get('.text-editor--readonly-bar').should('exist')
 			cy.get('.text-editor--readonly-bar').getActionEntry('edit').should('exist')
 		}
 
-		const requireMenubar = function () {
+		const requireMenubar = function() {
 			cy.get('.text-editor--readonly-bar').should('not.exist')
 			cy.get('.text-menubar').getActionEntry('done').should('exist')
 		}
 
-		beforeEach(function () {
+		beforeEach(function() {
 			setReadOnlyMode(1)
 
 			cy.createUser(user)
@@ -73,7 +73,7 @@ describe('Open read-only mode', function () {
 			cy.visit('/apps/files')
 		})
 
-		it('Test read-only markdown file', function () {
+		it('Test read-only markdown file', function() {
 			cy.openFile('test.md')
 
 			requireReadOnlyBar()
@@ -89,7 +89,7 @@ describe('Open read-only mode', function () {
 			requireReadOnlyBar()
 		})
 
-		it('Test read-only text file', function () {
+		it('Test read-only text file', function() {
 			cy.openFile('test.txt')
 
 			requireReadOnlyBar()
