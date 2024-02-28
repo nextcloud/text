@@ -24,7 +24,8 @@
 			:editor="$editor"
 			:tippy-options="floatingOptions()"
 			:should-show="floatingShow"
-			class="floating-menu">
+			class="floating-menu"
+			data-cy="assistantMenu">
 			<NcActions :title="t('text', 'Nextcloud Assistant')" :type="'secondary'">
 				<template #icon>
 					<CreationIcon :size="20" class="icon" />
@@ -154,6 +155,7 @@ import {
 } from './Editor.provider.js'
 import { FloatingMenu } from '@tiptap/vue-2'
 import Translate from './Modal/Translate.vue'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
@@ -241,7 +243,7 @@ export default {
 
 		this.$editor.on('selectionUpdate', this.onSelection)
 		this.fetchTasks()
-		this.$interval = setInterval(() => this.fetchTasks(), 60 * 1000)
+		subscribe('notifications:notification:received', this.checkNotification)
 	},
 	beforeDestroy() {
 		if (!this.showAssistant) {
@@ -249,7 +251,7 @@ export default {
 		}
 
 		this.$editor.off('selectionUpdate', this.onSelection)
-		clearInterval(this.$interval)
+		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
 	methods: {
 		async fetchTasks() {
@@ -268,6 +270,12 @@ export default {
 				}
 			}).sort((a, b) => b.id - a.id)
 		},
+		async checkNotification(event) {
+			if (event.notification.app !== 'assistant' || event.notification.actions[0].type !== 'WEB') {
+				return
+			}
+			await this.fetchTasks()
+		},
 		onSelection() {
 			const { state } = this.$editor
 			const { from, to } = state.selection
@@ -281,6 +289,17 @@ export default {
 					taskType,
 					input: this.selection,
 					isInsideViewer: true,
+					closeOnResult: false,
+					actionButtons: [
+						{
+							type: 'primary',
+							title: t('text', 'Insert result'),
+							label: t('text', 'Insert result'),
+							onClick: (lastTask) => {
+								this.insertResult(lastTask)
+							},
+						},
+					],
 				})
 			await this.fetchTasks()
 		},
@@ -344,11 +363,23 @@ export default {
 				getReferenceClientRect: () => {
 					const editorRect = this.$parent.$el.querySelector('.ProseMirror').getBoundingClientRect()
 					const pos = posToDOMRect(this.$editor.view, this.$editor.state.selection.from, this.$editor.state.selection.to)
+					let rightSpacing = 0
+					let addTopSpacing = 0
+
+					if (editorRect.width < 670) {
+						rightSpacing = 20
+					}
+
+					if (editorRect.width < 425) {
+						rightSpacing = 66
+						addTopSpacing = 30
+					}
+
 					return {
 						...pos,
-						width: editorRect.width,
+						width: editorRect.width - rightSpacing,
 						height: limitInRange(pos.height, buttonSize, window.innerHeight),
-						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing),
+						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing) + addTopSpacing,
 						left: editorRect.left,
 						right: editorRect.right,
 						bottom: limitInRange(pos.top + buttonSize, bottomSpacing, window.innerHeight - topSpacing) + 22,

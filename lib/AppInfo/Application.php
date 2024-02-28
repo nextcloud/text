@@ -41,7 +41,7 @@ use OCA\Text\Listeners\RegisterDirectEditorEventListener;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
 use OCA\Text\Service\ConfigService;
-use OCA\TPAssistant\Event\BeforeAssistantNotificationEvent;
+use OCA\TpAssistant\Event\BeforeAssistantNotificationEvent;
 use OCA\Viewer\Event\LoadViewer;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
