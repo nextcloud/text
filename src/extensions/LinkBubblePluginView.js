@@ -34,7 +34,11 @@ class LinkBubblePluginView {
 		document.addEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 
-	dragOrScrollHandler = () => {
+	dragOrScrollHandler = (event) => {
+		// Cypress fires unexpected scroll events, which breaks testing the link bubble
+		if (window.Cypress) {
+			return
+		}
 		this.hide()
 	}
 
