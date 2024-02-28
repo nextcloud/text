@@ -17,6 +17,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Atayos del tecláu",
     "Cancel" : "Encaboxar",
     "URL" : "URL",
+    "Select file or folder to link to" : "Seleicionar un ficheru o una carpeta a la qu'enllaciar",
     "Undo" : "Desfacer",
     "Redo" : "Refacer",
     "Info" : "Información",
