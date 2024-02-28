@@ -10,7 +10,6 @@ const updateDelay = 250
 class LinkBubblePluginView {
 
 	#component = null
-	#preventHide = false
 	#hadUpdateFromClick = false
 	#updateDebounceTimer = undefined
 
@@ -33,16 +32,10 @@ class LinkBubblePluginView {
 		this.view.dom.addEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.addEventListener('click', this.clickHandler)
 		document.addEventListener('scroll', this.dragOrScrollHandler, { capture: true })
-		this.editor.on('focus', this.focusHandler)
-		this.editor.on('blur', this.blurHandler)
 	}
 
 	dragOrScrollHandler = () => {
 		this.hide()
-	}
-
-	pointerdownHandler = () => {
-		this.#preventHide = true
 	}
 
 	// Required for read-only mode on Firefox. For some reason, editor selection doesn't get
@@ -65,28 +58,6 @@ class LinkBubblePluginView {
 
 		// we use `setTimeout` to make sure `selection` is already updated
 		setTimeout(() => this.updateFromClick(this.editor.view, clickedPos))
-	}
-
-	focusHandler = () => {
-		// we use `setTimeout` to make sure `selection` is already updated
-		setTimeout(() => this.update(this.editor.view))
-	}
-
-	blurHandler = ({ event }) => {
-		if (this.#preventHide) {
-			this.#preventHide = false
-			return
-		}
-
-		if (event?.relatedTarget && this.tippy?.popper.firstChild.contains(event.relatedTarget)) {
-			return
-		}
-
-		this.hide()
-	}
-
-	tippyBlurHandler = () => {
-		this.hide()
 	}
 
 	keydownHandler = (event) => {
@@ -116,10 +87,6 @@ class LinkBubblePluginView {
 				strategy: 'fixed',
 			},
 		})
-
-		this.tippy.popper.firstChild?.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
-		// Hide tippy on its own blur event as well
-		this.tippy.popper.firstChild?.addEventListener('blur', this.tippyBlurHandler)
 	}
 
 	update(view, oldState) {
@@ -136,7 +103,7 @@ class LinkBubblePluginView {
 			clearTimeout(this.#updateDebounceTimer)
 		}
 
-		this.#updateDebounceTimer = window.setTimeout(() => {
+		this.#updateDebounceTimer = setTimeout(() => {
 			this.updateFromSelection(view)
 		}, updateDelay)
 	}
@@ -178,7 +145,7 @@ class LinkBubblePluginView {
 		this.updateTooltip(this.editor.view, shouldShow, clickedNode, nodeStart)
 	}
 
-	updateTooltip = (view, shouldShow, linkNode, nodeStart) => {
+	updateTooltip(view, shouldShow, linkNode, nodeStart) {
 		this.createTooltip()
 
 		if (!shouldShow || !linkNode) {
@@ -216,17 +183,13 @@ class LinkBubblePluginView {
 	}
 
 	destroy() {
-		this.tippy?.popper.firstChild?.removeEventListener('blur', this.tippyBlurHandler)
-		this.tippy?.popper.firstChild?.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.destroy()
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.removeEventListener('click', this.clickHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
-		this.editor.off('focus', this.focusHandler)
-		this.editor.off('blur', this.blurHandler)
 	}
 
-	linkNodeFromSelection = (view) => {
+	linkNodeFromSelection(view) {
 		const { state } = view
 		const { selection } = state
 
