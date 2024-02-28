@@ -79,6 +79,7 @@ jobs:
       - name: Install dependencies & build assistant
         working-directory: apps/assistant
         run: |
+          composer install --no-dev
           npm ci
           npm run build
 
