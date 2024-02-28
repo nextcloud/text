@@ -1,17 +1,15 @@
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
+import debounce from 'debounce'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 
 import { getViewerVue } from '../ViewerVue.js'
 
-const updateDelay = 250
-
 class LinkBubblePluginView {
 
 	#component = null
 	#hadUpdateFromClick = false
-	#updateDebounceTimer = undefined
 
 	constructor({ editor, view }) {
 		this.editor = editor
@@ -103,16 +101,10 @@ class LinkBubblePluginView {
 			return
 		}
 
-		if (this.#updateDebounceTimer) {
-			clearTimeout(this.#updateDebounceTimer)
-		}
-
-		this.#updateDebounceTimer = setTimeout(() => {
-			this.updateFromSelection(view)
-		}, updateDelay)
+		this.updateFromSelection(view)
 	}
 
-	updateFromSelection(view) {
+	updateFromSelection = debounce((view) => {
 		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
 		if (this.#hadUpdateFromClick) {
 			return
@@ -135,7 +127,7 @@ class LinkBubblePluginView {
 		const shouldShow = !!linkNode && hasEditorFocus
 
 		this.updateTooltip(view, shouldShow, linkNode, nodeStart)
-	}
+	}, 250)
 
 	updateFromClick(view, clickedLinkPos) {
 		const nodeStart = clickedLinkPos.pos - clickedLinkPos.textOffset
@@ -145,7 +137,7 @@ class LinkBubblePluginView {
 		this.#hadUpdateFromClick = true
 		setTimeout(() => {
 			this.#hadUpdateFromClick = false
-		}, 200)
+		}, 500)
 		this.updateTooltip(this.editor.view, shouldShow, clickedNode, nodeStart)
 	}
 
