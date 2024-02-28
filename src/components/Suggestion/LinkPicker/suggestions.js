@@ -22,7 +22,7 @@
 import createSuggestions from '../suggestions.js'
 import LinkPickerList from './LinkPickerList.vue'
 import { searchProvider, getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import menuEntries from './../../Menu/entries.js'
+import { MenuEntries } from './../../Menu/entries.js'
 import { getIsActive } from '../../Menu/utils.js'
 import markdownit from '../../../markdownit/index.js'
 
@@ -70,11 +70,11 @@ const sortImportantFirst = (list) => {
 const formattingSuggestions = (query) => {
 	return sortImportantFirst(
 		[
-			...menuEntries.find(e => e.key === 'headings').children,
-			...menuEntries.filter(e => e.action && !filterOut(e)),
-			...menuEntries.find(e => e.key === 'callouts').children,
+			...MenuEntries.find(e => e.key === 'headings').children,
+			...MenuEntries.filter(e => e.action && !filterOut(e)),
+			...MenuEntries.find(e => e.key === 'callouts').children,
 			{
-				...menuEntries.find(e => e.key === 'emoji-picker'),
+				...MenuEntries.find(e => e.key === 'emoji-picker'),
 				action: (command) => command.insertContent(':'),
 			},
 		].filter(e => e?.label?.toLowerCase?.()?.includes(query.toLowerCase()))

@@ -35,7 +35,7 @@
 <script>
 import { ERROR_TYPE } from './../../services/SyncService.js'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
-import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
+import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
 import { mapState } from 'vuex'
 
@@ -52,6 +52,11 @@ export default {
 			[OUTLINE_ACTIONS]: {
 				get: () => ({
 					toggle: this.outlineToggle,
+				}),
+			},
+			[READ_ONLY_ACTIONS]: {
+				get: () => ({
+					toggle: this.readOnlyToggle,
 				}),
 			},
 		})
@@ -132,6 +137,9 @@ export default {
 		outlineToggle() {
 			this.outline.visible = !this.outline.visible
 			this.$emit('outline-toggled', this.outline.visible)
+		},
+		readOnlyToggle() {
+			this.$emit('read-only-toggled')
 		},
 	},
 

@@ -29,6 +29,11 @@ class InitialStateProvider {
 		);
 
 		$this->initialState->provideInitialState(
+			'open_read_only_enabled',
+			$this->configService->isOpenReadOnlyEnabled()
+		);
+
+		$this->initialState->provideInitialState(
 			'default_file_extension',
 			$this->configService->getDefaultFileExtension()
 		);
