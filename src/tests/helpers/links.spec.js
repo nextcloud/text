@@ -1,4 +1,5 @@
 import { domHref, parseHref } from '../../helpers/links'
+import { loadState } from '@nextcloud/initial-state'
 
 global.OCA = {
 	Viewer: {
@@ -11,6 +12,9 @@ global.OC = {
 }
 
 global._oc_webroot = ''
+
+jest.mock('@nextcloud/initial-state')
+loadState.mockImplementation((app, key) => 'files')
 
 describe('Preparing href attributes for the DOM', () => {
 
@@ -122,4 +126,15 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 			.toBe('/apps/collectives/page?fileId=123')
 	})
 
+})
+
+describe('Preparing href attributes for the DOM in Collectives app', () => {
+	beforeAll(() => {
+		loadState.mockImplementation((app, key) => 'collectives')
+	})
+
+	test('relative link with fileid in Collectives', () => {
+		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
+			.toBe('otherfile?fileId=123')
+	})
 })
