@@ -89,6 +89,7 @@ import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
+import { useResizeObserver } from '@vueuse/core'
 
 import {
 	EDITOR,
@@ -327,6 +328,12 @@ export default {
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
+		useResizeObserver(this.$el, (entries) => {
+			const entry = entries[0]
+			const { width } = entry.contentRect
+			const maxWidth = width - 36
+			this.$el.style.setProperty('--widget-full-width', `${maxWidth}px`)
+		})
 	},
 	created() {
 		this.$ydoc = new Doc()
