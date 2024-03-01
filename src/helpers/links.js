@@ -20,6 +20,7 @@
  *
  */
 
+import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 
 const domHref = function(node, relativePath) {
@@ -36,6 +37,10 @@ const domHref = function(node, relativePath) {
 	if (ref.startsWith('#')) {
 		return ref
 	}
+	// Don't rewrite links in collectives app context
+	if (loadState('core', 'active-app') === 'collectives') {
+		return ref
+	}
 	// Don't rewrite links to the collectives app
 	if (ref.includes('/apps/collectives/')) {
 		return ref
@@ -45,7 +50,7 @@ const domHref = function(node, relativePath) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, , id] = match
-		return generateUrl(`/f/${id}`)
+		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
 	}
 	return ref
 }
@@ -58,7 +63,7 @@ const parseHref = function(dom) {
 	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
 		const [, , id] = match
-		return generateUrl(`/f/${id}`)
+		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
 	}
 	return ref
 }

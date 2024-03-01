@@ -1,18 +1,15 @@
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
+import debounce from 'debounce'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 
 import { getViewerVue } from '../ViewerVue.js'
 
-const updateDelay = 250
-
 class LinkBubblePluginView {
 
 	#component = null
-	#preventHide = false
 	#hadUpdateFromClick = false
-	#updateDebounceTimer = undefined
 
 	constructor({ editor, view }) {
 		this.editor = editor
@@ -33,16 +30,14 @@ class LinkBubblePluginView {
 		this.view.dom.addEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.addEventListener('click', this.clickHandler)
 		document.addEventListener('scroll', this.dragOrScrollHandler, { capture: true })
-		this.editor.on('focus', this.focusHandler)
-		this.editor.on('blur', this.blurHandler)
 	}
 
-	dragOrScrollHandler = () => {
+	dragOrScrollHandler = (event) => {
+		// Cypress fires unexpected scroll events, which breaks testing the link bubble
+		if (window.Cypress) {
+			return
+		}
 		this.hide()
-	}
-
-	pointerdownHandler = () => {
-		this.#preventHide = true
 	}
 
 	// Required for read-only mode on Firefox. For some reason, editor selection doesn't get
@@ -65,28 +60,6 @@ class LinkBubblePluginView {
 
 		// we use `setTimeout` to make sure `selection` is already updated
 		setTimeout(() => this.updateFromClick(this.editor.view, clickedPos))
-	}
-
-	focusHandler = () => {
-		// we use `setTimeout` to make sure `selection` is already updated
-		setTimeout(() => this.update(this.editor.view))
-	}
-
-	blurHandler = ({ event }) => {
-		if (this.#preventHide) {
-			this.#preventHide = false
-			return
-		}
-
-		if (event?.relatedTarget && this.tippy?.popper.firstChild.contains(event.relatedTarget)) {
-			return
-		}
-
-		this.hide()
-	}
-
-	tippyBlurHandler = () => {
-		this.hide()
 	}
 
 	keydownHandler = (event) => {
@@ -116,10 +89,6 @@ class LinkBubblePluginView {
 				strategy: 'fixed',
 			},
 		})
-
-		this.tippy.popper.firstChild?.addEventListener('pointerdown', this.pointerdownHandler, { capture: true })
-		// Hide tippy on its own blur event as well
-		this.tippy.popper.firstChild?.addEventListener('blur', this.tippyBlurHandler)
 	}
 
 	update(view, oldState) {
@@ -132,16 +101,10 @@ class LinkBubblePluginView {
 			return
 		}
 
-		if (this.#updateDebounceTimer) {
-			clearTimeout(this.#updateDebounceTimer)
-		}
-
-		this.#updateDebounceTimer = window.setTimeout(() => {
-			this.updateFromSelection(view)
-		}, updateDelay)
+		this.updateFromSelection(view)
 	}
 
-	updateFromSelection(view) {
+	updateFromSelection = debounce((view) => {
 		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
 		if (this.#hadUpdateFromClick) {
 			return
@@ -164,7 +127,7 @@ class LinkBubblePluginView {
 		const shouldShow = !!linkNode && hasEditorFocus
 
 		this.updateTooltip(view, shouldShow, linkNode, nodeStart)
-	}
+	}, 250)
 
 	updateFromClick(view, clickedLinkPos) {
 		const nodeStart = clickedLinkPos.pos - clickedLinkPos.textOffset
@@ -174,11 +137,11 @@ class LinkBubblePluginView {
 		this.#hadUpdateFromClick = true
 		setTimeout(() => {
 			this.#hadUpdateFromClick = false
-		}, 200)
+		}, 500)
 		this.updateTooltip(this.editor.view, shouldShow, clickedNode, nodeStart)
 	}
 
-	updateTooltip = (view, shouldShow, linkNode, nodeStart) => {
+	updateTooltip(view, shouldShow, linkNode, nodeStart) {
 		this.createTooltip()
 
 		if (!shouldShow || !linkNode) {
@@ -216,17 +179,13 @@ class LinkBubblePluginView {
 	}
 
 	destroy() {
-		this.tippy?.popper.firstChild?.removeEventListener('blur', this.tippyBlurHandler)
-		this.tippy?.popper.firstChild?.removeEventListener('pointerdown', this.pointerdownHandler, { capture: true })
 		this.tippy?.destroy()
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
 		this.view.dom.removeEventListener('click', this.clickHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
-		this.editor.off('focus', this.focusHandler)
-		this.editor.off('blur', this.blurHandler)
 	}
 
-	linkNodeFromSelection = (view) => {
+	linkNodeFromSelection(view) {
 		const { state } = view
 		const { selection } = state
 

@@ -82,9 +82,10 @@ const Link = TipTapLink.extend({
 				props: {
 					handleDOMEvents: {
 						// Open link in new tab on middle click
-						pointerup: (view, event) => {
+						auxclick: (view, event) => {
 							if (event.target.closest('a') && event.button === 1 && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
 								event.preventDefault()
+								event.stopImmediatePropagation()
 
 								const linkElement = event.target.closest('a')
 								window.open(linkElement.href, '_blank')
