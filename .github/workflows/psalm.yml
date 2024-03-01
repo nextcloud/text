@@ -5,13 +5,7 @@
 
 name: Static analysis
 
-on:
-  pull_request:
-  push:
-    branches:
-      - master
-      - main
-      - stable*
+on: pull_request
 
 concurrency:
   group: psalm-${{ github.head_ref || github.run_id }}
@@ -21,15 +15,16 @@ jobs:
   static-analysis:
     runs-on: ubuntu-latest
 
-    name: Nextcloud
+    name: static-psalm-analysis
     steps:
       - name: Checkout
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      - name: Set up php
-        uses: shivammathur/setup-php@4bd44f22a98a19e0950cbad5f31095157cc9621b # v2
+      - name: Set up php8.2
+        uses: shivammathur/setup-php@6d7209f44a25a59e904b1ee9f3b0c33ab2cd888d # v2
         with:
-          php-version: 8.1
+          php-version: 8.2
+          extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, sqlite, pdo_sqlite
           coverage: none
           ini-file: development
         env:
