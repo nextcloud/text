@@ -17,6 +17,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Atayos del tecláu",
     "Cancel" : "Encaboxar",
     "URL" : "URL",
+    "Cannot copy, please copy the link manually" : "Nun se pue copiar. Copia l'enllaz manualmente",
     "Select file or folder to link to" : "Seleicionar un ficheru o una carpeta a la qu'enllaciar",
     "Undo" : "Desfacer",
     "Redo" : "Refacer",
