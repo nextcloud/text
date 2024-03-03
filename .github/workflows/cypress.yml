@@ -41,6 +41,13 @@ jobs:
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
+      - name: Checkout assistant
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        with:
+          repository: nextcloud/assistant
+          ref: 'main'
+          path: apps/assistant
+
       - name: Checkout app
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
@@ -69,6 +76,13 @@ jobs:
           npm ci
           TESTING=true npm run build --if-present
 
+      - name: Install dependencies & build assistant
+        working-directory: apps/assistant
+        run: |
+          composer install --no-dev
+          npm ci
+          npm run build
+
       - name: Save context
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
@@ -85,7 +99,6 @@ jobs:
         node-version: [16]
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         php-versions: [ '8.1' ]
-        server-versions: [ 'stable28' ]
         run-in-parallel:
           - false # only for PRs: ${{ !!github.head_ref }}
 
@@ -143,6 +156,8 @@ jobs:
           php occ user:add --password-from-env user2
           php occ app:enable viewer
           php occ app:enable text
+          php occ app:enable assistant
+          php occ app:enable testing
           php occ app:list
           php occ background:cron
           php occ config:system:set session_keepalive --value=false --type=boolean
