@@ -80,7 +80,7 @@ export default {
 			this.$editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.togglePreview({ href: this.href })
+				.setPreview({ href: this.href })
 				.run()
 		},
 		getTextReference(node) {

@@ -20,7 +20,7 @@
  *
  */
 
-import { Node } from '@tiptap/core'
+import { Node, isNodeActive, getNodeType } from '@tiptap/core'
 import { domHref, parseHref } from './../helpers/links.js'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
@@ -78,20 +78,35 @@ export default Node.create({
 
 	addCommands() {
 		return {
+
 			/**
 			 * Turn a paragraph that contains a single link
-			 * into a preview and vice versa.
+			 * into a preview.
 			 *
 			 */
-			togglePreview: () => ({ state, commands }) => {
+			setPreview: () => ({ state, commands }) => {
 				const { selection } = state
 				return previewPossible(selection)
-					&& commands.toggleNode(
+					&& commands.setNode(
 						this.name,
-						'paragraph',
 						previewAttributesFromSelection(selection),
 					)
 			},
+
+			/**
+			 * Turn a preview back into a paragraph
+			 * that contains a single link.
+			 *
+			 */
+			unsetPreview: () => ({ state, chain }) => {
+				const { selection } = state
+				return isPreview(this.name, this.attributes, state)
+					&& chain()
+						.setNode('paragraph')
+						.setLink(this.attributes)
+						.run()
+			},
+
 		}
 	},
 })
@@ -99,6 +114,11 @@ export default Node.create({
 function previewAttributesFromSelection({ $from }) {
 	const href = extractHref($from.nodeAfter)
 	return { href, title: 'preview' }
+}
+
+function isPreview(typeOrName, attributes, state) {
+	const type = getNodeType(typeOrName, state.schema)
+	return isNodeActive(state, type, attributes)
 }
 
 function previewPossible({ $from }) {

@@ -37,6 +37,7 @@
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
+import { useEditorMixin } from '../components/Editor.provider.js'
 
 export default {
 	name: 'Preview',
@@ -52,13 +53,14 @@ export default {
 			value: 'link-preview',
 		}
 	},
+	mixins: [ useEditorMixin ],
 	methods: {
 		convertToParagraph(...args) {
 			console.info(...args)
 			this.$editor.chain()
 				.focus()
 				.setTextSelection(this.getPos())
-				.setNode('paragaph')
+				.unsetPreview()
 				.run()
 		},
 	},

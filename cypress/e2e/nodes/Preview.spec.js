@@ -39,55 +39,86 @@ describe.only('Preview extension', { retries: 0 }, () => {
 		],
 	})
 
-	describe('togglePreview command', { retries: 0 }, () => {
+	describe('setPreview command', { retries: 0 }, () => {
 
 		it('is available in commands', () => {
-			expect(editor.commands).to.have.property('togglePreview')
+			expect(editor.commands).to.have.property('setPreview')
 		})
 
 		it('cannot run on normal paragraph', () => {
 			prepareEditor('hello\n')
-			expect(editor.can().togglePreview()).to.be.false
+			expect(editor.can().setPreview()).to.be.false
 		})
 
 		it('cannot run on a paragraph with a different mark', () => {
 			prepareEditor('*link text*\n')
-			expect(editor.can().togglePreview()).to.be.false
+			expect(editor.can().setPreview()).to.be.false
 		})
 
 		it('cannot run on a paragraph with a link without a href', () => {
 			prepareEditor('[link text]()\n')
-			expect(editor.can().togglePreview()).to.be.false
+			expect(editor.can().setPreview()).to.be.false
 		})
 
 		it('cannot run on a paragraph with an anchor link', () => {
 			prepareEditor('[link text](#top)\n')
-			expect(editor.can().togglePreview()).to.be.false
+			expect(editor.can().setPreview()).to.be.false
 		})
 
 		it('cannot run on a paragraph with other content', () => {
 			prepareEditor('[link text](https://nextcloud.com) hello\n')
-			expect(editor.can().togglePreview()).to.be.false
+			expect(editor.can().setPreview()).to.be.false
 		})
 
 		it('can run on a paragraph with a link', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
-			expect(editor.can().togglePreview()).to.be.true
+			expect(editor.can().setPreview()).to.be.true
 		})
 
 		it('results in a preview node with the href', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
-			editor.commands.togglePreview()
+			editor.commands.setPreview()
 			expect(getParentNode().type.name).to.equal('preview')
 			expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
 		})
 
-		it('reverts when toggled twice', () => {
+		it('cannot run twice', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
-			editor.commands.togglePreview()
-			editor.commands.togglePreview()
+			editor.commands.setPreview()
+			expect(editor.can().setPreview()).to.be.false
+		})
+
+	})
+
+	describe('unsetPreview command', { retries: 0 }, () => {
+
+		it('is available in commands', () => {
+			expect(editor.commands).to.have.property('unsetPreview')
+		})
+
+		it('cannot run on normal paragraph', () => {
+			prepareEditor('hello\n')
+			expect(editor.can().unsetPreview()).to.be.false
+		})
+
+		it('can run on the output of setPreview', () => {
+			prepareEditor('[link text](https://nextcloud.com)\n')
+			editor.commands.setPreview()
+			expect(editor.can().unsetPreview()).to.be.true
+		})
+
+		it('creates a paragraph', () => {
+			prepareEditor('[link text](https://nextcloud.com)\n')
+			editor.commands.setPreview()
+			editor.commands.unsetPreview()
 			expect(getParentNode().type.name).to.equal('paragraph')
-			expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
+		})
+
+		it('includes a link', () => {
+			prepareEditor('[link text](https://nextcloud.com)\n')
+			editor.commands.setPreview()
+			editor.commands.unsetPreview()
+			expect(getMark().attrs.href).to.equal('https://nextcloud.com')
 		})
 
 	})
@@ -95,6 +126,12 @@ describe.only('Preview extension', { retries: 0 }, () => {
 	function getParentNode() {
 		const { state: { selection } } = editor
 		return selection.$head.parent
+	}
+
+	function getMark() {
+		const { state: { selection } } = editor
+		console.info(selection.$head)
+		return selection.$head.nodeAfter.marks[0]
 	}
 
 	function prepareEditor(input) {
