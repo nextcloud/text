@@ -50,7 +50,7 @@
 		</NcActionButton>
 		<NcActionInput v-if="isInputMode"
 			type="text"
-			:value="href"
+			:value.sync="href"
 			:data-text-action-entry="`${actionEntry.key}-input`"
 			@submit="linkWebsite">
 			<template #icon>
@@ -144,8 +144,8 @@ export default {
 				.then((file) => {
 					const client = OC.Files.getClient()
 					client.getFileInfo(file).then((_status, fileInfo) => {
-						const href = generateUrl(`/f/${fileInfo.id}`)
-						this.setLink(href, fileInfo.name)
+						const url = new URL(generateUrl(`/f/${fileInfo.id}`), window.origin)
+						this.setLink(url.href, fileInfo.name)
 						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 					})
 					this.menuOpen = false
