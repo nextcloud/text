@@ -1,6 +1,8 @@
 OC.L10N.register(
     "text",
     {
+    "The file was uploaded" : "Kaset eo bet ar restr",
+    "No file was uploaded" : "N'eus restr ebet a zo bet kaset",
     "Translate" : "Treiñ",
     "Use current version" : "Implij stumm hiziv",
     "Use the saved version" : "Implij ",
