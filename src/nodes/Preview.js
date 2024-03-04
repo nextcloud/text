@@ -1,9 +1,9 @@
-/*
- * @copyright Copyright (c) 2022 Vinicius Reis <vinicius@nextcloud.com>
+/**
+ * @copyright Copyright (c) 2024 Max <max@nextcloud.com>
  *
- * @author Vinicius Reis <vinicius@nextcloud.com>
+ * @author Max <max@nextcloud.com>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
  *
  */
 
-import { Node, isNodeActive } from '@tiptap/core'
+import { Node } from '@tiptap/core'
 import { domHref, parseHref } from './../helpers/links.js'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
@@ -71,21 +71,52 @@ export default Node.create({
 	},
 
 	toMarkdown: (state, node) => {
-		state.write(`[`)
+		state.write('[')
 		state.text(node.textContent, false)
 		state.write(`](${node.attrs.href} (${node.attrs.title}))`)
 	},
 
 	addCommands() {
 		return {
-			setPreview: attrs => ({ commands }) => {
-				const attributes = { ...attrs, title: 'preview' }
-				return commands.setNode(this.name, attributes)
-			},
-			togglePreview: attrs => ({ commands }) => {
-				const attributes = { ...attrs, title: 'preview' }
-				return commands.toggleNode(this.name, 'paragraph', attributes)
+			/**
+			 * Turn a paragraph that contains a single link
+			 * into a preview and vice versa.
+			 *
+			 */
+			togglePreview: () => ({ state, commands }) => {
+				const { selection } = state
+				return previewPossible(selection)
+					&& commands.toggleNode(
+						this.name,
+						'paragraph',
+						previewAttributesFromSelection(selection),
+					)
 			},
 		}
 	},
 })
+
+function previewAttributesFromSelection({ $from }) {
+	const href = extractHref($from.nodeAfter)
+	return { href, title: 'preview' }
+}
+
+function previewPossible({ $from }) {
+	if (childCount($from.parent) > 1) {
+		return false
+	}
+	const href = extractHref($from.nodeAfter)
+	if (!href || href.startsWith('#')) {
+		return false
+	}
+	return true
+}
+
+function extractHref(node) {
+	const link = node.marks.find(mark => mark.type.name === 'link')
+	return link?.attrs.href
+}
+
+function childCount(node) {
+	return node.content.content.length
+}

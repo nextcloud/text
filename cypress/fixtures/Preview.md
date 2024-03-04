@@ -14,10 +14,10 @@ empty
 
 [link text](https://nextcloud.com)
 
-## Preserves a preview 
+## Converts a link into a preview 
 
-[link text](https://nextcloud.com (Preview))
+[setPreviewENDLESS LOOP!](https://nextcloud.com (Preview))
 
 ---
 
-[link text](https://nextcloud.com (Preview))
+[did setPreview](https://nextcloud.com (Preview))
