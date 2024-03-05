@@ -85,11 +85,10 @@ export default Node.create({
 			 *
 			 */
 			setPreview: () => ({ state, commands }) => {
-				const { selection } = state
-				return previewPossible(selection)
+				return previewPossible(state)
 					&& commands.setNode(
 						this.name,
-						previewAttributesFromSelection(selection),
+						previewAttributesFromSelection(state),
 					)
 			},
 
@@ -99,7 +98,6 @@ export default Node.create({
 			 *
 			 */
 			unsetPreview: () => ({ state, chain }) => {
-				const { selection } = state
 				return isPreview(this.name, this.attributes, state)
 					&& chain()
 						.setNode('paragraph')
@@ -111,7 +109,8 @@ export default Node.create({
 	},
 })
 
-function previewAttributesFromSelection({ $from }) {
+function previewAttributesFromSelection({ selection }) {
+	const { $from } = selection
 	const href = extractHref($from.nodeAfter)
 	return { href, title: 'preview' }
 }
@@ -121,7 +120,8 @@ function isPreview(typeOrName, attributes, state) {
 	return isNodeActive(state, type, attributes)
 }
 
-function previewPossible({ $from }) {
+function previewPossible({ selection }) {
+	const { $from } = selection
 	if (childCount($from.parent) > 1) {
 		return false
 	}
