@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Una estensión PHP paró la xuba de ficheros",
     "Text" : "Testu",
     "Nextcloud Assistant" : "Asistente de Nextcloud",
+    "guest" : "convidáu",
     "Offline" : "Desconectáu",
     "Saving …" : "Guardando…",
     "Saved" : "Guardóse",
