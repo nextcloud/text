@@ -84,12 +84,12 @@ export default Node.create({
 			 * into a preview.
 			 *
 			 */
-			setPreview: () => ({ state, commands }) => {
+			setPreview: () => ({ state, chain }) => {
 				return previewPossible(state)
-					&& commands.setNode(
-						this.name,
-						previewAttributesFromSelection(state),
-					)
+					&& chain()
+						.unsetLink()
+						.setNode(this.name, previewAttributesFromSelection(state))
+						.run()
 			},
 
 			/**
@@ -98,6 +98,7 @@ export default Node.create({
 			 *
 			 */
 			unsetPreview: () => ({ state, chain }) => {
+				console.info(this.attributes)
 				return isPreview(this.name, this.attributes, state)
 					&& chain()
 						.setNode('paragraph')
