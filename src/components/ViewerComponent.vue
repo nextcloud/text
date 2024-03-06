@@ -27,6 +27,7 @@
 		:active="active"
 		:autofocus="autofocus"
 		:share-token="shareToken"
+		:is-embedded="isEmbedded"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
 	<div v-else
@@ -53,6 +54,11 @@ export default {
 		RichTextReader,
 		PlainTextReader,
 		Editor: getEditorInstance,
+	},
+	provide() {
+		return {
+			isEmbedded: this.isEmbedded,
+		}
 	},
 	props: {
 		filename: {
@@ -90,6 +96,10 @@ export default {
 		source: {
 			type: String,
 			default: undefined,
+		},
+		isEmbedded: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {

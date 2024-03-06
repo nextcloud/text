@@ -73,6 +73,7 @@ export default Extension.create({
 			extensions: [],
 			component: null,
 			relativePath: null,
+			isEmbedded: false,
 		}
 	},
 
@@ -81,7 +82,9 @@ export default Extension.create({
 			this.options.editing ? Markdown : null,
 			Document,
 			Text,
-			Paragraph,
+			Paragraph.configure({
+				isEmbedded: this.options.isEmbedded,
+			}),
 			HardBreak,
 			Heading,
 			Strong,

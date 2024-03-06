@@ -181,6 +181,7 @@ export default {
 
 		return val
 	},
+	inject: ['isEmbedded'],
 	props: {
 		richWorkspace: {
 			type: Boolean,
@@ -542,6 +543,7 @@ export default {
 								}),
 							],
 							enableRichEditing: this.isRichEditor,
+							isEmbedded: this.isEmbedded,
 						})
 						this.hasEditor = true
 						if (!documentState && documentSource) {
