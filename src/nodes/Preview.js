@@ -87,7 +87,6 @@ export default Node.create({
 			setPreview: () => ({ state, chain }) => {
 				return previewPossible(state)
 					&& chain()
-						.unsetLink()
 						.setNode(this.name, previewAttributesFromSelection(state))
 						.run()
 			},
@@ -102,7 +101,6 @@ export default Node.create({
 				return isPreview(this.name, this.attributes, state)
 					&& chain()
 						.setNode('paragraph')
-						.setLink(this.attributes)
 						.run()
 			},
 

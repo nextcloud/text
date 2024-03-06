@@ -195,6 +195,12 @@ class LinkBubblePluginView {
 		const to = Math.max(...ranges.map(range => range.$to.pos))
 
 		const resolved = view.state.doc.resolve(from)
+
+		// ignore links in previews
+		if (resolved.parent.type.name === 'preview') {
+			return false
+		}
+
 		const node = resolved.parent.maybeChild(resolved.index())
 		const nodeStart = resolved.pos - resolved.textOffset
 		const nodeEnd = nodeStart + node?.nodeSize

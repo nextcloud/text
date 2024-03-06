@@ -75,12 +75,12 @@ describe.only('Preview extension', { retries: 0 }, () => {
 			expect(editor.can().setPreview()).to.be.true
 		})
 
-		it('results in a preview node with the href and plain text', () => {
+		it('results in a preview node with the href and text with link mark', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
 			editor.commands.setPreview()
 			expect(getParentNode().type.name).to.equal('preview')
 			expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
-			expect(getMark()).to.be.undefined
+			expect(getMark().attrs.href).to.equal('https://nextcloud.com')
 		})
 
 		it('cannot run twice', () => {
