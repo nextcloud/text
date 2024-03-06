@@ -59,7 +59,7 @@ export default {
 			console.info(...args)
 			this.$editor.chain()
 				.focus()
-				.setTextSelection(this.getPos())
+				.setTextSelection(this.getPos() + 1)
 				.unsetPreview()
 				.run()
 		},

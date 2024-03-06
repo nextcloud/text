@@ -75,6 +75,12 @@ describe.only('Preview extension', { retries: 0 }, () => {
 			expect(editor.can().setPreview()).to.be.true
 		})
 
+		it('can run the second a paragraph with a link', () => {
+			prepareEditor('hello\n\n[link text](https://nextcloud.com)\n')
+			editor.commands.setTextSelection(10)
+			expect(editor.can().setPreview()).to.be.true
+		})
+
 		it('results in a preview node with the href and text with link mark', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
 			editor.commands.setPreview()
