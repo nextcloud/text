@@ -90,6 +90,11 @@
       "enabled": false
     },
     {
+      "matchUpdateTypes": ["major", "minor"],
+      "matchBaseBranches": ["stable26"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["vue"],
       "allowedVersions": "<3"
     },
