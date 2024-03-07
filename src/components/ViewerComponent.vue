@@ -24,7 +24,7 @@
 	<Editor v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
-		:active="active"
+		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:is-embedded="isEmbedded"
