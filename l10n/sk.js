@@ -138,6 +138,7 @@ OC.L10N.register(
     "Control" : "Riadenie",
     "Option" : "Možnosť",
     "Formatting" : "Formátovanie",
+    "Smart picker" : "Inteligentný výber",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
     "Add description" : "Pridať popis",
