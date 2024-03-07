@@ -103,6 +103,16 @@ describe('Markdown though editor', () => {
 		})
 	})
 
+	test('preview with url only', () => {
+		const entry = '[https://nextcloud.com](https://nextcloud.com (preview))'
+		expect(markdownThroughEditor(entry)).toBe(entry)
+	})
+
+	test('preview with text', () => {
+		const entry = '[some other text](https://nextcloud.com (preview))'
+		expect(markdownThroughEditor(entry)).toBe(entry)
+	})
+
 	test('front matter', () => {
 		expect(markdownThroughEditor('---\nhello: world\n---')).toBe('---\nhello: world\n---')
 		expect(markdownThroughEditor('---\n---')).toBe('---\n---')

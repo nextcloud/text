@@ -28,7 +28,7 @@ const domHref = function(node, relativePath) {
 	if (!ref) {
 		return ref
 	}
-	if (!OCA.Viewer) {
+	if (!window.OCA?.Viewer) {
 		return ref
 	}
 	if (ref.match(/^[a-zA-Z]*:/)) {

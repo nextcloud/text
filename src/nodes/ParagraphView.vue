@@ -22,19 +22,18 @@
 
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
+		<PreviewOptions v-if="editor.isEditable && href"
+			:value.sync="value"
+			@update:value="convertToPreview" />
 		<NodeViewContent class="paragraph-content" />
-		<NcReferenceList v-if="isLoggedIn && text"
-			:text="text"
-			:limit="1"
-			:interactive="true"
-			contenteditable="false" />
 	</NodeViewWrapper>
 </template>
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
+import PreviewOptions from '../components/Editor/PreviewOptions.vue'
+import { useEditorMixin } from '../components/Editor.provider.js'
 import { getCurrentUser } from '@nextcloud/auth'
-import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import debounce from 'debounce'
 
 export default {
@@ -42,20 +41,22 @@ export default {
 	components: {
 		NodeViewWrapper,
 		NodeViewContent,
-		NcReferenceList,
+		PreviewOptions,
 	},
+	mixins: [useEditorMixin],
 	props: nodeViewProps,
 	data() {
 		return {
-			text: null,
+			href: null,
 			isLoggedIn: getCurrentUser(),
+			value: 'text-only',
 		}
 	},
 	watch: {
 		node: {
 			handler(newNode) {
 				if (!newNode?.textContent) {
-					this.text = ''
+					this.href = ''
 					return
 				}
 				this.debouncedUpdateText(newNode)
@@ -64,16 +65,24 @@ export default {
 	},
 	beforeCreate() {
 		this.debouncedUpdateText = debounce((newNode) => {
-			this.text = this.getTextReference(this.node)
+			this.href = this.getTextReference(this.node)
 		}, 500)
 	},
 	created() {
-		this.text = this.getTextReference(this.node)
+		this.href = this.getTextReference(this.node)
 	},
 	beforeUnmount() {
 		this.debouncedUpdateText?.cancel()
 	},
 	methods: {
+		convertToPreview(...args) {
+			console.info(...args)
+			this.$editor.chain()
+				.focus()
+				.setTextSelection(this.getPos() + 1)
+				.setPreview()
+				.run()
+		},
 		getTextReference(node) {
 			if (!node?.childCount) {
 				return null
@@ -117,17 +126,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-:deep(div.widgets--list a.widget-default) {
-	color: var(--color-main-text);
-	padding: 0;
-	text-decoration: none;
-	max-width: calc(100vw - 56px);
+
+.vue-component {
+	position: relative;
 }
 
-:deep(.widget-default--details) {
-	overflow:hidden;
-	p {
-		margin-bottom: 4px !important;
-	}
+/* center around current line */
+:deep([data-text-preview-options]) {
+	top: 50%;
+	transform: translate(0, -50%);
 }
+
 </style>

@@ -58,7 +58,6 @@ const Link = TipTapLink.extend({
 
 	renderHTML(options) {
 		const { mark } = options
-
 		return ['a', {
 			...mark.attrs,
 			href: domHref(mark, this.options.relativePath),
