@@ -24,7 +24,7 @@
 	<Editor v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
-		:active="active"
+		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
 		:mime="mime"
@@ -53,6 +53,11 @@ export default {
 		RichTextReader,
 		PlainTextReader,
 		Editor: getEditorInstance,
+	},
+	provide() {
+		return {
+			isEmbedded: this.isEmbedded,
+		}
 	},
 	props: {
 		filename: {
@@ -90,6 +95,10 @@ export default {
 		source: {
 			type: String,
 			default: undefined,
+		},
+		isEmbedded: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {

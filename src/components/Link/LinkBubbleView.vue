@@ -73,6 +73,7 @@
 			ref="referencelist"
 			:text="sanitizedHref"
 			:limit="1"
+			:interactive="false"
 			:display-fallback="true"
 			class="link-view-bubble__reference-list"
 			@loaded="onReferenceListLoaded" />

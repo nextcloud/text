@@ -49,12 +49,13 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
+const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
 			RichText.configure({
 				relativePath,
+				isEmbedded,
 				component: this,
 				extensions: [
 					Mention.configure({

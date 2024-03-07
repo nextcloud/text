@@ -73,6 +73,7 @@ export default Extension.create({
 			extensions: [],
 			component: null,
 			relativePath: null,
+			isEmbedded: false,
 		}
 	},
 
@@ -102,7 +103,9 @@ export default Extension.create({
 			TaskList,
 			TaskItem,
 			Callouts,
-			Preview,
+			Preview.configure({
+				isEmbedded: this.options.isEmbedded,
+			}),
 			Underline,
 			Image,
 			ImageInline,
