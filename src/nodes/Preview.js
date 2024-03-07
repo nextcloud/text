@@ -138,7 +138,7 @@ function isPreview(typeOrName, attributes, state) {
  */
 function previewPossible({ selection }) {
 	const { $from } = selection
-	if (childCount($from.parent) > 1) {
+	if (hasOtherContent($from.parent)) {
 		return false
 	}
 	const href = extractHref($from.nodeAfter)
@@ -146,6 +146,15 @@ function previewPossible({ selection }) {
 		return false
 	}
 	return true
+}
+
+/**
+ * Does the node contain more content than the first child
+ * @param node - node to inspect
+ */
+function hasOtherContent(node) {
+	return childCount(node) > 2
+		|| (childCount(node) === 2 && node.lastChild.textContent.trim())
 }
 
 /**

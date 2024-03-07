@@ -28,7 +28,7 @@ import { createCustomEditor } from './../../support/components.js'
 import testData from '../../fixtures/Preview.md'
 import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
 
-describe.only('Preview extension', { retries: 0 }, () => {
+describe('Preview extension', { retries: 0 }, () => {
 
 	const editor = createCustomEditor({
 		content: '',
@@ -71,23 +71,34 @@ describe.only('Preview extension', { retries: 0 }, () => {
 			expect(editor.can().setPreview()).to.be.false
 		})
 
-		it('can run on a paragraph with a link', () => {
+		it('convert a paragraph with a link', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
-			expect(editor.can().setPreview()).to.be.true
+			editor.commands.setPreview()
+			expectPreview()
 		})
 
-		it('can run the second a paragraph with a link', () => {
+		it('convert the second a paragraph with a link', () => {
 			prepareEditor('hello\n\n[link text](https://nextcloud.com)\n')
 			editor.commands.setTextSelection(10)
-			expect(editor.can().setPreview()).to.be.true
+			editor.commands.setPreview()
+			expectPreview()
+		})
+
+		it('convert a paragraph with a link and a space', () => {
+			prepareEditor('[link text](https://nextcloud.com)\n')
+			editor.commands.insertContentAt(
+				editor.state.doc.content.size - 1,
+				' ',
+				{ updateSelection: false },
+			)
+			editor.commands.setPreview()
+			expectPreview()
 		})
 
 		it('results in a preview node with the href and text with link mark', () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
 			editor.commands.setPreview()
-			expect(getParentNode().type.name).to.equal('preview')
-			expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
-			expect(getMark().attrs.href).to.equal('https://nextcloud.com')
+			expectPreview()
 		})
 
 		it('cannot run twice', () => {
@@ -130,6 +141,15 @@ describe.only('Preview extension', { retries: 0 }, () => {
 		})
 
 	})
+
+	/**
+	 *  Expect a preview in the editor.
+	 */
+	function expectPreview() {
+		expect(getParentNode().type.name).to.equal('preview')
+		expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
+		expect(getMark().attrs.href).to.equal('https://nextcloud.com')
+	}
 
 	/**
 	 *
