@@ -27,7 +27,6 @@
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
-		:is-embedded="isEmbedded"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
 	<div v-else

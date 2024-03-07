@@ -8,12 +8,6 @@ const Paragraph = TiptapParagraph.extend({
 		return VueNodeViewRenderer(ParagraphView)
 	},
 
-	addOptions() {
-		return {
-			isEmbedded: false,
-		}
-	},
-
 	parseHTML() {
 		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
 	},

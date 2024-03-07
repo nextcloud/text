@@ -29,7 +29,8 @@
 			:value.sync="value"
 			@update:value="convertToParagraph" />
 		<NcReferenceList :text="node.attrs.href"
-			:limit="1" />
+			:limit="1"
+			:interactive="!extension.options.isEmbedded" />
 	</NodeViewWrapper>
 </template>
 

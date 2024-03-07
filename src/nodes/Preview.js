@@ -38,6 +38,7 @@ export default Node.create({
 
 	addOptions() {
 		return {
+			isEmbedded: false,
 			relativePath: null,
 		}
 	},

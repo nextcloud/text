@@ -82,9 +82,7 @@ export default Extension.create({
 			this.options.editing ? Markdown : null,
 			Document,
 			Text,
-			Paragraph.configure({
-				isEmbedded: this.options.isEmbedded,
-			}),
+			Paragraph,
 			HardBreak,
 			Heading,
 			Strong,
@@ -105,7 +103,9 @@ export default Extension.create({
 			TaskList,
 			TaskItem,
 			Callouts,
-			Preview,
+			Preview.configure({
+				isEmbedded: this.options.isEmbedded,
+			}),
 			Underline,
 			Image,
 			ImageInline,
