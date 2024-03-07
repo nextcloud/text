@@ -93,13 +93,12 @@ export default Node.create({
 			},
 
 			/**
-			 * Turn a preview back into a paragraph
-			 * that contains a single link.
+			 * Turn a preview back into a paragraph with a link.
 			 *
 			 */
 			unsetPreview: () => ({ state, chain }) => {
 				console.info(this.attributes)
-				return isPreview(this.name, this.attributes, state)
+				return isActive(this.name, this.attributes, state)
 					&& chain()
 						.setNode('paragraph')
 						.run()
@@ -110,9 +109,11 @@ export default Node.create({
 })
 
 /**
+ * Attributes for a preview from link in the current selection
  *
- * @param root0
- * @param root0.selection
+ * @param {object} state the edior state
+ * @param {object} state.selection current selection
+ * @return {object}
  */
 function previewAttributesFromSelection({ selection }) {
 	const { $from } = selection
@@ -121,24 +122,26 @@ function previewAttributesFromSelection({ selection }) {
 }
 
 /**
- *
- * @param typeOrName
- * @param attributes
- * @param state
+ * Is the active node one of typeOrName with the given attributes
+ * @param {object|string} typeOrName type or name of the preview node type
+ * @param {object} attributes attributes of the node
+ * @param {object} state current editor state
+ * @return {boolean}
  */
-function isPreview(typeOrName, attributes, state) {
+function isActive(typeOrName, attributes, state) {
 	const type = getNodeType(typeOrName, state.schema)
 	return isNodeActive(state, type, attributes)
 }
 
 /**
- *
- * @param root0
- * @param root0.selection
+ * Is it possible to convert the currently selected node into a preview?
+ * @param {object} state current editor state
+ * @param {object} state.selection current selection
+ * @return {boolean}
  */
 function previewPossible({ selection }) {
 	const { $from } = selection
-	if (childCount($from.parent) > 1) {
+	if (hasOtherContent($from.parent)) {
 		return false
 	}
 	const href = extractHref($from.nodeAfter)
@@ -149,18 +152,21 @@ function previewPossible({ selection }) {
 }
 
 /**
- *
- * @param node
+ * Does the node contain more content than the first child
+ * @param {object} node node to inspect
+ * @return {boolean}
+ */
+function hasOtherContent(node) {
+	return node.childCount > 2
+		|| (node.childCount === 2 && node.lastChild.textContent.trim())
+}
+
+/**
+ * Get the link href of the given node
+ * @param {object} node to inspect
+ * @return {string} The href of the link mark of the node
  */
 function extractHref(node) {
 	const link = node.marks.find(mark => mark.type.name === 'link')
 	return link?.attrs.href
-}
-
-/**
- *
- * @param node
- */
-function childCount(node) {
-	return node.content.content.length
 }
