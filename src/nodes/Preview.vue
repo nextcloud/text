@@ -47,13 +47,13 @@ export default {
 		NcReferenceList,
 		PreviewOptions,
 	},
+	mixins: [useEditorMixin],
 	props: nodeViewProps,
 	data() {
 		return {
 			value: 'link-preview',
 		}
 	},
-	mixins: [ useEditorMixin ],
 	methods: {
 		convertToParagraph(...args) {
 			console.info(...args)

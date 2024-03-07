@@ -50,17 +50,17 @@ import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 
 export default {
 	name: 'PreviewOptions',
-	props: {
-		value: {
-			type: String,
-			required: true,
-		},
-	},
 	components: {
 		DotsVerticalIcon,
 		NcActions,
 		NcActionCaption,
 		NcActionRadio,
+	},
+	props: {
+		value: {
+			type: String,
+			required: true,
+		},
 	},
 }
 </script>

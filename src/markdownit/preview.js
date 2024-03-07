@@ -20,8 +20,13 @@
  *
  */
 
+/**
+ *
+ * @param tokens
+ * @param i
+ */
 function isPreviewLinkInParagraph(tokens, i) {
-	const [prev, cur, next] = tokens.slice(i-1, i+2)
+	const [prev, cur, next] = tokens.slice(i - 1, i + 2)
 	return prev.type === 'paragraph_open'
 		&& cur.type === 'inline'
 		&& cur.children
@@ -38,10 +43,15 @@ function isPreviewLinkInParagraph(tokens, i) {
  * @param {array} tokens - the token stream to modify
  * @param {Number} i - index of the token to unwrap
  */
+/**
+ *
+ * @param tokens
+ * @param i
+ */
 function unwrapToken(tokens, i) {
 	// Start from the end so indexes stay the same.
-	tokens.splice(i+1, 1)
-	tokens.splice(i-1, 1)
+	tokens.splice(i + 1, 1)
+	tokens.splice(i - 1, 1)
 }
 
 /**
@@ -49,6 +59,11 @@ function unwrapToken(tokens, i) {
  */
 export default (md) => {
 
+	/**
+	 *
+	 * @param root0
+	 * @param root0.tokens
+	 */
 	function linkPreviews({ tokens }) {
 		// do not process first and last token
 		for (let i = 1, l = tokens.length; i < (l - 1); ++i) {
@@ -58,5 +73,5 @@ export default (md) => {
 		}
 	}
 
-	md.core.ruler.before('linkify', 'link_previews', linkPreviews);
+	md.core.ruler.before('linkify', 'link_previews', linkPreviews)
 }

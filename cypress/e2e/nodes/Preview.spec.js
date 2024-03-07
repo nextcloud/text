@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /**
  * @copyright Copyright (c) 2024 Max <max@nextcloud.com>
  *
@@ -130,17 +131,27 @@ describe.only('Preview extension', { retries: 0 }, () => {
 
 	})
 
+	/**
+	 *
+	 */
 	function getParentNode() {
 		const { state: { selection } } = editor
 		return selection.$head.parent
 	}
 
+	/**
+	 *
+	 */
 	function getMark() {
 		const { state: { selection } } = editor
 		console.info(selection.$head)
 		return selection.$head.nodeAfter.marks[0]
 	}
 
+	/**
+	 *
+	 * @param input
+	 */
 	function prepareEditor(input) {
 		loadMarkdown(editor, input)
 		editor.commands.setTextSelection(1)

@@ -108,17 +108,33 @@ export default Node.create({
 	},
 })
 
+/**
+ *
+ * @param root0
+ * @param root0.selection
+ */
 function previewAttributesFromSelection({ selection }) {
 	const { $from } = selection
 	const href = extractHref($from.nodeAfter)
 	return { href, title: 'preview' }
 }
 
+/**
+ *
+ * @param typeOrName
+ * @param attributes
+ * @param state
+ */
 function isPreview(typeOrName, attributes, state) {
 	const type = getNodeType(typeOrName, state.schema)
 	return isNodeActive(state, type, attributes)
 }
 
+/**
+ *
+ * @param root0
+ * @param root0.selection
+ */
 function previewPossible({ selection }) {
 	const { $from } = selection
 	if (childCount($from.parent) > 1) {
@@ -131,11 +147,19 @@ function previewPossible({ selection }) {
 	return true
 }
 
+/**
+ *
+ * @param node
+ */
 function extractHref(node) {
 	const link = node.marks.find(mark => mark.type.name === 'link')
 	return link?.attrs.href
 }
 
+/**
+ *
+ * @param node
+ */
 function childCount(node) {
 	return node.content.content.length
 }

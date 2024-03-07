@@ -43,6 +43,7 @@ export default {
 		NodeViewContent,
 		PreviewOptions,
 	},
+	mixins: [useEditorMixin],
 	props: nodeViewProps,
 	data() {
 		return {
@@ -51,7 +52,6 @@ export default {
 			value: 'text-only',
 		}
 	},
-	mixins: [ useEditorMixin ],
 	watch: {
 		node: {
 			handler(newNode) {
