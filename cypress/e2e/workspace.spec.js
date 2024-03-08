@@ -184,7 +184,7 @@ describe('Workspace', function() {
 			.type('{leftArrow}')
 
 		cy.get('.link-view-bubble .widget-file', { timeout: 10000 })
-			.find('.widget-file--title')
+			.find('.widget-file__title')
 			.contains('test.md')
 			.click({ force: true })
 
