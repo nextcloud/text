@@ -2,7 +2,7 @@ import TableRow from './TableRow.js'
 
 export default TableRow.extend({
 	name: 'tableHeadRow',
-	content: 'tableHeader*',
+	content: 'tableHeader+',
 	allowGapCursor: false,
 
 	toMarkdown(state, node) {
