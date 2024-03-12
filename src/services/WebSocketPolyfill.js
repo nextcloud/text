@@ -21,7 +21,7 @@
  */
 
 import { logger } from '../helpers/logger.js'
-import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
+import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.ts'
 
 /**
  *

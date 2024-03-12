@@ -34,7 +34,7 @@ import { toBase64, fromBase64 } from 'lib0/buffer'
  *
  * @param {ArrayBuffer} data - binary data to encode
  */
-export function encodeArrayBuffer(data) {
+export function encodeArrayBuffer(data: ArrayBuffer): string {
 	const view = new Uint8Array(data)
 	return toBase64(view)
 }
@@ -43,6 +43,6 @@ export function encodeArrayBuffer(data) {
  *
  * @param {string} encoded - base64 encoded string to decode
  */
-export function decodeArrayBuffer(encoded) {
+export function decodeArrayBuffer(encoded: string): ArrayBuffer {
 	return fromBase64(encoded)
 }

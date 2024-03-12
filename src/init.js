@@ -1,10 +1,8 @@
 import { registerFileListHeaders, registerDavProperty } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { addMenuRichWorkspace, FilesWorkspaceHeader } from './helpers/files.js'
-import { linkTo } from '@nextcloud/router'
-
-__webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 
