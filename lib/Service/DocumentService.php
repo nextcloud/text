@@ -206,10 +206,12 @@ class DocumentService {
 	}
 
 	/**
-	 * @throws DoesNotExistException
 	 * @throws InvalidArgumentException
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws DoesNotExistException
 	 */
-	public function addStep(Document $document, Session $session, array $steps, int $version): array {
+	public function addStep(Document $document, Session $session, array $steps, int $version, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
 		$stepsToInsert = [];
 		$querySteps = [];
@@ -224,6 +226,9 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
+			if ($this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken)) {
+				throw new NotPermittedException('Read-only client tries to push steps with changes');
+			}
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
 		}
 		// If there were any queries in the steps send the entire history
