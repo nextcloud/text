@@ -75,6 +75,7 @@ export class Connection {
 		this.#content = content
 		this.#documentState = documentState
 		this.#options = options
+		this.isPublic = !!options.shareToken
 		this.closed = false
 	}
 
