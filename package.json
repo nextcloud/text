@@ -140,6 +140,7 @@
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
     "rollup-plugin-webpack-stats": "^0.2.4",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3",
     "vite": "^5.2.11",
     "vite-plugin-commonjs": "^0.10.1",
@@ -151,6 +152,7 @@
     "testEnvironment": "jest-environment-jsdom",
     "moduleFileExtensions": [
       "js",
+      "ts",
       "vue",
       "md",
       "html"
@@ -170,7 +172,16 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.mjs$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/@vue/vue2-jest",
-      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.cjs"
+      "^.+\\.(html|xml|md)$": "<rootDir>/jest-raw-loader.cjs",
+      "\\.ts$": [
+        "ts-jest",
+        {
+          "useESM": true,
+          "tsconfig": {
+            "verbatimModuleSyntax": false
+          }
+        }
+      ]
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
