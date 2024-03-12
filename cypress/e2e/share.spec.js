@@ -35,6 +35,7 @@ describe('Open test.md in viewer', function() {
 		cy.createFolder('folder')
 		cy.uploadFile('test.md', 'text/markdown', 'folder/test.md')
 		cy.uploadFile('test.md', 'text/markdown', 'folder/Readme.md')
+		cy.uploadFile('test.md', 'text/markdown', 'test3.md')
 		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
 		cy.uploadFile('test.md', 'text/markdown')
 
@@ -119,6 +120,27 @@ describe('Open test.md in viewer', function() {
 				cy.getModal().getContent().find('h2').should('contain', 'Hello world')
 				cy.getModal().find('.modal-header button.header-close').click()
 				cy.get('.modal-mask').should('not.exist')
+			})
+	})
+
+	it('Opens the editor as guest', function() {
+		cy.shareFile('/test3.md')
+			.then((token) => {
+				cy.logout()
+				cy.visit(`/s/${token}`)
+			})
+			.then(() => {
+				cy.getEditor().should('be.visible')
+				cy.getContent()
+					.should('contain', 'Hello world')
+					.find('h2').should('contain', 'Hello world')
+
+				cy.intercept({ method: 'POST', url: '**/apps/text/public/session' }).as('updateSession')
+				cy.get('button.avatar-list').click()
+				cy.get('.guest-name-dialog input[type="text"]')
+					.type('someone{enter}')
+				cy.wait('@updateSession')
+					.its('response.body.guestName').should('eq', 'someone')
 			})
 	})
 
