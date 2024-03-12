@@ -20,7 +20,7 @@
  *
  */
 
-import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
+import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.ts'
 import * as Y from 'yjs'
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
