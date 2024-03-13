@@ -41,6 +41,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Constants;
 use OCP\DB\Exception;
 use OCP\DirectEditing\IManager;
+use OCP\Files\AlreadyExistsException;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -157,7 +158,7 @@ class DocumentService {
 		} catch (Exception $e) {
 			if ($e->getReason() === Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
 				// Document might have been created in the meantime
-				return $this->documentMapper->find($file->getId());
+				throw new AlreadyExistsException();
 			}
 
 			throw $e;
