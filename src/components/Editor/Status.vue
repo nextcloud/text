@@ -35,7 +35,7 @@
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog v-if="$isPublic && !currentSession.userId" :session="currentSession" />
+			<GuestNameDialog v-if="$isPublic && currentSession && !currentSession.userId" :session="currentSession" />
 		</SessionList>
 	</div>
 </template>

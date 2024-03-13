@@ -140,7 +140,7 @@ class SyncService {
 
 	updateSession(guestName) {
 		if (!this.connection.isPublic) {
-			return
+			return Promise.reject(new Error())
 		}
 		return this.connection.update(guestName)
 			.catch((error) => {

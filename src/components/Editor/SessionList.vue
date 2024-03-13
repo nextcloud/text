@@ -108,7 +108,7 @@ export default {
 			},
 		},
 		participantsPopover() {
-			if (this.currentSession.guestName) {
+			if (this.currentSession?.guestName) {
 				return this.participantsWithoutCurrent
 			}
 			return this.participants
