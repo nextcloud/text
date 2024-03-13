@@ -74,6 +74,8 @@ class DocumentService {
 	 */
 	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
+	private bool $saveFromText = false;
+
 	private ?string $userId;
 	private DocumentMapper $documentMapper;
 	private SessionMapper $sessionMapper;
@@ -116,6 +118,10 @@ class DocumentService {
 		} catch (DoesNotExistException|NotFoundException $e) {
 			return null;
 		}
+	}
+
+	public function isSaveFromText(): bool {
+		return $this->saveFromText;
 	}
 
 	/**
@@ -389,6 +395,7 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			), function () use ($file, $autoSaveDocument, $documentState) {
+				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
 				if ($documentState) {
 					$this->writeDocumentState($file->getId(), $documentState);
