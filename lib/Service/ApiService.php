@@ -37,6 +37,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Constants;
+use OCP\Files\AlreadyExistsException;
 use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
@@ -117,7 +118,12 @@ class ApiService {
 
 			if ($freshSession) {
 				$this->logger->info('Create new document of ' . $file->getId());
-				$document = $this->documentService->createDocument($file);
+				try {
+					$document = $this->documentService->createDocument($file);
+				} catch (AlreadyExistsException) {
+					$freshSession = false;
+					$document = $this->documentService->getDocument($file->getId());
+				}
 			} else {
 				$this->logger->info('Keep previous document of ' . $file->getId());
 			}
