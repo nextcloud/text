@@ -184,7 +184,6 @@ class ApiService {
 
 	/**
 	 * @throws NotFoundException
-	 * @throws DoesNotExistException
 	 */
 	public function push(Session $session, Document $document, $version, $steps, $awareness, $token = null): DataResponse {
 		try {
@@ -196,16 +195,12 @@ class ApiService {
 		if (empty($steps)) {
 			return new DataResponse([]);
 		}
-		$file = $this->documentService->getFileForSession($session, $token);
-		if ($this->documentService->isReadOnly($file, $token)) {
-			return new DataResponse([], 403);
-		}
 		try {
-			$result = $this->documentService->addStep($document, $session, $steps, $version);
+			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse($e->getMessage(), 422);
-		} catch (DoesNotExistException $e) {
-			// Session was removed in the meantime. #3875
+		} catch (DoesNotExistException|NotPermittedException) {
+			// Either no write access or session was removed in the meantime (#3875).
 			return new DataResponse([], 403);
 		}
 		return new DataResponse($result);
