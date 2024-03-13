@@ -156,7 +156,7 @@ class DocumentService {
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
-		$document->setBaseVersionEtag($file->getEtag());
+		$document->setBaseVersionEtag(uniqid());
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
