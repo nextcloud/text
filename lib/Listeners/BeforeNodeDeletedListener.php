@@ -26,6 +26,7 @@ declare(strict_types=1);
 namespace OCA\Text\Listeners;
 
 use OCA\Text\Service\AttachmentService;
+use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
@@ -35,10 +36,13 @@ use OCP\Files\File;
  * @template-implements IEventListener<Event|BeforeNodeDeletedEvent>
  */
 class BeforeNodeDeletedListener implements IEventListener {
-	private $attachmentService;
+	private AttachmentService $attachmentService;
+	private DocumentService $documentService;
 
-	public function __construct(AttachmentService $attachmentService) {
+	public function __construct(AttachmentService $attachmentService,
+		DocumentService $documentService) {
 		$this->attachmentService = $attachmentService;
+		$this->documentService = $documentService;
 	}
 
 	public function handle(Event $event): void {
@@ -48,6 +52,7 @@ class BeforeNodeDeletedListener implements IEventListener {
 		$node = $event->getNode();
 		if ($node instanceof File && $node->getMimeType() === 'text/markdown') {
 			$this->attachmentService->deleteAttachments($node);
+			$this->documentService->resetDocument($node->getId(), true);
 		}
 	}
 }
