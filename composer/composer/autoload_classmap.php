@@ -38,6 +38,7 @@ return array(
     'OCA\\Text\\Listeners\\BeforeAssistantNotificationListener' => $baseDir . '/../lib/Listeners/BeforeAssistantNotificationListener.php',
     'OCA\\Text\\Listeners\\BeforeNodeDeletedListener' => $baseDir . '/../lib/Listeners/BeforeNodeDeletedListener.php',
     'OCA\\Text\\Listeners\\BeforeNodeRenamedListener' => $baseDir . '/../lib/Listeners/BeforeNodeRenamedListener.php',
+    'OCA\\Text\\Listeners\\BeforeNodeWrittenListener' => $baseDir . '/../lib/Listeners/BeforeNodeWrittenListener.php',
     'OCA\\Text\\Listeners\\FilesLoadAdditionalScriptsListener' => $baseDir . '/../lib/Listeners/FilesLoadAdditionalScriptsListener.php',
     'OCA\\Text\\Listeners\\FilesSharingLoadAdditionalScriptsListener' => $baseDir . '/../lib/Listeners/FilesSharingLoadAdditionalScriptsListener.php',
     'OCA\\Text\\Listeners\\LoadEditorListener' => $baseDir . '/../lib/Listeners/LoadEditorListener.php',

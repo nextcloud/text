@@ -53,6 +53,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Listeners\\BeforeAssistantNotificationListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeAssistantNotificationListener.php',
         'OCA\\Text\\Listeners\\BeforeNodeDeletedListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeNodeDeletedListener.php',
         'OCA\\Text\\Listeners\\BeforeNodeRenamedListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeNodeRenamedListener.php',
+        'OCA\\Text\\Listeners\\BeforeNodeWrittenListener' => __DIR__ . '/..' . '/../lib/Listeners/BeforeNodeWrittenListener.php',
         'OCA\\Text\\Listeners\\FilesLoadAdditionalScriptsListener' => __DIR__ . '/..' . '/../lib/Listeners/FilesLoadAdditionalScriptsListener.php',
         'OCA\\Text\\Listeners\\FilesSharingLoadAdditionalScriptsListener' => __DIR__ . '/..' . '/../lib/Listeners/FilesSharingLoadAdditionalScriptsListener.php',
         'OCA\\Text\\Listeners\\LoadEditorListener' => __DIR__ . '/..' . '/../lib/Listeners/LoadEditorListener.php',
