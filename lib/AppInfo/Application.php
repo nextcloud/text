@@ -32,6 +32,7 @@ use OCA\Text\Listeners\AddMissingIndicesListener;
 use OCA\Text\Listeners\BeforeAssistantNotificationListener;
 use OCA\Text\Listeners\BeforeNodeDeletedListener;
 use OCA\Text\Listeners\BeforeNodeRenamedListener;
+use OCA\Text\Listeners\BeforeNodeWrittenListener;
 use OCA\Text\Listeners\FilesLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\FilesSharingLoadAdditionalScriptsListener;
 use OCA\Text\Listeners\LoadEditorListener;
@@ -51,6 +52,7 @@ use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\DirectEditing\RegisterDirectEditorEvent;
 use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
+use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Events\Node\NodeCopiedEvent;
 use OCP\Files\Template\ITemplateManager;
 use OCP\Files\Template\TemplateFileCreator;
@@ -71,6 +73,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(LoadEditor::class, LoadEditorListener::class);
 		// for attachments
 		$context->registerEventListener(NodeCopiedEvent::class, NodeCopiedListener::class);
+		$context->registerEventListener(BeforeNodeWrittenEvent::class, BeforeNodeWrittenListener::class);
 		$context->registerEventListener(BeforeNodeRenamedEvent::class, BeforeNodeRenamedListener::class);
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
