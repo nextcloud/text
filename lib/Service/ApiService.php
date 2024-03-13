@@ -136,25 +136,19 @@ class ApiService {
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
 
+		$documentState = null;
+		$content = null;
 		if ($freshSession) {
 			$this->logger->debug('Starting a fresh editing session for ' . $file->getId());
-			$documentState = null;
 			$content = $this->loadContent($file);
 		} else {
 			$this->logger->debug('Loading existing session for ' . $file->getId());
-			$content = null;
 			try {
 				$stateFile = $this->documentService->getStateFile($document->getId());
 				$documentState = $stateFile->getContent();
+				$this->logger->debug('Existing document, state file loaded ' . $file->getId());
 			} catch (NotFoundException $e) {
-				$this->logger->debug('State file not found for ' . $file->getId());
-				$documentState = ''; // no state saved yet.
-				// If there are no steps yet we might still need the content.
-				$steps = $this->documentService->getSteps($document->getId(), 0);
-				if (empty($steps)) {
-					$this->logger->debug('Empty steps, loading content for ' . $file->getId());
-					$content = $this->loadContent($file);
-				}
+				$this->logger->debug('Existing document, but state file not found for ' . $file->getId());
 			}
 		}
 

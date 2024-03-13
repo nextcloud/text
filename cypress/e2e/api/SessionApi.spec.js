@@ -311,7 +311,7 @@ describe('The session Api', function() {
 			})
 		})
 
-		it('sends initial content if other session is alive but did not push any steps', function() {
+		it('does not send initial content if other session is alive but did not push any steps', function() {
 			let joining
 			cy.createTextSession(undefined, { filePath: '', shareToken })
 				.then(con => {
@@ -319,7 +319,7 @@ describe('The session Api', function() {
 					return con
 				})
 				.its('state.documentSource')
-				.should('not.eql', '')
+				.should('eql', '')
 				.then(() => joining.close())
 				.then(() => connection.close())
 		})
