@@ -34,7 +34,11 @@ export default Node.create({
 
 	content: 'text?',
 
-	defining: true,
+	atom: true,
+
+	marks: 'link',
+
+	isolating: true,
 
 	addOptions() {
 		return {
