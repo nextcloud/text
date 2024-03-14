@@ -34,11 +34,7 @@ describe('The session Api', function() {
 
 	before(function() {
 		cy.createUser(user)
-		window.OC = {
-			config: { modRewriteWorking: false },
-			webroot: '',
-		}
-		window._oc_webroot = ''
+		cy.prepareWindowForSessionApi()
 	})
 
 	beforeEach(function() {
