@@ -28,7 +28,6 @@ import axios from '@nextcloud/axios'
 
 import {
 	SET_SHOW_AUTHOR_ANNOTATIONS,
-	SET_CURRENT_SESSION,
 	SET_VIEW_WIDTH,
 	SET_HEADINGS,
 	SET_ATTACHMENT_LIST,
@@ -42,7 +41,6 @@ Vue.use(Vuex)
 export const textModule = {
 	state: {
 		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
-		currentSession: persistentStorage.getItem('currentSession'),
 		viewWidth: getClientWidth(),
 		headings: Object.freeze([]),
 		attachmentList: [],
@@ -58,10 +56,6 @@ export const textModule = {
 		[SET_SHOW_AUTHOR_ANNOTATIONS](state, value) {
 			state.showAuthorAnnotations = value
 			persistentStorage.setItem('showAuthorAnnotations', '' + value)
-		},
-		[SET_CURRENT_SESSION](state, value) {
-			state.currentSession = value
-			persistentStorage.setItem('currentSession', value)
 		},
 		[SET_HEADINGS](state, value) {
 			if (state.headings.length !== value.length) {
@@ -89,9 +83,6 @@ export const textModule = {
 	actions: {
 		setShowAuthorAnnotations({ commit }, value) {
 			commit(SET_SHOW_AUTHOR_ANNOTATIONS, value)
-		},
-		setCurrentSession({ commit }, value) {
-			commit(SET_CURRENT_SESSION, value)
 		},
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)

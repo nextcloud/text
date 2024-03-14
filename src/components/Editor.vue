@@ -82,7 +82,7 @@
 
 <script>
 import Vue, { set } from 'vue'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -363,10 +363,6 @@ export default {
 		this.$providers.forEach(p => p.destroy())
 	},
 	methods: {
-		...mapActions('text', [
-			'setCurrentSession',
-		]),
-
 		initSession() {
 			if (!this.hasDocumentParameters) {
 				this.emit('error', 'No valid file provided')
@@ -483,7 +479,6 @@ export default {
 			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
-			this.setCurrentSession(this.currentSession)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
 				user: getCurrentUser(),
