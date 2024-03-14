@@ -14,6 +14,10 @@ export default Extension.create({
 				char: '/',
 				allowedPrefixes: [' '],
 				pluginKey: LinkPickerPluginKey,
+				allow: ({ state, range }) => {
+					const $from = state.doc.resolve(range.from)
+					return $from.parent.type.name !== 'codeBlock'
+				},
 				...suggestions(),
 			},
 		}
