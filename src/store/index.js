@@ -96,11 +96,11 @@ export const textModule = {
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)
 		},
-		async setAttachmentList({ commit, state }, { documentId, shareToken }) {
+		async setAttachmentList({ commit }, { documentId, session, shareToken }) {
 			const response = await axios.post(generateUrl('/apps/text/attachments'), {
-				documentId: state.currentSession?.documentId ?? documentId,
-				sessionId: state.currentSession?.id,
-				sessionToken: state.currentSession?.token,
+				documentId: session?.documentId ?? documentId,
+				sessionId: session?.id,
+				sessionToken: session?.token,
 				shareToken,
 			})
 

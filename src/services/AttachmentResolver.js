@@ -47,7 +47,7 @@ export default class AttachmentResolver {
 	}
 
 	async #updateAttachmentList() {
-		return setAttachmentList({ documentId: this.#documentId, shareToken: this.#shareToken })
+		return setAttachmentList({ documentId: this.#documentId, session: this.#session, shareToken: this.#shareToken })
 	}
 
 	/*
