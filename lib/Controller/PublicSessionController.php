@@ -80,8 +80,8 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
-	public function create(string $token, string $file = null, ?string $guestName = null): DataResponse {
-		return $this->apiService->create(null, $file, $token, $guestName);
+	public function create(string $token, ?string $file = null, ?string $baseVersionEtag = null, ?string $guestName = null): DataResponse {
+		return $this->apiService->create(null, $file, $baseVersionEtag, $token, $guestName);
 	}
 
 	#[NoAdminRequired]
