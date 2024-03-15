@@ -11,8 +11,8 @@ class LinkBubblePluginView {
 	#component = null
 	#hadUpdateFromClick = false
 
-	constructor({ editor, view }) {
-		this.editor = editor
+	constructor({ view, options }) {
+		this.editor = options.editor
 		this.view = view
 
 		// When editor is used in Viewer component, it should render comopnent using Viewer's Vue constructor,

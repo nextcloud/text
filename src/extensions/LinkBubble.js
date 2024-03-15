@@ -12,7 +12,9 @@ const LinkBubble = Extension.create({
 
 	addProseMirrorPlugins() {
 		return [
-			linkBubble(this.editor, this.options.pluginKey),
+			linkBubble(this.options.pluginKey, {
+				editor: this.editor,
+			}),
 		]
 	},
 })
