@@ -21,6 +21,17 @@
  */
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import LinkBubblePluginView from './LinkBubblePluginView.js'
+
+export function linkBubble(editor, pluginKey) {
+	return new Plugin({
+		key: new PluginKey(pluginKey),
+		view: (view) => new LinkBubblePluginView({
+			editor,
+			view,
+		}),
+	})
+}
 
 export function linkClicking() {
 	return new Plugin({
