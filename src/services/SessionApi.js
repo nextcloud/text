@@ -38,9 +38,10 @@ class SessionApi {
 		this.#options = options
 	}
 
-	open({ fileId }) {
+	open({ fileId, baseVersionEtag }) {
 		return axios.put(this.#url(`session/${fileId}/create`), {
 			fileId,
+			baseVersionEtag,
 			filePath: this.#options.filePath,
 			token: this.#options.shareToken,
 			guestName: this.#options.guestName,

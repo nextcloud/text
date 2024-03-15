@@ -68,7 +68,7 @@ class SyncService {
 
 	#sendIntervalId
 
-	constructor({ serialize, getDocumentState, ...options }) {
+	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
@@ -82,6 +82,7 @@ class SyncService {
 		this.lastStepPush = Date.now()
 
 		this.version = null
+		this.baseVersionEtag = baseVersionEtag
 		this.sending = false
 		this.#sendIntervalId = null
 
@@ -94,7 +95,7 @@ class SyncService {
 
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
-			: this._api.open({ fileId })
+			: this._api.open({ fileId, baseVersionEtag: this.baseVersionEtag })
 				.catch(error => this._emitError(error))
 
 		this.connection = await connect
@@ -104,6 +105,7 @@ class SyncService {
 		}
 		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
+		this.baseVersionEtag = this.connection.document.baseVersionEtag
 		this.emit('opened', {
 			...this.connection.state,
 			version: this.version,
