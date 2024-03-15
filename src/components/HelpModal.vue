@@ -1,8 +1,9 @@
 <template>
-	<NcModal size="normal"
+	<NcDialog size="normal"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting help')"
-		@close="$emit('close')">
+		:close-on-click-outside="true"
+		@closing="$emit('close')">
 		<h2>{{ t('text', 'Formatting help') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
 		<p v-if="!isMobileCached">
@@ -175,17 +176,17 @@
 				</tr>
 			</tbody>
 		</table>
-	</NcModal>
+	</NcDialog>
 </template>
 
 <script>
-import { NcModal } from '@nextcloud/vue'
+import { NcDialog } from '@nextcloud/vue'
 import { isMobilePlatform } from '../helpers/platform.js'
 
 export default {
 	name: 'HelpModal',
 	components: {
-		NcModal,
+		NcDialog,
 	},
 	data() {
 		return {
@@ -222,22 +223,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	:deep(.modal-wrapper) {
-		.modal-container {
-			width: max-content;
-			padding: 30px 40px 20px;
-			user-select: text;
-		}
-
-		// Remove padding-right on mobile, screen might not be wide enough
-		@media only screen and (max-width: 512px) {
-			.modal-container {
-				width: inherit;
-				padding: 10px 0;
-			}
-		}
-	}
-
 	table {
 		margin-top: 24px;
 		border-collapse: collapse;
