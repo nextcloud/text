@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
@@ -49,7 +50,11 @@ class BeforeNodeWrittenListener implements IEventListener {
 		if ($node instanceof File && $node->getMimeType() === 'text/markdown') {
 			if (!$this->documentService->isSaveFromText()) {
 				// Reset document session to avoid manual conflict resolution if there's no unsaved steps
-				$this->documentService->resetDocument($node->getId());
+				try {
+					$this->documentService->resetDocument($node->getId());
+				} catch (DocumentHasUnsavedChangesException) {
+					// Do not throw during event handling in this is expected to happen
+				}
 			}
 		}
 	}
