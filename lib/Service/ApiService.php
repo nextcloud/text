@@ -73,7 +73,7 @@ class ApiService {
 		$this->l10n = $l10n;
 	}
 
-	public function create($fileId = null, $filePath = null, ?string $token = null, $guestName = null): DataResponse {
+	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, $guestName = null): DataResponse {
 		try {
 			if ($token) {
 				$file = $this->documentService->getFileByShareToken($token, $this->request->getParam('filePath'));
@@ -117,6 +117,9 @@ class ApiService {
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$document = $this->documentService->getDocument($file->getId());
 			$freshSession = $document === null;
+			if ($baseVersionEtag && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
+				return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_CONFLICT);
+			}
 
 			if ($freshSession) {
 				$this->logger->info('Create new document of ' . $file->getId());
