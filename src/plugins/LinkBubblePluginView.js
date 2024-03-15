@@ -12,7 +12,7 @@ class LinkBubblePluginView {
 	#hadUpdateFromClick = false
 
 	constructor({ view, options }) {
-		this.editor = options.editor
+		this.options = options
 		this.view = view
 
 		// When editor is used in Viewer component, it should render comopnent using Viewer's Vue constructor,
@@ -20,9 +20,9 @@ class LinkBubblePluginView {
 		const ViewerVue = getViewerVue()
 		const LinkBubbleViewConstructor = ViewerVue ? ViewerVue.extend(LinkBubbleView) : LinkBubbleView
 		this.#component = new VueRenderer(LinkBubbleViewConstructor, {
-			parent: this.editor.contentComponent,
+			parent: this.options.parent,
 			propsData: {
-				editor: this.editor,
+				editor: this.options.editor,
 				href: null,
 			},
 		})
@@ -49,17 +49,17 @@ class LinkBubblePluginView {
 		}
 
 		// Only regard clicks that resolve to a prosemirror position
-		const { pos } = this.editor.view.posAtCoords({ left: event.clientX, top: event.clientY })
+		const { pos } = this.view.posAtCoords({ left: event.clientX, top: event.clientY })
 		if (!pos) {
 			return false
 		}
 
 		// Derive link from position of click instead of using `getAttribute()` (like Tiptap handleClick does)
 		// In Firefox, `getAttribute()` doesn't work in read-only mode as clicking on links doesn't update selection/cursor.
-		const clickedPos = this.editor.view.state.doc.resolve(pos)
+		const clickedPos = this.view.state.doc.resolve(pos)
 
 		// we use `setTimeout` to make sure `selection` is already updated
-		setTimeout(() => this.updateFromClick(this.editor.view, clickedPos))
+		setTimeout(() => this.updateFromClick(this.view, clickedPos))
 	}
 
 	keydownHandler = (event) => {
@@ -70,7 +70,7 @@ class LinkBubblePluginView {
 	}
 
 	createTooltip() {
-		const { element: editorElement } = this.editor.options
+		const editorElement = this.options.editor.options.element
 		const editorIsAttached = !!editorElement.parentElement
 
 		if (this.tippy || !editorIsAttached) {
@@ -138,7 +138,7 @@ class LinkBubblePluginView {
 		setTimeout(() => {
 			this.#hadUpdateFromClick = false
 		}, 500)
-		this.updateTooltip(this.editor.view, shouldShow, clickedNode, nodeStart)
+		this.updateTooltip(this.view, shouldShow, clickedNode, nodeStart)
 	}
 
 	updateTooltip(view, shouldShow, linkNode, nodeStart) {
