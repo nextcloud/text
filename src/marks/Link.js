@@ -21,8 +21,8 @@
  */
 
 import TipTapLink from '@tiptap/extension-link'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { domHref, parseHref } from './../helpers/links.js'
+import { linkClicking } from '../plugins/links.js'
 
 const Link = TipTapLink.extend({
 
@@ -76,48 +76,9 @@ const Link = TipTapLink.extend({
 		// Custom click handler plugins
 		return [
 			...plugins,
-			new Plugin({
-				key: new PluginKey('textHandleClickLink'),
-				props: {
-					handleDOMEvents: {
-						// Open link in new tab on middle click
-						auxclick: (view, event) => {
-							if (event.target.closest('a') && event.button === 1 && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
-								event.preventDefault()
-								event.stopImmediatePropagation()
-
-								const linkElement = event.target.closest('a')
-								window.open(linkElement.href, '_blank')
-							}
-						},
-						// Prevent paste into links
-						// On Linux, middle click pastes, which breaks "open in new tab" on middle click
-						// Pasting into links will break the link anyway, so just disable it altogether.
-						paste: (view, event) => {
-							if (event.target.closest('a')) {
-								event.stopPropagation()
-								event.preventDefault()
-								event.stopImmediatePropagation()
-							}
-						},
-						// Prevent open link (except anchor links) on left click (required for read-only mode)
-						// Open link in new tab on Ctrl/Cmd + left click
-						click: (view, event) => {
-							const linkEl = event.target.closest('a')
-							if (event.button === 0 && linkEl) {
-								event.preventDefault()
-								if (linkEl.attributes.href?.value?.startsWith('#')) {
-									// Open anchor links directly
-									location.href = linkEl.attributes.href.value
-								} else if (event.ctrlKey || event.metaKey) {
-									window.open(linkEl.href, '_blank')
-								}
-							}
-						},
-					},
-				},
-			}),
+			linkClicking(),
 		]
+
 	},
 })
 
