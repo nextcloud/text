@@ -69,7 +69,7 @@ class LinkBubblePluginView {
 	}
 
 	update(view, oldState) {
-		const clicked = this.linkClicked(view, oldState)
+		const clicked = this.clickedChanged(view, oldState)
 		if (clicked) {
 			this.updateFromClick(view, clicked)
 		} else if (this.selectionUpdated(view, oldState)) {
@@ -77,7 +77,7 @@ class LinkBubblePluginView {
 		}
 	}
 
-	linkClicked(view, oldState) {
+	clickedChanged(view, oldState) {
 		const { clicked } = this.plugin.getState(view.state)
 		const { clicked: oldClicked } = this.plugin.getState(oldState)
 		if (clicked !== oldClicked) {
@@ -111,18 +111,17 @@ class LinkBubblePluginView {
 
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
+		const mark = linkNode?.marks.find(m => m.type.name === 'link')
+		const shouldShow = mark && hasEditorFocus
 
-		const shouldShow = !!linkNode && hasEditorFocus
-
-		this.updateTooltip(view, shouldShow, linkNode?.marks, nodeStart)
+		this.updateTooltip(view, shouldShow, mark, nodeStart)
 	}, 250)
 
 	updateFromClick(view, clicked) {
-		const marks = clicked?.resolved.marks()
-		this.updateTooltip(this.view, !!marks, marks, clicked.nodeStart)
+		this.updateTooltip(this.view, !!clicked.mark, clicked.mark, clicked.nodeStart)
 	}
 
-	updateTooltip(view, shouldShow, marks, nodeStart) {
+	updateTooltip(view, shouldShow, mark, nodeStart) {
 		this.createTooltip()
 
 		if (!shouldShow) {
@@ -137,7 +136,7 @@ class LinkBubblePluginView {
 		const clientRect = referenceEl?.getBoundingClientRect()
 
 		this.#component.updateProps({
-			href: domHref(marks.find(m => m.type.name === 'link')),
+			href: domHref(mark),
 		})
 
 		this.tippy?.setProps({

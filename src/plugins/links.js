@@ -57,8 +57,10 @@ export function linkBubble(pluginKey, options) {
 				}
 				const { dispatch, state } = view
 				const resolved = state.doc.resolve(pos)
+				const mark = resolved.marks()
+					.find(m => m.type.name === 'link')
 				const nodeStart = resolved.pos - resolved.textOffset
-				const clicked = { pos, resolved, nodePos, event, direct, nodeStart }
+				const clicked = { mark, nodeStart }
 				dispatch(state.tr.setMeta(linkBubblePlugin, { clicked }))
 			},
 		},
