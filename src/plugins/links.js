@@ -29,7 +29,7 @@ export function linkBubble(pluginKey, options) {
 		state: {
 			init: () => ({ clicked: null }),
 			apply: (tr, cur) => {
-				const meta = tr.getMeta(linkClickingKey)
+				const meta = tr.getMeta(linkBubblePlugin)
 				if (meta?.clicked) {
 					return { clicked: meta.clicked }
 				} else {
@@ -42,6 +42,27 @@ export function linkBubble(pluginKey, options) {
 			options,
 			plugin: linkBubblePlugin,
 		}),
+
+		props: {
+			// Required for read-only mode on Firefox.
+			// For some reason, editor selection doesn't get updated
+			// when clicking a link in read-only mode on Firefox.
+			handleClickOn: (view, pos, node, nodePos, event, direct) => {
+				// Only regard left clicks without Ctrl/Meta
+				if (!direct
+					|| event.button !== 0
+					|| event.ctrlKey
+					|| event.metaKey) {
+					return false
+				}
+				const { dispatch, state } = view
+				const resolved = state.doc.resolve(pos)
+				const nodeStart = resolved.pos - resolved.textOffset
+				const clicked = { pos, resolved, nodePos, event, direct, nodeStart }
+				dispatch(state.tr.setMeta(linkBubblePlugin, { clicked }))
+			},
+		},
+
 	})
 	return linkBubblePlugin
 }
@@ -51,20 +72,6 @@ export function linkClicking() {
 	return new Plugin({
 		key: linkClickingKey,
 		props: {
-			// Required for read-only mode on Firefox.
-			// For some reason, editor selection doesn't get updated
-			// when clicking a link in read-only mode on Firefox.
-			handleClickOn: (view, pos, node, nodePos, event, direct) => {
-				// Only regard left clicks without Ctrl/Meta
-				if (event.button !== 0 || event.ctrlKey || event.metaKey) {
-					return false
-				}
-				const { dispatch, state } = view
-				const resolved = state.doc.resolve(pos)
-				const nodeStart = resolved.pos - resolved.textOffset
-				const clicked = { pos, resolved, nodePos, event, direct, nodeStart }
-				dispatch(state.tr.setMeta(linkClickingKey, { clicked }))
-			},
 			handleDOMEvents: {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
