@@ -9,11 +9,11 @@ import { getViewerVue } from '../ViewerVue.js'
 class LinkBubblePluginView {
 
 	#component = null
-	#hadUpdateFromClick = false
 
-	constructor({ view, options }) {
+	constructor({ view, options, plugin }) {
 		this.options = options
 		this.view = view
+		this.plugin = plugin
 
 		// When editor is used in Viewer component, it should render comopnent using Viewer's Vue constructor,
 		// Otherwise there are VNodes with different Vue constructors in a single Virtual DOM which is not fully supported by Vue
@@ -28,7 +28,6 @@ class LinkBubblePluginView {
 		})
 
 		this.view.dom.addEventListener('dragstart', this.dragOrScrollHandler)
-		this.view.dom.addEventListener('click', this.clickHandler)
 		document.addEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 
@@ -38,28 +37,6 @@ class LinkBubblePluginView {
 			return
 		}
 		this.hide()
-	}
-
-	// Required for read-only mode on Firefox. For some reason, editor selection doesn't get
-	// updated when clicking a link in read-only mode on Firefox.
-	clickHandler = (event) => {
-		// Only regard left clicks without Ctrl/Meta
-		if (event.button !== 0 || event.ctrlKey || event.metaKey) {
-			return false
-		}
-
-		// Only regard clicks that resolve to a prosemirror position
-		const { pos } = this.view.posAtCoords({ left: event.clientX, top: event.clientY })
-		if (!pos) {
-			return false
-		}
-
-		// Derive link from position of click instead of using `getAttribute()` (like Tiptap handleClick does)
-		// In Firefox, `getAttribute()` doesn't work in read-only mode as clicking on links doesn't update selection/cursor.
-		const clickedPos = this.view.state.doc.resolve(pos)
-
-		// we use `setTimeout` to make sure `selection` is already updated
-		setTimeout(() => this.updateFromClick(this.view, clickedPos))
 	}
 
 	keydownHandler = (event) => {
@@ -92,23 +69,34 @@ class LinkBubblePluginView {
 	}
 
 	update(view, oldState) {
-		const { composing } = view
+		const clicked = this.linkClicked(view, oldState)
+		if (clicked) {
+			this.updateFromClick(view, clicked)
+		} else if (this.selectionUpdated(view, oldState)) {
+			this.updateFromSelection(view)
+		}
+	}
+
+	linkClicked(view, oldState) {
+		const { clicked } = this.plugin.getState(view.state)
+		const { clicked: oldClicked } = this.plugin.getState(oldState)
+		if (clicked !== oldClicked) {
+			return clicked
+		}
+	}
+
+	selectionUpdated(view, oldState) {
+		if (view.composing) {
+			return false
+		}
 		const selectionChanged = !oldState?.selection.eq(view.state.selection)
 		const docChanged = !oldState?.doc.eq(view.state.doc)
-		const isSame = !selectionChanged && !docChanged
+		return selectionChanged || docChanged
 
-		if (composing || isSame) {
-			return
-		}
-
-		this.updateFromSelection(view)
 	}
 
 	updateFromSelection = debounce((view) => {
 		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
-		if (this.#hadUpdateFromClick) {
-			return
-		}
 
 		const { state } = view
 		const { selection } = state
@@ -126,25 +114,18 @@ class LinkBubblePluginView {
 
 		const shouldShow = !!linkNode && hasEditorFocus
 
-		this.updateTooltip(view, shouldShow, linkNode, nodeStart)
+		this.updateTooltip(view, shouldShow, linkNode?.marks, nodeStart)
 	}, 250)
 
-	updateFromClick(view, clickedLinkPos) {
-		const nodeStart = clickedLinkPos.pos - clickedLinkPos.textOffset
-		const clickedNode = clickedLinkPos.parent.maybeChild(clickedLinkPos.index())
-		const shouldShow = this.isLinkNode(clickedNode)
-
-		this.#hadUpdateFromClick = true
-		setTimeout(() => {
-			this.#hadUpdateFromClick = false
-		}, 500)
-		this.updateTooltip(this.view, shouldShow, clickedNode, nodeStart)
+	updateFromClick(view, clicked) {
+		const marks = clicked?.resolved.marks()
+		this.updateTooltip(this.view, !!marks, marks, clicked.nodeStart)
 	}
 
-	updateTooltip(view, shouldShow, linkNode, nodeStart) {
+	updateTooltip(view, shouldShow, marks, nodeStart) {
 		this.createTooltip()
 
-		if (!shouldShow || !linkNode) {
+		if (!shouldShow) {
 			this.hide()
 			return
 		}
@@ -156,7 +137,7 @@ class LinkBubblePluginView {
 		const clientRect = referenceEl?.getBoundingClientRect()
 
 		this.#component.updateProps({
-			href: domHref(linkNode.marks.find(m => m.type.name === 'link')),
+			href: domHref(marks.find(m => m.type.name === 'link')),
 		})
 
 		this.tippy?.setProps({
@@ -181,7 +162,6 @@ class LinkBubblePluginView {
 	destroy() {
 		this.tippy?.destroy()
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
-		this.view.dom.removeEventListener('click', this.clickHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 

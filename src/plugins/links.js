@@ -24,19 +24,47 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 
 export function linkBubble(pluginKey, options) {
-	return new Plugin({
+	const linkBubblePlugin = new Plugin({
 		key: new PluginKey(pluginKey),
+		state: {
+			init: () => ({ clicked: null }),
+			apply: (tr, cur) => {
+				const meta = tr.getMeta(linkClickingKey)
+				if (meta?.clicked) {
+					return { clicked: meta.clicked }
+				} else {
+					return cur
+				}
+			},
+		},
 		view: (view) => new LinkBubblePluginView({
 			view,
 			options,
+			plugin: linkBubblePlugin,
 		}),
 	})
+	return linkBubblePlugin
 }
 
+export const linkClickingKey = new PluginKey('textHandleClickLink')
 export function linkClicking() {
 	return new Plugin({
-		key: new PluginKey('textHandleClickLink'),
+		key: linkClickingKey,
 		props: {
+			// Required for read-only mode on Firefox.
+			// For some reason, editor selection doesn't get updated
+			// when clicking a link in read-only mode on Firefox.
+			handleClickOn: (view, pos, node, nodePos, event, direct) => {
+				// Only regard left clicks without Ctrl/Meta
+				if (event.button !== 0 || event.ctrlKey || event.metaKey) {
+					return false
+				}
+				const { dispatch, state } = view
+				const resolved = state.doc.resolve(pos)
+				const nodeStart = resolved.pos - resolved.textOffset
+				const clicked = { pos, resolved, nodePos, event, direct, nodeStart }
+				dispatch(state.tr.setMeta(linkClickingKey, { clicked }))
+			},
 			handleDOMEvents: {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
