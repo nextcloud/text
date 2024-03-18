@@ -1,9 +1,7 @@
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
-import debounce from 'debounce'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
-import { linkNodeFromSelection } from './linkHelpers.js'
 
 import { getViewerVue } from '../ViewerVue.js'
 
@@ -72,41 +70,17 @@ class LinkBubblePluginView {
 	update(view, oldState) {
 		const { active } = this.plugin.getState(view.state)
 		const { active: oldActive } = this.plugin.getState(oldState)
-		if (active !== oldActive) {
-			this.updateTooltip(view, !!active.mark, active.mark, active.nodeStart)
-		} else if (this.selectionUpdated(view, oldState)) {
-			this.updateFromSelection(view)
+		if (view.composing && !active.clicked) {
+			return
 		}
-	}
-
-	selectionUpdated(view, oldState) {
-		if (view.composing) {
-			return false
+		if (active === oldActive) {
+			return
 		}
-		const selectionChanged = !oldState?.selection.eq(view.state.selection)
-		const docChanged = !oldState?.doc.eq(view.state.doc)
-		return selectionChanged || docChanged
-	}
-
-	updateFromSelection = debounce((view) => {
-		const { state } = view
-		const { selection } = state
-
-		// support for CellSelections
-		const { ranges } = selection
-		const from = Math.min(...ranges.map(range => range.$from.pos))
-
-		const resolved = view.state.doc.resolve(from)
-		const nodeStart = resolved.pos - resolved.textOffset
-		const linkNode = linkNodeFromSelection(state)
-
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
-		const mark = linkNode?.marks.find(m => m.type.name === 'link')
-		const shouldShow = mark && hasEditorFocus
-
-		this.updateTooltip(view, shouldShow, mark, nodeStart)
-	}, 250)
+		const shouldShow = active.mark && (active.clicked || hasEditorFocus)
+		this.updateTooltip(view, shouldShow, active.mark, active.nodeStart)
+	}
 
 	updateTooltip(view, shouldShow, mark, nodeStart) {
 		this.createTooltip()

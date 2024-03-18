@@ -22,6 +22,7 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
+import { linkNodeFromSelection } from './linkHelpers.js'
 
 // Commands
 
@@ -36,7 +37,7 @@ export const setActiveLink = (resolved) => (state, dispatch) => {
 		return false
 	}
 	const nodeStart = resolved.pos - resolved.textOffset
-	const active = { mark, nodeStart }
+	const active = { mark, nodeStart, clicked: true }
 	if (dispatch) {
 		dispatch(state.tr.setMeta(linkBubbleKey, { active }))
 	}
@@ -51,18 +52,37 @@ export function linkBubble(options) {
 			init: () => ({ active: null }),
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
-				if (meta?.active) {
+				if (meta && meta.active !== cur.active) {
 					return { active: meta.active }
 				} else {
 					return cur
 				}
 			},
 		},
+
 		view: (view) => new LinkBubblePluginView({
 			view,
 			options,
 			plugin: linkBubblePlugin,
 		}),
+
+		appendTransaction: (transactions, oldState, state) => {
+			const sameSelection = oldState?.selection.eq(state.selection)
+			const sameDoc = oldState?.doc.eq(state.doc)
+			if (sameSelection && sameDoc) {
+				return
+			}
+			const { selection } = state
+			// support for CellSelections
+			const { ranges } = selection
+			const from = Math.min(...ranges.map(range => range.$from.pos))
+			const resolved = state.doc.resolve(from)
+			const nodeStart = resolved.pos - resolved.textOffset
+			const linkNode = linkNodeFromSelection(state)
+			const mark = linkNode?.marks.find(m => m.type.name === 'link')
+			const active = { mark, nodeStart }
+			return state.tr.setMeta(linkBubbleKey, { active })
+		},
 
 		props: {
 			// Required for read-only mode on Firefox.
@@ -80,6 +100,7 @@ export function linkBubble(options) {
 				const resolved = state.doc.resolve(pos)
 				setActiveLink(resolved)(state, dispatch, view)
 			},
+
 		},
 
 	})
