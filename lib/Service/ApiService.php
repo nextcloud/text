@@ -118,7 +118,7 @@ class ApiService {
 			$document = $this->documentService->getDocument($file->getId());
 			$freshSession = $document === null;
 			if ($baseVersionEtag && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
-				return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_CONFLICT);
+				return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
 			}
 
 			if ($freshSession) {
@@ -193,7 +193,7 @@ class ApiService {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
 			// Session was removed in the meantime. #3875
-			return new DataResponse([], 403);
+			return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
 		}
 		if (empty($steps)) {
 			return new DataResponse([]);
@@ -204,7 +204,7 @@ class ApiService {
 			return new DataResponse($e->getMessage(), 422);
 		} catch (DoesNotExistException|NotPermittedException) {
 			// Either no write access or session was removed in the meantime (#3875).
-			return new DataResponse([], 403);
+			return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
 		}
 		return new DataResponse($result);
 	}

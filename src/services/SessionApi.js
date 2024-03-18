@@ -114,6 +114,7 @@ export class Connection {
 		return this.#post(this.#url('session/sync'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 			autosaveContent,
 			documentState,
@@ -126,6 +127,7 @@ export class Connection {
 		return this.#post(this.#url('session/push'), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
 			steps,
 			version,
 			awareness,

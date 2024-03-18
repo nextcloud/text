@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
@@ -83,6 +84,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
+	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
 	public function push(int $documentId, int $sessionId, string $sessionToken, int $version, array $steps, string $awareness, string $token): DataResponse {
 		return $this->apiService->push($this->getSession(), $this->getDocument(), $version, $steps, $awareness, $token);
@@ -90,6 +92,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
+	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
 	public function sync(string $token, int $documentId, int $sessionId, string $sessionToken, int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		return $this->apiService->sync($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
@@ -97,6 +100,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 
 	#[NoAdminRequired]
 	#[PublicPage]
+	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
 	public function updateSession(string $guestName) {
 		return $this->apiService->updateSession($this->getSession(), $guestName);
