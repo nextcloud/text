@@ -68,7 +68,13 @@ const parseHref = function(dom) {
 	return ref
 }
 
+const isLinkToSelfWithHash = function(href) {
+	const locationNoHash = window.location.origin + window.location.pathname + window.location.search
+	return href?.startsWith('#') || href?.startsWith(locationNoHash + '#')
+}
+
 export {
 	domHref,
 	parseHref,
+	isLinkToSelfWithHash,
 }
