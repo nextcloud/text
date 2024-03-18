@@ -23,15 +23,36 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 
-export function linkBubble(pluginKey, options) {
+// Commands
+
+/* Set resolved to be the active element (if it has a link mark)
+ *
+ * @params {ResolvedPos} resolved position of the action
+ */
+export const setActiveLink = (resolved) => (state, dispatch) => {
+	const mark = resolved.marks()
+		.find(m => m.type.name === 'link')
+	if (!mark) {
+		return false
+	}
+	const nodeStart = resolved.pos - resolved.textOffset
+	const active = { mark, nodeStart }
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active }))
+	}
+	return true
+}
+
+export const linkBubbleKey = new PluginKey('linkBubble')
+export function linkBubble(options) {
 	const linkBubblePlugin = new Plugin({
-		key: new PluginKey(pluginKey),
+		key: linkBubbleKey,
 		state: {
-			init: () => ({ clicked: null }),
+			init: () => ({ active: null }),
 			apply: (tr, cur) => {
-				const meta = tr.getMeta(linkBubblePlugin)
-				if (meta?.clicked) {
-					return { clicked: meta.clicked }
+				const meta = tr.getMeta(linkBubbleKey)
+				if (meta?.active) {
+					return { active: meta.active }
 				} else {
 					return cur
 				}
@@ -55,13 +76,9 @@ export function linkBubble(pluginKey, options) {
 					|| event.metaKey) {
 					return false
 				}
-				const { dispatch, state } = view
+				const { state, dispatch } = view
 				const resolved = state.doc.resolve(pos)
-				const mark = resolved.marks()
-					.find(m => m.type.name === 'link')
-				const nodeStart = resolved.pos - resolved.textOffset
-				const clicked = { mark, nodeStart }
-				dispatch(state.tr.setMeta(linkBubblePlugin, { clicked }))
+				setActiveLink(resolved)(state, dispatch, view)
 			},
 		},
 

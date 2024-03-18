@@ -69,19 +69,19 @@ class LinkBubblePluginView {
 	}
 
 	update(view, oldState) {
-		const clicked = this.clickedChanged(view, oldState)
-		if (clicked) {
-			this.updateFromClick(view, clicked)
+		const active = this.activeChanged(view, oldState)
+		if (active) {
+			this.updateFromClick(view, active)
 		} else if (this.selectionUpdated(view, oldState)) {
 			this.updateFromSelection(view)
 		}
 	}
 
-	clickedChanged(view, oldState) {
-		const { clicked } = this.plugin.getState(view.state)
-		const { clicked: oldClicked } = this.plugin.getState(oldState)
-		if (clicked !== oldClicked) {
-			return clicked
+	activeChanged(view, oldState) {
+		const { active } = this.plugin.getState(view.state)
+		const { active: oldActive } = this.plugin.getState(oldState)
+		if (active !== oldActive) {
+			return active
 		}
 	}
 
@@ -117,8 +117,8 @@ class LinkBubblePluginView {
 		this.updateTooltip(view, shouldShow, mark, nodeStart)
 	}, 250)
 
-	updateFromClick(view, clicked) {
-		this.updateTooltip(this.view, !!clicked.mark, clicked.mark, clicked.nodeStart)
+	updateFromClick(view, active) {
+		this.updateTooltip(this.view, !!active.mark, active.mark, active.nodeStart)
 	}
 
 	updateTooltip(view, shouldShow, mark, nodeStart) {
