@@ -151,7 +151,7 @@ describe('Open test.md in viewer', function() {
 			cy.login(recipient)
 			cy.visit('/apps/files')
 			cy.openFile('test.md')
-			cy.getModal().find('.empty-content__name').should('contain', 'Failed to load file')
+			cy.getModal().find('.document-status').should('contain', 'This file cannot be displayed as download is disabled by the share')
 			cy.getModal().getContent().should('not.exist')
 		})
 	})
