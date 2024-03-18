@@ -187,7 +187,9 @@ class SyncService {
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				}
-				if (response?.status === 403) {
+				if (response?.status === 412) {
+					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: response })
+				} else if (response?.status === 403) {
 					if (!data.document) {
 						// either the session is invalid or the document is read only.
 						logger.error('failed to write to document - not allowed')
