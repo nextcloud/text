@@ -3,6 +3,7 @@ import tippy from 'tippy.js'
 import debounce from 'debounce'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
+import { linkNodeFromSelection } from './linkHelpers.js'
 
 import { getViewerVue } from '../ViewerVue.js'
 
@@ -85,12 +86,9 @@ class LinkBubblePluginView {
 		const selectionChanged = !oldState?.selection.eq(view.state.selection)
 		const docChanged = !oldState?.doc.eq(view.state.doc)
 		return selectionChanged || docChanged
-
 	}
 
 	updateFromSelection = debounce((view) => {
-		// Don't update directly after updateFromClick. Prevents race condition in read-only documents in Chrome.
-
 		const { state } = view
 		const { selection } = state
 
@@ -100,7 +98,7 @@ class LinkBubblePluginView {
 
 		const resolved = view.state.doc.resolve(from)
 		const nodeStart = resolved.pos - resolved.textOffset
-		const linkNode = this.linkNodeFromSelection(state)
+		const linkNode = linkNodeFromSelection(state)
 
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
@@ -151,45 +149,6 @@ class LinkBubblePluginView {
 		this.tippy?.destroy()
 		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
-	}
-
-	linkNodeFromSelection({ selection, doc }) {
-		// support for CellSelections
-		const { ranges } = selection
-		const from = Math.min(...ranges.map(range => range.$from.pos))
-		const to = Math.max(...ranges.map(range => range.$to.pos))
-
-		const resolved = doc.resolve(from)
-
-		// ignore links in previews
-		if (resolved.parent.type.name === 'preview') {
-			return false
-		}
-
-		const node = resolved.parent.maybeChild(resolved.index())
-		const nodeStart = resolved.pos - resolved.textOffset
-		const nodeEnd = nodeStart + node?.nodeSize
-
-		if (to > nodeEnd) {
-			// Selection spans further than one text node
-			return
-		}
-
-		return this.isLinkNode(node) ? node : null
-	}
-
-	isLinkNode(node) {
-		const linkMark = node?.marks.find(m => m.type.name === 'link')
-		if (!linkMark) {
-			return false
-		}
-
-		// Don't open link bubble for anchor links
-		if (linkMark.attrs.href.startsWith('#')) {
-			return false
-		}
-
-		return true
 	}
 
 }
