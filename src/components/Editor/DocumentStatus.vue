@@ -22,27 +22,34 @@
 
 <template>
 	<div class="document-status">
-		<NcEmptyContent v-if="isLoadingError" :title="t('text', 'Failed to load file')" :description="syncError.data.data">
+		<NcNoteCard v-if="hasWarning" type="warning">
+			<p v-if="isLoadingError">
+				{{ syncError.data.data }}
+				<!-- Display reload button on PRECONDITION_FAILED response type -->
+				<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
+			</p>
+			<p v-else-if="hasSyncCollission">
+				{{ t('text', 'Document has been changed outside of the editor. The changes cannot be applied') }}
+			</p>
+			<p v-else-if="hasConnectionIssue">
+				{{ t('text', 'Document could not be loaded. Please check your internet connection.') }}
+				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+			</p>
+		</NcNoteCard>
+		<NcNoteCard v-else-if="idle" type="info">
+			<p>
+				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }}
+				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+			</p>
+		</NcNoteCard>
+		<NcNoteCard v-if="lock" type="info">
 			<template #icon>
-				<AlertOctagonOutline />
+				<Lock :size="20" />
 			</template>
-		</NcEmptyContent>
-
-		<p v-else-if="idle" class="msg">
-			{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-		</p>
-
-		<p v-else-if="hasSyncCollission" class="msg icon-error">
-			{{ t('text', 'The document has been changed outside of the editor. The changes cannot be applied.') }}
-		</p>
-
-		<p v-else-if="hasConnectionIssue" class="msg">
-			{{ t('text', 'File could not be loaded. Please check your internet connection.') }} <a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-		</p>
-
-		<p v-if="lock" class="msg msg-locked">
-			<Lock /> {{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
-		</p>
+			<p>
+				{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
+			</p>
+		</NcNoteCard>
 
 		<CollisionResolveDialog v-if="hasSyncCollission" :sync-error="syncError" />
 	</div>
@@ -51,9 +58,8 @@
 <script>
 
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
-import AlertOctagonOutline from 'vue-material-design-icons/AlertOctagonOutline.vue'
 import Lock from 'vue-material-design-icons/Lock.vue'
-import { NcEmptyContent } from '@nextcloud/vue'
+import { NcNoteCard } from '@nextcloud/vue'
 import CollisionResolveDialog from '../CollisionResolveDialog.vue'
 
 export default {
@@ -61,9 +67,8 @@ export default {
 
 	components: {
 		CollisionResolveDialog,
-		AlertOctagonOutline,
 		Lock,
-		NcEmptyContent,
+		NcNoteCard,
 	},
 
 	props: {
@@ -79,6 +84,7 @@ export default {
 			type: Object,
 			default: null,
 		},
+
 		hasConnectionIssue: {
 			type: Boolean,
 			require: true,
@@ -98,11 +104,17 @@ export default {
 		isLoadingError() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
 		},
+		hasWarning() {
+			return this.syncError || this.hasConnectionIssue
+		},
 	},
 
 	methods: {
 		reconnect() {
 			this.$emit('reconnect')
+		},
+		reload() {
+			window.location.reload()
 		},
 	},
 
@@ -112,28 +124,11 @@ export default {
 <style scoped lang="scss">
 	.document-status {
 		position: sticky;
-		top: 0;
-		z-index: 10000;
-		max-height: 50px;
+		top: 16px;
+		z-index: 100000;
+		// max-height: 50px;
+		max-width: var(--text-editor-max-width);
+		margin: auto;
 		background-color: var(--color-main-background);
-
-		.msg {
-			padding: 12px;
-			background-position: 8px center;
-			color: var(--color-text-maxcontrast);
-
-			&.icon-error {
-				padding-left: 30px;
-			}
-
-			.button {
-				margin-left: 8px;
-			}
-
-			&.msg-locked .lock-icon {
-				padding: 0 10px;
-				float: left;
-			}
-		}
 	}
 </style>
