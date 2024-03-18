@@ -100,7 +100,7 @@ class LinkBubblePluginView {
 
 		const resolved = view.state.doc.resolve(from)
 		const nodeStart = resolved.pos - resolved.textOffset
-		const linkNode = this.linkNodeFromSelection(view)
+		const linkNode = this.linkNodeFromSelection(state)
 
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
@@ -153,16 +153,13 @@ class LinkBubblePluginView {
 		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 
-	linkNodeFromSelection(view) {
-		const { state } = view
-		const { selection } = state
-
+	linkNodeFromSelection({ selection, doc }) {
 		// support for CellSelections
 		const { ranges } = selection
 		const from = Math.min(...ranges.map(range => range.$from.pos))
 		const to = Math.max(...ranges.map(range => range.$to.pos))
 
-		const resolved = view.state.doc.resolve(from)
+		const resolved = doc.resolve(from)
 
 		// ignore links in previews
 		if (resolved.parent.type.name === 'preview') {
