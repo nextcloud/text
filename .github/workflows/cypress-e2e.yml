@@ -1,19 +1,14 @@
 name: Cypress
 
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - master
-      - stable*
+on: pull_request
 
 concurrency:
-  group: ${{ github.head_ref || github.run_id }}
+  group: cypress-${{ github.head_ref || github.run_id }}
   cancel-in-progress: ${{ !github.head_ref }}
 
 env:
-  APP_NAME: text
+  # Adjust APP_NAME if your repository name is different
+  APP_NAME: ${{ github.event.repository.name }}
   CYPRESS_baseUrl: http://localhost:8081/index.php
 
 jobs:
@@ -23,7 +18,6 @@ jobs:
       nodeVersion: ${{ steps.versions.outputs.nodeVersion }}
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
     strategy:
-      fail-fast: false
       matrix:
         server-versions: ['stable27']
 
@@ -52,11 +46,11 @@ jobs:
         id: versions
         with:
           fallbackNode: "^20"
-          fallbackNpm: "^9"
+          fallbackNpm: "^10"
           path: apps/${{ env.APP_NAME }}
 
       - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
           cache: 'npm'
           node-version: ${{ steps.versions.outputs.nodeVersion }}
@@ -64,14 +58,14 @@ jobs:
       - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
         run: npm i -g npm@"${{ steps.versions.outputs.npmVersion }}"
 
-      - name: Install dependencies & build app
+      - name: Install node dependencies & build app
         working-directory: apps/${{ env.APP_NAME }}
         run: |
           npm ci
           TESTING=true npm run build --if-present
 
       - name: Save context
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: buildjet/cache/save@e376f15c6ec6dc595375c78633174c7e5f92dc0e # v3
         with:
           key: cypress-context-${{ github.run_id }}
           path: ./
@@ -83,25 +77,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3, 4, 5, 6, 7, 8]
-        php-versions: [ '8.1' ]
+        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        php-versions: ['8.1']
         run-in-parallel:
           - false # only for PRs: ${{ !!github.head_ref }}
-        exclude:
-          - run-in-parallel: false
-            containers: 2
-          - run-in-parallel: false
-            containers: 3
-          - run-in-parallel: false
-            containers: 4
-          - run-in-parallel: false
-            containers: 5
-          - run-in-parallel: false
-            containers: 6
-          - run-in-parallel: false
-            containers: 7
-          - run-in-parallel: false
-            containers: 8
 
     name: runner ${{ matrix.containers }}
 
@@ -118,14 +97,14 @@ jobs:
 
     steps:
       - name: Restore context
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        uses: buildjet/cache/restore@e376f15c6ec6dc595375c78633174c7e5f92dc0e # v3
         with:
           fail-on-cache-miss: true
           key: cypress-context-${{ github.run_id }}
           path: ./
 
       - name: Set up node ${{ needs.init.outputs.nodeVersion }}
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
           cache: 'npm'
           node-version: ${{ needs.init.outputs.nodeVersion }}
@@ -158,11 +137,14 @@ jobs:
           php occ app:enable viewer
           php occ app:enable text
           php occ app:list
+          php occ background:cron
+          php occ config:system:set session_keepalive --value=false --type=boolean
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - name: Run E2E cypress tests
+        # Starting with v5.4.0, tons of "tar: ... Cannot mkdir: Permission denied" errors
+        uses: cypress-io/github-action@4d475873e011991664253f34700acfc3acdc46a3 # v5.3.0
         with:
           record: '${{ !!matrix.run-in-parallel }}' # only on pull requests
           parallel: '${{ !!matrix.run-in-parallel }}' # only on pull requests
@@ -176,27 +158,30 @@ jobs:
           COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           npm_package_name: ${{ env.APP_NAME }}
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
 
-      - name: Upload test failure screenshots
-        uses: actions/upload-artifact@v2
+
+      - name: Upload snapshots
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         if: failure()
         with:
-          name: Upload screenshots
+          name: snapshots_${{ matrix.containers }}
           path: |
             apps/${{ env.APP_NAME }}/cypress/screenshots/
             apps/${{ env.APP_NAME }}/cypress/snapshots/
           retention-days: 5
 
-      - name: Upload nextcloud logs
-        uses: actions/upload-artifact@v2
+      - name: Upload NC logs
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         if: failure()
         with:
-          name: Upload nextcloud log
+          name: nc_logs_${{ matrix.containers }}.log
           path: data/nextcloud.log
           retention-days: 5
 
   summary:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
     needs: [init, cypress]
 
     if: always()
