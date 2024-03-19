@@ -1,8 +1,16 @@
 import { Extension } from '@tiptap/core'
-import { linkBubble } from '../plugins/links.js'
+import { linkBubble, hideLinkBubble } from '../plugins/links.js'
 
 const LinkBubble = Extension.create({
 	name: 'linkViewBubble',
+
+	addCommands() {
+		return {
+			hideLinkBubble: () => ({ state, dispatch }) => {
+				return hideLinkBubble(state, dispatch)
+			},
+		}
+	},
 
 	addProseMirrorPlugins() {
 		return [

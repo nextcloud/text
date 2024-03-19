@@ -20,7 +20,8 @@
   -
   -->
 <template>
-	<NcActions data-text-preview-options="select">
+	<NcActions data-text-preview-options="select"
+		@open="$emit('open')">
 		<template #icon>
 			<DotsVerticalIcon :size="20" />
 		</template>
