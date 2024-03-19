@@ -47,7 +47,6 @@ jest.mock('@nextcloud/dialogs', () => ({
 
 global.OC = {
 	requestToken: '123',
-	webroot: '/nc-webroot',
 	coreApps: [
 		'core',
 	],
@@ -74,6 +73,7 @@ global.OC = {
 	}
 }
 
+global._oc_webroot = '/nc-webroot'
 global.OCA = {}
 
 
