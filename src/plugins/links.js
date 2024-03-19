@@ -67,7 +67,15 @@ export function linkBubble(options) {
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
 				if (meta && meta.active !== cur.active) {
-					return { active: meta.active }
+					if (!cur.active || !meta.active) {
+						return { ...cur, active: meta.active }
+					}
+					// keep clicked as long as the node stays the same
+					const sameNode = cur.active.nodeStart == meta.active.nodeStart
+					const clicked = meta.active.clicked
+						|| ( cur.active.clicked && sameNode )
+					const active = { ...meta.active, clicked }
+					return { ...cur, active }
 				} else {
 					return cur
 				}

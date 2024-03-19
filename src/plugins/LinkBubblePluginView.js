@@ -71,18 +71,15 @@ class LinkBubblePluginView {
 		}
 		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
 		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
-		const shouldShow = active.mark && (active.clicked || hasEditorFocus)
-		this.updateTooltip(view, shouldShow, active.mark, active.nodeStart)
+		this.createTooltip()
+		if (active?.mark && (active.clicked || hasEditorFocus)) {
+			this.updateTooltip(view, active)
+		} else {
+			this.hide()
+		}
 	}
 
-	updateTooltip(view, shouldShow, mark, nodeStart) {
-		this.createTooltip()
-
-		if (!shouldShow) {
-			this.hide()
-			return
-		}
-
+	updateTooltip(view, { mark, nodeStart }) {
 		let referenceEl = view.nodeDOM(nodeStart)
 		if (Object.prototype.toString.call(referenceEl) === '[object Text]') {
 			referenceEl = referenceEl.parentElement
