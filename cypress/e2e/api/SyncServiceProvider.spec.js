@@ -34,8 +34,8 @@ describe('Sync service provider', function() {
 		cy.createUser(user)
 		window.OC = {
 			config: { modRewriteWorking: false },
-			webroot: '',
 		}
+		window._oc_webroot = ''
 	})
 
 	beforeEach(function() {
