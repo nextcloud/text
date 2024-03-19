@@ -1,0 +1,24 @@
+{
+  "extends": "@vue/tsconfig",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["DOM", "ESNext"],
+    "noEmit": true,
+    "outDir": "./js",
+    "plugins": [
+      { "name": "typescript-plugin-css-modules" }
+    ],
+    "sourceMap": true
+  },
+  "exclude": [
+    "js",
+    "lib",
+    "node_modules",
+    "vendor"
+  ],
+  "vueCompilerOptions": {
+    "target": 2.7
+  }
+}
