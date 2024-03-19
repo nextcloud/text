@@ -137,7 +137,7 @@
     "prosemirror-test-builder": "^1.1.1",
     "vite": "^4.5.1",
     "vite-plugin-commonjs": "^0.10.1",
-    "vue-demi": "^0.14.6",
+    "vue-demi": "^0.14.7",
     "vue-template-compiler": "^2.7.16"
   },
   "jest": {
