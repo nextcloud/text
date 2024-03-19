@@ -59,6 +59,10 @@ export const hideLinkBubble = (state, dispatch) => {
 }
 
 export const linkBubbleKey = new PluginKey('linkBubble')
+/**
+ * Prosemirror link bubble plugin
+ * @param {object} options - options for the link bubble plugin view
+ */
 export function linkBubble(options) {
 	const linkBubblePlugin = new Plugin({
 		key: linkBubbleKey,
@@ -135,6 +139,14 @@ export function linkBubble(options) {
 }
 
 export const linkClickingKey = new PluginKey('textHandleClickLink')
+
+/**
+ * Prosemirror plugin for special handling for clicks on links
+ *
+ * - Open link in new tab on middle click rather than pasting.
+ * - Only open link on ctrl/cmd + left click.
+ *   We use the link bubble otherwise.
+ */
 export function linkClicking() {
 	return new Plugin({
 		key: linkClickingKey,

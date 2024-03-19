@@ -20,6 +20,12 @@
  *
  */
 
+/**
+ *
+ * @param {object} state the prosemirror state
+ * @param {object} state.selection - the current selection
+ * @param {object} state.doc - the current doc
+ */
 export function linkNodeFromSelection({ selection, doc }) {
 	// support for CellSelections
 	const { ranges } = selection
@@ -45,6 +51,10 @@ export function linkNodeFromSelection({ selection, doc }) {
 	return isLinkNode(node) ? node : null
 }
 
+/**
+ * Determine wether the given node is a link node
+ * @param {object} node - node to check
+ */
 function isLinkNode(node) {
 	const linkMark = node?.marks.find(m => m.type.name === 'link')
 	if (!linkMark) {
