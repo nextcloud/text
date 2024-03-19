@@ -37,7 +37,7 @@ export const setActiveLink = (resolved) => (state, dispatch) => {
 		return false
 	}
 	const nodeStart = resolved.pos - resolved.textOffset
-	const active = { mark, nodeStart, clicked: true }
+	const active = { mark, nodeStart }
 	if (dispatch) {
 		dispatch(state.tr.setMeta(linkBubbleKey, { active }))
 	}
@@ -67,15 +67,7 @@ export function linkBubble(options) {
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
 				if (meta && meta.active !== cur.active) {
-					if (!cur.active || !meta.active) {
-						return { ...cur, active: meta.active }
-					}
-					// keep clicked as long as the node stays the same
-					const sameNode = cur.active.nodeStart == meta.active.nodeStart
-					const clicked = meta.active.clicked
-						|| ( cur.active.clicked && sameNode )
-					const active = { ...meta.active, clicked }
-					return { ...cur, active }
+					return { ...cur, active: meta.active }
 				} else {
 					return cur
 				}

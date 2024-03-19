@@ -63,16 +63,14 @@ class LinkBubblePluginView {
 	update(view, oldState) {
 		const { active } = this.plugin.getState(view.state)
 		const { active: oldActive } = this.plugin.getState(oldState)
-		if (view.composing && !active.clicked) {
+		if (view.composing) {
 			return
 		}
 		if (active === oldActive) {
 			return
 		}
-		const hasBubbleFocus = this.#component.element.contains(document.activeElement)
-		const hasEditorFocus = view.hasFocus() || hasBubbleFocus
 		this.createTooltip()
-		if (active?.mark && (active.clicked || hasEditorFocus)) {
+		if (active?.mark) {
 			this.updateTooltip(view, active)
 		} else {
 			this.hide()
