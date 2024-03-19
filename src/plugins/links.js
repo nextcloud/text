@@ -93,7 +93,10 @@ export function linkBubble(options) {
 			const resolved = state.doc.resolve(from)
 			const nodeStart = resolved.pos - resolved.textOffset
 			const linkNode = linkNodeFromSelection(state)
-			const mark = linkNode?.marks.find(m => m.type.name === 'link')
+			if (!linkNode) {
+				return state.tr.setMeta(linkBubbleKey, { active: null })
+			}
+			const mark = linkNode.marks.find(m => m.type.name === 'link')
 			const active = { mark, nodeStart }
 			return state.tr.setMeta(linkBubbleKey, { active })
 		},
