@@ -44,6 +44,20 @@ export const setActiveLink = (resolved) => (state, dispatch) => {
 	return true
 }
 
+/* Hide the link bubble by setting active state to null
+ *
+ */
+export const hideLinkBubble = (state, dispatch) => {
+	const pluginState = linkBubbleKey.getState(state)
+	if (!pluginState?.active) {
+		return false
+	}
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active: null }))
+	}
+	return true
+}
+
 export const linkBubbleKey = new PluginKey('linkBubble')
 export function linkBubble(options) {
 	const linkBubblePlugin = new Plugin({
@@ -88,7 +102,7 @@ export function linkBubble(options) {
 			// Required for read-only mode on Firefox.
 			// For some reason, editor selection doesn't get updated
 			// when clicking a link in read-only mode on Firefox.
-			handleClickOn: (view, pos, node, nodePos, event, direct) => {
+			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
 				// Only regard left clicks without Ctrl/Meta
 				if (!direct
 					|| event.button !== 0
@@ -98,7 +112,14 @@ export function linkBubble(options) {
 				}
 				const { state, dispatch } = view
 				const resolved = state.doc.resolve(pos)
-				setActiveLink(resolved)(state, dispatch, view)
+				return setActiveLink(resolved)(state, dispatch)
+			},
+
+			handleKeyDown: (view, event) => {
+				const { state, dispatch } = view
+				if (event.key === 'Escape') {
+					return hideLinkBubble(state, dispatch)
+				}
 			},
 
 		},

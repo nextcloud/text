@@ -20,7 +20,7 @@
  *
  */
 
-import { linkBubble, setActiveLink } from '../../plugins/links.js'
+import { linkBubble, setActiveLink, hideLinkBubble } from '../../plugins/links.js'
 import { Plugin, EditorState } from '@tiptap/pm/state'
 import { schema } from '@tiptap/pm/schema-basic'
 
@@ -28,7 +28,7 @@ describe('linkBubble prosemirror plugin', () => {
 
 	test('signature', () => {
 		expect(linkBubble).toBeInstanceOf(Function)
-		expect(new linkBubble('key')).toBeInstanceOf(Plugin)
+		expect(new linkBubble()).toBeInstanceOf(Plugin)
 	})
 
 	test('usage as plugin', () => {
@@ -65,6 +65,24 @@ describe('linkBubble prosemirror plugin', () => {
 		setActiveLink(resolved)(flow.state, flow.dispatch)
 		expect(plugin.getState(flow.state).active.mark)
 			.toEqual(mark)
+	})
+
+	test('hideLinkBubble requires an active menu bubble', () => {
+		const plugin = new linkBubble()
+		const state = createState({ plugins: [ plugin ] })
+		expect(hideLinkBubble(state, null)).toBe(false)
+	})
+
+	test('hideLinkBubble clears the active state', () => {
+		const plugin = new linkBubble()
+		const state = createState({ plugins: [ plugin ] })
+		const flow = createFlow(state)
+		const mark = { type: { name: 'link' } }
+		const resolved = { marks: () => [mark] }
+		setActiveLink(resolved)(flow.state, flow.dispatch)
+		hideLinkBubble(flow.state, flow.dispatch)
+		expect(plugin.getState(flow.state).active)
+			.toEqual(null)
 	})
 
 })

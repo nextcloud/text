@@ -38,13 +38,6 @@ class LinkBubblePluginView {
 		this.hide()
 	}
 
-	keydownHandler = (event) => {
-		if (event.key === 'Escape') {
-			event.preventDefault()
-			this.hide()
-		}
-	}
-
 	createTooltip() {
 		const editorElement = this.options.editor.options.element
 		const editorIsAttached = !!editorElement.parentElement
@@ -109,11 +102,9 @@ class LinkBubblePluginView {
 
 	show() {
 		this.tippy?.show()
-		this.view.dom.addEventListener('keydown', this.keydownHandler)
 	}
 
 	hide() {
-		this.view.dom.removeEventListener('keydown', this.keydownHandler)
 		setTimeout(() => {
 			this.tippy?.hide()
 		}, 100)
