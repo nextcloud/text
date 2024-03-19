@@ -115,11 +115,14 @@ export function linkBubble(options) {
 				return setActiveLink(resolved)(state, dispatch)
 			},
 
-			handleKeyDown: (view, event) => {
-				const { state, dispatch } = view
-				if (event.key === 'Escape') {
-					return hideLinkBubble(state, dispatch)
-				}
+			handleDOMEvents: {
+				// Handled here because `handleKeyDown` does not work in read only editor.
+				keydown: (view, event) => {
+					const { state, dispatch } = view
+					if (event.key === 'Escape') {
+						return hideLinkBubble(state, dispatch)
+					}
+				},
 			},
 
 		},
