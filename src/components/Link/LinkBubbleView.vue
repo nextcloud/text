@@ -69,7 +69,7 @@
 		</div>
 
 		<!-- link preview -->
-		<NcReferenceList v-else
+		<NcReferenceList v-else-if="href"
 			ref="referencelist"
 			:text="sanitizedHref"
 			:limit="1"
