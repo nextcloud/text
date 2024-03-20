@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress')
+const cypressSplit = require('cypress-split')
 const getCompareSnapshotsPlugin = require('cypress-visual-regression/dist/plugin.js')
 
 module.exports = defineConfig({
@@ -15,6 +16,7 @@ module.exports = defineConfig({
 	},
 	e2e: {
 		setupNodeEvents(on, config) {
+			cypressSplit(on, config)
 			getCompareSnapshotsPlugin(on, config)
 
 			const browserify = require('@cypress/browserify-preprocessor')
@@ -25,10 +27,11 @@ module.exports = defineConfig({
 
 			on('file:preprocessor', browserify())
 			on('file:preprocessor', webpack({ webpackOptions }))
+
+			return config
 		},
 
 		baseUrl: 'http://localhost:8081/index.php/',
-		experimentalSessionAndOrigin: true,
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 	},
 	component: {
