@@ -340,6 +340,24 @@ describe('The session Api', function() {
 				.then(() => connection.close())
 		})
 
+		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
+			cy.failToCreateTextSession(undefined, 'wrongBaseVersionEtag', { filePath: '', shareToken })
+				.its('status')
+				.should('eql', 412)
+
+			connection.setBaseVersionEtag('wrongBaseVersionEtag')
+
+			cy.failToPushSteps({ connection, steps: [messages.update], version })
+				.its('status')
+				.should('equal', 412)
+
+			cy.failToSyncSteps(connection, { version: 0 })
+				.its('status')
+				.should('equal', 412)
+
+			cy.then(() => connection.close())
+		})
+
 		it('recovers session even if last person leaves right after create', function() {
 			let joining
 			cy.log('Initial user pushes steps')
