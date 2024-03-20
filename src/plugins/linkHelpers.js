@@ -43,12 +43,27 @@ export function activeLinkFromSelection({ selection, doc }) {
 	const node = resolved.parent.maybeChild(resolved.index())
 	const nodeStart = resolved.pos - resolved.textOffset
 	const nodeEnd = nodeStart + node?.nodeSize
-
 	if (to > nodeEnd) {
 		// Selection spans further than one text node
-		return
+		return null
 	}
+	const active = activeLink(node, nodeStart)
+	if (active) {
+		return active
+	}
+	const nodeBefore = resolved.nodeBefore
+	if (nodeBefore) {
+		return activeLink(nodeBefore, nodeStart - nodeBefore.nodeSize)
+	}
+	return null
+}
 
+/**
+ * Active link object for the given node and nodeStart
+ * @param {object} node - node to check
+ * @param {Number} nodeStart - offset in the document
+ */
+function activeLink(node, nodeStart) {
 	const mark = linkMark(node)
 	return mark ? { mark, nodeStart } : null
 }
