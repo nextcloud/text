@@ -28,7 +28,7 @@ const newRichWorkspaceFileMenuPlugin = {
 			id: 'rich-workspace-init',
 			displayName: t('text', 'Add folder description'),
 			templateName: descriptionFile,
-			iconClass: 'icon-rename',
+			iconClass: 'icon-add-folder-description',
 			fileType: 'file',
 			useInput: false,
 			actionHandler() {
