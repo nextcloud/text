@@ -159,7 +159,7 @@ export default {
 				return
 			}
 
-			const path = await getFilePickerBuilder('Pick plain text files')
+			const path = await getFilePickerBuilder(t('text', 'Pick plain text files'))
 				.startAt(this.initialFilePath)
 				.build()
 				.pick()
