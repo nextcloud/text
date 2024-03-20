@@ -183,6 +183,11 @@ export class Connection {
 		return promise
 	}
 
+	// To be used in Cypress tests only
+	setBaseVersionEtag(baseVersionEtag) {
+		this.#document.baseVersionEtag = baseVersionEtag
+	}
+
 	#post(...args) {
 		if (this.closed) {
 			return Promise.reject(new ConnectionClosedError())

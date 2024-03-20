@@ -36,13 +36,12 @@ Cypress.Commands.add('createTextSession', (fileId, options = {}) => {
 	return api.open({ fileId })
 })
 
-Cypress.Commands.add('failToCreateTextSession', (fileId) => {
-	const api = new SessionApi()
-	return api.open({ fileId })
+Cypress.Commands.add('failToCreateTextSession', (fileId, baseVersionEtag = null, options = {}) => {
+	const api = new SessionApi(options)
+	return api.open({ fileId, baseVersionEtag })
 		.then((response) => {
 			throw new Error('Expected request to fail - but it succeeded!')
-		})
-		.catch((err) => err.response)
+		}, (err) => err.response)
 })
 
 Cypress.Commands.add('pushSteps', ({ connection, steps, version, awareness = '' }) => {
@@ -50,14 +49,35 @@ Cypress.Commands.add('pushSteps', ({ connection, steps, version, awareness = '' 
 		.then(response => response.data)
 })
 
+Cypress.Commands.add('failToPushSteps', ({ connection, steps, version, awareness = '' }) => {
+	return connection.push({ steps, version, awareness })
+		.then((response) => {
+			throw new Error('Expected request to fail - but it succeeded!')
+		}, (err) => err.response)
+})
+
 Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
 	return connection.sync(options)
 		.then(response => response.data)
 })
 
+Cypress.Commands.add('failToSyncSteps', (connection, options = { version: 0 }) => {
+	return connection.sync(options)
+		.then((response) => {
+			throw new Error('Expected request to fail - but it succeeded!')
+		}, (err) => err.response)
+})
+
 Cypress.Commands.add('save', (connection, options = { version: 0 }) => {
 	return connection.save(options)
 		.then(response => response.data)
+})
+
+Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
+	return connection.save(options)
+		.then((response) => {
+			throw new Error('Expected request to fail - but it succeeded!')
+		}, (err) => err.response)
 })
 
 // Used to test for race conditions between the last push and the close request
