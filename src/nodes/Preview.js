@@ -148,7 +148,7 @@ function previewPossible({ selection }) {
 	if (hasOtherContent($from.parent)) {
 		return false
 	}
-	const href = extractHref($from.nodeAfter)
+	const href = extractHref($from.nodeAfter || $from.nodeBefore)
 	if (!href || href.startsWith('#')) {
 		return false
 	}
@@ -171,6 +171,9 @@ function hasOtherContent(node) {
  * @return {string} The href of the link mark of the node
  */
 function extractHref(node) {
+	if (!node) {
+		return undefined
+	}
 	const link = node.marks.find(mark => mark.type.name === 'link')
 	return link?.attrs.href
 }

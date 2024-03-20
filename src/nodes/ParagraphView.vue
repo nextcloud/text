@@ -22,7 +22,7 @@
 
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
-		<PreviewOptions v-if="editor.isEditable && href"
+		<PreviewOptions v-if="editor.isEditable && canConvertToPreview"
 			:value.sync="value"
 			@open="editor.commands.hideLinkBubble()"
 			@update:value="convertToPreview" />
@@ -48,29 +48,25 @@ export default {
 	props: nodeViewProps,
 	data() {
 		return {
-			href: null,
+			canConvertToPreview: null,
 			isLoggedIn: getCurrentUser(),
 			value: 'text-only',
 		}
 	},
 	watch: {
 		node: {
-			handler(newNode) {
-				if (!newNode?.textContent) {
-					this.href = ''
-					return
-				}
-				this.debouncedUpdateText(newNode)
+			handler() {
+				this.debouncedUpdateText()
 			},
 		},
 	},
 	beforeCreate() {
-		this.debouncedUpdateText = debounce((newNode) => {
-			this.href = this.getTextReference(this.node)
+		this.debouncedUpdateText = debounce(() => {
+			this.canConvertToPreview = this.checkAvailability()
 		}, 500)
 	},
 	created() {
-		this.href = this.getTextReference(this.node)
+		this.canConvertToPreview = this.checkAvailability()
 	},
 	beforeUnmount() {
 		this.debouncedUpdateText?.cancel()
@@ -84,44 +80,13 @@ export default {
 				.setPreview()
 				.run()
 		},
-		getTextReference(node) {
-			if (!node?.childCount) {
-				return null
-			}
-
-			// Only regard paragraphs with exactly one text node (ignoring whitespace-only nodes)
-			let textNode
-			for (let i = 0; i < node.childCount; i++) {
-				const childNode = node.child(i)
-
-				// Disregard paragraphs with non-text nodes
-				if (childNode.type.name !== 'text') {
-					return null
-				}
-
-				// Ignore children with empty text
-				if (!childNode.textContent.trim()) {
-					continue
-				}
-
-				// Disregard paragraphs with more than one text nodes
-				if (textNode) {
-					return null
-				}
-
-				textNode = childNode
-			}
-
-			// Check if the text node is a link
-			const linkMark = textNode?.marks.find((m) => m.type.name === 'link')
-			const href = linkMark?.attrs?.href
-
-			if (href) {
-				const url = new URL(href, window.location)
-				return url.href
-			}
-
-			return null
+		checkAvailability() {
+			return this.editor
+				.can()
+				.chain()
+				.setTextSelection(this.getPos() + 1)
+				.setPreview()
+				.run()
 		},
 	},
 }
