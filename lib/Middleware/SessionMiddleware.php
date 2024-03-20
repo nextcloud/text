@@ -143,7 +143,7 @@ class SessionMiddleware extends Middleware {
 
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
 		if ($exception instanceof InvalidDocumentBaseVersionEtagException) {
-			return new JSONResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
+			return new JSONResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 
 		if ($exception instanceof InvalidSessionException) {

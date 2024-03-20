@@ -87,17 +87,17 @@ class ApiService {
 				} catch (NotFoundException $e) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				} catch (NotPermittedException $e) {
-					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 404);
+					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], 404);
 				}
 			} elseif ($fileId) {
 				try {
 					$file = $this->documentService->getFileById($fileId);
 				} catch (NotFoundException|NotPermittedException $e) {
 					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
-					return new DataResponse($this->l10n->t('No permission to access this file.'), Http::STATUS_NOT_FOUND);
+					return new DataResponse(['error' => $this->l10n->t('No permission to access this file.')], Http::STATUS_NOT_FOUND);
 				}
 			} else {
-				return new DataResponse('No valid file argument provided', Http::STATUS_PRECONDITION_FAILED);
+				return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
 			}
 
 			$storage = $file->getStorage();
@@ -108,7 +108,7 @@ class ApiService {
 				$share = $storage->getShare();
 				$shareAttribtues = $share->getAttributes();
 				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
-					return new DataResponse($this->l10n->t('This file cannot be displayed as download is disabled by the share'), 403);
+					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], 403);
 				}
 			}
 
@@ -118,7 +118,7 @@ class ApiService {
 			$document = $this->documentService->getDocument($file->getId());
 			$freshSession = $document === null;
 			if ($baseVersionEtag && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
-				return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
+				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 			}
 
 			if ($freshSession) {
@@ -134,7 +134,7 @@ class ApiService {
 			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
-			return new DataResponse('Failed to create the document session', 500);
+			return new DataResponse(['error' => 'Failed to create the document session'], 500);
 		}
 
 		$session = $this->sessionService->initSession($document->getId(), $guestName);
@@ -193,7 +193,7 @@ class ApiService {
 			$session = $this->sessionService->updateSessionAwareness($session, $awareness);
 		} catch (DoesNotExistException $e) {
 			// Session was removed in the meantime. #3875
-			return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
+			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		if (empty($steps)) {
 			return new DataResponse([]);
@@ -201,10 +201,10 @@ class ApiService {
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
 		} catch (InvalidArgumentException $e) {
-			return new DataResponse($e->getMessage(), 422);
+			return new DataResponse(['error' => $e->getMessage()], 422);
 		} catch (DoesNotExistException|NotPermittedException) {
 			// Either no write access or session was removed in the meantime (#3875).
-			return new DataResponse($this->l10n->t('Editing session has expired. Please reload the page.'), Http::STATUS_PRECONDITION_FAILED);
+			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		return new DataResponse($result);
 	}
