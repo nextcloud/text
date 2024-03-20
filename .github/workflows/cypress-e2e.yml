@@ -159,7 +159,8 @@ jobs:
           cat data/nextcloud.log
 
       - name: Run E2E cypress tests
-        uses: cypress-io/github-action@1b70233146622b69e789ccdd4f9452adc638d25a # v6.6.1
+        # Starting with v5.4.0, tons of "tar: ... Cannot mkdir: Permission denied" errors
+        uses: cypress-io/github-action@4d475873e011991664253f34700acfc3acdc46a3 # v5.3.0
         with:
           record: '${{ !!matrix.run-in-parallel }}' # only on pull requests
           parallel: '${{ !!matrix.run-in-parallel }}' # only on pull requests
