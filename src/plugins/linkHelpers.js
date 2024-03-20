@@ -27,7 +27,7 @@
  * @param {object} state.selection - the current selection
  * @param {object} state.doc - the current doc
  */
-export function linkMarkFromSelection({ selection, doc }) {
+export function activeLinkFromSelection({ selection, doc }) {
 	// support for CellSelections
 	const { ranges } = selection
 	const from = Math.min(...ranges.map(range => range.$from.pos))
@@ -49,7 +49,8 @@ export function linkMarkFromSelection({ selection, doc }) {
 		return
 	}
 
-	return linkMark(node)
+	const mark = linkMark(node)
+	return mark ? { mark, nodeStart } : null
 }
 
 /**

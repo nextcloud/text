@@ -22,7 +22,7 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
-import { linkMarkFromSelection } from './linkHelpers.js'
+import { activeLinkFromSelection } from './linkHelpers.js'
 
 // Commands
 
@@ -90,17 +90,7 @@ export function linkBubble(options) {
 			if (sameSelection && sameDoc) {
 				return
 			}
-			const { selection } = state
-			// support for CellSelections
-			const { ranges } = selection
-			const from = Math.min(...ranges.map(range => range.$from.pos))
-			const resolved = state.doc.resolve(from)
-			const nodeStart = resolved.pos - resolved.textOffset
-			const mark = linkMarkFromSelection(state)
-			if (!mark) {
-				return state.tr.setMeta(linkBubbleKey, { active: null })
-			}
-			const active = { mark, nodeStart }
+			const active = activeLinkFromSelection(state)
 			return state.tr.setMeta(linkBubbleKey, { active })
 		},
 
