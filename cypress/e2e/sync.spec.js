@@ -126,6 +126,25 @@ describe('Sync', () => {
 			.should('include', 'after the lost connection')
 	})
 
+	it('shows warning when document session got cleaned up', () => {
+		cy.get('.save-status button')
+			.click()
+		cy.wait('@save')
+		cy.uploadTestFile('test.md')
+
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('contain', 'Editing session has expired.')
+
+		// Reload button works
+		cy.get('#editor-container .document-status a.button')
+			.contains('Reload')
+			.click()
+
+		cy.getContent()
+		cy.get('#editor-container .document-status .notecard')
+			.should('not.exist')
+	})
+
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
 		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' })
