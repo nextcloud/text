@@ -360,3 +360,7 @@ div.ProseMirror {
 .editor__content {
 	tab-size: 4;
 }
+
+.tippy-content div {
+	visibility: visible !important;
+}

@@ -4,7 +4,7 @@ const currentUser = randUser()
 
 const fileName = 'empty.md'
 
-describe.skip('Assistant', () => {
+describe('Assistant', () => {
 	before(() => {
 		initUserAndFiles(currentUser, fileName)
 	})
