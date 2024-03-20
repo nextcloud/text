@@ -24,7 +24,7 @@
 	<div class="document-status">
 		<NcNoteCard v-if="hasWarning" type="warning">
 			<p v-if="isLoadingError">
-				{{ syncError.data.data }}
+				{{ syncError.data.data.error }}
 				<!-- Display reload button on PRECONDITION_FAILED response type -->
 				<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
 			</p>
