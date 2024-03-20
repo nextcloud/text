@@ -21,12 +21,13 @@
  */
 
 /**
+ * Get the link mark applied at the current selection or next to it.
  *
  * @param {object} state the prosemirror state
  * @param {object} state.selection - the current selection
  * @param {object} state.doc - the current doc
  */
-export function linkNodeFromSelection({ selection, doc }) {
+export function linkMarkFromSelection({ selection, doc }) {
 	// support for CellSelections
 	const { ranges } = selection
 	const from = Math.min(...ranges.map(range => range.$from.pos))
@@ -48,21 +49,22 @@ export function linkNodeFromSelection({ selection, doc }) {
 		return
 	}
 
-	return isLinkNode(node) ? node : null
+	return linkMark(node)
 }
 
 /**
- * Determine wether the given node is a link node
+ * Get the link mark for the given node
  * @param {object} node - node to check
  */
-function isLinkNode(node) {
+function linkMark(node) {
 	const linkMark = node?.marks.find(m => m.type.name === 'link')
 	if (!linkMark) {
-		return false
+		return undefined
 	}
 	// Don't open link bubble for anchor links
 	if (linkMark.attrs.href.startsWith('#')) {
-		return false
+		return undefined
+	} else {
+		return linkMark
 	}
-	return true
 }

@@ -22,7 +22,7 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
-import { linkNodeFromSelection } from './linkHelpers.js'
+import { linkMarkFromSelection } from './linkHelpers.js'
 
 // Commands
 
@@ -96,11 +96,10 @@ export function linkBubble(options) {
 			const from = Math.min(...ranges.map(range => range.$from.pos))
 			const resolved = state.doc.resolve(from)
 			const nodeStart = resolved.pos - resolved.textOffset
-			const linkNode = linkNodeFromSelection(state)
-			if (!linkNode) {
+			const mark = linkMarkFromSelection(state)
+			if (!mark) {
 				return state.tr.setMeta(linkBubbleKey, { active: null })
 			}
-			const mark = linkNode.marks.find(m => m.type.name === 'link')
 			const active = { mark, nodeStart }
 			return state.tr.setMeta(linkBubbleKey, { active })
 		},
