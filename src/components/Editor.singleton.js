@@ -19,7 +19,11 @@ export default async function getEditorInstance() {
 			window._nc_text_editor_importing = true
 		}
 		const Editor = await import(/* webpackChunkName: "editor" */'./Editor.vue')
-		window._nc_text_editor_instance = Editor.default
+		const { default: Vue } = await import('vue')
+		Vue.prototype.t = window.t
+		Vue.prototype.OCA = window.OCA
+		const EditorConstructor = Vue.extend(Editor.default)
+		window._nc_text_editor_instance = EditorConstructor
 	}
 	return window._nc_text_editor_instance
 }

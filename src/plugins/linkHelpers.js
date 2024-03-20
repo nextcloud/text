@@ -61,7 +61,7 @@ export function activeLinkFromSelection({ selection, doc }) {
 /**
  * Active link object for the given node and nodeStart
  * @param {object} node - node to check
- * @param {Number} nodeStart - offset in the document
+ * @param {number} nodeStart - offset in the document
  */
 function activeLink(node, nodeStart) {
 	const mark = linkMark(node)
