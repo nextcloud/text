@@ -21,10 +21,124 @@
  */
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import LinkBubblePluginView from './LinkBubblePluginView.js'
+import { activeLinkFromSelection } from './linkHelpers.js'
 
+// Commands
+
+/* Set resolved to be the active element (if it has a link mark)
+ *
+ * @params {ResolvedPos} resolved position of the action
+ */
+export const setActiveLink = (resolved) => (state, dispatch) => {
+	const mark = resolved.marks()
+		.find(m => m.type.name === 'link')
+	if (!mark) {
+		return false
+	}
+	const nodeStart = resolved.pos - resolved.textOffset
+	const active = { mark, nodeStart }
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active }))
+	}
+	return true
+}
+
+/* Hide the link bubble by setting active state to null
+ *
+ */
+export const hideLinkBubble = (state, dispatch) => {
+	const pluginState = linkBubbleKey.getState(state)
+	if (!pluginState?.active) {
+		return false
+	}
+	if (dispatch) {
+		dispatch(state.tr.setMeta(linkBubbleKey, { active: null }))
+	}
+	return true
+}
+
+export const linkBubbleKey = new PluginKey('linkBubble')
+/**
+ * Prosemirror link bubble plugin
+ * @param {object} options - options for the link bubble plugin view
+ */
+export function linkBubble(options) {
+	const linkBubblePlugin = new Plugin({
+		key: linkBubbleKey,
+		state: {
+			init: () => ({ active: null }),
+			apply: (tr, cur) => {
+				const meta = tr.getMeta(linkBubbleKey)
+				if (meta && meta.active !== cur.active) {
+					return { ...cur, active: meta.active }
+				} else {
+					return cur
+				}
+			},
+		},
+
+		view: (view) => new LinkBubblePluginView({
+			view,
+			options,
+			plugin: linkBubblePlugin,
+		}),
+
+		appendTransaction: (transactions, oldState, state) => {
+			const sameSelection = oldState?.selection.eq(state.selection)
+			const sameDoc = oldState?.doc.eq(state.doc)
+			if (sameSelection && sameDoc) {
+				return
+			}
+			const active = activeLinkFromSelection(state)
+			return state.tr.setMeta(linkBubbleKey, { active })
+		},
+
+		props: {
+			// Required for read-only mode on Firefox.
+			// For some reason, editor selection doesn't get updated
+			// when clicking a link in read-only mode on Firefox.
+			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
+				// Only regard left clicks without Ctrl/Meta
+				if (!direct
+					|| event.button !== 0
+					|| event.ctrlKey
+					|| event.metaKey) {
+					return false
+				}
+				const { state, dispatch } = view
+				const resolved = state.doc.resolve(pos)
+				return setActiveLink(resolved)(state, dispatch)
+			},
+
+			handleDOMEvents: {
+				// Handled here because `handleKeyDown` does not work in read only editor.
+				keydown: (view, event) => {
+					const { state, dispatch } = view
+					if (event.key === 'Escape') {
+						return hideLinkBubble(state, dispatch)
+					}
+				},
+			},
+
+		},
+
+	})
+	return linkBubblePlugin
+}
+
+export const linkClickingKey = new PluginKey('textHandleClickLink')
+
+/**
+ * Prosemirror plugin for special handling for clicks on links
+ *
+ * - Open link in new tab on middle click rather than pasting.
+ * - Only open link on ctrl/cmd + left click.
+ *   We use the link bubble otherwise.
+ */
 export function linkClicking() {
 	return new Plugin({
-		key: new PluginKey('textHandleClickLink'),
+		key: linkClickingKey,
 		props: {
 			handleDOMEvents: {
 				// Open link in new tab on middle click

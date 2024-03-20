@@ -1,24 +1,22 @@
 import { Extension } from '@tiptap/core'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
-import LinkBubblePluginView from './LinkBubblePluginView.js'
+import { linkBubble, hideLinkBubble } from '../plugins/links.js'
 
 const LinkBubble = Extension.create({
 	name: 'linkViewBubble',
 
-	addOptions() {
+	addCommands() {
 		return {
-			pluginKey: 'linkViewBubble',
+			hideLinkBubble: () => ({ state, dispatch }) => {
+				return hideLinkBubble(state, dispatch)
+			},
 		}
 	},
 
 	addProseMirrorPlugins() {
 		return [
-			new Plugin({
-				key: new PluginKey(this.options.pluginKey),
-				view: (view) => new LinkBubblePluginView({
-					editor: this.editor,
-					view,
-				}),
+			linkBubble({
+				editor: this.editor,
+				parent: this.editor.contentComponent,
 			}),
 		]
 	},

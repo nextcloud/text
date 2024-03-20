@@ -148,7 +148,7 @@ describe('test link marks', function() {
 				cy.getSubmenuEntry('insert-link', 'insert-link-website').click()
 				cy.getActionSubEntry('insert-link-input').find('input[type="text"]').type(`${url}{enter}`)
 				cy.getContent()
-					.get(`a[href*="${url}"]`)
+					.find(`a[href*="${url}"]`)
 					.should('have.text', text) // ensure correct text used
 					.click({ force: true })
 			}

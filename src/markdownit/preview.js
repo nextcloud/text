@@ -21,9 +21,9 @@
  */
 
 /**
- *
- * @param tokens
- * @param i
+ * Check if the given tokens represent a preview in a paragraph
+ * @param {Array} tokens - tokens to check
+ * @param {number} i - offset into the tokens
  */
 function isPreviewLinkInParagraph(tokens, i) {
 	const [prev, cur, next] = tokens.slice(i - 1, i + 2)
@@ -38,15 +38,11 @@ function isPreviewLinkInParagraph(tokens, i) {
 		&& next.type === 'paragraph_close'
 }
 
-/* Remove wrapping tokens
- *
- * @param {array} tokens - the token stream to modify
- * @param {Number} i - index of the token to unwrap
- */
 /**
+ * Remove wrapping tokens
  *
- * @param tokens
- * @param i
+ * @param {Array} tokens - the token stream to modify
+ * @param {number} i - index of the token to unwrap
  */
 function unwrapToken(tokens, i) {
 	// Start from the end so indexes stay the same.
@@ -60,9 +56,10 @@ function unwrapToken(tokens, i) {
 export default (md) => {
 
 	/**
+	 * Markdownit plugin to unwrap previews from a paragraph
 	 *
-	 * @param root0
-	 * @param root0.tokens
+	 * @param {object} state handed to the plugin
+	 * @param {Array} state.tokens current token stream
 	 */
 	function linkPreviews({ tokens }) {
 		// do not process first and last token

@@ -24,6 +24,7 @@
 	<NodeViewWrapper class="vue-component" as="p">
 		<PreviewOptions v-if="editor.isEditable && href"
 			:value.sync="value"
+			@open="editor.commands.hideLinkBubble()"
 			@update:value="convertToPreview" />
 		<NodeViewContent class="paragraph-content" />
 	</NodeViewWrapper>
