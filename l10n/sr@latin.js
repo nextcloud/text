@@ -2,6 +2,7 @@ OC.L10N.register(
     "text",
     {
     "Translate" : "Prevedi",
+    "Reload" : "Ponovo učitaj",
     "Guest" : "Gost",
     "guest" : "gost",
     "Bold" : "Podebljano",
