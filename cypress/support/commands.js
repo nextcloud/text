@@ -519,7 +519,7 @@ Cypress.Commands.add('createDescription', () => {
 
 	cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
 	cy.get('[data-cy-upload-picker] button.action-item__menutoggle').click()
-	cy.get('li.upload-picker__menu-entry button').contains('Add description').click()
+	cy.get('li.upload-picker__menu-entry button').contains('Add folder description').click()
 
 	cy.wait('@addDescription')
 })

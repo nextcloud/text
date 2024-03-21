@@ -33,7 +33,7 @@ import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 import { dirname } from 'path'
 
-import FilePlusSvg from '@mdi/svg/svg/file-plus.svg'
+import TextSvg from '@mdi/svg/svg/text.svg'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -134,14 +134,14 @@ export const addMenuRichWorkspace = () => {
 	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
-		displayName: t('text', 'Add description'),
+		displayName: t('text', 'Add folder description'),
 		enabled(context) {
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
 			}
 			return (context.permissions & Permission.CREATE) !== 0
 		},
-		iconSvgInline: FilePlusSvg,
+		iconSvgInline: TextSvg,
 		async handler(context, content) {
 			const contentNames = content.map((node) => node.basename)
 

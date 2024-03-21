@@ -44,6 +44,7 @@ use OCA\Text\Notification\Notifier;
 use OCA\Text\Service\ConfigService;
 use OCA\TpAssistant\Event\BeforeAssistantNotificationEvent;
 use OCA\Viewer\Event\LoadViewer;
+use OCP\App\IAppManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -84,12 +85,12 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function boot(IBootContext $context): void {
-		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l, ConfigService $configService) {
-			$templateManager->registerTemplateFileCreator(function () use ($l, $configService) {
+		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l, ConfigService $configService, IAppManager $appManager) {
+			$templateManager->registerTemplateFileCreator(function () use ($l, $configService, $appManager) {
 				$markdownFile = new TemplateFileCreator(Application::APP_NAME, $l->t('New text file'), '.' . $configService->getDefaultFileExtension());
 				$markdownFile->addMimetype('text/markdown');
 				$markdownFile->addMimetype('text/plain');
-				$markdownFile->setIconClass('icon-filetype-text');
+				$markdownFile->setIconSvgInline(file_get_contents($appManager->getAppPath('text') . '/img/article.svg'));
 				$markdownFile->setRatio(1);
 				$markdownFile->setOrder(10);
 				$markdownFile->setActionLabel($l->t('Create new text file'));
