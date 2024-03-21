@@ -22,7 +22,7 @@
 
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
-		<PreviewOptions v-if="editor.isEditable && href"
+		<PreviewOptions v-if="editor.isEditable && isSelected && canConvertToPreview"
 			:value.sync="value"
 			@open="editor.commands.hideLinkBubble()"
 			@update:value="convertToPreview" />
@@ -33,9 +33,7 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
-import { useEditorMixin } from '../components/Editor.provider.js'
 import { getCurrentUser } from '@nextcloud/auth'
-import debounce from 'debounce'
 
 export default {
 	name: 'ParagraphView',
@@ -44,84 +42,56 @@ export default {
 		NodeViewContent,
 		PreviewOptions,
 	},
-	mixins: [useEditorMixin],
 	props: nodeViewProps,
 	data() {
 		return {
-			href: null,
+			canConvertToPreview: null,
+			isSelected: false,
 			isLoggedIn: getCurrentUser(),
 			value: 'text-only',
 		}
 	},
 	watch: {
 		node: {
-			handler(newNode) {
-				if (!newNode?.textContent) {
-					this.href = ''
-					return
+			handler() {
+				if (this.isSelected) {
+					this.canConvertToPreview = this.checkAvailability()
 				}
-				this.debouncedUpdateText(newNode)
+			},
+		},
+		isSelected: {
+			handler(value) {
+				if (value) {
+					this.canConvertToPreview = this.checkAvailability()
+				}
 			},
 		},
 	},
-	beforeCreate() {
-		this.debouncedUpdateText = debounce((newNode) => {
-			this.href = this.getTextReference(this.node)
-		}, 500)
-	},
-	created() {
-		this.href = this.getTextReference(this.node)
+	mounted() {
+		this.editor.on('selectionUpdate', this.checkSelection)
 	},
 	beforeUnmount() {
-		this.debouncedUpdateText?.cancel()
+		this.editor.off('selectionUpdate', this.checkSelection)
 	},
 	methods: {
 		convertToPreview(...args) {
 			console.info(...args)
-			this.$editor.chain()
+			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos() + 1)
 				.setPreview()
 				.run()
 		},
-		getTextReference(node) {
-			if (!node?.childCount) {
-				return null
-			}
-
-			// Only regard paragraphs with exactly one text node (ignoring whitespace-only nodes)
-			let textNode
-			for (let i = 0; i < node.childCount; i++) {
-				const childNode = node.child(i)
-
-				// Disregard paragraphs with non-text nodes
-				if (childNode.type.name !== 'text') {
-					return null
-				}
-
-				// Ignore children with empty text
-				if (!childNode.textContent.trim()) {
-					continue
-				}
-
-				// Disregard paragraphs with more than one text nodes
-				if (textNode) {
-					return null
-				}
-
-				textNode = childNode
-			}
-
-			// Check if the text node is a link
-			const linkMark = textNode?.marks.find((m) => m.type.name === 'link')
-			const href = linkMark?.attrs?.href
-
-			if (href) {
-				const url = new URL(href, window.location)
-				return url.href
-			}
-
-			return null
+		checkAvailability() {
+			return this.editor
+				.can()
+				.setPreview()
+		},
+		checkSelection() {
+			const { selection } = this.editor.state
+			const start = selection.$from.parent
+			const end = selection.$to.parent
+			this.isSelected = (this.node === start) && (this.node === end)
 		},
 	},
 }
