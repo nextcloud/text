@@ -14,6 +14,7 @@ OC.L10N.register(
     "Translate" : "Tradu",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",
+    "Reload" : "Reîncarcă",
     "Guest" : "Invitat",
     "guest" : "invitat",
     "Offline" : "Offline",

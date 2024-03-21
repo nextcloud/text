@@ -19,10 +19,8 @@
     "Delete task" : "Verwijder taak",
     "Use current version" : "Gebruik huidige versie",
     "Use the saved version" : "Gebruik opgeslagen versie",
-    "Document idle for {timeout} minutes, click to continue editing" : "Document inactief voor {timeout} minuten, klik om door te gaan met bewerken",
     "Reconnect" : "Opnieuw verbinden",
-    "The document has been changed outside of the editor. The changes cannot be applied." : "Het document is gewijzigd buiten de editor. Veranderingen kunnen niet worden toegepast.",
-    "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
+    "Document idle for {timeout} minutes, click to continue editing" : "Document inactief voor {timeout} minuten, klik om door te gaan met bewerken",
     "This file is opened read-only as it is currently locked by {user}." : "Dit bestand is geopend als alleen lezen, omdat het op dit moment is vergrendeld door {user}.",
     "Enter your name so other people can see who is editing" : "Voer je naam in, zodat ander personen kunnen zien wie er aan het bewerken is",
     "Edit guest name" : "Bewerk gast naam",
@@ -35,6 +33,7 @@
     "Offline" : "Offline",
     "Saving …" : "Opslaan ...",
     "Saved" : "Opgeslagen",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "Het document is gewijzigd buiten de editor. Veranderingen kunnen niet worden toegepast.",
     "Unsaved changes" : "Niet opgeslagen veranderingen",
     "Formatting help" : "Formatteringshulp",
     "Speed up your writing with simple shortcuts." : "Versnel je geschrijf met deze handige snelkoppelingen.",
@@ -111,6 +110,7 @@
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
+    "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
     "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

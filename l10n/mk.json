@@ -20,10 +20,8 @@
     "Delete task" : "Избриши задача",
     "Use current version" : "Користи ја моменталната верзија",
     "Use the saved version" : "Користи ја зачуваната верзија",
-    "Document idle for {timeout} minutes, click to continue editing" : "Документот е неактивен {timeout} минути, кликни за да продолжиш со уредување",
     "Reconnect" : "Повторно поврзување",
-    "The document has been changed outside of the editor. The changes cannot be applied." : "Документот не е изменет од уредникот. Промените не можат да се применат.",
-    "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
+    "Document idle for {timeout} minutes, click to continue editing" : "Документот е неактивен {timeout} минути, кликни за да продолжиш со уредување",
     "This file is opened read-only as it is currently locked by {user}." : "Оваа датотека е отворена како за читање и истата е заклучена од {user}.",
     "Close outline view" : "Затвори преглед",
     "Outline" : "Преглед",
@@ -42,6 +40,7 @@
     "Saving …" : "Зачувува ...",
     "Saved" : "Зачувано",
     "Last saved {lastSave}" : "Последно зачувано {lastSave}",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "Документот не е изменет од уредникот. Промените не можат да се применат.",
     "Unsaved changes" : "Незачувани промени",
     "Formatting help" : "Помош за форматирање",
     "Speed up your writing with simple shortcuts." : "Забрзајте го вашето пишување со овие едноставни кратенки.",
@@ -102,6 +101,7 @@
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
     "Add description" : "Додади опис",
+    "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
     "Unsupported image type" : "Неподржан вид на слика",
     "Show rich workspaces" : "Прикажи збогатен работен простор"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
