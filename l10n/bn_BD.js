@@ -5,6 +5,7 @@ OC.L10N.register(
     "No file was uploaded" : "কোন ফাইল আপলোড করা হয় নি",
     "Missing a temporary folder" : "অস্থায়ী ফোল্ডারটি হারানো গিয়েছে",
     "Translate" : "Translate",
+    "Reload" : "পূনরায় লোড কর",
     "guest" : "অতিথি",
     "Saved" : "সংরক্ষণ করা হলো",
     "Keyboard shortcuts" : "কী-বোর্ড শর্টকাট",

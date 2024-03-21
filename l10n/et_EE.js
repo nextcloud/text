@@ -14,6 +14,7 @@ OC.L10N.register(
     "Translate" : "Tõlgi",
     "Use current version" : "Kasuta praegust versiooni",
     "Use the saved version" : "Kasuta salvestatud versiooni",
+    "Reload" : "Lae uuesti",
     "Guest" : "Külaline",
     "guest" : "külaline",
     "Offline" : "Offline",

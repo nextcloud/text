@@ -13,7 +13,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Gagal unggah berkas atau ukuran melampaui batas maksimum %s",
     "Text" : "Teks",
     "Translate" : "Terjemahkan",
-    "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda.",
+    "Reload" : "Muat ulang",
     "Edit guest name" : "Edit nama tamu",
     "Guest" : "Tamu",
     "Save guest name" : "Simpan nama tamu",
@@ -36,6 +36,7 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
+    "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda.",
     "Unsupported image type" : "Tipe gambar tidak bisa diterima"
 },
 "nplurals=1; plural=0;");
