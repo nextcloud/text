@@ -20,10 +20,8 @@
     "Delete task" : "Ištrinti užduotį",
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
-    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentas {timeout} min. neveiklus, spustelėkite norėdami tęsti taisymą",
     "Reconnect" : "Jungtis iš naujo",
-    "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
-    "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
+    "Document idle for {timeout} minutes, click to continue editing" : "Dokumentas {timeout} min. neveiklus, spustelėkite norėdami tęsti taisymą",
     "This file is opened read-only as it is currently locked by {user}." : "Šis failas yra atvertas tik skaitymui, nes šiuo metu jį užrakino {user}.",
     "Enter your name so other people can see who is editing" : "Įveskite savo vardą, kad kiti žmonės matytų, kas redaguoja dokumentą",
     "Edit guest name" : "Taisyti svečio vardą",
@@ -37,6 +35,7 @@
     "Offline" : "Atsijungęs",
     "Saving …" : "Įrašoma…",
     "Saved" : "Įrašyta",
+    "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentas pakeistas už redaktoriaus ribų. Pakeitimai negali būti pritaikyti.",
     "Unsaved changes" : "Neįrašyti pakeitimai",
     "Formatting help" : "Formatavimo pagalba",
     "Style" : "Stilius",
@@ -119,6 +118,7 @@
     "Formatting" : "Formatavimas",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Edit" : "Taisyti",
+    "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
