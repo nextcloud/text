@@ -22,7 +22,7 @@
 
 <template>
 	<NodeViewWrapper class="vue-component" as="p">
-		<PreviewOptions v-if="editor.isEditable && canConvertToPreview"
+		<PreviewOptions v-if="editor.isEditable && isSelected && canConvertToPreview"
 			:value.sync="value"
 			@open="editor.commands.hideLinkBubble()"
 			@update:value="convertToPreview" />
@@ -33,9 +33,7 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
-import { useEditorMixin } from '../components/Editor.provider.js'
 import { getCurrentUser } from '@nextcloud/auth'
-import debounce from 'debounce'
 
 export default {
 	name: 'ParagraphView',
@@ -44,11 +42,11 @@ export default {
 		NodeViewContent,
 		PreviewOptions,
 	},
-	mixins: [useEditorMixin],
 	props: nodeViewProps,
 	data() {
 		return {
 			canConvertToPreview: null,
+			isSelected: false,
 			isLoggedIn: getCurrentUser(),
 			value: 'text-only',
 		}
@@ -56,25 +54,29 @@ export default {
 	watch: {
 		node: {
 			handler() {
-				this.debouncedUpdateText()
+				if (this.isSelected) {
+					this.canConvertToPreview = this.checkAvailability()
+				}
+			},
+		},
+		isSelected: {
+			handler(value) {
+				if (value) {
+					this.canConvertToPreview = this.checkAvailability()
+				}
 			},
 		},
 	},
-	beforeCreate() {
-		this.debouncedUpdateText = debounce(() => {
-			this.canConvertToPreview = this.checkAvailability()
-		}, 500)
-	},
-	created() {
-		this.canConvertToPreview = this.checkAvailability()
+	mounted() {
+		this.editor.on('selectionUpdate', this.checkSelection)
 	},
 	beforeUnmount() {
-		this.debouncedUpdateText?.cancel()
+		this.editor.off('selectionUpdate', this.checkSelection)
 	},
 	methods: {
 		convertToPreview(...args) {
 			console.info(...args)
-			this.$editor.chain()
+			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos() + 1)
 				.setPreview()
@@ -83,10 +85,13 @@ export default {
 		checkAvailability() {
 			return this.editor
 				.can()
-				.chain()
-				.setTextSelection(this.getPos() + 1)
 				.setPreview()
-				.run()
+		},
+		checkSelection() {
+			const { selection } = this.editor.state
+			const start = selection.$from.parent
+			const end = selection.$to.parent
+			this.isSelected = (this.node === start) && (this.node === end)
 		},
 	},
 }
