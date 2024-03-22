@@ -123,6 +123,10 @@ export default {
 		}
 	},
 
+	updated() {
+		this.$editor.setEditable(!this.readOnly)
+	},
+
 	beforeDestroy() {
 		this.$editor.destroy()
 	},
