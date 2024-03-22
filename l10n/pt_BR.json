@@ -12,6 +12,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "Ou nenhum arquivo foi enviado ou o tamanho do arquivo excede o máximo de%s",
     "Nextcloud Text" : "Nextcloud Texto",
     "text document" : "documento de texto",
+    "Editing session has expired. Please reload the page." : "A sessão de edição expirou. Por favor recarregue a página.",
     "{user} has mentioned you in the text document {node}" : "{user} mencionou você no documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "Este arquivo não pode ser exibido porque o download está desabilitado pelo compartilhamento",
     "No permission to access this file." : "Sem permissão para acessar este arquivo.",
@@ -29,6 +30,9 @@
     "Could not copy result to clipboard" : "Não foi possível copiar o resultado para a área de transferência",
     "Use current version" : "Usar versão atual",
     "Use the saved version" : "Usar a versão salva",
+    "Reload" : "Recarregar",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "O documento foi alterado fora do editor. As alterações não podem ser aplicadas",
+    "Document could not be loaded. Please check your internet connection." : "Não foi possível carregar o documento. Por favor, verifique sua conexão à internet.",
     "Reconnect" : "Reconectar",
     "Document idle for {timeout} minutes, click to continue editing" : "Documento inativo por {timeout} minutos, clique para continuar editando",
     "This file is opened read-only as it is currently locked by {user}." : "Este arquivo está aberto para somente leitura, pois está atualmente bloqueado por {user}.",
@@ -178,7 +182,6 @@
     "Smart picker" : "Smart picker",
     "Add notes, lists or links …" : "Adicione observações, listas ou links...",
     "Edit" : "Editar",
-    "Add description" : "Adicionar descrição",
     "\"{name}\" already exist!" : "\"{name}\" já existe!",
     "Created \"{name}\"" : "Criado \"{nome}\"",
     "Copied to the clipboard" : "Copiado para a área de transferência",
@@ -190,6 +193,8 @@
     "Target language" : "Target language",
     "Unsupported image type" : "Tipo de imagem não suportado",
     "Show rich workspaces" : "Mostrar espaços de trabalho avançados",
+    "Add description" : "Adicionar descrição",
+    "Pick plain text files" : "Escolha arquivos de texto simples",
     "e.g. php, javascript, json, ..." : "por exemplo. php, javascript, json,..."
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

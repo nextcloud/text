@@ -169,7 +169,6 @@ OC.L10N.register(
     "Smart picker" : "Hautatzaile adimenduna",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Edit" : "Editatu",
-    "Add description" : "Gehitu deskribapena",
     "Copied to the clipboard" : "Arbelera kopiatuta",
     "Front matter" : "Aurreko gaia",
     "Failed to load file" : "Ezin izan da fitxategia kargatu",
@@ -178,6 +177,7 @@ OC.L10N.register(
     "Target language" : "Helburuko hizkuntza",
     "Unsupported image type" : "Irudi mota ez da onartzen",
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
+    "Add description" : "Gehitu deskribapena",
     "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");

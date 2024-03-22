@@ -23,6 +23,7 @@ OC.L10N.register(
     "Delete task" : "Изтрива задача",
     "Use current version" : "Използване на текуща версия",
     "Use the saved version" : "Използване на запазената версия",
+    "Reload" : "Презареди",
     "Reconnect" : "Повторно свързване",
     "Document idle for {timeout} minutes, click to continue editing" : "Документът е неактивен за {timeout} минути, щракнете, за да продължите да редактирате",
     "This file is opened read-only as it is currently locked by {user}." : "Този файл е достъпен само за четене, тъй като в момента е заключен от {user}.",
@@ -151,7 +152,6 @@ OC.L10N.register(
     "Smart picker" : "Смарт /интелигентен/ инструмент за избор",
     "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
     "Edit" : "Променяне",
-    "Add description" : "Добавяне на описание",
     "Copied to the clipboard" : "Копирано в клипборда",
     "Front matter" : "Предно съдържание",
     "Failed to load file" : "Неуспешно зареждане на файл",
@@ -159,6 +159,7 @@ OC.L10N.register(
     "Source language" : "Език на източника",
     "Target language" : "Целеви език",
     "Unsupported image type" : "Неподдържан тип изображение",
-    "Show rich workspaces" : "Показване  на обогатени работни пространства"
+    "Show rich workspaces" : "Показване  на обогатени работни пространства",
+    "Add description" : "Добавяне на описание"
 },
 "nplurals=2; plural=(n != 1);");

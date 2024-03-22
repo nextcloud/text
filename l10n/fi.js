@@ -147,7 +147,6 @@ OC.L10N.register(
     "Formatting" : "Muotoilu",
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Edit" : "Muokkaa",
-    "Add description" : "Lisää kuvaus",
     "\"{name}\" already exist!" : "\"{name}\" on jo olemassa!",
     "Created \"{name}\"" : "Luotu \"{name}\"",
     "Failed to load file" : "Tiedoston lataaminen epäonnistui",
@@ -156,6 +155,7 @@ OC.L10N.register(
     "Target language" : "Kohdekieli",
     "Unsupported image type" : "Ei-tuettu kuvatiedostomuoto",
     "Show rich workspaces" : "Näytä rikastetut työtilat",
+    "Add description" : "Lisää kuvaus",
     "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

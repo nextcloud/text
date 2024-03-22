@@ -173,7 +173,6 @@ OC.L10N.register(
     "Smart picker" : "Inteligentní výběr",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Edit" : "Upravit",
-    "Add description" : "Přidat popis",
     "\"{name}\" already exist!" : "„{name}“ už existuje!",
     "Created \"{name}\"" : "Vytvořeno „{name}“",
     "Copied to the clipboard" : "Zkopírováno do schránky",
@@ -184,6 +183,7 @@ OC.L10N.register(
     "Target language" : "Cílový jazyk",
     "Unsupported image type" : "Nepodporovaný typ obrázku",
     "Show rich workspaces" : "Zobrazit rich workspaces",
+    "Add description" : "Přidat popis",
     "e.g. php, javascript, json, ..." : "např. php, javascript, json, …"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -12,6 +12,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "沒有上傳檔案或檔案超過上限 %s",
     "Nextcloud Text" : "Nextcloud 文字編輯器",
     "text document" : "文字文件",
+    "Editing session has expired. Please reload the page." : "編輯工作階段已過期。請重新載入頁面。",
     "{user} has mentioned you in the text document {node}" : "{user} 在文字文件 {node} 中提到您",
     "This file cannot be displayed as download is disabled by the share" : "此檔案無法顯示，因為分享時已停用下載",
     "No permission to access this file." : "無權存取此檔案。",
@@ -29,6 +30,9 @@
     "Could not copy result to clipboard" : "無法複製結果至剪貼簿",
     "Use current version" : "使用目前版本",
     "Use the saved version" : "使用儲存版本",
+    "Reload" : "重新載入",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "文件已在編輯器外變更。無法套用變更。",
+    "Document could not be loaded. Please check your internet connection." : "無法載入文件。請檢查您的網路連線。",
     "Reconnect" : "重新連接",
     "Document idle for {timeout} minutes, click to continue editing" : "文件已閒置 {timeout} 分鐘。點選以繼續編輯",
     "This file is opened read-only as it is currently locked by {user}." : "此檔案以唯讀模式開啟，因為其目前被 {user} 鎖定。",
@@ -178,7 +182,6 @@
     "Smart picker" : "智慧型挑選器",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Edit" : "編輯",
-    "Add description" : "新增描述",
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
     "Copied to the clipboard" : "已複製到剪貼簿",
@@ -190,6 +193,8 @@
     "Target language" : "目標語言",
     "Unsupported image type" : "不支援的圖片類型",
     "Show rich workspaces" : "顯示較多功能的工作區",
+    "Add description" : "新增描述",
+    "Pick plain text files" : "挑選純文字檔",
     "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
