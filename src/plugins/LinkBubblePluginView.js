@@ -3,8 +3,6 @@ import tippy from 'tippy.js'
 import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 
-import { getViewerVue } from '../ViewerVue.js'
-
 class LinkBubblePluginView {
 
 	#component = null
@@ -14,11 +12,7 @@ class LinkBubblePluginView {
 		this.view = view
 		this.plugin = plugin
 
-		// When editor is used in Viewer component, it should render comopnent using Viewer's Vue constructor,
-		// Otherwise there are VNodes with different Vue constructors in a single Virtual DOM which is not fully supported by Vue
-		const ViewerVue = getViewerVue()
-		const LinkBubbleViewConstructor = ViewerVue ? ViewerVue.extend(LinkBubbleView) : LinkBubbleView
-		this.#component = new VueRenderer(LinkBubbleViewConstructor, {
+		this.#component = new VueRenderer(LinkBubbleView, {
 			parent: this.options.parent,
 			propsData: {
 				editor: this.options.editor,

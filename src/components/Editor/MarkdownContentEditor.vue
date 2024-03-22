@@ -155,7 +155,7 @@ export default {
 				onCreate: ({ editor }) => {
 					this.$emit('ready')
 					this.$parent.$emit('ready')
-				}
+				},
 			})
 		},
 
