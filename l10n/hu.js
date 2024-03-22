@@ -171,7 +171,6 @@ OC.L10N.register(
     "Smart picker" : "Okos választó",
     "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…",
     "Edit" : "Szerkesztés",
-    "Add description" : "Leírás hozzáadása",
     "Copied to the clipboard" : "Vágólapra másolva",
     "Front matter" : "Előlap",
     "Failed to load file" : "A fájl betöltése sikertelen",
@@ -180,6 +179,7 @@ OC.L10N.register(
     "Target language" : "Célnyelv",
     "Unsupported image type" : "Nem támogatott képtípus",
     "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
+    "Add description" : "Leírás hozzáadása",
     "e.g. php, javascript, json, ..." : "pl. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

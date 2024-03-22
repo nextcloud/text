@@ -178,7 +178,6 @@
     "Smart picker" : "聰明的選擇器",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Edit" : "編輯",
-    "Add description" : "添加描述",
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
     "Copied to the clipboard" : "已複製到剪貼板",
@@ -190,6 +189,7 @@
     "Target language" : "目標語言",
     "Unsupported image type" : "不支援的圖片類型",
     "Show rich workspaces" : "顯示較多功能的工作區",
+    "Add description" : "添加描述",
     "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

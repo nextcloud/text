@@ -169,7 +169,6 @@
     "Smart picker" : "Умный подборщик",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Edit" : "Редактировать",
-    "Add description" : "Добавить описание",
     "Front matter" : "Передний план",
     "Failed to load file" : "Не удалось загрузить файл",
     "File could not be loaded. Please check your internet connection." : "Не удалось загрузить файл, проверьте соединение с интернетом. ",
@@ -177,6 +176,7 @@
     "Target language" : "Целевой язык",
     "Unsupported image type" : "Неподдерживаемый тип изображения",
     "Show rich workspaces" : "Показывать дополнительные сведения",
+    "Add description" : "Добавить описание",
     "e.g. php, javascript, json, ..." : "например, php, javascript, json, ..."
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

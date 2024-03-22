@@ -164,7 +164,6 @@ OC.L10N.register(
     "Smart picker" : "Snjall-veljari",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Edit" : "Breyta",
-    "Add description" : "Bæta við lýsingu",
     "\"{name}\" already exist!" : "\"{name}\" er þegar til staðar!",
     "Created \"{name}\"" : "Bjó til \"{name}\"",
     "Failed to load file" : "Gat ekki lesið skrána",
@@ -173,6 +172,7 @@ OC.L10N.register(
     "Target language" : "Marktungumál:",
     "Unsupported image type" : "Óstudd gerð myndar",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
+    "Add description" : "Bæta við lýsingu",
     "e.g. php, javascript, json, ..." : "t.d. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

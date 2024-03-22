@@ -142,12 +142,12 @@ OC.L10N.register(
     "Smart picker" : "Inteligentný výber",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Edit" : "Upraviť",
-    "Add description" : "Pridať popis",
     "Front matter" : "Predná strana",
     "File could not be loaded. Please check your internet connection." : "Súbor sa nepodarilo nahrať. Skontrolujte pripojenie na internet.",
     "Source language" : "Zdrojový jazyk prekladu",
     "Target language" : "Cieľový jazyk",
     "Unsupported image type" : "Typ obrázka nie je podporovaný",
-    "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania"
+    "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
+    "Add description" : "Pridať popis"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
