@@ -12,6 +12,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "لم يتم تحميل أي ملف أو أن حجم الملف يتجاوز الحد الأقصى %s",
     "Nextcloud Text" : "\"نصوص نكست كلاود\" Nextcloud Text",
     "text document" : "مُستند نصّي",
+    "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
     "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف بسبب أن التحميل موقوف من قِبَل المُشارَكة",
     "No permission to access this file." : "لا تمتلك إذونات كافية للوصول إلى هذا الملف.",
@@ -29,6 +30,9 @@
     "Could not copy result to clipboard" : "تعذّر نسخ النتيجة إلى الحافظة",
     "Use current version" : "إستخدام النسخة الحالية",
     "Use the saved version" : "إستخدم النسخة المحفوظة",
+    "Reload" : "إعادة تحميل",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "المستند تمّ تعديله خارج محرر النصوص. التعديلات لا يمكن تطبيقها",
+    "Document could not be loaded. Please check your internet connection." : "لا يمكن تحميل المستند. الرجاء التحقق من اتصالك بالانترنت.",
     "Reconnect" : "أعد الاتصال",
     "Document idle for {timeout} minutes, click to continue editing" : "المستند خامل idel منذ {timeout} دقيقة ، أنقر لمتابعة التحرير",
     "This file is opened read-only as it is currently locked by {user}." : "الملف مفتوح في وضعية \"القراءة فقط\" حيث أنه مقفول locked حاليّاً من قِبَل {user}.",
@@ -178,7 +182,6 @@
     "Smart picker" : "اللاقط الذكي Smart picker",
     "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Edit" : "تحرير",
-    "Add description" : "أضِف وصفاً",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
     "Copied to the clipboard" : "تم النسخ إلى الحافطة",
@@ -190,6 +193,8 @@
     "Target language" : "اللغة المطلوبة",
     "Unsupported image type" : "هذا النوع من الصور غير مدعوم هنا",
     "Show rich workspaces" : "عرض توصيف مساحة العمل rich workspaces",
+    "Add description" : "أضِف وصفاً",
+    "Pick plain text files" : "إختَر ملفات نصية عادية",
     "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ..."
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

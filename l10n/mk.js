@@ -102,9 +102,9 @@ OC.L10N.register(
     "Option" : "Опции",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Edit" : "Уреди",
-    "Add description" : "Додади опис",
     "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
     "Unsupported image type" : "Неподржан вид на слика",
-    "Show rich workspaces" : "Прикажи збогатен работен простор"
+    "Show rich workspaces" : "Прикажи збогатен работен простор",
+    "Add description" : "Додади опис"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

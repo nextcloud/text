@@ -152,7 +152,6 @@ OC.L10N.register(
     "Smart picker" : "Selector inteligente",
     "Add notes, lists or links …" : "Agregar notas, listas o enlaces...",
     "Edit" : "Editar",
-    "Add description" : "Agregar descripción",
     "Copied to the clipboard" : "Copiado al portapapeles",
     "Front matter" : "Materias principales",
     "Failed to load file" : "Error al cargar el archivo",
@@ -160,6 +159,7 @@ OC.L10N.register(
     "Source language" : "Lenguaje de origen",
     "Target language" : "Lenguaje de destino",
     "Unsupported image type" : "Tipo de imagen no soportado",
-    "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos"
+    "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos",
+    "Add description" : "Agregar descripción"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

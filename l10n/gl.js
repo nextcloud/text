@@ -173,7 +173,6 @@ OC.L10N.register(
     "Smart picker" : "Selector intelixente",
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Edit" : "Editar",
-    "Add description" : "Engadir descrición",
     "\"{name}\" already exist!" : "Xa existe «{name}»!",
     "Created \"{name}\"" : "Creouse «{name}»",
     "Copied to the clipboard" : "Copiado no portapapeis.",
@@ -184,6 +183,7 @@ OC.L10N.register(
     "Target language" : "Idioma de destino",
     "Unsupported image type" : "Tipo de imaxe non admitido",
     "Show rich workspaces" : "Amosar espazos de traballo mellorados",
+    "Add description" : "Engadir descrición",
     "e.g. php, javascript, json, ..." : "p. ex. php, javascript, json, …"
 },
 "nplurals=2; plural=(n != 1);");

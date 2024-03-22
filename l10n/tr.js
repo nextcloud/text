@@ -176,7 +176,6 @@ OC.L10N.register(
     "Smart picker" : "Akıllı seçici",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Edit" : "Düzenle",
-    "Add description" : "Açıklama ekle",
     "\"{name}\" already exist!" : "\"{name}\" zaten var!",
     "Created \"{name}\"" : "\"{name}\" oluşturuldu",
     "Copied to the clipboard" : "Panoya kopyalandı",
@@ -187,6 +186,7 @@ OC.L10N.register(
     "Target language" : "Hedef dil",
     "Unsupported image type" : "Görsel türü desteklenmiyor",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
+    "Add description" : "Açıklama ekle",
     "e.g. php, javascript, json, ..." : "php, javascript, json gibi..."
 },
 "nplurals=2; plural=(n > 1);");

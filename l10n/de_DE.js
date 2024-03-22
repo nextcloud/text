@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Keine Datei hochgeladen oder die Dateigröße überschreitet %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "Textdokument",
+    "Editing session has expired. Please reload the page." : "Die Bearbeitungssitzung ist abgelaufen. Bitte laden Sie die Seite neu.",
     "{user} has mentioned you in the text document {node}" : "{user} hat Sie in dem Textdokument {node} erwähnt.",
     "This file cannot be displayed as download is disabled by the share" : "Diese Datei kann nicht angezeigt werden, da das Herunterladen für die Freigabe deaktiviert ist",
     "No permission to access this file." : "Keine Berechtigung zum Zugriff auf diese Datei.",
@@ -32,6 +33,8 @@ OC.L10N.register(
     "Use current version" : "Verwende aktuelle Version",
     "Use the saved version" : "Die gespeicherte Version verwenden",
     "Reload" : "Aktualisieren",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "Das Dokument wurde außerhalb des Editors geändert. Die Änderungen können nicht angewandt werden.",
+    "Document could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
     "Reconnect" : "Wiederverbinden",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument für {timeout} Minuten ruhend. Klicken, um die Bearbeitung fortzusetzen.",
     "This file is opened read-only as it is currently locked by {user}." : "Diese Datei ist schreibgeschützt geöffnet, da sie derzeit von {user} gesperrt ist.",
@@ -181,7 +184,6 @@ OC.L10N.register(
     "Smart picker" : "Smart Picker",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
-    "Add description" : "Beschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
     "Copied to the clipboard" : "In die Zwischenablage kopiert",
@@ -193,6 +195,8 @@ OC.L10N.register(
     "Target language" : "Zielsprache",
     "Unsupported image type" : "Nicht unterstütztes Bild-Format",
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
+    "Add description" : "Beschreibung hinzufügen",
+    "Pick plain text files" : "Reine Textdateien auswählen",
     "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …"
 },
 "nplurals=2; plural=(n != 1);");

@@ -12,6 +12,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "No s'ha pujat cap fitxer o la mida del fitxer supera el màxim de %s",
     "Nextcloud Text" : "Text del Nextcloud",
     "text document" : "document de text",
+    "Editing session has expired. Please reload the page." : "La sessió d'edició ha caducat. Torneu a carregar la pàgina.",
     "{user} has mentioned you in the text document {node}" : "{user} us ha esmentat en el document de text {node}",
     "This file cannot be displayed as download is disabled by the share" : "Aquest fitxer no es pot mostrar perquè la baixada està inhabilitada per l'ús compartit",
     "No permission to access this file." : "No teniu permís per a accedir a aquest fitxer.",
@@ -30,6 +31,8 @@
     "Use current version" : "Utilitza la versió actual",
     "Use the saved version" : "Utilitza la versió desada",
     "Reload" : "Recarrega",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "El document s'ha modificat fora de l'editor. No es poden aplicar els canvis.",
+    "Document could not be loaded. Please check your internet connection." : "No s'ha pogut carregar el document. Comproveu la connexió a Internet.",
     "Reconnect" : "Torna a connectar",
     "Document idle for {timeout} minutes, click to continue editing" : "El document ha estat inactiu durant {timeout} minuts, feu clic per a seguir editant-lo",
     "This file is opened read-only as it is currently locked by {user}." : "Aquest fitxer s'obre només de lectura perquè actualment l'ha bloquejat l'usuari {user}.",
@@ -179,7 +182,6 @@
     "Smart picker" : "Selector intel·ligent",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Edit" : "Edita",
-    "Add description" : "Afegeix una descripció",
     "\"{name}\" already exist!" : "«{name}» ja existeix!",
     "Created \"{name}\"" : "S'ha creat «{name}»",
     "Copied to the clipboard" : "S'ha copiat al porta-retalls",
@@ -191,6 +193,8 @@
     "Target language" : "Llengua de destinació",
     "Unsupported image type" : "Tipus d'imatge no compatible",
     "Show rich workspaces" : "Mostra els espais de treball enriquits",
+    "Add description" : "Afegeix una descripció",
+    "Pick plain text files" : "Trieu fitxers de text sense format",
     "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
