@@ -178,7 +178,6 @@ OC.L10N.register(
     "Smart picker" : "Асистент розумного вибору",
     "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
     "Edit" : "Редагувати",
-    "Add description" : "Додати опис",
     "\"{name}\" already exist!" : "\"{name}\" вже присутній!",
     "Created \"{name}\"" : "Створено \"{name}\"",
     "Copied to the clipboard" : "Скопійовано в буфер обміну",
@@ -190,6 +189,7 @@ OC.L10N.register(
     "Target language" : "Цільова мова",
     "Unsupported image type" : "Цей тип зображення не підтримується",
     "Show rich workspaces" : "Показувати опис каталогу",
+    "Add description" : "Додати опис",
     "e.g. php, javascript, json, ..." : "напр., PHP, JavaScript, JSON ..."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

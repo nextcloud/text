@@ -96,10 +96,10 @@ OC.L10N.register(
     "Formatting" : "Định dạng",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Edit" : "Chỉnh sửa",
-    "Add description" : "Thêm mô tả",
     "Failed to load file" : "Không tải được tập tin",
     "File could not be loaded. Please check your internet connection." : "Không thể tải tệp. Xin vui lòng kiểm tra kết nối internet của bạn.",
     "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
-    "Show rich workspaces" : "Hiển thị không gian làm việc"
+    "Show rich workspaces" : "Hiển thị không gian làm việc",
+    "Add description" : "Thêm mô tả"
 },
 "nplurals=1; plural=0;");

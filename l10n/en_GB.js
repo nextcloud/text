@@ -180,7 +180,6 @@ OC.L10N.register(
     "Smart picker" : "Smart picker",
     "Add notes, lists or links …" : "Add notes, lists or links …",
     "Edit" : "Edit",
-    "Add description" : "Add description",
     "\"{name}\" already exist!" : "\"{name}\" already exist!",
     "Created \"{name}\"" : "Created \"{name}\"",
     "Copied to the clipboard" : "Copied to the clipboard",
@@ -192,6 +191,7 @@ OC.L10N.register(
     "Target language" : "Target language",
     "Unsupported image type" : "Unsupported image type",
     "Show rich workspaces" : "Show rich workspaces",
+    "Add description" : "Add description",
     "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");

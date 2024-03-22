@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ingen fil lastet opp eller filen er større enn %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "tekstdokument",
+    "Editing session has expired. Please reload the page." : "Redigeringsøkten er utløpt. Last inn siden på nytt.",
     "{user} has mentioned you in the text document {node}" : "{user} har nevnt deg i tekstdokumentet {node}",
     "This file cannot be displayed as download is disabled by the share" : "Denne filen kan ikke vises ettersom nedlastingen er deaktivert av den delte ressursen",
     "No permission to access this file." : "Ingen tillatelse til å få tilgang til denne filen.",
@@ -32,6 +33,8 @@ OC.L10N.register(
     "Use current version" : "Bruk siste versjon",
     "Use the saved version" : "Bruk lagret versjon",
     "Reload" : "Last på nytt",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet har blitt endret utenfor programmet. Endringene kan ikke benyttes.",
+    "Document could not be loaded. Please check your internet connection." : "Dokumentet kan ikke lastes inn. Kontroller internettforbindelsen din.",
     "Reconnect" : "Koble til på nytt",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter, klikk for å fortsette redigeringen",
     "This file is opened read-only as it is currently locked by {user}." : "Denne filen åpnes skrivebeskyttet siden den for øyeblikket er låst av {user}.",
@@ -181,7 +184,6 @@ OC.L10N.register(
     "Smart picker" : "Smartvelger",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Edit" : "Rediger",
-    "Add description" : "Legg til beskrivelse",
     "\"{name}\" already exist!" : "\"{name}\" finnes allerede!",
     "Created \"{name}\"" : "Opprettet \"{name}\"",
     "Copied to the clipboard" : "Kopiert til utklippstavlen",
@@ -193,6 +195,8 @@ OC.L10N.register(
     "Target language" : "Målspråk",
     "Unsupported image type" : "Filtypen støttes ikke",
     "Show rich workspaces" : "Vis arbeidsområde",
+    "Add description" : "Legg til beskrivelse",
+    "Pick plain text files" : "Velg rene tekstfiler",
     "e.g. php, javascript, json, ..." : "f.eks. php, javascript, json..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Faylı diskə yazmaq mümkün olmadı",
     "A PHP extension stopped the file upload" : "PHP uzantısı faylın yüklənməsini dayandırdı",
     "Translate" : "Translate",
+    "Reload" : "Yenidən yüklə",
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
     "Save changes" : "Dəyişiklikləri yaddaşa ver",

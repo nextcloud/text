@@ -172,7 +172,6 @@ OC.L10N.register(
     "Smart picker" : "Inteligentna selekcja",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
     "Edit" : "Edytuj",
-    "Add description" : "Dodaj opis",
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",
     "Copied to the clipboard" : "Skopiowano do schowka",
@@ -183,6 +182,7 @@ OC.L10N.register(
     "Target language" : "Język docelowy",
     "Unsupported image type" : "Nieobsługiwany typ obrazu",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
+    "Add description" : "Dodaj opis",
     "e.g. php, javascript, json, ..." : "np. php, javascript, json, …"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

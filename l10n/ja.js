@@ -177,7 +177,6 @@ OC.L10N.register(
     "Smart picker" : "スマートピッカー",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Edit" : "編集",
-    "Add description" : "説明を追加",
     "\"{name}\" already exist!" : "\"{name}\" は既に存在します",
     "Created \"{name}\"" : "\"{name}\" を作成しました",
     "Copied to the clipboard" : "クリップボードにコピーされました",
@@ -189,6 +188,7 @@ OC.L10N.register(
     "Target language" : "訳文の言語",
     "Unsupported image type" : "サポートされていない画像形式です",
     "Show rich workspaces" : "各フォルダのReadmeを表示",
+    "Add description" : "説明を追加",
     "e.g. php, javascript, json, ..." : "例えば php, javascript, json等･･･"
 },
 "nplurals=1; plural=0;");
