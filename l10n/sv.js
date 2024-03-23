@@ -184,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Smart picker",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Edit" : "Redigera",
+    "Add folder description" : "Lägg till mappbeskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",
     "Copied to the clipboard" : "Kopierat till urklipp",

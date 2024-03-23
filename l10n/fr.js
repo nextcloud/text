@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Aucun fichier téléversé ou la taille du fichier dépasse le maximum de %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "document texte",
+    "Editing session has expired. Please reload the page." : "La session de modification a expiré. Veuillez recharger la page.",
     "{user} has mentioned you in the text document {node}" : "{user} vous a mentionné dans le document texte {node}",
     "This file cannot be displayed as download is disabled by the share" : "Ce fichier ne peut pas être affiché car le téléchargement est désactivé par le partage.",
     "No permission to access this file." : "Aucune autorisation d'accéder à ce fichier.",
@@ -31,6 +32,9 @@ OC.L10N.register(
     "Could not copy result to clipboard" : "Impossible de copier le résultat dans le presse-papiers",
     "Use current version" : "Utiliser la version actuelle",
     "Use the saved version" : "Utiliser la version enregistrée",
+    "Reload" : "Recharger",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "Le document a été modifié par un autre programme que l'éditeur. Les changements ne peuvent être appliqués",
+    "Document could not be loaded. Please check your internet connection." : "Le document n'a pu être chargé. Vérifiez votre connexion Internet.",
     "Reconnect" : "Se reconnecter",
     "Document idle for {timeout} minutes, click to continue editing" : "Document sans activité depuis {timeout} minutes, cliquez pour continuer les modifications",
     "This file is opened read-only as it is currently locked by {user}." : "Ce fichier est ouvert en lecture seule car il est actuellement verrouillé par {utilisateur}.",
@@ -180,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Sélecteur intelligent",
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
     "Edit" : "Modifier",
+    "Add folder description" : "Ajouter la description du dossier",
     "\"{name}\" already exist!" : "« {name} » existe déjà !",
     "Created \"{name}\"" : "« {name} » créé",
     "Copied to the clipboard" : "Copié dans le presse-papiers",
@@ -192,6 +197,7 @@ OC.L10N.register(
     "Unsupported image type" : "Type d'image non pris en charge",
     "Show rich workspaces" : "Afficher les espaces de travail riches",
     "Add description" : "Ajouter une description",
+    "Pick plain text files" : "Choisir des fichiers de texte brut",
     "e.g. php, javascript, json, ..." : "ex : php, javascript, json, ..."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

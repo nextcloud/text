@@ -184,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Smart Picker",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Edit" : "Bearbeiten",
+    "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
     "Copied to the clipboard" : "In die Zwischenablage kopiert",

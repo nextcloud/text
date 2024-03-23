@@ -184,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Паметни бирач",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Edit" : "Измени",
+    "Add folder description" : "Додај опис фолдера",
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
     "Copied to the clipboard" : "Копирано у клипборд",
