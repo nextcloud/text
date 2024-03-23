@@ -184,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Selector intel·ligent",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Edit" : "Edita",
+    "Add folder description" : "Afegiu una descripció per a la carpeta",
     "\"{name}\" already exist!" : "«{name}» ja existeix!",
     "Created \"{name}\"" : "S'ha creat «{name}»",
     "Copied to the clipboard" : "S'ha copiat al porta-retalls",
