@@ -14,6 +14,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "No file uploaded or file size exceeds maximum of %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "text document",
+    "Editing session has expired. Please reload the page." : "Editing session has expired. Please reload the page.",
     "{user} has mentioned you in the text document {node}" : "{user} has mentioned you in the text document {node}",
     "This file cannot be displayed as download is disabled by the share" : "This file cannot be displayed as download is disabled by the share",
     "No permission to access this file." : "No permission to access this file.",
@@ -31,6 +32,9 @@ OC.L10N.register(
     "Could not copy result to clipboard" : "Could not copy result to clipboard",
     "Use current version" : "Use current version",
     "Use the saved version" : "Use the saved version",
+    "Reload" : "Reload",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "Document has been changed outside of the editor. The changes cannot be applied",
+    "Document could not be loaded. Please check your internet connection." : "Document could not be loaded. Please check your internet connection.",
     "Reconnect" : "Reconnect",
     "Document idle for {timeout} minutes, click to continue editing" : "Document idle for {timeout} minutes, click to continue editing",
     "This file is opened read-only as it is currently locked by {user}." : "This file is opened read-only as it is currently locked by {user}.",
@@ -180,6 +184,7 @@ OC.L10N.register(
     "Smart picker" : "Smart picker",
     "Add notes, lists or links …" : "Add notes, lists or links …",
     "Edit" : "Edit",
+    "Add folder description" : "Add folder description",
     "\"{name}\" already exist!" : "\"{name}\" already exist!",
     "Created \"{name}\"" : "Created \"{name}\"",
     "Copied to the clipboard" : "Copied to the clipboard",
@@ -192,6 +197,7 @@ OC.L10N.register(
     "Unsupported image type" : "Unsupported image type",
     "Show rich workspaces" : "Show rich workspaces",
     "Add description" : "Add description",
+    "Pick plain text files" : "Pick plain text files",
     "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
 },
 "nplurals=2; plural=(n != 1);");
