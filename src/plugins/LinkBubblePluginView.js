@@ -25,10 +25,16 @@ class LinkBubblePluginView {
 	}
 
 	dragOrScrollHandler = (event) => {
+		// Only hide when scrolling on `<div>` (not .e.g. on `<input>`)
+		if (event.target.nodeName !== 'DIV') {
+			return
+		}
+
 		// Cypress fires unexpected scroll events, which breaks testing the link bubble
 		if (window.Cypress) {
 			return
 		}
+
 		this.hide()
 	}
 
