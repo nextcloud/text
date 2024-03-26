@@ -123,6 +123,7 @@ OC.L10N.register(
     "No command found" : "Ez da komandorik aurkitu",
     "No user found" : "Ez da erabiltzailerik aurkitu",
     "No suggestion found" : "Ez da iradokizunik aurkitu",
+    "Copy code block" : "Kopiatu kode-blokea",
     "Code block options" : "Kode-bloke aukerak",
     "Code block language" : "Kode-bloke lengoaia",
     "Source code" : "Iturburu-kodea",
