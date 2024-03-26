@@ -43,7 +43,6 @@ describe('Open test.md in viewer', function() {
 	})
 	beforeEach(function() {
 		cy.login(user)
-		cy.visit('/apps/files')
 	})
 
 	it('Shares the file as a public read only link', function() {
