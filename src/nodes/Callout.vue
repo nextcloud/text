@@ -86,7 +86,7 @@ export default {
 
 	.callout__content {
 		margin-left: 1em;
-		&:deep(p) {
+		&:deep(p .paragraph-content) {
 			&:last-child {
 				margin-bottom: 0;
 			}
