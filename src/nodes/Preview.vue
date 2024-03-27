@@ -27,7 +27,7 @@
 		<NodeViewContent style="display:none" />
 		<PreviewOptions v-if="editor.isEditable"
 			:value.sync="value"
-			@update:value="convertToParagraph" />
+			@update:value="changeViewMode" />
 		<NcReferenceList :text="node.attrs.href"
 			:limit="1"
 			:interactive="!extension.options.isEmbedded" />
@@ -58,7 +58,7 @@ export default {
 	methods: {
 		changeViewMode(value) {
 			if (value === 'delete-preview') this.deleteNode()
-			else if (value === 'link-preview') this.convertToParagraph()
+			else if (value === 'text-only') this.convertToParagraph()
 		},
 		convertToParagraph(...args) {
 			console.info(...args)
