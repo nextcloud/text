@@ -170,6 +170,9 @@ class PollingBackend {
 					outsideChange: e.response.data.outsideChange,
 				},
 			})
+		} else if (e.response.status === 412) {
+			this.#syncService.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: e.response })
+			this.disconnect()
 		} else if (e.response.status === 403) {
 			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()

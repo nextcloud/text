@@ -74,7 +74,7 @@ describe('Sync', () => {
 		}).as('sessionRequests')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'File could not be loaded')
+			.should('contain', 'Document could not be loaded.')
 			.then(() => {
 				reconnect = true
 			})
@@ -83,7 +83,7 @@ describe('Sync', () => {
 			.as('syncAfterRecovery')
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'File could not be loaded')
+			.should('not.contain', 'Document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.getContent().type('* more content added after the lost connection{enter}')
@@ -109,12 +109,12 @@ describe('Sync', () => {
 
 		cy.wait('@sessionRequests', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'File could not be loaded')
+			.should('contain', 'Document could not be loaded.')
 
 		cy.wait('@syncAfterRecovery', { timeout: 60000 })
 
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'File could not be loaded')
+			.should('not.contain', 'Document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.getContent().type('* more content added after the lost connection{enter}')
@@ -124,6 +124,25 @@ describe('Sync', () => {
 			.then(name => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'after the lost connection')
+	})
+
+	it('shows warning when document session got cleaned up', () => {
+		cy.get('.save-status button')
+			.click()
+		cy.wait('@save')
+		cy.uploadTestFile('test.md')
+
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('contain', 'Editing session has expired.')
+
+		// Reload button works
+		cy.get('#editor-container .document-status a.button')
+			.contains('Reload')
+			.click()
+
+		cy.getContent()
+		cy.get('#editor-container .document-status .notecard')
+			.should('not.exist')
 	})
 
 	it('passes the doc content from one session to the next', () => {

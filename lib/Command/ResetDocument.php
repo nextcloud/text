@@ -23,9 +23,7 @@
 
 namespace OCA\Text\Command;
 
-use OCA\Text\Db\DocumentMapper;
-use OCA\Text\Db\SessionMapper;
-use OCA\Text\Db\StepMapper;
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -34,33 +32,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetDocument extends Command {
 	protected DocumentService $documentService;
-	protected DocumentMapper $documentMapper;
-	protected StepMapper $stepMapper;
-	protected SessionMapper $sessionMapper;
 
-	public function __construct(DocumentService $documentService, DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper) {
+	public function __construct(DocumentService $documentService) {
 		parent::__construct();
-
 		$this->documentService = $documentService;
-		$this->documentMapper = $documentMapper;
-		$this->stepMapper = $stepMapper;
-		$this->sessionMapper = $sessionMapper;
 	}
 
 	protected function configure(): void {
 		$this
 			->setName('text:reset')
-			->setDescription('Reset a text document')
+			->setDescription('Reset a text document session to the current file content')
 			->addArgument(
 				'file-id',
 				InputArgument::REQUIRED,
-				'File id of the document to rest'
+				'File id of the document to reset'
 			)
 			->addOption(
-				'full',
+				'force',
 				'f',
 				null,
-				'Drop all existing steps and use the currently saved version'
+				'Reset the document session even with unsaved changes'
 			)
 		;
 	}
@@ -72,27 +63,23 @@ class ResetDocument extends Command {
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$fileId = $input->getArgument('file-id');
-		$fullReset = $input->getOption('full');
+		$fullReset = $input->getOption('force');
 
 		if ($fullReset) {
-			$output->writeln('Full document reset');
+			$output->writeln('Force-reset the document session for file ' . $fileId);
 			$this->documentService->resetDocument($fileId, true);
 
 			return 0;
-		} else {
-			$output->writeln('Trying to restore to last saved version');
-			$document = $this->documentMapper->find($fileId);
-			$deleted = $this->stepMapper->deleteAfterVersion($fileId, $document->getLastSavedVersion());
-			if ($deleted > 0) {
-				$this->sessionMapper->deleteByDocumentId($fileId);
-				$output->writeln('Reverted document to the last saved version');
+		}
 
-				return 0;
-			} else {
-				$output->writeln('Failed revert changes that are newer than the last saved version');
-			}
-
+		$output->writeln('Reset the document session for file ' . $fileId);
+		try {
+			$this->documentService->resetDocument($fileId);
+		} catch (DocumentHasUnsavedChangesException) {
+			$output->writeln('Not resetting due to unsaved changes');
 			return 1;
 		}
+
+		return 0;
 	}
 }

@@ -38,9 +38,10 @@ class SessionApi {
 		this.#options = options
 	}
 
-	open({ fileId }) {
+	open({ fileId, baseVersionEtag }) {
 		return axios.put(this.#url(`session/${fileId}/create`), {
 			fileId,
+			baseVersionEtag,
 			filePath: this.#options.filePath,
 			token: this.#options.shareToken,
 			guestName: this.#options.guestName,
@@ -113,6 +114,7 @@ export class Connection {
 		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 		})
 	}
@@ -121,6 +123,7 @@ export class Connection {
 		return this.#post(this.#url(`session/${this.#document.id}/save`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 			autosaveContent,
 			documentState,
@@ -133,6 +136,7 @@ export class Connection {
 		return this.#post(this.#url(`session/${this.#document.id}/push`), {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
 			steps,
 			version,
 			awareness,
@@ -177,6 +181,11 @@ export class Connection {
 		const promise = this.#post(this.#url(`session/${this.#document.id}/close`), this.#defaultParams)
 		this.closed = true
 		return promise
+	}
+
+	// To be used in Cypress tests only
+	setBaseVersionEtag(baseVersionEtag) {
+		this.#document.baseVersionEtag = baseVersionEtag
 	}
 
 	#post(...args) {
