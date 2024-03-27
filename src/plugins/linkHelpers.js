@@ -20,6 +20,8 @@
  *
  */
 
+import { isLinkToSelfWithHash } from '../helpers/links.js'
+
 /**
  * Get the link mark applied at the current selection or next to it.
  *
@@ -78,7 +80,7 @@ function linkMark(node) {
 		return undefined
 	}
 	// Don't open link bubble for anchor links
-	if (linkMark.attrs.href.startsWith('#')) {
+	if (isLinkToSelfWithHash(linkMark.attrs.href)) {
 		return undefined
 	} else {
 		return linkMark

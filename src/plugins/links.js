@@ -23,6 +23,7 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 import { activeLinkFromSelection } from './linkHelpers.js'
+import { isLinkToSelfWithHash } from '../helpers/links.js'
 
 // Commands
 
@@ -167,7 +168,7 @@ export function linkClicking() {
 					const linkEl = event.target.closest('a')
 					if (event.button === 0 && linkEl) {
 						event.preventDefault()
-						if (linkEl.attributes.href?.value?.startsWith('#')) {
+						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
 							// Open anchor links directly
 							location.href = linkEl.attributes.href.value
 						} else if (event.ctrlKey || event.metaKey) {

@@ -21,7 +21,7 @@
  */
 
 import { Node, isNodeActive, getNodeType } from '@tiptap/core'
-import { domHref, parseHref } from './../helpers/links.js'
+import { domHref, parseHref, isLinkToSelfWithHash } from './../helpers/links.js'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 
 import Preview from './Preview.vue'
@@ -149,7 +149,7 @@ function previewPossible({ selection }) {
 		return false
 	}
 	const href = extractHref($from.parent.firstChild)
-	if (!href || href.startsWith('#')) {
+	if (!href || isLinkToSelfWithHash('#')) {
 		return false
 	}
 	return true
