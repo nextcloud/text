@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 /**
- * @copyright Copyright (c) 2021 Julien Veyssier <eneiluj@posteo.net>
+ * @copyright Copyright (c) 2024 Jonas <jonas@freesources.org>
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Jonas <jonas@freesources.org>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -25,34 +25,37 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
-use OCA\Text\Service\AttachmentService;
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
-use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
+use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\File;
 
 /**
- * @template-implements IEventListener<Event|BeforeNodeDeletedEvent>
+ * @template-implements IEventListener<Event|BeforeNodeWrittenEvent>
  */
-class BeforeNodeDeletedListener implements IEventListener {
-	private AttachmentService $attachmentService;
+class BeforeNodeWrittenListener implements IEventListener {
 	private DocumentService $documentService;
 
-	public function __construct(AttachmentService $attachmentService,
-		DocumentService $documentService) {
-		$this->attachmentService = $attachmentService;
+	public function __construct(DocumentService $documentService) {
 		$this->documentService = $documentService;
 	}
 
 	public function handle(Event $event): void {
-		if (!$event instanceof BeforeNodeDeletedEvent) {
+		if (!$event instanceof BeforeNodeWrittenEvent) {
 			return;
 		}
 		$node = $event->getNode();
 		if ($node instanceof File && $node->getMimeType() === 'text/markdown') {
-			$this->attachmentService->deleteAttachments($node);
-			$this->documentService->resetDocument($node->getId(), true);
+			if (!$this->documentService->isSaveFromText()) {
+				// Reset document session to avoid manual conflict resolution if there's no unsaved steps
+				try {
+					$this->documentService->resetDocument($node->getId());
+				} catch (DocumentHasUnsavedChangesException) {
+					// Do not throw during event handling in this is expected to happen
+				}
+			}
 		}
 	}
 }

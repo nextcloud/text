@@ -364,6 +364,7 @@ export default {
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
+				baseVersionEtag: this.$syncService?.baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
 					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
