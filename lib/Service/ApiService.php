@@ -29,6 +29,7 @@ namespace OCA\Text\Service;
 use Exception;
 use InvalidArgumentException;
 use OCA\Files_Sharing\SharedStorage;
+use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
@@ -45,7 +46,10 @@ use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
+use OCP\Server;
 use OCP\Share\IShare;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
@@ -200,6 +204,7 @@ class ApiService {
 		}
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
+			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], 422);
 		} catch (DoesNotExistException|NotPermittedException) {
@@ -207,6 +212,26 @@ class ApiService {
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		return new DataResponse($result);
+	}
+
+	private function addToPushQueue(Document $document, array $steps): void {
+		try {
+			$queue = Server::get(IQueue::class);
+			$sessions = $this->sessionService->getActiveSessions($document->getId());
+			$sessions = array_values(array_filter(array_unique(array_map(fn ($session): ?string => $session['userId'], $sessions))));
+			foreach ($sessions as $userId) {
+				// Get sync response
+				$queue->push('notify_custom', [
+					'user' => $userId,
+					'message' => 'text_steps',
+					'body' => [
+						'documentId' => $document->getId(),
+						'steps' => $steps,
+					],
+				]);
+			}
+		} catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
+		}
 	}
 
 	public function sync(Session $session, Document $document, int $version = 0, ?string $shareToken = null): DataResponse {
