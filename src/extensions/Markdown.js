@@ -108,7 +108,17 @@ const Markdown = Extension.create({
 						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
 					},
 					clipboardTextSerializer: (slice) => {
-						return createMarkdownSerializer(this.editor.schema).serialize(slice.content)
+						const traverseNodes = (slice) => {
+							if (slice.content.childCount > 1) {
+								return createMarkdownSerializer(this.editor.schema).serialize(slice.content)
+							} else if (slice.isLeaf) {
+								return slice.textContent
+							} else {
+								traverseNodes(slice.content.firstChild)
+							}
+						}
+
+						return traverseNodes(slice)
 					},
 					transformPastedHTML,
 				},
