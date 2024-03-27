@@ -42,20 +42,31 @@
 			@change="e => $emit('update:value', e.currentTarget.value)">
 			{{ t('text', 'Show link preview') }}
 		</NcActionRadio>
+		<NcActionSeparator />
+		<NcActionButton @click="e => $emit('update:value', 'delete-preview')">
+			<template #icon>
+				<DeleteIcon :size="20" />
+			</template>
+			{{ t('text','delete') }}
+		</NcActionButton>
 	</NcActions>
 </template>
 
 <script>
-import { NcActions, NcActionRadio, NcActionCaption } from '@nextcloud/vue'
+import { NcActions, NcActionButton, NcActionRadio, NcActionCaption, NcActionSeparator } from '@nextcloud/vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
+import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 
 export default {
 	name: 'PreviewOptions',
 	components: {
 		DotsVerticalIcon,
 		NcActions,
+		NcActionButton,
 		NcActionCaption,
 		NcActionRadio,
+		NcActionSeparator,
+		DeleteIcon,
 	},
 	props: {
 		value: {

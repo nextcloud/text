@@ -56,6 +56,10 @@ export default {
 		}
 	},
 	methods: {
+		changeViewMode(value) {
+			if (value === 'delete-preview') this.deleteNode()
+			else if (value === 'link-preview') this.convertToParagraph()
+		},
 		convertToParagraph(...args) {
 			console.info(...args)
 			this.$editor.chain()
