@@ -33,7 +33,7 @@
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
 
-		<SkeletonLoading v-if="!contentLoaded && !displayedStatus" />
+		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<Wrapper v-if="displayed"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
@@ -285,6 +285,9 @@ export default {
 		},
 		displayedStatus() {
 			return this.displayed || !!this.syncError
+		},
+		showLoadingSkeleton() {
+			return (!this.contentLoaded || !this.displayed) && !this.syncError
 		},
 		renderRichEditorMenus() {
 			return this.contentLoaded
