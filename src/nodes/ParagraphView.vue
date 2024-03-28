@@ -25,7 +25,7 @@
 		<PreviewOptions v-if="editor.isEditable && isSelected && canConvertToPreview"
 			:value.sync="value"
 			@open="editor.commands.hideLinkBubble()"
-			@update:value="convertToPreview" />
+			@update:value="changeViewMode" />
 		<NodeViewContent class="paragraph-content" />
 	</NodeViewWrapper>
 </template>
@@ -74,8 +74,14 @@ export default {
 		this.editor.off('selectionUpdate', this.checkSelection)
 	},
 	methods: {
-		convertToPreview(...args) {
-			console.info(...args)
+		changeViewMode(value) {
+			if (value === 'delete-preview') {
+				this.deleteNode()
+			} else if (value === 'link-preview') {
+				this.convertToPreview()
+			}
+		},
+		convertToPreview() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos() + 1)
