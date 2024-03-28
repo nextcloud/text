@@ -27,6 +27,7 @@
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
+		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
 	<div v-else
@@ -34,11 +35,19 @@
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
 		<Component :is="readerComponent" :content="content" />
+		<NcButton class="toggle-interactive" @click="toggleEdit">
+			{{ t('text', 'Edit') }}
+			<template #icon>
+				<PencilIcon />
+			</template>
+		</NcButton>
 	</div>
 </template>
 
 <script>
 import axios from '@nextcloud/axios'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import RichTextReader from './RichTextReader.vue'
 
@@ -48,6 +57,8 @@ import getEditorInstance from './Editor.singleton.js'
 export default {
 	name: 'ViewerComponent',
 	components: {
+		NcButton,
+		PencilIcon,
 		RichTextReader,
 		PlainTextReader,
 		Editor: getEditorInstance,
@@ -102,12 +113,13 @@ export default {
 	data() {
 		return {
 			content: '',
+			hasToggledInteractiveEmbedding: false,
 		}
 	},
 	computed: {
 		/** @return {boolean} */
 		useSourceView() {
-			return this.source && (this.fileVersion || !this.fileid)
+			return this.source && (this.fileVersion || !this.fileid || this.isEmbedded) && !this.hasToggledInteractiveEmbedding
 		},
 
 		/** @return {boolean} */
@@ -135,6 +147,9 @@ export default {
 			}
 			this.$emit('update:loaded', true)
 		},
+		toggleEdit() {
+			this.hasToggledInteractiveEmbedding = true
+		},
 	},
 }
 </script>
@@ -151,10 +166,26 @@ export default {
 	background-color: var(--color-main-background);
 
 	&.source-viewer {
+		display: block;
+
 		.text-editor__content-wrapper {
 			margin-top: var(--header-height);
 		}
+
+		.toggle-interactive {
+			position: sticky;
+			bottom: 0;
+			right: 0;
+			z-index: 1;
+			margin-left: auto;
+			margin-right: 0;
+		}
 	}
+
+	&.text-editor--embedding {
+		min-height: 400px;
+	}
+
 }
 </style>
 <style lang="scss">
