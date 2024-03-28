@@ -75,11 +75,13 @@ export default {
 	},
 	methods: {
 		changeViewMode(value) {
-			if (value === 'delete-preview') this.deleteNode()
-			else if (value === 'link-preview') this.convertToPreview()
+			if (value === 'delete-preview') {
+				this.deleteNode()
+			} else if (value === 'link-preview') {
+				this.convertToPreview()
+			}
 		},
-		convertToPreview(...args) {
-			console.info(...args)
+		convertToPreview() {
 			this.editor.chain()
 				.focus()
 				.setTextSelection(this.getPos() + 1)

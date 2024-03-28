@@ -57,11 +57,13 @@ export default {
 	},
 	methods: {
 		changeViewMode(value) {
-			if (value === 'delete-preview') this.deleteNode()
-			else if (value === 'text-only') this.convertToParagraph()
+			if (value === 'delete-preview') {
+				this.deleteNode()
+			} else if (value === 'text-only') {
+				this.convertToParagraph()
+			}
 		},
-		convertToParagraph(...args) {
-			console.info(...args)
+		convertToParagraph() {
 			this.$editor.chain()
 				.focus()
 				.setTextSelection(this.getPos() + 1)

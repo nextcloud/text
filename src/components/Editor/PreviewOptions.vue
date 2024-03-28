@@ -47,7 +47,7 @@
 			<template #icon>
 				<DeleteIcon :size="20" />
 			</template>
-			{{ t('text','delete') }}
+			{{ t('text','Remove link') }}
 		</NcActionButton>
 	</NcActions>
 </template>
