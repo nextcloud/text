@@ -35,7 +35,7 @@
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
 		<Component :is="readerComponent" :content="content" />
-		<NcButton class="toggle-interactive" @click="toggleEdit">
+		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
 			{{ t('text', 'Edit') }}
 			<template #icon>
 				<PencilIcon />
@@ -45,22 +45,27 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from '@nextcloud/axios'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import RichTextReader from './RichTextReader.vue'
+import { translate, translatePlural } from '@nextcloud/l10n'
 
 import { getSharingToken } from '../helpers/token.js'
 import getEditorInstance from './Editor.singleton.js'
 
+Vue.prototype.t = translate
+Vue.prototype.n = translatePlural
+
 export default {
 	name: 'ViewerComponent',
 	components: {
-		NcButton,
-		PencilIcon,
-		RichTextReader,
-		PlainTextReader,
+		NcButton: Vue.extend(NcButton),
+		PencilIcon: Vue.extend(PencilIcon),
+		RichTextReader: Vue.extend(RichTextReader),
+		PlainTextReader: Vue.extend(PlainTextReader),
 		Editor: getEditorInstance,
 	},
 	provide() {
@@ -139,6 +144,7 @@ export default {
 	},
 
 	methods: {
+		t: translate,
 		async loadFileContent() {
 			if (this.useSourceView) {
 				const response = await axios.get(this.source)
