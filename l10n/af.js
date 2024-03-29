@@ -41,7 +41,6 @@ OC.L10N.register(
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing",
-    "Edit" : "Wysig",
-    "Unsupported image type" : "Onondersteunde beeldtipe"
+    "Edit" : "Wysig"
 },
 "nplurals=2; plural=(n != 1);");

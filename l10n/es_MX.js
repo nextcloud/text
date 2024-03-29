@@ -21,6 +21,7 @@ OC.L10N.register(
     "Edit guest name" : "Editar nombre de invitado",
     "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre de invitado",
+    "Remove link" : "Eliminar enlace",
     "guest" : "invitado",
     "Offline" : "Sin conexión",
     "Saving …" : "Guardando ...",
@@ -38,7 +39,6 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Cita",
     "Code block" : "Bloque de código",
-    "Remove link" : "Eliminar enlace",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copia el enlace manualmente",
     "Select file or folder to link to" : "Seleccionar archivo o carpeta para enlazar.",
@@ -57,7 +57,6 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ...",
-    "Edit" : "Editar",
-    "Unsupported image type" : "Tipo de imagen no soportado"
+    "Edit" : "Editar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

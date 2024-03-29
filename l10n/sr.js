@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Опције прегледа",
     "Text only" : "Само текст",
     "Show link preview" : "Прикажи преглед линка",
+    "Remove link" : "Уклони линк",
     "guest" : "гост",
     "Show author colors" : "Прикажи боје аутора",
     "Author colors are only shown until everyone has closed the document." : "Боје аутора се приказују све док сви не затворе документ.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Неки кôд",
     "Edit link" : "Уреди линк",
     "Save changes" : "Сачувај измене",
-    "Remove link" : "Уклони линк",
     "Cancel" : "Откажи",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Не могу да копирам, копирајте везу ручно",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Уводни део",
     "Failed to load file" : "Није успело учитавање фајла",
     "File could not be loaded. Please check your internet connection." : "Фајл не може да се учита. Проверите интернет конекцију.",
+    "Pick plain text files" : "Изаберите просте текст фајлове",
     "Source language" : "Изворни језик",
     "Target language" : "Циљни језик",
-    "Unsupported image type" : "Неподржани тип слике",
+    "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ...",
     "Show rich workspaces" : "Прикажи обогаћена радна места",
-    "Add description" : "Додај опис",
-    "Pick plain text files" : "Изаберите просте текст фајлове",
-    "e.g. php, javascript, json, ..." : "нпр. php, javascript, json, ..."
+    "Add description" : "Додај опис"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

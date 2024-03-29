@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Host",
     "Save guest name" : "Uložit jméno hosta",
     "Insert an attachment" : "Vložit přílohu",
+    "Remove link" : "Odebrat odkaz",
     "guest" : "host",
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Nějaký kód",
     "Edit link" : "Upravit odkaz",
     "Save changes" : "Uložit změny",
-    "Remove link" : "Odebrat odkaz",
     "Cancel" : "Storno",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Nedaří se zkopírovat, zkopírujte odkaz ručně",
@@ -181,9 +181,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Soubor se nepodařilo načíst. Zkontrolujte své připojení k Internetu.",
     "Source language" : "Zdrojový jazyk",
     "Target language" : "Cílový jazyk",
-    "Unsupported image type" : "Nepodporovaný typ obrázku",
+    "e.g. php, javascript, json, ..." : "např. php, javascript, json, …",
     "Show rich workspaces" : "Zobrazit rich workspaces",
-    "Add description" : "Přidat popis",
-    "e.g. php, javascript, json, ..." : "např. php, javascript, json, …"
+    "Add description" : "Přidat popis"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

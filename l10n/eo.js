@@ -54,7 +54,6 @@ OC.L10N.register(
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
-    "Edit" : "Modifi",
-    "Unsupported image type" : "Nesubtenata bildotipo"
+    "Edit" : "Modifi"
 },
 "nplurals=2; plural=(n != 1);");

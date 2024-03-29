@@ -23,7 +23,6 @@
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება",
-    "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი"
+    "Edit" : "ცვლილება"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }
