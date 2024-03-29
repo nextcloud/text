@@ -47,6 +47,8 @@ const ERROR_TYPE = {
 	CONNECTION_FAILED: 3,
 
 	SOURCE_NOT_FOUND: 4,
+
+	PUSH_FORBIDDEN: 5,
 }
 
 class SyncService {
@@ -170,6 +172,7 @@ class SyncService {
 					if (!data.document) {
 						// either the session is invalid or the document is read only.
 						logger.error('failed to write to document - not allowed')
+						this.emit('error', { type: ERROR_TYPE.PUSH_FORBIDDEN, data: {} })
 					}
 					// Only emit conflict event if we have synced until the latest version
 					if (response.data.document?.currentVersion === this.version) {
