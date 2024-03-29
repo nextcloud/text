@@ -30,6 +30,7 @@ OC.L10N.register(
     "Guest" : "Svečias",
     "Save guest name" : "Įrašyti svečio vardą",
     "Insert an attachment" : "Įterpti priedą",
+    "Remove link" : "Šalinti nuorodą",
     "guest" : "svečias",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
@@ -69,7 +70,6 @@ OC.L10N.register(
     "Some code" : "Kažkoks kodas",
     "Edit link" : "Taisyti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
-    "Remove link" : "Šalinti nuorodą",
     "Cancel" : "Atsisakyti",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Nepavyksta nukopijuoti, nukopijuokite nuorodą rankiniu būdu",
@@ -121,7 +121,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Edit" : "Taisyti",
     "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
-    "Unsupported image type" : "Nepalaikomas paveikslo tipas",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

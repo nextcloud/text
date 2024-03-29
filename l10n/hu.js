@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Vendég",
     "Save guest name" : "Vendégnév mentése",
     "Insert an attachment" : "Melléklet beszúrása",
+    "Remove link" : "Hivatkozás eltávolítása",
     "guest" : "vendég",
     "Show author colors" : "Szerzők színének megjelenítése",
     "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Valamilyen kód",
     "Edit link" : "Hivatkozás szerkesztése",
     "Save changes" : "Változások mentése",
-    "Remove link" : "Hivatkozás eltávolítása",
     "Cancel" : "Mégse",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "A másolás sikertelen, másolja kézzel a hivatkozást",
@@ -177,9 +177,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "A fájl betöltése sikertelen. Ellenőrizze az internetkapcsolatot.",
     "Source language" : "Forrásnyelv",
     "Target language" : "Célnyelv",
-    "Unsupported image type" : "Nem támogatott képtípus",
+    "e.g. php, javascript, json, ..." : "pl. php, javascript, json...",
     "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
-    "Add description" : "Leírás hozzáadása",
-    "e.g. php, javascript, json, ..." : "pl. php, javascript, json..."
+    "Add description" : "Leírás hozzáadása"
 },
 "nplurals=2; plural=(n != 1);");

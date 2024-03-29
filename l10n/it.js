@@ -40,6 +40,7 @@ OC.L10N.register(
     "Guest" : "Ospite",
     "Save guest name" : "Salva nome ospite",
     "Insert an attachment" : "Inserisci un allegato",
+    "Remove link" : "Rimuovi collegamento",
     "guest" : "ospite",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
@@ -90,7 +91,6 @@ OC.L10N.register(
     "Code block" : "Blocco di codice",
     "Some code" : "Codice",
     "Save changes" : "Salva modifiche",
-    "Remove link" : "Rimuovi collegamento",
     "Cancel" : "Annulla",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Impossibile copiare, copia il collegamento manualmente",
@@ -177,9 +177,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Il file non può essere caricato. Controlla la tua connessione a Internet.",
     "Source language" : "Lingua di origine",
     "Target language" : "Lingua di destinazione",
-    "Unsupported image type" : "Tipo di immagine non supportato",
+    "e.g. php, javascript, json, ..." : "es. php, javascript, json, ...",
     "Show rich workspaces" : "Mostra aree di lavoro avanzate",
-    "Add description" : "Aggiungi descrizione",
-    "e.g. php, javascript, json, ..." : "es. php, javascript, json, ..."
+    "Add description" : "Aggiungi descrizione"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

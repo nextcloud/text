@@ -27,6 +27,7 @@ OC.L10N.register(
     "Edit guest name" : "Επεξεργασία ονόματος επισκέτη",
     "Guest" : "Επισκέπτης",
     "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
+    "Remove link" : "Αφαίρεση συνδέσμου",
     "guest" : "Επισκέπτης",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
@@ -66,7 +67,6 @@ OC.L10N.register(
     "Code block" : "Μπλοκ κώδικα",
     "Some code" : "Κώδικας",
     "Save changes" : "Αποθήκευσε τις αλλαγές",
-    "Remove link" : "Αφαίρεση συνδέσμου",
     "Cancel" : "Ακύρωση",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Δεν μπορεί να αντιγραφεί, παρακαλώ αντιγράψτε χειροκίνητα",
@@ -101,7 +101,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Edit" : "Επεξεργασία",
     "File could not be loaded. Please check your internet connection." : "Το αρχείο δεν μπορεί να φορτωθεί. Παρακαλώ ελέγξτε την σύνδεσή σας.",
-    "Unsupported image type" : "Μη υποστηριζόμενος τύπος εικόνας",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");

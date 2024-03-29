@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Opcions de la previsualització",
     "Text only" : "Només text",
     "Show link preview" : "Mostra la previsualització dels enllaços",
+    "Remove link" : "Suprimeix l'enllaç",
     "guest" : "convidat",
     "Show author colors" : "Mostra els colors de l'autor",
     "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom ha tancat el document.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Fragment de codi",
     "Edit link" : "Edita l'enllaç",
     "Save changes" : "Desa els canvis",
-    "Remove link" : "Suprimeix l'enllaç",
     "Cancel" : "Cancel·la",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "No es pot copiar; copieu l'enllaç manualment",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Text preliminar",
     "Failed to load file" : "No s'ha pogut carregar el fitxer",
     "File could not be loaded. Please check your internet connection." : "No s'ha pogut carregar el fitxer. Comproveu la connexió a Internet.",
+    "Pick plain text files" : "Trieu fitxers de text sense format",
     "Source language" : "Llengua d'origen",
     "Target language" : "Llengua de destinació",
-    "Unsupported image type" : "Tipus d'imatge no compatible",
+    "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…",
     "Show rich workspaces" : "Mostra els espais de treball enriquits",
-    "Add description" : "Afegeix una descripció",
-    "Pick plain text files" : "Trieu fitxers de text sense format",
-    "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…"
+    "Add description" : "Afegeix una descripció"
 },
 "nplurals=2; plural=(n != 1);");

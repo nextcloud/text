@@ -27,6 +27,7 @@ OC.L10N.register(
     "Edit guest name" : "Rediger gæstens navn",
     "Guest" : "Gæst",
     "Save guest name" : "Gem gæstens navn",
+    "Remove link" : "Fjern link",
     "guest" : "Gæst",
     "Show author colors" : "Vis forfatterens farver",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
@@ -49,7 +50,6 @@ OC.L10N.register(
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
     "Edit link" : "Redigér link",
-    "Remove link" : "Fjern link",
     "Cancel" : "Annullér",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier venligst linket manuelt",
@@ -82,7 +82,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Edit" : "Redigér",
     "File could not be loaded. Please check your internet connection." : "Filen kunne ikke indlæses. Tjek venligst din internetforbindelse.",
-    "Unsupported image type" : "Ikke-understøttet billede format",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

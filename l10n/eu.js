@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Gonbidatua",
     "Save guest name" : "Gorde gonbidatuaren izena",
     "Insert an attachment" : "Txertatu eranskin bat",
+    "Remove link" : "Kendu esteka",
     "guest" : "gonbidatua",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Kode zatia",
     "Edit link" : "Editatu esteka",
     "Save changes" : "Gorde aldaketak",
-    "Remove link" : "Kendu esteka",
     "Cancel" : "Utzi",
     "URL" : "URLa",
     "Cannot copy, please copy the link manually" : "Ezin izan da kopiatu. Kopiatu esteka eskuz",
@@ -176,9 +176,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Ezin izan da fitxategia kargatu. Egiaztatu zure internet konexioa.",
     "Source language" : "Jatorrizko hizkuntza",
     "Target language" : "Helburuko hizkuntza",
-    "Unsupported image type" : "Irudi mota ez da onartzen",
+    "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ...",
     "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
-    "Add description" : "Gehitu deskribapena",
-    "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ..."
+    "Add description" : "Gehitu deskribapena"
 },
 "nplurals=2; plural=(n != 1);");

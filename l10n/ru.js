@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Гость",
     "Save guest name" : "Сохранить гостевое имя",
     "Insert an attachment" : "Добавить вложение",
+    "Remove link" : "Удалить ссылку",
     "guest" : "гость",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Некоторый код",
     "Edit link" : "Редактировать ссылку",
     "Save changes" : "Сохранить изменения",
-    "Remove link" : "Удалить ссылку",
     "Cancel" : "Отмена",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Не удалось скопировать, выполните копирование вручную",
@@ -176,9 +176,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Не удалось загрузить файл, проверьте соединение с интернетом. ",
     "Source language" : "Исходный язык",
     "Target language" : "Целевой язык",
-    "Unsupported image type" : "Неподдерживаемый тип изображения",
+    "e.g. php, javascript, json, ..." : "например, php, javascript, json, ...",
     "Show rich workspaces" : "Показывать дополнительные сведения",
-    "Add description" : "Добавить описание",
-    "e.g. php, javascript, json, ..." : "например, php, javascript, json, ..."
+    "Add description" : "Добавить описание"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

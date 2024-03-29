@@ -36,7 +36,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
-    "Edit" : "Përpuno",
-    "Unsupported image type" : "Lloj imazhi i pa suportuar"
+    "Edit" : "Përpuno"
 },
 "nplurals=2; plural=(n != 1);");

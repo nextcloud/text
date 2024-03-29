@@ -39,6 +39,7 @@
     "Guest" : "مهمان",
     "Save guest name" : "ذخیره نام مهمان",
     "Insert an attachment" : "Insert an attachment",
+    "Remove link" : "حذف پیوند",
     "guest" : "میهمان",
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
@@ -90,7 +91,6 @@
     "Some code" : "Some code",
     "Edit link" : "Edit link",
     "Save changes" : "ذخیرهٔ تغییرات",
-    "Remove link" : "حذف پیوند",
     "Cancel" : "منصرف شدن",
     "URL" : "آدرس",
     "Cannot copy, please copy the link manually" : "کپی کردن امکان پذیر نیست ، لطفا پیوند را به صورت دستی کپی کنید",
@@ -173,9 +173,8 @@
     "File could not be loaded. Please check your internet connection." : "File could not be loaded. Please check your internet connection.",
     "Source language" : "Source language",
     "Target language" : "Target language",
-    "Unsupported image type" : "Unsupported image type",
+    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ...",
     "Show rich workspaces" : "Show rich workspaces",
-    "Add description" : "Add description",
-    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
+    "Add description" : "Add description"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -36,7 +36,6 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
     "Edit" : "Sunting",
-    "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda.",
-    "Unsupported image type" : "Tipe gambar tidak bisa diterima"
+    "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda."
 },
 "nplurals=1; plural=0;");

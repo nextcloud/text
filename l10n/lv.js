@@ -7,6 +7,7 @@ OC.L10N.register(
     "Text" : "Teksts",
     "Translate" : "Tulkot",
     "Guest" : "Viesis",
+    "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
     "Offline" : "Bezsaistē",
     "Saving …" : "Saglabā ...",
@@ -15,7 +16,6 @@ OC.L10N.register(
     "Bold" : "Treknraksts",
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
-    "Remove link" : "Noņemt saiti",
     "URL" : "URL",
     "Update link" : "Atjaunināt saiti",
     "Select language" : "Izvēlies valodu",
@@ -28,7 +28,6 @@ OC.L10N.register(
     "Info" : "Info",
     "Warning" : "Brīdinājums",
     "Command" : "Komanda",
-    "Edit" : "Rediģēt",
-    "Unsupported image type" : "Neatbalstīts attēla tips"
+    "Edit" : "Rediģēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Preview options",
     "Text only" : "Text only",
     "Show link preview" : "Show link preview",
+    "Remove link" : "Remove link",
     "guest" : "guest",
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Some code",
     "Edit link" : "Edit link",
     "Save changes" : "Save changes",
-    "Remove link" : "Remove link",
     "Cancel" : "Cancel",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Cannot copy, please copy the link manually",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Front matter",
     "Failed to load file" : "Failed to load file",
     "File could not be loaded. Please check your internet connection." : "File could not be loaded. Please check your internet connection.",
+    "Pick plain text files" : "Pick plain text files",
     "Source language" : "Source language",
     "Target language" : "Target language",
-    "Unsupported image type" : "Unsupported image type",
+    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ...",
     "Show rich workspaces" : "Show rich workspaces",
-    "Add description" : "Add description",
-    "Pick plain text files" : "Pick plain text files",
-    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ..."
+    "Add description" : "Add description"
 },
 "nplurals=2; plural=(n != 1);");

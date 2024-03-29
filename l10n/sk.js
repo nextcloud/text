@@ -32,6 +32,7 @@ OC.L10N.register(
     "Guest" : "Hosť",
     "Save guest name" : "Uložiť meno hosťa",
     "Insert an attachment" : "Pridať prílohu",
+    "Remove link" : "Odstrániť odkaz",
     "guest" : "hosť",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
@@ -79,7 +80,6 @@ OC.L10N.register(
     "Code block" : "Blok kódu",
     "Some code" : "Nejaký kód",
     "Save changes" : "Uložiť zmeny",
-    "Remove link" : "Odstrániť odkaz",
     "Cancel" : "Zrušiť",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Nedarí sa skopírovať, skopírujte prosím ručne.",
@@ -146,7 +146,6 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Súbor sa nepodarilo nahrať. Skontrolujte pripojenie na internet.",
     "Source language" : "Zdrojový jazyk prekladu",
     "Target language" : "Cieľový jazyk",
-    "Unsupported image type" : "Typ obrázka nie je podporovaný",
     "Show rich workspaces" : "Zobraziť pokročilé pracovné rozhrania",
     "Add description" : "Pridať popis"
 },

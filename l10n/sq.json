@@ -34,7 +34,6 @@
     "Info" : "Info",
     "Success" : "Sukses",
     "Warning" : "Kujdes",
-    "Edit" : "Përpuno",
-    "Unsupported image type" : "Lloj imazhi i pa suportuar"
+    "Edit" : "Përpuno"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
