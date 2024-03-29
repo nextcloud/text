@@ -19,7 +19,7 @@ jobs:
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
     strategy:
       matrix:
-        server-versions: ['master']
+        server-versions: ['stable29']
 
     steps:
       - name: Checkout server
