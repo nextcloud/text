@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Opções de visualização",
     "Text only" : "Somente texto",
     "Show link preview" : "Mostrar visualização do link",
+    "Remove link" : "Remover link",
     "guest" : "convidado",
     "Show author colors" : "Mostrar cores de autoria",
     "Author colors are only shown until everyone has closed the document." : "As cores de autoria só são exibidas até que todas as pessoas tenham fechado o documento. ",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Algum código",
     "Edit link" : "Editar link",
     "Save changes" : "Salvar alterações",
-    "Remove link" : "Remover link",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Não é possível copiar, copie o link manualmente",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Matéria de frente",
     "Failed to load file" : "Falha ao carregar o arquivo",
     "File could not be loaded. Please check your internet connection." : "Não foi possível carregar o arquivo. Verifique sua conexão à internet.",
+    "Pick plain text files" : "Escolha arquivos de texto simples",
     "Source language" : "Source language",
     "Target language" : "Target language",
-    "Unsupported image type" : "Tipo de imagem não suportado",
+    "e.g. php, javascript, json, ..." : "por exemplo. php, javascript, json,...",
     "Show rich workspaces" : "Mostrar espaços de trabalho avançados",
-    "Add description" : "Adicionar descrição",
-    "Pick plain text files" : "Escolha arquivos de texto simples",
-    "e.g. php, javascript, json, ..." : "por exemplo. php, javascript, json,..."
+    "Add description" : "Adicionar descrição"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

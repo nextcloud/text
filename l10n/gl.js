@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Convidado",
     "Save guest name" : "Gardar o nome do convidado",
     "Insert an attachment" : "Insira un anexo",
+    "Remove link" : "Retirar ligazón",
     "guest" : "convidado",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Algún código",
     "Edit link" : "Editar a ligazón",
     "Save changes" : "Gardar os cambios",
-    "Remove link" : "Retirar ligazón",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Non foi posíbel copiala. Copie a ligazón manualmente",
@@ -181,9 +181,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Non foi posíbel cargar o ficheiro. Comprobe a súa conexión a Internet.",
     "Source language" : "idioma de orixe",
     "Target language" : "Idioma de destino",
-    "Unsupported image type" : "Tipo de imaxe non admitido",
+    "e.g. php, javascript, json, ..." : "p. ex. php, javascript, json, …",
     "Show rich workspaces" : "Amosar espazos de traballo mellorados",
-    "Add description" : "Engadir descrición",
-    "e.g. php, javascript, json, ..." : "p. ex. php, javascript, json, …"
+    "Add description" : "Engadir descrición"
 },
 "nplurals=2; plural=(n != 1);");

@@ -35,6 +35,7 @@ OC.L10N.register(
     "Guest" : "Gost",
     "Save guest name" : "Shrani ime gosta",
     "Insert an attachment" : "Vstavi prilogo",
+    "Remove link" : "Odstrani povezavo",
     "guest" : "gost",
     "Show author colors" : "Pokaži barve avtorja",
     "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
@@ -84,7 +85,6 @@ OC.L10N.register(
     "Code block" : "Navedek s kodo",
     "Some code" : "Vpisana koda",
     "Save changes" : "Shrani spremembe",
-    "Remove link" : "Odstrani povezavo",
     "Cancel" : "Prekliči",
     "URL" : "Naslov URL",
     "Cannot copy, please copy the link manually" : "Povezave ni mogoče kopirati. Storite to ročno.",
@@ -158,7 +158,6 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Datoteke ni mogoče naložiti. Preverite internetno povezavo.",
     "Source language" : "Izvorni jezik",
     "Target language" : "Ciljni jezik",
-    "Unsupported image type" : "Nepodprta vrsta slike",
     "Show rich workspaces" : "Pokaži obogaten delovni prostor",
     "Add description" : "Dodaj opis"
 },

@@ -40,6 +40,7 @@
     "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre del invitado",
     "Insert an attachment" : "Insertar un adjunto",
+    "Remove link" : "Eliminar enlace",
     "guest" : "invitado",
     "Show author colors" : "Ver colores del autor",
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor sólo se muestran cuando todo el mundo ha cerrado el documento.",
@@ -91,7 +92,6 @@
     "Some code" : "Algo de código",
     "Edit link" : "Editar enlace",
     "Save changes" : "Guardar cambios",
-    "Remove link" : "Eliminar enlace",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copia el enlace manualmente",
@@ -182,9 +182,8 @@
     "File could not be loaded. Please check your internet connection." : "El archivo no se pudo cargar. Por favor, compruebe su conexión a internet.",
     "Source language" : "Idioma fuente",
     "Target language" : "Idioma destino",
-    "Unsupported image type" : "Tipo de imagen no soportado",
+    "e.g. php, javascript, json, ..." : "p.ej. php, javascript, json, ...",
     "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos",
-    "Add description" : "Añadir descripción",
-    "e.g. php, javascript, json, ..." : "p.ej. php, javascript, json, ..."
+    "Add description" : "Añadir descripción"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

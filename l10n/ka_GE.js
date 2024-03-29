@@ -25,7 +25,6 @@ OC.L10N.register(
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება",
-    "Unsupported image type" : "ამ სურათის სახეობა არაა მხარდაჭერილი"
+    "Edit" : "ცვლილება"
 },
 "nplurals=2; plural=(n!=1);");

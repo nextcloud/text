@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Alternativer for forhåndsvisning",
     "Text only" : "Kun tekst",
     "Show link preview" : "Vis forhåndsvisning av kobling",
+    "Remove link" : "Fjern kobling",
     "guest" : "gjest",
     "Show author colors" : "Vis forfatterfarger",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarger vises bare til alle har lukket dokumentet.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Litt kode",
     "Edit link" : "Rediger kobling",
     "Save changes" : "Lagre endringer",
-    "Remove link" : "Fjern kobling",
     "Cancel" : "Avbryt",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kan ikke kopiere, kopier lenken manuelt",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Innledning",
     "Failed to load file" : "Lasting av fil feilet",
     "File could not be loaded. Please check your internet connection." : "Filen kunne ikke lastes. Vennligst sjekk internettforbindelsen din. ",
+    "Pick plain text files" : "Velg rene tekstfiler",
     "Source language" : "Kildespråk",
     "Target language" : "Målspråk",
-    "Unsupported image type" : "Filtypen støttes ikke",
+    "e.g. php, javascript, json, ..." : "f.eks. php, javascript, json...",
     "Show rich workspaces" : "Vis arbeidsområde",
-    "Add description" : "Legg til beskrivelse",
-    "Pick plain text files" : "Velg rene tekstfiler",
-    "e.g. php, javascript, json, ..." : "f.eks. php, javascript, json..."
+    "Add description" : "Legg til beskrivelse"
 },
 "nplurals=2; plural=(n != 1);");

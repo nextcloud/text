@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Vorschauoptionen",
     "Text only" : "Nur Text",
     "Show link preview" : "Link-Vorschau anzeigen",
+    "Remove link" : "Link entfernen",
     "guest" : "Gast",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Etwas Code",
     "Edit link" : "Link bearbeiten",
     "Save changes" : "Änderungen speichern",
-    "Remove link" : "Link entfernen",
     "Cancel" : "Abbrechen",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Kopieren fehlgeschlagen. Bitte den Link manuell kopieren",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Titelei",
     "Failed to load file" : "Datei konnte nicht geladen werden",
     "File could not be loaded. Please check your internet connection." : "Datei konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
+    "Pick plain text files" : "Reine Textdateien auswählen",
     "Source language" : "Ausgangssprache",
     "Target language" : "Zielsprache",
-    "Unsupported image type" : "Nicht unterstütztes Bild-Format",
+    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …",
     "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
-    "Add description" : "Beschreibung hinzufügen",
-    "Pick plain text files" : "Reine Textdateien auswählen",
-    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …"
+    "Add description" : "Beschreibung hinzufügen"
 },
 "nplurals=2; plural=(n != 1);");

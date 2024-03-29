@@ -40,6 +40,7 @@
     "Guest" : "ゲスト",
     "Save guest name" : "ゲスト名を保存",
     "Insert an attachment" : "添付ファイルを挿入する",
+    "Remove link" : "リンクを削除",
     "guest" : "ゲスト",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
@@ -91,7 +92,6 @@
     "Some code" : "何かコード",
     "Edit link" : "リンクを編集",
     "Save changes" : "変更を保存",
-    "Remove link" : "リンクを削除",
     "Cancel" : "キャンセル",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "コピーできませんでした。手動でリンクをコピーしてください。",
@@ -184,9 +184,8 @@
     "File could not be loaded. Please check your internet connection." : "ファイルを読み込めませんでした。 インターネット接続を確認してください。",
     "Source language" : "原文の言語",
     "Target language" : "訳文の言語",
-    "Unsupported image type" : "サポートされていない画像形式です",
+    "e.g. php, javascript, json, ..." : "例えば php, javascript, json等･･･",
     "Show rich workspaces" : "各フォルダのReadmeを表示",
-    "Add description" : "説明を追加",
-    "e.g. php, javascript, json, ..." : "例えば php, javascript, json等･･･"
+    "Add description" : "説明を追加"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

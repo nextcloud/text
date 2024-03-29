@@ -36,6 +36,7 @@ OC.L10N.register(
     "Guest" : "Gestur",
     "Save guest name" : "Vista nafn gests",
     "Insert an attachment" : "Setja inn viðhengi",
+    "Remove link" : "Fjarlægja tengil",
     "guest" : "gestanotandi",
     "Show author colors" : "Sýna liti höfunda",
     "Author colors are only shown until everyone has closed the document." : "Litir höfunda eru aðeins sýndir þar til allir hafa lokað skjalinu.",
@@ -85,7 +86,6 @@ OC.L10N.register(
     "Quoted text" : "Tilvitnaður texti",
     "Code block" : "Kóðablokk",
     "Some code" : "Einhver kóði",
-    "Remove link" : "Fjarlægja tengil",
     "Cancel" : "Hætta við",
     "URL" : "Slóð",
     "Cannot copy, please copy the link manually" : "Mistókst að afrita, afritaðu tengilinn handvirkt",
@@ -170,9 +170,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Ekki var hægt að hlaða inn skránni. Athugaðu nettenginguna þína.",
     "Source language" : "Upprunatungumál",
     "Target language" : "Marktungumál:",
-    "Unsupported image type" : "Óstudd gerð myndar",
+    "e.g. php, javascript, json, ..." : "t.d. php, javascript, json, ...",
     "Show rich workspaces" : "Birta vinnusvæði með sniðmöguleikum",
-    "Add description" : "Bæta við lýsingu",
-    "e.g. php, javascript, json, ..." : "t.d. php, javascript, json, ..."
+    "Add description" : "Bæta við lýsingu"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -33,7 +33,6 @@ OC.L10N.register(
     "Headings" : "Pealkirjad",
     "Info" : "Info",
     "Warning" : "Hoiatus",
-    "Edit" : "Redigeeri",
-    "Unsupported image type" : "Pildi tüüp pole toetatud"
+    "Edit" : "Redigeeri"
 },
 "nplurals=2; plural=(n != 1);");

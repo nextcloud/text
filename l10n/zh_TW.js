@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "預覽選項",
     "Text only" : "僅文字",
     "Show link preview" : "顯示連結預覽",
+    "Remove link" : "移除連結",
     "guest" : "訪客",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "一些程式碼",
     "Edit link" : "編輯連結",
     "Save changes" : "保存變更",
-    "Remove link" : "移除連結",
     "Cancel" : "取消",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "無法複製，請手動複製連結",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "前言",
     "Failed to load file" : "載入檔案失敗",
     "File could not be loaded. Please check your internet connection." : "無法載入檔案。請檢查您的網路連線。",
+    "Pick plain text files" : "挑選純文字檔",
     "Source language" : "來源語言",
     "Target language" : "目標語言",
-    "Unsupported image type" : "不支援的圖片類型",
+    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等",
     "Show rich workspaces" : "顯示較多功能的工作區",
-    "Add description" : "新增描述",
-    "Pick plain text files" : "挑選純文字檔",
-    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
+    "Add description" : "新增描述"
 },
 "nplurals=1; plural=0;");

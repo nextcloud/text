@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Konuk",
     "Save guest name" : "Konuk adını kaydet",
     "Insert an attachment" : "Bir ek dosya ekle",
+    "Remove link" : "Bağlantıyı kaldır",
     "guest" : "konuk",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Kod metni",
     "Edit link" : "Bağlantıyı düzenle",
     "Save changes" : "Değişiklikleri kaydet",
-    "Remove link" : "Bağlantıyı kaldır",
     "Cancel" : "İptal",
     "URL" : "Adres",
     "Cannot copy, please copy the link manually" : "Kopyalanamadı. Lütfen bağlantıyı el ile kopyalayın",
@@ -184,9 +184,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Dosya yüklenemedi. lütfen İnternet bağlantınızı denetleyin.",
     "Source language" : "Kaynak dil",
     "Target language" : "Hedef dil",
-    "Unsupported image type" : "Görsel türü desteklenmiyor",
+    "e.g. php, javascript, json, ..." : "php, javascript, json gibi...",
     "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
-    "Add description" : "Açıklama ekle",
-    "e.g. php, javascript, json, ..." : "php, javascript, json gibi..."
+    "Add description" : "Açıklama ekle"
 },
 "nplurals=2; plural=(n > 1);");

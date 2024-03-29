@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Förhandsgranskning alternativ",
     "Text only" : "Endast text",
     "Show link preview" : "Visa förhandsgranskning för länk",
+    "Remove link" : "Ta bort länk",
     "guest" : "gäst",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Någon kod",
     "Edit link" : "Redigera länk",
     "Save changes" : "Spara ändringar",
-    "Remove link" : "Ta bort länk",
     "Cancel" : "Avbryt",
     "URL" : "Webbadress",
     "Cannot copy, please copy the link manually" : "Kan inte kopiera, länken måste kopieras manuellt",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Förtexter",
     "Failed to load file" : "Kunde inte öppna filen",
     "File could not be loaded. Please check your internet connection." : "Filen kunde inte läsas in. Vänligen kontrollera din internetanslutning.",
+    "Pick plain text files" : "Välj vanliga textfiler",
     "Source language" : "Källspråk",
     "Target language" : "Målspråk",
-    "Unsupported image type" : "Filtyp stöds inte",
+    "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ...",
     "Show rich workspaces" : "Visa utökade arbetsytor",
-    "Add description" : "Lägg till beskrivning",
-    "Pick plain text files" : "Välj vanliga textfiler",
-    "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ..."
+    "Add description" : "Lägg till beskrivning"
 },
 "nplurals=2; plural=(n != 1);");
