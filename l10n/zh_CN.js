@@ -27,6 +27,7 @@ OC.L10N.register(
     "Edit guest name" : "编辑访客姓名",
     "Guest" : "访客",
     "Save guest name" : "保存访客姓名",
+    "Remove link" : "删除链接",
     "guest" : "访客",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
@@ -68,7 +69,6 @@ OC.L10N.register(
     "Some code" : "一些代码",
     "Edit link" : "编辑链接",
     "Save changes" : "保存更改",
-    "Remove link" : "删除链接",
     "Cancel" : "取消",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "无法复制，请手动复制链接",
@@ -111,9 +111,8 @@ OC.L10N.register(
     "Edit" : "编辑",
     "File could not be loaded. Please check your internet connection." : "无法加载文件。 请检查您的互联网连接。",
     "Target language" : "目标语言",
-    "Unsupported image type" : "不支持图片格式",
+    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等",
     "Show rich workspaces" : "显示富文本编辑区",
-    "Add description" : "添加描述",
-    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等"
+    "Add description" : "添加描述"
 },
 "nplurals=1; plural=0;");

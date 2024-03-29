@@ -32,6 +32,7 @@
     "Guest" : "Invitado",
     "Save guest name" : "Guardar nombre de invitado",
     "Insert an attachment" : "Insertar un adjunto",
+    "Remove link" : "Eliminar enlace",
     "guest" : "invitado/a",
     "Show author colors" : "Mostrar colores de autor",
     "Author colors are only shown until everyone has closed the document." : "Los colores de autor solo se muestran hasta que todos hayan cerrado el documento.",
@@ -82,7 +83,6 @@
     "Code block" : "Bloque de código",
     "Some code" : "Algo de código",
     "Edit link" : "Editar enlace",
-    "Remove link" : "Eliminar enlace",
     "Cancel" : "Cancelar",
     "Cannot copy, please copy the link manually" : "No se puede copiar, por favor copia el enlace manualmente",
     "Copy link to clipboard" : "Copiar enlace al portapapeles",
@@ -156,7 +156,6 @@
     "File could not be loaded. Please check your internet connection." : "No se pudo cargar el archivo. Por favor, verifica tu conexión a internet.",
     "Source language" : "Lenguaje de origen",
     "Target language" : "Lenguaje de destino",
-    "Unsupported image type" : "Tipo de imagen no soportado",
     "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos",
     "Add description" : "Agregar descripción"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

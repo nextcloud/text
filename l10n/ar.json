@@ -46,6 +46,7 @@
     "Preview options" : "خيارات المعاينة",
     "Text only" : "نص فقط",
     "Show link preview" : "عرض معاينة الرابط",
+    "Remove link" : "حذف الرابط",
     "guest" : "ضيف ",
     "Show author colors" : "إعرض ألوان الكُتّاب",
     "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
@@ -97,7 +98,6 @@
     "Some code" : "سطور كود",
     "Edit link" : "أكتب الرابط ",
     "Save changes" : "حفظ التعديلات",
-    "Remove link" : "حذف الرابط",
     "Cancel" : "إلغاء",
     "URL" : "رابط URL",
     "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
@@ -190,12 +190,11 @@
     "Front matter" : "المادة التقديمية front matter",
     "Failed to load file" : "تعذّر تحميل الملف",
     "File could not be loaded. Please check your internet connection." : "تعذّر تحميل الملف. رجاءً، تحقّق من اتصالك بالإنترنت.",
+    "Pick plain text files" : "إختَر ملفات نصية عادية",
     "Source language" : "اللغة الأصلية",
     "Target language" : "اللغة المطلوبة",
-    "Unsupported image type" : "هذا النوع من الصور غير مدعوم هنا",
+    "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ...",
     "Show rich workspaces" : "عرض توصيف مساحة العمل rich workspaces",
-    "Add description" : "أضِف وصفاً",
-    "Pick plain text files" : "إختَر ملفات نصية عادية",
-    "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ..."
+    "Add description" : "أضِف وصفاً"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

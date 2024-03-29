@@ -76,7 +76,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
     "Edit" : "Uredi",
     "File could not be loaded. Please check your internet connection." : "Datoteka nije učitana. Provjerite internetsku vezu.",
-    "Unsupported image type" : "Nepodržana vrsta slike",
     "Show rich workspaces" : "Prikaži bogate radne okoline"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

@@ -41,6 +41,7 @@ OC.L10N.register(
     "Guest" : "Gość",
     "Save guest name" : "Zapisz nazwę gościa",
     "Insert an attachment" : "Wstaw załącznik",
+    "Remove link" : "Usuń link",
     "guest" : "gość",
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
@@ -92,7 +93,6 @@ OC.L10N.register(
     "Some code" : "Jakiś kod",
     "Edit link" : "Edytuj link",
     "Save changes" : "Zapisz zmiany",
-    "Remove link" : "Usuń link",
     "Cancel" : "Anuluj",
     "URL" : "Adres URL",
     "Cannot copy, please copy the link manually" : "Nie można skopiować, spróbuj skopiować link ręcznie",
@@ -180,9 +180,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Nie można załadować pliku. Sprawdź połączenie z internetem.",
     "Source language" : "Język źródłowy",
     "Target language" : "Język docelowy",
-    "Unsupported image type" : "Nieobsługiwany typ obrazu",
+    "e.g. php, javascript, json, ..." : "np. php, javascript, json, …",
     "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
-    "Add description" : "Dodaj opis",
-    "e.g. php, javascript, json, ..." : "np. php, javascript, json, …"
+    "Add description" : "Dodaj opis"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

@@ -113,7 +113,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Edit" : "Bewerken",
     "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
-    "Unsupported image type" : "Afbeeldingstype wordt niet ondersteund",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

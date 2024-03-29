@@ -34,6 +34,7 @@ OC.L10N.register(
     "Guest" : "Гост",
     "Save guest name" : "Запис на името на госта",
     "Insert an attachment" : "Вмъкване на прикачен файл",
+    "Remove link" : "Премахване на връзка",
     "guest" : "гост",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
@@ -84,7 +85,6 @@ OC.L10N.register(
     "Some code" : "Някакъв код",
     "Edit link" : "Редактиране на връзка",
     "Save changes" : "Запиши промените",
-    "Remove link" : "Премахване на връзка",
     "Cancel" : "Отказ",
     "URL" : "URL адрес",
     "Cannot copy, please copy the link manually" : "Не може да се копира, моля, копирайте връзката ръчно",
@@ -158,7 +158,6 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Файлът не можа да бъде зареден. Моля, проверете вашата интернет връзка.",
     "Source language" : "Език на източника",
     "Target language" : "Целеви език",
-    "Unsupported image type" : "Неподдържан тип изображение",
     "Show rich workspaces" : "Показване  на обогатени работни пространства",
     "Add description" : "Добавяне на описание"
 },

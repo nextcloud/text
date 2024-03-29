@@ -98,7 +98,6 @@ OC.L10N.register(
     "Edit" : "Chỉnh sửa",
     "Failed to load file" : "Không tải được tập tin",
     "File could not be loaded. Please check your internet connection." : "Không thể tải tệp. Xin vui lòng kiểm tra kết nối internet của bạn.",
-    "Unsupported image type" : "Loại hình ảnh không được hỗ trợ",
     "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Add description" : "Thêm mô tả"
 },

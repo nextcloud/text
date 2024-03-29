@@ -12,7 +12,6 @@ OC.L10N.register(
     "Undo" : "буцах",
     "Info" : "Info",
     "Warning" : "Warning",
-    "Edit" : "засварлах",
-    "Unsupported image type" : "Дэмжигдэхгүй зургийн төрөл байна"
+    "Edit" : "засварлах"
 },
 "nplurals=2; plural=(n != 1);");

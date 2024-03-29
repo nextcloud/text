@@ -37,6 +37,7 @@ OC.L10N.register(
     "Guest" : "Vieras",
     "Save guest name" : "Tallenna vieraan nimi",
     "Insert an attachment" : "Lisää liite",
+    "Remove link" : "Poista linkki",
     "guest" : "vieras",
     "Show author colors" : "Näytä tekijän värit",
     "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
@@ -81,7 +82,6 @@ OC.L10N.register(
     "Some code" : "Koodia",
     "Edit link" : "Muokkaa linkkiä",
     "Save changes" : "Tallenna muutokset",
-    "Remove link" : "Poista linkki",
     "Cancel" : "Peruuta",
     "URL" : "URL-osoite",
     "Cannot copy, please copy the link manually" : "Kopioiminen ei onnistu. Kopioi linkki manuaalisesti",
@@ -153,9 +153,8 @@ OC.L10N.register(
     "File could not be loaded. Please check your internet connection." : "Tiedostoa ei voitu ladata. Tarkista internetyhteytesi tila.",
     "Source language" : "Lähdekieli",
     "Target language" : "Kohdekieli",
-    "Unsupported image type" : "Ei-tuettu kuvatiedostomuoto",
+    "e.g. php, javascript, json, ..." : "esim. php, javascript, json...",
     "Show rich workspaces" : "Näytä rikastetut työtilat",
-    "Add description" : "Lisää kuvaus",
-    "e.g. php, javascript, json, ..." : "esim. php, javascript, json..."
+    "Add description" : "Lisää kuvaus"
 },
 "nplurals=2; plural=(n != 1);");

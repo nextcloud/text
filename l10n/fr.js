@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Options de prévisualisation",
     "Text only" : "Texte uniquement",
     "Show link preview" : "Afficher la prévisualisation de lien",
+    "Remove link" : "Retirer le lien",
     "guest" : "invité",
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
@@ -99,7 +100,6 @@ OC.L10N.register(
     "Some code" : "Code source",
     "Edit link" : "Modifier le lien",
     "Save changes" : "Enregistrer les modifications",
-    "Remove link" : "Retirer le lien",
     "Cancel" : "Annuler",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "Impossible de copier, merci de copier le lien manuellement",
@@ -192,12 +192,11 @@ OC.L10N.register(
     "Front matter" : "Avant-propos",
     "Failed to load file" : "Échec du chargement du fichier",
     "File could not be loaded. Please check your internet connection." : "Le fichier n'a pu être chargé. Vérifiez votre connexion Internet.",
+    "Pick plain text files" : "Choisir des fichiers de texte brut",
     "Source language" : "Langue source",
     "Target language" : "Langue cible",
-    "Unsupported image type" : "Type d'image non pris en charge",
+    "e.g. php, javascript, json, ..." : "ex : php, javascript, json, ...",
     "Show rich workspaces" : "Afficher les espaces de travail riches",
-    "Add description" : "Ajouter une description",
-    "Pick plain text files" : "Choisir des fichiers de texte brut",
-    "e.g. php, javascript, json, ..." : "ex : php, javascript, json, ..."
+    "Add description" : "Ajouter une description"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
