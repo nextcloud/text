@@ -22,6 +22,11 @@
 
 import escapeHtml from 'escape-html'
 import markdownit from './../markdownit/index.js'
+import { Doc, encodeStateAsUpdate, XmlFragment, applyUpdate } from 'yjs'
+import { generateJSON } from '@tiptap/core'
+import { prosemirrorToYXmlFragment } from 'y-prosemirror'
+import { Node } from '@tiptap/pm/model'
+import { createEditor } from '../EditorFactory.js'
 
 export default {
 	methods: {
@@ -38,5 +43,38 @@ export default {
 				.run()
 		},
 
+		setInitialYjsState(content, { isRich }) {
+			const html = isRich
+				? markdownit.render(content) + '<p/>'
+				: `<pre>${escapeHtml(content)}</pre>`
+
+			const editor = createEditor({
+				enableRichEditing: isRich,
+			})
+			const json = generateJSON(html, editor.extensionManager.extensions)
+
+			const doc = Node.fromJSON(editor.schema, json)
+			const getBaseDoc = (doc) => {
+				const ydoc = new Doc()
+				// In order to make the initial document state idempotent, we need to reset the clientID
+				// While this is not recommended, we cannot avoid it here as we lack another mechanism
+				// generate the initial state on the server side
+				// The only other option to avoid this could be to generate the initial state once and push
+				// it to the server immediately, however this would require read only sessions to be able
+				// to still push a state
+				ydoc.clientID = 0
+				const type = /** @type {XmlFragment} */ (ydoc.get('default', XmlFragment))
+				if (!type.doc) {
+					prosemirrorToYXmlFragment(doc, ydoc)
+					return ydoc
+				}
+
+				prosemirrorToYXmlFragment(doc, type)
+				return ydoc
+			}
+
+			const baseUpdate = encodeStateAsUpdate(getBaseDoc(doc))
+			applyUpdate(this.$ydoc, baseUpdate)
+		},
 	},
 }
