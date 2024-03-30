@@ -30,9 +30,14 @@ describe('Test state loading of documents', function() {
 		cy.createUser(user)
 		cy.login(user)
 		cy.uploadFile('test.md', 'text/markdown')
+		cy.uploadFile('test.md', 'text/markdown', 'test2.md')
+		cy.uploadFile('test.md', 'text/markdown', 'test3.md')
 	})
 	beforeEach(function() {
 		cy.login(user)
+		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
+		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
+		cy.intercept({ method: 'POST', url: '**/session/*/save' }).as('save')
 	})
 
 	it('Initial content can not be undone', function() {
@@ -55,12 +60,9 @@ describe('Test state loading of documents', function() {
 	})
 
 	it('Consecutive sessions work properly', function() {
-		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
-		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
-
 		let readToken = null
 		let writeToken = null
-		cy.shareFile('/test.md')
+		cy.shareFile('/test2.md')
 			.then((token) => {
 				readToken = token
 				cy.logout()
@@ -81,7 +83,7 @@ describe('Test state loading of documents', function() {
 					.find('h2').should('contain', 'Hello world')
 
 				cy.login(user)
-				cy.shareFile('/test.md', { edit: true })
+				cy.shareFile('/test2.md', { edit: true })
 					.then((token) => {
 						writeToken = token
 						// Open write link and edit something
@@ -106,14 +108,9 @@ describe('Test state loading of documents', function() {
 	})
 
 	it('Load after state has been saved', function() {
-		cy.uploadFile('test.md', 'text/markdown')
-		cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
-		cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
-		cy.intercept({ method: 'POST', url: '**/session/*/save' }).as('save')
-
 		let readToken = null
 		let writeToken = null
-		cy.shareFile('/test.md', { edit: true })
+		cy.shareFile('/test3.md', { edit: true })
 			.then((token) => {
 				writeToken = token
 				cy.logout()
@@ -137,8 +134,8 @@ describe('Test state loading of documents', function() {
 					.should('contain', 'Hello world')
 					.find('h2').should('contain', 'Something new Hello world')
 
-                cy.login(user)
-				cy.shareFile('/test.md')
+				cy.login(user)
+				cy.shareFile('/test3.md')
 					.then((token) => {
 						readToken = token
 						cy.logout()
