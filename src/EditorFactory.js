@@ -49,7 +49,7 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ language, onCreate, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
+const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath }) => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
