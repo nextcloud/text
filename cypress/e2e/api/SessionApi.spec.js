@@ -323,7 +323,7 @@ describe('The session Api', function() {
 					return con
 				})
 				.its('state.documentSource')
-				.should('eql', '')
+				.should('eql', '## Hello world\n')
 				.then(() => joining.close())
 				.then(() => connection.close())
 		})
@@ -339,7 +339,7 @@ describe('The session Api', function() {
 					return con
 				})
 				.its('state.documentSource')
-				.should('eql', '')
+				.should('eql', '## Hello world\n')
 				.then(() => joining.close())
 				.then(() => connection.close())
 		})
