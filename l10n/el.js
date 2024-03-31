@@ -43,6 +43,7 @@ OC.L10N.register(
     "Style" : "Στυλ",
     "Syntax" : "Σύνταξη",
     "Keyboard shortcuts" : "Συντομεύσεις πληκτρολογίου",
+    "Enter" : "Enter",
     "Shift" : "Shift",
     "Bold" : "Έντονα",
     "Bold text" : "Εντονο Κείμενο",
