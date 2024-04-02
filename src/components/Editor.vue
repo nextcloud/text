@@ -489,7 +489,7 @@ export default {
 					this.$queue.push(updateMessage)
 				}
 			} else {
-				this.setInitialYjsState(documentSource, { isRich: this.isRichEditor })
+				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
 			this.hasConnectionIssue = false

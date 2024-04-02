@@ -71,7 +71,7 @@ export default {
 			const { outsideChange } = this.syncError.data
 			this.clicked = true
 			this.$editor.setEditable(!this.readOnly)
-			this.setContent(outsideChange, { isRich: this.$isRichEditor })
+			this.setContent(outsideChange, { isRichEditor: this.$isRichEditor })
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
