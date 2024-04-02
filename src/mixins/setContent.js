@@ -30,8 +30,8 @@ import { createEditor } from '../EditorFactory.js'
 
 export default {
 	methods: {
-		setContent(content, { isRich, addToHistory = true } = {}) {
-			const html = isRich
+		setContent(content, { isRichEditor, addToHistory = true } = {}) {
+			const html = isRichEditor
 				? markdownit.render(content) + '<p/>'
 				: `<pre>${escapeHtml(content)}</pre>`
 			this.$editor.chain()
@@ -43,13 +43,13 @@ export default {
 				.run()
 		},
 
-		setInitialYjsState(content, { isRich }) {
-			const html = isRich
+		setInitialYjsState(content, { isRichEditor }) {
+			const html = isRichEditor
 				? markdownit.render(content) + '<p/>'
 				: `<pre>${escapeHtml(content)}</pre>`
 
 			const editor = createEditor({
-				enableRichEditing: isRich,
+				enableRichEditing: isRichEditor,
 			})
 			const json = generateJSON(html, editor.extensionManager.extensions)
 
@@ -58,14 +58,15 @@ export default {
 				const ydoc = new Doc()
 				// In order to make the initial document state idempotent, we need to reset the clientID
 				// While this is not recommended, we cannot avoid it here as we lack another mechanism
-				// generate the initial state on the server side
+				// to generate the initial state on the server side
 				// The only other option to avoid this could be to generate the initial state once and push
 				// it to the server immediately, however this would require read only sessions to be able
 				// to still push a state
 				ydoc.clientID = 0
 				const type = /** @type {XmlFragment} */ (ydoc.get('default', XmlFragment))
 				if (!type.doc) {
-					prosemirrorToYXmlFragment(doc, ydoc)
+					// This should not happen but is aligned with the upstream implementation
+					// https://github.com/yjs/y-prosemirror/blob/8db24263770c2baaccb08e08ea9ef92dbcf8a9da/src/lib.js#L209
 					return ydoc
 				}
 
