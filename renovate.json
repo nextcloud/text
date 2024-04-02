@@ -14,9 +14,9 @@
   "ignoreUnstable": false,
   "baseBranches": [
     "main",
+    "stable29",
     "stable28",
-    "stable27",
-    "stable26"
+    "stable27"
   ],
   "enabledManagers": [
     "npm"
