@@ -291,6 +291,25 @@ export default {
 		margin: 0;
 	}
 
+	#rich-workspace:deep(.table-wrapper .content) {
+		tr {
+			th, td {
+				flex-grow: 1;
+			}
+
+			th {
+				div {
+					width: 100%;
+				}
+
+				.action-item div {
+					display: flex;
+					justify-content: flex-end;
+				}
+			}
+		}
+	}
+
 	#rich-workspace:deep(.editor__content) {
 		margin: 0;
 	}
