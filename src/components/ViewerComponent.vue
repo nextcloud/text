@@ -27,6 +27,7 @@
 		:active="active || isEmbedded"
 		:autofocus="autofocus"
 		:share-token="shareToken"
+		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
 	<div v-else
@@ -34,22 +35,37 @@
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
 		<Component :is="readerComponent" :content="content" />
+		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
+			{{ t('text', 'Edit') }}
+			<template #icon>
+				<PencilIcon />
+			</template>
+		</NcButton>
 	</div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from '@nextcloud/axios'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import RichTextReader from './RichTextReader.vue'
+import { translate, translatePlural } from '@nextcloud/l10n'
 
 import { getSharingToken } from '../helpers/token.js'
 import getEditorInstance from './Editor.singleton.js'
 
+Vue.prototype.t = translate
+Vue.prototype.n = translatePlural
+
 export default {
 	name: 'ViewerComponent',
 	components: {
-		RichTextReader,
-		PlainTextReader,
+		NcButton: Vue.extend(NcButton),
+		PencilIcon: Vue.extend(PencilIcon),
+		RichTextReader: Vue.extend(RichTextReader),
+		PlainTextReader: Vue.extend(PlainTextReader),
 		Editor: getEditorInstance,
 	},
 	provide() {
@@ -102,12 +118,13 @@ export default {
 	data() {
 		return {
 			content: '',
+			hasToggledInteractiveEmbedding: false,
 		}
 	},
 	computed: {
 		/** @return {boolean} */
 		useSourceView() {
-			return this.source && (this.fileVersion || !this.fileid)
+			return this.source && (this.fileVersion || !this.fileid || this.isEmbedded) && !this.hasToggledInteractiveEmbedding
 		},
 
 		/** @return {boolean} */
@@ -127,6 +144,7 @@ export default {
 	},
 
 	methods: {
+		t: translate,
 		async loadFileContent() {
 			if (this.useSourceView) {
 				const response = await axios.get(this.source)
@@ -134,6 +152,9 @@ export default {
 				this.contentLoaded = true
 			}
 			this.$emit('update:loaded', true)
+		},
+		toggleEdit() {
+			this.hasToggledInteractiveEmbedding = true
 		},
 	},
 }
@@ -151,10 +172,26 @@ export default {
 	background-color: var(--color-main-background);
 
 	&.source-viewer {
+		display: block;
+
 		.text-editor__content-wrapper {
 			margin-top: var(--header-height);
 		}
+
+		.toggle-interactive {
+			position: sticky;
+			bottom: 0;
+			right: 0;
+			z-index: 1;
+			margin-left: auto;
+			margin-right: 0;
+		}
 	}
+
+	&.text-editor--embedding {
+		min-height: 400px;
+	}
+
 }
 </style>
 <style lang="scss">
