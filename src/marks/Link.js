@@ -71,7 +71,7 @@ const Link = TipTapLink.extend({
 		const plugins = this.parent()
 			// remove original handle click
 			.filter(({ key }) => {
-				return !key.startsWith('handleClickLink')
+				return !key.startsWith('handleClickLink') && !key.startsWith('textHandleClickLink')
 			})
 
 		if (!this.options.openOnClick) {
