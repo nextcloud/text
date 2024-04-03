@@ -364,6 +364,7 @@ export default {
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
+				baseVersionEtag: this.$syncService?.baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
 					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
@@ -487,6 +488,8 @@ export default {
 					logger.debug('onLoaded: Pushing local changes to server')
 					this.$queue.push(updateMessage)
 				}
+			} else {
+				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
 			this.hasConnectionIssue = false
@@ -541,12 +544,6 @@ export default {
 							enableRichEditing: this.isRichEditor,
 						})
 						this.hasEditor = true
-						if (!documentState && documentSource) {
-							this.setContent(documentSource, {
-								isRich: this.isRichEditor,
-								addToHistory: false,
-							})
-						}
 						this.listenEditorEvents()
 					} else {
 						// $editor already existed. So this is a reconnect.

@@ -316,6 +316,36 @@ Cypress.Commands.add('closeFile', (fileName, params = {}) => {
 	cy.wait('@close', { timeout: 7000 })
 })
 
+let closeData = null
+Cypress.Commands.add('interceptCreate', () => {
+	return cy.intercept({ method: 'PUT', url: '**/session/create' }, (req) => {
+		closeData = {
+			url: ('' + req.url).replace('create', 'close'),
+		}
+		req.continue((res) => {
+			closeData = {
+				...closeData,
+				...res.body,
+			}
+		})
+	}).as('create')
+})
+
+Cypress.Commands.add('closeInterceptedSession', (shareToken = undefined) => {
+	return cy.window().then(win => {
+		return axios.post(
+			closeData.url,
+			{
+				documentId: closeData.session.documentId,
+				sessionId: closeData.session.id,
+				sessionToken: closeData.session.token,
+				token: shareToken,
+			},
+			{ headers: { requesttoken: win.OC.requestToken } },
+		)
+	})
+})
+
 Cypress.Commands.add('getFile', fileName => {
 	return cy.get(`.files-fileList tr[data-file="${fileName}"]`)
 })

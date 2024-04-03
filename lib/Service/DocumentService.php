@@ -74,6 +74,8 @@ class DocumentService {
 	 */
 	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
+	private bool $saveFromText = false;
+
 	private ?string $userId;
 	private DocumentMapper $documentMapper;
 	private SessionMapper $sessionMapper;
@@ -120,6 +122,10 @@ class DocumentService {
 		}
 	}
 
+	public function isSaveFromText(): bool {
+		return $this->saveFromText;
+	}
+
 	/**
 	 * @throws NotFoundException
 	 * @throws InvalidPathException
@@ -152,7 +158,7 @@ class DocumentService {
 		$document->setLastSavedVersion(0);
 		$document->setLastSavedVersionTime($file->getMTime());
 		$document->setLastSavedVersionEtag($file->getEtag());
-		$document->setBaseVersionEtag($file->getEtag());
+		$document->setBaseVersionEtag(uniqid());
 		try {
 			$document = $this->documentMapper->insert($document);
 			$this->cache->set('document-version-'.$document->getId(), 0);
@@ -381,6 +387,7 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			), function () use ($file, $autoSaveDocument, $documentState) {
+				$this->saveFromText = true;
 				$file->putContent($autoSaveDocument);
 				if ($documentState) {
 					$this->writeDocumentState($file->getId(), $documentState);
@@ -417,10 +424,8 @@ class DocumentService {
 			$this->stepMapper->deleteAll($documentId);
 			$this->sessionMapper->deleteByDocumentId($documentId);
 			$this->documentMapper->delete($document);
+			$this->getStateFile($documentId)->delete();
 
-			if ($force) {
-				$this->getStateFile($documentId)->delete();
-			}
 			$this->logger->debug('document reset for ' . $documentId);
 		} catch (DoesNotExistException|NotFoundException $e) {
 			// Ignore if document not found or state file not found

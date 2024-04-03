@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Controller;
 
+use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
 use OCA\Text\Middleware\Attribute\RequireDocumentSession;
 use OCA\Text\Service\ApiService;
 use OCA\Text\Service\NotificationService;
@@ -57,8 +58,8 @@ class SessionController extends ApiController implements ISessionAwareController
 	}
 
 	#[NoAdminRequired]
-	public function create(int $fileId = null, string $file = null): DataResponse {
-		return $this->apiService->create($fileId, $file, null, null);
+	public function create(?int $fileId = null, ?string $file = null, ?string $baseVersionEtag = null): DataResponse {
+		return $this->apiService->create($fileId, $file, $baseVersionEtag, null, null);
 	}
 
 	#[NoAdminRequired]
@@ -69,6 +70,7 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	#[PublicPage]
+	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
 	public function push(int $version, array $steps, string $awareness): DataResponse {
 		try {
@@ -81,6 +83,7 @@ class SessionController extends ApiController implements ISessionAwareController
 
 	#[NoAdminRequired]
 	#[PublicPage]
+	#[RequireDocumentBaseVersionEtag]
 	#[RequireDocumentSession]
 	public function sync(int $version = 0, string $autosaveContent = null, string $documentState = null, bool $force = false, bool $manualSave = false): DataResponse {
 		try {

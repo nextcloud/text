@@ -311,7 +311,7 @@ describe('The session Api', function() {
 			})
 		})
 
-		it('sends initial content if other session is alive but did not push any steps', function() {
+		it('does not send initial content if other session is alive but did not push any steps', function() {
 			let joining
 			cy.createTextSession(undefined, { filePath: '', shareToken })
 				.then(con => {
@@ -319,7 +319,7 @@ describe('The session Api', function() {
 					return con
 				})
 				.its('state.documentSource')
-				.should('not.eql', '')
+				.should('eql', '## Hello world\n')
 				.then(() => joining.close())
 				.then(() => connection.close())
 		})
@@ -335,9 +335,27 @@ describe('The session Api', function() {
 					return con
 				})
 				.its('state.documentSource')
-				.should('eql', '')
+				.should('eql', '## Hello world\n')
 				.then(() => joining.close())
 				.then(() => connection.close())
+		})
+
+		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
+			cy.failToCreateTextSession(undefined, 'wrongBaseVersionEtag', { filePath: '', shareToken })
+				.its('status')
+				.should('eql', 412)
+
+			connection.setBaseVersionEtag('wrongBaseVersionEtag')
+
+			cy.failToPushSteps({ connection, steps: [messages.update], version })
+				.its('status')
+				.should('equal', 412)
+
+			cy.failToSyncSteps(connection, { version: 0 })
+				.its('status')
+				.should('equal', 412)
+
+			cy.then(() => connection.close())
 		})
 
 		it('recovers session even if last person leaves right after create', function() {
