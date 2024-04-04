@@ -27,10 +27,10 @@
     "Replace" : "Asenda",
     "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",
+    "Edit" : "Redigeeri",
     "Undo" : "Tühista",
     "Headings" : "Pealkirjad",
     "Info" : "Info",
-    "Warning" : "Hoiatus",
-    "Edit" : "Redigeeri"
+    "Warning" : "Hoiatus"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

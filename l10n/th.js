@@ -23,12 +23,12 @@ OC.L10N.register(
     "Cannot copy, please copy the link manually" : "ไม่สามารถคัดลอก กรุณาคัดลอกลิงก์เอง",
     "to" : "ถึง",
     "Replace" : "แทนที่",
+    "Edit" : "แก้ไข",
     "Source code" : "โค้ดต้นฉบับ",
     "Undo" : "เลิกทำ",
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน",
-    "Formatting" : "การจัดรูปแบบ",
-    "Edit" : "แก้ไข"
+    "Formatting" : "การจัดรูปแบบ"
 },
 "nplurals=1; plural=0;");

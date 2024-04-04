@@ -55,6 +55,7 @@ OC.L10N.register(
     "Select language" : "Seletziona una limba",
     "to" : "a",
     "Replace" : "Càmbia cun àteru",
+    "Edit" : "Modìfica ",
     "Source code" : "Còdighe fonte",
     "Undo" : "Iscontza",
     "Redo" : "Torra a fàghere",
@@ -71,8 +72,6 @@ OC.L10N.register(
     "Control" : "Controllu",
     "Formatting" : "Formatatzione",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
-    "Edit" : "Modìfica ",
-    "File could not be loaded. Please check your internet connection." : "No at fatu a carrigare s'archìviu. Controlla sa connessione internet tua.",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas"
 },
 "nplurals=2; plural=(n != 1);");

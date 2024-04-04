@@ -10,7 +10,7 @@ OC.L10N.register(
     "Backspace" : "Retour",
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
-    "Warning" : "Alɣu",
-    "Edit" : "Ẓreg"
+    "Edit" : "Ẓreg",
+    "Warning" : "Alɣu"
 },
 "nplurals=2; plural=(n != 1);");

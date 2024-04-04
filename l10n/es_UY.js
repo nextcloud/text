@@ -18,11 +18,11 @@ OC.L10N.register(
     "Select language" : "Seleccionar idioma",
     "to" : "para",
     "Replace" : "Reemplazar",
+    "Edit" : "Editar",
     "Source code" : "Código fuente",
     "Undo" : "Deshacer",
     "Info" : "Info",
     "Success" : "Éxito",
-    "Warning" : "Advertencia",
-    "Edit" : "Editar"
+    "Warning" : "Advertencia"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
