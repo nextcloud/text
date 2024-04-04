@@ -51,6 +51,9 @@ class StepMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	/**
+	 * @psalm-return ?positive-int
+	 */
 	public function getLatestVersion(int $documentId): ?int {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();

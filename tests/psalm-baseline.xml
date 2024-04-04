@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
   <file src="lib/Controller/WorkspaceController.php">
     <UndefinedInterfaceMethod>
-      <code>open</code>
+      <code><![CDATA[open]]></code>
     </UndefinedInterfaceMethod>
   </file>
   <file src="lib/DAV/WorkspacePlugin.php">
     <UndefinedClass>
-      <code>ServerPlugin</code>
+      <code><![CDATA[ServerPlugin]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/DirectEditing/TextDirectEditor.php">
     <UndefinedInterfaceMethod>
-      <code>getToken</code>
+      <code><![CDATA[getToken]]></code>
     </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/Service/EncodingService.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[mb_detect_encoding($string, $this->getEncodings(), true)]]></code>
+      <code><![CDATA[mb_detect_order()]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php">
     <MissingClosureParamType>
-      <code>$data</code>
+      <code><![CDATA[$data]]></code>
     </MissingClosureParamType>
     <MissingClosureReturnType>
-      <code>function ($data) {</code>
+      <code><![CDATA[function ($data) {]]></code>
     </MissingClosureReturnType>
     <PossiblyInvalidArgument>
       <code><![CDATA[$data->getData()]]></code>
@@ -28,8 +34,8 @@
   </file>
   <file src="vendor/nextcloud/ocp/OCP/AppFramework/OCSController.php">
     <MissingClosureParamType>
-      <code>$data</code>
-      <code>$data</code>
+      <code><![CDATA[$data]]></code>
+      <code><![CDATA[$data]]></code>
     </MissingClosureParamType>
   </file>
 </files>
