@@ -30,80 +30,43 @@ describe('The user mention API', function() {
 
 	before(function() {
 		cy.createUser(user)
-		window.OC = {
-			config: { modRewriteWorking: false },
-		}
-		window._oc_webroot = ''
+		cy.prepareWindowForSessionApi()
 	})
-
-	let fileId
-	let requesttoken
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.prepareSessionApi().then((token) => {
-			requesttoken = token
-			cy.uploadTestFile('test.md')
-				.then(id => {
-					fileId = id
-				})
-		})
+		cy.uploadTestFile('test.md').as('fileId')
+			.then(cy.createTextSession).as('connection')
+		cy.getRequestToken()
+	})
+
+	afterEach(function() {
+		cy.get('@connection').then(c => c.closed || c.close())
+	})
+
+	it('has a valid connection', function() {
+		cy.get('@connection')
+			.its('document.id')
+			.should('equal', this.fileId)
 	})
 
 	it('fetches users with valid session', function() {
-		cy.createTextSession(fileId).then(connection => {
-			cy.wrap(connection)
-				.its('document.id')
-				.should('equal', fileId)
+		cy.sessionUsers(this.connection)
+			.its('status').should('eq', 200)
+	})
 
-			const requestData = {
-				method: 'POST',
-				url: '/apps/text/api/v1/users',
-				body: {
-					documentId: connection.document.id,
-					sessionId: connection.session.id,
-					sessionToken: connection.session.token,
-					requesttoken,
-				},
-				failOnStatusCode: false,
-			}
-			const invalidRequestData = { ...requestData }
+	it('rejects invalid sessions', function() {
+		cy.sessionUsers(this.connection, { sessionToken: 'invalid' })
+			.its('status').should('eq', 403)
+		cy.sessionUsers(this.connection, { sessionId: 0 })
+			.its('status').should('eq', 403)
+		cy.sessionUsers(this.connection, { documentId: 0 })
+			.its('status').should('eq', 403)
+	})
 
-			cy.request(requestData).then(({ status }) => {
-				expect(status).to.eq(200)
-
-				invalidRequestData.body = {
-					...requestData.body,
-					sessionToken: 'invalid',
-				}
-			})
-
-			cy.request(invalidRequestData).then(({ status }) => {
-				expect(status).to.eq(403)
-				invalidRequestData.body = {
-					...requestData.body,
-					sessionId: 0,
-				}
-			})
-
-			cy.request(invalidRequestData).then(({ status }) => {
-				expect(status).to.eq(403)
-
-				invalidRequestData.body = {
-					...requestData.body,
-					documentId: 0,
-				}
-			})
-
-			cy.request(invalidRequestData).then(({ status }) => {
-				expect(status).to.eq(403)
-			})
-
-			cy.wrap(null).then(() => connection.close())
-
-			cy.request(requestData).then(({ status, body }) => {
-				expect(status).to.eq(403)
-			})
-		})
+	it('rejects closed sessions', function() {
+		cy.then(() => this.connection.close())
+		cy.sessionUsers(this.connection)
+			.its('status').should('eq', 403)
 	})
 })
