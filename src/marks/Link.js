@@ -70,7 +70,7 @@ const Link = TipTapLink.extend({
 		const plugins = this.parent()
 			// remove upstream link click handle plugin
 			.filter(({ key }) => {
-				return !key.startsWith('handleClickLink')
+				return !key.startsWith('handleClickLink') && !key.startsWith('textHandleClickLink')
 			})
 
 		// Custom click handler plugins
