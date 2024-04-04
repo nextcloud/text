@@ -65,6 +65,7 @@ OC.L10N.register(
     "Insert" : "삽입",
     "Detect language" : "언어 감지",
     "Translation failed" : "번역 실패",
+    "Edit" : "편집",
     "Copy code block" : "코드 블록 복사",
     "Source code" : "소스 코드",
     "Hide outline" : "개요 숨기기",
@@ -82,9 +83,6 @@ OC.L10N.register(
     "Command" : "명령",
     "Control" : "제어:",
     "Formatting" : "서식",
-    "Smart picker" : "스마트 피커",
-    "Edit" : "편집",
-    "Failed to load file" : "파일 불러오기 실패",
-    "File could not be loaded. Please check your internet connection." : "파일을 가져올 수 없습니다. 인터넷 연결을 확인해주십시오."
+    "Smart picker" : "스마트 피커"
 },
 "nplurals=1; plural=0;");

@@ -14,9 +14,9 @@ OC.L10N.register(
     "Saved" : "Պահված",
     "Cancel" : "չեղարկել",
     "URL" : "URL",
+    "Edit" : "մշակել",
     "Source code" : "ծրագրի կոդը",
     "Info" : "Info",
-    "Warning" : "Զգուշացում",
-    "Edit" : "մշակել"
+    "Warning" : "Զգուշացում"
 },
 "nplurals=2; plural=(n != 1);");

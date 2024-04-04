@@ -77,6 +77,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chọn tập tin hoặc thư mục để liên kết đến",
     "to" : "đến",
     "Replace" : "Thay thế",
+    "Edit" : "Chỉnh sửa",
     "Source code" : "Mã nguồn",
     "Show folder description" : "Hiển thị mô tả thư mục",
     "Undo" : "Hoàn tác",
@@ -95,9 +96,6 @@ OC.L10N.register(
     "Control" : "Kiểm soát",
     "Formatting" : "Định dạng",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
-    "Edit" : "Chỉnh sửa",
-    "Failed to load file" : "Không tải được tập tin",
-    "File could not be loaded. Please check your internet connection." : "Không thể tải tệp. Xin vui lòng kiểm tra kết nối internet của bạn.",
     "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Add description" : "Thêm mô tả"
 },

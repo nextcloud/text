@@ -7,10 +7,10 @@ OC.L10N.register(
     "Save changes" : "වෙනස්කම් සුරකින්න",
     "Cancel" : "අවලංගු",
     "Select language" : "භාෂාව තෝරන්න",
+    "Edit" : "සංස්කරණය",
     "Undo" : "පෙරසේ",
     "Info" : "තොරතුරු",
     "Success" : "සාර්ථකයි",
-    "Warning" : "අවවාදයයි",
-    "Edit" : "සංස්කරණය"
+    "Warning" : "අවවාදයයි"
 },
 "nplurals=2; plural=(n != 1);");

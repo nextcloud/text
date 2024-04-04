@@ -12,8 +12,8 @@ OC.L10N.register(
     "Cancel" : "বাতিল করুন",
     "URL" : "URL",
     "to" : "প্রতি",
+    "Edit" : "সম্পাদনা",
     "Info" : "Info",
-    "Warning" : "সতর্কবাণী",
-    "Edit" : "সম্পাদনা"
+    "Warning" : "সতর্কবাণী"
 },
 "nplurals=2; plural=(n != 1);");

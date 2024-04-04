@@ -76,6 +76,7 @@ OC.L10N.register(
     "to" : "до",
     "Replace" : "Преклопи",
     "No emoji found" : "Не се пронајдени емотикони",
+    "Edit" : "Уреди",
     "Source code" : "Изворен код",
     "Failed to load" : "Неуспешно вчитување",
     "Add row before" : "Додади ред пред",
@@ -101,8 +102,6 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Option" : "Опции",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
-    "Edit" : "Уреди",
-    "File could not be loaded. Please check your internet connection." : "Датотеката неможе да се вчита. Проверете ја вашата интернет врска.",
     "Show rich workspaces" : "Прикажи збогатен работен простор",
     "Add description" : "Додади опис"
 },

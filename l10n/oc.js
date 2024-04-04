@@ -48,6 +48,7 @@ OC.L10N.register(
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",
     "to" : "a",
+    "Edit" : "Modificar",
     "Source code" : "Còdi font",
     "Delete this table" : "Suprimir aqueste tablèu",
     "Undo" : "Anullar",
@@ -65,7 +66,6 @@ OC.L10N.register(
     "Insert emoji" : "Inserir emoji",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",
-    "Edit" : "Modificar"
+    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…"
 },
 "nplurals=2; plural=(n > 1);");
