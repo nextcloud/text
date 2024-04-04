@@ -30,13 +30,13 @@ OC.L10N.register(
     "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
     "to" : "către",
     "Replace" : "Înlocuiește",
+    "Edit" : "Editează",
     "Source code" : "Cod sursă",
     "Undo" : "Anulează ultima acțiune",
     "Redo" : "Repetă",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",
-    "Formatting" : "Formatare",
-    "Edit" : "Editează"
+    "Formatting" : "Formatare"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

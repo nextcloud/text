@@ -20,11 +20,11 @@ OC.L10N.register(
     "Select language" : "აირჩიეთ ენა",
     "to" : "ვის",
     "Replace" : "ჩანაცვლება",
+    "Edit" : "ცვლილება",
     "Source code" : "კოდი",
     "Undo" : "დაბრუნება",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება",
-    "Edit" : "ცვლილება"
+    "Warning" : "გაფრთხილება"
 },
 "nplurals=2; plural=(n!=1);");

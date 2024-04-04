@@ -87,6 +87,7 @@ OC.L10N.register(
     "to" : "iki",
     "Replace" : "Pakeisti",
     "No emoji found" : "Nerasta jokių šypsenėlių",
+    "Edit" : "Taisyti",
     "Source code" : "Pradinis kodas",
     "Delete this attachment" : "Ištrinti šį priedą",
     "Delete this image" : "Ištrinti šį paveikslą",
@@ -119,8 +120,6 @@ OC.L10N.register(
     "Control" : "Valdoma",
     "Formatting" : "Formatavimas",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
-    "Edit" : "Taisyti",
-    "File could not be loaded. Please check your internet connection." : "Nepavyko įkelti failo. Patikrinkite savo interneto ryšį.",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

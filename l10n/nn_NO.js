@@ -12,8 +12,8 @@ OC.L10N.register(
     "Select language" : "Vel språk",
     "to" : "til",
     "Replace" : "Erstatt",
+    "Edit" : "Endra",
     "Info" : "Info",
-    "Warning" : "Åtvaring",
-    "Edit" : "Endra"
+    "Warning" : "Åtvaring"
 },
 "nplurals=2; plural=(n != 1);");

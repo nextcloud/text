@@ -10,8 +10,8 @@ OC.L10N.register(
     "Save changes" : "Ännerunge späicheren",
     "URL" : "URL",
     "to" : "bis",
+    "Edit" : "Änneren",
     "Info" : "Info",
-    "Warning" : "Warnung",
-    "Edit" : "Änneren"
+    "Warning" : "Warnung"
 },
 "nplurals=2; plural=(n != 1);");

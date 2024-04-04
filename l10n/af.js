@@ -33,6 +33,7 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
     "to" : "aan",
+    "Edit" : "Wysig",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
     "Heading 3" : "Kop 3",
@@ -40,7 +41,6 @@ OC.L10N.register(
     "Heading 5" : "Kop 5",
     "Info" : "Inligting",
     "Success" : "Sukses",
-    "Warning" : "Waarskuwing",
-    "Edit" : "Wysig"
+    "Warning" : "Waarskuwing"
 },
 "nplurals=2; plural=(n != 1);");

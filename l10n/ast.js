@@ -72,6 +72,7 @@ OC.L10N.register(
     "No command found" : "Nun s'atopó nengún comandu",
     "No user found" : "Nun s'atopó nengún usuariu",
     "No suggestion found" : "Nun s'atopó nenguna suxerencia",
+    "Edit" : "Editar",
     "Copy code block" : "Copiar el bloque de códigu",
     "Copy code" : "Copiar el códigu",
     "Code block options" : "Opciones del bloque de códigu",
@@ -99,10 +100,7 @@ OC.L10N.register(
     "Option" : "Opción",
     "Formatting" : "Formatu",
     "Smart picker" : "Selector intelixente",
-    "Edit" : "Editar",
     "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
-    "Failed to load file" : "Nun se pue cargar el ficheru",
-    "File could not be loaded. Please check your internet connection." : "Nun se pudo cargar el ficheru. Comprueba la conexón a internet.",
     "Source language" : "Llingua d'orixe",
     "Target language" : "Llingua de destín",
     "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos"

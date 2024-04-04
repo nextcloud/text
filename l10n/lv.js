@@ -21,13 +21,13 @@ OC.L10N.register(
     "Select language" : "Izvēlies valodu",
     "to" : "kam",
     "Replace" : "Aizvietot",
+    "Edit" : "Rediģēt",
     "Source code" : "Izejas kods",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
     "Insert link" : "Ievietojiet saiti",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
-    "Command" : "Komanda",
-    "Edit" : "Rediģēt"
+    "Command" : "Komanda"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

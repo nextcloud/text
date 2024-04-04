@@ -27,6 +27,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "to" : "untuk",
     "Replace" : "Timpa",
+    "Edit" : "Sunting",
     "Source code" : "Kode sumber",
     "Both" : "Keduanya",
     "Undo" : "Undo",
@@ -34,8 +35,6 @@ OC.L10N.register(
     "Warning" : "Peringatan",
     "Control" : "Kendali",
     "Formatting" : "Pemformatan",
-    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan...",
-    "Edit" : "Sunting",
-    "File could not be loaded. Please check your internet connection." : "Berkas tidak dapat dimuat. Periksa koneksi internet Anda."
+    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan..."
 },
 "nplurals=1; plural=0;");

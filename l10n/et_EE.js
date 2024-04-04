@@ -29,10 +29,10 @@ OC.L10N.register(
     "Replace" : "Asenda",
     "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",
+    "Edit" : "Redigeeri",
     "Undo" : "Tühista",
     "Headings" : "Pealkirjad",
     "Info" : "Info",
-    "Warning" : "Hoiatus",
-    "Edit" : "Redigeeri"
+    "Warning" : "Hoiatus"
 },
 "nplurals=2; plural=(n != 1);");

@@ -81,6 +81,7 @@ OC.L10N.register(
     "Replace" : "Αντικατάσταση",
     "Insert" : "Εισαγωγή",
     "No emoji found" : "Δε βρέθηκε emoji",
+    "Edit" : "Επεξεργασία",
     "Source code" : "Πηγαίος κώδικας",
     "Undo" : "Aναίρεση",
     "Redo" : "Επανάληψη",
@@ -100,8 +101,6 @@ OC.L10N.register(
     "Control" : "Έλεγχος",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
-    "Edit" : "Επεξεργασία",
-    "File could not be loaded. Please check your internet connection." : "Το αρχείο δεν μπορεί να φορτωθεί. Παρακαλώ ελέγξτε την σύνδεσή σας.",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");
