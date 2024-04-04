@@ -4,6 +4,13 @@ import debounce from 'debounce'
 import { extractHeadings } from './extractor.js'
 import HeaderViewVue from './HeadingView.vue'
 
+const onUpdate = debounce(({ editor }) => {
+	if (editor.view && editor.state && !editor.isDestroyed) {
+		// Only run if editor still exists (prevent dangling debounced extractHeadings function)
+		extractHeadings(editor)
+	}
+}, 900, { immediate: true })
+
 const Heading = TipTapHeading.extend({
 	addAttributes() {
 		return {
@@ -53,12 +60,9 @@ const Heading = TipTapHeading.extend({
 		}
 	},
 
-	onUpdate: debounce(({ editor }) => {
-		if (editor.view && editor.state && !editor.isDestroyed) {
-			// Only run if editor still exists (prevent dangling debounced extractHeadings function)
-			extractHeadings(editor)
-		}
-	}, 900),
+	onUpdate: (event) => {
+		onUpdate(event)
+	},
 
 })
 
