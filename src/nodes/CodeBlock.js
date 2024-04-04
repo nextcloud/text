@@ -1,5 +1,4 @@
 import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import CodeBlockView from './CodeBlockView.vue'
 
@@ -25,7 +24,21 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 	toMarkdown(state, node, parent, index) {
 		// @tiptap/pm/markdown uses `params` instead of `language` attribute
 		node.attrs.params = node.attrs.language
-		return defaultMarkdownSerializer.nodes.code_block(state, node, parent, index)
+
+		// After https://github.com/ProseMirror/prosemirror-markdown/pull/90 the upstream markdown serialization
+		// is no longer comparible with our extraction stripping the last new line, so we keep a reverted copy
+		// to stay consistent with our unit tests
+
+		// Make sure the front matter fences are longer than any dash sequence within it
+		const backticks = node.textContent.match(/`{3,}/gm)
+		const fence = backticks ? (backticks.sort().slice(-1)[0] + '`') : '```'
+
+		state.write(fence + (node.attrs.params || '') + '\n')
+		state.text(node.textContent, false)
+		// Add a newline to the current content before adding closing marker
+		state.ensureNewLine()
+		state.write(fence)
+		state.closeBlock(node)
 	},
 
 	addNodeView() {
