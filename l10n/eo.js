@@ -42,6 +42,7 @@ OC.L10N.register(
     "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane.",
     "to" : "al",
     "Replace" : "Anstataŭigi",
+    "Edit" : "Modifi",
     "Undo" : "Malfari",
     "Redo" : "Refari",
     "Headings" : "Titolaro",
@@ -53,7 +54,6 @@ OC.L10N.register(
     "Warning" : "Averto",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
-    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn...",
-    "Edit" : "Modifi"
+    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn..."
 },
 "nplurals=2; plural=(n != 1);");

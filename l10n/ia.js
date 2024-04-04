@@ -11,9 +11,9 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Combinationes de claves",
     "URL" : "URL",
     "to" : "a",
+    "Edit" : "Modificar",
     "Undo" : "Disfacer",
     "Info" : "Info",
-    "Warning" : "Aviso",
-    "Edit" : "Modificar"
+    "Warning" : "Aviso"
 },
 "nplurals=2; plural=(n != 1);");

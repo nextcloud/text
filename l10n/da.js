@@ -61,6 +61,7 @@ OC.L10N.register(
     "Select language" : "Vælg sprog",
     "to" : "til",
     "Replace" : "Erstat",
+    "Edit" : "Redigér",
     "Source code" : "Kildekode",
     "Delete this table" : "Slet denne tabel",
     "Hide outline" : "Skjul outline",
@@ -80,8 +81,6 @@ OC.L10N.register(
     "Formatting" : "Formatering",
     "Smart picker" : "Smart Vælger",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
-    "Edit" : "Redigér",
-    "File could not be loaded. Please check your internet connection." : "Filen kunne ikke indlæses. Tjek venligst din internetforbindelse.",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

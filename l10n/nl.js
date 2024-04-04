@@ -81,6 +81,7 @@ OC.L10N.register(
     "to" : "aan",
     "Replace" : "Vervangen",
     "No emoji found" : "Geen emoji gevonden",
+    "Edit" : "Bewerken",
     "Source code" : "Broncode",
     "Failed to load" : "Laden mislukt",
     "Add row before" : "Voeg rij toe voor",
@@ -111,8 +112,6 @@ OC.L10N.register(
     "Control" : "Controle",
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
-    "Edit" : "Bewerken",
-    "File could not be loaded. Please check your internet connection." : "Bestanden konden niet worden geladen. Controleer je internetverbinding.",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

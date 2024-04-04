@@ -17,8 +17,8 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "doğru",
     "Replace" : "Əvəz edin",
+    "Edit" : "Dəyişiklik et",
     "Info" : "Info",
-    "Warning" : "Xəbərdarlıq",
-    "Edit" : "Dəyişiklik et"
+    "Warning" : "Xəbərdarlıq"
 },
 "nplurals=2; plural=(n != 1);");

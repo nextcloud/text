@@ -44,6 +44,7 @@ OC.L10N.register(
     "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente",
     "to" : "Para",
     "Replace" : "Substitua",
+    "Edit" : "Editar",
     "Source code" : "Código fonte",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",
@@ -57,7 +58,6 @@ OC.L10N.register(
     "Warning" : "Aviso",
     "Control" : "Controle",
     "Formatting" : "Formação ",
-    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
-    "Edit" : "Editar"
+    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações..."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -30,12 +30,12 @@ OC.L10N.register(
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
     "Replace" : "Mbishkruaj",
+    "Edit" : "Përpuno",
     "Source code" : "Kodi burim",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",
     "Info" : "Info",
     "Success" : "Sukses",
-    "Warning" : "Kujdes",
-    "Edit" : "Përpuno"
+    "Warning" : "Kujdes"
 },
 "nplurals=2; plural=(n != 1);");

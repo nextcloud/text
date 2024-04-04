@@ -55,6 +55,7 @@ OC.L10N.register(
     "Select language" : "בחירת שפה",
     "to" : "סיום",
     "Replace" : "החלפה",
+    "Edit" : "עריכה",
     "Source code" : "קוד מקור",
     "Undo" : "ביטול",
     "Redo" : "שחזור",
@@ -71,8 +72,6 @@ OC.L10N.register(
     "Control" : "שליטה",
     "Formatting" : "עיצוב",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
-    "Edit" : "עריכה",
-    "File could not be loaded. Please check your internet connection." : "לא ניתן לטעון את הקובץ. נא לבדוק את מצב החיבור שלך לאינטרנט.",
     "Show rich workspaces" : "הצגת סביבות עבודה עשירות"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");
