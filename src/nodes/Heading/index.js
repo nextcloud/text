@@ -9,7 +9,7 @@ const onUpdate = debounce(({ editor }) => {
 		// Only run if editor still exists (prevent dangling debounced extractHeadings function)
 		extractHeadings(editor)
 	}
-}, 900)
+}, 900, { immediate: true })
 
 const Heading = TipTapHeading.extend({
 	addAttributes() {

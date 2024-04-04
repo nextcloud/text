@@ -19,6 +19,7 @@ describe('Content Sections', () => {
 	})
 
 	beforeEach(function() {
+		cy.clearAllSessionStorage()
 		cy.login(user)
 		cy.createTestFolder().then(folderName => {
 			currentFolder = folderName
