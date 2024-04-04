@@ -281,7 +281,9 @@ class SyncService {
 	}
 
 	_autosave() {
-		return this.save({ manualSave: false })
+		return this.save({ manualSave: false }).catch((error) => {
+			logger.error('Failed to autosave document.', { error })
+		})
 	}
 
 	async close() {
