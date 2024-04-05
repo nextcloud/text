@@ -49,4 +49,5 @@ module.exports = defineConfig({
 		openMode: 0,
 	},
 	numTestsKeptInMemory: 0,
+	experimentalMemoryManagement: true,
 })
