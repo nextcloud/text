@@ -34,11 +34,6 @@
 			'text-menubar--is-workspace': $isRichWorkspace
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
-		<Translate v-if="displayTranslate !== false"
-			:content="displayTranslate"
-			@insert-content="translateInsert"
-			@replace-content="translateReplace"
-			@close="hideTranslate" />
 
 		<div v-if="$isRichEditor"
 			ref="menubar"
@@ -63,7 +58,7 @@
 				:can-be-focussed="activeMenuEntry === visibleEntries.length"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton v-if="canTranslate" @click="showTranslate">
+					<NcActionButton close-after-click v-if="canTranslate" @click="showTranslate">
 						<template #icon>
 							<TranslateVariant />
 						</template>
@@ -85,6 +80,7 @@
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { useResizeObserver } from '@vueuse/core'
+import { emit } from '@nextcloud/event-bus'
 
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
@@ -92,7 +88,6 @@ import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
 import HelpModal from '../HelpModal.vue'
 import ToolBarLogic from './ToolBarLogic.js'
-import Translate from './../Modal/Translate.vue'
 import actionsFullEntries from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
@@ -114,7 +109,6 @@ export default {
 		NcActionButton,
 		CharacterCount,
 		TranslateVariant,
-		Translate,
 	},
 	extends: ToolBarLogic,
 	mixins: [
@@ -145,7 +139,6 @@ export default {
 			entries: [...actionsFullEntries],
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
-			displayTranslate: false,
 			isReady: false,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 			resize: null,
@@ -232,27 +225,7 @@ export default {
 			}
 
 			console.debug('translation click', this.$editor.view.state.selection, selectedText)
-			this.displayTranslate = selectedText ?? ''
-		},
-		hideTranslate() {
-			this.displayTranslate = false
-		},
-		translateInsert(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
-				return commands.insertContentAt(tr.selection.to, content)
-			})
-			this.displayTranslate = false
-		},
-		translateReplace(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
-				const selection = tr.selection
-				const range = {
-					from: selection.from,
-					to: selection.to,
-				}
-				return commands.insertContentAt(range, content)
-			})
-			this.displayTranslate = false
+			emit('text:translate-modal:show', { content: selectedText })
 		},
 	},
 }

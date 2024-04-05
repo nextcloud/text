@@ -63,12 +63,6 @@
 				class="floating-menu--badge" />
 		</FloatingMenu>
 
-		<Translate v-if="displayTranslate !== false"
-			:content="displayTranslate"
-			@insert-content="translateInsert"
-			@replace-content="translateReplace"
-			@close="hideTranslate" />
-
 		<NcModal :show.sync="showTaskList">
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
@@ -154,8 +148,7 @@ import {
 	useIsPublicMixin,
 } from './Editor.provider.js'
 import { FloatingMenu } from '@tiptap/vue-2'
-import Translate from './Modal/Translate.vue'
-import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
@@ -170,7 +163,6 @@ const STATUS_UNKNOWN = 0
 export default {
 	name: 'Assistant',
 	components: {
-		Translate,
 		FloatingMenu,
 		ErrorIcon,
 		CreationIcon,
@@ -209,7 +201,6 @@ export default {
 			STATUS_UNKNOWN,
 
 			showTaskList: false,
-			displayTranslate: false,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 		}
 	},
@@ -304,27 +295,7 @@ export default {
 			await this.fetchTasks()
 		},
 		openTranslateDialog() {
-			this.displayTranslate = this.selection
-		},
-		hideTranslate() {
-			this.displayTranslate = false
-		},
-		translateInsert(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
-				return commands.insertContentAt(tr.selection.to, content)
-			})
-			this.displayTranslate = false
-		},
-		translateReplace(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
-				const selection = tr.selection
-				const range = {
-					from: selection.from,
-					to: selection.to,
-				}
-				return commands.insertContentAt(range, content)
-			})
-			this.displayTranslate = false
+			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
 		async openResult(task) {
 			window.OCA?.TPAssistant.openAssistantResult(task)

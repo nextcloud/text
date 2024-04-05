@@ -77,6 +77,11 @@
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
 		<Assistant v-if="$editor" />
+		<Translate :show="translateModal"
+			:content="translateContent"
+			@insert-content="translateInsert"
+			@replace-content="translateReplace"
+			@close="hideTranslate" />
 	</div>
 </template>
 
@@ -125,6 +130,7 @@ import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import Assistant from './Assistant.vue'
+import Translate from './Modal/Translate.vue'
 
 export default {
 	name: 'Editor',
@@ -139,6 +145,7 @@ export default {
 		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
 		Status,
 		Assistant,
+		Translate,
 	},
 	mixins: [
 		isMobile,
@@ -251,6 +258,8 @@ export default {
 			draggedOver: false,
 
 			contentWrapper: null,
+			translateModal: false,
+			translateContent: '',
 		}
 	},
 	computed: {
@@ -338,6 +347,7 @@ export default {
 			const maxWidth = width - 36
 			this.$el.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
+		subscribe('text:translate-modal:show', this.showTranslateModal)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -364,6 +374,7 @@ export default {
 			await Promise.any([timeout, this.$syncService.save()])
 		}
 		this.$providers.forEach(p => p.destroy())
+		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 	},
 	methods: {
 		initSession() {
@@ -756,6 +767,31 @@ export default {
 				this.$syncService.save()
 				event.preventDefault()
 			}
+		},
+
+		showTranslateModal(e) {
+			this.translateContent = e.content
+			this.translateModal = true
+		},
+		hideTranslate() {
+			this.translateModal = false
+		},
+		translateInsert(content) {
+			this.$editor.commands.command(({ tr, commands }) => {
+				return commands.insertContentAt(tr.selection.to, content)
+			})
+			this.translateModal = false
+		},
+		translateReplace(content) {
+			this.$editor.commands.command(({ tr, commands }) => {
+				const selection = tr.selection
+				const range = {
+					from: selection.from,
+					to: selection.to,
+				}
+				return commands.insertContentAt(range, content)
+			})
+			this.translateModal = false
 		},
 	},
 }
