@@ -73,12 +73,11 @@ jobs:
           npm run build --if-present
           npm run stats --if-present
 
-      - name: Send bundle stats to RelativeCI
-        uses: relative-ci/agent-action@e92b0c712e5ad0a039faf1026cbe438b8e7fed16 # v2
+      # Upload webpack-stats.json to use on relative-ci.yaml workflow
+      - name: Upload webpack stats artifact
+        uses: relative-ci/agent-upload-artifact-action@51f8b30e845564c5415476f67dcc7758ed1b03f2 # v1.0.3
         with:
           webpackStatsFile: ./webpack-stats.json
-          key: ${{ secrets.RELATIVE_CI_KEY }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
   summary:
     permissions:
