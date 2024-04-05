@@ -48,5 +48,5 @@ module.exports = defineConfig({
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
-	'numTestsKeptInMemory': 5,
+	numTestsKeptInMemory: 0,
 })
