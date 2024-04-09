@@ -114,7 +114,7 @@ const Markdown = Extension.create({
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
-								traverseNodes(slice.content.firstChild)
+								return traverseNodes(slice.content.firstChild)
 							}
 						}
 
