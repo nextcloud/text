@@ -110,7 +110,7 @@ const Markdown = Extension.create({
 					clipboardTextSerializer: (slice) => {
 						const traverseNodes = (slice) => {
 							if (slice.content.childCount > 1) {
-								return createMarkdownSerializer(this.editor.schema).serialize(slice.content)
+								return clipboardSerializer(this.editor.schema).serialize(slice.content)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
@@ -128,12 +128,10 @@ const Markdown = Extension.create({
 })
 
 const createMarkdownSerializer = ({ nodes, marks }) => {
-	const defaultNodes = convertNames(defaultMarkdownSerializer.nodes)
-	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
 	return {
 		serializer: new MarkdownSerializer(
-			{ ...defaultNodes, ...extractToMarkdown(nodes) },
-			{ ...defaultMarks, ...extractToMarkdown(marks) },
+			extractNodesToMarkdown(nodes),
+			extractMarksToMarkdown(marks),
 		),
 		serialize(content, options) {
 			return this.serializer.serialize(content, { ...options, tightLists: true })
@@ -141,15 +139,46 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 	}
 }
 
+const clipboardSerializer = ({ nodes, marks }) => {
+	return {
+		serializer: new MarkdownSerializer(
+			extractNodesToMarkdown(nodes),
+			extractToPlaintext(marks),
+		),
+		serialize(content, options) {
+			return this.serializer.serialize(content, { ...options, tightLists: true })
+		},
+	}
+}
+
+const extractToPlaintext = (marks) => {
+	const blankMark = { open: '', close: '', mixable: true, expelEnclosingWhitespace: true }
+	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
+	const markEntries = Object.entries({ ...defaultMarks, ...marks })
+		.map(([name, _mark]) => [name, blankMark])
+
+	return Object.fromEntries(markEntries)
+}
+
 const extractToMarkdown = (nodesOrMarks) => {
-	return Object
+	const nodeOrMarkEntries = Object
 		.entries(nodesOrMarks)
 		.map(([name, nodeOrMark]) => [name, nodeOrMark.spec.toMarkdown])
 		.filter(([, toMarkdown]) => toMarkdown)
-		.reduce((items, [name, toMarkdown]) => ({
-			...items,
-			[name]: toMarkdown,
-		}), {})
+
+	return Object.fromEntries(nodeOrMarkEntries)
+}
+
+const extractNodesToMarkdown = (nodes) => {
+	const defaultNodes = convertNames(defaultMarkdownSerializer.nodes)
+	const nodesToMarkdown = extractToMarkdown(nodes)
+	return { ...defaultNodes, ...nodesToMarkdown }
+}
+
+const extractMarksToMarkdown = (marks) => {
+	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
+	const marksToMarkdown = extractToMarkdown(marks)
+	return { ...defaultMarks, ...marksToMarkdown }
 }
 
 const convertNames = (object) => {
