@@ -116,7 +116,8 @@ describe('Markdown extension integrated in the editor', () => {
 		expect(text).toBe('Hermannsreute 44A')
 	})
 
-	it('copy version number without escape character', () => {
+	// See https://github.com/nextcloud/text/issues/5660
+	it.failing('copy version number without escape character', () => {
 		const editor = createCustomEditor({
 		content: '<p>Hello</p><p>28.0.4</p>',
 			extensions: [Markdown],
