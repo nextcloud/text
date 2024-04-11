@@ -243,6 +243,9 @@ export default {
 	methods: {
 		async loadPreview() {
 			this.attachment = await this.$attachmentResolver.resolve(this.src)
+			if (!this.attachment.previewUrl) {
+				throw new Error('Attachment source was not resolved')
+			}
 			return new Promise((resolve, reject) => {
 				const img = new Image()
 				img.onload = async () => {
