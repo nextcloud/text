@@ -6,6 +6,7 @@ namespace OCA\Text\Service;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
+use OCP\Files\StorageInvalidException;
 use OCP\IL10N;
 
 class WorkspaceService {
@@ -29,7 +30,8 @@ class WorkspaceService {
 					if ($file instanceof File) {
 						return $file;
 					}
-				} catch (NotFoundException $e) {
+				} catch (NotFoundException|StorageInvalidException) {
+					return null;
 				}
 			}
 		}
