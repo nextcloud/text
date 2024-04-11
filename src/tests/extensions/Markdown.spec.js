@@ -6,7 +6,7 @@ import Image from './../../nodes/Image.js'
 import ImageInline from './../../nodes/ImageInline.js'
 import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
-import Underline from './../../marks/Underline.js'
+import { Italic, Strong, Underline, Link} from './../../marks/index.js'
 import TiptapImage from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
 import { __serializeForClipboard as serializeForClipboard } from '@tiptap/pm/view'
@@ -85,9 +85,7 @@ describe('Markdown extension integrated in the editor', () => {
 			content: '<p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></p>',
 			extensions: [Markdown, TaskList, TaskItem],
 		})
-		editor.commands.selectAll()
-		const slice = editor.state.selection.content()
-		const { text } = serializeForClipboard(editor.view, slice)
+		const text = copyEditorContent(editor)
 		expect(text).toBe('\n- [ ] Hello')
 	})
 
@@ -96,9 +94,7 @@ describe('Markdown extension integrated in the editor', () => {
 			content: '<pre><code>Hello</code></pre>',
 			extensions: [Markdown, CodeBlock],
 		})
-		editor.commands.selectAll()
-		const slice = editor.state.selection.content()
-		const { text } = serializeForClipboard(editor.view, slice)
+		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello')
 	})
 
@@ -107,10 +103,52 @@ describe('Markdown extension integrated in the editor', () => {
 			content: '<blockquote><p><ul class="contains-task-list"><li><input type="checkbox">Hello</li></ul></blockquote>',
 			extensions: [Markdown, Blockquote, TaskList, TaskItem],
 		})
-		editor.commands.selectAll()
-		const slice = editor.state.selection.content()
-		const { text } = serializeForClipboard(editor.view, slice)
+		const text = copyEditorContent(editor)
 		expect(text).toBe('\n- [ ] Hello')
 	})
 
+	it('copies address from blockquote to markdown', () => {
+		const editor = createCustomEditor({
+		content: '<blockquote><p>Hermannsreute 44A</p></blockquote>',
+			extensions: [Markdown, Blockquote],
+		})
+		const text = copyEditorContent(editor)
+		expect(text).toBe('Hermannsreute 44A')
+	})
+
+	// See https://github.com/nextcloud/text/issues/5660
+	it.failing('copy version number without escape character', () => {
+		const editor = createCustomEditor({
+		content: '<p>Hello</p><p>28.0.4</p>',
+			extensions: [Markdown],
+		})
+		const text = copyEditorContent(editor)
+		expect(text).toBe('Hello\n\n28.0.4')
+	})
+
+	it('strips bold, italic, and other marks from paragraph', () => {
+		const editor = createCustomEditor({
+		content: '<p><strong>Hello</strong></p><p><span style="text-decoration: underline;">lonely </span><em>world</em></p>',
+			extensions: [Markdown, Italic, Strong, Underline],
+		})
+		const text = copyEditorContent(editor)
+		expect(text).toBe('Hello\n\nlonely world')
+	})
+
+	it('strips href and link formatting from email address', () => {
+		const editor = createCustomEditor({
+		content: '<p>Hello</p><p><a href="mailto:example@example.com">example@example.com</a></p>',
+			extensions: [Markdown, Link],
+		})
+		const text = copyEditorContent(editor)
+		expect(text).toBe('Hello\n\nexample@example.com')
+	})
+
 })
+
+function copyEditorContent(editor) {
+	editor.commands.selectAll()
+	const slice = editor.state.selection.content()
+	const { text } = serializeForClipboard(editor.view, slice)
+	return text
+}
