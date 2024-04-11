@@ -85,6 +85,7 @@ OC.L10N.register(
     "_%n char_::_%n chars_" : ["%n caráuteres","%n caráuteres"],
     "Editor actions" : "Aiciones del editor",
     "Remaining actions" : "Aiciones que falten",
+    "to" : "pa",
     "Replace" : "Trocar",
     "Insert" : "Inxertar",
     "Detect language" : "Detectar la llingua",
