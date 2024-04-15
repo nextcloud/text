@@ -191,6 +191,9 @@ export default {
 			const chain = this.$editor.chain()
 			// Check if any text is selected, if not insert the link using the given text property
 			if (this.$editor.view.state?.selection.empty) {
+				if (this.state.active) {
+					chain.deleteNode('paragraph')
+				}
 				chain.insertContent({
 					type: 'paragraph',
 					content: [{
