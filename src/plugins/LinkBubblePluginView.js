@@ -6,11 +6,13 @@ import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 class LinkBubblePluginView {
 
 	#component = null
+	#editor = null
 
 	constructor({ view, options, plugin }) {
 		this.options = options
 		this.view = view
 		this.plugin = plugin
+		this.#editor = this.options.editor
 
 		this.#component = new VueRenderer(LinkBubbleView, {
 			parent: this.options.parent,
@@ -19,23 +21,46 @@ class LinkBubblePluginView {
 				href: null,
 			},
 		})
-
-		this.view.dom.addEventListener('dragstart', this.dragOrScrollHandler)
-		document.addEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 
-	dragOrScrollHandler = (event) => {
-		// Only hide when scrolling on `<div>` (not .e.g. on `<input>`)
-		if (event.target.nodeName !== 'DIV') {
+	addEventListeners() {
+		this.view.dom.addEventListener('dragstart',
+			this.closeOnExternalEvents,
+		)
+		document.addEventListener('mousedown',
+			this.closeOnExternalEvents,
+		)
+		document.addEventListener('scroll',
+			this.closeOnExternalEvents,
+			{ capture: true }
+		)
+	}
+
+	removeEventListeners() {
+		this.view.dom.removeEventListener('dragstart',
+			this.closeOnExternalEvents,
+		)
+		document.removeEventListener('mousedown',
+			this.closeOnExternalEvents,
+		)
+		document.removeEventListener('scroll',
+			this.closeOnExternalEvents,
+			{ capture: true }
+		)
+	}
+
+	closeOnExternalEvents = (event) => {
+		// Only hide when targetting something outside of the popup
+		if (this.tippy?.popper?.contains(event.target)) {
 			return
 		}
 
 		// Cypress fires unexpected scroll events, which breaks testing the link bubble
-		if (window.Cypress) {
+		if (window.Cypress && event.type === 'scroll') {
 			return
 		}
 
-		this.hide()
+		this.#editor.commands.hideLinkBubble()
 	}
 
 	createTooltip() {
@@ -73,7 +98,10 @@ class LinkBubblePluginView {
 		if (active?.mark) {
 			this.updateTooltip(view, active)
 		} else {
-			this.hide()
+			setTimeout(() => {
+				this.tippy?.hide()
+			}, 100)
+			this.removeEventListeners()
 		}
 	}
 
@@ -92,23 +120,12 @@ class LinkBubblePluginView {
 			getReferenceClientRect: () => clientRect,
 		})
 
-		this.show()
-	}
-
-	show() {
 		this.tippy?.show()
-	}
-
-	hide() {
-		setTimeout(() => {
-			this.tippy?.hide()
-		}, 100)
+		this.addEventListeners()
 	}
 
 	destroy() {
 		this.tippy?.destroy()
-		this.view.dom.removeEventListener('dragstart', this.dragOrScrollHandler)
-		document.removeEventListener('scroll', this.dragOrScrollHandler, { capture: true })
 	}
 
 }
