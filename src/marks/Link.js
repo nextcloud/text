@@ -87,6 +87,37 @@ const Link = TipTapLink.extend({
 			}),
 		]
 	},
+	addCommands() {
+		return {
+			/**
+			 * Update the target of existing links.
+			 * Insert a link if there currently is none.
+			 *
+			 */
+			insertOrSetLink: (active, text, attrs) => ({ state, chain, commands }) => {
+				// Check if any text is selected,
+				// if not insert the link using the given text property
+				if (state.selection.empty) {
+					if (active) {
+						commands.deleteNode('paragraph')
+					}
+					return chain().insertContent({
+						type: 'paragraph',
+						content: [{
+							type: 'text',
+							marks: [{
+								type: 'link',
+								attrs,
+							}],
+							text,
+						}],
+					})
+				} else {
+					return commands.setLink(attrs)
+				}
+			},
+		}
+	},
 
 	addProseMirrorPlugins() {
 		const plugins = this.parent()
