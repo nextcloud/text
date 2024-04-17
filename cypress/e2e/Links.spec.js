@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { randUser } from '../../utils/index.js'
+import { randUser } from '../utils/index.js'
 
 const user = randUser()
 const fileName = 'empty.md'
