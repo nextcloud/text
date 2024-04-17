@@ -43,7 +43,7 @@
 					</template>
 					{{ provider.name }}
 				</NcActionButton>
-				<NcActionButton close-after-click @click="openTranslateDialog">
+				<NcActionButton data-cy="open-translate" close-after-click @click="openTranslateDialog">
 					<template #icon>
 						<TranslateVariant :size="20" />
 					</template>
@@ -295,6 +295,9 @@ export default {
 			await this.fetchTasks()
 		},
 		openTranslateDialog() {
+			if (!this.selection.trim().length) {
+				this.$editor.commands.selectAll()
+			}
 			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
 		async openResult(task) {

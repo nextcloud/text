@@ -73,4 +73,28 @@ describe('Assistant', () => {
 			.should('be.visible')
 			.should('contain', 'Hello World')
 	})
+
+	it('Open translate dialog', () => {
+		cy.isolateTest({
+			sourceFile: fileName,
+		})
+		cy.openFile(fileName, { force: true })
+
+		cy.getContent()
+			.click({ force: true })
+		cy.get('[data-cy="assistantMenu"]')
+			.click()
+		cy.get('[data-cy="open-translate"]')
+			.should('be.visible')
+			.click()
+
+		cy.get('[data-cy="translate-input"]')
+			.should('be.visible')
+			.click()
+		cy.get('[data-cy="translate-input"]')
+			.should('be.visible')
+			.type('Hello World')
+		cy.get('[data-cy="translate-input"]')
+			.should('be.focused')
+	})
 })

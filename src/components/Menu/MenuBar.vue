@@ -58,7 +58,7 @@
 				:can-be-focussed="activeMenuEntry === visibleEntries.length"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton close-after-click v-if="canTranslate" @click="showTranslate">
+					<NcActionButton v-if="canTranslate" close-after-click @click="showTranslate">
 						<template #icon>
 							<TranslateVariant />
 						</template>

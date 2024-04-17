@@ -39,6 +39,7 @@
 						:value.sync="input"
 						:label="t('text', 'Text to translate from')"
 						autofocus
+						data-cy="translate-input"
 						input-class="translate-textarea"
 						resize="none"
 						@focus="onInputFocus" />
