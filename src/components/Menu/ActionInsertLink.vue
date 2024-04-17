@@ -189,7 +189,7 @@ export default {
 			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
 			const href = url.replaceAll(' ', '%20')
 			const chain = this.$editor.chain()
-			chain.insertOrSetLink(this.state.active, text, { href })
+			chain.insertOrSetLink(text, { href })
 			chain.focus().run()
 		},
 		/**
