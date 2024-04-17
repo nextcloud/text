@@ -54,6 +54,30 @@ describe('Link marks', { retries: 0 }, () => {
 			expectMarkdown(editor, 'he\n\n<https://nextcloud.com>\n\nllo')
 		})
 
+		it('will change the url and text of an existing link', () => {
+			prepareEditor('[https://nextcloud.com/team](https://nextcloud.com/team)\n', 3)
+			editor.commands.insertOrSetLink('https://nextcloud.com', { href: 'https://nextcloud.com' })
+			expectMarkdown(editor, '<https://nextcloud.com>')
+		})
+
+		it('will change the url and keep the text if it is different', () => {
+			prepareEditor('[Nextcloud](https://nextcloud.com/team)\n', 3)
+			editor.commands.insertOrSetLink('https://nextcloud.com', { href: 'https://nextcloud.com' })
+			expectMarkdown(editor, '[Nextcloud](https://nextcloud.com)')
+		})
+
+		it('will only change the link in a longer paragraph', () => {
+			prepareEditor('Hello https://nextcloud.com/team team\n', 8)
+			editor.commands.insertOrSetLink('https://nextcloud.com', { href: 'https://nextcloud.com' })
+			expectMarkdown(editor, 'Hello https://nextcloud.com team\n')
+		})
+
+		it('will only change the link url in a longer paragraph if the text differs', () => {
+			prepareEditor('Hello [Nextcloud](https://nextcloud.com/team) team\n', 8)
+			editor.commands.insertOrSetLink('https://nextcloud.com', { href: 'https://nextcloud.com' })
+			expectMarkdown(editor, 'Hello [Nextcloud](https://nextcloud.com) team\n')
+		})
+
 	})
 
 	/**
