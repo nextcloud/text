@@ -592,7 +592,7 @@ export default {
 			}
 			if (type === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
 				this.hasConnectionIssue = true
-				OC.Notification.showTemporary('Connection failed.')
+				OC.Notification.showTemporary(t('text', 'Connection failed.'))
 			}
 			if (type === ERROR_TYPE.SOURCE_NOT_FOUND) {
 				this.hasConnectionIssue = true
