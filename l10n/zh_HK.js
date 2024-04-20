@@ -62,6 +62,7 @@ OC.L10N.register(
     "Last saved {lastSave}" : "上次儲存於 {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "文件已在編輯器外變更。變更無法套用。",
     "Unsaved changes" : "未儲存變更",
+    "Connection failed." : "連線失敗。",
     "Formatting help" : "格式化說明",
     "Speed up your writing with simple shortcuts." : "使用簡單的快捷方式加快您的寫作速度。",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "只需輸入 Markdown 語法或使用下方的鍵盤快捷鍵即可。",

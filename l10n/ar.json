@@ -60,6 +60,7 @@
     "Last saved {lastSave}" : "آخر حفظ {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "تم تغيير المستند خارج محرر المستندات. لا يمكن تطبيق تلك التغييرات.",
     "Unsaved changes" : "تغييرات لم يتم حفظها",
+    "Connection failed." : "تعذّر الاتصال.",
     "Formatting help" : "مساعد التنسيق",
     "Speed up your writing with simple shortcuts." : "سرّع كتابتك باختصارات بسيطة للوحة المفاتيح.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "أكتب بنَسَق ماركداون Markdown أو استخدم اختصارات لوحة المفاتيح أدناه.",

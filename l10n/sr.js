@@ -62,6 +62,7 @@ OC.L10N.register(
     "Last saved {lastSave}" : "Последње сачувано {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ је измењен ван уређивача. Измене се не могу применити.",
     "Unsaved changes" : "Несачуване измене",
+    "Connection failed." : "Није успело повезивање.",
     "Formatting help" : "Помоћ око форматирања",
     "Speed up your writing with simple shortcuts." : "Убрзајте своје уређивање простим пречицама.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Једноставно куцајте Markdown синтаксу или користите пречице на тастатури приказане испод.",

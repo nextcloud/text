@@ -60,6 +60,7 @@
     "Last saved {lastSave}" : "S'ha desat per darrera vegada {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El document s'ha modificat fora d'aquest editor. No es poden aplicar els canvis.",
     "Unsaved changes" : "Canvis sense desar",
+    "Connection failed." : "S'ha produït un error de connexió.",
     "Formatting help" : "Ajuda de format",
     "Speed up your writing with simple shortcuts." : "Accelereu l'escriptura amb dreceres senzilles.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Només heu d'escriure la sintaxi Markdown o utilitzar les dreceres del teclat següents.",
