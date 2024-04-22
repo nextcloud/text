@@ -179,7 +179,7 @@ export const addMenuRichWorkspace = () => {
 			})
 			const fileid = parseInt(response.headers['oc-fileid'])
 			const file = new File({
-				source: context.source + '/' + encodeURIComponent(descriptionFile),
+				source: context.source + '/' + descriptionFile,
 				id: fileid,
 				mtime: new Date(),
 				mime: 'text/markdown',
