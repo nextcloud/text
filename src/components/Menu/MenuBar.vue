@@ -61,6 +61,7 @@
 			<ActionList ref="remainingEntries"
 				:action-entry="hiddenEntries"
 				:can-be-focussed="activeMenuEntry === visibleEntries.length"
+				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
 					<NcActionButton v-if="canTranslate" @click="showTranslate">
