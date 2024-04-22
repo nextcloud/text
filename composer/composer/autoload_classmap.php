@@ -46,6 +46,7 @@ return array(
     'OCA\\Text\\Listeners\\LoadViewerListener' => $baseDir . '/../lib/Listeners/LoadViewerListener.php',
     'OCA\\Text\\Listeners\\NodeCopiedListener' => $baseDir . '/../lib/Listeners/NodeCopiedListener.php',
     'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => $baseDir . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
+    'OCA\\Text\\Listeners\\RegisterTemplateCreatorListener' => $baseDir . '/../lib/Listeners/RegisterTemplateCreatorListener.php',
     'OCA\\Text\\Middleware\\Attribute\\RequireDocumentBaseVersionEtag' => $baseDir . '/../lib/Middleware/Attribute/RequireDocumentBaseVersionEtag.php',
     'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSession' => $baseDir . '/../lib/Middleware/Attribute/RequireDocumentSession.php',
     'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSessionOrUserOrShareToken' => $baseDir . '/../lib/Middleware/Attribute/RequireDocumentSessionOrUserOrShareToken.php',

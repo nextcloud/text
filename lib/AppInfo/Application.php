@@ -39,12 +39,11 @@ use OCA\Text\Listeners\LoadEditorListener;
 use OCA\Text\Listeners\LoadViewerListener;
 use OCA\Text\Listeners\NodeCopiedListener;
 use OCA\Text\Listeners\RegisterDirectEditorEventListener;
+use OCA\Text\Listeners\RegisterTemplateCreatorListener;
 use OCA\Text\Middleware\SessionMiddleware;
 use OCA\Text\Notification\Notifier;
-use OCA\Text\Service\ConfigService;
 use OCA\TpAssistant\Event\BeforeAssistantNotificationEvent;
 use OCA\Viewer\Event\LoadViewer;
-use OCP\App\IAppManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -55,9 +54,7 @@ use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
 use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
 use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\Events\Node\NodeCopiedEvent;
-use OCP\Files\Template\ITemplateManager;
-use OCP\Files\Template\TemplateFileCreator;
-use OCP\IL10N;
+use OCP\Files\Template\RegisterTemplateCreatorEvent;
 
 class Application extends App implements IBootstrap {
 	public const APP_NAME = 'text';
@@ -79,23 +76,12 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(BeforeNodeDeletedEvent::class, BeforeNodeDeletedListener::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
 		$context->registerEventListener(BeforeAssistantNotificationEvent::class, BeforeAssistantNotificationListener::class);
+		$context->registerEventListener(RegisterTemplateCreatorEvent::class, RegisterTemplateCreatorListener::class);
 
 		$context->registerNotifierService(Notifier::class);
 		$context->registerMiddleware(SessionMiddleware::class);
 	}
 
 	public function boot(IBootContext $context): void {
-		$context->injectFn(function (ITemplateManager $templateManager, IL10N $l, ConfigService $configService, IAppManager $appManager) {
-			$templateManager->registerTemplateFileCreator(function () use ($l, $configService, $appManager) {
-				$markdownFile = new TemplateFileCreator(Application::APP_NAME, $l->t('New text file'), '.' . $configService->getDefaultFileExtension());
-				$markdownFile->addMimetype('text/markdown');
-				$markdownFile->addMimetype('text/plain');
-				$markdownFile->setIconSvgInline(file_get_contents($appManager->getAppPath('text') . '/img/article.svg'));
-				$markdownFile->setRatio(1);
-				$markdownFile->setOrder(10);
-				$markdownFile->setActionLabel($l->t('Create new text file'));
-				return $markdownFile;
-			});
-		});
 	}
 }
