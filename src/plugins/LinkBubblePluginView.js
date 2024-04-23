@@ -13,14 +13,6 @@ class LinkBubblePluginView {
 		this.view = view
 		this.plugin = plugin
 		this.#editor = this.options.editor
-
-		this.#component = new VueRenderer(LinkBubbleView, {
-			parent: this.options.parent,
-			propsData: {
-				editor: this.options.editor,
-				href: null,
-			},
-		})
 	}
 
 	addEventListeners() {
@@ -71,6 +63,14 @@ class LinkBubblePluginView {
 			return
 		}
 
+		this.#component ||= new VueRenderer(LinkBubbleView, {
+			parent: this.options.parent,
+			propsData: {
+				editor: this.options.editor,
+				href: null,
+			},
+		})
+
 		this.tippy = tippy(editorElement, {
 			duration: 100,
 			getReferenceClientRect: null,
@@ -112,7 +112,7 @@ class LinkBubblePluginView {
 		}
 		const clientRect = referenceEl?.getBoundingClientRect()
 
-		this.#component.updateProps({
+		this.#component?.updateProps({
 			href: domHref(mark),
 		})
 

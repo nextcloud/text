@@ -18,7 +18,7 @@ describe('TaskItem extension', () => {
 		expect(taskItem.spec.toMarkdown).toBeDefined()
 	})
 
-	test('markdown syntax is preserved through editor', () => {
+	it('markdown syntax is preserved through editor', () => {
 		// Invalid ones but should be syntactical unchanged
 		expect(markdownThroughEditor('- [F] asd')).toBe('- [F] asd')
 		expect(markdownThroughEditor('- [ [asd](sdf)')).toBe('- [ [asd](sdf)')
