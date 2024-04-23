@@ -24,7 +24,7 @@ class LinkBubblePluginView {
 		)
 		document.addEventListener('scroll',
 			this.closeOnExternalEvents,
-			{ capture: true }
+			{ capture: true },
 		)
 	}
 
@@ -37,7 +37,7 @@ class LinkBubblePluginView {
 		)
 		document.removeEventListener('scroll',
 			this.closeOnExternalEvents,
-			{ capture: true }
+			{ capture: true },
 		)
 	}
 
