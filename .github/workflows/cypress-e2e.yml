@@ -23,33 +23,33 @@ jobs:
 
     steps:
       - name: Checkout server
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        uses: actions/checkout@v4.1.1
         with:
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
           submodules: true
 
       - name: Checkout viewer
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        uses: actions/checkout@v4.1.1
         with:
           repository: nextcloud/viewer
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
       - name: Checkout assistant
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        uses: actions/checkout@v4.1.1
         with:
           repository: nextcloud/assistant
           ref: 'main'
           path: apps/assistant
 
       - name: Checkout app
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        uses: actions/checkout@v4.1.1
         with:
           path: apps/${{ env.APP_NAME }}
 
       - name: Read package.json node and npm engines version
-        uses: skjnldsv/read-package-engines-version-actions@8205673bab74a63eb9b8093402fd9e0e018663a1 # v2.2
+        uses: skjnldsv/read-package-engines-version-actions@v3
         id: versions
         with:
           fallbackNode: "^20"
@@ -79,10 +79,12 @@ jobs:
           npm run build
 
       - name: Save context
-        uses: buildjet/cache/save@e376f15c6ec6dc595375c78633174c7e5f92dc0e # v3
+        uses: buildjet/cache/save@v4.0.2
         with:
           key: cypress-context-${{ github.run_id }}
-          path: ./
+          path: |
+            ./
+            /home/runner/.cache/Cypress
 
   cypress:
     runs-on: ubuntu-22.04
@@ -93,8 +95,6 @@ jobs:
       matrix:
         containers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         php-versions: ['8.1']
-        run-in-parallel:
-          - false # only for PRs: ${{ !!github.head_ref }}
 
     name: runner ${{ matrix.containers }}
 
@@ -111,11 +111,13 @@ jobs:
 
     steps:
       - name: Restore context
-        uses: buildjet/cache/restore@e376f15c6ec6dc595375c78633174c7e5f92dc0e # v3
+        uses: buildjet/cache/restore@v4.0.2
         with:
           fail-on-cache-miss: true
           key: cypress-context-${{ github.run_id }}
-          path: ./
+          path: |
+            ./
+            /home/runner/.cache/Cypress
 
       - name: Set up node ${{ needs.init.outputs.nodeVersion }}
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
@@ -127,7 +129,7 @@ jobs:
         run: npm i -g npm@"${{ needs.init.outputs.npmVersion }}"
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@4bd44f22a98a19e0950cbad5f31095157cc9621b # v2
+        uses: shivammathur/setup-php@8872c784b04a1420e81191df5d64fbd59d3d3033 # 2.30.2
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, pgsql, pdo_pgsql
@@ -159,15 +161,10 @@ jobs:
           cat data/nextcloud.log
 
       - name: Run E2E cypress tests
-        # Starting with v5.4.0, tons of "tar: ... Cannot mkdir: Permission denied" errors
-        uses: cypress-io/github-action@4d475873e011991664253f34700acfc3acdc46a3 # v5.3.0
-        with:
-          record: '${{ !!matrix.run-in-parallel }}' # only on pull requests
-          parallel: '${{ !!matrix.run-in-parallel }}' # only on pull requests
-          wait-on: '${{ env.CYPRESS_baseUrl }}'
-          working-directory: 'apps/${{ env.APP_NAME }}'
-          config: defaultCommandTimeout=10000,video=false
-          tag: ${{ matrix.run-in-parallel && github.event_name }}
+        run: |
+          cd 'apps/${{ env.APP_NAME }}'
+          npx wait-on $CYPRESS_baseUrl
+          npx cypress run --record false --config defaultCommandTimeout=10000,video=false
         env:
           # https://github.com/cypress-io/github-action/issues/124
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
