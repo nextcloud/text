@@ -5,6 +5,7 @@ OC.L10N.register(
     "Reload" : "Ponovo učitaj",
     "Guest" : "Gost",
     "guest" : "gost",
+    "Offline" : "Van mreže",
     "Bold" : "Podebljano",
     "Italic" : "Kurziv",
     "Cancel" : "Poništi",
