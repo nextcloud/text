@@ -62,6 +62,7 @@ OC.L10N.register(
     "Last saved {lastSave}" : "Востаннє збережено {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Документ було змінено за межами редактора. Неможливо застосувати зміни.",
     "Unsaved changes" : "Незбережені зміни",
+    "Connection failed." : "Відсутнє з'єднання",
     "Formatting help" : "Допомога",
     "Speed up your writing with simple shortcuts." : "Прискоріть написання за допомогою простих комбінацій клавіш.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Просто введіть синтаксис Markdown або скористайтеся комбінаціями клавіш нижче.",
