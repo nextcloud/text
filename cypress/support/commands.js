@@ -21,6 +21,7 @@
  */
 
 import axios from '@nextcloud/axios'
+import { emit } from '@nextcloud/event-bus'
 import { addCommands } from '@nextcloud/cypress'
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command.js'
 
@@ -33,59 +34,25 @@ const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 const silent = { log: false }
 
+// prepare main cypress window so we can use axios there
+// and it will successfully fetch csrf tokens when needed.
+window.OC = {
+	config: { modRewriteWorking: false },
+}
+// Prevent @nextcloud/router from reading window.location
+window._oc_webroot = url
+
 addCommands()
 
-// Keep track of the current user authentication.
-// We need it for various commands to authenticate
-// and also to determine paths, urls and the like.
-let auth
+// Prepare the csrf-token for axios
 Cypress.Commands.overwrite('login', (login, user) => {
 	cy.window(silent).then((win) => {
 		win.location.href = 'about:blank'
 	})
-	auth = { user: user.userId, password: user.password }
-	cy.wrap(null).as('requesttoken')
 	login(user)
-})
-
-Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
-	// Make sure that each visit call that triggers a page load will update the stored requesttoken
-	return originalFn(url, options).then((result) => {
-		cy.window(silent)
-			.then((win) => {
-				cy.wrap(win?.OC?.requestToken)
-					.as('requesttoken')
-			})
-	})
-})
-
-Cypress.Commands.add('getRequestToken', () => {
-	cy.then(function() {
-		if (this.requesttoken) {
-			return this.requesttoken
-		} else {
-			cy.log('Fetching request token')
-			return cy.request('/csrftoken')
-				.its('body.token')
-				.as('requesttoken')
-		}
-	})
-})
-
-Cypress.Commands.add('ocsRequest', (options) => {
-	return cy.getRequestToken()
-		.then((requesttoken) => {
-			return cy.request({
-				form: true,
-				auth,
-				headers: {
-					'OCS-ApiRequest': 'true',
-					'Content-Type': 'application/x-www-form-urlencoded',
-					requesttoken,
-				},
-				...options,
-			})
-		})
+	cy.request('/csrftoken', silent)
+		.then(({ body }) => emit('csrf-token-update', body))
+	cy.wrap(user, silent).as('currentUser')
 })
 
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
@@ -95,65 +62,35 @@ Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 			if (typeof target !== 'undefined') {
 				fileName = target
 			}
-			cy.getRequestToken()
-				.then(async (requesttoken) => {
-					return cy.request({
-						url: `${url}/remote.php/webdav/${fileName}`,
-						method: 'put',
-						body: blob.size > 0 ? blob : '',
-						auth,
-						headers: {
-							requesttoken,
-							'Content-Type': mimeType,
-						},
-					})
-				}).then(response => {
-					const fileId = Number(
-						response.headers['oc-fileid']?.split('oc')?.[0],
-					)
-					cy.log(`Uploaded ${fileName}`,
-						response.status,
-						{ fileId },
-					)
-					return cy.wrap(fileId)
-				})
+			return axios.put(
+				`${url}/remote.php/webdav/${fileName}`,
+				blob.size > 0 ? blob : '',
+				{ headers: { 'Content-Type': mimeType } },
+			).then(response => {
+				const fileId = Number(response.headers['oc-fileid']?.split('oc')?.[0])
+				Cypress.log({ message: `"${target}" (${response.status}): ${fileId}` })
+				return cy.wrap(fileId, silent)
+			})
 		})
 })
 
 Cypress.Commands.add('downloadFile', (fileName) => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return axios.get(`${url}/remote.php/webdav/${fileName}`, {
-				headers: {
-					requesttoken,
-				},
-			})
-		})
+	return axios.get(`${url}/remote.php/webdav/${fileName}`)
 })
 
 Cypress.Commands.add('createFile', (target, content, mimeType = 'text/markdown', headers = {}) => {
 	const blob = new Blob([content], { type: mimeType })
-
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				url: `${url}/remote.php/webdav/${target}`,
-				method: 'put',
-				body: blob.size > 0 ? blob : '',
-				auth,
-				headers: {
-					'Content-Type': mimeType,
-					requesttoken,
-					...headers,
-				},
-			}).then((response) => {
-				cy.log(`Uploaded ${target}`, response.status)
-				const fileId = Number(
-					response.headers['oc-fileid']?.split('oc')?.[0],
-				)
-				return cy.wrap(fileId)
-			})
-		})
+	return axios.put(
+		`${url}/remote.php/webdav/${target}`,
+		blob.size > 0 ? blob : '',
+		{
+			headers: { 'Content-Type': mimeType, ...headers },
+		},
+	).then((response) => {
+		const fileId = Number(response.headers['oc-fileid']?.split('oc')?.[0])
+		Cypress.log({ message: `"${target}" (${response.status}): ${fileId}` })
+		return fileId
+	})
 })
 
 Cypress.Commands.add('createMarkdown', (fileName, content, reload = true) => {
@@ -167,18 +104,16 @@ Cypress.Commands.add('createMarkdown', (fileName, content, reload = true) => {
 })
 
 Cypress.Commands.add('shareFileToUser', (path, targetUser, shareData = {}) => {
-	cy.ocsRequest({
-		method: 'POST',
-		url: `${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
-		body: {
+	Cypress.log()
+	return axios.post(
+		`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
+		{
 			path,
 			shareType: 0,
 			shareWith: targetUser.userId,
 			...shareData,
 		},
-	}).then(response => {
-		cy.log(`${auth.user} shared ${path} with ${targetUser.userId}`, response.status)
-	})
+	)
 })
 
 Cypress.Commands.add('testName', () => {
@@ -224,110 +159,65 @@ Cypress.Commands.add('isolateTest', ({ sourceFile = 'empty.md', targetFile = nul
 })
 
 Cypress.Commands.add('shareFile', (path, options = {}) => {
-	return cy.getRequestToken()
-		.then(async requesttoken => {
-			const headers = { requesttoken }
-			const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
-			const request = await axios.post(
-				`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
-				{ path, shareType },
-				{ headers },
-			)
-			const token = request.data?.ocs?.data?.token
-			const id = request.data?.ocs?.data?.id
-			if (!token || !id || token.length === 0) {
-				throw request
+	const shareType = window.OC?.Share?.SHARE_TYPE_LINK ?? 3
+	return axios.post(
+		`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares`,
+		{ path, shareType },
+	)
+		.then(response => response.data.ocs.data)
+		.then(({ token, id }) => {
+			Cypress.log({ message: `"${path}" (${id}): ${token}` })
+			if (!options.edit) {
+				return token
 			}
-			cy.log(`Share link created: ${token}`)
-
-			if (options.edit) {
-				// Same permissions makeing the share editable in the UI would set
-				// 1 = read; 2 = write; 16 = share;
-				const permissions = 19
-				await axios.put(
-					`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
-					{ permissions },
-					{ headers },
-				)
-				cy.log(`Made share ${token} editable.`)
-			}
-			return cy.wrap(token)
-		}).should('have.length', 15)
+			// Same permissions makeing the share editable in the UI would set
+			// 1 = read; 2 = write; 16 = share;
+			const permissions = 19
+			return axios.put(
+				`${url}/ocs/v2.php/apps/files_sharing/api/v1/shares/${id}`,
+				{ permissions },
+			).then(() => token)
+		})
 })
 
 Cypress.Commands.add('createFolder', (target) => {
-	const rootPath = `${Cypress.env('baseUrl')}/remote.php/dav/files/${encodeURIComponent(auth.user)}`
-	const dirPath = target.split('/').map(encodeURIComponent).join('/')
-
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				url: `${rootPath}/${dirPath}`,
-				method: 'MKCOL',
-				auth,
-				headers: {
-					requesttoken,
-				},
-			})
-		})
+	cy.get('@currentUser', silent).then(({ userId }) => {
+		const rootPath = `${url}/remote.php/dav/files/${encodeURIComponent(userId)}`
+		const dirPath = target.split('/').map(encodeURIComponent).join('/')
+		return axios.request(
+			`${rootPath}/${dirPath}`,
+			{ method: 'MKCOL' },
+		)
+	}).then((response) => parseInt(response.headers['oc-fileid']))
 })
 
 Cypress.Commands.add('moveFile', (path, destinationPath) => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				method: 'MOVE',
-				url: `${url}/remote.php/webdav/${path}`,
-				auth,
-				headers: {
-					requesttoken,
-					Destination: `${url}/remote.php/webdav/${destinationPath}`,
-				},
-			}).then(response => {
-				cy.wrap(response.body)
-			})
-		})
+	return axios.request({
+		method: 'MOVE',
+		url: `${url}/remote.php/webdav/${path}`,
+		headers: {
+			Destination: `${url}/remote.php/webdav/${destinationPath}`,
+		},
+	}).then(response => response.body)
 })
 
-Cypress.Commands.add('removeFile', (path) => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				url: `${url}/remote.php/webdav/${path}`,
-				method: 'DELETE',
-				auth,
-				headers: {
-					requesttoken,
-				},
-			})
-		})
+Cypress.Commands.add('deleteFile', (path) => {
+	return axios.delete(`${url}/remote.php/webdav/${path}`)
 })
 
 Cypress.Commands.add('copyFile', (path, destinationPath) => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				method: 'COPY',
-				url: `${url}/remote.php/webdav/${path}`,
-				auth,
-				headers: {
-					requesttoken,
-					Destination: `${url}/remote.php/webdav/${destinationPath}`,
-				},
-			}).then(response => {
-				cy.wrap(response.body)
-			})
-		})
+	return axios.request({
+		method: 'COPY',
+		url: `${url}/remote.php/webdav/${path}`,
+		headers: {
+			Destination: `${url}/remote.php/webdav/${destinationPath}`,
+		},
+	}).then(response => response.body)
 })
 
 Cypress.Commands.add('getFileContent', (path) => {
-	return cy.request({
-		method: 'GET',
-		url: `${url}/remote.php/webdav/${path}`,
-		auth,
-	}).then(response => {
-		cy.wrap(response.body)
-	})
+	return axios.get(`${url}/remote.php/webdav/${path}`)
+		.then(response => response.data)
 })
 
 Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
@@ -407,39 +297,20 @@ Cypress.Commands.add('interceptCreate', () => {
 })
 
 Cypress.Commands.add('closeInterceptedSession', (shareToken = undefined) => {
-	return cy.window().then(win => {
-		return axios.post(
-			closeData.url,
-			{
-				documentId: closeData.session.documentId,
-				sessionId: closeData.session.id,
-				sessionToken: closeData.session.token,
-				token: shareToken,
-			},
-			{ headers: { requesttoken: win.OC.requestToken } },
-		)
-	})
+	return axios.post(
+		closeData.url,
+		{
+			documentId: closeData.session.documentId,
+			sessionId: closeData.session.id,
+			sessionToken: closeData.session.token,
+			token: shareToken,
+		},
+	)
 })
 
 Cypress.Commands.add('getFile', fileName => {
 	return cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`)
 
-})
-
-Cypress.Commands.add('deleteFile', fileName => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				method: 'DELETE',
-				url: `${url}/remote.php/webdav/${fileName}`,
-				auth,
-				headers: {
-					requesttoken,
-				},
-			}).then(response => {
-				cy.wrap(response.body)
-			})
-		})
 })
 
 Cypress.Commands.add('getModal', () => {
@@ -512,32 +383,18 @@ Cypress.Commands.add('openWorkspace', () => {
 })
 
 Cypress.Commands.add('configureText', (key, value) => {
-	return cy.window(silent).then(win => {
-		return axios.post(
-			`${url}/index.php/apps/text/settings`,
-			{ key, value },
-			{ headers: { requesttoken: win.OC.requestToken } },
-		)
-	})
+	return axios.post(
+		`${url}/index.php/apps/text/settings`,
+		{ key, value },
+	)
 })
 
 Cypress.Commands.add('showHiddenFiles', (value = true) => {
-	return cy.getRequestToken()
-		.then(requesttoken => {
-			return cy.request({
-				url: `${url}/index.php/apps/files/api/v1/config/show_hidden`,
-				method: 'put',
-				body: {
-					value,
-				},
-				auth,
-				headers: {
-					requesttoken,
-				},
-			}).then((response) => {
-				return cy.log(`Set hidden files to ${value}`, response.status)
-			})
-		})
+	Cypress.log()
+	return axios.put(
+		`${url}/index.php/apps/files/api/v1/config/show_hidden`,
+		{ value },
+	)
 })
 
 Cypress.Commands.add('createDescription', () => {
@@ -559,6 +416,42 @@ Cypress.Commands.add('setCssMedia', (media) => {
 		params: {
 			media,
 		},
+	})
+})
+
+Cypress.Commands.add('createDirectEditingLink', path => {
+	return axios.request({
+		method: 'POST',
+		url: `${url}/ocs/v2.php/apps/files/api/v1/directEditing/open?format=json`,
+		data: { path },
+		headers: {
+			'OCS-ApiRequest': 'true',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	}).then(response => {
+		const token = response.data?.ocs?.data?.url
+		Cypress.log({ message: token })
+		return token
+	})
+})
+
+Cypress.Commands.add('createDirectEditingLinkForNewFile', path => {
+	return axios.request({
+		method: 'POST',
+		url: `${url}/ocs/v2.php/apps/files/api/v1/directEditing/create?format=json`,
+		data: {
+			path,
+			editorId: 'text',
+			creatorId: 'textdocument',
+		},
+		headers: {
+			'OCS-ApiRequest': 'true',
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	}).then(response => {
+		const token = response.data?.ocs?.data?.url
+		Cypress.log({ message: token })
+		return token
 	})
 })
 

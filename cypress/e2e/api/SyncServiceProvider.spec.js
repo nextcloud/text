@@ -32,12 +32,10 @@ describe('Sync service provider', function() {
 
 	before(function() {
 		cy.createUser(user)
-		cy.prepareWindowForSessionApi()
 	})
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.prepareSessionApi()
 		cy.uploadTestFile('test.md')
 			.then(id => {
 				fileId = id

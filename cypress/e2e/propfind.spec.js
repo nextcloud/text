@@ -51,7 +51,7 @@ describe('Text PROPFIND extension ', function() {
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
 			cy.propfindFolder('/')
 				.should('have.property', richWorkspace, '## Hello world\n')
-			cy.removeFile('/Readme.md')
+			cy.deleteFile('/Readme.md')
 			cy.propfindFolder('/')
 				.should('have.property', richWorkspace, '')
 		})

@@ -30,14 +30,12 @@ describe('The user mention API', function() {
 
 	before(function() {
 		cy.createUser(user)
-		cy.prepareWindowForSessionApi()
 	})
 
 	beforeEach(function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md').as('fileId')
 			.then(cy.createTextSession).as('connection')
-		cy.getRequestToken()
 	})
 
 	afterEach(function() {
