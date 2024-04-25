@@ -20,24 +20,10 @@
  *
  */
 
+import axios from '@nextcloud/axios'
 import SessionApi from '../../src/services/SessionApi.js'
-import { emit } from '@nextcloud/event-bus'
 
-Cypress.Commands.add('prepareWindowForSessionApi', () => {
-	window.OC = {
-		config: { modRewriteWorking: false },
-	}
-	// Prevent @nextcloud/router from reading window.location
-	window._oc_webroot = ''
-})
-
-Cypress.Commands.add('prepareSessionApi', () => {
-	return cy.request('/csrftoken')
-		.then(({ body }) => {
-			emit('csrf-token-update', body)
-			return body.token
-		})
-})
+const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
 Cypress.Commands.add('createTextSession', (fileId, options = {}) => {
 	const api = new SessionApi(options)
@@ -89,18 +75,18 @@ Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
 })
 
 Cypress.Commands.add('sessionUsers', function(connection, bodyOptions = {}) {
-	const body = {
+	const data = {
 		documentId: connection.document.id,
 		sessionId: connection.session.id,
 		sessionToken: connection.session.token,
 		requesttoken: this.requesttoken,
 		...bodyOptions,
 	}
-	cy.request({
+	return axios.request({
 		method: 'POST',
-		url: '/apps/text/api/v1/users',
-		body,
-		failOnStatusCode: false,
+		url: `${url}/index.php/apps/text/api/v1/users`,
+		data,
+		validateStatus: status => status < 500,
 	})
 })
 
