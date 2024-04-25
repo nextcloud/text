@@ -20,8 +20,8 @@
  *
  */
 
+import axios from '@nextcloud/axios'
 import SessionApi from '../../src/services/SessionApi.js'
-import { emit } from '@nextcloud/event-bus'
 
 Cypress.Commands.add('prepareSessionApi', () => {
 	return cy.request('/csrftoken')
