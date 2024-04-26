@@ -77,7 +77,7 @@ OC.L10N.register(
     "Backspace" : "Повернутися",
     "Shift" : "Shift",
     "Bold" : "Грубий",
-    "Bold text" : "Грубий текст",
+    "Bold text" : "Грубий шрифт",
     "Ctrl" : "Ctrl",
     "Italic" : "Курсив",
     "Italicized text" : "Текст курсивом",
