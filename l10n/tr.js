@@ -62,6 +62,7 @@ OC.L10N.register(
     "Last saved {lastSave}" : "Son kaydedilme {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "Belge düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "Unsaved changes" : "Kaydedilmemiş değişiklikler",
+    "Connection failed." : "Bağlantı kurulamadı.",
     "Formatting help" : "Biçimlendirme yardımı",
     "Speed up your writing with simple shortcuts." : "Basit kısayol tuşlarını kullanarak yazmayı hızlandırabilirsiniz.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Aşağıda Markdown söz dizimini yazın ya da kısayol tuşlarını kullanın.",
