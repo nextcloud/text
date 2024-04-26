@@ -117,7 +117,7 @@ describe('Open test.md in viewer', function() {
 				cy.getModal().getContent().should('contain', 'Hello world')
 				cy.getModal().getContent().find('h2').should('contain', 'Hello world')
 				cy.getModal().find('.modal-header button.header-close').click()
-				cy.get('.modal-mask').should('not.exist')
+				cy.get('.modal-mask').should('not.be.visible')
 				// cy.get('#rich-workspace').getContent().should('contain', 'Hello world')
 			})
 	})

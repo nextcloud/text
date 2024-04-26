@@ -20,7 +20,7 @@
   -->
 
 <template>
-	<NcModal size="large" @close="$emit('close')">
+	<NcModal :show="show" size="large" @close="$emit('close')">
 		<div class="translate-dialog">
 			<h2>{{ t('text', 'Translate') }}</h2>
 			<em>{{ t('text', 'To translate individual parts of the text, select it before using the translate function.') }}</em>
@@ -39,6 +39,7 @@
 						:value.sync="input"
 						:label="t('text', 'Text to translate from')"
 						autofocus
+						data-cy="translate-input"
 						input-class="translate-textarea"
 						resize="none"
 						@focus="onInputFocus" />
@@ -106,6 +107,10 @@ export default {
 		useIsMobileMixin,
 	],
 	props: {
+		show: {
+			type: Boolean,
+			default: false,
+		},
 		content: {
 			type: String,
 			default: '',
@@ -165,6 +170,9 @@ export default {
 		},
 	},
 	watch: {
+		content() {
+			this.input = this.content
+		},
 		input() {
 			this.result = null
 			this.error = null
@@ -246,6 +254,7 @@ export default {
 		resize: none;
 		box-sizing: border-box;
 		overflow-y: auto;
+		min-height: 62px;
 		max-height: 58vh;
 	}
 }
