@@ -52,6 +52,7 @@ OC.L10N.register(
     "Syntax" : "Syntax",
     "Keyboard shortcuts" : "Klávesové skratky",
     "New paragraph" : "Nový odstavec",
+    "Enter" : "Enter",
     "Hard line break" : "Vynútené zalomenie riadka",
     "followed by" : "a následne",
     "Backspace" : "Spätná lomka",
