@@ -31,7 +31,7 @@
 		:force-menu="true"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
-		:disabled="isDisabled"
+		:disabled="!isEnabled"
 		@update:open="onOpenChange">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
@@ -77,7 +77,7 @@ export default {
 	},
 	data: () => ({
 		visible: false,
-		disabledChildren: [],
+		hasEnabledChild: true,
 	}),
 	computed: {
 		currentChild() {
@@ -130,8 +130,8 @@ export default {
 
 			return this.actionEntry.label
 		},
-		isDisabled() {
-			return !this.forceEnabled && this.disabledChildren.length === this.children.filter((child) => !child.isSeparator).length
+		isEnabled() {
+			return this.forceEnabled || this.hasEnabledChild
 		},
 	},
 	mounted() {
@@ -158,13 +158,11 @@ export default {
 			this.$emit('trigged', entry)
 		},
 		checkStateOfChildren() {
-			this.disabledChildren = this.children.filter((child) => {
-				if (child.isSeparator) {
-					return false
-				}
-				const { disabled } = getActionState(child, this.$editor)
-				return disabled
-			})
+			this.hasEnabledChild = this.children.some(child => this.isChildEnabled(child))
+		},
+		isChildEnabled(child) {
+			return !child.isSeparator
+				&& !getActionState(child, this.$editor).disabled
 		},
 	},
 }
