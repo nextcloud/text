@@ -31,6 +31,7 @@
 		:force-menu="true"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
+		:disabled="!isEnabled"
 		@update:open="onOpenChange">
 		<template #icon>
 			<component :is="icon" :key="iconKey" />
@@ -53,10 +54,11 @@
 import { NcActions, NcActionSeparator } from '@nextcloud/vue'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionListItem from './ActionListItem.vue'
-import { getIsActive } from './utils.js'
+import { getActionState, getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
+import debounce from 'debounce'
 
 export default {
 	name: 'ActionList',
@@ -67,8 +69,15 @@ export default {
 	},
 	extends: BaseActionEntry,
 	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
+	props: {
+		forceEnabled: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	data: () => ({
 		visible: false,
+		hasEnabledChild: true,
 	}),
 	computed: {
 		currentChild() {
@@ -121,6 +130,18 @@ export default {
 
 			return this.actionEntry.label
 		},
+		isEnabled() {
+			return this.forceEnabled || this.hasEnabledChild
+		},
+	},
+	mounted() {
+		this.$_updateState = debounce(this.checkStateOfChildren.bind(this), 50)
+		this.$editor.on('update', this.$_updateState)
+		this.$editor.on('selectionUpdate', this.$_updateState)
+	},
+	beforeDestroy() {
+		this.$editor.off('update', this.$_updateState)
+		this.$editor.off('selectionUpdate', this.$_updateState)
 	},
 	methods: {
 		onOpenChange(val) {
@@ -135,6 +156,13 @@ export default {
 			}
 			this.$editor.chain().focus().run()
 			this.$emit('trigged', entry)
+		},
+		checkStateOfChildren() {
+			this.hasEnabledChild = this.children.some(child => this.isChildEnabled(child))
+		},
+		isChildEnabled(child) {
+			return !child.isSeparator
+				&& !getActionState(child, this.$editor).disabled
 		},
 	},
 }
