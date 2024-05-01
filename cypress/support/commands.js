@@ -55,6 +55,17 @@ Cypress.Commands.overwrite('login', (login, user) => {
 	cy.wrap(user, silent).as('currentUser')
 })
 
+Cypress.Commands.add('openDirectEditingToken', (token) => {
+	const visitHooks = {
+		onBeforeLoad(win) {
+			win.DirectEditingMobileInterface = {
+				close() {},
+			}
+		},
+	}
+	cy.visit(token, visitHooks)
+})
+
 Cypress.Commands.add('uploadFile', (fileName, mimeType, target) => {
 	return cy.fixture(fileName, 'binary')
 		.then(Cypress.Blob.binaryStringToBlob)
