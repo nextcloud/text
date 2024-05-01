@@ -4,13 +4,6 @@ const user = randUser()
 
 describe('direct editing', function() {
 
-	const visitHooks = {
-		onBeforeLoad(win) {
-			win.DirectEditingMobileInterface = {
-				close() {},
-			}
-		},
-	}
 	before(function() {
 		initUserAndFiles(user, 'test.md', 'empty.md', 'empty.txt')
 	})
@@ -23,8 +16,8 @@ describe('direct editing', function() {
 		cy.login(user)
 		cy.createDirectEditingLink('empty.md')
 			.then((token) => {
-				cy.logout()
-				cy.visit(token, visitHooks)
+				cy.session('direct-editing', () => { })
+				cy.openDirectEditingToken(token)
 			})
 		cy.getContent().type('# This is a headline')
 		cy.getContent().type('{enter}')
@@ -37,11 +30,10 @@ describe('direct editing', function() {
 
 		cy.get('button.icon-close').click()
 		cy.wait('@closeRequest')
-			.then(() => {
-				cy.getFileContent('empty.md').then((content) => {
-					expect(content).to.equal('# This is a headline\n\nSome text')
-				})
-			})
+		cy.login(user)
+		cy.getFileContent('empty.md').then((content) => {
+			expect(content).to.equal('# This is a headline\n\nSome text')
+		})
 	})
 
 	it('Create a file, edit it', () => {
@@ -52,8 +44,8 @@ describe('direct editing', function() {
 		cy.login(user)
 		cy.createDirectEditingLinkForNewFile('newfile.md')
 			.then((token) => {
-				cy.logout()
-				cy.visit(token, visitHooks)
+				cy.session('direct-editing', () => { })
+				cy.openDirectEditingToken(token)
 			})
 
 		cy.getContent().type('# This is a headline')
@@ -68,6 +60,7 @@ describe('direct editing', function() {
 		cy.get('button.icon-close').click()
 		cy.wait('@closeRequest')
 			.then(() => {
+				cy.login(user)
 				cy.getFileContent('newfile.md').then((content) => {
 					expect(content).to.equal('# This is a headline\n\nSome text')
 				})
@@ -82,8 +75,8 @@ describe('direct editing', function() {
 		cy.login(user)
 		cy.createDirectEditingLink('empty.txt')
 			.then((token) => {
-				cy.logout()
-				cy.visit(token, visitHooks)
+				cy.session('direct-editing', () => { })
+				cy.openDirectEditingToken(token)
 			})
 
 		cy.getContent().type('# This is a headline')
@@ -98,6 +91,7 @@ describe('direct editing', function() {
 		cy.get('button.icon-close').click()
 		cy.wait('@closeRequest')
 			.then(() => {
+				cy.login(user)
 				cy.getFileContent('empty.txt').then((content) => {
 					expect(content).to.equal('# This is a headline\nSome text\n')
 				})
