@@ -259,6 +259,14 @@ describe('Workspace', function() {
 				.should('contain', 'Hello world')
 		})
 
+		it('creates description with localized name properly rendered', function() {
+			cy.modifyUser(user, 'language', 'es')
+			cy.visitTestFolder()
+			cy.createDescription('Añadir descripción a carpeta')
+			cy.getFile('Léeme.md')
+			cy.get('#rich-workspace .editor__content').should('be.visible')
+		})
+
 		it('ignores localized file name in other language', function() {
 			cy.modifyUser(user, 'language', 'fr')
 			cy.uploadFile('test.md', 'text/markdown', `${this.testFolder}/Anleitung.md`)
