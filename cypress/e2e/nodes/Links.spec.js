@@ -41,14 +41,32 @@ describe('test link marks', function() {
 			cy.getContent()
 				.type(`${link}{enter}`)
 			cy.getContent()
-				.type('{upArrow}')
+				.find(`a[href*="${link}"]`)
 
 			cy.getContent()
-				.find(`a[href*="${link}"]`)
+				.type('{upArrow}')
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
+		})
+
+		it('closes the link bubble when clicking elsewhere', () => {
+			const link = 'https://nextcloud.com/'
+			cy.getContent()
+				.type(`${link}{enter}`)
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
+			cy.getContent()
+				.type('{upArrow}')
+			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
+				.find('.widget-default--name')
+				.contains('Nextcloud')
+
+			cy.get('[role="dialog"] h2.modal-name').click()
+
+			cy.get('.link-view-bubble .widget-default')
+				.should('not.exist')
 		})
 
 		it('allows to edit a link in the bubble', () => {
