@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import TiptapParagraph from '@tiptap/extension-paragraph'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import ParagraphView from './ParagraphView.vue'

@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 # Nextcloud Text
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nextcloud/text/node.yml?branch=main)

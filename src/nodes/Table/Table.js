@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { mergeAttributes } from '@tiptap/core'
 import { Table } from '@tiptap/extension-table'
 import TableCaption from './TableCaption.js'

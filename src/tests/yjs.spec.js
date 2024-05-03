@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import recorded from './fixtures/recorded'
 import { Doc, encodeStateAsUpdate } from 'yjs'
 import { decodeArrayBuffer } from '../helpers/base64.ts'

@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2021-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import TaskList from './../../nodes/TaskList'
 import TaskItem from './../../nodes/TaskItem'
 import Markdown from './../../extensions/Markdown'

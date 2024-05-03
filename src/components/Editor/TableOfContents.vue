@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<div data-text-el="editor-table-of-contents" :class="{ '--initial-render': initialRender }" class="editor--toc">
 		<ul class="editor--toc__list">

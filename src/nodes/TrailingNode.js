@@ -1,8 +1,7 @@
-/*
- * @copyright Copyright (c) 2021, überdosis GbR
- *
- * @license MIT
- *
+/**
+ * SPDX-FileCopyrightText: 2021 überdosis GbR
+ * SPDX-FileCopyrightText: 2021 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: MIT
  */
 
 import { Extension } from '@tiptap/core'

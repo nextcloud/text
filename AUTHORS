@@ -1,0 +1,74 @@
+<!--
+  - SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+# Authors
+
+- Adam Monsen <haircut@gmail.com>
+- Alexander Schau <alexander@schau.email>
+- Anton Strömkvist <anton@stromkvist.com>
+- Arthur Schiwon <blizzz@arthur-schiwon.de>
+- Ashutosh Verma <mail@ashu.io>
+- Azul <azul@riseup.net>
+- Bjørn Forsman <bjorn.forsman@gmail.com>
+- Carl Schwan <carl@carlschwan.eu>
+- Christoph Wurst <christoph@winzerhof-wurst.at>
+- Christopher Ng <chrng8@gmail.com>
+- Christopher Teutsch <chris@heychris.eu>
+- Côme Chilliet <come.chilliet@nextcloud.com>
+- Daniel Calviño Sánchez <danxuliu@gmail.com>
+- Daniel Kesselberg <mail@danielkesselberg.de>
+- dassio <dassio@icloud.com>
+- Elizabeth Danzberger <lizzy7128@tutanota.de>
+- Ferdinand Thiessen <opensource@fthiessen.de>
+- Frederic Habich <frederic.habich@codeadmin.de>
+- Gary Kim <gary@garykim.dev>
+- Georg Ehrke <developer@georgehrke.com>
+- goligo <ich@malte.de>
+- Grigorii K. Shartsev <me@shgk.me>
+- grnd-alt <salimbelakkaf@outlook.de>
+- Hephi2 <46924014+Hephi2@users.noreply.github.com>
+- Jan C. Borchardt <hey@jancborchardt.net>
+- Jan-Christoph Borchardt <hey@jancborchardt.net>
+- jeremy238 <113722664+jeremy238@users.noreply.github.com>
+- jld3103 <jld3103yt@gmail.com>
+- Joas Schilling <coding@schilljs.com>
+- John Molakvoæ <skjnldsv@protonmail.com>
+- Jonas <jonas@freesources.org>
+- Jonas <jonas@nextcloud.com>
+- Jonas Meurer <jonas@freesources.org>
+- Jonas Sulzer <jonas@violoncello.ch>
+- Julien Veyssier <julien-nc@posteo.net>
+- Julius Härtl <jus@bitgrid.net>
+- Jérôme Herbinet <33763786+Jerome-Herbinet@users.noreply.github.com>
+- Leifur Halldor Asgeirsson <leifurhauks@gmail.com>
+- LoneRifle <LoneRifle@users.noreply.github.com>
+- Louis Chemineau <louis@chmn.me>
+- Luka Trovic <luka@nextcloud.com>
+- Marcel Klehr <mklehr@gmx.net>
+- Max <max@nextcloud.com>
+- max-nextcloud <max@nextcloud.com>
+- Michal Junek <michal@junek.pw>
+- Morris Jobke <hey@morrisjobke.de>
+- nik gaffney <nik@fo.am>
+- ovk <koshelnikov@gmail.com>
+- Philipp Hempel <philipp.hempel@nextcloud.com>
+- Pierre Ozoux <pierre@ozoux.net>
+- Pytal <24800714+Pytal@users.noreply.github.com>
+- rakekniven <mark.ziegler@rakekniven.de>
+- Raul <r.ferreira.fuentes@gmail.com>
+- Raul <raul@nextcloud.com>
+- Raul Ferreira Fuentes <Raudius@users.noreply.github.com>
+- renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+- Robert Szmurło <robert.szmurlo@ee.pw.edu.pl>
+- Robin Appelman <robin@icewind.nl>
+- Roeland Jago Douma <roeland@famdouma.nl>
+- Simon L <szaimen@e.mail.de>
+- skjnldsv <skjnldsv@protonmail.com>
+- sneha <rsneha715@gmail.com>
+- szaimen <szaimen@e.mail.de>
+- Tobias Speicher <rootcommander@gmail.com>
+- Valdnet <47037905+Valdnet@users.noreply.github.com>
+- Vincent Petry <vincent@nextcloud.com>
+- Vinicius Reis <vinicius.reis@nextcloud.com>
+- Viorel Cojocaru <vio@beanon.com>

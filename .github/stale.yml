@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # Number of days of inactivity before an issue becomes stale
 daysUntilStale: 30
 # Number of days of inactivity before a stale issue is closed

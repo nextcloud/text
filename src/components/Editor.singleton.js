@@ -1,4 +1,9 @@
 /**
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+/**
  * Get instance of Editor component
  * Using singleton approach here to avoid duplicate yjs import error
  * @return {Promise<*>}

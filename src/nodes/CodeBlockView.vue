@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NodeViewWrapper as="div" :data-mode="viewMode" class="code-block">
 		<div class="code-block-header">

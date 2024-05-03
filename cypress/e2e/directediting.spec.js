@@ -1,7 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { initUserAndFiles, randUser } from '../utils/index.js'
 
 const user = randUser()
 
+/**
+ *
+ */
 function enterContentAndClose() {
 	cy.intercept({ method: 'POST', url: '**/session/*/close' }).as('closeRequest')
 	cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')

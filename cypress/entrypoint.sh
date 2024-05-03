@@ -1,4 +1,6 @@
 #!/bin/sh
+# SPDX-FileCopyrightText: 2012-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Ensure correct permissions, as the bind-mount might currupt them (and prevent the installation)
 [ -e /var/www/html/custom_apps ] && chown -R www-data:www-data /var/www/html/custom_apps > /dev/null 2>&1
 

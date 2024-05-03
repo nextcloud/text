@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 @use 'sass:math';
 
 @import './variables';
@@ -21,7 +26,9 @@
 	outline: 2px solid #8cf;
 }
 
-/* Make sure li selections wrap around markers */
+/**
+ * 
+ */
 li.ProseMirror-selectednode {
 	outline: none;
 
