@@ -333,10 +333,12 @@ export default {
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
 		useResizeObserver(this.$el, (entries) => {
-			const entry = entries[0]
-			const { width } = entry.contentRect
-			const maxWidth = width - 36
-			this.$el.style.setProperty('--widget-full-width', `${maxWidth}px`)
+			window.requestAnimationFrame(() => {
+				const entry = entries[0]
+				const { width } = entry.contentRect
+				const maxWidth = width - 36
+				this.$el.style.setProperty('--widget-full-width', `${maxWidth}px`)
+			})
 		})
 	},
 	created() {
