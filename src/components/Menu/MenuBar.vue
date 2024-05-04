@@ -197,17 +197,18 @@ export default {
 	},
 	methods: {
 		onResize(entries) {
-			const entry = entries[0]
-			const { width } = entry.contentRect
+			window.requestAnimationFrame(() => {
+				const entry = entries[0]
+				const { width } = entry.contentRect
 
-			// leave some buffer - this is necessary so the bar does not wrap during resizing
-			const spaceToFill = width - 4
-			const spacePerSlot = this.$isMobile ? 44 : 46
-			const slots = Math.floor(spaceToFill / spacePerSlot)
+				// leave some buffer - this is necessary so the bar does not wrap during resizing
+				const spaceToFill = width - 4
+				const spacePerSlot = this.$isMobile ? 44 : 46
+				const slots = Math.floor(spaceToFill / spacePerSlot)
 
-			// Leave one slot empty for the three dot menu
-			this.iconsLimit = slots - 1
-			this.isReady = true
+				// Leave one slot empty for the three dot menu
+				this.iconsLimit = slots - 1
+			})
 		},
 		showHelp() {
 			this.displayHelp = true
