@@ -16,16 +16,11 @@
 </template>
 
 <script>
-import debounce from 'debounce'
 import { NcButton } from '@nextcloud/vue'
 import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
 import useStore from '../../mixins/store.js'
-
-const onResize = debounce((context) => {
-	context.mobile = context.$el.parentElement.clientWidth < 320
-}, 10)
 
 export default {
 	name: 'EditorOutline',
@@ -39,19 +34,21 @@ export default {
 		mobile: false,
 	}),
 	mounted() {
-		this.$onResize = () => {
-			onResize(this)
-		}
-
-		this.$resizeObserver = new ResizeObserver(this.$onResize)
+		this.$resizeObserver = new ResizeObserver(this.onResize)
 		this.$resizeObserver.observe(this.$el.parentElement)
-
-		this.$onResize()
+		this.onResize()
 	},
 	beforeDestroy() {
 		this.$resizeObserver.unobserve(this.$el.parentElement)
 		this.$resizeObserver = null
 		this.$onResize = null
+	},
+	methods: {
+		onResize([el]) {
+			window.requestAnimationFrame(() => {
+				this.mobile = el.clientWidth < 320
+			})
+		},
 	},
 }
 </script>
