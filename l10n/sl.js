@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Nova besedilna datoteka",
-    "Create new text file" : "Ustvari novo besedilno datoteko",
     "The file was uploaded" : "Datoteka je uspešno poslana.",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Poslana datoteka presega največjo dovoljeno velikost, kot je to določeno v datoteki php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Poslana datoteka presega velikost, ki je določena kot omejitev MAX_FILE_SIZE v zapisu HTML.",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ali ni poslane datoteke ali pa velikost datoteke presega omejitev %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "besedilni dokument",
+    "New text file" : "Nova besedilna datoteka",
+    "Create new text file" : "Ustvari novo besedilno datoteko",
     "{user} has mentioned you in the text document {node}" : "{user} vas omeni v besedili datoteki »{node}«.",
     "This file cannot be displayed as download is disabled by the share" : "Datoteke ni mogoče prikazati, ker je na tem mestu souporabe prejem onemogočen",
     "Readme" : "Preberime",
