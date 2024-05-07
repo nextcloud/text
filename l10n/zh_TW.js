@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "新文字檔",
-    "Create new text file" : "建立新文字檔案",
     "The file was uploaded" : "檔案已上傳",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "上傳的檔案大小超過 php.ini 當中 upload_max_filesize 選項的限制",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "上傳的檔案大小超過 HTML 表單中 MAX_FILE_SIZE 的限制",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "沒有上傳檔案或檔案超過上限 %s",
     "Nextcloud Text" : "Nextcloud 文字編輯器",
     "text document" : "文字文件",
+    "New text file" : "新文字檔",
+    "Create new text file" : "建立新文字檔案",
     "Editing session has expired. Please reload the page." : "編輯工作階段已過期。請重新載入頁面。",
     "{user} has mentioned you in the text document {node}" : "{user} 在文字文件 {node} 中提到您",
     "This file cannot be displayed as download is disabled by the share" : "此檔案無法顯示，因為分享時已停用下載",

@@ -1,5 +1,4 @@
 { "translations": {
-    "New text file" : "Naujas tekstinis failas",
     "The file was uploaded" : "Failas buvo įkeltas",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Įkeliamas failas viršija upload_max_filesize direktyvą, esančią faile php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Įkeltas failas viršija MAX_FILE_SIZE direktyvą, kuri buvo nurodyta HTML formoje",
@@ -11,6 +10,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "Neįkeltas joks failas arba failo dydis viršija maksimalų %s dydį",
     "Nextcloud Text" : "Nextcloud tekstas",
     "text document" : "tekstinį dokumentą",
+    "New text file" : "Naujas tekstinis failas",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
     "Readme" : "Perskaityti",
     "Text" : "Tekstas",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "New text file",
     "The file was uploaded" : "The file was uploaded",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "The uploaded file exceeds the upload_max_filesize directive in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form",
@@ -11,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Could not write file to disk",
     "A PHP extension stopped the file upload" : "A PHP extension stopped the file upload",
     "No file uploaded or file size exceeds maximum of %s" : "No file uploaded or file size exceeds maximum of %s",
+    "New text file" : "New text file",
     "Text" : "Text",
     "Translate" : "Translate",
     "Delete task" : "Delete task",

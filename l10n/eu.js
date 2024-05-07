@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Testu-fitxategi berria",
-    "Create new text file" : "Sortu testu fitxategi berria",
     "The file was uploaded" : "Fitxategia igo da",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Igotako fitxategiak php.ini fitxategiko upload_max_filesize direktiban zehazturikoa gainditzen du",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Igotako fitxategiak HTML formularioan ezarritako MAX_FILE_SIZE direktiban zehazturikoa gainditzen du",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ez da fitxategirik igo edo fitxategi-tamainak gehienezko %s muga gainditzen du",
     "Nextcloud Text" : "Nextcloud Testua",
     "text document" : "testu dokumentua",
+    "New text file" : "Testu-fitxategi berria",
+    "Create new text file" : "Sortu testu fitxategi berria",
     "{user} has mentioned you in the text document {node}" : "{user}(e)k {node} testu-dokumentuan aipatu zaitu",
     "This file cannot be displayed as download is disabled by the share" : "Fitxategi hau ezin da bistaratu partekatzeak deskarga desgaituta duelako",
     "Readme" : "IrakurNazazu",

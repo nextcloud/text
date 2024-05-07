@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Novo arquivo de texto",
-    "Create new text file" : "Criar novo arquivo de texto",
     "The file was uploaded" : "O arquivo foi enviado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O arquivo enviado excede a configuração upload_max_filesize no php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O arquivo enviado excede a configuração MAX_FILE_SIZE que foi especificada no formulário HTML",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ou nenhum arquivo foi enviado ou o tamanho do arquivo excede o máximo de%s",
     "Nextcloud Text" : "Nextcloud Texto",
     "text document" : "documento de texto",
+    "New text file" : "Novo arquivo de texto",
+    "Create new text file" : "Criar novo arquivo de texto",
     "Editing session has expired. Please reload the page." : "A sessão de edição expirou. Por favor recarregue a página.",
     "{user} has mentioned you in the text document {node}" : "{user} mencionou você no documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "Este arquivo não pode ser exibido porque o download está desabilitado pelo compartilhamento",

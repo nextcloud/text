@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Neue Textdatei",
-    "Create new text file" : "Neue Textdatei erstellen",
     "The file was uploaded" : "Die Datei wurde hochgeladen",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Die hochgeladene Datei übersteigt das Limit upload_max_filesize in der Datei php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Die hochgeladene Datei übersteigt das Limit MAX_FILE_SIZE im HTML-Formular",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Keine Datei hochgeladen oder die Dateigröße überschreitet %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "Textdokument",
+    "New text file" : "Neue Textdatei",
+    "Create new text file" : "Neue Textdatei erstellen",
     "{user} has mentioned you in the text document {node}" : "{user} hat dich in dem Textdokument {node} erwähnt.",
     "This file cannot be displayed as download is disabled by the share" : "Diese Datei kann nicht angezeigt werden, da das Herunterladen durch die Freigabe deaktiviert ist",
     "Readme" : "Anleitung",

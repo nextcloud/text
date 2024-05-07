@@ -1,5 +1,4 @@
 { "translations": {
-    "New text file" : "新建文本文件",
     "The file was uploaded" : "文件已上传",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "上传文件超出了php.ini中upload_max_filesize的限制",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "上传文件超出了HTML表单中MAX_FILE_SIZE的限制",
@@ -11,6 +10,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "没有文件上传成功或者文件大小超出了最大%s的限制",
     "Nextcloud Text" : "Nextcloud 文本",
     "text document" : "文本文档",
+    "New text file" : "新建文本文件",
     "Readme" : "自述文件",
     "Text" : "文本 ",
     "📝 Collaborative document editing" : "文档协作编辑",

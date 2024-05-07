@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Nuovo file di testo",
-    "Create new text file" : "Crea nuovo file di testo",
     "The file was uploaded" : "Il file è stato caricato",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Il file caricato supera la direttiva upload_max_filesize in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Il file caricato supera la direttiva MAX_FILE_SIZE specificata nel modulo HTML",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Nessun file caricato o la dimensione del file supera il massimo di %s",
     "Nextcloud Text" : "Testo di Nextcloud",
     "text document" : "documento di testo",
+    "New text file" : "Nuovo file di testo",
+    "Create new text file" : "Crea nuovo file di testo",
     "{user} has mentioned you in the text document {node}" : "{user} ti ha menzionato nel documento di testo {node}",
     "This file cannot be displayed as download is disabled by the share" : "Questo file non può essere visualizzato poiché il download è disattivato dalla condivisione",
     "Readme" : "Leggimi",

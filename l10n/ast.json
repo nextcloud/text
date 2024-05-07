@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "Ficheru de testu nuevu",
-    "Create new text file" : "Crear un ficheru de testu",
     "The file was uploaded" : "Xubióse'l ficheru",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "El ficheru xubíu supera la direutiva «upload_max_filesize» del ficheru php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El ficheru xubíu supera la direutiva «MAX_FILE_SIZE» que s'especificó nel formulariu HTML",
@@ -12,6 +10,8 @@
     "No file uploaded or file size exceeds maximum of %s" : "Nun se xubió nengún ficheru o'l tamañu del ficheru supera'l máximu de %s",
     "Nextcloud Text" : "Testu de Nextcloud",
     "text document" : "documentu de testu",
+    "New text file" : "Ficheru de testu nuevu",
+    "Create new text file" : "Crear un ficheru de testu",
     "Editing session has expired. Please reload the page." : "La sesión d'edición caducó. Volvi cargar la páxina.",
     "{user} has mentioned you in the text document {node}" : "{user} mentóte nel documentu de testu «{node}»",
     "This file cannot be displayed as download is disabled by the share" : "Esti ficheru nun se pue amosar darréu que l'elementu compartíu desactivó la descarga",

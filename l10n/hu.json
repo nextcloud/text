@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "Új szöveges fájl",
-    "Create new text file" : "Új szöveges fájl létrehozása",
     "The file was uploaded" : "A fájl feltöltve",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "A feltöltött fájl meghaladja a php.ini-ben szereplő upload_max_filesize direktívában megadott méretet",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "A feltöltött fájl meghaladja a HTML űrlapon megadott MAX_FILE_SIZE direktívájában meghatározott méretet.",
@@ -12,6 +10,8 @@
     "No file uploaded or file size exceeds maximum of %s" : "Nincs fájl feltöltve, vagy a fájl meghaladja a maximumot: %s",
     "Nextcloud Text" : "Nextcloud Szöveg",
     "text document" : "szöveges dokumentum",
+    "New text file" : "Új szöveges fájl",
+    "Create new text file" : "Új szöveges fájl létrehozása",
     "{user} has mentioned you in the text document {node}" : "{user} megemlítette a(z) {node} szöveges dokumentumban",
     "This file cannot be displayed as download is disabled by the share" : "Ez a fájl nem jeleníthető meg, mert a letöltés le van tiltva a megosztásnál",
     "Readme" : "Olvass el",

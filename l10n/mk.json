@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "Нова текстуална датотека",
-    "Create new text file" : "Креирај нова текстуална датотека",
     "The file was uploaded" : "Датотеката е прикачена",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Подигнатата датотека ја надминува upload_max_filesize директивата во php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Големината на датотеката ја надминува MAX_FILE_SIZE директивата која е одредена во HTML формата",
@@ -12,6 +10,8 @@
     "No file uploaded or file size exceeds maximum of %s" : "Нема прикачена дадотека или големината го надмминува максимумот од %s",
     "Nextcloud Text" : "Текст",
     "text document" : "текстуален документ",
+    "New text file" : "Нова текстуална датотека",
+    "Create new text file" : "Креирај нова текстуална датотека",
     "{user} has mentioned you in the text document {node}" : "{user} те спомна во текстуална датотека {node}",
     "Readme" : "Прочитај",
     "Text" : "Текст",

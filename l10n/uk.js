@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Новий текстовий файл",
-    "Create new text file" : "Створіть новий текстовий файл",
     "The file was uploaded" : "Файл завантажено",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Файл для завантаження перевищує параметр upload_max_filesize у php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Розмір завантаженого файлу перевищує директиву MAX_FILE_SIZE, зазначену у HTML-формі",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Немає завантажених файлів або розмір файлу перевищує максимум %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "текстовий документ",
+    "New text file" : "Новий текстовий файл",
+    "Create new text file" : "Створіть новий текстовий файл",
     "Editing session has expired. Please reload the page." : "Сесія редагування тексту закінчилася. Оновіть цю сторінку.",
     "{user} has mentioned you in the text document {node}" : "{user} згадав вас у текстовому документі {node}",
     "This file cannot be displayed as download is disabled by the share" : "Файл неможливо показати, оскільки звантаження заборонено для цього спільного ресурсу",

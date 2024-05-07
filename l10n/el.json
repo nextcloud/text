@@ -1,5 +1,4 @@
 { "translations": {
-    "New text file" : "Νέο αρχείο κειμένου",
     "The file was uploaded" : "Το αρχείο μεταφορτώθηκε",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Το αρχείο που εστάλη υπερβαίνει την οδηγία μέγιστου επιτρεπτού μεγέθους \"upload_max_filesize\" του php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Το ανεβασμένο αρχείο υπερβαίνει το MAX_FILE_SIZE που ορίζεται στην HTML φόρμα",
@@ -11,6 +10,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "Δεν μεταφορτώθηκε αρχείο ή το μέγεθος αρχείου υπερβαίνει το μέγιστο %s",
     "Nextcloud Text" : "Κειμενογράφος Nextcloud",
     "text document" : "έγγραφο κειμένου",
+    "New text file" : "Νέο αρχείο κειμένου",
     "Readme" : "Γενικές πληροφορίες",
     "Text" : "Κείμενο",
     "📝 Collaborative document editing" : "📝 Συνεργατική επεξεργασία εγγράφων",

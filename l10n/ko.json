@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "새 텍스트 파일",
-    "Create new text file" : "새 텍스트 파일 만들기",
     "The file was uploaded" : "파일을 업로드함",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "업로드한 파일의 크기가 php.ini의 upload_max_filesize를 초과함",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "업로드한 파일의 크기가 HTML 폼에 지정한 MAX_FILE_SIZE를 초과함",
@@ -11,6 +9,8 @@
     "A PHP extension stopped the file upload" : "PHP 확장 기능에서 파일 업로드를 차단함",
     "No file uploaded or file size exceeds maximum of %s" : "파일이 업로드 되지 않았거나, 크기가 %s를 초과함",
     "text document" : "텍스트 문서",
+    "New text file" : "새 텍스트 파일",
+    "Create new text file" : "새 텍스트 파일 만들기",
     "This file cannot be displayed as download is disabled by the share" : "공유에서 다운로드가 비활성화 되었으므로 이 파일을 볼 수 없습니다.",
     "Text" : "텍스트",
     "Translate" : "번역:",

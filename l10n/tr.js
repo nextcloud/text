@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Yeni metin dosyası",
-    "Create new text file" : "Yeni metin dosyası oluştur",
     "The file was uploaded" : "Dosya yüklendi",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Yüklenen dosya php.ini dosyasındaki yüklenebilecek dosya boyutunu belirten upload_max_filesize değişkeninin değerini aşıyor",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Yüklenen dosya HTML formundaki yüklenebilecek dosya boyutunu belirten MAX_FILE_SIZE değişkeninin değerini aşıyor",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Herhangi bir dosya yüklenmedi ya da %s olan en büyük dosya boyutu sınırı aşıldı",
     "Nextcloud Text" : "Nextcloud Metin",
     "text document" : "metin belgesi",
+    "New text file" : "Yeni metin dosyası",
+    "Create new text file" : "Yeni metin dosyası oluştur",
     "Editing session has expired. Please reload the page." : "Düzenleme oturumunun süresi dolmuş. Lütfen sayfayı yeniden yükleyin.",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} metin belgesinde sizi andı",
     "This file cannot be displayed as download is disabled by the share" : "İndirme, paylaşım tarafından devre dışı bırakıldığından bu dosya görüntülenemiyor",
