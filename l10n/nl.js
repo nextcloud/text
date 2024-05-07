@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Nieuw tekstbestand",
     "The file was uploaded" : "Het bestand werd geüpload",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Het geüploade bestand overschrijdt de upload_max_filesize optie in php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Het geüploade bestand overschrijdt de MAX_FILE_SIZE waarde die is opgegeven in het HTML formulier",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Geen bestand geüpload of de grootte is meer dan het maximum van %s",
     "Nextcloud Text" : "Nextcloud Tekst",
     "text document" : "tekst document",
+    "New text file" : "Nieuw tekstbestand",
     "Readme" : "Leesmij",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Gezamenlijke documentbewerking",

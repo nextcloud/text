@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "ملف نصّي جديد",
-    "Create new text file" : "إنشاء ملف نصّي جديد",
     "The file was uploaded" : "تمّ رفع الملف",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "حجم الملف المرفوع يتجاوز \"الحدّ الأقصى لحجم الملفات المرفوعة\"  upload_max_filesize كما هو في ملف php.ini ",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "حجم الملف الذي تريد رفعه يتجاوز الحد المسموح به في نماذج الـ HTML.",
@@ -12,6 +10,8 @@
     "No file uploaded or file size exceeds maximum of %s" : "لم يتم تحميل أي ملف أو أن حجم الملف يتجاوز الحد الأقصى %s",
     "Nextcloud Text" : "\"نصوص نكست كلاود\" Nextcloud Text",
     "text document" : "مُستند نصّي",
+    "New text file" : "ملف نصّي جديد",
+    "Create new text file" : "إنشاء ملف نصّي جديد",
     "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
     "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف بسبب أن التحميل موقوف من قِبَل المُشارَكة",

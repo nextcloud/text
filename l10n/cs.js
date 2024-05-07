@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Nový textový soubor",
-    "Create new text file" : "Vytvořit nový textový soubor",
     "The file was uploaded" : "Soubor byl nahrán",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Velikost nahrávaného souboru překračuje limit nastavený direktivou upload_max_filesize v php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Velikost nahrávaného souboru překračuje limit nastavený direktivou MAX_FILE_SIZE, zadanou v HTML formuláři",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Nebyl nahrán žádný soubor nebo jeho velikost přesáhla %s",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "textový dokument",
+    "New text file" : "Nový textový soubor",
+    "Create new text file" : "Vytvořit nový textový soubor",
     "{user} has mentioned you in the text document {node}" : "{user} vás zmínil(a) v textovém dokumentu {node}",
     "This file cannot be displayed as download is disabled by the share" : "Tento soubor není možné zobrazit protože stažení není pro toto sdílení povoleno",
     "Readme" : "Čtimne",

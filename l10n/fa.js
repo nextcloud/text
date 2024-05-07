@@ -1,8 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "فایل متنی جدید",
-    "Create new text file" : "Create new text file",
     "The file was uploaded" : "پرونده، بارگذاری شد",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "حجم پرونده بارگذاری شده بیشتر از تنظیمات upload_max_filesize در پرونده php.ini است",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "حجم پرونده بازگذاری شده بیشتر از تنظیمات MAX_FILE_SIZE مشخص شده در فرم HTML است",
@@ -14,6 +12,8 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "پرونده‌ای بارگذاری نشد و یا حجم پرونده بیش از بیشینه مجاز %s بود",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "text document",
+    "New text file" : "فایل متنی جدید",
+    "Create new text file" : "Create new text file",
     "{user} has mentioned you in the text document {node}" : "{user} has mentioned you in the text document {node}",
     "This file cannot be displayed as download is disabled by the share" : "This file cannot be displayed as download is disabled by the share",
     "Readme" : "Readme",
