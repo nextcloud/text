@@ -136,7 +136,7 @@ class SessionMiddleware extends Middleware {
 
 		$documentId = $this->getDocumentId();
 
-		if ($userId = $this->getSessionUserId()) {
+		if (null !== ($userId = $this->getSessionUserId())) {
 			$this->assertUserHasAccessToDocument($userId, $documentId);
 
 			$this->userId = $userId;
@@ -220,7 +220,7 @@ class SessionMiddleware extends Middleware {
 		if ($this->session) {
 			$controller->setSession($this->session);
 		}
-		if ($this->userId) {
+		if (null !== $this->userId) {
 			$controller->setUserId($this->userId);
 		}
 	}
