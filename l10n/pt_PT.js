@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Novo ficheiro de texto",
     "The file was uploaded" : "O ficheiro foi carregado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "O ficheiro carregado excede a diretiva upload_max_filesize no php.ini ",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "O ficheiro carregado excede a diretiva MAX_FILE_SIZE especificada no formulário HTML",
@@ -11,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Não foi possível escrever o ficheiro no disco.",
     "A PHP extension stopped the file upload" : "Uma extensão PHP parou o carregamento do ficheiro",
     "No file uploaded or file size exceeds maximum of %s" : "Nenhum ficheiro carregado ou o tamanho do ficheiro excede o máximo de%s",
+    "New text file" : "Novo ficheiro de texto",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edição colaborativa de documento",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Edição colaborativa de documento!**\n\n- **📝 Escrita focada:** Sem distrações, apenas a formatação que necessita.\n- **🙋 Trabalhe conjuntamente:** Partilhe e colabore com amigos e colegas, independentemente deles usarem o Nextcloud ou não!\n- **💾 Formato aberto:** Os ficheiros são guardados como [Markdown](https://en.wikipedia.org/wiki/Markdown), por forma a que os possa editar em qualquer outra aplicação de edição de texto.\n- **✊ Base sólida:** Nós usamos [🐈 tiptap](https://tiptap.scrumpy.io) que é baseado em [🦉 ProseMirror](https://prosemirror.net) – um enorme obrigado a eles!",

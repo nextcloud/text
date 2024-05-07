@@ -1,5 +1,4 @@
 { "translations": {
-    "New text file" : "קובץ טקסט חדש",
     "The file was uploaded" : "הקובץ הועלה",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "הקובץ שהועלה חורג מההנחיה upload_max_filesize ב־php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "הקובץ שהועלה חורג מההנחיה MAX_FILE_SIZE שצוינה בטופס ה־HTML",
@@ -11,6 +10,7 @@
     "No file uploaded or file size exceeds maximum of %s" : "לא הועלה אף קובץ או שגודל הקובץ חרג מהסף המרבי של %s",
     "Nextcloud Text" : "טקסט Nextcloud",
     "text document" : "מסמך טקסט",
+    "New text file" : "קובץ טקסט חדש",
     "Readme" : "הסבר",
     "Text" : "טקסט",
     "📝 Collaborative document editing" : "📝 עריכת מסמכים שיתופית",

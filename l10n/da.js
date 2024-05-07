@@ -1,7 +1,6 @@
 OC.L10N.register(
     "text",
     {
-    "New text file" : "Ny tekst fil",
     "The file was uploaded" : "Filen blev uploadet",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Den uploadede fil overstiger upload_max_filesize-direktivet i php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Den uploadede fil overskrider MAX_FILE_SIZE-direktivet, der blev angivet i HTML-formularen",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "No file uploaded or file size exceeds maximum of %s" : "Ingen fil blev uploadet eller fil størrelsen er større end det maksimale: %s.",
     "Nextcloud Text" : "Nextcloud -tekst",
     "text document" : "tekst dokument",
+    "New text file" : "Ny tekst fil",
     "Readme" : "Læs mig",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Kollaborativ dokumentredigering",

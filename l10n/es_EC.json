@@ -1,6 +1,4 @@
 { "translations": {
-    "New text file" : "Nuevo archivo de texto",
-    "Create new text file" : "Crear nuevo archivo de texto",
     "The file was uploaded" : "El archivo fue cargado",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "El archivo cargado excede el valor establecido en la directiva upload_max_filesize en el archivo php.ini",
     "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "El archivo cargado excede el valor especificado de la directiva MAX_FILE_SIZE en la forma de HTML",
@@ -12,6 +10,8 @@
     "No file uploaded or file size exceeds maximum of %s" : "No se ha subido ningún archivo o el tamaño del archivo supera el máximo de %s",
     "Nextcloud Text" : "Texto de Nextcloud",
     "text document" : "documento de texto",
+    "New text file" : "Nuevo archivo de texto",
+    "Create new text file" : "Crear nuevo archivo de texto",
     "{user} has mentioned you in the text document {node}" : "{user} te ha mencionado en el documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "No se puede mostrar este archivo ya que la descarga está desactivada por el recurso compartido",
     "Readme" : "Leerme",
