@@ -232,7 +232,7 @@ class SessionMiddleware extends Middleware {
 		if ($this->session) {
 			$controller->setSession($this->session);
 		}
-		if (null !== $this->userId) {
+		if ($this->userId !== null) {
 			$controller->setUserId($this->userId);
 		}
 	}
