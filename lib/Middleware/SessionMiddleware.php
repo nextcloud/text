@@ -144,7 +144,7 @@ class SessionMiddleware extends Middleware {
 			return;
 		}
 
-		if ($shareToken = $this->getShareToken()) {
+		if (null !== ($shareToken = $this->getShareToken())) {
 			$this->assertShareTokenHasAccessToDocument($shareToken, $documentId);
 
 			return;
@@ -232,7 +232,7 @@ class SessionMiddleware extends Middleware {
 		if ($this->session) {
 			$controller->setSession($this->session);
 		}
-		if ($this->userId !== null) {
+		if (null !== $this->userId) {
 			$controller->setUserId($this->userId);
 		}
 	}
