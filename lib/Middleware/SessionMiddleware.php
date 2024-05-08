@@ -90,9 +90,7 @@ class SessionMiddleware extends Middleware {
 		}
 
 		//OTHERS
-		$controller->setDocument($this->document);
-		$controller->setSession($this->session);
-		$controller->setUserId($this->userId);
+		$this->setControllerData($controller);
 	}
 
 	public function afterException($controller, $methodName, Exception $exception): JSONResponse|Response {
@@ -225,5 +223,17 @@ class SessionMiddleware extends Middleware {
 	 */
 	private function getUserFolder(string $userId): Folder {
 		return $this->rootFolder->getUserFolder($userId);
+	}
+
+	private function setControllerData(ISessionAwareController $controller): void {
+		if ($this->document) {
+			$controller->setDocument($this->document);
+		}
+		if ($this->session) {
+			$controller->setSession($this->session);
+		}
+		if ($this->userId !== null) {
+			$controller->setUserId($this->userId);
+		}
 	}
 }
