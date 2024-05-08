@@ -78,7 +78,7 @@ class SessionMiddleware extends Middleware {
 		try {
 			$this->assertDocumentSession();
 
-			if (!$this->getShareToken()) {
+			if (!$this->getToken()) {
 				$this->userId = $this->session->getUserId();
 			}
 		} catch (InvalidSessionException) {
@@ -90,7 +90,9 @@ class SessionMiddleware extends Middleware {
 		}
 
 		//OTHERS
-		$this->setControllerData($controller);
+		$controller->setDocument($this->document);
+		$controller->setSession($this->session);
+		$controller->setUserId($this->userId);
 	}
 
 	public function afterException($controller, $methodName, Exception $exception): JSONResponse|Response {
@@ -201,8 +203,12 @@ class SessionMiddleware extends Middleware {
 		return (string)$this->request->getParam('sessionToken');
 	}
 
-	private function getShareToken(): string {
+	private function getToken(): string {
 		return (string)$this->request->getParam('token');
+	}
+
+	private function getShareToken(): ?string {
+		return $this->request->getParam('shareToken');
 	}
 
 	private function getBaseVersionEtag(): string {
@@ -211,18 +217,6 @@ class SessionMiddleware extends Middleware {
 
 	private function getSessionUserId(): ?string {
 		return $this->userSession->getUser()?->getUID();
-	}
-
-	private function setControllerData(ISessionAwareController $controller): void {
-		if ($this->document) {
-			$controller->setDocument($this->document);
-		}
-		if ($this->session) {
-			$controller->setSession($this->session);
-		}
-		if ($this->userId !== null) {
-			$controller->setUserId($this->userId);
-		}
 	}
 
 	/**
