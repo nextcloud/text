@@ -17,9 +17,9 @@
   "module": "dist/index.js",
   "main": "dist/index.js",
   "scripts": {
-    "build": "vite --mode production build",
-    "dev": "vite --mode development build",
-    "watch": "vite --mode development build --watch",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' vite --mode production build",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --mode development build",
+    "watch": "NODE_OPTIONS='--max-old-space-size=4096' vite --mode development build --watch",
     "lint": "tsc && eslint --ext .js,.vue src cypress",
     "lint:fix": "tsc && eslint --ext .js,.vue src cypress --fix",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css css/*.scss",
