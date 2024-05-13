@@ -62,6 +62,7 @@ OC.L10N.register(
     "Last saved {lastSave}" : "Guardado por última vez {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "El documento ha cambiado fuera del editor. Los cambios no se pueden aplicar.",
     "Unsaved changes" : "Cambios sin guardar",
+    "Connection failed." : "Falló la conexión.",
     "Formatting help" : "Ayuda de formato",
     "Speed up your writing with simple shortcuts." : "Mejora tu velocidad de escritura con atajos de teclado sencillos.",
     "Just type the Markdown syntax or use keyboard shortcuts from below." : "Escribe la sintaxis Markdown o usa los atajos de teclado que se muestran más abajo.",
