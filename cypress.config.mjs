@@ -1,8 +1,6 @@
 import { defineConfig } from 'cypress'
 import cypressSplit from 'cypress-split'
 import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin.js'
-import browserify from '@cypress/browserify-preprocessor'
-import webpack from '@cypress/webpack-preprocessor'
 
 
 export default defineConfig({
@@ -24,10 +22,6 @@ export default defineConfig({
 		setupNodeEvents(on, config) {
 			cypressSplit(on, config)
 			configureVisualRegression(on)
-
-
-			//on('file:preprocessor', browserify())
-			//on('file:preprocessor', webpack())
 
 			return config
 		},
