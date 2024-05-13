@@ -39,6 +39,15 @@ const config = createAppConfig({
 				},
 			},
 		},
+		test: {
+			environment: 'jsdom',
+			globals: true,
+			server: {
+				deps: {
+					inline: ['@nextcloud/vue'],
+				}
+			},
+		},
 	},
 })
 

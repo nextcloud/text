@@ -32,7 +32,7 @@ const initAttachmentResolver = (args) => {
 		fullUrl: `http://nextcloud.local/apps/text/media?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
 		previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
 	}]
-	const axiosSpy = jest.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
+	const axiosSpy = vi.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
 	const resolver = new AttachmentResolver(args)
 	expect(axiosSpy).toHaveBeenCalled()
 	return resolver
