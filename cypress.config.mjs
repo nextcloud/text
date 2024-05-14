@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import cypressSplit from 'cypress-split'
 import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin.js'
 import vitePreprocessor from 'cypress-vite'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import vue from '@vitejs/plugin-vue2'
 
 export default defineConfig({
@@ -22,7 +23,7 @@ export default defineConfig({
 		},
 		setupNodeEvents(on, config) {
 			on('file:preprocessor', vitePreprocessor({
-				plugins: [vue()],
+				plugins: [vue(), nodePolyfills()],
 				configFile: false,
 			}))
 			cypressSplit(on, config)
