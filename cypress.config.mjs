@@ -1,7 +1,8 @@
 import { defineConfig } from 'cypress'
 import cypressSplit from 'cypress-split'
 import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin.js'
-
+import vitePreprocessor from 'cypress-vite'
+import vue from '@vitejs/plugin-vue2'
 
 export default defineConfig({
 	projectId: 'hx9gqy',
@@ -20,6 +21,10 @@ export default defineConfig({
 			visualRegressionType: 'regression',
 		},
 		setupNodeEvents(on, config) {
+			on('file:preprocessor', vitePreprocessor({
+				plugins: [vue()],
+				configFile: false,
+			}))
 			cypressSplit(on, config)
 			configureVisualRegression(on)
 

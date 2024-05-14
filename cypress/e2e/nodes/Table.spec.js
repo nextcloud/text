@@ -6,7 +6,9 @@ import markdownit from './../../../src/markdownit/index.js'
 import EditableTable from './../../../src/nodes/EditableTable.js'
 import Markdown, { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
 
-import testData from '../../fixtures/Table.md'
+// https://github.com/import-js/eslint-plugin-import/issues/1739
+/* eslint-disable-next-line import/no-unresolved */
+import testData from '../../fixtures/Table.md?raw'
 
 const user = randUser()
 const fileName = 'empty.md'

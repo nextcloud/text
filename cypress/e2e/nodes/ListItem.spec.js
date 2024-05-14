@@ -7,8 +7,11 @@ import TaskItem from './../../../src/nodes/TaskItem.js'
 import BulletList from './../../../src/nodes/BulletList.js'
 import Markdown from './../../../src/extensions/Markdown.js'
 import { createCustomEditor } from './../../support/components.js'
-import testData from '../../fixtures/ListItem.md'
 import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
+
+// https://github.com/import-js/eslint-plugin-import/issues/1739
+/* eslint-disable-next-line import/no-unresolved */
+import testData from '../../fixtures/ListItem.md?raw'
 
 describe('ListItem extension integrated in the editor', () => {
 
