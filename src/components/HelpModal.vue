@@ -1,10 +1,10 @@
 <template>
 	<NcDialog size="normal"
 		data-text-el="formatting-help"
-		:name="t('text', 'Formatting help')"
+		:name="t('text', 'Formatting and shortcuts')"
 		:close-on-click-outside="true"
 		@closing="$emit('close')">
-		<h2>{{ t('text', 'Formatting help') }}</h2>
+		<h2>{{ t('text', 'Formatting and shortcuts') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
 		<p v-if="!isMobileCached">
 			{{ t('text', 'Just type the Markdown syntax or use keyboard shortcuts from below.') }}
@@ -173,6 +173,64 @@
 						<code>``` {{ t('text', 'Some code') }}</code>
 					</td>
 					<td v-if="!isMobileCached" />
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Insert emoji') }}</td>
+					<td>
+						<code>:{{ t('text', 'emoji') }}</code>
+					</td>
+					<td v-if="!isMobileCached" />
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Mention someone') }}</td>
+					<td>
+						<code>@{{ t('text', 'name') }}</code>
+					</td>
+					<td v-if="!isMobileCached" />
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Smart picker') }}</td>
+					<td>
+						<code>/{{ t('text', 'something') }}</code>
+					</td>
+					<td v-if="!isMobileCached" />
+				</tr>
+			</tbody>
+		</table>
+
+		<table vif="!isMobileCached">
+			<thead>
+				<tr>
+					<th>{{ t('text', 'Action') }}</th>
+					<th>{{ t('text', 'Keyboard shortcuts') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ t('text', 'Undo') }}</td>
+					<td>
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>Z</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Redo') }}</td>
+					<td>
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>Y</kbd>
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t('text', 'Toggle outline') }}</td>
+					<td>
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Alt') }}</kbd>
+						+
+						<kbd>H</kbd>
+					</td>
 				</tr>
 			</tbody>
 		</table>
