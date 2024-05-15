@@ -127,11 +127,21 @@ export default {
 				Object.assign(this.outline, { enable })
 			},
 		)
+
+		document.addEventListener('keydown', this.handleKeyDown)
+	},
+	beforeDestroy() {
+		document.removeEventListener('keydown', this.handleKeyDown)
 	},
 	methods: {
 		outlineToggle() {
 			this.outline.visible = !this.outline.visible
 			this.$emit('outline-toggled', this.outline.visible)
+		},
+		handleKeyDown(event) {
+			if (event.ctrlKey && event.altKey && event.key === 'h') {
+				this.outlineToggle()
+			}
 		},
 	},
 
