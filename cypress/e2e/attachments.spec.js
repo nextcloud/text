@@ -380,6 +380,7 @@ describe('Test all attachment insertion methods', () => {
 		})
 
 		cy.visit('/apps/files')
+		cy.waitForPreview(fileName)
 		cy.getFile(fileName)
 			.should('exist')
 			.should('have.attr', 'data-cy-files-list-row-fileid')
