@@ -22,8 +22,6 @@
 
 import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
 
-import 'proxy-polyfill'
-
 import { Editor } from '@tiptap/core'
 import { lowlight } from 'lowlight/lib/core.js'
 import hljs from 'highlight.js/lib/core'
