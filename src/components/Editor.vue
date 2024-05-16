@@ -115,7 +115,7 @@ import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, loadSyntaxHighlight } from './../EditorFactory.js'
-import { createMarkdownSerializer } from './../extensions/Markdown.js'
+import { serializeEditorContent } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
 import { CollaborationCursor } from '../extensions/index.js'
@@ -392,9 +392,7 @@ export default {
 				filePath: this.relativePath,
 				baseVersionEtag: this.$syncService?.baseVersionEtag,
 				forceRecreate: this.forceRecreate,
-				serialize: this.isRichEditor
-					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
-					: () => this.$editor.state.doc.textContent,
+				serialize: () => serializeEditorContent(this.$editor),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 

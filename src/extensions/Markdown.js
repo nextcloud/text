@@ -191,5 +191,10 @@ const convertNames = (object) => {
 	)
 }
 
-export { createMarkdownSerializer }
+function serializeEditorContent({ schema, state }) {
+	return createMarkdownSerializer(schema)
+		.serialize(state.doc)
+}
+
+export { serializeEditorContent, createMarkdownSerializer }
 export default Markdown
