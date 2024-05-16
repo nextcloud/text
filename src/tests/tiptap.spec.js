@@ -1,4 +1,4 @@
-import createEditor from '../EditorFactory'
+import { createEditor } from '../EditorFactory'
 import markdownit from '../markdownit'
 
 const renderedHTML = ( markdown ) => {

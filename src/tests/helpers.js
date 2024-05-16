@@ -5,7 +5,7 @@ import Document from '@tiptap/extension-document'
 import Paragraph from '../nodes/Paragraph'
 import Text from '@tiptap/extension-text'
 
-import createEditor from '../EditorFactory'
+import { createEditor } from '../EditorFactory'
 import markdownit from '../markdownit'
 
 export function createCustomEditor({ content, extensions }) {

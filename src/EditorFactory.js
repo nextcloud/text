@@ -33,7 +33,7 @@ import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
 // eslint-disable-next-line import/no-named-as-default
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
-const loadSyntaxHighlight = async (language) => {
+export const loadSyntaxHighlight = async (language) => {
 	const list = hljs.listLanguages()
 	logger.debug('Supported languages', { list })
 	if (!lowlight.listLanguages().includes(language)) {
@@ -49,7 +49,7 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
+export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
@@ -70,7 +70,6 @@ const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, exte
 	} else {
 		defaultExtensions = [PlainText, CodeBlockLowlight.configure({ lowlight, defaultLanguage: language })]
 	}
-
 	return new Editor({
 		onCreate,
 		onUpdate,
@@ -82,9 +81,6 @@ const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, exte
 	})
 }
 
-const serializePlainText = (doc) => {
+export const serializePlainText = (doc) => {
 	return doc.textContent
 }
-
-export default createEditor
-export { createEditor, serializePlainText, loadSyntaxHighlight }

@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import { Mark, Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
-import createEditor from '../EditorFactory'
+import { createEditor } from '../EditorFactory'
 
 
 export function getBuilders() {

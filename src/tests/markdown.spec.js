@@ -6,7 +6,7 @@ import {
 	markdownFromPaste
 } from './helpers.js'
 import { createMarkdownSerializer } from "../extensions/Markdown";
-import createEditor from "../EditorFactory";
+import { createEditor } from "../EditorFactory";
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
