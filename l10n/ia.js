@@ -9,10 +9,10 @@ OC.L10N.register(
     "guest" : "hospite",
     "Saved" : "Salveguardate",
     "Keyboard shortcuts" : "Combinationes de claves",
+    "Undo" : "Disfacer",
     "URL" : "URL",
     "to" : "a",
     "Edit" : "Modificar",
-    "Undo" : "Disfacer",
     "Info" : "Info",
     "Warning" : "Aviso"
 },
