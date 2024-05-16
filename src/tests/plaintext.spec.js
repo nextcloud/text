@@ -1,4 +1,4 @@
-import { createEditor, serializePlainText } from './../EditorFactory';
+import { createEditor } from './../EditorFactory';
 import spec from "./fixtures/spec"
 import xssFuzzVectors from './fixtures/xssFuzzVectors';
 
@@ -17,7 +17,7 @@ const plaintextThroughEditor = (markdown) => {
     enableRichEditing: false
   })
   tiptap.commands.setContent(content)
-  return serializePlainText(tiptap.state.doc) || 'failed'
+  return tiptap.state.doc.textContent || 'failed'
 }
 
 describe('commonmark as plaintext', () => {

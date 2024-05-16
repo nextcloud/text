@@ -114,7 +114,7 @@ import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
+import { createEditor, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
@@ -393,8 +393,8 @@ export default {
 				baseVersionEtag: this.$syncService?.baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
-					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
-					: (content) => serializePlainText(content ?? this.$editor.state.doc),
+					? () => createMarkdownSerializer(this.$editor.schema).serialize(this.$editor.state.doc)
+					: () => this.$editor.state.doc.textContent,
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 

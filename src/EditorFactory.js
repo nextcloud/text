@@ -78,7 +78,3 @@ export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {
 		extensions: defaultExtensions.concat(extensions || []),
 	})
 }
-
-export const serializePlainText = (doc) => {
-	return doc.textContent
-}
