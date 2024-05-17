@@ -25,8 +25,11 @@ import Markdown from './../../../src/extensions/Markdown.js'
 import Preview from './../../../src/nodes/Preview.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import { createCustomEditor } from './../../support/components.js'
-import testData from '../../fixtures/Preview.md'
 import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
+
+// https://github.com/import-js/eslint-plugin-import/issues/1739
+/* eslint-disable-next-line import/no-unresolved */
+import testData from '../../fixtures/Preview.md?raw'
 
 describe('Preview extension', { retries: 0 }, () => {
 

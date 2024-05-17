@@ -212,6 +212,17 @@ Cypress.Commands.add('moveFile', (path, destinationPath) => {
 	}).then(response => response.body)
 })
 
+// For files wait for preview to load and release lock
+Cypress.Commands.add('waitForPreview', name => {
+	cy.getFile(name)
+		.scrollIntoView()
+	cy.getFile(name)
+		.find('.files-list__row-icon img')
+		.should('be.visible')
+		.its('[0].naturalWidth')
+		.should('be.greaterThan', 0)
+})
+
 Cypress.Commands.add('deleteFile', (path) => {
 	return axios.delete(`${url}/remote.php/webdav/${path}`)
 })
@@ -320,7 +331,7 @@ Cypress.Commands.add('closeInterceptedSession', (shareToken = undefined) => {
 })
 
 Cypress.Commands.add('getFile', fileName => {
-	return cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"]`)
+	return cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"]`)
 
 })
 

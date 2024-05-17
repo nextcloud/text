@@ -19,13 +19,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import { linkTo } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
 import { logger } from './helpers/logger.js'
-
-__webpack_nonce__ = window.btoa(OC.requestToken) // eslint-disable-line
-__webpack_public_path__ = linkTo('text', 'js/') // eslint-disable-line
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 const workspaceEnabled = loadState('text', 'workspace_enabled')
