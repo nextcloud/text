@@ -1,0 +1,1 @@
+{"version":3,"file":"token-DpxtlN7K.mjs","sources":["../src/helpers/token.js"],"sourcesContent":["const getSharingToken = () => document.getElementById('sharingToken')\n\t? document.getElementById('sharingToken').value\n\t: null\n\nexport { getSharingToken }\n"],"names":["getSharingToken"],"mappings":";MAAMA,EAAkB,IAAM,SAAS,eAAe,cAAc,EACjE,SAAS,eAAe,cAAc,EAAE,MACxC"}
