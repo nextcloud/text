@@ -115,7 +115,7 @@ import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, loadSyntaxHighlight } from './../EditorFactory.js'
-import { serializeEditorContent } from './../extensions/Markdown.js'
+import { serializeEditorContent } from './../extensions/Serializer.js'
 import markdownit from './../markdownit/index.js'
 
 import { CollaborationCursor } from '../extensions/index.js'

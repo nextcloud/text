@@ -1,5 +1,5 @@
 import { createEditor } from './../EditorFactory';
-import { serializeEditorContent } from './../extensions/Markdown.js'
+import { serializeEditorContent } from './../extensions/Serializer.js'
 import spec from "./fixtures/spec"
 import xssFuzzVectors from './fixtures/xssFuzzVectors';
 

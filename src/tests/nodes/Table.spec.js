@@ -1,5 +1,5 @@
 import { createEditor } from '../../EditorFactory'
-import { createMarkdownSerializer } from '../../extensions/Markdown'
+import { serializeEditorContent } from '../../extensions/Serializer'
 import { builders } from 'prosemirror-test-builder'
 
 import markdownit from '../../markdownit'
@@ -63,9 +63,7 @@ describe('Table', () => {
 
 	test('serialize from editor', () => {
 		const tiptap = editorWithContent(markdownit.render(input))
-		const serializer = createMarkdownSerializer(tiptap.schema)
-
-		expect(serializer.serialize(tiptap.state.doc)).toBe(input)
+		expect(serializeEditorContent(tiptap)).toBe(input)
 	})
 })
 

@@ -1,5 +1,5 @@
-import { createMarkdownSerializer } from '../extensions/Markdown'
 import { Editor } from '@tiptap/core'
+import { serializeEditorContent } from '../extensions/Serializer'
 
 import Document from '@tiptap/extension-document'
 import Paragraph from '../nodes/Paragraph'
@@ -31,8 +31,7 @@ export function markdownThroughEditor(markdown) {
 		enableRichEditing: true
 	})
 	tiptap.commands.setContent(markdownit.render(markdown))
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	return serializeEditorContent(tiptap)
 }
 
 /**
@@ -46,8 +45,7 @@ export function markdownThroughEditorHtml(html) {
 		enableRichEditing: true
 	})
 	tiptap.commands.setContent(html)
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	return serializeEditorContent(tiptap)
 }
 
 /**
@@ -61,6 +59,5 @@ export function markdownFromPaste(html) {
 		enableRichEditing: true
 	})
 	tiptap.commands.insertContent(html)
-	const serializer = createMarkdownSerializer(tiptap.schema)
-	return serializer.serialize(tiptap.state.doc)
+	return serializeEditorContent(tiptap)
 }

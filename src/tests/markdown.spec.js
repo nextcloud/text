@@ -5,7 +5,7 @@ import {
 	markdownThroughEditorHtml,
 	markdownFromPaste
 } from './helpers.js'
-import { createMarkdownSerializer } from "../extensions/Markdown";
+import { serializeEditorContent } from "../extensions/Serializer";
 import { createEditor } from "../EditorFactory";
 
 /*
@@ -205,8 +205,6 @@ describe('Trailing nodes', () => {
 		const jsonAfter = tiptap.getJSON()
 		expect(jsonAfter).toStrictEqual(jsonBefore)
 
-		const serializer = createMarkdownSerializer(tiptap.schema)
-		const md = serializer.serialize(tiptap.state.doc)
-		expect(md).toBe(source)
+		expect(serializeEditorContent(tiptap)).toBe(source)
 	})
 })

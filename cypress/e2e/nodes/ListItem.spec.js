@@ -5,7 +5,7 @@ import ListItem from '@tiptap/extension-list-item'
 import TaskList from './../../../src/nodes/TaskList.js'
 import TaskItem from './../../../src/nodes/TaskItem.js'
 import BulletList from './../../../src/nodes/BulletList.js'
-import Markdown from './../../../src/extensions/Markdown.js'
+import Serializer from './../../../src/extensions/Serializer.js'
 import { createCustomEditor } from './../../support/components.js'
 import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
 
@@ -18,7 +18,7 @@ describe('ListItem extension integrated in the editor', () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			BulletList,
 			OrderedList,
 			ListItem,

@@ -21,7 +21,7 @@
  *
  */
 
-import Markdown from './../../../src/extensions/Markdown.js'
+import Serializer from './../../../src/extensions/Serializer.js'
 import Preview from './../../../src/nodes/Preview.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import { createCustomEditor } from './../../support/components.js'
@@ -36,7 +36,7 @@ describe('Preview extension', { retries: 0 }, () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			Preview,
 			Link,
 			Italic,
@@ -186,7 +186,7 @@ describe('Markdown tests for Previews in the editor', { retries: 0 }, () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			Preview,
 			Link,
 		],

@@ -22,7 +22,7 @@
 
 import markdownit from './../../../src/markdownit/index.js'
 import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
-import { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
+import { serializeEditorContent } from './../../../src/extensions/Serializer.js'
 
 /**
  *
@@ -74,7 +74,6 @@ export function expectMarkdown(editor, markdown) {
  *
  * @param editor
  */
-function getMarkdown(editor) {
-	const serializer = createMarkdownSerializer(editor.schema)
-	return serializer.serialize(editor.state.doc)
+export function getMarkdown(editor) {
+	return serializeEditorContent(editor)
 }

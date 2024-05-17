@@ -30,6 +30,7 @@ import PlainText from './PlainText.js'
 import RichText from './RichText.js'
 import KeepSyntax from './KeepSyntax.js'
 import Mention from './Mention.js'
+import Serializer from './Serializer.js'
 
 export {
 	CollaborationCursor,
@@ -42,4 +43,5 @@ export {
 	RichText,
 	KeepSyntax,
 	Mention,
+	Serializer,
 }

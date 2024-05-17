@@ -27,7 +27,7 @@ import { lowlight } from 'lowlight/lib/core.js'
 import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
-import { FocusTrap, Mention, PlainText, RichText, Markdown } from './extensions/index.js'
+import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
 import { PlainTextLowlight } from './nodes/PlainTextLowlight.js'
 
 export const loadSyntaxHighlight = async (language) => {
@@ -50,6 +50,7 @@ export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
+			FocusTrap,
 			RichText.configure({
 				relativePath,
 				isEmbedded,
@@ -62,11 +63,9 @@ export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {
 					}),
 				],
 			}),
-			FocusTrap,
 		]
 	} else {
 		defaultExtensions = [
-			Markdown,
 			PlainText,
 			PlainTextLowlight
 				.configure({ lowlight, defaultLanguage: language }),
