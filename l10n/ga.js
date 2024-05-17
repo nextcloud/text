@@ -11,6 +11,8 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Chuir síneadh PHP stop le huaslódáil an chomhaid",
     "Saved" : "Shábháil",
     "Keyboard shortcuts" : "Aicearraí méarchláir",
-    "Cancel" : "Cealaigh"
+    "Cancel" : "Cealaigh",
+    "Edit" : "Cuir in eagar",
+    "Success" : "Rath"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
