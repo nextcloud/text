@@ -31,7 +31,7 @@ export function serializeEditorContent({ schema, state }) {
 		.serialize(state.doc, { tightLists: true })
 }
 
-export const Serializer = Extension.create({
+const Serializer = Extension.create({
 
 	name: 'serializer',
 
@@ -66,9 +66,9 @@ export const Serializer = Extension.create({
  */
 export const _createMarkdownSerializer = ({ nodes, marks }) => {
 	return new MarkdownSerializer(
-			extractNodesToMarkdown(nodes),
-			extractMarksToMarkdown(marks),
-		)
+		extractNodesToMarkdown(nodes),
+		extractMarksToMarkdown(marks),
+	)
 }
 
 export default Serializer

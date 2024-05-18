@@ -5,7 +5,7 @@ import { getMarkdown } from './helpers.js'
 
 import markdownit from './../../../src/markdownit/index.js'
 import EditableTable from './../../../src/nodes/EditableTable.js'
-import { Serializer } from './../../../src/extensions/Serializer.js'
+import { Serializer } from './../../../src/extensions/index.js'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
