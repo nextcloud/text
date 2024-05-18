@@ -92,6 +92,7 @@ OC.L10N.register(
     "Insert emoji" : "Emoji einfügen",
     "name" : "Name",
     "Smart picker" : "Intelligente Auswahl",
+    "Action" : "Aktion",
     "Undo" : "Rückgängig",
     "Redo" : "Wiederherstellen",
     "Alt" : "Alt",

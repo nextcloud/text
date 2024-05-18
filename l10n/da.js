@@ -51,6 +51,7 @@ OC.L10N.register(
     "Insert emoji" : "Indsæt emoji",
     "name" : "Navn",
     "Smart picker" : "Smart Vælger",
+    "Action" : "Handling",
     "Undo" : "Fortryd",
     "Redo" : "Annullér fortryd",
     "Alt" : "Alt",
