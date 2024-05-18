@@ -67,12 +67,13 @@ const ERROR_TYPE = {
 class SyncService {
 
 	#sendIntervalId
+	#getContent
 
 	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
-		this.serialize = serialize
+		this.#getContent = serialize
 		this.getDocumentState = getDocumentState
 		this._api = new SessionApi(options)
 		this.connection = null
@@ -240,16 +241,12 @@ class SyncService {
 		return false
 	}
 
-	_getContent() {
-		return this.serialize()
-	}
-
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
 			const response = await this.connection.save({
 				version: this.version,
-				autosaveContent: this._getContent(),
+				autosaveContent: this.#getContent(),
 				documentState: this.getDocumentState(),
 				force,
 				manualSave,

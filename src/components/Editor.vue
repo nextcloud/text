@@ -516,10 +516,8 @@ export default {
 							},
 							onUpdate: ({ editor }) => {
 								// this.debugContent(editor)
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('update:content', {
-									markdown: proseMirrorMarkdown,
-								})
+								const markdown = serializeEditorContent(editor)
+								this.emit('update:content', { markdown })
 							},
 							extensions: [
 								Autofocus.configure({
@@ -732,15 +730,15 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+			const markdown = serializeEditorContent(editor)
+			const markdownItHtml = markdownit.render(markdown)
 
 			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
-			console.debug(proseMirrorMarkdown)
+			console.debug({ markdown })
 			logger.debug('HTML, serialized from markdown by markdown-it')
-			console.debug(markdownItHtml)
+			console.debug({ markdownItHtml })
 			logger.debug('HTML, as rendered in the browser by Tiptap')
-			console.debug(editor.getHTML())
+			console.debug({ editorHtml: editor.getHTML() })
 		},
 
 		outlineToggled(visible) {
