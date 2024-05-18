@@ -1,6 +1,6 @@
 import { Serializer } from './../../extensions/index.js'
 import {
-	createMarkdownSerializer,
+	_createMarkdownSerializer,
 	serializeEditorContent
 } from './../../extensions/Serializer.js'
 import Image from './../../nodes/Image.js'
@@ -26,10 +26,10 @@ describe('Serializer extension unit', () => {
 		const editor = createCustomEditor({
 			extensions: [Serializer, Underline],
 		})
-		const serializer = createMarkdownSerializer(editor.schema)
-		const underline = serializer.serializer.marks.underline
+		const serializer = _createMarkdownSerializer(editor.schema)
+		const underline = serializer.marks.underline
 		expect(underline).toEqual(Underline.config.toMarkdown)
-		const listItem = serializer.serializer.nodes.listItem
+		const listItem = serializer.nodes.listItem
 		expect(typeof listItem).toBe('function')
 	})
 })

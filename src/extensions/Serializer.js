@@ -27,8 +27,8 @@ import { MarkdownSerializer } from '@tiptap/pm/markdown'
 import { extractNodesToMarkdown, extractMarksToMarkdown } from '../helpers/serialize.js'
 
 export function serializeEditorContent({ schema, state }) {
-	return createMarkdownSerializer(schema)
-		.serialize(state.doc)
+	return _createMarkdownSerializer(schema)
+		.serialize(state.doc, { tightLists: true })
 }
 
 export const Serializer = Extension.create({
@@ -59,16 +59,16 @@ export const Serializer = Extension.create({
 
 })
 
-export const createMarkdownSerializer = ({ nodes, marks }) => {
-	return {
-		serializer: new MarkdownSerializer(
+/*
+ * Create the markdown serializer.
+ *
+ * Only exported for tests,
+ */
+export const _createMarkdownSerializer = ({ nodes, marks }) => {
+	return new MarkdownSerializer(
 			extractNodesToMarkdown(nodes),
 			extractMarksToMarkdown(marks),
-		),
-		serialize(content, options) {
-			return this.serializer.serialize(content, { ...options, tightLists: true })
-		},
-	}
+		)
 }
 
 export default Serializer
