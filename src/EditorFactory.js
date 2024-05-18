@@ -52,7 +52,6 @@ export const createRichEditor = ({ extensions = [], session, relativePath, isEmb
 		RichText.configure({
 			relativePath,
 			isEmbedded,
-			component: this,
 			extensions: [
 				Mention.configure({
 					suggestion: MentionSuggestion({
