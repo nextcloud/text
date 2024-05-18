@@ -1,4 +1,4 @@
-import { createEditor } from '../../EditorFactory'
+import { createRichEditor } from '../../EditorFactory'
 import { serializeEditorContent } from '../../extensions/Serializer'
 import { builders } from 'prosemirror-test-builder'
 
@@ -68,9 +68,7 @@ describe('Table', () => {
 })
 
 function editorWithContent(content) {
-	const editor = createEditor({
-		enableRichEditing: true,
-	})
+	const editor = createRichEditor()
 	editor.commands.setContent(content)
 	return editor
 }

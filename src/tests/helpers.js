@@ -5,7 +5,7 @@ import Document from '@tiptap/extension-document'
 import Paragraph from '../nodes/Paragraph'
 import Text from '@tiptap/extension-text'
 
-import { createEditor } from '../EditorFactory'
+import { createRichEditor } from '../EditorFactory'
 import markdownit from '../markdownit'
 
 export function createCustomEditor({ content, extensions }) {
@@ -27,9 +27,7 @@ export function createCustomEditor({ content, extensions }) {
  * @returns {string}
  */
 export function markdownThroughEditor(markdown) {
-	const tiptap = createEditor({
-		enableRichEditing: true
-	})
+	const tiptap = createRichEditor()
 	tiptap.commands.setContent(markdownit.render(markdown))
 	return serializeEditorContent(tiptap)
 }
@@ -41,9 +39,7 @@ export function markdownThroughEditor(markdown) {
  * @returns {string}
  */
 export function markdownThroughEditorHtml(html) {
-	const tiptap = createEditor({
-		enableRichEditing: true
-	})
+	const tiptap = createRichEditor()
 	tiptap.commands.setContent(html)
 	return serializeEditorContent(tiptap)
 }
@@ -55,9 +51,7 @@ export function markdownThroughEditorHtml(html) {
  * @returns {string}
  */
 export function markdownFromPaste(html) {
-	const tiptap = createEditor({
-		enableRichEditing: true
-	})
+	const tiptap = createRichEditor()
 	tiptap.commands.insertContent(html)
 	return serializeEditorContent(tiptap)
 }

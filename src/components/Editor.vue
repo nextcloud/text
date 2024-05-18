@@ -114,7 +114,11 @@ import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, loadSyntaxHighlight } from './../EditorFactory.js'
+import {
+	createRichEditor,
+	createPlainEditor,
+	loadSyntaxHighlight,
+} from './../EditorFactory.js'
 import { serializeEditorContent } from './../extensions/Serializer.js'
 import markdownit from './../markdownit/index.js'
 
@@ -510,35 +514,38 @@ export default {
 				this.$syncService.startSync()
 				return
 			}
+
+			const extensions = [
+				Autofocus.configure({
+					fileId: this.fileId,
+				}),
+				Collaboration.configure({
+					document: this.$ydoc,
+				}),
+				CollaborationCursor.configure({
+					provider: this.$providers[0],
+					user: {
+						name: session?.userId
+							? session.displayName
+							: (session?.guestName || t('text', 'Guest')),
+						color: session?.color,
+						clientId: this.$ydoc.clientID,
+					},
+				}),
+			]
+
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
-					this.$editor = createEditor({
-						language,
-						relativePath: this.relativePath,
-						session,
-						extensions: [
-							Autofocus.configure({
-								fileId: this.fileId,
-							}),
-							Collaboration.configure({
-								document: this.$ydoc,
-							}),
-							CollaborationCursor.configure({
-								provider: this.$providers[0],
-								user: {
-									name: session?.userId
-										? session.displayName
-										: (session?.guestName || t('text', 'Guest')),
-									color: session?.color,
-									clientId: this.$ydoc.clientID,
-								},
-							}),
-						],
-						enableRichEditing: this.isRichEditor,
-						isEmbedded: this.isEmbedded,
-					})
+					this.$editor = this.isRichEditor
+						? createRichEditor({
+							relativePath: this.relativePath,
+							session,
+							extensions,
+							isEmbedded: this.isEmbedded,
+						})
+						: createPlainEditor({ language, extensions })
 					this.hasEditor = true
 					this.listenEditorEvents()
 				})

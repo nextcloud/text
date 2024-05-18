@@ -6,7 +6,7 @@ import {
 	markdownFromPaste
 } from './helpers.js'
 import { serializeEditorContent } from "../extensions/Serializer";
-import { createEditor } from "../EditorFactory";
+import { createRichEditor } from "../EditorFactory";
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
@@ -190,9 +190,7 @@ describe('Markdown serializer from html', () => {
 describe('Trailing nodes', () => {
 	test('No extra transaction is added after loading', () => {
 		const source = "# My heading\n\n* test\n* test2"
-		const tiptap = createEditor({
-			enableRichEditing: true,
-		})
+		const tiptap = createRichEditor()
 		tiptap.commands.setContent(markdownit.render(source))
 
 		const jsonBefore = tiptap.getJSON()

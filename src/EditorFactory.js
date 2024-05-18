@@ -46,36 +46,37 @@ export const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-export const createEditor = ({ language, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
-	let defaultExtensions
-	if (enableRichEditing) {
-		defaultExtensions = [
-			FocusTrap,
-			RichText.configure({
-				relativePath,
-				isEmbedded,
-				component: this,
-				extensions: [
-					Mention.configure({
-						suggestion: MentionSuggestion({
-							session,
-						}),
+export const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded = false } = {}) => {
+	 return _createEditor([
+		FocusTrap,
+		RichText.configure({
+			relativePath,
+			isEmbedded,
+			component: this,
+			extensions: [
+				Mention.configure({
+					suggestion: MentionSuggestion({
+						session,
 					}),
-				],
-			}),
-		]
-	} else {
-		defaultExtensions = [
-			PlainText,
-			PlainTextLowlight
-				.configure({ lowlight, defaultLanguage: language }),
-		]
-	}
+				}),
+			],
+		}),
+		...extensions,
+	])
+}
+
+export const createPlainEditor = ({ language, extensions = [] } = {}) => {
+	return _createEditor([
+		PlainText,
+		PlainTextLowlight
+			.configure({ lowlight, defaultLanguage: language }),
+		...extensions,
+	])
+}
+
+const _createEditor = extensions => {
 	return new Editor({
-		editorProps: {
-			scrollMargin: 50,
-			scrollThreshold: 50,
-		},
-		extensions: defaultExtensions.concat(extensions || []),
+		editorProps: { scrollMargin: 50, scrollThreshold: 50 },
+		extensions,
 	})
 }
