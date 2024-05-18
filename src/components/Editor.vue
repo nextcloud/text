@@ -494,9 +494,6 @@ export default {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
-			if (this.$editor) {
-				this.$editor.setEditable(!this.readOnly)
-			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
@@ -507,43 +504,43 @@ export default {
 			})
 
 			this.hasConnectionIssue = false
+			if (this.$editor) {
+				// $editor already existed. So this is a reconnect.
+				this.$editor.setEditable(!this.readOnly)
+				this.$syncService.startSync()
+				return
+			}
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
-					if (!this.$editor) {
-						this.$editor = createEditor({
-							language,
-							relativePath: this.relativePath,
-							session,
-							extensions: [
-								Autofocus.configure({
-									fileId: this.fileId,
-								}),
-								Collaboration.configure({
-									document: this.$ydoc,
-								}),
-								CollaborationCursor.configure({
-									provider: this.$providers[0],
-									user: {
-										name: session?.userId
-											? session.displayName
-											: (session?.guestName || t('text', 'Guest')),
-										color: session?.color,
-										clientId: this.$ydoc.clientID,
-									},
-								}),
-							],
-							enableRichEditing: this.isRichEditor,
-							isEmbedded: this.isEmbedded,
-						})
-						this.hasEditor = true
-						this.listenEditorEvents()
-					} else {
-						// $editor already existed. So this is a reconnect.
-						this.$syncService.startSync()
-					}
-
+					this.$editor = createEditor({
+						language,
+						relativePath: this.relativePath,
+						session,
+						extensions: [
+							Autofocus.configure({
+								fileId: this.fileId,
+							}),
+							Collaboration.configure({
+								document: this.$ydoc,
+							}),
+							CollaborationCursor.configure({
+								provider: this.$providers[0],
+								user: {
+									name: session?.userId
+										? session.displayName
+										: (session?.guestName || t('text', 'Guest')),
+									color: session?.color,
+									clientId: this.$ydoc.clientID,
+								},
+							}),
+						],
+						enableRichEditing: this.isRichEditor,
+						isEmbedded: this.isEmbedded,
+					})
+					this.hasEditor = true
+					this.listenEditorEvents()
 				})
 		},
 
