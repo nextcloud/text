@@ -68,6 +68,7 @@ OC.L10N.register(
     "Some code" : "Κώδικας",
     "Insert emoji" : "Εισαγωγή emoji",
     "name" : "όνομα",
+    "Action" : "Ενέργεια",
     "Undo" : "Aναίρεση",
     "Redo" : "Επανάληψη",
     "Alt" : "Alt",
