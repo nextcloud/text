@@ -75,7 +75,7 @@ const Markdown = Extension.create({
 					clipboardTextSerializer: (slice) => {
 						const traverseNodes = (slice) => {
 							if (slice.content.childCount > 1) {
-								return clipboardSerializer(this.editor.schema).serialize(slice.content)
+								return serializeSliceForClipboard(this.editor, slice)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
@@ -92,16 +92,23 @@ const Markdown = Extension.create({
 	},
 })
 
-const clipboardSerializer = ({ nodes, marks }) => {
-	return {
-		serializer: new MarkdownSerializer(
-			extractNodesToMarkdown(nodes),
-			extractToPlaintext(marks),
-		),
-		serialize(content, options) {
-			return this.serializer.serialize(content, { ...options, tightLists: true })
-		},
-	}
+const serializeSliceForClipboard = ({ schema }, { content }) => {
+	return createTextSerializer(schema)
+		.serialize(content, { tightLists: true })
+}
+
+/*
+ * Create a serializer for multiple nodes:
+ *
+ * * use markdown for nodes so lists show up as lists, etc..
+ * * ignore marks as these can be irritating.
+ *
+ */
+const createTextSerializer = ({ nodes, marks }) => {
+	return new MarkdownSerializer(
+		extractNodesToMarkdown(nodes),
+		extractToPlaintext(marks),
+	)
 }
 
 export default Markdown
