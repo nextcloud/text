@@ -414,10 +414,15 @@ export default {
 		listenEditorEvents() {
 			this.$editor.on('focus', this.onFocus)
 			this.$editor.on('blur', this.onBlur)
+			this.$editor.on('create', this.onCreate)
+			this.$editor.on('update', this.onUpdate)
 		},
+
 		unlistenEditorEvents() {
 			this.$editor.off('focus', this.onFocus)
 			this.$editor.off('blur', this.onBlur)
+			this.$editor.off('create', this.onCreate)
+			this.$editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -511,14 +516,6 @@ export default {
 							language,
 							relativePath: this.relativePath,
 							session,
-							onCreate: ({ editor }) => {
-								this.$syncService.startSync()
-							},
-							onUpdate: ({ editor }) => {
-								// this.debugContent(editor)
-								const markdown = serializeEditorContent(editor)
-								this.emit('update:content', { markdown })
-							},
 							extensions: [
 								Autofocus.configure({
 									fileId: this.fileId,
@@ -658,6 +655,16 @@ export default {
 
 		onBlur() {
 			this.emit('blur')
+		},
+
+		onCreate() {
+			this.$syncService.startSync()
+		},
+
+		onUpdate(editor) {
+			// this.debugContent(editor)
+			const markdown = serializeEditorContent(editor)
+			this.emit('update:content', { markdown })
 		},
 
 		onAddImageNode() {

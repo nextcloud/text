@@ -46,7 +46,7 @@ export const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
+export const createEditor = ({ language, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
 	let defaultExtensions
 	if (enableRichEditing) {
 		defaultExtensions = [
@@ -72,8 +72,6 @@ export const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {
 		]
 	}
 	return new Editor({
-		onCreate,
-		onUpdate,
 		editorProps: {
 			scrollMargin: 50,
 			scrollThreshold: 50,
