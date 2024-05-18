@@ -26,7 +26,7 @@ import { Extension, getExtensionField } from '@tiptap/core'
 import { MarkdownSerializer } from '@tiptap/pm/markdown'
 import { extractNodesToMarkdown, extractMarksToMarkdown } from '../helpers/serialize.js'
 
-export function serializeEditorContent({ schema, state }) {
+export const serializeEditorContent = ({ schema, state }) => {
 	return _createMarkdownSerializer(schema)
 		.serialize(state.doc, { tightLists: true })
 }

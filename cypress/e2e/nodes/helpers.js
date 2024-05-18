@@ -24,21 +24,12 @@ import markdownit from './../../../src/markdownit/index.js'
 import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
 import { serializeEditorContent } from './../../../src/extensions/Serializer.js'
 
-/**
- *
- * @param editor
- * @param markdown
- */
-export function loadMarkdown(editor, markdown) {
+export const loadMarkdown = (editor, markdown) => {
 	const stripped = markdown.replace(/\t*/g, '')
 	editor.commands.setContent(markdownit.render(stripped))
 }
 
-/**
- *
- * @param editor
- */
-export function runCommands(editor) {
+export const runCommands = (editor) => {
 	let found
 	while ((found = findCommand(editor))) {
 		const { node, pos } = found
@@ -49,31 +40,18 @@ export function runCommands(editor) {
 	}
 }
 
-/**
- *
- * @param editor
- */
-function findCommand(editor) {
+const findCommand = (editor) => {
 	const doc = editor.state.doc
 	return findChildren(doc, child => {
 		return child.isText && Object.prototype.hasOwnProperty.call(editor.commands, child.text)
 	})[0]
 }
 
-/**
- *
- * @param editor
- * @param markdown
- */
-export function expectMarkdown(editor, markdown) {
+export const expectMarkdown = (editor, markdown) => {
 	const stripped = markdown.replace(/\t*/g, '')
 	expect(getMarkdown(editor)).to.equal(stripped)
 }
 
-/**
- *
- * @param editor
- */
-export function getMarkdown(editor) {
+export const getMarkdown = (editor) => {
 	return serializeEditorContent(editor)
 }

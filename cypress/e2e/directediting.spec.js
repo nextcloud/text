@@ -2,7 +2,7 @@ import { initUserAndFiles, randUser } from '../utils/index.js'
 
 const user = randUser()
 
-function enterContentAndClose() {
+const enterContentAndClose = () => {
 	cy.intercept({ method: 'POST', url: '**/session/*/close' }).as('closeRequest')
 	cy.intercept({ method: 'POST', url: '**/session/*/push' }).as('push')
 	cy.intercept({ method: 'POST', url: '**/session/*/sync' }).as('sync')
