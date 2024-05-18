@@ -495,32 +495,17 @@ export default {
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
-				session: this.currentSession,
+				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
-		},
-
-		onLoaded({ documentSource, documentState }) {
-			if (documentState) {
-				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
-				// distribute additional state that may exist locally
-				const updateMessage = getUpdateMessage(this.$ydoc, documentState)
-				if (updateMessage) {
-					logger.debug('onLoaded: Pushing local changes to server')
-					this.$queue.push(updateMessage)
-				}
-			} else {
-				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
-			}
 
 			this.hasConnectionIssue = false
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
-					const session = this.currentSession
 					if (!this.$editor) {
 						this.$editor = createEditor({
 							language,
@@ -565,7 +550,20 @@ export default {
 					}
 
 				})
+		},
 
+		onLoaded({ documentSource, documentState }) {
+			if (documentState) {
+				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
+				// distribute additional state that may exist locally
+				const updateMessage = getUpdateMessage(this.$ydoc, documentState)
+				if (updateMessage) {
+					logger.debug('onLoaded: Pushing local changes to server')
+					this.$queue.push(updateMessage)
+				}
+			} else {
+				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
+			}
 		},
 
 		onChange({ document, sessions }) {
