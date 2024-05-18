@@ -9,10 +9,14 @@ OC.L10N.register(
     "Missing a temporary folder" : "Fillteán sealadach ar iarraidh",
     "Could not write file to disk" : "Níorbh fhéidir an comhad a scríobh ar an diosca",
     "A PHP extension stopped the file upload" : "Chuir síneadh PHP stop le huaslódáil an chomhaid",
+    "Reload" : "Athlódáil",
+    "Offline" : "As líne",
     "Saved" : "Shábháil",
     "Keyboard shortcuts" : "Aicearraí méarchláir",
     "Cancel" : "Cealaigh",
     "Edit" : "Cuir in eagar",
-    "Success" : "Rath"
+    "Both" : "An dá",
+    "Success" : "Rath",
+    "Warning" : "Rabhadh"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
