@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Chuir síneadh PHP stop le huaslódáil an chomhaid",
     "Reload" : "Athlódáil",
     "Offline" : "As líne",
+    "Saving …" : "Shábháil …",
     "Saved" : "Shábháil",
     "Keyboard shortcuts" : "Aicearraí méarchláir",
     "Cancel" : "Cealaigh",
