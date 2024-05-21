@@ -514,6 +514,16 @@ export default {
 				this.$syncService.startSync()
 				return
 			}
+			this.createEditor()
+				.then(editor => {
+					this.$editor = editor
+					this.hasEditor = true
+					this.listenEditorEvents()
+				})
+		},
+
+		async createEditor() {
+			const session = this.currentSession
 
 			const extensions = [
 				Autofocus.configure({
@@ -534,21 +544,19 @@ export default {
 				}),
 			]
 
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
+			const language = extensionHighlight[this.fileExtension] || this.fileExtension
 
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					this.$editor = this.isRichEditor
-						? createRichEditor({
-							relativePath: this.relativePath,
-							session,
-							extensions,
-							isEmbedded: this.isEmbedded,
-						})
-						: createPlainEditor({ language, extensions })
-					this.hasEditor = true
-					this.listenEditorEvents()
+			if (this.isRichEditor) {
+				return createRichEditor({
+					relativePath: this.relativePath,
+					session,
+					extensions,
+					isEmbedded: this.isEmbedded,
 				})
+			} else {
+				await loadSyntaxHighlight(language)
+				return createPlainEditor({ language, extensions })
+			}
 		},
 
 		onLoaded({ documentSource, documentState }) {
