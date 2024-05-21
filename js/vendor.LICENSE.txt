@@ -73,7 +73,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
-version: 3.0.1
+version: 3.0.2
 license: GPL-3.0-or-later
 
 @nextcloud/moment
@@ -85,7 +85,7 @@ version: 2.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/router
-version: 3.0.1
+version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/vue
@@ -469,7 +469,7 @@ version: 1.0.2
 license: MIT
 
 lib0
-version: 0.2.93
+version: 0.2.94
 license: MIT
 
 linkify-it
@@ -533,7 +533,7 @@ version: 2.0.0
 license: MIT
 
 mermaid
-version: 10.9.0
+version: 10.9.1
 license: MIT
 
 micromark
