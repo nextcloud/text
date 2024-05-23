@@ -49,7 +49,7 @@ jobs:
         run: |
           {
             echo 'MESSAGE<<EOF'
-            git log -1 --pretty=%s | grep -v '^chore(assets): recompile assets$'
+            git log -1 --pretty=%s | grep -v '^chore(assets): recompile assets$' || test $? -eq 1
             echo 'EOF'
           } >> $GITHUB_OUTPUT
 
