@@ -5,7 +5,7 @@ on:
   push:
     branches:
       # implemented since 28, once branched off, add your stable branch here
-      - main
+      # disabled as vite builds are non-deterministic - main
       - stable29
       - stable28
 
