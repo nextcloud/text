@@ -14,6 +14,7 @@ OC.L10N.register(
     "Saving …" : "Shábháil …",
     "Saved" : "Shábháil",
     "Keyboard shortcuts" : "Aicearraí méarchláir",
+    "Save changes" : "Sabháil na hathruithe",
     "Cancel" : "Cealaigh",
     "Edit" : "Cuir in eagar",
     "Both" : "An dá",
