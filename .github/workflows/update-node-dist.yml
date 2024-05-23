@@ -5,7 +5,7 @@ on:
   push:
     branches:
       # implemented since 28, once branched off, add your stable branch here
-      # disabled as vite builds are non-deterministic - main
+      - main
       - stable29
       - stable28
 
@@ -43,7 +43,18 @@ jobs:
         run: |
           git config --local user.email "nextcloud-command@users.noreply.github.com"
           git config --local user.name "nextcloud-command"
+
+      - name: Get last commit message if it was not a recompile
+        id: last_commit
+        run: |
+          {
+            echo'MESSAGE<<EOF'
+            git log -1 --pretty=%s | grep -v '^chore(assets): recompile assets$'
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
       - name: Install dependencies & build
+        if: steps.last_commit.outputs.MESSAGE != ''
         env:
           CYPRESS_INSTALL_BINARY: 0
         run: |
