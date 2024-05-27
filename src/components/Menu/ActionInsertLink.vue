@@ -202,7 +202,7 @@ export default {
 			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
 			const href = url.replaceAll(' ', '%20')
 			const chain = this.$editor.chain()
-			// Check if any text is selected, if not insert the lunk using the given text property
+			// Check if any text is selected, if not insert the link using the given text property
 			if (this.$editor.view.state?.selection.empty) {
 				chain.insertContent({
 					type: 'paragraph',
@@ -233,11 +233,12 @@ export default {
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then(link => {
-					this.$editor
-						.chain()
-						.focus()
-						.insertContent(link + ' ')
-						.run()
+					const chain = this.$editor.chain()
+					if (this.$editor.view.state?.selection.empty) {
+						chain.focus().insertContent(link + ' ').run()
+					} else {
+						chain.setLink({ href: link }).focus().run()
+					}
 				})
 				.catch(error => {
 					console.error('Smart picker promise rejected', error)
