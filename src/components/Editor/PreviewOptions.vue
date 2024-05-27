@@ -82,7 +82,7 @@ export default {
 
 <style lang="scss" scoped>
 
-[data-text-preview-options] {
+div[data-text-preview-options] {
 	position: absolute;
 	left: -44px;
 }
