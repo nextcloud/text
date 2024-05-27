@@ -27,7 +27,7 @@
  */
 function isPreviewLinkInParagraph(tokens, i) {
 	const [prev, cur, next] = tokens.slice(i - 1, i + 2)
-	return prev.type === 'paragraph_open'
+	return prev?.type === 'paragraph_open'
 		&& cur.type === 'inline'
 		&& cur.children
 		&& cur.children.length === 3
