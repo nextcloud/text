@@ -23,6 +23,14 @@
 import SessionApi from '../../src/services/SessionApi.js'
 import { emit } from '@nextcloud/event-bus'
 
+Cypress.Commands.add('prepareWindowForSessionApi', () => {
+	window.OC = {
+		config: { modRewriteWorking: false },
+	}
+	// Prevent @nextcloud/router from reading window.location
+	window._oc_webroot = ''
+})
+
 Cypress.Commands.add('prepareSessionApi', () => {
 	return cy.request('/csrftoken')
 		.then(({ body }) => {
@@ -78,6 +86,22 @@ Cypress.Commands.add('failToSave', (connection, options = { version: 0 }) => {
 		.then((response) => {
 			throw new Error('Expected request to fail - but it succeeded!')
 		}, (err) => err.response)
+})
+
+Cypress.Commands.add('sessionUsers', function(connection, bodyOptions = {}) {
+	const body = {
+		documentId: connection.document.id,
+		sessionId: connection.session.id,
+		sessionToken: connection.session.token,
+		requesttoken: this.requesttoken,
+		...bodyOptions,
+	}
+	cy.request({
+		method: 'POST',
+		url: '/apps/text/api/v1/users',
+		body,
+		failOnStatusCode: false,
+	})
 })
 
 // Used to test for race conditions between the last push and the close request
