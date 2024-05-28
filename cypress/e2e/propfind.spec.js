@@ -33,7 +33,6 @@ describe('Text PROPFIND extension ', function() {
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.visit('/apps/files')
 	})
 
 	describe('with workspaces enabled', function() {
@@ -45,7 +44,9 @@ describe('Text PROPFIND extension ', function() {
 		// Android app relies on this to detect rich workspace availability
 		it('always adds rich workspace property', function() {
 			cy.uploadFile('empty.md', 'text/markdown', '/Readme.md')
-			cy.visit('/apps/files')
+			// FIXME: Ideally we do not need a page context for those tests at all
+			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
+			cy.visit('/apps/dashboard')
 			cy.propfindFolder('/')
 				.should('have.property', richWorkspace, '')
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
@@ -59,7 +60,9 @@ describe('Text PROPFIND extension ', function() {
 		// Android app relies on this when navigating nested folders
 		it('adds rich workspace property to nested folders', function() {
 			cy.createFolder('/workspace')
-			cy.visit('/apps/files')
+			// FIXME: Ideally we do not need a page context for those tests at all
+			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
+			cy.visit('/apps/dashboard')
 			cy.propfindFolder('/', 1)
 				.then(results => results.pop().propStat[0].properties)
 				.should('have.property', richWorkspace, '')
@@ -78,7 +81,9 @@ describe('Text PROPFIND extension ', function() {
 		})
 
 		it('does not return a rich workspace property', function() {
-			cy.visit('/apps/files')
+			// FIXME: Ideally we do not need a page context for those tests at all
+			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
+			cy.visit('/apps/dashboard')
 			cy.propfindFolder('/')
 				.should('not.have.property', richWorkspace)
 			cy.uploadFile('test.md', 'text/markdown', '/Readme.md')
