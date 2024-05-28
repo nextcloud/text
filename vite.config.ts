@@ -29,6 +29,15 @@ const config = createAppConfig({
 		plugins: [
 			webpackStats(),
 		],
+		test: {
+			environment: 'jsdom',
+			globals: true,
+			server: {
+				deps: {
+					inline: ['@nextcloud/vue'],
+				}
+			},
+		},
 	},
 })
 

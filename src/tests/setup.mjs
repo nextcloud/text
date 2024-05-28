@@ -23,24 +23,24 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import Vue from 'vue'
 
-global.t = jest.fn().mockImplementation((app, text) => text)
-global.n = jest.fn().mockImplementation((app, text) => text)
+global.t = vi.fn().mockImplementation((app, text) => text)
+global.n = vi.fn().mockImplementation((app, text) => text)
 
-jest.mock('@nextcloud/auth', () => ({
-	getCurrentUser: jest.fn().mockImplementation(() => ({
+vi.mock('@nextcloud/auth', () => ({
+	getCurrentUser: vi.fn().mockImplementation(() => ({
 		uid: 'user1',
 		displayName: 'User 1',
 		isAdmin: false,
 	})),
-	getRequestToken: jest.fn().mockImplementation(() => '123456abcdef'),
-	onRequestTokenUpdate: jest.fn().mockImplementation(() => {}),
+	getRequestToken: vi.fn().mockImplementation(() => '123456abcdef'),
+	onRequestTokenUpdate: vi.fn().mockImplementation(() => {}),
 }))
 
-jest.mock('@nextcloud/files', () => ({
+vi.mock('@nextcloud/files', () => ({
 	formatFileSize: (size) => size,
 	Header: class {},
 }))
-jest.mock('@nextcloud/dialogs', () => ({
+vi.mock('@nextcloud/dialogs', () => ({
 	FilePickerType: {},
 	getFilePickerBuilder: () => {},
 }))
@@ -66,7 +66,7 @@ global.OC = {
 	},
 
 	MimeType: {
-		getIconUrl: jest.fn(),
+		getIconUrl: vi.fn(),
 	},
 	L10N: {
 		translate: global.t,
@@ -88,8 +88,8 @@ class ClipboardEventMock extends Event {
   constructor(type, eventInitDict) {
     super(type, eventInitDict);
     this.clipboardData = {
-      getData: jest.fn(),
-      setData: jest.fn(),
+      getData: vi.fn(),
+      setData: vi.fn(),
     };
   }
 }
@@ -99,8 +99,8 @@ class DragEventMock extends Event {
   constructor(type, eventInitDict) {
     super(type, eventInitDict);
     this.dataTransfer = {
-      getData: jest.fn(),
-      setData: jest.fn(),
+      getData: vi.fn(),
+      setData: vi.fn(),
     };
   }
 }
