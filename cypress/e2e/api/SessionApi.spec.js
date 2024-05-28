@@ -34,12 +34,10 @@ describe('The session Api', function() {
 
 	before(function() {
 		cy.createUser(user)
-		cy.prepareWindowForSessionApi()
 	})
 
 	beforeEach(function() {
 		cy.login(user)
-		cy.prepareSessionApi()
 	})
 
 	describe('open the session', function() {
@@ -223,7 +221,6 @@ describe('The session Api', function() {
 				})
 				.then(() => cy.clearCookies())
 				.then(() => {
-					cy.prepareSessionApi()
 					return cy.createTextSession(undefined, { filePath: '', shareToken })
 						.then(con => {
 							connection = con
@@ -247,7 +244,6 @@ describe('The session Api', function() {
 				.should('be.at.least', 1)
 			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.login(user)
-			cy.prepareSessionApi()
 			cy.downloadFile('saves.md')
 				.its('data')
 				.should('eql', '# Heading 1')
@@ -290,7 +286,6 @@ describe('The session Api', function() {
 				cy.log(token)
 				shareToken = token
 				cy.clearCookies()
-				cy.prepareSessionApi()
 				cy.createTextSession(undefined, { filePath: '', shareToken })
 					.then(con => {
 						connection = con
