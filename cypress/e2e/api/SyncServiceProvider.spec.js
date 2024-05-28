@@ -32,10 +32,7 @@ describe('Sync service provider', function() {
 
 	before(function() {
 		cy.createUser(user)
-		window.OC = {
-			config: { modRewriteWorking: false },
-		}
-		window._oc_webroot = ''
+		cy.prepareWindowForSessionApi()
 	})
 
 	beforeEach(function() {
