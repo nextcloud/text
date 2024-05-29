@@ -86,7 +86,8 @@ export default () => createSuggestions({
 				editor
 					.chain()
 					.focus()
-					.insertContentAt(range, content + ' ')
+					.deleteRange(range)
+					.insertPreview(link)
 					.run()
 			})
 			.catch(error => {

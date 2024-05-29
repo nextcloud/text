@@ -129,6 +129,21 @@ describe('Preview extension', { retries: 0 }, () => {
 
 	})
 
+	describe('insertPreview command', { retries: 0 }, () => {
+
+		it('is available in commands', () => {
+			expect(editor.commands).to.have.property('insertPreview')
+		})
+
+		it('inserts a preview', () => {
+			editor.commands.clearContent()
+			editor.commands.insertPreview('https://nextcloud.com')
+			editor.commands.setTextSelection(1)
+			expectPreview()
+		})
+
+	})
+
 	/**
 	 *  Expect a preview in the editor.
 	 */

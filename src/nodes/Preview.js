@@ -62,6 +62,7 @@ export default Node.create({
 		state.write('[')
 		state.text(node.textContent, false)
 		state.write(`](${node.attrs.href} (${node.attrs.title}))`)
+		state.closeBlock(node)
 	},
 
 	addCommands() {
@@ -84,13 +85,32 @@ export default Node.create({
 			 *
 			 */
 			unsetPreview: () => ({ state, chain }) => {
-				console.info(this.attributes)
 				return isActive(this.name, this.attributes, state)
 					&& chain()
 						.setNode('paragraph')
 						.run()
 			},
 
+			/**
+			 * Insert a preview for given link.
+			 *
+			 */
+			insertPreview: (link) => ({ state, chain }) => {
+				return chain()
+					.insertContent({
+						type: 'preview',
+						attrs: { href: link, title: 'preview' },
+						content: [{
+							type: 'text',
+							marks: [{
+								type: 'link',
+								attrs: { href: link },
+							}],
+							text: link,
+						}],
+					})
+					.run()
+			},
 		}
 	},
 })
