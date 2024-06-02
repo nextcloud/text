@@ -183,12 +183,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "dec26e2d00da921341ec04aa97f7eb7cf766a81d"
+                "reference": "36698398d842967e052fbd191c133b0828b53f08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/dec26e2d00da921341ec04aa97f7eb7cf766a81d",
-                "reference": "dec26e2d00da921341ec04aa97f7eb7cf766a81d",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/36698398d842967e052fbd191c133b0828b53f08",
+                "reference": "36698398d842967e052fbd191c133b0828b53f08",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +219,7 @@
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
                 "source": "https://github.com/nextcloud-deps/ocp/tree/stable29"
             },
-            "time": "2024-05-22T00:34:34+00:00"
+            "time": "2024-06-01T00:37:47+00:00"
         },
         {
             "name": "nikic/php-parser",
