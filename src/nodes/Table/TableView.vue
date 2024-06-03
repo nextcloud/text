@@ -22,7 +22,7 @@
 
 <template>
 	<NodeViewWrapper data-text-el="table-view" class="table-wrapper">
-		<NcActions v-if="editor.isEditable"
+		<NcActions v-if="isEditable"
 			force-menu
 			data-text-table-actions="settings"
 			class="table-settings">
@@ -67,6 +67,17 @@ export default {
 			type: Function,
 			required: true,
 		},
+	},
+	data() {
+		return {
+			isEditable: false,
+		}
+	},
+	beforeMount() {
+		this.isEditable = this.editor.isEditable
+		this.editor.on('update', ({ editor }) => {
+			this.isEditable = editor.isEditable
+		})
 	},
 }
 </script>

@@ -24,7 +24,7 @@
 	<NodeViewWrapper data-text-el="table-cell" as="td" :style="textAlign">
 		<div class="container">
 			<NodeViewContent class="content" />
-			<NcActions v-if="editor.isEditable"
+			<NcActions v-if="isEditable"
 				data-text-table-actions="row">
 				<NcActionButton data-text-table-action="add-row-before"
 					close-after-click
@@ -81,10 +81,21 @@ export default {
 			required: true,
 		},
 	},
+	data() {
+		return {
+			isEditable: false,
+		}
+	},
 	computed: {
 		textAlign() {
 			return { 'text-align': this.node.attrs.textAlign }
 		},
+	},
+	beforeMount() {
+		this.isEditable = this.editor.isEditable
+		this.editor.on('update', ({ editor }) => {
+			this.isEditable = editor.isEditable
+		})
 	},
 	methods: {
 		deleteRow() {
