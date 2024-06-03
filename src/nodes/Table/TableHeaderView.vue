@@ -25,7 +25,7 @@
 	<NodeViewWrapper data-text-el="table-header" as="th" :style="textAlign">
 		<div>
 			<NodeViewContent class="content" />
-			<NcActions v-if="editor.isEditable"
+			<NcActions v-if="isEditable"
 				ref="menu"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
@@ -130,10 +130,21 @@ export default {
 			required: true,
 		},
 	},
+	data() {
+		return {
+			isEditable: false,
+		}
+	},
 	computed: {
 		textAlign() {
 			return { 'text-align': this.node.attrs.textAlign }
 		},
+	},
+	beforeMount() {
+		this.isEditable = this.editor.isEditable
+		this.editor.on('update', ({ editor }) => {
+			this.isEditable = editor.isEditable
+		})
 	},
 	methods: {
 		alignCenter() {
