@@ -30,5 +30,4 @@ export default Node.create({
 			Tab: () => this.editor.commands.insertContent('\t'),
 		}
 	},
-
 })

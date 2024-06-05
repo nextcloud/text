@@ -1,5 +1,5 @@
 import Preview from './../../nodes/Preview'
-import Markdown from './../../extensions/Markdown'
+import Serializer from './../../extensions/Serializer'
 import Link from './../../marks/Link'
 import { getExtensionField } from '@tiptap/core'
 import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers'
@@ -43,6 +43,6 @@ describe('Preview extension', () => {
 
 function createEditorWithPreview() {
 		return createCustomEditor({
-			extensions: [Markdown, Preview, Link]
+			extensions: [Serializer, Preview, Link]
 		})
 }

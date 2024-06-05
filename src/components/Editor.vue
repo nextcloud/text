@@ -114,8 +114,12 @@ import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
-import { createMarkdownSerializer } from './../extensions/Markdown.js'
+import {
+	createRichEditor,
+	createPlainEditor,
+	loadSyntaxHighlight,
+} from './../EditorFactory.js'
+import { serializeEditorContent } from './../extensions/Serializer.js'
 import markdownit from './../markdownit/index.js'
 
 import { CollaborationCursor } from '../extensions/index.js'
@@ -392,9 +396,7 @@ export default {
 				filePath: this.relativePath,
 				baseVersionEtag: this.$syncService?.baseVersionEtag,
 				forceRecreate: this.forceRecreate,
-				serialize: this.isRichEditor
-					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
-					: (content) => serializePlainText(content ?? this.$editor.state.doc),
+				serialize: () => serializeEditorContent(this.$editor),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
@@ -416,10 +418,15 @@ export default {
 		listenEditorEvents() {
 			this.$editor.on('focus', this.onFocus)
 			this.$editor.on('blur', this.onBlur)
+			this.$editor.on('create', this.onCreate)
+			this.$editor.on('update', this.onUpdate)
 		},
+
 		unlistenEditorEvents() {
 			this.$editor.off('focus', this.onFocus)
 			this.$editor.off('blur', this.onBlur)
+			this.$editor.off('create', this.onCreate)
+			this.$editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -491,17 +498,65 @@ export default {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
-			if (this.$editor) {
-				this.$editor.setEditable(!this.readOnly)
-			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
-				session: this.currentSession,
+				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
+
+			this.hasConnectionIssue = false
+			if (this.$editor) {
+				// $editor already existed. So this is a reconnect.
+				this.$editor.setEditable(!this.readOnly)
+				this.$syncService.startSync()
+				return
+			}
+			this.createEditor()
+				.then(editor => {
+					this.$editor = editor
+					this.hasEditor = true
+					this.listenEditorEvents()
+				})
+		},
+
+		async createEditor() {
+			const session = this.currentSession
+
+			const extensions = [
+				Autofocus.configure({
+					fileId: this.fileId,
+				}),
+				Collaboration.configure({
+					document: this.$ydoc,
+				}),
+				CollaborationCursor.configure({
+					provider: this.$providers[0],
+					user: {
+						name: session?.userId
+							? session.displayName
+							: (session?.guestName || t('text', 'Guest')),
+						color: session?.color,
+						clientId: this.$ydoc.clientID,
+					},
+				}),
+			]
+
+			const language = extensionHighlight[this.fileExtension] || this.fileExtension
+
+			if (this.isRichEditor) {
+				return createRichEditor({
+					relativePath: this.relativePath,
+					session,
+					extensions,
+					isEmbedded: this.isEmbedded,
+				})
+			} else {
+				await loadSyntaxHighlight(language)
+				return createPlainEditor({ language, extensions })
+			}
 		},
 
 		onLoaded({ documentSource, documentState }) {
@@ -516,58 +571,6 @@ export default {
 			} else {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
-
-			this.hasConnectionIssue = false
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
-
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					const session = this.currentSession
-					if (!this.$editor) {
-						this.$editor = createEditor({
-							language,
-							relativePath: this.relativePath,
-							session,
-							onCreate: ({ editor }) => {
-								this.$syncService.startSync()
-							},
-							onUpdate: ({ editor }) => {
-								// this.debugContent(editor)
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('update:content', {
-									markdown: proseMirrorMarkdown,
-								})
-							},
-							extensions: [
-								Autofocus.configure({
-									fileId: this.fileId,
-								}),
-								Collaboration.configure({
-									document: this.$ydoc,
-								}),
-								CollaborationCursor.configure({
-									provider: this.$providers[0],
-									user: {
-										name: session?.userId
-											? session.displayName
-											: (session?.guestName || t('text', 'Guest')),
-										color: session?.color,
-										clientId: this.$ydoc.clientID,
-									},
-								}),
-							],
-							enableRichEditing: this.isRichEditor,
-							isEmbedded: this.isEmbedded,
-						})
-						this.hasEditor = true
-						this.listenEditorEvents()
-					} else {
-						// $editor already existed. So this is a reconnect.
-						this.$syncService.startSync()
-					}
-
-				})
-
 		},
 
 		onChange({ document, sessions }) {
@@ -666,6 +669,16 @@ export default {
 			this.emit('blur')
 		},
 
+		onCreate() {
+			this.$syncService.startSync()
+		},
+
+		onUpdate(editor) {
+			// this.debugContent(editor)
+			const markdown = serializeEditorContent(editor)
+			this.emit('update:content', { markdown })
+		},
+
 		onAddImageNode() {
 			this.emit('add-image-node')
 		},
@@ -736,15 +749,15 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
+			const markdown = serializeEditorContent(editor)
+			const markdownItHtml = markdownit.render(markdown)
 
 			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
-			console.debug(proseMirrorMarkdown)
+			console.debug({ markdown })
 			logger.debug('HTML, serialized from markdown by markdown-it')
-			console.debug(markdownItHtml)
+			console.debug({ markdownItHtml })
 			logger.debug('HTML, as rendered in the browser by Tiptap')
-			console.debug(editor.getHTML())
+			console.debug({ editorHtml: editor.getHTML() })
 		},
 
 		outlineToggled(visible) {

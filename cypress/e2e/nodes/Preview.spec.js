@@ -21,11 +21,12 @@
  *
  */
 
-import Markdown from './../../../src/extensions/Markdown.js'
+import Serializer from './../../../src/extensions/Serializer.js'
 import Preview from './../../../src/nodes/Preview.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import { createCustomEditor } from './../../support/components.js'
 import { loadMarkdown, runCommands, expectMarkdown } from './helpers.js'
+import { isNodeActive, getMarkAttributes, getNodeAttributes } from '@tiptap/core'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
@@ -36,7 +37,7 @@ describe('Preview extension', { retries: 0 }, () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			Preview,
 			Link,
 			Italic,
@@ -133,51 +134,42 @@ describe('Preview extension', { retries: 0 }, () => {
 			prepareEditor('[link text](https://nextcloud.com)\n')
 			editor.commands.setPreview()
 			editor.commands.unsetPreview()
-			expect(getParentNode().type.name).to.equal('paragraph')
-		})
-
-		it('includes a link', () => {
-			prepareEditor('[link text](https://nextcloud.com)\n')
-			editor.commands.setPreview()
-			editor.commands.unsetPreview()
-			expect(getMark().attrs.href).to.equal('https://nextcloud.com')
+			expectParagraphWithLink()
 		})
 
 	})
 
 	/**
-	 *  Expect a preview in the editor.
+	 *  Expect a preview at the current position.
 	 */
 	function expectPreview() {
-		expect(getParentNode().type.name).to.equal('preview')
-		expect(getParentNode().attrs.href).to.equal('https://nextcloud.com')
-		expect(getMark().attrs.href).to.equal('https://nextcloud.com')
+		expect(isNodeActive(editor.state, 'paragraph'))
+			.to.be.false
+		expect(getNodeAttributes(editor.state, 'preview'))
+			.to.include({ href: 'https://nextcloud.com' })
+		expect(getMarkAttributes(editor.state, 'link'))
+			.to.include({ href: 'https://nextcloud.com' })
 	}
 
 	/**
-	 *
+	 *  Expect a paragraph with a link at the current position.
 	 */
-	function getParentNode() {
-		const { state: { selection } } = editor
-		return selection.$head.parent
+	function expectParagraphWithLink() {
+		expect(isNodeActive(editor.state, 'preview'))
+			.to.be.false
+		expect(isNodeActive(editor.state, 'paragraph'))
+			.to.be.true
+		expect(getMarkAttributes(editor.state, 'link'))
+			.to.include({ href: 'https://nextcloud.com' })
 	}
 
 	/**
-	 *
-	 */
-	function getMark() {
-		const { state: { selection } } = editor
-		console.info(selection.$head)
-		return selection.$head.nodeAfter.marks[0]
-	}
-
-	/**
-	 *
-	 * @param input
+	 * Load input and position the cursor inside.
+	 * @param { string } input - markdown to load
 	 */
 	function prepareEditor(input) {
 		loadMarkdown(editor, input)
-		editor.commands.setTextSelection(1)
+		editor.commands.setTextSelection(2)
 	}
 
 })
@@ -186,7 +178,7 @@ describe('Markdown tests for Previews in the editor', { retries: 0 }, () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			Preview,
 			Link,
 		],

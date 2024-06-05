@@ -1,10 +1,11 @@
 import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
 import { initUserAndFiles, randUser } from '../../utils/index.js'
 import { createCustomEditor } from './../../support/components.js'
+import { getMarkdown } from './helpers.js'
 
 import markdownit from './../../../src/markdownit/index.js'
 import EditableTable from './../../../src/nodes/EditableTable.js'
-import Markdown, { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
+import { Serializer } from './../../../src/extensions/index.js'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
@@ -146,7 +147,7 @@ describe('Table extension integrated in the editor', () => {
 	const editor = createCustomEditor({
 		content: '',
 		extensions: [
-			Markdown,
+			Serializer,
 			EditableTable,
 		],
 	})
@@ -198,8 +199,4 @@ describe('Table extension integrated in the editor', () => {
 		expect(getMarkdown().replace(/\n$/, '')).to.equal(markdown)
 	}
 
-	const getMarkdown = () => {
-		const serializer = createMarkdownSerializer(editor.schema)
-		return serializer.serialize(editor.state.doc)
-	}
 })

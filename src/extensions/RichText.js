@@ -52,6 +52,7 @@ import OrderedList from '@tiptap/extension-ordered-list'
 import Paragraph from './../nodes/Paragraph.js'
 import Placeholder from '@tiptap/extension-placeholder'
 import Preview from './../nodes/Preview.js'
+import Serializer from './../extensions/Serializer.js'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
@@ -71,7 +72,6 @@ export default Extension.create({
 		return {
 			editing: true,
 			extensions: [],
-			component: null,
 			relativePath: null,
 			isEmbedded: false,
 		}
@@ -80,6 +80,7 @@ export default Extension.create({
 	addExtensions() {
 		const defaultExtensions = [
 			this.options.editing ? Markdown : null,
+			this.options.editing ? Serializer : null,
 			Document,
 			Text,
 			Paragraph,

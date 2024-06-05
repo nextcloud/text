@@ -42,7 +42,7 @@ import { Editor } from '@tiptap/core'
 import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
 import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR } from '../Editor.provider.js'
-import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { serializeEditorContent } from '../../extensions/Serializer.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
 import { RichText } from '../../extensions/index.js'
@@ -150,7 +150,7 @@ export default {
 				content: this.htmlContent,
 				extensions: this.extensions(),
 				onUpdate: ({ editor }) => {
-					const markdown = (createMarkdownSerializer(this.$editor.schema)).serialize(editor.state.doc)
+					const markdown = serializeEditorContent(this.$editor)
 					this.emit('update:content', {
 						json: editor.state.doc,
 						markdown,

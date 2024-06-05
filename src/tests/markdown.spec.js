@@ -5,8 +5,8 @@ import {
 	markdownThroughEditorHtml,
 	markdownFromPaste
 } from './helpers.js'
-import { createMarkdownSerializer } from "../extensions/Markdown";
-import createEditor from "../EditorFactory";
+import { serializeEditorContent } from "../extensions/Serializer";
+import { createRichEditor } from "../EditorFactory";
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
@@ -190,9 +190,7 @@ describe('Markdown serializer from html', () => {
 describe('Trailing nodes', () => {
 	test('No extra transaction is added after loading', () => {
 		const source = "# My heading\n\n* test\n* test2"
-		const tiptap = createEditor({
-			enableRichEditing: true,
-		})
+		const tiptap = createRichEditor()
 		tiptap.commands.setContent(markdownit.render(source))
 
 		const jsonBefore = tiptap.getJSON()
@@ -205,8 +203,6 @@ describe('Trailing nodes', () => {
 		const jsonAfter = tiptap.getJSON()
 		expect(jsonAfter).toStrictEqual(jsonBefore)
 
-		const serializer = createMarkdownSerializer(tiptap.schema)
-		const md = serializer.serialize(tiptap.state.doc)
-		expect(md).toBe(source)
+		expect(serializeEditorContent(tiptap)).toBe(source)
 	})
 })
