@@ -175,7 +175,7 @@ OC.L10N.register(
     "Option" : "Option",
     "Formatting" : "Formatierung",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
-    "Add folder description" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
     "Copied to the clipboard" : "In die Zwischenablage kopiert",
