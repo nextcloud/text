@@ -15,10 +15,12 @@ export default function searchDecorations() {
 				const searchResults = runSearch(doc, '')
 				return highlightResults(doc, searchResults)
 			},
-			apply(transaction, _oldState) {
-				const query = transaction.getMeta('searchQuery') ?? ''
+			apply(transaction, oldState) {
+				const query = transaction.getMeta('searchQuery')
 
-				if (transaction.docChanged || query) {
+				if (query === undefined) {
+					return oldState
+				} else if (transaction.docChanged || query) {
 					const searchResults = runSearch(transaction.doc, query)
 					return highlightResults(transaction.doc, searchResults)
 				}
