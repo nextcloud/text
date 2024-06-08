@@ -1,0 +1,1 @@
+{"version":3,"file":"logger-C7d0ySTj.mjs","sources":["../src/helpers/logger.js"],"sourcesContent":["import { getLoggerBuilder } from '@nextcloud/logger'\n\nconst logger = getLoggerBuilder()\n\t.setApp('text')\n\t.detectUser()\n\t.build()\n\nexport {\n\tlogger,\n}\n"],"names":["logger","getLoggerBuilder"],"mappings":";yCAEK,MAACA,EAASC,EAAkB,EAC/B,OAAO,MAAM,EACb,WAAY,EACZ,MAAK"}
