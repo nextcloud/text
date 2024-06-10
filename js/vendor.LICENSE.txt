@@ -305,8 +305,8 @@ version: 4.1.0
 license: MIT
 
 d3-array
-version: 2.12.1
-license: BSD-3-Clause
+version: 3.2.4
+license: ISC
 
 d3-axis
 version: 3.0.0
@@ -393,7 +393,7 @@ version: 1.11.9
 license: MIT
 
 debounce
-version: 2.0.0
+version: 2.1.0
 license: MIT
 
 decode-named-character-reference
@@ -813,7 +813,7 @@ version: 5.6.0
 license: MIT
 
 y-prosemirror
-version: 1.2.5
+version: 1.2.6
 license: MIT
 
 y-protocols
