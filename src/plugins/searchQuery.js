@@ -1,5 +1,7 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 
+export const searchQueryPluginKey = new PluginKey('searchQuery')
+
 /**
  * Search query ProseMirror plugin
  * Sets the search query for the search TipTap extension
@@ -9,7 +11,7 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
  */
 export function searchQuery() {
 	return new Plugin({
-		key: new PluginKey('searchQuery'),
+		key: searchQueryPluginKey,
 		state: {
 			init: () => ({ query: '' }),
 			apply: (tr, oldState) => {
