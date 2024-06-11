@@ -20,13 +20,16 @@ export default function searchDecorations() {
 				const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
 				const { query: newQuery } = searchQueryPluginKey.getState(newState)
 
-				if (tr.docChanged || (newQuery !== oldQuery) || (newQuery === '')) {
-					const searchResults = runSearch(tr.doc, newQuery)
-					return highlightResults(tr.doc, searchResults)
+				let query = ''
+
+				if (tr.docChanged || (newQuery !== oldQuery)) {
+					query = newQuery
 				} else {
-					const searchResults = runSearch(tr.doc, oldQuery)
-					return highlightResults(tr.doc, searchResults)
+					query = oldQuery
 				}
+
+				const searchResults = runSearch(tr.doc, query)
+				return highlightResults(tr.doc, searchResults)
 			},
 		},
 		props: {
