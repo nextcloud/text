@@ -23,6 +23,7 @@
 
 namespace OCA\Text\Command;
 
+use OCA\Text\Db\Document;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use Symfony\Component\Console\Command\Command;
@@ -44,8 +45,14 @@ class ResetDocument extends Command {
 			->setDescription('Reset a text document session to the current file content')
 			->addArgument(
 				'file-id',
-				InputArgument::REQUIRED,
+				InputArgument::OPTIONAL,
 				'File id of the document to reset'
+			)
+			->addOption(
+				'all',
+				'a',
+				null,
+				'Reset all document sessions'
 			)
 			->addOption(
 				'force',
@@ -56,30 +63,45 @@ class ResetDocument extends Command {
 		;
 	}
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 * @return int
-	 */
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$fileId = $input->getArgument('file-id');
+		$all = $input->getOption('all');
 		$fullReset = $input->getOption('force');
 
-		if ($fullReset) {
-			$output->writeln('Force-reset the document session for file ' . $fileId);
-			$this->documentService->resetDocument($fileId, true);
-
-			return 0;
+		if (!$fileId && !$all) {
+			$output->writeln('<error>Either --all option or file-id argument is required.</error>');
+			return 1;
 		}
-
-		$output->writeln('Reset the document session for file ' . $fileId);
-		try {
-			$this->documentService->resetDocument($fileId);
-		} catch (DocumentHasUnsavedChangesException) {
-			$output->writeln('Not resetting due to unsaved changes');
+		if ($fileId && $all) {
+			$output->writeln('<error>The --all option and file id argument are exclusionary.</error>');
 			return 1;
 		}
 
-		return 0;
+		if ($all) {
+			$fileIds = array_map(static function (Document $document) {
+				return $document->getId();
+			}, $this->documentService->getAll());
+		} else {
+			$fileIds = [$fileId];
+		}
+
+		$rc = 0;
+		foreach ($fileIds as $id) {
+			if ($fullReset) {
+				$output->writeln('Force-reset the document session for file ' . $id);
+				$this->documentService->resetDocument($id, true);
+				continue;
+			}
+
+			$output->writeln('Reset the document session for file ' . $id);
+			try {
+				$this->documentService->resetDocument($id);
+			} catch (DocumentHasUnsavedChangesException) {
+				$output->writeln('Not resetting due to unsaved changes');
+				$rc = 1;
+			}
+		}
+
+		return $rc;
 	}
 }
