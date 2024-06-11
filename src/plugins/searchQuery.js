@@ -17,7 +17,7 @@ export function searchQuery() {
 			apply: (tr, oldState) => {
 				const searchQuery = tr.getMeta('searchQuery')
 
-				if (searchQuery) {
+				if (searchQuery !== undefined) {
 					return {
 						query: searchQuery,
 					}

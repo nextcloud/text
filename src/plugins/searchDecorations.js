@@ -1,7 +1,6 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import { searchQueryPluginKey } from './searchQuery.js'
-import {doc} from "lib0/dom";
 
 /**
  * Search decorations ProseMirror plugin
@@ -21,13 +20,13 @@ export default function searchDecorations() {
 				const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
 				const { query: newQuery } = searchQueryPluginKey.getState(newState)
 
-				const shouldUpdate = (tr.docChanged || (newQuery !== oldQuery))
-				const searchQuery = shouldUpdate ? newQuery : oldQuery
-
-				console.log({ searchQuery })
-
-				const searchResults = runSearch(tr.doc, searchQuery)
-				return highlightResults(tr.doc, searchResults)
+				if (tr.docChanged || (newQuery !== oldQuery) || (newQuery === '')) {
+					const searchResults = runSearch(tr.doc, newQuery)
+					return highlightResults(tr.doc, searchResults)
+				} else {
+					const searchResults = runSearch(tr.doc, oldQuery)
+					return highlightResults(tr.doc, searchResults)
+				}
 			},
 		},
 		props: {
