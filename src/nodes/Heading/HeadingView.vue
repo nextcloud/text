@@ -81,34 +81,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="scss">
-div.ProseMirror {
-	/* Anchor links */
-	h1,h2,h3,h4,h5,h6 {
-		position: relative;
-		.heading-anchor[contenteditable="false"] {
-			// Shrink clickable area of anchor permalinks to not overlay the heading
-			width: 1em;
-			opacity: 0;
-			padding: 0;
-			left: -1em;
-			bottom: 0;
-			font-size: max(1em, 16px);
-			position: absolute;
-			text-decoration: none;
-			transition-duration: .15s;
-			transition-property: opacity;
-			transition-timing-function: cubic-bezier(.4,0,.2,1);
-		}
-
-		&:hover .heading-anchor {
-			opacity: 0.5!important;
-		}
-
-		&:focus-visible {
-			outline: none;
-		}
-	}
-}
-</style>
