@@ -79,7 +79,6 @@
 import debounce from 'debounce'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcActions, NcActionButton, NcActionInput, NcActionLink, NcActionSeparator, NcLoadingIcon } from '@nextcloud/vue'
-import mermaid from 'mermaid'
 import { v4 as uuidv4 } from 'uuid'
 
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
@@ -93,7 +92,6 @@ import Check from 'vue-material-design-icons/Check.vue'
 import CopyToClipboardMixin from '../mixins/CopyToClipboardMixin.js'
 
 export default {
-	// eslint-disable-next-line vue/match-component-file-name
 	name: 'CodeBlockView',
 	components: {
 		MarkerIcon,
@@ -122,6 +120,12 @@ export default {
 			type: Object,
 			required: true,
 		},
+	},
+	setup() {
+		return {
+			/** The lazy loaded mermaid js module */
+			mermaid: null,
+		}
 	},
 	data() {
 		return {
@@ -153,10 +157,16 @@ export default {
 				return this.supportPreview() ? 'code' : 'preview'
 			}
 		},
+		renderMermaidDebounced() {
+			return debounce(this.renderMermaid, 250)
+		},
 	},
 	watch: {
-		'node.textContent'() {
-			this.renderMermaid()
+		'node.textContent': {
+			handler() {
+				this.renderMermaidDebounced()
+			},
+			immediate: true,
 		},
 	},
 	beforeMount() {
@@ -164,7 +174,17 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
-		this.renderMermaidDebounced = debounce(async function() {
+	},
+	methods: {
+		async copyCode() {
+			await this.copyToClipboard(this.node?.textContent)
+		},
+		updateLanguage(event) {
+			this.updateAttributes({
+				language: event.target.value,
+			})
+		},
+		async renderMermaid() {
 			if (!this.supportPreview) {
 				this.viewMode = 'code'
 				return
@@ -177,9 +197,14 @@ export default {
 			}
 
 			try {
-				await mermaid.parse(textContent)
+				// lazy load mermaid on first real usage
+				if (this.mermaid === null) {
+					this.mermaid = (await import('mermaid')).default
+					this.mermaid.initialize({ startOnLoad: false })
+				}
+				await this.mermaid.parse(textContent)
 
-				const { svg } = await mermaid.render(this.targetId, textContent)
+				const { svg } = await this.mermaid.render(this.targetId, textContent)
 				const targetElement = document.getElementById(this.targetId)
 				if (targetElement) {
 					targetElement.style.display = 'none'
@@ -191,24 +216,6 @@ export default {
 					this.viewMode = this.isEditable ? 'side-by-side' : 'code'
 				}
 			}
-		}, 250)
-
-		mermaid.initialize({ startOnLoad: false })
-		this.$nextTick(() => {
-			this.renderMermaid()
-		})
-	},
-	methods: {
-		async copyCode() {
-			await this.copyToClipboard(this.node?.textContent)
-		},
-		updateLanguage(event) {
-			this.updateAttributes({
-				language: event.target.value,
-			})
-		},
-		renderMermaid() {
-			this.renderMermaidDebounced()
 		},
 	},
 }
