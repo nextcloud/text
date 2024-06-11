@@ -35,6 +35,8 @@ use OCP\AppFramework\Db\Entity;
  * @method setSessionId(int $sessionId): void
  * @method getDocumentId(): int
  * @method setDocumentId(int $documentId): void
+ * @method getTimestamp(): int
+ * @method setTimestamp(int $timestam): void
  */
 class Step extends Entity implements JsonSerializable {
 
@@ -50,12 +52,14 @@ class Step extends Entity implements JsonSerializable {
 	protected int $version = 0;
 	protected int $sessionId = 0;
 	protected int $documentId = 0;
+	protected int $timestamp = 0;
 
 	public function __construct() {
 		$this->addType('id', 'integer');
 		$this->addType('version', 'integer');
 		$this->addType('documentId', 'integer');
 		$this->addType('sessionId', 'integer');
+		$this->addType('timestamp', 'integer');
 	}
 
 	public function jsonSerialize(): array {
@@ -70,7 +74,8 @@ class Step extends Entity implements JsonSerializable {
 			'id' => $this->getId(),
 			'data' => $jsonData,
 			'version' => $version,
-			'sessionId' => $this->getSessionId()
+			'sessionId' => $this->getSessionId(),
+			'timestamp' => $this->getTimestamp(),
 		];
 	}
 }
