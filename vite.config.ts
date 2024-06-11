@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { createAppConfig } from '@nextcloud/vite-config'
+import { webpackStats } from 'rollup-plugin-webpack-stats'
 import path from 'path'
-import { webpackStats } from 'rollup-plugin-webpack-stats';
 
 const ENTRIES_TO_INCLUDE_CSS = ['text', 'public', 'viewer', 'editors']
 
@@ -29,6 +29,18 @@ const config = createAppConfig({
 		plugins: [
 			webpackStats(),
 		],
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks: (id) => {
+						// Make the emoji related dependencies a custom chunk to reduce the size of the RichText chunk
+						if (id.includes('emoji-mart-vue') || id.includes('emoji-datasource')) {
+							return 'emoji-picker'
+						}
+					},
+				},
+			},
+		},
 	},
 })
 
