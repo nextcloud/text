@@ -48,6 +48,7 @@ import LinkBubble from './../extensions/LinkBubble.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
+import Search from './../extensions/Search.js'
 import OrderedList from '@tiptap/extension-ordered-list'
 import Paragraph from './../nodes/Paragraph.js'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -114,6 +115,7 @@ export default Extension.create({
 			KeepSyntax,
 			FrontMatter,
 			Mention,
+			Search,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),
 			}),
