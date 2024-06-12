@@ -7,7 +7,7 @@
 	<div data-text-el="editor-table-of-contents" :class="{ '--initial-render': initialRender }" class="editor--toc">
 		<ul class="editor--toc__list">
 			<li v-for="(heading) in headings"
-				:key="heading.uuid"
+				:key="heading.id"
 				:data-toc-level="heading.level"
 				class="editor--toc__item"
 				:class="{
@@ -45,12 +45,7 @@ export default {
 	},
 	methods: {
 		goto(heading) {
-			this.$editor
-				.chain()
-				.focus()
-				.setTextSelection(heading.position)
-				.scrollIntoView()
-				.run()
+			document.getElementById(heading.id).scrollIntoView()
 
 			this.$nextTick(() => {
 				window.location.hash = heading.id
