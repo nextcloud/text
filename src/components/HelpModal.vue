@@ -175,6 +175,13 @@
 					<td v-if="!isMobileCached" />
 				</tr>
 				<tr>
+					<td>{{ t('text', 'Link') }}</td>
+					<td>
+						<code>[Title](https://example.org)</code>
+					</td>
+					<td v-if="!isMobileCached" />
+				</tr>
+				<tr>
 					<td>{{ t('text', 'Insert emoji') }}</td>
 					<td>
 						<code>:{{ t('text', 'emoji') }}</code>
