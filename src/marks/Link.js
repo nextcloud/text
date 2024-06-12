@@ -20,9 +20,26 @@
  *
  */
 
+import { markInputRule } from '@tiptap/core'
 import TipTapLink from '@tiptap/extension-link'
 import { domHref, parseHref } from './../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
+
+const extractHrefFromMatch = (match) => {
+	return { href: match.groups.href }
+}
+
+const extractHrefFromMarkdownLink = (match) => {
+	/**
+	 * Removes the last capture group from the match to satisfy
+	 * Tiptap markInputRule expectation of having the content as
+	 * the last capture group in the match.
+	 *
+	 * https://github.com/ueberdosis/tiptap/blob/%40tiptap/core%402.0.0-beta.75/packages/core/src/inputRules/markInputRule.ts#L11
+	 */
+	match.pop()
+	return extractHrefFromMatch(match)
+}
 
 const Link = TipTapLink.extend({
 
@@ -64,6 +81,17 @@ const Link = TipTapLink.extend({
 			'data-md-href': mark.attrs.href,
 			rel: 'noopener noreferrer nofollow',
 		}, 0]
+	},
+
+	addInputRules() {
+		const linkInputRegex = /(?:^|\s)\[([\w|\s|-]+)\]\((?<href>.+?)\)$/gm
+		return [
+			markInputRule({
+				find: linkInputRegex,
+				type: this.type,
+				getAttributes: extractHrefFromMarkdownLink,
+			}),
+		]
 	},
 
 	addProseMirrorPlugins() {
