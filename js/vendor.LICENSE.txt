@@ -5,11 +5,11 @@ version: 6.0.2
 license: MIT
 
 @floating-ui/core
-version: 0.3.1
+version: 1.6.1
 license: MIT
 
 @floating-ui/dom
-version: 0.1.10
+version: 1.6.5
 license: MIT
 
 @floating-ui/utils
@@ -261,7 +261,7 @@ version: 10.10.0
 license: MIT
 
 @vueuse/shared
-version: 10.10.0
+version: 10.9.0
 license: MIT
 
 ansi-regex
@@ -305,8 +305,8 @@ version: 4.1.0
 license: MIT
 
 d3-array
-version: 3.2.4
-license: ISC
+version: 2.12.1
+license: BSD-3-Clause
 
 d3-axis
 version: 3.0.0
