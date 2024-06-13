@@ -85,6 +85,7 @@ OC.L10N.register(
     "Quoted text" : "Tilvitnaður texti",
     "Code block" : "Kóðablokk",
     "Some code" : "Einhver kóði",
+    "Link" : "Tengill",
     "Insert emoji" : "Setja inn tjáningartákn",
     "name" : "heiti",
     "Smart picker" : "Snjall-veljari",

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Saving …" : "Menyimpan ...",
     "Saved" : "Disimpan",
     "Keyboard shortcuts" : "Pintasan keyboard",
+    "Link" : "Tautan",
     "Undo" : "Undo",
     "Cancel" : "Batal",
     "URL" : "URL",

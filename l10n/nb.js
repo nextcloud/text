@@ -97,6 +97,7 @@ OC.L10N.register(
     "Quoted text" : "Sitert tekst",
     "Code block" : "Kode",
     "Some code" : "Litt kode",
+    "Link" : "Lenke",
     "Insert emoji" : "Sett inn emoji",
     "name" : "navn",
     "Smart picker" : "Smartvelger",

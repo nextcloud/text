@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "Цитирани текст",
     "Code block" : "Блок са изворним кôдом",
     "Some code" : "Неки кôд",
+    "Link" : "Веза",
     "Insert emoji" : "Уметни емођи",
     "emoji" : "емођи",
     "Mention someone" : "Помените некога",

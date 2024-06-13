@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Cha b’ urrainn dhuinn am faidhle a sgrìobhadh dhan diosg",
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
     "Translate" : "Eadar-theangaich",
+    "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",
     "Cancel" : "Sguir dheth",
     "Replace" : "Cuir ’na àite",

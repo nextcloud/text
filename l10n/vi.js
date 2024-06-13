@@ -69,6 +69,7 @@ OC.L10N.register(
     "Blockquote" : "Trích dẫn",
     "Quoted text" : "Văn bản được trích dẫn",
     "Code block" : "Khối mã",
+    "Link" : "Liên kết",
     "Insert emoji" : "Chèn emoji",
     "Action" : "Hành động",
     "Undo" : "Hoàn tác",

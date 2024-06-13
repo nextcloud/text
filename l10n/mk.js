@@ -63,6 +63,7 @@ OC.L10N.register(
     "Ordered list" : "Подредена листа",
     "Quoted text" : "Цитиран текст",
     "Some code" : "Некој код",
+    "Link" : "Линк",
     "Insert emoji" : "Вметни емотикон",
     "Undo" : "Назад",
     "Redo" : "Напред",

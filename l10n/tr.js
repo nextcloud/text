@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "Alıntılanmış metin",
     "Code block" : "Kod bloğu",
     "Some code" : "Kod metni",
+    "Link" : "Bağlantı",
     "Insert emoji" : "Emoji ekle",
     "emoji" : "emoji",
     "Mention someone" : "Birini an",

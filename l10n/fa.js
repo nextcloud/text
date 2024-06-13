@@ -90,6 +90,7 @@ OC.L10N.register(
     "Quoted text" : "Quoted text",
     "Code block" : "Code block",
     "Some code" : "Some code",
+    "Link" : "پیوند",
     "Insert emoji" : "Insert emoji",
     "name" : "نام",
     "Smart picker" : "Smart picker",
