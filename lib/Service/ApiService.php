@@ -35,6 +35,7 @@ use Psr\Log\LoggerInterface;
 class ApiService {
 	public function __construct(
 		private IRequest $request,
+		private ConfigService $configService,
 		private SessionService $sessionService,
 		private DocumentService $documentService,
 		private EncodingService $encodingService,
@@ -193,7 +194,7 @@ class ApiService {
 	}
 
 	private function addToPushQueue(Document $document, array $steps): void {
-		if ($this->queue === null) {
+		if ($this->queue === null || !$this->configService->isNotifyPushSyncEnabled()) {
 			return;
 		}
 
