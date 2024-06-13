@@ -4,6 +4,7 @@ OC.L10N.register(
     "Translate" : "Орчуулга",
     "Guest" : "Зочин",
     "Saved" : "Хадгалах",
+    "Link" : "Холбоос",
     "Undo" : "буцах",
     "Cancel" : "Цуцлах",
     "URL" : "URL",

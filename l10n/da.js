@@ -48,6 +48,7 @@ OC.L10N.register(
     "Ordered list" : "Sorteret liste",
     "Blockquote" : "Citat",
     "Code block" : "Kodeblok",
+    "Link" : "Link",
     "Insert emoji" : "Indsæt emoji",
     "name" : "Navn",
     "Smart picker" : "Smart Vælger",

@@ -9,6 +9,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Llwybrau byr bysellfwrdd",
     "Bold" : "Trwm",
     "Italic" : "Italig",
+    "Link" : "Dolen",
     "Undo" : "Dadwneud",
     "URL" : "URL",
     "to" : "at",

@@ -48,6 +48,7 @@ OC.L10N.register(
     "Heading 6" : "제목 6",
     "Heading level 6" : "제목 단계 6",
     "Quoted text" : "인용문",
+    "Link" : "링크",
     "Smart picker" : "스마트 피커",
     "Action" : "동작",
     "Undo" : "실행 취소",

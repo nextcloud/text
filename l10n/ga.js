@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "Téacs luaite",
     "Code block" : "Bloc cód",
     "Some code" : "Roinnt cód",
+    "Link" : "Nasc",
     "Insert emoji" : "Cuir isteach emoji",
     "emoji" : "emoji",
     "Mention someone" : "Luaigh duine éigin",

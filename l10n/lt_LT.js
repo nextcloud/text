@@ -67,6 +67,7 @@ OC.L10N.register(
     "Quoted text" : "Cituojamas tekstas",
     "Code block" : "Kodo blokas",
     "Some code" : "Kažkoks kodas",
+    "Link" : "Nuoroda",
     "Insert emoji" : "Įterpti šypsenėlę",
     "name" : "pavadinimas",
     "Action" : "Veiksmas",

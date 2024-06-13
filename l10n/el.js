@@ -66,6 +66,7 @@ OC.L10N.register(
     "Quoted text" : "Αναφερόμενο κείμενο",
     "Code block" : "Μπλοκ κώδικα",
     "Some code" : "Κώδικας",
+    "Link" : "Σύνδεσμος",
     "Insert emoji" : "Εισαγωγή emoji",
     "name" : "όνομα",
     "Action" : "Ενέργεια",
