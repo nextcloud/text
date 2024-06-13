@@ -30,18 +30,18 @@ describe('Versions', () => {
 
 			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
 			cy.get('.viewer__content #read-only-editor')
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V2')
+				.find('h1')
+				.should('contain.text', 'V2')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
 			cy.get('.viewer__content #read-only-editor')
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V1')
+				.find('h1')
+				.should('contain.text', 'V1')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(0).click()
 			cy.getContent()
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V3')
+				.find('h1')
+				.should('contain.text', 'V3')
 		})
 	})
 
@@ -64,18 +64,18 @@ describe('Versions', () => {
 
 			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
 			cy.get('.viewer__content #read-only-editor')
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V2')
+				.find('h1')
+				.should('contain.text', 'V2')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
 			cy.get('.viewer__content #read-only-editor')
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V1')
+				.find('h1')
+				.should('contain.text', 'V1')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(0).click()
 			cy.getContent()
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V3')
+				.find('h1')
+				.should('contain.text', 'V3')
 
 			cy.getContent()
 				.type('Hello')
@@ -109,11 +109,11 @@ describe('Versions', () => {
 				.click()
 
 			cy.get('.viewer__content #read-only-editor')
-				.find('h1 [data-node-view-content]')
-				.should('have.text', 'V1')
+				.find('h1')
+				.should('contain.text', '#V1')
 
 			cy.get('.viewer__content .viewer__file--active .ProseMirror')
-				.find('h1 [data-node-view-content]')
+				.find('h1')
 				.should('contain.text', 'V3')
 		})
 	})
