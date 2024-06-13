@@ -39,6 +39,7 @@ OC.L10N.register(
     "Strikethrough" : "Rasurado",
     "Underline" : "Sublinhado",
     "Underlined text" : "Texto sublinhado",
+    "Link" : "Hiperligação",
     "name" : "nome",
     "Undo" : "Desfazer",
     "Redo" : "Repetir",

@@ -91,6 +91,7 @@ OC.L10N.register(
     "Quoted text" : "引用された文字",
     "Code block" : "コードブロック",
     "Some code" : "何かコード",
+    "Link" : "リンク",
     "Insert emoji" : "絵文字を挿入",
     "name" : "名前",
     "Smart picker" : "スマートピッカー",

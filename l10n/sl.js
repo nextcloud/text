@@ -83,6 +83,7 @@ OC.L10N.register(
     "Quoted text" : "Navedek besedila",
     "Code block" : "Navedek s kodo",
     "Some code" : "Vpisana koda",
+    "Link" : "Povezava",
     "Insert emoji" : "Vstavi izrazno ikono",
     "name" : "ime",
     "Action" : "Dejanje",

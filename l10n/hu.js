@@ -90,6 +90,7 @@ OC.L10N.register(
     "Quoted text" : "Idézett szöveg",
     "Code block" : "Kódblokk",
     "Some code" : "Valamilyen kód",
+    "Link" : "Hivatkozás",
     "Insert emoji" : "Emodzsi beszúrása",
     "name" : "név",
     "Smart picker" : "Okos választó",

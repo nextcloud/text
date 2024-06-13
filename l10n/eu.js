@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "Aipatutako testua",
     "Code block" : "Kode blokea",
     "Some code" : "Kode zatia",
+    "Link" : "Esteka",
     "Insert emoji" : "Txertatu emojia",
     "emoji" : "emoji",
     "Mention someone" : "Aipatu norbait",

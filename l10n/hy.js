@@ -12,6 +12,7 @@ OC.L10N.register(
     "Translate" : "Թարգմանել",
     "guest" : "հյուր",
     "Saved" : "Պահված",
+    "Link" : "Հղում",
     "Cancel" : "չեղարկել",
     "URL" : "URL",
     "Edit" : "մշակել",

@@ -24,6 +24,7 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Ctrl" : "Ctrl",
     "Quoted text" : "Quoted text",
+    "Link" : "Link",
     "Smart picker" : "Smart picker",
     "Action" : "Action",
     "Undo" : "Undo",

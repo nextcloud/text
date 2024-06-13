@@ -13,6 +13,7 @@ OC.L10N.register(
     "Saved" : "Guardado",
     "Unsaved changes" : "Cambios no guardados",
     "Keyboard shortcuts" : "Atajos del teclado",
+    "Link" : "Ligas",
     "Action" : "Acción",
     "Undo" : "Deshacer",
     "URL" : "URL",

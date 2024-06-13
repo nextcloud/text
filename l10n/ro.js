@@ -23,6 +23,7 @@ OC.L10N.register(
     "Unsaved changes" : "Modificări nesalvate",
     "Keyboard shortcuts" : "Scurtături din tastatură",
     "Quoted text" : "Text citat",
+    "Link" : "Legătură",
     "Undo" : "Anulează ultima acțiune",
     "Redo" : "Repetă",
     "Edit link" : "Editare link",

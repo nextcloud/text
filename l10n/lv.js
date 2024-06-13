@@ -22,6 +22,7 @@ OC.L10N.register(
     "Bold" : "Treknraksts",
     "Italic" : "Slīpraksts",
     "Strikethrough" : "Pārsvītrojums",
+    "Link" : "Saite",
     "Action" : "Darbība",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",

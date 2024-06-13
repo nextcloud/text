@@ -8,6 +8,7 @@ OC.L10N.register(
     "Translate" : "Suqel",
     "Guest" : "Inebgi",
     "Backspace" : "Retour",
+    "Link" : "Aseɣwen",
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
     "Edit" : "Ẓreg",

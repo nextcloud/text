@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "Процитований текст",
     "Code block" : "Код",
     "Some code" : "Якийсь код",
+    "Link" : "Посилання",
     "Insert emoji" : "Емоційки",
     "emoji" : "емоційки",
     "Mention someone" : "Згадати когось",

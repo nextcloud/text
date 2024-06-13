@@ -36,6 +36,7 @@ OC.L10N.register(
     "Ordered list" : "Ordigita listo",
     "Blockquote" : "Citaĵo",
     "Code block" : "Kodbloko",
+    "Link" : "Ligilo",
     "Undo" : "Malfari",
     "Redo" : "Refari",
     "Save changes" : "Konservi ŝanĝojn",
