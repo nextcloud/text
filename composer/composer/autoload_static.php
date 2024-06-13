@@ -83,6 +83,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Service\\SessionService' => __DIR__ . '/..' . '/../lib/Service/SessionService.php',
         'OCA\\Text\\Service\\WorkspaceService' => __DIR__ . '/..' . '/../lib/Service/WorkspaceService.php',
         'OCA\\Text\\TextFile' => __DIR__ . '/..' . '/../lib/TextFile.php',
+        'OCA\\Text\\YjsMessage' => __DIR__ . '/..' . '/../lib/YjsMessage.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

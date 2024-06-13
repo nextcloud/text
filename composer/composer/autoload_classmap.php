@@ -68,4 +68,5 @@ return array(
     'OCA\\Text\\Service\\SessionService' => $baseDir . '/../lib/Service/SessionService.php',
     'OCA\\Text\\Service\\WorkspaceService' => $baseDir . '/../lib/Service/WorkspaceService.php',
     'OCA\\Text\\TextFile' => $baseDir . '/../lib/TextFile.php',
+    'OCA\\Text\\YjsMessage' => $baseDir . '/../lib/YjsMessage.php',
 );

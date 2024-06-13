@@ -36,6 +36,7 @@ use OCA\Text\Db\Step;
 use OCA\Text\Db\StepMapper;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Exception\DocumentSaveConflictException;
+use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Constants;
 use OCP\DB\Exception;
@@ -230,11 +231,16 @@ class DocumentService {
 	public function addStep(Document $document, Session $session, $steps, $version, $shareToken): array {
 		$sessionId = $session->getId();
 		$documentId = $session->getDocumentId();
+		$readOnly = $this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken);
 		$stepsToInsert = [];
 		$querySteps = [];
 		$getStepsSinceVersion = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
+			$message = YjsMessage::fromBase64($step);
+			if ($readOnly && $message->isUpdate()) {
+				continue;
+			}
 			// Steps are base64 encoded messages of the yjs protocols
 			// https://github.com/yjs/y-protocols
 			// Base64 encoded values smaller than "AAE" belong to sync step 1 messages.
@@ -245,8 +251,8 @@ class DocumentService {
 				array_push($stepsToInsert, $step);
 			}
 		}
-		if (sizeof($stepsToInsert) > 0) {
-			if ($this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken)) {
+		if (count($stepsToInsert) > 0) {
+			if ($readOnly) {
 				throw new NotPermittedException('Read-only client tries to push steps with changes');
 			}
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert, $version);
