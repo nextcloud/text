@@ -41,6 +41,7 @@ OC.L10N.register(
     "Ordered list" : "Lista ordenada",
     "Blockquote" : "Citacion",
     "Code block" : "Còdi",
+    "Link" : "Ligam",
     "Insert emoji" : "Inserir emoji",
     "Undo" : "Anullar",
     "Redo" : "Refar",

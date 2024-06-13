@@ -8,6 +8,7 @@ OC.L10N.register(
     "Offline" : "Van mreže",
     "Bold" : "Podebljano",
     "Italic" : "Kurziv",
+    "Link" : "Veza",
     "Undo" : "Opozovi",
     "Cancel" : "Poništi",
     "Replace" : "Zameni postojeću",

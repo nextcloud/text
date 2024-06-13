@@ -68,6 +68,7 @@ OC.L10N.register(
     "Quoted text" : "Geciteerde tekst",
     "Code block" : "Code blok",
     "Some code" : "Wat code",
+    "Link" : "Link",
     "Insert emoji" : "Invoegen emoji",
     "name" : "naam",
     "Action" : "Actie",

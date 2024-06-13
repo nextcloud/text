@@ -24,6 +24,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Shkurtoret e tastierës",
     "Bold" : "I theksuar",
     "Italic" : "I pjerrët",
+    "Link" : "Lidhje",
     "Action" : "Veprim",
     "Undo" : "Ktheje pas",
     "Redo" : "Ribëj",

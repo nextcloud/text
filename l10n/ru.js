@@ -90,6 +90,7 @@ OC.L10N.register(
     "Quoted text" : "Цитируемый текст",
     "Code block" : "Блок кода",
     "Some code" : "Некоторый код",
+    "Link" : "Ссылка",
     "Insert emoji" : "Вставить emoji",
     "name" : "имя",
     "Smart picker" : "Умный подборщик",

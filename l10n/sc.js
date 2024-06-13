@@ -45,6 +45,7 @@ OC.L10N.register(
     "Blockquote" : "Mentovu",
     "Quoted text" : "Testu tzitadu",
     "Code block" : "Blocu de còdighe",
+    "Link" : "Ligòngiu",
     "Insert emoji" : "Inserta·nche una carighedda",
     "name" : "nùmene",
     "Action" : "Atzione",

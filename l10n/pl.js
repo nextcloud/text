@@ -92,6 +92,7 @@ OC.L10N.register(
     "Quoted text" : "Cytowany tekst",
     "Code block" : "Blok kodu",
     "Some code" : "Jakiś kod",
+    "Link" : "Odnośnik",
     "Insert emoji" : "Wstaw emoji",
     "name" : "nazwa",
     "Smart picker" : "Inteligentna selekcja",

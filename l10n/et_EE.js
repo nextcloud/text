@@ -22,6 +22,7 @@ OC.L10N.register(
     "Saved" : "Salvestatud",
     "Unsaved changes" : "Salvestamata muutused",
     "Keyboard shortcuts" : "Klaviatuuri otseteed",
+    "Link" : "Link",
     "name" : "nimi",
     "Undo" : "Tühista",
     "Cancel" : "Tühista",

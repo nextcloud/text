@@ -45,6 +45,7 @@ OC.L10N.register(
     "Ordered list" : "רשימה ממוינת",
     "Blockquote" : "מקטע ציטוט",
     "Code block" : "מקטע קוד",
+    "Link" : "קישור",
     "name" : "שם",
     "Action" : "פעולה",
     "Undo" : "ביטול",

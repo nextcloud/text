@@ -80,6 +80,7 @@ OC.L10N.register(
     "Quoted text" : "Lainattu teksti",
     "Code block" : "Koodilohko",
     "Some code" : "Koodia",
+    "Link" : "Linkki",
     "Insert emoji" : "Lisää emoji",
     "name" : "nimi",
     "Action" : "Toiminto",
