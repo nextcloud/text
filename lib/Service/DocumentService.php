@@ -220,11 +220,15 @@ class DocumentService {
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
+		$readOnly = $this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken);
 		$stepsToInsert = [];
 		$querySteps = [];
 		$newVersion = $version;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
+			if ($readOnly && $message->isUpdate()) {
+				continue;
+			}
 			// Filter out query steps as they would just trigger clients to send their steps again
 			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
 				$querySteps[] = $step;
@@ -233,7 +237,7 @@ class DocumentService {
 			}
 		}
 		if (count($stepsToInsert) > 0) {
-			if ($this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken)) {
+			if ($readOnly) {
 				throw new NotPermittedException('Read-only client tries to push steps with changes');
 			}
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);

@@ -82,4 +82,17 @@ class YjsMessage {
 		return $syncType;
 	}
 
+	/**
+	 * Based on https://github.com/yjs/y-protocols/blob/master/PROTOCOL.md#handling-read-only-users
+	 */
+	public function isUpdate(): bool {
+		if ($this->getYjsMessageType() === self::YJS_MESSAGE_SYNC) {
+			if (in_array($this->getYjsSyncType(), [self::YJS_MESSAGE_SYNC_STEP2, self::YJS_MESSAGE_SYNC_UPDATE])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }
