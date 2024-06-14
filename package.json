@@ -109,7 +109,7 @@
     "y-prosemirror": "^1.2.6",
     "y-protocols": "^1.0.6",
     "y-websocket": "^2.0.3",
-    "yjs": "^13.6.15"
+    "yjs": "^13.6.16"
   },
   "engines": {
     "node": "^20.0.0",
