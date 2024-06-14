@@ -305,8 +305,8 @@ version: 4.1.0
 license: MIT
 
 d3-array
-version: 3.2.4
-license: ISC
+version: 2.12.1
+license: BSD-3-Clause
 
 d3-axis
 version: 3.0.0
@@ -337,8 +337,8 @@ version: 3.0.1
 license: ISC
 
 d3-path
-version: 3.1.0
-license: ISC
+version: 1.0.9
+license: BSD-3-Clause
 
 d3-sankey
 version: 0.12.3
@@ -357,8 +357,8 @@ version: 3.0.0
 license: ISC
 
 d3-shape
-version: 3.2.0
-license: ISC
+version: 1.3.7
+license: BSD-3-Clause
 
 d3-time
 version: 3.1.0
