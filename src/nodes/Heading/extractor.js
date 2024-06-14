@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import store from '../../store/index.js'
 import { slugify } from './slug.js'
 import { v4 as uuidv4 } from 'uuid'

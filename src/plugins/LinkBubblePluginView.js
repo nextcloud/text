@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 import { domHref } from '../helpers/links.js'

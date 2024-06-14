@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import MarkdownIt from 'markdown-it'
 import taskLists from '@hedgedoc/markdown-it-task-lists'
 import markdownitMentions from '@quartzy/markdown-it-mentions'

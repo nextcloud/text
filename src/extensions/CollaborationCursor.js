@@ -1,9 +1,11 @@
+/**
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
 /**
- * Show cursor for client ID
- * Wait 50ms for cases where the cursor gets re-rendered
- *
  * @param {number} clientId The Yjs client ID
  */
 function showCursorLabel(clientId) {

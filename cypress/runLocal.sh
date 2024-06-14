@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2021-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 CYPRESS_DIR=$(dirname -- "$(readlink -f "${BASH_SOURCE}")")
 CYPRESS_baseUrl=${CYPRESS_baseUrl:-http://localhost:8081/index.php}

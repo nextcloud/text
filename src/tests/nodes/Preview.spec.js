@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2023-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import Preview from './../../nodes/Preview'
 import Markdown from './../../extensions/Markdown'
 import Link from './../../marks/Link'

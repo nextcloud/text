@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2021-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { Markdown } from './../../extensions/index.js'
 import { createMarkdownSerializer } from './../../extensions/Markdown.js'
 import CodeBlock from '@tiptap/extension-code-block'

@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import TipTapHeading from '@tiptap/extension-heading'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import debounce from 'debounce'

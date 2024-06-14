@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2022-2024 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 # Cypress tests
 There are some custom cypress commands available making it easier to write tests,
 for example you can get the editor content and insert text by using

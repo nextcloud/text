@@ -1,4 +1,9 @@
 /**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+/**
  * Check if current platform is a mobile device
  *
  * @return {boolean} whether the platform is a mobile device

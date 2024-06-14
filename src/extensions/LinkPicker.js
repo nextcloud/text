@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { Extension } from '@tiptap/core'
 import { Suggestion } from '@tiptap/suggestion'
 import { PluginKey } from '@tiptap/pm/state'
