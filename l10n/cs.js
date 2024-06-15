@@ -90,6 +90,7 @@ OC.L10N.register(
     "Quoted text" : "Citovaný text",
     "Code block" : "Blok kódu",
     "Some code" : "Nějaký kód",
+    "Link" : "Odkaz",
     "Insert emoji" : "Vložit emotikonu",
     "name" : "název",
     "Smart picker" : "Inteligentní výběr",
