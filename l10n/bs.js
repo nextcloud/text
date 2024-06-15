@@ -8,6 +8,7 @@ OC.L10N.register(
     "guest" : "gost",
     "Saved" : "Spremljeno",
     "Keyboard shortcuts" : "Tipkovni prečaci",
+    "Link" : "Veza",
     "Cancel" : "Odustani",
     "to" : "do",
     "Edit" : "Izmjeni",
