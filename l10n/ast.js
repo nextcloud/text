@@ -88,6 +88,7 @@ OC.L10N.register(
     "Quoted text" : "Cita",
     "Code block" : "Bloque de códigu",
     "Some code" : "Dalgo de códigu",
+    "Link" : "Enllaz",
     "Smart picker" : "Selector intelixente",
     "Action" : "Aición",
     "Undo" : "Desfacer",

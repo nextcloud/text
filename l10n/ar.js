@@ -99,6 +99,7 @@ OC.L10N.register(
     "Quoted text" : "نصٌ مُقتبسٌ",
     "Code block" : "كتلة كود",
     "Some code" : "سطور كود",
+    "Link" : "رابط",
     "Insert emoji" : "أدخِل \"إيموجي\" emoji",
     "emoji" : "إيموجي",
     "Mention someone" : "الإشارة إلى شخصٍ ما",

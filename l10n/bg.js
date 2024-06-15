@@ -82,6 +82,7 @@ OC.L10N.register(
     "Quoted text" : "Цитиран текст",
     "Code block" : "Кодов блок",
     "Some code" : "Някакъв код",
+    "Link" : "Връзка",
     "Insert emoji" : "Вмъкване на емотикон",
     "name" : "име",
     "Smart picker" : "Смарт /интелигентен/ инструмент за избор",
