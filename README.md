@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 # Nextcloud Text
-
+[![REUSE status](https://api.reuse.software/badge/github.com/nextcloud/text)](https://api.reuse.software/info/github.com/nextcloud/text)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/nextcloud/text/node.yml?branch=main)
 [![Start contributing](https://img.shields.io/github/issues/nextcloud/text/good%20first%20issue?color=7057ff&label=Contribute)](https://github.com/nextcloud/text/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22)
 
