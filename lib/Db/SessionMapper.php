@@ -150,6 +150,12 @@ class SessionMapper extends QBMapper {
 		return $qb->execute();
 	}
 
+	public function clearAll(): void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->executeStatement();
+	}
+
 	public function isUserInDocument($documentId, $userId): bool {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')

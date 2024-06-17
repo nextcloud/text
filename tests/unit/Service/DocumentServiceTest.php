@@ -14,6 +14,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\Lock\ILockManager;
 use OCP\Files\NotPermittedException;
 use OCP\ICacheFactory;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
 use OCP\Share\IManager;
@@ -52,6 +53,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 		$this->lockingProvider = $this->createMock(ILockingProvider::class);
 		$this->lockManager = $this->createMock(ILockManager::class);
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
+		$config = $this->createMock(IConfig::class);
 
 		$this->documentService = new DocumentService(
 			$this->documentMapper,
@@ -68,6 +70,7 @@ class DocumentServiceTest extends \PHPUnit\Framework\TestCase {
 			$this->lockingProvider,
 			$this->lockManager,
 			$this->userMountCache,
+			$config,
 		);
 	}
 

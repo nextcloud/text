@@ -79,4 +79,10 @@ class DocumentMapper extends QBMapper {
 		$result->closeCursor();
 		return $count;
 	}
+
+	public function clearAll(): void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->executeStatement();
+	}
 }

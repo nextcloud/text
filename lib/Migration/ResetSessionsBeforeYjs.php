@@ -31,13 +31,6 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 			return;
 		}
 
-		$output->startProgress($this->documentService->countAll());
-		foreach ($this->documentService->getAll() as $document) {
-			$fileId = $document->getId();
-			$this->documentService->unlock($fileId);
-			$this->documentService->resetDocument($fileId, true);
-			$output->advance();
-		}
-		$output->finishProgress();
+		$this->documentService->clearAll();
 	}
 }
