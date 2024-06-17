@@ -77,6 +77,12 @@ class ResetDocument extends Command {
 			return 1;
 		}
 
+		if ($all && $fullReset) {
+			// Truncate tables and clear document directory
+			$this->documentService->clearAll();
+			return 0;
+		}
+
 		if ($all) {
 			$fileIds = [];
 			foreach ($this->documentService->getAll() as $document) {
