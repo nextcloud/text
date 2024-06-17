@@ -7,7 +7,6 @@
 
 namespace OCA\Text\Migration;
 
-use OCA\Text\Db\Document;
 use OCA\Text\Service\DocumentService;
 use OCP\IAppConfig;
 use OCP\Migration\IOutput;
@@ -32,16 +31,9 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 			return;
 		}
 
-		$fileIds = array_map(static function (Document $document) {
-			return $document->getId();
-		}, $this->documentService->getAll());
-
-		if (!$fileIds) {
-			return;
-		}
-
-		$output->startProgress(count($fileIds));
-		foreach ($fileIds as $fileId) {
+		$output->startProgress($this->documentService->countAll());
+		foreach ($this->documentService->getAll() as $document) {
+			$fileId = $document->getId();
 			$this->documentService->unlock($fileId);
 			$this->documentService->resetDocument($fileId, true);
 			$output->advance();

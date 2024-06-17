@@ -428,7 +428,7 @@ class DocumentService {
 		}
 	}
 
-	public function getAll(): array {
+	public function getAll(): \Generator {
 		return $this->documentMapper->findAll();
 	}
 
@@ -641,5 +641,9 @@ class DocumentService {
 			));
 		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
 		}
+	}
+
+	public function countAll(): int {
+		return $this->documentMapper->countAll();
 	}
 }

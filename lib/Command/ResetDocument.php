@@ -6,7 +6,6 @@
 
 namespace OCA\Text\Command;
 
-use OCA\Text\Db\Document;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use Symfony\Component\Console\Command\Command;
@@ -61,9 +60,7 @@ class ResetDocument extends Command {
 		}
 
 		if ($all) {
-			$fileIds = array_map(static function (Document $document) {
-				return $document->getId();
-			}, $this->documentService->getAll());
+			$fileIds = $this->documentService->getAll();
 		} else {
 			$fileIds = [$fileId];
 		}

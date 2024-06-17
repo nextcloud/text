@@ -6,6 +6,7 @@
 
 namespace OCA\Text\Db;
 
+use Generator;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
@@ -38,12 +39,27 @@ class DocumentMapper extends QBMapper {
 		return Document::fromRow($data);
 	}
 
-	public function findAll(): array {
+	public function findAll(): Generator {
 		$qb = $this->db->getQueryBuilder();
 		$result = $qb->select('*')
 			->from($this->getTableName())
 			->executeQuery();
+		try {
+			while ($row = $result->fetch()) {
+				yield $this->mapRowToEntity($row);
+			}
+		} finally {
+			$result->closeCursor();
+		}
+	}
 
-		return $this->findEntities($qb);
+	public function countAll(): int {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select($qb->func()->count('id'))
+			->from($this->getTableName());
+		$result = $qb->executeQuery();
+		$count = (int)$result->fetchOne();
+		$result->closeCursor();
+		return $count;
 	}
 }
