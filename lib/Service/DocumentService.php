@@ -42,6 +42,7 @@ use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICache;
 use OCP\ICacheFactory;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
 use OCP\PreConditionNotMetException;
@@ -70,8 +71,9 @@ class DocumentService {
 	private IAppData $appData;
 	private ILockManager $lockManager;
 	private IUserMountCache $userMountCache;
+	private IConfig $config;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockManager $lockManager, IUserMountCache $userMountCache) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, ?string $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockManager $lockManager, IUserMountCache $userMountCache, IConfig $config) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -83,6 +85,7 @@ class DocumentService {
 		$this->shareManager = $shareManager;
 		$this->lockManager = $lockManager;
 		$this->userMountCache = $userMountCache;
+		$this->config = $config;
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -645,5 +648,25 @@ class DocumentService {
 
 	public function countAll(): int {
 		return $this->documentMapper->countAll();
+	}
+
+	private function getFullAppFolder(): Folder {
+		$appFolder = $this->rootFolder->get('appdata_' . $this->config->getSystemValueString('instanceid', '') . '/text');
+		if (!$appFolder instanceof Folder) {
+			throw new NotFoundException('Folder not found');
+		}
+		return $appFolder;
+	}
+
+	public function clearAll(): void {
+		$this->stepMapper->clearAll();
+		$this->sessionMapper->clearAll();
+		$this->documentMapper->clearAll();
+		try {
+			$appFolder = $this->getFullAppFolder();
+			$appFolder->get('documents')->move($appFolder->getPath() . '/documents_old_' . time());
+		} catch (NotFoundException) {
+		}
+		$this->ensureDocumentsFolder();
 	}
 }
