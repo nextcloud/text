@@ -61,9 +61,10 @@ class ResetDocument extends Command {
 		}
 
 		if ($all) {
-			$fileIds = array_map(static function (Document $document) {
-				return $document->getId();
-			}, $this->documentService->getAll());
+			$fileIds = [];
+			foreach ($this->documentService->getAll() as $document) {
+				$fileIds[] = $document->getId();
+			}
 		} else {
 			$fileIds = [$fileId];
 		}

@@ -106,6 +106,10 @@ class SessionService {
 		}, $sessions);
 	}
 
+	public function countAllSessions(int $documentId): int {
+		return $this->sessionMapper->countAll($documentId);
+	}
+
 	public function getActiveSessions(int $documentId): array {
 		$sessions = $this->sessionMapper->findAllActive($documentId);
 		return array_map(function (Session $session) {
