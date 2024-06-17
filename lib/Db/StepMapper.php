@@ -76,6 +76,12 @@ class StepMapper extends QBMapper {
 			->executeStatement();
 	}
 
+	public function clearAll(): void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->executeStatement();
+	}
+
 	// not in use right now
 	public function deleteBeforeVersion(int $documentId, int $version): int {
 		$qb = $this->db->getQueryBuilder();
