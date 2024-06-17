@@ -638,4 +638,8 @@ class DocumentService {
 		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
 		}
 	}
+
+	public function countAll(): int {
+		return $this->documentMapper->countAll();
+	}
 }
