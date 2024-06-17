@@ -16,6 +16,7 @@ use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
+use OCP\IConfig;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
@@ -26,7 +27,9 @@ class Cleanup extends TimedJob {
 	public function __construct(ITimeFactory $time,
 		SessionService $sessionService,
 		DocumentService $documentService,
-		LoggerInterface $logger) {
+		LoggerInterface $logger,
+		private IConfig $config,
+	) {
 		parent::__construct($time);
 		$this->sessionService = $sessionService;
 		$this->documentService = $documentService;

@@ -7,14 +7,15 @@
 
 namespace OCA\Text\Migration;
 
-use OCA\Text\Service\DocumentService;
+use OCA\Text\AppInfo\Application;
 use OCP\IAppConfig;
 use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class ResetSessionsBeforeYjs implements IRepairStep {
-	public function __construct(private IAppConfig $config,
-		private DocumentService $documentService) {
+	public function __construct(
+		private IAppConfig $config,
+	) {
 	}
 
 	/**
@@ -31,13 +32,7 @@ class ResetSessionsBeforeYjs implements IRepairStep {
 			return;
 		}
 
-		$output->startProgress($this->documentService->countAll());
-		foreach ($this->documentService->getAll() as $document) {
-			$fileId = $document->getId();
-			$this->documentService->unlock($fileId);
-			$this->documentService->resetDocument($fileId, true);
-			$output->advance();
-		}
-		$output->finishProgress();
+		// Set the timestamp of the upgrade to reset documents when the create request tries to obtain the state
+		$this->config->setValueInt(Application::APP_NAME, 'update_reset_before', time());
 	}
 }

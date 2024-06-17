@@ -25,6 +25,7 @@ use OCP\Files\InvalidPathException;
 use OCP\Files\Lock\ILock;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Lock\LockedException;
@@ -44,7 +45,8 @@ class ApiService {
 		DocumentService $documentService,
 		EncodingService $encodingService,
 		LoggerInterface $logger,
-		IL10N $l10n
+		IL10N $l10n,
+		private IAppConfig $config
 	) {
 		$this->request = $request;
 		$this->sessionService = $sessionService;
@@ -97,6 +99,11 @@ class ApiService {
 
 			$this->sessionService->removeInactiveSessionsWithoutSteps($file->getId());
 			$document = $this->documentService->getDocument($file->getId());
+			$resetAfterUpdateTimestamp = $this->config->getValueInt(Application::APP_NAME, 'update_reset_before', 0);
+			if ($document && $document->getLastSavedVersionTime() < $resetAfterUpdateTimestamp) {
+				$this->documentService->resetDocument($document->getId());
+			}
+
 			$freshSession = $document === null;
 			if ($baseVersionEtag !== null && $baseVersionEtag !== $document?->getBaseVersionEtag()) {
 				return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
