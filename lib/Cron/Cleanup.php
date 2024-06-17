@@ -72,5 +72,8 @@ class Cleanup extends TimedJob {
 		$this->logger->debug('Run cleanup job for text sessions');
 		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps(null);
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
+
+		$this->logger->debug('Run cleanup job for obsolete documents folders');
+		$this->documentService->cleanupOldDocumentsFolders();
 	}
 }

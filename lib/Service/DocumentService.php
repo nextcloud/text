@@ -685,4 +685,16 @@ class DocumentService {
 		}
 		$this->ensureDocumentsFolder();
 	}
+
+	public function cleanupOldDocumentsFolders(): void {
+		try {
+			$appFolder = $this->getFullAppFolder();
+			foreach ($appFolder->getDirectoryListing() as $node) {
+				if (str_starts_with($node->getName(), 'documents_old_')) {
+					$node->delete();
+				}
+			}
+		} catch (NotFoundException) {
+		}
+	}
 }
