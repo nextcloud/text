@@ -85,6 +85,17 @@ class SessionMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
+	public function countAll(int $documentId): int {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('id', 'color', 'document_id', 'last_awareness_message', 'last_contact', 'user_id', 'guest_name')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
+		$result = $qb->executeQuery();
+		$count = (int)$result->fetchOne();
+		$result->closeCursor();
+		return $count;
+	}
+
 	/**
 	 * @return Session[]
 	 *
@@ -152,6 +163,12 @@ class SessionMapper extends QBMapper {
 		$qb->delete($this->getTableName())
 			->where($qb->expr()->eq('document_id', $qb->createNamedParameter($documentId)));
 		return $qb->executeStatement();
+	}
+
+	public function clearAll(): void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($this->getTableName())
+			->executeStatement();
 	}
 
 	public function isUserInDocument(int $documentId, string $userId): bool {

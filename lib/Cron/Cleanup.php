@@ -56,10 +56,8 @@ class Cleanup extends TimedJob {
 	 */
 	protected function run($argument): void {
 		$this->logger->debug('Run cleanup job for text documents');
-		$documents = $this->documentService->getAll();
-		foreach ($documents as $document) {
-			$allSessions = $this->sessionService->getAllSessions($document->getId());
-			if (count($allSessions) > 0) {
+		foreach ($this->documentService->getAll() as $document) {
+			if ($this->sessionService->countAllSessions($document->getId()) > 0) {
 				// Do not reset if there are any sessions left
 				// Inactive sessions will get removed further down and will trigger a reset next time
 				continue;
@@ -74,5 +72,8 @@ class Cleanup extends TimedJob {
 		$this->logger->debug('Run cleanup job for text sessions');
 		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps(null);
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
+
+		$this->logger->debug('Run cleanup job for obsolete documents folders');
+		$this->documentService->cleanupOldDocumentsFolders();
 	}
 }
