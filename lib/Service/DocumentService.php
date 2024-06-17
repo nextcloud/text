@@ -58,6 +58,7 @@ use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICache;
 use OCP\ICacheFactory;
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\Lock\ILockingProvider;
 use OCP\Lock\LockedException;
@@ -88,8 +89,9 @@ class DocumentService {
 	private ILockingProvider $lockingProvider;
 	private ILockManager $lockManager;
 	private IUserMountCache $userMountCache;
+	private IConfig $config;
 
-	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache) {
+	public function __construct(DocumentMapper $documentMapper, StepMapper $stepMapper, SessionMapper $sessionMapper, IAppData $appData, $userId, IRootFolder $rootFolder, ICacheFactory $cacheFactory, LoggerInterface $logger, ShareManager $shareManager, IRequest $request, IManager $directManager, ILockingProvider $lockingProvider, ILockManager $lockManager, IUserMountCache $userMountCache, IConfig $config) {
 		$this->documentMapper = $documentMapper;
 		$this->stepMapper = $stepMapper;
 		$this->sessionMapper = $sessionMapper;
@@ -102,6 +104,7 @@ class DocumentService {
 		$this->lockingProvider = $lockingProvider;
 		$this->lockManager = $lockManager;
 		$this->userMountCache = $userMountCache;
+		$this->config = $config;
 		$token = $request->getParam('token');
 		if ($this->userId === null && $token !== null) {
 			try {
@@ -636,6 +639,42 @@ class DocumentService {
 				Application::APP_NAME
 			));
 		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
+		}
+	}
+
+	public function countAll(): int {
+		return $this->documentMapper->countAll();
+	}
+
+	private function getFullAppFolder(): Folder {
+		$appFolder = $this->rootFolder->get('appdata_' . $this->config->getSystemValueString('instanceid', '') . '/text');
+		if (!$appFolder instanceof Folder) {
+			throw new NotFoundException('Folder not found');
+		}
+		return $appFolder;
+	}
+
+	public function clearAll(): void {
+		$this->stepMapper->clearAll();
+		$this->sessionMapper->clearAll();
+		$this->documentMapper->clearAll();
+		try {
+			$appFolder = $this->getFullAppFolder();
+			$appFolder->get('documents')->move($appFolder->getPath() . '/documents_old_' . time());
+		} catch (NotFoundException) {
+		}
+		$this->ensureDocumentsFolder();
+	}
+
+	public function cleanupOldDocumentsFolders(): void {
+		try {
+			$appFolder = $this->getFullAppFolder();
+			foreach ($appFolder->getDirectoryListing() as $node) {
+				if (str_starts_with($node->getName(), 'documents_old_')) {
+					$node->delete();
+				}
+			}
+		} catch (NotFoundException) {
 		}
 	}
 }
