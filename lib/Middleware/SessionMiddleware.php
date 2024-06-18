@@ -7,8 +7,11 @@
 
 namespace OCA\Text\Middleware;
 
+use Exception;
 use OC\User\NoUserException;
 use OCA\Text\Controller\ISessionAwareController;
+use OCA\Text\Db\Document;
+use OCA\Text\Db\Session;
 use OCA\Text\Exception\InvalidDocumentBaseVersionEtagException;
 use OCA\Text\Exception\InvalidSessionException;
 use OCA\Text\Middleware\Attribute\RequireDocumentBaseVersionEtag;
@@ -21,6 +24,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
@@ -29,17 +33,20 @@ use OCP\IUserSession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
 use ReflectionException;
+use ReflectionMethod;
 
 class SessionMiddleware extends Middleware {
-
 	public function __construct(
-		private IRequest $request,
-		private SessionService $sessionService,
+		private IRequest        $request,
+		private SessionService  $sessionService,
 		private DocumentService $documentService,
-		private IUserSession $userSession,
-		private IRootFolder $rootFolder,
-		private ShareManager $shareManager,
-		private IL10N $l10n,
+		private IUserSession    $userSession,
+		private IRootFolder     $rootFolder,
+		private ShareManager    $shareManager,
+		private IL10N           $l10n,
+		private ?Document       $document = null,
+		private ?Session        $session = null,
+		private ?string         $userId = null,
 	) {
 	}
 
@@ -53,100 +60,45 @@ class SessionMiddleware extends Middleware {
 			return;
 		}
 
-		$reflectionMethod = new \ReflectionMethod($controller, $methodName);
+		//ASSERTION
+		$documentId = $this->getDocumentId();
+		$this->document = $this->documentService->getDocument($documentId);
 
-		if (!empty($reflectionMethod->getAttributes(RequireDocumentSessionOrUserOrShareToken::class))) {
-			try {
-				$this->assertDocumentSession($controller);
-			} catch (InvalidSessionException) {
-				$this->assertUserOrShareToken($controller);
-			}
-		}
+		$reflectionMethod = new ReflectionMethod($controller, $methodName);
+		$requiresDocumentBaseVersionEtag = !empty($reflectionMethod->getAttributes(RequireDocumentBaseVersionEtag::class));
 
-		if (!empty($reflectionMethod->getAttributes(RequireDocumentBaseVersionEtag::class))) {
+		if ($requiresDocumentBaseVersionEtag) {
 			$this->assertDocumentBaseVersionEtag();
 		}
 
-		if (!empty($reflectionMethod->getAttributes(RequireDocumentSession::class))) {
-			$this->assertDocumentSession($controller);
-		}
-	}
+		$requiresDocumentSession = !empty($reflectionMethod->getAttributes(RequireDocumentSession::class));
+		$requiresDocumentSessionOrUserOrShareToken = !empty($reflectionMethod->getAttributes(RequireDocumentSessionOrUserOrShareToken::class));
 
-	/**
-	 * @throws InvalidDocumentBaseVersionEtagException
-	 */
-	private function assertDocumentBaseVersionEtag(): void {
-		$documentId = (int)$this->request->getParam('documentId');
-		$baseVersionEtag = $this->request->getParam('baseVersionEtag');
-
-		$document = $this->documentService->getDocument($documentId);
-		if ($baseVersionEtag && $document?->getBaseVersionEtag() !== $baseVersionEtag) {
-			throw new InvalidDocumentBaseVersionEtagException();
-		}
-	}
-
-	/**
-	 * @throws InvalidSessionException
-	 */
-	private function assertDocumentSession(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
-		$sessionId = (int)$this->request->getParam('sessionId');
-		$token = (string)$this->request->getParam('sessionToken');
-		$shareToken = (string)$this->request->getParam('token');
-
-		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
-		if (!$session) {
-			throw new InvalidSessionException();
+		if (!$requiresDocumentSession && !$requiresDocumentSessionOrUserOrShareToken) {
+			return;
 		}
 
-		$document = $this->documentService->getDocument($documentId);
-		if (!$document) {
-			throw new InvalidSessionException();
-		}
+		$this->session = $this->sessionService->getValidSession($documentId, $this->getSessionId(), $this->getSessionToken());
 
-		$controller->setSession($session);
-		$controller->setDocument($document);
-		if (!$shareToken) {
-			$controller->setUserId($session->getUserId());
-		}
-	}
+		try {
+			$this->assertDocumentSession();
 
-	/**
-	 * @throws NotPermittedException
-	 * @throws NoUserException
-	 * @throws InvalidSessionException
-	 */
-	private function assertUserOrShareToken(ISessionAwareController $controller): void {
-		$documentId = (int)$this->request->getParam('documentId');
-		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
-			// Check if user has access to document
-			if (count($this->rootFolder->getUserFolder($userId)->getById($documentId)) === 0) {
+			if (!$this->getToken()) {
+				$this->userId = $this->session->getUserId();
+			}
+		} catch (InvalidSessionException) {
+			if (!$requiresDocumentSessionOrUserOrShareToken) {
 				throw new InvalidSessionException();
 			}
-			$controller->setUserId($userId);
-		} elseif ('' !== $shareToken = (string)$this->request->getParam('shareToken')) {
-			try {
-				$share = $this->shareManager->getShareByToken($shareToken);
-			} catch (ShareNotFound) {
-				throw new InvalidSessionException();
-			}
-			// Check if shareToken has access to document
-			if (count($this->rootFolder->getUserFolder($share->getShareOwner())->getById($documentId)) === 0) {
-				throw new InvalidSessionException();
-			}
-		} else {
-			throw new InvalidSessionException();
+
+			$this->assertUserOrShareToken();
 		}
 
-		$document = $this->documentService->getDocument($documentId);
-		if (!$document) {
-			throw new InvalidSessionException();
-		}
-
-		$controller->setDocument($document);
+		//OTHERS
+		$this->setControllerData($controller);
 	}
 
-	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
+	public function afterException($controller, $methodName, Exception $exception): JSONResponse|Response {
 		if ($exception instanceof InvalidDocumentBaseVersionEtagException) {
 			return new JSONResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
@@ -156,5 +108,137 @@ class SessionMiddleware extends Middleware {
 		}
 
 		return parent::afterException($controller, $methodName, $exception);
+	}
+
+	/**
+	 * @throws InvalidDocumentBaseVersionEtagException
+	 */
+	private function assertDocumentBaseVersionEtag(): void {
+		$baseVersionEtag = $this->getBaseVersionEtag();
+
+		if ($baseVersionEtag && $this->document?->getBaseVersionEtag() !== $baseVersionEtag) {
+			throw new InvalidDocumentBaseVersionEtagException();
+		}
+	}
+
+	/**
+	 * @throws InvalidSessionException
+	 */
+	private function assertDocumentSession(): void {
+		if (!$this->document || !$this->session) {
+			throw new InvalidSessionException();
+		}
+	}
+
+
+	/**
+	 * @throws InvalidSessionException
+	 */
+	private function assertUserOrShareToken(): void {
+		if (!$this->document) {
+			throw new InvalidSessionException();
+		}
+
+		$documentId = $this->getDocumentId();
+
+		if (null !== ($userId = $this->getSessionUserId())) {
+			$this->assertUserHasAccessToDocument($userId, $documentId);
+
+			$this->userId = $userId;
+
+			return;
+		}
+
+		if (null !== ($shareToken = $this->getShareToken())) {
+			$this->assertShareTokenHasAccessToDocument($shareToken, $documentId);
+
+			return;
+		}
+
+		throw new InvalidSessionException();
+	}
+
+	/**
+	 * @throws InvalidSessionException
+	 */
+	private function assertUserHasAccessToDocument(string $userId, int $documentId): void {
+		try {
+			$userFolder = $this->getUserFolder($userId);
+		} catch (NoUserException|NotPermittedException) {
+			throw new InvalidSessionException();
+		}
+
+		if (count($userFolder->getById($documentId)) === 0) {
+			throw new InvalidSessionException();
+		}
+	}
+
+	/**
+	 * @throws InvalidSessionException
+	 */
+	private function assertShareTokenHasAccessToDocument(string $shareToken, int $documentId): void {
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+		} catch (ShareNotFound) {
+			throw new InvalidSessionException();
+		}
+
+		try {
+			$userFolder = $this->getUserFolder($share->getShareOwner());
+		} catch (NoUserException|NotPermittedException) {
+			throw new InvalidSessionException();
+		}
+
+		if (count($userFolder->getById($documentId)) === 0) {
+			throw new InvalidSessionException();
+		}
+	}
+
+	private function getDocumentId(): int {
+		return (int)$this->request->getParam('documentId');
+	}
+
+	private function getSessionId(): int {
+		return (int)$this->request->getParam('sessionId');
+	}
+
+	private function getSessionToken(): string {
+		return (string)$this->request->getParam('sessionToken');
+	}
+
+	private function getToken(): string {
+		return (string)$this->request->getParam('token');
+	}
+
+	private function getShareToken(): ?string {
+		return $this->request->getParam('shareToken');
+	}
+
+	private function getBaseVersionEtag(): string {
+		return (string)$this->request->getParam('baseVersionEtag');
+	}
+
+	private function getSessionUserId(): ?string {
+		return $this->userSession->getUser()?->getUID();
+	}
+
+	/**
+	 * @throws NotPermittedException
+	 * @throws NoUserException
+	 */
+	private function getUserFolder(string $userId): Folder {
+		return $this->rootFolder->getUserFolder($userId);
+	}
+
+	private function setControllerData(ISessionAwareController $controller): void {
+		if ($this->document) {
+			$controller->setDocument($this->document);
+		}
+		if ($this->session) {
+			$controller->setSession($this->session);
+		}
+		if ($this->userId !== null) {
+			$controller->setUserId($this->userId);
+		}
 	}
 }
