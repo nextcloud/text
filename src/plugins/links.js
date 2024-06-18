@@ -71,7 +71,9 @@ export function linkBubble(options) {
 		appendTransaction: (transactions, oldState, state) => {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
-			if (sameSelection && sameDoc) {
+			// Prevent bubble from opening at editor initialisation
+			const initLoad = oldState?.doc.content.size === 2
+			if (initLoad || (sameSelection && sameDoc)) {
 				return
 			}
 			const active = activeLinkFromSelection(state)
