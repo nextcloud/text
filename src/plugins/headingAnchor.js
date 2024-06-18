@@ -89,7 +89,11 @@ function anchorDecorations(doc, headings) {
  * @return {Decoration}
  */
 function decorationForHeading(heading) {
-	return Decoration.widget(heading.offset + 1, anchorForHeading(heading))
+	return Decoration.widget(
+		heading.offset + 1,
+		anchorForHeading(heading),
+		{ side: -1 },
+	)
 }
 
 /**
