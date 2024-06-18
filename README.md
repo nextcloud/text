@@ -73,6 +73,10 @@ Or you might set the `CYPRESS_baseUrl` environment variable for a custom nextclo
 In order to load the editor in your app, you'll need to dispatch an event.
 
 ```php
+use OCA\Text\Event\LoadEditor;
+
+// ...
+
 if (class_exists(LoadEditor::class)) {
 	$this->eventDispatcher->dispatchTyped(new LoadEditor());
 }
