@@ -33,17 +33,10 @@ export default function headingAnchor() {
 					return value
 				}
 				const headings = extractHeadings(newState.doc)
-				// if the headings are the same, keep the decorations
-				if (sameHeadings(headings, value.headings)) {
-					return {
-						headings,
-						decorations: value.decorations.map(tr.mapping, tr.doc),
-					}
-				}
-				return {
-					headings,
-					decorations: anchorDecorations(newState.doc, headings),
-				}
+				const decorations = headingsChanged(headings, value.headings)
+					? anchorDecorations(newState.doc, headings)
+					: value.decorations.map(tr.mapping, tr.doc)
+				return { headings, decorations }
 			},
 		},
 
@@ -56,20 +49,30 @@ export default function headingAnchor() {
 }
 
 /**
- * Check if the headings provided have the same ids.
- *
- * This is enough to ensure no updates are needed
- * as the id includes a slugified version of the text
- * and the level.
+ * Check if the headings provided are equivalent.
  *
  * @param {Array} current - array of headings
  * @param {Array} other - headings to compare against
  *
  * @return {boolean}
  */
-function sameHeadings(current, other) {
-	if (current.length !== other.length) return false
-	return current.every((heading, i) => heading.id === other[i].id)
+function headingsChanged(current, prev) {
+	return (current.length !== prev.length)
+		|| current.some(isDifferentFrom(prev))
+}
+
+/**
+ * Check if headings are different - i.e. have different id or level
+ *
+ * @param {Array} other - headings to compare against
+ *
+ * Returns a function to be used in a call to Array#some.
+ * The returned function takes a heading and an index (as provided by iterators)
+ * and compares the id and level of the heading to the one in `other` with the same index.
+ */
+const isDifferentFrom = (other) => (heading, i) => {
+	return heading.id !== other[i].id
+		|| heading.level !== other[i].level
 }
 
 /**
