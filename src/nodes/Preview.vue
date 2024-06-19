@@ -13,7 +13,8 @@
 			@update:value="changeViewMode" />
 		<NcReferenceList :text="node.attrs.href"
 			:limit="1"
-			:interactive="!extension.options.isEmbedded" />
+			:interactive="!extension.options.isEmbedded"
+			:display-fallback="true" />
 	</NodeViewWrapper>
 </template>
 
