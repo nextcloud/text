@@ -4,6 +4,14 @@
  */
 
 .text-menubar, .v-popper__inner {
+	.entry-action__emoji button.entry-action__button {
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: var(--color-background-hover);
+		}
+	}
+
 	button.entry-action__button {
 		height: 44px;
 		margin: 0;
