@@ -35,13 +35,13 @@ import MDI_FormatStrikethrough from 'vue-material-design-icons/FormatStrikethrou
 import MDI_FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue'
 import MDI_Help from 'vue-material-design-icons/HelpCircle.vue'
 import MDI_Image from 'vue-material-design-icons/ImageOutline.vue'
-import MDI_Images from 'vue-material-design-icons/ImageMultipleOutline.vue'
 import MDI_Info from 'vue-material-design-icons/Information.vue'
 import MDI_Link from 'vue-material-design-icons/Link.vue'
 import MDI_LinkOff from 'vue-material-design-icons/LinkOff.vue'
 import MDI_LinkVariantPlus from 'vue-material-design-icons/LinkVariantPlus.vue'
 import MDI_Loading from 'vue-material-design-icons/Loading.vue'
 import MDI_Lock from 'vue-material-design-icons/Lock.vue'
+import MDI_Paperclip from 'vue-material-design-icons/Paperclip.vue'
 import MDI_Positive from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
 import MDI_Redo from 'vue-material-design-icons/ArrowURightTop.vue'
 import MDI_Shape from 'vue-material-design-icons/Shape.vue'
@@ -113,12 +113,12 @@ export const FormatStrikethrough = makeIcon(MDI_FormatStrikethrough)
 export const FormatUnderline = makeIcon(MDI_FormatUnderline)
 export const Help = makeIcon(MDI_Help)
 export const Image = makeIcon(MDI_Image)
-export const Images = makeIcon(MDI_Images)
 export const Info = makeIcon(MDI_Info)
 export const LinkIcon = makeIcon(MDI_Link)
 export const LinkOff = makeIcon(MDI_LinkOff)
 export const LinkVariantPlus = makeIcon(MDI_LinkVariantPlus)
 export const Lock = makeIcon(MDI_Lock)
+export const Paperclip = makeIcon(MDI_Paperclip)
 export const Positive = makeIcon(MDI_Positive)
 export const Redo = makeIcon(MDI_Redo)
 export const Shape = makeIcon(MDI_Shape)
