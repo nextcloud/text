@@ -49,10 +49,11 @@ describe('Test state loading of documents', function() {
 					.find('h2').should('contain', 'Hello world')
 
 				cy.getMenu().should('be.visible')
-				cy.getActionEntry('undo').should('be.visible').click()
+				cy.getActionEntry('undo').should('be.disabled')
+
 				cy.getContent()
-					.should('contain', 'Hello world')
-					.find('h2').should('contain', 'Hello world')
+					.type('New content')
+				cy.getActionEntry('undo').should('not.be.disabled')
 			})
 	})
 
