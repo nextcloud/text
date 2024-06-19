@@ -77,10 +77,15 @@ export default () => createSuggestions({
 		}
 		getLinkWithPicker(props.providerId, true)
 			.then(link => {
-				let content = link
-
-				if (hasMarkdownSyntax(content) && isValidMarkdown(content)) {
-					content = markdownit.render(content)
+				if (hasMarkdownSyntax(link) && isValidMarkdown(link)) {
+					// Insert markdown content (e.g. from `text_templates` app)
+					const content = markdownit.render(link)
+					editor
+						.chain()
+						.focus()
+						.insertContentAt(range, content + ' ')
+						.run()
+					return
 				}
 
 				editor
