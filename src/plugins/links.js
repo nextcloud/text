@@ -69,11 +69,17 @@ export function linkBubble(options) {
 		}),
 
 		appendTransaction: (transactions, oldState, state) => {
+			// Don't open bubble at editor initialisation
+			if (oldState?.doc.content.size === 2) {
+				return
+			}
+
+			// Don't open bubble if neither selection nor doc changed
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
-			// Prevent bubble from opening at editor initialisation
-			const initLoad = oldState?.doc.content.size === 2
-			if (initLoad || (sameSelection && sameDoc)) {
+			// Don't open bubble on changes by other session members
+			const noHistory = !transactions.some(tr => tr.meta.addToHistory)
+			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
 			const active = activeLinkFromSelection(state)
