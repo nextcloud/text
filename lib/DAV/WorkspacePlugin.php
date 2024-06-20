@@ -85,12 +85,11 @@ class WorkspacePlugin extends ServerPlugin {
 
 		$file = null;
 		$owner = $this->userId ?? $node->getFileInfo()->getStorage()->getOwner('');
-		/** @var Folder[] $nodes */
-		$nodes = $this->rootFolder->getUserFolder($owner)->getById($node->getId());
-		if (count($nodes) > 0) {
+		$node = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($node->getId());
+		if ($node instanceof Folder) {
 			/** @var File $file */
 			try {
-				$file = $this->workspaceService->getFile($nodes[0]);
+				$file = $this->workspaceService->getFile($node);
 			} catch (StorageNotAvailableException $e) {
 				// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 			}

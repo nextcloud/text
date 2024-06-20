@@ -67,8 +67,7 @@ class Notifier implements INotifier {
 				} catch (NotPermittedException|NoUserException $e) {
 					throw new InvalidArgumentException();
 				}
-				$nodes = $userFolder->getById($fileId);
-				$node = array_shift($nodes);
+				$node = $userFolder->getFirstNodeById($fileId);
 
 				if ($node === null) {
 					throw new InvalidArgumentException();

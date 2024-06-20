@@ -120,7 +120,7 @@ class SessionMiddleware extends Middleware {
 		$documentId = (int)$this->request->getParam('documentId');
 		if (null !== $userId = $this->userSession->getUser()?->getUID()) {
 			// Check if user has access to document
-			if (count($this->rootFolder->getUserFolder($userId)->getById($documentId)) === 0) {
+			if ($this->rootFolder->getUserFolder($userId)->getFirstNodeById($documentId) === null) {
 				throw new InvalidSessionException();
 			}
 			$controller->setUserId($userId);
@@ -131,7 +131,7 @@ class SessionMiddleware extends Middleware {
 				throw new InvalidSessionException();
 			}
 			// Check if shareToken has access to document
-			if (count($this->rootFolder->getUserFolder($share->getShareOwner())->getById($documentId)) === 0) {
+			if ($this->rootFolder->getUserFolder($share->getShareOwner())->getFirstNodeById($documentId) === null) {
 				throw new InvalidSessionException();
 			}
 		} else {
