@@ -459,7 +459,7 @@ class DocumentService {
 
 		$node = $share->getNode();
 		if ($node instanceof Folder) {
-			$node = $node->getById($session->getDocumentId())[0];
+			$node = $node->getFirstNodeById($session->getDocumentId());
 		}
 		if ($node instanceof File) {
 			return $node;
@@ -617,7 +617,7 @@ class DocumentService {
 		}
 
 		try {
-			$file = $this->getFileById($fileId);
+			$file = $this->getFileById($fileId, $this->userId);
 			$this->lockManager->lock(new LockContext(
 				$file,
 				ILock::TYPE_APP,
@@ -636,7 +636,7 @@ class DocumentService {
 		}
 
 		try {
-			$file = $this->getFileById($fileId);
+			$file = $this->getFileById($fileId, $this->userId);
 			$this->lockManager->unlock(new LockContext(
 				$file,
 				ILock::TYPE_APP,

@@ -32,26 +32,16 @@ use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
-	private IRequest $request;
-	private SessionService $sessionService;
-	private DocumentService $documentService;
-	private LoggerInterface $logger;
-	private EncodingService $encodingService;
-	private IL10N $l10n;
 
-	public function __construct(IRequest $request,
-		SessionService $sessionService,
-		DocumentService $documentService,
-		EncodingService $encodingService,
-		LoggerInterface $logger,
-		IL10N $l10n
+	public function __construct(
+		private IRequest $request,
+		private SessionService $sessionService,
+		private DocumentService $documentService,
+		private EncodingService $encodingService,
+		private LoggerInterface $logger,
+		private IL10N $l10n,
+		private ?string $userId,
 	) {
-		$this->request = $request;
-		$this->sessionService = $sessionService;
-		$this->documentService = $documentService;
-		$this->logger = $logger;
-		$this->encodingService = $encodingService;
-		$this->l10n = $l10n;
 	}
 
 	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
@@ -72,7 +62,7 @@ class ApiService {
 				}
 			} elseif ($fileId !== null) {
 				try {
-					$file = $this->documentService->getFileById($fileId);
+					$file = $this->documentService->getFileById($fileId, $this->userId);
 				} catch (NotFoundException|NotPermittedException $e) {
 					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
 					return new DataResponse(['error' => $this->l10n->t('No permission to access this file.')], Http::STATUS_NOT_FOUND);
