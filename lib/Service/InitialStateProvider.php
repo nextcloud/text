@@ -64,6 +64,11 @@ class InitialStateProvider {
 				];
 			}, $this->textProcessingManager->getAvailableTaskTypes()),
 		);
+
+		$this->initialState->provideInitialState(
+			'notify_push',
+			$this->configService->isNotifyPushSyncEnabled(),
+		);
 	}
 
 	public function provideFileId(int $fileId): void {

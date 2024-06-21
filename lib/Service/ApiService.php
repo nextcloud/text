@@ -12,6 +12,7 @@ namespace OCA\Text\Service;
 use Exception;
 use InvalidArgumentException;
 use OCA\Files_Sharing\SharedStorage;
+use OCA\NotifyPush\Queue\IQueue;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Db\Document;
 use OCA\Text\Db\Session;
@@ -32,26 +33,16 @@ use OCP\Share\IShare;
 use Psr\Log\LoggerInterface;
 
 class ApiService {
-	private IRequest $request;
-	private SessionService $sessionService;
-	private DocumentService $documentService;
-	private LoggerInterface $logger;
-	private EncodingService $encodingService;
-	private IL10N $l10n;
-
-	public function __construct(IRequest $request,
-		SessionService $sessionService,
-		DocumentService $documentService,
-		EncodingService $encodingService,
-		LoggerInterface $logger,
-		IL10N $l10n
+	public function __construct(
+		private IRequest $request,
+		private ConfigService $configService,
+		private SessionService $sessionService,
+		private DocumentService $documentService,
+		private EncodingService $encodingService,
+		private LoggerInterface $logger,
+		private IL10N $l10n,
+		private ?IQueue $queue,
 	) {
-		$this->request = $request;
-		$this->sessionService = $sessionService;
-		$this->documentService = $documentService;
-		$this->logger = $logger;
-		$this->encodingService = $encodingService;
-		$this->l10n = $l10n;
 	}
 
 	public function create(?int $fileId = null, ?string $filePath = null, ?string $baseVersionEtag = null, ?string $token = null, ?string $guestName = null): DataResponse {
@@ -189,6 +180,7 @@ class ApiService {
 		}
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
+			$this->addToPushQueue($document, [$awareness, ...array_values($steps)]);
 		} catch (InvalidArgumentException $e) {
 			return new DataResponse(['error' => $e->getMessage()], 422);
 		} catch (DoesNotExistException|NotPermittedException) {
@@ -196,6 +188,27 @@ class ApiService {
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
 		}
 		return new DataResponse($result);
+	}
+
+	private function addToPushQueue(Document $document, array $steps): void {
+		if ($this->queue === null || !$this->configService->isNotifyPushSyncEnabled()) {
+			return;
+		}
+
+		$sessions = $this->sessionService->getActiveSessions($document->getId());
+		$userIds = array_values(array_filter(array_unique(
+			array_map(fn ($session): ?string => $session['userId'], $sessions)
+		)));
+		foreach ($userIds as $userId) {
+			$this->queue->push('notify_custom', [
+				'user' => $userId,
+				'message' => 'text_steps',
+				'body' => [
+					'documentId' => $document->getId(),
+					'steps' => $steps,
+				],
+			]);
+		}
 	}
 
 	public function sync(Session $session, Document $document, int $version = 0, ?string $shareToken = null): DataResponse {

@@ -49,3 +49,15 @@ namespace OCA\TpAssistant\Event {
 		abstract public function setNotificationTarget(?string $notificationTarget): void;
 	}
 }
+
+
+namespace OCA\NotifyPush\Queue {
+	interface IQueue {
+		/**
+		 * @param string $channel
+		 * @param mixed $message
+		 * @return void
+		 */
+		public function push(string $channel, $message);
+	}
+}
