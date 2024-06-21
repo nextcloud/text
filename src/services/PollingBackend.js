@@ -28,6 +28,12 @@ const FETCH_INTERVAL_MAX = 5000
 const FETCH_INTERVAL_SINGLE_EDITOR = 5000
 
 /**
+ * Interval to check for changes for read only users
+ * @type {number}
+ */
+const FETCH_INTERVAL_READ_ONLY = 30000
+
+/**
  * Interval to fetch for changes when a browser window is considered invisible by the
  * page visibility API https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
  *
@@ -120,7 +126,9 @@ class PollingBackend {
 			}
 			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
 			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
-			if (alive.length < 2) {
+			if (this.#syncService.connection.state.document.readOnly) {
+				this.maximumReadOnlyTimer()
+			} else if (alive.length < 2) {
 				this.maximumRefetchTimer()
 			} else {
 				this.increaseRefetchTimer()
@@ -191,6 +199,10 @@ class PollingBackend {
 
 	maximumRefetchTimer() {
 		this.#fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
+	}
+
+	maximumReadOnlyTimer() {
+		this.#fetchInterval = FETCH_INTERVAL_READ_ONLY
 	}
 
 	visibilitychange() {
