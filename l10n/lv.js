@@ -36,6 +36,7 @@ OC.L10N.register(
     "Insert link" : "Ievietojiet saiti",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
-    "Command" : "Komanda"
+    "Command" : "Komanda",
+    "Add folder description" : "Pievienot mapes aprakstu"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
