@@ -13,6 +13,7 @@
     "Create new text file" : "새 텍스트 파일 만들기",
     "This file cannot be displayed as download is disabled by the share" : "공유에서 다운로드가 비활성화 되었으므로 이 파일을 볼 수 없습니다.",
     "Text" : "텍스트",
+    "Nextcloud Assistant" : "Nextcloud 어시스턴트",
     "Translate" : "번역:",
     "Use current version" : "최근 버젼을 사용하십시오.",
     "Use the saved version" : "이전 버전 사용하기",
@@ -56,6 +57,7 @@
     "Cancel" : "취소",
     "URL" : "URL",
     "Cannot copy, please copy the link manually" : "복사할 수 없습니다, 링크를 수동으로 복사하세요.",
+    "Copy link to clipboard" : "링크를 클립보드에 복사",
     "Formatting help" : "서식 도움말",
     "Open the Smart Picker" : "스마트 피커 열기",
     "Select file or folder to link to" : "링크할 파일이나 폴더 선택",
@@ -83,6 +85,7 @@
     "Warning" : "경고",
     "Command" : "명령",
     "Control" : "제어:",
-    "Formatting" : "서식"
+    "Formatting" : "서식",
+    "Add folder description" : "폴더 설명 추가"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
