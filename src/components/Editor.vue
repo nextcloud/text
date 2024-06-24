@@ -370,7 +370,7 @@ export default {
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				baseVersionEtag: this.$syncService?.baseVersionEtag,
+				baseVersionEtag: this.$baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
@@ -485,7 +485,7 @@ export default {
 			})
 		},
 
-		onLoaded({ documentSource, documentState }) {
+		onLoaded({ document, documentSource, documentState }) {
 			if (documentState) {
 				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
 				// distribute additional state that may exist locally
@@ -498,6 +498,7 @@ export default {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
+			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
