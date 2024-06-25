@@ -228,7 +228,11 @@ export default {
 		},
 
 		removeLink() {
-			this.editor.chain().unsetLink().focus().run()
+			this.editor.chain()
+				.hideLinkBubble()
+				.unsetLink()
+				.focus()
+				.run()
 			this.stopEdit()
 		},
 	},
