@@ -59,7 +59,7 @@
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
-		<Assistant v-if="$editor" />
+		<Assistant v-if="hasEditor" />
 		<Translate :show="translateModal"
 			:content="translateContent"
 			@insert-content="translateInsert"
