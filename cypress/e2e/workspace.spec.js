@@ -160,9 +160,6 @@ describe('Workspace', function() {
 		cy.get('.file-picker [data-filename="test.md"]').click()
 		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
-		cy.getEditor()
-			.find('a')
-
 		cy.getContent()
 			.type('{leftArrow}')
 
