@@ -14,9 +14,13 @@ use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
 use OCA\Text\AppInfo\Application;
 use OCA\Text\Service\WorkspaceService;
+use OCP\Files\GenericFileException;
 use OCP\Files\IRootFolder;
+use OCP\Files\NotPermittedException;
 use OCP\Files\StorageNotAvailableException;
+use OCP\ICacheFactory;
 use OCP\IConfig;
+use OCP\Lock\LockedException;
 use Sabre\DAV\INode;
 use Sabre\DAV\PropFind;
 use Sabre\DAV\Server;
@@ -29,23 +33,13 @@ class WorkspacePlugin extends ServerPlugin {
 	/** @var Server */
 	private $server;
 
-	/** @var WorkspaceService */
-	private $workspaceService;
-
-	/**  @var IRootFolder */
-	private $rootFolder;
-
-	/** @var IConfig */
-	private $config;
-
-	/** @var string|null */
-	private $userId;
-
-	public function __construct(WorkspaceService $workspaceService, IRootFolder $rootFolder, IConfig $config, $userId) {
-		$this->workspaceService = $workspaceService;
-		$this->rootFolder = $rootFolder;
-		$this->config = $config;
-		$this->userId = $userId;
+	public function __construct(
+		private WorkspaceService $workspaceService,
+		private IRootFolder $rootFolder,
+		private ICacheFactory $cacheFactory,
+		private IConfig $config,
+		private ?string $userId
+	) {
 	}
 
 	/**
@@ -97,10 +91,21 @@ class WorkspacePlugin extends ServerPlugin {
 
 		// Only return the property for the parent node and ignore it for further in depth nodes
 		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($file) {
+			$cachedContent = '';
 			if ($file instanceof File) {
-				return $file->getContent();
+				$cache = $this->cacheFactory->createDistributed('text_workspace');
+				$cacheKey = $file->getFileInfo()->getId() . '_' . $file->getFileInfo()->getEtag();
+				if ($cachedContent = $cache->get($cacheKey)) {
+					return $cachedContent;
+				}
+
+				try {
+					$cachedContent = $file->getContent();
+					$cache->set($cacheKey, $cachedContent, 3600);
+				} catch (GenericFileException|NotPermittedException|LockedException $e) {
+				}
 			}
-			return '';
+			return $cachedContent;
 		});
 		$propFind->handle(self::WORKSPACE_FILE_PROPERTY, function () use ($file) {
 			if ($file instanceof File) {
