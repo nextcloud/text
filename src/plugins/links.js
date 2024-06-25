@@ -54,7 +54,7 @@ export function linkBubble(options) {
 			init: () => ({ active: null }),
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
-				if (meta && meta.active !== cur.active) {
+				if (meta) {
 					return { ...cur, active: meta.active }
 				} else {
 					return cur
