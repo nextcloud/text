@@ -96,12 +96,14 @@ class LinkBubblePluginView {
 		}
 		this.createTooltip()
 		if (active?.mark) {
-			this.updateTooltip(view, active)
+			setTimeout(() => {
+				this.updateTooltip(view, active)
+			}, 100)
 		} else {
+			this.removeEventListeners()
 			setTimeout(() => {
 				this.tippy?.hide()
 			}, 100)
-			this.removeEventListeners()
 		}
 	}
 
