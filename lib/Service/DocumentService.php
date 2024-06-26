@@ -492,6 +492,14 @@ class DocumentService {
 			throw new NotFoundException();
 		}
 
+		// We currently don't know the path nor care about which file mount it is when getting by id
+		// therefore we can take a shortcut on the cached node if we have edit permissions on that
+		$file = $userFolder->getFirstNodeById($fileId);
+		if ($file instanceof File && $file->getPermissions() & Constants::PERMISSION_UPDATE) {
+			return $file;
+		}
+
+		// Ideally we'd optimize this part in the future by storing the path and getting the acutal target directly
 		$files = $userFolder->getById($fileId);
 		if (count($files) === 0) {
 			throw new NotFoundException();
