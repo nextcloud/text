@@ -78,7 +78,7 @@ export function linkBubble(options) {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
-			const noHistory = !transactions.some(tr => tr.meta.addToHistory)
+			const noHistory = transactions.every(tr => tr.meta.addToHistory === false)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
