@@ -408,14 +408,14 @@ Cypress.Commands.add('showHiddenFiles', (value = true) => {
 	)
 })
 
-Cypress.Commands.add('createDescription', () => {
+Cypress.Commands.add('createDescription', (buttonLabel = 'Add description') => {
 	const url = '**/remote.php/dav/files/**'
 	cy.intercept({ method: 'PUT', url })
 		.as('addDescription')
 
 	cy.get('[data-cy-files-list] tr[data-cy-files-list-row-name="Readme.md"]').should('not.exist')
 	cy.get('[data-cy-upload-picker] button.action-item__menutoggle').click()
-	cy.get('li.upload-picker__menu-entry button').contains('Add description').click()
+	cy.get('li.upload-picker__menu-entry button').contains(buttonLabel).click()
 
 	cy.wait('@addDescription')
 })
