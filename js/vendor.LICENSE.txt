@@ -5,15 +5,15 @@ version: 6.0.2
 license: MIT
 
 @floating-ui/core
-version: 1.6.1
+version: 1.6.3
 license: MIT
 
 @floating-ui/dom
-version: 1.6.5
+version: 1.6.6
 license: MIT
 
 @floating-ui/utils
-version: 0.2.1
+version: 0.2.3
 license: MIT
 
 @hedgedoc/markdown-it-task-lists
@@ -44,24 +44,20 @@ license: GPL-3.0
 version: 0.4.0
 license: GPL-3.0-or-later
 
-@nextcloud/calendar-js
-version: 6.1.0
-license: AGPL-3.0-or-later
-
 @nextcloud/capabilities
 version: 1.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/dialogs
-version: 5.3.1
-license: GPL-3.0-or-later
+version: 5.3.4
+license: AGPL-3.0-or-later
 
 @nextcloud/event-bus
 version: 3.3.1
 license: GPL-3.0-or-later
 
 @nextcloud/files
-version: 3.4.1
+version: 3.5.1
 license: AGPL-3.0-or-later
 
 @nextcloud/initial-state
@@ -88,9 +84,17 @@ license: GPL-3.0-or-later
 version: 3.0.1
 license: GPL-3.0-or-later
 
+@nextcloud/sharing
+version: 0.2.2
+license: GPL-3.0-or-later
+
+@nextcloud/timezones
+version: 0.1.1
+license: AGPL-3.0-or-later
+
 @nextcloud/vue
-version: 8.11.3
-license: AGPL-3.0
+version: 8.13.0
+license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
 version: 3.25.0
@@ -445,7 +449,7 @@ version: 11.9.0
 license: BSD-3-Clause
 
 ical.js
-version: 1.5.0
+version: 2.0.1
 license: MPL-2.0
 
 internmap
@@ -790,6 +794,10 @@ license: MIT
 
 vue-material-design-icons
 version: 5.3.0
+license: MIT
+
+vue-router
+version: 3.6.5
 license: MIT
 
 vue-ts-types
