@@ -87,21 +87,19 @@ class LinkBubblePluginView {
 
 	update(view, oldState) {
 		const { active } = this.plugin.getState(view.state)
-		const { active: oldActive } = this.plugin.getState(oldState)
 		if (view.composing) {
-			return
-		}
-		if (active === oldActive) {
 			return
 		}
 		this.createTooltip()
 		if (active?.mark) {
-			this.updateTooltip(view, active)
+			setTimeout(() => {
+				this.updateTooltip(view, active)
+			}, 100)
 		} else {
+			this.removeEventListeners()
 			setTimeout(() => {
 				this.tippy?.hide()
 			}, 100)
-			this.removeEventListeners()
 		}
 	}
 

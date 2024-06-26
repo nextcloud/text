@@ -71,7 +71,7 @@ export function linkBubble(options) {
 			init: () => ({ active: null }),
 			apply: (tr, cur) => {
 				const meta = tr.getMeta(linkBubbleKey)
-				if (meta && meta.active !== cur.active) {
+				if (meta) {
 					return { ...cur, active: meta.active }
 				} else {
 					return cur
@@ -86,9 +86,17 @@ export function linkBubble(options) {
 		}),
 
 		appendTransaction: (transactions, oldState, state) => {
+			// Don't open bubble at editor initialisation
+			if (oldState?.doc.content.size === 2) {
+				return
+			}
+
+			// Don't open bubble if neither selection nor doc changed
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
-			if (sameSelection && sameDoc) {
+			// Don't open bubble on changes by other session members
+			const noHistory = !transactions.some(tr => tr.meta.addToHistory)
+			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
 			const active = activeLinkFromSelection(state)
