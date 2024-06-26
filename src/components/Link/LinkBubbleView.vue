@@ -229,6 +229,7 @@ export default {
 
 		removeLink() {
 			this.editor.chain()
+				// Explicitly hide bubble to prevent flickering before it's removed
 				.hideLinkBubble()
 				.unsetLink()
 				.focus()
