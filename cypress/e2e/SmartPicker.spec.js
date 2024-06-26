@@ -46,7 +46,7 @@ describe('Smart picker', () => {
 			.should('have.text', 'Hello World')
 	})
 
-	it.skip('Insert a link with the smart picker', () => {
+	it('Insert a link with the smart picker', () => {
 		cy.isolateTest({
 			sourceFile: fileName,
 		})
