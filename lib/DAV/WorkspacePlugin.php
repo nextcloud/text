@@ -78,6 +78,12 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
+		// Only return the property for the parent node and ignore it for further in depth nodes
+		// Otherwise requesting parent with description files for all the children makes a huge performance impact for external storages children
+		if ($propFind->getDepth() !== $this->server->getHTTPDepth()) {
+			return;
+		}
+
 		$node = $node->getNode();
 		try {
 			$file = $this->workspaceService->getFile($node);
@@ -85,7 +91,6 @@ class WorkspacePlugin extends ServerPlugin {
 			$file = null;
 		}
 
-		// Only return the property for the parent node and ignore it for further in depth nodes
 		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($file) {
 			$cachedContent = '';
 			if ($file instanceof File) {
