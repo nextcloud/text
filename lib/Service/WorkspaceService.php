@@ -29,15 +29,13 @@ class WorkspaceService {
 
 	public function getFile(Folder $folder): ?File {
 		foreach ($this->getSupportedFilenames() as $filename) {
-			if ($folder->nodeExists($filename)) {
-				try {
-					$file = $folder->get($filename);
-					if ($file instanceof File) {
-						return $file;
-					}
-				} catch (NotFoundException|StorageInvalidException) {
-					return null;
+			try {
+				$file = $folder->get($filename);
+				if ($file instanceof File) {
+					return $file;
 				}
+			} catch (NotFoundException|StorageInvalidException) {
+				continue;
 			}
 		}
 		return null;
