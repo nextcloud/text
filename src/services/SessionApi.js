@@ -84,6 +84,10 @@ export class Connection {
 		}
 	}
 
+	get isClosed() {
+		return this.closed
+	}
+
 	get #defaultParams() {
 		return {
 			documentId: this.#document.id,

@@ -52,6 +52,7 @@ const ERROR_TYPE = {
 class SyncService {
 
 	#sendIntervalId
+	#connection
 
 	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
@@ -60,7 +61,7 @@ class SyncService {
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
 		this._api = new SessionApi(options)
-		this.connection = null
+		this.#connection = null
 
 		this.stepClientIDs = []
 
@@ -76,6 +77,14 @@ class SyncService {
 		return this
 	}
 
+	get isReadOnly() {
+		return this.#connection.state.document.readOnly
+	}
+
+	get guestName() {
+		return this.#connection.session.guestName
+	}
+
 	async open({ fileId, initialSession }) {
 
 		const connect = initialSession
@@ -83,20 +92,20 @@ class SyncService {
 			: this._api.open({ fileId, baseVersionEtag: this.baseVersionEtag })
 				.catch(error => this._emitError(error))
 
-		this.connection = await connect
-		if (!this.connection) {
+		this.#connection = await connect
+		if (!this.#connection) {
 			// Error was already emitted in connect
 			return
 		}
-		this.backend = new PollingBackend(this, this.connection)
-		this.version = this.connection.docStateVersion
-		this.baseVersionEtag = this.connection.document.baseVersionEtag
+		this.backend = new PollingBackend(this, this.#connection)
+		this.version = this.#connection.docStateVersion
+		this.baseVersionEtag = this.#connection.document.baseVersionEtag
 		this.emit('opened', {
-			...this.connection.state,
+			...this.#connection.state,
 			version: this.version,
 		})
 		this.emit('loaded', {
-			...this.connection.state,
+			...this.#connection.state,
 			version: this.version,
 		})
 	}
@@ -118,10 +127,10 @@ class SyncService {
 	}
 
 	updateSession(guestName) {
-		if (!this.connection.isPublic) {
+		if (!this.#connection.isPublic) {
 			return Promise.reject(new Error())
 		}
-		return this.connection.update(guestName)
+		return this.#connection.update(guestName)
 			.catch((error) => {
 				logger.error('Failed to update the session', { error })
 				return Promise.reject(error)
@@ -135,7 +144,7 @@ class SyncService {
 		}
 		return new Promise((resolve, reject) => {
 			this.#sendIntervalId = setInterval(() => {
-				if (this.connection && !this.sending) {
+				if (this.#connection && !this.sending) {
 					this.sendStepsNow(getSendable).then(resolve).catch(reject)
 				}
 			}, 200)
@@ -150,12 +159,12 @@ class SyncService {
 		if (data.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		return this.connection.push(data)
+		return this.#connection.push(data)
 			.then((response) => {
 				this.sending = false
 				this.emit('sync', {
 					steps: [],
-					document: this.connection.document,
+					document: this.#connection.document,
 					version: this.version,
 				})
 			}).catch(err => {
@@ -210,7 +219,7 @@ class SyncService {
 		this.emit('sync', {
 			steps: newSteps,
 			// TODO: do we actually need to dig into the connection here?
-			document: this.connection.document,
+			document: this.#connection.document,
 			version: this.version,
 		})
 	}
@@ -232,7 +241,7 @@ class SyncService {
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
-			const response = await this.connection.save({
+			const response = await this.#connection.save({
 				version: this.version,
 				autosaveContent: this._getContent(),
 				documentState: this.getDocumentState(),
@@ -240,7 +249,7 @@ class SyncService {
 				manualSave,
 			})
 			this.emit('stateChange', { dirty: false })
-			this.connection.document.lastSavedVersionTime = Date.now() / 1000
+			this.#connection.document.lastSavedVersionTime = Date.now() / 1000
 			logger.debug('[SyncService] saved', response)
 			const { document, sessions } = response.data
 			this.emit('save', { document, sessions })
@@ -265,23 +274,22 @@ class SyncService {
 		// Make sure to leave no pending requests behind.
 		this.autosave.clear()
 		this.backend?.disconnect()
-		return this._close()
-	}
-
-	_close() {
-		if (this.connection === null) {
-			return Promise.resolve()
+		if (!this.#connection || this.#connection.isClosed) {
+			return
 		}
-		this.backend.disconnect()
-		return this.connection.close()
+		return this.#connection.close()
+			// Log and ignore possible network issues.
+			.catch(e => {
+				logger.info('Failed to close connection.', { e })
+			})
 	}
 
 	uploadAttachment(file) {
-		return this.connection.uploadAttachment(file)
+		return this.#connection.uploadAttachment(file)
 	}
 
 	insertAttachmentFile(filePath) {
-		return this.connection.insertAttachmentFile(filePath)
+		return this.#connection.insertAttachmentFile(filePath)
 	}
 
 	on(event, callback) {
