@@ -143,7 +143,7 @@ class PollingBackend {
 			}
 			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
 			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
-			if (this.#syncService.connection.state.document.readOnly) {
+			if (this.#syncService.isReadOnly) {
 				this.maximumReadOnlyTimer()
 			} else if (alive.length < 2) {
 				this.maximumRefetchTimer()
