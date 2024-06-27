@@ -661,14 +661,11 @@ export default {
 
 		async close() {
 			if (this.currentSession && this.$syncService) {
-				try {
-					await this.$syncService.close()
-					this.unlistenSyncServiceEvents()
-					this.currentSession = null
-					this.$syncService = null
-				} catch (e) {
-					// Ignore issues closing the session since those might happen due to network issues
-				}
+				await this.$syncService.close()
+				this.unlistenSyncServiceEvents()
+				this.$syncService = null
+				// disallow editing while still showing the content
+				this.readOnly = true
 			}
 			if (this.$editor) {
 				try {
