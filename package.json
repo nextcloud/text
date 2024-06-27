@@ -98,6 +98,7 @@
     "mermaid": "^10.9.1",
     "mitt": "^3.0.1",
     "path-normalize": "^6.0.13",
+    "prosemirror-view": "^1.33.8",
     "proxy-polyfill": "^0.3.2",
     "slug": "^9.1.0",
     "tippy.js": "^6.3.7",
