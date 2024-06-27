@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace OCA\Text\DAV;
 
 use OC\Files\Node\File;
-use OC\Files\Node\Folder;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
 use OCA\Text\AppInfo\Application;
@@ -77,16 +76,11 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
-		$file = null;
-		$owner = $this->userId ?? $node->getFileInfo()->getStorage()->getOwner('');
-		$node = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($node->getId());
-		if ($node instanceof Folder) {
-			/** @var File $file */
-			try {
-				$file = $this->workspaceService->getFile($node);
-			} catch (StorageNotAvailableException $e) {
-				// If a storage is not available we can for the propfind response assume that there is no rich workspace present
-			}
+		$node = $node->getNode();
+		try {
+			$file = $this->workspaceService->getFile($node);
+		} catch (StorageNotAvailableException $e) {
+			$file = null;
 		}
 
 		// Only return the property for the parent node and ignore it for further in depth nodes
