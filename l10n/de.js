@@ -96,6 +96,7 @@ OC.L10N.register(
     "Action" : "Aktion",
     "Undo" : "Rückgängig",
     "Redo" : "Wiederherstellen",
+    "Toggle outline" : "Umriss umschalten",
     "Alt" : "Alt",
     "Edit link" : "Link bearbeiten",
     "Save changes" : "Änderungen speichern",
