@@ -354,12 +354,12 @@ export default {
 		}
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
+		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.$syncService.save()])
 		}
-		this.$providers.forEach(p => p.destroy())
-		unsubscribe('text:translate-modal:show', this.showTranslateModal)
+		this.close()
 	},
 	methods: {
 		initSession() {
@@ -383,8 +383,6 @@ export default {
 
 			this.listenSyncServiceEvents()
 
-			this.$providers.forEach(p => p?.destroy())
-			this.$providers = []
 			const syncServiceProvider = createSyncServiceProvider({
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
@@ -432,7 +430,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.close().then(this.initSession)
+			this.disconnect().then(this.initSession)
 			this.idle = false
 		},
 
@@ -662,14 +660,19 @@ export default {
 			await this.$syncService.save()
 		},
 
+		async disconnect() {
+			await this.$syncService.close()
+			this.unlistenSyncServiceEvents()
+			this.$providers.forEach(p => p?.destroy())
+			this.$providers = []
+			this.$syncService = null
+			// disallow editing while still showing the content
+			this.readOnly = true
+		},
+
 		async close() {
-			if (this.currentSession && this.$syncService) {
-				await this.$syncService.close()
-				this.unlistenSyncServiceEvents()
-				this.$syncService = null
-				// disallow editing while still showing the content
-				this.readOnly = true
-			}
+			await this.$syncService.sendRemainingSteps(this.$queue)
+			await this.disconnect()
 			if (this.$editor) {
 				try {
 					this.unlistenEditorEvents()
