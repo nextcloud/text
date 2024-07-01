@@ -1,0 +1,1 @@
+{"version":3,"file":"index.chunk2.mjs","sources":["../node_modules/vite-plugin-node-polyfills/shims/global/dist/index.js"],"sourcesContent":["const global = globalThis || void 0 || self;\n\nexport { global as default, global };\n//# sourceMappingURL=index.js.map\n"],"names":["global"],"mappings":";MAAMA,EAAS,YAAc,QAAU","x_google_ignoreList":[0]}
