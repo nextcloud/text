@@ -25,6 +25,7 @@ import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import SessionApi, { Connection } from './SessionApi.js'
+import { encodeArrayBuffer } from '../helpers/base64.ts'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -291,6 +292,29 @@ class SyncService {
 
 	_autosave() {
 		return this.save({ manualSave: false })
+	}
+
+	async sendRemainingSteps(queue) {
+		if (queue.length === 0) {
+			return
+		}
+		let outbox = []
+		const steps = queue.map(s => encodeArrayBuffer(s))
+			.filter(s => s < 'AQ')
+		const awareness = queue.map(s => encodeArrayBuffer(s))
+			.findLast(s => s > 'AQ') || ''
+		return this.sendStepsNow(() => {
+			const data = { steps, awareness, version: this.version }
+			outbox = [...queue]
+			logger.debug('sending final steps ', data)
+			return data
+		})?.then(() => {
+			// only keep the steps that were not send yet
+			queue.splice(0,
+				queue.length,
+				...queue.filter(s => !outbox.includes(s)),
+			)
+		}, err => logger.error(err))
 	}
 
 	async close() {
