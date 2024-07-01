@@ -100,6 +100,11 @@ class WorkspacePlugin extends ServerPlugin {
 			return;
 		}
 
+		// Only return the property for the parent node and ignore it for further in depth nodes
+		if ($propFind->getDepth() !== $this->server->getHTTPDepth()) {
+			return;
+		}
+
 		$file = null;
 		$owner = $this->userId ?? $node->getFileInfo()->getStorage()->getOwner('');
 		/** @var Folder[] $nodes */
@@ -113,7 +118,6 @@ class WorkspacePlugin extends ServerPlugin {
 			}
 		}
 
-		// Only return the property for the parent node and ignore it for further in depth nodes
 		$propFind->handle(self::WORKSPACE_PROPERTY, function () use ($file) {
 			if ($file instanceof File) {
 				return $file->getContent();
