@@ -93,12 +93,15 @@ describe('Sync', () => {
 			.should('contain', 'Document could not be loaded.')
 		cy.get('#editor-container .document-status')
 			.find('.button.primary').click()
-		cy.intercept('**/apps/text/session/*/*', req => {
-			if (req.url.endsWith('create')) {
-				req.alias = 'create'
-			}
-			req.continue()
-		}).as('alive')
+		cy.get('.toastify').should('contain', 'Connection failed.')
+		cy.get('.toastify', { timeout: 30000 }).should('not.exist')
+		cy.get('#editor-container .document-status', { timeout: 30000 })
+			.should('contain', 'Document could not be loaded.')
+		// bring back the network connection
+		cy.intercept('**/apps/text/session/*/*', req => { req.continue() }).as('alive')
+		cy.intercept('**/apps/text/session/*/create').as('create')
+		cy.get('#editor-container .document-status')
+			.find('.button.primary').click()
 		cy.wait('@alive', { timeout: 30000 })
 		cy.wait('@create', { timeout: 10000 })
 			.its('request.body')
