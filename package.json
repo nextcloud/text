@@ -141,7 +141,7 @@
     "rollup-plugin-webpack-stats": "^0.4.1",
     "ts-jest": "^29.1.4",
     "typescript": "^5.5.2",
-    "vite": "^5.3.1",
+    "vite": "^5.3.2",
     "vite-plugin-commonjs": "^0.10.1",
     "vue-demi": "^0.14.8",
     "vue-template-compiler": "^2.7.16"
