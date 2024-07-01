@@ -105,6 +105,7 @@ class SessionMiddleware extends Middleware {
 		}
 
 		$controller->setSession($session);
+		$controller->setDocumentId($documentId);
 		$controller->setDocument($document);
 		if (!$shareToken) {
 			$controller->setUserId($session->getUserId());
@@ -138,12 +139,7 @@ class SessionMiddleware extends Middleware {
 			throw new InvalidSessionException();
 		}
 
-		$document = $this->documentService->getDocument($documentId);
-		if (!$document) {
-			throw new InvalidSessionException();
-		}
-
-		$controller->setDocument($document);
+		$controller->setDocumentId($documentId);
 	}
 
 	public function afterException($controller, $methodName, \Exception $exception): JSONResponse|Response {
