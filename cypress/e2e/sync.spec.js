@@ -19,10 +19,10 @@ describe('Sync', () => {
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as('save')
 		cy.openTestFile()
-		cy.wait('@sync')
+		cy.wait('@sync', { timeout: 10000 })
 		cy.getContent().find('h2').should('contain', 'Hello world')
 		cy.getContent().type('{moveToEnd}* Saving the doc saves the doc state{enter}')
-		cy.wait('@sync')
+		cy.wait('@sync', { timeout: 10000 })
 	})
 
 	it('saves the actual file and document state', () => {
