@@ -161,7 +161,8 @@ describe('Workspace', function() {
 		cy.get('.dialog__actions button.button-vue--vue-primary').click()
 
 		cy.getContent()
-			.type('{leftArrow}')
+			.find('a')
+			.click()
 
 		cy.get('.link-view-bubble .widget-file', { timeout: 10000 })
 			.find('.widget-file__title')
