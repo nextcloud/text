@@ -603,6 +603,12 @@ export default {
 				this.hasConnectionIssue = true
 			}
 
+			if (type === ERROR_TYPE.PUSH_FORBIDDEN) {
+				this.hasConnectionIssue = true
+				this.emit('push:forbidden')
+				return
+			}
+
 			this.emit('ready')
 		},
 
