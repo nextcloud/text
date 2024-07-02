@@ -70,7 +70,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[PublicPage]
 	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getAttachmentList(string $shareToken = ''): DataResponse {
-		$documentId = $this->getDocument()->getId();
+		$documentId = $this->getDocumentId();
 		try {
 			$session = $this->getSession();
 		} catch (InvalidSessionException) {
@@ -178,7 +178,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getImageFile(string $imageFileName, string $shareToken = '',
 		int $preferRawImage = 0): DataResponse|DataDownloadResponse {
-		$documentId = $this->getDocument()->getId();
+		$documentId = $this->getDocumentId();
 
 		try {
 			if ($shareToken) {
@@ -212,7 +212,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFile(string $mediaFileName, string $shareToken = ''): DataResponse|DataDownloadResponse {
-		$documentId = $this->getDocument()->getId();
+		$documentId = $this->getDocumentId();
 
 		try {
 			if ($shareToken) {
@@ -243,7 +243,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoCSRFRequired]
 	#[RequireDocumentSessionOrUserOrShareToken]
 	public function getMediaFilePreview(string $mediaFileName, string $shareToken = '') {
-		$documentId = $this->getDocument()->getId();
+		$documentId = $this->getDocumentId();
 
 		try {
 			if ($shareToken) {
