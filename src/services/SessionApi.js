@@ -84,6 +84,10 @@ export class Connection {
 		}
 	}
 
+	get isClosed() {
+		return this.closed
+	}
+
 	get #defaultParams() {
 		return {
 			documentId: this.#document.id,
@@ -161,9 +165,12 @@ export class Connection {
 	}
 
 	close() {
-		const promise = this.#post(this.#url(`session/${this.#document.id}/close`), this.#defaultParams)
-		this.closed = true
-		return promise
+		return this.#post(
+			this.#url(`session/${this.#document.id}/close`),
+			this.#defaultParams,
+		).then(() => {
+			this.closed = true
+		})
 	}
 
 	// To be used in Cypress tests only
