@@ -21,7 +21,8 @@
  */
 
 import { logger } from '../helpers/logger.js'
-import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
+import { decodeArrayBuffer } from '../helpers/base64.js'
+import { getSteps, getAwareness } from '../helpers/yjs.js'
 
 /**
  *
@@ -86,8 +87,8 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			let outbox = []
 			return syncService.sendSteps(() => {
 				const data = {
-					steps: this.#steps,
-					awareness: this.#awareness,
+					steps: getSteps(queue),
+					awareness: getAwareness(queue),
 					version: this.#version,
 				}
 				outbox = [...queue]
@@ -101,16 +102,6 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				)
 				return ret
 			}, err => logger.error(err))
-		}
-
-		get #steps() {
-			return queue.map(s => encodeArrayBuffer(s))
-				.filter(s => s < 'AQ')
-		}
-
-		get #awareness() {
-			return queue.map(s => encodeArrayBuffer(s))
-				.findLast(s => s > 'AQ') || ''
 		}
 
 		async close() {

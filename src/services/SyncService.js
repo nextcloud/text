@@ -25,7 +25,7 @@ import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import SessionApi, { Connection } from './SessionApi.js'
-import { encodeArrayBuffer } from '../helpers/base64.ts'
+import { getSteps, getAwareness } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -299,10 +299,8 @@ class SyncService {
 			return
 		}
 		let outbox = []
-		const steps = queue.map(s => encodeArrayBuffer(s))
-			.filter(s => s < 'AQ')
-		const awareness = queue.map(s => encodeArrayBuffer(s))
-			.findLast(s => s > 'AQ') || ''
+		const steps = getSteps(queue)
+		const awareness = getAwareness(queue)
 		return this.sendStepsNow(() => {
 			const data = { steps, awareness, version: this.version }
 			outbox = [...queue]
