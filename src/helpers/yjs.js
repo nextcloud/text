@@ -81,6 +81,26 @@ export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
 }
 
 /**
+ * Get the steps for sending to the server
+ *
+ * @param {object[]} queue - queue for the outgoing steps
+ */
+export function getSteps(queue) {
+	return queue.map(s => encodeArrayBuffer(s))
+		.filter(s => s < 'AQ')
+}
+
+/**
+ * Encode the latest awareness message for sending
+ *
+ * @param {object[]} queue - queue for the outgoing steps
+ */
+export function getAwareness(queue) {
+	return queue.map(s => encodeArrayBuffer(s))
+		.findLast(s => s > 'AQ') || ''
+}
+
+/**
  * Log y.js messages with their type and initiator call stack
  *
  * @param {string} step - Y.js message
