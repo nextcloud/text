@@ -4,7 +4,7 @@
  */
 
 import { emit } from '@nextcloud/event-bus'
-import { Header, addNewFileMenuEntry, Permission, File } from '@nextcloud/files'
+import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
 import { imagePath } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -118,6 +118,7 @@ export const addMenuRichWorkspace = () => {
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
+		category: NewMenuEntryCategory.Other,
 		enabled(context) {
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
