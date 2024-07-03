@@ -21,7 +21,8 @@
  */
 
 import { logger } from '../helpers/logger.js'
-import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.js'
+import { decodeArrayBuffer } from '../helpers/base64.js'
+import { getSteps, getAwareness } from '../helpers/yjs.js'
 
 /**
  *
@@ -86,8 +87,8 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			let outbox = []
 			return syncService.sendSteps(() => {
 				const data = {
-					steps: this.#steps,
-					awareness: this.#awareness,
+					steps: getSteps(queue),
+					awareness: getAwareness(queue),
 					version: this.#version,
 				}
 				outbox = [...queue]
@@ -103,47 +104,12 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			}, err => logger.error(err))
 		}
 
-		get #steps() {
-			return queue.map(s => encodeArrayBuffer(s))
-				.filter(s => s < 'AQ')
-		}
-
-		get #awareness() {
-			return queue.map(s => encodeArrayBuffer(s))
-				.findLast(s => s > 'AQ') || ''
-		}
-
 		async close() {
-			await this.#sendRemainingSteps()
 			Object.entries(this.#handlers)
 				.forEach(([key, value]) => syncService.off(key, value))
 			this.#handlers = []
-			syncService.close().then(() => {
-				this.onclose()
-			})
+			this.onclose()
 			logger.debug('Websocket closed')
-		}
-
-		#sendRemainingSteps() {
-			if (queue.length) {
-				let outbox = []
-				return syncService.sendStepsNow(() => {
-					const data = {
-						steps: this.#steps,
-						awareness: this.#awareness,
-						version: this.#version,
-					}
-					outbox = [...queue]
-					logger.debug('sending final steps ', data)
-					return data
-				})?.then(() => {
-					// only keep the steps that were not send yet
-					queue.splice(0,
-						queue.length,
-						...queue.filter(s => !outbox.includes(s)),
-					)
-				}, err => logger.error(err))
-			}
 		}
 
 	}

@@ -365,7 +365,7 @@ export default {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.$syncService.save()])
 		}
-		this.$providers.forEach(p => p.destroy())
+		this.close()
 	},
 	methods: {
 		initSession() {
@@ -379,7 +379,7 @@ export default {
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				baseVersionEtag: this.$syncService?.baseVersionEtag,
+				baseVersionEtag: this.$baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
@@ -389,8 +389,6 @@ export default {
 
 			this.listenSyncServiceEvents()
 
-			this.$providers.forEach(p => p?.destroy())
-			this.$providers = []
 			const syncServiceProvider = createSyncServiceProvider({
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
@@ -438,7 +436,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.close().then(this.initSession)
+			this.disconnect().then(this.initSession)
 			this.idle = false
 		},
 
@@ -493,7 +491,7 @@ export default {
 			})
 		},
 
-		onLoaded({ documentSource, documentState }) {
+		onLoaded({ document, documentSource, documentState }) {
 			if (documentState) {
 				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
 				// distribute additional state that may exist locally
@@ -506,6 +504,7 @@ export default {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
+			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
 			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 
@@ -667,17 +666,19 @@ export default {
 			await this.$syncService.save()
 		},
 
+		async disconnect() {
+			await this.$syncService.close()
+			this.unlistenSyncServiceEvents()
+			this.$providers.forEach(p => p?.destroy())
+			this.$providers = []
+			this.$syncService = null
+			// disallow editing while still showing the content
+			this.readOnly = true
+		},
+
 		async close() {
-			if (this.currentSession && this.$syncService) {
-				try {
-					await this.$syncService.close()
-					this.unlistenSyncServiceEvents()
-					this.currentSession = null
-					this.$syncService = null
-				} catch (e) {
-					// Ignore issues closing the session since those might happen due to network issues
-				}
-			}
+			await this.$syncService.sendRemainingSteps(this.$queue)
+			await this.disconnect()
 			if (this.$editor) {
 				try {
 					this.unlistenEditorEvents()
