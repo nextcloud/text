@@ -92,7 +92,7 @@ export function highlightResults(doc, results) {
 	results.forEach((result) => {
 		decorations.push(
 			Decoration.inline(result.from, result.to, {
-				style: 'background-color: #f8ff00; color: black; border-radius: 4px;',
+				style: 'background-color: #ead637; color: black; border-radius: 2px;',
 			}),
 		)
 	})
