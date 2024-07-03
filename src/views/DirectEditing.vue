@@ -114,6 +114,11 @@ export default {
 	},
 	mounted() {
 		document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+
+		this.$refs.editor.$on('push:forbidden', () => {
+			logger.warn('push was forbidden due to invalidated session')
+			this.reload()
+		})
 	},
 	methods: {
 		async close() {
@@ -128,6 +133,9 @@ export default {
 		},
 		loaded() {
 			callMobileMessage('loaded')
+		},
+		reload() {
+			callMobileMessage('reload')
 		},
 	},
 }
