@@ -220,7 +220,7 @@ export default {
 	}
 
 	.rich-workspace--preview {
-		margin-top: 44px;
+		margin-top: var(--default-clickable-area);
 
 		&:deep(div[contenteditable='false']) {
 			margin: 0;

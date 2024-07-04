@@ -222,7 +222,7 @@ export default {
 		z-index: 10021; // above modal-header so menubar is always on top
 		background-color: var(--color-main-background-translucent);
 		backdrop-filter: var(--background-blur);
-		max-height: 44px; // important for mobile so that the buttons are always inside the container
+		max-height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
 		padding-top:3px;
 		padding-bottom: 3px;
 

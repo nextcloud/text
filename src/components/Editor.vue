@@ -837,7 +837,7 @@ export default {
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
-	height: 44px; // important for mobile so that the buttons are always inside the container
+	height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
 	padding-top:3px;
 	padding-bottom: 3px;
 }

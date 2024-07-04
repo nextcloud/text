@@ -414,8 +414,8 @@ export default {
 		padding: 8px;
 
 		img {
-			width: 44px;
-			height: 44px;
+			width: var(--default-clickable-area);
+			height: var(--default-clickable-area);
 		}
 
 		.metadata {
