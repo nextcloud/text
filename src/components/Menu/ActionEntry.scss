@@ -13,7 +13,7 @@
 	}
 
 	button.entry-action__button {
-		height: 44px;
+		height: var(--default-clickable-area);
 		margin: 0;
 		border: 0;
 		// opacity: 0.5;
@@ -32,7 +32,7 @@
 		}
 
 		&:not(li.entry-action-item button) {
-			width: 44px;
+			width: var(--default-clickable-area);
 		}
 
 		&:hover,

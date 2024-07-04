@@ -160,8 +160,8 @@ export default {
 	}
 
 	button {
-		width: 44px;
-		height: 44px;
+		width: var(--default-clickable-area);
+		height: var(--default-clickable-area);
 		margin: 0;
 		background-size: 16px;
 		border: 0;

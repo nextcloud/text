@@ -148,8 +148,8 @@ export default {
 		display: inline-flex;
 		justify-content: center;
 		padding: 0;
-		height: 44px;
-		width: 44px;
+		height: var(--default-clickable-area);
+		width: var(--default-clickable-area);
 
 		&:hover {
 			background-color: var(--color-background-hover);

@@ -15,7 +15,7 @@
 					<AvatarWrapper v-for="session in sessionsVisible"
 						:key="session.id"
 						:session="session"
-						:size="40" />
+						:size="30" />
 				</button>
 			</div>
 		</template>
@@ -130,7 +130,7 @@ export default {
 
 <style scoped lang="scss">
 	.session-list {
-		height: 44px;
+		height: var(--default-clickable-area);
 	}
 	.avatar-list {
 		border: none;
@@ -142,18 +142,18 @@ export default {
 		flex-direction: row-reverse;
 
 		.avatar-wrapper {
-			margin: 0 -18px 0 0;
+			margin: 0 -12px 0 0;
 			z-index: 1;
 			border-radius: 50%;
 			overflow: hidden;
 			box-sizing: content-box !important;
-			height: 36px;
-			width: 36px;
+			height: calc(var(--default-clickable-area) - 4px);
+			width: calc(var(--default-clickable-area) - 4px);
 		}
 
 		.icon-more, .icon-group, .icon-settings-dark {
-			width: 44px;
-			height: 44px;
+			width: var(--default-clickable-area);
+			height: var(--default-clickable-area);
 			margin: 0 3px 0 0;
 
 			&:hover {
