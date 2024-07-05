@@ -118,7 +118,8 @@ export const addMenuRichWorkspace = () => {
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
-		category: NewMenuEntryCategory.Other,
+		// FIXME Move back to other once https://github.com/nextcloud-libraries/nextcloud-upload/pull/1269 is available in server
+		category: NewMenuEntryCategory.CreateNew,
 		enabled(context) {
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
