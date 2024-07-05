@@ -5,15 +5,15 @@ version: 6.0.2
 license: MIT
 
 @floating-ui/core
-version: 0.3.1
+version: 1.6.4
 license: MIT
 
 @floating-ui/dom
-version: 0.1.10
+version: 1.6.7
 license: MIT
 
 @floating-ui/utils
-version: 0.2.3
+version: 0.2.4
 license: MIT
 
 @hedgedoc/markdown-it-task-lists
@@ -81,7 +81,7 @@ version: 2.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/router
-version: 3.0.1
+version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
@@ -93,7 +93,7 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.13.0
+version: 8.14.0
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
@@ -265,7 +265,7 @@ version: 10.11.0
 license: MIT
 
 @vueuse/shared
-version: 10.11.0
+version: 10.9.0
 license: MIT
 
 ansi-regex
