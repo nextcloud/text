@@ -5,6 +5,7 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import { emit } from '@nextcloud/event-bus'
 import { searchQueryPluginKey } from './searchQuery.js'
 
 /**
@@ -27,6 +28,11 @@ export default function searchDecorations() {
 
 				if (tr.docChanged || (newQuery !== oldQuery)) {
 					const searchResults = runSearch(tr.doc, newQuery)
+
+					emit('text:editor:search-start', {
+						searchResults,
+					})
+
 					return highlightResults(tr.doc, searchResults)
 				} else {
 					return value
