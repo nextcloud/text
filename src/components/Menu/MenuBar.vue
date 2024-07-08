@@ -59,9 +59,10 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
-import { useResizeObserver } from '@vueuse/core'
+import { useElementSize } from '@vueuse/core'
 import { emit } from '@nextcloud/event-bus'
 
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
@@ -116,6 +117,13 @@ export default {
 			default: false,
 		},
 	},
+
+	setup() {
+		const menubar = ref()
+		const { width } = useElementSize(menubar)
+		return { menubar, width }
+	},
+
 	data() {
 		return {
 			entries: [...actionsFullEntries],
@@ -124,7 +132,6 @@ export default {
 			isReady: false,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 			resize: null,
-			iconsLimit: 4,
 		}
 	},
 	computed: {
@@ -164,33 +171,30 @@ export default {
 				children: entries,
 			}
 		},
+		iconWidth() {
+			const style = this.menubar && getComputedStyle(this.menubar)
+			const clickableArea = style?.getPropertyValue('--default-clickable-area')
+			return parseInt(clickableArea) || 34
+		},
+		iconsLimit() {
+			// leave some buffer - this is necessary so the bar does not wrap during resizing
+			const spaceToFill = this.width - 4
+			const spacePerSlot = this.$isMobile
+				? this.iconWidth
+				: this.iconWidth + 2
+			const slots = Math.floor(spaceToFill / spacePerSlot)
+			// Leave one slot empty for the three dot menu
+			return slots - 1
+		},
 	},
 	mounted() {
-		this.resize = useResizeObserver(this.$refs.menubar, this.onResize)
-
 		this.$nextTick(() => {
 			this.isReady = true
 			this.$emit('update:loaded', true)
 		})
 	},
-	beforeDestroy() {
-		this.resize?.stop()
-	},
 	methods: {
-		onResize(entries) {
-			window.requestAnimationFrame(() => {
-				const entry = entries[0]
-				const { width } = entry.contentRect
 
-				// leave some buffer - this is necessary so the bar does not wrap during resizing
-				const spaceToFill = width - 4
-				const spacePerSlot = this.$isMobile ? 44 : 46
-				const slots = Math.floor(spaceToFill / spacePerSlot)
-
-				// Leave one slot empty for the three dot menu
-				this.iconsLimit = slots - 1
-			})
-		},
 		showHelp() {
 			this.displayHelp = true
 		},
