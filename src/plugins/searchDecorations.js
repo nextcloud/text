@@ -30,7 +30,7 @@ export default function searchDecorations() {
 					const searchResults = runSearch(tr.doc, newQuery)
 
 					emit('text:editor:search-start', {
-						searchResults,
+						matches: (newQuery === '' ? null : searchResults),
 					})
 
 					return highlightResults(tr.doc, searchResults)
