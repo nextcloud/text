@@ -22,6 +22,7 @@
 
 <template>
 	<div id="editor-container"
+		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
 		tabindex="-1"
@@ -81,7 +82,7 @@
 </template>
 
 <script>
-import Vue, { set } from 'vue'
+import Vue, { ref, set, watch } from 'vue'
 import { mapActions, mapState } from 'vuex'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
@@ -89,6 +90,7 @@ import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
+import { useElementSize } from '@vueuse/core'
 
 import {
 	EDITOR,
@@ -227,6 +229,17 @@ export default {
 			default: false,
 		},
 	},
+
+	setup() {
+		const el = ref(null)
+		const { width } = useElementSize(el)
+		watch(width, value => {
+			const maxWidth = Math.floor(value) - 36
+			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
+		})
+		return { el, width }
+	},
+
 	data() {
 		return {
 			IDLE_TIMEOUT,
