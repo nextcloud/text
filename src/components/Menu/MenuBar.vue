@@ -82,9 +82,10 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
-import { useResizeObserver } from '@vueuse/core'
+import { useElementSize } from '@vueuse/core'
 
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
@@ -140,6 +141,13 @@ export default {
 			default: false,
 		},
 	},
+
+	setup() {
+		const menubar = ref()
+		const { width } = useElementSize(menubar)
+		return { menubar, width }
+	},
+
 	data() {
 		return {
 			entries: [...actionsFullEntries],
@@ -149,7 +157,6 @@ export default {
 			isReady: false,
 			canTranslate: loadState('text', 'translation_languages', []).length > 0,
 			resize: null,
-			iconsLimit: 4,
 		}
 	},
 	computed: {
@@ -189,32 +196,22 @@ export default {
 				children: entries,
 			}
 		},
+		iconsLimit() {
+			// leave some buffer - this is necessary so the bar does not wrap during resizing
+			const spaceToFill = this.width - 4
+			const spacePerSlot = this.$isMobile ? 44 : 46
+			const slots = Math.floor(spaceToFill / spacePerSlot)
+			// Leave one slot empty for the three dot menu
+			return slots - 1
+		},
 	},
 	mounted() {
-		this.resize = useResizeObserver(this.$refs.menubar, this.onResize)
-
 		this.$nextTick(() => {
 			this.isReady = true
 			this.$emit('update:loaded', true)
 		})
 	},
-	beforeDestroy() {
-		this.resize?.stop()
-	},
 	methods: {
-		onResize(entries) {
-			const entry = entries[0]
-			const { width } = entry.contentRect
-
-			// leave some buffer - this is necessary so the bar does not wrap during resizing
-			const spaceToFill = width - 4
-			const spacePerSlot = this.$isMobile ? 44 : 46
-			const slots = Math.floor(spaceToFill / spacePerSlot)
-
-			// Leave one slot empty for the three dot menu
-			this.iconsLimit = slots - 1
-			this.isReady = true
-		},
 		showHelp() {
 			this.displayHelp = true
 		},
