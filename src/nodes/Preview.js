@@ -94,7 +94,7 @@ export default Node.create({
 			/**
 			 * Insert a preview for given link.
 			 *
-			 * @param link
+			 * @param {string} link - the link URL
 			 */
 			insertPreview: (link) => ({ state, chain }) => {
 				return chain()
