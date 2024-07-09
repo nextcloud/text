@@ -85,14 +85,16 @@ class ApiService {
 				} catch (NotFoundException $e) {
 					return new DataResponse([], Http::STATUS_NOT_FOUND);
 				} catch (NotPermittedException $e) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], 404);
+					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_NOT_FOUND);
 				}
 			} elseif ($fileId) {
 				try {
 					$file = $this->documentService->getFileById($fileId);
 				} catch (NotFoundException|NotPermittedException $e) {
 					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
-					return new DataResponse(['error' => $this->l10n->t('No permission to access this file.')], Http::STATUS_NOT_FOUND);
+					return new DataResponse([
+						'error' => $this->l10n->t('File not found')
+					], Http::STATUS_NOT_FOUND);
 				}
 			} else {
 				return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
@@ -106,7 +108,7 @@ class ApiService {
 				$share = $storage->getShare();
 				$shareAttribtues = $share->getAttributes();
 				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
-					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], 403);
+					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 				}
 			}
 
@@ -132,7 +134,7 @@ class ApiService {
 			}
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
-			return new DataResponse(['error' => 'Failed to create the document session'], 500);
+			return new DataResponse(['error' => 'Failed to create the document session'], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
 		/** @var Document $document */
@@ -207,7 +209,7 @@ class ApiService {
 		try {
 			$result = $this->documentService->addStep($document, $session, $steps, $version, $token);
 		} catch (InvalidArgumentException $e) {
-			return new DataResponse(['error' => $e->getMessage()], 422);
+			return new DataResponse(['error' => $e->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		} catch (DoesNotExistException|NotPermittedException) {
 			// Either no write access or session was removed in the meantime (#3875).
 			return new DataResponse(['error' => $this->l10n->t('Editing session has expired. Please reload the page.')], Http::STATUS_PRECONDITION_FAILED);
@@ -228,16 +230,16 @@ class ApiService {
 			// ensure file is still present and accessible
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
-		} catch (NotFoundException|InvalidPathException $e) {
+		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
-			], 404);
+			], Http::STATUS_NOT_FOUND);
 		} catch (DoesNotExistException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'Document no longer exists'
-			], 404);
+			], Http::STATUS_NOT_FOUND);
 		} catch (DocumentSaveConflictException) {
 			try {
 				/** @psalm-suppress PossiblyUndefinedVariable */
@@ -247,22 +249,22 @@ class ApiService {
 			}
 		}
 
-		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
+		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
 	}
 
 	public function save(Session $session, Document $document, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
 			$file = $this->documentService->getFileForSession($session, $shareToken);
-		} catch (NotFoundException $e) {
+		} catch (NotPermittedException|NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
-			], 404);
+			], Http::STATUS_NOT_FOUND);
 		} catch (DoesNotExistException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'Document no longer exists'
-			], 404);
+			], Http::STATUS_NOT_FOUND);
 		}
 
 		$result = [];
@@ -275,15 +277,15 @@ class ApiService {
 				// Ignore locked exception since it might happen due to an autosave action happening at the same time
 			}
 		} catch (NotFoundException) {
-			return new DataResponse([], 404);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
 			$this->logger->error($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'Failed to autosave document'
-			], 500);
+			], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
-		return new DataResponse($result, isset($result['outsideChange']) ? 409 : 200);
+		return new DataResponse($result, isset($result['outsideChange']) ? Http::STATUS_CONFLICT : Http::STATUS_OK);
 	}
 
 	public function updateSession(Session $session, string $guestName): DataResponse {
