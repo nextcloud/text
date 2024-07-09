@@ -22,7 +22,6 @@
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
-			:show-author-annotations="showAuthorAnnotations"
 			:show-outline-outside="showOutlineOutside"
 			@outline-toggled="outlineToggled">
 			<MainContainer v-if="hasEditor">
@@ -71,7 +70,6 @@
 
 <script>
 import Vue, { ref, set, watch } from 'vue'
-import { mapState } from 'vuex'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -106,7 +104,6 @@ import { CollaborationCursor } from '../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
 import setContent from './../mixins/setContent.js'
-import store from './../mixins/store.js'
 import MenuBar from './Menu/MenuBar.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
@@ -134,7 +131,6 @@ export default {
 	mixins: [
 		isMobile,
 		setContent,
-		store,
 	],
 
 	provide() {
@@ -259,9 +255,6 @@ export default {
 		}
 	},
 	computed: {
-		...mapState({
-			showAuthorAnnotations: (state) => state.text.showAuthorAnnotations,
-		}),
 		isRichWorkspace() {
 			return this.richWorkspace
 		},

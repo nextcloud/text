@@ -9,8 +9,8 @@ import { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
 
 /**
  *
- * @param editor
- * @param markdown
+ * @param {object} editor - the editor object
+ * @param {string} markdown - markdown content
  */
 export function loadMarkdown(editor, markdown) {
 	const stripped = markdown.replace(/\t*/g, '')
@@ -19,7 +19,7 @@ export function loadMarkdown(editor, markdown) {
 
 /**
  *
- * @param editor
+ * @param {object} editor - the editor object
  */
 export function runCommands(editor) {
 	let found
@@ -34,7 +34,7 @@ export function runCommands(editor) {
 
 /**
  *
- * @param editor
+ * @param {object} editor - the editor object
  */
 function findCommand(editor) {
 	const doc = editor.state.doc
@@ -45,8 +45,8 @@ function findCommand(editor) {
 
 /**
  *
- * @param editor
- * @param markdown
+ * @param {object} editor - the editor object
+ * @param {string} markdown - markdown content
  */
 export function expectMarkdown(editor, markdown) {
 	const stripped = markdown.replace(/\t*/g, '')
@@ -55,7 +55,7 @@ export function expectMarkdown(editor, markdown) {
 
 /**
  *
- * @param editor
+ * @param {object} editor - the editor object
  */
 function getMarkdown(editor) {
 	const serializer = createMarkdownSerializer(editor.schema)
