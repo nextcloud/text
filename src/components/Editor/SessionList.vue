@@ -34,16 +34,6 @@
 						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
 					</li>
 				</ul>
-				<!-- disable for now as this broke during the y.js migration
-				<input id="toggle-color-annotations"
-					v-model="showAuthorAnnotations"
-					type="checkbox"
-					class="checkbox">
-				<label for="toggle-color-annotations">{{ t('text', 'Show author colors') }}</label>
-				<p class="hint">
-					{{ t('text', 'Author colors are only shown until everyone has closed the document.') }}
-				</p>
-				-->
 			</div>
 		</template>
 	</NcPopover>
@@ -52,8 +42,6 @@
 <script>
 import { NcPopover } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { mapActions, mapState } from 'vuex'
-import store from '../../mixins/store.js'
 import { COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME } from '../../services/SyncService.js'
 
 export default {
@@ -62,7 +50,6 @@ export default {
 		AvatarWrapper,
 		NcPopover,
 	},
-	mixins: [store],
 	props: {
 		sessions: {
 			type: Object,
@@ -75,20 +62,8 @@ export default {
 		}
 	},
 	computed: {
-		...mapState({
-			storeShowAuthorAnnotations: (state) => state.text.showAuthorAnnotations,
-		}),
-
 		label() {
 			return t('text', 'Active people')
-		},
-		showAuthorAnnotations: {
-			get() {
-				return this.storeShowAuthorAnnotations
-			},
-			set(value) {
-				this.setShowAuthorAnnotations(value)
-			},
 		},
 		participantsPopover() {
 			if (this.currentSession?.guestName) {
@@ -118,12 +93,6 @@ export default {
 		sessionsVisible() {
 			return this.participantsWithoutCurrent.slice(0, 3)
 		},
-	},
-
-	methods: {
-		...mapActions('text', [
-			'setShowAuthorAnnotations',
-		]),
 	},
 }
 </script>

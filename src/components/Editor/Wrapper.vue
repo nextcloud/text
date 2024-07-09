@@ -9,7 +9,6 @@
 			'has-conflicts': hasSyncCollission,
 			'is-rich-workspace': $isRichWorkspace,
 			'is-rich-editor': $isRichEditor,
-			'show-color-annotations': showAuthorAnnotations
 		}">
 		<slot />
 	</div>
@@ -54,10 +53,6 @@ export default {
 		contentLoaded: {
 			type: Boolean,
 			default: true,
-		},
-		showAuthorAnnotations: {
-			type: Boolean,
-			default: false,
 		},
 		showOutlineOutside: {
 			type: Boolean,
@@ -137,16 +132,6 @@ export default {
 		display: flex;
 		width: 100%;
 		height: 100%;
-
-		&.show-color-annotations:deep(.author-annotation) {
-			padding-top: 2px;
-			padding-bottom: 2px;
-		}
-
-		&:not(.show-color-annotations):deep(.author-annotation),
-		&:not(.show-color-annotations):deep(.image) {
-			background-color: transparent !important;
-		}
 
 		.ProseMirror {
 			margin-top: 0 !important;

@@ -5,25 +5,20 @@
 
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
-import { getBuilder } from '@nextcloud/browser-storage'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
 import {
-	SET_SHOW_AUTHOR_ANNOTATIONS,
 	SET_VIEW_WIDTH,
 	SET_HEADINGS,
 	SET_ATTACHMENT_LIST,
 } from './mutation-types.js'
 import plugin, { getClientWidth } from './plugin.js'
 
-const persistentStorage = getBuilder('text').persist().build()
-
 Vue.use(Vuex)
 
 export const textModule = {
 	state: {
-		showAuthorAnnotations: persistentStorage.getItem('showAuthorAnnotations') === 'true',
 		viewWidth: getClientWidth(),
 		headings: Object.freeze([]),
 		attachmentList: [],
@@ -35,10 +30,6 @@ export const textModule = {
 	mutations: {
 		[SET_VIEW_WIDTH](state, value) {
 			state.viewWidth = value
-		},
-		[SET_SHOW_AUTHOR_ANNOTATIONS](state, value) {
-			state.showAuthorAnnotations = value
-			persistentStorage.setItem('showAuthorAnnotations', '' + value)
 		},
 		[SET_HEADINGS](state, value) {
 			if (state.headings.length !== value.length) {
@@ -64,9 +55,6 @@ export const textModule = {
 		},
 	},
 	actions: {
-		setShowAuthorAnnotations({ commit }, value) {
-			commit(SET_SHOW_AUTHOR_ANNOTATIONS, value)
-		},
 		setHeadings({ commit }, value) {
 			commit(SET_HEADINGS, value)
 		},
