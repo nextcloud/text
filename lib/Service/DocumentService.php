@@ -452,6 +452,7 @@ class DocumentService {
 	}
 
 	/**
+	 * @throws NotPermittedException
 	 * @throws NotFoundException
 	 */
 	public function getFileForSession(Session $session, ?string $shareToken = null): File {
