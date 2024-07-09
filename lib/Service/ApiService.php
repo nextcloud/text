@@ -65,7 +65,9 @@ class ApiService {
 					$file = $this->documentService->getFileById($fileId, $this->userId);
 				} catch (NotFoundException|NotPermittedException $e) {
 					$this->logger->error('No permission to access this file', [ 'exception' => $e ]);
-					return new DataResponse(['error' => $this->l10n->t('No permission to access this file.')], Http::STATUS_NOT_FOUND);
+					return new DataResponse([
+						'error' => $this->l10n->t('File not found')
+					], Http::STATUS_NOT_FOUND);
 				}
 			} else {
 				return new DataResponse(['error' => 'No valid file argument provided'], Http::STATUS_PRECONDITION_FAILED);
@@ -201,7 +203,7 @@ class ApiService {
 			// ensure file is still present and accessible
 			$file = $this->documentService->getFileForSession($session, $shareToken);
 			$this->documentService->assertNoOutsideConflict($document, $file);
-		} catch (NotFoundException|InvalidPathException $e) {
+		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
@@ -226,7 +228,7 @@ class ApiService {
 	public function save(Session $session, Document $document, int $version = 0, ?string $autosaveContent = null, ?string $documentState = null, bool $force = false, bool $manualSave = false, ?string $shareToken = null): DataResponse {
 		try {
 			$file = $this->documentService->getFileForSession($session, $shareToken);
-		} catch (NotFoundException $e) {
+		} catch (NotPermittedException|NotFoundException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
 				'message' => 'File not found'
