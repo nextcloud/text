@@ -5,8 +5,6 @@ import { createAppConfig } from '@nextcloud/vite-config'
 import { webpackStats } from 'rollup-plugin-webpack-stats'
 import path from 'path'
 
-const ENTRIES_TO_INCLUDE_CSS = ['text', 'public', 'viewer', 'editors']
-
 const config = createAppConfig({
 	text: path.join(__dirname, 'src', 'main.js'),
 	files: path.join(__dirname, 'src', 'files.js'),
@@ -16,9 +14,7 @@ const config = createAppConfig({
 	init: path.join(__dirname, 'src', 'init.js'),
 }, {
 	inlineCSS: {
-		jsAssetsFilterFunction: ({ name }) => {
-			return ENTRIES_TO_INCLUDE_CSS.includes(name)
-		}
+		relativeCSSInjection: true,
 	},
 	config: {
 		resolve: {
@@ -33,6 +29,7 @@ const config = createAppConfig({
 			webpackStats(),
 		],
 		build: {
+			cssCodeSplit: true,
 			rollupOptions: {
 				output: {
 					manualChunks: (id) => {
