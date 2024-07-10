@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Nu s-a putut scrie fișierul pe disc",
     "A PHP extension stopped the file upload" : "O extensie PHP a oprit încărcarea fișierelor",
     "No file uploaded or file size exceeds maximum of %s" : "Niciun fișier pentru încărcare sau s-a depășit maximul de %s",
+    "File not found" : "Fișierul nu a fost găsit",
     "Text" : "Text",
     "Translate" : "Tradu",
     "Use current version" : "Folosește versiunea curentă",

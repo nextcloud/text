@@ -15,7 +15,6 @@
     "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
     "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف بسبب أن التحميل موقوف من قِبَل المُشارَكة",
-    "No permission to access this file." : "لا تمتلك إذونات كافية للوصول إلى هذا الملف.",
     "Readme" : "إقرأني",
     "Text" : "نص",
     "📝 Collaborative document editing" : "📝تحرير المستندات تعاونيّاً Collaborative document editing",
@@ -48,8 +47,6 @@
     "Show link preview" : "عرض معاينة الرابط",
     "Remove link" : "حذف الرابط",
     "guest" : "ضيف ",
-    "Show author colors" : "إعرض ألوان الكُتّاب",
-    "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
     "Active people" : "أشخاص نشطون",
     "Save document" : "إحفَظِ المُستَنَد",
     "Last saved" : "آخر حفظ",
@@ -198,7 +195,10 @@
     "Copied to the clipboard" : "تم النسخ إلى الحافطة",
     "Could not copy to the clipboard" : "تعذّر النسخ إلى الحافظة",
     "Front matter" : "المادة التقديمية front matter",
+    "No permission to access this file." : "لا تمتلك إذونات كافية للوصول إلى هذا الملف.",
     "Pick plain text files" : "إختَر ملفات نصية عادية",
+    "Show author colors" : "إعرض ألوان الكُتّاب",
+    "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
     "Source language" : "اللغة الأصلية",
     "Target language" : "اللغة المطلوبة",
     "e.g. php, javascript, json, ..." : "مثلاً: PHP، و Javascript، و Json، و ...",

@@ -5,6 +5,7 @@ OC.L10N.register(
     "No file was uploaded" : "No se subió ningún archivo ",
     "Missing a temporary folder" : "Falta un directorio temporal",
     "New text file" : "Nuevo archivo de texto",
+    "File not found" : "Archivo no encontrado",
     "Text" : "Texto",
     "Translate" : "Traducir",
     "Reload" : "Recargar",

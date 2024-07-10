@@ -9,6 +9,7 @@
     "A PHP extension stopped the file upload" : "Uma extensão PHP parou o carregamento do ficheiro",
     "No file uploaded or file size exceeds maximum of %s" : "Nenhum ficheiro carregado ou o tamanho do ficheiro excede o máximo de%s",
     "New text file" : "Novo ficheiro de texto",
+    "File not found" : "Ficheiro não encontrado",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edição colaborativa de documento",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Edição colaborativa de documento!**\n\n- **📝 Escrita focada:** Sem distrações, apenas a formatação que necessita.\n- **🙋 Trabalhe conjuntamente:** Partilhe e colabore com amigos e colegas, independentemente deles usarem o Nextcloud ou não!\n- **💾 Formato aberto:** Os ficheiros são guardados como [Markdown](https://en.wikipedia.org/wiki/Markdown), por forma a que os possa editar em qualquer outra aplicação de edição de texto.\n- **✊ Base sólida:** Nós usamos [🐈 tiptap](https://tiptap.scrumpy.io) que é baseado em [🦉 ProseMirror](https://prosemirror.net) – um enorme obrigado a eles!",
@@ -20,8 +21,6 @@
     "Guest" : "Convidado",
     "Save guest name" : "Guardar o nome do convidado",
     "guest" : "convidado",
-    "Show author colors" : "Mostrar cores do autor ",
-    "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
     "Offline" : "Offline",
     "Saving …" : "A guardar...",
     "Saved" : "Guardado",
@@ -58,6 +57,8 @@
     "Warning" : "Aviso",
     "Control" : "Controle",
     "Formatting" : "Formação ",
-    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações..."
+    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
+    "Show author colors" : "Mostrar cores do autor ",
+    "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. "
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
