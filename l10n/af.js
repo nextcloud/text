@@ -17,8 +17,6 @@ OC.L10N.register(
     "Reconnect" : "Herverbind",
     "Guest" : "Gas",
     "guest" : "gas",
-    "Show author colors" : "Toon outeurkleure",
-    "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het.",
     "Offline" : "Vanlyn",
     "Saving …" : "Bewaar tans…",
     "Saved" : "Bewaar",
@@ -41,6 +39,8 @@ OC.L10N.register(
     "Heading 5" : "Kop 5",
     "Info" : "Inligting",
     "Success" : "Sukses",
-    "Warning" : "Waarskuwing"
+    "Warning" : "Waarskuwing",
+    "Show author colors" : "Toon outeurkleure",
+    "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het."
 },
 "nplurals=2; plural=(n != 1);");

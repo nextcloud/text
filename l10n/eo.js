@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "PHP-modulo haltigis la dosieralŝuton",
     "No file uploaded or file size exceeds maximum of %s" : "Neniu dosiero alŝutita, aŭ dosiergrando transpasas la maksimumon %s",
     "New text file" : "Nova tekstodosiero",
+    "File not found" : "Netrovita dosiero",
     "Text" : "Teksto",
     "📝 Collaborative document editing" : "📝 Kunlabora dokumentmodifado",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Kunlabora dokumentmodifado!**\n\n- **📝 Enfokusigita skribado:** Neniu distraĵo, nur la iloj kiujn vi bezonas.\n- **🙋 Kune labori:** Kunhavigi kaj kunlabori kun viaj amikoj kaj kolegoj, ĉu ili uzas Nextcloud-on aŭ ne!\n- **💾 Malfermita dosierformo:** Dosieroj estas en [Markdown](https://en.wikipedia.org/wiki/Markdown)-formo, vi do povas modifi ilin en iu ajn tekstaplikaĵo.\n- **✊ Solida fundamento:** Ni uzas la redaktilon [🐈 tiptap](https://tiptap.scrumpy.io), kiuj devenas de [🦉 ProseMirror](https://prosemirror.net) – dankegon al ili!",

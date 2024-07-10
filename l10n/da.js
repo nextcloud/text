@@ -13,6 +13,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud -tekst",
     "text document" : "tekst dokument",
     "New text file" : "Ny tekst fil",
+    "File not found" : "Filen blev ikke fundet",
     "Readme" : "Læs mig",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Kollaborativ dokumentredigering",
@@ -29,8 +30,6 @@ OC.L10N.register(
     "Save guest name" : "Gem gæstens navn",
     "Remove link" : "Fjern link",
     "guest" : "Gæst",
-    "Show author colors" : "Vis forfatterens farver",
-    "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Offline" : "Offline",
     "Saving …" : "Gemmer ...",
     "Saved" : "Gemt",
@@ -87,6 +86,8 @@ OC.L10N.register(
     "Command" : "Kommando",
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
+    "Show author colors" : "Vis forfatterens farver",
+    "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Show rich workspaces" : "Vis rige arbejdsområder"
 },
 "nplurals=2; plural=(n != 1);");

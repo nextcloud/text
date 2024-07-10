@@ -13,6 +13,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Testu Nextcloud",
     "text document" : "archìviu de testu",
     "New text file" : "Archìviu de testu nou",
+    "File not found" : "Archìviu no agatadu",
     "Readme" : "Leghe·mi",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "📝 Modìfica de archìvios collaborativa",
@@ -27,8 +28,6 @@ OC.L10N.register(
     "Guest" : "Persone invitada",
     "Save guest name" : "Sarva nùmene de sa persone invitada",
     "guest" : "persone invitada",
-    "Show author colors" : "Mustra is colores de sa persone autora",
-    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
     "Offline" : "Fora de lìnia",
     "Saving …" : "Sarvende ...",
     "Saved" : "Sarvadu",
@@ -75,6 +74,8 @@ OC.L10N.register(
     "Control" : "Controllu",
     "Formatting" : "Formatatzione",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
+    "Show author colors" : "Mustra is colores de sa persone autora",
+    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
     "Show rich workspaces" : "Mustra àreas de traballu avantzadas"
 },
 "nplurals=2; plural=(n != 1);");

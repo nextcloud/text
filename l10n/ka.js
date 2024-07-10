@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "A PHP extension stopped the file upload",
     "No file uploaded or file size exceeds maximum of %s" : "No file uploaded or file size exceeds maximum of %s",
     "New text file" : "New text file",
+    "File not found" : "File not found",
     "Text" : "Text",
     "Translate" : "Translate",
     "Delete task" : "Delete task",

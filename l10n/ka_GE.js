@@ -6,6 +6,7 @@ OC.L10N.register(
     "No file was uploaded" : "ფაილი არ აიტვირთა",
     "Missing a temporary folder" : "დროებითი დირექტორია არ არსებობს",
     "New text file" : "ახალი ტექსტ ფაილი",
+    "File not found" : "ფაილი ვერ იქნა ნაპოვნი",
     "Text" : "ტექსტი",
     "Translate" : "გადათარგმნეთ",
     "Guest" : "სტუმარი",
