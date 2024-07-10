@@ -21,6 +21,9 @@ const config = createAppConfig({
 		}
 	},
 	config: {
+		resolve: {
+			dedupe: ['vue'],
+		},
 		css: {
 			modules: {
 				localsConvention: 'camelCase',
