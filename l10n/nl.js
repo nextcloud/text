@@ -13,6 +13,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Nextcloud Tekst",
     "text document" : "tekst document",
     "New text file" : "Nieuw tekstbestand",
+    "File not found" : "Bestand niet gevonden",
     "Readme" : "Leesmij",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Gezamenlijke documentbewerking",
@@ -29,8 +30,6 @@ OC.L10N.register(
     "Guest" : "Gast",
     "Save guest name" : "Bewaar gast naam",
     "guest" : "gast",
-    "Show author colors" : "Tonen auteurskleuren",
-    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
     "Active people" : "Actieve personen",
     "Offline" : "Offline",
     "Saving …" : "Opslaan ...",
@@ -116,6 +115,8 @@ OC.L10N.register(
     "Control" : "Controle",
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
+    "Show author colors" : "Tonen auteurskleuren",
+    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
     "Show rich workspaces" : "Toon rijke werkplekken"
 },
 "nplurals=2; plural=(n != 1);");

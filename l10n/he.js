@@ -13,6 +13,7 @@ OC.L10N.register(
     "Nextcloud Text" : "טקסט Nextcloud",
     "text document" : "מסמך טקסט",
     "New text file" : "קובץ טקסט חדש",
+    "File not found" : "קובץ לא נמצא",
     "Readme" : "הסבר",
     "Text" : "טקסט",
     "📝 Collaborative document editing" : "📝 עריכת מסמכים שיתופית",

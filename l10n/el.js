@@ -13,6 +13,7 @@ OC.L10N.register(
     "Nextcloud Text" : "Κειμενογράφος Nextcloud",
     "text document" : "έγγραφο κειμένου",
     "New text file" : "Νέο αρχείο κειμένου",
+    "File not found" : "Δε βρέθηκε το αρχείο",
     "Readme" : "Γενικές πληροφορίες",
     "Text" : "Κείμενο",
     "📝 Collaborative document editing" : "📝 Συνεργατική επεξεργασία εγγράφων",
@@ -29,8 +30,6 @@ OC.L10N.register(
     "Save guest name" : "Αποθήκευση ονόματος επισκέπτη",
     "Remove link" : "Αφαίρεση συνδέσμου",
     "guest" : "Επισκέπτης",
-    "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
-    "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
     "Offline" : "Εκτός σύνδεσης",
     "Saving …" : "Γίνεται αποθήκευση …",
     "Saved" : "Αποθηκεύτηκε",
@@ -105,6 +104,8 @@ OC.L10N.register(
     "Control" : "Έλεγχος",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
+    "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
+    "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
     "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας"
 },
 "nplurals=2; plural=(n != 1);");

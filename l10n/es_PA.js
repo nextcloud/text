@@ -6,6 +6,7 @@ OC.L10N.register(
     "No file was uploaded" : "No se cargó el archivo",
     "Missing a temporary folder" : "Falta una carpeta temporal",
     "New text file" : "Nuevo archivo de texto",
+    "File not found" : "Archivo no encontrado",
     "Text" : "Texto",
     "Translate" : "Traducir",
     "Guest" : "Invitado",

@@ -9,6 +9,7 @@
     "A PHP extension stopped the file upload" : "Ekstensi PHP menghentikan proses unggah berkas",
     "No file uploaded or file size exceeds maximum of %s" : "Gagal unggah berkas atau ukuran melampaui batas maksimum %s",
     "New text file" : "Berkas teks baru",
+    "File not found" : "Berkas tidak ditemukan",
     "Text" : "Teks",
     "Translate" : "Terjemahkan",
     "Reload" : "Muat ulang",

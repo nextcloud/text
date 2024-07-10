@@ -14,6 +14,7 @@ OC.L10N.register(
     "text document" : "tekstinį dokumentą",
     "New text file" : "Naujas tekstinis failas",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
+    "File not found" : "Failas nerastas",
     "Readme" : "Perskaityti",
     "Text" : "Tekstas",
     "📝 Collaborative document editing" : "📝 Dokumentų taisymas bendradarbiaujant",
@@ -32,8 +33,6 @@ OC.L10N.register(
     "Insert an attachment" : "Įterpti priedą",
     "Remove link" : "Šalinti nuorodą",
     "guest" : "svečias",
-    "Show author colors" : "Rodyti autoriaus spalvas",
-    "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
     "Last saved" : "Paskutinį kartą įrašyta",
     "Offline" : "Atsijungęs",
     "Saving …" : "Įrašoma…",
@@ -124,6 +123,8 @@ OC.L10N.register(
     "Control" : "Valdoma",
     "Formatting" : "Formatavimas",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
+    "Show author colors" : "Rodyti autoriaus spalvas",
+    "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
     "Show rich workspaces" : "Rodyti raiškiąsias darbo sritis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

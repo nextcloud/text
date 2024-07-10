@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "File not found" : "Fajl nije nađen",
     "Translate" : "Prevedi",
     "Reload" : "Ponovo učitaj",
     "Guest" : "Gost",
