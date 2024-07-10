@@ -32,6 +32,7 @@ class LoadViewerListener implements IEventListener {
 			return;
 		}
 		Util::addScript('text', 'text-viewer', 'viewer');
+		Util::addStyle('text', 'text-viewer');
 		$this->eventDispatcher->dispatchTyped(new RenderReferenceEvent());
 
 		$this->initialStateProvider->provideState();
