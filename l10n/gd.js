@@ -9,6 +9,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Tha pasgan sealach a dhìth",
     "Could not write file to disk" : "Cha b’ urrainn dhuinn am faidhle a sgrìobhadh dhan diosg",
     "A PHP extension stopped the file upload" : "Chur leudachan PHP stad air luchdadh suas an fhaidhle",
+    "File not found" : "Cha deach am faidhle a lorg",
     "Translate" : "Eadar-theangaich",
     "Link" : "Ceangal",
     "Undo" : "Neo-dhèan",

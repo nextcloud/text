@@ -9,6 +9,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "โฟลเดอร์ชั่วคราวขาดหาย",
     "Could not write file to disk" : "ไม่สามารถเขียนไฟล์ลงดิสก์",
     "A PHP extension stopped the file upload" : "ส่วนขยาย PHP ได้หยุดการอัปโหลดไฟล์",
+    "File not found" : "ไม่พบไฟล์",
     "Text" : "ข้อความ",
     "Translate" : "แปลภาษา",
     "Reload" : "โหลดใหม่",

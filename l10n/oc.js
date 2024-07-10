@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Una extension PHP a arrestat lo mandadís de fichièr",
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "document tèxt",
+    "File not found" : "Fichièr pas trobat",
     "Readme" : "Readme",
     "Text" : "Tèxt",
     "📝 Collaborative document editing" : "📝 Edicion collaborativa de document",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Save guest name" : "Enregistrar lo nom de convidat",
     "Insert an attachment" : "Inserir una pèça junta",
     "guest" : "convidat",
-    "Show author colors" : "Afichar las colors dels utilizaires",
     "Last saved" : "Darrièra salvagarda",
     "Offline" : "Fòra linha",
     "Saving …" : "Enregistrament...",
@@ -67,6 +67,7 @@ OC.L10N.register(
     "Table" : "Tablèu",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…"
+    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",
+    "Show author colors" : "Afichar las colors dels utilizaires"
 },
 "nplurals=2; plural=(n > 1);");

@@ -11,6 +11,7 @@
     "Nextcloud Text" : "Nextcloud Text",
     "text document" : "tekstni dokument",
     "New text file" : "Nova tekstna datoteka",
+    "File not found" : "Datoteka nije pronađena",
     "Readme" : "Informacije",
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Zajedničko obrađivanje dokumenata",
@@ -26,8 +27,6 @@
     "Guest" : "Gost",
     "Save guest name" : "Spremi ime gosta",
     "guest" : "gost",
-    "Show author colors" : "Prikaži boje autora",
-    "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
     "Offline" : "Izvanmrežno",
     "Saving …" : "Spremanje…",
     "Saved" : "Spremljeno",
@@ -76,6 +75,8 @@
     "Control" : "Kontrola",
     "Formatting" : "Oblikovanje",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…",
+    "Show author colors" : "Prikaži boje autora",
+    "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
     "Show rich workspaces" : "Prikaži bogate radne okoline"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }
