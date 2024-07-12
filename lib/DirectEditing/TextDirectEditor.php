@@ -144,6 +144,7 @@ class TextDirectEditor implements IEditor {
 			$this->initialStateProvider->provideDirectEditToken($token->getToken());
 			$this->initialStateProvider->provideState();
 			Util::addScript('text', 'text-text');
+			Util::addStyle('text', 'text-text');
 			return new TemplateResponse('text', 'main', [], 'base');
 		} catch (InvalidPathException $e) {
 		} catch (NotFoundException $e) {

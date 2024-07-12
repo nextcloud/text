@@ -30,6 +30,9 @@ class FilesLoadAdditionalScriptsListener implements IEventListener {
 
 		\OCP\Util::addInitScript('text', 'text-init');
 		\OCP\Util::addScript('text', 'text-files');
+		// Add associated styles
+		\OCP\Util::addStyle('text', 'text-init');
+		\OCP\Util::addStyle('text', 'text-files');
 
 		$this->initialStateProvider->provideState();
 	}
