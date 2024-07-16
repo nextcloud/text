@@ -111,6 +111,7 @@ describe('Sync', () => {
 
 	it('recovers from a lost and closed connection', () => {
 		let reconnect = false
+		// block all requests until the session is closed and reopened
 		cy.intercept('**/apps/text/session/*/*', (req) => {
 			if (req.url.includes('close') || req.url.includes('create') || reconnect) {
 				req.continue()
@@ -124,6 +125,11 @@ describe('Sync', () => {
 		cy.wait('@sessionRequests', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
 			.should('contain', 'Document could not be loaded.')
+
+		// Reconnect button works - it closes and reopens the session
+		cy.get('#editor-container .document-status a.button')
+			.contains('Reconnect')
+			.click()
 
 		cy.wait('@syncAfterRecovery', { timeout: 60000 })
 
