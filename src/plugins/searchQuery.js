@@ -27,17 +27,16 @@ export function searchQuery() {
 				const trMeta = tr.getMeta('searchQuery')
 				const isQuery = trMeta?.query !== undefined
 
-				if (isQuery || trMeta?.nextMatch) {
+				if (isQuery || trMeta?.match) {
 					const newState = {
 						query: trMeta.query ?? oldState.query,
 						matchAll: trMeta.matchAll ?? oldState.matchAll,
-						index: oldState.index ?? 0,
+						index: oldState.index,
 					}
 
-					if (trMeta?.nextMatch) {
-						newState.index = oldState.index + 1
+					if (trMeta?.match) {
 						newState.matchAll = false
-						newState.nextMatch = false
+						newState.index = (oldState.index + trMeta.match)
 					}
 
 					return newState
@@ -54,5 +53,9 @@ export const setSearchQuery = (query, matchAll) => ({ tr }) => {
 }
 
 export const nextMatch = () => ({ tr }) => {
-	return tr.setMeta('searchQuery', { nextMatch: true })
+	return tr.setMeta('searchQuery', { match: 1 })
+}
+
+export const previousMatch = () => ({ tr }) => {
+	return tr.setMeta('searchQuery', { match: -1 })
 }

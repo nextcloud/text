@@ -40,21 +40,6 @@ export default function searchDecorations() {
 				} else {
 					return value
 				}
-
-				/* const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
-				const { query: newQuery } = searchQueryPluginKey.getState(newState)
-
-				if (tr.docChanged || (newQuery !== oldQuery)) {
-					const searchResults = runSearch(tr.doc, newQuery)
-
-					emit('text:editor:search-start', {
-						matches: (newQuery === '' ? null : searchResults),
-					})
-
-					return highlightResults(tr.doc, searchResults)
-				} else {
-					return value
-				} */
 			},
 		},
 		props: {
@@ -105,7 +90,8 @@ export function runSearch(doc, query, options) {
 	if (opts.matchAll) {
 		return results
 	} else {
-		return [results[opts.index % results.length] ?? results]
+		const index = normalizeIndex(opts.index, results.length)
+		return [results[index] ?? results]
 	}
 }
 
@@ -133,4 +119,18 @@ export function highlightResults(doc, results) {
 	})
 
 	return DecorationSet.create(doc, decorations)
+}
+
+/**
+ * Normalized the search index so the array can be accessed properly
+ *
+ * @param {number} index - Index of the match
+ * @param {number} length - Length of the results array
+ */
+function normalizeIndex(index, length) {
+	if (index < 0) {
+		return (index % length + length) % length
+	} else {
+		return index % length
+	}
 }

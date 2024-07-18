@@ -6,7 +6,12 @@
 import { Extension } from '@tiptap/core'
 import { subscribe } from '@nextcloud/event-bus'
 import searchDecorations from '../plugins/searchDecorations.js'
-import { setSearchQuery, nextMatch, searchQuery } from '../plugins/searchQuery.js'
+import {
+	setSearchQuery,
+	nextMatch,
+	previousMatch,
+	searchQuery,
+} from '../plugins/searchQuery.js'
 
 export default Extension.create({
 	name: 'Search',
@@ -19,12 +24,17 @@ export default Extension.create({
 		subscribe('text:editor:search-next', () => {
 			this.editor.commands.nextMatch()
 		})
+
+		subscribe('text:editor:search-previous', () => {
+			this.editor.commands.previousMatch()
+		})
 	},
 
 	addCommands() {
 		return {
 			setSearchQuery,
 			nextMatch,
+			previousMatch,
 		}
 	},
 
