@@ -7,7 +7,7 @@ Files: .gitattributes .editorconfig babel.config.js .php-cs-fixer.dist.php packa
 Copyright: none
 License: CC0-1.0
 
-Files: l10n/*.js l10n/*.json js/*.mjs.map js/*.mjs css/password_policy-settings.css
+Files: l10n/*.js l10n/*.json js/*.mjs.map js/*.mjs css/*.css
 Copyright: 2019-2024 Nextcloud GmbH and Nextcloud contributors
 License: AGPL-3.0-or-later
 
