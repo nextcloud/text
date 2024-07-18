@@ -5,7 +5,7 @@
 import { searchQuery } from '../../plugins/searchQuery.js'
 import { Plugin, EditorState } from '@tiptap/pm/state'
 import { schema } from '@tiptap/pm/schema-basic'
-import { setSearchQuery } from '../../plugins/searchQuery.js'
+import { setSearchQuery, nextMatch } from '../../plugins/searchQuery.js'
 
 describe('searchQuery plugin', () => {
 	it('can set up plugin and state', () => {
@@ -15,19 +15,33 @@ describe('searchQuery plugin', () => {
 		expect(state.plugins).toContain(plugin)
 	})
 
-	it('has default search query state of empty string', () => {
+	it('has default search query state', () => {
 		const { plugin, state } = pluginSetup()
+		const defaultState = {
+			query: '',
+			matchAll: true,
+			index: 0,
+		}
 
-		expect(plugin.getState(state)).toEqual({ query: '' })
+		expect(plugin.getState(state)).toEqual(defaultState)
 	})
 
 	it('can accept new search query state', () => {
 		const { plugin, state } = pluginSetup()
 
-		const tr = setSearchQuery('lorem')(state)
-		const newState = state.apply(tr)
+		const setSearch = setSearchQuery('lorem')(state)
+		let newState = state.apply(setSearch)
 
-		expect(plugin.getState(newState)).toEqual({ query: 'lorem' })
+		expect(plugin.getState(newState)).toEqual({
+			query: 'lorem',
+			matchAll: true,
+			index: 0,
+		})
+	})
+
+	it('can accept next match state', () => {
+		// TODO
+		fail()
 	})
 })
 

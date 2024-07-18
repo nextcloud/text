@@ -22,7 +22,6 @@ export function searchQuery() {
 				query: '',
 				matchAll: true,
 				index: 0,
-				nextMatch: false,
 			}),
 			apply: (tr, oldState) => {
 				const trMeta = tr.getMeta('searchQuery')
@@ -44,19 +43,6 @@ export function searchQuery() {
 				} else {
 					return oldState
 				}
-
-				/* const searchQuery = tr.getMeta('searchQuery')
-				const index = tr.getMeta('index')
-
-				if (searchQuery !== undefined) {
-					return {
-						query: searchQuery,
-						all,
-						index,
-					}
-				} else {
-					return oldState
-				} */
 			},
 		},
 	})
