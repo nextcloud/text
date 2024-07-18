@@ -18,10 +18,34 @@ export function searchQuery() {
 	return new Plugin({
 		key: searchQueryPluginKey,
 		state: {
-			init: () => ({ query: '', all: true, index: 0 }),
+			init: () => ({
+				query: '',
+				matchAll: true,
+				index: 0,
+				nextMatch: false,
+			}),
 			apply: (tr, oldState) => {
-				const searchQuery = tr.getMeta('searchQuery')
-				const all = tr.getMeta('all')
+				const trMeta = tr.getMeta('searchQuery')
+				const isQuery = trMeta?.query !== undefined
+
+				if (isQuery || trMeta?.nextMatch) {
+					const newState = {
+						query: trMeta.query ?? oldState.query,
+						matchAll: trMeta.matchAll ?? oldState.matchAll,
+						index: oldState.index ?? 0,
+					}
+
+					if (trMeta?.nextMatch) {
+						newState.index = oldState.index + 1
+						newState.nextSearch = false
+					}
+
+					return newState
+				} else {
+					return oldState
+				}
+
+				/* const searchQuery = tr.getMeta('searchQuery')
 				const index = tr.getMeta('index')
 
 				if (searchQuery !== undefined) {
@@ -32,15 +56,16 @@ export function searchQuery() {
 					}
 				} else {
 					return oldState
-				}
+				} */
 			},
 		},
 	})
 }
 
-export const setSearchQuery = (query, all, index) => ({ tr }) => {
-	return tr
-		.setMeta('searchQuery', query)
-		.setMeta('all', all)
-		.setMeta('index', index)
+export const setSearchQuery = (query, matchAll) => ({ tr }) => {
+	return tr.setMeta('searchQuery', { query, matchAll })
+}
+
+export const nextMatch = () => ({ tr }) => {
+	return tr.setMeta('searchQuery', { nextMatch: true })
 }

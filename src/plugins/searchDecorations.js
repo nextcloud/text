@@ -23,7 +23,25 @@ export default function searchDecorations() {
 				return highlightResults(doc, searchResults)
 			},
 			apply(tr, value, oldState, newState) {
-				const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
+				const oldSearch = searchQueryPluginKey.getState(oldState)
+				const newSearch = searchQueryPluginKey.getState(newState)
+
+				if (tr.docChanged || (newSearch.query !== oldSearch.query) || (newSearch.index !== oldSearch.index)) {
+					const searchResults = runSearch(tr.doc, newSearch.query, {
+						matchAll: newSearch.matchAll,
+						index: newSearch.index,
+					})
+
+					emit('text:editor:search-start', {
+						matches: (newSearch.query === '' ? null : searchResults),
+					})
+
+					return highlightResults(tr.doc, searchResults)
+				} else {
+					return value
+				}
+
+				/* const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
 				const { query: newQuery } = searchQueryPluginKey.getState(newState)
 
 				if (tr.docChanged || (newQuery !== oldQuery)) {
@@ -36,7 +54,7 @@ export default function searchDecorations() {
 					return highlightResults(tr.doc, searchResults)
 				} else {
 					return value
-				}
+				} */
 			},
 		},
 		props: {
@@ -52,10 +70,17 @@ export default function searchDecorations() {
  *
  * @param {Node} doc - Editor document
  * @param {string} query - Search query
+ * @param {Array} options - Search options (matchAll, index)
  *
  * @return {Array}
  */
-export function runSearch(doc, query) {
+export function runSearch(doc, query, options) {
+	const opts = {
+		matchAll: true,
+		index: 0,
+		...options,
+	}
+
 	const results = []
 
 	if (!query || query === '') {
@@ -77,7 +102,11 @@ export function runSearch(doc, query) {
 		}
 	})
 
-	return results
+	if (opts.matchAll) {
+		return results
+	} else {
+		return [results[opts.index % results.length] ?? results]
+	}
 }
 
 /**
