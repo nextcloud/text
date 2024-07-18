@@ -36,7 +36,8 @@ export function searchQuery() {
 
 					if (trMeta?.nextMatch) {
 						newState.index = oldState.index + 1
-						newState.nextSearch = false
+						newState.matchAll = false
+						newState.nextMatch = false
 					}
 
 					return newState

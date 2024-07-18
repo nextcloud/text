@@ -40,8 +40,27 @@ describe('searchQuery plugin', () => {
 	})
 
 	it('can accept next match state', () => {
-		// TODO
-		fail()
+		const { plugin, state } = pluginSetup()
+
+		const setSearch = setSearchQuery('lorem')(state)
+		const nextSearch = nextMatch()(state)
+
+		let newState = state.apply(setSearch)
+
+		expect(plugin.getState(newState)).toEqual({
+			query: 'lorem',
+			matchAll: true,
+			index: 0,
+		})
+
+		newState = newState.apply(nextSearch)
+
+		expect(plugin.getState(newState)).toEqual({
+			query: 'lorem',   // search query should be the same
+			matchAll: false,  // matchAll is set to false
+			index: 1,         // index is incremented to the next match
+			nextMatch: false, // is set back to false after increment
+		})
 	})
 })
 
