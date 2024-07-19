@@ -19,24 +19,27 @@ export default function searchDecorations() {
 		key: new PluginKey('searchDecorations'),
 		state: {
 			init(_, { doc }) {
-				const searchResults = runSearch(doc, '')
-				return highlightResults(doc, searchResults)
+				const search = runSearch(doc, '')
+				return highlightResults(doc, search.results)
 			},
 			apply(tr, value, oldState, newState) {
 				const oldSearch = searchQueryPluginKey.getState(oldState)
 				const newSearch = searchQueryPluginKey.getState(newState)
 
-				if (tr.docChanged || (newSearch.query !== oldSearch.query) || (newSearch.index !== oldSearch.index)) {
-					const searchResults = runSearch(tr.doc, newSearch.query, {
+				const queryChanged = (newSearch.query !== oldSearch.query)
+				const indexChanged = (newSearch.index !== oldSearch.index)
+
+				if (tr.docChanged || queryChanged || indexChanged) {
+					const { results, total } = runSearch(tr.doc, newSearch.query, {
 						matchAll: newSearch.matchAll,
 						index: newSearch.index,
 					})
 
-					emit('text:editor:search-start', {
-						matches: (newSearch.query === '' ? null : searchResults),
+					emit('text:editor:search-results', {
+						results: (newSearch.query === '' ? null : total),
 					})
 
-					return highlightResults(tr.doc, searchResults)
+					return highlightResults(tr.doc, results)
 				} else {
 					return value
 				}
@@ -69,7 +72,10 @@ export function runSearch(doc, query, options) {
 	const results = []
 
 	if (!query || query === '') {
-		return results
+		return {
+			results,
+			total: results.length,
+		}
 	}
 
 	doc.descendants((node, offset, _position) => {
@@ -88,10 +94,17 @@ export function runSearch(doc, query, options) {
 	})
 
 	if (opts.matchAll) {
-		return results
+		return {
+			results,
+			total: results.length,
+		}
 	} else {
 		const index = normalizeIndex(opts.index, results.length)
-		return [results[index] ?? results]
+
+		return {
+			results: [results[index]],
+			total: results.length,
+		}
 	}
 }
 
@@ -122,7 +135,7 @@ export function highlightResults(doc, results) {
 }
 
 /**
- * Normalized the search index so the array can be accessed properly
+ * Normalize the search index so the array can be accessed properly
  *
  * @param {number} index - Index of the match
  * @param {number} length - Length of the results array
