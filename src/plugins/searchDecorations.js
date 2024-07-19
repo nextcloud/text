@@ -28,8 +28,9 @@ export default function searchDecorations() {
 
 				const queryChanged = (newSearch.query !== oldSearch.query)
 				const indexChanged = (newSearch.index !== oldSearch.index)
+				const matchAllChanged = (newSearch.matchAll !== oldSearch.matchAll)
 
-				if (tr.docChanged || queryChanged || indexChanged) {
+				if (tr.docChanged || queryChanged || indexChanged || matchAllChanged) {
 					const { results, total } = runSearch(tr.doc, newSearch.query, {
 						matchAll: newSearch.matchAll,
 						index: newSearch.index,
@@ -64,9 +65,8 @@ export default function searchDecorations() {
  */
 export function runSearch(doc, query, options) {
 	const opts = {
-		matchAll: true,
-		index: 0,
-		...options,
+		matchAll: options?.matchAll ?? true,
+		index: options?.index ?? 0,
 	}
 
 	const results = []
@@ -102,7 +102,7 @@ export function runSearch(doc, query, options) {
 		const index = normalizeIndex(opts.index, results.length)
 
 		return {
-			results: [results[index]],
+			results: [results[index] ?? results],
 			total: results.length,
 		}
 	}
@@ -141,6 +141,10 @@ export function highlightResults(doc, results) {
  * @param {number} length - Length of the results array
  */
 function normalizeIndex(index, length) {
+	if (length < 1) {
+		return 0
+	}
+
 	if (index < 0) {
 		return (index % length + length) % length
 	} else {
