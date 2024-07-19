@@ -5,6 +5,7 @@
 import { logger } from '../helpers/logger.js'
 import { SyncService, ERROR_TYPE } from './SyncService.js'
 import { Connection } from './SessionApi.js'
+import getNotifyBus from './NotifyService.js'
 
 /**
  * Minimum inverval to refetch the document changes
@@ -39,7 +40,9 @@ const FETCH_INTERVAL_READ_ONLY = 30000
  *
  * @type {number} time in ms
  */
-const FETCH_INTERVAL_INVISIBLE = 60000
+const FETCH_INTERVAL_INVISIBLE = 30000
+
+const FETCH_INTERVAL_NOTIFY = 30000
 
 /* Maximum number of retries for fetching before emitting a connection error */
 const MAX_RETRY_FETCH_COUNT = 5
@@ -62,6 +65,7 @@ class PollingBackend {
 	#fetchRetryCounter
 	#pollActive
 	#initialLoadingFinished
+	#notifyPushBus
 
 	constructor(syncService, connection) {
 		this.#syncService = syncService
@@ -79,6 +83,7 @@ class PollingBackend {
 		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
 		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
+		this.#notifyPushBus = getNotifyBus()
 	}
 
 	/**
@@ -108,6 +113,13 @@ class PollingBackend {
 		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this.#lastPoll = Date.now()
 		this.#pollActive = false
+	}
+
+	handleNotifyPush({ messageType, messageBody }) {
+		if (messageBody.documentId !== this.#connection.document.id) {
+			return
+		}
+		this._handleResponse({ data: messageBody.response })
 	}
 
 	_handleResponse({ data }) {
@@ -189,15 +201,26 @@ class PollingBackend {
 	}
 
 	resetRefetchTimer() {
+		if (this.#notifyPushBus && this.#initialLoadingFinished) {
+			this.#fetchInterval = FETCH_INTERVAL_NOTIFY
+			return
+		}
 		this.#fetchInterval = FETCH_INTERVAL
-
 	}
 
 	increaseRefetchTimer() {
+		if (this.#notifyPushBus && this.#initialLoadingFinished) {
+			this.#fetchInterval = FETCH_INTERVAL_NOTIFY
+			return
+		}
 		this.#fetchInterval = Math.min(this.#fetchInterval * 2, FETCH_INTERVAL_MAX)
 	}
 
 	maximumRefetchTimer() {
+		if (this.#notifyPushBus && this.#initialLoadingFinished) {
+			this.#fetchInterval = FETCH_INTERVAL_NOTIFY
+			return
+		}
 		this.#fetchInterval = FETCH_INTERVAL_SINGLE_EDITOR
 	}
 

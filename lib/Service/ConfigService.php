@@ -39,4 +39,9 @@ class ConfigService {
 		}
 		return $this->config->getUserValue($userId, Application::APP_NAME, 'workspace_enabled', '1') === '1';
 	}
+
+	public function isNotifyPushSyncEnabled(): bool {
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
+
+	}
 }
