@@ -188,7 +188,7 @@ export const FilesWorkspaceHeader = new Header({
 	order: 10,
 
 	enabled(folder, view) {
-		return view.id === 'files'
+		return view.id === 'files' || view.id === 'favorites'
 	},
 
 	async render(el, folder, view) {
