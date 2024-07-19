@@ -76,6 +76,10 @@ license: GPL-3.0-or-later
 version: 1.3.1
 license: GPL-3.0-or-later
 
+@nextcloud/notify_push
+version: 1.3.0
+license: AGPL-3.0-or-later
+
 @nextcloud/paths
 version: 2.1.0
 license: GPL-3.0-or-later
@@ -445,7 +449,7 @@ version: 0.2.7
 license: MIT
 
 highlight.js
-version: 11.9.0
+version: 11.10.0
 license: BSD-3-Clause
 
 ical.js
