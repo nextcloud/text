@@ -128,7 +128,7 @@ describe('Open test.md in viewer', function() {
 
 	it('Share a file with download disabled shows an error', function() {
 		cy.shareFileToUser('test.md', recipient, {
-			attributes: '[{"scope":"permissions","key":"download","enabled":false}]',
+			attributes: '[{"scope":"permissions","key":"download","value":false}]',
 		}).then(() => {
 			cy.login(recipient)
 			cy.visit('/apps/files')
