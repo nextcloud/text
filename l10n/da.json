@@ -21,6 +21,7 @@
     "Use current version" : "Brug aktuelle version",
     "Use the saved version" : "Brug den gemte version",
     "Reload" : "Genindlæs",
+    "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet er blevet ændret uden for editoren. Ændringerne kan ikke anvendes.",
     "Reconnect" : "Tilslut igen",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter. Klik for at fortsætte med at redigere",
     "Edit guest name" : "Rediger gæstens navn",
