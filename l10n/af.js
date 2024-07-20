@@ -9,6 +9,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Ontbrekende tydelike gids",
     "A PHP extension stopped the file upload" : "’n PHP-uitbreiding het die oplaai gestaak",
     "text document" : "teksdokument",
+    "File not found" : "Lêer nie gevind nie",
     "Readme" : "Leesmy",
     "Text" : "Teks",
     "📝 Collaborative document editing" : "📝 Samewerkende dokumentredigering",

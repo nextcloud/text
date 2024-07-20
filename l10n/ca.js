@@ -17,6 +17,7 @@ OC.L10N.register(
     "Editing session has expired. Please reload the page." : "La sessió d'edició ha caducat. Torneu a carregar la pàgina.",
     "{user} has mentioned you in the text document {node}" : "{user} us ha esmentat en el document de text {node}",
     "This file cannot be displayed as download is disabled by the share" : "Aquest fitxer no es pot mostrar perquè la baixada està inhabilitada per l'ús compartit",
+    "File not found" : "No s'ha trobat el fitxer",
     "Readme" : "Llegeix-me",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Edició col·laborativa de documents",
