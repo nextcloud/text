@@ -16,6 +16,7 @@ OC.L10N.register(
     "Create new text file" : "Vytvořit nový textový soubor",
     "{user} has mentioned you in the text document {node}" : "{user} vás zmínil(a) v textovém dokumentu {node}",
     "This file cannot be displayed as download is disabled by the share" : "Tento soubor není možné zobrazit protože stažení není pro toto sdílení povoleno",
+    "File not found" : "Soubor nenalezen",
     "Readme" : "Čtimne",
     "Text" : "Text",
     "📝 Collaborative document editing" : "📝 Upravování dokumentů vícero uživateli naráz",
