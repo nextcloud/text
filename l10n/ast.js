@@ -17,6 +17,7 @@ OC.L10N.register(
     "Editing session has expired. Please reload the page." : "La sesión d'edición caducó. Volvi cargar la páxina.",
     "{user} has mentioned you in the text document {node}" : "{user} mentóte nel documentu de testu «{node}»",
     "This file cannot be displayed as download is disabled by the share" : "Esti ficheru nun se pue amosar darréu que l'elementu compartíu desactivó la descarga",
+    "File not found" : "Nun s'atopó'l ficheru",
     "Readme" : "Lleime",
     "Text" : "Testu",
     "📝 Collaborative document editing" : "📝 Edición collaborativa de documentos",
