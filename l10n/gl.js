@@ -199,7 +199,7 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Non foi posíbel copiar ao portapapeis",
     "Front matter" : "Preliminar ",
     "No permission to access this file." : "Non ten permiso para acceder a este ficheiro.",
-    "Pick plain text files" : "Seleccionar ficheiros de texto simple",
+    "Pick plain text files" : "Escoller ficheiros de texto simple",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
     "Source language" : "idioma de orixe",
