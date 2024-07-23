@@ -174,6 +174,7 @@ OC.L10N.register(
     "Option" : "Вариант",
     "Formatting" : "Форматирование",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
+    "Add folder description" : "Добавить описание папки",
     "Front matter" : "Передний план",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
