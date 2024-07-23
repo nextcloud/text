@@ -59,7 +59,6 @@ describe('searchQuery plugin', () => {
 			query: 'lorem',   // search query should be the same
 			matchAll: false,  // matchAll is set to false
 			index: 1,         // index is incremented to the next match
-			nextMatch: false, // is set back to false after increment
 		})
 	})
 })
