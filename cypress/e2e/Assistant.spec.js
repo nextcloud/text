@@ -53,19 +53,27 @@ describe('Assistant', () => {
 			.click({ force: true })
 		cy.get('[data-cy="assistantMenu"]')
 			.click()
-		cy.get('.action-item__popper ul li').first()
+		cy.get('.action-item__popper li')
+			.contains('Free prompt')
 			.click()
 
-		cy.get('.assistant-modal--content #input-prompt')
+		cy.get('.assistant-modal--content #input-input')
 			.should('be.visible')
 
-		cy.get('.assistant-modal--content #input-prompt')
+		cy.get('.assistant-modal--content #input-input')
 			.type('Hello World')
 		cy.get('.assistant-modal--content .submit-button')
 			.click()
 
 		// eslint-disable-next-line cypress/no-unnecessary-waiting
 		cy.wait(2000)
+
+		cy.get('.assistant-modal--content button')
+			.contains('Run in the background')
+			.click()
+
+		cy.get('assistant-modal--content')
+			.should('contain', 'Your task has been scheduled')
 
 		cy.get('.assistant-modal--content .close-button')
 			.click()
