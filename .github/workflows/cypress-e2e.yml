@@ -36,11 +36,16 @@ jobs:
           ref: ${{ matrix.server-versions }}
           path: apps/viewer
 
+      - name: Register assistant Git reference
+        run: |
+          assistant_app_ref="$(if [ "${{ matrix.server-versions }}" = "master" ]; then echo -n "main"; else echo -n "${{ matrix.server-versions }}"; fi)"
+          echo "assistant_app_ref=$assistant_app_ref" >> $GITHUB_ENV
+
       - name: Checkout assistant
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/assistant
-          ref: 'main'
+          ref: '${{ env.assistant_app_ref }}'
           path: apps/assistant
 
       - name: Checkout app
