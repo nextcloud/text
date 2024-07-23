@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           repository: nextcloud/assistant
-          ref: 'main'
+          ref: 'stable29'
           path: apps/assistant
 
       - name: Checkout app
