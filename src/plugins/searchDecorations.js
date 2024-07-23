@@ -5,6 +5,7 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import { emit } from '@nextcloud/event-bus'
 import { searchQueryPluginKey } from './searchQuery.js'
 
 /**
@@ -18,16 +19,29 @@ export default function searchDecorations() {
 		key: new PluginKey('searchDecorations'),
 		state: {
 			init(_, { doc }) {
-				const searchResults = runSearch(doc, '')
-				return highlightResults(doc, searchResults)
+				const search = runSearch(doc, '')
+				return highlightResults(doc, search.results)
 			},
 			apply(tr, value, oldState, newState) {
-				const { query: oldQuery } = searchQueryPluginKey.getState(oldState)
-				const { query: newQuery } = searchQueryPluginKey.getState(newState)
+				const oldSearch = searchQueryPluginKey.getState(oldState)
+				const newSearch = searchQueryPluginKey.getState(newState)
 
-				if (tr.docChanged || (newQuery !== oldQuery)) {
-					const searchResults = runSearch(tr.doc, newQuery)
-					return highlightResults(tr.doc, searchResults)
+				const queryChanged = (newSearch.query !== oldSearch.query)
+				const indexChanged = (newSearch.index !== oldSearch.index)
+				const matchAllChanged = (newSearch.matchAll !== oldSearch.matchAll)
+
+				if (tr.docChanged || queryChanged || indexChanged || matchAllChanged) {
+					const { results, total, index } = runSearch(tr.doc, newSearch.query, {
+						matchAll: newSearch.matchAll,
+						index: newSearch.index,
+					})
+
+					emit('text:editor:search-results', {
+						results: (newSearch.query === '' ? null : total),
+						index,
+					})
+
+					return highlightResults(tr.doc, results)
 				} else {
 					return value
 				}
@@ -46,14 +60,24 @@ export default function searchDecorations() {
  *
  * @param {Node} doc - Editor document
  * @param {string} query - Search query
+ * @param {Array} options - Search options (matchAll, index)
  *
  * @return {Array}
  */
-export function runSearch(doc, query) {
+export function runSearch(doc, query, options) {
+	options = {
+		matchAll: options?.matchAll ?? true,
+		index: options?.index ?? 0,
+	}
+
 	const results = []
 
 	if (!query || query === '') {
-		return results
+		return {
+			results,
+			total: results.length,
+			index: options.index,
+		}
 	}
 
 	doc.descendants((node, offset, _position) => {
@@ -71,7 +95,21 @@ export function runSearch(doc, query) {
 		}
 	})
 
-	return results
+	if (options.matchAll) {
+		return {
+			results,
+			total: results.length,
+			index: options.index,
+		}
+	} else {
+		const index = normalizeIndex(options.index, results.length)
+
+		return {
+			results: [results[index] ?? results],
+			total: results.length,
+			index,
+		}
+	}
 }
 
 /**
@@ -98,4 +136,22 @@ export function highlightResults(doc, results) {
 	})
 
 	return DecorationSet.create(doc, decorations)
+}
+
+/**
+ * Normalize the search index so the array can be accessed properly
+ *
+ * @param {number} index - Index of the match
+ * @param {number} length - Length of the results array
+ */
+function normalizeIndex(index, length) {
+	if (length < 1) {
+		return 0
+	}
+
+	if (index < 0) {
+		return (index % length + length) % length
+	} else {
+		return index % length
+	}
 }

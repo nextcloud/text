@@ -6,20 +6,35 @@
 import { Extension } from '@tiptap/core'
 import { subscribe } from '@nextcloud/event-bus'
 import searchDecorations from '../plugins/searchDecorations.js'
-import { setSearchQuery, searchQuery } from '../plugins/searchQuery.js'
+import {
+	setSearchQuery,
+	nextMatch,
+	previousMatch,
+	searchQuery,
+} from '../plugins/searchQuery.js'
 
 export default Extension.create({
 	name: 'Search',
 
 	onCreate() {
-		subscribe('text:editor:search', (event) => {
-			this.editor.commands.setSearchQuery(event.query)
+		subscribe('text:editor:search', ({ query, matchAll }) => {
+			this.editor.commands.setSearchQuery(query, matchAll)
+		})
+
+		subscribe('text:editor:search-next', () => {
+			this.editor.commands.nextMatch()
+		})
+
+		subscribe('text:editor:search-previous', () => {
+			this.editor.commands.previousMatch()
 		})
 	},
 
 	addCommands() {
 		return {
 			setSearchQuery,
+			nextMatch,
+			previousMatch,
 		}
 	},
 
