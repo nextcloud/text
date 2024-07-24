@@ -14,18 +14,18 @@
 				<template #icon>
 					<CreationIcon :size="20" class="icon" />
 				</template>
-				<NcActionButton v-for="provider in providers"
-					:key="provider.task"
+				<NcActionButton v-for="type in taskTypes"
+					:key="type.id"
 					close-after-click
-					@click="openAssistantForm(provider.task)">
+					@click="openAssistantForm(type.id)">
 					<template #icon>
-						<PencilIcon v-if="provider.task == 'OCP\\TextProcessing\\FreePromptTaskType'" :size="20" />
-						<TextShort v-else-if="provider.task == 'OCP\\TextProcessing\\SummarizeTaskType'" :size="20" />
-						<FormatHeader1 v-else-if="provider.task == 'OCP\\TextProcessing\\HeadlineTaskType'" :size="20" />
-						<Shuffle v-else-if="provider.task == 'OCA\\OpenAi\\TextProcessing\\ReformulateTaskType'" :size="20" />
+						<PencilIcon v-if="type.id == 'core:text2text'" :size="20" />
+						<FormatHeader1 v-else-if="type.id == 'core:text2text:headline'" :size="20" />
+						<Shuffle v-else-if="type.id == 'core:text2text:reformulation'" :size="20" />
+						<TextShort v-else-if="type.id == 'core:text2text:summary'" :size="20" />
 						<CreationIcon v-else />
 					</template>
-					{{ provider.name }}
+					{{ type.name }}
 				</NcActionButton>
 				<NcActionButton data-cy="open-translate" close-after-click @click="openTranslateDialog">
 					<template #icon>
@@ -63,7 +63,7 @@
 						:force-display-actions="true"
 						@click="() => openResult(task)">
 						<template #subname>
-							{{ task.input }}
+							{{ task.input.input }}
 						</template>
 						<template #icon>
 							<CheckCircleIcon v-if="task.status === STATUS_SUCCESSFUL" :size="20" class="icon-status--success" />
@@ -72,7 +72,7 @@
 						</template>
 						<template #indicator>
 							<NcActions :inline="2">
-								<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output" @click.stop="() => copyResult(task)">
+								<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click.stop="() => copyResult(task)">
 									<template #icon>
 										<ClipboardTextOutlineIcon :size="20" />
 									</template>
@@ -81,13 +81,13 @@
 							</NcActions>
 						</template>
 						<template #actions>
-							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output" @click.stop="() => openResult(task)">
+							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click.stop="() => openResult(task)">
 								<template #icon>
 									<CreationIcon :size="20" />
 								</template>
 								{{ t('text', 'Show result') }}
 							</NcActionButton>
-							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output" @click="() => insertResult(task)">
+							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click="() => insertResult(task)">
 								<template #icon>
 									<TextBoxPlusOutlineIcon :size="20" />
 								</template>
@@ -138,11 +138,12 @@ const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
 }
 
-const STATUS_FAILED = 4
-const STATUS_SUCCESSFUL = 3
-const STATUS_RUNNING = 2
-const STATUS_SCHEDULED = 1
-const STATUS_UNKNOWN = 0
+// https://github.com/nextcloud/server/blob/master/lib/public/TaskProcessing/Task.php#L366-L371
+const STATUS_FAILED = 'STATUS_FAILED'
+const STATUS_SUCCESSFUL = 'STATUS_SUCCESSFUL'
+const STATUS_RUNNING = 'STATUS_RUNNING'
+const STATUS_SCHEDULED = 'STATUS_SCHEDULED'
+const STATUS_UNKNOWN = 'STATUS_UNKNOWN'
 
 export default {
 	name: 'Assistant',
@@ -174,7 +175,7 @@ export default {
 	],
 	data() {
 		return {
-			providers: OCP.InitialState.loadState('text', 'textprocessing'),
+			taskTypes: OCP.InitialState.loadState('text', 'taskprocessing'),
 			selection: '',
 			tasks: [],
 
@@ -190,7 +191,7 @@ export default {
 	},
 	computed: {
 		showAssistant() {
-			return !this.$isRichWorkspace && !this.$isPublic && window?.OCA?.TPAssistant?.openAssistantForm
+			return !this.$isRichWorkspace && !this.$isPublic && window.OCA.Assistant?.openAssistantForm
 		},
 		identifier() {
 			return 'text-file:' + this.$file.fileId
@@ -209,6 +210,9 @@ export default {
 			}
 
 			return null
+		},
+		taskTypeIds() {
+			return this.taskTypes.map((type) => type.id)
 		},
 	},
 	beforeMount() {
@@ -230,18 +234,13 @@ export default {
 	},
 	methods: {
 		async fetchTasks() {
-			const result = await axios.get(generateOcsUrl('/textprocessing/tasks/app/text') + '?identifier=' + this.identifier)
+			const result = await axios.get(generateOcsUrl('/taskprocessing/tasks/app/text') + '?customId=' + this.identifier)
 
-			const taskMap = {}
-			for (const index in this.providers) {
-				const provider = this.providers[index]
-				taskMap[provider.task] = provider
-			}
-
-			this.tasks = result.data.ocs.data.tasks.map((task) => {
+			const filteredTasks = result.data.ocs.data.tasks.filter(t => this.taskTypeIds.includes(t.type))
+			this.tasks = filteredTasks.map((task) => {
 				return {
 					...task,
-					title: taskMap[task.type].name,
+					title: this.taskTypes.find(t => t.id === task.type).name,
 				}
 			}).sort((a, b) => b.id - a.id)
 		},
@@ -257,12 +256,14 @@ export default {
 			this.selection = state.doc.textBetween(from, to, ' ')
 		},
 		async openAssistantForm(taskType = null) {
-			await window.OCA.TPAssistant.openAssistantForm(
+			await window.OCA.Assistant.openAssistantForm(
 				{
 					appId: 'text',
-					identifier: this.identifier,
+					customId: this.identifier,
 					taskType,
-					input: this.selection,
+					inputs: {
+						input: this.selection,
+					},
 					isInsideViewer: true,
 					closeOnResult: false,
 					actionButtons: [
@@ -275,8 +276,9 @@ export default {
 							},
 						},
 					],
-				})
-			await this.fetchTasks()
+				}).finally(() => {
+				this.fetchTasks()
+			})
 		},
 		openTranslateDialog() {
 			if (!this.selection.trim().length) {
@@ -285,15 +287,15 @@ export default {
 			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
 		async openResult(task) {
-			window.OCA?.TPAssistant.openAssistantResult(task)
+			window.OCA.Assistant.openAssistantTask(task)
 		},
 		async insertResult(task) {
-			this.$editor.commands.insertContent(task.output)
+			this.$editor.commands.insertContent(task.output.output)
 			this.showTaskList = false
 		},
 		async copyResult(task) {
 			try {
-				await navigator.clipboard.writeText(task.output)
+				await navigator.clipboard.writeText(task.output.output)
 				showSuccess(t('text', 'Nextcloud Assistant result copied'))
 				this.showTaskList = false
 			} catch (error) {
@@ -303,7 +305,7 @@ export default {
 		},
 		async deleteTask(task) {
 			try {
-				await axios.delete(generateOcsUrl(`/textprocessing/task/${task.id}`))
+				await axios.delete(generateOcsUrl(`/taskprocessing/task/${task.id}`))
 			} catch (e) {
 				console.error('Failed to delete task', e)
 			}

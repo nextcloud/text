@@ -37,7 +37,7 @@ describe('Assistant', () => {
 		cy.get('.action-item__popper ul').children().should(($children) => {
 			const entries = $children.find('button').map((i, el) => el.innerText).get()
 			expect(entries.length).to.be.greaterThan(0)
-			expect('Free prompt').to.be.oneOf(entries)
+			expect('Free text to text prompt').to.be.oneOf(entries)
 			expect('Translate').to.be.oneOf(entries)
 			expect('Show assistant results').to.be.oneOf(entries)
 		})
@@ -54,7 +54,7 @@ describe('Assistant', () => {
 		cy.get('[data-cy="assistantMenu"]')
 			.click()
 		cy.get('.action-item__popper li')
-			.contains('Free prompt')
+			.contains('Free text to text prompt')
 			.click()
 
 		cy.get('.assistant-modal--content #input-input')
@@ -72,7 +72,7 @@ describe('Assistant', () => {
 			.contains('Run in the background')
 			.click()
 
-		cy.get('assistant-modal--content')
+		cy.get('.assistant-modal--content')
 			.should('contain', 'Your task has been scheduled')
 
 		cy.get('.assistant-modal--content .close-button')
