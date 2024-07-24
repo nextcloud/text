@@ -107,6 +107,10 @@ class SyncService {
 	}
 
 	async open({ fileId, initialSession }) {
+		if (this.#connection && !this.#connection.isClosed) {
+			// We're already connected.
+			return
+		}
 		const onChange = ({ sessions }) => {
 			this.sessions = sessions
 		}
@@ -116,7 +120,6 @@ class SyncService {
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
 			: this._api.open({ fileId, baseVersionEtag: this.baseVersionEtag })
 				.catch(error => this._emitError(error))
-
 		this.#connection = await connect
 		if (!this.#connection) {
 			this.off('change', onChange)
