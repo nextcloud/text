@@ -17,8 +17,8 @@ describe('Preview Options', function() {
 		cy.openFile('empty.md')
 		cy.get('.entry-action__insert-link').click()
 		cy.get('li').get('[data-text-action-entry="insert-link-website"]').click()
-		cy.get('.input-field__input--trailing-icon').type('nextcloud.com')
-		cy.get('.input-field__trailing-button').click()
+		cy.get('[data-text-action-entry="insert-link-input"] input').type('nextcloud.com')
+		cy.get('[data-text-action-entry="insert-link-input"] button').click()
 		cy.get('.preview-options').click()
 	})
 
