@@ -40,20 +40,13 @@ variants.forEach(function({ fixture, mime }) {
 
 		beforeEach(function() {
 			cy.login(user)
-			cy.visit('/apps/files')
 		})
 
 		it('displays conflicts', function() {
+			createConflict(fileName, mime)
+
 			cy.openFile(fileName)
 
-			cy.log('Inspect editor')
-			cy.getContent()
-				.type('Hello you cruel conflicting world')
-			cy.uploadFile(fileName, mime)
-
-			cy.get('#viewer .modal-header button.header-close').click()
-			cy.get('#viewer').should('not.exist')
-			cy.openFile(fileName)
 			cy.get('.text-editor .document-status')
 				.should('contain', 'Document has been changed outside of the editor.')
 			getWrapper()
@@ -68,25 +61,15 @@ variants.forEach(function({ fixture, mime }) {
 		})
 
 		it('resolves conflict using current editing session', function() {
+			createConflict(fileName, mime)
+
 			cy.openFile(fileName)
-
-			cy.log('Inspect editor')
-			cy.getContent()
-				.type('Hello you cruel conflicting world')
-			cy.uploadFile(fileName, mime)
-
-			cy.get('#viewer .modal-header button.header-close').click()
-			cy.get('#viewer').should('not.exist')
-			cy.openFile(fileName)
-
 			cy.get('[data-cy="resolveThisVersion"]').click()
 
 			getWrapper()
 				.should('not.exist')
-
 			cy.get('[data-cy="resolveThisVersion"]')
 				.should('not.exist')
-
 			cy.get('.text-editor__main')
 				.should('contain', 'Hello world')
 			cy.get('.text-editor__main')
@@ -94,17 +77,9 @@ variants.forEach(function({ fixture, mime }) {
 		})
 
 		it('resolves conflict using server version', function() {
+			createConflict(fileName, mime)
+
 			cy.openFile(fileName)
-
-			cy.log('Inspect editor')
-			cy.getContent()
-				.type('Hello you cruel conflicting world')
-			cy.uploadFile(fileName, mime)
-
-			cy.get('#viewer .modal-header button.header-close').click()
-			cy.get('#viewer').should('not.exist')
-			cy.openFile(fileName)
-
 			cy.get('[data-cy="resolveServerVersion"]')
 				.click()
 
@@ -114,7 +89,6 @@ variants.forEach(function({ fixture, mime }) {
 				.should('not.exist')
 			cy.get('[data-cy="resolveServerVersion"]')
 				.should('not.exist')
-
 			cy.get('.text-editor__main')
 				.should('contain', 'Hello world')
 			cy.get('.text-editor__main')
@@ -122,3 +96,14 @@ variants.forEach(function({ fixture, mime }) {
 		})
 	})
 })
+
+function createConflict(fileName, mime) {
+	cy.visit('/apps/files')
+	cy.openFile(fileName)
+	cy.log('Inspect editor')
+	cy.getContent()
+		.type('Hello you cruel conflicting world')
+	cy.uploadFile(fileName, mime)
+	cy.get('#viewer .modal-header button.header-close').click()
+	cy.get('#viewer').should('not.exist')
+}
