@@ -79,6 +79,7 @@ OC.L10N.register(
     "Edit" : "편집",
     "Copy code block" : "코드 블록 복사",
     "Source code" : "소스 코드",
+    "Show folder description" : "폴더 설명 보이기",
     "Hide outline" : "개요 숨기기",
     "Show outline" : "개요 보이기",
     "Headings" : "제목",
