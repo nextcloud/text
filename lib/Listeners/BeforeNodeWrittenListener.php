@@ -14,7 +14,6 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
 use OCP\Files\File;
-use OCP\Files\NotFoundException;
 
 /**
  * @template-implements IEventListener<Event|BeforeNodeWrittenEvent>
@@ -31,19 +30,17 @@ class BeforeNodeWrittenListener implements IEventListener {
 			return;
 		}
 		$node = $event->getNode();
+		if (!$node instanceof File) {
+			return;
+		}
+		if ($this->documentService->isSaveFromText()) {
+			return;
+		}
+		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
 		try {
-			if ($node instanceof File && $node->getMimeType() === 'text/markdown') {
-				if (!$this->documentService->isSaveFromText()) {
-					// Reset document session to avoid manual conflict resolution if there's no unsaved steps
-					try {
-						$this->documentService->resetDocument($node->getId());
-					} catch (DocumentHasUnsavedChangesException) {
-						// Do not throw during event handling in this is expected to happen
-					}
-				}
-			}
-		} catch (NotFoundException) {
-			// This might occur on new files when a NonExistingFile is passed and we cannot access the mimetype
+			$this->documentService->resetDocument($node->getId());
+		} catch (DocumentHasUnsavedChangesException) {
+			// Do not throw during event handling in this is expected to happen
 		}
 	}
 }
