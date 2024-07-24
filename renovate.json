@@ -15,8 +15,7 @@
   "baseBranches": [
     "main",
     "stable29",
-    "stable28",
-    "stable27"
+    "stable28"
   ],
   "enabledManagers": [
     "npm"
