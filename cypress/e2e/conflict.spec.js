@@ -32,7 +32,7 @@ const variants = [
 variants.forEach(function({ fixture, mime }) {
 	const fileName = fixture
 	describe(`${mime} (${fileName})`, function() {
-		const getWrapper = () => cy.get('.viewer__content .text-editor__wrapper.has-conflicts')
+		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 		before(() => {
 			initUserAndFiles(user, fileName)
@@ -40,6 +40,34 @@ variants.forEach(function({ fixture, mime }) {
 
 		beforeEach(function() {
 			cy.login(user)
+		})
+
+		it('no actual conflict - just reload', function() {
+			// start with different content
+			cy.uploadFile('frontmatter.md', mime, fileName)
+			// just a read only session opened
+			cy.shareFile(`/${fileName}`)
+				.then((token) => {
+					cy.visit(`/s/${token}`)
+				})
+			cy.get('.text-editor__main')
+				.should('contain', 'Heading')
+			cy.intercept({ method: 'POST', url: '**/session/*/push' })
+				.as('push')
+			cy.wait('@push')
+			cy.uploadFile(fileName, mime)
+			cy.get('#editor-container .document-status', { timeout: 30000 })
+				.should('contain', 'session has expired')
+			// Reload button works
+			cy.get('#editor-container .document-status a.button')
+				.contains('Reload')
+				.click()
+			getWrapper()
+				.should('not.exist')
+			cy.getContent()
+				.should('contain', 'Hello world')
+			cy.getContent()
+				.should('not.contain', 'Heading')
 		})
 
 		it('displays conflicts', function() {
@@ -94,6 +122,20 @@ variants.forEach(function({ fixture, mime }) {
 			cy.get('.text-editor__main')
 				.should('not.contain', 'cruel conflicting')
 		})
+
+		it('hides conflict in read only session', function() {
+			createConflict(fileName, mime)
+			cy.shareFile(`/${fileName}`)
+				.then((token) => {
+					cy.logout()
+					cy.visit(`/s/${token}`)
+				})
+			cy.get('.text-editor__main')
+				.should('contain', 'cruel conflicting')
+			getWrapper()
+				.should('not.exist')
+		})
+
 	})
 })
 
