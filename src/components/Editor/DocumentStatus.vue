@@ -34,7 +34,7 @@
 			</p>
 		</NcNoteCard>
 
-		<CollisionResolveDialog v-if="hasSyncCollission" :sync-error="syncError" />
+		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 	</div>
 </template>
 
@@ -69,6 +69,10 @@ export default {
 		},
 
 		hasConnectionIssue: {
+			type: Boolean,
+			require: true,
+		},
+		isResolvingConflict: {
 			type: Boolean,
 			require: true,
 		},

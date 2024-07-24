@@ -33,9 +33,12 @@ class BeforeNodeDeletedListener implements IEventListener {
 			return;
 		}
 		$node = $event->getNode();
-		if ($node instanceof File && $node->getMimeType() === 'text/markdown') {
-			$this->attachmentService->deleteAttachments($node);
-			$this->documentService->resetDocument($node->getId(), true);
+		if (!$node instanceof File) {
+			return;
 		}
+		if ($node->getMimeType() === 'text/markdown') {
+			$this->attachmentService->deleteAttachments($node);
+		}
+		$this->documentService->resetDocument($node->getId(), true);
 	}
 }
