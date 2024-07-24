@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { ERROR_TYPE } from './../../services/SyncService.js'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
