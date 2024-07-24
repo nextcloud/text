@@ -47,11 +47,8 @@ variants.forEach(function({ fixture, mime }) {
 			cy.uploadFile('frontmatter.md', mime, fileName)
 			// just a read only session opened
 			cy.shareFile(`/${fileName}`)
-				.then((token) => {
-					cy.visit(`/s/${token}`)
-				})
-			cy.get('.text-editor__main')
-				.should('contain', 'Heading')
+				.then(token => cy.visit(`/s/${token}`))
+			cy.getContent().should('contain', 'Heading')
 			cy.intercept({ method: 'POST', url: '**/session/*/push' })
 				.as('push')
 			cy.wait('@push')
@@ -62,12 +59,9 @@ variants.forEach(function({ fixture, mime }) {
 			cy.get('#editor-container .document-status a.button')
 				.contains('Reload')
 				.click()
-			getWrapper()
-				.should('not.exist')
-			cy.getContent()
-				.should('contain', 'Hello world')
-			cy.getContent()
-				.should('not.contain', 'Heading')
+			getWrapper().should('not.exist')
+			cy.getContent().should('contain', 'Hello world')
+			cy.getContent().should('not.contain', 'Heading')
 		})
 
 		it('displays conflicts', function() {
@@ -94,14 +88,11 @@ variants.forEach(function({ fixture, mime }) {
 			cy.openFile(fileName)
 			cy.get('[data-cy="resolveThisVersion"]').click()
 
-			getWrapper()
-				.should('not.exist')
+			getWrapper().should('not.exist')
 			cy.get('[data-cy="resolveThisVersion"]')
 				.should('not.exist')
-			cy.get('.text-editor__main')
-				.should('contain', 'Hello world')
-			cy.get('.text-editor__main')
-				.should('contain', 'cruel conflicting')
+			cy.getContent().should('contain', 'Hello world')
+			cy.getContent().should('contain', 'cruel conflicting')
 		})
 
 		it('resolves conflict using server version', function() {
@@ -111,16 +102,13 @@ variants.forEach(function({ fixture, mime }) {
 			cy.get('[data-cy="resolveServerVersion"]')
 				.click()
 
-			getWrapper()
-				.should('not.exist')
+			getWrapper().should('not.exist')
 			cy.get('[data-cy="resolveThisVersion"]')
 				.should('not.exist')
 			cy.get('[data-cy="resolveServerVersion"]')
 				.should('not.exist')
-			cy.get('.text-editor__main')
-				.should('contain', 'Hello world')
-			cy.get('.text-editor__main')
-				.should('not.contain', 'cruel conflicting')
+			cy.getContent().should('contain', 'Hello world')
+			cy.getContent().should('not.contain', 'cruel conflicting')
 		})
 
 		it('hides conflict in read only session', function() {
@@ -130,10 +118,8 @@ variants.forEach(function({ fixture, mime }) {
 					cy.logout()
 					cy.visit(`/s/${token}`)
 				})
-			cy.get('.text-editor__main')
-				.should('contain', 'cruel conflicting')
-			getWrapper()
-				.should('not.exist')
+			cy.getContent().should('contain', 'cruel conflicting')
+			getWrapper().should('not.exist')
 		})
 
 	})
