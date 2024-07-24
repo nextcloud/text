@@ -23,7 +23,7 @@
 <template>
 	<div class="text-editor__wrapper"
 		:class="{
-			'has-conflicts': hasSyncCollission,
+			'has-conflicts': isResolvingConflict,
 			'is-rich-workspace': $isRichWorkspace,
 			'is-rich-editor': $isRichEditor,
 			'show-color-annotations': showAuthorAnnotations
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import { ERROR_TYPE } from './../../services/SyncService.js'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
@@ -60,9 +59,9 @@ export default {
 	},
 
 	props: {
-		syncError: {
-			type: Object,
-			default: null,
+		isResolvingConflict: {
+			type: Boolean,
+			require: true,
 		},
 		hasConnectionIssue: {
 			type: Boolean,
@@ -93,10 +92,6 @@ export default {
 		...mapState({
 			viewWidth: (state) => state.text.viewWidth,
 		}),
-
-		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
-		},
 		showOutline() {
 			return this.isAbleToShowOutline
 				? this.outline.visible

@@ -29,13 +29,14 @@
 		<DocumentStatus v-if="displayedStatus"
 			:idle="idle"
 			:lock="lock"
+			:is-resolving-conflict="isResolvingConflict"
 			:sync-error="syncError"
 			:has-connection-issue="hasConnectionIssue"
 			@reconnect="reconnect" />
 
 		<SkeletonLoading v-if="!contentLoaded && !displayedStatus" />
 		<Wrapper v-if="displayed"
-			:sync-error="syncError"
+			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
 			:show-author-annotations="showAuthorAnnotations"
@@ -72,7 +73,7 @@
 				<ContentContainer v-show="contentLoaded"
 					ref="contentWrapper" />
 			</MainContainer>
-			<Reader v-if="hasSyncCollission"
+			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
@@ -257,6 +258,9 @@ export default {
 		}),
 		isRichWorkspace() {
 			return this.richWorkspace
+		},
+		isResolvingConflict() {
+			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
