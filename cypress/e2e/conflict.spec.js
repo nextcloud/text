@@ -125,6 +125,10 @@ variants.forEach(function({ fixture, mime }) {
 	})
 })
 
+/**
+ * @param {string} fileName - filename
+ * @param {string} mime - mimetype
+ */
 function createConflict(fileName, mime) {
 	cy.visit('/apps/files')
 	cy.openFile(fileName)
