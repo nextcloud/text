@@ -22,6 +22,7 @@ export default function headingAnchor() {
 
 		state: {
 			init(_, { doc }) {
+				console.debug('headingAnchor init')
 				const headings = extractHeadings(doc)
 				return {
 					headings,
@@ -33,9 +34,7 @@ export default function headingAnchor() {
 					return value
 				}
 				const headings = extractHeadings(newState.doc)
-				const decorations = headingsChanged(headings, value.headings)
-					? anchorDecorations(newState.doc, headings)
-					: value.decorations.map(tr.mapping, tr.doc)
+				const decorations = mapDecorations(value, tr, headings) || anchorDecorations(newState.doc, headings)
 				return { headings, decorations }
 			},
 		},
@@ -49,10 +48,33 @@ export default function headingAnchor() {
 }
 
 /**
+ * Map the previous decorations to current document state.
+ *
+ * Return false if headings changed or decorations would get removed.
+ * The latter prevents lost decorations in case of replacements.
+ *
+ * @param {object} value - previous plugin state
+ * @param {object} tr - current transaction
+ * @param {Array} headings - array of headings
+ *
+ * @return {false|DecorationSet}
+ */
+function mapDecorations(value, tr, headings) {
+	if (headingsChanged(headings, value.headings)) {
+		return false
+	}
+	let removedDecorations = false
+	const decorations = value.decorations.map(tr.mapping, tr.doc, { onRemove: () => { removedDecorations = true } })
+	return removedDecorations
+		? false
+		: decorations
+}
+
+/**
  * Check if the headings provided are equivalent.
  *
  * @param {Array} current - array of headings
- * @param {Array} other - headings to compare against
+ * @param {Array} prev - headings to compare against
  *
  * @return {boolean}
  */
