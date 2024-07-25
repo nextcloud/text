@@ -8,16 +8,25 @@
 namespace OCA\Text\Service;
 
 use OCP\AppFramework\Services\IInitialState;
-use OCP\TextProcessing\IManager;
-use OCP\TextProcessing\ITaskType;
+use OCP\TaskProcessing\IManager;
 use OCP\Translation\ITranslationManager;
 
 class InitialStateProvider {
+	private const ASSISTANT_TASK_TYPES = [
+		'core:text2text',
+		'core:text2text:formalization',
+		'core:text2text:headline',
+		'core:text2text:reformulation',
+		'core:text2text:simplification',
+		'core:text2text:summary',
+		'core:text2text:topics',
+	];
+
 	public function __construct(
 		private IInitialState $initialState,
 		private ConfigService $configService,
 		private ITranslationManager $translationManager,
-		private IManager $textProcessingManager,
+		private IManager $taskProcessingManager,
 		private ?string $userId
 	) {
 	}
@@ -53,16 +62,15 @@ class InitialStateProvider {
 			$this->translationManager->getLanguages()
 		);
 
+		$filteredTypes = array_filter($this->taskProcessingManager->getAvailableTaskTypes(), static function (string $taskType) {
+			return in_array($taskType, self::ASSISTANT_TASK_TYPES, true);
+		}, ARRAY_FILTER_USE_KEY);
 		$this->initialState->provideInitialState(
-			'textprocessing',
-			array_map(function (string $className) {
-				/** @var class-string<ITaskType> $className */
-				$type = \OCP\Server::get($className);
-				return [
-					'task' => $className,
-					'name' => $type->getName(),
-				];
-			}, $this->textProcessingManager->getAvailableTaskTypes()),
+			'taskprocessing',
+			array_map(static function (string $typeId, array $taskType) {
+				$taskType['id'] = $typeId;
+				return $taskType;
+			}, array_keys($filteredTypes), array_values($filteredTypes)),
 		);
 
 		$this->initialState->provideInitialState(
