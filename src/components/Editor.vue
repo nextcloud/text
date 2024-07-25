@@ -571,7 +571,10 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			this.$editor.setEditable(!this.readOnly)
+			const editable = !this.readOnly
+			if (this.$editor.isEditable !== editable) {
+				this.$editor.setEditable(editable)
+			}
 		},
 
 		onSync({ steps, document }) {
