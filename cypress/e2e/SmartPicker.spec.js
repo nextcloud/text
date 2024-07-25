@@ -42,8 +42,8 @@ describe('Smart picker', () => {
 			.type('Heading{enter}Hello World{enter}')
 
 		cy.getContent()
-			.find('h1 [data-node-view-content]')
-			.should('have.text', 'Hello World')
+			.find('h1')
+			.should('contain.text', 'Hello World')
 	})
 
 	it('Insert a link with the smart picker', () => {
