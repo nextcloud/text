@@ -100,7 +100,7 @@ div.ProseMirror {
 			margin-top: 0;
 		}
 
-		.heading-anchor[contenteditable="false"] {
+		.heading-anchor[contenteditable='false'] {
 			// Shrink clickable area of anchor permalinks to not overlay the heading
 			width: 1em;
 			opacity: 0;
