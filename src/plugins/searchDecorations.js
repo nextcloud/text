@@ -130,6 +130,7 @@ export function highlightResults(doc, results) {
 	results.forEach((result) => {
 		decorations.push(
 			Decoration.inline(result.from, result.to, {
+				'data-text-el': 'search-decoration',
 				style: 'background-color: #ead637; color: black; border-radius: 2px;',
 			}),
 		)
