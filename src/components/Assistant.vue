@@ -287,7 +287,19 @@ export default {
 			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
 		async openResult(task) {
-			window.OCA.Assistant.openAssistantTask(task)
+			window.OCA.Assistant.openAssistantTask(task, {
+				isInsideViewer: true,
+				actionButtons: [
+					{
+						type: 'primary',
+						title: t('text', 'Insert result'),
+						label: t('text', 'Insert result'),
+						onClick: (lastTask) => {
+							this.insertResult(lastTask)
+						},
+					},
+				],
+			})
 		},
 		async insertResult(task) {
 			this.$editor.commands.insertContent(task.output.output)
