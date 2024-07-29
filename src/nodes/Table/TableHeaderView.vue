@@ -184,7 +184,6 @@ th {
 
 	.content {
 		margin: 0;
-		padding-top: 0.75em;
 		flex-grow: 1;
 	}
 	.action-item {
