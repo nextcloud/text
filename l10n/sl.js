@@ -85,6 +85,7 @@ OC.L10N.register(
     "Link" : "Povezava",
     "Insert emoji" : "Vstavi izrazno ikono",
     "name" : "ime",
+    "Smart picker" : "Pametni izbirnik",
     "Action" : "Dejanje",
     "Undo" : "Razveljavi",
     "Redo" : "Ponovi",
