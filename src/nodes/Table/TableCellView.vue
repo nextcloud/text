@@ -113,13 +113,11 @@ td {
 	.container {
 		display: flex;
 		flex-wrap: wrap;
-		min-height: 36px;
 	}
 
 	.content {
 		flex: 1 1 0;
 		margin: 0;
-		padding-top: 0.6em;
 	}
 
 	.action-item {
