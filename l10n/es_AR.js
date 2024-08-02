@@ -28,6 +28,7 @@ OC.L10N.register(
     "Source code" : "Código fuente",
     "Info" : "Info",
     "Warning" : "Advertencia",
-    "Table" : "Tabla"
+    "Table" : "Tabla",
+    "Add folder description" : "Agregar una descripción a la carpeta"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
