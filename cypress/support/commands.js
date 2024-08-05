@@ -198,7 +198,7 @@ Cypress.Commands.add('moveFile', (path, destinationPath) => {
 // For files wait for preview to load and release lock
 Cypress.Commands.add('waitForPreview', name => {
 	cy.getFile(name)
-		.scrollIntoView()
+		.scrollIntoView({ offset: { top: -200 } })
 	cy.getFile(name)
 		.find('.files-list__row-icon img')
 		.should('be.visible')
