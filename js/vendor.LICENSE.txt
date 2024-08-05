@@ -97,7 +97,7 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.15.0
+version: 8.15.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
@@ -345,8 +345,8 @@ version: 3.0.1
 license: ISC
 
 d3-path
-version: 1.0.9
-license: BSD-3-Clause
+version: 3.1.0
+license: ISC
 
 d3-sankey
 version: 0.12.3
@@ -477,7 +477,7 @@ version: 1.0.2
 license: MIT
 
 lib0
-version: 0.2.94
+version: 0.2.95
 license: MIT
 
 linkify-it
