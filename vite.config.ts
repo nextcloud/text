@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { createAppConfig } from '@nextcloud/vite-config'
-import { webpackStats } from 'rollup-plugin-webpack-stats'
+import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
 
 const config = createAppConfig({
