@@ -4,22 +4,23 @@
 -->
 <template>
 	<div id="files-setting-richworkspace">
-		<input id="showRichWorkspacesToggle"
-			v-model="showWorkspace"
-			class="checkbox"
-			type="checkbox"
-			@change="toggle">
-		<label for="showRichWorkspacesToggle">{{ t('text', 'Show folder description') }}</label>
+		<NcCheckboxRadioSwitch :checked.sync="showWorkspace" @update:checked="toggle">
+			{{ t('text', 'Show folder description') }}
+		</NcCheckboxRadioSwitch>
 	</div>
 </template>
 
 <script>
 import { emit } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
+import { NcCheckboxRadioSwitch } from '@nextcloud/vue'
 import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'FilesSettings',
+	components: {
+		NcCheckboxRadioSwitch,
+	},
 	data() {
 		return {
 			showWorkspace: OCA.Text.RichWorkspaceEnabled,
