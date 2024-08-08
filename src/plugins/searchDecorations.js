@@ -37,8 +37,8 @@ export default function searchDecorations() {
 					})
 
 					emit('text:editor:search-results', {
-						results: (newSearch.query === '' ? null : total),
-						index,
+						totalMatches: (newSearch.query === '' ? null : total),
+						matchIndex: index,
 					})
 
 					return highlightResults(tr.doc, results)

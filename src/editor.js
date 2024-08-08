@@ -5,6 +5,7 @@
 
 import Vue from 'vue'
 import store from './store/index.js'
+import { subscribe } from '@nextcloud/event-bus'
 import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
@@ -56,6 +57,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	onSearch(onSearchCallback = () => {}) {
+	  subscribe('text:editor:search-results', onSearchCallback)
+	  return this
+	}
+
 	render(el) {
 		el.innerHTML = ''
 		const element = document.createElement('div')
@@ -75,6 +81,21 @@ class TextEditorEmbed {
 		// Call setContent for file based Editor
 		this.#getEditorComponent()?.setContent?.(content)
 		return this
+	}
+
+	setSearchQuery(query, matchAll) {
+		const editor = this.#getEditorComponent()?.$editor
+		editor.commands.setSearchQuery(query, matchAll)
+	}
+
+	searchNext() {
+		const editor = this.#getEditorComponent()?.$editor
+		editor.commands.nextMatch()
+	}
+
+	searchPrevious() {
+		const editor = this.#getEditorComponent()?.$editor
+		editor.commands.previousMatch()
 	}
 
 	async save() {
@@ -138,6 +159,7 @@ window.OCA.Text.createEditor = async function({
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
+	onSearch = undefined,
 }) {
 	const { default: MarkdownContentEditor } = await import(/* webpackChunkName: "editor" */'./components/Editor/MarkdownContentEditor.vue')
 	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
@@ -212,5 +234,6 @@ window.OCA.Text.createEditor = async function({
 		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
 		.onOutlineToggle(onOutlineToggle)
+		.onSearch(onSearch)
 		.render(el)
 }
