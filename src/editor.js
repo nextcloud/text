@@ -132,12 +132,16 @@ window.OCA.Text.createEditor = async function({
 		props: null,
 	},
 
+	searchQuery = '',
+	matchAll = true,
+
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 	onOutlineToggle = (visible) => {},
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
+	onSearch = undefined,
 }) {
 	const { default: MarkdownContentEditor } = await import(/* webpackChunkName: "editor" */'./components/Editor/MarkdownContentEditor.vue')
 	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
