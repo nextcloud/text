@@ -77,6 +77,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	setSearchQuery(query, matchAll) {
+		const editor = this.#getEditorComponent()?.$editor
+		editor.commands.setSearchQuery(query, matchAll)
+	}
+
 	async save() {
 		return this.#getEditorComponent().save?.()
 	}
@@ -131,9 +136,6 @@ window.OCA.Text.createEditor = async function({
 		component: null,
 		props: null,
 	},
-
-	searchQuery = '',
-	matchAll = true,
 
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
