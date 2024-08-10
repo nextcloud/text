@@ -83,19 +83,8 @@ class TextEditorEmbed {
 		return this
 	}
 
-	setSearchQuery(query, matchAll) {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.setSearchQuery(query, matchAll)
-	}
-
-	searchNext() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.nextMatch()
-	}
-
-	searchPrevious() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.previousMatch()
+	search(query) {
+		this.#getEditorComponent()?.$editor.commands.search(query)
 	}
 
 	async save() {
