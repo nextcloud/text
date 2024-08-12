@@ -24,7 +24,7 @@ describe('editor search highlighting', () => {
 
 		const highlightedElements = document.querySelectorAll('span[data-text-el]')
 		expect(highlightedElements.length).to.equal(1)
-		expect(highlightedElements[0].innerText).to.equal(searchQuery)
+		verifyHighlights(highlightedElements, searchQuery)
 	})
 
 	it('can highlight multiple matches', () => {
@@ -33,9 +33,31 @@ describe('editor search highlighting', () => {
 
 		const highlightedElements = document.querySelectorAll('span[data-text-el]')
 		expect(highlightedElements.length).to.equal(16)
+		verifyHighlights(highlightedElements, searchQuery)
+	})
 
-		for (const element of highlightedElements) {
-			expect(element.innerText).to.equal(searchQuery)
-		}
+	it('can toggle highlight all', () => {
+		const searchQuery = 'quod'
+		let highlightedElements = []
+
+		// Highlight all occurrences 
+		editor.commands.setSearchQuery(searchQuery, true)
+		highlightedElements = document.querySelectorAll('span[data-text-el]')
+
+		expect(highlightedElements.length).to.equal(3)
+		verifyHighlights(highlightedElements, searchQuery)
+
+		// Highlight only first occurrence
+		editor.commands.setSearchQuery(searchQuery, false)
+		highlightedElements = document.querySelectorAll('span[data-text-el]')
+
+		expect(highlightedElements.length).to.equal(1)
+		verifyHighlights(highlightedElements, searchQuery)
 	})
 })
+
+function verifyHighlights(highlightedElements, searchQuery) {
+	for (const element of highlightedElements) {
+		expect(element.innerText.toLowerCase()).to.equal(searchQuery.toLowerCase())
+	}
+}
