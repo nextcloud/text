@@ -214,6 +214,8 @@ class SyncService {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 						OC.Notification.showTemporary('Changes could not be sent yet')
 					}
+				} else {
+					this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 				}
 				throw new Error('Failed to apply steps. Retry!', { cause: err })
 			})
