@@ -75,6 +75,11 @@ describe('editor search highlighting', () => {
 	})
 })
 
+/**
+ * Verifies the Nodes in the given NodeList match the search query
+ * @param {NodeList} highlightedElements - NodeList of highlighted elements
+ * @param {string} searchQuery - search query
+ */
 function verifyHighlights(highlightedElements, searchQuery) {
 	for (const element of highlightedElements) {
 		expect(element.innerText.toLowerCase()).to.equal(searchQuery.toLowerCase())
