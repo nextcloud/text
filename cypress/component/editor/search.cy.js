@@ -18,11 +18,24 @@ describe('editor search highlighting', () => {
 		})
 	})
 
-	it('can highlight a search', () => {
+	it('can highlight a match', () => {
 		const searchQuery = 'Lorem ipsum dolor sit amet'
 		editor.commands.setSearchQuery(searchQuery)
 
-		const highlightedElement = document.querySelector('span[data-text-el]')
-		expect(highlightedElement.innerText).to.equal(searchQuery)
+		const highlightedElements = document.querySelectorAll('span[data-text-el]')
+		expect(highlightedElements.length).to.equal(1)
+		expect(highlightedElements[0].innerText).to.equal(searchQuery)
+	})
+
+	it('can highlight multiple matches', () => {
+		const searchQuery = 'et'
+		editor.commands.setSearchQuery(searchQuery)
+
+		const highlightedElements = document.querySelectorAll('span[data-text-el]')
+		expect(highlightedElements.length).to.equal(16)
+
+		for (const element of highlightedElements) {
+			expect(element.innerText).to.equal(searchQuery)
+		}
 	})
 })
