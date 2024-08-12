@@ -559,7 +559,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = !this.readOnly
+			const editable = !this.readOnly && !this.hasConnectionIssue
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
