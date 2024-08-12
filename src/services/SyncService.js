@@ -108,8 +108,12 @@ class SyncService {
 		return this.#connection.session.guestName
 	}
 
+	get hasActiveConnection() {
+		return this.#connection && !this.#connection.isClosed
+	}
+
 	async open({ fileId, initialSession }) {
-		if (this.#connection && !this.#connection.isClosed) {
+		if (this.hasActiveConnection) {
 			// We're already connected.
 			return
 		}
@@ -329,7 +333,7 @@ class SyncService {
 		// Make sure to leave no pending requests behind.
 		this.autosave.clear()
 		this.backend?.disconnect()
-		if (!this.#connection || this.#connection.isClosed) {
+		if (!this.hasActiveConnection) {
 			return
 		}
 		return this.#connection.close()
