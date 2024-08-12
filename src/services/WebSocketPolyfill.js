@@ -47,6 +47,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		constructor(url) {
 			this.url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
+			if (syncService.hasActiveConnection) {
+				setTimeout(() => this.onopen?.(), 0)
+			}
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
 					this.#version = version
@@ -101,7 +104,10 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					...queue.filter(s => !outbox.includes(s)),
 				)
 				return ret
-			}, err => logger.error(err))
+			}, err => {
+				logger.error(`Failed to push the queue with ${queue.length} steps to the server`, err)
+				this.onerror?.(err)
+			})
 		}
 
 		async close() {
