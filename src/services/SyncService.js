@@ -95,6 +95,8 @@ class SyncService {
 
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
 
+		this.pushError = 0
+
 		return this
 	}
 
@@ -190,6 +192,7 @@ class SyncService {
 		}
 		return this.#connection.push(data)
 			.then((response) => {
+				this.pushError = 0
 				this.sending = false
 				this.emit('sync', {
 					steps: [],
@@ -199,6 +202,7 @@ class SyncService {
 			}).catch(err => {
 				const { response, code } = err
 				this.sending = false
+				this.pushError++
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				}

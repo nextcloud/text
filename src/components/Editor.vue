@@ -565,7 +565,7 @@ export default {
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = false
+			this.hasConnectionIssue = !this.$providers[0].wsconnected || this.$syncService.pushError > 0
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
