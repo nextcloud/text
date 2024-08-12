@@ -23,16 +23,16 @@ describe('editor search highlighting', () => {
 		editor.commands.setSearchQuery(searchQuery)
 
 		const highlightedElements = document.querySelectorAll('span[data-text-el]')
-		expect(highlightedElements.length).to.equal(1)
+		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
 
 	it('can highlight multiple matches', () => {
-		const searchQuery = 'et'
+		const searchQuery = 'quod'
 		editor.commands.setSearchQuery(searchQuery)
 
 		const highlightedElements = document.querySelectorAll('span[data-text-el]')
-		expect(highlightedElements.length).to.equal(16)
+		expect(highlightedElements).to.have.lengthOf(3)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
 
@@ -40,19 +40,38 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 		let highlightedElements = []
 
-		// Highlight all occurrences 
-		editor.commands.setSearchQuery(searchQuery, true)
-		highlightedElements = document.querySelectorAll('span[data-text-el]')
-
-		expect(highlightedElements.length).to.equal(3)
-		verifyHighlights(highlightedElements, searchQuery)
-
 		// Highlight only first occurrence
 		editor.commands.setSearchQuery(searchQuery, false)
 		highlightedElements = document.querySelectorAll('span[data-text-el]')
 
-		expect(highlightedElements.length).to.equal(1)
+		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
+	})
+
+	it('can move to next occurrence', () => {
+		const searchQuery = 'quod'
+
+		editor.commands.setSearchQuery(searchQuery, true)
+		const allHighlightedElements = document.querySelectorAll('span[data-text-el]')
+
+		editor.commands.nextMatch()
+		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el]')
+
+		expect(currentlyHighlightedElement).to.have.lengthOf(1)
+		expect(allHighlightedElements[1]).to.deep.equal(currentlyHighlightedElement[0])
+	})
+
+	it('can move to previous occurrence', () => {
+		const searchQuery = 'quod'
+
+		editor.commands.setSearchQuery(searchQuery, true)
+		const allHighlightedElements = document.querySelectorAll('span[data-text-el]')
+
+		editor.commands.previousMatch()
+		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el]')
+
+		expect(currentlyHighlightedElement).to.have.lengthOf(1)
+		expect(allHighlightedElements[0]).to.deep.equal(currentlyHighlightedElement[0])
 	})
 })
 
