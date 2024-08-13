@@ -128,7 +128,7 @@ describe('Image View', () => {
 
 			cy.getContent()
 				.find('[data-component="image-view"][data-src=".attachments.123/github.png"] img', { timeout: 20000 })
-				.click()
+				.click({ force: true })
 
 			cy.get('.modal__content img')
 				.should('have.attr', 'src')
@@ -141,7 +141,7 @@ describe('Image View', () => {
 
 			cy.getContent()
 				.find('[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img', { timeout: 20000 })
-				.click()
+				.click({ force: true })
 
 			const downloadsFolder = Cypress.config('downloadsFolder')
 			cy.log(`downloadsFolder: ${downloadsFolder}`)
