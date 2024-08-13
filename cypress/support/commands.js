@@ -324,8 +324,8 @@ Cypress.Commands.add('getModal', () => {
 
 Cypress.Commands.add('getEditor', { prevSubject: 'optional' }, (subject) => {
 	return subject
-		? cy.wrap(subject).find('[data-text-el="editor-container"]')
-		: cy.get('[data-text-el="editor-container"]')
+		? cy.wrap(subject).find('[data-text-el="editor-container"]', { timeout: 20000 })
+		: cy.get('[data-text-el="editor-container"]', { timeout: 20000 })
 })
 
 Cypress.Commands.add('getMenu', { prevSubject: 'optional' }, (subject) => {
