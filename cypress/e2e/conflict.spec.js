@@ -116,6 +116,7 @@ function createConflict(fileName, mime) {
 	cy.visit('/apps/files')
 	cy.openFile(fileName)
 	cy.log('Inspect editor')
+	cy.getEditor().find('.ProseMirror').should('have.attr', 'contenteditable', 'true')
 	cy.getContent()
 		.type('Hello you cruel conflicting world')
 	cy.uploadFile(fileName, mime)
