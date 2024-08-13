@@ -38,7 +38,8 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 		const backticks = node.textContent.match(/`{3,}/gm)
 		const fence = backticks ? (backticks.sort().slice(-1)[0] + '`') : '```'
 
-		state.write(fence + (node.attrs.params || '') + '\n')
+		const language = node.attrs.params !== 'plaintext' ? node.attrs.params : ''
+		state.write(fence + (language || '') + '\n')
 		state.text(node.textContent, false)
 		// Add a newline to the current content before adding closing marker
 		state.ensureNewLine()
