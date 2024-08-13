@@ -335,6 +335,13 @@ export default {
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
 		subscribe('text:translate-modal:show', this.showTranslateModal)
+
+		window.addEventListener('beforeunload', (e) => {
+			if (this.$queue.length > 0) {
+				e.preventDefault()
+				e.returnValue = t('text', 'Some changes have not been synced. You might loose your edits when leaving the page.')
+			}
+		})
 	},
 	created() {
 		this.$ydoc = new Doc()
