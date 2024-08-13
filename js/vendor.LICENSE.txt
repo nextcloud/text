@@ -265,11 +265,11 @@ version: 10.9.0
 license: MIT
 
 @vueuse/core
-version: 10.11.0
+version: 10.11.1
 license: MIT
 
 @vueuse/shared
-version: 10.11.0
+version: 10.11.1
 license: MIT
 
 ansi-regex
@@ -825,7 +825,7 @@ version: 5.6.0
 license: MIT
 
 y-prosemirror
-version: 1.2.9
+version: 1.2.12
 license: MIT
 
 y-protocols
