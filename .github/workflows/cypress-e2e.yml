@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4.1.1
         with:
           repository: nextcloud/viewer
-          ref: ${{ matrix.server-versions }}
+          ref: fix/filename-relative-to-davroot
           path: apps/viewer
 
       - name: Register assistant Git reference
