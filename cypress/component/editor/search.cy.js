@@ -27,7 +27,7 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'Lorem ipsum dolor sit amet'
 		editor.commands.setSearchQuery(searchQuery)
 
-		const highlightedElements = document.querySelectorAll('span[data-text-el]')
+		const highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
 		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
@@ -36,7 +36,7 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 		editor.commands.setSearchQuery(searchQuery)
 
-		const highlightedElements = document.querySelectorAll('span[data-text-el]')
+		const highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
 		expect(highlightedElements).to.have.lengthOf(3)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
@@ -47,7 +47,7 @@ describe('editor search highlighting', () => {
 
 		// Highlight only first occurrence
 		editor.commands.setSearchQuery(searchQuery, false)
-		highlightedElements = document.querySelectorAll('span[data-text-el]')
+		highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
 
 		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
@@ -57,10 +57,10 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 
 		editor.commands.setSearchQuery(searchQuery, true)
-		const allHighlightedElements = document.querySelectorAll('span[data-text-el]')
+		const allHighlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
 
 		editor.commands.nextMatch()
-		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el]')
+		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el="search-decoration"]')
 
 		expect(currentlyHighlightedElement).to.have.lengthOf(1)
 		expect(allHighlightedElements[1]).to.deep.equal(currentlyHighlightedElement[0])
@@ -70,10 +70,10 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 
 		editor.commands.setSearchQuery(searchQuery, true)
-		const allHighlightedElements = document.querySelectorAll('span[data-text-el]')
+		const allHighlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
 
 		editor.commands.previousMatch()
-		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el]')
+		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el="search-decoration"]')
 
 		expect(currentlyHighlightedElement).to.have.lengthOf(1)
 		expect(allHighlightedElements[0]).to.deep.equal(currentlyHighlightedElement[0])
