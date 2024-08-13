@@ -77,6 +77,8 @@ class SyncService {
 
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
 
+		this.pushError = 0
+
 		return this
 	}
 
@@ -88,8 +90,12 @@ class SyncService {
 		return this.#connection.session.guestName
 	}
 
+	get hasActiveConnection() {
+		return this.#connection && !this.#connection.isClosed
+	}
+
 	async open({ fileId, initialSession }) {
-		if (this.#connection && !this.#connection.isClosed) {
+		if (this.hasActiveConnection) {
 			// We're already connected.
 			return
 		}
@@ -166,6 +172,7 @@ class SyncService {
 		}
 		return this.#connection.push(data)
 			.then((response) => {
+				this.pushError = 0
 				this.sending = false
 				this.emit('sync', {
 					steps: [],
@@ -175,6 +182,7 @@ class SyncService {
 			}).catch(err => {
 				const { response, code } = err
 				this.sending = false
+				this.pushError++
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				}
@@ -191,6 +199,8 @@ class SyncService {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 						OC.Notification.showTemporary('Changes could not be sent yet')
 					}
+				} else {
+					this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 				}
 				throw new Error('Failed to apply steps. Retry!', { cause: err })
 			})
@@ -301,7 +311,7 @@ class SyncService {
 		// Make sure to leave no pending requests behind.
 		this.autosave.clear()
 		this.backend?.disconnect()
-		if (!this.#connection || this.#connection.isClosed) {
+		if (!this.hasActiveConnection) {
 			return
 		}
 		return this.#connection.close()
