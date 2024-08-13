@@ -6,12 +6,16 @@
 <template>
 	<div class="text-editor__session-list">
 		<div :title="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
-			<NcButton type="tertiary"
+			<NcButton v-if="statusIndicatorError" type="tertiary">
+				<template #icon>
+					<SyncAlertIcon />
+				</template>
+			</NcButton>
+			<NcButton v-else type="tertiary"
 				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
 				<template #icon>
-					<NcSavingIndicatorIcon :saving="saveStatusClass === 'saving'"
-						:error="saveStatusClass === 'error'" />
+					<NcSavingIndicatorIcon :saving="statusIndicatorSaving" />
 				</template>
 			</NcButton>
 		</div>
@@ -29,6 +33,7 @@
 import { ERROR_TYPE } from '../../services/SyncService.js'
 import moment from '@nextcloud/moment'
 import { NcButton, NcSavingIndicatorIcon } from '@nextcloud/vue'
+import SyncAlertIcon from 'vue-material-design-icons/SyncAlert.vue'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
@@ -40,6 +45,7 @@ export default {
 	name: 'Status',
 
 	components: {
+		SyncAlertIcon,
 		NcButton,
 		NcSavingIndicatorIcon,
 		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
@@ -77,14 +83,6 @@ export default {
 	},
 
 	computed: {
-		lastSavedStatus() {
-			if (this.hasConnectionIssue) {
-				return this.$isMobile
-					? t('text', 'Offline')
-					: t('text', 'Offline, changes will be saved when online')
-			}
-			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
-		},
 		dirtyStateIndicator() {
 			return this.dirty || this.hasUnsavedChanges
 		},
@@ -92,6 +90,11 @@ export default {
 			let message = t('text', 'Last saved {lastSave}', { lastSave: this.lastSavedString })
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
+			}
+			if (this.hasConnectionIssue) {
+				return this.$isMobile
+					? t('text', 'Offline')
+					: t('text', 'Offline, changes will be saved when online')
 			}
 			if (this.dirty || this.hasUnsavedChanges) {
 				message += ' - ' + t('text', 'Unsaved changes')
@@ -105,11 +108,23 @@ export default {
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
 		},
-		saveStatusClass() {
+		statusIndicatorSaving() {
 			if (this.syncError && this.lastSavedString !== '') {
-				return 'error'
+				return false
 			}
-			return this.dirtyStateIndicator ? 'saving' : 'saved'
+
+			return this.dirtyStateIndicator
+		},
+		statusIndicatorError() {
+			if (this.syncError && this.lastSavedString !== '') {
+				return true
+			}
+
+			if (this.hasConnectionIssue) {
+				return true
+			}
+
+			return false
 		},
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)
