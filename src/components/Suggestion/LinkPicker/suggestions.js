@@ -44,6 +44,14 @@ const isValidMarkdown = (content) => {
 	}
 }
 
+const isValidUrl = (url) => {
+	try {
+		return Boolean(new URL(url))
+	} catch (e) {
+		return false
+	}
+}
+
 const sortImportantFirst = (list) => {
 	return [
 		...list.filter(e => important.indexOf(e.key) > -1),
@@ -77,9 +85,11 @@ export default () => createSuggestions({
 		}
 		getLinkWithPicker(props.providerId, true)
 			.then(link => {
-				if (hasMarkdownSyntax(link) && isValidMarkdown(link)) {
+				const isUrl = isValidUrl(link)
+				if (!isUrl) {
+					const isMarkdown = hasMarkdownSyntax(link) && isValidMarkdown(link)
 					// Insert markdown content (e.g. from `text_templates` app)
-					const content = markdownit.render(link)
+					const content = isMarkdown ? markdownit.render(link) : link
 					editor
 						.chain()
 						.focus()
