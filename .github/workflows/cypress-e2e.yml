@@ -161,7 +161,7 @@ jobs:
           php occ user:add --password-from-env user2
           php occ app:enable viewer
           php occ app:enable text
-          php occ app:enable assistant
+          php occ app:enable assistant --force
           php occ app:enable testing
           php occ app:list
           php occ background:cron
