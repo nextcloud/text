@@ -22,7 +22,7 @@ jobs:
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
     strategy:
       matrix:
-        server-versions: ['master']
+        server-versions: ['stable30']
 
     steps:
       - name: Checkout server
@@ -41,7 +41,7 @@ jobs:
 
       - name: Register assistant Git reference
         run: |
-          assistant_app_ref="$(if [ "${{ matrix.server-versions }}" = "master" ]; then echo -n "main"; else echo -n "${{ matrix.server-versions }}"; fi)"
+          assistant_app_ref="$(if [ "${{ matrix.server-versions }}" = "stable30" ]; then echo -n "main"; else echo -n "${{ matrix.server-versions }}"; fi)"
           echo "assistant_app_ref=$assistant_app_ref" >> $GITHUB_ENV
 
       - name: Checkout assistant
