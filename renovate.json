@@ -14,6 +14,7 @@
   "ignoreUnstable": false,
   "baseBranches": [
     "main",
+    "stable30",
     "stable29",
     "stable28"
   ],
@@ -85,7 +86,7 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "matchBaseBranches": ["stable29", "stable28", "stable27", "stable26"],
+      "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
       "enabled": false
     },
     {
