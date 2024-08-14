@@ -7,7 +7,7 @@
 		"psalm/phar": "^5.4",
 		"phpunit/phpunit": "^9.5",
 		"ext-mbstring": "*",
-		"nextcloud/ocp": "dev-master"
+		"nextcloud/ocp": "dev-stable30"
 	},
 	"license": "AGPLv3",
 	"authors": [
