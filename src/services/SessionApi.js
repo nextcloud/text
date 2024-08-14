@@ -147,7 +147,7 @@ export class Connection {
 			+ '?documentId=' + encodeURIComponent(this.#document.id)
 			+ '&sessionId=' + encodeURIComponent(this.#session.id)
 			+ '&sessionToken=' + encodeURIComponent(this.#session.token)
-			+ '&shareToken=' + encodeURIComponent(this.#options.shareToken || '')
+			+ '&token=' + encodeURIComponent(this.#options.shareToken || '')
 		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',

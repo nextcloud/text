@@ -109,7 +109,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
-	public function uploadAttachment(string $shareToken = ''): DataResponse {
+	public function uploadAttachment(string $token = ''): DataResponse {
 		$documentId = $this->getSession()->getDocumentId();
 
 		try {
@@ -120,8 +120,8 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 					throw new Exception('Could not read file');
 				}
 				$newFileName = $file['name'];
-				if ($shareToken) {
-					$uploadResult = $this->attachmentService->uploadAttachmentPublic($documentId, $newFileName, $newFileResource, $shareToken);
+				if ($token) {
+					$uploadResult = $this->attachmentService->uploadAttachmentPublic($documentId, $newFileName, $newFileResource, $token);
 				} else {
 					$userId = $this->getSession()->getUserId();
 					$uploadResult = $this->attachmentService->uploadAttachment($documentId, $newFileName, $newFileResource, $userId);
