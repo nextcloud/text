@@ -85,7 +85,7 @@ version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/router
-version: 3.0.1
+version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
@@ -277,7 +277,7 @@ version: 6.0.1
 license: MIT
 
 axios
-version: 1.6.8
+version: 1.7.4
 license: MIT
 
 cancelable-promise
