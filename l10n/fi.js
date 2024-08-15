@@ -164,10 +164,6 @@ OC.L10N.register(
     "Link to this section" : "Linkki tähän osioon",
     "Show author colors" : "Näytä tekijän värit",
     "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
-    "Source language" : "Lähdekieli",
-    "Target language" : "Kohdekieli",
-    "e.g. php, javascript, json, ..." : "esim. php, javascript, json...",
-    "Show rich workspaces" : "Näytä rikastetut työtilat",
     "Add description" : "Lisää kuvaus"
 },
 "nplurals=2; plural=(n != 1);");

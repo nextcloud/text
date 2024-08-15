@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Panoya kopyalanamadı",
     "Front matter" : "Açılış bölümleri ",
     "Link to this section" : "Bu bölüm bağlantısı",
-    "No permission to access this file." : "Bu dosyaya erişme izniniz yok.",
-    "Pick plain text files" : "Düz metin dosyalarını seçin",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
-    "Source language" : "Kaynak dil",
-    "Target language" : "Hedef dil",
-    "e.g. php, javascript, json, ..." : "php, javascript, json gibi...",
-    "Show rich workspaces" : "Zengin çalışma alanlarını görüntüle",
     "Add description" : "Açıklama ekle"
 },
 "nplurals=2; plural=(n > 1);");

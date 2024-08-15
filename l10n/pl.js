@@ -184,10 +184,6 @@ OC.L10N.register(
     "Link to this section" : "Link do tej sekcji",
     "Show author colors" : "Pokaż kolory autora",
     "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
-    "Source language" : "Język źródłowy",
-    "Target language" : "Język docelowy",
-    "e.g. php, javascript, json, ..." : "np. php, javascript, json, …",
-    "Show rich workspaces" : "Pokaż zasoby obszaru roboczego",
     "Add description" : "Dodaj opis"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

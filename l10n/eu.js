@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Ezin izan da arbelera kopiatu",
     "Front matter" : "Aurreko gaia",
     "Link to this section" : "Estekatu atal honetara",
-    "No permission to access this file." : "Ez duzu baimenik fitxategi honetara sartzeko.",
-    "Pick plain text files" : "Hartu testu planoko fitxategiak",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
-    "Source language" : "Jatorrizko hizkuntza",
-    "Target language" : "Helburuko hizkuntza",
-    "e.g. php, javascript, json, ..." : "adib. php, javascript, json, ...",
-    "Show rich workspaces" : "Erakutsi lan-gune aberatsak",
     "Add description" : "Gehitu deskribapena"
 },
 "nplurals=2; plural=(n != 1);");

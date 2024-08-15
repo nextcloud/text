@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "Could not copy to the clipboard",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
-    "No permission to access this file." : "No permission to access this file.",
-    "Pick plain text files" : "Pick plain text files",
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
-    "Source language" : "Source language",
-    "Target language" : "Target language",
-    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ...",
-    "Show rich workspaces" : "Show rich workspaces",
     "Add description" : "Add description"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

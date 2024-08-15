@@ -175,10 +175,6 @@ OC.L10N.register(
     "Link to this section" : "Link to this section",
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
-    "Source language" : "Source language",
-    "Target language" : "Target language",
-    "e.g. php, javascript, json, ..." : "e.g. php, javascript, json, ...",
-    "Show rich workspaces" : "Show rich workspaces",
     "Add description" : "Add description"
 },
 "nplurals=2; plural=(n > 1);");

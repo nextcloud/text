@@ -150,12 +150,8 @@ OC.L10N.register(
     "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
     "Copied to the clipboard" : "Copióse nel cartafueyu",
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
-    "No permission to access this file." : "Nun tienes permisu p'acceder a esti ficheru.",
     "Show author colors" : "Amosar los colores de los autores",
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
-    "Source language" : "Llingua d'orixe",
-    "Target language" : "Llingua de destín",
-    "Show rich workspaces" : "Amosar espacios de trabayu arriquecíos",
     "Add description" : "Amestar una descripción"
 },
 "nplurals=2; plural=(n != 1);");

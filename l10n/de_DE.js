@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Konnte nicht in die Zwischenablage kopieren",
     "Front matter" : "Titelei",
     "Link to this section" : "Link zu diesem Abschnitt",
-    "No permission to access this file." : "Keine Berechtigung zum Zugriff auf diese Datei.",
-    "Pick plain text files" : "Reine Textdateien auswählen",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
-    "Source language" : "Ausgangssprache",
-    "Target language" : "Zielsprache",
-    "e.g. php, javascript, json, ..." : "z. B. php, javascript, json, …",
-    "Show rich workspaces" : "Umfangreiche Arbeitsbereiche anzeigen",
     "Add description" : "Beschreibung hinzufügen"
 },
 "nplurals=2; plural=(n != 1);");
