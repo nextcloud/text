@@ -159,9 +159,6 @@ OC.L10N.register(
     "Link to this section" : "Връзка към този раздел",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
-    "Source language" : "Език на източника",
-    "Target language" : "Целеви език",
-    "Show rich workspaces" : "Показване  на обогатени работни пространства",
     "Add description" : "Добавяне на описание"
 },
 "nplurals=2; plural=(n != 1);");

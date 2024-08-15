@@ -105,7 +105,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Show author colors" : "Прикажи ги боите на авторот",
     "Author colors are only shown until everyone has closed the document." : "Боите на авторот се прикажуваат само кога сите ќе го затворат документот.",
-    "Show rich workspaces" : "Прикажи збогатен работен простор",
     "Add description" : "Додади опис"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

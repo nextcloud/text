@@ -176,10 +176,6 @@
     "Link to this section" : "Ссылка на этот раздел",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
-    "Source language" : "Исходный язык",
-    "Target language" : "Целевой язык",
-    "e.g. php, javascript, json, ..." : "например, php, javascript, json, ...",
-    "Show rich workspaces" : "Показывать дополнительные сведения",
     "Add description" : "Добавить описание"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

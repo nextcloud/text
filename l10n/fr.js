@@ -196,14 +196,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Impossible de copier dans le presse-papiers",
     "Front matter" : "Avant-propos",
     "Link to this section" : "Lier vers cette section",
-    "No permission to access this file." : "Aucune autorisation d'accéder à ce fichier.",
-    "Pick plain text files" : "Choisir des fichiers de texte brut",
     "Show author colors" : "Afficher les couleurs de l'auteur",
     "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
-    "Source language" : "Langue source",
-    "Target language" : "Langue cible",
-    "e.g. php, javascript, json, ..." : "ex : php, javascript, json, ...",
-    "Show rich workspaces" : "Afficher les espaces de travail riches",
     "Add description" : "Ajouter une description"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

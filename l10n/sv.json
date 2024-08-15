@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "Kunde inte kopiera till urklipp",
     "Front matter" : "Förtexter",
     "Link to this section" : "Länk till detta avsnitt",
-    "No permission to access this file." : "Ingen behörighet att komma åt denna fil.",
-    "Pick plain text files" : "Välj vanliga textfiler",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
-    "Source language" : "Källspråk",
-    "Target language" : "Målspråk",
-    "e.g. php, javascript, json, ..." : "t.ex. php, javascript, json, ...",
-    "Show rich workspaces" : "Visa utökade arbetsytor",
     "Add description" : "Lägg till beskrivning"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

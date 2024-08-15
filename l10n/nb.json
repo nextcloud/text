@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "Kunne ikke kopiere til utklippstavlen",
     "Front matter" : "Innledning",
     "Link to this section" : "Kobling til denne seksjonen",
-    "No permission to access this file." : "Ingen tillatelse til å få tilgang til denne filen.",
-    "Pick plain text files" : "Velg rene tekstfiler",
     "Show author colors" : "Vis forfatterfarger",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarger vises bare til alle har lukket dokumentet.",
-    "Source language" : "Kildespråk",
-    "Target language" : "Målspråk",
-    "e.g. php, javascript, json, ..." : "f.eks. php, javascript, json...",
-    "Show rich workspaces" : "Vis arbeidsområde",
     "Add description" : "Legg til beskrivelse"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

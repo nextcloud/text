@@ -75,7 +75,6 @@ OC.L10N.register(
     "Command" : "פקודה",
     "Control" : "שליטה",
     "Formatting" : "עיצוב",
-    "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…",
-    "Show rich workspaces" : "הצגת סביבות עבודה עשירות"
+    "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");
