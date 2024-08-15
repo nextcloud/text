@@ -113,8 +113,8 @@
     "Control" : "Controle",
     "Formatting" : "Opmaak",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
+    "Add folder description" : "Mapomschrijving toevoegen",
     "Show author colors" : "Tonen auteurskleuren",
-    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
-    "Show rich workspaces" : "Toon rijke werkplekken"
+    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

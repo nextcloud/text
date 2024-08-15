@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "Não foi possível copiar para a área de transferência",
     "Front matter" : "Matéria de frente",
     "Link to this section" : "Link para esta seção",
-    "No permission to access this file." : "Sem permissão para acessar este arquivo.",
-    "Pick plain text files" : "Escolha arquivos de texto simples",
     "Show author colors" : "Mostrar cores de autoria",
     "Author colors are only shown until everyone has closed the document." : "As cores de autoria só são exibidas até que todas as pessoas tenham fechado o documento. ",
-    "Source language" : "Source language",
-    "Target language" : "Target language",
-    "e.g. php, javascript, json, ..." : "por exemplo. php, javascript, json,...",
-    "Show rich workspaces" : "Mostrar espaços de trabalho avançados",
     "Add description" : "Adicionar descrição"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

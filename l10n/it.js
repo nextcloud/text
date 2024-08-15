@@ -197,14 +197,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Impossibile copiare negli appunti",
     "Front matter" : "Frontespizio",
     "Link to this section" : "Collegamento a questa sezione",
-    "No permission to access this file." : "Non hai l'autorizzazione per accedere a questo file.",
-    "Pick plain text files" : "Scegli file di testo semplice",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
-    "Source language" : "Lingua di origine",
-    "Target language" : "Lingua di destinazione",
-    "e.g. php, javascript, json, ..." : "es. php, javascript, json, ...",
-    "Show rich workspaces" : "Mostra aree di lavoro avanzate",
     "Add description" : "Aggiungi descrizione"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
