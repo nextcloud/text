@@ -99,7 +99,6 @@ OC.L10N.register(
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Show author colors" : "Hiển thị màu sắc của tác giả",
     "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
-    "Show rich workspaces" : "Hiển thị không gian làm việc",
     "Add description" : "Thêm mô tả"
 },
 "nplurals=1; plural=0;");

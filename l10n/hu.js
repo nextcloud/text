@@ -178,10 +178,6 @@ OC.L10N.register(
     "Link to this section" : "Hivatkozás erre a szakaszra",
     "Show author colors" : "Szerzők színének megjelenítése",
     "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
-    "Source language" : "Forrásnyelv",
-    "Target language" : "Célnyelv",
-    "e.g. php, javascript, json, ..." : "pl. php, javascript, json...",
-    "Show rich workspaces" : "Gazdag munkaterületek megjelenítése",
     "Add description" : "Leírás hozzáadása"
 },
 "nplurals=2; plural=(n != 1);");

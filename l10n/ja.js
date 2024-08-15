@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "クリップボードにコピーできませんでした",
     "Front matter" : "Front matter",
     "Link to this section" : "このセクションへのリンク",
-    "No permission to access this file." : "権限がないため、このファイルにアクセスできません。",
-    "Pick plain text files" : "プレーンテキストファイルを取り出す",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
-    "Source language" : "原文の言語",
-    "Target language" : "訳文の言語",
-    "e.g. php, javascript, json, ..." : "例えば php, javascript, json等･･･",
-    "Show rich workspaces" : "各フォルダのReadmeを表示",
     "Add description" : "説明を追加"
 },
 "nplurals=1; plural=0;");

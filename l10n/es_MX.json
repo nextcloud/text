@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "No se pudo copiar al portapapeles",
     "Front matter" : "Páginas iniciales",
     "Link to this section" : "Enlace a esta sección",
-    "No permission to access this file." : "Sin permiso para acceder a este archivo.",
-    "Pick plain text files" : "Escoger archivos de texto plano",
     "Show author colors" : "Mostrar colores de autor",
     "Author colors are only shown until everyone has closed the document." : "Los colores de autor sólo se muestran hasta que todos hayan cerrado el documento.",
-    "Source language" : "Idioma fuente",
-    "Target language" : "Idioma destino",
-    "e.g. php, javascript, json, ..." : "por ejemplo, php, javascript, json, ...",
-    "Show rich workspaces" : "Mostrar espacios de trabajo enriquecidos",
     "Add description" : "Añadir descripción"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "無法複製到剪貼簿",
     "Front matter" : "前言",
     "Link to this section" : "連結到本節",
-    "No permission to access this file." : "無權存取此檔案。",
-    "Pick plain text files" : "挑選純文字檔案",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
-    "Source language" : "本源語言",
-    "Target language" : "目標語言",
-    "e.g. php, javascript, json, ..." : "例如：php、javascript、json 等",
-    "Show rich workspaces" : "顯示較多功能的工作區",
     "Add description" : "添加描述"
 },
 "nplurals=1; plural=0;");

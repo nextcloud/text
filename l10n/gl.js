@@ -198,14 +198,8 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Non foi posíbel copiar ao portapapeis",
     "Front matter" : "Preliminar ",
     "Link to this section" : "Ligazón a esta sección",
-    "No permission to access this file." : "Non ten permiso para acceder a este ficheiro.",
-    "Pick plain text files" : "Escoller ficheiros de texto simple",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
-    "Source language" : "idioma de orixe",
-    "Target language" : "Idioma de destino",
-    "e.g. php, javascript, json, ..." : "p. ex. php, javascript, json, …",
-    "Show rich workspaces" : "Amosar espazos de traballo mellorados",
     "Add description" : "Engadir descrición"
 },
 "nplurals=2; plural=(n != 1);");

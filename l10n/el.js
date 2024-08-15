@@ -127,7 +127,6 @@ OC.L10N.register(
     "Add folder description" : "Προσθήκη περιγραφής φακέλου",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
-    "Show rich workspaces" : "Εμφάνιση εμπλουτισμένων χώρων εργασίας",
     "Add description" : "Προσθήκη περιγραφής"
 },
 "nplurals=2; plural=(n != 1);");

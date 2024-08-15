@@ -196,14 +196,8 @@
     "Could not copy to the clipboard" : "No s'ha pogut copiar el codi al porta-retalls",
     "Front matter" : "Text preliminar",
     "Link to this section" : "Enllaç a aquesta secció",
-    "No permission to access this file." : "No teniu permís per a accedir a aquest fitxer.",
-    "Pick plain text files" : "Trieu fitxers de text sense format",
     "Show author colors" : "Mostra els colors de l'autor",
     "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom ha tancat el document.",
-    "Source language" : "Llengua d'origen",
-    "Target language" : "Llengua de destinació",
-    "e.g. php, javascript, json, ..." : "Per exemple: php, javascript, json…",
-    "Show rich workspaces" : "Mostra els espais de treball enriquits",
     "Add description" : "Afegeix una descripció"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
