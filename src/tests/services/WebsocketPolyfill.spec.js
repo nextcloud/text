@@ -8,21 +8,21 @@ import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 describe('Init function', () => {
 
 	it('returns a websocket polyfill class', () => {
-		const syncService = { on: jest.fn(), open: jest.fn() }
+		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
 		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 	})
 
 	it('registers handlers', () => {
-		const syncService = { on: jest.fn(), open: jest.fn() }
+		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
 		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(syncService.on).toHaveBeenCalled()
 	})
 
 	it('opens sync service', () => {
-		const syncService = { on: jest.fn(), open: jest.fn() }
+		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
 		const fileId = 123
 		const initialSession = { }
 		const Polyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
@@ -33,7 +33,7 @@ describe('Init function', () => {
 	it('sends steps to sync service', async () => {
 		const syncService = {
 			on: jest.fn(),
-			open: jest.fn(),
+			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: async getData => getData(),
 		}
 		const queue = [ 'initial' ]
@@ -51,9 +51,10 @@ describe('Init function', () => {
 	})
 
 	it('handles early reject', async () => {
+		jest.spyOn(console, 'error').mockImplementation(() => {})
 		const syncService = {
 			on: jest.fn(),
-			open: jest.fn(),
+			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: jest.fn().mockRejectedValue('error before reading steps in sync service'),
 		}
 		const queue = [ 'initial' ]
@@ -69,9 +70,10 @@ describe('Init function', () => {
 	})
 
 	it('handles reject after reading data', async () => {
+		jest.spyOn(console, 'error').mockImplementation(() => {})
 		const syncService = {
 			on: jest.fn(),
-			open: jest.fn(),
+			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: jest.fn().mockImplementation( async getData => {
 				getData()
 				throw 'error when sending in sync service'
@@ -90,9 +92,10 @@ describe('Init function', () => {
 	})
 
 	it('queue survives a close', async () => {
+		jest.spyOn(console, 'error').mockImplementation(() => {})
 		const syncService = {
 			on: jest.fn(),
-			open: jest.fn(),
+			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: jest.fn().mockImplementation( async getData => {
 				getData()
 				throw 'error when sending in sync service'
