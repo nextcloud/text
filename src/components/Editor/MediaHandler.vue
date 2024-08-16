@@ -110,8 +110,8 @@ export default {
 
 			return Promise.all(uploadPromises)
 				.catch(error => {
-					logger.error('Uploading multiple images failed', { error })
-					showError(error?.response?.data?.error || error.message)
+					logger.error('Uploading multiple attachments failed', { error })
+					showError(t('text', 'Uploading multiple attachments failed.'))
 				})
 				.then(() => {
 					this.state.isUploadingAttachments = false
@@ -128,8 +128,8 @@ export default {
 					)
 				})
 				.catch((error) => {
-					logger.error('Uploading image failed', { error })
-					showError(error?.response?.data?.error)
+					logger.error('Uploading attachment failed', { error })
+					showError(t('text', 'Uploading attachment failed.'))
 				})
 				.then(() => {
 					this.state.isUploadingAttachments = false
@@ -156,8 +156,8 @@ export default {
 					null, response.data?.dirname,
 				)
 			}).catch((error) => {
-				logger.error('Failed to insert image path', { error })
-				showError(error?.response?.data?.error || error.message)
+				logger.error('Failed to insert from Files', { error })
+				showError(t('text', 'Failed to insert from Files'))
 			}).then(() => {
 				this.state.isUploadingAttachments = false
 			})
