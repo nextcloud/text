@@ -112,10 +112,19 @@ class SyncService {
 		return this.#connection && !this.#connection.isClosed
 	}
 
+	get connectionState() {
+		if (!this.#connection || this.version === undefined) {
+			return null
+		}
+		return {
+			...this.#connection.state,
+			version: this.version,
+		}
+	}
+
 	async open({ fileId, initialSession }) {
 		if (this.hasActiveConnection) {
-			// We're already connected.
-			return
+			return this.connectionState
 		}
 		const onChange = ({ sessions }) => {
 			this.sessions = sessions
@@ -130,19 +139,15 @@ class SyncService {
 		if (!this.#connection) {
 			this.off('change', onChange)
 			// Error was already emitted in connect
-			return
+			return null
 		}
 		this.backend = new PollingBackend(this, this.#connection)
 		this.version = this.#connection.docStateVersion
 		this.baseVersionEtag = this.#connection.document.baseVersionEtag
-		this.emit('opened', {
-			...this.#connection.state,
-			version: this.version,
-		})
-		this.emit('loaded', {
-			...this.#connection.state,
-			version: this.version,
-		})
+		this.emit('opened', this.connectionState)
+		this.emit('loaded', this.connectionState)
+
+		return this.connectionState
 	}
 
 	startSync() {
