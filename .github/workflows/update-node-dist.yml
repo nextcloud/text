@@ -9,6 +9,7 @@ on:
     branches:
       # implemented since 28, once branched off, add your stable branch here
       - main
+      - stable3*
       - stable29
       - stable28
 
