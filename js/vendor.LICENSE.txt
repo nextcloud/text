@@ -33,7 +33,7 @@ version: 7.4.47
 license: Apache-2.0
 
 @nextcloud/auth
-version: 2.3.0
+version: 2.4.0
 license: GPL-3.0-or-later
 
 @nextcloud/axios
@@ -57,7 +57,7 @@ version: 3.3.1
 license: GPL-3.0-or-later
 
 @nextcloud/files
-version: 3.7.0
+version: 3.8.0
 license: AGPL-3.0-or-later
 
 @nextcloud/initial-state
@@ -65,7 +65,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 2.2.0
+version: 3.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -89,7 +89,7 @@ version: 3.0.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
-version: 0.2.2
+version: 0.2.3
 license: GPL-3.0-or-later
 
 @nextcloud/timezones
@@ -821,7 +821,7 @@ version: 2.2.4
 license: MIT
 
 webdav
-version: 5.6.0
+version: 5.7.1
 license: MIT
 
 y-prosemirror
