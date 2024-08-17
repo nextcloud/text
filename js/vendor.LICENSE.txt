@@ -85,7 +85,7 @@ version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/router
-version: 2.2.1
+version: 3.0.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
@@ -113,151 +113,151 @@ version: 0.2.0
 license: Apache-2.0
 
 @tiptap/core
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-blockquote
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-bold
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-bullet-list
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-character-count
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-code
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-code-block
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-code-block-lowlight
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-collaboration
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-collaboration-cursor
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-document
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-dropcursor
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-floating-menu
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-gapcursor
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-hard-break
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-heading
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-history
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-horizontal-rule
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-image
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-italic
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-link
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-list-item
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-mention
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-ordered-list
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-paragraph
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-placeholder
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-strike
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-table
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-table-cell
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-table-header
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-table-row
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-task-item
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-task-list
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-text
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/extension-underline
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/suggestion
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @tiptap/vue-2
-version: 2.4.0
+version: 2.6.2
 license: MIT
 
 @vueuse/components
@@ -653,7 +653,7 @@ version: 1.3.2
 license: MIT
 
 prosemirror-history
-version: 1.4.0
+version: 1.4.1
 license: MIT
 
 prosemirror-keymap
@@ -661,15 +661,15 @@ version: 1.2.2
 license: MIT
 
 prosemirror-markdown
-version: 1.12.0
+version: 1.13.0
 license: MIT
 
 prosemirror-model
-version: 1.19.4
+version: 1.22.3
 license: MIT
 
 prosemirror-schema-list
-version: 1.3.0
+version: 1.4.1
 license: MIT
 
 prosemirror-state
@@ -677,15 +677,15 @@ version: 1.4.3
 license: MIT
 
 prosemirror-tables
-version: 1.3.7
+version: 1.4.0
 license: MIT
 
 prosemirror-transform
-version: 1.8.0
+version: 1.10.0
 license: MIT
 
 prosemirror-view
-version: 1.33.1
+version: 1.33.10
 license: MIT
 
 proxy-polyfill
