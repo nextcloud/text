@@ -34,15 +34,11 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
 			this.url = url
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
-			if (syncService.hasActiveConnection) {
-				setTimeout(() => this.onopen?.(), 0)
-			}
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
-					this.#version = version
 					logger.debug('opened ', { version, session })
+					this.#version = version
 					this.#session = session
-					this.onopen?.()
 				},
 				loaded: ({ version, session, content }) => {
 					logger.debug('loaded ', { version, session })
@@ -60,7 +56,16 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					}
 				},
 			})
-			syncService.open({ fileId, initialSession })
+
+			syncService.open({ fileId, initialSession }).then((data) => {
+				if (syncService.hasActiveConnection) {
+					const { version, session } = data
+					this.#version = version
+					this.#session = session
+
+					this.onopen?.()
+				}
+			})
 		}
 
 		#registerHandlers(handlers) {
