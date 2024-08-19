@@ -1,0 +1,2 @@
+/*! third party licenses: js/vendor.LICENSE.txt */
+import{T as r,au as n}from"./RichText-BiFp1-Lv.chunk.mjs";import{n as o,e as s}from"./_plugin-vue2_normalizer-BquhOuio.chunk.mjs";import{B as a}from"./RichTextReader-Dx4R1C69.chunk.mjs";const p={name:"PlainTextReader",components:{BaseReader:a},provide:{renderHtml(e){return"<pre>"+s(e)+"</pre>"},extensions:()=>[r,n]},props:{content:{type:String,required:!0}}};var l=function(){var e=this,t=e._self._c;return t("BaseReader",{attrs:{content:e.content}})},i=[],c=o(p,l,i,!1,null,null,null,null);const f=c.exports;export{f as P};
