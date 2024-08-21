@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\DAV;
 
+use Exception;
 use OC\Files\Node\File;
 use OCA\DAV\Connector\Sabre\Directory;
 use OCA\DAV\Files\FilesHome;
@@ -20,6 +21,7 @@ use OCP\Files\StorageNotAvailableException;
 use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\Lock\LockedException;
+use Psr\Log\LoggerInterface;
 use Sabre\DAV\INode;
 use Sabre\DAV\PropFind;
 use Sabre\DAV\Server;
@@ -37,6 +39,7 @@ class WorkspacePlugin extends ServerPlugin {
 		private IRootFolder $rootFolder,
 		private ICacheFactory $cacheFactory,
 		private IConfig $config,
+		private LoggerInterface $logger,
 		private ?string $userId
 	) {
 	}
@@ -96,7 +99,12 @@ class WorkspacePlugin extends ServerPlugin {
 				try {
 					$cachedContent = $file->getContent();
 					$cache->set($cacheKey, $cachedContent, 3600);
-				} catch (GenericFileException|NotPermittedException|LockedException $e) {
+				} catch (GenericFileException|NotPermittedException|LockedException) {
+					// Ignore
+				} catch (Exception $e) {
+					$this->logger->error($e->getMessage(), [
+						'exception' => $e,
+					]);
 				}
 			}
 			return $cachedContent;
