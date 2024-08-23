@@ -13,6 +13,7 @@ import Callouts from './../nodes/Callouts.js'
 import CharacterCount from '@tiptap/extension-character-count'
 import Code from '@tiptap/extension-code'
 import CodeBlock from './../nodes/CodeBlock.js'
+import Details from './../nodes/Details.js'
 import Document from '@tiptap/extension-document'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import EditableTable from './../nodes/EditableTable.js'
@@ -79,6 +80,7 @@ export default Extension.create({
 				lowlight,
 				defaultLanguage: 'plaintext',
 			}),
+			Details,
 			BulletList,
 			HorizontalRule,
 			OrderedList,

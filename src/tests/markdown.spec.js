@@ -126,6 +126,16 @@ describe('Markdown though editor', () => {
 	test('mentions', () => {
 		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe(' @[username](mention://user/id) ')
 	})
+
+	test('details', () => {
+		expect(markdownThroughEditor('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n'))
+			.toBe('<details>\n<summary>**summary**</summary>\n* list\n\n</details>\n')
+	})
+
+	test('nested details', () => {
+		expect(markdownThroughEditor('<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n'))
+			.toBe('<details>\n<summary>summary</summary>\n* list\n\n<details>\n<summary>summary</summary>\ncontent\n\n</details>\n\n</details>\n')
+	})
 })
 
 describe('Markdown serializer from html', () => {
@@ -189,6 +199,11 @@ describe('Markdown serializer from html', () => {
 	test('mentions', () => {
 		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe(' @[username](mention://user/id) ')
 		expect(markdownThroughEditorHtml('<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>')).toBe(' @[whitespace user](mention://user/whitespace%20user) ')
+	})
+
+	test('details', () => {
+		expect(markdownThroughEditorHtml('<details><summary><strong>summary</strong></summary><pre>code</pre></details>'))
+			.toBe('<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n')
 	})
 })
 
