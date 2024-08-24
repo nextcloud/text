@@ -246,8 +246,8 @@ class DocumentService {
 
 	/**
 	 * @param Document $document
-	 * @param Session  $session
-	 * @param Step[]   $steps
+	 * @param Session $session
+	 * @param Step[] $steps
 	 *
 	 * @return int
 	 *
@@ -269,7 +269,7 @@ class DocumentService {
 			$step->setTimestamp(time());
 			$step = $this->stepMapper->insert($step);
 			$newVersion = $step->getId();
-			$this->logger->debug("Adding steps to " . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
+			$this->logger->debug('Adding steps to ' . $document->getId() . ": bumping version from $stepsVersion to $newVersion");
 			$this->cache->set('document-version-' . $document->getId(), $newVersion);
 			// TODO write steps to cache for quicker reading
 			return $newVersion;
@@ -632,7 +632,7 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
+		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException $e) {
 		} catch (OwnerLockedException $e) {
 			return false;
 		}
@@ -651,7 +651,7 @@ class DocumentService {
 				ILock::TYPE_APP,
 				Application::APP_NAME
 			));
-		} catch (NoLockProviderException | PreConditionNotMetException | NotFoundException $e) {
+		} catch (NoLockProviderException|PreConditionNotMetException|NotFoundException $e) {
 		}
 	}
 

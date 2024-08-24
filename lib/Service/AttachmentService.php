@@ -245,10 +245,10 @@ class AttachmentService {
 	/**
 	 * Save an uploaded file in the attachment folder
 	 *
-	 * @param int      $documentId
-	 * @param string   $newFileName
+	 * @param int $documentId
+	 * @param string $newFileName
 	 * @param resource $newFileResource
-	 * @param string   $userId
+	 * @param string $userId
 	 *
 	 * @return array
 	 * @throws InvalidPathException
@@ -470,7 +470,7 @@ class AttachmentService {
 	/**
 	 * Get a user file from file ID
 	 *
-	 * @param int    $documentId
+	 * @param int $documentId
 	 * @param string $userId
 	 *
 	 * @return File
@@ -568,7 +568,7 @@ class AttachmentService {
 	 * Get attachment file names listed in the markdown file content
 	 *
 	 * @param string $content
-	 * @param int    $fileId
+	 * @param int $fileId
 	 *
 	 * @return array
 	 */
