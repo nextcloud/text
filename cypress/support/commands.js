@@ -275,7 +275,7 @@ Cypress.Commands.add('getFileId', (fileName, params = {}) => {
 })
 
 Cypress.Commands.add('openFile', (fileName, params = {}) => {
-	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] a[data-cy-files-list-row-name-link]`).click(params)
+	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-name-link]`).click(params)
 })
 
 Cypress.Commands.add('openFileInShare', fileName => {
