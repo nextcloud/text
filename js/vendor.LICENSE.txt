@@ -1,15 +1,27 @@
 Included dependencies:
 
 @braintree/sanitize-url
-version: 6.0.2
+version: 7.1.0
 license: MIT
 
+@chevrotain/gast
+version: 11.0.3
+license: Apache-2.0
+
+@chevrotain/regexp-to-ast
+version: 11.0.3
+license: Apache-2.0
+
+@chevrotain/utils
+version: 11.0.3
+license: Apache-2.0
+
 @floating-ui/core
-version: 1.6.7
+version: 0.3.1
 license: MIT
 
 @floating-ui/dom
-version: 1.6.10
+version: 0.1.10
 license: MIT
 
 @floating-ui/utils
@@ -31,6 +43,10 @@ license: Apache-2.0
 @mdi/svg
 version: 7.4.47
 license: Apache-2.0
+
+@mermaid-js/parser
+version: 0.2.0
+license: MIT
 
 @nextcloud/auth
 version: 2.4.0
@@ -65,7 +81,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 2.2.0
+version: 3.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -292,6 +308,14 @@ charenc
 version: 0.0.2
 license: BSD-3-Clause
 
+chevrotain
+version: 11.0.3
+license: Apache-2.0
+
+chevrotain-allstar
+version: 0.3.1
+license: MIT
+
 core-js
 version: 3.37.0
 license: MIT
@@ -305,7 +329,7 @@ version: 0.0.2
 license: BSD-3-Clause
 
 cytoscape
-version: 3.28.1
+version: 3.30.2
 license: MIT
 
 cytoscape-cose-bilkent
@@ -331,10 +355,6 @@ license: ISC
 d3-ease
 version: 3.0.1
 license: BSD-3-Clause
-
-d3-fetch
-version: 3.0.1
-license: ISC
 
 d3-format
 version: 3.1.0
@@ -365,8 +385,8 @@ version: 3.0.0
 license: ISC
 
 d3-shape
-version: 1.3.7
-license: BSD-3-Clause
+version: 3.2.0
+license: ISC
 
 d3-time
 version: 3.1.0
@@ -397,24 +417,16 @@ version: 0.2.7
 license: MIT
 
 dayjs
-version: 1.11.9
+version: 1.11.13
 license: MIT
 
 debounce
 version: 2.1.0
 license: MIT
 
-decode-named-character-reference
-version: 1.0.2
-license: MIT
-
 dompurify
 version: 3.1.2
 license: (MPL-2.0 OR Apache-2.0)
-
-elkjs
-version: 0.9.1
-license: EPL-2.0
 
 emoji-mart-vue-fast
 version: 15.0.1
@@ -444,10 +456,6 @@ format
 version: 0.2.2
 license: (MIT)
 
-heap
-version: 0.2.7
-license: MIT
-
 highlight.js
 version: 11.10.0
 license: BSD-3-Clause
@@ -469,8 +477,12 @@ version: 0.16.10
 license: MIT
 
 khroma
-version: 2.0.0
+version: 2.1.0
 license: 
+
+langium
+version: 3.0.0
+license: MIT
 
 layout-base
 version: 1.0.2
@@ -490,10 +502,6 @@ license: MIT
 
 linkifyjs
 version: 4.1.0
-license: MIT
-
-lodash
-version: 4.17.21
 license: MIT
 
 lodash-es
@@ -524,92 +532,20 @@ markdown-it-image-figures
 version: 2.1.1
 license: MIT
 
+marked
+version: 13.0.3
+license: MIT
+
 md5
 version: 2.3.0
 license: BSD-3-Clause
-
-mdast-util-from-markdown
-version: 1.3.0
-license: MIT
-
-mdast-util-to-string
-version: 3.1.1
-license: MIT
 
 mdurl
 version: 2.0.0
 license: MIT
 
 mermaid
-version: 10.9.1
-license: MIT
-
-micromark
-version: 3.1.0
-license: MIT
-
-micromark-core-commonmark
-version: 1.0.6
-license: MIT
-
-micromark-factory-destination
-version: 1.0.0
-license: MIT
-
-micromark-factory-label
-version: 1.0.2
-license: MIT
-
-micromark-factory-space
-version: 1.0.0
-license: MIT
-
-micromark-factory-title
-version: 1.0.2
-license: MIT
-
-micromark-factory-whitespace
-version: 1.0.0
-license: MIT
-
-micromark-util-character
-version: 1.1.0
-license: MIT
-
-micromark-util-chunked
-version: 1.0.0
-license: MIT
-
-micromark-util-classify-character
-version: 1.0.0
-license: MIT
-
-micromark-util-combine-extensions
-version: 1.0.0
-license: MIT
-
-micromark-util-decode-numeric-character-reference
-version: 1.0.0
-license: MIT
-
-micromark-util-decode-string
-version: 1.0.2
-license: MIT
-
-micromark-util-html-tag-name
-version: 1.1.0
-license: MIT
-
-micromark-util-normalize-identifier
-version: 1.0.0
-license: MIT
-
-micromark-util-resolve-all
-version: 1.0.0
-license: MIT
-
-micromark-util-subtokenize
-version: 1.0.2
+version: 11.0.2
 license: MIT
 
 mitt
@@ -712,6 +648,10 @@ rope-sequence
 version: 1.3.3
 license: MIT
 
+roughjs
+version: 4.6.6
+license: MIT
+
 semver
 version: 7.6.2
 license: ISC
@@ -733,7 +673,7 @@ version: 3.2.0
 license: MIT
 
 stylis
-version: 4.3.0
+version: 4.3.4
 license: MIT
 
 tabbable
@@ -760,10 +700,6 @@ uc.micro
 version: 2.1.0
 license: MIT
 
-unist-util-stringify-position
-version: 3.0.3
-license: MIT
-
 url-parse
 version: 1.5.10
 license: MIT
@@ -774,6 +710,22 @@ license: MIT
 
 vite-plugin-node-polyfills
 version: 0.22.0
+license: MIT
+
+vscode-jsonrpc
+version: 8.2.0
+license: MIT
+
+vscode-languageserver-textdocument
+version: 1.0.12
+license: MIT
+
+vscode-languageserver-types
+version: 3.17.5
+license: MIT
+
+vscode-uri
+version: 3.0.8
 license: MIT
 
 vue
