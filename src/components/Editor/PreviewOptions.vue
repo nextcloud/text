@@ -70,4 +70,9 @@ div[data-text-preview-options] {
 	left: -44px;
 }
 
+// Inside details, button needs to be shifted further
+.details-content div[data-text-preview-options] {
+	left: calc(-44px - 24px);
+}
+
 </style>

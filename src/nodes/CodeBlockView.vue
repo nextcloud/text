@@ -229,6 +229,7 @@ export default {
 <style lang="scss" scoped>
 .code-block {
 	background-color: var(--color-background-dark);
+	position: relative;
 }
 
 .code-block-header {

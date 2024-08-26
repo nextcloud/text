@@ -11,11 +11,11 @@
 			<template #icon>
 				<TriangleSmallDownIcon :size="20"
 					class="button-open"
-					:class="{ 'open': isOpen }"
+					:class="{ 'open': open }"
 					@click="toggleOpen" />
 			</template>
 		</NcButton>
-		<NodeViewContent :class="{ 'is-hidden': !isOpen }" />
+		<NodeViewContent class="details-container" :class="{ 'is-hidden': !open }" />
 	</NodeViewWrapper>
 </template>
 
@@ -45,17 +45,31 @@ export default {
 		},
 	},
 
-	computed: {
-		isOpen() {
-			return this.node.attrs.open
+	data() {
+		return {
+			open: false,
+		}
+	},
+
+	watch: {
+		'node.attrs.openDetails'() {
+			this.openByAttr()
 		},
+	},
+
+	beforeMount() {
+		this.openByAttr()
 	},
 
 	methods: {
 		toggleOpen() {
-			this.updateAttributes({
-				open: !this.isOpen,
-			})
+			this.open = !this.open
+		},
+		openByAttr() {
+			if (this.node.attrs.openDetails) {
+				this.open = true
+				this.updateAttributes({ openDetails: false })
+			}
 		},
 	},
 }
@@ -69,6 +83,11 @@ div.details {
 
 	border: 1px solid var(--color-border-dark) !important;
 	border-radius: var(--border-radius-large);
+
+	.details-container {
+		width: 100%;
+		margin-right: 12px;
+	}
 
 	:deep(summary) {
 		font-weight: bold;

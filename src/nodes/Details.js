@@ -30,21 +30,21 @@ function detailsParentInfo(resolvedPos, schema) {
 }
 
 /**
- * Get first detailsContent node from descendants of a node
+ * Get first child node of a type from descendants of a node
  *
  * @param {object} node - prosemirror node
- * @param {object} schema - prosemirror editor schema
+ * @param {object} nodeType - prosemirror node type
  */
-function detailsContentNode(node, schema) {
-	const detailsContentNodes = []
+function childFromNode(node, nodeType) {
+	const childNodes = []
 	node.descendants((childNode, i) => {
-		if (childNode.type === schema.nodes.detailsContent) {
-			detailsContentNodes.push(childNode)
+		if (childNode.type === nodeType) {
+			childNodes.push(childNode)
 			return false
 		}
 	})
-	return detailsContentNodes.length > 0
-		? detailsContentNodes[0]
+	return childNodes.length > 0
+		? childNodes[0]
 		: null
 }
 
@@ -71,7 +71,7 @@ const Details = Node.create({
 
 	addAttributes() {
 		return {
-			open: {
+			openDetails: {
 				default: false,
 			},
 		}
@@ -123,7 +123,7 @@ const Details = Node.create({
 					}, {
 						type: this.name,
 						attrs: {
-							open: true,
+							openDetails: true,
 						},
 						content: [
 							{ type: 'detailsSummary' },
@@ -139,7 +139,7 @@ const Details = Node.create({
 				if (!details) {
 					return false
 				}
-				const detailsContent = detailsContentNode(details.node, schema)
+				const detailsContent = childFromNode(details.node, schema.nodes.detailsContent)
 				if (!detailsContent) {
 					return false
 				}
@@ -176,23 +176,36 @@ const Details = Node.create({
 				}
 
 				const details = detailsParentInfo($from, schema)
-				if (!details.node.attrs.open) {
-					editor.commands.updateAttributes('details', { open: true })
+				if (!details.node.attrs.openDetails) {
+					editor.commands.updateAttributes('details', { openDetails: true })
 				}
 
-				const detailsContent = detailsContentNode(details.node, schema)
+				const detailsContent = childFromNode(details.node, schema.nodes.detailsContent)
 				if (!detailsContent) {
 					return false
 				}
 
 				// Check if next node is detailsContent
-				const detailsNode = state.doc.nodeAt($from.after())
-				if (!detailsNode?.type === schema.nodes.detailsContent) {
+				const nextNode = state.doc.nodeAt($from.after())
+				if (!nextNode?.type === schema.nodes.detailsContent) {
 					return false
 				}
 
-				const detailsContentPos = $from.after()
-				return editor.commands.setTextSelection(detailsContentPos)
+				return editor.commands.setTextSelection($from.after())
+			},
+			// Unset details with backspace in empty summary
+			Backspace: ({ editor }) => {
+				const { state } = editor
+				const { schema, selection } = state
+				const { $from } = selection
+				if ($from.parent.type !== schema.nodes.detailsSummary) {
+					return false
+				}
+				if ($from.parent.textContent !== '') {
+					return false
+				}
+
+				return editor.commands.unsetDetails()
 			},
 		}
 
