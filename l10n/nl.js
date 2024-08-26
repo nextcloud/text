@@ -89,6 +89,7 @@ OC.L10N.register(
     "No emoji found" : "Geen emoji gevonden",
     "Edit" : "Bewerken",
     "Source code" : "Broncode",
+    "Both" : "Beide",
     "Failed to load" : "Laden mislukt",
     "Add row before" : "Voeg rij toe voor",
     "Add row after" : "Voeg rij to na",
