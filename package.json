@@ -140,7 +140,7 @@
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
     "rollup-plugin-webpack-stats": "^1.0.2",
-    "ts-jest": "^29.2.4",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.5.4",
     "vite": "^5.4.2",
     "vite-plugin-commonjs": "^0.10.1",
