@@ -8,10 +8,12 @@
 		:show-outline-outside="showOutlineOutside"
 		@outline-toggled="outlineToggled">
 		<MainContainer>
-			<MenuBar v-if="!readOnly" :autohide="false" />
-			<slot v-else name="readonlyBar">
-				<ReadonlyBar />
-			</slot>
+			<template v-if="showMenuBar">
+				<MenuBar v-if="!readOnly" :autohide="false" />
+				<slot v-else name="readonlyBar">
+					<ReadonlyBar />
+				</slot>
+			</template>
 			<ContentContainer />
 		</MainContainer>
 	</Wrapper>
@@ -74,6 +76,10 @@ export default {
 		shareToken: {
 			type: String,
 			default: null,
+		},
+		showMenuBar: {
+			type: Boolean,
+			default: true,
 		},
 		showOutlineOutside: {
 			type: Boolean,
@@ -175,6 +181,7 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import './../../css/prosemirror';
+@import './../../css/print';
 </style>
