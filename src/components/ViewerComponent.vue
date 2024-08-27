@@ -17,7 +17,11 @@
 		id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
-		<Component :is="readerComponent" :content="content" />
+		<Component :is="readerComponent"
+			:content="content"
+			:file-id="fileid"
+			:read-only="true"
+			:show-menu-bar="false" />
 		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
 			{{ t('text', 'Edit') }}
 			<template #icon>
@@ -33,7 +37,7 @@ import axios from '@nextcloud/axios'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
-import RichTextReader from './RichTextReader.vue'
+import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import { translate, translatePlural } from '@nextcloud/l10n'
 
 import { getSharingToken } from '../helpers/token.js'
@@ -47,8 +51,8 @@ export default {
 	components: {
 		NcButton: Vue.extend(NcButton),
 		PencilIcon: Vue.extend(PencilIcon),
-		RichTextReader: Vue.extend(RichTextReader),
 		PlainTextReader: Vue.extend(PlainTextReader),
+		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
 		Editor: getEditorInstance,
 	},
 	provide() {
@@ -112,7 +116,7 @@ export default {
 
 		/** @return {boolean} */
 		readerComponent() {
-			return this.mime === 'text/markdown' ? RichTextReader : PlainTextReader
+			return this.mime === 'text/markdown' ? MarkdownContentEditor : PlainTextReader
 		},
 	},
 
