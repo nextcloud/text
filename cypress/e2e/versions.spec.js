@@ -34,12 +34,12 @@ describe('Versions', () => {
 			cy.get('[data-files-versions-versions-list] li a').should('have.length', 3)
 
 			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
-			cy.get('.viewer__content #read-only-editor')
+			cy.getContent()
 				.find('h1')
 				.should('contain.text', 'V2')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
-			cy.get('.viewer__content #read-only-editor')
+			cy.getContent()
 				.find('h1')
 				.should('contain.text', 'V1')
 
@@ -68,12 +68,12 @@ describe('Versions', () => {
 			cy.get('[data-files-versions-versions-list] li a').should('have.length', 3)
 
 			cy.get('[data-files-versions-versions-list] li a').eq(1).click()
-			cy.get('.viewer__content #read-only-editor')
+			cy.getContent()
 				.find('h1')
 				.should('contain.text', 'V2')
 
 			cy.get('[data-files-versions-versions-list] li a').eq(2).click()
-			cy.get('.viewer__content #read-only-editor')
+			cy.getContent()
 				.find('h1')
 				.should('contain.text', 'V1')
 
@@ -113,7 +113,7 @@ describe('Versions', () => {
 				.should('contain', 'Compare to current version')
 				.click()
 
-			cy.get('.viewer__content #read-only-editor')
+			cy.getContent()
 				.find('h1')
 				.should('contain.text', '#V1')
 
