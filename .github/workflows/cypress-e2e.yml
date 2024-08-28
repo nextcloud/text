@@ -169,11 +169,19 @@ jobs:
           curl -v http://localhost:8081/index.php/login
           cat data/nextcloud.log
 
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 114
+          install-dependencies: true
+          install-chromedriver: true
+          chromedriver-version: 114
+      - run: chrome --version
+
       - name: Run E2E cypress tests
         run: |
           cd 'apps/${{ env.APP_NAME }}'
           npx wait-on $CYPRESS_baseUrl
-          npx cypress run --record false --config defaultCommandTimeout=10000,video=false
+          npx cypress run --record false --config defaultCommandTimeout=10000,video=false --browser chrome
         env:
           # https://github.com/cypress-io/github-action/issues/124
           COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
