@@ -16,6 +16,7 @@ use OCA\Text\Db\Session;
 use OCP\Constants;
 use OCP\Files\File;
 use OCP\Files\Folder;
+use OCP\Files\IFilenameValidator;
 use OCP\Files\IMimeTypeDetector;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
@@ -35,7 +36,8 @@ class AttachmentService {
 		private ShareManager $shareManager,
 		private IPreview $previewManager,
 		private IMimeTypeDetector $mimeTypeDetector,
-		private IURLGenerator $urlGenerator) {
+		private IURLGenerator $urlGenerator,
+		private IFilenameValidator $filenameValidator) {
 	}
 
 	/**
@@ -263,6 +265,7 @@ class AttachmentService {
 		}
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = self::getUniqueFileName($saveDir, $newFileName);
+		$this->filenameValidator->validateFilename($fileName);
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
@@ -293,6 +296,7 @@ class AttachmentService {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
 		$fileName = self::getUniqueFileName($saveDir, $newFileName);
+		$this->filenameValidator->validateFilename($fileName);
 		$savedFile = $saveDir->newFile($fileName, $newFileResource);
 		return [
 			'name' => $fileName,
