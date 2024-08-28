@@ -514,6 +514,10 @@ export default {
 							session,
 							onCreate: ({ editor }) => {
 								this.$syncService.startSync()
+								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+								this.emit('create:content', {
+									markdown: proseMirrorMarkdown,
+								})
 							},
 							onUpdate: ({ editor }) => {
 								// this.debugContent(editor)

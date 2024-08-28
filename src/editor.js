@@ -52,6 +52,13 @@ class TextEditorEmbed {
 		return this.#vm.$children[0]
 	}
 
+	onCreate(onCreateCallback = () => {}) {
+		this.#vm.$on('create:content', (content) => {
+			onCreateCallback(content)
+		})
+		return this
+	}
+
 	onLoaded(onLoadedCallback = () => {}) {
 		this.#vm.$on('ready', () => {
 			onLoadedCallback()
@@ -149,6 +156,7 @@ window.OCA.Text.createEditor = async function({
 		props: null,
 	},
 
+	onCreate = ({ markdown }) => {},
 	onLoaded = () => {},
 	onUpdate = ({ markdown }) => {},
 	onOutlineToggle = (visible) => {},
@@ -228,6 +236,7 @@ window.OCA.Text.createEditor = async function({
 		store,
 	})
 	return new TextEditorEmbed(vm, data)
+		.onCreate(onCreate)
 		.onLoaded(onLoaded)
 		.onUpdate(onUpdate)
 		.onOutlineToggle(onOutlineToggle)
