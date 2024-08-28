@@ -23,6 +23,7 @@ use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\Files\IMimeTypeDetector;
+use OCP\Files\InvalidPathException;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Util;
@@ -133,6 +134,10 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 				}
 			}
 			return new DataResponse(['error' => 'No uploaded file'], Http::STATUS_BAD_REQUEST);
+		} catch (InvalidPathException $e) {
+			$this->logger->error('Upload error', ['exception' => $e]);
+			$error = $e->getMessage() ?: 'Upload error';
+			return new DataResponse(['error' => $error], Http::STATUS_BAD_REQUEST);
 		} catch (Exception $e) {
 			$this->logger->error('Upload error', ['exception' => $e]);
 			return new DataResponse(['error' => 'Upload error'], Http::STATUS_BAD_REQUEST);
