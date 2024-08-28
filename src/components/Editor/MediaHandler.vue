@@ -129,7 +129,11 @@ export default {
 				})
 				.catch((error) => {
 					logger.error('Uploading attachment failed', { error })
-					showError(t('text', 'Uploading attachment failed.'))
+					if (error.response?.data.error) {
+						showError(t('text', 'Uploading attachment failed: {error}', { error: error.response.data.error }))
+					} else {
+						showError(t('text', 'Uploading attachment failed.'))
+					}
 				})
 				.then(() => {
 					this.state.isUploadingAttachments = false
