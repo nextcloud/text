@@ -28,6 +28,7 @@ import {
 	Paperclip,
 	Positive,
 	Table,
+	UnfoldMoreHorizontal,
 	Warn,
 } from '../icons.js'
 import EmojiPickerAction from './EmojiPickerAction.vue'
@@ -321,6 +322,16 @@ export default [
 			return command.insertTable()
 		},
 		priority: 17,
+	},
+	{
+		key: 'details',
+		label: t('text', 'Details'),
+		isActive: 'details',
+		icon: UnfoldMoreHorizontal,
+		action: (command) => {
+			return command.toggleDetails()
+		},
+		priority: 18,
 	},
 	{
 		key: 'emoji-picker',

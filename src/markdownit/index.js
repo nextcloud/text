@@ -9,6 +9,7 @@ import markdownitMentions from '@quartzy/markdown-it-mentions'
 import underline from './underline.js'
 import splitMixedLists from './splitMixedLists.js'
 import callouts from './callouts.js'
+import details from './details.ts'
 import preview from './preview.js'
 import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
@@ -25,6 +26,7 @@ const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.use(underline)
 	.use(hardbreak)
 	.use(callouts)
+	.use(details)
 	.use(preview)
 	.use(keepSyntax)
 	.use(markdownitMentions)

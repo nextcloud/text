@@ -53,6 +53,7 @@ import MDI_TableAddRowBefore from 'vue-material-design-icons/TableRowPlusBefore.
 import MDI_TableSettings from 'vue-material-design-icons/TableCog.vue'
 import MDI_TrashCan from 'vue-material-design-icons/TrashCan.vue'
 import MDI_Undo from 'vue-material-design-icons/ArrowULeftTop.vue'
+import MDI_UnfoldMoreHorizontal from 'vue-material-design-icons/UnfoldMoreHorizontal.vue'
 import MDI_Upload from 'vue-material-design-icons/Upload.vue'
 import MDI_Warn from 'vue-material-design-icons/Alert.vue'
 import MDI_Web from 'vue-material-design-icons/Web.vue'
@@ -131,6 +132,7 @@ export const TableSettings = makeIcon(MDI_TableSettings)
 export const TrashCan = makeIcon(MDI_TrashCan)
 export const TranslateVariant = makeIcon(MDI_TranslateVariant)
 export const Undo = makeIcon(MDI_Undo)
+export const UnfoldMoreHorizontal = makeIcon(MDI_UnfoldMoreHorizontal)
 export const Upload = makeIcon(MDI_Upload)
 export const Warn = makeIcon(MDI_Warn)
 export const Web = makeIcon(MDI_Web)
