@@ -49,10 +49,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
 			this.#registerHandlers({
 				opened: ({ version, session }) => {
-					this.#version = version
 					logger.debug('opened ', { version, session })
+					this.#version = version
 					this.#session = session
-					this.onopen?.()
 				},
 				loaded: ({ version, session, content }) => {
 					logger.debug('loaded ', { version, session })
@@ -70,7 +69,16 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					}
 				},
 			})
-			syncService.open({ fileId, initialSession })
+
+			syncService.open({ fileId, initialSession }).then((data) => {
+				if (syncService.hasActiveConnection) {
+					const { version, session } = data
+					this.#version = version
+					this.#session = session
+
+					this.onopen?.()
+				}
+			})
 		}
 
 		#registerHandlers(handlers) {
@@ -101,7 +109,10 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					...queue.filter(s => !outbox.includes(s)),
 				)
 				return ret
-			}, err => logger.error(err))
+			}, err => {
+				logger.error(`Failed to push the queue with ${queue.length} steps to the server`, err)
+				this.onerror?.(err)
+			})
 		}
 
 		async close() {

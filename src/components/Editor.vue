@@ -562,14 +562,14 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = !this.readOnly
+			const editable = !this.readOnly && !this.hasConnectionIssue
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = false
+			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0 || !this.$providers[0].wsconnected || this.$syncService.pushError > 0
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
