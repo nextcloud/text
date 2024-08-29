@@ -99,6 +99,7 @@ OC.L10N.register(
     "Success" : "Успешно",
     "Warning" : "Предупредување",
     "Table" : "Табела",
+    "Details" : "Детали",
     "Command" : "Команда",
     "Control" : "Контрола",
     "Option" : "Опции",

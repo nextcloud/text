@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Varning",
     "Danger" : "Fara",
     "Table" : "Tabell",
+    "Details" : "Detaljer",
     "Insert attachment" : "Infoga bilaga",
     "Command" : "Kommando",
     "Control" : "Kontroll",

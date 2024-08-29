@@ -27,6 +27,7 @@ OC.L10N.register(
     "Source code" : "კოდი",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება"
+    "Warning" : "გაფრთხილება",
+    "Details" : "დეტალები"
 },
 "nplurals=2; plural=(n!=1);");

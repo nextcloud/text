@@ -15,6 +15,7 @@ OC.L10N.register(
     "to" : "a",
     "Edit" : "Modificar",
     "Info" : "Info",
-    "Warning" : "Aviso"
+    "Warning" : "Aviso",
+    "Details" : "Detalios"
 },
 "nplurals=2; plural=(n != 1);");

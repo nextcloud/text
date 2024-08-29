@@ -12,6 +12,7 @@ OC.L10N.register(
     "to" : "bis",
     "Edit" : "Änneren",
     "Info" : "Info",
-    "Warning" : "Warnung"
+    "Warning" : "Warnung",
+    "Details" : "Detailer"
 },
 "nplurals=2; plural=(n != 1);");

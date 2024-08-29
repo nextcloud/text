@@ -13,6 +13,7 @@ OC.L10N.register(
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
     "Edit" : "Ẓreg",
-    "Warning" : "Alɣu"
+    "Warning" : "Alɣu",
+    "Details" : "Talqayt"
 },
 "nplurals=2; plural=(n != 1);");

@@ -54,6 +54,7 @@ OC.L10N.register(
     "Heading 5" : "Titolo 5",
     "Info" : "Info",
     "Warning" : "Averto",
+    "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
     "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn..."

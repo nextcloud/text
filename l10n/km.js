@@ -11,6 +11,7 @@ OC.L10N.register(
     "Edit" : "កែប្រែ",
     "Info" : "Info",
     "Warning" : "បម្រាម",
-    "Table" : "តារាង"
+    "Table" : "តារាង",
+    "Details" : "ព័ត៌មាន​លម្អិត"
 },
 "nplurals=1; plural=0;");

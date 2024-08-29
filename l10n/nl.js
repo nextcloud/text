@@ -111,6 +111,7 @@ OC.L10N.register(
     "Warning" : "Waarschuwing",
     "Danger" : "Gevaar",
     "Table" : "Tabel",
+    "Details" : "Details",
     "Insert attachment" : "Toevoegen bijlage",
     "Command" : "Commando",
     "Control" : "Controle",

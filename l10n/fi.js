@@ -151,6 +151,7 @@ OC.L10N.register(
     "Success" : "Onnistui",
     "Warning" : "Varoitus",
     "Table" : "Taulukko",
+    "Details" : "Tiedot",
     "Insert attachment" : "Lisää liite",
     "Command" : "Komento",
     "Control" : "Hallinta",

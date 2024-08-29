@@ -35,6 +35,7 @@
     "Insert link" : "Ievietojiet saiti",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
+    "Details" : "Detaļas",
     "Command" : "Komanda",
     "Add folder description" : "Pievienot mapes aprakstu"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
