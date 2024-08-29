@@ -31,6 +31,7 @@ OC.L10N.register(
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน",
+    "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ"
 },
 "nplurals=1; plural=0;");

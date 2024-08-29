@@ -90,6 +90,7 @@ OC.L10N.register(
     "Info" : "정보",
     "Success" : "성공",
     "Warning" : "경고",
+    "Details" : "세부사항",
     "Command" : "명령",
     "Control" : "제어:",
     "Formatting" : "서식",

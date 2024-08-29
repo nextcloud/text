@@ -164,6 +164,7 @@ OC.L10N.register(
     "Warning" : "هشدار",
     "Danger" : "Danger",
     "Table" : "Table",
+    "Details" : "جزییات",
     "Insert attachment" : "Insert attachment",
     "Command" : "Command",
     "Control" : "کنترل",

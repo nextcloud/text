@@ -43,6 +43,7 @@
     "Headings" : "Headings",
     "Info" : "Info",
     "Warning" : "Warning",
+    "Details" : "Details",
     "Command" : "Command",
     "Formatting" : "Formatting"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

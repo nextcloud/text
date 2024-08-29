@@ -57,6 +57,7 @@ OC.L10N.register(
     "Info" : "Informação",
     "Success" : "Sucesso",
     "Warning" : "Aviso",
+    "Details" : "Detalhes",
     "Control" : "Controle",
     "Formatting" : "Formação ",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",

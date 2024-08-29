@@ -71,6 +71,7 @@ OC.L10N.register(
     "Info" : "פרטים",
     "Success" : "הצלחה",
     "Warning" : "אזהרה",
+    "Details" : "פרטים",
     "Insert attachment" : "הוספת קובץ מצורף",
     "Command" : "פקודה",
     "Control" : "שליטה",

@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Oharra",
     "Danger" : "Arriskua",
     "Table" : "Taula",
+    "Details" : "Xehetasunak",
     "Insert attachment" : "Txertatu eranskina",
     "Command" : "Komandoa",
     "Control" : "Kontrola",

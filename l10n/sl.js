@@ -150,6 +150,7 @@ OC.L10N.register(
     "Warning" : "Opozorilo",
     "Danger" : "Nevarnost",
     "Table" : "Razpredelnica",
+    "Details" : "Podrobnosti",
     "Insert attachment" : "Vstavi prilogo",
     "Command" : "Ukaz",
     "Control" : "Nadzor",
