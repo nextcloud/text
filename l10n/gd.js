@@ -16,6 +16,7 @@ OC.L10N.register(
     "Cancel" : "Sguir dheth",
     "Replace" : "Cuir ’na àite",
     "Edit" : "Deasaich",
-    "Source code" : "Bun-tùs"
+    "Source code" : "Bun-tùs",
+    "Details" : "Mion-fhiosrachadh"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");

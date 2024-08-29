@@ -35,6 +35,7 @@ OC.L10N.register(
     "Both" : "Keduanya",
     "Info" : "Info",
     "Warning" : "Peringatan",
+    "Details" : "Detail",
     "Control" : "Kendali",
     "Formatting" : "Pemformatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan..."

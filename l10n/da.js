@@ -84,6 +84,7 @@ OC.L10N.register(
     "Success" : "Succes",
     "Warning" : "Advarsler",
     "Table" : "Tabel",
+    "Details" : "Detaljer",
     "Command" : "Kommando",
     "Formatting" : "Formatering",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",

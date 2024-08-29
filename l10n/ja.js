@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "危険",
     "Table" : "表",
+    "Details" : "詳細",
     "Insert attachment" : "添付ファイルを挿入する",
     "Command" : "コマンド",
     "Control" : "コントロール",

@@ -39,6 +39,7 @@ OC.L10N.register(
     "Source code" : "Kodi burim",
     "Info" : "Info",
     "Success" : "Sukses",
-    "Warning" : "Kujdes"
+    "Warning" : "Kujdes",
+    "Details" : "Detajet"
 },
 "nplurals=2; plural=(n != 1);");

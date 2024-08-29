@@ -12,6 +12,7 @@ OC.L10N.register(
     "Edit" : "ແກ້ໄຂ",
     "Info" : "ຂໍ້ມຸນ",
     "Success" : "ຄວາມສໍາເລັດ",
-    "Warning" : "ແຈ້ງເຕືອນ"
+    "Warning" : "ແຈ້ງເຕືອນ",
+    "Details" : "ລາຍລະອຽດ"
 },
 "nplurals=1; plural=0;");

@@ -118,6 +118,7 @@ OC.L10N.register(
     "Warning" : "Įspėjimas",
     "Danger" : "Pavojus",
     "Table" : "Lentelė",
+    "Details" : "Išsamiau",
     "Insert attachment" : "Įterpti priedą",
     "Command" : "Komanda",
     "Control" : "Valdoma",

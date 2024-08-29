@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Avertissement",
     "Danger" : "Danger",
     "Table" : "Tableau",
+    "Details" : "Détails",
     "Insert attachment" : "Insérer une pièce jointe",
     "Command" : "Commande",
     "Control" : "Contrôler",

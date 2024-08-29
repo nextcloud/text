@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Rabhadh",
     "Danger" : "Contúirt",
     "Table" : "Tábla",
+    "Details" : "Sonraí",
     "Insert attachment" : "Ionsáigh ceangaltán",
     "Command" : "Ordú",
     "Control" : "Smacht",

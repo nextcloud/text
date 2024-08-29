@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Упозорење",
     "Danger" : "Опасност",
     "Table" : "Табела",
+    "Details" : "Детаљи",
     "Insert attachment" : "Убаци прилог",
     "Command" : "Команда",
     "Control" : "Контрола",
