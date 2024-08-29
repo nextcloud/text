@@ -525,7 +525,7 @@ class AttachmentService {
 		// is the file shared with this token?
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
-            if (in_array($share->getShareType(), [IShare::TYPE_LINK, IShare::TYPE_EMAIL])) {
+			if (in_array($share->getShareType(), [IShare::TYPE_LINK, IShare::TYPE_EMAIL])) {
 				// shared file or folder?
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
