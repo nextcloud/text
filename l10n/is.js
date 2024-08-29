@@ -159,6 +159,7 @@ OC.L10N.register(
     "Warning" : "Aðvörun",
     "Danger" : "Hættulegt",
     "Table" : "Tafla",
+    "Details" : "Nánar",
     "Insert attachment" : "Setja inn viðhengi",
     "Command" : "Skipun",
     "Control" : "Stjórnun",

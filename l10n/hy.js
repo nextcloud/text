@@ -19,6 +19,7 @@ OC.L10N.register(
     "Edit" : "մշակել",
     "Source code" : "ծրագրի կոդը",
     "Info" : "Info",
-    "Warning" : "Զգուշացում"
+    "Warning" : "Զգուշացում",
+    "Details" : "Մանրամասներ"
 },
 "nplurals=2; plural=(n != 1);");

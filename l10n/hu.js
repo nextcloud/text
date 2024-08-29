@@ -167,6 +167,7 @@ OC.L10N.register(
     "Warning" : "Figyelmeztetés",
     "Danger" : "Veszély",
     "Table" : "Táblázat",
+    "Details" : "Részletek",
     "Insert attachment" : "Melléklet beszúrása",
     "Command" : "Command",
     "Control" : "Control",

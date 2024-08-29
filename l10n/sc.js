@@ -70,6 +70,7 @@ OC.L10N.register(
     "Info" : "Informatziones",
     "Success" : "Sutzessu",
     "Warning" : "Avisu",
+    "Details" : "Detàllios",
     "Command" : "Cumandu",
     "Control" : "Controllu",
     "Formatting" : "Formatatzione",

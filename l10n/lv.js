@@ -37,6 +37,7 @@ OC.L10N.register(
     "Insert link" : "Ievietojiet saiti",
     "Info" : "Info",
     "Warning" : "Brīdinājums",
+    "Details" : "Detaļas",
     "Command" : "Komanda",
     "Add folder description" : "Pievienot mapes aprakstu"
 },

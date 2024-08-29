@@ -92,6 +92,7 @@ OC.L10N.register(
     "Info" : "Thông tin",
     "Success" : "Thành công",
     "Warning" : "Cảnh báo",
+    "Details" : "Chi tiết",
     "Insert attachment" : "Thêm đính kèm",
     "Command" : "Lệnh",
     "Control" : "Kiểm soát",

@@ -45,6 +45,7 @@ OC.L10N.register(
     "Headings" : "Headings",
     "Info" : "Info",
     "Warning" : "Warning",
+    "Details" : "Details",
     "Command" : "Command",
     "Formatting" : "Formatting"
 },

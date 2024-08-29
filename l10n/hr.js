@@ -72,6 +72,7 @@ OC.L10N.register(
     "Info" : "Informacije",
     "Success" : "Uspjeh",
     "Warning" : "Upozorenje",
+    "Details" : "Pojedinosti",
     "Insert attachment" : "Umetni privitak",
     "Command" : "Naredba",
     "Control" : "Kontrola",

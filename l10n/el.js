@@ -119,6 +119,7 @@ OC.L10N.register(
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
     "Table" : "Πίνακας",
+    "Details" : "Λεπτομέρειες",
     "Insert attachment" : "Εισαγωγή συνημμένου",
     "Command" : "Εντολή",
     "Control" : "Έλεγχος",

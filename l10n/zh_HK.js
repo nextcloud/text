@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "危險",
     "Table" : "表",
+    "Details" : "細節",
     "Insert attachment" : "插入附件",
     "Command" : "指令",
     "Control" : "掌控",

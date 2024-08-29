@@ -65,6 +65,7 @@ OC.L10N.register(
     "Success" : "Succès",
     "Warning" : "Avertiment",
     "Table" : "Tablèu",
+    "Details" : "Per lo Menut",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
     "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",

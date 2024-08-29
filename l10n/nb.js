@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Advarsel",
     "Danger" : "Fare",
     "Table" : "Bord",
+    "Details" : "Detaljer",
     "Insert attachment" : "Legg til vedlegg",
     "Command" : "Kommando",
     "Control" : "Kontroll",

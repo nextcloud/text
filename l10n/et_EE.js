@@ -36,6 +36,7 @@ OC.L10N.register(
     "Edit" : "Redigeeri",
     "Headings" : "Pealkirjad",
     "Info" : "Info",
-    "Warning" : "Hoiatus"
+    "Warning" : "Hoiatus",
+    "Details" : "Üksikasjad"
 },
 "nplurals=2; plural=(n != 1);");

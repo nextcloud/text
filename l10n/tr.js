@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
     "Table" : "Tablo",
+    "Details" : "Ayrıntılar",
     "Insert attachment" : "Ek dosya ekle",
     "Command" : "Komut",
     "Control" : "Denetim",
