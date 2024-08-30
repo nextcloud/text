@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "ゲスト",
     "Save guest name" : "ゲスト名を保存",
     "Uploading multiple attachments failed." : "複数の添付ファイルのアップロードに失敗しました。",
+    "Uploading attachment failed: {error}" : "添付ファイルのアップロードに失敗しました: {error}",
     "Uploading attachment failed." : "添付ファイルのアップロードに失敗しました。",
     "Insert an attachment" : "添付ファイルを挿入する",
     "Failed to insert from Files" : "ファイルからの挿入に失敗しました",

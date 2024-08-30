@@ -181,6 +181,7 @@ OC.L10N.register(
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
     "Table" : "Tabulka",
+    "Details" : "Podrobnosti",
     "Insert attachment" : "Vložit přílohu",
     "Command" : "Příkaz",
     "Control" : "Kontrola",
