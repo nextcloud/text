@@ -17,6 +17,62 @@ const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
 const silent = { log: false }
 
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+	return originalFn(url, options).then(() => {
+		cy.window().then((win) => {
+			// Workaround for crashing ResizeObserver in Cypress
+			// https://github.com/cypress-io/cypress/issues/27415#issuecomment-2169155274
+			// store real observer
+			const RealResizeObserver = ResizeObserver
+
+			let queueFlushTimeout
+			let queue = []
+
+			/**
+			 * ResizeObserver wrapper with "enforced batches"
+			 */
+			class ResizeObserverPolyfill {
+
+				constructor(callback) {
+					this.callback = callback
+					this.observer = new RealResizeObserver(this.check.bind(this))
+				}
+
+				observe(element) {
+					this.observer.observe(element)
+				}
+
+				unobserve(element) {
+					this.observer.unobserve(element)
+				}
+
+				disconnect() {
+					this.observer.disconnect()
+				}
+
+				check(entries) {
+					// remove previous invocations of "self"
+					queue = queue.filter((x) => x.cb !== this.callback)
+					// put a new one
+					queue.push({ cb: this.callback, args: entries })
+					// trigger update
+					if (!queueFlushTimeout) {
+						queueFlushTimeout = requestAnimationFrame(() => {
+							queueFlushTimeout = undefined
+							const q = queue
+							queue = []
+							q.forEach(({ cb, args }) => cb(args))
+						}, 0)
+					}
+				}
+
+			}
+
+			window.ResizeObserver = ResizeObserverPolyfill
+		})
+	})
+})
+
 // prepare main cypress window so we can use axios there
 // and it will successfully fetch csrf tokens when needed.
 window.OC = {
