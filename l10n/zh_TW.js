@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "訪客",
     "Save guest name" : "儲存訪客名稱",
     "Uploading multiple attachments failed." : "上傳多個附件失敗。",
+    "Uploading attachment failed: {error}" : "上傳附件失敗：{error}",
     "Uploading attachment failed." : "上傳附件失敗。",
     "Insert an attachment" : "插入附件",
     "Failed to insert from Files" : "從檔案插入失敗",

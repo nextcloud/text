@@ -148,6 +148,7 @@ OC.L10N.register(
     "Warning" : "Внимание",
     "Danger" : "Опасност",
     "Table" : "Таблица",
+    "Details" : "Подробности",
     "Insert attachment" : "Вмъкнете прикачен файл",
     "Command" : "Команда",
     "Control" : "Control Center",

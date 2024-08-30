@@ -15,6 +15,7 @@ OC.L10N.register(
     "to" : "প্রতি",
     "Edit" : "সম্পাদনা",
     "Info" : "Info",
-    "Warning" : "সতর্কবাণী"
+    "Warning" : "সতর্কবাণী",
+    "Details" : "বিসতারিত"
 },
 "nplurals=2; plural=(n != 1);");

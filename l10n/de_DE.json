@@ -43,6 +43,7 @@
     "Guest" : "Gast",
     "Save guest name" : "Gast-Namen speichern",
     "Uploading multiple attachments failed." : "Das Hochladen mehrerer Anhänge ist fehlgeschlagen.",
+    "Uploading attachment failed: {error}" : "Aktualisierung des Anhangs fehlgeschlagen: {error}",
     "Uploading attachment failed." : "Das Hochladen des Anhangs ist fehlgeschlagen.",
     "Insert an attachment" : "Einen Anhang einfügen",
     "Failed to insert from Files" : "Einfügen von Dateien fehlgeschlagen",
