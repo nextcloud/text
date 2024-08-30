@@ -40,7 +40,8 @@
 			</template>
 			{{ t('text', 'Remove link') }}
 		</NcActionButton>
-		<NcActionButton ref="buttonFile"
+		<NcActionButton v-if="!isUsingDirectEditing"
+			ref="buttonFile"
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
 			<template #icon>
@@ -80,6 +81,7 @@
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
+import { loadState } from '@nextcloud/initial-state'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
@@ -113,6 +115,7 @@ export default {
 			startPath: null,
 			/** Open state of the actions menu */
 			menuOpen: false,
+			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
 	computed: {
