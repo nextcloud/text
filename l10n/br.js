@@ -24,6 +24,7 @@ OC.L10N.register(
     "Info" : "Titouroù",
     "Success" : "Graet",
     "Warning" : "Kemenadenn",
+    "Details" : "Munudoù",
     "Command" : "Urzh",
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell"
 },

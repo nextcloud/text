@@ -188,6 +188,7 @@ OC.L10N.register(
     "Warning" : "تحذير",
     "Danger" : "خطر",
     "Table" : "جدول",
+    "Details" : "التفاصيل",
     "Insert attachment" : "أدخِل مُرفَقاً",
     "Command" : "أمر",
     "Control" : "تحكُّم",

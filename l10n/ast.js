@@ -143,6 +143,7 @@ OC.L10N.register(
     "Warning" : "Alvertencia",
     "Danger" : "Peligru",
     "Table" : "Tabla",
+    "Details" : "Detalles",
     "Command" : "Comandu",
     "Control" : "Control",
     "Option" : "Opción",

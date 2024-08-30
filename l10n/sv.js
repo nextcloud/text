@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Gäst",
     "Save guest name" : "Spara gästnamn",
     "Uploading multiple attachments failed." : "Uppladdning av flera bilagor misslyckades.",
+    "Uploading attachment failed: {error}" : "Det gick inte att ladda upp bilagan: {error}",
     "Uploading attachment failed." : "Det gick inte att ladda upp bilagan.",
     "Insert an attachment" : "Infoga en bilaga",
     "Failed to insert from Files" : "Det gick inte att infoga från Filer",
