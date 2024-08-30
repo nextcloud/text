@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Aoi",
     "Save guest name" : "Sábháil ainm aoi",
     "Uploading multiple attachments failed." : "Theip ar uaslódáil ceangaltán iolrach.",
+    "Uploading attachment failed: {error}" : "Theip ar uaslódáil ceangaltán: {error}",
     "Uploading attachment failed." : "Theip ar uaslódáil ceangaltán.",
     "Insert an attachment" : "Cuir isteach ceangaltán",
     "Failed to insert from Files" : "Theip ar chur isteach ó Chomhaid",

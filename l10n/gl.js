@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Convidado",
     "Save guest name" : "Gardar o nome do convidado",
     "Uploading multiple attachments failed." : "Produciuse un fallo ao enviar varios anexos.",
+    "Uploading attachment failed: {error}" : "Produciuse un fallo ao enviar o anexo: {error}",
     "Uploading attachment failed." : "Produciuse un fallo ao enviar o anexo.",
     "Insert an attachment" : "Insira un anexo",
     "Failed to insert from Files" : "Produciuse un fallo ao inserir dende Ficheiros",
