@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { getCurrentUser } from '@nextcloud/auth'
+import { showSuccess, showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
-import { imagePath } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
+import { imagePath } from '@nextcloud/router'
+import { dirname } from 'path'
 
 import { getSharingToken } from './token.js'
 import { openMimetypes } from './mime.js'
 import store from '../store/index.js'
-import { getCurrentUser } from '@nextcloud/auth'
-import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
-import { dirname } from 'path'
 
-import TextSvg from '@mdi/svg/svg/text.svg'
+import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -118,8 +118,7 @@ export const addMenuRichWorkspace = () => {
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
-		// FIXME Move back to other once https://github.com/nextcloud-libraries/nextcloud-upload/pull/1269 is available in server
-		category: NewMenuEntryCategory.CreateNew,
+		category: NewMenuEntryCategory.Other,
 		enabled(context) {
 			if (Number(context.attributes['rich-workspace-file'])) {
 				return false
