@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Invité",
     "Save guest name" : "Enregistrer le nom de l'invité",
     "Uploading multiple attachments failed." : "Le téléversement de plusieurs pièces jointes a échoué.",
+    "Uploading attachment failed: {error}" : "Le téléversement de la pièce jointe a échoué : {error}",
     "Uploading attachment failed." : "Le téléversement de la pièce jointe a échoué.",
     "Insert an attachment" : "Insérer une pièce jointe",
     "Failed to insert from Files" : "Échec de l'insertion depuis Fichiers",
