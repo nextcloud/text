@@ -113,7 +113,7 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.17.0
+version: 8.17.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
