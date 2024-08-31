@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "ضيف",
     "Save guest name" : "حفظ اسم الضيف",
     "Uploading multiple attachments failed." : "تعذّر رفع مرفقات متعددة",
+    "Uploading attachment failed: {error}" : "أخفق رفع المُرفَق: {error}",
     "Uploading attachment failed." : "تعذّر رفع المرفقات",
     "Insert an attachment" : "أدخل مٌرفقاً",
     "Failed to insert from Files" : "تعذّر الإدخال من الملفات",
