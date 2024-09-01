@@ -199,7 +199,7 @@ OC.L10N.register(
     "Add folder description" : "Engadir a descrición do cartafol",
     "\"{name}\" already exist!" : "Xa existe «{name}»!",
     "Created \"{name}\"" : "Creouse «{name}»",
-    "Copied to the clipboard" : "Copiado no portapapeis.",
+    "Copied to the clipboard" : "Copiado no portapapeis",
     "Could not copy to the clipboard" : "Non foi posíbel copiar ao portapapeis",
     "Front matter" : "Preliminar ",
     "Link to this section" : "Ligazón a esta sección",
