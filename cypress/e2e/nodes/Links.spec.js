@@ -21,13 +21,17 @@ describe('test link marks', function() {
 	})
 
 	describe('link bubble', function() {
+
+		function clickLink(link, options = {}) {
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
+				.click(options)
+		}
+
 		it('shows a link preview in the bubble after clicking link', () => {
 			const link = 'https://nextcloud.com/'
 			cy.insertLine(link)
-
-			cy.getContent()
-				.find(`a[href*="${link}"]`)
-				.click()
+			clickLink(link)
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
@@ -52,10 +56,8 @@ describe('test link marks', function() {
 		it('closes the link bubble when clicking elsewhere', () => {
 			const link = 'https://nextcloud.com/'
 			cy.insertLine(link)
-			cy.getContent()
-				.find(`a[href*="${link}"]`)
-			cy.getContent()
-				.type('{upArrow}')
+			clickLink(link)
+
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
@@ -68,8 +70,7 @@ describe('test link marks', function() {
 
 		it('allows to edit a link in the bubble', () => {
 			cy.insertLine('https://example.org')
-			cy.getContent()
-				.type('{upArrow}{rightArrow}')
+			clickLink('https://example.org')
 
 			cy.get('.link-view-bubble button[title="Edit link"]')
 				.click()
@@ -88,8 +89,7 @@ describe('test link marks', function() {
 		it('allows to remove a link in the bubble', () => {
 			const link = 'https://nextcloud.com'
 			cy.insertLine(link)
-			cy.getContent()
-				.type('{upArrow}{rightArrow}')
+			clickLink(link)
 
 			cy.get('.link-view-bubble button[title="Remove link"]')
 				.click()
@@ -104,14 +104,13 @@ describe('test link marks', function() {
 			const link = 'https://nextcloud.com/'
 			cy.insertLine(link)
 
-			cy.getContent()
-				.find(`a[href*="${link}"]`)
-				.click({ ctrlKey: true })
+			clickLink(link, { ctrlKey: true })
 
 			cy.get('@winOpen')
 				.should('have.been.calledOnce')
 				.should('have.been.calledWith', link)
 		})
+
 	})
 
 	describe('autolink', function() {
