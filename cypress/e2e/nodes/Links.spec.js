@@ -1,11 +1,11 @@
-import { initUserAndFiles, randUser } from '../../utils/index.js'
+import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 const fileName = 'empty.md'
 
 describe('test link marks', function() {
 	before(function() {
-		initUserAndFiles(user)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
@@ -23,8 +23,7 @@ describe('test link marks', function() {
 	describe('link bubble', function() {
 		it('shows a link preview in the bubble after clicking link', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
@@ -38,8 +37,7 @@ describe('test link marks', function() {
 
 		it('shows a link preview in the bubble after browsing to link', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
 
@@ -53,8 +51,7 @@ describe('test link marks', function() {
 
 		it('closes the link bubble when clicking elsewhere', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
 			cy.getContent()
@@ -70,8 +67,7 @@ describe('test link marks', function() {
 		})
 
 		it('allows to edit a link in the bubble', () => {
-			cy.getContent()
-				.type('https://example.org{enter}')
+			cy.insertLine('https://example.org')
 			cy.getContent()
 				.type('{upArrow}{rightArrow}')
 
@@ -91,8 +87,7 @@ describe('test link marks', function() {
 
 		it('allows to remove a link in the bubble', () => {
 			const link = 'https://nextcloud.com'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 			cy.getContent()
 				.type('{upArrow}{rightArrow}')
 
@@ -107,8 +102,7 @@ describe('test link marks', function() {
 
 		it('Ctrl-click on a link opens a new tab', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
@@ -128,8 +122,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/apps/files/?dir=/&openfile=${id}#relPath=/${fileName}`
 					cy.clearContent()
-					cy.getContent()
-						.type(`${link}{enter}`)
+					cy.insertLine(link)
 
 					cy.getContent()
 						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
@@ -138,16 +131,14 @@ describe('test link marks', function() {
 
 		it('without protocol', () => {
 			cy.clearContent()
-			cy.getContent()
-				.type('google.com{enter}')
+			cy.insertLine('google.com')
 			cy.getContent()
 				.find('a[href*="google.com"]')
 				.should('not.exist')
 		})
 
 		it('with protocol but without space', () => {
-			cy.getContent()
-				.type('https://nextcloud.com')
+			cy.getContent().type('https://nextcloud.com')
 
 			cy.getContent()
 				.find('a[href*="nextcloud.com"]')
