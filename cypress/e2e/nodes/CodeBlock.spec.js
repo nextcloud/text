@@ -89,7 +89,7 @@ describe('Front matter support', function() {
 		cy.isolateTest({ sourceFile: 'codeblock.md' })
 		cy.openFile('codeblock.md').then(() => {
 			cy.clearContent()
-			cy.getContent().type('{enter}```javascript{enter}')
+			cy.insertLine('```javascript')
 			cy.getContent().type('const foo = "bar"{enter}{enter}{enter}')
 			cy.getContent().find('.hljs-keyword').first().contains('const')
 		})
@@ -108,7 +108,7 @@ describe('Front matter support', function() {
 	it('Add an invalid mermaid block', function() {
 		cy.isolateTest()
 		cy.openFile('empty.md').then(() => {
-			cy.getContent().type('```mermaid{enter}')
+			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -123,7 +123,7 @@ describe('Front matter support', function() {
 	it('Add a valid mermaid block', function() {
 		cy.isolateTest()
 		cy.openFile('empty.md').then(() => {
-			cy.getContent().type('```mermaid{enter}')
+			cy.insertLine('```mermaid')
 			cy.getContent().find('code').should('exist')
 			cy.getContent().get('.split-view__preview').should('be.visible')
 			// eslint-disable-next-line cypress/no-unnecessary-waiting
