@@ -74,7 +74,7 @@
 		</div>
 
 		<!-- link preview -->
-		<NcReferenceList v-else-if="href"
+		<NcReferenceList v-else-if="showPreview"
 			ref="referencelist"
 			:text="sanitizedHref"
 			:limit="1"
@@ -96,6 +96,8 @@ import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
+
+const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
 export default {
 	name: 'LinkBubbleView',
@@ -161,6 +163,11 @@ export default {
 
 		title() {
 			return this.referenceTitle ? this.referenceTitle : this.sanitizedHref
+		},
+
+		showPreview() {
+			const url = new URL(this.href, window.location)
+			return this.href && PROTOCOLS_WITH_PREVIEW.includes(url.protocol)
 		},
 	},
 
