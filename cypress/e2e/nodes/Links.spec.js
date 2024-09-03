@@ -68,22 +68,41 @@ describe('test link marks', function() {
 				.should('not.exist')
 		})
 
+		const changeLink = target => {
+			cy.get('.link-view-bubble button[title="Edit link"]')
+				.click()
+			cy.get('.link-view-bubble input')
+				.type(`{selectAll}${target}{enter}`)
+		}
+
 		it('allows to edit a link in the bubble', () => {
 			cy.insertLine('https://example.org')
 			clickLink('https://example.org')
-
-			cy.get('.link-view-bubble button[title="Edit link"]')
-				.click()
-
-			cy.get('.link-view-bubble input')
-				.type('{selectAll}https://nextcloud.com')
-
-			cy.get('.link-view-bubble button[title="Save changes"]')
-				.click()
-
+			changeLink('https://nextcloud.com')
 			cy.getContent()
 				.find('a[href*="https://nextcloud.com"]')
+		})
 
+		it('does not link to other protocols', () => {
+			cy.insertLine('https://example.org')
+			clickLink('https://example.org')
+			cy.get('.link-view-bubble .widget-default')
+				.should('exist')
+			changeLink('mailto:test@my.example')
+			cy.getContent()
+				.find('a[href*="mailto:test@my.example"]')
+				.should('exist')
+			cy.get('.link-view-bubble .widget-default')
+				.should('not.exist')
+			changeLink('unknown:protocol')
+			cy.getContent()
+				.find('a[href*="unknown:protocol"]')
+				.should('not.exist')
+			cy.getContent()
+				.find('a[href*="#"]')
+				.should('exist')
+			cy.get('.link-view-bubble .widget-default')
+				.should('not.exist')
 		})
 
 		it('allows to remove a link in the bubble', () => {
