@@ -64,19 +64,17 @@ export default TableCell.extend({
 						}
 
 						const { state } = view
+						const { schema } = state
 						const childNodes = []
-						let newLineAdded = false
 						slice.content.descendants((node, pos) => {
 							if (node.isText) {
-								childNodes.push(state.schema.text(node.textContent, node.marks))
-								newLineAdded = false
-							} else if (!newLineAdded) {
-								childNodes.push(state.schema.text('\n'))
-								newLineAdded = true
+								childNodes.push(schema.text(node.textContent, node.marks))
+							} else if (childNodes.length !== 0 && node.type === schema.nodes.hardBreak) {
+								childNodes.push(node)
 							}
 						})
 
-						const newNode = state.schema.node('paragraph', [], childNodes)
+						const newNode = schema.node('paragraph', [], childNodes)
 						slice.content = Fragment.empty.addToStart(newNode)
 					},
 				},
