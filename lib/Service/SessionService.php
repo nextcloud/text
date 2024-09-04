@@ -28,6 +28,7 @@ namespace OCA\Text\Service;
 
 use OCA\Text\Db\Session;
 use OCA\Text\Db\SessionMapper;
+use OCA\Text\YjsMessage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DirectEditing\IManager;
@@ -245,6 +246,12 @@ class SessionService {
 		if (empty($message)) {
 			return $session;
 		}
+
+		$decoded = YjsMessage::fromBase64($message);
+		if ($decoded->getYjsMessageType() !== YjsMessage::YJS_MESSAGE_AWARENESS) {
+			throw new \ValueError('Message passed was not an awareness message');
+		}
+
 		$session->setLastAwarenessMessage($message);
 		return $this->sessionMapper->update($session);
 	}
