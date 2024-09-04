@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/node-repl"],{69609:e=>{e.exports=function(e){return{name:"Node REPL",contains:[{className:"meta.prompt",starts:{end:/ |$/,starts:{end:"$",subLanguage:"javascript"}},variants:[{begin:/^>(?=[ ]|$)/},{begin:/^\.\.\.(?=[ ]|$)/}]}]}}}}]);
-//# sourceMappingURL=node-repl.js.map?v=3919d002ab5c0f76ac28
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/node-repl"],{16673:e=>{e.exports=function(e){return{name:"Node REPL",contains:[{className:"meta.prompt",starts:{end:/ |$/,starts:{end:"$",subLanguage:"javascript"}},variants:[{begin:/^>(?=[ ]|$)/},{begin:/^\.\.\.(?=[ ]|$)/}]}]}}}}]);
+//# sourceMappingURL=node-repl.js.map?v=3dd8a45d6b2860aa14fd

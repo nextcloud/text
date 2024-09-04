@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mojolicious"],{8895:e=>{e.exports=function(e){return{name:"Mojolicious",subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
-//# sourceMappingURL=mojolicious.js.map?v=ce4f373f8de79d99c17a
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/mojolicious"],{56078:e=>{e.exports=function(e){return{name:"Mojolicious",subLanguage:"xml",contains:[{className:"meta",begin:"^__(END|DATA)__$"},{begin:"^\\s*%{1,2}={0,2}",end:"$",subLanguage:"perl"},{begin:"<%{1,2}={0,2}",end:"={0,1}%>",subLanguage:"perl",excludeBegin:!0,excludeEnd:!0}]}}}}]);
+//# sourceMappingURL=mojolicious.js.map?v=5a7c3c5d04492aea841f
