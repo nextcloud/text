@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Gjest",
     "Save guest name" : "Lagre gjestenavn",
     "Uploading multiple attachments failed." : "Opplasting av flere vedlegg feilet.",
+    "Uploading attachment failed: {error}" : "Opplasting av vedlegg feilet: {error}",
     "Uploading attachment failed." : "Opplasting av vedlegg feilet.",
     "Insert an attachment" : "Sett inn som vedlegg",
     "Failed to insert from Files" : "Feilet å sette inn fra Filer",
