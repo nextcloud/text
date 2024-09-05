@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Konuk",
     "Save guest name" : "Konuk adını kaydet",
     "Uploading multiple attachments failed." : "Birkaç ek dosya yüklenemedi.",
+    "Uploading attachment failed: {error}" : "Ek dosya yüklenemedi: {error}",
     "Uploading attachment failed." : "Ek dosya yüklenemedi.",
     "Insert an attachment" : "Bir ek dosya ekle",
     "Failed to insert from Files" : "Dosyalar uygulamasından eklenemedi",
