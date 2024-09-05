@@ -124,7 +124,8 @@ describe('Markdown though editor', () => {
 	})
 
 	test('mentions', () => {
-		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe(' @[username](mention://user/id) ')
+		expect(markdownThroughEditor('@[username](mention://user/id)')).toBe('@[username](mention://user/id)')
+		expect(markdownThroughEditor('pretext @[username](mention://user/id) posttext')).toBe('pretext @[username](mention://user/id) posttext')
 	})
 })
 
@@ -187,8 +188,9 @@ describe('Markdown serializer from html', () => {
 	})
 
 	test('mentions', () => {
-		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe(' @[username](mention://user/id) ')
-		expect(markdownThroughEditorHtml('<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>')).toBe(' @[whitespace user](mention://user/whitespace%20user) ')
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="username" data-type="user" data-id="id">username</span>')).toBe('@[username](mention://user/id)')
+		expect(markdownThroughEditorHtml('<span class="mention" data-label="whitespace user" data-type="user" data-id="whitespace user">whitespace user</span>')).toBe('@[whitespace user](mention://user/whitespace%20user)')
+		expect(markdownThroughEditorHtml('pretext <span class="mention" data-label="username" data-type="user" data-id="id">username</span> posttext')).toBe('pretext @[username](mention://user/id) posttext')
 	})
 })
 
