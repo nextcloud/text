@@ -128,7 +128,7 @@ describe('Workspace', function() {
 		;[
 			['unordered-list', 'ul'],
 			['ordered-list', 'ol'],
-			['task-list', 'ul[data-type="taskList"]'],
+			['task-list', 'ul.contains-task-list'],
 		].forEach(([button, tag]) => testButton(button, tag, 'List me'))
 	})
 
