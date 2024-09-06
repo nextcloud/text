@@ -42,7 +42,7 @@ const TaskItem = TipTapTaskItem.extend({
 	],
 
 	renderHTML({ node, HTMLAttributes }) {
-		const listAttributes = { class: 'checkbox-item' }
+		const listAttributes = { class: 'task-list-item checkbox-item' }
 		const checkboxAttributes = { type: 'checkbox', class: '', contenteditable: false }
 		if (node.attrs.checked) {
 			checkboxAttributes.checked = true
@@ -70,7 +70,7 @@ const TaskItem = TipTapTaskItem.extend({
 		state.renderContent(node)
 	},
 
-	 addInputRules() {
+	addInputRules() {
 		return [
 			...this.parent(),
 			wrappingInputRule({
