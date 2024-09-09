@@ -5,13 +5,13 @@
 
 import { getCurrentUser } from '@nextcloud/auth'
 import { showSuccess, showError } from '@nextcloud/dialogs'
+import { getSharingToken } from '@nextcloud/sharing/public'
 import { emit } from '@nextcloud/event-bus'
 import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { imagePath } from '@nextcloud/router'
 import { dirname } from 'path'
 
-import { getSharingToken } from './token.js'
 import { openMimetypes } from './mime.js'
 import store from '../store/index.js'
 import axios from '@nextcloud/axios'

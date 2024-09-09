@@ -73,6 +73,7 @@
 import Vue, { ref, set, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
+import { isPublicShare } from '@nextcloud/sharing/public'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import Autofocus from '../extensions/Autofocus.js'
@@ -269,7 +270,7 @@ export default {
 			return this.fileId || this.shareToken || this.initialSession
 		},
 		isPublic() {
-			return this.isDirectEditing || (document.getElementById('isPublic') && document.getElementById('isPublic').value === '1')
+			return this.isDirectEditing || isPublicShare()
 		},
 		isRichEditor() {
 			return loadState('text', 'rich_editing_enabled', true) && this.mime === 'text/markdown'

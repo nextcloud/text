@@ -29,10 +29,11 @@
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
 import getEditorInstance from '../components/Editor.singleton.js'
 import RichTextReader from '../components/RichTextReader.vue'
 
-const IS_PUBLIC = !!(document.getElementById('isPublic'))
+const IS_PUBLIC = isPublicShare()
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
 const SUPPORTED_STATIC_FILENAMES = ['Readme.md', 'README.md', 'readme.md']
 
@@ -77,7 +78,7 @@ export default {
 	},
 	computed: {
 		shareToken() {
-			return document.getElementById('sharingToken')?.value
+			return getSharingToken()
 		},
 	},
 	watch: {

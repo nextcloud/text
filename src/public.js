@@ -4,6 +4,7 @@
  */
 
 import { loadState } from '@nextcloud/initial-state'
+import { getSharingToken } from '@nextcloud/sharing/public'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
@@ -134,7 +135,7 @@ const loadEditor = ({ sharingToken, mimetype, fileId, $el }) => {
 }
 
 documentReady(() => {
-	const sharingToken = document.getElementById('sharingToken') ? document.getElementById('sharingToken').value : null
+	const sharingToken = getSharingToken()
 
 	if (!sharingToken) {
 		return
