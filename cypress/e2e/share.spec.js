@@ -95,7 +95,7 @@ describe('Open test.md in viewer', function() {
 				return cy.visit(`/s/${token}`)
 			})
 			.then(() => {
-				cy.openFileInShare('test.md')
+				cy.openFile('test.md')
 				cy.getModal().getContent().should('be.visible')
 				cy.getModal().getContent().should('contain', 'Hello world')
 				cy.getModal().getContent().find('h2').should('contain', 'Hello world')
@@ -105,8 +105,8 @@ describe('Open test.md in viewer', function() {
 			})
 	})
 
-	it('Opens the editor as guest', function() {
-		cy.shareFile('/test3.md')
+	it('Opens the editor as guest and set a session username', function() {
+		cy.shareFile('/test3.md', { edit: true })
 			.then((token) => {
 				cy.logout()
 				cy.visit(`/s/${token}`)
