@@ -175,6 +175,7 @@ OC.L10N.register(
     "Formatting" : "Форматирование",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Add folder description" : "Добавить описание папки",
+    "Copied to the clipboard" : "Скопировано в буфер обмена",
     "Front matter" : "Передний план",
     "Link to this section" : "Ссылка на этот раздел",
     "Show author colors" : "Выделить правки цветами",
