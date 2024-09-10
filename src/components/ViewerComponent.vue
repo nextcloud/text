@@ -34,13 +34,13 @@
 <script>
 import Vue from 'vue'
 import axios from '@nextcloud/axios'
+import { getSharingToken } from '@nextcloud/sharing/public'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import { translate, translatePlural } from '@nextcloud/l10n'
 
-import { getSharingToken } from '../helpers/token.js'
 import getEditorInstance from './Editor.singleton.js'
 
 Vue.prototype.t = translate

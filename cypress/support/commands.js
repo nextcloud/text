@@ -272,12 +272,6 @@ Cypress.Commands.add('openFile', (fileName, params = {}) => {
 	cy.get(`[data-cy-files-list] tr[data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-name-link]`).click(params)
 })
 
-Cypress.Commands.add('openFileInShare', fileName => {
-	cy.get(`.files-fileList tr[data-file="${CSS.escape(fileName)}"] a.name`).click()
-	// eslint-disable-next-line
-	cy.wait(250)
-})
-
 Cypress.Commands.add('closeFile', (params = {}) => {
 	cy.intercept({ method: 'POST', url: '**/apps/text/session/*/close' })
 		.as('close')
