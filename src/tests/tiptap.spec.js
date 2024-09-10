@@ -25,4 +25,9 @@ describe('TipTap', () => {
         const markdown = 'Hard line break  \nNext Paragraph'
         expect(renderedHTML(markdown)).toEqual('<p>Hard line break<br>Next Paragraph</p>')
     })
+
+	it('render taskList', () => {
+		const markdown = '* [ ] item 1\n'
+		expect(renderedHTML(markdown)).toEqual('<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p>item 1</p></label></li></ul>')
+	})
 })

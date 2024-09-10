@@ -45,7 +45,7 @@ describe('keyboard shortcuts', () => {
 	it('codeblock', () => testShortcut(`${modKey}{alt}c`, 'pre'))
 	it('ordered-list', () => testShortcut(`${modKey}{shift}7`, 'ol'))
 	it('unordered-list', () => testShortcut(`${modKey}{shift}8`, 'ul'))
-	it('task-list', () => testShortcut(`${modKey}{shift}9`, 'ul[data-type="taskList"]'))
+	it('task-list', () => testShortcut(`${modKey}{shift}9`, 'ul.contains-task-list'))
 
 	// Headings
 	const levels = [1, 2, 3, 4, 5, 6]

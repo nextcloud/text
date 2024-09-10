@@ -4,6 +4,7 @@
  */
 
 import TiptapTaskList from '@tiptap/extension-task-list'
+import { mergeAttributes } from '@tiptap/core'
 
 const TaskList = TiptapTaskList.extend({
 
@@ -13,6 +14,10 @@ const TaskList = TiptapTaskList.extend({
 			tag: 'ul.contains-task-list',
 		},
 	],
+
+	renderHTML({ HTMLAttributes }) {
+		return ['ul', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { class: 'contains-task-list' }), 0]
+	},
 
 	addAttributes() {
 		return {
