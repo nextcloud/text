@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ldif"],{57604:t=>{t.exports=function(t){return{name:"LDIF",contains:[{className:"attribute",match:"^dn(?=:)",relevance:10},{className:"attribute",match:"^\\w+(?=:)"},{className:"literal",match:"^-"},t.HASH_COMMENT_MODE]}}}}]);
-//# sourceMappingURL=ldif.js.map?v=30b9e909df345090e89b
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/ldif"],{67172:t=>{t.exports=function(t){return{name:"LDIF",contains:[{className:"attribute",match:"^dn(?=:)",relevance:10},{className:"attribute",match:"^\\w+(?=:)"},{className:"literal",match:"^-"},t.HASH_COMMENT_MODE]}}}}]);
+//# sourceMappingURL=ldif.js.map?v=a5d683ccd97be141d808

@@ -1,2 +1,2 @@
-(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/julia-repl"],{25850:e=>{e.exports=function(e){return{name:"Julia REPL",contains:[{className:"meta.prompt",begin:/^julia>/,relevance:10,starts:{end:/^(?![ ]{6})/,subLanguage:"julia"}}],aliases:["jldoctest"]}}}}]);
-//# sourceMappingURL=julia-repl.js.map?v=f5be4c2c71d99cf59924
+(self.webpackChunk_nextcloud_text=self.webpackChunk_nextcloud_text||[]).push([["highlight/julia-repl"],{8514:e=>{e.exports=function(e){return{name:"Julia REPL",contains:[{className:"meta.prompt",begin:/^julia>/,relevance:10,starts:{end:/^(?![ ]{6})/,subLanguage:"julia"}}],aliases:["jldoctest"]}}}}]);
+//# sourceMappingURL=julia-repl.js.map?v=3251b8c4f5fdfe4b39d8
