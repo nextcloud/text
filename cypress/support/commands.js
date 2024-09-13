@@ -6,7 +6,7 @@
 import axios from '@nextcloud/axios'
 import { emit } from '@nextcloud/event-bus'
 import { addCommands } from '@nextcloud/cypress'
-import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command.js'
+import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command'
 
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
