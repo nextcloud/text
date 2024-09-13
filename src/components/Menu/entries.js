@@ -19,6 +19,8 @@ import {
 	FormatHeader4,
 	FormatHeader5,
 	FormatHeader6,
+	FormatIndentDecrease,
+	FormatIndentIncrease,
 	FormatListNumbered,
 	FormatListBulleted,
 	FormatListCheckbox,
@@ -126,6 +128,8 @@ export default [
 			{
 				key: 'headings-h1',
 				label: t('text', 'Heading 1'),
+				keyChar: '1',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader1,
 				isActive: ['heading', { level: 1 }],
 				action: (command) => {
@@ -135,6 +139,8 @@ export default [
 			{
 				key: 'headings-h2',
 				label: t('text', 'Heading 2'),
+				keyChar: '2',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader2,
 				isActive: ['heading', { level: 2 }],
 				action: (command) => {
@@ -144,6 +150,8 @@ export default [
 			{
 				key: 'headings-h3',
 				label: t('text', 'Heading 3'),
+				keyChar: '3',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader3,
 				isActive: ['heading', { level: 3 }],
 				action: (command) => {
@@ -153,6 +161,8 @@ export default [
 			{
 				key: 'headings-h4',
 				label: t('text', 'Heading 4'),
+				keyChar: '4',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				isActive: ['heading', { level: 4 }],
 				icon: FormatHeader4,
 				action: (command) => {
@@ -162,6 +172,8 @@ export default [
 			{
 				key: 'headings-h5',
 				label: t('text', 'Heading 5'),
+				keyChar: '5',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				isActive: ['heading', { level: 5 }],
 				icon: FormatHeader5,
 				action: (command) => {
@@ -171,6 +183,8 @@ export default [
 			{
 				key: 'headings-h6',
 				label: t('text', 'Heading 6'),
+				keyChar: '6',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				isActive: ['heading', { level: 6 }],
 				icon: FormatHeader6,
 				action: (command) => {
@@ -201,38 +215,75 @@ export default [
 		priority: 1,
 	},
 	{
-		key: 'unordered-list',
-		label: t('text', 'Unordered list'),
-		keyChar: '8',
+		key: 'lists',
+		label: t('text', 'Lists'),
+		keyChar: '7…9',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: 'bulletList',
+		isActive: [{ isList: true }],
 		icon: FormatListBulleted,
-		action: (command) => {
-			return command.toggleBulletList()
-		},
-		priority: 9,
-	},
-	{
-		key: 'ordered-list',
-		label: t('text', 'Ordered list'),
-		keyChar: '7',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: 'orderedList',
-		icon: FormatListNumbered,
-		action: (command) => {
-			return command.toggleOrderedList()
-		},
-		priority: 10,
-	},
-	{
-		key: 'task-list',
-		label: t('text', 'To-Do list'),
-		keyChar: '9',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: 'taskList',
-		icon: FormatListCheckbox,
-		action: (command) => command.toggleTaskList(),
-		priority: 11,
+		children: [
+			{
+				key: 'unordered-list',
+				label: t('text', 'Unordered list'),
+				keyChar: '8',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: 'bulletList',
+				icon: FormatListBulleted,
+				action: (command) => {
+					return command.toggleBulletList()
+				},
+			},
+			{
+				key: 'ordered-list',
+				label: t('text', 'Ordered list'),
+				keyChar: '7',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: 'orderedList',
+				icon: FormatListNumbered,
+				action: (command) => {
+					return command.toggleOrderedList()
+				},
+			},
+			{
+				key: 'task-list',
+				label: t('text', 'To-Do list'),
+				keyChar: '9',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: 'taskList',
+				icon: FormatListCheckbox,
+				action: (command) => command.toggleTaskList(),
+			},
+			{
+				key: 'lists-separator',
+				isSeparator: true,
+			},
+			{
+				key: 'list-indent-increase',
+				label: t('text', 'Increase indentation'),
+				keyChar: 'Tab',
+				icon: FormatIndentIncrease,
+				action: (command, editor = null) => {
+					if (editor && editor.isActive('taskItem')) {
+						return command.sinkListItem('taskItem')
+					}
+					return command.sinkListItem('listItem')
+				},
+			},
+			{
+				key: 'list-indent-decrease',
+				label: t('text', 'Decrease indentation'),
+				keyChar: 'Tab',
+				keyModifiers: [MODIFIERS.Shift],
+				icon: FormatIndentDecrease,
+				action: (command, editor = null) => {
+					if (editor && editor.isActive('taskItem')) {
+						return command.liftListItem('taskItem')
+					}
+					return command.liftListItem('listItem')
+				},
+			},
+		],
+		priority: 3,
 	},
 	{
 		key: 'insert-link',

@@ -54,6 +54,11 @@ const BaseActionEntry = {
 				getKeys(this.$isMobile, this.actionEntry),
 			].join(' ')
 		},
+		listItemTooltip() {
+			return [
+				getKeys(this.$isMobile, this.actionEntry),
+			].join(' ')
+		},
 	},
 	watch: {
 		/** Handle tabindex for menu toolbar */
