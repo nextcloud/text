@@ -63,7 +63,7 @@ describe('test link marks', function() {
 				.find('.widget-default--name')
 				.contains('Nextcloud')
 
-			cy.get('[role="dialog"] h2.modal-name').click()
+			cy.get('[role="dialog"] h2.modal-header__name').click()
 
 			cy.get('.link-view-bubble .widget-default')
 				.should('not.exist')
@@ -214,7 +214,7 @@ describe('test link marks', function() {
 				cy.getFile(fileName)
 					.then($el => {
 						checkLinkFile(fileName)
-						cy.get('.modal-name').should('include.text', fileName)
+						cy.get('.modal-header__name').should('include.text', fileName)
 					})
 			})
 			it('with selected text', () => {
@@ -225,7 +225,7 @@ describe('test link marks', function() {
 					.then($el => {
 						cy.getContent().type(`${text}{selectAll}`)
 						checkLinkFile(fileName, text)
-						cy.get('.modal-name').should('include.text', fileName)
+						cy.get('.modal-header__name').should('include.text', fileName)
 					})
 			})
 			it('link to directory', () => {
