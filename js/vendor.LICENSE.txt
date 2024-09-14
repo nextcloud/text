@@ -85,7 +85,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 2.2.0
+version: 3.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -117,7 +117,7 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.17.1
+version: 8.18.0
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
@@ -325,7 +325,7 @@ version: 3.37.0
 license: MIT
 
 cose-base
-version: 2.2.0
+version: 1.0.3
 license: MIT
 
 crypt
@@ -345,8 +345,8 @@ version: 2.2.0
 license: MIT
 
 d3-array
-version: 2.12.1
-license: BSD-3-Clause
+version: 3.2.4
+license: ISC
 
 d3-axis
 version: 3.0.0
@@ -429,7 +429,7 @@ version: 1.11.13
 license: MIT
 
 debounce
-version: 2.1.0
+version: 2.1.1
 license: MIT
 
 dompurify
@@ -493,7 +493,7 @@ version: 3.0.0
 license: MIT
 
 layout-base
-version: 2.0.1
+version: 1.0.2
 license: MIT
 
 lib0
@@ -797,5 +797,5 @@ version: 2.0.4
 license: MIT
 
 yjs
-version: 13.6.18
+version: 13.6.19
 license: MIT
