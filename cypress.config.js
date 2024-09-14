@@ -11,8 +11,6 @@ module.exports = defineConfig({
 	env: {
 		failSilently: false,
 		type: 'actual',
-		SNAPSHOT_BASE_DIRECTORY: './cypress/snapshots/base',
-		SNAPSHOT_DIFF_DIRECTORY: './cypress/snapshots/diff',
 	},
 	e2e: {
 		env: {
