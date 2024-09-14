@@ -401,7 +401,7 @@ version: 1.11.9
 license: MIT
 
 debounce
-version: 2.1.0
+version: 2.1.1
 license: MIT
 
 decode-named-character-reference
@@ -837,5 +837,5 @@ version: 2.0.4
 license: MIT
 
 yjs
-version: 13.6.18
+version: 13.6.19
 license: MIT
