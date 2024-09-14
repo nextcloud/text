@@ -16,6 +16,7 @@ describe('Image View', () => {
 		cy.createFolder('child-folder')
 		cy.uploadFile('github.png', 'image/png')
 		cy.uploadFile('github.png', 'image/png', 'child-folder/github.png')
+
 	})
 
 	beforeEach(() => {
@@ -110,11 +111,8 @@ describe('Image View', () => {
 	describe('native attachments', () => {
 		before(() => {
 			cy.login(user)
-			cy.visit('/apps/files')
 			const fileName = 'native attachments.md'
-			cy.createMarkdown(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)')
-
-			cy.getFileId(fileName).then((fileId) => {
+			cy.createFile(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)').then((fileId) => {
 				const attachmentsFolder = `.attachments.${fileId}`
 				cy.createFolder(attachmentsFolder)
 				cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
