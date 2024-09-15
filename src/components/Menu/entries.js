@@ -6,6 +6,7 @@
 import {
 	Undo,
 	Redo,
+	CardTextOutline,
 	CodeTags,
 	Danger,
 	Emoticon,
@@ -59,7 +60,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Undo,
 		action: (command) => command.undo(),
-		priority: 7,
+		priority: 8,
 	},
 	{
 		key: 'redo',
@@ -68,7 +69,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Redo,
 		action: (command) => command.redo(),
-		priority: 10,
+		priority: 11,
 	},
 	{
 		key: 'bold',
@@ -80,7 +81,7 @@ export default [
 		action: (command) => {
 			return command.toggleBold()
 		},
-		priority: 8,
+		priority: 9,
 	},
 	{
 		key: 'italic',
@@ -92,7 +93,7 @@ export default [
 		action: (command) => {
 			return command.toggleItalic()
 		},
-		priority: 9,
+		priority: 10,
 	},
 	{
 		key: 'underline',
@@ -104,7 +105,7 @@ export default [
 		action: (command) => {
 			return command.toggleUnderline()
 		},
-		priority: 13,
+		priority: 12,
 	},
 	{
 		key: 'strikethrough',
@@ -116,7 +117,7 @@ export default [
 		action: (command) => {
 			return command.toggleStrike()
 		},
-		priority: 14,
+		priority: 13,
 	},
 	{
 		key: 'headings',
@@ -132,7 +133,7 @@ export default [
 				keyChar: '1',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader1,
-				isActive: ['heading', { level: 1 }],
+				isActive: { name: 'heading', attributes: { level: 1 } },
 				action: (command) => {
 					return command.toggleHeading({ level: 1 })
 				},
@@ -143,7 +144,7 @@ export default [
 				keyChar: '2',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader2,
-				isActive: ['heading', { level: 2 }],
+				isActive: { name: 'heading', attributes: { level: 2 } },
 				action: (command) => {
 					return command.toggleHeading({ level: 2 })
 				},
@@ -154,7 +155,7 @@ export default [
 				keyChar: '3',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
 				icon: FormatHeader3,
-				isActive: ['heading', { level: 3 }],
+				isActive: { name: 'heading', attributes: { level: 3 } },
 				action: (command) => {
 					return command.toggleHeading({ level: 3 })
 				},
@@ -164,7 +165,7 @@ export default [
 				label: t('text', 'Heading 4'),
 				keyChar: '4',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 4 }],
+				isActive: { name: 'heading', attributes: { level: 4 } },
 				icon: FormatHeader4,
 				action: (command) => {
 					return command.toggleHeading({ level: 4 })
@@ -175,7 +176,7 @@ export default [
 				label: t('text', 'Heading 5'),
 				keyChar: '5',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 5 }],
+				isActive: { name: 'heading', attributes: { level: 5 } },
 				icon: FormatHeader5,
 				action: (command) => {
 					return command.toggleHeading({ level: 5 })
@@ -186,7 +187,7 @@ export default [
 				label: t('text', 'Heading 6'),
 				keyChar: '6',
 				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 6 }],
+				isActive: { name: 'heading', attributes: { level: 6 } },
 				icon: FormatHeader6,
 				action: (command) => {
 					return command.toggleHeading({ level: 6 })
@@ -220,7 +221,7 @@ export default [
 		label: t('text', 'Lists'),
 		keyChar: '7…9',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: [{ isList: true }],
+		isActive: ['bulletList', 'orderedList', 'taskList'],
 		icon: FormatListBulleted,
 		children: [
 			{
@@ -287,36 +288,42 @@ export default [
 		priority: 2,
 	},
 	{
-		key: 'insert-link',
-		label: t('text', 'Insert link'),
-		isActive: 'link',
-		icon: LinkIcon,
-		component: ActionInsertLink,
-		priority: 3,
-	},
-	{
-		key: 'blockquote',
-		label: t('text', 'Blockquote'),
-		keyChar: 'b',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: 'blockquote',
-		icon: FormatQuote,
-		action: (command) => {
-			return command.toggleBlockquote()
-		},
-		priority: 11,
-	},
-	{
-		key: 'callouts',
-		label: t('text', 'Callouts'),
+		key: 'blocks',
+		label: t('text', 'Blocks'),
 		visible: false,
-		icon: Info,
-		isActive: 'callout',
+		icon: CardTextOutline,
+		isActive: ['blockquote', 'codeBlock', 'callout'],
 		children: [
 			{
+				key: 'blockquote',
+				label: t('text', 'Blockquote'),
+				keyChar: 'b',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: 'blockquote',
+				icon: FormatQuote,
+				action: (command) => {
+					return command.toggleBlockquote()
+				},
+			},
+			{
+				key: 'code-block',
+				label: t('text', 'Code block'),
+				keyChar: 'c',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
+				isActive: 'codeBlock',
+				icon: CodeTags,
+				action: (command) => {
+					return command.toggleCodeBlock()
+				},
+			},
+			{
+				key: 'blocks-separator',
+				isSeparator: true,
+			},
+			{
 				key: 'callout-info',
-				label: t('text', 'Info'),
-				isActive: ['callout', { type: 'info' }],
+				label: t('text', 'Info callout'),
+				isActive: { name: 'callout', attributes: { type: 'info' } },
 				icon: Info,
 				action: (command) => {
 					return command.toggleCallout({ type: 'info' })
@@ -324,8 +331,8 @@ export default [
 			},
 			{
 				key: 'callout-success',
-				label: t('text', 'Success'),
-				isActive: ['callout', { type: 'success' }],
+				label: t('text', 'Success callout'),
+				isActive: { name: 'callout', attributes: { type: 'success' } },
 				icon: Positive,
 				action: (command) => {
 					return command.toggleCallout({ type: 'success' })
@@ -333,8 +340,8 @@ export default [
 			},
 			{
 				key: 'callout-warn',
-				label: t('text', 'Warning'),
-				isActive: ['callout', { type: 'warn' }],
+				label: t('text', 'Warning callout'),
+				isActive: { name: 'callout', attributes: { type: 'warn' } },
 				icon: Warn,
 				action: (command) => {
 					return command.toggleCallout({ type: 'warn' })
@@ -342,27 +349,15 @@ export default [
 			},
 			{
 				key: 'callout-error',
-				label: t('text', 'Danger'),
-				isActive: ['callout', { type: 'error' }],
+				label: t('text', 'Danger callout'),
+				isActive: { name: 'callout', attributes: { type: 'error' } },
 				icon: Danger,
 				action: (command) => {
 					return command.toggleCallout({ type: 'error' })
 				},
 			},
 		],
-		priority: 4,
-	},
-	{
-		key: 'code-block',
-		label: t('text', 'Code block'),
-		keyChar: 'c',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
-		isActive: 'codeBlock',
-		icon: CodeTags,
-		action: (command) => {
-			return command.toggleCodeBlock()
-		},
-		priority: 12,
+		priority: 3,
 	},
 	{
 		key: 'table',
@@ -372,7 +367,15 @@ export default [
 		action: (command) => {
 			return command.insertTable()
 		},
-		priority: 15,
+		priority: 4,
+	},
+	{
+		key: 'insert-link',
+		label: t('text', 'Insert link'),
+		isActive: 'link',
+		icon: LinkIcon,
+		component: ActionInsertLink,
+		priority: 5,
 	},
 	{
 		key: 'details',
@@ -382,7 +385,7 @@ export default [
 		action: (command) => {
 			return command.toggleDetails()
 		},
-		priority: 16,
+		priority: 14,
 	},
 	{
 		key: 'emoji-picker',
@@ -392,13 +395,13 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 5,
+		priority: 6,
 	},
 	{
 		key: 'insert-attachment',
 		label: t('text', 'Insert attachment'),
 		icon: Paperclip,
 		component: ActionAttachmentUpload,
-		priority: 6,
+		priority: 7,
 	},
 ]

@@ -65,7 +65,7 @@ const formattingSuggestions = (query) => {
 			...menuEntries.find(e => e.key === 'headings').children,
 			...menuEntries.find(e => e.key === 'lists').children,
 			...menuEntries.filter(e => e.action && !filterOut(e)),
-			...menuEntries.find(e => e.key === 'callouts').children,
+			...menuEntries.find(e => e.key === 'blocks').children,
 			{
 				...menuEntries.find(e => e.key === 'emoji-picker'),
 				action: (command) => command.insertContent(':'),
