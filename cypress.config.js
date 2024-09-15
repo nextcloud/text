@@ -1,6 +1,6 @@
 const { defineConfig } = require('cypress')
 const cypressSplit = require('cypress-split')
-const { configureVisualRegression } = require('cypress-visual-regression/dist/plugin.js')
+const { configureVisualRegression } = require('cypress-visual-regression/dist/plugin')
 
 module.exports = defineConfig({
 	projectId: 'hx9gqy',
