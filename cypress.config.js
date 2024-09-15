@@ -1,6 +1,6 @@
 const { defineConfig } = require('cypress')
 const cypressSplit = require('cypress-split')
-const { configureVisualRegression } = require('cypress-visual-regression/dist/plugin.js')
+const { configureVisualRegression } = require('cypress-visual-regression/dist/plugin')
 
 module.exports = defineConfig({
 	projectId: 'hx9gqy',
@@ -11,8 +11,6 @@ module.exports = defineConfig({
 	env: {
 		failSilently: false,
 		type: 'actual',
-		SNAPSHOT_BASE_DIRECTORY: './cypress/snapshots/base',
-		SNAPSHOT_DIFF_DIRECTORY: './cypress/snapshots/diff',
 	},
 	e2e: {
 		env: {
