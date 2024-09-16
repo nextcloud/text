@@ -24,6 +24,8 @@ import TipTapLink from '@tiptap/extension-link'
 import { domHref, parseHref } from './../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
 
+const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
+
 const Link = TipTapLink.extend({
 
 	addOptions() {
@@ -58,9 +60,13 @@ const Link = TipTapLink.extend({
 
 	renderHTML(options) {
 		const { mark } = options
+		const url = new URL(mark.attrs.href, window.location)
+		const href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
+			? domHref(mark, this.options.relativePath)
+			: '#'
 		return ['a', {
 			...mark.attrs,
-			href: domHref(mark, this.options.relativePath),
+			href,
 			'data-md-href': mark.attrs.href,
 			rel: 'noopener noreferrer nofollow',
 		}, 0]
