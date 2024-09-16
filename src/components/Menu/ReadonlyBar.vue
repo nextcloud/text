@@ -49,6 +49,9 @@ export default defineComponent({
 <style scoped>
 .text-readonly-bar {
 	display: flex;
+	border-bottom: 1px solid var(--color-border);
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 .text-readonly-bar__entries {
 	display: flex;
