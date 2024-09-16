@@ -26,9 +26,6 @@
 	outline: 2px solid #8cf;
 }
 
-/**
- * 
- */
 li.ProseMirror-selectednode {
 	outline: none;
 
@@ -77,7 +74,6 @@ li.ProseMirror-selectednode {
 
 [data-handler='text'] {
 	background-color: var(--color-main-background);
-	border-top: 3px solid var(--color-primary-element);
 	.modal-title {
 		font-weight: bold;
 	}
