@@ -60,7 +60,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Undo,
 		action: (command) => command.undo(),
-		priority: 8,
+		priority: 7,
 	},
 	{
 		key: 'redo',
@@ -69,55 +69,7 @@ export default [
 		keyModifiers: [MODIFIERS.Mod],
 		icon: Redo,
 		action: (command) => command.redo(),
-		priority: 11,
-	},
-	{
-		key: 'bold',
-		label: t('text', 'Bold'),
-		keyChar: 'b',
-		keyModifiers: [MODIFIERS.Mod],
-		icon: FormatBold,
-		isActive: 'strong',
-		action: (command) => {
-			return command.toggleBold()
-		},
-		priority: 9,
-	},
-	{
-		key: 'italic',
-		label: t('text', 'Italic'),
-		keyChar: 'i',
-		keyModifiers: [MODIFIERS.Mod],
-		icon: FormatItalic,
-		isActive: 'em',
-		action: (command) => {
-			return command.toggleItalic()
-		},
 		priority: 10,
-	},
-	{
-		key: 'underline',
-		label: t('text', 'Underline'),
-		keyChar: 'u',
-		keyModifiers: [MODIFIERS.Mod],
-		icon: FormatUnderline,
-		isActive: 'underline',
-		action: (command) => {
-			return command.toggleUnderline()
-		},
-		priority: 12,
-	},
-	{
-		key: 'strikethrough',
-		label: t('text', 'Strikethrough'),
-		keyChar: 's',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		icon: FormatStrikethrough,
-		isActive: 'strike',
-		action: (command) => {
-			return command.toggleStrike()
-		},
-		priority: 13,
 	},
 	{
 		key: 'headings',
@@ -215,6 +167,54 @@ export default [
 			},
 		],
 		priority: 1,
+	},
+	{
+		key: 'bold',
+		label: t('text', 'Bold'),
+		keyChar: 'b',
+		keyModifiers: [MODIFIERS.Mod],
+		icon: FormatBold,
+		isActive: 'strong',
+		action: (command) => {
+			return command.toggleBold()
+		},
+		priority: 8,
+	},
+	{
+		key: 'italic',
+		label: t('text', 'Italic'),
+		keyChar: 'i',
+		keyModifiers: [MODIFIERS.Mod],
+		icon: FormatItalic,
+		isActive: 'em',
+		action: (command) => {
+			return command.toggleItalic()
+		},
+		priority: 9,
+	},
+	{
+		key: 'underline',
+		label: t('text', 'Underline'),
+		keyChar: 'u',
+		keyModifiers: [MODIFIERS.Mod],
+		icon: FormatUnderline,
+		isActive: 'underline',
+		action: (command) => {
+			return command.toggleUnderline()
+		},
+		priority: 11,
+	},
+	{
+		key: 'strikethrough',
+		label: t('text', 'Strikethrough'),
+		keyChar: 's',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+		icon: FormatStrikethrough,
+		isActive: 'strike',
+		action: (command) => {
+			return command.toggleStrike()
+		},
+		priority: 12,
 	},
 	{
 		key: 'lists',
@@ -367,15 +367,7 @@ export default [
 		action: (command) => {
 			return command.insertTable()
 		},
-		priority: 4,
-	},
-	{
-		key: 'insert-link',
-		label: t('text', 'Insert link'),
-		isActive: 'link',
-		icon: LinkIcon,
-		component: ActionInsertLink,
-		priority: 5,
+		priority: 13,
 	},
 	{
 		key: 'details',
@@ -388,6 +380,21 @@ export default [
 		priority: 14,
 	},
 	{
+		key: 'insert-link',
+		label: t('text', 'Insert link'),
+		isActive: 'link',
+		icon: LinkIcon,
+		component: ActionInsertLink,
+		priority: 4,
+	},
+	{
+		key: 'insert-attachment',
+		label: t('text', 'Insert attachment'),
+		icon: Paperclip,
+		component: ActionAttachmentUpload,
+		priority: 5,
+	},
+	{
 		key: 'emoji-picker',
 		label: t('text', 'Insert emoji'),
 		icon: Emoticon,
@@ -396,12 +403,5 @@ export default [
 			return command.emoji(emojiObject)
 		},
 		priority: 6,
-	},
-	{
-		key: 'insert-attachment',
-		label: t('text', 'Insert attachment'),
-		icon: Paperclip,
-		component: ActionAttachmentUpload,
-		priority: 7,
 	},
 ]
