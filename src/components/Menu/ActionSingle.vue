@@ -58,7 +58,7 @@ export default {
 			} else {
 				// Some actions run themselves.
 				// others still need to have .run() called upon them.
-				actionEntry.action(this.$editor.chain().focus())?.run()
+				actionEntry.action(this.$editor.chain().focus(), this.$editor)?.run()
 			}
 
 			this.$nextTick(() => {

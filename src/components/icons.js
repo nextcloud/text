@@ -26,6 +26,8 @@ import MDI_FormatHeader3 from 'vue-material-design-icons/FormatHeader3.vue'
 import MDI_FormatHeader4 from 'vue-material-design-icons/FormatHeader4.vue'
 import MDI_FormatHeader5 from 'vue-material-design-icons/FormatHeader5.vue'
 import MDI_FormatHeader6 from 'vue-material-design-icons/FormatHeader6.vue'
+import MDI_FormatIndentDecrease from 'vue-material-design-icons/FormatIndentDecrease.vue'
+import MDI_FormatIndentIncrease from 'vue-material-design-icons/FormatIndentIncrease.vue'
 import MDI_FormatItalic from 'vue-material-design-icons/FormatItalic.vue'
 import MDI_FormatListBulleted from 'vue-material-design-icons/FormatListBulleted.vue'
 import MDI_FormatListCheckbox from 'vue-material-design-icons/FormatListCheckbox.vue'
@@ -105,6 +107,8 @@ export const FormatHeader3 = makeIcon(MDI_FormatHeader3)
 export const FormatHeader4 = makeIcon(MDI_FormatHeader4)
 export const FormatHeader5 = makeIcon(MDI_FormatHeader5)
 export const FormatHeader6 = makeIcon(MDI_FormatHeader6)
+export const FormatIndentDecrease = makeIcon(MDI_FormatIndentDecrease)
+export const FormatIndentIncrease = makeIcon(MDI_FormatIndentIncrease)
 export const FormatItalic = makeIcon(MDI_FormatItalic)
 export const FormatListBulleted = makeIcon(MDI_FormatListBulleted)
 export const FormatListCheckbox = makeIcon(MDI_FormatListCheckbox)

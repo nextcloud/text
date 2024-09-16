@@ -112,7 +112,7 @@ describe('Workspace', function() {
 			['unordered-list', 'ul'],
 			['ordered-list', 'ol'],
 			['task-list', 'ul.contains-task-list'],
-		].forEach(([button, tag]) => testButton(button, tag, 'List me'))
+		].forEach(([button, tag]) => testListButton(button, tag, 'List me'))
 	})
 
 	it('takes README.md into account', function() {
@@ -302,7 +302,23 @@ const openSidebar = filename => {
 }
 
 /**
- *
+ * @param {string} button Name of the button to click.
+ * @param {string} tag Html tag expected to be toggled.
+ * @param {string} content Content expected in the element.
+ */
+function testListButton(button, tag, content) {
+	cy.getSubmenuEntry('lists', button)
+		.should('not.have.class', 'is-active')
+		.click()
+	cy.getContent()
+		.find(`${tag}`)
+		.should('contain', content)
+	cy.getSubmenuEntry('lists', button)
+		.should('have.class', 'is-active')
+		.click()
+}
+
+/**
  * @param {string} button Name of the button to click.
  * @param {string} tag Html tag expected to be toggled.
  * @param {string} content Content expected in the element.

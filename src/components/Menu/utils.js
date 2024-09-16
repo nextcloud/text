@@ -36,7 +36,7 @@ const getKeys = (isMobile, { keyChar, keyModifiers }) => {
 }
 
 const isDisabled = (actionEntry, $editor) => {
-	return actionEntry.action && !actionEntry.action($editor.can())
+	return actionEntry.action && !actionEntry.action($editor.can(), $editor)
 }
 
 const getIsActive = ({ isActive }, $editor) => {
