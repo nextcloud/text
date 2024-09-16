@@ -13,6 +13,7 @@ import {
 	FormatBold,
 	FormatItalic,
 	FormatUnderline,
+	FormatSize,
 	FormatStrikethrough,
 	FormatHeader1,
 	FormatHeader2,
@@ -76,7 +77,7 @@ export default [
 		label: t('text', 'Headings'),
 		keyChar: '1…6',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		icon: FormatHeader1,
+		icon: FormatSize,
 		isActive: 'heading',
 		children: [
 			{

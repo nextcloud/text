@@ -18,6 +18,7 @@ import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
 import MDI_Folder from 'vue-material-design-icons/Folder.vue'
 import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
+import MDI_FormatSize from 'vue-material-design-icons/FormatSize.vue'
 import MDI_AlignHorizontalCenter from 'vue-material-design-icons/AlignHorizontalCenter.vue'
 import MDI_AlignHorizontalLeft from 'vue-material-design-icons/AlignHorizontalLeft.vue'
 import MDI_AlignHorizontalRight from 'vue-material-design-icons/AlignHorizontalRight.vue'
@@ -103,6 +104,7 @@ export const DotsHorizontal = makeIcon(MDI_DotsHorizontal)
 export const Emoticon = makeIcon(MDI_Emoticon)
 export const Folder = makeIcon(MDI_Folder)
 export const FormatBold = makeIcon(MDI_FormatBold)
+export const FormatSize = makeIcon(MDI_FormatSize)
 export const FormatHeader1 = makeIcon(MDI_FormatHeader1)
 export const FormatHeader2 = makeIcon(MDI_FormatHeader2)
 export const FormatHeader3 = makeIcon(MDI_FormatHeader3)
