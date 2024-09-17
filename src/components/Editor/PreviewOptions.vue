@@ -3,32 +3,31 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div>
+	<div contenteditable="false" class="preview-options-container">
 		<NcActions data-text-preview-options="select"
 			class="preview-options"
-			@open="$emit('open')">
+			:open.sync="open"
+			@open="onOpen">
 			<template #icon>
 				<DotsVerticalIcon :size="20" />
 			</template>
 			<NcActionCaption :name="t('text', 'Preview options')" />
 			<NcActionRadio data-text-preview-option="text-only"
-				close-after-click
 				name="preview-option"
 				value="text-only"
-				:checked="value === 'text-only'"
-				@change="e => $emit('update:value', e.currentTarget.value)">
+				:checked="type === 'text-only'"
+				@change="e => toggle(e.currentTarget.value)">
 				{{ t('text', 'Text only') }}
 			</NcActionRadio>
 			<NcActionRadio data-text-preview-option="link-preview"
-				close-after-click
 				name="preview-option"
 				value="link-preview"
-				:checked="value === 'link-preview'"
-				@change="e => $emit('update:value', e.currentTarget.value)">
+				:checked="type === 'link-preview'"
+				@change="e => toggle(e.currentTarget.value)">
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
 			<NcActionSeparator />
-			<NcActionButton @click="e => $emit('update:value', 'delete-preview')">
+			<NcActionButton close-after-click="true" @click="deleteNode">
 				<template #icon>
 					<DeleteIcon :size="20" />
 				</template>
@@ -45,6 +44,7 @@ import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 
 export default {
 	name: 'PreviewOptions',
+
 	components: {
 		DotsVerticalIcon,
 		NcActions,
@@ -54,20 +54,62 @@ export default {
 		NcActionSeparator,
 		DeleteIcon,
 	},
+
 	props: {
-		value: {
+		type: {
 			type: String,
 			required: true,
+		},
+		offset: {
+			type: Number,
+			required: true,
+		},
+		editor: {
+			type: Object,
+			required: true,
+		},
+	},
+
+	data() {
+		return {
+			open: false,
+		}
+	},
+
+	methods: {
+		onOpen() {
+			this.editor.commands.hideLinkBubble()
+		},
+		toggle(type) {
+			this.open = false
+			const chain = this.editor.chain().focus()
+				.setTextSelection(this.offset + 1)
+			if (type === 'text-only') {
+				chain.unsetPreview().run()
+				return
+			}
+			chain.setPreview().run()
+		},
+		deleteNode() {
+			this.editor.chain().focus()
+				.setNodeSelection(this.offset + 1)
+				.deleteSelection()
 		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
+div[contenteditable=false] {
+	padding: 0;
+	margin: 0;
+}
 
-div[data-text-preview-options] {
+.preview-options-container {
 	position: absolute;
 	left: -44px;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 </style>
