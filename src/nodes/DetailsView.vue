@@ -108,7 +108,7 @@ div.details {
 		}
 	}
 
-	:deep(.details-content .paragraph-content:last-child) {
+	:deep(.details-content p:last-child) {
 		margin-bottom: 0.5em;
 	}
 }
