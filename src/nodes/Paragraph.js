@@ -1,5 +1,6 @@
 import TiptapParagraph from '@tiptap/extension-paragraph'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import previewOptions from '../plugins/previewOptions.js'
 import ParagraphView from './ParagraphView.vue'
 
 const Paragraph = TiptapParagraph.extend({
@@ -34,6 +35,14 @@ const Paragraph = TiptapParagraph.extend({
 				return false
 			},
 		}
+	},
+
+	addProseMirrorPlugins() {
+		return [
+			previewOptions({
+				editor: this.editor,
+			}),
+		]
 	},
 })
 
