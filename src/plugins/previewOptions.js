@@ -137,9 +137,8 @@ function decorationForLinkParagraph(linkParagraph, editor) {
  */
 function previewOptionForLinkParagraph(linkParagraph, editor) {
 	const propsData = {
-		type: linkParagraph.type,
-		offset: linkParagraph.offset,
 		editor,
+		...linkParagraph,
 	}
 	const el = document.createElement('div')
 	const Component = Vue.extend(PreviewOptions)
