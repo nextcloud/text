@@ -89,6 +89,7 @@ OC.L10N.register(
     "Heading 3" : "Đầu đề 3",
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
+    "Lists" : "Danh sách",
     "Info" : "Thông tin",
     "Success" : "Thành công",
     "Warning" : "Cảnh báo",

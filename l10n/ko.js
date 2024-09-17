@@ -87,6 +87,7 @@ OC.L10N.register(
     "Heading 3" : "제목 3",
     "Heading 4" : "제목 4",
     "Heading 5" : "제목 5",
+    "Lists" : "목록",
     "Info" : "정보",
     "Success" : "성공",
     "Warning" : "경고",

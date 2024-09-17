@@ -151,6 +151,7 @@ OC.L10N.register(
     "Heading 3" : "Fyrirsögn 3",
     "Heading 4" : "Fyrirsögn 4",
     "Heading 5" : "Fyrirsögn 5",
+    "Lists" : "Listar",
     "To-Do list" : "Verkþáttalisti",
     "Insert link" : "Setja inn tengil",
     "Callouts" : "Talblöðrur",

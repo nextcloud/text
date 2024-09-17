@@ -177,6 +177,7 @@ OC.L10N.register(
     "Heading 3" : "Títol 3",
     "Heading 4" : "Títol 4",
     "Heading 5" : "Títol 5",
+    "Lists" : "Llistes",
     "To-Do list" : "Llista de tasques pendents",
     "Insert link" : "Insereix un enllaç",
     "Callouts" : "Notificacions",
