@@ -12,31 +12,32 @@ import { isLinkToSelfWithHash } from './../helpers/links.js'
  * @return {Array} paragraphs with one link only found in the doc
  */
 export default function extractLinkParagraphs(doc) {
-	const counter = new Map()
 	const paragraphs = []
 
 	doc.descendants((node, offset) => {
-		if (node.type.name !== 'paragraph') {
-			return
+		if (previewPossible(node)) {
+			paragraphs.push(Object.freeze({
+				offset,
+				type: 'text-only',
+			}))
+		} else if (node.type.name === 'preview') {
+			paragraphs.push(Object.freeze({
+				offset,
+				type: 'link-preview',
+			}))
 		}
-		// ignore paragraphs that cannot be converted
-		if (!previewPossible(node)) return
-		paragraphs.push(Object.freeze({
-			offset,
-		}))
 	})
 
 	return paragraphs
 }
 
 /**
- * Is it possible to convert the currently selected node into a preview?
- * @param {object} state current editor state
- * @param {object} state.selection current selection
+ * Is it possible to convert the node into a preview?
+ * @param {object} node the node in question
  * @return {boolean}
  */
 function previewPossible(node) {
-	if (hasOtherContent(node)) {
+	if (node.type.name !== 'paragraph' || hasOtherContent(node)) {
 		return false
 	}
 	const href = extractHref(node.firstChild)
