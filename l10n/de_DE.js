@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "Überschrift 3",
     "Heading 4" : "Überschrift 4",
     "Heading 5" : "Überschrift 5",
+    "Lists" : "Listen",
     "To-Do list" : "Aufgabenliste",
     "Insert link" : "Link einfügen",
     "Callouts" : "Beschriftungen",

@@ -69,6 +69,7 @@ OC.L10N.register(
     "Heading 3" : "Naslov 3",
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
+    "Lists" : "Popisi",
     "Info" : "Informacije",
     "Success" : "Uspjeh",
     "Warning" : "Upozorenje",

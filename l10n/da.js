@@ -80,6 +80,7 @@ OC.L10N.register(
     "Heading 3" : "Overskrift 3",
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
+    "Lists" : "Lister",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Advarsler",

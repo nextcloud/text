@@ -67,6 +67,7 @@ OC.L10N.register(
     "Heading 3" : "Intestatzione 3",
     "Heading 4" : "Intestatzione 4",
     "Heading 5" : "Intestatzione 5",
+    "Lists" : "Listas",
     "Info" : "Informatziones",
     "Success" : "Sutzessu",
     "Warning" : "Avisu",

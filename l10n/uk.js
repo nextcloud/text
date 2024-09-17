@@ -180,6 +180,7 @@ OC.L10N.register(
     "Heading 3" : "Заголовок 3",
     "Heading 4" : "Заголовок 4",
     "Heading 5" : "Заголовок 5",
+    "Lists" : "Списки",
     "To-Do list" : "Список справ",
     "Insert link" : "Вставити посилання",
     "Callouts" : "Виноска",

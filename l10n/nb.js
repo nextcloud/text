@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "Overskrift 3",
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
+    "Lists" : "Lister",
     "To-Do list" : "Gjøremålsliste",
     "Insert link" : "Sett inn kobling",
     "Callouts" : "Bildeforklaringer",

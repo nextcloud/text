@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "Ceannteideal 3",
     "Heading 4" : "Ceannteideal 4",
     "Heading 5" : "Ceannteideal 5",
+    "Lists" : "Liostaí",
     "To-Do list" : "Liosta le Déanamh",
     "Insert link" : "Ionsáigh nasc",
     "Callouts" : "Glaonna",

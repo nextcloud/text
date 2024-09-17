@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
+    "Lists" : "Listas",
     "To-Do list" : "Lista de tarefas",
     "Insert link" : "Inserir link",
     "Callouts" : "Frases de destaque",

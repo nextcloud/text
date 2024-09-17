@@ -159,6 +159,7 @@ OC.L10N.register(
     "Heading 3" : "Címsor 3",
     "Heading 4" : "Címsor 4",
     "Heading 5" : "Címsor 5",
+    "Lists" : "Listák",
     "To-Do list" : "Teendőlista",
     "Insert link" : "Hivatkozás beszúrása",
     "Callouts" : "Kiemelések",
