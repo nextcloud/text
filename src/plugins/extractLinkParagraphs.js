@@ -18,11 +18,13 @@ export default function extractLinkParagraphs(doc) {
 		if (previewPossible(node)) {
 			paragraphs.push(Object.freeze({
 				offset,
+				nodeSize: node.nodeSize,
 				type: 'text-only',
 			}))
 		} else if (node.type.name === 'preview') {
 			paragraphs.push(Object.freeze({
 				offset,
+				nodeSize: node.nodeSize,
 				type: 'link-preview',
 			}))
 		}
