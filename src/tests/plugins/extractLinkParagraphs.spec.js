@@ -23,7 +23,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 , type: 'text-only' }
+			{ offset: 0 , type: 'text-only', nodeSize: 6 }
 		])
 	})
 
@@ -31,7 +31,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(preview)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 , type: 'link-preview' }
+			{ offset: 0 , type: 'link-preview', nodeSize: 6 }
 		])
 	})
 
@@ -40,7 +40,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 , type: 'text-only' }
+			{ offset: 0 , type: 'text-only', nodeSize: 7 }
 		])
 	})
 
@@ -50,8 +50,8 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 , type: 'text-only' },
-			{ offset: 6 , type: 'text-only' }
+			{ offset: 0 , type: 'text-only', nodeSize: 6 },
+			{ offset: 6 , type: 'text-only', nodeSize: 6 }
 		])
 	})
 
@@ -60,8 +60,8 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 , type: 'text-only' },
-			{ offset: 6 , type: 'link-preview' }
+			{ offset: 0 , type: 'text-only', nodeSize: 6 },
+			{ offset: 6 , type: 'link-preview', nodeSize: 6 }
 		])
 	})
 
