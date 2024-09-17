@@ -43,6 +43,7 @@ OC.L10N.register(
     "Copy code block" : "Copy code block",
     "Source code" : "Source code",
     "Headings" : "Headings",
+    "Lists" : "Lists",
     "Info" : "Info",
     "Warning" : "Warning",
     "Details" : "Details",

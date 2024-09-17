@@ -112,6 +112,7 @@ OC.L10N.register(
     "Heading 3" : "Επικεφαλίδα 3",
     "Heading 4" : "Επικεφαλίδα 4",
     "Heading 5" : "Επικεφαλίδα 5",
+    "Lists" : "Λίστες",
     "Insert link" : "Εισαγωγή συνδέσμου",
     "Callouts" : "Επεξηγήσεις (Callouts)",
     "Info" : "Πληροφόρηση",

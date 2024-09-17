@@ -142,6 +142,7 @@ OC.L10N.register(
     "Heading 3" : "Naslov 3",
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
+    "Lists" : "Seznami",
     "To-Do list" : "Seznam opravil",
     "Insert link" : "Vstavi povezavo",
     "Callouts" : "Oblački",

@@ -180,6 +180,7 @@ OC.L10N.register(
     "Heading 3" : "Наслов 3",
     "Heading 4" : "Наслов 4",
     "Heading 5" : "Наслов 5",
+    "Lists" : "Спискови",
     "To-Do list" : "Листа обавеза",
     "Insert link" : "Уметни линк",
     "Callouts" : "Балончићи",

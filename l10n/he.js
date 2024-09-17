@@ -68,6 +68,7 @@ OC.L10N.register(
     "Heading 3" : "כותרת 3",
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
+    "Lists" : "רשימות",
     "Info" : "פרטים",
     "Success" : "הצלחה",
     "Warning" : "אזהרה",

@@ -177,6 +177,7 @@ OC.L10N.register(
     "Heading 3" : "标题 3",
     "Heading 4" : "标题 4",
     "Heading 5" : "标题 5",
+    "Lists" : "列表",
     "To-Do list" : "代办事项",
     "Insert link" : "插入链接",
     "Callouts" : "标记",

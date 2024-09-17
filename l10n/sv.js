@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "Rubrik 3",
     "Heading 4" : "Rubrik 4",
     "Heading 5" : "Rubrik 5",
+    "Lists" : "Listor",
     "To-Do list" : "Att göra-lista",
     "Insert link" : "Infoga länk",
     "Callouts" : "Status",

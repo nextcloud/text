@@ -105,6 +105,7 @@ OC.L10N.register(
     "Heading 3" : "Kop 3",
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
+    "Lists" : "Lijsten",
     "To-Do list" : "Takenlijst",
     "Info" : "Info",
     "Success" : "Geslaagd",

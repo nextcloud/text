@@ -33,6 +33,7 @@ OC.L10N.register(
     "Edit" : "Sunting",
     "Source code" : "Kode sumber",
     "Both" : "Keduanya",
+    "Lists" : "Daftar",
     "Info" : "Info",
     "Warning" : "Peringatan",
     "Details" : "Detail",

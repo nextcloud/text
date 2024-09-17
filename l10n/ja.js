@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "見出し3",
     "Heading 4" : "見出し4",
     "Heading 5" : "見出し5",
+    "Lists" : "リスト",
     "To-Do list" : "To-Do リスト",
     "Insert link" : "リンクを挿入する",
     "Callouts" : "コールアウト",
