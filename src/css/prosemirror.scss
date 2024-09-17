@@ -382,12 +382,12 @@ div.ProseMirror {
 	display: block;
 }
 
-.editor__content p.is-empty:first-child::before {
+.editor__content p.is-empty::before {
+	color: var(--color-text-maxcontrast);
 	content: attr(data-placeholder);
 	float: left;
-	color: var(--color-text-maxcontrast);
-	pointer-events: none;
 	height: 0;
+	pointer-events: none;
 }
 
 .editor__content {
