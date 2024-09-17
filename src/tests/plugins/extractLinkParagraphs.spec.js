@@ -8,6 +8,7 @@ import Link from '../../marks/Link.js'
 import { createCustomEditor } from '../helpers.js'
 
 describe('extractLinkParagraphs', () => {
+	const link = '<a href="https://nextcloud.com">Link</a>'
 
 	it('returns an empty array for an empty doc', () => {
 		const doc = prepareDoc('')
@@ -16,7 +17,7 @@ describe('extractLinkParagraphs', () => {
 	})
 
 	it('returns paragraphs with a single link', () => {
-		const content = '<p><a href="https://nextcloud.com">Link</a></p>'
+		const content = `<p>${link}</p>`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
@@ -25,7 +26,7 @@ describe('extractLinkParagraphs', () => {
 	})
 
 	it('returns paragraphs with a single link and whitespace', () => {
-		const content = '<p><a href="https://nextcloud.com">Link</a> </p>'
+		const content = `<p>${link} </p>`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
@@ -34,7 +35,7 @@ describe('extractLinkParagraphs', () => {
 	})
 
 	it('returns multiple paragraphs with a single link', () => {
-		const paragraph = '<p><a href="https://nextcloud.com">Link</a></p>'
+		const paragraph = `<p>${link}</p>`
 		const content = paragraph + paragraph
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
@@ -52,21 +53,20 @@ describe('extractLinkParagraphs', () => {
 	})
 
 	it('ignores paragraphs with text after the link', () => {
-		const content = '<p><a href="https://nextcloud.com">Link</a> Hello</p>'
+		const content = `<p>${link} Hello</p>`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([])
 	})
 
 	it('ignores paragraphs with text before the link', () => {
-		const content = '<p>bla <a href="https://nextcloud.com">Link</a></p>'
+		const content = `<p>Hello ${link}</p>`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([])
 	})
 
 	it('ignores paragraphs with multiple links', () => {
-		const link = '<a href="https://nextcloud.com">Link</a>'
 		const content = `<p>${link} ${link}</p>`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
