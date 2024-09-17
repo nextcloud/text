@@ -81,6 +81,10 @@ export default {
 			type: Number,
 			required: true,
 		},
+		nodeSize: {
+			type: Number,
+			required: true,
+		},
 		editor: {
 			type: Object,
 			required: true,
@@ -108,9 +112,10 @@ export default {
 			chain.setPreview().run()
 		},
 		deleteNode() {
-			this.editor.chain().focus()
-				.setNodeSelection(this.offset + 1)
-				.deleteSelection()
+			this.editor.commands.deleteRange({
+				from: this.offset,
+				to: this.offset + this.nodeSize
+			})
 		},
 	},
 }
