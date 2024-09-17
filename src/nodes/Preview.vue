@@ -7,10 +7,7 @@
 		class="preview"
 		as="div"
 		contenteditable="false">
-		<NodeViewContent style="display:none" />
-		<PreviewOptions v-if="editor.isEditable"
-			:value.sync="value"
-			@update:value="changeViewMode" />
+		<NodeViewContent />
 		<NcReferenceList :text="node.attrs.href"
 			:limit="1"
 			:interactive="!extension.options.isEmbedded"
@@ -21,8 +18,6 @@
 <script>
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import PreviewOptions from '../components/Editor/PreviewOptions.vue'
-import { useEditorMixin } from '../components/Editor.provider.js'
 
 export default {
 	name: 'Preview',
@@ -30,35 +25,17 @@ export default {
 		NodeViewWrapper,
 		NodeViewContent,
 		NcReferenceList,
-		PreviewOptions,
 	},
-	mixins: [useEditorMixin],
 	props: nodeViewProps,
-	data() {
-		return {
-			value: 'link-preview',
-		}
-	},
-	methods: {
-		changeViewMode(value) {
-			if (value === 'delete-preview') {
-				this.deleteNode()
-			} else if (value === 'text-only') {
-				this.convertToParagraph()
-			}
-		},
-		convertToParagraph() {
-			this.$editor.chain()
-				.focus()
-				.setTextSelection(this.getPos() + 1)
-				.unsetPreview()
-				.run()
-		},
-	},
 }
 </script>
 
 <style lang="scss" scoped>
+// Hide the link element inside previews. We cannot hide full node view content
+// as the preview options (prosemirror decorations) are inside it.
+[data-text-el="preview"] [data-node-view-content] :deep(a) {
+	display: none;
+}
 
 .preview {
 	position: relative;
@@ -83,7 +60,6 @@ export default {
  * + widget margin-top
  */
 :deep([data-text-preview-options]) {
-	top: calc(7px + var(--default-grid-baseline, 4px) * 3);
+	top: calc(-7px - var(--default-grid-baseline, 4px) * 3);
 }
-
 </style>
