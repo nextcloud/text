@@ -5,10 +5,12 @@
 
 import extractLinkParagraphs from '../../plugins/extractLinkParagraphs.js'
 import Link from '../../marks/Link.js'
+import Preview from '../../nodes/Preview.js'
 import { createCustomEditor } from '../helpers.js'
 
 describe('extractLinkParagraphs', () => {
 	const link = '<a href="https://nextcloud.com">Link</a>'
+	const preview = '<a href="https://nextcloud.com" title="preview">Link</a>'
 
 	it('returns an empty array for an empty doc', () => {
 		const doc = prepareDoc('')
@@ -21,7 +23,15 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 }
+			{ offset: 0 , type: 'text-only' }
+		])
+	})
+
+	it('returns paragraphs with a single preview', () => {
+		const doc = prepareDoc(preview)
+		const paragraphs = extractLinkParagraphs(doc)
+		expect(paragraphs).toEqual([
+			{ offset: 0 , type: 'link-preview' }
 		])
 	})
 
@@ -30,7 +40,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 }
+			{ offset: 0 , type: 'text-only' }
 		])
 	})
 
@@ -40,8 +50,18 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ offset: 0 },
-			{ offset: 6 }
+			{ offset: 0 , type: 'text-only' },
+			{ offset: 6 , type: 'text-only' }
+		])
+	})
+
+	it('returns previews mixed with paragraphs with a single link', () => {
+		const content = `<p>${link}</p>${preview}`
+		const doc = prepareDoc(content)
+		const paragraphs = extractLinkParagraphs(doc)
+		expect(paragraphs).toEqual([
+			{ offset: 0 , type: 'text-only' },
+			{ offset: 6 , type: 'link-preview' }
 		])
 	})
 
@@ -54,6 +74,13 @@ describe('extractLinkParagraphs', () => {
 
 	it('ignores paragraphs with text after the link', () => {
 		const content = `<p>${link} Hello</p>`
+		const doc = prepareDoc(content)
+		const paragraphs = extractLinkParagraphs(doc)
+		expect(paragraphs).toEqual([])
+	})
+
+	it('ignores paragraphs with a link to self', () => {
+		const content = '<p><a href="#test">test</a></p>'
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([])
@@ -78,7 +105,7 @@ describe('extractLinkParagraphs', () => {
 function prepareDoc(content) {
 	const editor = createCustomEditor({
 		content,
-		extensions: [ Link ]
+		extensions: [ Link, Preview ]
 	})
 	return editor.state.doc
 }
