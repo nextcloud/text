@@ -73,10 +73,12 @@ export default {
 }
 
 /* Top align with preview image:
- * 7px .preview padding
- * + widget margin-top
+ * - unset center alignment
+ * - margin-top of widget-default
  */
-:deep([data-text-preview-options]) {
-	top: calc(-7px - var(--default-grid-baseline, 4px) * 3);
+:deep(.preview-options-container) {
+	top: unset;
+	transform: unset;
+	margin-top: calc(var(--default-grid-baseline, 4px) * 3) !important;
 }
 </style>
