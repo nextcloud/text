@@ -181,6 +181,7 @@ OC.L10N.register(
     "Heading 3" : "3. Başlık",
     "Heading 4" : "4. Başlık",
     "Heading 5" : "5. Başlık",
+    "Lists" : "Listeler",
     "To-Do list" : "Yapılacak iş listesi",
     "Insert link" : "Bağlantı ekle",
     "Callouts" : "Metin notları",

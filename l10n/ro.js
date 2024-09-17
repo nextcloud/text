@@ -38,6 +38,7 @@ OC.L10N.register(
     "Replace" : "Înlocuiește",
     "Edit" : "Editează",
     "Source code" : "Cod sursă",
+    "Lists" : "Liste",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție",

@@ -110,6 +110,7 @@ OC.L10N.register(
     "Heading 3" : "Antraštė 3",
     "Heading 4" : "Antraštė 4",
     "Heading 5" : "Antraštė 5",
+    "Lists" : "Sąrašai",
     "To-Do list" : "Užduočių sąrašas",
     "Insert link" : "Įterpti nuorodą",
     "Callouts" : "Paaiškinimo išnašos",
