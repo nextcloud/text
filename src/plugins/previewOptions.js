@@ -16,6 +16,7 @@ export const previewOptionsPluginKey = new PluginKey('linkParagraphMenu')
  * Add preview options to linkParagraphs.
  *
  * @param {object} options - options for the plugin
+ * @param {object} options.editor - the tiptap editor
  *
  * @return {Plugin<DecorationSet>}
  */

@@ -97,7 +97,7 @@ export default {
 		deleteNode() {
 			this.editor.commands.deleteRange({
 				from: this.offset,
-				to: this.offset + this.nodeSize
+				to: this.offset + this.nodeSize,
 			})
 		},
 	},
