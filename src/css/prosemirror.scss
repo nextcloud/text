@@ -131,6 +131,7 @@ div.ProseMirror {
 	}
 
 	p {
+		position: relative;
 		margin-bottom: 1em;
 		line-height: 150%;
 	}
@@ -281,6 +282,7 @@ div.ProseMirror {
 		padding-left: 3px;
 
 		p {
+			position: relative;
 			margin-bottom: 0.5em;
 		}
 	}

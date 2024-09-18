@@ -112,13 +112,14 @@ div[contenteditable=false] {
 
 .preview-options-container {
 	position: absolute;
+	width: 0 !important;
 	left: -44px;
 	top: 50%;
 	transform: translate(0, -50%);
 }
 
 // Inside details, button needs to be shifted further
-.details-content div[data-text-preview-options] {
+.details-content .preview-options-container {
 	left: calc(-44px - 24px);
 }
 
