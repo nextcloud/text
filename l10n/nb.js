@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
-    "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Add folder description" : "Legg til mappebeskrivelse",
     "\"{name}\" already exist!" : "\"{name}\" finnes allerede!",
     "Created \"{name}\"" : "Opprettet \"{name}\"",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "Kobling til denne seksjonen",
     "Show author colors" : "Vis forfatterfarger",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarger vises bare til alle har lukket dokumentet.",
+    "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
     "Add description" : "Legg til beskrivelse"
 },
 "nplurals=2; plural=(n != 1);");

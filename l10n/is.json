@@ -164,12 +164,12 @@
     "Control" : "Stjórnun",
     "Option" : "Valkostur",
     "Formatting" : "Sniðmótun",
-    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "\"{name}\" already exist!" : "\"{name}\" er þegar til staðar!",
     "Created \"{name}\"" : "Bjó til \"{name}\"",
     "Link to this section" : "Tengja í þennan hluta",
     "Show author colors" : "Sýna liti höfunda",
     "Author colors are only shown until everyone has closed the document." : "Litir höfunda eru aðeins sýndir þar til allir hafa lokað skjalinu.",
+    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Add description" : "Bæta við lýsingu"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

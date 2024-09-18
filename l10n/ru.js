@@ -174,13 +174,13 @@ OC.L10N.register(
     "Control" : "Контроль",
     "Option" : "Вариант",
     "Formatting" : "Форматирование",
-    "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Add folder description" : "Добавить описание папки",
     "Copied to the clipboard" : "Скопировано в буфер обмена",
     "Front matter" : "Передний план",
     "Link to this section" : "Ссылка на этот раздел",
     "Show author colors" : "Выделить правки цветами",
     "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
+    "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Add description" : "Добавить описание"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

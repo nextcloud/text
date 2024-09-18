@@ -195,7 +195,6 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Aukera",
     "Formatting" : "Formatua",
-    "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Add folder description" : "Gehitu karpetaren deskribapena",
     "\"{name}\" already exist!" : "\"{name}\" badago dagoeneko!",
     "Created \"{name}\"" : "\"{name}\" sortu da",
@@ -205,6 +204,7 @@ OC.L10N.register(
     "Link to this section" : "Estekatu atal honetara",
     "Show author colors" : "Erakutsi egilearen koloreak",
     "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
+    "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Add description" : "Gehitu deskribapena"
 },
 "nplurals=2; plural=(n != 1);");

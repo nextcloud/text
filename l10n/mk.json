@@ -101,9 +101,9 @@
     "Command" : "Команда",
     "Control" : "Контрола",
     "Option" : "Опции",
-    "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Show author colors" : "Прикажи ги боите на авторот",
     "Author colors are only shown until everyone has closed the document." : "Боите на авторот се прикажуваат само кога сите ќе го затворат документот.",
+    "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Add description" : "Додади опис"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

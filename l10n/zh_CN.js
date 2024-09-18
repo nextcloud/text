@@ -192,7 +192,6 @@ OC.L10N.register(
     "Control" : "控制",
     "Option" : "选项",
     "Formatting" : "格式",
-    "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Add folder description" : "添加文件夹描述",
     "\"{name}\" already exist!" : "\"{name}\" 已存在！",
     "Created \"{name}\"" : "创建 \"{name}\"",
@@ -202,6 +201,7 @@ OC.L10N.register(
     "Link to this section" : "链接至本节",
     "Show author colors" : "显示作者颜色",
     "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
+    "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Add description" : "添加描述"
 },
 "nplurals=1; plural=0;");

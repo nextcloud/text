@@ -195,7 +195,6 @@ OC.L10N.register(
     "Control" : "Controllo",
     "Option" : "Opzione",
     "Formatting" : "Formattazione",
-    "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
     "Add folder description" : "Aggiungi descrizione cartella",
     "\"{name}\" already exist!" : "\"{name}\" esiste già!",
     "Created \"{name}\"" : "Creato \"{name}\"",
@@ -205,6 +204,7 @@ OC.L10N.register(
     "Link to this section" : "Collegamento a questa sezione",
     "Show author colors" : "Mostra i colori degli autori",
     "Author colors are only shown until everyone has closed the document." : "I colori degli autori sono visualizzati solo finché tutti non hanno chiuso il documento. ",
+    "Add notes, lists or links …" : "Aggiungi note, elenchi o collegamenti...",
     "Add description" : "Aggiungi descrizione"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

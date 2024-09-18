@@ -125,10 +125,10 @@ OC.L10N.register(
     "Command" : "Εντολή",
     "Control" : "Έλεγχος",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
-    "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Add folder description" : "Προσθήκη περιγραφής φακέλου",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
+    "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
     "Add description" : "Προσθήκη περιγραφής"
 },
 "nplurals=2; plural=(n != 1);");

@@ -88,8 +88,8 @@ OC.L10N.register(
     "Details" : "Detaljer",
     "Command" : "Kommando",
     "Formatting" : "Formatering",
-    "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Show author colors" : "Vis forfatterens farver",
-    "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet."
+    "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
+    "Add notes, lists or links …" : "Tilføj noter, lister eller links ..."
 },
 "nplurals=2; plural=(n != 1);");

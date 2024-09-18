@@ -179,7 +179,10 @@
     "Heading 3" : "عنوان 3",
     "Heading 4" : "عنوان 4",
     "Heading 5" : "عنوان 5",
+    "Lists" : "قوائم",
     "To-Do list" : "قائمة المهام",
+    "Increase indentation" : "زيادة المسافة البادئة",
+    "Decrease indentation" : "إنقاص المسافة البادئة",
     "Insert link" : "أدخِل الرابط",
     "Callouts" : "توضيحات callouts",
     "Info" : "معلومات",
@@ -193,7 +196,6 @@
     "Control" : "تحكُّم",
     "Option" : "خيار",
     "Formatting" : "التنسيق",
-    "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Add folder description" : "أضِف وصفاً للمجلد",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
@@ -203,6 +205,7 @@
     "Link to this section" : "رابط إلى القسم section",
     "Show author colors" : "إعرض ألوان الكُتّاب",
     "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
+    "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Add description" : "أضِف وصفاً"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }
