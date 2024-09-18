@@ -42,8 +42,8 @@ describe('Preview Options', function() {
 	})
 
 	it('should Remove link', function() {
-		cy.get('.paragraph-content').should('have.text', 'nextcloud.com')
+		cy.get('p > a').should('have.text', 'nextcloud.com')
 		cy.get('.action-button__text').contains('Remove link').click()
-		cy.get('.paragraph-content').should('not.have.text', 'nextcloud.com')
+		cy.get('p > a').should('not.exist')
 	})
 })
