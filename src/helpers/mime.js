@@ -28,6 +28,7 @@ const openMimetypesPlainText = [
 	'text/x-h',
 	'text/x-java-source',
 	'text/x-ldif',
+	'text/x-nfo',
 	'text/x-python',
 	'text/x-shellscript',
 ]
