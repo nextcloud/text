@@ -1,5 +1,4 @@
 import TiptapParagraph from '@tiptap/extension-paragraph'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import previewOptions from '../plugins/previewOptions.js'
 
 const Paragraph = TiptapParagraph.extend({
