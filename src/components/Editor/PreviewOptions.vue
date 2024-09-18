@@ -85,7 +85,7 @@ export default {
 			type: Number,
 			required: true,
 		},
-		editor: {
+		$editor: {
 			type: Object,
 			required: true,
 		},
@@ -99,11 +99,11 @@ export default {
 
 	methods: {
 		onOpen() {
-			this.editor.commands.hideLinkBubble()
+			this.$editor.commands.hideLinkBubble()
 		},
 		toggle(type) {
 			this.open = false
-			const chain = this.editor.chain().focus()
+			const chain = this.$editor.chain().focus()
 				.setTextSelection(this.offset + 1)
 			if (type === 'text-only') {
 				chain.unsetPreview().run()
@@ -112,7 +112,7 @@ export default {
 			chain.setPreview().run()
 		},
 		deleteNode() {
-			this.editor.commands.deleteRange({
+			this.$editor.commands.deleteRange({
 				from: this.offset,
 				to: this.offset + this.nodeSize,
 			})
