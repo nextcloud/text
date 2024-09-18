@@ -183,6 +183,8 @@ OC.L10N.register(
     "Heading 5" : "Título 5",
     "Lists" : "Listas",
     "To-Do list" : "Lista de tarefas",
+    "Increase indentation" : "Aumentar recuo",
+    "Decrease indentation" : "Diminuir recuo",
     "Insert link" : "Inserir link",
     "Callouts" : "Frases de destaque",
     "Info" : "Info",
@@ -196,7 +198,6 @@ OC.L10N.register(
     "Control" : "Controle",
     "Option" : "Opção",
     "Formatting" : "Formatação",
-    "Add notes, lists or links …" : "Adicione observações, listas ou links...",
     "Add folder description" : "Adicionar descrição da pasta",
     "\"{name}\" already exist!" : "\"{name}\" já existe!",
     "Created \"{name}\"" : "Criado \"{nome}\"",
@@ -206,6 +207,7 @@ OC.L10N.register(
     "Link to this section" : "Link para esta seção",
     "Show author colors" : "Mostrar cores de autoria",
     "Author colors are only shown until everyone has closed the document." : "As cores de autoria só são exibidas até que todas as pessoas tenham fechado o documento. ",
+    "Add notes, lists or links …" : "Adicione observações, listas ou links...",
     "Add description" : "Adicionar descrição"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

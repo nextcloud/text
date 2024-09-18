@@ -155,12 +155,12 @@ OC.L10N.register(
     "Control" : "Control Center",
     "Option" : "Опция",
     "Formatting" : "Форматиране",
-    "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
     "Copied to the clipboard" : "Копирано в клипборда",
     "Front matter" : "Предно съдържание",
     "Link to this section" : "Връзка към този раздел",
     "Show author colors" : "Показване на цветовете на автора",
     "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
+    "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
     "Add description" : "Добавяне на описание"
 },
 "nplurals=2; plural=(n != 1);");

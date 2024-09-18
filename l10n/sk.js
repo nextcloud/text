@@ -147,11 +147,11 @@ OC.L10N.register(
     "Control" : "Riadenie",
     "Option" : "Možnosť",
     "Formatting" : "Formátovanie",
-    "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Front matter" : "Predná strana",
     "Link to this section" : "Odkaz na túto sekciu",
     "Show author colors" : "Zobraziť autorské farby",
     "Author colors are only shown until everyone has closed the document." : "Farby autora sa zobrazujú iba dovtedy, kým dokument všetci neuzavrú.",
+    "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Add description" : "Pridať popis"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

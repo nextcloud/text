@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "Denetim",
     "Option" : "Seçenek",
     "Formatting" : "Biçimlendirme",
-    "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Add folder description" : "Klasör açıklaması ekle",
     "\"{name}\" already exist!" : "\"{name}\" zaten var!",
     "Created \"{name}\"" : "\"{name}\" oluşturuldu",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "Bu bölüm bağlantısı",
     "Show author colors" : "Yazar renkleri görüntülensin",
     "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
+    "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Add description" : "Açıklama ekle"
 },
 "nplurals=2; plural=(n > 1);");
