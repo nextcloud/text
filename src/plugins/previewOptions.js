@@ -26,6 +26,9 @@ export default function previewOptions({ editor }) {
 
 		state: {
 			init(_, { doc }) {
+				if (!editor.options.editable) {
+					return { decorations: DecorationSet.create() }
+				}
 				const linkParagraphs = extractLinkParagraphs(doc)
 				return {
 					linkParagraphs,
@@ -34,6 +37,9 @@ export default function previewOptions({ editor }) {
 			},
 			apply(tr, value, _oldState, newState) {
 				if (!tr.docChanged) {
+					return value
+				}
+				if (!editor.options.editable) {
 					return value
 				}
 				const linkParagraphs = extractLinkParagraphs(newState.doc)
@@ -96,6 +102,7 @@ function linkParagraphsChanged(current, prev) {
  */
 const isDifferentFrom = (other) => (linkParagraph, i) => {
 	return linkParagraph.type !== other[i].type
+		|| linkParagraph.nodeSize !== other[i].nodeSize
 }
 
 /**
@@ -138,7 +145,7 @@ function decorationForLinkParagraph(linkParagraph, editor) {
  */
 function previewOptionForLinkParagraph(linkParagraph, editor) {
 	const propsData = {
-		editor,
+		$editor: editor,
 		...linkParagraph,
 	}
 	const el = document.createElement('div')
