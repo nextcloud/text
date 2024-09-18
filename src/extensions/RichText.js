@@ -111,9 +111,7 @@ export default Extension.create({
 			LinkBubble,
 			this.options.editing
 				? Placeholder.configure({
-					emptyNodeClass: 'is-empty',
-					placeholder: t('text', 'Add notes, lists or links …'),
-					showOnlyWhenEditable: true,
+					placeholder: t('text', 'Start writing, or try \'/\' to add, \'@\' to mention…'),
 				})
 				: null,
 			TrailingNode,
