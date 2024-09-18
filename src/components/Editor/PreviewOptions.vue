@@ -129,6 +129,7 @@ div[contenteditable=false] {
 
 .preview-options-container {
 	position: absolute;
+	width: 0 !important;
 	left: -44px;
 	top: 50%;
 	transform: translate(0, -50%);
