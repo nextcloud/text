@@ -45,6 +45,7 @@ OC.L10N.register(
     "Guest" : "Гост",
     "Save guest name" : "Сачувај име госта",
     "Uploading multiple attachments failed." : "Није успело отпремање више прилога.",
+    "Uploading attachment failed: {error}" : "Није успело отпремање прилога: {error}",
     "Uploading attachment failed." : "Није успело отпремање прилога.",
     "Insert an attachment" : "Уметни прилог",
     "Failed to insert from Files" : "Није успело уметање из апликације Фајлови",
@@ -182,6 +183,8 @@ OC.L10N.register(
     "Heading 5" : "Наслов 5",
     "Lists" : "Спискови",
     "To-Do list" : "Листа обавеза",
+    "Increase indentation" : "Увећај увлачење",
+    "Decrease indentation" : "Умањи увлачење",
     "Insert link" : "Уметни линк",
     "Callouts" : "Балончићи",
     "Info" : "Инфо",
@@ -195,7 +198,6 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Option" : "Опција",
     "Formatting" : "Форматирање",
-    "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Add folder description" : "Додај опис фолдера",
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
@@ -205,6 +207,7 @@ OC.L10N.register(
     "Link to this section" : "Линк на овај одељак",
     "Show author colors" : "Прикажи боје аутора",
     "Author colors are only shown until everyone has closed the document." : "Боје аутора се приказују све док сви не затворе документ.",
+    "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Add description" : "Додај опис"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

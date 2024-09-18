@@ -183,6 +183,8 @@ OC.L10N.register(
     "Heading 5" : "Título 5",
     "Lists" : "Listas",
     "To-Do list" : "Lista de tarefas pendentes",
+    "Increase indentation" : "Incrementar a sangría",
+    "Decrease indentation" : "Diminuír a sangría",
     "Insert link" : "Inserir ligazón",
     "Callouts" : "Lendas",
     "Info" : "Información",
@@ -196,7 +198,6 @@ OC.L10N.register(
     "Control" : "Control",
     "Option" : "Opción",
     "Formatting" : "Formatado",
-    "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Add folder description" : "Engadir a descrición do cartafol",
     "\"{name}\" already exist!" : "Xa existe «{name}»!",
     "Created \"{name}\"" : "Creouse «{name}»",
@@ -206,6 +207,7 @@ OC.L10N.register(
     "Link to this section" : "Ligazón a esta sección",
     "Show author colors" : "Amosar as cores do autor",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
+    "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Add description" : "Engadir descrición"
 },
 "nplurals=2; plural=(n != 1);");

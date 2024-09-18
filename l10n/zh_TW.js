@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "控制",
     "Option" : "選項",
     "Formatting" : "文字樣式",
-    "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Add folder description" : "新增資料夾描述",
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "連結至此節",
     "Show author colors" : "顯示作者顏色",
     "Author colors are only shown until everyone has closed the document." : "僅在所有人都關閉文件前才顯示文件顏色。",
+    "Add notes, lists or links …" : "加入筆記、清單或連結…",
     "Add description" : "新增描述"
 },
 "nplurals=1; plural=0;");

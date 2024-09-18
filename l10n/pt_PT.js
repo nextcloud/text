@@ -60,8 +60,8 @@ OC.L10N.register(
     "Details" : "Detalhes",
     "Control" : "Controle",
     "Formatting" : "Formação ",
-    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações...",
     "Show author colors" : "Mostrar cores do autor ",
-    "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. "
+    "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
+    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações..."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -122,8 +122,8 @@
     "Command" : "Komanda",
     "Control" : "Valdoma",
     "Formatting" : "Formatavimas",
-    "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
     "Show author colors" : "Rodyti autoriaus spalvas",
-    "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento."
+    "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
+    "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

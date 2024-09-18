@@ -75,8 +75,8 @@ OC.L10N.register(
     "Command" : "Cumandu",
     "Control" : "Controllu",
     "Formatting" : "Formatatzione",
-    "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Show author colors" : "Mustra is colores de sa persone autora",
-    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu."
+    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
+    "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …"
 },
 "nplurals=2; plural=(n != 1);");

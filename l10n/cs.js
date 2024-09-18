@@ -188,7 +188,6 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Volba",
     "Formatting" : "Formátování",
-    "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Add folder description" : "Přidat popis složky",
     "\"{name}\" already exist!" : "„{name}“ už existuje!",
     "Created \"{name}\"" : "Vytvořeno „{name}“",
@@ -198,6 +197,7 @@ OC.L10N.register(
     "Link to this section" : "Odkázat na tuto sekci",
     "Show author colors" : "Zobrazit barvy autorů",
     "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
+    "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Add description" : "Přidat popis"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "コントロール",
     "Option" : "Option",
     "Formatting" : "フォーマット",
-    "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Add folder description" : "フォルダーの説明を追加",
     "\"{name}\" already exist!" : "\"{name}\" は既に存在します",
     "Created \"{name}\"" : "\"{name}\" を作成しました",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "このセクションへのリンク",
     "Show author colors" : "記入者の色をつける",
     "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
+    "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Add description" : "説明を追加"
 },
 "nplurals=1; plural=0;");
