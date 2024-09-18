@@ -137,6 +137,7 @@ OC.L10N.register(
     "Heading 3" : "Testera 3",
     "Heading 4" : "Testera 4",
     "Heading 5" : "Testera 5",
+    "Lists" : "Llistes",
     "To-Do list" : "Llista de xeres pendientes",
     "Insert link" : "Inxertar un enllaz",
     "Info" : "Información",

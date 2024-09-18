@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "Smacht",
     "Option" : "Rogha",
     "Formatting" : "Formáidiú",
-    "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
     "Add folder description" : "Cuir cur síos ar fhillteán leis",
     "\"{name}\" already exist!" : "Tá \"{name}\" ann cheana féin!",
     "Created \"{name}\"" : "Cruthaithe \"{name}\"",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "Nasc leis an alt seo",
     "Show author colors" : "Taispeáin dathanna an údair",
     "Author colors are only shown until everyone has closed the document." : "Ní thaispeántar dathanna an údair ach go dtí go mbíonn an doiciméad dúnta ag gach duine.",
+    "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
     "Add description" : "Cuir cur síos leis"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

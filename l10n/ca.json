@@ -190,7 +190,6 @@
     "Control" : "Control",
     "Option" : "Opció",
     "Formatting" : "Format",
-    "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Add folder description" : "Afegiu una descripció per a la carpeta",
     "\"{name}\" already exist!" : "«{name}» ja existeix!",
     "Created \"{name}\"" : "S'ha creat «{name}»",
@@ -200,6 +199,7 @@
     "Link to this section" : "Enllaç a aquesta secció",
     "Show author colors" : "Mostra els colors de l'autor",
     "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom ha tancat el document.",
+    "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Add description" : "Afegeix una descripció"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

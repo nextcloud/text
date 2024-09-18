@@ -169,12 +169,12 @@
     "Control" : "کنترل",
     "Option" : "Option",
     "Formatting" : "قالب‌بندی",
-    "Add notes, lists or links …" : "Add notes, lists or links …",
     "Copied to the clipboard" : "Copied to the clipboard",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",
     "Show author colors" : "Show author colors",
     "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
+    "Add notes, lists or links …" : "Add notes, lists or links …",
     "Add description" : "Add description"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

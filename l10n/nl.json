@@ -115,9 +115,9 @@
     "Command" : "Commando",
     "Control" : "Controle",
     "Formatting" : "Opmaak",
-    "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Add folder description" : "Mapomschrijving toevoegen",
     "Show author colors" : "Tonen auteurskleuren",
-    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten."
+    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
+    "Add notes, lists or links …" : "Notities, lijsten of links toevoegen..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

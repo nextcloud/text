@@ -196,7 +196,6 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
-    "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Add folder description" : "Lägg till mappbeskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",
@@ -206,6 +205,7 @@ OC.L10N.register(
     "Link to this section" : "Länk till detta avsnitt",
     "Show author colors" : "Visa författarfärger",
     "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
+    "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Add description" : "Lägg till beskrivning"
 },
 "nplurals=2; plural=(n != 1);");

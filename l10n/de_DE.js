@@ -183,6 +183,8 @@ OC.L10N.register(
     "Heading 5" : "Überschrift 5",
     "Lists" : "Listen",
     "To-Do list" : "Aufgabenliste",
+    "Increase indentation" : "Einrückung vergrößern",
+    "Decrease indentation" : "Einrückung verkleinern",
     "Insert link" : "Link einfügen",
     "Callouts" : "Beschriftungen",
     "Info" : "Info",
@@ -196,7 +198,6 @@ OC.L10N.register(
     "Control" : "Kontrolle",
     "Option" : "Option",
     "Formatting" : "Formatierung",
-    "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
@@ -206,6 +207,7 @@ OC.L10N.register(
     "Link to this section" : "Link zu diesem Abschnitt",
     "Show author colors" : "Autorenfarben anzeigen",
     "Author colors are only shown until everyone has closed the document." : "Autorenfarben werden nur so lange angezeigt, bis jeder das Dokument geschlossen hat.",
+    "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Add description" : "Beschreibung hinzufügen"
 },
 "nplurals=2; plural=(n != 1);");

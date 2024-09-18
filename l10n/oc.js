@@ -68,7 +68,7 @@ OC.L10N.register(
     "Details" : "Per lo Menut",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
-    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…",
-    "Show author colors" : "Afichar las colors dels utilizaires"
+    "Show author colors" : "Afichar las colors dels utilizaires",
+    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…"
 },
 "nplurals=2; plural=(n > 1);");

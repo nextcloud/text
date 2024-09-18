@@ -155,7 +155,6 @@
     "Command" : "Komento",
     "Control" : "Hallinta",
     "Formatting" : "Muotoilu",
-    "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Add folder description" : "Lisään kansion kuvaus",
     "\"{name}\" already exist!" : "\"{name}\" on jo olemassa!",
     "Created \"{name}\"" : "Luotu \"{name}\"",
@@ -164,6 +163,7 @@
     "Link to this section" : "Linkki tähän osioon",
     "Show author colors" : "Näytä tekijän värit",
     "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
+    "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Add description" : "Lisää kuvaus"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
