@@ -59,7 +59,7 @@ export function getUpdateMessage(ydoc, encodedBaseUpdate) {
  * Apply an updated message to the ydoc.
  *
  * Only used in tests right now.
- * @param {Y.Doc} ydoc - encode state of this doc
+ * @param {Y.Doc} ydoc - update state of this doc
  * @param {Uint8Array} updateMessage - y-websocket sync message with update
  * @param {object} origin - initiator object e.g. WebsocketProvider
  */
@@ -78,6 +78,10 @@ export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
 		ydoc,
 		origin,
 	)
+
+	// TODO: check if the update was applied
+	// by checking if the state vector of the update
+	// is included in the state vector of the doc after the update
 }
 
 /**
@@ -129,11 +133,38 @@ export function logStep(step) {
 }
 
 /**
+ * Helper function to convert a state vector to a map
+ *
+ * Maps the client id to the clock of the client in question
+ * @param {Uint8Array} stateVector - state vector to convert
+ */
+export function stateVectorToMap(stateVector) {
+	const decoder = decoding.createDecoder(stateVector)
+	const size = decoding.readVarUint(decoder)
+	const map = new Map()
+	while (decoding.hasContent(decoder)) {
+		const client = decoding.readVarUint(decoder)
+		const clock = decoding.readVarUint(decoder)
+		map.set(client, clock)
+	}
+	return map
+}
+
+/**
  * Helper function to check if two state vectors have the same state
- * @param {Array} arr - state vector to compare
- * @param {Array} other - state vector to compare against
+ * @param {Uint8Array} arr - state vector to compare
+ * @param {Uint8Array} other - state vector to compare against
  */
 function sameState(arr, other) {
 	return arr.length === other.length
 		&& arr.every((value, index) => other[index] === value)
+}
+
+/**
+ * Helper function to check if one state vector is up to date with another
+ * @param {Array} arr - state vector to compare
+ * @param {Array} other - state vector to compare against
+ */
+function upToDate(arr, other) {
+	// TODO: implement me
 }
