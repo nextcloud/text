@@ -198,6 +198,7 @@ OC.L10N.register(
     "Control" : "تحكُّم",
     "Option" : "خيار",
     "Formatting" : "التنسيق",
+    "Start writing, or try '/' to add, '@' to mention…" : "إبدأ الكتابة، أو جرِّب '/' للإضافة، أو  '@' للإشارة …",
     "Add folder description" : "أضِف وصفاً للمجلد",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
