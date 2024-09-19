@@ -198,6 +198,7 @@ OC.L10N.register(
     "Control" : "Control",
     "Option" : "Opción",
     "Formatting" : "Formatado",
+    "Start writing, or try '/' to add, '@' to mention…" : "Comece a escribir, ou probe con «/» para engadir, «@» para mencionar…",
     "Add folder description" : "Engadir a descrición do cartafol",
     "\"{name}\" already exist!" : "Xa existe «{name}»!",
     "Created \"{name}\"" : "Creouse «{name}»",
