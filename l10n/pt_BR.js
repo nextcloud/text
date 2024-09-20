@@ -198,6 +198,7 @@ OC.L10N.register(
     "Control" : "Controle",
     "Option" : "Opção",
     "Formatting" : "Formatação",
+    "Start writing, or try '/' to add, '@' to mention…" : "Comece a escrever ou tente '/' para adicionar, '@' para mencionar…",
     "Add folder description" : "Adicionar descrição da pasta",
     "\"{name}\" already exist!" : "\"{name}\" já existe!",
     "Created \"{name}\"" : "Criado \"{nome}\"",
