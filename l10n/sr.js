@@ -198,6 +198,7 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Option" : "Опција",
     "Formatting" : "Форматирање",
+    "Start writing, or try '/' to add, '@' to mention…" : "Почните да пишете, или пробајте ’/’ да додате, ’@’ да поменете",
     "Add folder description" : "Додај опис фолдера",
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
