@@ -198,7 +198,7 @@ OC.L10N.register(
     "Control" : "Kontrolle",
     "Option" : "Option",
     "Formatting" : "Formatierung",
-    "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit „/“ zum Hinzufügen oder „@“ zum Erwähnen …",
+    "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
