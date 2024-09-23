@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
 // Hide the link element inside previews. We cannot hide full node view content
 // as the preview options (prosemirror decorations) are inside it.
-[data-text-el="preview"] [data-node-view-content] :deep(a) {
+[data-text-el='preview'] [data-node-view-content] :deep(a) {
 	display: none;
 }
 
