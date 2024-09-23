@@ -66,7 +66,7 @@ class WorkspaceController extends OCSController {
 		private IEventDispatcher $eventDispatcher,
 		private LoggerInterface $logger,
 		private ISession $session,
-		private ?string $userId
+		private ?string $userId,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -173,9 +173,9 @@ class WorkspaceController extends OCSController {
 			if ($folder instanceof Folder) {
 				$file = $this->getFile($folder);
 				if ($file === null) {
-					$token = $this->directEditingManager->create($path . '/'. $this->workspaceService->getSupportedFilenames()[0], Application::APP_NAME, TextDocumentCreator::CREATOR_ID);
+					$token = $this->directEditingManager->create($path . '/' . $this->workspaceService->getSupportedFilenames()[0], Application::APP_NAME, TextDocumentCreator::CREATOR_ID);
 				} else {
-					$token = $this->directEditingManager->open($path . '/'. $file->getName(), Application::APP_NAME);
+					$token = $this->directEditingManager->open($path . '/' . $file->getName(), Application::APP_NAME);
 				}
 				return new DataResponse([
 					'url' => $this->urlGenerator->linkToRouteAbsolute('files.DirectEditingView.edit', ['token' => $token])

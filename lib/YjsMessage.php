@@ -35,7 +35,7 @@ class YjsMessage {
 	private int $pos = 0;
 
 	public function __construct(
-		private string $data = ''
+		private string $data = '',
 	) {
 	}
 

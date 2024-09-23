@@ -31,7 +31,7 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		IRequest $request,
 		ISession $session,
 		private ShareManager $shareManager,
-		private ApiService $apiService
+		private ApiService $apiService,
 	) {
 		parent::__construct($appName, $request, $session);
 	}

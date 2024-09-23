@@ -40,7 +40,7 @@ class WorkspacePlugin extends ServerPlugin {
 		private ICacheFactory $cacheFactory,
 		private IConfig $config,
 		private LoggerInterface $logger,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 

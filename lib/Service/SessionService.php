@@ -45,7 +45,7 @@ class SessionService {
 		IRequest $request,
 		IManager $directManager,
 		?string $userId,
-		ICacheFactory $cacheFactory
+		ICacheFactory $cacheFactory,
 	) {
 		$this->sessionMapper = $sessionMapper;
 		$this->secureRandom = $secureRandom;

@@ -19,7 +19,12 @@ class SettingsController extends Controller {
 		'workspace_enabled'
 	];
 
-	public function __construct(string $appName, IRequest $request, private IConfig $config, private ?string $userId) {
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private IConfig $config,
+		private ?string $userId,
+	) {
 		parent::__construct($appName, $request);
 	}
 

@@ -36,7 +36,8 @@ class SessionController extends ApiController implements ISessionAwareController
 		private SessionService $sessionService,
 		private NotificationService $notificationService,
 		private IUserManager $userManager,
-		private IUserSession $userSession) {
+		private IUserSession $userSession,
+	) {
 		parent::__construct($appName, $request);
 	}
 

@@ -24,7 +24,8 @@ class BeforeNodeRenamedListener implements IEventListener {
 	public function __construct(
 		private readonly AttachmentService $attachmentService,
 		private readonly DocumentService $documentService,
-		private readonly LoggerInterface $logger) {
+		private readonly LoggerInterface $logger,
+	) {
 	}
 
 	public function handle(Event $event): void {

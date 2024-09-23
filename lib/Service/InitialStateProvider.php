@@ -27,7 +27,7 @@ class InitialStateProvider {
 		private ConfigService $configService,
 		private ITranslationManager $translationManager,
 		private IManager $taskProcessingManager,
-		private ?string $userId
+		private ?string $userId,
 	) {
 	}
 
