@@ -22,6 +22,10 @@ const TaskList = TiptapTaskList.extend({
 	addAttributes() {
 		return {
 			...this.parent?.(),
+			isList: {
+				default: true,
+				rendered: false,
+			},
 			bullet: {
 				default: '-',
 				rendered: false,

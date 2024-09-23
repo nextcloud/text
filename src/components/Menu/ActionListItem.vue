@@ -5,6 +5,7 @@
 
 <template>
 	<NextcloudVueNcActionButton class="entry-single-action entry-action entry-action-item"
+		:title="listItemTooltip || undefined"
 		:class="state.class"
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"
@@ -52,7 +53,7 @@ export default {
 			} else {
 				// Some actions run themselves.
 				// others still need to have .run() called upon them.
-				actionEntry.action(this.$editor.chain().focus())?.run()
+				actionEntry.action(this.$editor.chain().focus(), this.$editor)?.run()
 			}
 
 			this.$nextTick(() => {
