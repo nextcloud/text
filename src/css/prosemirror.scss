@@ -123,7 +123,8 @@ div.ProseMirror {
 		padding: .5em 0;
 	}
 
-	p .paragraph-content {
+	p {
+		position: relative;
 		margin-bottom: 1em;
 		line-height: 150%;
 	}
@@ -273,7 +274,8 @@ div.ProseMirror {
 		position: relative;
 		padding-left: 3px;
 
-		p .paragraph-content {
+		p {
+			position: relative;
 			margin-bottom: 0.5em;
 		}
 	}
