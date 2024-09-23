@@ -22,7 +22,6 @@ export default function headingAnchor() {
 
 		state: {
 			init(_, { doc }) {
-				console.debug('headingAnchor init')
 				const headings = extractHeadings(doc)
 				return {
 					headings,
