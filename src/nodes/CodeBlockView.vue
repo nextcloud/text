@@ -228,6 +228,7 @@ export default {
 <style lang="scss" scoped>
 .code-block {
 	background-color: var(--color-background-dark);
+	border-radius: var(--border-radius);
 	position: relative;
 }
 
