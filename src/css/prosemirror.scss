@@ -46,13 +46,11 @@ div.ProseMirror {
 		}
 	}
 
-	ul[data-type=taskList] {
-		margin-left: 1px;
-	}
-
 	.checkbox-item {
 		display: flex;
 		align-items: start;
+		// Leave space for checkbox (14px width + 2x 1px border + 6px margin-right)
+		margin-left: -24px;
 
 		input[type=checkbox] {
 			display: none;
@@ -69,7 +67,6 @@ div.ProseMirror {
 			box-shadow: none !important;
 			background-position: center;
 			cursor: pointer;
-			left: 9px;
 		}
 		&.checked{
 			&:before {
