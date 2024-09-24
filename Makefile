@@ -5,7 +5,7 @@ app_name=$(notdir $(CURDIR))
 
 .NOTPARALLEL:
 
-all: dev-setup lint build-js-production
+all: dev-setup lint build-js
 
 # Dev env management
 dev-setup: clean clean-dev npm-init
