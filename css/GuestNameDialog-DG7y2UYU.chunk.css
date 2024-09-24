@@ -1,0 +1,15 @@
+form.guest-name-dialog[data-v-d22a5b2e] {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+}
+form.guest-name-dialog[data-v-d22a5b2e] img {
+  margin: 0 !important;
+}
+form.guest-name-dialog input[type=text][data-v-d22a5b2e] {
+  flex-grow: 1;
+}
+form.guest-name-dialog label[data-v-d22a5b2e] {
+  padding-right: 3px;
+  height: 32px;
+}

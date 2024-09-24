@@ -1,0 +1,13 @@
+.avatar[data-v-46b5e95c], .avatar-wrapper[data-v-46b5e95c] {
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+  text-align: center;
+  color: #ffffff;
+  line-height: var(--size);
+  font-size: var(--font-size);
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

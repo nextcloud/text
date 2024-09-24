@@ -1,2 +1,23 @@
 /*! third party licenses: js/vendor.LICENSE.txt */
-import{r as o,a as r}from"./index-DFRiQR_-.chunk.mjs";import{l as t}from"./index-Ubm2itxG.chunk.mjs";import{addMenuRichWorkspace as p,FilesWorkspaceHeader as i}from"./files-DKwC98uh.chunk.mjs";import"./modulepreload-polyfill-DMTabKmO.chunk.mjs";import"./index-DkzhscpN.chunk.mjs";import"./_plugin-vue2_normalizer-CQ6iBklL-rU_GxdkG.chunk.mjs";import"./emoji-picker-SoWZqoso.chunk.mjs";import"./NcNoteCard-CImn6F9p-UxtsH02J.chunk.mjs";import"./vue.runtime.esm-DaLNuXGQ.chunk.mjs";import"./index-CmPFnv9J.chunk.mjs";import"./mime-bnICMVzq.chunk.mjs";import"./index-c3o_VCAX.chunk.mjs";const a=t("text","workspace_available");o("nc:rich-workspace",{nc:"http://nextcloud.org/ns"}),o("nc:rich-workspace-file",{nc:"http://nextcloud.org/ns"}),a&&(p(),r(i));
+const appName = "text";
+const appVersion = "5.0.0";
+import { r as registerDavProperty, a as registerFileListHeaders } from "./index-vvv79fCA.chunk.mjs";
+import { l as loadState } from "./index-BlY3bsRS.chunk.mjs";
+import { addMenuRichWorkspace, FilesWorkspaceHeader } from "./files-Dyrnz9k_.chunk.mjs";
+import "./modulepreload-polyfill-BYUVWjVf.chunk.mjs";
+import "./index-CN6XKkNN.chunk.mjs";
+import "./_plugin-vue2_normalizer-CQ6iBklL-Cs_Ws5tX.chunk.mjs";
+import "./emoji-picker-BhtCN8J5.chunk.mjs";
+import "./NcNoteCard-CImn6F9p-D99bniab.chunk.mjs";
+import "./vue.runtime.esm-DTeU3deE.chunk.mjs";
+import "./index-C0K-IFBz.chunk.mjs";
+import "./mime-D5AROL7j.chunk.mjs";
+import "./index-Das7djPE.chunk.mjs";
+const workspaceAvailable = loadState("text", "workspace_available");
+registerDavProperty("nc:rich-workspace", { nc: "http://nextcloud.org/ns" });
+registerDavProperty("nc:rich-workspace-file", { nc: "http://nextcloud.org/ns" });
+if (workspaceAvailable) {
+  addMenuRichWorkspace();
+  registerFileListHeaders(FilesWorkspaceHeader);
+}
+//# sourceMappingURL=text-init.mjs.map
