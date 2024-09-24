@@ -79,6 +79,7 @@ export default {
 div.details {
 	display: flex;
 	align-items: start;
+	margin-bottom: 0.5em;
 	gap: 4px;
 
 	border: 1px solid var(--color-border-dark) !important;
