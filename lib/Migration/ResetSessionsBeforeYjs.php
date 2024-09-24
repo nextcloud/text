@@ -13,8 +13,10 @@ use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 
 class ResetSessionsBeforeYjs implements IRepairStep {
-	public function __construct(private IAppConfig $config,
-		private DocumentService $documentService) {
+	public function __construct(
+		private IAppConfig $config,
+		private DocumentService $documentService,
+	) {
 	}
 
 	/**

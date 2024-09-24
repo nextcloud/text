@@ -28,7 +28,7 @@ class UserApiController extends ApiController implements ISessionAwareController
 		IRequest $request,
 		private SessionService $sessionService,
 		private ISearch $collaboratorSearch,
-		private IUserManager $userManager
+		private IUserManager $userManager,
 	) {
 		parent::__construct($appName, $request);
 	}

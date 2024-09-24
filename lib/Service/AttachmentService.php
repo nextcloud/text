@@ -32,12 +32,14 @@ use OCP\Share\IShare;
 use OCP\Util;
 
 class AttachmentService {
-	public function __construct(private IRootFolder $rootFolder,
+	public function __construct(
+		private IRootFolder $rootFolder,
 		private ShareManager $shareManager,
 		private IPreview $previewManager,
 		private IMimeTypeDetector $mimeTypeDetector,
 		private IURLGenerator $urlGenerator,
-		private IFilenameValidator $filenameValidator) {
+		private IFilenameValidator $filenameValidator,
+	) {
 	}
 
 	/**
@@ -101,7 +103,7 @@ class AttachmentService {
 	 * @throws NotPermittedException
 	 * @throws NoUserException
 	 */
-	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): File|null {
+	public function getMediaFile(int $documentId, string $mediaFileName, string $userId): ?File {
 		$textFile = $this->getTextFile($documentId, $userId);
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}
@@ -114,7 +116,7 @@ class AttachmentService {
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 */
-	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken): File|null {
+	public function getMediaFilePublic(int $documentId, string $mediaFileName, string $shareToken): ?File {
 		$textFile = $this->getTextFilePublic($documentId, $shareToken);
 		return $this->getMediaFullFile($mediaFileName, $textFile);
 	}

@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
 class BeforeNodeWrittenListener implements IEventListener {
 	public function __construct(
 		private LoggerInterface $logger,
-		private DocumentService $documentService
+		private DocumentService $documentService,
 	) {
 	}
 

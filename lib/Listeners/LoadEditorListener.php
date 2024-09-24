@@ -22,7 +22,7 @@ use OCP\Util;
 class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
 	public function __construct(
 		private InitialStateProvider $initialStateProvider,
-		private IEventDispatcher $eventDispatcher
+		private IEventDispatcher $eventDispatcher,
 	) {
 	}
 

@@ -62,7 +62,7 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		private IL10N $l10n,
 		private LoggerInterface $logger,
 		private IMimeTypeDetector $mimeTypeDetector,
-		private AttachmentService $attachmentService
+		private AttachmentService $attachmentService,
 	) {
 		parent::__construct($appName, $request);
 	}

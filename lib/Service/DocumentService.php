@@ -146,7 +146,7 @@ class DocumentService {
 		try {
 			/** @var Document $document */
 			$document = $this->documentMapper->insert($document);
-			$this->cache->set('document-version-'.$document->getId(), 0);
+			$this->cache->set('document-version-' . $document->getId(), 0);
 		} catch (Exception $e) {
 			if ($e->getReason() === Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION) {
 				// Document might have been created in the meantime
