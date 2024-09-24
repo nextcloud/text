@@ -6,7 +6,7 @@
 import {
 	Undo,
 	Redo,
-	CardTextOutline,
+	CodeBrackets,
 	CodeTags,
 	Danger,
 	Emoticon,
@@ -292,7 +292,7 @@ export default [
 		key: 'blocks',
 		label: t('text', 'Blocks'),
 		visible: false,
-		icon: CardTextOutline,
+		icon: CodeBrackets,
 		isActive: ['blockquote', 'codeBlock', 'callout'],
 		children: [
 			{

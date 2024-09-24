@@ -6,10 +6,10 @@
 /* eslint-disable camelcase */
 
 import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVariant.vue'
-import MDI_CardTextOutline from 'vue-material-design-icons/CardTextOutline.vue'
 import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
+import MDI_CodeBrackets from 'vue-material-design-icons/CodeBrackets.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
 import MDI_Delete from 'vue-material-design-icons/Delete.vue'
@@ -92,9 +92,9 @@ export const AlphabeticalVariant = makeIcon(MDI_AlphabeticalVariant)
 export const AlignHorizontalCenter = makeIcon(MDI_AlignHorizontalCenter)
 export const AlignHorizontalLeft = makeIcon(MDI_AlignHorizontalLeft)
 export const AlignHorizontalRight = makeIcon(MDI_AlignHorizontalRight)
-export const CardTextOutline = makeIcon(MDI_CardTextOutline)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
+export const CodeBrackets = makeIcon(MDI_CodeBrackets)
 export const CodeTags = makeIcon(MDI_CodeTags)
 export const CircleMedium = makeIcon(MDI_CircleMedium)
 export const Danger = makeIcon(MDI_Danger)
