@@ -6,12 +6,14 @@
 import {
 	Undo,
 	Redo,
+	CodeBrackets,
 	CodeTags,
 	Danger,
 	Emoticon,
 	FormatBold,
 	FormatItalic,
 	FormatUnderline,
+	FormatSize,
 	FormatStrikethrough,
 	FormatHeader1,
 	FormatHeader2,
@@ -71,6 +73,103 @@ export default [
 		priority: 10,
 	},
 	{
+		key: 'headings',
+		label: t('text', 'Headings'),
+		keyChar: '1…6',
+		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+		icon: FormatSize,
+		isActive: 'heading',
+		children: [
+			{
+				key: 'headings-h1',
+				label: t('text', 'Heading 1'),
+				keyChar: '1',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				icon: FormatHeader1,
+				isActive: { name: 'heading', attributes: { level: 1 } },
+				action: (command) => {
+					return command.toggleHeading({ level: 1 })
+				},
+			},
+			{
+				key: 'headings-h2',
+				label: t('text', 'Heading 2'),
+				keyChar: '2',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				icon: FormatHeader2,
+				isActive: { name: 'heading', attributes: { level: 2 } },
+				action: (command) => {
+					return command.toggleHeading({ level: 2 })
+				},
+			},
+			{
+				key: 'headings-h3',
+				label: t('text', 'Heading 3'),
+				keyChar: '3',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				icon: FormatHeader3,
+				isActive: { name: 'heading', attributes: { level: 3 } },
+				action: (command) => {
+					return command.toggleHeading({ level: 3 })
+				},
+			},
+			{
+				key: 'headings-h4',
+				label: t('text', 'Heading 4'),
+				keyChar: '4',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: { name: 'heading', attributes: { level: 4 } },
+				icon: FormatHeader4,
+				action: (command) => {
+					return command.toggleHeading({ level: 4 })
+				},
+			},
+			{
+				key: 'headings-h5',
+				label: t('text', 'Heading 5'),
+				keyChar: '5',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: { name: 'heading', attributes: { level: 5 } },
+				icon: FormatHeader5,
+				action: (command) => {
+					return command.toggleHeading({ level: 5 })
+				},
+			},
+			{
+				key: 'headings-h6',
+				label: t('text', 'Heading 6'),
+				keyChar: '6',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: { name: 'heading', attributes: { level: 6 } },
+				icon: FormatHeader6,
+				action: (command) => {
+					return command.toggleHeading({ level: 6 })
+				},
+			},
+			{
+				key: 'headings-separator',
+				isSeparator: true,
+				visible: ({ $outlineState }) => {
+					return $outlineState.enable
+				},
+			},
+			{
+				key: 'outline',
+				icon: FormatListBulleted,
+				click: ({ $outlineActions }) => $outlineActions.toggle(),
+				visible: ({ $outlineState }) => {
+					return $outlineState.enable
+				},
+				label: ({ $outlineState }) => {
+					return $outlineState.visible
+						? t('text', 'Hide outline')
+						: t('text', 'Show outline')
+				},
+			},
+		],
+		priority: 1,
+	},
+	{
 		key: 'bold',
 		label: t('text', 'Bold'),
 		keyChar: 'b',
@@ -104,7 +203,7 @@ export default [
 		action: (command) => {
 			return command.toggleUnderline()
 		},
-		priority: 13,
+		priority: 11,
 	},
 	{
 		key: 'strikethrough',
@@ -116,111 +215,14 @@ export default [
 		action: (command) => {
 			return command.toggleStrike()
 		},
-		priority: 14,
-	},
-	{
-		key: 'headings',
-		label: t('text', 'Headings'),
-		keyChar: '1…6',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		icon: FormatHeader1,
-		isActive: 'heading',
-		children: [
-			{
-				key: 'headings-h1',
-				label: t('text', 'Heading 1'),
-				keyChar: '1',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				icon: FormatHeader1,
-				isActive: ['heading', { level: 1 }],
-				action: (command) => {
-					return command.toggleHeading({ level: 1 })
-				},
-			},
-			{
-				key: 'headings-h2',
-				label: t('text', 'Heading 2'),
-				keyChar: '2',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				icon: FormatHeader2,
-				isActive: ['heading', { level: 2 }],
-				action: (command) => {
-					return command.toggleHeading({ level: 2 })
-				},
-			},
-			{
-				key: 'headings-h3',
-				label: t('text', 'Heading 3'),
-				keyChar: '3',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				icon: FormatHeader3,
-				isActive: ['heading', { level: 3 }],
-				action: (command) => {
-					return command.toggleHeading({ level: 3 })
-				},
-			},
-			{
-				key: 'headings-h4',
-				label: t('text', 'Heading 4'),
-				keyChar: '4',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 4 }],
-				icon: FormatHeader4,
-				action: (command) => {
-					return command.toggleHeading({ level: 4 })
-				},
-			},
-			{
-				key: 'headings-h5',
-				label: t('text', 'Heading 5'),
-				keyChar: '5',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 5 }],
-				icon: FormatHeader5,
-				action: (command) => {
-					return command.toggleHeading({ level: 5 })
-				},
-			},
-			{
-				key: 'headings-h6',
-				label: t('text', 'Heading 6'),
-				keyChar: '6',
-				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-				isActive: ['heading', { level: 6 }],
-				icon: FormatHeader6,
-				action: (command) => {
-					return command.toggleHeading({ level: 6 })
-				},
-			},
-			{
-				key: 'headings-separator',
-				isSeparator: true,
-				visible: ({ $outlineState }) => {
-					return $outlineState.enable
-				},
-			},
-			{
-				key: 'outline',
-				icon: FormatListBulleted,
-				click: ({ $outlineActions }) => $outlineActions.toggle(),
-				visible: ({ $outlineState }) => {
-					return $outlineState.enable
-				},
-				label: ({ $outlineState }) => {
-					return $outlineState.visible
-						? t('text', 'Hide outline')
-						: t('text', 'Show outline')
-				},
-			},
-		],
-		priority: 1,
+		priority: 12,
 	},
 	{
 		key: 'lists',
 		label: t('text', 'Lists'),
 		keyChar: '7…9',
 		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: [{ isList: true }],
+		isActive: ['bulletList', 'orderedList', 'taskList'],
 		icon: FormatListBulleted,
 		children: [
 			{
@@ -287,36 +289,42 @@ export default [
 		priority: 2,
 	},
 	{
-		key: 'insert-link',
-		label: t('text', 'Insert link'),
-		isActive: 'link',
-		icon: LinkIcon,
-		component: ActionInsertLink,
-		priority: 3,
-	},
-	{
-		key: 'blockquote',
-		label: t('text', 'Blockquote'),
-		keyChar: 'b',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
-		isActive: 'blockquote',
-		icon: FormatQuote,
-		action: (command) => {
-			return command.toggleBlockquote()
-		},
-		priority: 11,
-	},
-	{
-		key: 'callouts',
-		label: t('text', 'Callouts'),
+		key: 'blocks',
+		label: t('text', 'Blocks'),
 		visible: false,
-		icon: Info,
-		isActive: 'callout',
+		icon: CodeBrackets,
+		isActive: ['blockquote', 'codeBlock', 'callout'],
 		children: [
 			{
+				key: 'blockquote',
+				label: t('text', 'Blockquote'),
+				keyChar: 'b',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Shift],
+				isActive: 'blockquote',
+				icon: FormatQuote,
+				action: (command) => {
+					return command.toggleBlockquote()
+				},
+			},
+			{
+				key: 'code-block',
+				label: t('text', 'Code block'),
+				keyChar: 'c',
+				keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
+				isActive: 'codeBlock',
+				icon: CodeTags,
+				action: (command) => {
+					return command.toggleCodeBlock()
+				},
+			},
+			{
+				key: 'blocks-separator',
+				isSeparator: true,
+			},
+			{
 				key: 'callout-info',
-				label: t('text', 'Info'),
-				isActive: ['callout', { type: 'info' }],
+				label: t('text', 'Info callout'),
+				isActive: { name: 'callout', attributes: { type: 'info' } },
 				icon: Info,
 				action: (command) => {
 					return command.toggleCallout({ type: 'info' })
@@ -324,8 +332,8 @@ export default [
 			},
 			{
 				key: 'callout-success',
-				label: t('text', 'Success'),
-				isActive: ['callout', { type: 'success' }],
+				label: t('text', 'Success callout'),
+				isActive: { name: 'callout', attributes: { type: 'success' } },
 				icon: Positive,
 				action: (command) => {
 					return command.toggleCallout({ type: 'success' })
@@ -333,8 +341,8 @@ export default [
 			},
 			{
 				key: 'callout-warn',
-				label: t('text', 'Warning'),
-				isActive: ['callout', { type: 'warn' }],
+				label: t('text', 'Warning callout'),
+				isActive: { name: 'callout', attributes: { type: 'warn' } },
 				icon: Warn,
 				action: (command) => {
 					return command.toggleCallout({ type: 'warn' })
@@ -342,27 +350,15 @@ export default [
 			},
 			{
 				key: 'callout-error',
-				label: t('text', 'Danger'),
-				isActive: ['callout', { type: 'error' }],
+				label: t('text', 'Danger callout'),
+				isActive: { name: 'callout', attributes: { type: 'error' } },
 				icon: Danger,
 				action: (command) => {
 					return command.toggleCallout({ type: 'error' })
 				},
 			},
 		],
-		priority: 4,
-	},
-	{
-		key: 'code-block',
-		label: t('text', 'Code block'),
-		keyChar: 'c',
-		keyModifiers: [MODIFIERS.Mod, MODIFIERS.Alt],
-		isActive: 'codeBlock',
-		icon: CodeTags,
-		action: (command) => {
-			return command.toggleCodeBlock()
-		},
-		priority: 12,
+		priority: 3,
 	},
 	{
 		key: 'table',
@@ -372,7 +368,7 @@ export default [
 		action: (command) => {
 			return command.insertTable()
 		},
-		priority: 15,
+		priority: 13,
 	},
 	{
 		key: 'details',
@@ -382,7 +378,22 @@ export default [
 		action: (command) => {
 			return command.toggleDetails()
 		},
-		priority: 16,
+		priority: 14,
+	},
+	{
+		key: 'insert-link',
+		label: t('text', 'Insert link'),
+		isActive: 'link',
+		icon: LinkIcon,
+		component: ActionInsertLink,
+		priority: 4,
+	},
+	{
+		key: 'insert-attachment',
+		label: t('text', 'Insert attachment'),
+		icon: Paperclip,
+		component: ActionAttachmentUpload,
+		priority: 5,
 	},
 	{
 		key: 'emoji-picker',
@@ -392,13 +403,6 @@ export default [
 		action: (command, emojiObject = {}) => {
 			return command.emoji(emojiObject)
 		},
-		priority: 5,
-	},
-	{
-		key: 'insert-attachment',
-		label: t('text', 'Insert attachment'),
-		icon: Paperclip,
-		component: ActionAttachmentUpload,
 		priority: 6,
 	},
 ]

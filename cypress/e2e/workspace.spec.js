@@ -194,7 +194,7 @@ describe('Workspace', function() {
 				const actionName = `callout-${type}`
 
 				// enable callout
-				cy.getSubmenuEntry('callouts', actionName).click()
+				cy.getSubmenuEntry('blocks', actionName).click()
 
 				// check content
 				cy.getContent()
@@ -202,7 +202,7 @@ describe('Workspace', function() {
 					.should('contain', 'Callout')
 
 				// disable
-				cy.getSubmenuEntry('callouts', actionName)
+				cy.getSubmenuEntry('blocks', actionName)
 					.should('have.class', 'is-active')
 					.click()
 			})
@@ -212,19 +212,19 @@ describe('Workspace', function() {
 			const [first, ...rest] = types
 
 			// enable callout
-			cy.getSubmenuEntry('callouts', `callout-${first}`)
+			cy.getSubmenuEntry('blocks', `callout-${first}`)
 				.click()
 
 			cy.wrap(rest).each(type => {
 				const actionName = `callout-${type}`
-				cy.getSubmenuEntry('callouts', actionName).click()
+				cy.getSubmenuEntry('blocks', actionName).click()
 				cy.getContent().find(`.callout.callout--${type}`)
 					.should('contain', 'Callout')
 			})
 
-			cy.getSubmenuEntry('callouts', `callout-${rest.at(-1)}`)
+			cy.getSubmenuEntry('blocks', `callout-${rest.at(-1)}`)
 				.click()
-			cy.getMenuEntry('callouts')
+			cy.getMenuEntry('blocks')
 				.should('not.have.class', 'is-active')
 		})
 	})

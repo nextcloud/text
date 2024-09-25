@@ -103,7 +103,7 @@ export default {
 		},
 		labelWithSelected() {
 			if (this.currentChild) {
-				// TRANSLATORS: examples - Headings, "Heading 1" is selected - Callouts, "Info" is selected
+				// TRANSLATORS: examples - Headings, "Heading 1" is selected - Blocks, "Info callout" is selected
 				return t('text', '{menuItemName}, "{selectedSubMenuItemName}" is selected', {
 					menuItemName: this.actionEntry.label,
 					selectedSubMenuItemName: this.currentChild.label,

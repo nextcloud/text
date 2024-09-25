@@ -44,19 +44,42 @@ const getIsActive = ({ isActive }, $editor) => {
 		return false
 	}
 
-	const args = Array.isArray(isActive)
+	// Supports either one type or an array of types
+	const types = Array.isArray(isActive)
 		? isActive
 		: [isActive]
 
-	return $editor.isActive(...args)
+	for (const type of types) {
+		let args
+		// Supports either a type string or an object with type name and type attributes.
+		// Name can be `null`, only give `attributes` to isActive in this case.
+		if (type !== null && typeof type === 'object') {
+			args = type.name
+				? [type.name, { ...type.attributes }]
+				: [{ ...type.attributes }]
+		} else {
+			args = [type]
+		}
+		if ($editor.isActive(...args)) {
+			return true
+		}
+	}
+
+	return false
 }
 
 const getType = (actionEntry) => {
 	// isActive stores the value changing on active state change (on click)
 
-	// If it is an array, the button is one of the list of alternative values for a specific option
-	// Like ['heading', { level: 1 }]
+	// If it is an array, the button is a submenu button.
+	// Like `['bulletList', 'orderedList']`
 	if (Array.isArray(actionEntry.isActive)) {
+		return 'button'
+	}
+
+	// If it is an object, the button is one of the list of alternative values for a specific option.
+	// Like `{ name: 'heading', attributes: { level: 1 } }`
+	if (actionEntry.isActive && typeof actionEntry.isActive === 'object') {
 		return 'radio'
 	}
 

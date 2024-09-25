@@ -9,6 +9,7 @@ import MDI_AlphabeticalVariant from 'vue-material-design-icons/AlphabeticalVaria
 import MDI_Close from 'vue-material-design-icons/Close.vue'
 import MDI_Check from 'vue-material-design-icons/Check.vue'
 import MDI_CircleMedium from 'vue-material-design-icons/CircleMedium.vue'
+import MDI_CodeBrackets from 'vue-material-design-icons/CodeBrackets.vue'
 import MDI_CodeTags from 'vue-material-design-icons/CodeTags.vue'
 import MDI_Danger from 'vue-material-design-icons/AlertDecagram.vue'
 import MDI_Delete from 'vue-material-design-icons/Delete.vue'
@@ -17,6 +18,7 @@ import MDI_DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import MDI_Emoticon from 'vue-material-design-icons/EmoticonOutline.vue'
 import MDI_Folder from 'vue-material-design-icons/Folder.vue'
 import MDI_FormatBold from 'vue-material-design-icons/FormatBold.vue'
+import MDI_FormatSize from 'vue-material-design-icons/FormatSize.vue'
 import MDI_AlignHorizontalCenter from 'vue-material-design-icons/AlignHorizontalCenter.vue'
 import MDI_AlignHorizontalLeft from 'vue-material-design-icons/AlignHorizontalLeft.vue'
 import MDI_AlignHorizontalRight from 'vue-material-design-icons/AlignHorizontalRight.vue'
@@ -92,6 +94,7 @@ export const AlignHorizontalLeft = makeIcon(MDI_AlignHorizontalLeft)
 export const AlignHorizontalRight = makeIcon(MDI_AlignHorizontalRight)
 export const Close = makeIcon(MDI_Close)
 export const Check = makeIcon(MDI_Check)
+export const CodeBrackets = makeIcon(MDI_CodeBrackets)
 export const CodeTags = makeIcon(MDI_CodeTags)
 export const CircleMedium = makeIcon(MDI_CircleMedium)
 export const Danger = makeIcon(MDI_Danger)
@@ -101,6 +104,7 @@ export const DotsHorizontal = makeIcon(MDI_DotsHorizontal)
 export const Emoticon = makeIcon(MDI_Emoticon)
 export const Folder = makeIcon(MDI_Folder)
 export const FormatBold = makeIcon(MDI_FormatBold)
+export const FormatSize = makeIcon(MDI_FormatSize)
 export const FormatHeader1 = makeIcon(MDI_FormatHeader1)
 export const FormatHeader2 = makeIcon(MDI_FormatHeader2)
 export const FormatHeader3 = makeIcon(MDI_FormatHeader3)
