@@ -17,11 +17,11 @@ version: 11.0.3
 license: Apache-2.0
 
 @floating-ui/core
-version: 1.6.7
+version: 0.3.1
 license: MIT
 
 @floating-ui/dom
-version: 1.6.10
+version: 0.1.10
 license: MIT
 
 @floating-ui/utils
@@ -325,7 +325,7 @@ version: 3.37.0
 license: MIT
 
 cose-base
-version: 2.2.0
+version: 1.0.3
 license: MIT
 
 crypt
@@ -345,8 +345,8 @@ version: 2.2.0
 license: MIT
 
 d3-array
-version: 2.12.1
-license: BSD-3-Clause
+version: 3.2.4
+license: ISC
 
 d3-axis
 version: 3.0.0
@@ -493,7 +493,7 @@ version: 3.0.0
 license: MIT
 
 layout-base
-version: 2.0.1
+version: 1.0.2
 license: MIT
 
 lib0
