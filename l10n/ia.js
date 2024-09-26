@@ -14,8 +14,8 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "a",
     "Edit" : "Modificar",
+    "Details" : "Detalios",
     "Info" : "Info",
-    "Warning" : "Aviso",
-    "Details" : "Detalios"
+    "Warning" : "Aviso"
 },
 "nplurals=2; plural=(n != 1);");

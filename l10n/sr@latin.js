@@ -23,8 +23,8 @@ OC.L10N.register(
     "Replace" : "Zameni postojeću",
     "Edit" : "Uredi",
     "Source code" : "Izvorni kôd",
+    "Details" : "Detalji",
     "Info" : "Info",
-    "Warning" : "Upozorenje",
-    "Details" : "Detalji"
+    "Warning" : "Upozorenje"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

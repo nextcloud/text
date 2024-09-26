@@ -88,9 +88,6 @@
     "Heading 4" : "Đầu đề 4",
     "Heading 5" : "Đầu đề 5",
     "Lists" : "Danh sách",
-    "Info" : "Thông tin",
-    "Success" : "Thành công",
-    "Warning" : "Cảnh báo",
     "Details" : "Chi tiết",
     "Insert attachment" : "Thêm đính kèm",
     "Command" : "Lệnh",
@@ -98,6 +95,9 @@
     "Formatting" : "Định dạng",
     "Show author colors" : "Hiển thị màu sắc của tác giả",
     "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
+    "Info" : "Thông tin",
+    "Success" : "Thành công",
+    "Warning" : "Cảnh báo",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
     "Add description" : "Thêm mô tả"
 },"pluralForm" :"nplurals=1; plural=0;"

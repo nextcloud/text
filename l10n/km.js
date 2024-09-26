@@ -9,9 +9,9 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "ទៅ",
     "Edit" : "កែប្រែ",
-    "Info" : "Info",
-    "Warning" : "បម្រាម",
     "Table" : "តារាង",
-    "Details" : "ព័ត៌មាន​លម្អិត"
+    "Details" : "ព័ត៌មាន​លម្អិត",
+    "Info" : "Info",
+    "Warning" : "បម្រាម"
 },
 "nplurals=1; plural=0;");

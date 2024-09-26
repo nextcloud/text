@@ -107,10 +107,6 @@ OC.L10N.register(
     "Heading 5" : "Kop 5",
     "Lists" : "Lijsten",
     "To-Do list" : "Takenlijst",
-    "Info" : "Info",
-    "Success" : "Geslaagd",
-    "Warning" : "Waarschuwing",
-    "Danger" : "Gevaar",
     "Table" : "Tabel",
     "Details" : "Details",
     "Insert attachment" : "Toevoegen bijlage",
@@ -120,6 +116,10 @@ OC.L10N.register(
     "Add folder description" : "Mapomschrijving toevoegen",
     "Show author colors" : "Tonen auteurskleuren",
     "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
+    "Info" : "Info",
+    "Success" : "Geslaagd",
+    "Warning" : "Waarschuwing",
+    "Danger" : "Gevaar",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen..."
 },
 "nplurals=2; plural=(n != 1);");

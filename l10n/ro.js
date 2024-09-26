@@ -39,10 +39,10 @@ OC.L10N.register(
     "Edit" : "Editează",
     "Source code" : "Cod sursă",
     "Lists" : "Liste",
+    "Details" : "Detalii",
+    "Formatting" : "Formatare",
     "Info" : "Info",
     "Success" : "Succes",
-    "Warning" : "Atenție",
-    "Details" : "Detalii",
-    "Formatting" : "Formatare"
+    "Warning" : "Atenție"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

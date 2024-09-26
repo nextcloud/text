@@ -44,10 +44,10 @@ OC.L10N.register(
     "Source code" : "Source code",
     "Headings" : "Headings",
     "Lists" : "Lists",
-    "Info" : "Info",
-    "Warning" : "Warning",
     "Details" : "Details",
     "Command" : "Command",
-    "Formatting" : "Formatting"
+    "Formatting" : "Formatting",
+    "Info" : "Info",
+    "Warning" : "Warning"
 },
 "nplurals=2; plural=(n!=1);");

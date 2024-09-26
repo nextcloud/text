@@ -9,8 +9,8 @@ OC.L10N.register(
     "Link" : "Link",
     "Cancel" : "ரத்து செய்",
     "Edit" : "தொகுக்க",
+    "Details" : "விவரங்கள்",
     "Info" : "Info",
-    "Warning" : "எச்சரிக்கை",
-    "Details" : "விவரங்கள்"
+    "Warning" : "எச்சரிக்கை"
 },
 "nplurals=2; plural=(n != 1);");

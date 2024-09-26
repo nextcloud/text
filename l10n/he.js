@@ -69,14 +69,14 @@ OC.L10N.register(
     "Heading 4" : "כותרת 4",
     "Heading 5" : "כותרת 5",
     "Lists" : "רשימות",
-    "Info" : "פרטים",
-    "Success" : "הצלחה",
-    "Warning" : "אזהרה",
     "Details" : "פרטים",
     "Insert attachment" : "הוספת קובץ מצורף",
     "Command" : "פקודה",
     "Control" : "שליטה",
     "Formatting" : "עיצוב",
+    "Info" : "פרטים",
+    "Success" : "הצלחה",
+    "Warning" : "אזהרה",
     "Add notes, lists or links …" : "ניתן להוסיף הערות, רשימות או קישורים…"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");
