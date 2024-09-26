@@ -38,11 +38,11 @@ OC.L10N.register(
     "Heading 3" : "Kop 3",
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
-    "Info" : "Inligting",
-    "Success" : "Sukses",
-    "Warning" : "Waarskuwing",
     "Details" : "Besonderhede",
     "Show author colors" : "Toon outeurkleure",
-    "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het."
+    "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het.",
+    "Info" : "Inligting",
+    "Success" : "Sukses",
+    "Warning" : "Waarskuwing"
 },
 "nplurals=2; plural=(n != 1);");

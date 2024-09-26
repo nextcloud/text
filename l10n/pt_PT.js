@@ -54,14 +54,14 @@ OC.L10N.register(
     "Heading 3" : "Título 3",
     "Heading 4" : "Título 4",
     "Heading 5" : "Título 5",
-    "Info" : "Informação",
-    "Success" : "Sucesso",
-    "Warning" : "Aviso",
     "Details" : "Detalhes",
     "Control" : "Controle",
     "Formatting" : "Formação ",
     "Show author colors" : "Mostrar cores do autor ",
     "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
+    "Info" : "Informação",
+    "Success" : "Sucesso",
+    "Warning" : "Aviso",
     "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações..."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

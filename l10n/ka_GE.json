@@ -23,9 +23,9 @@
     "Replace" : "ჩანაცვლება",
     "Edit" : "ცვლილება",
     "Source code" : "კოდი",
+    "Details" : "დეტალები",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
-    "Warning" : "გაფრთხილება",
-    "Details" : "დეტალები"
+    "Warning" : "გაფრთხილება"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

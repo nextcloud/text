@@ -10,9 +10,9 @@ OC.L10N.register(
     "Cancel" : "ຍົກເລີກ",
     "Replace" : "ປ່ຽນແທນ",
     "Edit" : "ແກ້ໄຂ",
+    "Details" : "ລາຍລະອຽດ",
     "Info" : "ຂໍ້ມຸນ",
     "Success" : "ຄວາມສໍາເລັດ",
-    "Warning" : "ແຈ້ງເຕືອນ",
-    "Details" : "ລາຍລະອຽດ"
+    "Warning" : "ແຈ້ງເຕືອນ"
 },
 "nplurals=1; plural=0;");

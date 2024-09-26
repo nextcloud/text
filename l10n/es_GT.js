@@ -28,9 +28,9 @@ OC.L10N.register(
     "Replace" : "Reemplazar",
     "Edit" : "Editar",
     "Source code" : "Código fuente",
+    "Details" : "Detalles",
     "Info" : "Info",
     "Success" : "Éxito",
-    "Warning" : "Advertencia",
-    "Details" : "Detalles"
+    "Warning" : "Advertencia"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

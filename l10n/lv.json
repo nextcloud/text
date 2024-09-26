@@ -32,11 +32,11 @@
     "Replace" : "Aizvietot",
     "Edit" : "Labot",
     "Source code" : "Izejas kods",
-    "Insert link" : "Ievietojiet saiti",
-    "Info" : "Info",
-    "Warning" : "Brīdinājums",
     "Details" : "Detaļas",
+    "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",
-    "Add folder description" : "Pievienot mapes aprakstu"
+    "Add folder description" : "Pievienot mapes aprakstu",
+    "Info" : "Info",
+    "Warning" : "Brīdinājums"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

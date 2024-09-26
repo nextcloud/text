@@ -88,13 +88,13 @@ OC.L10N.register(
     "Heading 4" : "제목 4",
     "Heading 5" : "제목 5",
     "Lists" : "목록",
-    "Info" : "정보",
-    "Success" : "성공",
-    "Warning" : "경고",
     "Details" : "세부사항",
     "Command" : "명령",
     "Control" : "제어:",
     "Formatting" : "서식",
-    "Add folder description" : "폴더 설명 추가"
+    "Add folder description" : "폴더 설명 추가",
+    "Info" : "정보",
+    "Success" : "성공",
+    "Warning" : "경고"
 },
 "nplurals=1; plural=0;");

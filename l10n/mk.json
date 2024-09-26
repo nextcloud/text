@@ -93,9 +93,6 @@
     "Heading 3" : "Заглавие 3",
     "Heading 4" : "Заглавие 4",
     "Heading 5" : "Заглавие 5",
-    "Info" : "Инфо",
-    "Success" : "Успешно",
-    "Warning" : "Предупредување",
     "Table" : "Табела",
     "Details" : "Детали",
     "Command" : "Команда",
@@ -103,6 +100,9 @@
     "Option" : "Опции",
     "Show author colors" : "Прикажи ги боите на авторот",
     "Author colors are only shown until everyone has closed the document." : "Боите на авторот се прикажуваат само кога сите ќе го затворат документот.",
+    "Info" : "Инфо",
+    "Success" : "Успешно",
+    "Warning" : "Предупредување",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
     "Add description" : "Додади опис"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
