@@ -145,12 +145,9 @@
     "Heading 5" : "Otsikko 5",
     "Lists" : "Luettelot",
     "To-Do list" : "Tehtävälista",
-    "Insert link" : "Lisää linkki",
-    "Info" : "Tietoa",
-    "Success" : "Onnistui",
-    "Warning" : "Varoitus",
     "Table" : "Taulukko",
     "Details" : "Tiedot",
+    "Insert link" : "Lisää linkki",
     "Insert attachment" : "Lisää liite",
     "Command" : "Komento",
     "Control" : "Hallinta",
@@ -163,6 +160,9 @@
     "Link to this section" : "Linkki tähän osioon",
     "Show author colors" : "Näytä tekijän värit",
     "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
+    "Info" : "Tietoa",
+    "Success" : "Onnistui",
+    "Warning" : "Varoitus",
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
     "Add description" : "Lisää kuvaus"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

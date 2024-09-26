@@ -13,8 +13,8 @@ OC.L10N.register(
     "Replace" : "Солих",
     "Edit" : "засварлах",
     "Source code" : "эх үүсвэр талын код",
+    "Details" : "Дэлгэрэнгүй",
     "Info" : "Info",
-    "Warning" : "Warning",
-    "Details" : "Дэлгэрэнгүй"
+    "Warning" : "Warning"
 },
 "nplurals=2; plural=(n != 1);");

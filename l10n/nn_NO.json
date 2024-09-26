@@ -13,8 +13,8 @@
     "to" : "til",
     "Replace" : "Erstatt",
     "Edit" : "Endra",
+    "Details" : "Detaljar",
     "Info" : "Info",
-    "Warning" : "Åtvaring",
-    "Details" : "Detaljar"
+    "Warning" : "Åtvaring"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

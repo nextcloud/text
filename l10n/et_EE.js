@@ -35,8 +35,8 @@ OC.L10N.register(
     "Translation failed" : "Tõlkimine ebaõnnestus",
     "Edit" : "Redigeeri",
     "Headings" : "Pealkirjad",
+    "Details" : "Üksikasjad",
     "Info" : "Info",
-    "Warning" : "Hoiatus",
-    "Details" : "Üksikasjad"
+    "Warning" : "Hoiatus"
 },
 "nplurals=2; plural=(n != 1);");
