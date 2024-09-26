@@ -18,8 +18,8 @@ OC.L10N.register(
     "to" : "doğru",
     "Replace" : "Əvəz edin",
     "Edit" : "Dəyişiklik et",
+    "Details" : "Detallar",
     "Info" : "Info",
-    "Warning" : "Xəbərdarlıq",
-    "Details" : "Detallar"
+    "Warning" : "Xəbərdarlıq"
 },
 "nplurals=2; plural=(n != 1);");

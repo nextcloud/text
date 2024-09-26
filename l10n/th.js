@@ -28,10 +28,10 @@ OC.L10N.register(
     "Replace" : "แทนที่",
     "Edit" : "แก้ไข",
     "Source code" : "โค้ดต้นฉบับ",
+    "Details" : "รายละเอียด",
+    "Formatting" : "การจัดรูปแบบ",
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",
-    "Warning" : "คำเตือน",
-    "Details" : "รายละเอียด",
-    "Formatting" : "การจัดรูปแบบ"
+    "Warning" : "คำเตือน"
 },
 "nplurals=1; plural=0;");

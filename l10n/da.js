@@ -81,15 +81,15 @@ OC.L10N.register(
     "Heading 4" : "Overskrift 4",
     "Heading 5" : "Overskrift 5",
     "Lists" : "Lister",
-    "Info" : "Info",
-    "Success" : "Succes",
-    "Warning" : "Advarsler",
     "Table" : "Tabel",
     "Details" : "Detaljer",
     "Command" : "Kommando",
     "Formatting" : "Formatering",
     "Show author colors" : "Vis forfatterens farver",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
+    "Info" : "Info",
+    "Success" : "Succes",
+    "Warning" : "Advarsler",
     "Add notes, lists or links …" : "Tilføj noter, lister eller links ..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -139,12 +139,9 @@ OC.L10N.register(
     "Heading 5" : "Testera 5",
     "Lists" : "Llistes",
     "To-Do list" : "Llista de xeres pendientes",
-    "Insert link" : "Inxertar un enllaz",
-    "Info" : "Información",
-    "Warning" : "Alvertencia",
-    "Danger" : "Peligru",
     "Table" : "Tabla",
     "Details" : "Detalles",
+    "Insert link" : "Inxertar un enllaz",
     "Command" : "Comandu",
     "Control" : "Control",
     "Option" : "Opción",
@@ -154,6 +151,9 @@ OC.L10N.register(
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
     "Show author colors" : "Amosar los colores de los autores",
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
+    "Info" : "Información",
+    "Warning" : "Alvertencia",
+    "Danger" : "Peligru",
     "Add description" : "Amestar una descripción"
 },
 "nplurals=2; plural=(n != 1);");

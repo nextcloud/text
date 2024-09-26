@@ -70,9 +70,6 @@ OC.L10N.register(
     "Heading 4" : "Naslov 4",
     "Heading 5" : "Naslov 5",
     "Lists" : "Popisi",
-    "Info" : "Informacije",
-    "Success" : "Uspjeh",
-    "Warning" : "Upozorenje",
     "Details" : "Pojedinosti",
     "Insert attachment" : "Umetni privitak",
     "Command" : "Naredba",
@@ -80,6 +77,9 @@ OC.L10N.register(
     "Formatting" : "Oblikovanje",
     "Show author colors" : "Prikaži boje autora",
     "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
+    "Info" : "Informacije",
+    "Success" : "Uspjeh",
+    "Warning" : "Upozorenje",
     "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

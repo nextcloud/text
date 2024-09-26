@@ -18,8 +18,8 @@ OC.L10N.register(
     "URL" : "URL",
     "Edit" : "մշակել",
     "Source code" : "ծրագրի կոդը",
+    "Details" : "Մանրամասներ",
     "Info" : "Info",
-    "Warning" : "Զգուշացում",
-    "Details" : "Մանրամասներ"
+    "Warning" : "Զգուշացում"
 },
 "nplurals=2; plural=(n != 1);");

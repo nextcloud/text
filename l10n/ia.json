@@ -12,8 +12,8 @@
     "URL" : "URL",
     "to" : "a",
     "Edit" : "Modificar",
+    "Details" : "Detalios",
     "Info" : "Info",
-    "Warning" : "Aviso",
-    "Details" : "Detalios"
+    "Warning" : "Aviso"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

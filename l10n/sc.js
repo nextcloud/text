@@ -68,15 +68,15 @@ OC.L10N.register(
     "Heading 4" : "Intestatzione 4",
     "Heading 5" : "Intestatzione 5",
     "Lists" : "Listas",
-    "Info" : "Informatziones",
-    "Success" : "Sutzessu",
-    "Warning" : "Avisu",
     "Details" : "Detàllios",
     "Command" : "Cumandu",
     "Control" : "Controllu",
     "Formatting" : "Formatatzione",
     "Show author colors" : "Mustra is colores de sa persone autora",
     "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
+    "Info" : "Informatziones",
+    "Success" : "Sutzessu",
+    "Warning" : "Avisu",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …"
 },
 "nplurals=2; plural=(n != 1);");
