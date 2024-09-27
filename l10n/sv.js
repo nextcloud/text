@@ -185,6 +185,7 @@ OC.L10N.register(
     "To-Do list" : "Att göra-lista",
     "Increase indentation" : "Öka indraget",
     "Decrease indentation" : "Minska indraget",
+    "Blocks" : "Block",
     "Table" : "Tabell",
     "Details" : "Detaljer",
     "Insert link" : "Infoga länk",
