@@ -308,9 +308,7 @@ describe('The session Api', function() {
 			cy.get('@joining').then(con => con.close())
 		})
 
-		// Failed with a probability of ~ 50% initially
-		// Skipped for now since the behaviour changed by not cleaning up the state on close/create
-		it.skip('ignores steps stored after close cleaned up', function() {
+		it('ignores steps stored after close cleaned up', function() {
 			cy.pushAndClose({ connection: this.connection, steps: [messages.update], version })
 			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
 				.as('joining')
