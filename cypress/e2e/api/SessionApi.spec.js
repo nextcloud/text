@@ -24,35 +24,25 @@ describe('The session Api', function() {
 	})
 
 	describe('open the session', function() {
-		let fileId
-		let filePath
-
 		beforeEach(function() {
-			cy.uploadTestFile('test.md')
-				.then(id => {
-					fileId = id
-				})
-			cy.testName().then(name => {
-				filePath = `/${name}.md`
-			})
+			cy.uploadTestFile('test.md').as('fileId')
+			cy.testName().then(name => `/${name}.md`).as('filePath')
 		})
 
 		it('returns connection', function() {
-			cy.createTextSession(fileId).then(connection => {
-				cy.wrap(connection)
-					.its('document.id')
-					.should('equal', fileId)
-				connection.close()
-			})
+			cy.createTextSession(this.fileId)
+				.as('connection')
+				.its('document.id')
+				.should('equal', this.fileId)
+			cy.get('@connection').then(con => con.close())
 		})
 
 		it('provides initial content', function() {
-			cy.createTextSession(fileId, { filePath }).then(connection => {
-				cy.wrap(connection)
-					.its('state.documentSource')
-					.should('eql', '## Hello world\n')
-				connection.close()
-			})
+			cy.createTextSession(this.fileId, { filePath: this.filePath })
+				.as('connection')
+				.its('state.documentSource')
+				.should('eql', '## Hello world\n')
+			cy.get('@connection').then(con => con.close())
 		})
 
 		it('handles invalid file id', function() {
@@ -70,18 +60,15 @@ describe('The session Api', function() {
 	})
 
 	describe('step types', function() {
-		let connection
 
 		beforeEach(function() {
 			cy.uploadTestFile()
 				.then(cy.createTextSession)
-				.then(con => {
-					connection = con
-				})
+				.as('connection')
 		})
 
 		afterEach(function() {
-			connection.close()
+			this.connection.close()
 		})
 
 		// Echoes all message types but queries
@@ -91,10 +78,10 @@ describe('The session Api', function() {
 				it(`echos ${type} messages`, function() {
 					const steps = [sample]
 					const version = 0
-					cy.pushSteps({ connection, steps, version })
+					cy.pushSteps({ connection: this.connection, steps, version })
 						.its('version')
 						.should('be.at.least', 1)
-					cy.syncSteps(connection)
+					cy.syncSteps(this.connection)
 						.its('steps[0].data')
 						.should('eql', steps)
 				})
@@ -104,9 +91,9 @@ describe('The session Api', function() {
 			const version = 0
 			Object.entries(messages)
 				.forEach(([type, sample]) => {
-					cy.pushSteps({ connection, steps: [sample], version })
+					cy.pushSteps({ connection: this.connection, steps: [sample], version })
 				})
-			cy.pushSteps({ connection, steps: [messages.query], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.query], version })
 				.then(response => {
 					cy.wrap(response)
 						.its('version')
@@ -123,109 +110,83 @@ describe('The session Api', function() {
 
 	describe('sync', function() {
 		const version = 0
-		let connection
-		let fileId
-		let filePath
-		let joining
 
 		beforeEach(function() {
-			cy.testName().then(name => {
-				filePath = `/${name}.md`
-			})
-			cy.uploadTestFile()
-				.then(id => {
-					fileId = id
-					return cy.createTextSession(fileId, { filePath })
-				})
-				.then(con => {
-					connection = con
-				})
+			cy.uploadTestFile().as('fileId')
+			cy.testName().then(name => `/${name}.md`).as('filePath')
+				.then(filePath => cy.createTextSession(this.fileId, { filePath }))
+				.as('connection')
+		})
+
+		afterEach(function() {
+			this.connection.close()
 		})
 
 		it('starts empty', function() {
-			cy.syncSteps(connection)
+			cy.syncSteps(this.connection)
 				.its('steps')
 				.should('eql', [])
 		})
 
 		it('saves', function() {
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
-			cy.downloadFile(filePath)
+			cy.save(this.connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.downloadFile(this.filePath)
 				.its('data')
 				.should('eql', '# Heading 1')
 		})
 
 		it('saves yjs document state', function() {
 			const documentState = 'Base64 encoded string'
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.save(connection, {
+			cy.save(this.connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,
 				manualSave: true,
 			})
-			cy.createTextSession(fileId, { filePath })
-				.then(con => {
-					joining = con
-					return joining
-				})
+			cy.createTextSession(this.fileId, { filePath: this.filePath })
+				.as('joining')
 				.its('state.documentState')
 				.should('eql', documentState)
-				.then(() => joining.close())
+			cy.get('@joining').then(con => con.close())
 		})
 
-		afterEach(function() {
-			connection.close()
-		})
 	})
 
 	describe('public sync', function() {
 		const version = 0
-		let connection
-		let filePath
-		let shareToken
-		let joining
 
 		beforeEach(function() {
-			cy.testName().then(name => {
-				filePath = `/${name}.md`
-			})
-			cy.uploadTestFile()
-				.then(_id => {
-					return cy.shareFile(filePath, { edit: true })
-				})
-				.then(token => {
-					shareToken = token
-				})
-				.then(() => cy.clearCookies())
-				.then(() => {
-					return cy.createTextSession(undefined, { filePath: '', shareToken })
-						.then(con => {
-							connection = con
-						})
-				})
+			cy.uploadTestFile().as('fileId')
+			cy.testName().then(name => `/${name}.md`).as('filePath')
+				.then(filePath => cy.shareFile(filePath, { edit: true }))
+				.as('shareToken')
+			cy.clearCookies()
+			cy.get('@shareToken')
+				.then(shareToken => cy.createTextSession(undefined, { filePath: '', shareToken }))
+				.as('connection')
 		})
 
 		afterEach(function() {
-			connection.close()
+			this.connection.close()
 		})
 
 		it('starts empty public', function() {
-			cy.syncSteps(connection)
+			cy.syncSteps(this.connection)
 				.its('steps')
 				.should('eql', [])
 		})
 
 		it('saves public', function() {
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.save(connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
+			cy.save(this.connection, { version: 1, autosaveContent: '# Heading 1', manualSave: true })
 			cy.login(user)
 			cy.downloadFile('saves.md')
 				.its('data')
@@ -234,53 +195,49 @@ describe('The session Api', function() {
 
 		it('saves yjs document state public', function() {
 			const documentState = 'Base64 encoded string'
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.save(connection, {
+			cy.save(this.connection, {
 				version: 1,
 				autosaveContent: '# Heading 1',
 				documentState,
 				manualSave: true,
 			})
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
-					joining = con
-					return con
-				})
+			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
+				.as('joining')
 				.its('state.documentState')
 				.should('eql', documentState)
-				.then(() => joining.close())
+			cy.get('@joining').then(con => con.close())
 		})
 
 	})
 
 	describe('race conditions', function() {
 		const version = 0
-		let connection
-		let shareToken
 
 		beforeEach(function() {
-			cy.testName().then(name => {
-				const filePath = `/${name}.md`
-				cy.uploadTestFile('test.md')
-				return cy.shareFile(filePath, { edit: true })
-			}).then(token => {
-				cy.log(token)
-				shareToken = token
-				cy.clearCookies()
-				cy.createTextSession(undefined, { filePath: '', shareToken })
-					.then(con => {
-						connection = con
-					})
-			})
+			cy.uploadTestFile('test.md').as('fileId')
+			cy.testName().then(name => `/${name}.md`).as('filePath')
+				.then(filePath => cy.shareFile(filePath, { edit: true }))
+				.as('shareToken')
+			cy.clearCookies()
+			cy.get('@shareToken')
+				.then(shareToken => cy.createTextSession(undefined, { filePath: '', shareToken }))
+				.as('connection')
+		})
+
+		afterEach(function() {
+			if (!this.connection.isClosed) {
+				this.connection.close()
+			}
 		})
 
 		it('signals closing connection', function() {
 			cy.then(() => {
 				return new Promise((resolve, reject) => {
-					connection.close()
-					connection.push({ steps: [messages.update], version, awareness: '' })
+					this.connection.close()
+					this.connection.push({ steps: [messages.update], version, awareness: '' })
 						.then(
 							() => reject(new Error('Push should have thrown ConnectionClosed()')),
 							resolve,
@@ -290,88 +247,76 @@ describe('The session Api', function() {
 		})
 
 		it('does not send initial content if other session is alive but did not push any steps', function() {
-			let joining
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
-					joining = con
-					return con
-				})
+			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
+				.as('joining')
+			cy.get('@connection')
 				.its('state.documentSource')
 				.should('eql', '## Hello world\n')
-				.then(() => joining.close())
-				.then(() => connection.close())
+			cy.get('@joining').then(con => con.close())
 		})
 
 		it('does not send initial content if session is alive even without saved state', function() {
-			let joining
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
-					joining = con
-					return con
-				})
+			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
+				.as('joining')
+			cy.get('@connection')
 				.its('state.documentSource')
 				.should('eql', '## Hello world\n')
-				.then(() => joining.close())
-				.then(() => connection.close())
+			cy.get('@joining').then(con => con.close())
 		})
 
 		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
-			cy.failToCreateTextSession(undefined, 'wrongBaseVersionEtag', { filePath: '', shareToken })
+			cy.failToCreateTextSession(undefined,
+				'wrongBaseVersionEtag',
+				{ filePath: '', shareToken: this.shareToken },
+
+			)
 				.its('status')
 				.should('eql', 412)
 
-			connection.setBaseVersionEtag('wrongBaseVersionEtag')
+			this.connection.setBaseVersionEtag('wrongBaseVersionEtag')
 
-			cy.failToPushSteps({ connection, steps: [messages.update], version })
+			cy.failToPushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('status')
 				.should('equal', 412)
 
-			cy.failToSyncSteps(connection, { version: 0 })
+			cy.failToSyncSteps(this.connection, { version: 0 })
 				.its('status')
 				.should('equal', 412)
 
-			cy.failToSave(connection)
+			cy.failToSave(this.connection)
 				.its('status')
 				.should('equal', 412)
-
-			cy.then(() => connection.close())
 		})
 
 		it('recovers session even if last person leaves right after create', function() {
-			let joining
 			cy.log('Initial user pushes steps')
-			cy.pushSteps({ connection, steps: [messages.update], version })
+			cy.pushSteps({ connection: this.connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
 			cy.log('Other user creates session')
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
-					joining = con
-				})
+			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
+				.as('joining')
 			cy.log('Initial user closes session')
-				.then(() => connection.close())
+				.then(() => this.connection.close())
 			cy.log('Other user still finds the steps')
-				.then(() => {
-					cy.syncSteps(joining, {
-						version: 0,
-					}).its('steps[0].data')
-						.should('eql', [messages.update])
-				})
+				.then(() => cy.syncSteps(this.joining, { version: 0 }))
+				.its('steps[0].data')
+				.should('eql', [messages.update])
+			cy.get('@joining').then(con => con.close())
 		})
 
 		// Failed with a probability of ~ 50% initially
-		// Skipped for now since the behaviour chanced by not cleaning up the state on close/create
+		// Skipped for now since the behaviour changed by not cleaning up the state on close/create
 		it.skip('ignores steps stored after close cleaned up', function() {
-			cy.pushAndClose({ connection, steps: [messages.update], version })
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
-					connection = con
-				})
+			cy.pushAndClose({ connection: this.connection, steps: [messages.update], version })
+			cy.createTextSession(undefined, { filePath: '', shareToken: this.shareToken })
+				.as('joining')
 				.its('state.documentSource')
 				.should('eql', '## Hello world\n')
+			cy.get('@joining').then(con => con.close())
 		})
 
 	})
