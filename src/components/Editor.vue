@@ -403,6 +403,7 @@ export default {
 				fileId: this.fileId,
 				queue: this.$queue,
 				initialSession: this.initialSession,
+				disableBC: true,
 			})
 			this.$providers.push(syncServiceProvider)
 			this.forceRecreate = false
