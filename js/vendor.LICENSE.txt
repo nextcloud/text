@@ -97,11 +97,11 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.18.0
+version: 8.19.0
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
-version: 3.25.0
+version: 3.25.1
 license: MIT
 
 @popperjs/core
@@ -269,7 +269,7 @@ version: 10.11.1
 license: MIT
 
 @vueuse/shared
-version: 10.11.1
+version: 11.0.3
 license: MIT
 
 ansi-regex
@@ -409,7 +409,7 @@ version: 1.0.2
 license: MIT
 
 dompurify
-version: 3.1.2
+version: 3.1.7
 license: (MPL-2.0 OR Apache-2.0)
 
 elkjs
