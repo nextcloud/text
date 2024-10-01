@@ -85,7 +85,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 3.1.0
+version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -117,11 +117,11 @@ version: 0.1.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.18.0
+version: 8.19.0
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
-version: 3.25.0
+version: 3.25.1
 license: MIT
 
 @popperjs/core
@@ -325,7 +325,7 @@ version: 3.37.0
 license: MIT
 
 cose-base
-version: 1.0.3
+version: 2.2.0
 license: MIT
 
 crypt
@@ -493,7 +493,7 @@ version: 3.0.0
 license: MIT
 
 layout-base
-version: 1.0.2
+version: 2.0.1
 license: MIT
 
 lib0
