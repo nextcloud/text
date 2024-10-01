@@ -85,6 +85,37 @@
       ]
     },
     {
+      "groupName": "typescript",
+      "matchPackageNames": [
+        "typescript",
+        "typedoc"
+      ]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["major", "minor"],
+      "matchBaseBranches": ["stable26", "stable27"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["vue"],
+      "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["vuex"],
+      "allowedVersions": "<4"
+    },
+    {
+      "matchPackageNames": ["@vue/test-utils"],
+      "allowedVersions": "<2"
+    }
+  ]
+}
+    {
       "matchUpdateTypes": ["major"],
       "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
       "enabled": false
