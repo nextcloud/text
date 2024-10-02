@@ -16,10 +16,12 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Middleware;
+use OCP\Constants;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 use OCP\IRequest;
+use OCP\ISession;
 use OCP\IUserSession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
@@ -31,6 +33,7 @@ class SessionMiddleware extends Middleware {
 		private IRequest $request,
 		private SessionService $sessionService,
 		private DocumentService $documentService,
+		private ISession $session,
 		private IUserSession $userSession,
 		private IRootFolder $rootFolder,
 		private ShareManager $shareManager,
@@ -126,8 +129,26 @@ class SessionMiddleware extends Middleware {
 			} catch (ShareNotFound) {
 				throw new InvalidSessionException();
 			}
+
 			// Check if shareToken has access to document
 			if (count($this->rootFolder->getUserFolder($share->getShareOwner())->getById($documentId)) === 0) {
+				throw new InvalidSessionException();
+			}
+
+			/** @psalm-suppress RedundantConditionGivenDocblockType */
+			if ($share->getPassword() !== null) {
+				$shareId = $this->session->get('public_link_authenticated');
+				if ($share->getId() !== $shareId) {
+					throw new InvalidSessionException();
+				}
+			}
+
+			if (($share->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
+				throw new InvalidSessionException();
+			}
+
+			$attributes = $share->getAttributes();
+			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
 				throw new InvalidSessionException();
 			}
 		} else {
