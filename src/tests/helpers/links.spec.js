@@ -16,10 +16,12 @@ global._oc_webroot = ''
 jest.mock('@nextcloud/initial-state')
 loadState.mockImplementation((app, key) => 'files')
 
+const linkTo = href => domHref({ attrs: { href } })
+
 describe('Preparing href attributes for the DOM', () => {
 
 	test('leave empty hrefs alone', () => {
-		expect(domHref({attrs: {href: ''}})).toBe('')
+		expect(linkTo('')).toBe('')
 	})
 
 	test('leave undefined hrefs alone', () => {
@@ -27,32 +29,30 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('full url', () => {
-		expect(domHref({attrs: {href: 'https://otherdomain.tld'}}))
-			.toBe('https://otherdomain.tld')
+		expect(linkTo('https://otherdomain.tld')).toBe('https://otherdomain.tld')
 	})
 
-	test('other protocol', () => {
-		expect(domHref({attrs: {href: 'mailTo:test@mail.example'}}))
-			.toBe('mailTo:test@mail.example')
+	test('other protocols', () => {
+		expect(linkTo('mailto:name@otherdomain.tld')).toBe('mailto:name@otherdomain.tld')
 	})
 
 	test('relative link with fileid (old format from file picker)', () => {
-		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
+		expect(linkTo('otherfile?fileId=123'))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('relative path with ../ (old format from file picker)', () => {
-		expect(domHref({attrs: {href: '../other/otherfile?fileId=123'}}))
+		expect(linkTo('../other/otherfile?fileId=123'))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute path (old format from file picker)', () => {
-		expect(domHref({attrs: {href: '/other/otherfile?fileId=123'}}))
+		expect(linkTo('/other/otherfile?fileId=123'))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute path (old format from file picker)', () => {
-		expect(domHref({attrs: {href: '/otherfile?fileId=123'}}))
+		expect(linkTo('/otherfile?fileId=123'))
 			.toBe('http://localhost/f/123')
 	})
 
@@ -134,7 +134,7 @@ describe('Preparing href attributes for the DOM in Collectives app', () => {
 	})
 
 	test('relative link with fileid in Collectives', () => {
-		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
+		expect(linkTo('otherfile?fileId=123'))
 			.toBe('otherfile?fileId=123')
 	})
 })
