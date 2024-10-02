@@ -373,6 +373,11 @@ Cypress.Commands.add('clearContent', () => {
 	cy.getContent()
 })
 
+Cypress.Commands.add('insertLine', (line = '') => {
+	cy.getContent()
+		.type(`${line}{enter}`)
+})
+
 Cypress.Commands.add('openWorkspace', () => {
 	cy.createDescription()
 	cy.get('#rich-workspace .editor__content').click({ force: true })

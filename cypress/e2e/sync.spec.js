@@ -21,7 +21,7 @@ describe('Sync', () => {
 		cy.openTestFile()
 		cy.wait('@sync', { timeout: 10000 })
 		cy.getContent().find('h2').should('contain', 'Hello world')
-		cy.getContent().type('{moveToEnd}* Saving the doc saves the doc state{enter}')
+		cy.insertLine('{moveToEnd}* Saving the doc saves the doc state')
 		cy.wait('@sync', { timeout: 10000 })
 	})
 
@@ -60,7 +60,7 @@ describe('Sync', () => {
 			.should('not.contain', 'Document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
-		cy.getContent().type('* more content added after the lost connection{enter}')
+		cy.insertLine('* more content added after the lost connection')
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.closeFile()
 		cy.testName()
@@ -120,7 +120,7 @@ describe('Sync', () => {
 			.should('not.contain', 'Document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
-		cy.getContent().type('* more content added after the lost connection{enter}')
+		cy.insertLine('* more content added after the lost connection')
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.closeFile()
 		cy.testName()

@@ -78,8 +78,7 @@ describe('Open test.md in viewer', function() {
 		// This used to break with the focus trap that the viewer modal has
 		cy.openFile('empty.md')
 
-		cy.getContent()
-			.type('- test{enter}')
+		cy.insertLine('- test')
 
 		// Cypress does not have native tab key support, though this seems to work
 		// for triggering the key handler of tiptap
