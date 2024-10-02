@@ -176,13 +176,10 @@ class PollingBackend {
 		} else if (e.response.status === 412) {
 			this.#syncService.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: e.response })
 			this.disconnect()
-		} else if (e.response.status === 403) {
+		} else if ([403, 404].includes(e.response.status)) {
 			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
 			this.disconnect()
-		} else if (e.response.status === 404) {
-			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
-			this.disconnect()
-		} else if (e.response.status === 503) {
+		} else if ([502, 503].includes(e.response.status)) {
 			this.increaseRefetchTimer()
 			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 			logger.error('Failed to fetch steps due to unavailable service', { error: e })
