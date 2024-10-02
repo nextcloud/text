@@ -50,7 +50,7 @@ describe('Content Sections', () => {
 		it('Anchor ID is updated', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
-			cy.getContent().type('# Heading 1{enter}')
+			cy.insertLine('# Heading 1')
 			cy.getContent()
 				.find('h1 > a')
 				.should('have.attr', 'id')
@@ -89,8 +89,7 @@ describe('Content Sections', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
 			// Issue #2868
-			cy.getContent()
-				.type('# Heading 1{enter}')
+			cy.insertLine('# Heading 1')
 			cy.getContent()
 				.find('h1 > a')
 				.should('have.attr', 'id')

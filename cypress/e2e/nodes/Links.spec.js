@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { initUserAndFiles, randUser } from '../../utils/index.js'
+import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 const fileName = 'empty.md'
 
 describe('test link marks', function() {
 	before(function() {
-		initUserAndFiles(user)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
@@ -26,14 +26,17 @@ describe('test link marks', function() {
 	})
 
 	describe('link bubble', function() {
-		it('shows a link preview in the bubble after clicking link', () => {
-			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
 
+		function clickLink(link, options = {}) {
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
-				.click()
+				.click(options)
+		}
+
+		it('shows a link preview in the bubble after clicking link', () => {
+			const link = 'https://nextcloud.com/'
+			cy.insertLine(link)
+			clickLink(link)
 
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
@@ -43,8 +46,7 @@ describe('test link marks', function() {
 
 		it('shows a link preview in the bubble after browsing to link', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
 
@@ -58,12 +60,9 @@ describe('test link marks', function() {
 
 		it('closes the link bubble when clicking elsewhere', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
-			cy.getContent()
-				.find(`a[href*="${link}"]`)
-			cy.getContent()
-				.type('{upArrow}')
+			cy.insertLine(link)
+			clickLink(link)
+
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
@@ -75,10 +74,8 @@ describe('test link marks', function() {
 		})
 
 		it('allows to edit a link in the bubble', () => {
-			cy.getContent()
-				.type('https://example.org{enter}')
-			cy.getContent()
-				.type('{upArrow}{rightArrow}')
+			cy.insertLine('https://example.org')
+			clickLink('https://example.org')
 
 			cy.get('.link-view-bubble button[title="Edit link"]')
 				.click()
@@ -96,10 +93,8 @@ describe('test link marks', function() {
 
 		it('allows to remove a link in the bubble', () => {
 			const link = 'https://nextcloud.com'
-			cy.getContent()
-				.type(`${link}{enter}`)
-			cy.getContent()
-				.type('{upArrow}{rightArrow}')
+			cy.insertLine(link)
+			clickLink(link)
 
 			cy.get('.link-view-bubble button[title="Remove link"]')
 				.click()
@@ -112,17 +107,39 @@ describe('test link marks', function() {
 
 		it('Ctrl-click on a link opens a new tab', () => {
 			const link = 'https://nextcloud.com/'
-			cy.getContent()
-				.type(`${link}{enter}`)
+			cy.insertLine(link)
 
-			cy.getContent()
-				.find(`a[href*="${link}"]`)
-				.click({ ctrlKey: true })
+			clickLink(link, { ctrlKey: true })
 
 			cy.get('@winOpen')
 				.should('have.been.calledOnce')
 				.should('have.been.calledWith', link)
 		})
+
+		it('Handles typed in markdown links with text', () => {
+			const link = 'https://nextcloud.com/'
+			cy.insertLine(`[text](${link})`)
+			clickLink(link)
+			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
+				.find('.widget-default--name')
+				.contains('Nextcloud')
+			cy.get('.link-view-bubble a')
+				.should('have.attr', 'href', link)
+		})
+
+		it('Leaves out link to other protocols', () => {
+			const link = 'other://protocol'
+			cy.insertLine(`[text](${link})`)
+			cy.getContent()
+				.find(`a[href*="${link}"]`)
+				.should('not.exist')
+			clickLink('#')
+			cy.get('.link-view-bubble__title', { timeout: 10000 })
+				.contains('other://protocol')
+			cy.get('.link-view-bubble a')
+				.should('not.exist')
+		})
+
 	})
 
 	describe('autolink', function() {
@@ -133,8 +150,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/apps/files/?dir=/&openfile=${id}#relPath=/${fileName}`
 					cy.clearContent()
-					cy.getContent()
-						.type(`${link}{enter}`)
+					cy.insertLine(link)
 
 					cy.getContent()
 						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
@@ -143,16 +159,14 @@ describe('test link marks', function() {
 
 		it('without protocol', () => {
 			cy.clearContent()
-			cy.getContent()
-				.type('google.com{enter}')
+			cy.insertLine('google.com')
 			cy.getContent()
 				.find('a[href*="google.com"]')
 				.should('not.exist')
 		})
 
 		it('with protocol but without space', () => {
-			cy.getContent()
-				.type('https://nextcloud.com')
+			cy.getContent().type('https://nextcloud.com')
 
 			cy.getContent()
 				.find('a[href*="nextcloud.com"]')
