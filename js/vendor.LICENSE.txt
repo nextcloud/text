@@ -5,11 +5,11 @@ version: 6.0.2
 license: MIT
 
 @floating-ui/core
-version: 1.6.7
+version: 0.3.1
 license: MIT
 
 @floating-ui/dom
-version: 1.6.10
+version: 0.1.10
 license: MIT
 
 @floating-ui/utils
@@ -265,7 +265,7 @@ version: 11.0.3
 license: MIT
 
 @vueuse/core
-version: 10.11.1
+version: 11.0.3
 license: MIT
 
 @vueuse/shared
@@ -345,8 +345,8 @@ version: 3.0.1
 license: ISC
 
 d3-path
-version: 1.0.9
-license: BSD-3-Clause
+version: 3.1.0
+license: ISC
 
 d3-sankey
 version: 0.12.3
