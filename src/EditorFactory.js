@@ -64,7 +64,11 @@ const createPlainEditor = ({ language, extensions = [] } = {}) => {
 		editorProps,
 		extensions: [
 			PlainText,
-			CodeBlockLowlight.configure({ lowlight, defaultLanguage: language }),
+			CodeBlockLowlight.configure({
+				lowlight,
+				defaultLanguage: language,
+				exitOnTripleEnter: false,
+			}),
 			...extensions,
 		],
 	})
