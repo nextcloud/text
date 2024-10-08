@@ -520,35 +520,40 @@ export default {
 				return
 			}
 
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					const session = this.currentSession
-					const extensions = [
-						Autofocus.configure({ fileId: this.fileId }),
-						Collaboration.configure({ document: this.$ydoc }),
-						CollaborationCursor.configure({
-							provider: this.$providers[0],
-							user: {
-								name: session?.userId
-									? session.displayName
-									: (session?.guestName || t('text', 'Guest')),
-								color: session?.color,
-								clientId: this.$ydoc.clientID,
-							},
-						}),
-					]
-					this.$editor = this.isRichEditor
-						? createRichEditor({
-							relativePath: this.relativePath,
-							session,
-							extensions,
-							isEmbedded: this.isEmbedded,
-						})
-						: createPlainEditor({ language, extensions })
-					this.hasEditor = true
-					this.listenEditorEvents()
+			const session = this.currentSession
+			const extensions = [
+				Autofocus.configure({ fileId: this.fileId }),
+				Collaboration.configure({ document: this.$ydoc }),
+				CollaborationCursor.configure({
+					provider: this.$providers[0],
+					user: {
+						name: session?.userId
+							? session.displayName
+							: (session?.guestName || t('text', 'Guest')),
+						color: session?.color,
+						clientId: this.$ydoc.clientID,
+					},
+				}),
+			]
+			if (this.isRichEditor) {
+				this.$editor = createRichEditor({
+					relativePath: this.relativePath,
+					session,
+					extensions,
+					isEmbedded: this.isEmbedded,
 				})
+				this.hasEditor = true
+				this.listenEditorEvents()
+			} else {
+				const language = extensionHighlight[this.fileExtension]
+					|| this.fileExtension
+				loadSyntaxHighlight(language)
+					.then(() => {
+						this.$editor = createPlainEditor({ language, extensions })
+						this.hasEditor = true
+						this.listenEditorEvents()
+					})
+			}
 
 		},
 
