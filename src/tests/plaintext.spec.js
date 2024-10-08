@@ -79,4 +79,17 @@ describe('html as plain text', () => {
     expect(plaintextThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
     expect(plaintextThroughEditor(xssFuzzVectors)).toBe(xssFuzzVectors)
   })
+} )
+
+describe('regression tests', () => {
+	test('tripple enter creates new lines at end (#6507)', () => {
+		const tiptap = createEditor({
+			enableRichEditing: false
+		})
+		tiptap.commands.enter()
+		tiptap.commands.enter()
+		tiptap.commands.enter()
+		expect(serializePlainText(tiptap))
+			.toEqual("\n\n\n")
+	})
 })
