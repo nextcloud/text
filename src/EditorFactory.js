@@ -67,7 +67,14 @@ const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, exte
 			FocusTrap,
 		]
 	} else {
-		defaultExtensions = [PlainText, CodeBlockLowlight.configure({ lowlight, defaultLanguage: language })]
+		defaultExtensions = [
+			PlainText,
+			CodeBlockLowlight.configure({
+				lowlight,
+				defaultLanguage: language,
+				exitOnTripleEnter: false,
+			}),
+		]
 	}
 
 	return new Editor({
