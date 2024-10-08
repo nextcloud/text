@@ -40,11 +40,6 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 					this.#version = version
 					this.#session = session
 				},
-				loaded: ({ version, session, content }) => {
-					logger.debug('loaded ', { version, session })
-					this.#version = version
-					this.#session = session
-				},
 				sync: ({ steps, version }) => {
 					logger.debug('synced ', { version, steps })
 					this.#version = version
@@ -57,15 +52,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				},
 			})
 
-			syncService.open({ fileId, initialSession }).then((data) => {
-				if (syncService.hasActiveConnection) {
-					const { version, session } = data
-					this.#version = version
-					this.#session = session
-
-					this.onopen?.()
-				}
-			})
+			syncService.open({ fileId, initialSession }).then(() => this.onopen?.())
 		}
 
 		#registerHandlers(handlers) {

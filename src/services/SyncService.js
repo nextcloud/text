@@ -106,7 +106,7 @@ class SyncService {
 
 	async open({ fileId, initialSession }) {
 		if (this.hasActiveConnection) {
-			return this.connectionState
+			return
 		}
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
@@ -115,15 +115,13 @@ class SyncService {
 		this.#connection = await connect
 		if (!this.#connection) {
 			// Error was already emitted in connect
-			return null
+			return
 		}
 		this.backend = new PollingBackend(this, this.#connection)
 		this.version = this.#connection.docStateVersion
 		this.baseVersionEtag = this.#connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
-
-		return this.connectionState
 	}
 
 	startSync() {
