@@ -514,41 +514,40 @@ export default {
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
+			if (this.$editor) {
+				// $editor already existed. So this is a reconnect.
+				this.$syncService.startSync()
+				return
+			}
 
+			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
 			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
 				.then(() => {
 					const session = this.currentSession
-					if (!this.$editor) {
-						const extensions = [
-							Autofocus.configure({ fileId: this.fileId }),
-							Collaboration.configure({ document: this.$ydoc }),
-							CollaborationCursor.configure({
-								provider: this.$providers[0],
-								user: {
-									name: session?.userId
-										? session.displayName
-										: (session?.guestName || t('text', 'Guest')),
-									color: session?.color,
-									clientId: this.$ydoc.clientID,
-								},
-							}),
-						]
-						this.$editor = this.isRichEditor
-							? createRichEditor({
-								relativePath: this.relativePath,
-								session,
-								extensions,
-								isEmbedded: this.isEmbedded,
-							})
-							: createPlainEditor({ language, extensions })
-						this.hasEditor = true
-						this.listenEditorEvents()
-					} else {
-						// $editor already existed. So this is a reconnect.
-						this.$syncService.startSync()
-					}
-
+					const extensions = [
+						Autofocus.configure({ fileId: this.fileId }),
+						Collaboration.configure({ document: this.$ydoc }),
+						CollaborationCursor.configure({
+							provider: this.$providers[0],
+							user: {
+								name: session?.userId
+									? session.displayName
+									: (session?.guestName || t('text', 'Guest')),
+								color: session?.color,
+								clientId: this.$ydoc.clientID,
+							},
+						}),
+					]
+					this.$editor = this.isRichEditor
+						? createRichEditor({
+							relativePath: this.relativePath,
+							session,
+							extensions,
+							isEmbedded: this.isEmbedded,
+						})
+						: createPlainEditor({ language, extensions })
+					this.hasEditor = true
+					this.listenEditorEvents()
 				})
 
 		},
