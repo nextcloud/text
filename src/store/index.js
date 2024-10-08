@@ -24,8 +24,9 @@ export const textModule = {
 		attachmentList: [],
 	},
 	getters: {
-		imageAttachments: (state) => state.attachmentList.filter(a => a.isImage),
-		findAttachment: (state) => (fileName) => state.attachmentList.find(a => a.name === fileName),
+		imageAttachments: (state) => state.attachmentList.filter((a) => a.isImage),
+		findAttachment: (state) => (fileName) =>
+			state.attachmentList.find((a) => a.name === fileName),
 	},
 	mutations: {
 		[SET_VIEW_WIDTH](state, value) {
@@ -59,12 +60,15 @@ export const textModule = {
 			commit(SET_HEADINGS, value)
 		},
 		async setAttachmentList({ commit }, { documentId, session, shareToken }) {
-			const response = await axios.post(generateUrl('/apps/text/attachments'), {
-				documentId: session?.documentId ?? documentId,
-				sessionId: session?.id,
-				sessionToken: session?.token,
-				shareToken,
-			})
+			const response = await axios.post(
+				generateUrl('/apps/text/attachments'),
+				{
+					documentId: session?.documentId ?? documentId,
+					sessionId: session?.id,
+					sessionToken: session?.token,
+					shareToken,
+				},
+			)
 
 			commit(SET_ATTACHMENT_LIST, response.data)
 		},

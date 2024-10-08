@@ -36,7 +36,7 @@ export function searchQuery() {
 
 					if (trMeta?.match) {
 						newState.matchAll = false
-						newState.index = (oldState.index + trMeta.match)
+						newState.index = oldState.index + trMeta.match
 					}
 
 					return newState
@@ -48,14 +48,20 @@ export function searchQuery() {
 	})
 }
 
-export const setSearchQuery = (query, matchAll) => ({ tr }) => {
-	return tr.setMeta('searchQuery', { query, matchAll })
-}
+export const setSearchQuery =
+	(query, matchAll) =>
+	({ tr }) => {
+		return tr.setMeta('searchQuery', { query, matchAll })
+	}
 
-export const nextMatch = () => ({ tr }) => {
-	return tr.setMeta('searchQuery', { match: 1 })
-}
+export const nextMatch =
+	() =>
+	({ tr }) => {
+		return tr.setMeta('searchQuery', { match: 1 })
+	}
 
-export const previousMatch = () => ({ tr }) => {
-	return tr.setMeta('searchQuery', { match: -1 })
-}
+export const previousMatch =
+	() =>
+	({ tr }) => {
+		return tr.setMeta('searchQuery', { match: -1 })
+	}

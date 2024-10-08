@@ -4,28 +4,28 @@
  */
 
 export declare type EventTypes = {
-  /* Document state */
-  opened: unknown;
-  loaded: unknown;
+	/* Document state */
+	opened: unknown
+	loaded: unknown
 
-  /* All initial steps fetched */
-  fetched: unknown;
+	/* All initial steps fetched */
+	fetched: unknown
 
-  /* received new steps */
-  sync: unknown;
+	/* received new steps */
+	sync: unknown
 
-  /* state changed (dirty) */
-  stateChange: unknown;
+	/* state changed (dirty) */
+	stateChange: unknown
 
-  /* error */
-  error: unknown;
+	/* error */
+	error: unknown
 
-  /* Events for session and document meta data */
-  change: unknown;
+	/* Events for session and document meta data */
+	change: unknown
 
-  /* Emitted after successful save */
-  save: unknown;
+	/* Emitted after successful save */
+	save: unknown
 
-  /* Emitted once a document becomes idle */
-  idle: unknown;
-};
+	/* Emitted once a document becomes idle */
+	idle: unknown
+}

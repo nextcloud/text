@@ -3,7 +3,8 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NodeViewWrapper data-text-el="callout"
+	<NodeViewWrapper
+		data-text-el="callout"
 		class="callout"
 		:class="`callout--${type}`"
 		as="div">
@@ -63,7 +64,7 @@ export default {
 	align-items: center;
 	justify-content: flex-start;
 
-	&+ * {
+	& + * {
 		margin-top: 0.5em;
 	}
 
@@ -77,13 +78,15 @@ export default {
 	}
 
 	.callout__icon {
-		&, :deep(svg) {
+		&,
+		:deep(svg) {
 			color: var(--callout-border);
 		}
 	}
 
 	// Info (default) variables
-	&, &--info {
+	&,
+	&--info {
 		--callout-border: var(--color-info, #006aa3);
 	}
 

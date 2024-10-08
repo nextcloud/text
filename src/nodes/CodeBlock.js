@@ -8,7 +8,6 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import CodeBlockView from './CodeBlockView.vue'
 
 const CodeBlock = TiptapCodeBlockLowlight.extend({
-
 	parseHTML() {
 		return [
 			{
@@ -17,9 +16,7 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 				// Remove trailing newline from code blocks (#2344)
 				getContent: (node, schema) => {
 					const textContent = node.textContent.replace(/\n$/, '')
-					const inner = textContent
-						? [schema.text(textContent)]
-						: []
+					const inner = textContent ? [schema.text(textContent)] : []
 					return schema.nodes.codeBlock.create(null, inner)
 				},
 			},
@@ -36,7 +33,7 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 
 		// Make sure the front matter fences are longer than any dash sequence within it
 		const backticks = node.textContent.match(/`{3,}/gm)
-		const fence = backticks ? (backticks.sort().slice(-1)[0] + '`') : '```'
+		const fence = backticks ? backticks.sort().slice(-1)[0] + '`' : '```'
 
 		const language = node.attrs.params !== 'plaintext' ? node.attrs.params : ''
 		state.write(fence + (language || '') + '\n')
@@ -68,7 +65,6 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 			},
 		}
 	},
-
 })
 
 export default CodeBlock

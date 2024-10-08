@@ -10,15 +10,17 @@
  */
 function isPreviewLinkInParagraph(tokens, i) {
 	const [prev, cur, next] = tokens.slice(i - 1, i + 2)
-	return prev?.type === 'paragraph_open'
-		&& cur.type === 'inline'
-		&& cur.children
-		&& cur.children.length === 3
-		&& cur.children[0].type === 'link_open'
-		&& cur.children[0].attrGet('title') === 'preview'
-		&& cur.children[1].type === 'text'
-		&& cur.children[2].type === 'link_close'
-		&& next.type === 'paragraph_close'
+	return (
+		prev?.type === 'paragraph_open' &&
+		cur.type === 'inline' &&
+		cur.children &&
+		cur.children.length === 3 &&
+		cur.children[0].type === 'link_open' &&
+		cur.children[0].attrGet('title') === 'preview' &&
+		cur.children[1].type === 'text' &&
+		cur.children[2].type === 'link_close' &&
+		next.type === 'paragraph_close'
+	)
 }
 
 /**
@@ -37,7 +39,6 @@ function unwrapToken(tokens, i) {
  * @param {object} md Markdown object
  */
 export default (md) => {
-
 	/**
 	 * Markdownit plugin to unwrap previews from a paragraph
 	 *
@@ -46,7 +47,7 @@ export default (md) => {
 	 */
 	function linkPreviews({ tokens }) {
 		// do not process first and last token
-		for (let i = 1, l = tokens.length; i < (l - 1); ++i) {
+		for (let i = 1, l = tokens.length; i < l - 1; ++i) {
 			if (isPreviewLinkInParagraph(tokens, i)) {
 				unwrapToken(tokens, i)
 			}

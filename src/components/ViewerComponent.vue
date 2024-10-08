@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<Editor v-if="!useSourceView"
+	<Editor
+		v-if="!useSourceView"
 		:file-id="fileid"
 		:relative-path="filename"
 		:active="active || isEmbedded"
@@ -13,11 +14,13 @@
 		:class="{ 'text-editor--embedding': isEmbedded }"
 		:mime="mime"
 		:show-outline-outside="showOutlineOutside" />
-	<div v-else
+	<div
+		v-else
 		id="editor-container"
 		data-text-el="editor-container"
 		class="text-editor source-viewer">
-		<Component :is="readerComponent"
+		<Component
+			:is="readerComponent"
 			:content="content"
 			:file-id="fileid"
 			:read-only="true"
@@ -111,12 +114,18 @@ export default {
 	computed: {
 		/** @return {boolean} */
 		useSourceView() {
-			return this.source && (this.fileVersion || !this.fileid || this.isEmbedded) && !this.hasToggledInteractiveEmbedding
+			return (
+				this.source &&
+				(this.fileVersion || !this.fileid || this.isEmbedded) &&
+				!this.hasToggledInteractiveEmbedding
+			)
 		},
 
 		/** @return {boolean} */
 		readerComponent() {
-			return this.mime === 'text/markdown' ? MarkdownContentEditor : PlainTextReader
+			return this.mime === 'text/markdown'
+				? MarkdownContentEditor
+				: PlainTextReader
 		},
 	},
 
@@ -178,7 +187,6 @@ export default {
 	&.text-editor--embedding {
 		min-height: 400px;
 	}
-
 }
 </style>
 <style lang="scss">

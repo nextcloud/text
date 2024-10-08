@@ -107,22 +107,26 @@ export default Extension.create({
 			LinkPicker,
 			Link.configure({
 				openOnClick: true,
-				validate: href => /^https?:\/\//.test(href),
+				validate: (href) => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
 			this.options.editing
 				? Placeholder.configure({
-					placeholder: t('text', 'Start writing, or try \'/\' to add, \'@\' to mention…'),
-				})
+						placeholder: t(
+							'text',
+							"Start writing, or try '/' to add, '@' to mention…",
+						),
+					})
 				: null,
 			TrailingNode,
 		]
-		const additionalExtensionNames = this.options.extensions.map(e => e.name)
+		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
-			...defaultExtensions.filter(e => e && !additionalExtensionNames.includes(e.name)),
+			...defaultExtensions.filter(
+				(e) => e && !additionalExtensionNames.includes(e.name),
+			),
 			...this.options.extensions,
 		]
 	},
-
 })

@@ -15,8 +15,8 @@ import { isLinkToSelfWithHash } from '../helpers/links.js'
 export function activeLinkFromSelection({ selection, doc }) {
 	// support for CellSelections
 	const { ranges } = selection
-	const from = Math.min(...ranges.map(range => range.$from.pos))
-	const to = Math.max(...ranges.map(range => range.$to.pos))
+	const from = Math.min(...ranges.map((range) => range.$from.pos))
+	const to = Math.max(...ranges.map((range) => range.$to.pos))
 
 	const resolved = doc.resolve(from)
 
@@ -58,7 +58,7 @@ function activeLink(node, nodeStart) {
  * @param {object} node - node to check
  */
 function linkMark(node) {
-	const linkMark = node?.marks.find(m => m.type.name === 'link')
+	const linkMark = node?.marks.find((m) => m.type.name === 'link')
 	if (!linkMark) {
 		return undefined
 	}

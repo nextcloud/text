@@ -15,7 +15,7 @@ export default function extractHeadings(doc) {
 	const counter = new Map()
 	const headings = []
 
-	const getId = text => {
+	const getId = (text) => {
 		const id = slugify(text)
 		if (counter.has(id)) {
 			const next = counter.get(id)
@@ -36,12 +36,14 @@ export default function extractHeadings(doc) {
 		// ignore empty headings
 		if (!text) return
 		const id = getId(text)
-		headings.push(Object.freeze({
-			level: node.attrs.level,
-			text,
-			id,
-			offset,
-		}))
+		headings.push(
+			Object.freeze({
+				level: node.attrs.level,
+				text,
+				id,
+				offset,
+			}),
+		)
 	})
 
 	return headings

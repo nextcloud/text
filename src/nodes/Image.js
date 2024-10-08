@@ -10,7 +10,6 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 
 const Image = TiptapImage.extend({
-
 	selectable: false,
 
 	parseHTML() {
@@ -45,8 +44,14 @@ const Image = TiptapImage.extend({
 				props: {
 					handleDrop: (view, event, slice) => {
 						// only catch the drop if it contains files
-						if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-							const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+						if (
+							event.dataTransfer.files &&
+							event.dataTransfer.files.length > 0
+						) {
+							const coordinates = view.posAtCoords({
+								left: event.clientX,
+								top: event.clientY,
+							})
 							const customEvent = new CustomEvent('file-drop', {
 								bubbles: true,
 								detail: {
@@ -60,7 +65,10 @@ const Image = TiptapImage.extend({
 					},
 					handlePaste: (view, event, slice) => {
 						// only catch the paste if it contains files
-						if (event.clipboardData.files && event.clipboardData.files.length > 0) {
+						if (
+							event.clipboardData.files &&
+							event.clipboardData.files.length > 0
+						) {
 							// let the editor wrapper catch this custom event
 							const customEvent = new CustomEvent('image-paste', {
 								bubbles: true,

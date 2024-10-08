@@ -54,7 +54,6 @@ const MAX_RETRY_FETCH_COUNT = 5
 const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
 class PollingBackend {
-
 	/** @type {SyncService} */
 	#syncService
 	/** @type {Connection} */
@@ -82,7 +81,10 @@ class PollingBackend {
 		}
 		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
-		document.addEventListener('visibilitychange', this.visibilitychange.bind(this))
+		document.addEventListener(
+			'visibilitychange',
+			this.visibilitychange.bind(this),
+		)
 		this.#notifyPushBus = getNotifyBus()
 	}
 
@@ -96,7 +98,7 @@ class PollingBackend {
 
 		const now = Date.now()
 
-		if (this.#lastPoll > (now - this.#fetchInterval)) {
+		if (this.#lastPoll > now - this.#fetchInterval) {
 			return
 		}
 
@@ -108,9 +110,11 @@ class PollingBackend {
 		this.#pollActive = true
 
 		logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
-		await this.#connection.sync({
-			version: this.#syncService.version,
-		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
+		await this.#connection
+			.sync({
+				version: this.#syncService.version,
+			})
+			.then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this.#lastPoll = Date.now()
 		this.#pollActive = false
 	}
@@ -157,11 +161,17 @@ class PollingBackend {
 	_handleError(e) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
-				logger.error('[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED')
-				this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-
+				logger.error(
+					'[PollingBackend:fetchSteps] Network error when fetching steps, emitting CONNECTION_FAILED',
+				)
+				this.#syncService.emit('error', {
+					type: ERROR_TYPE.CONNECTION_FAILED,
+					data: {},
+				})
 			} else {
-				logger.error(`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`)
+				logger.error(
+					`[PollingBackend:fetchSteps] Network error when fetching steps, retry ${this.#fetchRetryCounter}`,
+				)
 			}
 		} else if (e.response.status === 409) {
 			// Still apply the steps to update our version of the document
@@ -174,27 +184,43 @@ class PollingBackend {
 				},
 			})
 		} else if (e.response.status === 412) {
-			this.#syncService.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: e.response })
+			this.#syncService.emit('error', {
+				type: ERROR_TYPE.LOAD_ERROR,
+				data: e.response,
+			})
 			this.disconnect()
 		} else if ([403, 404].includes(e.response.status)) {
-			this.#syncService.emit('error', { type: ERROR_TYPE.SOURCE_NOT_FOUND, data: {} })
+			this.#syncService.emit('error', {
+				type: ERROR_TYPE.SOURCE_NOT_FOUND,
+				data: {},
+			})
 			this.disconnect()
 		} else if ([502, 503].includes(e.response.status)) {
 			this.increaseRefetchTimer()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
-			logger.error('Failed to fetch steps due to unavailable service', { error: e })
+			this.#syncService.emit('error', {
+				type: ERROR_TYPE.CONNECTION_FAILED,
+				data: {},
+			})
+			logger.error('Failed to fetch steps due to unavailable service', {
+				error: e,
+			})
 		} else {
 			this.disconnect()
-			this.#syncService.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+			this.#syncService.emit('error', {
+				type: ERROR_TYPE.CONNECTION_FAILED,
+				data: {},
+			})
 			logger.error('Failed to fetch steps due to other reason', { error: e })
 		}
-
 	}
 
 	disconnect() {
 		clearInterval(this.fetcher)
 		this.fetcher = 0
-		document.removeEventListener('visibilitychange', this.visibilitychange.bind(this))
+		document.removeEventListener(
+			'visibilitychange',
+			this.visibilitychange.bind(this),
+		)
 	}
 
 	resetRefetchTimer() {
@@ -232,7 +258,6 @@ class PollingBackend {
 			this.resetRefetchTimer()
 		}
 	}
-
 }
 
 export default PollingBackend

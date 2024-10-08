@@ -10,7 +10,6 @@ import suggestions from '../components/Suggestion/LinkPicker/suggestions.js'
 
 export const LinkPickerPluginKey = new PluginKey('linkPicker')
 export default Extension.create({
-
 	name: 'linkPicker',
 
 	addOptions() {

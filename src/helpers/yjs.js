@@ -72,12 +72,7 @@ export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
 	}
 	// There are no responses to updates - so this is a dummy.
 	const encoder = encoding.createEncoder()
-	syncProtocol.readSyncMessage(
-		decoder,
-		encoder,
-		ydoc,
-		origin,
-	)
+	syncProtocol.readSyncMessage(decoder, encoder, ydoc, origin)
 }
 
 /**
@@ -86,8 +81,7 @@ export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
  * @param {object[]} queue - queue for the outgoing steps
  */
 export function getSteps(queue) {
-	return queue.map(s => encodeArrayBuffer(s))
-		.filter(s => s < 'AQ')
+	return queue.map((s) => encodeArrayBuffer(s)).filter((s) => s < 'AQ')
 }
 
 /**
@@ -96,8 +90,7 @@ export function getSteps(queue) {
  * @param {object[]} queue - queue for the outgoing steps
  */
 export function getAwareness(queue) {
-	return queue.map(s => encodeArrayBuffer(s))
-		.findLast(s => s > 'AQ') || ''
+	return queue.map((s) => encodeArrayBuffer(s)).findLast((s) => s > 'AQ') || ''
 }
 
 /**
@@ -116,15 +109,15 @@ export function logStep(step) {
 
 	const encodedStep = encodeArrayBuffer(step)
 	switch (messageType) {
-	case 0:
-		console.debug('y.js message sync', subType, encodedStep, err.stack)
-		break
-	case 3:
-		console.debug('y.js message awareness_query', encodedStep, err.stack)
-		break
-	case 1:
-		console.debug('y.js message awareness', encodedStep, err.stack)
-		break
+		case 0:
+			console.debug('y.js message sync', subType, encodedStep, err.stack)
+			break
+		case 3:
+			console.debug('y.js message awareness_query', encodedStep, err.stack)
+			break
+		case 1:
+			console.debug('y.js message awareness', encodedStep, err.stack)
+			break
 	}
 }
 
@@ -134,6 +127,8 @@ export function logStep(step) {
  * @param {Array} other - state vector to compare against
  */
 function sameState(arr, other) {
-	return arr.length === other.length
-		&& arr.every((value, index) => other[index] === value)
+	return (
+		arr.length === other.length &&
+		arr.every((value, index) => other[index] === value)
+	)
 }

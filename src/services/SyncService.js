@@ -53,7 +53,6 @@ const ERROR_TYPE = {
 }
 
 class SyncService {
-
 	#sendIntervalId
 	#connection
 
@@ -110,8 +109,9 @@ class SyncService {
 		}
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
-			: this._api.open({ fileId, baseVersionEtag: this.baseVersionEtag })
-				.catch(error => this._emitError(error))
+			: this._api
+					.open({ fileId, baseVersionEtag: this.baseVersionEtag })
+					.catch((error) => this._emitError(error))
 		this.#connection = await connect
 		if (!this.#connection) {
 			// Error was already emitted in connect
@@ -146,11 +146,10 @@ class SyncService {
 		if (!this.#connection.isPublic) {
 			return Promise.reject(new Error())
 		}
-		return this.#connection.update(guestName)
-			.catch((error) => {
-				logger.error('Failed to update the session', { error })
-				return Promise.reject(error)
-			})
+		return this.#connection.update(guestName).catch((error) => {
+			logger.error('Failed to update the session', { error })
+			return Promise.reject(error)
+		})
 	}
 
 	sendSteps(getSendable) {
@@ -175,7 +174,8 @@ class SyncService {
 		if (data.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		return this.#connection.push(data)
+		return this.#connection
+			.push(data)
 			.then((response) => {
 				this.pushError = 0
 				this.sending = false
@@ -184,25 +184,40 @@ class SyncService {
 					document: this.#connection.document,
 					version: this.version,
 				})
-			}).catch(err => {
+			})
+			.catch((err) => {
 				const { response, code } = err
 				this.sending = false
 				this.pushError++
 				if (!response || code === 'ECONNABORTED') {
-					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
+					this.emit('error', {
+						type: ERROR_TYPE.CONNECTION_FAILED,
+						data: {},
+					})
 				}
 				if (response?.status === 412) {
-					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: response })
+					this.emit('error', {
+						type: ERROR_TYPE.LOAD_ERROR,
+						data: response,
+					})
 				} else if (response?.status === 403) {
 					if (!data.document) {
 						// either the session is invalid or the document is read only.
 						logger.error('failed to write to document - not allowed')
-						this.emit('error', { type: ERROR_TYPE.PUSH_FORBIDDEN, data: {} })
+						this.emit('error', {
+							type: ERROR_TYPE.PUSH_FORBIDDEN,
+							data: {},
+						})
 					}
 					// Only emit conflict event if we have synced until the latest version
 					if (response.data.document?.currentVersion === this.version) {
-						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
-						OC.Notification.showTemporary('Changes could not be sent yet')
+						this.emit('error', {
+							type: ERROR_TYPE.PUSH_FAILURE,
+							data: {},
+						})
+						OC.Notification.showTemporary(
+							'Changes could not be sent yet',
+						)
 					}
 				} else {
 					this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
@@ -213,9 +228,13 @@ class SyncService {
 
 	_receiveSteps({ steps, document, sessions }) {
 		const awareness = sessions
-			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
-			.filter(s => s.lastAwarenessMessage)
-			.map(s => {
+			.filter(
+				(s) =>
+					s.lastContact >
+					Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME,
+			)
+			.filter((s) => s.lastAwarenessMessage)
+			.map((s) => {
 				return { step: s.lastAwarenessMessage, clientId: s.clientId }
 			})
 		const newSteps = [...awareness]
@@ -229,7 +248,7 @@ class SyncService {
 				// TODO: recover
 				continue
 			}
-			singleSteps.forEach(step => {
+			singleSteps.forEach((step) => {
 				newSteps.push({
 					step,
 					clientID: steps[i].sessionId,
@@ -248,7 +267,9 @@ class SyncService {
 	checkIdle() {
 		const lastPushMinutesAgo = (Date.now() - this.lastStepPush) / 1000 / 60
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
-			logger.debug(`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`)
+			logger.debug(
+				`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`,
+			)
 			this.emit('idle')
 			return true
 		}
@@ -303,13 +324,17 @@ class SyncService {
 			outbox = [...queue]
 			logger.debug('sending final steps ', data)
 			return data
-		})?.then(() => {
-			// only keep the steps that were not send yet
-			queue.splice(0,
-				queue.length,
-				...queue.filter(s => !outbox.includes(s)),
-			)
-		}, err => logger.error(err))
+		})?.then(
+			() => {
+				// only keep the steps that were not send yet
+				queue.splice(
+					0,
+					queue.length,
+					...queue.filter((s) => !outbox.includes(s)),
+				)
+			},
+			(err) => logger.error(err),
+		)
 	}
 
 	async close() {
@@ -319,11 +344,14 @@ class SyncService {
 		if (!this.hasActiveConnection) {
 			return
 		}
-		return this.#connection.close()
-			// Log and ignore possible network issues.
-			.catch(e => {
-				logger.info('Failed to close connection.', { e })
-			})
+		return (
+			this.#connection
+				.close()
+				// Log and ignore possible network issues.
+				.catch((e) => {
+					logger.info('Failed to close connection.', { e })
+				})
+		)
 	}
 
 	uploadAttachment(file) {
@@ -347,8 +375,13 @@ class SyncService {
 	emit(event, data) {
 		this._bus.emit(event, data)
 	}
-
 }
 
 export default SyncService
-export { SyncService, ERROR_TYPE, IDLE_TIMEOUT, COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME }
+export {
+	SyncService,
+	ERROR_TYPE,
+	IDLE_TIMEOUT,
+	COLLABORATOR_IDLE_TIME,
+	COLLABORATOR_DISCONNECT_TIME,
+}

@@ -10,14 +10,19 @@ import TrackState from './tracking/TrackState.js'
 import { Span } from './tracking/models.js'
 
 const UserColor = Extension.create({
-
 	name: 'users',
 
 	addOptions() {
 		return {
 			clientID: 0,
 			color: (clientID) => {
-				return '#' + Math.floor((Math.abs(Math.sin(clientID) * 16777215)) % 16777215).toString(16) + 'aa'
+				return (
+					'#' +
+					Math.floor(
+						Math.abs(Math.sin(clientID) * 16777215) % 16777215,
+					).toString(16) +
+					'aa'
+				)
 			},
 			name: (clientID) => {
 				return 'Unknown user ' + clientID
@@ -39,7 +44,12 @@ const UserColor = Extension.create({
 				state: {
 					init(_, instance) {
 						return {
-							tracked: new TrackState([new Span(0, instance.doc.content.size, null)], [], [], []),
+							tracked: new TrackState(
+								[new Span(0, instance.doc.content.size, null)],
+								[],
+								[],
+								[],
+							),
 							deco: DecorationSet.empty,
 						}
 					},
@@ -49,7 +59,10 @@ const UserColor = Extension.create({
 						if (tr.docChanged) {
 							if (!tr.getMeta('clientID')) {
 								// we have an undefined client id for own transactions
-								tr.setMeta('clientID', tr.steps.map(i => this.spec.clientID))
+								tr.setMeta(
+									'clientID',
+									tr.steps.map((i) => this.spec.clientID),
+								)
 							}
 							// Don't apply transaction when in composition (Github issue #2871)
 							if (!viewReference.composing) {
@@ -58,15 +71,22 @@ const UserColor = Extension.create({
 							}
 						}
 						decos = tState.blameMap
-							.map(span => {
+							.map((span) => {
 								const clientID = span.author
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
-									style: 'background-color: ' + this.spec.color(clientID) + '66;',
+									style:
+										'background-color: ' +
+										this.spec.color(clientID) +
+										'66;',
 									title: this.spec.name(clientID),
 								})
-							}).filter(dec => dec !== null)
-						return { tracked, deco: DecorationSet.create(state.doc, decos) }
+							})
+							.filter((dec) => dec !== null)
+						return {
+							tracked,
+							deco: DecorationSet.create(state.doc, decos),
+						}
 					},
 				},
 				props: {
@@ -77,7 +97,6 @@ const UserColor = Extension.create({
 			}),
 		]
 	},
-
 })
 
 export default UserColor

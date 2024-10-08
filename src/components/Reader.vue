@@ -4,10 +4,8 @@
 -->
 
 <template>
-	<RichTextReader v-if="isRichEditor"
-		:content="content" />
-	<PlainTextReader v-else
-		:content="content" />
+	<RichTextReader v-if="isRichEditor" :content="content" />
+	<PlainTextReader v-else :content="content" />
 </template>
 
 <script>
@@ -31,19 +29,17 @@ export default {
 </script>
 
 <style lang="scss">
+#read-only-editor {
+	overflow: scroll;
+}
 
-	#read-only-editor {
-		overflow: scroll;
+.thumbnailContainer #read-only-editor {
+	width: 100%;
+
+	.ProseMirror {
+		height: auto;
+		margin: 0 0 0 0;
+		padding: 0;
 	}
-
-	.thumbnailContainer #read-only-editor  {
-		width: 100%;
-
-		.ProseMirror {
-			height: auto;
-			margin: 0 0 0 0;
-			padding: 0;
-		}
-	}
-
+}
 </style>
