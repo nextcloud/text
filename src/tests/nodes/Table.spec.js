@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createEditor } from '../../EditorFactory'
+import { createRichEditor } from '../../EditorFactory'
 import { createMarkdownSerializer } from '../../extensions/Markdown'
 import { builders } from 'prosemirror-test-builder'
 
@@ -75,9 +75,7 @@ describe('Table', () => {
 })
 
 function editorWithContent(content) {
-	const editor = createEditor({
-		enableRichEditing: true,
-	})
+	const editor = createRichEditor()
 	editor.commands.setContent(content)
 	return editor
 }

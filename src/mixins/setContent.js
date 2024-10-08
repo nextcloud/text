@@ -9,7 +9,7 @@ import { Doc, encodeStateAsUpdate, XmlFragment, applyUpdate } from 'yjs'
 import { generateJSON } from '@tiptap/core'
 import { prosemirrorToYXmlFragment } from 'y-prosemirror'
 import { Node } from '@tiptap/pm/model'
-import { createEditor } from '../EditorFactory.js'
+import { createRichEditor, createPlainEditor } from '../EditorFactory.js'
 
 export default {
 	methods: {
@@ -31,9 +31,10 @@ export default {
 				? markdownit.render(content) + '<p/>'
 				: `<pre>${escapeHtml(content)}</pre>`
 
-			const editor = createEditor({
-				enableRichEditing: isRichEditor,
-			})
+			const editor = isRichEditor
+				? createRichEditor()
+				: createPlainEditor()
+
 			const json = generateJSON(html, editor.extensionManager.extensions)
 
 			const doc = Node.fromJSON(editor.schema, json)
