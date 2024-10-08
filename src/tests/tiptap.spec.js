@@ -3,13 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import createEditor from '../EditorFactory'
+import { createRichEditor } from '../EditorFactory'
 import markdownit from '../markdownit'
 
 const renderedHTML = ( markdown ) => {
-    const editor = createEditor({
-        enableRichEditing: true
-    })
+    const editor = createRichEditor()
     editor.commands.setContent(markdownit.render(markdown))
     // Remove TrailingNode
     return editor.getHTML().replace(/<p><\/p>$/, '')
