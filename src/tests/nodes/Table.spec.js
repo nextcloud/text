@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createRichEditor } from '../../EditorFactory'
-import { createMarkdownSerializer } from '../../extensions/Markdown'
-import { builders } from 'prosemirror-test-builder'
+import { createRichEditor } from '../../EditorFactory.js'
+import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 
-import markdownit from '../../markdownit'
+import markdownit from '../../markdownit/index.js'
 
 import input from '../fixtures/tables/basic/table.md'
 import output from '../fixtures/tables/basic/table.html'
@@ -15,7 +14,7 @@ import otherStructure from '../fixtures/tables/basic/table.structure.html'
 
 import handbook from '../fixtures/tables/handbook/handbook.html'
 import handbookOut from '../fixtures/tables/handbook/handbook.out.html'
-import { br, table, td, th, thead, tr, expectDocument } from '../builders'
+import { br, table, td, th, thead, tr, expectDocument } from '../builders.js'
 
 describe('Table', () => {
 	it('Markdown-IT renders tables', () => {
@@ -31,14 +30,14 @@ describe('Table', () => {
 				thead(
 					th({ textAlign: 'center' }, 'heading'),
 					th({ textAlign: 'right' }, 'heading 2'),
-					th('heading 3')
+					th('heading 3'),
 				),
 				tr(
 					td({ textAlign: 'center' }, 'center'),
 					td({ textAlign: 'right' }, 'right'),
-					td('left cell ', br({ syntax: 'html' }), 'with line break')
-				)
-			)
+					td('left cell ', br({ syntax: 'html' }), 'with line break'),
+				),
+			),
 		)
 	})
 
@@ -50,14 +49,14 @@ describe('Table', () => {
 				thead(
 					th({ textAlign: 'center' }, 'heading'),
 					th({ textAlign: 'right' }, 'heading 2'),
-					th('heading 3')
+					th('heading 3'),
 				),
 				tr(
 					td({ textAlign: 'center' }, 'center'),
 					td({ textAlign: 'right' }, 'right'),
-					td('left cell ', br({ syntax: '  ' }), 'with line break')
-				)
-			)
+					td('left cell ', br({ syntax: '  ' }), 'with line break'),
+				),
+			),
 		)
 	})
 
@@ -74,12 +73,12 @@ describe('Table', () => {
 	})
 })
 
-function editorWithContent(content) {
+const editorWithContent = (content) => {
 	const editor = createRichEditor()
 	editor.commands.setContent(content)
 	return editor
 }
 
-function formatHTML(html) {
+const formatHTML = (html) => {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')
 }

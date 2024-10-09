@@ -11,37 +11,37 @@ describe('linkBubble prosemirror plugin', () => {
 
 	test('signature', () => {
 		expect(linkBubble).toBeInstanceOf(Function)
-		expect(new linkBubble()).toBeInstanceOf(Plugin)
+		expect(linkBubble()).toBeInstanceOf(Plugin)
 	})
 
 	test('usage as plugin', () => {
-		const plugin = new linkBubble()
-		const state = createState({ plugins: [ plugin ] })
+		const plugin = linkBubble()
+		const state = createState({ plugins: [plugin] })
 		expect(state.plugins).toContain(plugin)
-		expect(plugin.getState(state)).toEqual({"active": null})
+		expect(plugin.getState(state)).toEqual({ active: null })
 	})
 
 	test('updates plugin state active on transaction', () => {
-		const plugin = new linkBubble()
-		const state = createState({ plugins: [ plugin ] })
+		const plugin = linkBubble()
+		const state = createState({ plugins: [plugin] })
 		const dummy = { was: 'active' }
 		const tr = state.tr.setMeta(plugin, { active: dummy })
 		const after = state.apply(tr)
-		expect(plugin.getState(after)).toEqual({"active": dummy})
+		expect(plugin.getState(after)).toEqual({ active: dummy })
 	})
 
 	test('setActiveLink requires a link mark', () => {
 		const noMarks = { marks: () => [] }
 		expect(setActiveLink(noMarks)(null, null)).toBe(false)
-		const otherMark = { marks: () => [{type: {name: 'other'}}] }
+		const otherMark = { marks: () => [{ type: { name: 'other' } }] }
 		expect(setActiveLink(otherMark)(null, null)).toBe(false)
-		const mark = { marks: () => [{type: {name: 'link'}}] }
+		const mark = { marks: () => [{ type: { name: 'link' } }] }
 		expect(setActiveLink(mark)(null, null)).toBe(true)
 	})
 
 	test('setActiveLink extracts the link mark', () => {
-		const plugin = new linkBubble()
-		const state = createState({ plugins: [ plugin ] })
+		const plugin = linkBubble()
+		const state = createState({ plugins: [plugin] })
 		const flow = createFlow(state)
 		const mark = { type: { name: 'link' } }
 		const resolved = { marks: () => [mark] }
@@ -51,14 +51,14 @@ describe('linkBubble prosemirror plugin', () => {
 	})
 
 	test('hideLinkBubble requires an active menu bubble', () => {
-		const plugin = new linkBubble()
-		const state = createState({ plugins: [ plugin ] })
+		const plugin = linkBubble()
+		const state = createState({ plugins: [plugin] })
 		expect(hideLinkBubble(state, null)).toBe(false)
 	})
 
 	test('hideLinkBubble clears the active state', () => {
-		const plugin = new linkBubble()
-		const state = createState({ plugins: [ plugin ] })
+		const plugin = linkBubble()
+		const state = createState({ plugins: [plugin] })
 		const flow = createFlow(state)
 		const mark = { type: { name: 'link' } }
 		const resolved = { marks: () => [mark] }
@@ -71,7 +71,7 @@ describe('linkBubble prosemirror plugin', () => {
 })
 
 // simulate the data flow in prosemirror
-function createFlow(initialState) {
+const createFlow = (initialState) => {
 	let state = initialState
 	return {
 		get state() {
@@ -83,7 +83,7 @@ function createFlow(initialState) {
 	}
 }
 
-function createState(options = {}) {
+const createState = (options = {}) => {
 	return EditorState.create({
 		schema,
 		...options,

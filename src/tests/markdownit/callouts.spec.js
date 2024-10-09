@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from '../../markdownit'
-import { typesAvailable } from '../../markdownit/callouts'
+import markdownit from '../../markdownit/index.js'
+import { typesAvailable } from '../../markdownit/callouts.js'
 import stripIndent from './stripIndent.js'
 
 describe('callouts', () => {
@@ -14,9 +14,8 @@ describe('callouts', () => {
 			expect(stripIndent(rendered)).toBe(stripIndent(
 				`<div data-callout="${type}" class="callout callout-${type}">
 					<p>Hey there!</p>
-				</div>`
+				</div>`,
 			))
 		})
 	})
 })
-

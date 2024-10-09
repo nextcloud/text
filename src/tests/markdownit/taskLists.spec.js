@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from '../../markdownit'
-import stripIndent from './stripIndent'
+import markdownit from '../../markdownit/index.js'
+import stripIndent from './stripIndent.js'
 
 describe('task list extension', () => {
 
@@ -16,9 +16,8 @@ describe('task list extension', () => {
 			</ul>
 			<ul data-bullet="*">
 			<li>not a task</li>
-			</ul>`
-			))
+			</ul>`,
+		))
 	})
 
 })
-

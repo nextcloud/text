@@ -5,13 +5,13 @@
 
 import { Markdown } from './../../extensions/index.js'
 import { createMarkdownSerializer } from './../../extensions/Markdown.js'
-import CodeBlock from '@tiptap/extension-code-block'
-import Blockquote from '@tiptap/extension-blockquote'
+import { CodeBlock } from '@tiptap/extension-code-block'
+import { Blockquote } from '@tiptap/extension-blockquote'
 import Image from './../../nodes/Image.js'
 import ImageInline from './../../nodes/ImageInline.js'
 import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
-import { Italic, Strong, Underline, Link} from './../../marks/index.js'
+import { Italic, Strong, Underline, Link } from './../../marks/index.js'
 import TiptapImage from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
 import { __serializeForClipboard as serializeForClipboard } from '@tiptap/pm/view'
@@ -114,7 +114,7 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('copies address from blockquote to markdown', () => {
 		const editor = createCustomEditor({
-		content: '<blockquote><p>Hermannsreute 44A</p></blockquote>',
+			content: '<blockquote><p>Hermannsreute 44A</p></blockquote>',
 			extensions: [Markdown, Blockquote],
 		})
 		const text = copyEditorContent(editor)
@@ -123,7 +123,7 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('copy version number without escape character', () => {
 		const editor = createCustomEditor({
-		content: '<p>Hello</p><p>28.0.4</p>',
+			content: '<p>Hello</p><p>28.0.4</p>',
 			extensions: [Markdown],
 		})
 		const text = copyEditorContent(editor)
@@ -132,7 +132,7 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('strips bold, italic, and other marks from paragraph', () => {
 		const editor = createCustomEditor({
-		content: '<p><strong>Hello</strong></p><p><span style="text-decoration: underline;">lonely </span><em>world</em></p>',
+			content: '<p><strong>Hello</strong></p><p><span style="text-decoration: underline;">lonely </span><em>world</em></p>',
 			extensions: [Markdown, Italic, Strong, Underline],
 		})
 		const text = copyEditorContent(editor)
@@ -141,7 +141,7 @@ describe('Markdown extension integrated in the editor', () => {
 
 	it('strips href and link formatting from email address', () => {
 		const editor = createCustomEditor({
-		content: '<p>Hello</p><p><a href="mailto:example@example.com">example@example.com</a></p>',
+			content: '<p>Hello</p><p><a href="mailto:example@example.com">example@example.com</a></p>',
 			extensions: [Markdown, Link],
 		})
 		const text = copyEditorContent(editor)
@@ -150,7 +150,7 @@ describe('Markdown extension integrated in the editor', () => {
 
 })
 
-function copyEditorContent(editor) {
+const copyEditorContent = (editor) => {
 	editor.commands.selectAll()
 	const slice = editor.state.selection.content()
 	const { text } = serializeForClipboard(editor.view, slice)

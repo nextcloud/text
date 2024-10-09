@@ -2,10 +2,14 @@
  * SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-import { searchQuery } from '../../plugins/searchQuery.js'
 import { Plugin, EditorState } from '@tiptap/pm/state'
 import { schema } from '@tiptap/pm/schema-basic'
-import { setSearchQuery, nextMatch, previousMatch } from '../../plugins/searchQuery.js'
+import {
+	searchQuery,
+	setSearchQuery,
+	nextMatch,
+	previousMatch,
+} from '../../plugins/searchQuery.js'
 
 describe('searchQuery plugin', () => {
 	it('can set up plugin and state', () => {
@@ -30,7 +34,7 @@ describe('searchQuery plugin', () => {
 		const { plugin, state } = pluginSetup()
 
 		const setSearch = setSearchQuery('lorem')(state)
-		let newState = state.apply(setSearch)
+		const newState = state.apply(setSearch)
 
 		expect(plugin.getState(newState)).toEqual({
 			query: 'lorem',
@@ -56,13 +60,13 @@ describe('searchQuery plugin', () => {
 		newState = newState.apply(nextSearch)
 
 		expect(plugin.getState(newState)).toEqual({
-			query: 'lorem',   // search query should be the same
-			matchAll: false,  // matchAll is set to false
-			index: 1,         // index is incremented to the next match
+			query: 'lorem', // search query should be the same
+			matchAll: false, // matchAll is set to false
+			index: 1, // index is incremented to the next match
 		})
 	})
 
-	it ('can accept previous match state', () => {
+	it('can accept previous match state', () => {
 		const { plugin, state } = pluginSetup()
 
 		const setSearch = setSearchQuery('lorem')(state)
@@ -75,7 +79,7 @@ describe('searchQuery plugin', () => {
 			matchAll: true,
 			index: 0,
 		})
-		
+
 		newState = newState.apply(previousSearch)
 
 		expect(plugin.getState(newState)).toEqual({
@@ -86,8 +90,8 @@ describe('searchQuery plugin', () => {
 	})
 })
 
-function pluginSetup() {
-	const plugin = new searchQuery()
+const pluginSetup = () => {
+	const plugin = searchQuery()
 	const state = EditorState.create({
 		schema,
 		plugins: [plugin],

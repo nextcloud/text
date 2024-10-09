@@ -3,26 +3,26 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createRichEditor } from '../EditorFactory'
-import markdownit from '../markdownit'
+import { createRichEditor } from '../EditorFactory.js'
+import markdownit from '../markdownit/index.js'
 
-const renderedHTML = ( markdown ) => {
-    const editor = createRichEditor()
-    editor.commands.setContent(markdownit.render(markdown))
-    // Remove TrailingNode
-    return editor.getHTML().replace(/<p><\/p>$/, '')
+const renderedHTML = (markdown) => {
+	const editor = createRichEditor()
+	editor.commands.setContent(markdownit.render(markdown))
+	// Remove TrailingNode
+	return editor.getHTML().replace(/<p><\/p>$/, '')
 }
 
 describe('TipTap', () => {
 	it('render softbreaks', () => {
-        const markdown = 'This\nis\none\nparagraph'
+		const markdown = 'This\nis\none\nparagraph'
 		expect(renderedHTML(markdown)).toEqual(`<p>${markdown}</p>`)
 	})
 
-    it('render hardbreak', () => {
-        const markdown = 'Hard line break  \nNext Paragraph'
-        expect(renderedHTML(markdown)).toEqual('<p>Hard line break<br>Next Paragraph</p>')
-    })
+	it('render hardbreak', () => {
+		const markdown = 'Hard line break  \nNext Paragraph'
+		expect(renderedHTML(markdown)).toEqual('<p>Hard line break<br>Next Paragraph</p>')
+	})
 
 	it('render taskList', () => {
 		const markdown = '* [ ] item 1\n'

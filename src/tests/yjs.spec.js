@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import recorded from './fixtures/recorded'
+import recorded from './fixtures/recorded.js'
 import { Doc, encodeStateAsUpdate } from 'yjs'
 import { decodeArrayBuffer } from '../helpers/base64.ts'
 import * as decoding from 'lib0/decoding'
@@ -14,28 +14,25 @@ describe('recorded session', () => {
 	const flattened = recorded.flat()
 	const sync = flattened.filter(step => step.startsWith('AA'))
 	const awareness = flattened.filter(step => /^A[QRSTU]/.test(step))
-	function size(arr) {
-		return arr.reduce((total, cur) => total + cur.length, 0)
-	}
-
-	function processStep(ydoc, step) {
+	const size = (arr) => arr.reduce((total, cur) => total + cur.length, 0)
+	const processStep = (ydoc, step) => {
 		const buf = decodeArrayBuffer(step)
 		const decoder = decoding.createDecoder(buf)
 		const encoder = encoding.createEncoder()
-		const messageType = decoding.readVarUint(decoder)
+		decoding.readVarUint(decoder)
 		const inType = syncProtocol.readSyncMessage(
 			decoder,
 			encoder,
-			ydoc
+			ydoc,
 		)
 		if (!encoding.length(encoder)) {
-			return {inType, length: 0}
+			return { inType, length: 0 }
 		}
 		const binary = encoding.toUint8Array(encoder)
 		const outBuf = decodeArrayBuffer(binary)
 		const outDecoder = decoding.createDecoder(outBuf)
 		const outType = decoding.peekVarUint(outDecoder)
-		return {inType, outType, length: encoding.length(encoder)}
+		return { inType, outType, length: encoding.length(encoder) }
 	}
 
 	test('original size', () => {
@@ -77,7 +74,7 @@ describe('recorded session', () => {
 		const syncsOfType = type => sync.filter((step) => {
 			const buf = decodeArrayBuffer(step)
 			const decoder = decoding.createDecoder(buf)
-			const messageType = decoding.readVarUint(decoder)
+			decoding.readVarUint(decoder)
 			return decoding.peekVarUint(decoder) === type
 		})
 		const step1s = syncsOfType(syncProtocol.messageYjsSyncStep1)
@@ -94,7 +91,7 @@ describe('recorded session', () => {
 	test('read messages', () => {
 		const ydoc = new Doc()
 		const responses = sync.map(step => processStep(ydoc, step))
-		responses.forEach(({inType, length}) => {
+		responses.forEach(({ inType, length }) => {
 			expect([0, 1, 2]).toContain(inType)
 			if (inType !== syncProtocol.messageYjsSyncStep1) {
 				expect(length).toBe(0)
@@ -107,7 +104,7 @@ describe('recorded session', () => {
 	test('analyse responses', () => {
 		const ydoc = new Doc()
 		const responses = sync.map(step => processStep(ydoc, step))
-		responses.forEach(({inType, outType}) => {
+		responses.forEach(({ inType, outType }) => {
 			if (inType === syncProtocol.messageYjsSyncStep1) {
 				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
 			}
@@ -128,7 +125,7 @@ describe('recorded session', () => {
 		const ydoc = new Doc()
 		const withoutQueries = sync.filter(step => step > 'AAE')
 		const responses = withoutQueries.map(step => processStep(ydoc, step))
-		responses.forEach(({inType, outType}) => {
+		responses.forEach(({ inType, outType }) => {
 			if (inType === syncProtocol.messageYjsSyncStep1) {
 				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
 			}

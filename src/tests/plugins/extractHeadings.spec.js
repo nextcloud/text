@@ -46,10 +46,10 @@ describe('extractHeadings', () => {
 
 })
 
-function prepareDoc(content) {
+const prepareDoc = (content) => {
 	const editor = createCustomEditor({
 		content,
-		extensions: [ Heading ]
+		extensions: [Heading],
 	})
 	return editor.state.doc
 }

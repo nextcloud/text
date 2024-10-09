@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { domHref, parseHref } from '../../helpers/links'
+import { domHref, parseHref } from '../../helpers/links.js'
 import { loadState } from '@nextcloud/initial-state'
 
 global.OCA = {
@@ -13,7 +13,7 @@ global.OCA = {
 }
 
 global.OC = {
-	config: {modRewriteWorking: true},
+	config: { modRewriteWorking: true },
 }
 
 global._oc_webroot = ''
@@ -30,7 +30,7 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('leave undefined hrefs alone', () => {
-		expect(domHref({attrs: {}})).toBe(undefined)
+		expect(domHref({ attrs: {} })).toBe(undefined)
 	})
 
 	test('full url', () => {
@@ -88,8 +88,8 @@ describe('Extracting short urls from the DOM', () => {
 
 describe('Inserting hrefs into the dom and extracting them again', () => {
 
-	function insertAndExtract(attrs) {
-		const node = {attrs}
+	const insertAndExtract = (attrs) => {
+		const node = { attrs }
 		const dom = {
 			getAttribute() {
 				return domHref(node)
@@ -99,7 +99,7 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 	}
 
 	test('leave empty hrefs alone', () => {
-		expect(insertAndExtract({href: ''})).toBe('')
+		expect(insertAndExtract({ href: '' })).toBe('')
 	})
 
 	test('leave undefined hrefs alone', () => {
@@ -107,27 +107,27 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 	})
 
 	test('old relative link format (from file picker) is rewritten', () => {
-		expect(insertAndExtract({href: 'otherfile?fileId=123'}))
+		expect(insertAndExtract({ href: 'otherfile?fileId=123' }))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('old relative link format with ../ (from file picker) is rewritten', () => {
-		expect(insertAndExtract({href: '../otherfile?fileId=123'}))
+		expect(insertAndExtract({ href: '../otherfile?fileId=123' }))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('old absolute link format (from file picker) is rewritten', () => {
-		expect(insertAndExtract({href: '/otherfile?fileId=123'}))
+		expect(insertAndExtract({ href: '/otherfile?fileId=123' }))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('default full URL link format is unchanged', () => {
-		expect(insertAndExtract({href: 'http://localhost/f/123'}))
+		expect(insertAndExtract({ href: 'http://localhost/f/123' }))
 			.toBe('http://localhost/f/123')
 	})
 
 	test('absolute link to collectives page is unchanged', () => {
-		expect(insertAndExtract({href: '/apps/collectives/page?fileId=123'}))
+		expect(insertAndExtract({ href: '/apps/collectives/page?fileId=123' }))
 			.toBe('/apps/collectives/page?fileId=123')
 	})
 

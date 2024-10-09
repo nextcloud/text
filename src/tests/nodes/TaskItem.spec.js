@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TaskList from './../../nodes/TaskList'
-import TaskItem from './../../nodes/TaskItem'
-import Markdown from './../../extensions/Markdown'
+import TaskList from './../../nodes/TaskList.js'
+import TaskItem from './../../nodes/TaskItem.js'
+import Markdown from './../../extensions/Markdown.js'
 import { getExtensionField } from '@tiptap/core'
-import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers'
+import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
 
 describe('TaskItem extension', () => {
 	it('exposes toMarkdown function', () => {
@@ -17,7 +17,7 @@ describe('TaskItem extension', () => {
 
 	it('exposes the toMarkdown function in the prosemirror schema', () => {
 		const editor = createCustomEditor({
-			extensions: [Markdown, TaskList, TaskItem]
+			extensions: [Markdown, TaskList, TaskItem],
 		})
 		const taskItem = editor.schema.nodes.taskItem
 		expect(taskItem.spec.toMarkdown).toBeDefined()
@@ -35,13 +35,13 @@ describe('TaskItem extension', () => {
 		expect(markdownThroughEditor('- [ ] [asd](sdf)')).toBe('- [ ] [asd](sdf)')
 		expect(markdownThroughEditor('- [x] [asd](sdf)')).toBe('- [x] [asd](sdf)')
 		expect(markdownThroughEditor('- [ ] foo\n- [x] bar')).toBe('- [ ] foo\n- [x] bar')
-		expect(markdownThroughEditor('- [x] foo\n' +
-			'  - [ ] bar\n' +
-			'  - [x] baz\n' +
-			'- [ ] bim')).toBe('- [x] foo\n' +
-				'  - [ ] bar\n' +
-				'  - [x] baz\n' +
-				'- [ ] bim')
+		expect(markdownThroughEditor('- [x] foo\n'
+			+ '  - [ ] bar\n'
+			+ '  - [x] baz\n'
+			+ '- [ ] bim')).toBe('- [x] foo\n'
+				+ '  - [ ] bar\n'
+				+ '  - [x] baz\n'
+				+ '- [ ] bim')
 		expect(markdownThroughEditor('- [X] asd')).toBe('- [x] asd')
 		expect(markdownThroughEditor('-   [X] asd')).toBe('- [x] asd')
 	})
