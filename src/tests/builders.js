@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect } from '@jest/globals';
-import { Mark, Node } from '@tiptap/pm/model'
+// eslint-disable-next-line n/no-extraneous-import
+import { expect } from '@jest/globals'
+import { Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
-import { createRichEditor } from '../EditorFactory'
+import { createRichEditor } from '../EditorFactory.js'
 
-
+/**
+ * Get node builders from the default rich editor.
+ * @return {object}
+ */
 export function getBuilders() {
 	const editor = createRichEditor()
 	return builders(editor.schema, {
@@ -34,34 +38,24 @@ export const thead = getBuilders().thead
 
 /**
  * Create string representation of prosemirror / TipTap Node with attributes
- * @param {Node} node
- * @returns {string}
+ * @param {Node} node to serialize
+ * @return {string}
  */
 function createDocumentString(node) {
-	/**
-	 * Extract attributes of node or mark
-	 * @param {Node|Mark} node
-	 * @returns {string}
-	 */
 	const extractAttributes = (node) => {
 		const attrs = node.attrs || {}
 		const attrString = Object.keys(attrs)
 			.map((key) => {
 				// null is the TipTap default so we ignore it (e.g. a value of `unknown` must be manually set by the application)
-				if (attrs[key] !== null) {
-					return key + '=' + (typeof attrs[key] === 'string' ? `"${attrs[key]}"` : attrs[key])
-				}
+				return (attrs[key] === null)
+					? undefined
+					: key + '=' + (typeof attrs[key] === 'string' ? `"${attrs[key]}"` : attrs[key])
 			})
 			.filter(v => !!v)
 			.join(',')
 		return attrString ? `<${attrString}>` : ''
 	}
 
-	/**
-	 * Create string representation of a single Node
-	 * @param {Node} node
-	 * @returns {string}
-	 */
 	const stringifyNode = (node) => {
 		const name = node.type.name
 		if (name === 'text') return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"'
@@ -83,9 +77,9 @@ function createDocumentString(node) {
  * @example
  * const editor = createRichEditor()
  * expectDocument(editor.state.doc, table(
- * 	tr(
- * 		td('foo')
- * 	)
+ *   tr(
+ *     td('foo')
+ *   )
  * ))
  */
 export function expectDocument(subject, expected) {

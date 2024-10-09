@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Underline from './../../marks/Underline';
+import Underline from './../../marks/Underline.js'
 import { getExtensionField } from '@tiptap/core'
-import { createCustomEditor } from '../helpers'
+import { createCustomEditor } from '../helpers.js'
 
 describe('Underline extension unit', () => {
 	it('exposes toMarkdown function', () => {

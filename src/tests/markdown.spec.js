@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from './../markdownit'
-import { typesAvailable } from './../markdownit/callouts'
+import markdownit from './../markdownit/index.js'
+import { typesAvailable } from './../markdownit/callouts.js'
 import {
 	markdownThroughEditor,
 	markdownThroughEditorHtml,
-	markdownFromPaste
+	markdownFromPaste,
 } from './helpers.js'
-import { createMarkdownSerializer } from "../extensions/Markdown";
-import { createRichEditor } from "../EditorFactory";
+import { createMarkdownSerializer } from '../extensions/Markdown.js'
+import { createRichEditor } from '../EditorFactory.js'
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.
@@ -91,11 +91,11 @@ describe('Markdown though editor', () => {
 	})
 
 	test('escaping', () => {
-		const test = '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n' +
-			'\n' +
-			'* [asdf asdf asdf/asdf](Asdf Asdf)\n' +
-			'* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n' +
-			'* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
+		const test = '(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n'
+			+ '\n'
+			+ '* [asdf asdf asdf/asdf](Asdf Asdf)\n'
+			+ '* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n'
+			+ '* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
 		expect(markdownThroughEditor(test)).toBe(test)
 		expect(markdownThroughEditor('This is a [test] for escaping')).toBe('This is a [test] for escaping')
 		expect(markdownThroughEditor('This is a [test for escaping')).toBe('This is a [test for escaping')
@@ -164,17 +164,17 @@ describe('Markdown serializer from html', () => {
 	test('callouts', () => {
 		typesAvailable.forEach(type => {
 			expect(markdownThroughEditorHtml(
-				`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`
+				`<div data-callout="${type}" class="callout callout-${type}"><p>!${type}!</p>just do it<p></p></div>`,
 			)).toBe(`::: ${type}\n!${type}!\n\njust do it\n\n:::`)
 			expect(markdownThroughEditorHtml(
-				`<p class="callout ${type}">!${type}!</p>`
+				`<p class="callout ${type}">!${type}!</p>`,
 			)).toBe(`::: ${type}\n!${type}!\n\n:::`)
 		})
 	})
 	test('callouts with handbook classes', () => {
 		expect(markdownThroughEditorHtml(
-			`<p class="callout warning">!warning!</p>`
-		)).toBe(`::: warn\n!warning!\n\n:::`)
+			'<p class="callout warning">!warning!</p>',
+		)).toBe('::: warn\n!warning!\n\n:::')
 	})
 
 	test('table', () => {
@@ -211,7 +211,7 @@ describe('Markdown serializer from html', () => {
 
 describe('Trailing nodes', () => {
 	test('No extra transaction is added after loading', () => {
-		const source = "# My heading\n\n* test\n* test2"
+		const source = '# My heading\n\n* test\n* test2'
 		const tiptap = createRichEditor()
 		tiptap.commands.setContent(markdownit.render(source))
 

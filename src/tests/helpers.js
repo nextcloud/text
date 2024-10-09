@@ -3,16 +3,22 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createMarkdownSerializer } from '../extensions/Markdown'
+import { createMarkdownSerializer } from '../extensions/Markdown.js'
 import { Editor } from '@tiptap/core'
 
-import Document from '@tiptap/extension-document'
-import Paragraph from '../nodes/Paragraph'
-import Text from '@tiptap/extension-text'
+import { Document } from '@tiptap/extension-document'
+import { Text } from '@tiptap/extension-text'
+import Paragraph from '../nodes/Paragraph.js'
 
-import { createRichEditor } from '../EditorFactory'
-import markdownit from '../markdownit'
+import { createRichEditor } from '../EditorFactory.js'
+import markdownit from '../markdownit/index.js'
 
+/**
+ *
+ * @param {object} options for the editor
+ * @param {string} options.content Content for the editor.
+ * @param {Array} options.extensions Tip tap extensions
+ */
 export function createCustomEditor({ content, extensions }) {
 	return new Editor({
 		content,
@@ -21,15 +27,15 @@ export function createCustomEditor({ content, extensions }) {
 			Paragraph,
 			Text,
 			...extensions,
-		]
+		],
 	})
 }
 
 /**
  * Ease markdown through TipTap editor and return serialized markdown
  *
- * @param {string} markdown
- * @returns {string}
+ * @param {string} markdown to process
+ * @return {string}
  */
 export function markdownThroughEditor(markdown) {
 	const tiptap = createRichEditor()
@@ -41,8 +47,8 @@ export function markdownThroughEditor(markdown) {
 /**
  * Ease HTML as input through the Editor and return the serialized markdown
  *
- * @param {string} html
- * @returns {string}
+ * @param {string} html to process
+ * @return {string}
  */
 export function markdownThroughEditorHtml(html) {
 	const tiptap = createRichEditor()
@@ -54,8 +60,8 @@ export function markdownThroughEditorHtml(html) {
 /**
  * Paste HTML into the Editor and return the serialized markdown
  *
- * @param {string} html
- * @returns {string}
+ * @param {string} html to paste
+ * @return {string}
  */
 export function markdownFromPaste(html) {
 	const tiptap = createRichEditor()

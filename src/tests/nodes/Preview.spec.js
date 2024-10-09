@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Preview from './../../nodes/Preview'
-import Markdown from './../../extensions/Markdown'
-import Link from './../../marks/Link'
+import Preview from './../../nodes/Preview.js'
+import Markdown from './../../extensions/Markdown.js'
+import Link from './../../marks/Link.js'
 import { getExtensionField } from '@tiptap/core'
-import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers'
-import markdownit from '../../markdownit/index.js'
+import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
 
 describe('Preview extension', () => {
 	it('exposes toMarkdown function', () => {
@@ -23,19 +22,19 @@ describe('Preview extension', () => {
 	})
 
 	it('markdown syntax is preserved through editor', () => {
-		const markdown = `[link](https://nextcloud.com (preview))`
+		const markdown = '[link](https://nextcloud.com (preview))'
 		expect(markdownThroughEditor(markdown)).toBe(markdown)
 	})
 
 	it('serializes HTML to markdown', () => {
-		const markdown = `[link](https://nextcloud.com (preview))`
-		const link = `<a href="https://nextcloud.com" title="preview">link</a>`
+		const markdown = '[link](https://nextcloud.com (preview))'
+		const link = '<a href="https://nextcloud.com" title="preview">link</a>'
 		expect(markdownThroughEditorHtml(link))
 			.toBe(markdown)
 	})
 
 	it('detects links', () => {
-		const link = `<a href="https://nextcloud.com" title="preview">link</a>`
+		const link = '<a href="https://nextcloud.com" title="preview">link</a>'
 		const editor = createEditorWithPreview()
 		editor.commands.setContent(`${link}<p>hello></p>`)
 		const node = editor.state.doc.content.firstChild
@@ -46,8 +45,6 @@ describe('Preview extension', () => {
 
 })
 
-function createEditorWithPreview() {
-		return createCustomEditor({
-			extensions: [Markdown, Preview, Link]
-		})
-}
+const createEditorWithPreview = () => createCustomEditor({
+	extensions: [Markdown, Preview, Link],
+})

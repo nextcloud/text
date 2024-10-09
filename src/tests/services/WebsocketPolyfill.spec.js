@@ -18,6 +18,7 @@ describe('Init function', () => {
 		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
 		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
+		expect(websocket).toBeInstanceOf(Polyfill)
 		expect(syncService.on).toHaveBeenCalled()
 	})
 
@@ -27,6 +28,7 @@ describe('Init function', () => {
 		const initialSession = { }
 		const Polyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
 		const websocket = new Polyfill('url')
+		expect(websocket).toBeInstanceOf(Polyfill)
 		expect(syncService.open).toHaveBeenCalledWith({ fileId, initialSession })
 	})
 
@@ -36,13 +38,13 @@ describe('Init function', () => {
 			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: async getData => getData(),
 		}
-		const queue = [ 'initial' ]
+		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
 		const websocket = new Polyfill('url')
 		const result = websocket.send(data)
 		expect(result).toBeInstanceOf(Promise)
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 		const dataSendOut = await result
 		expect(queue).toEqual([])
 		expect(dataSendOut).toHaveProperty('awareness')
@@ -57,16 +59,16 @@ describe('Init function', () => {
 			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
 			sendSteps: jest.fn().mockRejectedValue('error before reading steps in sync service'),
 		}
-		const queue = [ 'initial' ]
+		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
 		const websocket = new Polyfill('url')
 		const result = websocket.send(data)
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 		expect(result).toBeInstanceOf(Promise)
 		const returned = await result
 		expect(returned).toBeUndefined()
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 	})
 
 	it('handles reject after reading data', async () => {
@@ -74,21 +76,21 @@ describe('Init function', () => {
 		const syncService = {
 			on: jest.fn(),
 			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
-			sendSteps: jest.fn().mockImplementation( async getData => {
+			sendSteps: jest.fn().mockImplementation(async getData => {
 				getData()
-				throw 'error when sending in sync service'
+				throw new Error('error when sending in sync service')
 			}),
 		}
-		const queue = [ 'initial' ]
+		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
 		const websocket = new Polyfill('url')
 		const result = websocket.send(data)
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 		expect(result).toBeInstanceOf(Promise)
 		const returned = await result
 		expect(returned).toBeUndefined()
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 	})
 
 	it('queue survives a close', async () => {
@@ -96,27 +98,27 @@ describe('Init function', () => {
 		const syncService = {
 			on: jest.fn(),
 			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
-			sendSteps: jest.fn().mockImplementation( async getData => {
+			sendSteps: jest.fn().mockImplementation(async getData => {
 				getData()
-				throw 'error when sending in sync service'
+				throw new Error('error when sending in sync service')
 			}),
-			sendStepsNow: jest.fn().mockImplementation( async getData => {
+			sendStepsNow: jest.fn().mockImplementation(async getData => {
 				getData()
-				throw 'sendStepsNow error when sending'
+				throw new Error('sendStepsNow error when sending')
 			}),
 			off: jest.fn(),
-			close: jest.fn( async data => data ),
+			close: jest.fn(async data => data),
 		}
-		const queue = [ 'initial' ]
+		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
 		const websocket = new Polyfill('url')
 		websocket.onclose = jest.fn()
 		await websocket.send(data)
 		const promise = websocket.close()
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 		await promise
-		expect(queue).toEqual([ 'initial' , data ])
+		expect(queue).toEqual(['initial', data])
 	})
 
 })

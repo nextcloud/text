@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from '../../markdownit'
-import stripIndent from './stripIndent'
+import markdownit from '../../markdownit/index.js'
+import stripIndent from './stripIndent.js'
 
 describe('markdownit', () => {
 
@@ -15,7 +15,7 @@ describe('markdownit', () => {
 				<ul data-bullet="${bullet}">
 				<li>first</li>
 				<li>second</li>
-				</ul>`
+				</ul>`,
 			))
 		})
 	})
@@ -28,7 +28,7 @@ describe('markdownit', () => {
 			</ul>
 			<ul class="contains-task-list" data-bullet="*">
 			<li class="task-list-item "><input class="task-list-item-checkbox" type="checkbox" disabled="" id="task-item-1" />task</li>
-			</ul>`
+			</ul>`,
 		))
 	})
 

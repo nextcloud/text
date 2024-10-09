@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { encodeArrayBuffer, decodeArrayBuffer } from '../../helpers/base64'
+import { encodeArrayBuffer, decodeArrayBuffer } from '../../helpers/base64.ts'
 
 describe('encoding ArrayBuffer content', () => {
 	test('empty array buffer is empty base64 string', () => {
@@ -32,7 +32,7 @@ describe('decoding base64 to array buffer', () => {
 		const encoded = 'AAAA'
 		const buffer = decodeArrayBuffer(encoded)
 		expect(buffer.byteLength).toBe(3)
-		const view = new Uint8Array(buffer);
+		const view = new Uint8Array(buffer)
 		expect(view).toEqual(new Uint8Array([0, 0, 0]))
 	})
 })

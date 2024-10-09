@@ -31,7 +31,7 @@ describe('search plugin', () => {
 		testSearch(
 			'<p>Hallo Welt</p>',
 			'',
-			expected
+			expected,
 		)
 	})
 
@@ -49,7 +49,7 @@ describe('search plugin', () => {
 		testSearch(
 			'<p>CATS birds crocodiles cats platypus CAts</p>',
 			'cAtS',
-			expected
+			expected,
 		)
 	})
 
@@ -57,7 +57,7 @@ describe('search plugin', () => {
 		const expected = {
 			results: [
 				{ from: 1, to: 4 },
-				{ from: 23, to: 26 }
+				{ from: 23, to: 26 },
 			],
 			total: 2,
 			index: 0,
@@ -66,20 +66,20 @@ describe('search plugin', () => {
 		testSearch(
 			'<p>cat dinosaur bird dog cat</p>',
 			'cat',
-			expected
+			expected,
 		)
 	})
 
 	it('finds matches in separate blocks', () => {
-		const doc = '<p>cat dinosaur bird dog cat</p>' +
-					'<p>dinosaur cat bird <i>dinosaur cat</i></p>'
+		const doc = '<p>cat dinosaur bird dog cat</p>'
+					+ '<p>dinosaur cat bird <i>dinosaur cat</i></p>'
 
 		const expected = {
 			results: [
 				{ from: 1, to: 4 },
 				{ from: 23, to: 26 },
 				{ from: 37, to: 40 },
-				{ from: 55, to: 58 }
+				{ from: 55, to: 58 },
 			],
 			total: 5,
 			index: 0,
@@ -88,28 +88,16 @@ describe('search plugin', () => {
 		testSearch(
 			doc,
 			'cat',
-			expected
+			expected,
 		)
 	})
 })
 
-function testSearch(doc, query, expectedSearchResults) {
-	const editor = createCustomEditor({
-		content: doc,
-		extensions: [],
-	})
-
-	const searchResults = {
-		expected: expectedSearchResults,
-		actual: runSearch(editor.state.doc, query),
-	}
-
-	const decorationResults = {
-		expected: highlightResults(editor.state.doc, searchResults.expected.results),
-		actual: highlightResults(editor.state.doc, searchResults.actual.results),
-	}
-
-
-	expect(searchResults.actual.results).toEqual(searchResults.expected.results)
-	expect(decorationResults.actual.results).toEqual(decorationResults.expected.results)
+const testSearch = (doc, query, expectedSearchResults) => {
+	const editor = createCustomEditor({ content: doc, extensions: [] })
+	const searched = runSearch(editor.state.doc, query)
+	expect(searched)
+		.toHaveProperty('results', expectedSearchResults.results)
+	expect(highlightResults(editor.state.doc, searched.results))
+		.toEqual(highlightResults(editor.state.doc, expectedSearchResults.results))
 }
