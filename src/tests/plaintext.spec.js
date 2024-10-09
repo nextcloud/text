@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createEditor, serializePlainText } from './../EditorFactory';
+import { createPlainEditor, serializePlainText } from './../EditorFactory';
 import spec from "./fixtures/spec"
 import xssFuzzVectors from './fixtures/xssFuzzVectors';
 
@@ -18,9 +18,7 @@ const escapeHTML = (s) => {
 
 const plaintextThroughEditor = (markdown) => {
   const content = '<pre>' + escapeHTML(markdown) + '</pre>'
-  const tiptap = createEditor({
-    enableRichEditing: false
-  })
+  const tiptap = createPlainEditor()
   tiptap.commands.setContent(content)
   return serializePlainText(tiptap.state.doc) || 'failed'
 }
@@ -84,4 +82,14 @@ describe('html as plain text', () => {
     expect(plaintextThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
     expect(plaintextThroughEditor(xssFuzzVectors)).toBe(xssFuzzVectors)
   })
+} )
+
+describe('regression tests', () => {
+	test('tripple enter creates new lines at end (#6507)', () => {
+		const tiptap = createPlainEditor()
+		tiptap.commands.enter()
+		tiptap.commands.enter()
+		tiptap.commands.enter()
+		expect(serializePlainText(tiptap.state.doc)).toEqual("\n\n\n")
+	})
 })

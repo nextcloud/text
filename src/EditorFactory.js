@@ -32,10 +32,15 @@ const loadSyntaxHighlight = async (language) => {
 	}
 }
 
-const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, extensions, enableRichEditing, session, relativePath, isEmbedded = false }) => {
-	let defaultExtensions
-	if (enableRichEditing) {
-		defaultExtensions = [
+const editorProps = {
+	scrollMargin: 50,
+	scrollThreshold: 50,
+}
+
+const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded = false } = {}) => {
+	return new Editor({
+		editorProps,
+		extensions: [
 			RichText.configure({
 				relativePath,
 				isEmbedded,
@@ -49,19 +54,23 @@ const createEditor = ({ language, onCreate = () => {}, onUpdate = () => {}, exte
 				],
 			}),
 			FocusTrap,
-		]
-	} else {
-		defaultExtensions = [PlainText, CodeBlockLowlight.configure({ lowlight, defaultLanguage: language })]
-	}
+			...extensions,
+		],
+	})
+}
 
+const createPlainEditor = ({ language, extensions = [] } = {}) => {
 	return new Editor({
-		onCreate,
-		onUpdate,
-		editorProps: {
-			scrollMargin: 50,
-			scrollThreshold: 50,
-		},
-		extensions: defaultExtensions.concat(extensions || []),
+		editorProps,
+		extensions: [
+			PlainText,
+			CodeBlockLowlight.configure({
+				lowlight,
+				defaultLanguage: language,
+				exitOnTripleEnter: false,
+			}),
+			...extensions,
+		],
 	})
 }
 
@@ -69,5 +78,4 @@ const serializePlainText = (doc) => {
 	return doc.textContent
 }
 
-export default createEditor
-export { createEditor, serializePlainText, loadSyntaxHighlight }
+export { createRichEditor, createPlainEditor, serializePlainText, loadSyntaxHighlight }

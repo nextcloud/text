@@ -98,7 +98,12 @@ import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
+import {
+	createRichEditor,
+	createPlainEditor,
+	serializePlainText,
+	loadSyntaxHighlight,
+} from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
@@ -401,10 +406,15 @@ export default {
 		listenEditorEvents() {
 			this.$editor.on('focus', this.onFocus)
 			this.$editor.on('blur', this.onBlur)
+			this.$editor.on('create', this.onCreate)
+			this.$editor.on('update', this.onUpdate)
 		},
+
 		unlistenEditorEvents() {
 			this.$editor.off('focus', this.onFocus)
 			this.$editor.off('blur', this.onBlur)
+			this.$editor.off('create', this.onCreate)
+			this.$editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -504,59 +514,46 @@ export default {
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
+			if (this.$editor) {
+				// $editor already existed. So this is a reconnect.
+				this.$syncService.startSync()
+				return
+			}
 
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					const session = this.currentSession
-					if (!this.$editor) {
-						this.$editor = createEditor({
-							language,
-							relativePath: this.relativePath,
-							session,
-							onCreate: ({ editor }) => {
-								this.$syncService.startSync()
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('create:content', {
-									markdown: proseMirrorMarkdown,
-								})
-							},
-							onUpdate: ({ editor }) => {
-								// this.debugContent(editor)
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('update:content', {
-									markdown: proseMirrorMarkdown,
-								})
-							},
-							extensions: [
-								Autofocus.configure({
-									fileId: this.fileId,
-								}),
-								Collaboration.configure({
-									document: this.$ydoc,
-								}),
-								CollaborationCursor.configure({
-									provider: this.$providers[0],
-									user: {
-										name: session?.userId
-											? session.displayName
-											: (session?.guestName || t('text', 'Guest')),
-										color: session?.color,
-										clientId: this.$ydoc.clientID,
-									},
-								}),
-							],
-							enableRichEditing: this.isRichEditor,
-							isEmbedded: this.isEmbedded,
-						})
+			const session = this.currentSession
+			const extensions = [
+				Autofocus.configure({ fileId: this.fileId }),
+				Collaboration.configure({ document: this.$ydoc }),
+				CollaborationCursor.configure({
+					provider: this.$providers[0],
+					user: {
+						name: session?.userId
+							? session.displayName
+							: (session?.guestName || t('text', 'Guest')),
+						color: session?.color,
+						clientId: this.$ydoc.clientID,
+					},
+				}),
+			]
+			if (this.isRichEditor) {
+				this.$editor = createRichEditor({
+					relativePath: this.relativePath,
+					session,
+					extensions,
+					isEmbedded: this.isEmbedded,
+				})
+				this.hasEditor = true
+				this.listenEditorEvents()
+			} else {
+				const language = extensionHighlight[this.fileExtension]
+					|| this.fileExtension
+				loadSyntaxHighlight(language)
+					.then(() => {
+						this.$editor = createPlainEditor({ language, extensions })
 						this.hasEditor = true
 						this.listenEditorEvents()
-					} else {
-						// $editor already existed. So this is a reconnect.
-						this.$syncService.startSync()
-					}
-
-				})
+					})
+			}
 
 		},
 
@@ -569,6 +566,22 @@ export default {
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
+		},
+
+		onCreate({ editor }) {
+			this.$syncService.startSync()
+			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			this.emit('create:content', {
+				markdown: proseMirrorMarkdown,
+			})
+		},
+
+		onUpdate({ editor }) {
+			// this.debugContent(editor)
+			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			this.emit('update:content', {
+				markdown: proseMirrorMarkdown,
+			})
 		},
 
 		onSync({ steps, document }) {

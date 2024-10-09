@@ -6,14 +6,11 @@
 import { expect } from '@jest/globals';
 import { Mark, Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
-import createEditor from '../EditorFactory'
+import { createRichEditor } from '../EditorFactory'
 
 
 export function getBuilders() {
-	const editor = createEditor({
-		content: '',
-		enableRichEditing: true
-	})
+	const editor = createRichEditor()
 	return builders(editor.schema, {
 		tr: { nodeType: 'tableRow' },
 		td: { nodeType: 'tableCell' },
@@ -84,7 +81,7 @@ function createDocumentString(node) {
  * @param {Node} subject The editor document
  * @param {Node} expected The expected document
  * @example
- * const editor = createEditor()
+ * const editor = createRichEditor()
  * expectDocument(editor.state.doc, table(
  * 	tr(
  * 		td('foo')
