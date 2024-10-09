@@ -36,6 +36,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\IPreview;
+use OCP\ISession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
 use OCP\Util;
@@ -57,6 +58,10 @@ class AttachmentService {
 	 */
 	private $previewManager;
 	/**
+	 * @var ISession
+	 */
+	private $session;
+	/**
 	 * @var IMimeTypeDetector
 	 */
 	private $mimeTypeDetector;
@@ -64,10 +69,12 @@ class AttachmentService {
 	public function __construct(IRootFolder $rootFolder,
 								ShareManager $shareManager,
 								IPreview $previewManager,
+								ISession $session,
 								IMimeTypeDetector $mimeTypeDetector) {
 		$this->rootFolder = $rootFolder;
 		$this->shareManager = $shareManager;
 		$this->previewManager = $previewManager;
+		$this->session = $session;
 		$this->mimeTypeDetector = $mimeTypeDetector;
 	}
 
@@ -529,6 +536,27 @@ class AttachmentService {
 		try {
 			$share = $this->shareManager->getShareByToken($shareToken);
 			if ($share->getShareType() === IShare::TYPE_LINK) {
+
+				// check for password if required
+				/** @psalm-suppress RedundantConditionGivenDocblockType */
+				if ($share->getPassword() !== null) {
+					$shareId = $this->session->get('public_link_authenticated');
+					if ($share->getId() !== $shareId) {
+						throw new ShareNotFound();
+					}
+				}
+
+				// check read permission
+				if (($share->getPermissions() & Constants::PERMISSION_READ) !== Constants::PERMISSION_READ) {
+					throw new ShareNotFound();
+				}
+
+				// check download permission
+				$attributes = $share->getAttributes();
+				if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
+					throw new ShareNotFound();
+				}
+
 				// shared file or folder?
 				if ($share->getNodeType() === 'file') {
 					$textFile = $share->getNode();
