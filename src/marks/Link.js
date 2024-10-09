@@ -27,7 +27,6 @@ const extractHrefFromMarkdownLink = (match) => {
 }
 
 const Link = TipTapLink.extend({
-
 	addOptions() {
 		return {
 			...this.parent?.(),
@@ -51,7 +50,7 @@ const Link = TipTapLink.extend({
 	parseHTML: [
 		{
 			tag: 'a[href]',
-			getAttrs: dom => ({
+			getAttrs: (dom) => ({
 				href: parseHref(dom),
 				title: dom.getAttribute('title'),
 			}),
@@ -64,12 +63,16 @@ const Link = TipTapLink.extend({
 		const href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
 			? domHref(mark, this.options.relativePath)
 			: '#'
-		return ['a', {
-			...mark.attrs,
-			href,
-			'data-md-href': mark.attrs.href,
-			rel: 'noopener noreferrer nofollow',
-		}, 0]
+		return [
+			'a',
+			{
+				...mark.attrs,
+				href,
+				'data-md-href': mark.attrs.href,
+				rel: 'noopener noreferrer nofollow',
+			},
+			0,
+		]
 	},
 
 	addInputRules() {
@@ -87,15 +90,14 @@ const Link = TipTapLink.extend({
 		const plugins = this.parent()
 			// remove upstream link click handle plugin
 			.filter(({ key }) => {
-				return !key.startsWith('handleClickLink') && !key.startsWith('textHandleClickLink')
+				return (
+					!key.startsWith('handleClickLink') &&
+					!key.startsWith('textHandleClickLink')
+				)
 			})
 
 		// Custom click handler plugins
-		return [
-			...plugins,
-			linkClicking(),
-		]
-
+		return [...plugins, linkClicking()]
 	},
 })
 

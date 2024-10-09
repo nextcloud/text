@@ -4,13 +4,15 @@
 -->
 
 <template>
-	<div id="editor-container"
+	<div
+		id="editor-container"
 		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
 		tabindex="-1"
 		@keydown.stop="onKeyDown">
-		<DocumentStatus v-if="displayedStatus"
+		<DocumentStatus
+			v-if="displayedStatus"
 			:idle="idle"
 			:lock="lock"
 			:is-resolving-conflict="isResolvingConflict"
@@ -19,7 +21,8 @@
 			@reconnect="reconnect" />
 
 		<SkeletonLoading v-if="showLoadingSkeleton" />
-		<Wrapper v-if="displayed"
+		<Wrapper
+			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
@@ -30,7 +33,8 @@
 				<div v-if="readOnly" class="text-editor--readonly-bar">
 					<slot name="readonlyBar">
 						<ReadonlyBar>
-							<Status :document="document"
+							<Status
+								:document="document"
 								:dirty="dirty"
 								:sessions="filteredSessions"
 								:sync-error="syncError"
@@ -40,11 +44,13 @@
 				</div>
 				<!-- Rich Menu -->
 				<template v-else>
-					<MenuBar v-if="renderMenus"
+					<MenuBar
+						v-if="renderMenus"
 						ref="menubar"
 						:is-hidden="hideMenu"
 						:loaded.sync="menubarLoaded">
-						<Status :document="document"
+						<Status
+							:document="document"
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
@@ -53,15 +59,16 @@
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
 				</template>
-				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper" />
+				<ContentContainer v-show="contentLoaded" ref="contentWrapper" />
 			</MainContainer>
-			<Reader v-if="isResolvingConflict"
+			<Reader
+				v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
 		</Wrapper>
 		<Assistant v-if="hasEditor" />
-		<Translate :show="translateModal"
+		<Translate
+			:show="translateModal"
 			:content="translateContent"
 			@insert-content="translateInsert"
 			@replace-content="translateReplace"
@@ -93,12 +100,20 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState, applyDocumentState, getUpdateMessage } from '../helpers/yjs.js'
+import {
+	getDocumentState,
+	applyDocumentState,
+	getUpdateMessage,
+} from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
-import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
+import {
+	createEditor,
+	serializePlainText,
+	loadSyntaxHighlight,
+} from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
 
@@ -125,15 +140,12 @@ export default {
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
+		Reader: () => import(/* webpackChunkName: "editor" */ './Reader.vue'),
 		Status,
 		Assistant,
 		Translate,
 	},
-	mixins: [
-		isMobile,
-		setContent,
-	],
+	mixins: [isMobile, setContent],
 
 	provide() {
 		const val = {}
@@ -223,7 +235,7 @@ export default {
 	setup() {
 		const el = ref(null)
 		const { width } = useElementSize(el)
-		watch(width, value => {
+		watch(width, (value) => {
 			const maxWidth = Math.floor(value) - 36
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
@@ -264,7 +276,9 @@ export default {
 			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -273,10 +287,15 @@ export default {
 			return this.isDirectEditing || isPublicShare()
 		},
 		isRichEditor() {
-			return loadState('text', 'rich_editing_enabled', true) && this.mime === 'text/markdown'
+			return (
+				loadState('text', 'rich_editing_enabled', true) &&
+				this.mime === 'text/markdown'
+			)
 		},
 		fileExtension() {
-			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
+			return this.relativePath
+				? this.relativePath.split('/').pop().split('.').pop()
+				: 'txt'
 		},
 		currentDirectory() {
 			return this.relativePath
@@ -293,14 +312,15 @@ export default {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
 		},
 		renderRichEditorMenus() {
-			return this.contentLoaded
-				&& this.isRichEditor
-				&& !this.syncError
-				&& !this.readOnly
+			return (
+				this.contentLoaded &&
+				this.isRichEditor &&
+				!this.syncError &&
+				!this.readOnly
+			)
 		},
 		renderMenus() {
-			return this.contentLoaded
-				&& !this.syncError
+			return this.contentLoaded && !this.syncError
 		},
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
@@ -323,7 +343,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.active && (this.hasDocumentParameters)) {
+		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
 		}
 		if (!this.richWorkspace) {
@@ -370,7 +390,9 @@ export default {
 				this.emit('error', 'No valid file provided')
 				return
 			}
-			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
+			const guestName = localStorage.getItem('nick')
+				? localStorage.getItem('nick')
+				: ''
 
 			this.$syncService = new SyncService({
 				guestName,
@@ -379,8 +401,12 @@ export default {
 				baseVersionEtag: this.$baseVersionEtag,
 				forceRecreate: this.forceRecreate,
 				serialize: this.isRichEditor
-					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
-					: (content) => serializePlainText(content ?? this.$editor.state.doc),
+					? (content) =>
+							createMarkdownSerializer(this.$editor.schema).serialize(
+								content ?? this.$editor.state.doc,
+							)
+					: (content) =>
+							serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
@@ -443,14 +469,19 @@ export default {
 
 			// Make sure we get our own session updated
 			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
+			const currentUpdatedSession = this.sessions.find(
+				(session) => session.id === this.currentSession.id,
+			)
 			set(this, 'currentSession', currentUpdatedSession)
 
 			const currentSessionIds = this.sessions.map((session) => session.userId)
 			const currentGuestIds = this.sessions.map((session) => session.guestId)
 
-			const removedSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
+			const removedSessions = Object.keys(this.filteredSessions).filter(
+				(sessionId) =>
+					!currentSessionIds.includes(sessionId) &&
+					!currentGuestIds.includes(sessionId),
+			)
 
 			for (const index in removedSessions) {
 				Vue.delete(this.filteredSessions, removedSessions[index])
@@ -460,8 +491,15 @@ export default {
 				const sessionKey = session.displayName ? session.userId : session.id
 				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant
-					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
-						set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
+					if (
+						this.filteredSessions[sessionKey].lastContact <
+						session.lastContact
+					) {
+						set(
+							this.filteredSessions[sessionKey],
+							'lastContact',
+							session.lastContact,
+						)
 					}
 				} else {
 					set(this.filteredSessions, sessionKey, session)
@@ -499,65 +537,72 @@ export default {
 					this.$queue.push(updateMessage)
 				}
 			} else {
-				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
+				this.setInitialYjsState(documentSource, {
+					isRichEditor: this.isRichEditor,
+				})
 			}
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
-			const language = extensionHighlight[this.fileExtension] || this.fileExtension;
+			const language =
+				extensionHighlight[this.fileExtension] || this.fileExtension
 
-			(this.isRichEditor ? Promise.resolve() : loadSyntaxHighlight(language))
-				.then(() => {
-					const session = this.currentSession
-					if (!this.$editor) {
-						this.$editor = createEditor({
-							language,
-							relativePath: this.relativePath,
-							session,
-							onCreate: ({ editor }) => {
-								this.$syncService.startSync()
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('create:content', {
-									markdown: proseMirrorMarkdown,
-								})
-							},
-							onUpdate: ({ editor }) => {
-								// this.debugContent(editor)
-								const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
-								this.emit('update:content', {
-									markdown: proseMirrorMarkdown,
-								})
-							},
-							extensions: [
-								Autofocus.configure({
-									fileId: this.fileId,
-								}),
-								Collaboration.configure({
-									document: this.$ydoc,
-								}),
-								CollaborationCursor.configure({
-									provider: this.$providers[0],
-									user: {
-										name: session?.userId
-											? session.displayName
-											: (session?.guestName || t('text', 'Guest')),
-										color: session?.color,
-										clientId: this.$ydoc.clientID,
-									},
-								}),
-							],
-							enableRichEditing: this.isRichEditor,
-							isEmbedded: this.isEmbedded,
-						})
-						this.hasEditor = true
-						this.listenEditorEvents()
-					} else {
-						// $editor already existed. So this is a reconnect.
-						this.$syncService.startSync()
-					}
-
-				})
-
+			;(this.isRichEditor
+				? Promise.resolve()
+				: loadSyntaxHighlight(language)
+			).then(() => {
+				const session = this.currentSession
+				if (!this.$editor) {
+					this.$editor = createEditor({
+						language,
+						relativePath: this.relativePath,
+						session,
+						onCreate: ({ editor }) => {
+							this.$syncService.startSync()
+							const proseMirrorMarkdown = this.$syncService.serialize(
+								editor.state.doc,
+							)
+							this.emit('create:content', {
+								markdown: proseMirrorMarkdown,
+							})
+						},
+						onUpdate: ({ editor }) => {
+							// this.debugContent(editor)
+							const proseMirrorMarkdown = this.$syncService.serialize(
+								editor.state.doc,
+							)
+							this.emit('update:content', {
+								markdown: proseMirrorMarkdown,
+							})
+						},
+						extensions: [
+							Autofocus.configure({
+								fileId: this.fileId,
+							}),
+							Collaboration.configure({
+								document: this.$ydoc,
+							}),
+							CollaborationCursor.configure({
+								provider: this.$providers[0],
+								user: {
+									name: session?.userId
+										? session.displayName
+										: session?.guestName || t('text', 'Guest'),
+									color: session?.color,
+									clientId: this.$ydoc.clientID,
+								},
+							}),
+						],
+						enableRichEditing: this.isRichEditor,
+						isEmbedded: this.isEmbedded,
+					})
+					this.hasEditor = true
+					this.listenEditorEvents()
+				} else {
+					// $editor already existed. So this is a reconnect.
+					this.$syncService.startSync()
+				}
+			})
 		},
 
 		onChange({ document, sessions }) {
@@ -572,7 +617,10 @@ export default {
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0 || !this.$providers[0].wsconnected || this.$syncService.pushError > 0
+			this.hasConnectionIssue =
+				this.$syncService.backend.fetcher === 0 ||
+				!this.$providers[0].wsconnected ||
+				this.$syncService.pushError > 0
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
@@ -592,7 +640,11 @@ export default {
 				}
 			}
 
-			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
+			if (
+				type === ERROR_TYPE.SAVE_COLLISSION &&
+				(!this.syncError ||
+					this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+			) {
 				this.contentLoaded = true
 				this.syncError = {
 					type,
@@ -628,8 +680,9 @@ export default {
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes
-				if (this.$editor
-					&& (this.$editor.can().undo() || this.$editor.can().redo())
+				if (
+					this.$editor &&
+					(this.$editor.can().undo() || this.$editor.can().redo())
 				) {
 					this.dirty = state.dirty
 					if (this.dirty) {
@@ -680,7 +733,7 @@ export default {
 		async disconnect() {
 			await this.$syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach(p => p?.destroy())
+			this.$providers.forEach((p) => p?.destroy())
 			this.$providers = []
 			this.$syncService = null
 			// disallow editing while still showing the content
@@ -740,7 +793,9 @@ export default {
 			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
-			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
+			logger.debug(
+				'markdown, serialized from editor state by prosemirror-markdown',
+			)
 			console.debug(proseMirrorMarkdown)
 			logger.debug('HTML, serialized from markdown by markdown-it')
 			console.debug(markdownItHtml)
@@ -758,7 +813,13 @@ export default {
 				return
 			}
 
-			if (event.key === 'Tab' && !event.shiftKey && !event.ctrlKey && !event.metaKey && this.$editor.isActive('codeBlock')) {
+			if (
+				event.key === 'Tab' &&
+				!event.shiftKey &&
+				!event.ctrlKey &&
+				!event.metaKey &&
+				this.$editor.isActive('codeBlock')
+			) {
 				this.$editor.commands.insertContent('\t')
 				this.$editor.commands.focus()
 				event.preventDefault()
@@ -848,8 +909,10 @@ export default {
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
-	height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-	padding-top:3px;
+	height: var(
+		--default-clickable-area
+	); // important for mobile so that the buttons are always inside the container
+	padding-top: 3px;
 	padding-bottom: 3px;
 }
 
@@ -867,75 +930,79 @@ export default {
 </style>
 
 <style lang="scss">
-	@import './../css/variables';
-	@import './../css/style';
-	@import './../css/print';
+@import './../css/variables';
+@import './../css/style';
+@import './../css/print';
 
-	.text-editor__wrapper {
-		@import './../css/prosemirror';
+.text-editor__wrapper {
+	@import './../css/prosemirror';
 
-		// relative position for the alignment of the menububble
-		.text-editor__main {
-			&.draggedOver {
-				background-color: var(--color-primary-element-light);
-			}
-			.text-editor__content-wrapper {
-				position: relative;
-			}
+	// relative position for the alignment of the menububble
+	.text-editor__main {
+		&.draggedOver {
+			background-color: var(--color-primary-element-light);
+		}
+		.text-editor__content-wrapper {
+			position: relative;
 		}
 	}
+}
 
-	.text-editor__wrapper.has-conflicts > .editor {
-		width: 50%;
+.text-editor__wrapper.has-conflicts > .editor {
+	width: 50%;
+}
+
+.text-editor__wrapper.has-conflicts > .content-wrapper {
+	width: 50%;
+	#read-only-editor {
+		margin: 0px auto;
+		padding-top: 50px;
+		overflow: initial;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Give a remote user a caret */
+.collaboration-cursor__caret {
+	position: relative;
+	margin-left: -1px;
+	margin-right: -1px;
+	border-left: 1px solid #0d0d0d;
+	border-right: 1px solid #0d0d0d;
+	word-break: normal;
+	pointer-events: none;
+}
+
+/* Render the username above the caret */
+.collaboration-cursor__label {
+	position: absolute;
+	top: -1.4em;
+	left: -1px;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	user-select: none;
+	color: #0d0d0d;
+	padding: 0.1rem 0.3rem;
+	border-radius: 3px 3px 3px 0;
+	white-space: nowrap;
+	opacity: 0;
+
+	&.collaboration-cursor__label__active {
+		opacity: 1;
 	}
 
-	.text-editor__wrapper.has-conflicts > .content-wrapper {
-		width: 50%;
-		#read-only-editor {
-			margin: 0px auto;
-			padding-top: 50px;
-			overflow: initial;
-		}
+	&:not(.collaboration-cursor__label__active) {
+		transition: opacity 0.2s 5s;
 	}
-
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-	}
-
-	/* Give a remote user a caret */
-	.collaboration-cursor__caret {
-		position: relative;
-		margin-left: -1px;
-		margin-right: -1px;
-		border-left: 1px solid #0D0D0D;
-		border-right: 1px solid #0D0D0D;
-		word-break: normal;
-		pointer-events: none;
-	}
-
-	/* Render the username above the caret */
-	.collaboration-cursor__label {
-		position: absolute;
-		top: -1.4em;
-		left: -1px;
-		font-size: 12px;
-		font-style: normal;
-		font-weight: 600;
-		line-height: normal;
-		user-select: none;
-		color: #0D0D0D;
-		padding: 0.1rem 0.3rem;
-		border-radius: 3px 3px 3px 0;
-		white-space: nowrap;
-		opacity: 0;
-
-		&.collaboration-cursor__label__active {
-			opacity: 1;
-		}
-
-		&:not(.collaboration-cursor__label__active) {
-			transition: opacity 0.2s 5s;
-		}
-	}
+}
 </style>

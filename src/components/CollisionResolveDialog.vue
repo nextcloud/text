@@ -4,11 +4,20 @@
 -->
 
 <template>
-	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<NcButton :disabled="clicked" data-cy="resolveThisVersion" @click="resolveThisVersion">
+	<div
+		id="resolve-conflicts"
+		class="collision-resolve-dialog"
+		:class="{ 'icon-loading': clicked }">
+		<NcButton
+			:disabled="clicked"
+			data-cy="resolveThisVersion"
+			@click="resolveThisVersion">
 			{{ t('text', 'Use current version') }}
 		</NcButton>
-		<NcButton :disabled="clicked" data-cy="resolveServerVersion" @click="resolveServerVersion">
+		<NcButton
+			:disabled="clicked"
+			data-cy="resolveServerVersion"
+			@click="resolveServerVersion">
 			{{ t('text', 'Use the saved version') }}
 		</NcButton>
 	</div>
@@ -27,12 +36,7 @@ export default {
 	components: {
 		NcButton,
 	},
-	mixins: [
-		useEditorMixin,
-		useIsRichEditorMixin,
-		setContent,
-		useSyncServiceMixin,
-	],
+	mixins: [useEditorMixin, useIsRichEditorMixin, setContent, useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -62,14 +66,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	#resolve-conflicts {
-		display: flex;
-		width: 100%;
-		margin: auto;
-		padding: 20px 0;
+#resolve-conflicts {
+	display: flex;
+	width: 100%;
+	margin: auto;
+	padding: 20px 0;
 
-		button {
-			margin: auto;
-		}
+	button {
+		margin: auto;
 	}
+}
 </style>

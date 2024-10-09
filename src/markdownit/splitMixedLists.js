@@ -7,7 +7,7 @@
  * @param {import('markdown-it')} md Markdown object
  */
 export default function splitMixedLists(md) {
-	md.core.ruler.after('task-lists', 'split-mixed-task-lists', state => {
+	md.core.ruler.after('task-lists', 'split-mixed-task-lists', (state) => {
 		const tokens = state.tokens
 
 		for (let i = 0; i < tokens.length; i++) {
@@ -23,9 +23,11 @@ export default function splitMixedLists(md) {
 					token.attrs = null
 				}
 			}
-			const splitBefore = findChildOf(tokens, i, child => {
-				return child.nesting === 1
-					&& includesClass(child, 'task-list-item') !== startsWithTask
+			const splitBefore = findChildOf(tokens, i, (child) => {
+				return (
+					child.nesting === 1 &&
+					includesClass(child, 'task-list-item') !== startsWithTask
+				)
 			})
 			if (splitBefore > i) {
 				splitListAt(tokens, splitBefore, state.Token)
@@ -71,7 +73,7 @@ function findChildOf(tokens, parentIndex, predicate) {
 		if (token.level < searchLevel) {
 			return -1
 		}
-		if ((token.level === searchLevel) && predicate(tokens[i])) {
+		if (token.level === searchLevel && predicate(tokens[i])) {
 			return i
 		}
 	}

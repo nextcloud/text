@@ -12,7 +12,7 @@ export default function keepSyntax(md) {
 	// Extracting named groups as positive lookbehind patterns are not supported by Safari
 	const escaped = /(\n(?<linestart>[#\-*+>])|(?<special>[`*\\~[\]]+))/
 
-	md.core.ruler.before('text_join', 'tag-markdown-syntax', state => {
+	md.core.ruler.before('text_join', 'tag-markdown-syntax', (state) => {
 		const open = new state.Token('keep_md_open', 'span', 1)
 		open.attrSet('class', 'keep-md')
 		const close = new state.Token('keep_md_close', 'span', -1)
@@ -26,15 +26,26 @@ export default function keepSyntax(md) {
 				if (token.type === 'text') {
 					const match = escaped.exec(token.content)
 					if (match) {
-						const index = match.groups.linestart ? match.index + 1 : match.index
-						const matchChars = match.groups.linestart ?? match.groups.special
+						const index = match.groups.linestart
+							? match.index + 1
+							: match.index
+						const matchChars =
+							match.groups.linestart ?? match.groups.special
 						const contentNext = index + matchChars.length
-						block.children.splice(j, 1,
-							Object.assign({}, token, { content: token.content.slice(0, index) }),
+						block.children.splice(
+							j,
+							1,
+							Object.assign({}, token, {
+								content: token.content.slice(0, index),
+							}),
 							Object.assign({}, open),
-							Object.assign({}, token, { content: token.content.slice(index, contentNext) }),
+							Object.assign({}, token, {
+								content: token.content.slice(index, contentNext),
+							}),
 							Object.assign({}, close),
-							Object.assign({}, token, { content: token.content.slice(contentNext) }),
+							Object.assign({}, token, {
+								content: token.content.slice(contentNext),
+							}),
 						)
 						j += 3
 					}

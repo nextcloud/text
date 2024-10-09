@@ -26,18 +26,27 @@ export default function searchDecorations() {
 				const oldSearch = searchQueryPluginKey.getState(oldState)
 				const newSearch = searchQueryPluginKey.getState(newState)
 
-				const queryChanged = (newSearch.query !== oldSearch.query)
-				const indexChanged = (newSearch.index !== oldSearch.index)
-				const matchAllChanged = (newSearch.matchAll !== oldSearch.matchAll)
+				const queryChanged = newSearch.query !== oldSearch.query
+				const indexChanged = newSearch.index !== oldSearch.index
+				const matchAllChanged = newSearch.matchAll !== oldSearch.matchAll
 
-				if (tr.docChanged || queryChanged || indexChanged || matchAllChanged) {
-					const { results, total, index } = runSearch(tr.doc, newSearch.query, {
-						matchAll: newSearch.matchAll,
-						index: newSearch.index,
-					})
+				if (
+					tr.docChanged ||
+					queryChanged ||
+					indexChanged ||
+					matchAllChanged
+				) {
+					const { results, total, index } = runSearch(
+						tr.doc,
+						newSearch.query,
+						{
+							matchAll: newSearch.matchAll,
+							index: newSearch.index,
+						},
+					)
 
 					emit('text:editor:search-results', {
-						totalMatches: (newSearch.query === '' ? null : total),
+						totalMatches: newSearch.query === '' ? null : total,
 						matchIndex: index,
 					})
 
@@ -151,7 +160,7 @@ function normalizeIndex(index, length) {
 	}
 
 	if (index < 0) {
-		return (index % length + length) % length
+		return ((index % length) + length) % length
 	} else {
 		return index % length
 	}

@@ -7,7 +7,7 @@ import container from 'markdown-it-container'
 
 export const typesAvailable = ['info', 'warn', 'error', 'success']
 
-const buildRender = type => (tokens, idx, options, env, slf) => {
+const buildRender = (type) => (tokens, idx, options, env, slf) => {
 	const tag = tokens[idx]
 
 	// add attributes to the opening tag
@@ -24,7 +24,7 @@ const buildRender = type => (tokens, idx, options, env, slf) => {
  */
 export default (md) => {
 	// create a custom container to each callout type
-	typesAvailable.forEach(type => {
+	typesAvailable.forEach((type) => {
 		md.use(container, type, {
 			render: buildRender(type),
 		})

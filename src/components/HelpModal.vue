@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcDialog size="normal"
+	<NcDialog
+		size="normal"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting and shortcuts')"
 		:close-on-click-outside="true"
@@ -12,7 +13,12 @@
 		<h2>{{ t('text', 'Formatting and shortcuts') }}</h2>
 		<p>{{ t('text', 'Speed up your writing with simple shortcuts.') }}</p>
 		<p v-if="!isMobileCached">
-			{{ t('text', 'Just type the Markdown syntax or use keyboard shortcuts from below.') }}
+			{{
+				t(
+					'text',
+					'Just type the Markdown syntax or use keyboard shortcuts from below.',
+				)
+			}}
 		</p>
 		<p v-else>
 			{{ t('text', 'Just type the Markdown syntax from below.') }}
@@ -51,7 +57,9 @@
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Bold') }}</td>
-					<td><code>**{{ t('text', 'Bold text') }}**</code></td>
+					<td>
+						<code>**{{ t('text', 'Bold text') }}**</code>
+					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
@@ -60,7 +68,9 @@
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Italic') }}</td>
-					<td><code>*{{ t('text', 'Italicized text') }}*</code></td>
+					<td>
+						<code>*{{ t('text', 'Italicized text') }}*</code>
+					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
@@ -69,7 +79,9 @@
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Strikethrough') }}</td>
-					<td><code>~~{{ t('text', 'Mistaken text') }}~~</code></td>
+					<td>
+						<code>~~{{ t('text', 'Mistaken text') }}~~</code>
+					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
@@ -80,7 +92,9 @@
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Underline') }}</td>
-					<td><code>__{{ t('text', 'Underlined text') }}__</code></td>
+					<td>
+						<code>__{{ t('text', 'Underlined text') }}__</code>
+					</td>
 					<td v-if="!isMobileCached">
 						<kbd>{{ t('text', 'Ctrl') }}</kbd>
 						+
@@ -103,15 +117,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="noborder ellipsis">
-						…
-					</td>
-					<td class="noborder ellipsis">
-						…
-					</td>
-					<td v-if="!isMobileCached" class="ellipsis noborder">
-						…
-					</td>
+					<td class="noborder ellipsis">…</td>
+					<td class="noborder ellipsis">…</td>
+					<td v-if="!isMobileCached" class="ellipsis noborder">…</td>
 				</tr>
 				<tr>
 					<td class="noborder ellipsis_bottom">
@@ -293,74 +301,77 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	table {
-		margin-top: 24px;
-		border-collapse: collapse;
+table {
+	margin-top: 24px;
+	border-collapse: collapse;
 
-		tbody tr {
-			&:hover, &:focus, &:active {
-				background-color: transparent !important;
-			}
-		}
-
-		thead tr {
-			border: none;
-		}
-
-		th {
-			font-weight: bold;
-			padding: .75rem 1rem .75rem 0;
-			border-bottom: 2px solid var(--color-background-darker);
-		}
-
-		td {
-			padding: .75rem 1rem .75rem 0;
-			border-top: 1px solid var(--color-background-dark);
-			border-bottom: unset;
-
-			&.noborder {
-				border-top: unset;
-			}
-
-			&.ellipsis_top {
-				padding-bottom: 0;
-			}
-
-			&.ellipsis {
-				padding-top: 0;
-				padding-bottom: 0;
-			}
-
-			&.ellipsis_bottom {
-				padding-top: 0;
-			}
-		}
-
-		kbd {
-			font-size: smaller;
-		}
-
-		code {
-			padding: .2em .4em;
-			font-size: 90%;
-			background-color: var(--color-background-dark);
-			border-radius: 6px;
+	tbody tr {
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: transparent !important;
 		}
 	}
 
-	@import '../css/prosemirror';
+	thead tr {
+		border: none;
+	}
 
-	div.ProseMirror {
+	th {
+		font-weight: bold;
+		padding: 0.75rem 1rem 0.75rem 0;
+		border-bottom: 2px solid var(--color-background-darker);
+	}
+
+	td {
+		padding: 0.75rem 1rem 0.75rem 0;
+		border-top: 1px solid var(--color-background-dark);
+		border-bottom: unset;
+
+		&.noborder {
+			border-top: unset;
+		}
+
+		&.ellipsis_top {
+			padding-bottom: 0;
+		}
+
+		&.ellipsis {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		&.ellipsis_bottom {
+			padding-top: 0;
+		}
+	}
+
+	kbd {
+		font-size: smaller;
+	}
+
+	code {
+		padding: 0.2em 0.4em;
+		font-size: 90%;
+		background-color: var(--color-background-dark);
+		border-radius: 6px;
+	}
+}
+
+@import '../css/prosemirror';
+
+div.ProseMirror {
+	display: inline;
+	margin-top: unset;
+	position: unset;
+	padding: unset;
+	line-height: unset;
+
+	h1,
+	h6 {
 		display: inline;
-		margin-top: unset;
-		position: unset;
-		padding: unset;
-		line-height: unset;
-
-		h1, h6 {
-			display: inline;
-			padding: 0;
-			margin: 0;
-		}
+		padding: 0;
+		margin: 0;
 	}
+}
 </style>

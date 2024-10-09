@@ -2,6 +2,7 @@
   "name": "text",
   "description": "Collaborative document editing",
   "version": "5.0.0",
+  "prettier": "@nextcloud/prettier-config",
   "authors": [
     {
       "name": "Julius Härtl",
@@ -24,6 +25,8 @@
     "lint:fix": "tsc && eslint --ext .js,.vue src cypress --fix",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css css/*.scss",
     "stylelint:fix": "stylelint src/**/*.vue src/**/*.scss src/**/*.css css/*.scss --fix",
+    "prettier": "prettier --check src/**/*.js src/**/*.ts src/**/*.vue src/**/*.scss",
+    "prettier:fix": "prettier --write src/**/*.js src/**/*.ts src/**/*.vue src/**/*.scss",
     "test": "NODE_ENV=test jest",
     "test:cypress": "cd cypress && ./runLocal.sh run",
     "test:cypress:open": "cd cypress && ./runLocal.sh open",
@@ -122,6 +125,7 @@
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/cypress": "^1.0.0-beta.8",
     "@nextcloud/eslint-config": "^8.4.1",
+    "@nextcloud/prettier-config": "^1.1.0",
     "@nextcloud/stylelint-config": "^3.0.1",
     "@nextcloud/vite-config": "^1.4.2",
     "@types/markdown-it": "^13.0.9",
@@ -134,6 +138,7 @@
     "cypress-split": "^1.24.0",
     "cypress-visual-regression": "^5.2.2",
     "cypress-vite": "^1.5.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress": "^3.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",

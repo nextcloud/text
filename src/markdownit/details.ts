@@ -11,7 +11,12 @@ const DETAILS_START_REGEX = /^<details>\s*$/
 const DETAILS_END_REGEX = /^<\/details>\s*$/
 const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
 
-function parseDetails(state: StateBlock, startLine: number, endLine: number, silent: boolean) {
+function parseDetails(
+	state: StateBlock,
+	startLine: number,
+	endLine: number,
+	silent: boolean,
+) {
 	// let autoClosedBlock = false
 	let start = state.bMarks[startLine] + state.tShift[startLine]
 	let max = state.eMarks[startLine]
@@ -76,14 +81,14 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 	state.parentType = 'reference'
 
 	// This will prevent lazy continuations from ever going past our end marker
-	state.lineMax = nextLine;
+	state.lineMax = nextLine
 
 	// Push tokens to the state
 
 	let token = state.push('details_open', 'details', 1)
 	token.block = true
 	token.info = detailsSummary
-	token.map = [ startLine, nextLine ]
+	token.map = [startLine, nextLine]
 
 	token = state.push('details_summary', 'summary', 1)
 	token.block = false
@@ -100,7 +105,7 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 
 	token = state.push('details_summary', 'summary', -1)
 
-	state.md.block.tokenize(state, startLine + 2, nextLine);
+	state.md.block.tokenize(state, startLine + 2, nextLine)
 
 	token = state.push('details_close', 'details', -1)
 	token.block = true
@@ -117,6 +122,6 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
  */
 export default function details(md: MarkdownIt) {
 	md.block.ruler.before('fence', 'details', parseDetails, {
-		alt: [ 'paragraph', 'reference', 'blockquote', 'list' ],
+		alt: ['paragraph', 'reference', 'blockquote', 'list'],
 	})
 }

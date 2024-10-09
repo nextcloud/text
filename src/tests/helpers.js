@@ -16,12 +16,7 @@ import markdownit from '../markdownit'
 export function createCustomEditor({ content, extensions }) {
 	return new Editor({
 		content,
-		extensions: [
-			Document,
-			Paragraph,
-			Text,
-			...extensions,
-		]
+		extensions: [Document, Paragraph, Text, ...extensions],
 	})
 }
 
@@ -33,7 +28,7 @@ export function createCustomEditor({ content, extensions }) {
  */
 export function markdownThroughEditor(markdown) {
 	const tiptap = createEditor({
-		enableRichEditing: true
+		enableRichEditing: true,
 	})
 	tiptap.commands.setContent(markdownit.render(markdown))
 	const serializer = createMarkdownSerializer(tiptap.schema)
@@ -48,7 +43,7 @@ export function markdownThroughEditor(markdown) {
  */
 export function markdownThroughEditorHtml(html) {
 	const tiptap = createEditor({
-		enableRichEditing: true
+		enableRichEditing: true,
 	})
 	tiptap.commands.setContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)
@@ -63,7 +58,7 @@ export function markdownThroughEditorHtml(html) {
  */
 export function markdownFromPaste(html) {
 	const tiptap = createEditor({
-		enableRichEditing: true
+		enableRichEditing: true,
 	})
 	tiptap.commands.insertContent(html)
 	const serializer = createMarkdownSerializer(tiptap.schema)

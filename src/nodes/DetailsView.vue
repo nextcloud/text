@@ -4,14 +4,13 @@
  -->
 
 <template>
-	<NodeViewWrapper data-text-el="details"
-		class="details"
-		as="div">
+	<NodeViewWrapper data-text-el="details" class="details" as="div">
 		<NcButton type="tertiary" size="small">
 			<template #icon>
-				<TriangleSmallDownIcon :size="20"
+				<TriangleSmallDownIcon
+					:size="20"
 					class="button-open"
-					:class="{ 'open': open }"
+					:class="{ open: open }"
 					@click="toggleOpen" />
 			</template>
 		</NcButton>

@@ -12,7 +12,6 @@ const setAttachmentList = (val) => store.dispatch('text/setAttachmentList', val)
 const findAttachment = store.getters['text/findAttachment']
 
 export default class AttachmentResolver {
-
 	#session
 	#user
 	#shareToken
@@ -30,7 +29,11 @@ export default class AttachmentResolver {
 	}
 
 	async #updateAttachmentList() {
-		return setAttachmentList({ documentId: this.#documentId, session: this.#session, shareToken: this.#shareToken })
+		return setAttachmentList({
+			documentId: this.#documentId,
+			session: this.#session,
+			shareToken: this.#shareToken,
+		})
 	}
 
 	/*
@@ -44,7 +47,9 @@ export default class AttachmentResolver {
 		// Native attachment
 		const directoryRegexp = /^\.attachments\.\d+\//
 		if (src.match(directoryRegexp)) {
-			const imageFileName = decodeURIComponent(src.replace(directoryRegexp, '').split('?')[0])
+			const imageFileName = decodeURIComponent(
+				src.replace(directoryRegexp, '').split('?')[0],
+			)
 
 			// Wait until attachment list got fetched (initialized by constructor)
 			await this.#initAttachmentListPromise
@@ -59,7 +64,6 @@ export default class AttachmentResolver {
 			if (attachment) {
 				return attachment
 			}
-
 		}
 
 		// Direct URLs
@@ -88,7 +92,10 @@ export default class AttachmentResolver {
 	#davUrl(src) {
 		if (this.#user) {
 			const uid = this.#user.uid
-			const encoded = this.#filePath(src).split('/').map(encodeURIComponent).join('/')
+			const encoded = this.#filePath(src)
+				.split('/')
+				.map(encodeURIComponent)
+				.join('/')
 			return generateRemoteUrl(`dav/files/${uid}${encoded}`)
 		}
 
@@ -113,14 +120,10 @@ export default class AttachmentResolver {
 	}
 
 	#filePath(src) {
-		const f = [
-			this.#currentDirectory,
-			this.#relativePath(src),
-		].join('/')
+		const f = [this.#currentDirectory, this.#relativePath(src)].join('/')
 
 		return pathNormalize(f)
 	}
-
 }
 
 /**
@@ -130,7 +133,9 @@ export default class AttachmentResolver {
  * @param {string} src - the url to check
  */
 function isDirectUrl(src) {
-	return src.startsWith('http://')
-		|| src.startsWith('https://')
-		|| src.startsWith('data:')
+	return (
+		src.startsWith('http://') ||
+		src.startsWith('https://') ||
+		src.startsWith('data:')
+	)
 }

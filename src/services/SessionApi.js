@@ -6,15 +6,15 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 
 export class ConnectionClosedError extends Error {
-
-	constructor(message = 'Close has already been called on the connection', ...rest) {
+	constructor(
+		message = 'Close has already been called on the connection',
+		...rest
+	) {
 		super(message, ...rest)
 	}
-
 }
 
 class SessionApi {
-
 	#options
 
 	constructor(options = {}) {
@@ -22,25 +22,25 @@ class SessionApi {
 	}
 
 	open({ fileId, baseVersionEtag }) {
-		return axios.put(this.#url(`session/${fileId}/create`), {
-			fileId,
-			baseVersionEtag,
-			filePath: this.#options.filePath,
-			token: this.#options.shareToken,
-			guestName: this.#options.guestName,
-			forceRecreate: this.#options.forceRecreate,
-		}).then(response => new Connection(response, this.#options))
+		return axios
+			.put(this.#url(`session/${fileId}/create`), {
+				fileId,
+				baseVersionEtag,
+				filePath: this.#options.filePath,
+				token: this.#options.shareToken,
+				guestName: this.#options.guestName,
+				forceRecreate: this.#options.forceRecreate,
+			})
+			.then((response) => new Connection(response, this.#options))
 	}
 
 	#url(endpoint) {
 		const isPublic = !!this.#options.shareToken
 		return _endpointUrl(endpoint, isPublic)
 	}
-
 }
 
 export class Connection {
-
 	#content
 	#closed
 	#documentState
@@ -51,7 +51,8 @@ export class Connection {
 	#options
 
 	constructor(response, options) {
-		const { document, session, lock, readOnly, content, documentState } = response.data
+		const { document, session, lock, readOnly, content, documentState } =
+			response.data
 		this.#document = document
 		this.#session = session
 		this.#lock = lock
@@ -143,11 +144,16 @@ export class Connection {
 	uploadAttachment(file) {
 		const formData = new FormData()
 		formData.append('file', file)
-		const url = _endpointUrl('attachment/upload')
-			+ '?documentId=' + encodeURIComponent(this.#document.id)
-			+ '&sessionId=' + encodeURIComponent(this.#session.id)
-			+ '&sessionToken=' + encodeURIComponent(this.#session.token)
-			+ '&token=' + encodeURIComponent(this.#options.shareToken || '')
+		const url =
+			_endpointUrl('attachment/upload') +
+			'?documentId=' +
+			encodeURIComponent(this.#document.id) +
+			'&sessionId=' +
+			encodeURIComponent(this.#session.id) +
+			'&sessionToken=' +
+			encodeURIComponent(this.#session.token) +
+			'&token=' +
+			encodeURIComponent(this.#options.shareToken || '')
 		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
@@ -189,7 +195,6 @@ export class Connection {
 		const isPublic = !!this.#defaultParams.token
 		return _endpointUrl(endpoint, isPublic)
 	}
-
 }
 
 /**

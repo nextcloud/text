@@ -7,6 +7,15 @@ module.exports = {
 	root: true,
 	extends: [
 		'@nextcloud/eslint-config/typescript',
+		'prettier',
+	],
+	"overrides": [
+		{
+			"files": ["**/*.vue"],
+			"rules": {
+				"vue/first-attribute-linebreak": "off"
+			}
+		}
 	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['off'],

@@ -8,7 +8,8 @@
 		<div class="code-block-header">
 			<div class="view-switch">
 				<NcActions :aria-label="t('text', 'Copy code block')">
-					<NcActionButton v-if="hasCode"
+					<NcActionButton
+						v-if="hasCode"
 						data-cy="copy-code"
 						:aria-label="t('text', 'Copy code')"
 						:close-after-click="false"
@@ -21,10 +22,12 @@
 					</NcActionButton>
 				</NcActions>
 
-				<NcActions v-if="isEditable"
+				<NcActions
+					v-if="isEditable"
 					data-cy="code-action-group"
 					:aria-label="t('text', 'Code block options')">
-					<NcActionInput :label="t('text', 'Code block language')"
+					<NcActionInput
+						:label="t('text', 'Code block language')"
 						:value="type"
 						:show-trailing-button="false"
 						:placeholder="t('text', 'e.g. php, javascript, json…')"
@@ -36,19 +39,28 @@
 
 					<NcActionSeparator v-if="supportPreview" />
 
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'code'">
+					<NcActionButton
+						v-if="supportPreview"
+						:close-after-click="true"
+						@click="viewMode = 'code'">
 						<template #icon>
 							<CodeBraces :size="20" />
 						</template>
 						{{ t('text', 'Source code') }}
 					</NcActionButton>
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'preview'">
+					<NcActionButton
+						v-if="supportPreview"
+						:close-after-click="true"
+						@click="viewMode = 'preview'">
 						<template #icon>
 							<Eye :size="20" />
 						</template>
 						{{ t('text', 'Diagram') }}
 					</NcActionButton>
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'side-by-side'">
+					<NcActionButton
+						v-if="supportPreview"
+						:close-after-click="true"
+						@click="viewMode = 'side-by-side'">
 						<template #icon>
 							<ViewSplitVertical :size="20" />
 						</template>
@@ -57,7 +69,10 @@
 
 					<NcActionSeparator v-if="supportPreview" />
 
-					<NcActionLink v-if="supportPreview" href="https://mermaid.js.org/intro/" target="_blank">
+					<NcActionLink
+						v-if="supportPreview"
+						href="https://mermaid.js.org/intro/"
+						target="_blank">
 						<template #icon>
 							<Help :size="20" />
 						</template>
@@ -66,11 +81,14 @@
 				</NcActions>
 			</div>
 		</div>
-		<div :class="{'split-view': showCode && showPreview }">
-			<pre v-show="showCode" class="split-view__code"><NodeViewContent spellcheck="false"
+		<div :class="{ 'split-view': showCode && showPreview }">
+			<pre
+				v-show="showCode"
+				class="split-view__code"><NodeViewContent spellcheck="false"
 				as="code"
 				:contenteditable="isEditable" /></pre>
-			<div v-show="showPreview"
+			<div
+				v-show="showPreview"
 				ref="preview"
 				class="split-view__preview"
 				:contenteditable="false" />
@@ -82,7 +100,14 @@
 <script>
 import debounce from 'debounce'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcActionInput, NcActionLink, NcActionSeparator, NcLoadingIcon } from '@nextcloud/vue'
+import {
+	NcActions,
+	NcActionButton,
+	NcActionInput,
+	NcActionLink,
+	NcActionSeparator,
+	NcLoadingIcon,
+} from '@nextcloud/vue'
 import { v4 as uuidv4 } from 'uuid'
 
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
@@ -149,10 +174,17 @@ export default {
 			return ['mermaid'].includes(this.type)
 		},
 		showCode() {
-			return !this.supportPreview || this.viewMode === 'code' || this.viewMode === 'side-by-side'
+			return (
+				!this.supportPreview ||
+				this.viewMode === 'code' ||
+				this.viewMode === 'side-by-side'
+			)
 		},
 		showPreview() {
-			return this.supportPreview && (this.viewMode === 'preview' || this.viewMode === 'side-by-side')
+			return (
+				this.supportPreview &&
+				(this.viewMode === 'preview' || this.viewMode === 'side-by-side')
+			)
 		},
 		defaultMode() {
 			if (this.isEditable) {

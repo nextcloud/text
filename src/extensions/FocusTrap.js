@@ -11,9 +11,10 @@ const toggleFocusTrap = ({ editor }) => {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
-	const possibleEditorTabCommand = editor.can().sinkListItem('listItem')
-		|| editor.can().goToNextCell()
-		|| editor.can().goToPreviousCell()
+	const possibleEditorTabCommand =
+		editor.can().sinkListItem('listItem') ||
+		editor.can().goToNextCell() ||
+		editor.can().goToPreviousCell()
 
 	if (possibleEditorTabCommand) {
 		activeTrap?.pause()
