@@ -83,9 +83,9 @@ class Notifier implements INotifier {
 					],
 					'node' => [
 						'type' => 'file',
-						'id' => $node->getId(),
+						'id' => (string)$node->getId(),
 						'name' => $node->getName(),
-						'path' => $userFolder->getRelativePath($node->getPath()),
+						'path' => $userFolder->getRelativePath($node->getPath()) ?? '',
 						'link' => $fileLink,
 					],
 				]);
