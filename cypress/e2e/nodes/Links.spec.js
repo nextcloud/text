@@ -5,7 +5,7 @@ const fileName = 'empty.md'
 
 describe('test link marks', function() {
 	before(function() {
-		initUserAndFiles(user)
+		cy.createUser(user)
 	})
 
 	beforeEach(function() {
@@ -49,8 +49,7 @@ describe('test link marks', function() {
 
 					const link = `${Cypress.env('baseUrl')}/apps/files/file-name?fileId=${id}`
 					cy.clearContent()
-					cy.getContent()
-						.type(`${link}{enter}`)
+					cy.insertLine(link)
 
 					cy.getContent()
 						.find(`a[href*="${Cypress.env('baseUrl')}"]`)
@@ -84,16 +83,14 @@ describe('test link marks', function() {
 
 		it('without protocol', () => {
 			cy.clearContent()
-			cy.getContent()
-				.type('google.com{enter}')
+			cy.insertLine('google.com')
 			cy.getContent()
 				.find('a[href*="google.com"]')
 				.should('not.exist')
 		})
 
 		it('with protocol but without space', () => {
-			cy.getContent()
-				.type('https://nextcloud.com')
+			cy.getContent().type('https://nextcloud.com')
 
 			cy.getContent()
 				.find('a[href*="nextcloud.com"]')

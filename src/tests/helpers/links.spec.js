@@ -15,7 +15,7 @@ global._oc_webroot = ''
 describe('Preparing href attributes for the DOM', () => {
 
 	test('leave empty hrefs alone', () => {
-		expect(domHref({attrs: {href: ''}})).toBe('')
+		expect(linkTo('')).toBe('')
 	})
 
 	test('leave undefined hrefs alone', () => {
@@ -23,13 +23,11 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('full url', () => {
-		expect(domHref({attrs: {href: 'https://otherdomain.tld'}}))
-			.toBe('https://otherdomain.tld')
+		expect(linkTo('https://otherdomain.tld')).toBe('https://otherdomain.tld')
 	})
 
-	test('other protocol', () => {
-		expect(domHref({attrs: {href: 'mailTo:test@mail.example'}}))
-			.toBe('mailTo:test@mail.example')
+	test('other protocols', () => {
+		expect(linkTo('mailto:name@otherdomain.tld')).toBe('mailto:name@otherdomain.tld')
 	})
 
 	test('relative link with fileid', () => {
