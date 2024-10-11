@@ -92,6 +92,7 @@ OC.L10N.register(
     "Select language" : "Pasirinkite kalbą",
     "to" : "iki",
     "Replace" : "Pakeisti",
+    "Detect language" : "Aptikti kalbą",
     "No emoji found" : "Nerasta jokių šypsenėlių",
     "Edit" : "Taisyti",
     "Source code" : "Pradinis kodas",
