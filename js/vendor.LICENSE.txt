@@ -17,15 +17,15 @@ version: 11.0.3
 license: Apache-2.0
 
 @floating-ui/core
-version: 0.3.1
+version: 1.6.8
 license: MIT
 
 @floating-ui/dom
-version: 0.1.10
+version: 1.6.11
 license: MIT
 
 @floating-ui/utils
-version: 0.2.7
+version: 0.2.8
 license: MIT
 
 @hedgedoc/markdown-it-task-lists
@@ -329,7 +329,7 @@ version: 3.37.0
 license: MIT
 
 cose-base
-version: 1.0.3
+version: 2.2.0
 license: MIT
 
 crypt
@@ -497,7 +497,7 @@ version: 3.0.0
 license: MIT
 
 layout-base
-version: 1.0.2
+version: 2.0.1
 license: MIT
 
 lib0
