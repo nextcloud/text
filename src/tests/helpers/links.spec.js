@@ -22,20 +22,22 @@ global.OC = {
 
 global._oc_webroot = ''
 
+let app
 /**
  * Mock `@nextcloud/initial-state` as if we were using the given app.
- * @param {string} app - app to return in loadState
+ * @param {string} value - app to return in loadState
  */
-function setApp(app) {
-	vi.mock('@nextcloud/initial-state', async (importOriginal) => {
-		const mod = await importOriginal()
-		return {
-			...mod,
-			// replace some exports
-			loadState: (_app, key) => app,
-		}
-	})
+function setApp(value) {
+	app = value
 }
+vi.mock('@nextcloud/initial-state', async (importOriginal) => {
+	const mod = await importOriginal()
+	return {
+		...mod,
+		// replace some exports
+		loadState: (_app, key) => app,
+	}
+})
 
 const linkTo = href => domHref({ attrs: { href } })
 
