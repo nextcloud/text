@@ -7,7 +7,8 @@ import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
 import Markdown from './../../extensions/Markdown.js'
 import { getExtensionField } from '@tiptap/core'
-import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
+import { markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('TaskItem extension', () => {
 	it('exposes toMarkdown function', () => {
@@ -16,9 +17,7 @@ describe('TaskItem extension', () => {
 	})
 
 	it('exposes the toMarkdown function in the prosemirror schema', () => {
-		const editor = createCustomEditor({
-			extensions: [Markdown, TaskList, TaskItem],
-		})
+		const editor = createCustomEditor('', [Markdown, TaskList, TaskItem])
 		const taskItem = editor.schema.nodes.taskItem
 		expect(taskItem.spec.toMarkdown).toBeDefined()
 	})

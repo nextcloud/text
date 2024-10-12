@@ -7,7 +7,11 @@ import Preview from './../../nodes/Preview.js'
 import Markdown from './../../extensions/Markdown.js'
 import Link from './../../marks/Link.js'
 import { getExtensionField } from '@tiptap/core'
-import { createCustomEditor, markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
+import {
+	markdownThroughEditor,
+	markdownThroughEditorHtml,
+} from '../testHelpers/markdown.js'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('Preview extension', () => {
 	it('exposes toMarkdown function', () => {
@@ -45,6 +49,4 @@ describe('Preview extension', () => {
 
 })
 
-const createEditorWithPreview = () => createCustomEditor({
-	extensions: [Markdown, Preview, Link],
-})
+const createEditorWithPreview = () => createCustomEditor('', [Markdown, Preview, Link])

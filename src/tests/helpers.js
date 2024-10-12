@@ -4,32 +4,8 @@
  */
 
 import { createMarkdownSerializer } from '../extensions/Markdown.js'
-import { Editor } from '@tiptap/core'
-
-import { Document } from '@tiptap/extension-document'
-import { Text } from '@tiptap/extension-text'
-import Paragraph from '../nodes/Paragraph.js'
-
 import { createRichEditor } from '../EditorFactory.js'
 import markdownit from '../markdownit/index.js'
-
-/**
- *
- * @param {object} options for the editor
- * @param {string} options.content Content for the editor.
- * @param {Array} options.extensions Tip tap extensions
- */
-export function createCustomEditor({ content, extensions }) {
-	return new Editor({
-		content,
-		extensions: [
-			Document,
-			Paragraph,
-			Text,
-			...extensions,
-		],
-	})
-}
 
 /**
  * Ease markdown through TipTap editor and return serialized markdown

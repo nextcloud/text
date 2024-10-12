@@ -6,7 +6,7 @@
 import extractLinkParagraphs from '../../plugins/extractLinkParagraphs.js'
 import Link from '../../marks/Link.js'
 import Preview from '../../nodes/Preview.js'
-import { createCustomEditor } from '../helpers.js'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractLinkParagraphs', () => {
 	const link = '<a href="https://nextcloud.com">Link</a>'
@@ -103,9 +103,6 @@ describe('extractLinkParagraphs', () => {
 })
 
 const prepareDoc = (content) => {
-	const editor = createCustomEditor({
-		content,
-		extensions: [Link, Preview],
-	})
+	const editor = createCustomEditor(content, [Link, Preview])
 	return editor.state.doc
 }
