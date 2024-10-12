@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, it, vi, expect } from 'vitest'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
 describe('Init function', () => {
@@ -76,7 +77,7 @@ describe('Init function', () => {
 		const syncService = {
 			on: vi.fn(),
 			open: vi.fn(),
-			sendSteps: vi.fn().mockImplementation( async getData => {
+			sendSteps: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('error when sending in sync service')
 			}),
@@ -98,16 +99,16 @@ describe('Init function', () => {
 		const syncService = {
 			on: vi.fn(),
 			open: vi.fn(),
-			sendSteps: vi.fn().mockImplementation( async getData => {
+			sendSteps: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('error when sending in sync service')
 			}),
-			sendStepsNow: vi.fn().mockImplementation( async getData => {
+			sendStepsNow: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('sendStepsNow error when sending')
 			}),
 			off: vi.fn(),
-			close: vi.fn( async data => data ),
+			close: vi.fn(async data => data),
 		}
 		const queue = ['initial']
 		const data = { dummy: 'data' }

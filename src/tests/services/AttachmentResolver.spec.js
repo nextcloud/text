@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, it, expect, vi } from 'vitest'
 import AttachmentResolver from './../../services/AttachmentResolver.js'
 import axios from '@nextcloud/axios'
 

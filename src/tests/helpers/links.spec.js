@@ -4,8 +4,11 @@
  */
 
 import { domHref, parseHref } from '../../helpers/links.js'
-import { loadState } from '@nextcloud/initial-state'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
+
+// import loadState so we can mock it
+// eslint-disable-next-line no-unused-vars
+import { loadState } from '@nextcloud/initial-state'
 
 global.OCA = {
 	Viewer: {
@@ -19,11 +22,15 @@ global.OC = {
 
 global._oc_webroot = ''
 
+/**
+ * Mock `@nextcloud/initial-state` as if we were using the given app.
+ * @param {string} app - app to return in loadState
+ */
 function setApp(app) {
-	vi.mock('@nextcloud/initial-state',  async (importOriginal) => {
-		const mod = await importOriginal ()
+	vi.mock('@nextcloud/initial-state', async (importOriginal) => {
+		const mod = await importOriginal()
 		return {
-			...mod ,
+			...mod,
 			// replace some exports
 			loadState: (_app, key) => app,
 		}
@@ -135,7 +142,7 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 	})
 
 	test('default full URL link format is unchanged', () => {
-		expect(insertAndExtract({href: 'http://localhost:3000/f/123'}))
+		expect(insertAndExtract({ href: 'http://localhost:3000/f/123' }))
 			.toBe('http://localhost:3000/f/123')
 	})
 
