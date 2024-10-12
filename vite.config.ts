@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: Ferdinand Thiessen <opensource@fthiessen.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+/// <reference types="vitest/config" />
+
 import { createAppConfig } from '@nextcloud/vite-config'
 import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
