@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createMarkdownSerializer } from '../extensions/Markdown.js'
-import { createRichEditor } from '../EditorFactory.js'
-import markdownit from '../markdownit/index.js'
+import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { createRichEditor } from '../../EditorFactory.js'
+import markdownit from '../../markdownit/index.js'
 
 /**
  * Ease markdown through TipTap editor and return serialized markdown

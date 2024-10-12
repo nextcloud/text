@@ -14,7 +14,7 @@ import otherStructure from '../fixtures/tables/basic/table.structure.html'
 
 import handbook from '../fixtures/tables/handbook/handbook.html'
 import handbookOut from '../fixtures/tables/handbook/handbook.out.html'
-import { br, table, td, th, thead, tr, expectDocument } from '../builders.js'
+import { br, table, td, th, thead, tr, expectDocument } from '../testHelpers/builders.js'
 
 describe('Table', () => {
 	it('Markdown-IT renders tables', () => {

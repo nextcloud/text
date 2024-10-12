@@ -9,7 +9,7 @@ import {
 	markdownThroughEditor,
 	markdownThroughEditorHtml,
 	markdownFromPaste,
-} from './helpers.js'
+} from './testHelpers/markdown.js'
 import { createMarkdownSerializer } from '../extensions/Markdown.js'
 import { createRichEditor } from '../EditorFactory.js'
 

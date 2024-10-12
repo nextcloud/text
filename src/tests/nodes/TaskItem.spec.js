@@ -7,7 +7,7 @@ import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
 import Markdown from './../../extensions/Markdown.js'
 import { getExtensionField } from '@tiptap/core'
-import { markdownThroughEditor, markdownThroughEditorHtml } from '../helpers.js'
+import { markdownThroughEditor, markdownThroughEditorHtml } from '../testHelpers/markdown.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('TaskItem extension', () => {
