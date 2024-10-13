@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+const t = window.t
 const isMac = (navigator.userAgent.includes('Mac'))
 
 const MODIFIERS = {

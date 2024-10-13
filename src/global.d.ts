@@ -7,6 +7,9 @@
 
 declare global {
 	interface Window {
+		// Nextcloud Globals
+		t: typeof import('@nextcloud/l10n').t
+		n: typeof import('@nextcloud/l10n').n
 		OCA: Record<string, any>
 		OCP: Nextcloud.v29.OCP
 	}

@@ -42,11 +42,12 @@ const config = createAppConfig({
 			},
 		},
 		test: {
+			setupFiles: ['src/tests/setup.mjs'],
 			environment: 'jsdom',
 			globals: true,
 			server: {
 				deps: {
-					inline: ['@nextcloud/vue'],
+					inline: [/@nextcloud.*/],
 				}
 			},
 		},
