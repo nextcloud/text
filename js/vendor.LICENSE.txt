@@ -85,7 +85,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 3.1.0
+version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -557,7 +557,7 @@ version: 2.0.0
 license: MIT
 
 mermaid
-version: 11.2.1
+version: 11.3.0
 license: MIT
 
 mitt
