@@ -41,7 +41,7 @@ OC.L10N.register(
     "Close outline view" : "أغلق العرض التخطيطي outline view",
     "Outline" : "عرض تخطيطي outline",
     "Enter your name so other people can see who is editing" : "أدخل اسمك حتى يتمكن الأشخاص الآخرون من معرفة من يقوم بالتحرير",
-    "Edit guest name" : "عدّل اسم الضيف",
+    "Edit guest name" : "تعديل اسم الضيف",
     "Guest" : "ضيف",
     "Save guest name" : "حفظ اسم الضيف",
     "Uploading multiple attachments failed." : "تعذّر رفع مرفقات متعددة",
