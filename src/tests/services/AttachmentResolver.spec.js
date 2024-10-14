@@ -52,7 +52,7 @@ describe('Image resolver', () => {
 	const currentDirectory = '/parentDir'
 
 	it('is a class with one constructor argument', () => {
-		const resolver = new AttachmentResolver({ fileId })
+		const resolver = initAttachmentResolver({ fileId })
 		expect(resolver).toBeInstanceOf(AttachmentResolver)
 	})
 
@@ -92,7 +92,8 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ fileId, user, currentDirectory })
 		const attachment = await resolver.resolve(src)
 		expect(attachment.isImage).toBe(true)
-		expect(attachment.previewUrl).toBe('http://localhost/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
+		expect(attachment.previewUrl)
+			.toBe('http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
 	})
 
 })
