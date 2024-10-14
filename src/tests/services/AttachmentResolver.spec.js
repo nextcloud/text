@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, it, expect, vi } from 'vitest'
 import AttachmentResolver from './../../services/AttachmentResolver.js'
 import axios from '@nextcloud/axios'
 
@@ -32,7 +33,7 @@ const initAttachmentResolver = (args) => {
 		fullUrl: `http://nextcloud.local/apps/text/media?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
 		previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
 	}]
-	const axiosSpy = jest.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
+	const axiosSpy = vi.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
 	const resolver = new AttachmentResolver(args)
 	expect(axiosSpy).toHaveBeenCalled()
 	return resolver
@@ -51,7 +52,7 @@ describe('Image resolver', () => {
 	const currentDirectory = '/parentDir'
 
 	it('is a class with one constructor argument', () => {
-		const resolver = new AttachmentResolver({ fileId })
+		const resolver = initAttachmentResolver({ fileId })
 		expect(resolver).toBeInstanceOf(AttachmentResolver)
 	})
 
@@ -91,7 +92,8 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ fileId, user, currentDirectory })
 		const attachment = await resolver.resolve(src)
 		expect(attachment.isImage).toBe(true)
-		expect(attachment.previewUrl).toBe('http://localhost/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
+		expect(attachment.previewUrl)
+			.toBe('http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
 	})
 
 })

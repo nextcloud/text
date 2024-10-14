@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-// eslint-disable-next-line n/no-extraneous-import
-import { expect } from '@jest/globals'
+import { expect } from 'vitest'
 import { Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
-import { createRichEditor } from '../EditorFactory.js'
+import { createRichEditor } from '../../EditorFactory.js'
 
 /**
  * Get node builders from the default rich editor.

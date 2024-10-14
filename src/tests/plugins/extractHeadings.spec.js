@@ -5,7 +5,7 @@
 
 import extractHeadings from '../../plugins/extractHeadings.js'
 import Heading from '../../nodes/Heading.js'
-import { createCustomEditor } from '../helpers.js'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractHeadings', () => {
 
@@ -47,9 +47,6 @@ describe('extractHeadings', () => {
 })
 
 const prepareDoc = (content) => {
-	const editor = createCustomEditor({
-		content,
-		extensions: [Heading],
-	})
+	const editor = createCustomEditor(content, [Heading])
 	return editor.state.doc
 }

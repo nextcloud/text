@@ -4,7 +4,7 @@
  */
 
 import { runSearch, highlightResults } from '../../plugins/searchDecorations.js'
-import { createCustomEditor } from '../helpers.js'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('search plugin', () => {
 	it('finds no matches in empty document', () => {
@@ -93,11 +93,11 @@ describe('search plugin', () => {
 	})
 })
 
-const testSearch = (doc, query, expectedSearchResults) => {
-	const editor = createCustomEditor({ content: doc, extensions: [] })
-	const searched = runSearch(editor.state.doc, query)
+const testSearch = (content, query, expectedSearchResults) => {
+	const doc = createCustomEditor(content).state.doc
+	const searched = runSearch(doc, query)
 	expect(searched)
 		.toHaveProperty('results', expectedSearchResults.results)
-	expect(highlightResults(editor.state.doc, searched.results))
-		.toEqual(highlightResults(editor.state.doc, expectedSearchResults.results))
+	expect(highlightResults(doc, searched.results))
+		.toEqual(highlightResults(doc, expectedSearchResults.results))
 }

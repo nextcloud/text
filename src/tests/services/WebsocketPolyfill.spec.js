@@ -3,19 +3,27 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { describe, it, vi, expect } from 'vitest'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
 describe('Init function', () => {
+	const mockSyncService = (mocked = {}) => {
+		return {
+			on: vi.fn(),
+			open: vi.fn().mockImplementation(async () => ({})),
+			...mocked,
+		}
+	}
 
 	it('returns a websocket polyfill class', () => {
-		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
+		const syncService = mockSyncService()
 		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 	})
 
 	it('registers handlers', () => {
-		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
+		const syncService = mockSyncService()
 		const Polyfill = initWebSocketPolyfill(syncService)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
@@ -23,7 +31,7 @@ describe('Init function', () => {
 	})
 
 	it('opens sync service', () => {
-		const syncService = { on: jest.fn(), open: jest.fn(() => Promise.resolve({ version: 123, session: {} })) }
+		const syncService = mockSyncService()
 		const fileId = 123
 		const initialSession = { }
 		const Polyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
@@ -33,11 +41,9 @@ describe('Init function', () => {
 	})
 
 	it('sends steps to sync service', async () => {
-		const syncService = {
-			on: jest.fn(),
-			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
+		const syncService = mockSyncService({
 			sendSteps: async getData => getData(),
-		}
+		})
 		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
@@ -53,12 +59,11 @@ describe('Init function', () => {
 	})
 
 	it('handles early reject', async () => {
-		jest.spyOn(console, 'error').mockImplementation(() => {})
-		const syncService = {
-			on: jest.fn(),
-			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
-			sendSteps: jest.fn().mockRejectedValue('error before reading steps in sync service'),
-		}
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		const syncService = mockSyncService({
+			sendSteps: vi.fn().mockRejectedValue('error before reading steps in sync service'),
+		})
+		syncService.open.mockImplementation(async () => ({}))
 		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
@@ -72,15 +77,13 @@ describe('Init function', () => {
 	})
 
 	it('handles reject after reading data', async () => {
-		jest.spyOn(console, 'error').mockImplementation(() => {})
-		const syncService = {
-			on: jest.fn(),
-			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
-			sendSteps: jest.fn().mockImplementation(async getData => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		const syncService = mockSyncService({
+			sendSteps: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('error when sending in sync service')
 			}),
-		}
+		})
 		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
@@ -94,26 +97,24 @@ describe('Init function', () => {
 	})
 
 	it('queue survives a close', async () => {
-		jest.spyOn(console, 'error').mockImplementation(() => {})
-		const syncService = {
-			on: jest.fn(),
-			open: jest.fn(() => Promise.resolve({ version: 123, session: {} })),
-			sendSteps: jest.fn().mockImplementation(async getData => {
+		vi.spyOn(console, 'error').mockImplementation(() => {})
+		const syncService = mockSyncService({
+			sendSteps: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('error when sending in sync service')
 			}),
-			sendStepsNow: jest.fn().mockImplementation(async getData => {
+			sendStepsNow: vi.fn().mockImplementation(async getData => {
 				getData()
 				throw new Error('sendStepsNow error when sending')
 			}),
-			off: jest.fn(),
-			close: jest.fn(async data => data),
-		}
+			off: vi.fn(),
+			close: vi.fn(async data => data),
+		})
 		const queue = ['initial']
 		const data = { dummy: 'data' }
 		const Polyfill = initWebSocketPolyfill(syncService, null, null, queue)
 		const websocket = new Polyfill('url')
-		websocket.onclose = jest.fn()
+		websocket.onclose = vi.fn()
 		await websocket.send(data)
 		const promise = websocket.close()
 		expect(queue).toEqual(['initial', data])

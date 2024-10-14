@@ -9,7 +9,7 @@ import previewOptions from '../plugins/previewOptions.js'
 const Paragraph = TiptapParagraph.extend({
 
 	parseHTML() {
-		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
+		return this.parent?.()?.map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
 	},
 
 	addKeyboardShortcuts() {

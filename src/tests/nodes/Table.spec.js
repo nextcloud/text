@@ -8,13 +8,16 @@ import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 
 import markdownit from '../../markdownit/index.js'
 
-import input from '../fixtures/tables/basic/table.md'
-import output from '../fixtures/tables/basic/table.html'
-import otherStructure from '../fixtures/tables/basic/table.structure.html'
+// Eslint does not know about ?raw suffix it seems.
+/* eslint-disable import/no-unresolved */
+import input from '../fixtures/tables/basic/table.md?raw'
+import output from '../fixtures/tables/basic/table.html?raw'
+import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
+import handbook from '../fixtures/tables/handbook/handbook.html?raw'
+import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
+/* eslint-enable import/no-unresolved */
 
-import handbook from '../fixtures/tables/handbook/handbook.html'
-import handbookOut from '../fixtures/tables/handbook/handbook.out.html'
-import { br, table, td, th, thead, tr, expectDocument } from '../builders.js'
+import { br, table, td, th, thead, tr, expectDocument } from '../testHelpers/builders.js'
 
 describe('Table', () => {
 	it('Markdown-IT renders tables', () => {

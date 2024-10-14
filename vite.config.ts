@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: Ferdinand Thiessen <opensource@fthiessen.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+/// <reference types="vitest/config" />
+
 import { createAppConfig } from '@nextcloud/vite-config'
 import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
@@ -37,6 +39,16 @@ const config = createAppConfig({
 						}
 					},
 				},
+			},
+		},
+		test: {
+			setupFiles: ['src/tests/setup.mjs'],
+			environment: 'jsdom',
+			globals: true,
+			server: {
+				deps: {
+					inline: [/@nextcloud.*/],
+				}
 			},
 		},
 	},
