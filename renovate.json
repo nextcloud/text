@@ -94,6 +94,18 @@
       "enabled": false
     },
     {
+      "matchUpdateTypes": ["major", "minor"],
+      "matchPackageNames": [
+        "cypress",
+        "@nextcloud/cypress"
+      ],
+      "matchPackagePrefixes": [
+        "@cypress/"
+      ],
+      "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["vue"],
       "allowedVersions": "<3"
     },
