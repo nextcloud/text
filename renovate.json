@@ -70,14 +70,6 @@
       ]
     },
     {
-      "groupName": "jest",
-      "matchPackageNames": [
-        "jest",
-        "@vue/vue2-jest",
-        "jest-environment-jsdom"
-      ]
-    },
-    {
       "groupName": "tiptap",
       "matchPackagePrefixes": [
         "@tiptap/",
