@@ -75,6 +75,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
@@ -119,6 +120,7 @@ import Wrapper from './Editor/Wrapper.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import Assistant from './Assistant.vue'
 import Translate from './Modal/Translate.vue'
+import { generateRemoteUrl } from '@nextcloud/router'
 
 export default {
 	name: 'Editor',
@@ -664,7 +666,14 @@ export default {
 		},
 
 		onSave() {
-			emit('files:file:updated', { fileid: this.fileId })
+			const user = getCurrentUser()
+			const node = new File({
+				id: this.fileId,
+				source: generateRemoteUrl(`dav/files/${user.uid}${this.relativePath}`),
+				mtime: new Date(),
+				mime: 'text/markdown',
+			})
+			emit('files:node:updated', node)
 			this.$nextTick(() => {
 				this.emit('sync-service:save')
 			})
