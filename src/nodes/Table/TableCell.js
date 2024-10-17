@@ -6,6 +6,7 @@
 import { TableCell } from '@tiptap/extension-table-cell'
 import { Plugin } from '@tiptap/pm/state'
 import { Fragment } from '@tiptap/pm/model'
+import { mergeAttributes } from '@tiptap/core'
 
 export default TableCell.extend({
 	content: 'inline*',
@@ -56,6 +57,17 @@ export default TableCell.extend({
 				parseHTML: (element) => element.style.textAlign || null,
 			},
 		}
+	},
+
+	renderHTML({ HTMLAttributes }) {
+		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		if (attributes.colspan === 1) {
+			delete attributes.colspan
+		}
+		if (attributes.rowspan === 1) {
+			delete attributes.rowspan
+		}
+		return ['td', attributes, 0]
 	},
 
 	addProseMirrorPlugins() {
