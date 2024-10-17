@@ -14,6 +14,8 @@ const config = createAppConfig({
 	init: path.join(__dirname, 'src', 'init.js'),
 }, {
 	createEmptyCSSEntryPoints: true,
+	extractLicenseInformation: true,
+	thirdPartyLicense: false,
 	config: {
 		resolve: {
 			dedupe: ['vue'],
