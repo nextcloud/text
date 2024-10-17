@@ -322,10 +322,10 @@ div.ProseMirror {
 
 	table {
 		border-spacing: 0;
-		width: calc(100% - 50px);
+		width: calc(100% - 50px - var(--default-clickable-area));
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
-		margin-bottom: 1em;
+		margin-bottom: calc(var(--clickable-area-small) + var(--default-clickable-area));
 		&+ * {
 			margin-top: 1em;
 		}

@@ -144,6 +144,48 @@ describe('table plugin', () => {
 				expect($el.get(0).innerHTML).to.equal(multilinesContent.replace(/\n/g, '<br>'))
 			})
 	})
+
+	it('Button add row below', () => {
+		cy.getActionEntry('table').click()
+
+		cy.getContent()
+			.find('table tr')
+			.should('have.length', 3)
+
+		cy.getContent()
+			.find('.table-wrapper .table-add-row')
+			.should('be.visible')
+
+		cy.getContent()
+			.find('.table-wrapper .table-add-row')
+			.click()
+
+		// Added a row
+		cy.getContent()
+			.find('table tr')
+			.should('have.length', 4)
+	})
+
+	it('Button add column after', () => {
+		cy.getActionEntry('table').click()
+
+		cy.getContent()
+			.find('table tr')
+			.should('have.length', 3)
+
+		cy.getContent()
+			.find('.table-wrapper .table-add-column')
+			.should('be.visible')
+
+		cy.getContent()
+			.find('.table-wrapper .table-add-column')
+			.click()
+
+		// Added a column
+		cy.getContent()
+			.find('table tr th')
+			.should('have.length', 4)
+	})
 })
 
 describe('Table extension integrated in the editor', () => {
