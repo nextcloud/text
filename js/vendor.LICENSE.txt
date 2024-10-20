@@ -433,7 +433,7 @@ version: 1.11.13
 license: MIT
 
 debounce
-version: 2.1.1
+version: 2.2.0
 license: MIT
 
 dompurify
@@ -801,5 +801,5 @@ version: 2.0.4
 license: MIT
 
 yjs
-version: 13.6.19
+version: 13.6.20
 license: MIT
