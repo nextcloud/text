@@ -71,7 +71,7 @@ OC.L10N.register(
     "Just type the Markdown syntax from below." : "فقط، استعمل نَسَق ماركداون أدناه.",
     "Style" : "أسلوب style",
     "Syntax" : "نَسَق Syntax",
-    "Keyboard shortcuts" : "إختصارات لوحة المفاتيح",
+    "Keyboard shortcuts" : "اختصارات لوحة المفاتيح",
     "New paragraph" : "فقرة جديدة",
     "Enter" : "إدخال",
     "Hard line break" : "فاصل خطي ثابت Hard line break",
