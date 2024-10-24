@@ -4,6 +4,7 @@
  */
 
 import { TableHeader } from '@tiptap/extension-table-header'
+import { mergeAttributes } from '@tiptap/core'
 
 export default TableHeader.extend({
 	content: 'inline*',
@@ -37,6 +38,17 @@ export default TableHeader.extend({
 			{ tag: 'table > :first-child > th', priority: 60 },
 			{ tag: 'table > :first-child > td', priority: 60 },
 		]
+	},
+
+	renderHTML({ HTMLAttributes }) {
+		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		if (attributes.colspan === 1) {
+			delete attributes.colspan
+		}
+		if (attributes.rowspan === 1) {
+			delete attributes.rowspan
+		}
+		return ['th', attributes, 0]
 	},
 
 	addAttributes() {
