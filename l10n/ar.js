@@ -96,7 +96,7 @@ OC.L10N.register(
     "Ordered list" : "قائمة مرتبة",
     "First item" : "أول بند",
     "Checklist" : "قائمة خيارات checklist",
-    "To-Do item" : "بند مَهَمّة",
+    "To-Do item" : "عنصر مهمة",
     "Blockquote" : "اقتباس Blockquote",
     "Quoted text" : "نصٌ مُقتبسٌ",
     "Code block" : "كتلة كود",
