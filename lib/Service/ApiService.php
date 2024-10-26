@@ -81,8 +81,13 @@ class ApiService {
 			if ($storage->instanceOfStorage(SharedStorage::class)) {
 				/** @var IShare $share */
 				$share = $storage->getShare();
-				$shareAttribtues = $share->getAttributes();
-				if ($shareAttribtues !== null && $shareAttribtues->getAttribute('permissions', 'download') === false) {
+
+				$allowedFileExtensions = $this->configService->getAllowedViewFileExtensions();
+				$isAllowedToViewForExtension = $allowedFileExtensions && in_array($file->getExtension(), $allowedFileExtensions, true);
+				$shareAttributes = $share->getAttributes();
+				$isAllowedByShare = $shareAttributes === null || $shareAttributes->getAttribute('permissions', 'download') !== false;
+
+				if (!$isAllowedToViewForExtension && !$isAllowedByShare) {
 					return new DataResponse(['error' => $this->l10n->t('This file cannot be displayed as download is disabled by the share')], Http::STATUS_FORBIDDEN);
 				}
 			}
