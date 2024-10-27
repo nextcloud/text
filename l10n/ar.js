@@ -16,7 +16,7 @@ OC.L10N.register(
     "Create new text file" : "إنشاء ملف نصّي جديد",
     "Editing session has expired. Please reload the page." : "جلسة التحرير انتهت صلاحيتها. قم رجاءً بإعادة تحميل الصفحة.",
     "{user} has mentioned you in the text document {node}" : "{user} أشار إليك في المستند النصّي {node}",
-    "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف لإن التحميل معطل من قبل المشاركة",
+    "This file cannot be displayed as download is disabled by the share" : "لا يمكن عرض الملف لإن التنزيل معطل من قبل المشاركة",
     "File not found" : "تعذر العثور على الملف",
     "Readme" : "إقرأني",
     "Text" : "نص",
