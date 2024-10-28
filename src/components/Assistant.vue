@@ -28,7 +28,10 @@
 					</template>
 					{{ type.name }}
 				</NcActionButton>
-				<NcActionButton data-cy="open-translate" close-after-click @click="openTranslateDialog">
+				<NcActionButton v-if="canTranslate"
+					data-cy="open-translate"
+					close-after-click
+					@click="openTranslateDialog">
 					<template #icon>
 						<TranslateVariant :size="20" />
 					</template>
@@ -189,7 +192,7 @@ export default {
 			STATUS_UNKNOWN,
 
 			showTaskList: false,
-			canTranslate: loadState('text', 'translation_languages', []).length > 0,
+			canTranslate: loadState('text', 'translation_languages', []).from?.length > 0,
 		}
 	},
 	computed: {

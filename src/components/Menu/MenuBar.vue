@@ -134,7 +134,7 @@ export default {
 			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
-			canTranslate: loadState('text', 'translation_languages', []).length > 0,
+			canTranslate: loadState('text', 'translation_languages', []).from?.length > 0,
 			resize: null,
 		}
 	},
