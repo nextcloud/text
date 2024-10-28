@@ -78,11 +78,6 @@ import { generateOcsUrl } from '@nextcloud/router'
 import { NcModal, NcButton, NcSelect, NcLoadingIcon, NcTextArea } from '@nextcloud/vue'
 import { useIsMobileMixin } from '../Editor.provider.js'
 
-const detectLanguageEntry = {
-	id: null,
-	label: t('text', 'Detect language'),
-}
-
 export default {
 	name: 'Translate',
 	components: {
@@ -109,10 +104,9 @@ export default {
 		return {
 			input: 'Hallo welt. Das ist ein Test.',
 			result: '',
-			fromLanguage: loadState('text', 'translation_can_detect', false) === true ? detectLanguageEntry : null,
+			fromLanguage: null,
 			toLanguage: null,
 			languages: loadState('text', 'translation_languages', []),
-			canDetect: loadState('text', 'translation_can_detect'),
 			loading: false,
 			error: null,
 			disableFromLanguageSelect: true,
@@ -120,16 +114,12 @@ export default {
 	},
 	computed: {
 		fromLanguages() {
-			const result = this.canDetect ? [detectLanguageEntry] : []
-			const set = new Set()
-			for (const item of this.languages) {
-				if (!set.has(item.from)) {
-					set.add(item.from)
-					result.push({
-						id: item.from,
-						label: !this.$isMobile ? item.fromLabel : t('text', 'Translate from {language}', { language: item.fromLabel }),
-					})
-				}
+			const result = []
+			for (const item of this.languages.from) {
+				result.push({
+					id: item.value,
+					label: !this.$isMobile ? item.name : t('text', 'Translate from {language}', { language: item.name }),
+				})
 			}
 			return result
 		},
@@ -138,22 +128,18 @@ export default {
 				return []
 			}
 
-			const languages = this.languages.filter(l => {
+			const languages = this.languages.to.filter(l => {
 				if (this.fromLanguage.id === null) {
 					return true
 				}
-				return l.from === this.fromLanguage.id
+				return l.value !== this.fromLanguage.id
 			})
 			const result = []
-			const set = new Set()
 			for (const item of languages) {
-				if (!set.has(item.to)) {
-					set.add(item.to)
-					result.push({
-						id: item.to,
-						label: !this.$isMobile ? item.toLabel : t('text', 'Translate to {language}', { language: item.toLabel }),
-					})
-				}
+				result.push({
+					id: item.value,
+					label: !this.$isMobile ? item.name : t('text', 'Translate to {language}', { language: item.name }),
+				})
 			}
 			return result
 		},
@@ -167,6 +153,11 @@ export default {
 			this.error = null
 			this.autosize()
 		},
+		fromLanguage(newVal) {
+			if (newVal.id === this.toLanguage.id) {
+				this.toLanguage = null
+			}
+		},
 		toLanguage() {
 			this.result = ''
 			this.error = null
@@ -179,12 +170,25 @@ export default {
 		async translate() {
 			this.loading = true
 			try {
-				const result = await axios.post(generateOcsUrl('translation/translate'), {
-					text: this.input,
-					fromLanguage: this.fromLanguage?.id ?? null,
-					toLanguage: this.toLanguage.id,
+				const scheduleResponse = await axios.post(generateOcsUrl('taskprocessing/schedule'), {
+					input: {
+						origin_language: this.fromLanguage?.id ?? null,
+						input: this.input,
+						target_language: this.toLanguage.id,
+					},
+					type: 'core:text2text:translate',
+					appId: 'text',
 				})
-				this.result = result.data.ocs.data.text
+				const task = scheduleResponse.data.ocs.data.task
+				const getTaskOutput = async (task) => {
+					if (task.output) {
+						return task.output.output
+					}
+					await new Promise(resolve => setTimeout(resolve, 2000))
+					const taskResponse = await axios.get(generateOcsUrl(`taskprocessing/task/${task.id}`))
+					return getTaskOutput(taskResponse.data.ocs.data.task)
+				}
+				this.result = await getTaskOutput(task)
 			} catch (e) {
 				console.error('Failed to translate', e)
 				this.error = t('text', 'Translation failed')
