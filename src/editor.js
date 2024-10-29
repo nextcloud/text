@@ -11,7 +11,7 @@ import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provi
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
-const apiVersion = '1.1'
+const apiVersion = '1.2'
 
 Vue.prototype.t = window.t
 Vue.prototype.n = window.n
@@ -119,6 +119,11 @@ class TextEditorEmbed {
 		return this
 	}
 
+	updateReadonlyBarProps(value) {
+		this.#vm.$set(this.#data, 'readonlyBarProps', value)
+		return this
+	}
+
 	insertAtCursor(content) {
 		this.#getEditorComponent().$editor.chain().insertContent(content).focus().run()
 	}
@@ -174,6 +179,7 @@ window.OCA.Text.createEditor = async function({
 
 	const data = Vue.observable({
 		showOutlineOutside: false,
+		readonlyBarProps: readonlyBar.props,
 		readOnly,
 		content,
 	})
@@ -205,7 +211,7 @@ window.OCA.Text.createEditor = async function({
 				? {
 					readonlyBar: () => {
 						return h(readonlyBar.component, {
-							props: readonlyBar.props,
+							props: data.readonlyBarProps,
 						})
 					},
 				}
