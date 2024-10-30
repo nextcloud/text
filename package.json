@@ -134,7 +134,7 @@
     "cypress-split": "^1.24.4",
     "cypress-visual-regression": "^5.2.2",
     "cypress-vite": "^1.5.0",
-    "eslint-plugin-cypress": "^3.6.0",
+    "eslint-plugin-cypress": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
