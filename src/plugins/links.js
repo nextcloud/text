@@ -175,6 +175,11 @@ export function linkClicking() {
 				click: (view, event) => {
 					const linkEl = event.target.closest('a')
 					if (event.button === 0 && linkEl) {
+						// No special handling in mermaid diagrams to not break links there
+						if (linkEl.closest('svg[id^="mermaid-view"]')) {
+							return false
+						}
+
 						event.preventDefault()
 						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
 							// Open anchor links directly
