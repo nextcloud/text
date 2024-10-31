@@ -43,6 +43,8 @@ OC.L10N.register(
     "Edit guest name" : "Edytuj nazwę gościa",
     "Guest" : "Gość",
     "Save guest name" : "Zapisz nazwę gościa",
+    "Uploading multiple attachments failed." : "Przesyłanie wielu załączników nie powiodło się.",
+    "Uploading attachment failed." : "Przesyłanie załącznika nie powiodło się.",
     "Insert an attachment" : "Wstaw załącznik",
     "Remove link" : "Usuń link",
     "guest" : "gość",
