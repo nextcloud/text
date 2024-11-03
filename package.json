@@ -103,7 +103,7 @@
     "proxy-polyfill": "^0.3.2",
     "slug": "^10.0.0",
     "tippy.js": "^6.3.7",
-    "uuid": "^10.0.0",
+    "uuid": "^11.0.2",
     "vue": "^2.7.16",
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.3.1",
