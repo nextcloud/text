@@ -47,7 +47,7 @@
 				class="floating-menu--badge" />
 		</FloatingMenu>
 
-		<NcModal :show.sync="showTaskList">
+		<NcModal :show.sync="showTaskList" :name="t('text', 'Assistant results')">
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
 					<span class="assistant-bubble">
