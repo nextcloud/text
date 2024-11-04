@@ -16,7 +16,7 @@ OC.L10N.register(
     "Create new text file" : "Yeni metin dosyası oluştur",
     "Editing session has expired. Please reload the page." : "Düzenleme oturumunun süresi dolmuş. Lütfen sayfayı yeniden yükleyin.",
     "{user} has mentioned you in the text document {node}" : "{user} kullanıcısı, {node} metin belgesinde sizi andı",
-    "This file cannot be displayed as download is disabled by the share" : "İndirme, paylaşım tarafından devre dışı bırakıldığından bu dosya görüntülenemiyor",
+    "This file cannot be displayed as download is disabled by the share" : "İndirme, paylaşım tarafından kullanımdan kaldırıldığından bu dosya görüntülenemiyor",
     "File not found" : "Dosya bulunamadı",
     "Readme" : "Benioku",
     "Text" : "Metin",
