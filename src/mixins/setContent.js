@@ -51,7 +51,7 @@ export default {
 			const editor = createEditor({
 				enableRichEditing: isRichEditor,
 			})
-			const json = generateJSON(html, editor.extensionManager.extensions)
+			const json = generateJSON(html, editor.options.extensions)
 
 			const doc = Node.fromJSON(editor.schema, json)
 			const getBaseDoc = (doc) => {
