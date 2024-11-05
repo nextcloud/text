@@ -10,7 +10,7 @@ import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import Outbox from './Outbox.ts'
-import SessionApi, { Connection } from './SessionApi.js'
+import { Connection } from './SessionApi.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
@@ -59,13 +59,13 @@ class SyncService {
 	#connection
 	#outbox = new Outbox()
 
-	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
+	constructor({ baseVersionEtag, serialize, getDocumentState, api }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
-		this._api = new SessionApi(options)
+		this._api = api
 		this.#connection = null
 
 		this.stepClientIDs = []
@@ -124,6 +124,7 @@ class SyncService {
 		this.baseVersionEtag = this.#connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
+
 		return this.connectionState
 	}
 
