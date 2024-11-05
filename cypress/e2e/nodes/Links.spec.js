@@ -67,7 +67,9 @@ describe('test link marks', function() {
 				.find('.widget-default--name')
 				.contains('Nextcloud')
 
-			cy.get('[role="dialog"] h2.modal-header__name').click()
+			cy.get('[role="dialog"] h2.modal-header__name')
+				.contains(fileName)
+				.click()
 
 			cy.get('.link-view-bubble .widget-default')
 				.should('not.exist')
