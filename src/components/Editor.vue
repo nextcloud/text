@@ -108,6 +108,7 @@ import ReadonlyBar from './Menu/ReadonlyBar.vue'
 import { logger } from '../helpers/logger.js'
 import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
@@ -361,6 +362,7 @@ export default {
 		// });
 		this.$providers = []
 		this.$editor = null
+		this.$api = null
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
@@ -385,16 +387,20 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 
-			this.$syncService = new SyncService({
+			this.$api = new SessionApi({
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				baseVersionEtag: this.$baseVersionEtag,
 				forceRecreate: this.forceRecreate,
+			})
+
+			this.$syncService = new SyncService({
+				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
 					: (content) => serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
+				api: this.$api,
 			})
 
 			this.listenSyncServiceEvents()
