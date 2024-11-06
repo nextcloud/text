@@ -262,6 +262,9 @@ export default {
 		},
 		onLoaded() {
 			this.loaded = true
+			this.$nextTick(() => {
+				this.$refs.altInput?.focus()
+			})
 		},
 		async updateEmbeddedImageList() {
 			this.embeddedImageList = []
