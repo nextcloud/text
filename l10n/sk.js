@@ -106,6 +106,7 @@ OC.L10N.register(
     "Translate from" : "Preložiť z",
     "Select language" : "Vybrať jazyk",
     "to" : "do",
+    "Translate to" : "Preložiť do",
     "Replace" : "Nahradiť",
     "Detect language" : "Zistiť jazyk",
     "Translation failed" : "Preklad zlyhal",

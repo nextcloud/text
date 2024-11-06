@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "言語を選択する",
     "Text to translate from" : "翻訳元テキスト",
     "to" : "訳文の言語",
+    "Translate to" : "翻訳先",
     "Translated text result" : "テキスト翻訳の結果",
     "Replace" : "入れ替え",
     "Insert" : "挿入する",

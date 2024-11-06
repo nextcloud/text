@@ -136,6 +136,7 @@ OC.L10N.register(
     "Select language" : "تىل تاللاڭ",
     "Text to translate from" : "تەرجىمە قىلىدىغان تېكىست",
     "to" : "to",
+    "Translate to" : "تەرجىمە قىلىڭ",
     "Translated text result" : "تەرجىمە قىلىنغان تېكىست نەتىجىسى",
     "Replace" : "ئالماشتۇرۇڭ",
     "Insert" : "قىستۇر",

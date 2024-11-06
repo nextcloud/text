@@ -111,6 +111,7 @@ OC.L10N.register(
     "Translate from" : "Prevedi iz",
     "Select language" : "Izbor jezika",
     "to" : "do",
+    "Translate to" : "Prevedi v",
     "Replace" : "Zamenjaj",
     "Insert" : "Vstavi",
     "Detect language" : "Zaznava jezika",

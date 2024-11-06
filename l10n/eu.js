@@ -137,6 +137,7 @@ OC.L10N.register(
     "Select language" : "Hautatu hizkuntza",
     "Text to translate from" : "Itzuli behar den testua",
     "to" : "honi",
+    "Translate to" : "Itzuli honetara",
     "Translated text result" : "Itzulitako testu-emaitza",
     "Replace" : "Ordeztu",
     "Insert" : "Txertatu",

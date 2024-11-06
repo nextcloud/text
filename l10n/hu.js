@@ -119,6 +119,7 @@ OC.L10N.register(
     "Translate from" : "Fordítás a következőről:",
     "Select language" : "Nyelvválasztás",
     "to" : "eddig:",
+    "Translate to" : "Fordítás a következőre:",
     "Replace" : "Csere",
     "Insert" : "Beillesztés",
     "Detect language" : "Nyelv észlelése",

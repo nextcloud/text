@@ -119,6 +119,7 @@ OC.L10N.register(
     "Translate from" : "Translate from",
     "Select language" : "زبان را انتخاب کنید",
     "to" : "به",
+    "Translate to" : "Translate to",
     "Replace" : "جایگزین کردن",
     "Insert" : "Insert",
     "Detect language" : "Detect language",
