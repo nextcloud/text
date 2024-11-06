@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "Одаберите језик",
     "Text to translate from" : "Текст који се преводи",
     "to" : "за",
+    "Translate to" : "Преведи на",
     "Translated text result" : "Резултат преведеног текста",
     "Replace" : "Замени",
     "Insert" : "Уметни",

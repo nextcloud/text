@@ -134,6 +134,7 @@ OC.L10N.register(
     "Select language" : "Seleccioneu la llengua",
     "Text to translate from" : "Text que voleu traduir",
     "to" : "a",
+    "Translate to" : "Traduir a",
     "Translated text result" : "Text traduït",
     "Replace" : "Substitueix",
     "Insert" : "Insereix",

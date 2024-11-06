@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "Dil seçin",
     "Text to translate from" : "Çevrilecek metin",
     "to" : "hedef dil",
+    "Translate to" : "Hedef dil",
     "Translated text result" : "Çevrilmiş metin",
     "Replace" : "Değiştir",
     "Insert" : "Ekle",
