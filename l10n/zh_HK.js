@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "選擇語言",
     "Text to translate from" : "要翻譯的文字",
     "to" : "至",
+    "Translate to" : "翻譯至",
     "Translated text result" : "翻譯文字結果",
     "Replace" : "取代",
     "Insert" : "插入",

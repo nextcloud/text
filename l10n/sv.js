@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "Välj språk",
     "Text to translate from" : "Text att översätta från",
     "to" : "till",
+    "Translate to" : "Översätt till",
     "Translated text result" : "Översatt textresultat",
     "Replace" : "Ersätt",
     "Insert" : "Infoga",

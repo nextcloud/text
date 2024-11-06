@@ -110,6 +110,7 @@ OC.L10N.register(
     "Translate from" : "Lähdekieli",
     "Select language" : "Valitse kieli",
     "to" : "päättyen",
+    "Translate to" : "Kohdekieli",
     "Replace" : "Korvaa",
     "Detect language" : "Havaitse kieli",
     "Translate from {language}" : "Käännä kielestä {language}",

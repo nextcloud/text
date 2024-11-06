@@ -138,6 +138,7 @@ OC.L10N.register(
     "Select language" : "Roghnaigh teanga",
     "Text to translate from" : "Téacs le haistriú uaidh",
     "to" : "chun",
+    "Translate to" : "Aistrigh go",
     "Translated text result" : "Toradh téacs aistrithe",
     "Replace" : "Ionadaigh",
     "Insert" : "cuir isteach",
