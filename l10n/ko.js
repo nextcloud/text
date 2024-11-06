@@ -72,6 +72,7 @@ OC.L10N.register(
     "Translate from" : "다음을 번역",
     "Select language" : "언어 선택",
     "to" : "에서",
+    "Translate to" : "다음으로 번역",
     "Replace" : "바꾸기",
     "Insert" : "삽입",
     "Detect language" : "언어 감지",

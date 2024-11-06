@@ -120,6 +120,7 @@ OC.L10N.register(
     "Translate from" : "Перевод с",
     "Select language" : "Выбрать язык",
     "to" : "по",
+    "Translate to" : "Перевести на",
     "Replace" : "Заменить",
     "Insert" : "Вставить",
     "Detect language" : "Определить язык",

@@ -124,6 +124,7 @@ OC.L10N.register(
     "Translate from" : "Przetłumacz z",
     "Select language" : "Wybierz język",
     "to" : "do",
+    "Translate to" : "Przetłumacz na",
     "Replace" : "Zamień",
     "Insert" : "wstaw",
     "Detect language" : "Wykryj język",
