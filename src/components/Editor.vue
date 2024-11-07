@@ -337,6 +337,7 @@ export default {
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
 		subscribe('text:translate-modal:show', this.showTranslateModal)
+		this.setupEditorDebug()
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -747,6 +748,54 @@ export default {
 			console.debug(markdownItHtml)
 			logger.debug('HTML, as rendered in the browser by Tiptap')
 			console.debug(editor.getHTML())
+		},
+
+		/**
+		 * Setup OCA.Text.debugYjs() and expose editor component in OCA.Text.editorComponents
+		 */
+		setupEditorDebug() {
+			if (!window.OCA.Text) {
+				window.OCA.Text = {}
+			}
+			if (!window.OCA.Text.editorComponents) {
+				window.OCA.Text.editorComponents = []
+			}
+			window.OCA.Text.editorComponents.push(this)
+
+			if (!window.OCA.Text.debugYjs) {
+				window.OCA.Text.debugYjs = () => {
+					const intro = 'Editor Yjs debug data. Copy the objects above that start with "fileId".'
+					const introChrome = '- In Chrome, select "Copy" at the end of the line.'
+					const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
+					const styleBold = 'font-weight: bold;'
+					const styleItalic = 'font-weight: normal; font-style: italic;'
+
+					for (const editorComponent of window.OCA.Text.editorComponents) {
+						console.warn(JSON.stringify(editorComponent.debugYjsData(), null, ' '))
+					}
+
+					console.warn('%c%s\n%c%s\n%s', styleBold, intro, styleItalic, introChrome, introFirefox)
+				}
+			}
+		},
+
+		/**
+		 * Helper method to debug yjs issues
+		 */
+		debugYjsData() {
+			const yjsData = {
+				fileId: this.fileId,
+				filePath: this.relativePath,
+				clientId: this.$ydoc.clientID,
+				pendingStructs: this.$ydoc.store.pendingStructs,
+				clientVectors: [],
+				documentState: this.$syncService.getDocumentState(),
+			}
+			for (const client of this.$ydoc.store.clients.values()) {
+				yjsData.clientVectors.push(client.at(-1).id)
+			}
+
+			return yjsData
 		},
 
 		outlineToggled(visible) {

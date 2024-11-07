@@ -132,6 +132,18 @@ class TextEditorEmbed {
 		this.#getEditorComponent().$editor.commands.focus()
 	}
 
+	debugYjs() {
+		const yjsData = this.#getEditorComponent().debugYjsData()
+
+		const intro = 'Editor Yjs debug data. Copy the object below that starts with "clientId".'
+		const introChrome = '- In Chrome, select "Copy" at the end of the line.'
+		const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
+		const styleBold = 'font-weight: bold;'
+		const styleItalic = 'font-weight: normal; font-style: italic;'
+		console.warn(JSON.stringify(yjsData, null, ' '))
+		console.warn('%c%s\n%c%s\n%s', styleBold, intro, styleItalic, introChrome, introFirefox)
+	}
+
 	#registerDebug() {
 		if (window?._oc_debug) {
 			this.vm = this.#vm
