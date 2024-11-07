@@ -170,7 +170,9 @@ export default {
 
 		return val
 	},
-	inject: ['isEmbedded'],
+	inject: {
+		isEmbedded: { default: false },
+	},
 	props: {
 		richWorkspace: {
 			type: Boolean,
