@@ -20,7 +20,9 @@
   -->
 
 <template>
-	<NcModal size="large" @close="$emit('close')">
+	<NcModal size="large"
+		:name="t('text', 'Translate')"
+		@close="$emit('close')">
 		<div class="translate-dialog">
 			<h2>{{ t('text', 'Translate') }}</h2>
 			<em>{{ t('text', 'To translate individual parts of the text, select it before using the translate function.') }}</em>
@@ -31,6 +33,7 @@
 						<NcSelect v-model="fromLanguage"
 							input-id="fromLanguage"
 							:placeholder="t('text', 'Select language')"
+							:aria-label-combobox="t('text', 'Translate from')"
 							:options="fromLanguages"
 							:disabled="disableFromLanguageSelect"
 							:append-to-body="false" />
@@ -49,6 +52,7 @@
 						<NcSelect v-model="toLanguage"
 							input-id="toLanguage"
 							:placeholder="t('text', 'Select language')"
+							:aria-label-combobox="t('text', 'Translate to')"
 							:options="toLanguages"
 							:disabled="!fromLanguage"
 							:append-to-body="false" />
@@ -166,12 +170,12 @@ export default {
 	},
 	watch: {
 		input() {
-			this.result = null
+			this.result = ''
 			this.error = null
 			this.autosize()
 		},
 		toLanguage() {
-			this.result = null
+			this.result = ''
 			this.error = null
 		},
 	},
