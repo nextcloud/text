@@ -239,7 +239,7 @@ export default {
 	align-items: stretch;
 	position: absolute;
 	right: 12px;
-	margin-top: 4px;
+	margin-top: 9px;
 }
 
 .split-view {
