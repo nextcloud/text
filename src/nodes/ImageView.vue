@@ -43,7 +43,7 @@
 								</NcButton>
 							</div>
 						</div>
-						<div v-else contenteditable="false">
+						<div v-else class="media" contenteditable="false">
 							<img v-show="loaded"
 								:src="imageUrl"
 								:alt="alt"
@@ -410,6 +410,8 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: left;
+	padding-bottom: 0;
+
 	.media__wrapper {
 		display: flex;
 		border: 2px solid var(--color-border);
