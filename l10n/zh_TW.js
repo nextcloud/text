@@ -25,6 +25,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Nextcloud 小幫手",
     "Translate" : "翻譯",
     "Show assistant results" : "顯示小幫手結果",
+    "Assistant results" : "小幫手結果",
     "Insert result" : "插入結果",
     "Show result" : "顯示結果",
     "Delete task" : "刪除工作項目",

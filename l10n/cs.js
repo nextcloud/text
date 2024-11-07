@@ -25,6 +25,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Nextcloud Asistent",
     "Translate" : "Překládání",
     "Show assistant results" : "Zobrazit výsledky z asistenta",
+    "Assistant results" : "Výsledky z asistenta",
     "Insert result" : "Vložit výsledek",
     "Show result" : "Zobrazit výsledek",
     "Delete task" : "Smazat úkol",
