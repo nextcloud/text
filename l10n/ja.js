@@ -25,6 +25,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Nextcloud アシスタント",
     "Translate" : "翻訳",
     "Show assistant results" : "アシスタントの結果を表示する",
+    "Assistant results" : "アシスタントの結果",
     "Insert result" : "結果を挿入する",
     "Show result" : "結果を表示する",
     "Delete task" : "タスクを削除",
