@@ -25,6 +25,7 @@ OC.L10N.register(
     "Nextcloud Assistant" : "Cúntóir Nextcloud",
     "Translate" : "Aistrigh",
     "Show assistant results" : "Taispeáin torthaí cúntóir",
+    "Assistant results" : "Torthaí cúntóir",
     "Insert result" : "Cuir isteach an toradh",
     "Show result" : "Taispeáin toradh",
     "Delete task" : "Scrios tasc",
