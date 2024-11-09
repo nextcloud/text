@@ -11,6 +11,7 @@
     "Nextcloud Text" : "Nextcloud tekstas",
     "text document" : "tekstinį dokumentą",
     "New text file" : "Naujas tekstinis failas",
+    "Create new text file" : "Sukurti naują tekstinį failą",
     "{user} has mentioned you in the text document {node}" : "{user} paminėjo jus tekstiniame dokumente {node}",
     "File not found" : "Failas nerastas",
     "Readme" : "Perskaityti",
@@ -21,6 +22,7 @@
     "Delete task" : "Ištrinti užduotį",
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
+    "Reload" : "Įkelti iš naujo",
     "Reconnect" : "Jungtis iš naujo",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentas {timeout} min. neveiklus, spustelėkite norėdami tęsti taisymą",
     "This file is opened read-only as it is currently locked by {user}." : "Šis failas yra atvertas tik skaitymui, nes šiuo metu jį užrakino {user}.",
@@ -40,6 +42,7 @@
     "Style" : "Stilius",
     "Syntax" : "Sintaksė",
     "Keyboard shortcuts" : "Spartieji klavišai",
+    "New paragraph" : "Nauja pastraipa",
     "Shift" : "Lyg2",
     "Bold" : "Pusjuodis",
     "Bold text" : "Pusjuodis tekstas",
@@ -93,6 +96,7 @@
     "Detect language" : "Aptikti kalbą",
     "No emoji found" : "Nerasta jokių šypsenėlių",
     "Edit" : "Taisyti",
+    "e.g. php, javascript, json…" : "pvz., php, javascript, json…",
     "Source code" : "Pradinis kodas",
     "Delete this attachment" : "Ištrinti šį priedą",
     "Delete this image" : "Ištrinti šį paveikslą",
@@ -111,6 +115,8 @@
     "Heading 5" : "Antraštė 5",
     "Lists" : "Sąrašai",
     "To-Do list" : "Užduočių sąrašas",
+    "Increase indentation" : "Padidinti įtrauką",
+    "Decrease indentation" : "Sumažinti įtrauką",
     "Table" : "Lentelė",
     "Details" : "Išsamiau",
     "Insert link" : "Įterpti nuorodą",
@@ -119,6 +125,8 @@
     "Control" : "Valdoma",
     "Formatting" : "Formatavimas",
     "Add folder description" : "Pridėti aplanko aprašą",
+    "Copied to the clipboard" : "Nukopijuota į iškarpinę",
+    "Could not copy to the clipboard" : "Nepavyko nukopijuoti į iškarpinę",
     "Show author colors" : "Rodyti autoriaus spalvas",
     "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
     "Callouts" : "Paaiškinimo išnašos",
@@ -126,6 +134,7 @@
     "Success" : "Pavyko",
     "Warning" : "Įspėjimas",
     "Danger" : "Pavojus",
-    "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…"
+    "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…",
+    "Add description" : "Pridėti aprašą"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }
