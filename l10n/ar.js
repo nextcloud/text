@@ -126,7 +126,7 @@ OC.L10N.register(
     "Link to file or folder" : "ربط إلى ملف أو مجلد",
     "Link to website" : "ربط مع موقع وِب",
     "Update link" : "تحديث الرابط",
-    "Open the Smart Picker" : "إفتح اللاقط الذكي smart picker",
+    "Open the Smart Picker" : "فتح المحدد الذكي",
     "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تمّ اختياره",
     "_%n word_::_%n words_" : ["%n كلمات","%n كلمة","%n كلمات","%n كلمات","%n كلمات","%n كلمات"],
