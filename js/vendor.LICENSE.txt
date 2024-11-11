@@ -49,7 +49,7 @@ version: 1.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/dialogs
-version: 5.3.7
+version: 5.3.8
 license: AGPL-3.0-or-later
 
 @nextcloud/event-bus
@@ -85,7 +85,7 @@ version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/router
-version: 2.2.1
+version: 3.0.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
@@ -428,6 +428,10 @@ escape-html
 version: 1.0.3
 license: MIT
 
+eventemitter3
+version: 5.0.1
+license: MIT
+
 fault
 version: 2.0.1
 license: MIT
@@ -630,6 +634,14 @@ license: (MIT)
 
 orderedmap
 version: 2.0.0
+license: MIT
+
+p-queue
+version: 8.0.1
+license: MIT
+
+p-timeout
+version: 6.1.3
 license: MIT
 
 path-browserify
