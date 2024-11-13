@@ -37,14 +37,31 @@ messageHandlers[messageSync] = (
 	_messageType,
 ) => {
 	encoding.writeVarUint(encoder, messageSync)
+	const decoderForRemote = decoding.clone(decoder)
 	const syncMessageType = syncProtocol.readSyncMessage(
 		decoder,
 		encoder,
 		provider.doc,
 		provider,
 	)
+	// Message came from the broadcast channel
+	// Do not track in this.remote and do not emit sync.
+	if (!emitSynced) {
+		return
+	}
 	if (
-		emitSynced && syncMessageType === syncProtocol.messageYjsSyncStep2
+		syncMessageType === syncProtocol.messageYjsSyncStep2
+	|| syncMessageType === syncProtocol.messageYjsUpdate
+	) {
+		syncProtocol.readSyncMessage(
+			decoderForRemote,
+			encoding.createEncoder(),
+			provider.remote,
+			provider,
+		)
+	}
+	if (
+		syncMessageType === syncProtocol.messageYjsSyncStep2
     && !provider.synced
 	) {
 		provider.synced = true
@@ -290,6 +307,10 @@ export class WebsocketProvider extends Observable {
 		this.wsUnsuccessfulReconnects = 0
 		this.messageHandlers = messageHandlers.slice()
 		/**
+		 * @type {Y.Doc}
+		 */
+		this.remote = new Y.Doc()
+		/**
 		 * @type {boolean}
 		 */
 		this._synced = false
@@ -334,14 +355,17 @@ export class WebsocketProvider extends Observable {
 		}
 		/**
 		 * Listens to Yjs updates and sends them to remote peers (ws and broadcastchannel)
-		 * @param {Uint8Array} update
+		 * @param {Uint8Array} _update
 		 * @param {any} origin
+		 * @param {Y.Doc} doc
 		 */
-		this._updateHandler = (update, origin) => {
+		this._updateHandler = (_update, origin, doc) => {
 			if (origin !== this) {
+				const from = Y.encodeStateVector(this.remote)
+				const fullUpdate = Y.encodeStateAsUpdate(doc, from)
 				const encoder = encoding.createEncoder()
 				encoding.writeVarUint(encoder, messageSync)
-				syncProtocol.writeUpdate(encoder, update)
+				syncProtocol.writeUpdate(encoder, fullUpdate)
 				broadcastMessage(this, encoding.toUint8Array(encoder))
 			}
 		}

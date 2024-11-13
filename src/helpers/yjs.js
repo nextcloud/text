@@ -88,6 +88,7 @@ export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
 export function getSteps(queue) {
 	return queue.map(s => encodeArrayBuffer(s))
 		.filter(s => s < 'AQ')
+		.slice(-1)
 }
 
 /**
