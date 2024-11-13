@@ -25,7 +25,7 @@ import * as Y from 'yjs'
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
-import { messageSync } from 'y-websocket'
+import { messageSync } from '../services/y-websocket.js'
 
 /**
  * Get Document state encode as base64.
