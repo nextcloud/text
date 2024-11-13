@@ -110,7 +110,6 @@
     "vuex": "^3.6.2",
     "y-prosemirror": "^1.2.13",
     "y-protocols": "^1.0.6",
-    "y-websocket": "^2.0.4",
     "yjs": "^13.6.20"
   },
   "engines": {
