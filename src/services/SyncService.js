@@ -186,19 +186,18 @@ class SyncService {
 		this.sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = null
-		const data = getSendable()
-		if (data.steps.length > 0) {
+		const sendable = getSendable()
+		if (sendable.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		return this.#connection.push(data)
+		return this.#connection.push(sendable)
 			.then((response) => {
+				const { steps } = response.data
 				this.pushError = 0
 				this.sending = false
-				this.emit('sync', {
-					steps: [],
-					document: this.#connection.document,
-					version: this.version,
-				})
+				if (steps?.length > 0) {
+					this._receiveSteps({ steps })
+				}
 			}).catch(err => {
 				const { response, code } = err
 				this.sending = false
@@ -209,11 +208,13 @@ class SyncService {
 				if (response?.status === 412) {
 					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: response })
 				} else if (response?.status === 403) {
-					if (!data.document) {
+					// TODO: is this really about sendable?
+					if (!sendable.document) {
 						// either the session is invalid or the document is read only.
 						logger.error('failed to write to document - not allowed')
 						this.emit('error', { type: ERROR_TYPE.PUSH_FORBIDDEN, data: {} })
 					}
+					// TODO: does response.data ever have a document? maybe for errors?
 					// Only emit conflict event if we have synced until the latest version
 					if (response.data.document?.currentVersion === this.version) {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
@@ -226,7 +227,7 @@ class SyncService {
 			})
 	}
 
-	_receiveSteps({ steps, document, sessions }) {
+	_receiveSteps({ steps, document = null, sessions = [] }) {
 		const awareness = sessions
 			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
 			.filter(s => s.lastAwarenessMessage)
@@ -254,8 +255,7 @@ class SyncService {
 		this.lastStepPush = Date.now()
 		this.emit('sync', {
 			steps: newSteps,
-			// TODO: do we actually need to dig into the connection here?
-			document: this.#connection.document,
+			document,
 			version: this.version,
 		})
 	}

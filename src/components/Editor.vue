@@ -590,7 +590,9 @@ export default {
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
-			this.document = document
+			if (document) {
+				this.document = document
+			}
 		},
 
 		onError({ type, data }) {
