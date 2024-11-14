@@ -74,6 +74,7 @@ messageHandlers[messageSync] = (
 	}
 }
 
+// modified to only send own awareness
 messageHandlers[messageQueryAwareness] = (
 	encoder,
 	_decoder,
@@ -86,7 +87,8 @@ messageHandlers[messageQueryAwareness] = (
 		encoder,
 		awarenessProtocol.encodeAwarenessUpdate(
 			provider.awareness,
-			Array.from(provider.awareness.getStates().keys()),
+			[provider.doc.clientID],
+			// Array.from(provider.awareness.getStates().keys()),
 		),
 	)
 }
@@ -377,16 +379,22 @@ export class WebsocketProvider extends Observable {
 		}
 		this.doc.on('update', this._updateHandler)
 		/**
+		 * Send an awareness update message when local awareness changes
+		 * modified to only send update about this client.
 		 * @param {any} changed
 		 * @param {any} _origin
 		 */
 		this._awarenessUpdateHandler = ({ added, updated, removed }, _origin) => {
-			const changedClients = added.concat(updated).concat(removed)
+			// const changedClients = added.concat(updated).concat(removed)
 			const encoder = encoding.createEncoder()
 			encoding.writeVarUint(encoder, messageAwareness)
 			encoding.writeVarUint8Array(
 				encoder,
-				awarenessProtocol.encodeAwarenessUpdate(awareness, changedClients),
+				awarenessProtocol.encodeAwarenessUpdate(
+					awareness,
+					[this.doc.clientID],
+					// changedClients
+				),
 			)
 			broadcastMessage(this, encoding.toUint8Array(encoder))
 		}
