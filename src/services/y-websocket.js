@@ -1,5 +1,11 @@
 /**
- * @module provider/websocket
+ * SPDX-FileCopyrightText: 2019 Kevin Jahns <kevin.jahns@protonmail.com>
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
+ * Based on the awesome y-websocket https://github.com/yjs/y-websocket/
+ * Modified to match the needs of an http transport.
  */
 
 /* eslint-env browser */
