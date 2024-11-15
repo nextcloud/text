@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "在後面新增欄",
     "Delete this column" : "刪除此欄",
     "Delete this table" : "刪除此表格",
+    "Add row below" : "在下方新增列",
     "Show folder description" : "顯示資料夾描述",
     "Hide outline" : "隱藏大綱",
     "Show outline" : "顯示大綱",
