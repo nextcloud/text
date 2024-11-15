@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "Spalte danach hinzufügen",
     "Delete this column" : "Diese Spalte löschen",
     "Delete this table" : "Diese Tabelle löschen",
+    "Add row below" : "Zeile darunter hinzufügen",
     "Show folder description" : "Ordnerbeschreibung anzeigen",
     "Hide outline" : "Gliederung ausblenden",
     "Show outline" : "Gliederung anzeigen",

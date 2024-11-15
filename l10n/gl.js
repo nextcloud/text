@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "Engadir columna após",
     "Delete this column" : "Eliminar esta columna",
     "Delete this table" : "Eliminar esta táboa",
+    "Add row below" : "Engadir fila embaixo",
     "Show folder description" : "Amosar a descrición do cartafol",
     "Hide outline" : "Agochar o esquema",
     "Show outline" : "Amosar o esquema",
