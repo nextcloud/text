@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "Cuir colún leis ina dhiaidh",
     "Delete this column" : "Scrios an colún seo",
     "Delete this table" : "Scrios an tábla seo",
+    "Add row below" : "Cuir ró thíos leis",
     "Show folder description" : "Taispeáin cur síos ar fhillteán",
     "Hide outline" : "Folaigh imlíne",
     "Show outline" : "Taispeáin imlíne",
