@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "列を右に追加する",
     "Delete this column" : "この列を削除する",
     "Delete this table" : "この表を削除する",
+    "Add row below" : "行を下に追加する",
     "Show folder description" : "フォルダーの概要を表示する",
     "Hide outline" : "目次を隠す",
     "Show outline" : "目次を表示する",
