@@ -106,7 +106,7 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState, applyDocumentState, getUpdateMessage } from '../helpers/yjs.js'
+import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -506,12 +506,6 @@ export default {
 		onLoaded({ document, documentSource, documentState }) {
 			if (documentState) {
 				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
-				// distribute additional state that may exist locally
-				const updateMessage = getUpdateMessage(this.$ydoc, documentState)
-				if (updateMessage) {
-					logger.debug('onLoaded: Pushing local changes to server')
-					this.$queue.push(updateMessage)
-				}
 			} else {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
