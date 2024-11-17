@@ -127,7 +127,7 @@ class PollingBackend {
 		this.#fetchRetryCounter = 0
 
 		this.#syncService.emit('change', { document, sessions })
-		this.#syncService._receiveSteps(data)
+		this.#syncService.receiveSteps(data)
 
 		if (data.steps.length === 0) {
 			if (!this.#initialLoadingFinished) {

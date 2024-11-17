@@ -181,7 +181,7 @@ class SyncService {
 				this.pushError = 0
 				this.sending = false
 				if (steps?.length > 0) {
-					this._receiveSteps({ steps })
+					this.receiveSteps({ steps })
 				}
 			}).catch(err => {
 				const { response, code } = err
@@ -212,7 +212,7 @@ class SyncService {
 			})
 	}
 
-	_receiveSteps({ steps, document = null, sessions = [] }) {
+	receiveSteps({ steps, document = null, sessions = [] }) {
 		const awareness = sessions
 			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
 			.filter(s => s.lastAwarenessMessage)
