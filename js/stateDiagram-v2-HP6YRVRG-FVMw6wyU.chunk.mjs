@@ -1,2 +1,0 @@
-/*! third party licenses: js/vendor.LICENSE.txt */
-import{s as a,a as t,c as e,b as o}from"./chunk-JZAHL7AJ-C4Euur2t.chunk.mjs";import{_ as s}from"./mermaid.core-bgflwl9I.chunk.mjs";import"./chunk-EICJXIV7-DszZ4xaW.chunk.mjs";import"./modulepreload-polyfill-DMTabKmO.chunk.mjs";import"./emoji-picker-SoWZqoso.chunk.mjs";import"./NcNoteCard-CImn6F9p-L4G761VD.chunk.mjs";import"./vue.runtime.esm-DaLNuXGQ.chunk.mjs";var d={parser:a,db:t,renderer:e,styles:o,init:s(r=>{r.state||(r.state={}),r.state.arrowMarkerAbsolute=r.arrowMarkerAbsolute,t.clear()},"init")};export{d as diagram};
