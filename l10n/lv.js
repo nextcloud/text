@@ -27,6 +27,7 @@ OC.L10N.register(
     "Action" : "Darbība",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
+    "Cancel" : "Atcelt",
     "URL" : "URL",
     "Update link" : "Atjaunināt saiti",
     "Select language" : "Izvēlies valodu",
