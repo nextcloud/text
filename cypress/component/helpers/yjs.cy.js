@@ -21,10 +21,10 @@
  */
 
 import * as Y from 'yjs'
-import { getDocumentState, getUpdateMessage, applyUpdateMessage } from '../../../src/helpers/yjs.js'
+import { getDocumentState, documentStateToStep, applyStep } from '../../../src/helpers/yjs.js'
 
 describe('Yjs base64 wrapped with our helpers', function() {
-	it('applies step in wrong order', function() {
+	it('applies step generated from document state', function() {
 		const source = new Y.Doc()
 		const target = new Y.Doc()
 		const sourceMap = source.getMap()
@@ -34,44 +34,26 @@ describe('Yjs base64 wrapped with our helpers', function() {
 			// console.log('afterTransaction', tr)
 		})
 
-		const state0 = getDocumentState(source)
-
 		// Add keyA to source and apply to target
 		sourceMap.set('keyA', 'valueA')
 
 		const stateA = getDocumentState(source)
-		const update0A = getUpdateMessage(source, state0)
-		applyUpdateMessage(target, update0A)
+		const step0A = documentStateToStep(stateA)
+		applyStep(target, step0A)
 		expect(targetMap.get('keyA')).to.be.eq('valueA')
 
 		// Add keyB to source, don't apply to target yet
 		sourceMap.set('keyB', 'valueB')
 		const stateB = getDocumentState(source)
-		const updateAB = getUpdateMessage(source, stateA)
+		const step0B = documentStateToStep(stateB)
 
 		// Add keyC to source, apply to target
 		sourceMap.set('keyC', 'valueC')
-		const updateBC = getUpdateMessage(source, stateB)
-		applyUpdateMessage(target, updateBC)
-		expect(targetMap.get('keyB')).to.be.eq(undefined)
-		expect(targetMap.get('keyC')).to.be.eq(undefined)
 
 		// Apply keyB to target
-		applyUpdateMessage(target, updateAB)
+		applyStep(target, step0B)
 		expect(targetMap.get('keyB')).to.be.eq('valueB')
-		expect(targetMap.get('keyC')).to.be.eq('valueC')
-	})
-
-	it('update message is empty if no additional state exists', function() {
-		const source = new Y.Doc()
-		const sourceMap = source.getMap()
-		const state0 = getDocumentState(source)
-		sourceMap.set('keyA', 'valueA')
-		const stateA = getDocumentState(source)
-		const update0A = getUpdateMessage(source, state0)
-		const updateAA = getUpdateMessage(source, stateA)
-		expect(update0A.length).to.be.eq(29)
-		expect(updateAA).to.be.eq(undefined)
+		expect(targetMap.get('keyC')).to.be.eq(undefined)
 	})
 
 })

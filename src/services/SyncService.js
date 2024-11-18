@@ -25,7 +25,7 @@ import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import SessionApi, { Connection } from './SessionApi.js'
-import { getSteps, getAwareness } from '../helpers/yjs.js'
+import { getSteps, getAwareness, documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -137,6 +137,15 @@ class SyncService {
 		this.baseVersionEtag = this.#connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
+		const documentState = this.connectionState.documentState
+		if (documentState) {
+			const initialStep = documentStateToStep(documentState)
+			this.emit('sync', {
+				version: this.version,
+				steps: [initialStep],
+				document: this.#connection.document,
+			})
+		}
 
 		return this.connectionState
 	}

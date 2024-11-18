@@ -51,36 +51,44 @@ export function applyDocumentState(ydoc, documentState, origin) {
 }
 
 /**
- * Update message for everything in ydoc that is not in encodedBaseUpdate
+ * Create a step from a document state
+ * i.e. create a sync protocol update message from it
+ * and encode it and wrap it in a step data structure.
  *
- * @param {Y.Doc} ydoc - encode state of this doc
- * @param {string} encodedBaseUpdate - base64 encoded doc update to build upon
- * @return {Uint8Array|undefined}
+ * @param {string} documentState - base64 encoded doc state
+ * @return {string} base64 encoded yjs sync protocol update message
  */
-export function getUpdateMessage(ydoc, encodedBaseUpdate) {
-	const baseUpdate = decodeArrayBuffer(encodedBaseUpdate)
-	const baseStateVector = Y.encodeStateVectorFromUpdate(baseUpdate)
-	const docStateVector = Y.encodeStateVector(ydoc)
-	if (sameState(baseStateVector, docStateVector)) {
-		// no additional state in the ydoc - early return
-		return
-	}
+export function documentStateToStep(documentState) {
+	const message = documentStateToUpdateMessage(documentState)
+	return { step: encodeArrayBuffer(message) }
+}
+
+/**
+ * Create an update message from a document state
+ * i.e. decode the base64 encoded yjs update
+ * and create a sync protocol update message from it
+ *
+ * @param {string} documentState - base64 encoded doc state
+ * @return {Uint8Array}
+ */
+function documentStateToUpdateMessage(documentState) {
+	const update = decodeArrayBuffer(documentState)
 	const encoder = encoding.createEncoder()
 	encoding.writeVarUint(encoder, messageSync)
-	const update = Y.encodeStateAsUpdate(ydoc, baseStateVector)
 	syncProtocol.writeUpdate(encoder, update)
 	return encoding.toUint8Array(encoder)
 }
 
 /**
- * Apply an updated message to the ydoc.
+ * Apply a step to the ydoc.
  *
  * Only used in tests right now.
  * @param {Y.Doc} ydoc - encode state of this doc
- * @param {Uint8Array} updateMessage - y-websocket sync message with update
+ * @param {string} step - base64 encoded yjs sync update message
  * @param {object} origin - initiator object e.g. WebsocketProvider
  */
-export function applyUpdateMessage(ydoc, updateMessage, origin = 'origin') {
+export function applyStep(ydoc, step, origin = 'origin') {
+	const updateMessage = decodeArrayBuffer(step.step)
 	const decoder = decoding.createDecoder(updateMessage)
 	const messageType = decoding.readVarUint(decoder)
 	if (messageType !== messageSync) {
@@ -144,14 +152,4 @@ export function logStep(step) {
 		console.debug('y.js message awareness', encodedStep, err.stack)
 		break
 	}
-}
-
-/**
- * Helper function to check if two state vectors have the same state
- * @param {Array} arr - state vector to compare
- * @param {Array} other - state vector to compare against
- */
-function sameState(arr, other) {
-	return arr.length === other.length
-		&& arr.every((value, index) => other[index] === value)
 }
