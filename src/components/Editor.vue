@@ -503,9 +503,7 @@ export default {
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
-			if (documentState) {
-				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
-			} else {
+			if (!documentState) {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
