@@ -175,6 +175,7 @@ OC.L10N.register(
     "Add column after" : "Přidat sloupec za",
     "Delete this column" : "Smazat tento sloupec",
     "Delete this table" : "Smazat tuto tabulku",
+    "Add row below" : "Přidat níže řádek",
     "Show folder description" : "Zobrazit popis složky",
     "Hide outline" : "Skrýt ohraničení",
     "Show outline" : "Zobrazit ohraničení",
