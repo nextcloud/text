@@ -245,8 +245,10 @@ class DocumentService {
 			}
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
 		}
-		// If there were any queries in the steps send the entire history
-		$getStepsSinceVersion = count($querySteps) > 0 ? 0 : $version;
+		// If there were any queries in the steps send all steps since last save.
+		$getStepsSinceVersion = count($querySteps) > 0
+			? $document->getLastSavedVersion()
+			: $version;
 		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
 		$stepsToReturn = [];
 		foreach ($allSteps as $step) {
