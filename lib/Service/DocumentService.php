@@ -208,7 +208,8 @@ class DocumentService {
 		$documentId = $session->getDocumentId();
 		$readOnly = $this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken);
 		$stepsToInsert = [];
-		$querySteps = [];
+		$stepsIncludeQuery = false;
+		$documentState = null;
 		$newVersion = $version;
 		foreach ($steps as $step) {
 			$message = YjsMessage::fromBase64($step);
@@ -217,7 +218,7 @@ class DocumentService {
 			}
 			// Filter out query steps as they would just trigger clients to send their steps again
 			if ($message->getYjsMessageType() === YjsMessage::YJS_MESSAGE_SYNC && $message->getYjsSyncType() === YjsMessage::YJS_MESSAGE_SYNC_STEP1) {
-				$querySteps[] = $step;
+				$stepsIncludeQuery = true;
 			} else {
 				$stepsToInsert[] = $step;
 			}
@@ -228,10 +229,24 @@ class DocumentService {
 			}
 			$newVersion = $this->insertSteps($document, $session, $stepsToInsert);
 		}
-		// If there were any queries in the steps send all steps since last save.
-		$getStepsSinceVersion = count($querySteps) > 0
-			? $document->getLastSavedVersion()
-			: $version;
+
+		// By default send all steps the user has not received yet.
+		$getStepsSinceVersion = $version;
+		if ($stepsIncludeQuery) {
+			$this->logger->debug('Loading document state for ' . $documentId);
+			try {
+				$stateFile = $this->getStateFile($documentId);
+				$documentState = $stateFile->getContent();
+				$this->logger->debug('Existing document, state file loaded ' . $documentId);
+				// If there were any queries in the steps send all steps since last save.
+				$getStepsSinceVersion = $document->getLastSavedVersion();
+			} catch (NotFoundException $e) {
+				$this->logger->debug('Existing document, but no state file found for ' . $documentId);
+				// If there is no state file include all the steps.
+				$getStepsSinceVersion = 0;
+			}
+		}
+
 		$allSteps = $this->getSteps($documentId, $getStepsSinceVersion);
 		$stepsToReturn = [];
 		foreach ($allSteps as $step) {
@@ -240,9 +255,11 @@ class DocumentService {
 				$stepsToReturn[] = $step;
 			}
 		}
+
 		return [
 			'steps' => $stepsToReturn,
-			'version' => $newVersion
+			'version' => $newVersion,
+			'documentState' => $documentState
 		];
 	}
 
