@@ -137,16 +137,6 @@ class SyncService {
 		this.baseVersionEtag = this.#connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
-		const documentState = this.connectionState.documentState
-		if (documentState) {
-			const initialStep = documentStateToStep(documentState)
-			this.emit('sync', {
-				version: this.version,
-				steps: [initialStep],
-				document: this.#connection.document,
-			})
-		}
-
 		return this.connectionState
 	}
 
@@ -201,7 +191,15 @@ class SyncService {
 		}
 		return this.#connection.push(sendable)
 			.then((response) => {
-				const { steps } = response.data
+				const { steps, documentState } = response.data
+				if (documentState) {
+					const documentStateStep = documentStateToStep(documentState)
+					this.emit('sync', {
+						version: this.version,
+						steps: [documentStateStep],
+						document: this.#connection.document,
+					})
+				}
 				this.pushError = 0
 				this.sending = false
 				if (steps?.length > 0) {
