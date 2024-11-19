@@ -15,7 +15,8 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions">
+		<SessionList :sessions="sessions"
+			@editor-width-change="onEditorWidthChange">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
@@ -72,7 +73,9 @@ export default {
 		},
 		sessions: {
 			type: Object,
-			default: () => { return {} },
+			default: () => {
+				return {}
+			},
 		},
 	},
 
@@ -128,35 +131,38 @@ export default {
 				this.$syncService.forceSave()
 			}
 		},
+		onEditorWidthChange(newWidth) {
+			this.$emit('editor-width-change', newWidth)
+		},
 	},
 }
 </script>
 
 <style scoped lang="scss">
-	.text-editor__session-list {
-		display: flex;
+.text-editor__session-list {
+	display: flex;
 
-		input, div {
-			vertical-align: middle;
-			margin-left: 3px;
-		}
+	input, div {
+		vertical-align: middle;
+		margin-left: 3px;
 	}
+}
 
-	.save-status {
-		border-radius: 50%;
-		color: var(--color-text-lighter);
-		display: inline-flex;
-		justify-content: center;
-		padding: 0;
-		height: var(--default-clickable-area);
-		width: var(--default-clickable-area);
+.save-status {
+	border-radius: 50%;
+	color: var(--color-text-lighter);
+	display: inline-flex;
+	justify-content: center;
+	padding: 0;
+	height: var(--default-clickable-area);
+	width: var(--default-clickable-area);
 
-		&:hover {
-			background-color: var(--color-background-hover);
-		}
+	&:hover {
+		background-color: var(--color-background-hover);
 	}
+}
 
-	.last-saved {
-		padding: 6px;
-	}
+.last-saved {
+	padding: 6px;
+}
 </style>

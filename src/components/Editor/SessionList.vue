@@ -29,9 +29,16 @@
 						:style="avatarStyle(session)">
 						<AvatarWrapper :session="session" :size="36" />
 						<span class="session-label">
-							{{ session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest')) }}
+							{{
+								session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest'))
+							}}
 						</span>
 						<span v-if="session.userId === null" class="guest-label">({{ t('text', 'guest') }})</span>
+					</li>
+					<li>
+						<NcCheckboxRadioSwitch :checked="isFullWidth" @update:checked="onWidthToggle">
+							{{ t('text', 'Full width editor') }}
+						</NcCheckboxRadioSwitch>
 					</li>
 				</ul>
 			</div>
@@ -40,25 +47,33 @@
 </template>
 
 <script>
-import { NcPopover } from '@nextcloud/vue'
+import { NcCheckboxRadioSwitch, NcPopover } from '@nextcloud/vue'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME } from '../../services/SyncService.js'
+import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.js'
+import { loadState } from '@nextcloud/initial-state'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'SessionList',
 	components: {
 		AvatarWrapper,
 		NcPopover,
+		NcCheckboxRadioSwitch,
 	},
 	props: {
 		sessions: {
 			type: Object,
-			default: () => { return {} },
+			default: () => {
+				return {}
+			},
 		},
 	},
 	data() {
+		const isFullWidth = loadState('text', 'is_full_width_editor', false)
 		return {
 			myName: '',
+			isFullWidth,
 		}
 	},
 	computed: {
@@ -77,7 +92,7 @@ export default {
 		participants() {
 			return Object.values(this.sessions).filter((session) =>
 				session.lastContact > Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-					&& (session.userId !== null || session.guestName !== null),
+				&& (session.userId !== null || session.guestName !== null),
 			).sort((a, b) => a.lastContact < b.lastContact)
 		},
 		currentSession() {
@@ -94,76 +109,89 @@ export default {
 			return this.participantsWithoutCurrent.slice(0, 3)
 		},
 	},
+	methods: {
+		onWidthToggle(checked) {
+			this.isFullWidth = checked
+			this.$emit('editor-width-change', checked ? '100%' : '80ch')
+
+			axios.post(generateUrl('/apps/text/settings'), {
+				key: 'is_full_width_editor',
+				value: checked ? '1' : '0',
+			})
+		},
+	},
 }
 </script>
 
 <style scoped lang="scss">
-	.session-list {
-		height: var(--default-clickable-area);
+.session-list {
+	height: var(--default-clickable-area);
+}
+
+.avatar-list {
+	border: none;
+	background-color: var(--color-main-background);
+	padding: 0;
+	margin: 0;
+	padding-left: 3px;
+	display: inline-flex;
+	flex-direction: row-reverse;
+
+	.avatar-wrapper {
+		margin: 0 -12px 0 0;
+		z-index: 1;
+		border-radius: 50%;
+		overflow: hidden;
+		box-sizing: content-box !important;
+		height: calc(var(--default-clickable-area) - 4px);
+		width: calc(var(--default-clickable-area) - 4px);
 	}
-	.avatar-list {
-		border: none;
-		background-color: var(--color-main-background);
-		padding: 0;
-		margin: 0;
-		padding-left: 3px;
-		display: inline-flex;
-		flex-direction: row-reverse;
+
+	.icon-more, .icon-group, .icon-settings-dark {
+		width: var(--default-clickable-area);
+		height: var(--default-clickable-area);
+		margin: 0 3px 0 0;
+
+		&:hover {
+			background-color: var(--color-background-hover);
+		}
+	}
+}
+
+.session-menu {
+	max-width: 280px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+
+	ul li {
+		align-items: center;
+		display: flex;
+		padding: 6px;
 
 		.avatar-wrapper {
-			margin: 0 -12px 0 0;
-			z-index: 1;
-			border-radius: 50%;
-			overflow: hidden;
-			box-sizing: content-box !important;
-			height: calc(var(--default-clickable-area) - 4px);
-			width: calc(var(--default-clickable-area) - 4px);
+			height: 36px;
+			width: 36px;
+			margin-right: 6px;
 		}
 
-		.icon-more, .icon-group, .icon-settings-dark {
-			width: var(--default-clickable-area);
-			height: var(--default-clickable-area);
-			margin: 0 3px 0 0;
+		.session-label {
+			padding-right: 3px;
+		}
 
-			&:hover {
-				background-color: var(--color-background-hover);
-			}
+		.guest-label {
+			padding-left: 3px;
+			color: var(--color-text-maxcontrast);
 		}
 	}
+}
 
-	.session-menu {
-		max-width: 280px;
-		padding-top: 6px;
-		padding-bottom: 6px;
+label {
+	display: block;
+	margin: 8px;
+}
 
-		ul li {
-			align-items: center;
-			display: flex;
-			padding: 6px;
-
-			.avatar-wrapper {
-				height: 36px;
-				width: 36px;
-				margin-right: 6px;
-			}
-
-			.session-label {
-				padding-right: 3px;
-			}
-			.guest-label {
-				padding-left: 3px;
-				color: var(--color-text-maxcontrast);
-			}
-		}
-	}
-
-	label {
-		display: block;
-		margin: 8px;
-	}
-
-	.hint {
-		margin: 8px;
-		color: var(--color-text-maxcontrast);
-	}
+.hint {
+	margin: 8px;
+	color: var(--color-text-maxcontrast);
+}
 </style>
