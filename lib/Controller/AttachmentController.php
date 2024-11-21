@@ -144,6 +144,30 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 		}
 	}
 
+	#[NoAdminRequired]
+	#[PublicPage]
+	#[RequireDocumentSession]
+	public function createAttachment(string $token = ''): DataResponse {
+		$documentId = $this->getSession()->getDocumentId();
+		try {
+			$userId = $this->getSession()->getUserId();
+			$newFileName = $this->request->getParam('fileName', 'text.md');
+			$createResult = $this->attachmentService->createAttachmentFile($documentId, $newFileName, $userId);
+			if (isset($createResult['error'])) {
+				return new DataResponse($createResult, Http::STATUS_BAD_REQUEST);
+			} else {
+				return new DataResponse($createResult);
+			}
+		} catch (InvalidPathException $e) {
+			$this->logger->error('File creation error', ['exception' => $e]);
+			$error = $e->getMessage() ?: 'Upload error';
+			return new DataResponse(['error' => $error], Http::STATUS_BAD_REQUEST);
+		} catch (Exception $e) {
+			$this->logger->error('File creation error', ['exception' => $e]);
+			return new DataResponse(['error' => 'File creation error'], Http::STATUS_BAD_REQUEST);
+		}
+	}
+
 	private function getUploadedFile(string $key): array {
 		$file = $this->request->getUploadedFile($key);
 		$error = null;
