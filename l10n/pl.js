@@ -175,7 +175,7 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Opcja",
     "Formatting" : "Formatowanie",
-    "Add folder description" : "Dodaj opis folderu",
+    "Add folder description" : "Dodaj opis katalogu",
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",
     "Copied to the clipboard" : "Skopiowano do schowka",
