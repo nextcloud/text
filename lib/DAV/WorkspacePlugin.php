@@ -99,8 +99,11 @@ class WorkspacePlugin extends ServerPlugin {
 				try {
 					$cachedContent = $file->getContent();
 					$cache->set($cacheKey, $cachedContent, 3600);
-				} catch (GenericFileException|NotPermittedException|LockedException) {
-					// Ignore
+				} catch (GenericFileException|NotPermittedException|LockedException $e) {
+					// Ignore but log when debugging
+					$this->logger->debug($e->getMessage(), [
+						'exception' => $e,
+					]);
 				} catch (Exception $e) {
 					$this->logger->error($e->getMessage(), [
 						'exception' => $e,
