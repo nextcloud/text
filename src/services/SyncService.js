@@ -9,8 +9,9 @@ import mitt from 'mitt'
 import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
+import Outbox from './Outbox.ts'
 import SessionApi, { Connection } from './SessionApi.js'
-import { getSteps, getAwareness, documentStateToStep } from '../helpers/yjs.js'
+import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -56,6 +57,7 @@ class SyncService {
 
 	#sendIntervalId
 	#connection
+	#outbox = new Outbox()
 
 	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
@@ -152,30 +154,34 @@ class SyncService {
 			})
 	}
 
-	sendSteps(getSendable) {
+	sendStep(step) {
+		this.#outbox.storeStep(step)
+		this.sendSteps()
+	}
+
+	sendSteps() {
 		// If already waiting to send, do nothing.
 		if (this.#sendIntervalId) {
 			return
 		}
-		return new Promise((resolve, reject) => {
-			this.#sendIntervalId = setInterval(() => {
-				if (this.#connection && !this.sending) {
-					this.sendStepsNow(getSendable).then(resolve).catch(reject)
-				}
-			}, 200)
-		})
+		this.#sendIntervalId = setInterval(() => {
+			if (this.#connection && !this.sending) {
+				this.sendStepsNow()
+			}
+		}, 200)
 	}
 
-	sendStepsNow(getSendable) {
+	sendStepsNow() {
 		this.sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = null
-		const sendable = getSendable()
+		const sendable = this.#outbox.getDataToSend()
 		if (sendable.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		return this.#connection.push(sendable)
+		return this.#connection.push({ ...sendable, version: this.version })
 			.then((response) => {
+				this.#outbox.clearSentData(sendable)
 				const { steps, documentState } = response.data
 				if (documentState) {
 					const documentStateStep = documentStateToStep(documentState)
@@ -194,6 +200,7 @@ class SyncService {
 				const { response, code } = err
 				this.sending = false
 				this.pushError++
+				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				}
@@ -298,25 +305,12 @@ class SyncService {
 		})
 	}
 
-	async sendRemainingSteps(queue) {
-		if (queue.length === 0) {
+	sendRemainingSteps() {
+		if (!this.outbox.hasUpdate()) {
 			return
 		}
-		let outbox = []
-		const steps = getSteps(queue)
-		const awareness = getAwareness(queue)
-		return this.sendStepsNow(() => {
-			const data = { steps, awareness, version: this.version }
-			outbox = [...queue]
-			logger.debug('sending final steps ', data)
-			return data
-		})?.then(() => {
-			// only keep the steps that were not send yet
-			queue.splice(0,
-				queue.length,
-				...queue.filter(s => !outbox.includes(s)),
-			)
-		}, err => logger.error(err))
+		logger.debug('sending final steps')
+		return this.sendStepsNow().catch(err => logger.error(err))
 	}
 
 	async close() {

@@ -347,7 +347,6 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
-		this.$queue = []
 		// The following can be useful for debugging ydoc updates
 		// this.$ydoc.on('update', function(update, origin, doc, tr) {
 		//   console.debug('ydoc update', update, origin, doc, tr)
@@ -398,7 +397,6 @@ export default {
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
 				fileId: this.fileId,
-				queue: this.$queue,
 				initialSession: this.initialSession,
 				disableBC: true,
 			})
@@ -698,7 +696,7 @@ export default {
 		},
 
 		async close() {
-			await this.$syncService.sendRemainingSteps(this.$queue)
+			await this.$syncService.sendRemainingSteps()
 			await this.disconnect()
 			if (this.$editor) {
 				try {
