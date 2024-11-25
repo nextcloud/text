@@ -9,6 +9,7 @@ import { searchProvider, getLinkWithPicker } from '@nextcloud/vue/dist/Component
 import menuEntries from './../../Menu/entries.js'
 import { getIsActive } from '../../Menu/utils.js'
 import markdownit from '../../../markdownit/index.js'
+import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
 
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')
@@ -18,31 +19,6 @@ const filterOut = (e) => {
 }
 
 const important = ['task-list', 'table']
-
-const hasMarkdownSyntax = (content) => {
-	// Regular expressions for common Markdown patterns
-	const markdownPatterns = [
-		/\*\*.*?\*\*/, // Bold: **text**
-		/\*.*?\*/, // Italics: *text*
-		/\[.*?\(.*?\)/, // Links: [text](url)
-		/^#{1,6}\s.*$/, // Headings: # text
-		/^\s*[-+*]\s.*/m, // Unordered list: - item
-		/^\s\d\..*/m, // Ordered list: 1. item
-		/^>+\s.*/, // Blockquote: > text
-		/`.*?`/, // Code: `code`
-	]
-
-	return markdownPatterns.some(pattern => pattern.test(content))
-}
-
-const isValidMarkdown = (content) => {
-	try {
-		markdownit.parse(content)
-		return true
-	} catch (e) {
-		return false
-	}
-}
 
 const isValidUrl = (url) => {
 	try {
@@ -88,7 +64,7 @@ export default () => createSuggestions({
 			.then(link => {
 				const isUrl = isValidUrl(link)
 				if (!isUrl) {
-					const isMarkdown = hasMarkdownSyntax(link) && isValidMarkdown(link)
+					const isMarkdown = shouldInterpretAsMarkdown(link)
 					// Insert markdown content (e.g. from `text_templates` app)
 					const content = isMarkdown ? markdownit.render(link) : link
 					editor
