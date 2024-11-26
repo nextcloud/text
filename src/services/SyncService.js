@@ -167,7 +167,7 @@ class SyncService {
 		}
 		this.#sendIntervalId = setInterval(() => {
 			if (this.#connection && !this.sending) {
-				this.sendStepsNow()
+				this.sendStepsNow().catch(err => logger.error(err))
 			}
 		}, 200)
 	}
