@@ -17,7 +17,7 @@ export default class Outbox {
 
 	storeStep(step: Uint8Array) {
 		const encoded = encodeArrayBuffer(step)
-		if (encoded < 'AAA') {
+		if (encoded < 'AAA' || encoded > 'Ag') {
 			logger.warn('Unexpected step type:', { step, encoded })
 			return
 		}
@@ -29,11 +29,7 @@ export default class Outbox {
 			this.#syncUpdate = encoded
 			return
 		}
-		if (encoded < 'Ag') {
-			this.#awarenessUpdate = encoded
-			return
-		}
-		logger.warn('Unexpected step type:', { step, encoded })
+		this.#awarenessUpdate = encoded
 	}
 
 	getDataToSend(): Sendable {
@@ -48,7 +44,7 @@ export default class Outbox {
 	}
 
 	/*
-	 * Clear data that has just been
+	 * Clear data that has just been sent.
 	 *
 	 * Only clear data that has not changed in the meantime.
 	 * @param {Sendable} - data that was to the server

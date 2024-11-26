@@ -307,8 +307,8 @@ class SyncService {
 	}
 
 	sendRemainingSteps() {
-		if (!this.outbox.hasUpdate()) {
-			return
+		if (!this.#outbox.hasUpdate) {
+			return Promise.resolve()
 		}
 		logger.debug('sending final steps')
 		return this.sendStepsNow().catch(err => logger.error(err))

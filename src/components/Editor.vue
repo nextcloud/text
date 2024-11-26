@@ -703,7 +703,9 @@ export default {
 
 		async close() {
 			await this.$syncService.sendRemainingSteps()
+				.catch(err => logger.warn('Failed to send remaining steps', { err }))
 			await this.disconnect()
+				.catch(err => logger.warn('Failed to disconnect', { err }))
 			if (this.$editor) {
 				try {
 					this.unlistenEditorEvents()
