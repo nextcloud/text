@@ -4,7 +4,7 @@
  */
 
 import { Extension } from '@tiptap/core'
-import { lowlight } from 'lowlight'
+import { createLowlight, common } from 'lowlight'
 
 /* eslint-disable import/no-named-as-default */
 import Blockquote from '@tiptap/extension-blockquote'
@@ -47,6 +47,7 @@ import TrailingNode from './../nodes/TrailingNode.js'
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
 import { translate as t } from '@nextcloud/l10n'
 
+const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
 
 export default Extension.create({
