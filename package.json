@@ -91,7 +91,7 @@
     "escape-html": "^1.0.3",
     "highlight.js": "^11.10.0",
     "lib0": "^0.2.98",
-    "lowlight": "^2.9.0",
+    "lowlight": "^3.2.0",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
     "markdown-it-front-matter": "^0.2.4",
