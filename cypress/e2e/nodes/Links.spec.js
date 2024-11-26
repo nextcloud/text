@@ -27,6 +27,12 @@ describe('test link marks', function() {
 
 	describe('link bubble', function() {
 
+		/**
+		 * Find link and click on it
+		 *
+		 * @param {string} link The link URL
+		 * @param {object|null} options the click options
+		 */
 		function clickLink(link, options = {}) {
 			cy.getContent()
 				.find(`a[href*="${link}"]`)
