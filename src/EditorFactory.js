@@ -8,13 +8,15 @@ import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
-import { lowlight } from 'lowlight/lib/core.js'
+import { createLowlight } from 'lowlight'
 import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
 import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
 // eslint-disable-next-line import/no-named-as-default
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+
+const lowlight = createLowlight()
 
 const loadSyntaxHighlight = async (language) => {
 	const list = hljs.listLanguages()
@@ -24,7 +26,7 @@ const loadSyntaxHighlight = async (language) => {
 			logger.debug('Loading language', language)
 			// eslint-disable-next-line n/no-missing-import
 			const syntax = await import(/* webpackChunkName: "highlight/[request]" */`../node_modules/highlight.js/lib/languages/${language}.js`)
-			lowlight.registerLanguage(language, syntax.default)
+			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
 			logger.debug('No matching highlighing found', { error })
