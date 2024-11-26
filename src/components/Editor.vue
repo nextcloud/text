@@ -93,8 +93,9 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState, applyDocumentState, getUpdateMessage } from '../helpers/yjs.js'
+import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
@@ -347,7 +348,6 @@ export default {
 	},
 	created() {
 		this.$ydoc = new Doc()
-		this.$queue = []
 		// The following can be useful for debugging ydoc updates
 		// this.$ydoc.on('update', function(update, origin, doc, tr) {
 		//   console.debug('ydoc update', update, origin, doc, tr)
@@ -355,6 +355,7 @@ export default {
 		// });
 		this.$providers = []
 		this.$editor = null
+		this.$api = null
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
@@ -380,16 +381,20 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 
-			this.$syncService = new SyncService({
+			this.$api = new SessionApi({
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				baseVersionEtag: this.$baseVersionEtag,
 				forceRecreate: this.forceRecreate,
+			})
+
+			this.$syncService = new SyncService({
+				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
 					: (content) => serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
+				api: this.$api,
 			})
 
 			this.listenSyncServiceEvents()
@@ -398,7 +403,6 @@ export default {
 				ydoc: this.$ydoc,
 				syncService: this.$syncService,
 				fileId: this.fileId,
-				queue: this.$queue,
 				initialSession: this.initialSession,
 				disableBC: true,
 			})
@@ -503,15 +507,7 @@ export default {
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
-			if (documentState) {
-				applyDocumentState(this.$ydoc, documentState, this.$providers[0])
-				// distribute additional state that may exist locally
-				const updateMessage = getUpdateMessage(this.$ydoc, documentState)
-				if (updateMessage) {
-					logger.debug('onLoaded: Pushing local changes to server')
-					this.$queue.push(updateMessage)
-				}
-			} else {
+			if (!documentState) {
 				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
 			}
 
@@ -592,7 +588,9 @@ export default {
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
-			this.document = document
+			if (document) {
+				this.document = document
+			}
 		},
 
 		onError({ type, data }) {
@@ -704,8 +702,10 @@ export default {
 		},
 
 		async close() {
-			await this.$syncService.sendRemainingSteps(this.$queue)
+			await this.$syncService.sendRemainingSteps()
+				.catch(err => logger.warn('Failed to send remaining steps', { err }))
 			await this.disconnect()
+				.catch(err => logger.warn('Failed to disconnect', { err }))
 			if (this.$editor) {
 				try {
 					this.unlistenEditorEvents()
