@@ -106,7 +106,7 @@ import {
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState, applyDocumentState } from '../helpers/yjs.js'
+import { getDocumentState } from '../helpers/yjs.js'
 import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
