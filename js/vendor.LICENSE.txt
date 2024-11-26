@@ -81,7 +81,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 3.1.0
+version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -341,8 +341,8 @@ version: 2.2.0
 license: MIT
 
 d3-array
-version: 3.2.4
-license: ISC
+version: 2.12.1
+license: BSD-3-Clause
 
 d3-axis
 version: 3.0.0
@@ -448,10 +448,6 @@ eventemitter3
 version: 5.0.1
 license: MIT
 
-fault
-version: 2.0.1
-license: MIT
-
 floating-vue
 version: 1.0.0-beta.19
 license: MIT
@@ -459,10 +455,6 @@ license: MIT
 focus-trap
 version: 7.4.3
 license: MIT
-
-format
-version: 0.2.2
-license: (MIT)
 
 highlight.js
 version: 11.10.0
@@ -521,7 +513,7 @@ version: 4.4.2
 license: MIT
 
 lowlight
-version: 2.9.0
+version: 3.2.0
 license: MIT
 
 markdown-it
