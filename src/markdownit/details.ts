@@ -4,8 +4,8 @@
  */
 
 import type MarkdownIt from 'markdown-it'
-import type StateBlock from 'markdown-it/lib/rules_block/state_block'
-import type Token from 'markdown-it/lib/token'
+import type StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
+import type Token from 'markdown-it/lib/token.mjs'
 
 const DETAILS_START_REGEX = /^<details>\s*$/
 const DETAILS_END_REGEX = /^<\/details>\s*$/
