@@ -4,7 +4,7 @@
  */
 
 import MarkdownIt from 'markdown-it'
-import taskLists from '@hedgedoc/markdown-it-task-lists'
+import taskLists from './taskLists.ts'
 import markdownitMentions from '@quartzy/markdown-it-mentions'
 import underline from './underline.js'
 import splitMixedLists from './splitMixedLists.js'
@@ -15,7 +15,7 @@ import hardbreak from './hardbreak.js'
 import keepSyntax from './keepSyntax.js'
 import frontMatter from 'markdown-it-front-matter'
 import implicitFigures from 'markdown-it-image-figures'
-import { escapeHtml } from 'markdown-it/lib/common/utils.js'
+import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')
