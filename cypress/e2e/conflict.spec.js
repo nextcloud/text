@@ -31,40 +31,45 @@ const variants = [
 
 variants.forEach(function({ fixture, mime }) {
 	const fileName = fixture
+	const prefix = mime.replaceAll('/', '-')
 	describe(`${mime} (${fileName})`, function() {
 		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 		before(() => {
-			initUserAndFiles(user, fileName)
+			initUserAndFiles(user)
 		})
 
 		beforeEach(function() {
 			cy.login(user)
+			cy.isolateTest({ sourceFile: fileName })
 		})
 
-		it('no actual conflict - just reload', function() {
-			// start with different content
-			cy.uploadFile('frontmatter.md', mime, fileName)
-			// just a read only session opened
-			cy.shareFile(`/${fileName}`)
-				.then(token => cy.visit(`/s/${token}`))
-			cy.getContent().should('contain', 'Heading')
-			cy.intercept({ method: 'POST', url: '**/session/*/push' })
-				.as('push')
-			cy.wait('@push')
-			cy.uploadFile(fileName, mime)
-			cy.get('#editor-container .document-status', { timeout: 30000 })
-				.should('contain', 'session has expired')
-			// Reload button works
-			cy.get('#editor-container .document-status a.button')
-				.contains('Reload')
-				.click()
-			getWrapper().should('not.exist')
-			cy.getContent().should('contain', 'Hello world')
-			cy.getContent().should('not.contain', 'Heading')
+		it(prefix + ': no actual conflict - just reload', function() {
+			cy.testName().then(testName => {
+				// start with different content
+				cy.uploadFile('frontmatter.md', mime, `${testName}/${fileName}`)
+				// just a read only session opened
+				cy.shareFile(`${testName}/${fileName}`)
+					.then((token) => {
+						cy.visit(`/s/${token}`)
+					})
+				cy.getContent().should('contain', 'Heading')
+
+				cy.uploadFile(fileName, mime, testName + '/' + fileName)
+				cy.get('#editor-container .document-status', { timeout: 40000 })
+					.should('contain', 'session has expired')
+
+				// Reload button works
+				cy.get('#editor-container .document-status a.button')
+					.contains('Reload')
+					.click()
+				getWrapper().should('not.exist')
+				cy.getContent().should('contain', 'Hello world')
+				cy.getContent().should('not.contain', 'Heading')
+			})
 		})
 
-		it('displays conflicts', function() {
+		it(prefix + ': displays conflicts', function() {
 			createConflict(fileName, mime)
 
 			cy.openFile(fileName)
@@ -82,10 +87,13 @@ variants.forEach(function({ fixture, mime }) {
 				.should('contain', 'cruel conflicting')
 		})
 
-		it('resolves conflict using current editing session', function() {
+		it(prefix + ': resolves conflict using current editing session', function() {
 			createConflict(fileName, mime)
 
 			cy.openFile(fileName)
+			cy.intercept({ method: 'POST', url: '**/session/*/push' })
+				.as('push')
+			cy.wait('@push')
 			cy.get('[data-cy="resolveThisVersion"]').click()
 
 			getWrapper().should('not.exist')
@@ -95,7 +103,7 @@ variants.forEach(function({ fixture, mime }) {
 			cy.getContent().should('contain', 'cruel conflicting')
 		})
 
-		it('resolves conflict using server version', function() {
+		it(prefix + ': resolves conflict using server version', function() {
 			createConflict(fileName, mime)
 
 			cy.openFile(fileName)
@@ -111,13 +119,15 @@ variants.forEach(function({ fixture, mime }) {
 			cy.getContent().should('not.contain', 'cruel conflicting')
 		})
 
-		it('hides conflict in read only session', function() {
+		it(prefix + ': hides conflict in read only session', function() {
 			createConflict(fileName, mime)
-			cy.shareFile(`/${fileName}`)
-				.then((token) => {
-					cy.logout()
-					cy.visit(`/s/${token}`)
-				})
+			cy.testName().then(testName => {
+				cy.shareFile(`/${testName}/${fileName}`)
+					.then((token) => {
+						cy.logout()
+						cy.visit(`/s/${token}`)
+					})
+			})
 			cy.getContent().should('contain', 'cruel conflicting')
 			getWrapper().should('not.exist')
 		})
@@ -130,12 +140,14 @@ variants.forEach(function({ fixture, mime }) {
  * @param {string} mime - mimetype
  */
 function createConflict(fileName, mime) {
-	cy.visit('/apps/files')
 	cy.openFile(fileName)
 	cy.log('Inspect editor')
+	cy.getEditor().find('.ProseMirror').should('have.attr', 'contenteditable', 'true')
 	cy.getContent()
 		.type('Hello you cruel conflicting world')
-	cy.uploadFile(fileName, mime)
+	cy.testName().then(testName => {
+		cy.uploadFile(fileName, mime, testName + '/' + fileName)
+	})
 	cy.get('#viewer .modal-header button.header-close').click()
 	cy.get('#viewer').should('not.exist')
 }
