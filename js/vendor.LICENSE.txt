@@ -341,8 +341,8 @@ version: 2.2.0
 license: MIT
 
 d3-array
-version: 3.2.4
-license: ISC
+version: 2.12.1
+license: BSD-3-Clause
 
 d3-axis
 version: 3.0.0
