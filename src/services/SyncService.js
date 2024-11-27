@@ -24,8 +24,9 @@ import mitt from 'mitt'
 import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
-import SessionApi, { Connection } from './SessionApi.js'
-import { getSteps, getAwareness } from '../helpers/yjs.js'
+import Outbox from './Outbox.js'
+import { Connection } from './SessionApi.js'
+import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
 /**
@@ -71,14 +72,15 @@ class SyncService {
 
 	#sendIntervalId
 	#connection
+	#outbox = new Outbox()
 
-	constructor({ baseVersionEtag, serialize, getDocumentState, ...options }) {
+	constructor({ baseVersionEtag, serialize, getDocumentState, api }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
-		this._api = new SessionApi(options)
+		this._api = api
 		this.#connection = null
 
 		this.stepClientIDs = []
@@ -168,52 +170,69 @@ class SyncService {
 			})
 	}
 
-	sendSteps(getSendable) {
+	sendStep(step) {
+		this.#outbox.storeStep(step)
+		this.sendSteps()
+	}
+
+	sendSteps() {
 		// If already waiting to send, do nothing.
 		if (this.#sendIntervalId) {
 			return
 		}
-		return new Promise((resolve, reject) => {
-			this.#sendIntervalId = setInterval(() => {
-				if (this.#connection && !this.sending) {
-					this.sendStepsNow(getSendable).then(resolve).catch(reject)
-				}
-			}, 200)
-		})
+		this.#sendIntervalId = setInterval(() => {
+			if (this.#connection && !this.sending) {
+				this.sendStepsNow().catch(err => logger.error(err))
+			}
+		}, 200)
 	}
 
-	sendStepsNow(getSendable) {
+	async sendStepsNow() {
 		this.sending = true
 		clearInterval(this.#sendIntervalId)
 		this.#sendIntervalId = null
-		const data = getSendable()
-		if (data.steps.length > 0) {
+		const sendable = this.#outbox.getDataToSend()
+		if (sendable.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		return this.#connection.push(data)
+		if (!this.hasActiveConnection) {
+			return
+		}
+		return this.#connection.push({ ...sendable, version: this.version })
 			.then((response) => {
+				this.#outbox.clearSentData(sendable)
+				const { steps, documentState } = response.data
+				if (documentState) {
+					const documentStateStep = documentStateToStep(documentState)
+					this.emit('sync', {
+						version: this.version,
+						steps: [documentStateStep],
+						document: this.#connection.document,
+					})
+				}
 				this.pushError = 0
 				this.sending = false
-				this.emit('sync', {
-					steps: [],
-					document: this.#connection.document,
-					version: this.version,
-				})
+				if (steps?.length > 0) {
+					this.receiveSteps({ steps })
+				}
 			}).catch(err => {
 				const { response, code } = err
 				this.sending = false
 				this.pushError++
+				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {
 					this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 				}
 				if (response?.status === 412) {
 					this.emit('error', { type: ERROR_TYPE.LOAD_ERROR, data: response })
 				} else if (response?.status === 403) {
-					if (!data.document) {
+					// TODO: is this really about sendable?
+					if (!sendable.document) {
 						// either the session is invalid or the document is read only.
 						logger.error('failed to write to document - not allowed')
 						this.emit('error', { type: ERROR_TYPE.PUSH_FORBIDDEN, data: {} })
 					}
+					// TODO: does response.data ever have a document? maybe for errors?
 					// Only emit conflict event if we have synced until the latest version
 					if (response.data.document?.currentVersion === this.version) {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
@@ -226,7 +245,7 @@ class SyncService {
 			})
 	}
 
-	_receiveSteps({ steps, document, sessions }) {
+	receiveSteps({ steps, document = null, sessions = [] }) {
 		const awareness = sessions
 			.filter(s => s.lastContact > (Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME))
 			.filter(s => s.lastAwarenessMessage)
@@ -254,8 +273,7 @@ class SyncService {
 		this.lastStepPush = Date.now()
 		this.emit('sync', {
 			steps: newSteps,
-			// TODO: do we actually need to dig into the connection here?
-			document: this.#connection.document,
+			document,
 			version: this.version,
 		})
 	}
@@ -306,25 +324,12 @@ class SyncService {
 		})
 	}
 
-	async sendRemainingSteps(queue) {
-		if (queue.length === 0) {
+	async sendRemainingSteps() {
+		if (!this.#outbox.hasUpdate) {
 			return
 		}
-		let outbox = []
-		const steps = getSteps(queue)
-		const awareness = getAwareness(queue)
-		return this.sendStepsNow(() => {
-			const data = { steps, awareness, version: this.version }
-			outbox = [...queue]
-			logger.debug('sending final steps ', data)
-			return data
-		})?.then(() => {
-			// only keep the steps that were not send yet
-			queue.splice(0,
-				queue.length,
-				...queue.filter(s => !outbox.includes(s)),
-			)
-		}, err => logger.error(err))
+		logger.debug('sending final steps')
+		return this.sendStepsNow().catch(err => logger.error(err))
 	}
 
 	async close() {

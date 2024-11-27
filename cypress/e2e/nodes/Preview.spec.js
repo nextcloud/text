@@ -185,7 +185,7 @@ describe('Preview extension', { retries: 0 }, () => {
 
 	/**
 	 *
-	 * @param input
+	 * @param {string} input the markdown content
 	 */
 	function prepareEditor(input) {
 		loadMarkdown(editor, input)
