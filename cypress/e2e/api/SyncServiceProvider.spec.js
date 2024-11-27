@@ -4,6 +4,7 @@
  */
 
 import { randUser } from '../../utils/index.js'
+import SessionApi from '../../../src/services/SessionApi.js'
 import { SyncService } from '../../../src/services/SyncService.js'
 import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
 import { Doc } from 'yjs'
@@ -39,9 +40,11 @@ describe('Sync service provider', function() {
 	 */
 	function createProvider(ydoc) {
 		const queue = []
+		const api = new SessionApi()
 		const syncService = new SyncService({
 			serialize: () => 'Serialized',
 			getDocumentState: () => null,
+			api,
 		})
 		syncService.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({

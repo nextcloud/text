@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { WebsocketProvider } from 'y-websocket'
+import { WebsocketProvider } from './y-websocket.js'
 import initWebSocketPolyfill from './WebSocketPolyfill.js'
 import { logger } from '../helpers/logger.js'
 
