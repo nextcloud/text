@@ -17,7 +17,6 @@ use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
-use OCP\Files\StorageNotAvailableException;
 use OCP\ICacheFactory;
 use OCP\IConfig;
 use OCP\Lock\LockedException;
@@ -82,7 +81,7 @@ class WorkspacePlugin extends ServerPlugin {
 		$node = $node->getNode();
 		try {
 			$file = $this->workspaceService->getFile($node);
-		} catch (StorageNotAvailableException $e) {
+		} catch (\Exception $e) {
 			$file = null;
 		}
 
