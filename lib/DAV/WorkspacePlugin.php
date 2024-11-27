@@ -35,7 +35,6 @@ use OCA\Text\Service\WorkspaceService;
 use OCP\Files\GenericFileException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
-use OCP\Files\StorageNotAvailableException;
 use OCP\IConfig;
 use OCP\Lock\LockedException;
 use Psr\Log\LoggerInterface;
@@ -117,7 +116,7 @@ class WorkspacePlugin extends ServerPlugin {
 			/** @var File $file */
 			try {
 				$file = $this->workspaceService->getFile($nodes[0]);
-			} catch (StorageNotAvailableException $e) {
+			} catch (\Exception $e) {
 				// If a storage is not available we can for the propfind response assume that there is no rich workspace present
 			}
 		}
