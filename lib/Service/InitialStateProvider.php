@@ -77,6 +77,11 @@ class InitialStateProvider {
 			'notify_push',
 			$this->configService->isNotifyPushSyncEnabled(),
 		);
+
+		$this->initialState->provideInitialState(
+			'is_full_width_editor',
+			$this->configService->isFullWidthEditor($this->userId),
+		);
 	}
 
 	public function provideFileId(int $fileId): void {

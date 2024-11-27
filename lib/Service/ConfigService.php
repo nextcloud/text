@@ -44,4 +44,8 @@ class ConfigService {
 		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
 
 	}
+
+	public function isFullWidthEditor(?string $userId): bool {
+		return $this->config->getUserValue($userId, Application::APP_NAME, 'is_full_width_editor', '0') === '1';
+	}
 }
