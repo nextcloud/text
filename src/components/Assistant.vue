@@ -133,6 +133,8 @@ import {
 } from './Editor.provider.js'
 import { FloatingMenu } from '@tiptap/vue-2'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import markdownit from '../markdownit/index.js'
+import shouldInterpretAsMarkdown from '../markdownit/shouldInterpretAsMarkdown.js'
 
 const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
@@ -302,7 +304,9 @@ export default {
 			})
 		},
 		async insertResult(task) {
-			this.$editor.commands.insertContent(task.output.output)
+			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
+			const content = isMarkdown ? markdownit.render(task.output.output) : task.output.output
+			this.$editor.commands.insertContent(content)
 			this.showTaskList = false
 		},
 		async copyResult(task) {
