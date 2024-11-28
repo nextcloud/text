@@ -88,6 +88,10 @@ export class Connection {
 		return this.closed
 	}
 
+	get hasUnsavedChanges() {
+		return this.#document && this.#document.lastSavedVersion < this.#document.currentVersion
+	}
+
 	get #defaultParams() {
 		return {
 			documentId: this.#document.id,
