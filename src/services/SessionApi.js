@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import axios from '@nextcloud/axios'
+import { getRequestToken } from '@nextcloud/auth'
 import { generateUrl } from '@nextcloud/router'
 
 export class ConnectionClosedError extends Error {
@@ -105,17 +106,30 @@ export class Connection {
 		})
 	}
 
-	save({ version, autosaveContent, documentState, force, manualSave }) {
-		return this.#post(this.#url(`session/${this.#document.id}/save`), {
+	save(data) {
+		const url = this.#url(`session/${this.#document.id}/save`)
+		const postData = {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
-			version,
-			autosaveContent,
-			documentState,
-			force,
-			manualSave,
-		})
+			...data,
+		}
+
+		return this.#post(url, postData)
+	}
+
+	saveViaSendBeacon(data) {
+		const url = this.#url(`session/${this.#document.id}/save`)
+		const postData = {
+			...this.#defaultParams,
+			filePath: this.#options.filePath,
+			baseVersionEtag: this.#document.baseVersionEtag,
+			...data,
+			requestToken: getRequestToken() ?? '',
+		}
+
+		const blob = new Blob([JSON.stringify(postData)], { type: 'application/json' })
+		return navigator.sendBeacon(url, blob)
 	}
 
 	push({ steps, version, awareness }) {

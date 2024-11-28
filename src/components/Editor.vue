@@ -346,6 +346,13 @@ export default {
 				this.updateEditorWidth(newWidth)
 			},
 		},
+		dirty(val) {
+			if (val) {
+				window.addEventListener('beforeunload', this.saveBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -882,6 +889,10 @@ export default {
 		},
 		updateEditorWidth(newWidth) {
 			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
+		},
+
+		saveBeforeUnload() {
+			this.$syncService?.saveViaSendBeacon()
 		},
 	},
 }
