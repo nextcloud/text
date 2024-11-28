@@ -327,6 +327,13 @@ export default {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
 		},
+		dirty(val) {
+			if (val) {
+				window.addEventListener('beforeunload', this.saveBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -834,6 +841,10 @@ export default {
 				return commands.insertContentAt(range, content)
 			})
 			this.translateModal = false
+		},
+
+		saveBeforeUnload() {
+			this.$syncService?.saveViaSendBeacon()
 		},
 	},
 }
