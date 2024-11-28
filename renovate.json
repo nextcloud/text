@@ -27,6 +27,15 @@
   ],
   "packageRules": [
     {
+      "groupName": "vue",
+      "matchPackageNames": [
+        "vue"
+      ],
+      "matchPackagePrefixes": [
+        "@vue/"
+      ]
+    },
+    {
       "groupName": "vueuse",
       "matchPackagePrefixes": [
         "@vueuse/"
@@ -108,6 +117,10 @@
     {
       "matchPackageNames": ["vue"],
       "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["@vue/tsconfig"],
+      "allowedVersions": "<0.6"
     },
     {
       "matchPackageNames": ["vuex"],
