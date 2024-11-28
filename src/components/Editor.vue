@@ -642,7 +642,7 @@ export default {
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes
+				// ignore initial loading and other automated changes before first user change
 				if (this.$editor
 					&& (this.$editor.can().undo() || this.$editor.can().redo())
 				) {
