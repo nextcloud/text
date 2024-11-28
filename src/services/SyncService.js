@@ -300,6 +300,17 @@ class SyncService {
 		}
 	}
 
+	saveViaSendBeacon() {
+		this.#connection.saveViaSendBeacon({
+			version: this.version,
+			autosaveContent: this._getContent(),
+			documentState: this.getDocumentState(),
+			force: false,
+			manualSave: true,
+		})
+		logger.debug('[SyncService] saved using sendBeacon')
+	}
+
 	forceSave() {
 		return this.save({ force: true })
 	}
