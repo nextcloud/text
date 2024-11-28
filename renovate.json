@@ -1,14 +1,19 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "timezone": "Europe/Berlin",
   "schedule": [
     "every weekend"
   ],
-  "reviewers": ["max-nextcloud", "mejo-"],
-  "labels": ["dependencies"],
+  "reviewers": [
+    "max-nextcloud",
+    "mejo-"
+  ],
+  "labels": [
+    "dependencies"
+  ],
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
@@ -29,36 +34,30 @@
     {
       "groupName": "vue",
       "matchPackageNames": [
-        "vue"
-      ],
-      "matchPackagePrefixes": [
-        "@vue/"
+        "vue",
+        "@vue/{/,}**"
       ]
     },
     {
       "groupName": "vueuse",
-      "matchPackagePrefixes": [
-        "@vueuse/"
+      "matchPackageNames": [
+        "@vueuse/{/,}**"
       ]
     },
     {
       "groupName": "cypress",
       "matchPackageNames": [
         "cypress",
-        "@nextcloud/cypress"
-      ],
-      "matchPackagePrefixes": [
-        "@cypress/"
+        "@nextcloud/cypress",
+        "@cypress/{/,}**"
       ]
     },
     {
       "groupName": "vite",
       "matchPackageNames": [
         "vite",
-        "vite-plugin-commonjs"
-      ],
-      "matchPackagePrefixes": [
-        "@vitejs/"
+        "vite-plugin-commonjs",
+        "@vitejs/{/,}**"
       ]
     },
     {
@@ -70,7 +69,6 @@
         "lib0"
       ]
     },
-
     {
       "groupName": "highlight",
       "matchPackageNames": [
@@ -80,9 +78,9 @@
     },
     {
       "groupName": "tiptap",
-      "matchPackagePrefixes": [
-        "@tiptap/",
-        "prosemirror-"
+      "matchPackageNames": [
+        "@tiptap/{/,}**",
+        "prosemirror-{/,}**"
       ]
     },
     {
@@ -93,41 +91,70 @@
       ]
     },
     {
-      "matchUpdateTypes": ["major"],
-      "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "matchBaseBranches": [
+        "stable30",
+        "stable29",
+        "stable28",
+        "stable27",
+        "stable26"
+      ],
       "enabled": false
     },
     {
-      "matchUpdateTypes": ["major", "minor"],
-      "matchBaseBranches": ["stable26", "stable27"],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "matchBaseBranches": [
+        "stable26",
+        "stable27"
+      ],
       "enabled": false
     },
     {
-      "matchUpdateTypes": ["major", "minor"],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
       "matchPackageNames": [
         "cypress",
-        "@nextcloud/cypress"
+        "@nextcloud/cypress",
+        "@cypress/{/,}**"
       ],
-      "matchPackagePrefixes": [
-        "@cypress/"
+      "matchBaseBranches": [
+        "stable30",
+        "stable29",
+        "stable28",
+        "stable27",
+        "stable26"
       ],
-      "matchBaseBranches": ["stable30", "stable29", "stable28", "stable27", "stable26"],
       "enabled": false
     },
     {
-      "matchPackageNames": ["vue"],
+      "matchPackageNames": [
+        "vue"
+      ],
       "allowedVersions": "<3"
     },
     {
-      "matchPackageNames": ["@vue/tsconfig"],
+      "matchPackageNames": [
+        "@vue/tsconfig"
+      ],
       "allowedVersions": "<0.6"
     },
     {
-      "matchPackageNames": ["vuex"],
+      "matchPackageNames": [
+        "vuex"
+      ],
       "allowedVersions": "<4"
     },
     {
-      "matchPackageNames": ["@vue/test-utils"],
+      "matchPackageNames": [
+        "@vue/test-utils"
+      ],
       "allowedVersions": "<2"
     }
   ]
