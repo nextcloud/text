@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "عرض معاينة الرابط",
     "Remove link" : "حذف الرابط",
     "guest" : "ضيف ",
+    "Full width editor" : "محرر بالعُرْض الكامل",
     "Active people" : "أشخاص نشطون",
     "Save document" : "إحفَظِ المُستَنَد",
     "Last saved" : "آخر حفظ",
