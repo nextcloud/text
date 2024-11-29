@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "Show link preview",
     "Remove link" : "Remove link",
     "guest" : "guest",
+    "Full width editor" : "Full width editor",
     "Active people" : "Active people",
     "Save document" : "Save document",
     "Last saved" : "Last saved",

@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "顯示連結預覽",
     "Remove link" : "移除連結",
     "guest" : "訪客",
+    "Full width editor" : "完整寬度編輯器",
     "Active people" : "活躍的人",
     "Save document" : "保存文件",
     "Last saved" : "最後保存於",
