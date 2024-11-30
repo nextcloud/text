@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "Zobrazit náhled odkazu",
     "Remove link" : "Odebrat odkaz",
     "guest" : "host",
+    "Full width editor" : "Editor v plné šířce",
     "Active people" : "Aktivní lidé",
     "Save document" : "Uložit dokument",
     "Last saved" : "Naposledy uloženo",

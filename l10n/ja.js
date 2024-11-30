@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "リンクのプレビューを表示",
     "Remove link" : "リンクを削除",
     "guest" : "ゲスト",
+    "Full width editor" : "フルワイドエディタ",
     "Active people" : "ファイルを開いているユーザー",
     "Save document" : "ファイルを保存する",
     "Last saved" : "最終保存",
