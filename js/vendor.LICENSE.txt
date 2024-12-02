@@ -81,7 +81,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 2.2.0
+version: 3.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -429,7 +429,7 @@ version: 2.2.0
 license: MIT
 
 dompurify
-version: 3.1.6
+version: 3.2.2
 license: (MPL-2.0 OR Apache-2.0)
 
 emoji-mart-vue-fast
@@ -545,7 +545,7 @@ version: 2.0.0
 license: MIT
 
 mermaid
-version: 11.4.0
+version: 11.4.1
 license: MIT
 
 mitt
