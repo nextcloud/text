@@ -106,8 +106,9 @@ export class Connection {
 		})
 	}
 
-	save({ version, autosaveContent, documentState, force, manualSave }) {
-		return this.#post(this.#url(`session/${this.#document.id}/save`), {
+	save({ version, autosaveContent, documentState, force, manualSave, useSendBeacon = false }) {
+		const url = this.#url(`session/${this.#document.id}/save`)
+		const data = {
 			...this.#defaultParams,
 			filePath: this.#options.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
@@ -116,7 +117,10 @@ export class Connection {
 			documentState,
 			force,
 			manualSave,
-		})
+		}
+		return useSendBeacon
+			? navigator.sendBeacon(url, data)
+			: this.#post(url, data)
 	}
 
 	push({ steps, version, awareness }) {

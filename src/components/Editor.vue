@@ -354,6 +354,7 @@ export default {
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
 		subscribe('text:translate-modal:show', this.showTranslateModal)
+		window.addEventListener('beforeunload', this.checkBeforeUnload)
 		this.setupEditorDebug()
 	},
 	created() {
@@ -370,6 +371,7 @@ export default {
 		this.$attachmentResolver = null
 	},
 	async beforeDestroy() {
+		window.removeEventListener('beforeunload', this.checkBeforeUnload)
 		if (!this.richWorkspace) {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
@@ -850,15 +852,18 @@ export default {
 			this.translateContent = e.content
 			this.translateModal = true
 		},
+
 		hideTranslate() {
 			this.translateModal = false
 		},
+
 		translateInsert(content) {
 			this.$editor.commands.command(({ tr, commands }) => {
 				return commands.insertContentAt(tr.selection.to, content)
 			})
 			this.translateModal = false
 		},
+
 		translateReplace(content) {
 			this.$editor.commands.command(({ tr, commands }) => {
 				const selection = tr.selection
@@ -880,8 +885,16 @@ export default {
 				}
 			})
 		},
+
 		updateEditorWidth(newWidth) {
 			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
+		},
+
+		checkBeforeUnload(event) {
+			if (this.document?.hasUnsavedChanges) {
+				this.$syncService.save({ useSendBeacon: true })
+				event.preventDefault()
+			}
 		},
 	},
 }

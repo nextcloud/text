@@ -281,7 +281,7 @@ class SyncService {
 		return this.serialize()
 	}
 
-	async save({ force = false, manualSave = true } = {}) {
+	async save({ force = false, manualSave = true, useSendBeacon = false } = {}) {
 		logger.debug('[SyncService] saving', arguments[0])
 		try {
 			const response = await this.#connection.save({
@@ -290,6 +290,7 @@ class SyncService {
 				documentState: this.getDocumentState(),
 				force,
 				manualSave,
+				useSendBeacon,
 			})
 			this.emit('stateChange', { dirty: false })
 			this.#connection.document.lastSavedVersionTime = Date.now() / 1000
