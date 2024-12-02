@@ -13,10 +13,10 @@ const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
 
 /**
  *
- * @param state
- * @param startLine
- * @param endLine
- * @param silent
+ * @param state - MarkdownIt state
+ * @param startLine - start line number
+ * @param endLine - end line number
+ * @param silent - validation mode
  */
 function parseDetails(state: StateBlock, startLine: number, endLine: number, silent: boolean) {
 	// let autoClosedBlock = false
@@ -120,7 +120,7 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 }
 
 /**
- * @param {object} md Markdown object
+ * @param {object} md - Markdown object
  */
 export default function details(md: MarkdownIt) {
 	md.block.ruler.before('fence', 'details', parseDetails, {
