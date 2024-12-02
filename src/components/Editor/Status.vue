@@ -89,22 +89,19 @@ export default {
 			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
 		},
 		dirtyStateIndicator() {
-			return this.dirty || this.hasUnsavedChanges
+			return this.dirty || this.$syncService.hasUnsavedChanges
 		},
 		lastSavedStatusTooltip() {
 			let message = t('text', 'Last saved {lastSave}', { lastSave: this.lastSavedString })
 			if (this.hasSyncCollission) {
 				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
 			}
-			if (this.dirty || this.hasUnsavedChanges) {
+			if (this.dirtyStateIndicator) {
 				message += ' - ' + t('text', 'Unsaved changes')
 			}
 			return message
 		},
 
-		hasUnsavedChanges() {
-			return this.document && this.document.lastSavedVersion < this.document.currentVersion
-		},
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
 		},

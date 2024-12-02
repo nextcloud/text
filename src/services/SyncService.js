@@ -106,6 +106,10 @@ class SyncService {
 		}
 	}
 
+	get hasUnsavedChanges() {
+		return this.#connection.document && this.#connection.document.lastSavedVersion < this.#connection.document.currentVersion
+	}
+
 	async open({ fileId, initialSession }) {
 		if (this.hasActiveConnection) {
 			return this.connectionState
