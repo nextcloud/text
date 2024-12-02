@@ -11,6 +11,7 @@ type Sendable = {
 }
 
 export default class Outbox {
+
 	#awarenessUpdate = ''
 	#syncUpdate = ''
 	#syncQuery = ''
@@ -33,7 +34,7 @@ export default class Outbox {
 	}
 
 	getDataToSend(): Sendable {
-		return  {
+		return {
 			steps: [this.#syncUpdate, this.#syncQuery].filter(s => s),
 			awareness: this.#awarenessUpdate,
 		}
