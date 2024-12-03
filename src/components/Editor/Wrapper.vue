@@ -102,7 +102,7 @@ export default {
 				return false
 			}
 
-			return this.viewWidth > 1265
+			return true
 		},
 	},
 

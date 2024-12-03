@@ -1,5 +1,5 @@
 <template>
-	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': mobile }">
+	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': $isMobile }">
 		<header class="editor--outline__header">
 			<NcButton class="editor--outline__btn-close"
 				type="tertiary"
@@ -21,6 +21,7 @@ import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
 import useStore from '../../mixins/store.js'
+import { useIsMobileMixin } from '../Editor.provider.js'
 
 export default {
 	name: 'EditorOutline',
@@ -29,27 +30,12 @@ export default {
 		NcButton,
 		TableOfContents,
 	},
-	mixins: [useStore, useOutlineStateMixin, useOutlineActions],
-	data: () => ({
-		mobile: false,
-	}),
-	mounted() {
-		this.$resizeObserver = new ResizeObserver(this.onResize)
-		this.$resizeObserver.observe(this.$el.parentElement)
-		this.onResize()
-	},
-	beforeDestroy() {
-		this.$resizeObserver.unobserve(this.$el.parentElement)
-		this.$resizeObserver = null
-		this.$onResize = null
-	},
-	methods: {
-		onResize([el]) {
-			window.requestAnimationFrame(() => {
-				this.mobile = el.clientWidth < 320
-			})
-		},
-	},
+	mixins: [
+		useIsMobileMixin,
+		useStore,
+		useOutlineStateMixin,
+		useOutlineActions,
+	],
 }
 </script>
 
@@ -63,7 +49,8 @@ export default {
 	max-height: calc(100% - 204px);
 
 	&-mobile {
-		box-shadow: 8px 0 17px -19px var(--color-box-shadow);
+		border-radius: var(--border-radius-large);
+		box-shadow: 0 1px 10px var(--color-box-shadow);
 		background-color: var(--color-main-background-translucent);
 		z-index: 1;
 	}
