@@ -27,6 +27,7 @@
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
+		@drop.prevent.stop="setDraggedOver(false)"
 		@file-drop="onEditorDrop">
 		<input v-show="false"
 			ref="attachmentFileInput"
@@ -103,7 +104,6 @@ export default {
 		},
 		onEditorDrop(e) {
 			this.uploadAttachmentFiles(e.detail.files, e.detail.position)
-			this.draggedOver = false
 		},
 		onAttachmentUploadFilePicked(event) {
 			this.uploadAttachmentFiles(event.target.files)
