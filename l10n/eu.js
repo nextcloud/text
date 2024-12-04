@@ -183,6 +183,7 @@ OC.L10N.register(
     "Heading 5" : "5. goiburua",
     "Lists" : "Zerrendak",
     "To-Do list" : "Egiteke zerrenda",
+    "Blocks" : "Blokeak",
     "Table" : "Taula",
     "Details" : "Xehetasunak",
     "Insert link" : "Txertatu esteka",
