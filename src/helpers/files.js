@@ -3,20 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { getCurrentUser } from '@nextcloud/auth'
-import { showSuccess, showError } from '@nextcloud/dialogs'
-import { getSharingToken } from '@nextcloud/sharing/public'
-import { emit } from '@nextcloud/event-bus'
-import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
-import { loadState } from '@nextcloud/initial-state'
-import { imagePath } from '@nextcloud/router'
 import { dirname } from 'path'
-
-import { openMimetypes } from './mime.js'
-import store from '../store/index.js'
+import { emit } from '@nextcloud/event-bus'
+import { getCurrentUser } from '@nextcloud/auth'
+import { getSharingToken } from '@nextcloud/sharing/public'
+import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
+import { imagePath } from '@nextcloud/router'
+import { loadState } from '@nextcloud/initial-state'
+import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 
 import TextSvg from '@mdi/svg/svg/text.svg?raw'
+
+import { openMimetypes } from './mime.js'
+import store from '../store/index.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -212,6 +212,11 @@ export const FilesWorkspaceHeader = new Header({
 
 	updated(folder, view) {
 		newWorkspaceCreated = false
+
+		if (!vm) {
+			console.warn('No vue instance found for FilesWorkspaceHeader')
+			return
+		}
 
 		// Currently there is not much use in updating the vue instance props since render is called on every folder change
 		// removing the rendered element from the DOM
