@@ -213,6 +213,11 @@ export const FilesWorkspaceHeader = new Header({
 	updated(folder, view) {
 		newWorkspaceCreated = false
 
+		if (!vm) {
+			console.warn('No vue instance found for FilesWorkspaceHeader')
+			return
+		}
+
 		// Currently there is not much use in updating the vue instance props since render is called on every folder change
 		// removing the rendered element from the DOM
 		// This is only relevant if switching to a folder that has no content as then the render function is not called
