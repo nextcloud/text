@@ -17,11 +17,11 @@ version: 11.0.3
 license: Apache-2.0
 
 @floating-ui/core
-version: 1.6.8
+version: 0.3.1
 license: MIT
 
 @floating-ui/dom
-version: 1.6.12
+version: 0.1.10
 license: MIT
 
 @floating-ui/utils
@@ -285,7 +285,7 @@ version: 11.3.0
 license: MIT
 
 @vueuse/shared
-version: 11.0.1
+version: 11.3.0
 license: MIT
 
 ansi-regex
