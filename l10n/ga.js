@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "Taispeáin réamhamharc ar an nasc",
     "Remove link" : "Bain nasc",
     "guest" : "aoi",
+    "Full width editor" : "Eagarthóir leithead iomlán",
     "Active people" : "Daoine gníomhacha",
     "Save document" : "Sábháil doiciméad",
     "Last saved" : "Last shábháil",
