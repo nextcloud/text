@@ -143,6 +143,7 @@ OC.L10N.register(
     "Control" : "Riadenie",
     "Option" : "Možnosť",
     "Formatting" : "Formátovanie",
+    "Add folder description" : "Pridať popis adresára",
     "Front matter" : "Predná strana",
     "Link to this section" : "Odkaz na túto sekciu",
     "Show author colors" : "Zobraziť autorské farby",
