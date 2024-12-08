@@ -81,7 +81,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 3.1.0
+version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -105,7 +105,7 @@ version: 3.0.1
 license: GPL-3.0-or-later
 
 @nextcloud/sharing
-version: 0.2.3
+version: 0.2.4
 license: GPL-3.0-or-later
 
 @nextcloud/timezones
@@ -781,7 +781,7 @@ version: 5.7.1
 license: MIT
 
 y-prosemirror
-version: 1.2.13
+version: 1.2.15
 license: MIT
 
 y-protocols
