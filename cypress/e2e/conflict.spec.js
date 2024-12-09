@@ -1,7 +1,7 @@
 /**
- * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2022 Nextcloud GmbH and Nextcloud contributors
  *
- * @author John Molakvoæ <skjnldsv@protonmail.com>
+ * @author Max <max@nextcloud.com>
  *
  * @license AGPL-3.0-or-later
  *
@@ -20,9 +20,7 @@
  *
  */
 
-import { initUserAndFiles, randUser } from '../utils/index.js'
-
-const user = randUser()
+import { randUser } from '../utils/index.js'
 
 const variants = [
 	{ fixture: 'lines.txt', mime: 'text/plain' },
@@ -30,16 +28,18 @@ const variants = [
 ]
 
 variants.forEach(function({ fixture, mime }) {
+	const user = randUser()
 	const fileName = fixture
 	describe(`${mime} (${fileName})`, function() {
 		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 		before(() => {
-			initUserAndFiles(user, fileName)
+			cy.createUser(user)
 		})
 
 		beforeEach(function() {
 			cy.login(user)
+			cy.createTestFolder()
 		})
 
 		it('no actual conflict - just reload', function() {
@@ -130,7 +130,10 @@ variants.forEach(function({ fixture, mime }) {
  * @param {string} mime - mimetype
  */
 function createConflict(fileName, mime) {
-	cy.visit('/apps/files')
+	cy.testName().then(testName => {
+		cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
+	})
+	cy.visitTestFolder()
 	cy.openFile(fileName)
 	cy.log('Inspect editor')
 	cy.getContent()
