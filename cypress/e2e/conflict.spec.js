@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { initUserAndFiles, randUser } from '../utils/index.js'
-
-const user = randUser()
+import { randUser } from '../utils/index.js'
 
 const variants = [
 	{ fixture: 'lines.txt', mime: 'text/plain' },
@@ -13,18 +11,19 @@ const variants = [
 ]
 
 variants.forEach(function({ fixture, mime }) {
+	const user = randUser()
 	const fileName = fixture
 	const prefix = mime.replaceAll('/', '-')
 	describe(`${mime} (${fileName})`, function() {
 		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 		before(() => {
-			initUserAndFiles(user)
+			cy.createUser(user)
 		})
 
 		beforeEach(function() {
 			cy.login(user)
-			cy.isolateTest({ sourceFile: fileName })
+			cy.createTestFolder()
 		})
 
 		it(prefix + ': no actual conflict - just reload', function() {
@@ -123,6 +122,10 @@ variants.forEach(function({ fixture, mime }) {
  * @param {string} mime - mimetype
  */
 function createConflict(fileName, mime) {
+	cy.testName().then(testName => {
+		cy.uploadFile(fileName, mime, `${testName}/${fileName}`)
+	})
+	cy.visitTestFolder()
 	cy.openFile(fileName)
 	cy.log('Inspect editor')
 	cy.getEditor().find('.ProseMirror').should('have.attr', 'contenteditable', 'true')
