@@ -115,7 +115,7 @@ import { extensionHighlight } from '../helpers/mappings.js'
 import { createEditor, serializePlainText, loadSyntaxHighlight } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
-
+import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { CollaborationCursor } from '../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
@@ -351,7 +351,7 @@ export default {
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
-		this.setupEditorDebug()
+		exposeForDebugging(this)
 	},
 	created() {
 		this.$ydoc = new Doc()
@@ -377,7 +377,8 @@ export default {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
 			await Promise.any([timeout, this.$syncService.save()])
 		}
-		this.close()
+		await this.close()
+		removeFromDebugging(this)
 	},
 	methods: {
 		initSession() {
@@ -763,45 +764,16 @@ export default {
 		},
 
 		/**
-		 * Setup OCA.Text.debugYjs() and expose editor component in OCA.Text.editorComponents
-		 */
-		setupEditorDebug() {
-			if (!window.OCA.Text) {
-				window.OCA.Text = {}
-			}
-			if (!window.OCA.Text.editorComponents) {
-				window.OCA.Text.editorComponents = []
-			}
-			window.OCA.Text.editorComponents.push(this)
-
-			if (!window.OCA.Text.debugYjs) {
-				window.OCA.Text.debugYjs = () => {
-					const intro = 'Editor Yjs debug data. Copy the objects above that start with "fileId".'
-					const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-					const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
-					const styleBold = 'font-weight: bold;'
-					const styleItalic = 'font-weight: normal; font-style: italic;'
-
-					for (const editorComponent of window.OCA.Text.editorComponents) {
-						console.warn(JSON.stringify(editorComponent.debugYjsData(), null, ' '))
-					}
-
-					console.warn('%c%s\n%c%s\n%s', styleBold, intro, styleItalic, introChrome, introFirefox)
-				}
-			}
-		},
-
-		/**
 		 * Helper method to debug yjs issues
 		 */
-		debugYjsData() {
+		debugData() {
 			const yjsData = {
 				fileId: this.fileId,
 				filePath: this.relativePath,
 				clientId: this.$ydoc.clientID,
 				pendingStructs: this.$ydoc.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.$syncService.getDocumentState(),
+				documentState: this.$syncService?.getDocumentState(),
 			}
 			for (const client of this.$ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
