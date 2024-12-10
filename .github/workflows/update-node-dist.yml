@@ -11,7 +11,6 @@ on:
       - main
       - stable3*
       - stable29
-      - stable28
 
 concurrency:
   group: update-node-dist-${{ github.head_ref || github.ref || github.run_id }}
