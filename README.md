@@ -40,6 +40,26 @@ Follow its development setup and then continue here.
 3. ✅ Enable the app through the app management of your Nextcloud
 4. 🎉 Partytime! Help fix [some issues](https://github.com/nextcloud/text/issues) and [review pull requests](https://github.com/nextcloud/text/pulls) 👍
 
+### Use hot module replacement via `vite serve`
+
+To use the advantages of `vite serve` with hot module replacement (HMR) and not have to recompile the JS assets after each code change, do the following:
+
+1. Configure your webserver to redirect requests to `/apps/text/` to the vite serve server.
+   When using [nextcloud-docker-dev](https://github.com/juliusknorr/nextcloud-docker-dev), add the following snippet to `data/nginx/vhost.d/nextcloud.local` and restart the proxy container. You might have to replace `/apps/text` with e.g. `/apps-extra/text` depending on where the text app resides in your dev setup.
+   ```
+   location /apps/text/ {
+       proxy_pass http://host.docker.internal:5173/apps/text;
+       # fallback to nextcloud server if vite serve doesn't answer
+       error_page 502 = @fallback;
+   }
+   location @fallback {
+       proxy_pass http://nextcloud.local;
+   }
+   ```
+2. Run `npm run serve` to start the vite serve server. If text resides somewhere else than `/apps/text`, run e.g. `BASE=/apps-extra/text npm run serve`.
+
+Afterwards all changes to the code will apply to the application in your browser automatically thanks to hot module replacement (HMR).
+   
 ### 🧙 Advanced development stuff
 
 To build the Javascript whenever you make changes, instead of the full `make` you can also run `npm run build`. Or run `npm run watch` to rebuild on every file save.

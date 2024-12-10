@@ -4,8 +4,28 @@
 /// <reference types="vitest/config" />
 
 import { createAppConfig } from '@nextcloud/vite-config'
+import type { ViteDevServer, Connect } from 'vite'
 import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
+
+const rewriteMiddlewarePlugin = {
+	name: 'rewriteAssetsUrl',
+	configureServer(server: ViteDevServer) {
+		server.middlewares.use((req, res, next: Connect.NextFunction): void => {
+			const m = req.url?.match(/\/js\/text-(.*)\.mjs$/)
+			if (m) {
+				if (m[1] === 'text') {
+					req.url = req.url?.replace(/\/js\/text-.*.mjs/, '/src/main.js')
+				} else if (m[1] === 'editors') {
+					req.url = req.url?.replace(/\/js\/text-.*.mjs/, '/src/editors.js')
+				} else {
+					req.url = req.url?.replace(/\/js\/text-.*.mjs/, `/src/${m[1]}.js`)
+				}
+			}
+			next()
+		})
+	}
+}
 
 const config = createAppConfig({
 	text: path.join(__dirname, 'src', 'main.js'),
@@ -19,6 +39,7 @@ const config = createAppConfig({
 	extractLicenseInformation: true,
 	thirdPartyLicense: false,
 	config: {
+		base: process.env.BASE,
 		resolve: {
 			dedupe: ['vue'],
 		},
@@ -29,6 +50,7 @@ const config = createAppConfig({
 		},
 		plugins: [
 			webpackStats(),
+			rewriteMiddlewarePlugin,
 		],
 		build: {
 			cssCodeSplit: true,
