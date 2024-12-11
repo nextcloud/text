@@ -34,7 +34,7 @@ class LoadEditorListener implements \OCP\EventDispatcher\IEventListener {
 		$this->eventDispatcher->dispatchTyped(new RenderReferenceEvent());
 
 		$this->initialStateProvider->provideState();
-		Util::addScript('text', 'text-editors');
-		Util::addStyle('text', 'text-editors');
+		Util::addScript('text', 'text-editor');
+		Util::addStyle('text', 'text-editor');
 	}
 }

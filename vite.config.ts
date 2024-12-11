@@ -16,8 +16,6 @@ const rewriteMiddlewarePlugin = {
 			if (m) {
 				if (m[1] === 'text') {
 					req.url = req.url?.replace(/\/js\/text-.*.mjs/, '/src/main.js')
-				} else if (m[1] === 'editors') {
-					req.url = req.url?.replace(/\/js\/text-.*.mjs/, '/src/editors.js')
 				} else {
 					req.url = req.url?.replace(/\/js\/text-.*.mjs/, `/src/${m[1]}.js`)
 				}
@@ -32,7 +30,7 @@ const config = createAppConfig({
 	files: path.join(__dirname, 'src', 'files.js'),
 	public: path.join(__dirname, 'src', 'public.js'),
 	viewer: path.join(__dirname, 'src', 'viewer.js'),
-	editors: path.join(__dirname, 'src', 'editor.js'),
+	editor: path.join(__dirname, 'src', 'editor.js'),
 	init: path.join(__dirname, 'src', 'init.js'),
 }, {
 	createEmptyCSSEntryPoints: true,
