@@ -11,27 +11,31 @@ const user = randUser()
 
 describe('Open read-only mode', function() {
 
+	before(function() {
+		cy.createUser(user)
+		cy.login(user)
+		cy.uploadFile('test.md', 'text/markdown')
+		cy.uploadFile('test.md', 'text/plain', 'test.txt')
+	})
+
 	const setReadOnlyMode = function(mode) {
 		cy.login(admin)
 		cy.setAppConfig('open_read_only_enabled', mode)
-		cy.logout()
 	}
 
 	describe('Disabled', function() {
 		const checkMenubar = function() {
 			cy.get('.text-editor--readonly-bar').should('not.exist')
-			cy.get('.text-menubar').getActionEntry('done').should('not.exist')
+			cy.get('.text-menubar', { timeout: 10000 })
+				.getActionEntry('done').should('not.exist')
 		}
 
-		beforeEach(function() {
+		before(function() {
 			setReadOnlyMode(0)
+		})
 
-			cy.createUser(user)
+		beforeEach(function() {
 			cy.login(user)
-
-			cy.uploadFile('test.md', 'text/markdown')
-			cy.uploadFile('test.md', 'text/markdown', 'test.txt')
-
 			cy.visit('/apps/files')
 		})
 
@@ -57,18 +61,12 @@ describe('Open read-only mode', function() {
 			cy.get('.text-menubar').getActionEntry('done').should('exist')
 		}
 
-		beforeEach(function() {
+		before(function() {
 			setReadOnlyMode(1)
+		})
 
-			cy.createUser(user)
+		beforeEach(function() {
 			cy.login(user)
-
-			cy.removeFile('test.md')
-			cy.removeFile('test.txt')
-
-			cy.uploadFile('test.md', 'text/markdown')
-			cy.uploadFile('test.md', 'text/plain', 'test.txt')
-
 			cy.visit('/apps/files')
 		})
 
