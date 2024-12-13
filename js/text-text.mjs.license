@@ -1,0 +1,7 @@
+SPDX-License-Identifier: agpl
+SPDX-FileCopyrightText: text developers
+
+This file is generated from multiple sources. Included packages:
+- text
+	- version: 5.0.0
+	- license: agpl

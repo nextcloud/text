@@ -1,0 +1,12 @@
+SPDX-License-Identifier: MIT
+SPDX-License-Identifier: agpl
+SPDX-FileCopyrightText: Evan You
+SPDX-FileCopyrightText: text developers
+
+This file is generated from multiple sources. Included packages:
+- text
+	- version: 5.0.0
+	- license: agpl
+- vuex
+	- version: 3.6.2
+	- license: MIT
