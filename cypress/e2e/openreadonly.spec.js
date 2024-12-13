@@ -13,13 +13,7 @@ describe('Open read-only mode', function() {
 
 	const setReadOnlyMode = function(mode) {
 		cy.login(admin)
-		cy.ocsRequest({
-			method: 'POST',
-			url: `${Cypress.env('baseUrl')}/ocs/v2.php/apps/testing/api/v1/app/text/open_read_only_enabled`,
-			body: { value: mode },
-		}).then(response => {
-			cy.log(response.status)
-		})
+		cy.setAppConfig('open_read_only_enabled', mode)
 		cy.logout()
 	}
 
