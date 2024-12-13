@@ -55,6 +55,7 @@ OC.L10N.register(
     "Show link preview" : "Прикажи преглед линка",
     "Remove link" : "Уклони линк",
     "guest" : "гост",
+    "Full width editor" : "Едитор пуне ширине",
     "Active people" : "Активне особе",
     "Save document" : "Сачувај документ",
     "Last saved" : "Последње сачувано",
