@@ -1,0 +1,19 @@
+SPDX-License-Identifier: ISC
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: Mike Bostock
+SPDX-FileCopyrightText: Thibaut Lassalle
+
+This file is generated from multiple sources. Included packages:
+- d3-selection
+	- version: 3.0.0
+	- license: ISC
+- dagre-d3-es
+	- version: 7.0.10
+	- license: MIT
+- dagre-d3-es
+	- version: 7.0.10
+	- license: MIT
+- mermaid
+	- version: 10.9.3
+	- license: MIT

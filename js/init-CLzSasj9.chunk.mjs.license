@@ -1,0 +1,7 @@
+SPDX-License-Identifier: ISC
+SPDX-FileCopyrightText: Mike Bostock
+
+This file is generated from multiple sources. Included packages:
+- d3-scale
+	- version: 4.0.2
+	- license: ISC
