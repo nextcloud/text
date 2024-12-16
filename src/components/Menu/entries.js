@@ -66,7 +66,6 @@ export const ReadOnlyEditEntries = [{
 export const ReadOnlyDoneEntries = [{
 	key: 'done',
 	label: t('text', 'Done'),
-	keyChar: 'esc',
 	icon: PencilOff,
 	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
 }]
