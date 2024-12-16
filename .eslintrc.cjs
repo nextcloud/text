@@ -6,7 +6,7 @@
 module.exports = {
 	root: true,
 	extends: [
-		'@nextcloud/eslint-config/typescript',
+		'@nextcloud',
 	],
 	rules: {
 		'@typescript-eslint/no-unused-vars': ['off'],
