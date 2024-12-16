@@ -24,12 +24,13 @@
 			:has-connection-issue="hasConnectionIssue"
 			:content-loaded="contentLoaded"
 			:show-outline-outside="showOutlineOutside"
+			@read-only-toggled="readOnlyToggled"
 			@outline-toggled="outlineToggled">
 			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
-				<div v-if="readOnly" class="text-editor--readonly-bar">
+				<div v-if="readOnly || (openReadOnlyEnabled && !editMode)" class="text-editor--readonly-bar">
 					<slot name="readonlyBar">
-						<ReadonlyBar>
+						<ReadonlyBar :open-read-only="openReadOnlyEnabled">
 							<Status :document="document"
 								:dirty="dirty"
 								:sessions="filteredSessions"
@@ -43,6 +44,7 @@
 					<MenuBar v-if="renderMenus"
 						ref="menubar"
 						:is-hidden="hideMenu"
+						:open-read-only="openReadOnlyEnabled"
 						:loaded.sync="menubarLoaded">
 						<Status :document="document"
 							:dirty="dirty"
@@ -260,6 +262,8 @@ export default {
 			hasConnectionIssue: false,
 			hasEditor: false,
 			readOnly: true,
+			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
+			editMode: true,
 			forceRecreate: false,
 			menubarLoaded: false,
 			draggedOver: false,
@@ -508,8 +512,10 @@ export default {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
+			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+
 			if (this.$editor) {
-				this.$editor.setEditable(!this.readOnly)
+				this.$editor.setEditable(this.editMode)
 			}
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
@@ -586,7 +592,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = !this.readOnly && !this.hasConnectionIssue
+			const editable = this.editMode && !this.hasConnectionIssue
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
@@ -682,7 +688,8 @@ export default {
 			this.$syncService.close()
 			this.idle = true
 			this.readOnly = true
-			this.$editor.setEditable(!this.readOnly)
+			this.editMode = false
+			this.$editor.setEditable(this.editMode)
 
 			this.$nextTick(() => {
 				this.emit('sync-service:idle')
@@ -813,6 +820,14 @@ export default {
 
 		outlineToggled(visible) {
 			this.emit('outline-toggled', visible)
+		},
+
+		readOnlyToggled() {
+			if (this.editMode) {
+				this.$syncService.save()
+			}
+			this.editMode = !this.editMode
+			this.$editor.setEditable(this.editMode)
 		},
 
 		onKeyDown(event) {

@@ -16,7 +16,7 @@
 
 <script>
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
-import { OUTLINE_STATE, OUTLINE_ACTIONS } from './Wrapper.provider.js'
+import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
 import { mapState } from 'vuex'
 
@@ -33,6 +33,11 @@ export default {
 			[OUTLINE_ACTIONS]: {
 				get: () => ({
 					toggle: this.outlineToggle,
+				}),
+			},
+			[READ_ONLY_ACTIONS]: {
+				get: () => ({
+					toggle: this.readOnlyToggle,
 				}),
 			},
 		})
@@ -115,6 +120,9 @@ export default {
 			if (event.ctrlKey && event.altKey && event.key === 'h') {
 				this.outlineToggle()
 			}
+		},
+		readOnlyToggle() {
+			this.$emit('read-only-toggled')
 		},
 	},
 

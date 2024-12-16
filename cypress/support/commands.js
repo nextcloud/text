@@ -401,6 +401,14 @@ Cypress.Commands.add('showHiddenFiles', (value = true) => {
 	)
 })
 
+Cypress.Commands.add('setAppConfig', (key, value) => {
+	Cypress.log()
+	return axios.post(
+		`${url}/ocs/v2.php/apps/testing/api/v1/app/text/${key}`,
+		{ value },
+	)
+})
+
 Cypress.Commands.add('createDescription', (buttonLabel = 'Add folder description') => {
 	const url = '**/remote.php/dav/files/**'
 	cy.intercept({ method: 'PUT', url })
