@@ -9,7 +9,7 @@
       "role": "Developer"
     }
   ],
-  "license": "agpl",
+  "license": "AGPL-3.0-or-later",
   "type": "module",
   "files": [
     "dist"
