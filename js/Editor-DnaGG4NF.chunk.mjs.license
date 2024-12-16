@@ -2,7 +2,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: Apache-2.0
 SPDX-License-Identifier: GPL-3.0-or-later
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: agpl
 SPDX-FileCopyrightText: 
 SPDX-FileCopyrightText: @tiptap/extension-collaboration developers
 SPDX-FileCopyrightText: Christoph Wurst
@@ -349,7 +348,7 @@ This file is generated from multiple sources. Included packages:
 	- license: Apache-2.0
 - text
 	- version: 5.0.0
-	- license: agpl
+	- license: AGPL-3.0-or-later
 - vue-material-design-icons
 	- version: 5.3.1
 	- license: MIT

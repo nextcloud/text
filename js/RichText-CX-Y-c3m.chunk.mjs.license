@@ -3,7 +3,6 @@ SPDX-License-Identifier: Apache-2.0
 SPDX-License-Identifier: BSD-2-Clause
 SPDX-License-Identifier: BSD-3-Clause
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: agpl
 SPDX-FileCopyrightText: @nextcloud/dialogs developers
 SPDX-FileCopyrightText: @tiptap/core developers
 SPDX-FileCopyrightText: @tiptap/extension-blockquote developers
@@ -723,7 +722,7 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - text
 	- version: 5.0.0
-	- license: agpl
+	- license: AGPL-3.0-or-later
 - tippy.js
 	- version: 6.3.7
 	- license: MIT

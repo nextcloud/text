@@ -1,7 +1,6 @@
 SPDX-License-Identifier: BSD-3-Clause
 SPDX-License-Identifier: ISC
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: undefined
 SPDX-FileCopyrightText: 
 SPDX-FileCopyrightText: Christopher Jeffrey
 SPDX-FileCopyrightText: John-David Dalton <john.david.dalton@gmail.com>
@@ -314,7 +313,7 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - khroma
 	- version: 2.1.0
-	- license: undefined
+	- license: MIT
 - lodash-es
 	- version: 4.17.21
 	- license: MIT

@@ -1,5 +1,5 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: agpl
 SPDX-FileCopyrightText: Zac Anger
 SPDX-FileCopyrightText: text developers
 
@@ -12,4 +12,4 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - text
 	- version: 5.0.0
-	- license: agpl
+	- license: AGPL-3.0-or-later
