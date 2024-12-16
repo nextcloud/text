@@ -14,6 +14,12 @@ const config = createAppConfig({
 	init: path.join(__dirname, 'src', 'init.js'),
 }, {
 	createEmptyCSSEntryPoints: true,
+	extractLicenseInformation: {
+		overwriteLicenses: {
+			khroma: 'MIT',
+		},
+	},
+	thirdPartyLicense: false,
 	config: {
 		resolve: {
 			dedupe: ['vue'],
