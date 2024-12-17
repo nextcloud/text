@@ -50,10 +50,10 @@ Follow its development setup and then continue here.
 To use the advantages of `vite serve` with hot module replacement (HMR) and not have to recompile the JS assets after each code change, do the following:
 
 1. Configure your webserver to redirect requests to `/apps/text/` to the vite serve server.
-   When using [nextcloud-docker-dev](https://github.com/juliusknorr/nextcloud-docker-dev), add the following snippet to `data/nginx/vhost.d/nextcloud.local` and restart the proxy container. You might have to replace `/apps/text` with e.g. `/apps-extra/text` depending on where the text app resides in your dev setup.
+   When using [nextcloud-docker-dev](https://github.com/juliusknorr/nextcloud-docker-dev), add the following snippet to `data/nginx/vhost.d/nextcloud.local` and restart the proxy container. You might have to replace `/apps/text/` with e.g. `/apps-extra/text/` depending on where the text app resides in your dev setup.
    ```
    location /apps/text/ {
-       proxy_pass http://host.docker.internal:5173/apps/text;
+       proxy_pass http://host.docker.internal:5173/apps/text/;
        # fallback to nextcloud server if vite serve doesn't answer
        error_page 502 = @fallback;
    }
