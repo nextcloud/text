@@ -26,6 +26,6 @@ export function encodeArrayBuffer(data: ArrayBuffer): string {
  *
  * @param {string} encoded - base64 encoded string to decode
  */
-export function decodeArrayBuffer(encoded: string): ArrayBuffer {
+export function decodeArrayBuffer(encoded: string): Uint8Array {
 	return fromBase64(encoded)
 }
