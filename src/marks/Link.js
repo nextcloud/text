@@ -60,10 +60,15 @@ const Link = TipTapLink.extend({
 
 	renderHTML(options) {
 		const { mark } = options
-		const url = new URL(mark.attrs.href, window.location)
-		const href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
-			? domHref(mark, this.options.relativePath)
-			: '#'
+		let href
+		try {
+			const url = new URL(mark.attrs.href, window.location)
+			href = PROTOCOLS_TO_LINK_TO.includes(url.protocol)
+				? domHref(mark, this.options.relativePath)
+				: '#'
+		} catch (error) {
+			href = '#'
+		}
 		return ['a', {
 			...mark.attrs,
 			href,
