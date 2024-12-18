@@ -9,6 +9,7 @@
 			<NodeViewContent class="content" />
 			<NcActions v-if="isEditable"
 				ref="menu"
+				type="tertiary-no-background"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
 					<NcActionButton data-text-table-action="align-column-left"
