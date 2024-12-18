@@ -35,6 +35,7 @@ OC.L10N.register(
     "Replace" : "Aizvietot",
     "Edit" : "Labot",
     "Source code" : "Izejas kods",
+    "Done" : "Pabeigts",
     "Details" : "Detaļas",
     "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",

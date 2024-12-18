@@ -134,6 +134,7 @@ OC.L10N.register(
     "Delete this table" : "Eliminar esta tabla",
     "Hide outline" : "Ocultar esquema",
     "Show outline" : "Mostrar esquema",
+    "Done" : "Hecho",
     "Headings" : "Encabezados",
     "Heading 2" : "Título 2",
     "Heading 3" : "Título 3",

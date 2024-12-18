@@ -106,6 +106,7 @@ OC.L10N.register(
     "Delete this table" : "Verwijder deze tabel",
     "Hide outline" : "Overzicht verbergen",
     "Show outline" : "Overzicht tonen",
+    "Done" : "Klaar",
     "Headings" : "Kopstijlen",
     "Heading 2" : "Kop 2",
     "Heading 3" : "Kop 3",

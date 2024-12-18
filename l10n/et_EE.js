@@ -34,6 +34,7 @@ OC.L10N.register(
     "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",
     "Edit" : "Redigeeri",
+    "Done" : "Valmis",
     "Headings" : "Pealkirjad",
     "Details" : "Üksikasjad",
     "Info" : "Info",

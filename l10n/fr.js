@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Afficher la description du dossier",
     "Hide outline" : "Masquer le plan",
     "Show outline" : "Afficher le plan",
+    "Done" : "Fait",
     "Headings" : "Titres",
     "Heading 2" : "Titre 2",
     "Heading 3" : "Titre 3",

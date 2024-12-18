@@ -84,6 +84,7 @@ OC.L10N.register(
     "Edit" : "Chỉnh sửa",
     "Source code" : "Mã nguồn",
     "Show folder description" : "Hiển thị mô tả thư mục",
+    "Done" : "Hoàn thành",
     "Headings" : "Đầu đề",
     "Heading 2" : "Đầu đề 2",
     "Heading 3" : "Đầu đề 3",

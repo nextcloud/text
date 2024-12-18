@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "أظهِر وصف المجلد",
     "Hide outline" : "إخفِ قائمة المحتويات outline",
     "Show outline" : "أظهِر قائمة المحتويات outline",
+    "Done" : "تمّ",
     "Headings" : "العناوين ",
     "Heading 2" : "عنوان 2",
     "Heading 3" : "عنوان 3",

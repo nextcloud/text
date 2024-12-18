@@ -63,6 +63,7 @@ OC.L10N.register(
     "Replace" : "החלפה",
     "Edit" : "עריכה",
     "Source code" : "קוד מקור",
+    "Done" : "הסתיים",
     "Headings" : "כותרות",
     "Heading 2" : "כותרת 2",
     "Heading 3" : "כותרת 3",

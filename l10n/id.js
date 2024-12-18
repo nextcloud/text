@@ -33,6 +33,7 @@ OC.L10N.register(
     "Edit" : "Sunting",
     "Source code" : "Kode sumber",
     "Both" : "Keduanya",
+    "Done" : "Selesai",
     "Lists" : "Daftar",
     "Details" : "Detail",
     "Control" : "Kendali",

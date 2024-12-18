@@ -173,6 +173,7 @@ OC.L10N.register(
     "Show folder description" : "显示文件夹描述",
     "Hide outline" : "隐藏大纲",
     "Show outline" : "显示大纲",
+    "Done" : "完成",
     "Headings" : "标题",
     "Heading 2" : "标题 2",
     "Heading 3" : "标题 3",

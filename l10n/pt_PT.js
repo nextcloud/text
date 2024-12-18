@@ -49,6 +49,7 @@ OC.L10N.register(
     "Replace" : "Substitua",
     "Edit" : "Editar",
     "Source code" : "Código fonte",
+    "Done" : "Concluído",
     "Headings" : "Títulos",
     "Heading 2" : "Título 2",
     "Heading 3" : "Título 3",
