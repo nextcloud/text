@@ -75,6 +75,7 @@ OC.L10N.register(
     "Delete this table" : "Slet denne tabel",
     "Hide outline" : "Skjul outline",
     "Show outline" : "Vis outline",
+    "Done" : "Færdig",
     "Headings" : "Overskrifter",
     "Heading 2" : "Overskrift 2",
     "Heading 3" : "Overskrift 3",

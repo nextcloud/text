@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Ordnerbeschreibung anzeigen",
     "Hide outline" : "Gliederung ausblenden",
     "Show outline" : "Gliederung anzeigen",
+    "Done" : "Erledigt",
     "Headings" : "Überschriften",
     "Heading 2" : "Überschrift 2",
     "Heading 3" : "Überschrift 3",

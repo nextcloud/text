@@ -160,6 +160,7 @@ OC.L10N.register(
     "Show folder description" : "Pokaż opis katalogu",
     "Hide outline" : "Ukryj konspekt",
     "Show outline" : "Pokaż konspekt",
+    "Done" : "Gotowe",
     "Headings" : "Nagłówki",
     "Heading 2" : "Nagłówek 2",
     "Heading 3" : "Nagłówek 3",

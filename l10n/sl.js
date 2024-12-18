@@ -138,6 +138,7 @@ OC.L10N.register(
     "Delete this table" : "Izbriši razpredelnico",
     "Hide outline" : "Skrij obris",
     "Show outline" : "Pokaži obris",
+    "Done" : "Končano",
     "Headings" : "Naslovi",
     "Heading 2" : "Naslov 2",
     "Heading 3" : "Naslov 3",

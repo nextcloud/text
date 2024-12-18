@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Klasör açıklamasını görüntüle",
     "Hide outline" : "Özeti gizle",
     "Show outline" : "Özeti görüntüle",
+    "Done" : "Tamam",
     "Headings" : "Başlıklar",
     "Heading 2" : "2. Başlık",
     "Heading 3" : "3. Başlık",

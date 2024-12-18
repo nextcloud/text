@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Mostrar descrição da pasta",
     "Hide outline" : "Ocultar contorno",
     "Show outline" : "Mostrar contorno",
+    "Done" : "Pronto",
     "Headings" : "Títulos",
     "Heading 2" : "Título 2",
     "Heading 3" : "Título 3",

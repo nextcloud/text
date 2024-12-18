@@ -13,6 +13,7 @@ OC.L10N.register(
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
     "Edit" : "Ẓreg",
+    "Done" : "Immed",
     "Details" : "Talqayt",
     "Warning" : "Alɣu"
 },

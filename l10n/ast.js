@@ -132,6 +132,7 @@ OC.L10N.register(
     "Delete this column" : "Desaniciar esta columna",
     "Delete this table" : "Desaniciar esta tabla",
     "Show folder description" : "Amosar la descripción de les carpetes",
+    "Done" : "Fecho",
     "Headings" : "Testeres",
     "Heading 2" : "Testera 2",
     "Heading 3" : "Testera 3",

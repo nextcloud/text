@@ -37,6 +37,7 @@ OC.L10N.register(
     "Replace" : "Mbishkruaj",
     "Edit" : "Përpuno",
     "Source code" : "Kodi burim",
+    "Done" : "U bë",
     "Details" : "Detajet",
     "Info" : "Info",
     "Success" : "Sukses",

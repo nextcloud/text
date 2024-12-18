@@ -14,6 +14,7 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "a",
     "Edit" : "Modificar",
+    "Done" : "Preste",
     "Details" : "Detalios",
     "Info" : "Info",
     "Warning" : "Aviso"

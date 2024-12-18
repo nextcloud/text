@@ -9,6 +9,7 @@ OC.L10N.register(
     "Link" : "Link",
     "Cancel" : "ரத்து செய்",
     "Edit" : "தொகுக்க",
+    "Done" : "Done",
     "Details" : "விவரங்கள்",
     "Info" : "Info",
     "Warning" : "எச்சரிக்கை"

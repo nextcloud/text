@@ -146,6 +146,7 @@ OC.L10N.register(
     "Show folder description" : "Birta lýsingu möppunnar",
     "Hide outline" : "Fela útlínu",
     "Show outline" : "Birta útlínu",
+    "Done" : "Lokið",
     "Headings" : "Fyrirsagnir",
     "Heading 2" : "Fyrirsögn 2",
     "Heading 3" : "Fyrirsögn 3",
