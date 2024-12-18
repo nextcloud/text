@@ -23,6 +23,7 @@ OC.L10N.register(
     "Replace" : "Zameni postojeću",
     "Edit" : "Uredi",
     "Source code" : "Izvorni kôd",
+    "Done" : "Gotovo",
     "Details" : "Detalji",
     "Info" : "Info",
     "Warning" : "Upozorenje"

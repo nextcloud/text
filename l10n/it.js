@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Mostra descrizione cartella",
     "Hide outline" : "Nascondi indice",
     "Show outline" : "Mostra indice",
+    "Done" : "Completato",
     "Headings" : "Intestazioni",
     "Heading 2" : "Intestazione 2",
     "Heading 3" : "Intestazione 3",

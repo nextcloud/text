@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Taispeáin cur síos ar fhillteán",
     "Hide outline" : "Folaigh imlíne",
     "Show outline" : "Taispeáin imlíne",
+    "Done" : "Déanta",
     "Headings" : "Ceannteidil",
     "Heading 2" : "Ceannteideal 2",
     "Heading 3" : "Ceannteideal 3",

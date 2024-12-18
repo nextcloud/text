@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Zobrazit popis složky",
     "Hide outline" : "Skrýt ohraničení",
     "Show outline" : "Zobrazit ohraničení",
+    "Done" : "Dokončeno",
     "Headings" : "Nadpisy",
     "Heading 2" : "Nadpis 2",
     "Heading 3" : "Nadpis 3",

@@ -175,6 +175,7 @@ OC.L10N.register(
     "Show folder description" : "ھۆججەت قىسقۇچ چۈشەندۈرۈشىنى كۆرسەت",
     "Hide outline" : "تىزىمىنى يوشۇرۇش",
     "Show outline" : "تىزىمىنى كۆرسەت",
+    "Done" : "تامام",
     "Headings" : "ماۋزۇلار",
     "Heading 2" : "Heading 2",
     "Heading 3" : "Heading 3",

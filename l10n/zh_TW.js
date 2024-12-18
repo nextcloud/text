@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "顯示資料夾描述",
     "Hide outline" : "隱藏大綱",
     "Show outline" : "顯示大綱",
+    "Done" : "完成",
     "Headings" : "標題",
     "Heading 2" : "標題 2",
     "Heading 3" : "標題 3",

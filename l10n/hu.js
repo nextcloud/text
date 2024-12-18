@@ -155,6 +155,7 @@ OC.L10N.register(
     "Show folder description" : "Mappa leírása",
     "Hide outline" : "Vázlat elrejtése",
     "Show outline" : "Vázlat megjelenítése",
+    "Done" : "Kész",
     "Headings" : "Címsorok",
     "Heading 2" : "Címsor 2",
     "Heading 3" : "Címsor 3",

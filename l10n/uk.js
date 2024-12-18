@@ -176,6 +176,7 @@ OC.L10N.register(
     "Show folder description" : "Показувати опис каталогу",
     "Hide outline" : "Сховати зміст",
     "Show outline" : "Показати зміст",
+    "Done" : "Готово",
     "Headings" : "Заголовок",
     "Heading 2" : "Заголовок 2",
     "Heading 3" : "Заголовок 3",

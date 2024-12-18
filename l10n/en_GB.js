@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Show folder description",
     "Hide outline" : "Hide outline",
     "Show outline" : "Show outline",
+    "Done" : "Done",
     "Headings" : "Headings",
     "Heading 2" : "Heading 2",
     "Heading 3" : "Heading 3",

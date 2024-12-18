@@ -177,6 +177,7 @@ OC.L10N.register(
     "Show folder description" : "Vis mappebeskrivelse",
     "Hide outline" : "Skjul omriss",
     "Show outline" : "Vis omriss",
+    "Done" : "Ferdig",
     "Headings" : "Overskrifter",
     "Heading 2" : "Overskrift 2",
     "Heading 3" : "Overskrift 3",

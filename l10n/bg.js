@@ -135,6 +135,7 @@ OC.L10N.register(
     "Delete this table" : "Изтриване на тази таблица",
     "Hide outline" : "Скриване на структурата",
     "Show outline" : "Показване на структурата",
+    "Done" : "Завършено",
     "Headings" : "Заглавия",
     "Heading 2" : "Заглавие 2",
     "Heading 3" : "Заглавие 3",

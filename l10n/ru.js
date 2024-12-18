@@ -175,6 +175,7 @@ OC.L10N.register(
     "Show folder description" : "Показать описание папки",
     "Hide outline" : "Скрыть обрамление",
     "Show outline" : "Показать обрамление",
+    "Done" : "Выполненные",
     "Headings" : "Заголовки",
     "Heading 2" : "Заголовок 2",
     "Heading 3" : "Заголовок 3",

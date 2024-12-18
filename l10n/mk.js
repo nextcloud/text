@@ -90,6 +90,7 @@ OC.L10N.register(
     "Add column after" : "Додади колона после",
     "Delete this column" : "Избриши ја оваа колона",
     "Delete this table" : "Избриши ја оваа табела",
+    "Done" : "Готово",
     "Headings" : "Заглавија",
     "Heading 2" : "Заглавие 2",
     "Heading 3" : "Заглавие 3",

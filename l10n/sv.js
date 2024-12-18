@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Visa mappbeskrivning",
     "Hide outline" : "Göm översikt",
     "Show outline" : "Visa översikt",
+    "Done" : "Klar",
     "Headings" : "Rubriker",
     "Heading 2" : "Rubrik 2",
     "Heading 3" : "Rubrik 3",

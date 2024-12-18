@@ -11,6 +11,7 @@ OC.L10N.register(
     "A PHP extension stopped the file upload" : "Una estensión de PHP aturó a carga de fichers",
     "File not found" : "Fichero no trobau",
     "Cancel" : "Canzelar",
+    "Done" : "Feito",
     "Details" : "Detalles"
 },
 "nplurals=2; plural=(n != 1);");

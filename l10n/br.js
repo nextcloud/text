@@ -21,6 +21,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Replace" : "Erlec'hiañ",
     "Edit" : "Cheñch",
+    "Done" : "Graet",
     "Details" : "Munudoù",
     "Command" : "Urzh",
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell",
