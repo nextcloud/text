@@ -128,6 +128,7 @@ OC.L10N.register(
     "Delete this table" : "Zmazať túto tabuľku",
     "Hide outline" : "Skryť prehľad",
     "Show outline" : "Zobraziť prehľad",
+    "Done" : "Hotovo",
     "Headings" : "Nadpisy",
     "Heading 2" : "Nadpis 2",
     "Heading 3" : "Nadpis 3",

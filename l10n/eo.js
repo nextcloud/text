@@ -47,6 +47,7 @@ OC.L10N.register(
     "to" : "al",
     "Replace" : "Anstataŭigi",
     "Edit" : "Modifi",
+    "Done" : "Farita",
     "Headings" : "Titolaro",
     "Heading 2" : "Titolo 2",
     "Heading 3" : "Titolo 3",

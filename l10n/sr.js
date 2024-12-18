@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Прикажи опис фолдера",
     "Hide outline" : "Сакриј контуру",
     "Show outline" : "Прикажи контуру",
+    "Done" : "Завршено",
     "Headings" : "Наслови",
     "Heading 2" : "Наслов 2",
     "Heading 3" : "Наслов 3",

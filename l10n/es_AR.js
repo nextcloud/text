@@ -32,6 +32,7 @@ OC.L10N.register(
     "Replace" : "Reemplazar",
     "Edit" : "Editar",
     "Source code" : "Código fuente",
+    "Done" : "Terminado",
     "Table" : "Tabla",
     "Details" : "Detalles",
     "Add folder description" : "Agregar una descripción a la carpeta",

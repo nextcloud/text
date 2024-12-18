@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Erakutsi karpetaren deskribapena",
     "Hide outline" : "Ezkutatu eskema",
     "Show outline" : "Erakutsi eskema",
+    "Done" : "Egina",
     "Headings" : "Goiburuak",
     "Heading 2" : "2. goiburua",
     "Heading 3" : "3. goiburua",

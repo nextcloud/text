@@ -83,6 +83,7 @@ OC.L10N.register(
     "Show folder description" : "폴더 설명 보이기",
     "Hide outline" : "개요 숨기기",
     "Show outline" : "개요 보이기",
+    "Done" : "완료",
     "Headings" : "제목",
     "Heading 2" : "제목 2",
     "Heading 3" : "제목 3",

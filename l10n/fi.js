@@ -141,6 +141,7 @@ OC.L10N.register(
     "Delete this column" : "Poista tämä sarake",
     "Delete this table" : "Poista tämä taulu",
     "Show folder description" : "Näytä kansion kuvaus",
+    "Done" : "Valmis",
     "Headings" : "Otsikot",
     "Heading 2" : "Otsikko 2",
     "Heading 3" : "Otsikko 3",

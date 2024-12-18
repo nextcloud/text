@@ -114,6 +114,7 @@ OC.L10N.register(
     "Delete this column" : "Ištrinti šį stulpelį",
     "Delete this table" : "Ištrinti šią lentelę",
     "Show folder description" : "Rodyti aplanko aprašą",
+    "Done" : "Atlikta",
     "Headings" : "Antraštės",
     "Heading 2" : "Antraštė 2",
     "Heading 3" : "Antraštė 3",

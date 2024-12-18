@@ -180,6 +180,7 @@ OC.L10N.register(
     "Show folder description" : "Amosar a descrición do cartafol",
     "Hide outline" : "Agochar o esquema",
     "Show outline" : "Amosar o esquema",
+    "Done" : "Feito",
     "Headings" : "Títulos",
     "Heading 2" : "Título 2",
     "Heading 3" : "Título 3",
