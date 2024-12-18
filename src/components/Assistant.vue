@@ -34,7 +34,7 @@
 					{{ t('text', 'Translate') }}
 				</NcActionButton>
 				<NcActionSeparator />
-				<NcActionButton close-after-click @click="showTaskList=true">
+				<NcActionButton :disabled="tasks.length < 1" close-after-click @click="showTaskList=true">
 					<template #icon>
 						<CreationIcon :size="20" />
 					</template>
