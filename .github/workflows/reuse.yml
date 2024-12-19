@@ -40,5 +40,9 @@ jobs:
         npm ci
         npm run build --if-present
 
+    - name: Add changed files to git so they are checked
+      run: |
+        git add --force js/ css/
+
     - name: REUSE Compliance Check
       uses: fsfe/reuse-action@3ae3c6bdf1257ab19397fab11fd3312144692083 # v4.0.0
