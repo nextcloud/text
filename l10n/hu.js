@@ -171,6 +171,7 @@ OC.L10N.register(
     "Control" : "Control",
     "Option" : "Option",
     "Formatting" : "Formázás",
+    "Add folder description" : "Mappaleírás hozzáadása",
     "Copied to the clipboard" : "Vágólapra másolva",
     "Front matter" : "Előlap",
     "Link to this section" : "Hivatkozás erre a szakaszra",
