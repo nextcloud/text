@@ -8,15 +8,16 @@ declare(strict_types=1);
 
 namespace OCA\Text\Notification;
 
-use InvalidArgumentException;
 use OC\User\NoUserException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IURLGenerator;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
+use OCP\Notification\AlreadyProcessedException;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
+use OCP\Notification\UnknownNotificationException;
 
 class Notifier implements INotifier {
 	public const TYPE_MENTIONED = 'mentioned';
@@ -45,7 +46,7 @@ class Notifier implements INotifier {
 
 	public function prepare(INotification $notification, string $languageCode): INotification {
 		if ($notification->getApp() !== 'text') {
-			throw new InvalidArgumentException('Application should be text instead of ' . $notification->getApp());
+			throw new UnknownNotificationException('Application should be text instead of ' . $notification->getApp());
 		}
 
 		$l = $this->factory->get('text', $languageCode);
@@ -59,18 +60,18 @@ class Notifier implements INotifier {
 				$fileId = (int)$notification->getObjectId();
 
 				if ($sourceUserDisplayName === null) {
-					throw new InvalidArgumentException();
+					throw new UnknownNotificationException();
 				}
 
 				try {
 					$userFolder = $this->rootFolder->getUserFolder($targetUser);
 				} catch (NotPermittedException|NoUserException $e) {
-					throw new InvalidArgumentException();
+					throw new UnknownNotificationException();
 				}
 				$node = $userFolder->getFirstNodeById($fileId);
 
 				if ($node === null) {
-					throw new InvalidArgumentException();
+					throw new AlreadyProcessedException();
 				}
 
 				$fileLink = $this->url->linkToRouteAbsolute('files.viewcontroller.showFile', ['fileid' => $node->getId()]);
@@ -91,7 +92,7 @@ class Notifier implements INotifier {
 				]);
 				break;
 			default:
-				throw new InvalidArgumentException();
+				throw new UnknownNotificationException();
 		}
 		$notification->setIcon($this->url->getAbsoluteURL($this->url->imagePath('text', 'app-dark.svg')));
 		$notification->setLink($fileLink);
