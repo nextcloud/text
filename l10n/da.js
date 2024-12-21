@@ -86,6 +86,7 @@ OC.L10N.register(
     "Details" : "Detaljer",
     "Command" : "Kommando",
     "Formatting" : "Formatering",
+    "Add folder description" : "Tilføj mappebeskrivelse",
     "Show author colors" : "Vis forfatterens farver",
     "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
     "Info" : "Info",
