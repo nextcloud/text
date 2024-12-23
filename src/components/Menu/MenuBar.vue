@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { useElementSize } from '@vueuse/core'
@@ -125,7 +125,13 @@ export default {
 	setup() {
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { menubar, width }
+		const widthAfterResize = ref(width)
+		watch(width, value => {
+			nextTick(() => {
+				widthAfterResize.value = value
+			})
+		})
+		return { menubar, width: widthAfterResize }
 	},
 
 	data() {
