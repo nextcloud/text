@@ -17,7 +17,7 @@ OC.L10N.register(
     "Editing session has expired. Please reload the page." : "A sesión de edición caducou. Volva cargar a páxina.",
     "{user} has mentioned you in the text document {node}" : "{user} mencionouno a Vde. no documento de texto {node}",
     "This file cannot be displayed as download is disabled by the share" : "Non é posíbel amosar este ficheiro por mor de que a descarga está desactivada pola compartición",
-    "File not found" : "Ficheiro non atopado",
+    "File not found" : "Non se atopou o ficheiro",
     "Readme" : "Léeme",
     "Text" : "Texto",
     "📝 Collaborative document editing" : "📝 Edición colaborativa de documentos",
