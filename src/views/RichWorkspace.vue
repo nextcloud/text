@@ -32,10 +32,12 @@ import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
 import getEditorInstance from '../components/Editor.singleton.js'
 import RichTextReader from '../components/RichTextReader.vue'
+import { loadState } from '@nextcloud/initial-state'
 
 const IS_PUBLIC = isPublicShare()
 const WORKSPACE_URL = generateOcsUrl('apps/text' + (IS_PUBLIC ? '/public' : '') + '/workspace', 2)
-const SUPPORTED_STATIC_FILENAMES = ['Readme.md', 'README.md', 'readme.md']
+const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+const SUPPORTED_STATIC_FILENAMES = [descriptionFile, 'Readme.md', 'README.md', 'readme.md']
 
 export default {
 	name: 'RichWorkspace',
