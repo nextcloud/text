@@ -27,8 +27,36 @@ window._oc_webroot = url
 
 addCommands()
 
+// Copy of the new login command as long as we are blocked to upgrade @nextcloud/cypress by cypress crashes
+const login = function(user) {
+	cy.session(user, function() {
+		cy.request('/csrftoken').then(({ body }) => {
+			const requestToken = body.token
+			cy.request({
+				method: 'POST',
+				url: '/login',
+				body: {
+					user: user.userId,
+					password: user.password,
+					requesttoken: requestToken,
+				},
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					// Add the Origin header so that the request is not blocked by the browser.
+					Origin: (Cypress.config('baseUrl') ?? '').replace('index.php/', ''),
+				},
+				followRedirect: false,
+			})
+		})
+	}, {
+		validate() {
+			cy.request('/apps/files').its('status').should('eq', 200)
+		},
+	})
+}
+
 // Prepare the csrf-token for axios
-Cypress.Commands.overwrite('login', (login, user) => {
+Cypress.Commands.overwrite('login', (_login, user) => {
 	cy.window(silent).then((win) => {
 		win.location.href = 'about:blank'
 	})
