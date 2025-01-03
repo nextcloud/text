@@ -31,7 +31,7 @@ import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR } from '../Editor.provider.
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
-import { RichText } from '../../extensions/index.js'
+import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 
@@ -133,6 +133,7 @@ export default {
 						History,
 					],
 				}),
+				FocusTrap,
 			]
 		},
 		createEditor() {
