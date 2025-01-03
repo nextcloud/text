@@ -37,6 +37,7 @@ OC.L10N.register(
     "The document has been changed outside of the editor. The changes cannot be applied." : "Dokumentet er blevet ændret uden for editoren. Ændringerne kan ikke anvendes.",
     "Unsaved changes" : "Ikke gemte ændringer",
     "Keyboard shortcuts" : "Tastaturgenveje",
+    "Backspace" : "Backspace",
     "Shift" : "Shift",
     "Bold" : "Fed",
     "Ctrl" : "Ctrl",
