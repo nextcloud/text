@@ -11,6 +11,9 @@ This file is generated from multiple sources. Included packages:
 - d3-array
 	- version: 2.12.1
 	- license: BSD-3-Clause
+- d3-array
+	- version: 2.12.1
+	- license: BSD-3-Clause
 - d3-path
 	- version: 1.0.9
 	- license: BSD-3-Clause
