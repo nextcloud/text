@@ -176,6 +176,7 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Opcja",
     "Formatting" : "Formatowanie",
+    "Start writing, or try '/' to add, '@' to mention…" : "Zacznij pisać, lub spróbuj \"/\", aby dodać; '@', aby wspomnieć o...",
     "Add folder description" : "Dodaj opis katalogu",
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",
