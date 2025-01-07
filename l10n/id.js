@@ -39,6 +39,7 @@ OC.L10N.register(
     "Control" : "Kendali",
     "Formatting" : "Pemformatan",
     "Info" : "Info",
+    "Success" : "Berhasil",
     "Warning" : "Peringatan",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan..."
 },
