@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import Vue, { ref, set, watch } from 'vue'
+import Vue, { ref, set, watch, nextTick } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
@@ -239,7 +239,9 @@ export default {
 		const { width } = useElementSize(el)
 		watch(width, value => {
 			const maxWidth = Math.floor(value) - 36
-			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
+			nextTick(() => {
+				el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
+			})
 		})
 		return { el, width }
 	},
