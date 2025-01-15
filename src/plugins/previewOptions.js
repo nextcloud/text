@@ -139,19 +139,42 @@ function decorationForLinkParagraph(linkParagraph, editor) {
  * Create a previewOptions element for the given linkParagraph
  *
  * @param {object} linkParagraph - linkParagraph to generate anchor for
+ * @param {number} linkParagraph.pos - Position of the node
+ * @param {string} linkParagraph.type - selected type
+ * @param {number} linkParagraph.nodeSize - size of the node
  * @param {object} editor - tiptap editor
  *
  * @return {Element}
  */
-function previewOptionForLinkParagraph(linkParagraph, editor) {
-	const propsData = {
-		$editor: editor,
-		...linkParagraph,
-	}
+function previewOptionForLinkParagraph({ type, pos, nodeSize }, editor) {
 	const el = document.createElement('div')
 	const Component = Vue.extend(PreviewOptions)
-	const previewOption = new Component({
-		propsData,
-	}).$mount(el)
+	const propsData = { type }
+	const previewOption = new Component({ propsData }).$mount(el)
+	previewOption.$on('open', () => {
+		editor.commands.hideLinkBubble()
+	})
+	previewOption.$on('toggle', (type) => {
+		setPreview(pos, type, editor)
+	})
+	previewOption.$on('delete', () => {
+		editor.commands.deleteRange({ from: pos, to: pos + nodeSize })
+	})
 	return previewOption.$el
+}
+
+/**
+ *
+ *
+ * @param {number} pos - Position of the node
+ * @param {string} type - selected type
+ * @param {object} editor - tiptap editor
+ */
+function setPreview(pos, type, editor) {
+	const chain = editor.chain().focus().setTextSelection(pos + 1)
+	if (type !== 'text-only') {
+		chain.setPreview().run()
+	} else {
+		chain.unsetPreview().run()
+	}
 }

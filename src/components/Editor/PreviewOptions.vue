@@ -60,18 +60,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		pos: {
-			type: Number,
-			required: true,
-		},
-		nodeSize: {
-			type: Number,
-			required: true,
-		},
-		$editor: {
-			type: Object,
-			required: true,
-		},
 	},
 
 	data() {
@@ -82,23 +70,14 @@ export default {
 
 	methods: {
 		onOpen() {
-			this.$editor.commands.hideLinkBubble()
+			this.$emit('open')
 		},
 		toggle(type) {
 			this.open = false
-			const chain = this.$editor.chain().focus()
-				.setTextSelection(this.pos + 1)
-			if (type === 'text-only') {
-				chain.unsetPreview().run()
-				return
-			}
-			chain.setPreview().run()
+			this.$emit('toggle', type)
 		},
 		deleteNode() {
-			this.$editor.commands.deleteRange({
-				from: this.pos,
-				to: this.pos + this.nodeSize,
-			})
+			this.$emit('delete')
 		},
 	},
 }
