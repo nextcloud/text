@@ -27,7 +27,7 @@
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
 			<NcActionSeparator />
-			<NcActionButton close-after-click="true" @click="deleteNode">
+			<NcActionButton close-after-click @click="deleteNode">
 				<template #icon>
 					<DeleteIcon :size="20" />
 				</template>
