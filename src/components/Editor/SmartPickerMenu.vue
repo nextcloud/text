@@ -5,6 +5,7 @@
 
 <template>
 	<FloatingMenu :editor="$editor"
+		:tippy-options="tippyOptions()"
 		:should-show="shouldShow">
 		<NcActions :title="t('text', 'Open the Smart Picker')" :type="'tertiary'">
 			<NcActionButton @click="openSmartPicker()">
@@ -19,10 +20,9 @@
 <script>
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
 import { NcActions, NcActionButton } from '@nextcloud/vue'
-import {
-	useEditorMixin,
-} from '../Editor.provider.js'
+import { posToDOMRect } from '@tiptap/core'
 import { FloatingMenu } from '@tiptap/vue-2'
+import { useEditorMixin } from '../Editor.provider.js'
 
 export default {
 	name: 'SmartPickerMenu',
@@ -37,24 +37,37 @@ export default {
 	],
 	methods: {
 		async openSmartPicker() {
-			const parent = this.$editor.state.selection.$anchor.parent
-			const content = parent.textContent.match(/(^| )$/) ? '/' : ' /'
-			this.$editor.chain().focus().insertContent(content).run()
+			const { selection } = this.$editor.state
+			const { textContent } = selection.$anchor.parent
+			const eol = selection.$anchor.end()
+			const contentToInsert = textContent.match(/(^| )$/) ? '/' : ' /'
+			this.$editor.chain()
+				.focus()
+				.setTextSelection(eol)
+				.insertContent(contentToInsert)
+				.run()
 		},
 		shouldShow({ view, state }) {
 			const { selection } = state
 			const { parent, depth, pos } = selection.$anchor
 			const isRootDepth = depth === 1
-			const isEndOfLine = pos === selection.$anchor.end()
 			const noLinkPickerYet = !parent.textContent.match(/(^| )\/$/)
 			return view.hasFocus()
 				&& this.$editor.isEditable
 				&& isRootDepth
-				&& isEndOfLine
 				&& noLinkPickerYet
 				&& selection.empty
 				&& parent.isTextblock
 				&& !parent.type.spec.code
+		},
+		tippyOptions() {
+			return {
+				getReferenceClientRect: () => {
+					const { view, state } = this.$editor
+					const eol = state.selection.$anchor.end()
+					return posToDOMRect(view, eol, eol)
+				},
+			}
 		},
 	},
 }
