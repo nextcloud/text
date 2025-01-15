@@ -57,7 +57,9 @@
 					<div v-else class="menubar-placeholder" />
 				</template>
 				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper" />
+					ref="contentWrapper">
+					<SmartPickerMenu />
+				</ContentContainer>
 			</MainContainer>
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
@@ -123,6 +125,7 @@ import MainContainer from './Editor/MainContainer.vue'
 import Wrapper from './Editor/Wrapper.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import Assistant from './Assistant.vue'
+import SmartPickerMenu from './Editor/SmartPickerMenu.vue'
 import Translate from './Modal/Translate.vue'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
@@ -141,6 +144,7 @@ export default {
 		Status,
 		Assistant,
 		Translate,
+		SmartPickerMenu,
 	},
 	mixins: [
 		isMobile,

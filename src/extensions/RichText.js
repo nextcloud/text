@@ -35,7 +35,6 @@ import Mention from './../extensions/Mention.js'
 import Search from './../extensions/Search.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
-import Placeholder from '@tiptap/extension-placeholder'
 import Preview from './../nodes/Preview.js'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
@@ -45,7 +44,6 @@ import TrailingNode from './../nodes/TrailingNode.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
-import { translate as t } from '@nextcloud/l10n'
 
 const lowlight = createLowlight(common)
 lowlight.registerAlias('plaintext', 'mermaid')
@@ -112,11 +110,6 @@ export default Extension.create({
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
-			this.options.editing
-				? Placeholder.configure({
-					placeholder: t('text', 'Start writing, or try \'/\' to add, \'@\' to mention…'),
-				})
-				: null,
 			TrailingNode,
 		]
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)

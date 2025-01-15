@@ -5,6 +5,7 @@
 <template>
 	<div v-if="showAssistant" class="text-assistant">
 		<FloatingMenu v-if="$editor"
+			plugin-key="assistantMenu"
 			:editor="$editor"
 			:tippy-options="floatingOptions()"
 			:should-show="floatingShow"
