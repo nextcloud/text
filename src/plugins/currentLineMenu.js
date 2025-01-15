@@ -42,9 +42,8 @@ export default function currentLineMenu({ editor }) {
 				if (!currentParagraph) {
 					return { decorations: DecorationSet.empty }
 				}
-				const decorations = (value.currentParagraph?.index === currentParagraph.index)
-					? value.decorations.map(tr.mapping, tr.doc)
-					: currentParagraphDecorations(newState.doc, currentParagraph, editor)
+				const decorations = mapDecorations(value, tr, currentParagraph)
+					|| currentParagraphDecorations(newState.doc, currentParagraph, editor)
 				return { currentParagraph, decorations }
 			},
 		},
@@ -58,6 +57,33 @@ export default function currentLineMenu({ editor }) {
 }
 
 /**
+ * Map the previous deocrations to current document state
+ *
+ * Return false if previewParagraphs changes or decorations would get removed. The latter prevents
+ * lost decorations in case of replacements.
+ *
+ * @param {object} value - previous plugin state
+ * @param {object} tr - current transaction
+ * @param {object} currentParagraph - attributes of the current paragraph
+ *
+ * @return {false|DecorationSet}
+ */
+function mapDecorations(value, tr, currentParagraph) {
+	if (value.currentParagraph?.pos !== currentParagraph.pos) {
+		return false
+	}
+	let removedDecorations = false
+	const decorations = value.decorations.map(tr.mapping, tr.doc, {
+		onRemove: () => {
+			removedDecorations = true
+		},
+	})
+	return removedDecorations
+		? false
+		: decorations
+}
+
+/**
  * Get the paragraph node the cursor is on.
  *
  * @param {EditorState} state - the prosemirror state
@@ -65,14 +91,20 @@ export default function currentLineMenu({ editor }) {
  */
 function getCurrentParagraph({ selection }) {
 	const { parent, depth } = selection.$anchor
+	// handle invalid cursor position
+	if (depth > 1) {
+		return false
+	}
+	const pos = depth === 0 ? 0 : selection.$anchor.before()
 	const isRootDepth = depth === 1
 	const noLinkPickerYet = !parent.textContent.match(/(^| )\/$/)
-	return isRootDepth
+	if (isRootDepth
 		&& noLinkPickerYet
 		&& selection.empty
 		&& parent.isTextblock
-		&& !parent.type.spec.code
-		&& { pos: selection.$anchor.before(), index: selection.$anchor.index(0) }
+		&& !parent.type.spec.code) {
+		return { pos }
+	}
 }
 
 /**
@@ -100,7 +132,7 @@ function currentParagraphDecorations(doc, currentParagraph, editor) {
 function decorationForCurrentParagraph(currentParagraph, editor) {
 	return Decoration.widget(
 		currentParagraph.pos + 1,
-		menuForCurrentParagraph(currentParagraph, editor),
+		menuForCurrentParagraph(editor),
 		{ side: -1 },
 	)
 }
@@ -108,21 +140,15 @@ function decorationForCurrentParagraph(currentParagraph, editor) {
 /**
  * Create a menu element for the given currentParagraph
  *
- * @param {object} currentParagraph - currentParagraph to generate menu for
  * @param {object} editor - tiptap editor
  *
  * @return {Element}
  */
-function menuForCurrentParagraph(currentParagraph, editor) {
-	const propsData = {
-		$editor: editor,
-		...currentParagraph,
-	}
+function menuForCurrentParagraph(editor) {
 	const el = document.createElement('div')
 	const Component = Vue.extend(SmartPickerMenu)
-	const menu = new Component({
-		propsData,
-	}).$mount(el)
+	const menu = new Component()
+	menu.$mount(el)
 	menu.$on('open-smart-picker', () => {
 		const { selection } = editor.state
 		const { textContent } = selection.$anchor.parent
