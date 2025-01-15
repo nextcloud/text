@@ -39,7 +39,7 @@ div[contenteditable=false] {
 .smart-picker-menu-container {
 	position: absolute;
 	width: 0 !important;
-	left: -80px;
+	left: -84px;
 	top: 50%;
 	transform: translate(0, -50%);
 }
