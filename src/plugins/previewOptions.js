@@ -129,7 +129,7 @@ function linkParagraphDecorations(doc, linkParagraphs, editor) {
  */
 function decorationForLinkParagraph(linkParagraph, editor) {
 	return Decoration.widget(
-		linkParagraph.offset + 1,
+		linkParagraph.pos + 1,
 		previewOptionForLinkParagraph(linkParagraph, editor),
 		{ side: -1 },
 	)

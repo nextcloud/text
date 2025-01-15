@@ -60,7 +60,7 @@ export default {
 			type: String,
 			required: true,
 		},
-		offset: {
+		pos: {
 			type: Number,
 			required: true,
 		},
@@ -87,7 +87,7 @@ export default {
 		toggle(type) {
 			this.open = false
 			const chain = this.$editor.chain().focus()
-				.setTextSelection(this.offset + 1)
+				.setTextSelection(this.pos + 1)
 			if (type === 'text-only') {
 				chain.unsetPreview().run()
 				return
@@ -96,8 +96,8 @@ export default {
 		},
 		deleteNode() {
 			this.$editor.commands.deleteRange({
-				from: this.offset,
-				to: this.offset + this.nodeSize,
+				from: this.pos,
+				to: this.pos + this.nodeSize,
 			})
 		},
 	},

@@ -5,6 +5,7 @@
 
 import TiptapParagraph from '@tiptap/extension-paragraph'
 import previewOptions from '../plugins/previewOptions.js'
+import currentLineMenu from '../plugins/currentLineMenu.js'
 
 const Paragraph = TiptapParagraph.extend({
 
@@ -38,9 +39,8 @@ const Paragraph = TiptapParagraph.extend({
 
 	addProseMirrorPlugins() {
 		return [
-			previewOptions({
-				editor: this.editor,
-			}),
+			currentLineMenu({ editor: this.editor }),
+			previewOptions({ editor: this.editor }),
 		]
 	},
 })
