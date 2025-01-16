@@ -131,7 +131,7 @@ function currentParagraphDecorations(doc, currentParagraph, editor) {
  */
 function decorationForCurrentParagraph(currentParagraph, editor) {
 	return Decoration.widget(
-		currentParagraph.pos + 1,
+		currentParagraph?.pos + 1,
 		menuForCurrentParagraph(editor),
 		{ side: -1 },
 	)

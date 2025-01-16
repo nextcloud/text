@@ -5,26 +5,23 @@
 
 <template>
 	<div contenteditable="false" class="smart-picker-menu-container">
-		<NcActions :title="t('text', 'Open the Smart Picker')" :type="'tertiary'">
-			<NcActionButton @click="$emit('open-smart-picker')">
-				<template #icon>
-					<PlusIcon />
-				</template>
-			</NcActionButton>
-		</NcActions>
+		<NcButton :aria-label="t('text', 'Open the Smart Picker')" :type="'tertiary'" @click="$emit('open-smart-picker')">
+			<template #icon>
+				<PlusIcon />
+			</template>
+		</NcButton>
 	</div>
 </template>
 
 <script>
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import { NcActions, NcActionButton } from '@nextcloud/vue'
+import { NcButton } from '@nextcloud/vue'
 
 export default {
 	name: 'SmartPickerMenu',
 	components: {
 		PlusIcon,
-		NcActions,
-		NcActionButton,
+		NcButton,
 	},
 }
 
