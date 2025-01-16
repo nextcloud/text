@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Plugin, PluginKey, EditorState } from '@tiptap/pm/state'
+import { EditorState, Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import { Editor } from '@tiptap/core'
 import Vue from 'vue'
 import SmartPickerMenu from '../components/Editor/SmartPickerMenu.vue'
 
@@ -15,7 +16,7 @@ export const currentLineMenuKey = new PluginKey('currentLineMenu')
  * ProseMirror plugin providing a single decoration for the current line.
  *
  * @param {object} options - options for the plugin
- * @param {object} options.editor - the tiptap editor
+ * @param {Editor} options.editor - the tiptap editor
  *
  * @return {Plugin<DecorationSet>}
  */
@@ -63,8 +64,8 @@ export default function currentLineMenu({ editor }) {
  * lost decorations in case of replacements.
  *
  * @param {object} value - previous plugin state
- * @param {object} tr - current transaction
- * @param {object} currentParagraph - attributes of the current paragraph
+ * @param {Transaction} tr - current transaction
+ * @param {object|undefined} currentParagraph - attributes of the current paragraph
  *
  * @return {false|DecorationSet}
  */
@@ -87,7 +88,7 @@ function mapDecorations(value, tr, currentParagraph) {
  * Get the paragraph node the cursor is on.
  *
  * @param {EditorState} state - the prosemirror state
- * @return {Node|undefined} - the current paragraph if the cursor is in one
+ * @return {object|undefined} - the current paragraph if the cursor is in one
  */
 function getCurrentParagraph({ selection }) {
 	const { parent, depth } = selection.$anchor
@@ -111,12 +112,15 @@ function getCurrentParagraph({ selection }) {
  * Create a menu decorations for the given paragraph
  *
  * @param {Document} doc - prosemirror doc
- * @param {Node} currentParagraph - paragraph to decorate
- * @param {object} editor - tiptap editor
+ * @param {object} currentParagraph - paragraph to decorate
+ * @param {Editor} editor - tiptap editor
  *
  * @return {DecorationSet}
  */
 function currentParagraphDecorations(doc, currentParagraph, editor) {
+	if (!currentParagraph) {
+		return DecorationSet.empty
+	}
 	const decorations = [decorationForCurrentParagraph(currentParagraph, editor)]
 	return DecorationSet.create(doc, decorations)
 }
@@ -125,13 +129,13 @@ function currentParagraphDecorations(doc, currentParagraph, editor) {
  * Create a decoration for the currentParagraph
  *
  * @param {object} currentParagraph to decorate
- * @param {object} editor - tiptap editor
+ * @param {Editor} editor - tiptap editor
  *
  * @return {Decoration}
  */
 function decorationForCurrentParagraph(currentParagraph, editor) {
 	return Decoration.widget(
-		currentParagraph?.pos + 1,
+		currentParagraph.pos + 1,
 		menuForCurrentParagraph(editor),
 		{ side: -1 },
 	)
@@ -140,7 +144,7 @@ function decorationForCurrentParagraph(currentParagraph, editor) {
 /**
  * Create a menu element for the given currentParagraph
  *
- * @param {object} editor - tiptap editor
+ * @param {Editor} editor - tiptap editor
  *
  * @return {Element}
  */
