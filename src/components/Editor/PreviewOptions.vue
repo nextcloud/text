@@ -27,7 +27,7 @@
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
 			<NcActionSeparator />
-			<NcActionButton close-after-click="true" @click="deleteNode">
+			<NcActionButton close-after-click @click="deleteNode">
 				<template #icon>
 					<DeleteIcon :size="20" />
 				</template>
@@ -60,18 +60,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		offset: {
-			type: Number,
-			required: true,
-		},
-		nodeSize: {
-			type: Number,
-			required: true,
-		},
-		$editor: {
-			type: Object,
-			required: true,
-		},
 	},
 
 	data() {
@@ -82,23 +70,14 @@ export default {
 
 	methods: {
 		onOpen() {
-			this.$editor.commands.hideLinkBubble()
+			this.$emit('open')
 		},
 		toggle(type) {
 			this.open = false
-			const chain = this.$editor.chain().focus()
-				.setTextSelection(this.offset + 1)
-			if (type === 'text-only') {
-				chain.unsetPreview().run()
-				return
-			}
-			chain.setPreview().run()
+			this.$emit('toggle', type)
 		},
 		deleteNode() {
-			this.$editor.commands.deleteRange({
-				from: this.offset,
-				to: this.offset + this.nodeSize,
-			})
+			this.$emit('delete')
 		},
 	},
 }

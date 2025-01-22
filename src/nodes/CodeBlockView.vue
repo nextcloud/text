@@ -11,7 +11,6 @@
 					<NcActionButton v-if="hasCode"
 						data-cy="copy-code"
 						:aria-label="t('text', 'Copy code')"
-						:close-after-click="false"
 						@click="copyCode">
 						<template #icon>
 							<Check v-if="copySuccess" :size="20" />
@@ -36,19 +35,19 @@
 
 					<NcActionSeparator v-if="supportPreview" />
 
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'code'">
+					<NcActionButton v-if="supportPreview" close-after-click @click="viewMode = 'code'">
 						<template #icon>
 							<CodeBraces :size="20" />
 						</template>
 						{{ t('text', 'Source code') }}
 					</NcActionButton>
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'preview'">
+					<NcActionButton v-if="supportPreview" close-after-click @click="viewMode = 'preview'">
 						<template #icon>
 							<Eye :size="20" />
 						</template>
 						{{ t('text', 'Diagram') }}
 					</NcActionButton>
-					<NcActionButton v-if="supportPreview" :close-after-click="true" @click="viewMode = 'side-by-side'">
+					<NcActionButton v-if="supportPreview" close-after-click @click="viewMode = 'side-by-side'">
 						<template #icon>
 							<ViewSplitVertical :size="20" />
 						</template>

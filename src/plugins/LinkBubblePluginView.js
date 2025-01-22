@@ -113,15 +113,17 @@ class LinkBubblePluginView {
 		if (Object.prototype.toString.call(referenceEl) === '[object Text]') {
 			referenceEl = referenceEl.parentElement
 		}
-		const clientRect = referenceEl?.getBoundingClientRect()
 
 		this.#component?.updateProps({
 			href: domHref(mark),
 		})
 
-		this.tippy?.setProps({
-			getReferenceClientRect: () => clientRect,
-		})
+		const clientRect = referenceEl?.getBoundingClientRect()
+		if (clientRect) {
+			this.tippy?.setProps({
+				getReferenceClientRect: () => clientRect,
+			})
+		}
 
 		this.tippy?.show()
 		this.addEventListeners()

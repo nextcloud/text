@@ -14,16 +14,16 @@ import { isLinkToSelfWithHash } from './../helpers/links.js'
 export default function extractLinkParagraphs(doc) {
 	const paragraphs = []
 
-	doc.descendants((node, offset) => {
+	doc.descendants((node, pos) => {
 		if (previewPossible(node)) {
 			paragraphs.push(Object.freeze({
-				offset,
+				pos,
 				nodeSize: node.nodeSize,
 				type: 'text-only',
 			}))
 		} else if (node.type.name === 'preview') {
 			paragraphs.push(Object.freeze({
-				offset,
+				pos,
 				nodeSize: node.nodeSize,
 				type: 'link-preview',
 			}))
