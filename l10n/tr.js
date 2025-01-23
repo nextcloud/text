@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "konuk",
     "Full width editor" : "Tam genişlikte düzenleyici",
     "Active people" : "Etkin kişiler",
+    "Open the Smart Picker" : "Akıllı seçiciyi aç",
     "Save document" : "Belgeyi kaydet",
     "Last saved" : "Son kaydedilme",
     "Offline" : "Çevrim dışı",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Dosya ya da klasör bağlantısı",
     "Link to website" : "Site bağlantısı",
     "Update link" : "Bağlantıyı güncelle",
-    "Open the Smart Picker" : "Akıllı seçiciyi aç",
     "Select file or folder to link to" : "Bağlantı verilecek dosya ya da klasörü seçin",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" seçilmiş",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Denetim",
     "Option" : "Seçenek",
     "Formatting" : "Biçimlendirme",
-    "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…",
     "Add folder description" : "Klasör açıklaması ekle",
     "\"{name}\" already exist!" : "\"{name}\" zaten var!",
     "Created \"{name}\"" : "\"{name}\" oluşturuldu",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
-    "Add description" : "Açıklama ekle"
+    "Add description" : "Açıklama ekle",
+    "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…"
 },
 "nplurals=2; plural=(n > 1);");

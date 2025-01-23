@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "guest",
     "Full width editor" : "Full width editor",
     "Active people" : "Active people",
+    "Open the Smart Picker" : "Open the Smart Picker",
     "Save document" : "Save document",
     "Last saved" : "Last saved",
     "Offline" : "Offline",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Link to file or folder",
     "Link to website" : "Link to website",
     "Update link" : "Update link",
-    "Open the Smart Picker" : "Open the Smart Picker",
     "Select file or folder to link to" : "Select file or folder to link to",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" is selected",
     "_%n word_::_%n words_" : ["%n word","%n words"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Control",
     "Option" : "Option",
     "Formatting" : "Formatting",
-    "Start writing, or try '/' to add, '@' to mention…" : "Start writing, or try '/' to add, '@' to mention…",
     "Add folder description" : "Add folder description",
     "\"{name}\" already exist!" : "\"{name}\" already exist!",
     "Created \"{name}\"" : "Created \"{name}\"",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Warning",
     "Danger" : "Danger",
     "Add notes, lists or links …" : "Add notes, lists or links …",
-    "Add description" : "Add description"
+    "Add description" : "Add description",
+    "Start writing, or try '/' to add, '@' to mention…" : "Start writing, or try '/' to add, '@' to mention…"
 },
 "nplurals=2; plural=(n != 1);");

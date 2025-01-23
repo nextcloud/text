@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "aoi",
     "Full width editor" : "Eagarthóir leithead iomlán",
     "Active people" : "Daoine gníomhacha",
+    "Open the Smart Picker" : "Oscail an Roghnóir Cliste",
     "Save document" : "Sábháil doiciméad",
     "Last saved" : "Last shábháil",
     "Offline" : "As líne",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Nasc chuig comhad nó fillteán",
     "Link to website" : "Nasc chuig an suíomh Gréasáin",
     "Update link" : "Nuashonraigh nasc",
-    "Open the Smart Picker" : "Oscail an Roghnóir Cliste",
     "Select file or folder to link to" : "Roghnaigh comhad nó fillteán le nascadh leis",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, tá \"{selectedSubMenuItemName}\" roghnaithe",
     "_%n word_::_%n words_" : ["%n focal","%n focail","%n focail","%n focail","%n focail"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Smacht",
     "Option" : "Rogha",
     "Formatting" : "Formáidiú",
-    "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…",
     "Add folder description" : "Cuir cur síos ar fhillteán leis",
     "\"{name}\" already exist!" : "Tá \"{name}\" ann cheana féin!",
     "Created \"{name}\"" : "Cruthaithe \"{name}\"",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Rabhadh",
     "Danger" : "Contúirt",
     "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
-    "Add description" : "Cuir cur síos leis"
+    "Add description" : "Cuir cur síos leis",
+    "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

@@ -49,6 +49,7 @@
     "Remove link" : "删除链接",
     "guest" : "访客",
     "Active people" : "活动用户",
+    "Open the Smart Picker" : "打开智能选择器",
     "Save document" : "保存文档",
     "Last saved" : "最近保存",
     "Offline" : "离线",
@@ -119,7 +120,6 @@
     "Link to file or folder" : "链接至文件或文件夹",
     "Link to website" : "链接至网站",
     "Update link" : "更新链接",
-    "Open the Smart Picker" : "打开智能选择器",
     "Select file or folder to link to" : "选择需要链接的文件或文件夹",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" 已选择",
     "_%n word_::_%n words_" : ["%n 字"],
@@ -187,7 +187,6 @@
     "Control" : "控制",
     "Option" : "选项",
     "Formatting" : "格式",
-    "Start writing, or try '/' to add, '@' to mention…" : "开始写作，或尝试用 “/” 添加，用 “@” 提及…",
     "Add folder description" : "添加文件夹描述",
     "\"{name}\" already exist!" : "\"{name}\" 已存在！",
     "Created \"{name}\"" : "创建 \"{name}\"",
@@ -203,6 +202,7 @@
     "Warning" : "警告",
     "Danger" : "重要",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
-    "Add description" : "添加描述"
+    "Add description" : "添加描述",
+    "Start writing, or try '/' to add, '@' to mention…" : "开始写作，或尝试用 “/” 添加，用 “@” 提及…"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

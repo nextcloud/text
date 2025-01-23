@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "gonbidatua",
     "Full width editor" : "Zabalera osoko editorea",
     "Active people" : "Pertsona aktiboak",
+    "Open the Smart Picker" : "Ireki hautatzaile adimentsua",
     "Save document" : "Gorde dokumentua",
     "Last saved" : "Azken gordetze-data",
     "Offline" : "Lineaz kanpo",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Esteka fitxategira edo karpetara",
     "Link to website" : "Esteka webgunera",
     "Update link" : "Eguneratu esteka",
-    "Open the Smart Picker" : "Ireki hautatzaile adimentsua",
     "Select file or folder to link to" : "Hautatu estekatzeko fitxategia edo karpeta",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" hautatuta dago",
     "_%n word_::_%n words_" : ["hitz %n","%n hitz"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Aukera",
     "Formatting" : "Formatua",
-    "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko...",
     "Add folder description" : "Gehitu karpetaren deskribapena",
     "\"{name}\" already exist!" : "\"{name}\" badago dagoeneko!",
     "Created \"{name}\"" : "\"{name}\" sortu da",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Oharra",
     "Danger" : "Arriskua",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
-    "Add description" : "Gehitu deskribapena"
+    "Add description" : "Gehitu deskribapena",
+    "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "ゲスト",
     "Full width editor" : "フルワイドエディタ",
     "Active people" : "ファイルを開いているユーザー",
+    "Open the Smart Picker" : "スマートピッカーを開く",
     "Save document" : "ファイルを保存する",
     "Last saved" : "最終保存",
     "Offline" : "オフライン",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "ファイルやフォルダーへのリンク",
     "Link to website" : "ウェブサイトへのリンク",
     "Update link" : "リンクの更新",
-    "Open the Smart Picker" : "スマートピッカーを開く",
     "Select file or folder to link to" : "リンク先のファイルまたはフォルダを選択",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" が選択されました",
     "_%n word_::_%n words_" : ["%n語"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "コントロール",
     "Option" : "Option",
     "Formatting" : "フォーマット",
-    "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。",
     "Add folder description" : "フォルダーの説明を追加",
     "\"{name}\" already exist!" : "\"{name}\" は既に存在します",
     "Created \"{name}\"" : "\"{name}\" を作成しました",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "危険",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
-    "Add description" : "説明を追加"
+    "Add description" : "説明を追加",
+    "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。"
 },
 "nplurals=1; plural=0;");
