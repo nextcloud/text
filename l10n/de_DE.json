@@ -55,6 +55,7 @@
     "guest" : "Gast",
     "Full width editor" : "Editor in voller Breite",
     "Active people" : "Aktive Benutzer",
+    "Open the Smart Picker" : "Smart Picker öffnen",
     "Save document" : "Dokument speichern",
     "Last saved" : "Zuletzt gespeichert",
     "Offline" : "Offline",
@@ -125,7 +126,6 @@
     "Link to file or folder" : "Link zu Datei oder Ordner",
     "Link to website" : "Link zur Website",
     "Update link" : "Link aktualisieren",
-    "Open the Smart Picker" : "Smart Picker öffnen",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "\"{menuItemName}, \"{selectedSubMenuItemName}\" ist ausgewählt",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
@@ -201,7 +201,6 @@
     "Control" : "Kontrolle",
     "Option" : "Option",
     "Formatting" : "Formatierung",
-    "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
@@ -217,6 +216,7 @@
     "Warning" : "Warnung",
     "Danger" : "Achtung",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
-    "Add description" : "Beschreibung hinzufügen"
+    "Add description" : "Beschreibung hinzufügen",
+    "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

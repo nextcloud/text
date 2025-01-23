@@ -55,6 +55,7 @@ OC.L10N.register(
     "Remove link" : "ئۇلىنىشنى ئۆچۈرۈڭ",
     "guest" : "مېھمان",
     "Active people" : "ئاكتىپ كىشىلەر",
+    "Open the Smart Picker" : "Smart Picker نى ئېچىڭ",
     "Save document" : "ھۆججەتنى ساقلاڭ",
     "Last saved" : "ئاخىرقى قېتىم ساقلاندى",
     "Offline" : "تورسىز",
@@ -125,7 +126,6 @@ OC.L10N.register(
     "Link to file or folder" : "ھۆججەت ياكى ھۆججەت قىسقۇچقا ئۇلىنىش",
     "Link to website" : "توربېكەتكە ئۇلىنىش",
     "Update link" : "ئۇلىنىشنى يېڭىلاش",
-    "Open the Smart Picker" : "Smart Picker نى ئېچىڭ",
     "Select file or folder to link to" : "ئۇلىنىدىغان ھۆججەت ياكى ھۆججەت قىسقۇچنى تاللاڭ",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تاللانغان",
     "Editor actions" : "تەھرىرلىگۈچ ھەرىكىتى",
@@ -198,7 +198,6 @@ OC.L10N.register(
     "Control" : "كونترول",
     "Option" : "تاللاش",
     "Formatting" : "فورماتلاش",
-    "Start writing, or try '/' to add, '@' to mention…" : "يېزىشنى باشلاڭ ياكى «/» نى قوشۇپ ، «@» نى تىلغا ئېلىڭ.",
     "Add folder description" : "ھۆججەت قىسقۇچ چۈشەندۈرۈشىنى قوشۇڭ",
     "\"{name}\" already exist!" : "\"{name}\" ئاللىبۇرۇن مەۋجۇت!",
     "Created \"{name}\"" : "\"{name}\" قۇرۇلدى",
@@ -214,6 +213,7 @@ OC.L10N.register(
     "Warning" : "ئاگاھلاندۇرۇش",
     "Danger" : "خەتەر",
     "Add notes, lists or links …" : "خاتىرە ، تىزىملىك ياكى ئۇلىنىش قوشۇڭ…",
-    "Add description" : "چۈشەندۈرۈش قوشۇڭ"
+    "Add description" : "چۈشەندۈرۈش قوشۇڭ",
+    "Start writing, or try '/' to add, '@' to mention…" : "يېزىشنى باشلاڭ ياكى «/» نى قوشۇپ ، «@» نى تىلغا ئېلىڭ."
 },
 "nplurals=2; plural=(n != 1);");

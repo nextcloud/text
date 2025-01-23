@@ -56,6 +56,7 @@ OC.L10N.register(
     "Remove link" : "Удалить ссылку",
     "guest" : "гость",
     "Active people" : "Активные пользователи",
+    "Open the Smart Picker" : "Откройте интеллектуальный инструмент выбора",
     "Save document" : "Сохранить документ",
     "Last saved" : "Последнее сохранение",
     "Offline" : "Автономно",
@@ -123,7 +124,6 @@ OC.L10N.register(
     "Link to file or folder" : "Ссылка на файл или папку",
     "Link to website" : "Ссылка на сайт",
     "Update link" : "Обновить ссылку",
-    "Open the Smart Picker" : "Откройте интеллектуальный инструмент выбора",
     "Select file or folder to link to" : "Выберите файл или папку для создания ссылки",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" выбран",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слов","%n слова"],
@@ -193,7 +193,6 @@ OC.L10N.register(
     "Control" : "Контроль",
     "Option" : "Вариант",
     "Formatting" : "Форматирование",
-    "Start writing, or try '/' to add, '@' to mention…" : "Начните писать, или используйте '/', чтобы добавить объект, а '@', чтобы упомянуть...",
     "Add folder description" : "Добавить описание папки",
     "\"{name}\" already exist!" : "\"{name}\" уже существует!",
     "Created \"{name}\"" : "Создан \"{name}\"",
@@ -209,6 +208,7 @@ OC.L10N.register(
     "Warning" : "Предупреждение",
     "Danger" : "Опасность",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
-    "Add description" : "Добавить описание"
+    "Add description" : "Добавить описание",
+    "Start writing, or try '/' to add, '@' to mention…" : "Начните писать, или используйте '/', чтобы добавить объект, а '@', чтобы упомянуть..."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

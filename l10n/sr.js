@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "гост",
     "Full width editor" : "Едитор пуне ширине",
     "Active people" : "Активне особе",
+    "Open the Smart Picker" : "Отвори Паметни бирач",
     "Save document" : "Сачувај документ",
     "Last saved" : "Последње сачувано",
     "Offline" : "Ван мреже",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Линк на фајл или фолдер",
     "Link to website" : "Линк на веб сајт",
     "Update link" : "Ажурирај везу",
-    "Open the Smart Picker" : "Отвори Паметни бирач",
     "Select file or folder to link to" : "Изаберите фајл или фордер на који показује линк",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "Изабрано је {menuItemName}, „{selectedSubMenuItemName}”",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Контрола",
     "Option" : "Опција",
     "Formatting" : "Форматирање",
-    "Start writing, or try '/' to add, '@' to mention…" : "Почните да пишете, или пробајте ’/’ да додате, ’@’ да поменете",
     "Add folder description" : "Додај опис фолдера",
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Упозорење",
     "Danger" : "Опасност",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
-    "Add description" : "Додај опис"
+    "Add description" : "Додај опис",
+    "Start writing, or try '/' to add, '@' to mention…" : "Почните да пишете, или пробајте ’/’ да додате, ’@’ да поменете"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
