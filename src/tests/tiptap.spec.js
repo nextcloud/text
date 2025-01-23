@@ -13,16 +13,16 @@ const renderedHTML = ( markdown ) => {
 describe('TipTap', () => {
 	it('render softbreaks', () => {
         const markdown = 'This\nis\none\nparagraph'
-		expect(renderedHTML(markdown)).toEqual(`<p>${markdown}</p>`)
+		expect(renderedHTML(markdown)).toEqual(`<p dir="ltr">${markdown}</p>`)
 	})
 
     it('render hardbreak', () => {
         const markdown = 'Hard line break  \nNext Paragraph'
-        expect(renderedHTML(markdown)).toEqual('<p>Hard line break<br>Next Paragraph</p>')
+        expect(renderedHTML(markdown)).toEqual('<p dir="ltr">Hard line break<br>Next Paragraph</p>')
     })
 
 	it('render taskList', () => {
 		const markdown = '* [ ] item 1\n'
-		expect(renderedHTML(markdown)).toEqual('<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p>item 1</p></label></li></ul>')
+		expect(renderedHTML(markdown)).toEqual('<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p dir="ltr">item 1</p></label></li></ul>')
 	})
 })
