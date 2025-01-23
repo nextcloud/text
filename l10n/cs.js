@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "host",
     "Full width editor" : "Editor v plné šířce",
     "Active people" : "Aktivní lidé",
+    "Open the Smart Picker" : "Otevřít Inteligentní výběr",
     "Save document" : "Uložit dokument",
     "Last saved" : "Naposledy uloženo",
     "Offline" : "Offline",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Odkaz na soubor nebo složku",
     "Link to website" : "Odkaz na webovou stránku",
     "Update link" : "Aktualizovat odkaz",
-    "Open the Smart Picker" : "Otevřít Inteligentní výběr",
     "Select file or folder to link to" : "Vyberte soubor nebo složku na kterou odkazovat",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, „{selectedSubMenuItemName}“ je vybráno",
     "_%n word_::_%n words_" : ["%n slovo","%n slova","%n slov","%n slova"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Volba",
     "Formatting" : "Formátování",
-    "Start writing, or try '/' to add, '@' to mention…" : "Začněte psát nebo zkuste přidat pomocí „/“, zmínit pomocí „@“… ",
     "Add folder description" : "Přidat popis složky",
     "\"{name}\" already exist!" : "„{name}“ už existuje!",
     "Created \"{name}\"" : "Vytvořeno „{name}“",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
-    "Add description" : "Přidat popis"
+    "Add description" : "Přidat popis",
+    "Start writing, or try '/' to add, '@' to mention…" : "Začněte psát nebo zkuste přidat pomocí „/“, zmínit pomocí „@“… "
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

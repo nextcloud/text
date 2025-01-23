@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "гість",
     "Full width editor" : "Редактор на весь екран",
     "Active people" : "Зараз редагують",
+    "Open the Smart Picker" : "Відкрийте асистент вибору",
     "Save document" : "Зберегти документ",
     "Last saved" : "Востаннє збережено",
     "Offline" : "Офлайн",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Посилання на файл або каталог",
     "Link to website" : "Посилання на вебсайт",
     "Update link" : "Оновити посилання",
-    "Open the Smart Picker" : "Відкрийте асистент вибору",
     "Select file or folder to link to" : "Виберіть файл або каталог, до якого потрібно застосувати посилання",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "Вибрано {menuItemName}, \"{selectedSubMenuItemName}\"",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слів","%n слів"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Контроль",
     "Option" : "Варіант",
     "Formatting" : "Форматування",
-    "Start writing, or try '/' to add, '@' to mention…" : "Почніть вводити текст або введіть '/' для додавання, '@' для згадки...",
     "Add folder description" : "Додати опис каталогу",
     "\"{name}\" already exist!" : "\"{name}\" вже присутній!",
     "Created \"{name}\"" : "Створено \"{name}\"",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Увага",
     "Danger" : "Небезпека",
     "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
-    "Add description" : "Додати опис"
+    "Add description" : "Додати опис",
+    "Start writing, or try '/' to add, '@' to mention…" : "Почніть вводити текст або введіть '/' для додавання, '@' для згадки..."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

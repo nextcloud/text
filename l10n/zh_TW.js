@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "訪客",
     "Full width editor" : "完整寬度編輯器",
     "Active people" : "活躍的人",
+    "Open the Smart Picker" : "開啟智慧型挑選器",
     "Save document" : "儲存文件",
     "Last saved" : "最後儲存於",
     "Offline" : "離線",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "連結至檔案或資料夾",
     "Link to website" : "連結至網站",
     "Update link" : "更新連結",
-    "Open the Smart Picker" : "開啟智慧型挑選器",
     "Select file or folder to link to" : "選取要連結的檔案或資料夾",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}，已選取「{selectedSubMenuItemName}」",
     "_%n word_::_%n words_" : ["%n 個字"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "控制",
     "Option" : "選項",
     "Formatting" : "文字樣式",
-    "Start writing, or try '/' to add, '@' to mention…" : "開始撰寫，或試試看「/」新增、「@」提及……",
     "Add folder description" : "新增資料夾描述",
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "危險",
     "Add notes, lists or links …" : "加入筆記、清單或連結…",
-    "Add description" : "新增描述"
+    "Add description" : "新增描述",
+    "Start writing, or try '/' to add, '@' to mention…" : "開始撰寫，或試試看「/」新增、「@」提及……"
 },
 "nplurals=1; plural=0;");

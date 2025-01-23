@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "gäst",
     "Full width editor" : "Full bredd editor",
     "Active people" : "Aktiva användare",
+    "Open the Smart Picker" : "Öppna Smart Picker",
     "Save document" : "Spara dokument",
     "Last saved" : "Senast sparad",
     "Offline" : "Frånkopplad",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Länk till fil eller mapp",
     "Link to website" : "Länk till webbplats",
     "Update link" : "Uppdatera länk",
-    "Open the Smart Picker" : "Öppna Smart Picker",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{text_to_translate} \"{selectedSubMenuItemName}\" är vald",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
@@ -199,7 +199,6 @@ OC.L10N.register(
     "Control" : "Kontroll",
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
-    "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna...",
     "Add folder description" : "Lägg till mappbeskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",
@@ -215,6 +214,7 @@ OC.L10N.register(
     "Warning" : "Varning",
     "Danger" : "Fara",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
-    "Add description" : "Lägg till beskrivning"
+    "Add description" : "Lägg till beskrivning",
+    "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna..."
 },
 "nplurals=2; plural=(n != 1);");

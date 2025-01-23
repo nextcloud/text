@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "ضيف ",
     "Full width editor" : "محرر بالعُرْض الكامل",
     "Active people" : "أشخاص نشطون",
+    "Open the Smart Picker" : "فتح المحدد الذكي",
     "Save document" : "إحفَظِ المُستَنَد",
     "Last saved" : "آخر حفظ",
     "Offline" : "غير متصل",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "ربط إلى ملف أو مجلد",
     "Link to website" : "ربط مع موقع وِب",
     "Update link" : "تحديث الرابط",
-    "Open the Smart Picker" : "فتح المحدد الذكي",
     "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تمّ اختياره",
     "_%n word_::_%n words_" : ["%n كلمات","%n كلمة","%n كلمات","%n كلمات","%n كلمات","%n كلمات"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "تحكُّم",
     "Option" : "خيار",
     "Formatting" : "التنسيق",
-    "Start writing, or try '/' to add, '@' to mention…" : "إبدأ الكتابة، أو جرِّب '/' للإضافة، أو  '@' للإشارة …",
     "Add folder description" : "أضِف وصفاً للمجلد",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "تحذير",
     "Danger" : "خطر",
     "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
-    "Add description" : "أضِف وصفاً"
+    "Add description" : "أضِف وصفاً",
+    "Start writing, or try '/' to add, '@' to mention…" : "إبدأ الكتابة، أو جرِّب '/' للإضافة، أو  '@' للإشارة …"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
