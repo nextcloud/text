@@ -49,6 +49,7 @@ OC.L10N.register(
     "Remove link" : "Usuń link",
     "guest" : "gość",
     "Active people" : "Aktywne osoby",
+    "Open the Smart Picker" : "Otwórz inteligentny selektor",
     "Save document" : "Zapisz dokument",
     "Last saved" : "Ostatnio zapisane",
     "Offline" : "Offline",
@@ -113,7 +114,6 @@ OC.L10N.register(
     "Link to file or folder" : "Link do pliku lub katalogu",
     "Link to website" : "Link do strony internetowej",
     "Update link" : "Aktualizuj link",
-    "Open the Smart Picker" : "Otwórz inteligentny selektor",
     "Select file or folder to link to" : "Wybierz plik lub katalog do linku",
     "_%n word_::_%n words_" : ["%n słowo","%n słowa","%n słów","%n słów"],
     "_%n char_::_%n chars_" : ["%n znak","%n znaki","%n znaków","%n znaków"],
@@ -176,7 +176,6 @@ OC.L10N.register(
     "Control" : "Kontrola",
     "Option" : "Opcja",
     "Formatting" : "Formatowanie",
-    "Start writing, or try '/' to add, '@' to mention…" : "Zacznij pisać, lub spróbuj \"/\", aby dodać; '@', aby wspomnieć o...",
     "Add folder description" : "Dodaj opis katalogu",
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",
@@ -191,6 +190,7 @@ OC.L10N.register(
     "Warning" : "Ostrzeżenie",
     "Danger" : "Zagrożenie",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
-    "Add description" : "Dodaj opis"
+    "Add description" : "Dodaj opis",
+    "Start writing, or try '/' to add, '@' to mention…" : "Zacznij pisać, lub spróbuj \"/\", aby dodać; '@', aby wspomnieć o..."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

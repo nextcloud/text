@@ -57,6 +57,7 @@ OC.L10N.register(
     "guest" : "Gast",
     "Full width editor" : "Editor in voller Breite",
     "Active people" : "Aktive Benutzer",
+    "Open the Smart Picker" : "Smart-Picker öffnen",
     "Save document" : "Dokument speichern",
     "Last saved" : "Zuletzt gespeichert",
     "Offline" : "Offline",
@@ -127,7 +128,6 @@ OC.L10N.register(
     "Link to file or folder" : "Link zu Datei oder Ordner",
     "Link to website" : "Link zu Website",
     "Update link" : "Link aktualisieren",
-    "Open the Smart Picker" : "Smart-Picker öffnen",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "\"{menuItemName}, \"{selectedSubMenuItemName}\" ist ausgewählt",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
@@ -203,7 +203,6 @@ OC.L10N.register(
     "Control" : "Kontrolle",
     "Option" : "Option",
     "Formatting" : "Formatierung",
-    "Start writing, or try '/' to add, '@' to mention…" : "Beginne mit dem Schreiben oder versuche es mit '/' zum Hinzufügen oder '@' zum Erwähnen …",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",
@@ -219,6 +218,7 @@ OC.L10N.register(
     "Warning" : "Warnung",
     "Danger" : "Achtung",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
-    "Add description" : "Beschreibung hinzufügen"
+    "Add description" : "Beschreibung hinzufügen",
+    "Start writing, or try '/' to add, '@' to mention…" : "Beginne mit dem Schreiben oder versuche es mit '/' zum Hinzufügen oder '@' zum Erwähnen …"
 },
 "nplurals=2; plural=(n != 1);");

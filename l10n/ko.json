@@ -55,6 +55,7 @@
     "guest" : "손님",
     "Full width editor" : "전체 너비 편집기",
     "Active people" : "활동 중인 사용자",
+    "Open the Smart Picker" : "스마트 피커 열기",
     "Save document" : "문서 저장",
     "Last saved" : "마지막 저장",
     "Offline" : "오프라인",
@@ -124,7 +125,6 @@
     "Link to file or folder" : "파일이나 폴더로 링크",
     "Link to website" : "웹사이트로 링크",
     "Update link" : "링크 갱신",
-    "Open the Smart Picker" : "스마트 피커 열기",
     "Select file or folder to link to" : "링크할 파일이나 폴더 선택",
     "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\"(이)가 선택되었습니다.",
     "_%n word_::_%n words_" : ["%n개 단어"],
@@ -200,7 +200,6 @@
     "Control" : "제어:",
     "Option" : "옵션",
     "Formatting" : "서식",
-    "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요...",
     "Add folder description" : "폴더 설명 추가",
     "\"{name}\" already exist!" : "\"{name}\" (이)가 이미 존재합니다!",
     "Created \"{name}\"" : "\"{name}\" 생성함",
@@ -216,6 +215,7 @@
     "Warning" : "경고",
     "Danger" : "위험",
     "Add notes, lists or links …" : "메모나 목록, 링크를 추가하세요...",
-    "Add description" : "설명 추가"
+    "Add description" : "설명 추가",
+    "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요..."
 },"pluralForm" :"nplurals=1; plural=0;"
 }
