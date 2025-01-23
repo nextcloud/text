@@ -19,6 +19,7 @@
   "ignoreUnstable": false,
   "baseBranches": [
     "main",
+    "stable31",
     "stable30",
     "stable29"
   ],
@@ -94,6 +95,7 @@
         "major"
       ],
       "matchBaseBranches": [
+        "stable31",
         "stable30",
         "stable29",
         "stable28",
@@ -125,6 +127,7 @@
         "@cypress/{/,}**"
       ],
       "matchBaseBranches": [
+        "stable31",
         "stable30",
         "stable29",
         "stable28",
