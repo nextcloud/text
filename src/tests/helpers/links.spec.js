@@ -12,10 +12,12 @@ global.OC = {
 
 global._oc_webroot = ''
 
+const linkTo = href => domHref({ attrs: { href } })
+
 describe('Preparing href attributes for the DOM', () => {
 
 	test('leave empty hrefs alone', () => {
-		expect(domHref({attrs: {href: ''}})).toBe('')
+		expect(linkTo('')).toBe('')
 	})
 
 	test('leave undefined hrefs alone', () => {
@@ -23,22 +25,21 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('full url', () => {
-		expect(domHref({attrs: {href: 'https://otherdomain.tld'}}))
-			.toBe('https://otherdomain.tld')
+		expect(linkTo('https://otherdomain.tld')).toBe('https://otherdomain.tld')
 	})
 
 	test('other protocol', () => {
-		expect(domHref({attrs: {href: 'mailTo:test@mail.example'}}))
+		expect(linkTo('mailTo:test@mail.example'))
 			.toBe('mailTo:test@mail.example')
 	})
 
 	test('relative link with fileid', () => {
-		expect(domHref({attrs: {href: 'otherfile?fileId=123'}}))
+		expect(linkTo('otherfile?fileId=123'))
 			.toBe('/apps/files/?dir=/Wiki&openfile=123#relPath=otherfile')
 	})
 
 	test('relative path with ../', () => {
-		expect(domHref({attrs: {href: '../other/otherfile?fileId=123'}}))
+		expect(linkTo('../other/otherfile?fileId=123'))
 			.toBe('/apps/files/?dir=/other&openfile=123#relPath=../other/otherfile')
 	})
 
@@ -48,7 +49,7 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('absolute path', () => {
-		expect(domHref({attrs: {href: '/otherfile?fileId=123'}}))
+		expect(linkTo('/otherfile?fileId=123'))
 			.toBe('/apps/files/?dir=/&openfile=123#relPath=/otherfile')
 	})
 
