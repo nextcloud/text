@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
-    "Add description" : "Přidat popis",
     "Start writing, or try '/' to add, '@' to mention…" : "Začněte psát nebo zkuste přidat pomocí „/“, zmínit pomocí „@“… "
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

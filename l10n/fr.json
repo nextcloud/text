@@ -216,7 +216,6 @@
     "Warning" : "Avertissement",
     "Danger" : "Danger",
     "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
-    "Add description" : "Ajouter une description",
     "Start writing, or try '/' to add, '@' to mention…" : "Commencez à écrire, ou essayez '/' pour ajouter, '@' pour mentionner..."
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

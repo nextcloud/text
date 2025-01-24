@@ -204,7 +204,6 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "重要",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
-    "Add description" : "添加描述",
     "Start writing, or try '/' to add, '@' to mention…" : "开始写作，或尝试用 “/” 添加，用 “@” 提及…"
 },
 "nplurals=1; plural=0;");

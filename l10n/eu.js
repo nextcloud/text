@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Oharra",
     "Danger" : "Arriskua",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
-    "Add description" : "Gehitu deskribapena",
     "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko..."
 },
 "nplurals=2; plural=(n != 1);");

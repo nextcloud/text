@@ -178,7 +178,6 @@ OC.L10N.register(
     "Success" : "موفقیت",
     "Warning" : "هشدار",
     "Danger" : "Danger",
-    "Add notes, lists or links …" : "Add notes, lists or links …",
-    "Add description" : "Add description"
+    "Add notes, lists or links …" : "Add notes, lists or links …"
 },
 "nplurals=2; plural=(n > 1);");

@@ -42,6 +42,7 @@ OC.L10N.register(
     "Lists" : "Liste",
     "Details" : "Detalii",
     "Formatting" : "Formatare",
+    "Add folder description" : "Adăugați descrierea directorului",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție"
