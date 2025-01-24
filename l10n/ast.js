@@ -154,7 +154,6 @@ OC.L10N.register(
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
     "Info" : "Información",
     "Warning" : "Alvertencia",
-    "Danger" : "Peligru",
-    "Add description" : "Amestar una descripción"
+    "Danger" : "Peligru"
 },
 "nplurals=2; plural=(n != 1);");

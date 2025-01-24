@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Упозорење",
     "Danger" : "Опасност",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
-    "Add description" : "Додај опис",
     "Start writing, or try '/' to add, '@' to mention…" : "Почните да пишете, или пробајте ’/’ да додате, ’@’ да поменете"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

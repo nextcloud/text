@@ -207,7 +207,6 @@ OC.L10N.register(
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
     "Danger" : "Fare",
-    "Add notes, lists or links …" : "Legg til notater, lister eller lenker ...",
-    "Add description" : "Legg til beskrivelse"
+    "Add notes, lists or links …" : "Legg til notater, lister eller lenker ..."
 },
 "nplurals=2; plural=(n != 1);");

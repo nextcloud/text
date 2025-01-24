@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
-    "Add description" : "Açıklama ekle",
     "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…"
 },
 "nplurals=2; plural=(n > 1);");

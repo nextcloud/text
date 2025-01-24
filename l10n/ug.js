@@ -213,7 +213,6 @@ OC.L10N.register(
     "Warning" : "ئاگاھلاندۇرۇش",
     "Danger" : "خەتەر",
     "Add notes, lists or links …" : "خاتىرە ، تىزىملىك ياكى ئۇلىنىش قوشۇڭ…",
-    "Add description" : "چۈشەندۈرۈش قوشۇڭ",
     "Start writing, or try '/' to add, '@' to mention…" : "يېزىشنى باشلاڭ ياكى «/» نى قوشۇپ ، «@» نى تىلغا ئېلىڭ."
 },
 "nplurals=2; plural=(n != 1);");

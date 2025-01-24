@@ -167,7 +167,6 @@ OC.L10N.register(
     "Info" : "Tietoa",
     "Success" : "Onnistui",
     "Warning" : "Varoitus",
-    "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä...",
-    "Add description" : "Lisää kuvaus"
+    "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä..."
 },
 "nplurals=2; plural=(n != 1);");

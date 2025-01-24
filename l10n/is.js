@@ -172,7 +172,6 @@ OC.L10N.register(
     "Success" : "Tókst",
     "Warning" : "Aðvörun",
     "Danger" : "Hættulegt",
-    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
-    "Add description" : "Bæta við lýsingu"
+    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

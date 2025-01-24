@@ -182,7 +182,6 @@ OC.L10N.register(
     "Success" : "Siker",
     "Warning" : "Figyelmeztetés",
     "Danger" : "Veszély",
-    "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…",
-    "Add description" : "Leírás hozzáadása"
+    "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Warnung",
     "Danger" : "Achtung",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
-    "Add description" : "Beschreibung hinzufügen",
     "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …"
 },
 "nplurals=2; plural=(n != 1);");
