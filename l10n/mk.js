@@ -106,7 +106,6 @@ OC.L10N.register(
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Предупредување",
-    "Add notes, lists or links …" : "Додади белешки, листи или линкови ...",
-    "Add description" : "Додади опис"
+    "Add notes, lists or links …" : "Додади белешки, листи или линкови ..."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

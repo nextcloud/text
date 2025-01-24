@@ -163,7 +163,6 @@ OC.L10N.register(
     "Success" : "Uspešno končano",
     "Warning" : "Opozorilo",
     "Danger" : "Nevarnost",
-    "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ...",
-    "Add description" : "Dodaj opis"
+    "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ..."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

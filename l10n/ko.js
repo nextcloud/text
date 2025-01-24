@@ -217,7 +217,6 @@ OC.L10N.register(
     "Warning" : "경고",
     "Danger" : "위험",
     "Add notes, lists or links …" : "메모나 목록, 링크를 추가하세요...",
-    "Add description" : "설명 추가",
     "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요..."
 },
 "nplurals=1; plural=0;");
