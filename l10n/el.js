@@ -129,7 +129,6 @@ OC.L10N.register(
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
-    "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …",
-    "Add description" : "Προσθήκη περιγραφής"
+    "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …"
 },
 "nplurals=2; plural=(n != 1);");

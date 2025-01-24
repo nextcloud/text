@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "Rabhadh",
     "Danger" : "Contúirt",
     "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
-    "Add description" : "Cuir cur síos leis",
     "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

@@ -161,7 +161,6 @@ OC.L10N.register(
     "Success" : "Успех",
     "Warning" : "Внимание",
     "Danger" : "Опасност",
-    "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки...",
-    "Add description" : "Добавяне на описание"
+    "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки..."
 },
 "nplurals=2; plural=(n != 1);");

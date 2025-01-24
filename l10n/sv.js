@@ -214,7 +214,6 @@ OC.L10N.register(
     "Warning" : "Varning",
     "Danger" : "Fara",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
-    "Add description" : "Lägg till beskrivning",
     "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna..."
 },
 "nplurals=2; plural=(n != 1);");

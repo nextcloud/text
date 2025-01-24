@@ -101,7 +101,6 @@ OC.L10N.register(
     "Info" : "Thông tin",
     "Success" : "Thành công",
     "Warning" : "Cảnh báo",
-    "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn",
-    "Add description" : "Thêm mô tả"
+    "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn"
 },
 "nplurals=1; plural=0;");

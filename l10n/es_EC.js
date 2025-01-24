@@ -160,7 +160,6 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Danger" : "Peligro",
-    "Add notes, lists or links …" : "Agregar notas, listas o enlaces...",
-    "Add description" : "Agregar descripción"
+    "Add notes, lists or links …" : "Agregar notas, listas o enlaces..."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

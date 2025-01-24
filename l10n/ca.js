@@ -203,7 +203,6 @@ OC.L10N.register(
     "Success" : "Correcte",
     "Warning" : "Avís",
     "Danger" : "Perill",
-    "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
-    "Add description" : "Afegeix una descripció"
+    "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -218,7 +218,6 @@ OC.L10N.register(
     "Warning" : "警告",
     "Danger" : "危険",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
-    "Add description" : "説明を追加",
     "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。"
 },
 "nplurals=1; plural=0;");
