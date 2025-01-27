@@ -112,6 +112,7 @@ OC.L10N.register(
     "to" : "päättyen",
     "Translate to" : "Kohdekieli",
     "Replace" : "Korvaa",
+    "Insert" : "Lisää",
     "Detect language" : "Havaitse kieli",
     "Translate from {language}" : "Käännä kielestä {language}",
     "Translate to {language}" : "Käännä kielelle {language}",
