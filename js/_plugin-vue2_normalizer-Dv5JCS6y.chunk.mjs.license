@@ -62,6 +62,9 @@ This file is generated from multiple sources. Included packages:
 - @nextcloud/vue-select
 	- version: 3.25.1
 	- license: MIT
+- @nextcloud/vue-select
+	- version: 3.25.1
+	- license: MIT
 - @vueuse/components
 	- version: 11.0.3
 	- license: MIT
