@@ -70,7 +70,7 @@ OC.L10N.register(
     "Connection failed." : "Verbindung fehlgeschlagen.",
     "Formatting and shortcuts" : "Formatierung und Tastaturkürzel",
     "Speed up your writing with simple shortcuts." : "Beschleunige dein Schreiben mit einfachen Tastaturkürzeln",
-    "Just type the Markdown syntax or use keyboard shortcuts from below." : "Gebe die Markdown-Syntax ein oder verwende die untenstehenden Tastaturkürzel.",
+    "Just type the Markdown syntax or use keyboard shortcuts from below." : "Gib die Markdown-Syntax ein oder verwende die untenstehenden Tastaturkürzel.",
     "Just type the Markdown syntax from below." : "Gib die untenstehende Markdown-Syntax ein.",
     "Style" : "Stil",
     "Syntax" : "Syntax",
