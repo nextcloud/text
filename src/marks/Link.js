@@ -7,6 +7,7 @@ import { markInputRule } from '@tiptap/core'
 import TipTapLink from '@tiptap/extension-link'
 import { domHref, parseHref } from './../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
+import { isMarkActive } from '@tiptap/core'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
@@ -86,6 +87,37 @@ const Link = TipTapLink.extend({
 				getAttributes: extractHrefFromMarkdownLink,
 			}),
 		]
+	addCommands() {
+		return {
+			/**
+			 * Update the target of existing links.
+			 * Insert a link if there currently is none.
+			 *
+			 */
+			insertOrSetLink: (text, attrs) => ({ state, chain, commands }) => {
+				// Check if any text is selected,
+				// if not insert the link using the given text property
+				if (state.selection.empty) {
+					if (isMarkActive(state, this.name)) {
+						commands.deleteNode('paragraph')
+					}
+					return chain().insertContent({
+						type: 'paragraph',
+						content: [{
+							type: 'text',
+							marks: [{
+								type: 'link',
+								attrs,
+							}],
+							text,
+						}],
+					})
+				} else {
+					return commands.setLink(attrs)
+				}
+			},
+		}
+>>>>>>> 177e3e01e (refactor(links): add insertOrSetLink command)
 	},
 
 	addProseMirrorPlugins() {
