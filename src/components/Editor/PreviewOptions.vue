@@ -27,6 +27,14 @@
 				{{ t('text', 'Show link preview') }}
 			</NcActionRadio>
 			<NcActionSeparator />
+			<NcActionButton v-if="href"
+				close-after-click
+				@click="openLink">
+				<template #icon>
+					<OpenIcon :size="20" />
+				</template>
+				{{ t('text','Open in new tab') }}
+			</NcActionButton>
 			<NcActionButton close-after-click @click="deleteNode">
 				<template #icon>
 					<DeleteIcon :size="20" />
@@ -41,6 +49,7 @@
 import { NcActions, NcActionButton, NcActionRadio, NcActionCaption, NcActionSeparator } from '@nextcloud/vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
+import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
 
 export default {
 	name: 'PreviewOptions',
@@ -53,12 +62,18 @@ export default {
 		NcActionRadio,
 		NcActionSeparator,
 		DeleteIcon,
+		OpenIcon,
 	},
 
 	props: {
 		type: {
 			type: String,
 			required: true,
+		},
+		href: {
+			type: String,
+			required: false,
+			default: '',
 		},
 	},
 
@@ -78,6 +93,10 @@ export default {
 		},
 		deleteNode() {
 			this.$emit('delete')
+		},
+		openLink() {
+			if (!this.href) return
+			window.open(this.href, '_blank').focus()
 		},
 	},
 }

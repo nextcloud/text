@@ -9,8 +9,9 @@ import Preview from '../../nodes/Preview.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractLinkParagraphs', () => {
-	const link = '<a href="https://nextcloud.com">Link</a>'
-	const preview = '<a href="https://nextcloud.com" title="preview">Link</a>'
+	const href = 'https://nextcloud.com'
+	const link = `<a href="${href}">Link</a>`
+	const preview = `<a href="${href}" title="preview">Link</a>`
 
 	it('returns an empty array for an empty doc', () => {
 		const doc = prepareDoc('')
@@ -23,7 +24,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ pos: 0, type: 'text-only', nodeSize: 6 },
+			{ href, pos: 0, type: 'text-only', nodeSize: 6 },
 		])
 	})
 
@@ -31,7 +32,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(preview)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ pos: 0, type: 'link-preview', nodeSize: 6 },
+			{ href, pos: 0, type: 'link-preview', nodeSize: 6 },
 		])
 	})
 
@@ -40,7 +41,7 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ pos: 0, type: 'text-only', nodeSize: 7 },
+			{ href, pos: 0, type: 'text-only', nodeSize: 7 },
 		])
 	})
 
@@ -50,8 +51,8 @@ describe('extractLinkParagraphs', () => {
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([
-			{ pos: 0, type: 'text-only', nodeSize: 6 },
-			{ pos: 6, type: 'text-only', nodeSize: 6 },
+			{ href, pos: 0, type: 'text-only', nodeSize: 6 },
+			{ href, pos: 6, type: 'text-only', nodeSize: 6 },
 		])
 	})
 
@@ -59,9 +60,10 @@ describe('extractLinkParagraphs', () => {
 		const content = `<p>${link}</p>${preview}`
 		const doc = prepareDoc(content)
 		const paragraphs = extractLinkParagraphs(doc)
+
 		expect(paragraphs).toEqual([
-			{ pos: 0, type: 'text-only', nodeSize: 6 },
-			{ pos: 6, type: 'link-preview', nodeSize: 6 },
+			{ href, pos: 0, type: 'text-only', nodeSize: 6 },
+			{ href, pos: 6, type: 'link-preview', nodeSize: 6 },
 		])
 	})
 
