@@ -322,9 +322,6 @@ This file is generated from multiple sources. Included packages:
 - core-js
 	- version: 3.37.0
 	- license: MIT
-- core-js
-	- version: 3.37.0
-	- license: MIT
 - lib0
 	- version: 0.2.99
 	- license: MIT
