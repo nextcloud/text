@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Předvolby náhledu",
     "Text only" : "Pouze text",
     "Show link preview" : "Zobrazit náhled odkazu",
+    "Open in new tab" : "Otevřít v nové kartě",
     "Remove link" : "Odebrat odkaz",
     "guest" : "host",
     "Full width editor" : "Editor v plné šířce",

@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Ön izleme seçenekleri",
     "Text only" : "Yalnızca metin",
     "Show link preview" : "Bağlantı ön izlemesini görüntüle",
+    "Open in new tab" : "Yeni sekmede aç",
     "Remove link" : "Bağlantıyı kaldır",
     "guest" : "konuk",
     "Full width editor" : "Tam genişlikte düzenleyici",

@@ -36,6 +36,7 @@ OC.L10N.register(
     "Save guest name" : "Įrašyti svečio vardą",
     "Insert an attachment" : "Įterpti priedą",
     "Preview options" : "Peržiūros parinktys",
+    "Open in new tab" : "Atverti naujoje kortelėje",
     "Remove link" : "Šalinti nuorodą",
     "guest" : "svečias",
     "Save document" : "Įrašyti dokumentą",

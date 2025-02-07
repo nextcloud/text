@@ -40,6 +40,7 @@ OC.L10N.register(
     "Save guest name" : "Tallenna vieraan nimi",
     "Insert an attachment" : "Lisää liite",
     "Show link preview" : "Näytä linkin esikatselu",
+    "Open in new tab" : "Avaa uudessa välilehdessä",
     "Remove link" : "Poista linkki",
     "guest" : "vieras",
     "Active people" : "Aktiiviset ihmiset",

@@ -52,6 +52,7 @@ OC.L10N.register(
     "Preview options" : "Alternativer for forhåndsvisning",
     "Text only" : "Kun tekst",
     "Show link preview" : "Vis forhåndsvisning av kobling",
+    "Open in new tab" : "Åpne i ny fane",
     "Remove link" : "Fjern kobling",
     "guest" : "gjest",
     "Active people" : "Aktive personer",

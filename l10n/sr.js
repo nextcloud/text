@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Опције прегледа",
     "Text only" : "Само текст",
     "Show link preview" : "Прикажи преглед линка",
+    "Open in new tab" : "Отвори у новој картици",
     "Remove link" : "Уклони линк",
     "guest" : "гост",
     "Full width editor" : "Едитор пуне ширине",
