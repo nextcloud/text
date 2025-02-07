@@ -29,6 +29,7 @@ OC.L10N.register(
     "Edit guest name" : "Rediger gæstens navn",
     "Guest" : "Gæst",
     "Save guest name" : "Gem gæstens navn",
+    "Open in new tab" : "Åben i ny fane",
     "Remove link" : "Fjern link",
     "guest" : "Gæst",
     "Open the Smart Picker" : "Åben Smart Vælgeren",

@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Vorschauoptionen",
     "Text only" : "Nur Text",
     "Show link preview" : "Link-Vorschau anzeigen",
+    "Open in new tab" : "In einem neuen Tab öffnen",
     "Remove link" : "Link entfernen",
     "guest" : "Gast",
     "Full width editor" : "Editor in voller Breite",

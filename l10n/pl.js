@@ -46,6 +46,7 @@ OC.L10N.register(
     "Uploading multiple attachments failed." : "Przesyłanie wielu załączników nie powiodło się.",
     "Uploading attachment failed." : "Przesyłanie załącznika nie powiodło się.",
     "Insert an attachment" : "Wstaw załącznik",
+    "Open in new tab" : "Otwórz w nowej karcie",
     "Remove link" : "Usuń link",
     "guest" : "gość",
     "Active people" : "Aktywne osoby",

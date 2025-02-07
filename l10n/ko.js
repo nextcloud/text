@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "미리 보기 옵션",
     "Text only" : "텍스트만",
     "Show link preview" : "링크 미리 보기 표시",
+    "Open in new tab" : "새 탭으로 열기",
     "Remove link" : "링크 제거",
     "guest" : "손님",
     "Full width editor" : "전체 너비 편집기",
