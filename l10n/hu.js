@@ -42,6 +42,7 @@ OC.L10N.register(
     "Guest" : "Vendég",
     "Save guest name" : "Vendégnév mentése",
     "Insert an attachment" : "Melléklet beszúrása",
+    "Open in new tab" : "Megnyitás új fülön",
     "Remove link" : "Hivatkozás eltávolítása",
     "guest" : "vendég",
     "Active people" : "Aktív emberek",

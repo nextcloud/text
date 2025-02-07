@@ -29,6 +29,7 @@ OC.L10N.register(
     "Edit guest name" : "Bewerk gast naam",
     "Guest" : "Gast",
     "Save guest name" : "Bewaar gast naam",
+    "Open in new tab" : "Open in nieuwe tab",
     "guest" : "gast",
     "Active people" : "Actieve personen",
     "Offline" : "Offline",

@@ -48,6 +48,7 @@ OC.L10N.register(
     "Preview options" : "Opcions de la previsualització",
     "Text only" : "Només text",
     "Show link preview" : "Mostra la previsualització dels enllaços",
+    "Open in new tab" : "Obre en una pestanya nova",
     "Remove link" : "Suprimeix l'enllaç",
     "guest" : "convidat",
     "Active people" : "Persones actives",
