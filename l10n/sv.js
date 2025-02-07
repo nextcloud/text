@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Förhandsgranskning alternativ",
     "Text only" : "Endast text",
     "Show link preview" : "Visa förhandsgranskning för länk",
+    "Open in new tab" : "Öppna i ny flik",
     "Remove link" : "Ta bort länk",
     "guest" : "gäst",
     "Full width editor" : "Full bredd editor",

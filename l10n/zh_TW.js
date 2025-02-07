@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "預覽選項",
     "Text only" : "僅文字",
     "Show link preview" : "顯示連結預覽",
+    "Open in new tab" : "以新分頁開啟",
     "Remove link" : "移除連結",
     "guest" : "訪客",
     "Full width editor" : "完整寬度編輯器",

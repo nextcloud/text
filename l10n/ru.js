@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Настройки предпросмотра",
     "Text only" : "Только текст",
     "Show link preview" : "Показать предварительный просмотр ссылок",
+    "Open in new tab" : "Открыть в новой вкладке",
     "Remove link" : "Удалить ссылку",
     "guest" : "гость",
     "Active people" : "Активные пользователи",
