@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Roghanna réamhamhairc",
     "Text only" : "Téacs amháin",
     "Show link preview" : "Taispeáin réamhamharc ar an nasc",
+    "Open in new tab" : "Oscail i gcluaisín nua",
     "Remove link" : "Bain nasc",
     "guest" : "aoi",
     "Full width editor" : "Eagarthóir leithead iomlán",
