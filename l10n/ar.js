@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "خيارات المعاينة",
     "Text only" : "نص فقط",
     "Show link preview" : "عرض معاينة الرابط",
+    "Open in new tab" : "فتح تبويبة جديدة",
     "Remove link" : "حذف الرابط",
     "guest" : "ضيف ",
     "Full width editor" : "محرر بالعُرْض الكامل",
