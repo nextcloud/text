@@ -131,7 +131,7 @@
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/core": "^11.3.0",
     "cypress": "^13.6.4",
-    "cypress-split": "^1.24.7",
+    "cypress-split": "^1.24.10",
     "cypress-visual-regression": "^5.2.2",
     "cypress-vite": "^1.6.0",
     "eslint-plugin-cypress": "^3.6.0",
