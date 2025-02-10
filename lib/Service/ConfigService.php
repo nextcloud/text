@@ -46,7 +46,13 @@ class ConfigService {
 
 	public function isNotifyPushSyncEnabled(): bool {
 		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
+	}
 
+	/**
+	 * @return string[]
+	 */
+	public function getAllowedViewFileExtensions(): array {
+		return $this->config->getSystemValue('allowed_view_extensions', []);
 	}
 
 	public function isFullWidthEditor(?string $userId): bool {
