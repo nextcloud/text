@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { markInputRule } from '@tiptap/core'
 import TipTapLink from '@tiptap/extension-link'
 import { domHref, parseHref } from './../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
-import { isMarkActive } from '@tiptap/core'
+import { markInputRule, getMarkRange, isMarkActive } from '@tiptap/core'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 
@@ -90,28 +89,28 @@ const Link = TipTapLink.extend({
 	},
 	addCommands() {
 		return {
-			/**
-			 * Update the target of existing links.
-			 * Insert a link if there currently is none.
-			 *
-			 */
 			insertOrSetLink: (text, attrs) => ({ state, chain, commands }) => {
 				// Check if any text is selected,
 				// if not insert the link using the given text property
 				if (state.selection.empty) {
 					if (isMarkActive(state, this.name)) {
-						commands.deleteNode('paragraph')
+
+						// get current href to check what to replace, assumes there's only one link mark on the anchor
+						let href = ''
+						state.selection.$anchor.marks().forEach(item => {
+							if (item.attrs.href && item.type.name === 'link') {
+								href = item.attrs.href
+							}
+						})
+						commands.deleteRange(getMarkRange(state.selection.$anchor, state.schema.marks.link, { href }))
 					}
 					return chain().insertContent({
-						type: 'paragraph',
-						content: [{
-							type: 'text',
-							marks: [{
-								type: 'link',
-								attrs,
-							}],
-							text,
+						type: 'text',
+						marks: [{
+							type: 'link',
+							attrs,
 						}],
+						text,
 					})
 				} else {
 					return commands.setLink(attrs)
