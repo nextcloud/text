@@ -26,7 +26,7 @@ describe('Open print.md and compare print view', function() {
 			.get('h1:not(.hidden-visually)').should('contain', 'Print test')
 			.should('be.visible')
 
-		cy.compareSnapshot('print view in viewer', { capture: 'fullPage' })
+		cy.compareSnapshot('print view in viewer')
 		cy.setCssMedia('screen')
 	})
 
@@ -45,7 +45,7 @@ describe('Open print.md and compare print view', function() {
 					.get('h1:not(.hidden-visually)').should('contain', 'Print test')
 					.should('be.visible')
 
-				cy.compareSnapshot('print view in single-file share', { capture: 'fullPage' })
+				cy.compareSnapshot('print view in single-file share')
 				cy.setCssMedia('screen')
 			})
 	})
