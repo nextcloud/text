@@ -11,7 +11,7 @@ import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/comman
 // eslint-disable-next-line no-unused-vars,n/no-extraneous-import
 import regeneratorRuntime from 'regenerator-runtime'
 
-addCompareSnapshotCommand()
+addCompareSnapshotCommand({ capture: 'fullPage' })
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 Cypress.env('baseUrl', url)
