@@ -9,6 +9,7 @@ namespace OCA\Text\Service;
 
 use OCP\AppFramework\Services\IInitialState;
 use OCP\TaskProcessing\IManager;
+use OCP\Translation\ITranslationManager;
 
 class InitialStateProvider {
 	private const ASSISTANT_TASK_TYPES = [
@@ -24,6 +25,7 @@ class InitialStateProvider {
 	public function __construct(
 		private IInitialState $initialState,
 		private ConfigService $configService,
+		private ITranslationManager $translationManager,
 		private IManager $taskProcessingManager,
 		private ?string $userId,
 	) {
@@ -55,19 +57,17 @@ class InitialStateProvider {
 			$this->configService->isRichEditingEnabled()
 		);
 
-		$taskTypes = $this->taskProcessingManager->getAvailableTaskTypes();
-		$fromLanguages = $taskTypes['core:text2text:translate']['inputShapeEnumValues']['origin_language'] ?? [];
-		$toLanguages = $taskTypes['core:text2text:translate']['inputShapeEnumValues']['target_language'] ?? [];
+		$this->initialState->provideInitialState(
+			'translation_can_detect',
+			$this->translationManager->canDetectLanguage()
+		);
 
 		$this->initialState->provideInitialState(
 			'translation_languages',
-			[
-				'from' => $fromLanguages,
-				'to' => $toLanguages,
-			]
+			$this->translationManager->getLanguages()
 		);
 
-		$filteredTypes = array_filter($taskTypes, static function (string $taskType) {
+		$filteredTypes = array_filter($this->taskProcessingManager->getAvailableTaskTypes(), static function (string $taskType) {
 			return in_array($taskType, self::ASSISTANT_TASK_TYPES, true);
 		}, ARRAY_FILTER_USE_KEY);
 		$this->initialState->provideInitialState(
