@@ -171,6 +171,7 @@ jobs:
 
       - name: Run E2E cypress tests
         run: |
+          ls '/home/runner/.cache/Cypress'
           cd 'apps/${{ env.APP_NAME }}'
           npx wait-on $CYPRESS_baseUrl
           npx cypress run --record false --config defaultCommandTimeout=10000,video=false
