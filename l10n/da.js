@@ -71,6 +71,8 @@ OC.L10N.register(
     "Select language" : "Vælg sprog",
     "to" : "til",
     "Replace" : "Erstat",
+    "Detect language" : "Detekter sprog",
+    "Translation failed" : "Oversættelse fejlede",
     "Edit" : "Rediger",
     "Source code" : "Kildekode",
     "Both" : "Begge",
