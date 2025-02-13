@@ -33,8 +33,6 @@
 				{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
 			</p>
 		</NcNoteCard>
-
-		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 	</div>
 </template>
 
@@ -43,13 +41,11 @@
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
 import Lock from 'vue-material-design-icons/Lock.vue'
 import { NcNoteCard } from '@nextcloud/vue'
-import CollisionResolveDialog from '../CollisionResolveDialog.vue'
 
 export default {
 	name: 'DocumentStatus',
 
 	components: {
-		CollisionResolveDialog,
 		Lock,
 		NcNoteCard,
 	},
@@ -110,12 +106,14 @@ export default {
 
 <style scoped lang="scss">
 	.document-status {
-		position: sticky;
-		top: 16px;
+		position: absolute;
+		bottom: var(--default-clickable-area);
 		z-index: 100000;
 		// max-height: 50px;
-		max-width: var(--text-editor-max-width);
 		margin: auto;
 		background-color: var(--color-main-background);
+		display: flex;
+		width: 100%;
+		justify-content: center;
 	}
 </style>

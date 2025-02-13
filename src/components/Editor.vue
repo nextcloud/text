@@ -10,14 +10,6 @@
 		class="text-editor"
 		tabindex="-1"
 		@keydown.stop="onKeyDown">
-		<DocumentStatus v-if="displayedStatus"
-			:idle="idle"
-			:lock="lock"
-			:is-resolving-conflict="isResolvingConflict"
-			:sync-error="syncError"
-			:has-connection-issue="hasConnectionIssue"
-			@reconnect="reconnect" />
-
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<Wrapper v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
@@ -62,6 +54,12 @@
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
+			<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
+			<DocumentStatus :idle="idle"
+				:lock="lock"
+				:sync-error="syncError"
+				:has-connection-issue="hasConnectionIssue"
+				@reconnect="reconnect" />
 		</Wrapper>
 		<Assistant v-if="hasEditor" />
 		<Translate :show="translateModal"
@@ -124,12 +122,14 @@ import Wrapper from './Editor/Wrapper.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import Assistant from './Assistant.vue'
 import Translate from './Modal/Translate.vue'
+import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
 
 export default {
 	name: 'Editor',
 	components: {
+		CollisionResolveDialog,
 		SkeletonLoading,
 		DocumentStatus,
 		Wrapper,
@@ -301,10 +301,7 @@ export default {
 				: '/'
 		},
 		displayed() {
-			return this.currentSession && this.active
-		},
-		displayedStatus() {
-			return this.displayed || !!this.syncError
+			return (this.currentSession && this.active) || this.syncError
 		},
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
