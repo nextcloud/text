@@ -135,6 +135,7 @@ export default {
 		display: flex;
 		width: 100%;
 		height: 100%;
+		overflow: auto;
 
 		.ProseMirror {
 			margin-top: 0 !important;
