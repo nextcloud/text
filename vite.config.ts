@@ -77,6 +77,9 @@ const config = createAppConfig({
 				}
 			},
 		},
+		server: {
+			allowedHosts: ['host.docker.internal', 'localhost', 'nextcloud.local'],
+		},
 	},
 })
 
