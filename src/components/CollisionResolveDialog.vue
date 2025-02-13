@@ -22,10 +22,16 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<NcButton :disabled="clicked" data-cy="resolveThisVersion" @click="resolveThisVersion">
+		<NcButton size="large"
+			:disabled="clicked"
+			data-cy="resolveThisVersion"
+			@click="resolveThisVersion">
 			{{ t('text', 'Use current version') }}
 		</NcButton>
-		<NcButton :disabled="clicked" data-cy="resolveServerVersion" @click="resolveServerVersion">
+		<NcButton size="large"
+			:disabled="clicked"
+			data-cy="resolveServerVersion"
+			@click="resolveServerVersion">
 			{{ t('text', 'Use the saved version') }}
 		</NcButton>
 	</div>

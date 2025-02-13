@@ -161,7 +161,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
-	overflow: scroll;
 	top: 0;
 	width: 100%;
 	max-width: 100%;

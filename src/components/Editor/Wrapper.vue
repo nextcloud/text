@@ -139,6 +139,7 @@ export default {
 		display: flex;
 		width: 100%;
 		height: 100%;
+		overflow: auto;
 
 		&.show-color-annotations:deep(.author-annotation) {
 			padding-top: 2px;
