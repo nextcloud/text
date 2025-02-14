@@ -40,8 +40,7 @@ describe('Text PROPFIND extension ', function() {
 				.should('have.property', richWorkspace, '')
 		})
 
-		// Android app relies on this when navigating nested folders
-		it('adds rich workspace property to nested folders', function() {
+		it('never adds rich workspace property to nested folders', function() {
 			cy.createFolder('/workspace')
 			// FIXME: Ideally we do not need a page context for those tests at all
 			// For now the dashboard avoids that we have failing requests due to conflicts when updating the file
@@ -52,9 +51,8 @@ describe('Text PROPFIND extension ', function() {
 			cy.uploadFile('test.md', 'text/markdown', '/workspace/Readme.md')
 			cy.propfindFolder('/', 1)
 				.then(results => results.pop().propStat[0].properties)
-				.should('have.property', richWorkspace, '## Hello world\n')
+				.should('not.have.property', richWorkspace)
 		})
-
 	})
 
 	describe('with workspaces disabled', function() {
