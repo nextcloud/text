@@ -299,6 +299,18 @@ class SyncService {
 		}
 	}
 
+	async saveNoWait() {
+		await this.#connection.save({
+			version: this.version,
+			autosaveContent: this._getContent(),
+			documentState: this.getDocumentState(),
+			force: false,
+			manualSave: true,
+			useSendBeacon: true,
+		})
+		logger.debug('[SyncService] saved using sendBeacon (nowait)')
+	}
+
 	forceSave() {
 		return this.save({ force: true })
 	}
