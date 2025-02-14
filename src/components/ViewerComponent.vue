@@ -189,6 +189,12 @@ export default {
 	}
 }
 
+body .toastify.dialogs {
+	// Move the dialogs below the toolbar / status
+	// Normal margin is 45px, add one clickable area.
+	margin-top: 79px;
+}
+
 .viewer[data-handler='text'] .modal-wrapper .modal-container {
 	bottom: 0;
 }
