@@ -84,6 +84,11 @@ class InitialStateProvider {
 		);
 
 		$this->initialState->provideInitialState(
+			'experimental_offline_typing',
+			$this->configService->isExperimentalOfflineTypingEnabled(),
+		);
+
+		$this->initialState->provideInitialState(
 			'is_full_width_editor',
 			$this->configService->isFullWidthEditor($this->userId),
 		);

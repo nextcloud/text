@@ -139,6 +139,8 @@ import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 
+const experimentalOfflineTyping = loadState('text', 'experimental_offline_typing', false)
+
 export default {
 	name: 'Editor',
 	components: {
@@ -375,7 +377,7 @@ export default {
 			if (val) {
 				this.emit('sync-service:error')
 			}
-			if (this.$editor?.isEditable === val) {
+			if (!experimentalOfflineTyping && this.$editor?.isEditable === val) {
 				this.$editor.setEditable(!val)
 			}
 		},
@@ -643,7 +645,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = this.editMode && !this.requireReconnect
+			const editable = this.editMode && (!this.requireReconnect || experimentalOfflineTyping)
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
@@ -744,7 +746,9 @@ export default {
 		onIdle() {
 			this.$syncService.close()
 			this.idle = true
-			this.readOnly = true
+			if (!experimentalOfflineTyping) {
+				this.readOnly = true
+			}
 			this.editMode = false
 			this.$editor.setEditable(this.editMode)
 
@@ -790,7 +794,9 @@ export default {
 			this.$providers = []
 			this.$syncService = null
 			// disallow editing while still showing the content
-			this.readOnly = true
+			if (!experimentalOfflineTyping) {
+				this.readOnly = true
+			}
 		},
 
 		async close() {
