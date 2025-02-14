@@ -128,6 +128,8 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 
+const experimentalOfflineTyping = loadState('text', 'experimental_offline_typing', false)
+
 export default {
 	name: 'Editor',
 	components: {
@@ -595,7 +597,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = this.editMode && !this.hasConnectionIssue
+			const editable = this.editMode && (experimentalOfflineTyping || !this.hasConnectionIssue)
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
@@ -629,7 +631,9 @@ export default {
 
 		onError({ type, data }) {
 			this.$nextTick(() => {
-				this.$editor?.setEditable(false)
+				if (!experimentalOfflineTyping) {
+					this.$editor?.setEditable(false)
+				}
 				this.emit('sync-service:error')
 			})
 
@@ -690,7 +694,9 @@ export default {
 		onIdle() {
 			this.$syncService.close()
 			this.idle = true
-			this.readOnly = true
+			if (!experimentalOfflineTyping) {
+				this.readOnly = true
+			}
 			this.editMode = false
 			this.$editor.setEditable(this.editMode)
 
@@ -736,7 +742,9 @@ export default {
 			this.$providers = []
 			this.$syncService = null
 			// disallow editing while still showing the content
-			this.readOnly = true
+			if (!experimentalOfflineTyping) {
+				this.readOnly = true
+			}
 		},
 
 		async close() {
