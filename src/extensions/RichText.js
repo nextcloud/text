@@ -55,6 +55,7 @@ import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
 import TrailingNode from './../nodes/TrailingNode.js'
+import TextDirection from 'tiptap-text-direction'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
