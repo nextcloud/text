@@ -148,7 +148,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .text-editor:not(.viewer__file--hidden) {
-	overflow: scroll;
 	top: 0;
 	width: 100%;
 	max-width: 100%;
@@ -188,6 +187,12 @@ export default {
 	.text-editor {
 		top: auto;
 	}
+}
+
+body .toastify.dialogs {
+	// Move the dialogs below the toolbar / status
+	// Normal margin is 45px, add one clickable area.
+	margin-top: 79px;
 }
 
 .viewer[data-handler='text'] .modal-wrapper .modal-container {
