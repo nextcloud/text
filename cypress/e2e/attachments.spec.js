@@ -12,6 +12,7 @@ const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
+const ACTION_CREATE_NEW_TEXT_FILE = 'insert-attachment-add-text-0'
 
 /**
  * @param {string} name name of file
@@ -277,6 +278,19 @@ describe('Test all attachment insertion methods', () => {
 		cy.getEditor().find('[data-component="image-view"]')
 			.should('have.length', 3)
 		cy.closeFile()
+	})
+
+	it('Create a new text file as an attachment', () => {
+		cy.visit('/apps/files')
+		cy.openFile('test.md')
+
+		cy.log('Create a new text file as an attachment')
+		const requestAlias = 'create-attachment-request'
+		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(requestAlias)
+		clickOnAttachmentAction(ACTION_CREATE_NEW_TEXT_FILE)
+			.then(() => {
+				return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
+			})
 	})
 
 	it('test if attachment files are in the attachment folder', () => {
