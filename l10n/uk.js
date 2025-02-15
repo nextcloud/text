@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "Параметри попереднього перегляду",
     "Text only" : "Лише текст",
     "Show link preview" : "Посилання попереднього перегляду",
+    "Open in new tab" : "Відкрити у новій вкладці",
     "Remove link" : "Вилучити посилання",
     "guest" : "гість",
     "Full width editor" : "Редактор на весь екран",
