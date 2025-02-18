@@ -13,11 +13,11 @@ const renderedHTML = ( markdown ) => {
 describe('TipTap', () => {
 	it('render softbreaks', () => {
         const markdown = 'This\nis\none\nparagraph'
-		expect(renderedHTML(markdown)).toEqual(`<p>${markdown}</p>`)
+		expect(renderedHTML(markdown)).toEqual(`<p dir="ltr">${markdown}</p>`)
 	})
 
     it('render hardbreak', () => {
         const markdown = 'Hard line break  \nNext Paragraph'
-        expect(renderedHTML(markdown)).toEqual('<p>Hard line break<br>Next Paragraph</p>')
+        expect(renderedHTML(markdown)).toEqual('<p dir="ltr">Hard line break<br>Next Paragraph</p>')
     })
 })

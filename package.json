@@ -62,6 +62,7 @@
     "@tiptap/extension-collaboration-cursor": "^2.1.13",
     "@tiptap/extension-document": "^2.1.13",
     "@tiptap/extension-dropcursor": "^2.1.13",
+    "tiptap-text-direction": "^0.3.2",
     "@tiptap/extension-gapcursor": "^2.1.13",
     "@tiptap/extension-hard-break": "^2.1.13",
     "@tiptap/extension-heading": "^2.1.13",
