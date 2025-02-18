@@ -16,6 +16,7 @@
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "📝 Kollaborativ dokumentredigering",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 Kollaborativ dokumentredigering! **\n\n- ** 📝 Fokuseret skrivning: ** Ingen distraktioner, kun den formatering, du har brug for.\n- ** 🙋 Arbejd sammen: ** Del og samarbejd med venner og kolleger, uanset om de bruger Nextcloud eller ej!\n- ** 💾 Åbent format: ** Filer gemmes som [Markdown] (https://da.wikipedia.org/wiki/Markdown), så du kan også redigere dem fra enhver anden tekstapp.\n- ** ✊ Stærkt fundament: ** Vi bruger [🐈 tiptap] (https://tiptap.scrumpy.io), som er baseret på [🦉 ProseMirror] (https://prosemirror.net) - kæmpe tak til dem!",
+    "Nextcloud Assistant" : "Nextcloud assistent",
     "Translate" : "Oversæt",
     "Delete task" : "Slet opgave",
     "Use current version" : "Brug aktuel version",
