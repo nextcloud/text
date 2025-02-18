@@ -77,7 +77,7 @@ describe('Front matter support', function() {
 				cy.getContent().find('code').eq(1).find('.hljs-keyword').eq(1).contains('function')
 
 				// Mermaid diagram
-				cy.getEditor().scrollTo('bottom')
+				cy.getEditor().find('.text-editor__wrapper').scrollTo('bottom')
 				cy.getContent().find('.split-view__preview').eq(2).should('be.visible')
 				cy.get('.code-block').eq(2).find('code').should('not.be.visible')
 				cy.get('.split-view__preview').find('svg .entityTitleText')
