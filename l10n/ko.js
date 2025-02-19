@@ -79,6 +79,7 @@ OC.L10N.register(
     "New paragraph" : "새 문단",
     "Enter" : "Enter",
     "Hard line break" : "강제 줄 바꿈",
+    "followed by" : "followed by",
     "Backspace" : "백스페이스",
     "Shift" : "쉬프트",
     "Bold" : "굵게",
