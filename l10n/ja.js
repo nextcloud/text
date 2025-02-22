@@ -53,6 +53,7 @@ OC.L10N.register(
     "Preview options" : "プレビューオプション",
     "Text only" : "テキストのみ",
     "Show link preview" : "リンクのプレビューを表示",
+    "Open in new tab" : "新しいタブで開く",
     "Remove link" : "リンクを削除",
     "guest" : "ゲスト",
     "Full width editor" : "フルワイドエディタ",
