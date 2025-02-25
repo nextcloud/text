@@ -58,6 +58,7 @@
 				</template>
 				<ContentContainer v-show="contentLoaded"
 					ref="contentWrapper" />
+				<SuggestionsBar v-if="isRichEditor && isEmptyContent && contentLoaded" />
 			</MainContainer>
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
@@ -126,6 +127,7 @@ import Assistant from './Assistant.vue'
 import Translate from './Modal/Translate.vue'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
+import SuggestionsBar from './SuggestionsBar.vue'
 
 export default {
 	name: 'Editor',
@@ -141,6 +143,7 @@ export default {
 		Status,
 		Assistant,
 		Translate,
+		SuggestionsBar,
 	},
 	mixins: [
 		isMobile,
@@ -271,6 +274,7 @@ export default {
 			contentWrapper: null,
 			translateModal: false,
 			translateContent: '',
+			isEmptyContent: true,
 		}
 	},
 	computed: {
@@ -612,6 +616,11 @@ export default {
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
+			/**
+			 *  Empty document has an empty document and an empty paragraph (open and close blocks)
+			 */
+			const EMPTY_DOCUMENT_SIZE = 4
+			this.isEmptyContent = editor.state.doc.nodeSize <= EMPTY_DOCUMENT_SIZE
 		},
 
 		onSync({ steps, document }) {
