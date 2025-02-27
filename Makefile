@@ -69,4 +69,5 @@ clean-dev:
 
 clean-git:
 	rm -r js/
-	git checkout -- js/
+	rm -r css/
+	git checkout -- js/ css/
