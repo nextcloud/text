@@ -13,13 +13,11 @@ import {
 	SET_HEADINGS,
 	SET_ATTACHMENT_LIST,
 } from './mutation-types.js'
-import plugin, { getClientWidth } from './plugin.js'
 
 Vue.use(Vuex)
 
 export const textModule = {
 	state: {
-		viewWidth: getClientWidth(),
 		headings: Object.freeze([]),
 		attachmentList: [],
 	},
@@ -28,9 +26,6 @@ export const textModule = {
 		findAttachment: (state) => (fileName) => state.attachmentList.find(a => a.name === fileName),
 	},
 	mutations: {
-		[SET_VIEW_WIDTH](state, value) {
-			state.viewWidth = value
-		},
 		[SET_HEADINGS](state, value) {
 			if (state.headings.length !== value.length) {
 				state.headings = Object.freeze(value)
@@ -72,7 +67,6 @@ export const textModule = {
 }
 
 const store = new Store({
-	plugins: [plugin],
 	modules: {
 		text: {
 			namespaced: true,
