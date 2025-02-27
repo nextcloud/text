@@ -157,12 +157,12 @@ function menuForCurrentParagraph(editor) {
 		const { selection } = editor.state
 		const { textContent } = selection.$anchor.parent
 		const eol = selection.$anchor.end()
-		const contentToInsert = textContent.match(/(^| )$/) ? '/' : ' /'
-		editor.chain()
-			.focus()
-			.setTextSelection(eol)
-			.insertContent(contentToInsert)
-			.run()
+		const chain = editor.chain().focus().setTextSelection(eol)
+		if (textContent.trim() === '') {
+			chain.insertContent('/').run()
+		} else {
+			chain.splitBlock().insertContent('/').run()
+		}
 	})
 	return menu.$el
 }

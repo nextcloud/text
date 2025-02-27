@@ -20,15 +20,15 @@
     "Text" : "نص",
     "📝 Collaborative document editing" : "📝تحرير المستندات تعاونيّاً Collaborative document editing",
     "** 📝 Collaborative document editing!**\n\n- **📝 Focused writing:** No distractions, only the formatting you need.\n- **🙋 Work together:** Share and collaborate with friends and colleagues, no matter if they use Nextcloud or not!\n- **💾 Open format:** Files are saved as [Markdown](https://en.wikipedia.org/wiki/Markdown), so you can edit them from any other text app too.\n- **✊ Strong foundation:** We use [🐈 tiptap](https://tiptap.scrumpy.io) which is based on [🦉 ProseMirror](https://prosemirror.net) – huge thanks to them!" : "** 📝 تحرير المستندات تعاونيّاً! ** \n- ** 📝 التركيز على الكتابة: ** لا تشتيت للانتباه، فقط التنسيق الذي تحتاجه.\n- ** 💾 نسق مفتوح: ** يتم حفظ الملفات على نسق ماركداون [Markdown] (https://en.wikipedia.org/wiki/Markdown)، حتى تتمكن من تحريرها من أي تطبيق نصي آخر أيضًا.\n-** 🙋 العمل معًا: ** شارك وتعاون مع الأصدقاء والزملاء، بغض النظر عما إذا يستخدمون نكست كلاود أم لا! .\n- ** ✊ أساسٌ قويٌّ: ** نستخدم محرر ماركداون \"تِب توب\" [🐈 tiptap] (https://tiptap.scrumpy.io) الذي بدوره يعتمد على \"بروز ميرور\" [🦉 ProseMirror] (https://prosemirror.net) - شكراً جزيلاً لهم!",
+    "Insert result" : "أدخِل نتيجةً",
+    "Nextcloud Assistant result copied" : "تمّ نسخ نتيجة مُساعِد نكست كلاود",
+    "Could not copy result to clipboard" : "تعذّر نسخ النتيجة إلى الحافظة",
     "Nextcloud Assistant" : "مُساعِد نكست كلاود Nextcloud Assistant",
     "Translate" : "ترجم",
     "Show assistant results" : "عرض نتائج المُساعِد",
     "Assistant results" : "نتائج \"المُساعد\"",
-    "Insert result" : "أدخِل نتيجةً",
     "Show result" : "أظهِر نتيجةً",
     "Delete task" : "حذف المهمّة",
-    "Nextcloud Assistant result copied" : "تمّ نسخ نتيجة مُساعِد نكست كلاود",
-    "Could not copy result to clipboard" : "تعذّر نسخ النتيجة إلى الحافظة",
     "Use current version" : "إستخدام النسخة الحالية",
     "Use the saved version" : "إستخدم النسخة المحفوظة",
     "Reload" : "إعادة تحميل",
@@ -53,12 +53,10 @@
     "Show link preview" : "عرض معاينة الرابط",
     "Open in new tab" : "فتح تبويبة جديدة",
     "Remove link" : "حذف الرابط",
+    "Active people" : "أشخاص نشطون",
     "guest" : "ضيف ",
     "Full width editor" : "محرر بالعُرْض الكامل",
-    "Active people" : "أشخاص نشطون",
     "Open the Smart Picker" : "فتح المحدد الذكي",
-    "Save document" : "إحفَظِ المُستَنَد",
-    "Last saved" : "آخر حفظ",
     "Offline" : "غير متصل",
     "Offline, changes will be saved when online" : "غير متصل. التغييرات سيتم حفظها بمجرد تحقيق الاتصال",
     "Saving …" : "الحفظ جارٍ …",
@@ -66,6 +64,8 @@
     "Last saved {lastSave}" : "آخر حفظ {lastSave}",
     "The document has been changed outside of the editor. The changes cannot be applied." : "تم تغيير المستند خارج محرر المستندات. لا يمكن تطبيق تلك التغييرات.",
     "Unsaved changes" : "تغييرات لم يتم حفظها",
+    "Save document" : "إحفَظِ المُستَنَد",
+    "Last saved" : "آخر حفظ",
     "Connection failed." : "تعذّر الاتصال.",
     "Formatting and shortcuts" : "التنسيق و الاختصارات",
     "Speed up your writing with simple shortcuts." : "سرّع كتابتك باختصارات بسيطة للوحة المفاتيح.",
@@ -115,25 +115,28 @@
     "Redo" : "إعادة",
     "Toggle outline" : "تبديل المخطط التفصيلي",
     "Alt" : "مفتاح Alt",
+    "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
+    "Copy link to clipboard" : "انسخ الرابط إلى الحافظة",
     "Edit link" : "أكتب الرابط ",
     "Save changes" : "حفظ التعديلات",
     "Cancel" : "إلغاء",
     "URL" : "رابط URL",
-    "Cannot copy, please copy the link manually" : "يتعذّر النسخ. يُرجى نسخ الرابط يدويًا",
-    "Copy link to clipboard" : "انسخ الرابط إلى الحافظة",
     "Upload from computer" : "رفع من حاسوبك",
     "Insert from Files" : "إدخال من \"الملفات\" Files",
     "Formatting help" : "مساعد التنسيق",
+    "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
     "Link to file or folder" : "ربط إلى ملف أو مجلد",
     "Link to website" : "ربط مع موقع وِب",
     "Update link" : "تحديث الرابط",
-    "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
-    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تمّ اختياره",
     "_%n word_::_%n words_" : ["%n كلمات","%n كلمة","%n كلمات","%n كلمات","%n كلمات","%n كلمات"],
     "_%n char_::_%n chars_" : ["%n حروف","%n حرف","%n حروف","%n حروف","%n حروف","%n حروف"],
+    "Remaining actions" : "الإجراءات المتبقية",
     "Editor actions" : "إجراءات المُحرّر editor",
     "Formatting menu bar" : "تنسيق شريط القوائم",
-    "Remaining actions" : "الإجراءات المتبقية",
+    "Detect language" : "إكتشف اللغة",
+    "Translate from {language}" : "ترجِم من {language}",
+    "Translate to {language}" : "ترجِم إلى {language}",
+    "Translation failed" : "فشل الترجمة",
     "To translate individual parts of the text, select it before using the translate function." : "لترجمة أجزاء مستقلة من النص، حدّدها قبل استعمال وظيفة الترجمة.",
     "Translate from" : "ترجِم من",
     "Select language" : "اختر لغة",
@@ -143,10 +146,6 @@
     "Translated text result" : "نتيجة ترجمة النص",
     "Replace" : "إحلال",
     "Insert" : "إدخال",
-    "Detect language" : "إكتشف اللغة",
-    "Translate from {language}" : "ترجِم من {language}",
-    "Translate to {language}" : "ترجِم إلى {language}",
-    "Translation failed" : "فشل الترجمة",
     "No emoji found" : "لا توجد أي \"إيميوجي\" emoji",
     "No command found" : "لا يوجد أي أمر command",
     "No user found" : "لا يوجد أي مستخدِم",
@@ -161,10 +160,10 @@
     "Diagram" : "شكل",
     "Both" : "كلاهما",
     "Mermaid documentation" : "توثيق عروس البحر Mermaid",
-    "Delete this attachment" : "حذف المُرفَق",
-    "Delete this image" : "إحذف هذه الصورة",
     "Failed to load" : "فشل في التحميل",
     "Could not find image in attachments list." : "تعذّر إيجاد صورة في قائمة المرفقات.",
+    "Delete this attachment" : "حذف المُرفَق",
+    "Delete this image" : "إحذف هذه الصورة",
     "Add row before" : "أضِف صفّاً قبلَ",
     "Add row after" : "أضِف صفّاً بعدَ",
     "Delete this row" : "إحذف هذا الصفّ",

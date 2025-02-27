@@ -30,7 +30,7 @@ OC.L10N.register(
     "Cancel" : "Atcelt",
     "URL" : "URL",
     "Update link" : "Atjaunināt saiti",
-    "Select language" : "Izvēlies valodu",
+    "Select language" : "Atlasīt valodu",
     "to" : "kam",
     "Replace" : "Aizvietot",
     "Edit" : "Labot",
