@@ -159,7 +159,13 @@
 					<td>
 						<code>* [] {{ t('text', 'To-Do item') }}</code>
 					</td>
-					<td v-if="!isMobileCached" />
+					<td v-if="!isMobileCached">
+						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>9</kbd>
+					</td>
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Blockquote') }}</td>
