@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<NcDialog size="normal"
+	<NcDialog size="large"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting and shortcuts')"
 		:close-on-click-outside="true"
@@ -304,6 +304,7 @@ export default {
 	table {
 		margin-top: 24px;
 		border-collapse: collapse;
+		width: 100%;
 
 		tbody tr {
 			&:hover, &:focus, &:active {
