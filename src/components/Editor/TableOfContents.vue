@@ -23,25 +23,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { useEditorMixin } from '../Editor.provider.js'
-import useStore from '../../mixins/store.js'
+import { useEditorMixin } from '../../components/Editor.provider.js'
+import { headingAnchorPluginKey } from '../../plugins/headingAnchor.js'
 
 export default {
 	name: 'TableOfContents',
-	mixins: [useStore, useEditorMixin],
+	mixins: [useEditorMixin],
 	data: () => ({
 		initialRender: true,
+		headings: [],
 	}),
-	computed: {
-		...mapState({
-			headings: (state) => state.text.headings,
-		}),
-	},
 	mounted() {
+		if (this.$editor) {
+			this.$editor.on('update', this.updateHeadings)
+			this.updateHeadings()
+		}
 		setTimeout(() => {
 			this.initialRender = false
 		}, 1000)
+	},
+	beforeDestroy() {
+		this.$editor.off('update', this.updateHeadings)
 	},
 	methods: {
 		goto(heading) {
@@ -50,6 +52,10 @@ export default {
 			this.$nextTick(() => {
 				window.location.hash = heading.id
 			})
+		},
+		updateHeadings() {
+			this.headings = headingAnchorPluginKey
+				.getState(this.$editor.state)?.headings ?? []
 		},
 	},
 }
