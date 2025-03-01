@@ -38,7 +38,6 @@ import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionListItem from './ActionListItem.vue'
 import { getActionState, getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
-import useStore from '../../mixins/store.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import debounce from 'debounce'
 
@@ -50,7 +49,7 @@ export default {
 		ActionListItem,
 	},
 	extends: BaseActionEntry,
-	mixins: [useStore, useOutlineStateMixin, useMenuIDMixin],
+	mixins: [useOutlineStateMixin, useMenuIDMixin],
 	props: {
 		forceEnabled: {
 			type: Boolean,

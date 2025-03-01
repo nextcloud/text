@@ -4,7 +4,6 @@
  */
 
 import Vue from 'vue'
-import store from './store/index.js'
 import { subscribe } from '@nextcloud/event-bus'
 import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
@@ -254,7 +253,6 @@ window.OCA.Text.createEditor = async function({
 					scopedSlots,
 				})
 		},
-		store,
 	})
 	return new TextEditorEmbed(vm, data)
 		.onCreate(onCreate)

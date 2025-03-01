@@ -22,14 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 	if (workspaceAvailable && OCA && OCA?.Files?.Settings) {
 		const { default: Vue } = await import('vue')
 		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
-		const { default: store } = await import('./store/index.js')
 
 		Vue.prototype.t = window.t
 		Vue.prototype.n = window.n
 		Vue.prototype.OCA = window.OCA
 		const vm = new Vue({
 			render: h => h(FilesSettings, {}),
-			store,
 		})
 		const el = vm.$mount().$el
 		OCA.Files.Settings.register(new OCA.Files.Settings.Setting('text', {

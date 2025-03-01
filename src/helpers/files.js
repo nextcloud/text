@@ -16,7 +16,6 @@ import axios from '@nextcloud/axios'
 import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 import { openMimetypes } from './mime.js'
-import store from '../store/index.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -205,7 +204,6 @@ export const FilesWorkspaceHeader = new Header({
 					hasRichWorkspace,
 					content,
 				},
-				store,
 			}).$mount(el)
 		})
 	},
