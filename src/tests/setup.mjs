@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue from 'vue'
 import './testHelpers/jsdomMocks.js'
 import './testHelpers/nextcloudMocks.js'
+import './testHelpers/vueMocks.js'
+import Vue from 'vue'
 
 Vue.prototype.t = global.t
 Vue.prototype.n = global.n

@@ -17,12 +17,10 @@
 <script>
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
-import useStore from '../../mixins/store.js'
-import { mapState } from 'vuex'
 
 export default {
 	name: 'Wrapper',
-	mixins: [useStore, useIsRichEditorMixin, useIsRichWorkspaceMixin],
+	mixins: [useIsRichEditorMixin, useIsRichWorkspaceMixin],
 	provide() {
 		const val = {}
 
@@ -72,9 +70,6 @@ export default {
 	}),
 
 	computed: {
-		...mapState({
-			viewWidth: (state) => state.text.viewWidth,
-		}),
 		showOutline() {
 			return this.isAbleToShowOutline
 				? this.outline.visible

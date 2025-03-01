@@ -15,7 +15,6 @@ import {
 import { logger } from './helpers/logger.js'
 import { openMimetypes } from './helpers/mime.js'
 import { documentReady } from './helpers/index.js'
-import store from './store/index.js'
 import { emit, subscribe } from '@nextcloud/event-bus'
 import RichWorkspace from './views/RichWorkspace.vue'
 
@@ -82,7 +81,6 @@ const filesWorkspacePlugin = {
 					path: fileList.getCurrentDirectory(),
 					hasRichWorkspace: true,
 				},
-				store,
 			}).$mount(this.el)
 			subscribe('files:navigation:changed', () => {
 				// Expose if the default file list is active to the component
@@ -126,7 +124,6 @@ const loadEditor = ({ sharingToken, mimetype, fileId, $el }) => {
 						fileId,
 					},
 				}),
-				store,
 			})
 				.$mount($el)
 

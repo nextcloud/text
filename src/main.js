@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import store from './store/index.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
@@ -18,7 +17,6 @@ if (document.getElementById('app-content')) {
 		const DirectEditing = imports[1].default
 		const vm = new Vue({
 			render: h => h(DirectEditing),
-			store,
 		})
 		vm.$mount(document.getElementById('app-content'))
 	})
