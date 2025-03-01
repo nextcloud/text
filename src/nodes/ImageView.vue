@@ -114,11 +114,9 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
-import { mapGetters } from 'vuex'
 import { NcButton } from '@nextcloud/vue'
 import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
-import store from '../mixins/store.js'
 import { useAttachmentResolver } from '../components/Editor.provider.js'
 import { emit } from '@nextcloud/event-bus'
 import { NodeViewWrapper } from '@tiptap/vue-2'
@@ -147,7 +145,6 @@ export default {
 		ClickOutside,
 	},
 	mixins: [
-		store,
 		useAttachmentResolver,
 	],
 	props: ['editor', 'node', 'extension', 'updateAttributes', 'deleteNode'], // eslint-disable-line
@@ -168,9 +165,6 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({
-			imageAttachments: 'text/imageAttachments',
-		}),
 		attachmentType() {
 			if (this.attachment) {
 				return this.attachment.isImage ? 'image' : 'media'
