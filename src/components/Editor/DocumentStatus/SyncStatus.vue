@@ -1,0 +1,98 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<template>
+	<NcNoteCard v-if="hasWarning" type="warning">
+		<p v-if="isLoadingError">
+			{{ syncError.data.data.error }}
+			<!-- Display reload button on PRECONDITION_FAILED response type -->
+			<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
+		</p>
+		<p v-else-if="hasSyncCollission">
+			{{ t('text', 'Document has been changed outside of the editor. The changes cannot be applied') }}
+		</p>
+		<p v-else-if="hasConnectionIssue">
+			{{ t('text', 'Document could not be loaded. Please check your internet connection.') }}
+			<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+		</p>
+	</NcNoteCard>
+	<NcNoteCard v-else-if="idle" type="info">
+		<p>
+			{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }}
+			<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+		</p>
+	</NcNoteCard>
+</template>
+
+<script>
+
+import { ERROR_TYPE, IDLE_TIMEOUT } from '../../../services/SyncService.js'
+import { NcNoteCard } from '@nextcloud/vue'
+
+export default {
+	name: 'SyncStatus',
+
+	components: {
+		NcNoteCard,
+	},
+
+	props: {
+		idle: {
+			type: Boolean,
+			default: false,
+		},
+		syncError: {
+			type: Object,
+			default: null,
+		},
+		hasConnectionIssue: {
+			type: Boolean,
+			default: false,
+		},
+	},
+
+	data() {
+		return {
+			IDLE_TIMEOUT,
+		}
+	},
+
+	computed: {
+		hasSyncCollission() {
+			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+		},
+		isLoadingError() {
+			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
+		},
+		hasWarning() {
+			return this.syncError || this.hasConnectionIssue
+		},
+	},
+
+	methods: {
+		reconnect() {
+			this.$emit('reconnect')
+		},
+		reload() {
+			window.location.reload()
+		},
+	},
+
+}
+
+</script>
+
+<style scoped lang="scss">
+	.document-status {
+		.notecard {
+			margin-bottom: 0;
+		}
+	}
+	.document-status.mobile {
+		.notecard {
+			border-radius: 0;
+		}
+	}
+</style>
