@@ -4,35 +4,37 @@
 -->
 
 <template>
-	<div class="document-status">
-		<NcNoteCard v-if="hasWarning" type="warning">
-			<p v-if="isLoadingError">
-				{{ syncError.data.data.error }}
-				<!-- Display reload button on PRECONDITION_FAILED response type -->
-				<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
-			</p>
-			<p v-else-if="hasSyncCollission">
-				{{ t('text', 'Document has been changed outside of the editor. The changes cannot be applied') }}
-			</p>
-			<p v-else-if="hasConnectionIssue">
-				{{ t('text', 'Document could not be loaded. Please check your internet connection.') }}
-				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-		</NcNoteCard>
-		<NcNoteCard v-else-if="idle" type="info">
-			<p>
-				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }}
-				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-		</NcNoteCard>
-		<NcNoteCard v-if="lock" type="info">
-			<template #icon>
-				<Lock :size="20" />
-			</template>
-			<p>
-				{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
-			</p>
-		</NcNoteCard>
+	<div class="document-status" :class="{ mobile: isMobile }">
+		<div class="status-wrapper">
+			<NcNoteCard v-if="hasWarning" type="warning">
+				<p v-if="isLoadingError">
+					{{ syncError.data.data.error }}
+					<!-- Display reload button on PRECONDITION_FAILED response type -->
+					<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
+				</p>
+				<p v-else-if="hasSyncCollission">
+					{{ t('text', 'Document has been changed outside of the editor. The changes cannot be applied') }}
+				</p>
+				<p v-else-if="hasConnectionIssue">
+					{{ t('text', 'Document could not be loaded. Please check your internet connection.') }}
+					<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+				</p>
+			</NcNoteCard>
+			<NcNoteCard v-else-if="idle" type="info">
+				<p>
+					{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }}
+					<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
+				</p>
+			</NcNoteCard>
+			<NcNoteCard v-if="lock" type="info">
+				<template #icon>
+					<Lock :size="20" />
+				</template>
+				<p>
+					{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
+				</p>
+			</NcNoteCard>
+		</div>
 	</div>
 </template>
 
@@ -41,6 +43,7 @@
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
 import Lock from 'vue-material-design-icons/Lock.vue'
 import { NcNoteCard } from '@nextcloud/vue'
+import isMobile from '../../mixins/isMobile.js'
 
 export default {
 	name: 'DocumentStatus',
@@ -49,6 +52,8 @@ export default {
 		Lock,
 		NcNoteCard,
 	},
+
+	mixins: [isMobile],
 
 	props: {
 		idle: {
@@ -111,9 +116,20 @@ export default {
 		z-index: 100000;
 		// max-height: 50px;
 		margin: auto;
-		background-color: var(--color-main-background);
 		display: flex;
 		width: 100%;
 		justify-content: center;
+		.notecard {
+			margin-bottom: 0;
+		}
+	}
+	.document-status.mobile {
+		bottom: 0;
+		.notecard {
+			border-radius: 0;
+		}
+	}
+	.status-wrapper {
+		background-color: var(--color-main-background);
 	}
 </style>
