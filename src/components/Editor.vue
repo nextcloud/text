@@ -678,7 +678,10 @@ export default {
 				) {
 					this.dirty = state.dirty
 					if (this.dirty) {
+						window.addEventListener('beforeunload', this.saveBeforeUnload)
 						this.$syncService.autosave()
+					} else {
+						window.removeEventListener('beforeunload', this.saveBeforeUnload)
 					}
 				}
 			}
@@ -886,6 +889,13 @@ export default {
 		},
 		updateEditorWidth(newWidth) {
 			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
+		},
+
+		async saveBeforeUnload(event) {
+			if (!this.dirty && !this.document.hasUnsavedChanges) {
+				return
+			}
+			await this.$syncService.saveNoWait()
 		},
 	},
 }
