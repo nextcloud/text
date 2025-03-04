@@ -14,7 +14,9 @@ exports[`renders idle 1`] = `
 
 exports[`renders sync error 0 1`] = `
 "<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
-  <p data-v-56029fad=""> Document has been changed outside of the editor. The changes cannot be applied </p>
+  <p data-v-56029fad=""> Document has been changed outside of the editor. The changes cannot be applied
+    <!---->
+  </p>
 </ncnotecard-stub>"
 `;
 
