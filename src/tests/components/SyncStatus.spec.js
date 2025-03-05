@@ -29,7 +29,7 @@ Object.values(ERROR_TYPE).forEach(type => {
 	test(`renders sync error ${type}`, () => {
 		const data = {
 			data: { error: 'Error Message goes here' },
-			status: 412
+			status: 412,
 		}
 		const wrapper = shallowMount(SyncStatus, {
 			propsData: { syncError: { type, data } },
@@ -37,4 +37,3 @@ Object.values(ERROR_TYPE).forEach(type => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 })
-
