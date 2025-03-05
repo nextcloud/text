@@ -9,15 +9,11 @@
 			<SyncStatus :idle="idle"
 				:sync-error="syncError"
 				:has-connection-issue="hasConnectionIssue"
-				:is-resolving-conflict="isResolvingConflict"
 				@reconnect="$emit('reconnect')" />
-			<NcNoteCard v-if="lock" type="info">
+			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
 					<Lock :size="20" />
 				</template>
-				<p>
-					{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
-				</p>
 			</NcNoteCard>
 		</div>
 	</div>
@@ -58,12 +54,17 @@ export default {
 			type: Boolean,
 			require: true,
 		},
-		isResolvingConflict: {
-			type: Boolean,
-			require: true,
-		},
 	},
 
+	computed: {
+		lockText() {
+			return t(
+				'text',
+				'This file is opened read-only as it is currently locked by {user}.',
+				{ user: this.lock.displayName },
+			)
+		},
+	},
 }
 </script>
 
