@@ -4,10 +4,10 @@
 -->
 
 <template>
-	<NcNoteCard v-if="type" :type="type">
-		<p v-if="message">
-			{{ message }}
-			<a v-if="button" class="button primary" @click="button.action">{{ button.text }}</a>
+	<NcNoteCard v-if="hasWarning || idle" :type="card.type || 'warning'">
+		<p v-if="card.message">
+			{{ card.message }}
+			<a v-if="card.action" class="button primary" @click="card.action">{{ card.actionLabel }}</a>
 		</p>
 	</NcNoteCard>
 </template>
@@ -16,12 +16,6 @@
 
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../../../services/SyncService.js'
 import { NcNoteCard } from '@nextcloud/vue'
-
-const MESSAGES = {
-	changedOutside: t('text', 'Document has been changed outside of the editor. The changes cannot be applied'),
-	couldNotBeLoaded: t('text', 'Document could not be loaded. Please check your internet connection.'),
-	idle: t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }),
-}
 
 export default {
 	name: 'SyncStatus',
@@ -52,29 +46,35 @@ export default {
 	},
 
 	computed: {
-		type() {
-			return ( this.hasWarning && 'warning' ) || ( this.idle && 'info' )
-		},
-		message() {
-			return (this.isLoadingError && this.syncError.data.data.error)
-				|| (this.hasSyncCollission && MESSAGES.changedOutside)
-				|| (this.hasConnectionIssue && MESSAGES.couldNotBeLoaded)
-				|| (this.idle && MESSAGES.idle)
-		},
-		button() {
-			// Display reload button on PRECONDITION_FAILED response
-			if (this.isPreconditionFailed) {
+		card() {
+			if (this.isLoadingError) {
 				return {
-					text: t('text', 'Reload'),
-					action: this.reload
+					message: this.syncError.data.data.error,
+					action: this.isPreconditionFailed ? this.reload : false,
+					actionLabel: t('text', 'Reload'),
 				}
 			}
-			if (this.hasConnectionIssue || this.idle ) {
+			if (this.hasSyncCollission) {
 				return {
-					text: t('text', 'Reconnect'),
-					action: this.reconnect
+					message: t('text', 'Document has been changed outside of the editor. The changes cannot be applied'),
 				}
 			}
+			if (this.hasConnectionIssue) {
+				return {
+					message: t('text', 'Document could not be loaded. Please check your internet connection.'),
+					action: this.reconnect,
+					actionLabel: t('text', 'Reconnect'),
+				}
+			}
+			if (this.idle) {
+				return {
+					type: 'info',
+					message: t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }),
+					action: this.reconnect,
+					actionLabel: t('text', 'Reconnect'),
+				}
+			}
+			return {}
 		},
 		hasSyncCollission() {
 			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
