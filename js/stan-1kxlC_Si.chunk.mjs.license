@@ -1,0 +1,7 @@
+SPDX-License-Identifier: BSD-3-Clause
+SPDX-FileCopyrightText: Josh Goebel <hello@joshgoebel.com>
+
+This file is generated from multiple sources. Included packages:
+- highlight.js
+	- version: 11.11.1
+	- license: BSD-3-Clause
