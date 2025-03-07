@@ -142,7 +142,7 @@
     "raw-loader": "^4.0.2",
     "rollup-plugin-webpack-stats": "^1.2.3",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2",
+    "typescript": "^5.8.2",
     "vite": "^5.4.11",
     "vite-plugin-commonjs": "^0.10.4",
     "vue-demi": "^0.14.10",
