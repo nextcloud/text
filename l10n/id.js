@@ -36,11 +36,11 @@ OC.L10N.register(
     "Done" : "Selesai",
     "Lists" : "Daftar",
     "Details" : "Detail",
-    "Control" : "Kendali",
     "Formatting" : "Pemformatan",
     "Info" : "Info",
     "Success" : "Berhasil",
     "Warning" : "Peringatan",
+    "Control" : "Kendali",
     "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan..."
 },
 "nplurals=1; plural=0;");

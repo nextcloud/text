@@ -73,13 +73,13 @@
     "Lists" : "Listas",
     "Details" : "Detàllios",
     "Command" : "Cumandu",
-    "Control" : "Controllu",
     "Formatting" : "Formatatzione",
     "Show author colors" : "Mustra is colores de sa persone autora",
     "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
     "Info" : "Informatziones",
     "Success" : "Sutzessu",
     "Warning" : "Avisu",
+    "Control" : "Controllu",
     "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

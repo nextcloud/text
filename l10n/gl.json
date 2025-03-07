@@ -82,7 +82,6 @@
     "Shift" : "Cambiar",
     "Bold" : "Grosa",
     "Bold text" : "Texto en grosa",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursiva",
     "Italicized text" : "Texto en cursiva",
     "Strikethrough" : "Riscado",
@@ -198,7 +197,7 @@
     "Insert link" : "Inserir ligazón",
     "Insert attachment" : "Inserir o anexo",
     "Command" : "Orde",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Opción",
     "Formatting" : "Formatado",
     "Add folder description" : "Engadir a descrición do cartafol",
@@ -215,6 +214,7 @@
     "Success" : "Correcto",
     "Warning" : "Advertencia",
     "Danger" : "Perigo",
+    "Control" : "Control",
     "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Start writing, or try '/' to add, '@' to mention…" : "Comece a escribir, ou probe con «/» para engadir, «@» para mencionar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

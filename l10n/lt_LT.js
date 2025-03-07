@@ -53,7 +53,6 @@ OC.L10N.register(
     "Shift" : "Lyg2",
     "Bold" : "Pusjuodis",
     "Bold text" : "Pusjuodis tekstas",
-    "Ctrl" : "Vald",
     "Italic" : "Kursyvas",
     "Italicized text" : "Pasvirasis tekstas",
     "Strikethrough" : "Perbrauktas",
@@ -131,7 +130,7 @@ OC.L10N.register(
     "Insert link" : "Įterpti nuorodą",
     "Insert attachment" : "Įterpti priedą",
     "Command" : "Komanda",
-    "Control" : "Valdoma",
+    "Ctrl" : "Vald",
     "Formatting" : "Formatavimas",
     "Add folder description" : "Pridėti aplanko aprašą",
     "\"{name}\" already exist!" : "„{name}“ jau yra!",
@@ -144,6 +143,7 @@ OC.L10N.register(
     "Success" : "Pavyko",
     "Warning" : "Įspėjimas",
     "Danger" : "Pavojus",
+    "Control" : "Valdoma",
     "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

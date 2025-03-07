@@ -66,7 +66,6 @@
     "New paragraph" : "Párrafu nuevu",
     "Bold" : "Negrina",
     "Bold text" : "Testu en negrina",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursiva",
     "Italicized text" : "Testu en cursiva",
     "Strikethrough" : "Tacháu",
@@ -142,7 +141,7 @@
     "Details" : "Detalles",
     "Insert link" : "Inxertar un enllaz",
     "Command" : "Comandu",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Opción",
     "Formatting" : "Formatu",
     "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
@@ -152,6 +151,7 @@
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
     "Info" : "Información",
     "Warning" : "Alvertencia",
-    "Danger" : "Peligru"
+    "Danger" : "Peligru",
+    "Control" : "Control"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "加粗",
     "Bold text" : "粗文本",
-    "Ctrl" : "Ctrl",
     "Italic" : "斜体",
     "Italicized text" : "斜文本",
     "Strikethrough" : "删除线",
@@ -198,7 +197,7 @@
     "Insert link" : "插入链接",
     "Insert attachment" : "插入附件",
     "Command" : "命令",
-    "Control" : "控制",
+    "Ctrl" : "Ctrl",
     "Option" : "选项",
     "Formatting" : "格式",
     "Add folder description" : "添加文件夹描述",
@@ -215,6 +214,7 @@
     "Success" : "成功",
     "Warning" : "警告",
     "Danger" : "重要",
+    "Control" : "控制",
     "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Start writing, or try '/' to add, '@' to mention…" : "开始写作，或尝试用 “/” 添加，用 “@” 提及…"
 },"pluralForm" :"nplurals=1; plural=0;"

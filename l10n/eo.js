@@ -55,9 +55,9 @@ OC.L10N.register(
     "Heading 5" : "Titolo 5",
     "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
-    "Control" : "Kontrolo",
     "Info" : "Info",
     "Warning" : "Averto",
+    "Control" : "Kontrolo",
     "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn..."
 },
 "nplurals=2; plural=(n != 1);");

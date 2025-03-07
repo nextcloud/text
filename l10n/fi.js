@@ -155,7 +155,6 @@ OC.L10N.register(
     "Insert link" : "Lisää linkki",
     "Insert attachment" : "Lisää liite",
     "Command" : "Komento",
-    "Control" : "Hallinta",
     "Formatting" : "Muotoilu",
     "Add folder description" : "Lisään kansion kuvaus",
     "\"{name}\" already exist!" : "\"{name}\" on jo olemassa!",
@@ -168,6 +167,7 @@ OC.L10N.register(
     "Info" : "Tietoa",
     "Success" : "Onnistui",
     "Warning" : "Varoitus",
+    "Control" : "Hallinta",
     "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä..."
 },
 "nplurals=2; plural=(n != 1);");

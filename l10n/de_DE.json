@@ -82,7 +82,6 @@
     "Shift" : "Umschalttaste",
     "Bold" : "Fett",
     "Bold text" : "Fetter Text",
-    "Ctrl" : "Strg",
     "Italic" : "Kursiv",
     "Italicized text" : "Kursiver Text",
     "Strikethrough" : "Durchgestrichen",
@@ -198,7 +197,7 @@
     "Insert link" : "Link einfügen",
     "Insert attachment" : "Anhang einfügen",
     "Command" : "Befehl",
-    "Control" : "Kontrolle",
+    "Ctrl" : "Strg",
     "Option" : "Option",
     "Formatting" : "Formatierung",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
@@ -215,6 +214,7 @@
     "Success" : "Erfolgreich",
     "Warning" : "Warnung",
     "Danger" : "Achtung",
+    "Control" : "Kontrolle",
     "Add notes, lists or links …" : "Notizen, Listen oder Links hinzufügen …",
     "Start writing, or try '/' to add, '@' to mention…" : "Beginnen Sie mit dem Schreiben oder versuchen Sie es mit '/' zum Hinzufügen oder '@' zum Erwähnen …"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

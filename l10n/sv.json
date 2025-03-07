@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Fet",
     "Bold text" : "Fetstil",
-    "Ctrl" : "Ctrl",
     "Italic" : "Kursiv",
     "Italicized text" : "Kursiv stil",
     "Strikethrough" : "Genomstruken",
@@ -194,7 +193,7 @@
     "Insert link" : "Infoga länk",
     "Insert attachment" : "Infoga bilaga",
     "Command" : "Kommando",
-    "Control" : "Kontroll",
+    "Ctrl" : "Ctrl",
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
     "Add folder description" : "Lägg till mappbeskrivning",
@@ -211,6 +210,7 @@
     "Success" : "Lyckades",
     "Warning" : "Varning",
     "Danger" : "Fara",
+    "Control" : "Kontroll",
     "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

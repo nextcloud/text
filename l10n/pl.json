@@ -72,7 +72,6 @@
     "Shift" : "Shift",
     "Bold" : "Tekst pogrubiony",
     "Bold text" : "Pogrubiony tekst",
-    "Ctrl" : "Ctrl",
     "Italic" : "Kursywa",
     "Italicized text" : "Tekst pisany kursywą",
     "Strikethrough" : "Tekst przekreślony",
@@ -172,7 +171,7 @@
     "Insert link" : "Wstaw link",
     "Insert attachment" : "Wstaw załącznik",
     "Command" : "Polecenie",
-    "Control" : "Kontrola",
+    "Ctrl" : "Ctrl",
     "Option" : "Opcja",
     "Formatting" : "Formatowanie",
     "Add folder description" : "Dodaj opis katalogu",
@@ -188,6 +187,7 @@
     "Success" : "Powiodło się",
     "Warning" : "Ostrzeżenie",
     "Danger" : "Zagrożenie",
+    "Control" : "Kontrola",
     "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
     "Start writing, or try '/' to add, '@' to mention…" : "Zacznij pisać, lub spróbuj \"/\", aby dodać; '@', aby wspomnieć o..."
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
