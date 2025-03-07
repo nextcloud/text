@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Koyu",
     "Bold text" : "Koyu metin",
-    "Ctrl" : "Ctrl",
     "Italic" : "Yatık",
     "Italicized text" : "Yatık metin",
     "Strikethrough" : "Üzeri çizili",
@@ -198,7 +197,7 @@
     "Insert link" : "Bağlantı ekle",
     "Insert attachment" : "Ek dosya ekle",
     "Command" : "Komut",
-    "Control" : "Denetim",
+    "Ctrl" : "Ctrl",
     "Option" : "Seçenek",
     "Formatting" : "Biçimlendirme",
     "Add folder description" : "Klasör açıklaması ekle",
@@ -215,6 +214,7 @@
     "Success" : "Başarılı",
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
+    "Control" : "Denetim",
     "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"

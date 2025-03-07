@@ -69,7 +69,6 @@
     "Shift" : "Shift",
     "Bold" : "Vet",
     "Bold text" : "Vette tekst",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursief",
     "Italicized text" : "Cursief",
     "Strikethrough" : "Doorgehaald",
@@ -169,7 +168,7 @@
     "Insert link" : "Link invoegen",
     "Insert attachment" : "Toevoegen bijlage",
     "Command" : "Commando",
-    "Control" : "Controle",
+    "Ctrl" : "Ctrl",
     "Option" : "Optie",
     "Formatting" : "Opmaak",
     "Add folder description" : "Mapomschrijving toevoegen",
@@ -179,6 +178,7 @@
     "Success" : "Geslaagd",
     "Warning" : "Waarschuwing",
     "Danger" : "Gevaar",
+    "Control" : "Controle",
     "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Start writing, or try '/' to add, '@' to mention…" : "Begin met schrijven, of probeer '/' om toe te voegen, '@' om te vermelden..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

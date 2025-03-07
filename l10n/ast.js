@@ -68,7 +68,6 @@ OC.L10N.register(
     "New paragraph" : "Párrafu nuevu",
     "Bold" : "Negrina",
     "Bold text" : "Testu en negrina",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursiva",
     "Italicized text" : "Testu en cursiva",
     "Strikethrough" : "Tacháu",
@@ -144,7 +143,7 @@ OC.L10N.register(
     "Details" : "Detalles",
     "Insert link" : "Inxertar un enllaz",
     "Command" : "Comandu",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Opción",
     "Formatting" : "Formatu",
     "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
@@ -154,6 +153,7 @@ OC.L10N.register(
     "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
     "Info" : "Información",
     "Warning" : "Alvertencia",
-    "Danger" : "Peligru"
+    "Danger" : "Peligru",
+    "Control" : "Control"
 },
 "nplurals=2; plural=(n != 1);");

@@ -62,7 +62,6 @@ OC.L10N.register(
     "Shift" : "Shift /бутон/",
     "Bold" : "Удебелен",
     "Bold text" : "Удебелен текст",
-    "Ctrl" : "Ctrl /бутон/",
     "Italic" : "Курсив",
     "Italicized text" : "Текст в курсив",
     "Strikethrough" : "Зачеркване",
@@ -149,7 +148,7 @@ OC.L10N.register(
     "Insert link" : "Вмъкване на връзка",
     "Insert attachment" : "Вмъкнете прикачен файл",
     "Command" : "Команда",
-    "Control" : "Control Center",
+    "Ctrl" : "Ctrl /бутон/",
     "Option" : "Опция",
     "Formatting" : "Форматиране",
     "Copied to the clipboard" : "Копирано в клипборда",
@@ -162,6 +161,7 @@ OC.L10N.register(
     "Success" : "Успех",
     "Warning" : "Внимание",
     "Danger" : "Опасност",
+    "Control" : "Control Center",
     "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки..."
 },
 "nplurals=2; plural=(n != 1);");

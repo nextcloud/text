@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Tučné",
     "Bold text" : "Tučný text",
-    "Ctrl" : "Ctrl",
     "Italic" : "Skloněné",
     "Italicized text" : "Skloněný text",
     "Strikethrough" : "Přeškrtnuté",
@@ -198,7 +197,7 @@
     "Insert link" : "Vložit odkaz",
     "Insert attachment" : "Vložit přílohu",
     "Command" : "Příkaz",
-    "Control" : "Kontrola",
+    "Ctrl" : "Ctrl",
     "Option" : "Volba",
     "Formatting" : "Formátování",
     "Add folder description" : "Přidat popis složky",
@@ -215,6 +214,7 @@
     "Success" : "Úspěch",
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
+    "Control" : "Kontrola",
     "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Start writing, or try '/' to add, '@' to mention…" : "Začněte psát nebo zkuste přidat pomocí „/“, zmínit pomocí „@“… "
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"

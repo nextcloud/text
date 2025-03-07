@@ -81,7 +81,6 @@
     "Shift" : "Shift",
     "Bold" : "Жирный",
     "Bold text" : "Жирный текст",
-    "Ctrl" : "Ctrl",
     "Italic" : "Курсив",
     "Italicized text" : "Текст, выделенный курсивом",
     "Strikethrough" : "Зачеркнутый",
@@ -188,7 +187,7 @@
     "Insert link" : "Вставить ссылку",
     "Insert attachment" : "Вставить вложение",
     "Command" : "Команда",
-    "Control" : "Контроль",
+    "Ctrl" : "Ctrl",
     "Option" : "Вариант",
     "Formatting" : "Форматирование",
     "Add folder description" : "Добавить описание папки",
@@ -205,6 +204,7 @@
     "Success" : "Выполнено",
     "Warning" : "Предупреждение",
     "Danger" : "Опасность",
+    "Control" : "Контроль",
     "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Start writing, or try '/' to add, '@' to mention…" : "Начните писать, или используйте '/', чтобы добавить объект, а '@', чтобы упомянуть..."
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"

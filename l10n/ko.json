@@ -82,7 +82,6 @@
     "Shift" : "쉬프트",
     "Bold" : "굵게",
     "Bold text" : "굵은 텍스트",
-    "Ctrl" : "Ctrl",
     "Italic" : "Italic체",
     "Italicized text" : "기울임꼴 텍스트",
     "Strikethrough" : "취소선",
@@ -198,7 +197,7 @@
     "Insert link" : "링크 삽입",
     "Insert attachment" : "첨부 파일 삽입",
     "Command" : "명령",
-    "Control" : "제어:",
+    "Ctrl" : "Ctrl",
     "Option" : "옵션",
     "Formatting" : "서식",
     "Add folder description" : "폴더 설명 추가",
@@ -215,6 +214,7 @@
     "Success" : "성공",
     "Warning" : "경고",
     "Danger" : "위험",
+    "Control" : "제어:",
     "Add notes, lists or links …" : "메모나 목록, 링크를 추가하세요...",
     "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요..."
 },"pluralForm" :"nplurals=1; plural=0;"

@@ -62,7 +62,6 @@ OC.L10N.register(
     "Shift" : "Premakni",
     "Bold" : "Krepko",
     "Bold text" : "Krepko besedilo",
-    "Ctrl" : "CTRL",
     "Italic" : "Ležeče",
     "Italicized text" : "Ležeče besedilo",
     "Strikethrough" : "Prečrtano",
@@ -151,7 +150,7 @@ OC.L10N.register(
     "Insert link" : "Vstavi povezavo",
     "Insert attachment" : "Vstavi prilogo",
     "Command" : "Ukaz",
-    "Control" : "Nadzor",
+    "Ctrl" : "CTRL",
     "Option" : "Možnosti",
     "Formatting" : "Oblikovanje",
     "Front matter" : "Uvodne strani",
@@ -163,6 +162,7 @@ OC.L10N.register(
     "Success" : "Uspešno končano",
     "Warning" : "Opozorilo",
     "Danger" : "Nevarnost",
+    "Control" : "Nadzor",
     "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ..."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

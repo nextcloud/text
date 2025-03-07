@@ -60,7 +60,6 @@
     "Shift" : "Shift /бутон/",
     "Bold" : "Удебелен",
     "Bold text" : "Удебелен текст",
-    "Ctrl" : "Ctrl /бутон/",
     "Italic" : "Курсив",
     "Italicized text" : "Текст в курсив",
     "Strikethrough" : "Зачеркване",
@@ -147,7 +146,7 @@
     "Insert link" : "Вмъкване на връзка",
     "Insert attachment" : "Вмъкнете прикачен файл",
     "Command" : "Команда",
-    "Control" : "Control Center",
+    "Ctrl" : "Ctrl /бутон/",
     "Option" : "Опция",
     "Formatting" : "Форматиране",
     "Copied to the clipboard" : "Копирано в клипборда",
@@ -160,6 +159,7 @@
     "Success" : "Успех",
     "Warning" : "Внимание",
     "Danger" : "Опасност",
+    "Control" : "Control Center",
     "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

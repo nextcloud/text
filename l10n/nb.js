@@ -82,7 +82,6 @@ OC.L10N.register(
     "Shift" : "Skift",
     "Bold" : "Uthevet",
     "Bold text" : "Fet tekst",
-    "Ctrl" : "Ctrl",
     "Italic" : "Kursiv",
     "Italicized text" : "Kursiv tekst",
     "Strikethrough" : "Gjennomstreking",
@@ -190,7 +189,7 @@ OC.L10N.register(
     "Insert link" : "Sett inn kobling",
     "Insert attachment" : "Legg til vedlegg",
     "Command" : "Kommando",
-    "Control" : "Kontroll",
+    "Ctrl" : "Ctrl",
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
     "Add folder description" : "Legg til mappebeskrivelse",
@@ -207,6 +206,7 @@ OC.L10N.register(
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
     "Danger" : "Fare",
+    "Control" : "Kontroll",
     "Add notes, lists or links …" : "Legg til notater, lister eller lenker ..."
 },
 "nplurals=2; plural=(n != 1);");

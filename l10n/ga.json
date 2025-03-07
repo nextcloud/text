@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Trom",
     "Bold text" : "Téacs trom",
-    "Ctrl" : "Ctrl",
     "Italic" : "iodálach",
     "Italicized text" : "Téacs iodálach",
     "Strikethrough" : "Stailc tríd",
@@ -198,7 +197,7 @@
     "Insert link" : "Ionsáigh nasc",
     "Insert attachment" : "Ionsáigh ceangaltán",
     "Command" : "Ordú",
-    "Control" : "Smacht",
+    "Ctrl" : "Ctrl",
     "Option" : "Rogha",
     "Formatting" : "Formáidiú",
     "Add folder description" : "Cuir cur síos ar fhillteán leis",
@@ -215,6 +214,7 @@
     "Success" : "Rath",
     "Warning" : "Rabhadh",
     "Danger" : "Contúirt",
+    "Control" : "Smacht",
     "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
     "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…"
 },"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"

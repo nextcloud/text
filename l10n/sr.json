@@ -82,7 +82,6 @@
     "Shift" : "Помери",
     "Bold" : "Подебљано",
     "Bold text" : "Подебљани текст",
-    "Ctrl" : "Ctrl",
     "Italic" : "Курзив",
     "Italicized text" : "Курзивни текст",
     "Strikethrough" : "Прецртано",
@@ -198,7 +197,7 @@
     "Insert link" : "Уметни линк",
     "Insert attachment" : "Убаци прилог",
     "Command" : "Команда",
-    "Control" : "Контрола",
+    "Ctrl" : "Ctrl",
     "Option" : "Опција",
     "Formatting" : "Форматирање",
     "Add folder description" : "Додај опис фолдера",
@@ -215,6 +214,7 @@
     "Success" : "Успешно",
     "Warning" : "Упозорење",
     "Danger" : "Опасност",
+    "Control" : "Контрола",
     "Add notes, lists or links …" : "Додајте белешке, спискове или везе…",
     "Start writing, or try '/' to add, '@' to mention…" : "Почните да пишете, или пробајте ’/’ да додате, ’@’ да поменете"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

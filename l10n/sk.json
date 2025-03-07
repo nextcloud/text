@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Tučné",
     "Bold text" : "Tučné písmo",
-    "Ctrl" : "Ctrl",
     "Italic" : "Kurzíva",
     "Italicized text" : "Šikmé písmo",
     "Strikethrough" : "Prečiarknuté",
@@ -198,7 +197,7 @@
     "Insert link" : "Vložte odkaz",
     "Insert attachment" : "Vložiť prílohu",
     "Command" : "Príkaz",
-    "Control" : "Riadenie",
+    "Ctrl" : "Ctrl",
     "Option" : "Možnosť",
     "Formatting" : "Formátovanie",
     "Add folder description" : "Pridať popis adresára",
@@ -215,6 +214,7 @@
     "Success" : "Úspešné",
     "Warning" : "Varovanie",
     "Danger" : "Nebezpečie",
+    "Control" : "Riadenie",
     "Add notes, lists or links …" : "Pridať poznámky, zoznamy alebo odkazy...",
     "Start writing, or try '/' to add, '@' to mention…" : "Začnite písať alebo zadajte „/“ pre pridanie, „@“ pre zmienku..."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
