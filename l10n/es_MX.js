@@ -77,7 +77,6 @@ OC.L10N.register(
     "Shift" : "Mayús",
     "Bold" : "Negritas",
     "Bold text" : "Texto en negritas",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursiva",
     "Italicized text" : "Texto en itálicas",
     "Strikethrough" : "Tachada",
@@ -183,7 +182,7 @@ OC.L10N.register(
     "Insert link" : "Insertar enlace",
     "Insert attachment" : "Insertar adjunto",
     "Command" : "Comando",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Opción",
     "Formatting" : "Formato",
     "Add folder description" : "Añadir descripción de carpeta",
@@ -200,6 +199,7 @@ OC.L10N.register(
     "Success" : "Éxito",
     "Warning" : "Advertencia",
     "Danger" : "Peligro",
+    "Control" : "Control",
     "Add notes, lists or links …" : "Agregar notas, listas o ligas ..."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

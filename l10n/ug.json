@@ -79,7 +79,6 @@
     "Shift" : "Shift",
     "Bold" : "Bold",
     "Bold text" : "توم تېكىست",
-    "Ctrl" : "Ctrl",
     "Italic" : "ئىتالىيان",
     "Italicized text" : "يانتۇ تېكىست",
     "Strikethrough" : "Strikethrough",
@@ -192,7 +191,7 @@
     "Insert link" : "ئۇلىنىش قىستۇر",
     "Insert attachment" : "قوشۇمچە قىستۇر",
     "Command" : "بۇيرۇق",
-    "Control" : "كونترول",
+    "Ctrl" : "Ctrl",
     "Option" : "تاللاش",
     "Formatting" : "فورماتلاش",
     "Add folder description" : "ھۆججەت قىسقۇچ چۈشەندۈرۈشىنى قوشۇڭ",
@@ -209,6 +208,7 @@
     "Success" : "مۇۋەپپەقىيەت",
     "Warning" : "ئاگاھلاندۇرۇش",
     "Danger" : "خەتەر",
+    "Control" : "كونترول",
     "Add notes, lists or links …" : "خاتىرە ، تىزىملىك ياكى ئۇلىنىش قوشۇڭ…",
     "Start writing, or try '/' to add, '@' to mention…" : "يېزىشنى باشلاڭ ياكى «/» نى قوشۇپ ، «@» نى تىلغا ئېلىڭ."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

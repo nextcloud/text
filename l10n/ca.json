@@ -82,7 +82,6 @@
     "Shift" : "Maj",
     "Bold" : "Negreta",
     "Bold text" : "Text en negreta",
-    "Ctrl" : "Ctrl",
     "Italic" : "Cursiva",
     "Italicized text" : "Text en cursiva",
     "Strikethrough" : "Ratllat",
@@ -198,7 +197,7 @@
     "Insert link" : "Insereix un enllaç",
     "Insert attachment" : "Insereix un adjunt",
     "Command" : "Ordre",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Opció",
     "Formatting" : "Format",
     "Add folder description" : "Afegiu una descripció per a la carpeta",
@@ -215,6 +214,7 @@
     "Success" : "Correcte",
     "Warning" : "Avís",
     "Danger" : "Perill",
+    "Control" : "Control",
     "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Start writing, or try '/' to add, '@' to mention…" : "Comença a escriure o prova '/' per afegir, '@' per esmentar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

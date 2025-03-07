@@ -69,7 +69,6 @@ OC.L10N.register(
     "Shift" : "تغییر مکان",
     "Bold" : "درشت",
     "Bold text" : "Bold text",
-    "Ctrl" : "Ctrl",
     "Italic" : "Italic",
     "Italicized text" : "Italicized text",
     "Strikethrough" : "Strikethrough",
@@ -165,7 +164,7 @@ OC.L10N.register(
     "Insert link" : "Insert link",
     "Insert attachment" : "Insert attachment",
     "Command" : "Command",
-    "Control" : "کنترل",
+    "Ctrl" : "Ctrl",
     "Option" : "Option",
     "Formatting" : "قالب‌بندی",
     "Copied to the clipboard" : "Copied to the clipboard",
@@ -178,6 +177,7 @@ OC.L10N.register(
     "Success" : "موفقیت",
     "Warning" : "هشدار",
     "Danger" : "Danger",
+    "Control" : "کنترل",
     "Add notes, lists or links …" : "Add notes, lists or links …"
 },
 "nplurals=2; plural=(n > 1);");

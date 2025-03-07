@@ -81,7 +81,6 @@
     "Shift" : "Shift",
     "Bold" : "Feitletrað",
     "Bold text" : "Feitletraður texti",
-    "Ctrl" : "Ctrl",
     "Italic" : "Skáletrað",
     "Italicized text" : "Skáletraður texti",
     "Strikethrough" : "Gegnumstrikað",
@@ -197,7 +196,7 @@
     "Insert link" : "Setja inn tengil",
     "Insert attachment" : "Setja inn viðhengi",
     "Command" : "Skipun",
-    "Control" : "Stjórnun",
+    "Ctrl" : "Ctrl",
     "Option" : "Valkostur",
     "Formatting" : "Sniðmótun",
     "Add folder description" : "Bæta við lýsingu á möppu",
@@ -214,6 +213,7 @@
     "Success" : "Tókst",
     "Warning" : "Aðvörun",
     "Danger" : "Hættulegt",
+    "Control" : "Stjórnun",
     "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Start writing, or try '/' to add, '@' to mention…" : "Byrja að skrifa eða prófaðu'/' til að bæta við, '@' til að minnast á…"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"

@@ -81,7 +81,6 @@
     "Shift" : "Shift",
     "Bold" : "Lodia",
     "Bold text" : "Testu lodia",
-    "Ctrl" : "Ctrl",
     "Italic" : "Etzana",
     "Italicized text" : "Testu etzana",
     "Strikethrough" : "Marratua",
@@ -197,7 +196,7 @@
     "Insert link" : "Txertatu esteka",
     "Insert attachment" : "Txertatu eranskina",
     "Command" : "Komandoa",
-    "Control" : "Kontrola",
+    "Ctrl" : "Ctrl",
     "Option" : "Aukera",
     "Formatting" : "Formatua",
     "Add folder description" : "Gehitu karpetaren deskribapena",
@@ -214,6 +213,7 @@
     "Success" : "Arrakasta",
     "Warning" : "Oharra",
     "Danger" : "Arriskua",
+    "Control" : "Kontrola",
     "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

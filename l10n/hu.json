@@ -68,7 +68,6 @@
     "Shift" : "Shift",
     "Bold" : "Félkövér",
     "Bold text" : "Félkövér szöveg",
-    "Ctrl" : "Ctrl",
     "Italic" : "Dőlt",
     "Italicized text" : "Dőlt szöveg",
     "Strikethrough" : "Áthúzott",
@@ -167,7 +166,7 @@
     "Insert link" : "Hivatkozás beszúrása",
     "Insert attachment" : "Melléklet beszúrása",
     "Command" : "Command",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Option",
     "Formatting" : "Formázás",
     "Add folder description" : "Mappaleírás hozzáadása",
@@ -181,6 +180,7 @@
     "Success" : "Siker",
     "Warning" : "Figyelmeztetés",
     "Danger" : "Veszély",
+    "Control" : "Control",
     "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
