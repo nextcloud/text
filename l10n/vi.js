@@ -58,7 +58,6 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Bold" : "Đậm",
     "Bold text" : "Chữ in đậm",
-    "Ctrl" : "Ctrl",
     "Italic" : "Nghiêng",
     "Strikethrough" : "Gạch dưới",
     "Heading 1" : "Đầu đề 1",
@@ -94,13 +93,14 @@ OC.L10N.register(
     "Details" : "Chi tiết",
     "Insert attachment" : "Thêm đính kèm",
     "Command" : "Lệnh",
-    "Control" : "Kiểm soát",
+    "Ctrl" : "Ctrl",
     "Formatting" : "Định dạng",
     "Show author colors" : "Hiển thị màu sắc của tác giả",
     "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
     "Info" : "Thông tin",
     "Success" : "Thành công",
     "Warning" : "Cảnh báo",
+    "Control" : "Kiểm soát",
     "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn"
 },
 "nplurals=1; plural=0;");

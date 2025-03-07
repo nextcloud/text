@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "Грубий",
     "Bold text" : "Грубий шрифт",
-    "Ctrl" : "Ctrl",
     "Italic" : "Курсив",
     "Italicized text" : "Текст курсивом",
     "Strikethrough" : "Перекреслений",
@@ -198,7 +197,7 @@
     "Insert link" : "Вставити посилання",
     "Insert attachment" : "Вставте вкладення",
     "Command" : "Команда",
-    "Control" : "Контроль",
+    "Ctrl" : "Ctrl",
     "Option" : "Варіант",
     "Formatting" : "Форматування",
     "Add folder description" : "Додати опис каталогу",
@@ -215,6 +214,7 @@
     "Success" : "Успіх",
     "Warning" : "Увага",
     "Danger" : "Небезпека",
+    "Control" : "Контроль",
     "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
     "Start writing, or try '/' to add, '@' to mention…" : "Почніть вводити текст або введіть '/' для додавання, '@' для згадки..."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"

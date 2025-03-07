@@ -48,7 +48,6 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Bold" : "Έντονα",
     "Bold text" : "Εντονο Κείμενο",
-    "Ctrl" : "Ctrl",
     "Italic" : "Πλάγια",
     "Italicized text" : "Πλάγιο κείμενο",
     "Strikethrough" : "Διαγράμμιση",
@@ -119,7 +118,7 @@ OC.L10N.register(
     "Insert link" : "Εισαγωγή συνδέσμου",
     "Insert attachment" : "Εισαγωγή συνημμένου",
     "Command" : "Εντολή",
-    "Control" : "Έλεγχος",
+    "Ctrl" : "Ctrl",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Add folder description" : "Προσθήκη περιγραφής φακέλου",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
@@ -129,6 +128,7 @@ OC.L10N.register(
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
     "Danger" : "Κίνδυνος",
+    "Control" : "Έλεγχος",
     "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …"
 },
 "nplurals=2; plural=(n != 1);");

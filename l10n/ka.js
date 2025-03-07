@@ -23,7 +23,6 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Keyboard shortcuts",
     "Enter" : "Enter",
     "Shift" : "Shift",
-    "Ctrl" : "Ctrl",
     "Quoted text" : "Quoted text",
     "Link" : "Link",
     "Smart picker" : "Smart picker",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "Lists" : "Lists",
     "Details" : "Details",
     "Command" : "Command",
+    "Ctrl" : "Ctrl",
     "Formatting" : "Formatting",
     "Info" : "Info",
     "Warning" : "Warning"

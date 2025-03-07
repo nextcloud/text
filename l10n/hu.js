@@ -70,7 +70,6 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Bold" : "Félkövér",
     "Bold text" : "Félkövér szöveg",
-    "Ctrl" : "Ctrl",
     "Italic" : "Dőlt",
     "Italicized text" : "Dőlt szöveg",
     "Strikethrough" : "Áthúzott",
@@ -169,7 +168,7 @@ OC.L10N.register(
     "Insert link" : "Hivatkozás beszúrása",
     "Insert attachment" : "Melléklet beszúrása",
     "Command" : "Command",
-    "Control" : "Control",
+    "Ctrl" : "Ctrl",
     "Option" : "Option",
     "Formatting" : "Formázás",
     "Add folder description" : "Mappaleírás hozzáadása",
@@ -183,6 +182,7 @@ OC.L10N.register(
     "Success" : "Siker",
     "Warning" : "Figyelmeztetés",
     "Danger" : "Veszély",
+    "Control" : "Control",
     "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…"
 },
 "nplurals=2; plural=(n != 1);");

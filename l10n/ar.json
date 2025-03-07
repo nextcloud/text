@@ -82,7 +82,6 @@
     "Shift" : "العالي shift",
     "Bold" : "داكن",
     "Bold text" : "نص داكن",
-    "Ctrl" : "تحكم Ctrl",
     "Italic" : "مائل italic",
     "Italicized text" : "نص مائل",
     "Strikethrough" : "مشطوب",
@@ -198,7 +197,7 @@
     "Insert link" : "أدخِل الرابط",
     "Insert attachment" : "أدخِل مُرفَقاً",
     "Command" : "أمر",
-    "Control" : "تحكُّم",
+    "Ctrl" : "تحكم Ctrl",
     "Option" : "خيار",
     "Formatting" : "التنسيق",
     "Add folder description" : "أضِف وصفاً للمجلد",
@@ -215,6 +214,7 @@
     "Success" : "نجاح",
     "Warning" : "تحذير",
     "Danger" : "خطر",
+    "Control" : "تحكُّم",
     "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Start writing, or try '/' to add, '@' to mention…" : "إبدأ الكتابة، أو جرِّب '/' للإضافة، أو  '@' للإشارة …"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"

@@ -50,7 +50,6 @@ OC.L10N.register(
     "Shift" : "Shift",
     "Bold" : "Болд",
     "Bold text" : "Болдиран текст",
-    "Ctrl" : "Ctrl",
     "Italic" : "Италик",
     "Strikethrough" : "Прецртај",
     "Mistaken text" : "Погрешен текст",
@@ -99,13 +98,14 @@ OC.L10N.register(
     "Table" : "Табела",
     "Details" : "Детали",
     "Command" : "Команда",
-    "Control" : "Контрола",
+    "Ctrl" : "Ctrl",
     "Option" : "Опции",
     "Show author colors" : "Прикажи ги боите на авторот",
     "Author colors are only shown until everyone has closed the document." : "Боите на авторот се прикажуваат само кога сите ќе го затворат документот.",
     "Info" : "Инфо",
     "Success" : "Успешно",
     "Warning" : "Предупредување",
+    "Control" : "Контрола",
     "Add notes, lists or links …" : "Додади белешки, листи или линкови ..."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -82,7 +82,6 @@
     "Shift" : "Shift",
     "Bold" : "太字",
     "Bold text" : "太字",
-    "Ctrl" : "Ctrl",
     "Italic" : "斜体",
     "Italicized text" : "斜体で書きたい文字",
     "Strikethrough" : "取り消し線",
@@ -198,7 +197,7 @@
     "Insert link" : "リンクを挿入する",
     "Insert attachment" : "添付ファイルを挿入する",
     "Command" : "コマンド",
-    "Control" : "コントロール",
+    "Ctrl" : "Ctrl",
     "Option" : "Option",
     "Formatting" : "フォーマット",
     "Add folder description" : "フォルダーの説明を追加",
@@ -215,6 +214,7 @@
     "Success" : "完了",
     "Warning" : "警告",
     "Danger" : "危険",
+    "Control" : "コントロール",
     "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。"
 },"pluralForm" :"nplurals=1; plural=0;"
