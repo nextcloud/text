@@ -4,10 +4,7 @@
  */
 
 import TipTapHeading from '@tiptap/extension-heading'
-import headingAnchor, { headingAnchorPluginKey } from '../plugins/headingAnchor.js'
-import store from '../store/index.js'
-
-const setHeadings = (val) => store.dispatch('text/setHeadings', val)
+import headingAnchor from '../plugins/headingAnchor.js'
 
 const Heading = TipTapHeading.extend({
 
@@ -16,13 +13,6 @@ const Heading = TipTapHeading.extend({
 			...items,
 			[`Mod-Shift-${level}`]: () => this.editor.commands.toggleHeading({ level }),
 		}), {})
-	},
-
-	// sync heading data structure to the vuex store
-	onUpdate({ editor }) {
-		const headings = headingAnchorPluginKey
-			.getState(editor.state)?.headings ?? []
-		setHeadings(headings)
 	},
 
 	addProseMirrorPlugins() {

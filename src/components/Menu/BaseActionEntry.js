@@ -10,7 +10,6 @@ import debounce from 'debounce'
 import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
 import { useOutlineActions, useOutlineStateMixin, useReadOnlyActions } from '../Editor/Wrapper.provider.js'
 import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
-import useStore from '../../mixins/store.js'
 
 import './ActionEntry.scss'
 
@@ -21,7 +20,6 @@ const BaseActionEntry = {
 	mixins: [
 		useEditorMixin,
 		useIsMobileMixin,
-		useStore,
 		useOutlineActions,
 		useOutlineStateMixin,
 		useReadOnlyActions,

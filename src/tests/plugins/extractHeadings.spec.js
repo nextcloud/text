@@ -44,6 +44,20 @@ describe('extractHeadings', () => {
 		expect(headings[1].id).toEqual('h-level-1-heading--1')
 	})
 
+	it('includes previous level', () => {
+		const before = prepareDoc('<h1>heading 1->3</h1>')
+		const previousHeadings = extractHeadings(before)
+		const after = prepareDoc('<h3>heading 1->3</h3>')
+		const headings = extractHeadings(after, previousHeadings)
+		expect(headings).toEqual([{
+			id: 'h-heading-1-3',
+			level: 3,
+			offset: 0,
+			previous: 1,
+			text: 'heading 1->3',
+		}])
+	})
+
 })
 
 const prepareDoc = (content) => {
