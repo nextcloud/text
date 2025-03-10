@@ -89,6 +89,7 @@ const Link = TipTapLink.extend({
 	},
 	addCommands() {
 		return {
+			...this.parent?.(),
 			insertOrSetLink: (text, attrs) => ({ state, chain, commands }) => {
 				// Check if any text is selected,
 				// if not insert the link using the given text property
@@ -103,14 +104,25 @@ const Link = TipTapLink.extend({
 							}
 						})
 						commands.deleteRange(getMarkRange(state.selection.$anchor, state.schema.marks.link, { href }))
+						return chain().insertContent({
+							type: 'text',
+							marks: [{
+								type: 'link',
+								attrs,
+							}],
+							text,
+						})
 					}
 					return chain().insertContent({
-						type: 'text',
-						marks: [{
-							type: 'link',
-							attrs,
+						type: 'paragraph',
+						content: [{
+							type: 'text',
+							marks: [{
+								type: 'link',
+								attrs,
+							}],
+							text,
 						}],
-						text,
 					})
 				} else {
 					return commands.setLink(attrs)
