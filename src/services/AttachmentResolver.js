@@ -3,13 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import axios from '@nextcloud/axios'
 import { generateUrl, generateRemoteUrl } from '@nextcloud/router'
 import pathNormalize from 'path-normalize'
-
-import store from '../store/index.js'
-
-const setAttachmentList = (val) => store.dispatch('text/setAttachmentList', val)
-const findAttachment = store.getters['text/findAttachment']
 
 export default class AttachmentResolver {
 
@@ -19,6 +15,7 @@ export default class AttachmentResolver {
 	#currentDirectory
 	#documentId
 	#initAttachmentListPromise
+	#attachmentList = []
 
 	constructor({ session, user, shareToken, currentDirectory, fileId }) {
 		this.#session = session
@@ -30,7 +27,17 @@ export default class AttachmentResolver {
 	}
 
 	async #updateAttachmentList() {
-		return setAttachmentList({ documentId: this.#documentId, session: this.#session, shareToken: this.#shareToken })
+		const response = await axios.post(generateUrl('/apps/text/attachments'), {
+			documentId: this.#session?.documentId ?? this.#documentId,
+			sessionId: this.#session?.id,
+			sessionToken: this.#session?.token,
+			shareToken: this.#shareToken,
+		})
+		this.#attachmentList = response.data
+	}
+
+	#findAttachment(fileName) {
+		return this.#attachmentList.find(a => a.name === fileName)
 	}
 
 	/*
@@ -48,12 +55,12 @@ export default class AttachmentResolver {
 
 			// Wait until attachment list got fetched (initialized by constructor)
 			await this.#initAttachmentListPromise
-			attachment = findAttachment(imageFileName)
+			attachment = this.#findAttachment(imageFileName)
 
 			if (fallback && !attachment) {
 				// Update attachments list. Needed if attachments gets added to the session
 				await this.#updateAttachmentList()
-				attachment = findAttachment(imageFileName)
+				attachment = this.#findAttachment(imageFileName)
 			}
 
 			if (attachment) {

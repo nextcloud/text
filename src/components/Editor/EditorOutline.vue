@@ -25,7 +25,6 @@ import { NcButton } from '@nextcloud/vue'
 import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
-import useStore from '../../mixins/store.js'
 import { useIsMobileMixin } from '../Editor.provider.js'
 
 export default {
@@ -37,7 +36,6 @@ export default {
 	},
 	mixins: [
 		useIsMobileMixin,
-		useStore,
 		useOutlineStateMixin,
 		useOutlineActions,
 	],

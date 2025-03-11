@@ -22,10 +22,16 @@ vi.mock('@nextcloud/files', () => ({
 	formatFileSize: (size) => size,
 	Header: class {},
 }))
+
 vi.mock('@nextcloud/dialogs', () => ({
 	FilePickerType: {},
 	getFilePickerBuilder: () => {},
 }))
+
+vi.mock('@nextcloud/capabilities', async () => {
+	const getCapabilities = vi.fn(() => ({ }))
+	return { getCapabilities }
+})
 
 global.OC = {
 	requestToken: '123',
