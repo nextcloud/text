@@ -4,55 +4,38 @@
 -->
 
 <template>
-	<div class="document-status">
-		<NcNoteCard v-if="hasWarning" type="warning">
-			<p v-if="isLoadingError">
-				{{ syncError.data.data.error }}
-				<!-- Display reload button on PRECONDITION_FAILED response type -->
-				<a v-if="syncError.data.status === 412" class="button primary" @click="reload">{{ t('text', 'Reload') }}</a>
-			</p>
-			<p v-else-if="hasSyncCollission">
-				{{ t('text', 'Document has been changed outside of the editor. The changes cannot be applied') }}
-			</p>
-			<p v-else-if="hasConnectionIssue">
-				{{ t('text', 'Document could not be loaded. Please check your internet connection.') }}
-				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-		</NcNoteCard>
-		<NcNoteCard v-else-if="idle" type="info">
-			<p>
-				{{ t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }) }}
-				<a class="button primary" @click="reconnect">{{ t('text', 'Reconnect') }}</a>
-			</p>
-		</NcNoteCard>
-		<NcNoteCard v-if="lock" type="info">
-			<template #icon>
-				<Lock :size="20" />
-			</template>
-			<p>
-				{{ t('text', 'This file is opened read-only as it is currently locked by {user}.', { user: lock.displayName }) }}
-			</p>
-		</NcNoteCard>
-
-		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
+	<div class="document-status" :class="{ mobile: isMobile }">
+		<div class="status-wrapper">
+			<SyncStatus :idle="idle"
+				:sync-error="syncError"
+				:has-connection-issue="hasConnectionIssue"
+				@reconnect="$emit('reconnect')" />
+			<NcNoteCard v-if="lock" type="info" :text="lockText">
+				<template #icon>
+					<Lock :size="20" />
+				</template>
+			</NcNoteCard>
+		</div>
 	</div>
 </template>
 
 <script>
 
-import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
-import Lock from 'vue-material-design-icons/Lock.vue'
 import { NcNoteCard } from '@nextcloud/vue'
-import CollisionResolveDialog from '../CollisionResolveDialog.vue'
+import Lock from 'vue-material-design-icons/Lock.vue'
+import isMobile from '../../mixins/isMobile.js'
+import SyncStatus from './DocumentStatus/SyncStatus.vue'
 
 export default {
 	name: 'DocumentStatus',
 
 	components: {
-		CollisionResolveDialog,
-		Lock,
+		SyncStatus,
 		NcNoteCard,
+		Lock,
 	},
+
+	mixins: [isMobile],
 
 	props: {
 		idle: {
@@ -67,55 +50,39 @@ export default {
 			type: Object,
 			default: null,
 		},
-
 		hasConnectionIssue: {
 			type: Boolean,
 			require: true,
 		},
-		isResolvingConflict: {
-			type: Boolean,
-			require: true,
-		},
-	},
-
-	data() {
-		return {
-			IDLE_TIMEOUT,
-		}
 	},
 
 	computed: {
-		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
-		},
-		isLoadingError() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.LOAD_ERROR
-		},
-		hasWarning() {
-			return this.syncError || this.hasConnectionIssue
+		lockText() {
+			return t(
+				'text',
+				'This file is opened read-only as it is currently locked by {user}.',
+				{ user: this.lock.displayName },
+			)
 		},
 	},
-
-	methods: {
-		reconnect() {
-			this.$emit('reconnect')
-		},
-		reload() {
-			window.location.reload()
-		},
-	},
-
 }
 </script>
 
 <style scoped lang="scss">
 	.document-status {
-		position: sticky;
-		top: 16px;
+		position: absolute;
+		bottom: var(--default-clickable-area);
 		z-index: 100000;
 		// max-height: 50px;
-		max-width: var(--text-editor-max-width);
 		margin: auto;
+		display: flex;
+		width: 100%;
+		justify-content: center;
+	}
+	.document-status.mobile {
+		bottom: 0;
+	}
+	.status-wrapper {
 		background-color: var(--color-main-background);
 	}
 </style>

@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders hasConnectionIssue 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <p data-v-56029fad=""> Document could not be loaded. Please check your internet connection. <a data-v-56029fad="" class="button primary">Reconnect</a></p>
+</ncnotecard-stub>"
+`;
+
+exports[`renders idle 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="info" heading="" text="">
+  <p data-v-56029fad=""> Document idle for {timeout} minutes, click to continue editing <a data-v-56029fad="" class="button primary">Reconnect</a></p>
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 0 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <p data-v-56029fad=""> Document has been changed outside of the editor. The changes cannot be applied
+    <!---->
+  </p>
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 1 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <!---->
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 2 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <p data-v-56029fad=""> Error Message goes here <a data-v-56029fad="" class="button primary">Reload</a></p>
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 3 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <!---->
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 4 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <!---->
+</ncnotecard-stub>"
+`;
+
+exports[`renders sync error 5 1`] = `
+"<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
+  <!---->
+</ncnotecard-stub>"
+`;
