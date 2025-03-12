@@ -10,6 +10,7 @@ env:
   # Adjust APP_NAME if your repository name is different
   APP_NAME: ${{ github.event.repository.name }}
   CYPRESS_baseUrl: http://localhost:8081/index.php
+  CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/Cypress
 
 jobs:
   init:
