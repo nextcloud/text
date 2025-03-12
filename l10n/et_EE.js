@@ -32,7 +32,6 @@ OC.L10N.register(
     "Copy link to clipboard" : "Kopeeri link lõikelauale",
     "Cancel" : "Tühista",
     "URL" : "URL",
-    "Detect language" : "Tuvasta keel",
     "Translation failed" : "Tõlkimine ebaõnnestus",
     "to" : "saaja",
     "Replace" : "Asenda",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Done" : "Valmis",
     "Headings" : "Pealkirjad",
     "Details" : "Üksikasjad",
+    "Detect language" : "Tuvasta keel",
     "Info" : "Info",
     "Warning" : "Hoiatus"
 },
