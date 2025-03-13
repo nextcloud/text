@@ -17,6 +17,7 @@ const emitMention = ({ session, props }) => {
 		sessionId: session.id,
 		sessionToken: session.token,
 		mention: props.id,
+		scope: window.location,
 	})
 }
 
