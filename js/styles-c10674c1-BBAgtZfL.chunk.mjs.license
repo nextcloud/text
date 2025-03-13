@@ -11,9 +11,6 @@ This file is generated from multiple sources. Included packages:
 - dagre-d3-es
 	- version: 7.0.10
 	- license: MIT
-- dagre-d3-es
-	- version: 7.0.10
-	- license: MIT
 - mermaid
 	- version: 10.9.3
 	- license: MIT
