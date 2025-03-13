@@ -39,6 +39,7 @@ class AttachmentService {
 		private IMimeTypeDetector $mimeTypeDetector,
 		private IURLGenerator $urlGenerator,
 		private IFilenameValidator $filenameValidator,
+		private ConfigService $configService,
 	) {
 	}
 
@@ -464,6 +465,12 @@ class AttachmentService {
 		if ($storage->instanceOfStorage(SharedStorage::class)) {
 			/** @var SharedStorage $storage */
 			$share = $storage->getShare();
+
+			$allowedFileExtensions = $this->configService->getAllowedViewFileExtensions();
+			if ($allowedFileExtensions && in_array($file->getExtension(), $allowedFileExtensions, true)) {
+				return false;
+			}
+
 			$attributes = $share->getAttributes();
 			if ($attributes !== null && $attributes->getAttribute('permissions', 'download') === false) {
 				return true;
