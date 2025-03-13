@@ -106,6 +106,8 @@ OC.L10N.register(
     "Delete this column" : "Διαγράψτε αυτή τη στήλη",
     "Delete this table" : "Διαγραφή του πίνακα",
     "Show folder description" : "Εμφάνιση περιγραφής φακέλου",
+    "Hide outline" : "Απόκρυψη περιγράμματος",
+    "Show outline" : "Εμφάνιση περιγράμματος",
     "Done" : "Ολοκληρώθηκε",
     "Headings" : "Επικεφαλίδες",
     "Heading 2" : "Επικεφαλίδα 2",
