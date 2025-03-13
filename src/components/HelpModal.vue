@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<NcDialog size="normal"
+	<NcDialog size="large"
 		data-text-el="formatting-help"
 		:name="t('text', 'Formatting and shortcuts')"
 		:close-on-click-outside="true"
@@ -53,7 +53,7 @@
 					<td>{{ t('text', 'Bold') }}</td>
 					<td><code>**{{ t('text', 'Bold text') }}**</code></td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>B</kbd>
 					</td>
@@ -62,7 +62,7 @@
 					<td>{{ t('text', 'Italic') }}</td>
 					<td><code>*{{ t('text', 'Italicized text') }}*</code></td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>I</kbd>
 					</td>
@@ -71,7 +71,7 @@
 					<td>{{ t('text', 'Strikethrough') }}</td>
 					<td><code>~~{{ t('text', 'Mistaken text') }}~~</code></td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
@@ -82,7 +82,7 @@
 					<td>{{ t('text', 'Underline') }}</td>
 					<td><code>__{{ t('text', 'Underlined text') }}__</code></td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>U</kbd>
 					</td>
@@ -95,7 +95,7 @@
 						<code># {{ t('text', 'Heading level 1') }}</code>
 					</td>
 					<td v-if="!isMobileCached" class="ellipsis_top">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
@@ -121,7 +121,7 @@
 						<code>###### {{ t('text', 'Heading level 6') }}</code>
 					</td>
 					<td v-if="!isMobileCached" class="noborder ellipsis_bottom">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
@@ -134,7 +134,7 @@
 						<code>* {{ t('text', 'An item') }}</code>
 					</td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
@@ -147,7 +147,7 @@
 						<code>1. {{ t('text', 'First item') }}</code>
 					</td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Shift') }}</kbd>
 						+
@@ -159,7 +159,13 @@
 					<td>
 						<code>* [] {{ t('text', 'To-Do item') }}</code>
 					</td>
-					<td v-if="!isMobileCached" />
+					<td v-if="!isMobileCached">
+						<kbd>{{ ctrlOrModKey }}</kbd>
+						+
+						<kbd>{{ t('text', 'Shift') }}</kbd>
+						+
+						<kbd>9</kbd>
+					</td>
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Blockquote') }}</td>
@@ -167,7 +173,7 @@
 						<code>> {{ t('text', 'Quoted text') }}</code>
 					</td>
 					<td v-if="!isMobileCached">
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>></kbd>
 					</td>
@@ -221,7 +227,7 @@
 				<tr>
 					<td>{{ t('text', 'Undo') }}</td>
 					<td>
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>Z</kbd>
 					</td>
@@ -229,7 +235,7 @@
 				<tr>
 					<td>{{ t('text', 'Redo') }}</td>
 					<td>
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>Y</kbd>
 					</td>
@@ -237,7 +243,7 @@
 				<tr>
 					<td>{{ t('text', 'Toggle outline') }}</td>
 					<td>
-						<kbd>{{ t('text', 'Ctrl') }}</kbd>
+						<kbd>{{ ctrlOrModKey }}</kbd>
 						+
 						<kbd>{{ t('text', 'Alt') }}</kbd>
 						+
@@ -252,6 +258,7 @@
 <script>
 import { NcDialog } from '@nextcloud/vue'
 import { isMobilePlatform } from '../helpers/platform.js'
+import { TRANSLATIONS, MODIFIERS } from './Menu/keys.js'
 
 export default {
 	name: 'HelpModal',
@@ -272,6 +279,7 @@ export default {
 				blockQuote: true,
 				codeBlock: true,
 			},
+			ctrlOrModKey: TRANSLATIONS[MODIFIERS.Mod],
 		}
 	},
 	computed: {
@@ -296,6 +304,7 @@ export default {
 	table {
 		margin-top: 24px;
 		border-collapse: collapse;
+		width: 100%;
 
 		tbody tr {
 			&:hover, &:focus, &:active {
