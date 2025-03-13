@@ -66,7 +66,6 @@
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -76,6 +75,7 @@ import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useFileMixin } from '../Editor.provider.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
+import { buildFilePicker } from '../../helpers/filePicker.js'
 
 export default {
 	name: 'ActionInsertLink',
@@ -122,12 +122,7 @@ export default {
 				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
 			}
 
-			const filePicker = getFilePickerBuilder(t('text', 'Select file or folder to link to'))
-				.startAt(this.startPath)
-				.allowDirectories(true)
-				.setMultiSelect(false)
-				.setType(FilePickerType.Choose)
-				.build()
+			const filePicker = buildFilePicker(this.startPath)
 
 			filePicker.pick()
 				.then((file) => {
@@ -173,42 +168,9 @@ export default {
 		 * @param {string} text Text part of the link
 		 */
 		setLink(url, text) {
-			// Heuristics for determining if we need a https:// prefix.
-			const noPrefixes = [
-				/^[a-zA-Z]+:/, // url with protocol ("mailTo:email@domain.tld")
-				/^\//, // absolute path
-				/\?fileId=/, // relative link with fileId
-				/^\.\.?\//, // relative link starting with ./ or ../
-				/^[^.]*[/$]/, // no dots before first '/' - not a domain name
-				/^#/, // url fragment
-			]
-			if (url && !noPrefixes.find(regex => url.match(regex))) {
-				url = 'https://' + url
-			}
-
-			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
-			const href = url.replaceAll(' ', '%20')
-			const chain = this.$editor.chain()
-			// Check if any text is selected, if not insert the link using the given text property
-			if (this.$editor.view.state?.selection.empty) {
-				chain.insertContent({
-					type: 'paragraph',
-					content: [{
-						type: 'text',
-						marks: [{
-							type: 'link',
-							attrs: {
-								href,
-							},
-						}],
-						text,
-					}],
-				})
-			} else {
-				chain.setLink({ href })
-			}
-			chain.focus().run()
+			this.$editor.chain().setOrInsertLink(url, text).focus().run()
 		},
+
 		/**
 		 * Remove link markup at current position
 		 * Triggered by the "remove link" button
