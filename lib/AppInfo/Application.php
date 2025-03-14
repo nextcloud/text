@@ -28,6 +28,7 @@ namespace OCA\Text\AppInfo;
 use OCA\Files\Event\LoadAdditionalScriptsEvent;
 use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
 use OCA\Text\Event\LoadEditor;
+use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Listeners\AddMissingIndicesListener;
 use OCA\Text\Listeners\BeforeAssistantNotificationListener;
 use OCA\Text\Listeners\BeforeNodeDeletedListener;
@@ -82,6 +83,9 @@ class Application extends App implements IBootstrap {
 
 		$context->registerNotifierService(Notifier::class);
 		$context->registerMiddleware(SessionMiddleware::class);
+
+		/** @psalm-suppress DeprecatedMethod */
+		Util::connectHook('\OCP\Versions', 'rollback', $this, 'resetSessionsAfterRestoreFile');
 	}
 
 	public function boot(IBootContext $context): void {
@@ -97,5 +101,22 @@ class Application extends App implements IBootstrap {
 				return $markdownFile;
 			});
 		});
+	}
+
+	public function resetSessionsAfterRestoreFile(array $params): void {
+		$node = $params['node'];
+		if (!$node instanceof File) {
+			return;
+		}
+
+		$documentService = Server::get(DocumentService::class);
+		// Reset document session to avoid manual conflict resolution if there's no unsaved steps
+		try {
+			$documentService->resetDocument($node->getId());
+		} catch (DocumentHasUnsavedChangesException|NotFoundException $e) {
+			// Do not throw during event handling in this is expected to happen
+			// DocumentHasUnsavedChangesException: A document editing session is likely ongoing, someone can resolve the conflict
+			// NotFoundException: The event was called oin a file that was just created so a NonExistingFile object is used that has no id yet
+		}
 	}
 }
