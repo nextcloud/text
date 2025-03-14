@@ -125,6 +125,7 @@ OC.L10N.register(
     "Add folder description" : "Προσθήκη περιγραφής φακέλου",
     "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
     "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
+    "Detect language" : "Ανίχνευση γλώσσας",
     "Callouts" : "Επεξηγήσεις (Callouts)",
     "Info" : "Πληροφόρηση",
     "Success" : "Επιτυχία",
