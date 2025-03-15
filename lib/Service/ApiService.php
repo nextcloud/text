@@ -208,7 +208,7 @@ class ApiService {
 				'message' => 'text_steps',
 				'body' => [
 					'documentId' => $document->getId(),
-					'steps' => $steps,
+					'steps' => array_values(array_filter($steps)),
 				],
 			]);
 		}
