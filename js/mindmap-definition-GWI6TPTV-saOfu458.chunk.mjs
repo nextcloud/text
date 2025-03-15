@@ -93,3 +93,4 @@ Expecting `+K.join(", ")+", got '"+(this.terminals_[P]||P)+"'":et="Parse error o
     text-align: center;
   }
 `,"getStyles"),ce=le,_e={db:qt,renderer:ae,parser:Pt,styles:ce};export{_e as diagram};
+//# sourceMappingURL=mindmap-definition-GWI6TPTV-saOfu458.chunk.mjs.map

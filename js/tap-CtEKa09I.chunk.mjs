@@ -1,1 +1,2 @@
 var n,e;function s(){if(e)return n;e=1;function a(i){return{name:"Test Anything Protocol",case_insensitive:!0,contains:[i.HASH_COMMENT_MODE,{className:"meta",variants:[{begin:"^TAP version (\\d+)$"},{begin:"^1\\.\\.(\\d+)$"}]},{begin:/---$/,end:"\\.\\.\\.$",subLanguage:"yaml",relevance:0},{className:"number",begin:" (\\d+) "},{className:"symbol",variants:[{begin:"^ok"},{begin:"^not ok"}]}]}}return n=a,n}export{s as r};
+//# sourceMappingURL=tap-CtEKa09I.chunk.mjs.map

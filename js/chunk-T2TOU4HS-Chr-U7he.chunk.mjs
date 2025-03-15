@@ -162,3 +162,4 @@ g.classGroup line {
   fill: ${e.textColor};
 }
 `,"getStyles"),cs=ss,is=a((e,i="TB")=>{if(!e.doc)return i;let r=i;for(const o of e.doc)o.stmt==="dir"&&(r=o.value);return r},"getDir"),ns=a(function(e,i){return i.db.getClasses()},"getClasses"),us=a(async function(e,i,r,o){Ue.info("REF0:"),Ue.info("Drawing class diagram (v3)",i);const{securityLevel:n,state:p,layout:d}=T(),g=o.db.getData(),F=ft(i,n);g.type=o.type,g.layoutAlgorithm=Dt(d),g.nodeSpacing=p?.nodeSpacing||50,g.rankSpacing=p?.rankSpacing||50,g.markers=["aggregation","extension","composition","dependency","lollipop"],g.diagramId=i,await Bt(g,F),We.insertTitle(F,"classDiagramTitleText",p?.titleTopMargin??25,o.db.getDiagramTitle()),Et(F,8,"classDiagram",p?.useMaxWidth??!0)},"draw"),hs={getClasses:ns,draw:us,getDir:is};export{ls as a,os as b,hs as c,cs as s};
+//# sourceMappingURL=chunk-T2TOU4HS-Chr-U7he.chunk.mjs.map

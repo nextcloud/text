@@ -1,1 +1,2 @@
 var e,a;function s(){if(a)return e;a=1;function t(n){return{name:"Dust",aliases:["dst"],case_insensitive:!0,subLanguage:"xml",contains:[{className:"template-tag",begin:/\{[#\/]/,end:/\}/,illegal:/;/,contains:[{className:"name",begin:/[a-zA-Z\.-]+/,starts:{endsWithParent:!0,relevance:0,contains:[n.QUOTE_STRING_MODE]}}]},{className:"template-variable",begin:/\{/,end:/\}/,illegal:/;/,keywords:"if eq ne lt lte gt gte select default math sep"}]}}return e=t,e}export{s as r};
+//# sourceMappingURL=dust-ByylHqAL.chunk.mjs.map
