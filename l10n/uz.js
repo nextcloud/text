@@ -10,6 +10,8 @@ OC.L10N.register(
     "Could not write file to disk" : "Faylni diskka yozib bo'lmadi",
     "A PHP extension stopped the file upload" : "PHP kengaytmasi faylni yuklashni to'xtatdi",
     "File not found" : "File not found",
+    "Nextcloud Assistant" : "Next bulut yordamchisi",
+    "Translate" : "Tarjima",
     "Offline" : "Offline",
     "Saving …" : "Saqlanmoqda...",
     "Saved" : "Saved",
@@ -20,6 +22,7 @@ OC.L10N.register(
     "Edit" : "Tahrirlash",
     "Delete this attachment" : "Ushbu biriktirmani oʻchirib tashlang",
     "Done" : "Done",
+    "Table" : "Jadval",
     "Details" : "Details",
     "Success" : "Success"
 },
