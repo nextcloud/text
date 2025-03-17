@@ -20,12 +20,16 @@ import {
 	useIsRichEditorMixin,
 	useSyncServiceMixin,
 } from './Editor.provider.js'
+import CloudIcon from 'vue-material-design-icons/Cloud.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { NcButton } from '@nextcloud/vue'
 import setContent from './../mixins/setContent.js'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
+		PencilIcon,
+		CloudIcon,
 	},
 	mixins: [
 		useEditorMixin,
@@ -66,10 +70,8 @@ export default {
 		display: flex;
 		width: 100%;
 		margin: auto;
-		padding: 20px 0;
-
 		button {
-			margin: auto;
+			margin: 0 var(--default-grid-baseline) ;
 		}
 	}
 </style>
