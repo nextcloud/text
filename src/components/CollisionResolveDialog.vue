@@ -5,17 +5,23 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<NcButton size="large"
+		<NcButton :wide="true"
 			:disabled="clicked"
 			data-cy="resolveThisVersion"
 			@click="resolveThisVersion">
-			{{ t('text', 'Use current version') }}
+			{{ t('text', 'Overwrite version saved in the cloud') }}
+			<template #icon>
+				<PencilIcon :size="20" />
+			</template>
 		</NcButton>
-		<NcButton size="large"
+		<NcButton :wide="true"
 			:disabled="clicked"
 			data-cy="resolveServerVersion"
 			@click="resolveServerVersion">
-			{{ t('text', 'Use the saved version') }}
+			{{ t('text', 'Fetch version from the cloud') }}
+			<template #icon>
+				<CloudIcon :size="20" />
+			</template>
 		</NcButton>
 	</div>
 </template>
@@ -26,12 +32,16 @@ import {
 	useIsRichEditorMixin,
 	useSyncServiceMixin,
 } from './Editor.provider.js'
+import CloudIcon from 'vue-material-design-icons/Cloud.vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { NcButton } from '@nextcloud/vue'
 import setContent from './../mixins/setContent.js'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
+		PencilIcon,
+		CloudIcon,
 	},
 	mixins: [
 		useEditorMixin,
@@ -72,10 +82,8 @@ export default {
 		display: flex;
 		width: 100%;
 		margin: auto;
-		padding: 20px 0;
-
 		button {
-			margin: auto;
+			margin: 0 var(--default-grid-baseline) ;
 		}
 	}
 </style>

@@ -11,6 +11,7 @@
 		tabindex="-1"
 		@keydown.stop="onKeyDown">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
+		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 		<Wrapper v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="hasConnectionIssue"
@@ -54,7 +55,6 @@
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-			<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 			<DocumentStatus :idle="idle"
 				:lock="lock"
 				:sync-error="syncError"
