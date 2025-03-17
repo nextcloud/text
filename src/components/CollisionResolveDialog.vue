@@ -6,6 +6,7 @@
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
 		<NcButton :wide="true"
+			size="large"
 			:disabled="clicked"
 			data-cy="resolveThisVersion"
 			@click="resolveThisVersion">
@@ -80,8 +81,8 @@ export default {
 <style scoped lang="scss">
 	#resolve-conflicts {
 		display: flex;
-		width: 100%;
 		margin: auto;
+		padding: 0 var(--default-grid-baseline);
 		button {
 			margin: 0 var(--default-grid-baseline) ;
 		}
