@@ -68,8 +68,8 @@ export default {
 <style scoped lang="scss">
 	#resolve-conflicts {
 		display: flex;
-		width: 100%;
 		margin: auto;
+		padding: 0 var(--default-grid-baseline);
 		button {
 			margin: 0 var(--default-grid-baseline) ;
 		}
