@@ -10,19 +10,13 @@
 			:disabled="clicked"
 			data-cy="resolveThisVersion"
 			@click="resolveThisVersion">
-			{{ t('text', 'Overwrite version saved in the cloud') }}
-			<template #icon>
-				<PencilIcon :size="20" />
-			</template>
+			{{ t('text', 'Overwrite the file and save the current changes') }}
 		</NcButton>
 		<NcButton :wide="true"
 			:disabled="clicked"
 			data-cy="resolveServerVersion"
 			@click="resolveServerVersion">
-			{{ t('text', 'Fetch version from the cloud') }}
-			<template #icon>
-				<CloudIcon :size="20" />
-			</template>
+			{{ t('text', 'Discard the current changes and load the latest version') }}
 		</NcButton>
 	</div>
 </template>
@@ -33,16 +27,12 @@ import {
 	useIsRichEditorMixin,
 	useSyncServiceMixin,
 } from './Editor.provider.js'
-import CloudIcon from 'vue-material-design-icons/Cloud.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import { NcButton } from '@nextcloud/vue'
 import setContent from './../mixins/setContent.js'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
-		PencilIcon,
-		CloudIcon,
 	},
 	mixins: [
 		useEditorMixin,
