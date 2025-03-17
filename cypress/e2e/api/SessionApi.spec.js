@@ -279,12 +279,15 @@ describe('The session Api', function() {
 		it('signals closing connection', function() {
 			cy.then(() => {
 				return new Promise((resolve, reject) => {
+					// Create a promise that resolves when close completes
 					connection.close()
-					connection.push({ steps: [messages.update], version, awareness: '' })
-						.then(
-							() => reject(new Error('Push should have thrown ConnectionClosed()')),
-							resolve,
-						)
+						.then(() => {
+							connection.push({ steps: [messages.update], version, awareness: '' })
+								.then(
+									() => reject(new Error('Push should have thrown ConnectionClosed()')),
+									resolve,
+								)
+						})
 				})
 			})
 		})
