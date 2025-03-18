@@ -57,7 +57,7 @@ variants.forEach(function({ fixture, mime }) {
 			cy.openFile(fileName)
 
 			cy.get('.text-editor .document-status')
-				.should('contain', 'Document has been changed outside of the editor.')
+				.should('contain', 'The file was overwritten.')
 			getWrapper()
 				.find('#read-only-editor')
 				.should('contain', 'Hello world')
