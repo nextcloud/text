@@ -14,7 +14,7 @@
 
 <script>
 
-import { ERROR_TYPE, IDLE_TIMEOUT } from '../../../services/SyncService.js'
+import { ERROR_TYPE } from '../../../services/SyncService.js'
 import { NcNoteCard } from '@nextcloud/vue'
 
 export default {
@@ -37,12 +37,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-	},
-
-	data() {
-		return {
-			IDLE_TIMEOUT,
-		}
 	},
 
 	computed: {
@@ -69,7 +63,7 @@ export default {
 			if (this.idle) {
 				return {
 					type: 'info',
-					message: t('text', 'You\'ve been disconnected from the server.', { timeout: IDLE_TIMEOUT }),
+					message: t('text', 'You\'ve been disconnected from the server.'),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}
