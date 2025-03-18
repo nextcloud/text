@@ -5,17 +5,18 @@
 
 <template>
 	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<NcButton size="large"
+		<NcButton :wide="true"
+			size="large"
 			:disabled="clicked"
 			data-cy="resolveThisVersion"
 			@click="resolveThisVersion">
-			{{ t('text', 'Use current version') }}
+			{{ t('text', 'Overwrite the file and save the current changes') }}
 		</NcButton>
-		<NcButton size="large"
+		<NcButton :wide="true"
 			:disabled="clicked"
 			data-cy="resolveServerVersion"
 			@click="resolveServerVersion">
-			{{ t('text', 'Use the saved version') }}
+			{{ t('text', 'Discard the current changes and load the latest version') }}
 		</NcButton>
 	</div>
 </template>
@@ -70,12 +71,10 @@ export default {
 <style scoped lang="scss">
 	#resolve-conflicts {
 		display: flex;
-		width: 100%;
 		margin: auto;
-		padding: 20px 0;
-
+		padding: 0 var(--default-grid-baseline);
 		button {
-			margin: auto;
+			margin: 0 var(--default-grid-baseline) ;
 		}
 	}
 </style>

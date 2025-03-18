@@ -14,7 +14,7 @@
 
 <script>
 
-import { ERROR_TYPE, IDLE_TIMEOUT } from '../../../services/SyncService.js'
+import { ERROR_TYPE } from '../../../services/SyncService.js'
 import { NcNoteCard } from '@nextcloud/vue'
 
 export default {
@@ -39,12 +39,6 @@ export default {
 		},
 	},
 
-	data() {
-		return {
-			IDLE_TIMEOUT,
-		}
-	},
-
 	computed: {
 		card() {
 			if (this.isLoadingError) {
@@ -56,12 +50,12 @@ export default {
 			}
 			if (this.hasSyncCollission) {
 				return {
-					message: t('text', 'Document has been changed outside of the editor. The changes cannot be applied'),
+					message: t('text', 'The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed.'),
 				}
 			}
 			if (this.hasConnectionIssue) {
 				return {
-					message: t('text', 'Document could not be loaded. Please check your internet connection.'),
+					message: t('text', 'The document could not be loaded. Please check your internet connection.'),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}
@@ -69,7 +63,7 @@ export default {
 			if (this.idle) {
 				return {
 					type: 'info',
-					message: t('text', 'Document idle for {timeout} minutes, click to continue editing', { timeout: IDLE_TIMEOUT }),
+					message: t('text', 'You\'ve been disconnected from the server.'),
 					action: this.reconnect,
 					actionLabel: t('text', 'Reconnect'),
 				}

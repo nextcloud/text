@@ -2,19 +2,19 @@
 
 exports[`renders hasConnectionIssue 1`] = `
 "<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
-  <p data-v-56029fad=""> Document could not be loaded. Please check your internet connection. <a data-v-56029fad="" class="button primary">Reconnect</a></p>
+  <p data-v-56029fad=""> The document could not be loaded. Please check your internet connection. <a data-v-56029fad="" class="button primary">Reconnect</a></p>
 </ncnotecard-stub>"
 `;
 
 exports[`renders idle 1`] = `
 "<ncnotecard-stub data-v-56029fad="" type="info" heading="" text="">
-  <p data-v-56029fad=""> Document idle for {timeout} minutes, click to continue editing <a data-v-56029fad="" class="button primary">Reconnect</a></p>
+  <p data-v-56029fad=""> You've been disconnected from the server. <a data-v-56029fad="" class="button primary">Reconnect</a></p>
 </ncnotecard-stub>"
 `;
 
 exports[`renders sync error 0 1`] = `
 "<ncnotecard-stub data-v-56029fad="" type="warning" heading="" text="">
-  <p data-v-56029fad=""> Document has been changed outside of the editor. The changes cannot be applied
+  <p data-v-56029fad=""> The file was overwritten. Your current changes cannot be auto-saved. Please choose how to proceed.
     <!---->
   </p>
 </ncnotecard-stub>"
