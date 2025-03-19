@@ -19,63 +19,17 @@ describe('Link extension integrated in the editor', () => {
 		)
 		editor.commands.setTextSelection(3)
 		editor.commands.insertOrSetLink('updated.de', { href: 'updated.de' })
-		expect(editor.getJSON()).toEqual({
-			content: [
-				{
-					content: [
-						{
-							marks: [
-								{ attrs: { href: 'updated.de', title: null }, type: 'link' },
-							],
-							text: 'updated.de',
-							type: 'text',
-						},
-						{ text: ' HELLO WORLD', type: 'text' },
-					],
-					type: 'paragraph',
-				},
-			],
-			type: 'doc',
-		})
+		expect(editor.getJSON()).toMatchSnapshot()
 	})
 
 	it('Should only update link the anchor is on', () => {
 		const editor = createCustomEditor(
-		  '<p><a href="nextcloud.com">Test</a><a href="not-nextcloud.com">second link</a></p>',
+			'<p><a href="nextcloud.com">Test</a><a href="not-nextcloud.com">second link</a></p>',
 			[Link],
 		)
 		editor.commands.setTextSelection(3)
 		editor.commands.insertOrSetLink('updated.de', { href: 'updated.de' })
-		expect(editor.getJSON()).toEqual({
-			content: [
-				{
-					content: [
-						{
-							marks: [
-								{ attrs: { href: 'updated.de', title: null }, type: 'link' },
-							],
-							text: 'updated.de',
-							type: 'text',
-						},
-						{
-							marks: [
-								{
-									attrs: {
-										href: 'not-nextcloud.com',
-										title: null,
-									},
-									type: 'link',
-								},
-							],
-							text: 'second link',
-							type: 'text',
-						},
-					],
-					type: 'paragraph',
-				},
-			],
-			type: 'doc',
-		})
+		expect(editor.getJSON()).toMatchSnapshot()
 	})
 
 	it('should insert new link if none at anchor', () => {
@@ -84,23 +38,7 @@ describe('Link extension integrated in the editor', () => {
 			[Link],
 		)
 		editor.commands.setTextSelection(10)
-		expect(editor.getJSON()).toEqual({
-			content: [
-				{
-					content: [
-						{
-							marks: [
-								{ attrs: { href: 'nextcloud.com', title: null }, type: 'link' },
-							],
-							text: 'Test',
-							type: 'text',
-						},
-						{ text: ' HELLO WORLD', type: 'text' },
-					],
-					type: 'paragraph',
-				},
-			],
-			type: 'doc',
-		})
+		editor.commands.insertOrSetLink('new link', { href: 'https://nextcloud.com' })
+		expect(editor.getJSON()).toMatchSnapshot()
 	})
 })

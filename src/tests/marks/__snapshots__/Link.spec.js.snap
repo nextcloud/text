@@ -1,0 +1,127 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Link extension integrated in the editor > Should only update link the anchor is on 1`] = `
+{
+  "content": [
+    {
+      "content": [
+        {
+          "marks": [
+            {
+              "attrs": {
+                "href": "updated.de",
+                "title": null,
+              },
+              "type": "link",
+            },
+          ],
+          "text": "updated.de",
+          "type": "text",
+        },
+        {
+          "marks": [
+            {
+              "attrs": {
+                "href": "not-nextcloud.com",
+                "title": null,
+              },
+              "type": "link",
+            },
+          ],
+          "text": "second link",
+          "type": "text",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "doc",
+}
+`;
+
+exports[`Link extension integrated in the editor > should insert new link if none at anchor 1`] = `
+{
+  "content": [
+    {
+      "content": [
+        {
+          "marks": [
+            {
+              "attrs": {
+                "href": "nextcloud.com",
+                "title": null,
+              },
+              "type": "link",
+            },
+          ],
+          "text": "Test",
+          "type": "text",
+        },
+        {
+          "text": " HELL",
+          "type": "text",
+        },
+      ],
+      "type": "paragraph",
+    },
+    {
+      "content": [
+        {
+          "marks": [
+            {
+              "attrs": {
+                "href": "https://nextcloud.com",
+                "title": null,
+              },
+              "type": "link",
+            },
+          ],
+          "text": "new link",
+          "type": "text",
+        },
+      ],
+      "type": "paragraph",
+    },
+    {
+      "content": [
+        {
+          "text": "O WORLD",
+          "type": "text",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "doc",
+}
+`;
+
+exports[`Link extension integrated in the editor > should update link if anchor has mark 1`] = `
+{
+  "content": [
+    {
+      "content": [
+        {
+          "marks": [
+            {
+              "attrs": {
+                "href": "updated.de",
+                "title": null,
+              },
+              "type": "link",
+            },
+          ],
+          "text": "updated.de",
+          "type": "text",
+        },
+        {
+          "text": " HELLO WORLD",
+          "type": "text",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "doc",
+}
+`;
