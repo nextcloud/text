@@ -47,7 +47,8 @@ class YjsMessage {
 	 * https://github.com/dmonad/lib0/blob/bd69ab4dc701d77e808f2bab08d96d63acd297da/decoding.js#L242
 	 */
 	public function readVarUint(): int {
-		$bytes = array_values(unpack('C*', $this->data));
+		$values = unpack('C*', $this->data);
+		$bytes = array_values($values !== false ? $values : []);
 		$num = 0;
 		$mult = 1;
 		$len = count($bytes);

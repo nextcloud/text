@@ -36,7 +36,7 @@ class RegisterTemplateCreatorListener implements IEventListener {
 			$markdownFile = new TemplateFileCreator(Application::APP_NAME, $this->l10n->t('New text file'), '.' . $this->configService->getDefaultFileExtension());
 			$markdownFile->addMimetype('text/markdown');
 			$markdownFile->addMimetype('text/plain');
-			$markdownFile->setIconSvgInline(file_get_contents($this->appManager->getAppPath('text') . '/img/article.svg'));
+			$markdownFile->setIconSvgInline((string)file_get_contents($this->appManager->getAppPath('text') . '/img/article.svg'));
 			$markdownFile->setRatio(1);
 			$markdownFile->setOrder(10);
 			$markdownFile->setActionLabel($this->l10n->t('Create new text file'));
