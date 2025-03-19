@@ -368,12 +368,12 @@ class AttachmentService {
 		if ($extension !== '') {
 			while ($dir->nodeExists($uniqueFileName)) {
 				$counter++;
-				$uniqueFileName = preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
+				$uniqueFileName = (string)preg_replace('/\.' . $extension . '$/', ' (' . $counter . ').' . $extension, $fileName);
 			}
 		} else {
 			while ($dir->nodeExists($uniqueFileName)) {
 				$counter++;
-				$uniqueFileName = preg_replace('/$/', ' (' . $counter . ')', $fileName);
+				$uniqueFileName = (string)preg_replace('/$/', ' (' . $counter . ')', $fileName);
 			}
 		}
 		return $uniqueFileName;
