@@ -4,8 +4,6 @@ OC.L10N.register(
     "The file was uploaded" : "Kaset eo bet ar restr",
     "No file was uploaded" : "N'eus restr ebet a zo bet kaset",
     "Translate" : "Treiñ",
-    "Use current version" : "Implij stumm hiziv",
-    "Use the saved version" : "Implij ",
     "Reload" : "Adkargañ",
     "Edit guest name" : "Embannañ anv an hini pedet",
     "Guest" : "Kouviad",
@@ -25,6 +23,8 @@ OC.L10N.register(
     "Details" : "Munudoù",
     "Command" : "Urzh",
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell",
+    "Use current version" : "Implij stumm hiziv",
+    "Use the saved version" : "Implij ",
     "Info" : "Titouroù",
     "Success" : "Graet",
     "Warning" : "Kemenadenn"
