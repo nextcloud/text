@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="6.5.1@3f17a6b24a2dbe543e21408c2b19108cf6a355ef">
   <file src="lib/Controller/WorkspaceController.php">
     <UndefinedInterfaceMethod>
       <code><![CDATA[open]]></code>
@@ -20,30 +20,5 @@
       <code><![CDATA[mb_detect_encoding($string, $this->getEncodings(), true)]]></code>
       <code><![CDATA[mb_detect_order()]]></code>
     </RiskyTruthyFalsyComparison>
-  </file>
-  <file src="lib/Service/InitialStateProvider.php">
-    <DeprecatedClass>
-      <code><![CDATA[$this->translationManager->getLanguages()]]></code>
-    </DeprecatedClass>
-    <DeprecatedInterface>
-      <code><![CDATA[private]]></code>
-    </DeprecatedInterface>
-  </file>
-  <file src="vendor/nextcloud/ocp/OCP/AppFramework/Controller.php">
-    <MissingClosureParamType>
-      <code><![CDATA[$data]]></code>
-    </MissingClosureParamType>
-    <MissingClosureReturnType>
-      <code><![CDATA[function ($data) {]]></code>
-    </MissingClosureReturnType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$data->getData()]]></code>
-    </PossiblyInvalidArgument>
-  </file>
-  <file src="vendor/nextcloud/ocp/OCP/AppFramework/OCSController.php">
-    <MissingClosureParamType>
-      <code><![CDATA[$data]]></code>
-      <code><![CDATA[$data]]></code>
-    </MissingClosureParamType>
   </file>
 </files>
