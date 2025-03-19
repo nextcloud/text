@@ -12,7 +12,6 @@ OC.L10N.register(
     "File not found" : "Datne nav atrasta",
     "Text" : "Teksts",
     "Translate" : "Tulkot",
-    "Use current version" : "Izmantot pašreizējo versiju",
     "Guest" : "Viesis",
     "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",
     "Add folder description" : "Pievienot mapes aprakstu",
+    "Use current version" : "Izmantot pašreizējo versiju",
     "Info" : "Info",
     "Warning" : "Brīdinājums"
 },
