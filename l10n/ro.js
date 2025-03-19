@@ -13,8 +13,6 @@ OC.L10N.register(
     "File not found" : "Fișierul nu a fost găsit",
     "Text" : "Text",
     "Translate" : "Tradu",
-    "Use current version" : "Folosește versiunea curentă",
-    "Use the saved version" : "Folosește versiuna salvată",
     "Reload" : "Reîncarcă",
     "Guest" : "Invitat",
     "Remove link" : "Șterge link-ul",
@@ -43,6 +41,8 @@ OC.L10N.register(
     "Details" : "Detalii",
     "Formatting" : "Formatare",
     "Add folder description" : "Adăugați descrierea directorului",
+    "Use current version" : "Folosește versiunea curentă",
+    "Use the saved version" : "Folosește versiuna salvată",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Atenție"

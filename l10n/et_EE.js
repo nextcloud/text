@@ -14,8 +14,6 @@ OC.L10N.register(
     "File not found" : "Faili ei leitud",
     "Text" : "Tekst",
     "Translate" : "Tõlgi",
-    "Use current version" : "Kasuta praegust versiooni",
-    "Use the saved version" : "Kasuta salvestatud versiooni",
     "Reload" : "Lae uuesti",
     "Guest" : "Külaline",
     "guest" : "külaline",
@@ -39,6 +37,8 @@ OC.L10N.register(
     "Done" : "Valmis",
     "Headings" : "Pealkirjad",
     "Details" : "Üksikasjad",
+    "Use current version" : "Kasuta praegust versiooni",
+    "Use the saved version" : "Kasuta salvestatud versiooni",
     "Detect language" : "Tuvasta keel",
     "Info" : "Info",
     "Warning" : "Hoiatus"
