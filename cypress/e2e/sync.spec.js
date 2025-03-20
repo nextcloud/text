@@ -50,14 +50,14 @@ describe('Sync', () => {
 		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'Document could not be loaded.')
+			.should('contain', 'The document could not be loaded.')
 		cy.intercept('**/apps/text/session/*/*', req => req.continue()).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
 		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
 			.as('syncAfterRecovery')
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'Document could not be loaded.')
+			.should('not.contain', 'The document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.insertLine('* more content added after the lost connection')
@@ -73,13 +73,13 @@ describe('Sync', () => {
 		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'Document could not be loaded.')
+			.should('contain', 'The document could not be loaded.')
 		cy.get('#editor-container .document-status')
 			.find('.button.primary').click()
 		cy.get('.toastify').should('contain', 'Connection failed.')
 		cy.get('.toastify', { timeout: 30000 }).should('not.exist')
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'Document could not be loaded.')
+			.should('contain', 'The document could not be loaded.')
 		// bring back the network connection
 		cy.intercept('**/apps/text/session/*/*', req => { req.continue() }).as('alive')
 		cy.intercept('**/apps/text/session/*/create').as('create')
@@ -107,7 +107,7 @@ describe('Sync', () => {
 
 		cy.wait('@sessionRequests', { timeout: 30000 })
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'Document could not be loaded.')
+			.should('contain', 'The document could not be loaded.')
 
 		// Reconnect button works - it closes and reopens the session
 		cy.get('#editor-container .document-status a.button')
@@ -117,7 +117,7 @@ describe('Sync', () => {
 		cy.wait('@syncAfterRecovery', { timeout: 60000 })
 
 		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'Document could not be loaded.')
+			.should('not.contain', 'The document could not be loaded.')
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.insertLine('* more content added after the lost connection')
