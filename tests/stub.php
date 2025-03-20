@@ -50,7 +50,6 @@ namespace OCA\TpAssistant\Event {
 	}
 }
 
-
 namespace OCA\NotifyPush\Queue {
 	interface IQueue {
 		/**
@@ -59,5 +58,17 @@ namespace OCA\NotifyPush\Queue {
 		 * @return void
 		 */
 		public function push(string $channel, $message);
+	}
+}
+
+namespace OCA\Files_Versions\Events {
+	abstract class VersionRestoredEvent extends \OCP\EventDispatcher\Event {
+		abstract public function getVersion(): \OCA\Files_Versions\Versions\IVersion;
+	}
+}
+
+namespace OCA\Files_Versions\Versions {
+	abstract class IVersion {
+		abstract public function getSourceFile(): \OCP\Files\File;
 	}
 }

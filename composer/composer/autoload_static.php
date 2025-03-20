@@ -62,6 +62,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Listeners\\NodeCopiedListener' => __DIR__ . '/..' . '/../lib/Listeners/NodeCopiedListener.php',
         'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
         'OCA\\Text\\Listeners\\RegisterTemplateCreatorListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterTemplateCreatorListener.php',
+        'OCA\\Text\\Listeners\\VersionRestoredListener' => __DIR__ . '/..' . '/../lib/Listeners/VersionRestoredListener.php',
         'OCA\\Text\\Middleware\\Attribute\\RequireDocumentBaseVersionEtag' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentBaseVersionEtag.php',
         'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSession' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentSession.php',
         'OCA\\Text\\Middleware\\Attribute\\RequireDocumentSessionOrUserOrShareToken' => __DIR__ . '/..' . '/../lib/Middleware/Attribute/RequireDocumentSessionOrUserOrShareToken.php',
