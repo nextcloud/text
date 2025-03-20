@@ -189,24 +189,7 @@ export default {
 			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
 			const href = url.replaceAll(' ', '%20')
 			const chain = this.$editor.chain()
-			// Check if any text is selected, if not insert the link using the given text property
-			if (this.$editor.view.state?.selection.empty) {
-				chain.insertContent({
-					type: 'paragraph',
-					content: [{
-						type: 'text',
-						marks: [{
-							type: 'link',
-							attrs: {
-								href,
-							},
-						}],
-						text,
-					}],
-				})
-			} else {
-				chain.setLink({ href })
-			}
+			chain.insertOrSetLink(text, { href })
 			chain.focus().run()
 		},
 		/**
