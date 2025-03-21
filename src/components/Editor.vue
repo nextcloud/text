@@ -88,6 +88,7 @@ import { mapState } from 'vuex'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
@@ -252,6 +253,7 @@ export default {
 			document: null,
 			sessions: [],
 			currentSession: null,
+			fileNode: null,
 
 			filteredSessions: {},
 
@@ -506,6 +508,16 @@ export default {
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
+			if (this.currentSession?.userId && this.relativePath?.length) {
+				const node = new File({
+					id: this.fileId,
+					source: generateRemoteUrl(`dav/files/${this.currentSession.userId}${this.relativePath}`),
+					mime: this.mime,
+				})
+				fetchNode(node)
+					.then((n) => { this.fileNode = n })
+					.catch(err => logger.warn('Failed to fetch node', { err }))
+			}
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
@@ -664,7 +676,10 @@ export default {
 		},
 
 		onSave() {
-			emit('files:file:updated', { fileid: this.fileId })
+			if (this.fileNode) {
+				this.fileNode.mtime = new Date()
+				emit('files:node:updated', this.fileNode)
+			}
 			this.$nextTick(() => {
 				this.emit('sync-service:save')
 			})
