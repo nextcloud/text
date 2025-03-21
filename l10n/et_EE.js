@@ -14,6 +14,7 @@ OC.L10N.register(
     "File not found" : "Faili ei leitud",
     "Text" : "Tekst",
     "Translate" : "Tõlgi",
+    "Delete task" : "Kustuta ülesanne",
     "Reload" : "Lae uuesti",
     "Guest" : "Külaline",
     "guest" : "külaline",
