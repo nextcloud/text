@@ -110,8 +110,12 @@
 					border: none!important;
 				}
 			}
+			.container-suggestions {
+				display: none;
+			}
 		}
 	}
+
 
 	.menubar-placeholder, .text-editor--readonly-bar {
 		display: none;

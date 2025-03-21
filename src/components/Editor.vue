@@ -51,6 +51,7 @@
 				</template>
 				<ContentContainer v-show="contentLoaded"
 					ref="contentWrapper" />
+				<SuggestionsBar v-if="isRichEditor && contentLoaded" />
 			</MainContainer>
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
@@ -125,6 +126,7 @@ import Translate from './Modal/Translate.vue'
 import CollisionResolveDialog from './CollisionResolveDialog.vue'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
+import SuggestionsBar from './SuggestionsBar.vue'
 
 export default {
 	name: 'Editor',
@@ -141,6 +143,7 @@ export default {
 		Status,
 		Assistant,
 		Translate,
+		SuggestionsBar,
 	},
 	mixins: [
 		isMobile,

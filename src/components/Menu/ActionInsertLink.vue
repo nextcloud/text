@@ -66,7 +66,6 @@
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -76,6 +75,7 @@ import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useFileMixin } from '../Editor.provider.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
+import { buildFilePicker } from '../../helpers/filePicker.js'
 
 export default {
 	name: 'ActionInsertLink',
@@ -122,12 +122,7 @@ export default {
 				this.startPath = this.relativePath.split('/').slice(0, -1).join('/')
 			}
 
-			const filePicker = getFilePickerBuilder(t('text', 'Select file or folder to link to'))
-				.startAt(this.startPath)
-				.allowDirectories(true)
-				.setMultiSelect(false)
-				.setType(FilePickerType.Choose)
-				.build()
+			const filePicker = buildFilePicker(this.startPath)
 
 			filePicker.pick()
 				.then((file) => {
