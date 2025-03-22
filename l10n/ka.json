@@ -31,12 +31,12 @@
     "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Formatting help",
-    "Select file or folder to link to" : "Select file or folder to link to",
     "Translate from" : "Translate from",
     "Select language" : "Select language",
     "to" : "to",
     "Translate to" : "Translate to",
     "Replace" : "Replace",
+    "Upload" : "Upload",
     "Edit" : "Edit",
     "Copy code block" : "Copy code block",
     "Source code" : "Source code",
@@ -47,6 +47,7 @@
     "Command" : "Command",
     "Ctrl" : "Ctrl",
     "Formatting" : "Formatting",
+    "Select file or folder to link to" : "Select file or folder to link to",
     "Info" : "Info",
     "Warning" : "Warning"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

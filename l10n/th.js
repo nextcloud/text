@@ -26,6 +26,7 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "ถึง",
     "Replace" : "แทนที่",
+    "Upload" : "อัปโหลด",
     "Edit" : "แก้ไข",
     "Source code" : "โค้ดต้นฉบับ",
     "Details" : "รายละเอียด",

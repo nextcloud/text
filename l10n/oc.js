@@ -50,6 +50,7 @@ OC.L10N.register(
     "Remaining actions" : "Mai d’accions",
     "Select language" : "Causir lenga",
     "to" : "a",
+    "Upload" : "Telecargament",
     "Edit" : "Modificar",
     "Source code" : "Còdi font",
     "Delete this table" : "Suprimir aqueste tablèu",

@@ -8,6 +8,7 @@ OC.L10N.register(
     "Cancel" : "លើកលែង",
     "URL" : "URL",
     "to" : "ទៅ",
+    "Upload" : "ផ្ទុក​ឡើង",
     "Edit" : "កែប្រែ",
     "Table" : "តារាង",
     "Details" : "ព័ត៌មាន​លម្អិត",

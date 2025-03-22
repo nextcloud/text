@@ -34,6 +34,7 @@ OC.L10N.register(
     "Translation failed" : "Tõlkimine ebaõnnestus",
     "to" : "saaja",
     "Replace" : "Asenda",
+    "Upload" : "Laadi üles",
     "Edit" : "Redigeeri",
     "Source code" : "Lähtekood",
     "Done" : "Valmis",

@@ -33,6 +33,8 @@ OC.L10N.register(
     "Select language" : "Zgjidh gjuhën",
     "to" : "te",
     "Replace" : "Mbishkruaj",
+    "Upload" : "Ngarkoni",
+    "Insert Table" : "Fut tabelë",
     "Edit" : "Përpuno",
     "Source code" : "Kodi burim",
     "Done" : "U bë",
