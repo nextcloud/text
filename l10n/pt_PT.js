@@ -44,6 +44,7 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "Para",
     "Replace" : "Substitua",
+    "Upload" : "Enviar",
     "Edit" : "Editar",
     "Source code" : "Código fonte",
     "Done" : "Concluído",

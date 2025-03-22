@@ -59,6 +59,7 @@ OC.L10N.register(
     "Select language" : "Izaberi jezik",
     "to" : "do",
     "Replace" : "Zamijeni",
+    "Upload" : "Otpremi",
     "Edit" : "Uredi",
     "Source code" : "Izvorni kod",
     "Headings" : "Naslovi",

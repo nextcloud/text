@@ -11,6 +11,7 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "Дуусах нь",
     "Replace" : "Солих",
+    "Upload" : "байршуулах",
     "Edit" : "засварлах",
     "Source code" : "эх үүсвэр талын код",
     "Details" : "Дэлгэрэнгүй",
