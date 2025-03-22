@@ -111,7 +111,7 @@
     "webdav": "^5.7.1",
     "y-prosemirror": "^1.2.15",
     "y-protocols": "^1.0.6",
-    "yjs": "^13.6.23"
+    "yjs": "^13.6.24"
   },
   "engines": {
     "node": "^20.0.0",
