@@ -108,7 +108,7 @@
     "vue": "^2.7.16",
     "vue-click-outside": "^1.1.0",
     "vue-material-design-icons": "^5.3.1",
-    "webdav": "^5.7.1",
+    "webdav": "^5.8.0",
     "y-prosemirror": "^1.2.17",
     "y-protocols": "^1.0.6",
     "yjs": "^13.6.24"
