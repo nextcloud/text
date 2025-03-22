@@ -44,6 +44,7 @@ OC.L10N.register(
     "Formatting help" : "Helpo pri tekstaranĝo",
     "to" : "al",
     "Replace" : "Anstataŭigi",
+    "Upload" : "Alŝuti",
     "Edit" : "Modifi",
     "Done" : "Farita",
     "Headings" : "Titolaro",

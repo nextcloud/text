@@ -12,6 +12,7 @@ OC.L10N.register(
     "Link" : "Aseɣwen",
     "Save changes" : "Sekles asnifel",
     "Replace" : "Semselsi",
+    "Upload" : "Sili",
     "Edit" : "Ẓreg",
     "Done" : "Immed",
     "Details" : "Talqayt",

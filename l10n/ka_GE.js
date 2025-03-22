@@ -23,6 +23,7 @@ OC.L10N.register(
     "Select language" : "აირჩიეთ ენა",
     "to" : "ვის",
     "Replace" : "ჩანაცვლება",
+    "Upload" : "ატვირთვა",
     "Edit" : "ცვლილება",
     "Source code" : "კოდი",
     "Done" : "დასრულდა",
