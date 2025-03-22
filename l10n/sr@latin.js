@@ -21,6 +21,7 @@ OC.L10N.register(
     "Undo" : "Opozovi",
     "Cancel" : "Poništi",
     "Replace" : "Zameni postojeću",
+    "Upload" : "Otpremi",
     "Edit" : "Uredi",
     "Source code" : "Izvorni kôd",
     "Done" : "Gotovo",

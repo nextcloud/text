@@ -9,6 +9,7 @@ OC.L10N.register(
     "Save changes" : "වෙනස්කම් සුරකින්න",
     "Cancel" : "අවලංගු",
     "Select language" : "භාෂාව තෝරන්න",
+    "Upload" : "උඩුගත",
     "Edit" : "සංස්කරණය",
     "Info" : "තොරතුරු",
     "Success" : "සාර්ථකයි",

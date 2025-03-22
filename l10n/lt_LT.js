@@ -97,6 +97,7 @@ OC.L10N.register(
     "to" : "iki",
     "Replace" : "Pakeisti",
     "No emoji found" : "Nerasta jokių šypsenėlių",
+    "Upload" : "Įkelti",
     "Edit" : "Taisyti",
     "e.g. php, javascript, json…" : "pvz., php, javascript, json…",
     "Source code" : "Pradinis kodas",

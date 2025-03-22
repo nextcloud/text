@@ -59,6 +59,7 @@ OC.L10N.register(
     "Select language" : "בחירת שפה",
     "to" : "סיום",
     "Replace" : "החלפה",
+    "Upload" : "העלאה",
     "Edit" : "עריכה",
     "Source code" : "קוד מקור",
     "Done" : "הסתיים",

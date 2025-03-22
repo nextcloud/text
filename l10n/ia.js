@@ -13,6 +13,7 @@ OC.L10N.register(
     "Undo" : "Disfacer",
     "URL" : "URL",
     "to" : "a",
+    "Upload" : "Incargar",
     "Edit" : "Modificar",
     "Done" : "Preste",
     "Details" : "Detalios",

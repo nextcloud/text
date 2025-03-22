@@ -32,6 +32,8 @@ OC.L10N.register(
     "Select language" : "Atlasīt valodu",
     "to" : "kam",
     "Replace" : "Aizvietot",
+    "Upload" : "Augšupielādēt",
+    "Insert Table" : "Ievietot tabulu",
     "Edit" : "Labot",
     "Source code" : "Izejas kods",
     "Done" : "Pabeigts",

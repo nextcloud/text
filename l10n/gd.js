@@ -15,6 +15,7 @@ OC.L10N.register(
     "Undo" : "Neo-dhèan",
     "Cancel" : "Sguir dheth",
     "Replace" : "Cuir ’na àite",
+    "Upload" : "Luchdaich suas",
     "Edit" : "Deasaich",
     "Source code" : "Bun-tùs",
     "Details" : "Mion-fhiosrachadh"

@@ -19,6 +19,7 @@ OC.L10N.register(
     "Save changes" : "Save changes",
     "Cancel" : "Cancel",
     "to" : "пф",
+    "Upload" : "Upload",
     "Edit" : "Tahrirlash",
     "Delete this attachment" : "Ushbu biriktirmani oʻchirib tashlang",
     "Done" : "Done",
