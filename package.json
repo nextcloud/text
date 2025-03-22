@@ -91,7 +91,7 @@
     "debounce": "^2.2.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
-    "lib0": "^0.2.99",
+    "lib0": "^0.2.100",
     "lowlight": "^3.3.0",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
