@@ -1,1 +1,0 @@
-function e(t,r,n){const o=document.querySelector("#initial-state-".concat(t,"-").concat(r));if(o===null){if(n!==void 0)return n;throw new Error("Could not find initial state ".concat(r," of ").concat(t))}try{return JSON.parse(atob(o.value))}catch{throw new Error("Could not parse initial state ".concat(r," of ").concat(t))}}export{e as l};
