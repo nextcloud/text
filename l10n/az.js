@@ -17,6 +17,7 @@ OC.L10N.register(
     "URL" : "URL",
     "to" : "doğru",
     "Replace" : "Əvəz edin",
+    "Upload" : "Serverə yüklə",
     "Edit" : "Dəyişiklik et",
     "Done" : "Edildi",
     "Details" : "Detallar",

@@ -30,6 +30,7 @@ OC.L10N.register(
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
     "to" : "aan",
+    "Upload" : "Oplaai",
     "Edit" : "Wysig",
     "Headings" : "Koppe",
     "Heading 2" : "Kop 2",
