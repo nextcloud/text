@@ -106,6 +106,7 @@ OC.L10N.register(
     "No command found" : "Nun s'atopó nengún comandu",
     "No user found" : "Nun s'atopó nengún usuariu",
     "No suggestion found" : "Nun s'atopó nenguna suxerencia",
+    "Upload" : "Xunir",
     "Edit" : "Editar",
     "Copy code block" : "Copiar el bloque de códigu",
     "Copy code" : "Copiar el códigu",
