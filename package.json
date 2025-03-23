@@ -138,7 +138,7 @@
     "identity-obj-proxy": "^3.0.0",
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
-    "rollup-plugin-webpack-stats": "^1.2.3",
+    "rollup-plugin-webpack-stats": "^1.2.4-beta.6",
     "typescript": "^5.7.2",
     "vite": "^5.4.14",
     "vite-plugin-commonjs": "^0.10.4",
