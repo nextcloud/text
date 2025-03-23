@@ -151,6 +151,7 @@ OC.L10N.register(
     "No suggestion found" : "Inget förslag hittades",
     "Upload" : "Ladda upp",
     "Insert Table" : "Infoga Tabell",
+    "Smart Picker" : "Smart Picker",
     "Edit" : "Redigera",
     "Copy code block" : "Kopiera kodblock",
     "Copy code" : "Kopiera kod",

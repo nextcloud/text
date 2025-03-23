@@ -151,6 +151,7 @@ OC.L10N.register(
     "No suggestion found" : "Kein Vorschlag gefunden",
     "Upload" : "Hochladen",
     "Insert Table" : "Tabelle einfügen",
+    "Smart Picker" : "Smart Picker",
     "Edit" : "Bearbeiten",
     "Copy code block" : "Codeblock kopieren",
     "Copy code" : "Code kopieren",

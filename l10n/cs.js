@@ -151,6 +151,7 @@ OC.L10N.register(
     "No suggestion found" : "Nenalezeno žádné doporučení",
     "Upload" : "Nahrát",
     "Insert Table" : "Vložit tabulku",
+    "Smart Picker" : "Inteligentní výběr",
     "Edit" : "Upravit",
     "Copy code block" : "Zkopírovat blok kódu",
     "Copy code" : "Zkopírovat kód",
