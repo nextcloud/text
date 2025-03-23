@@ -91,7 +91,7 @@
     "debounce": "^2.2.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
-    "lib0": "^0.2.99",
+    "lib0": "^0.2.100",
     "lowlight": "^3.3.0",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
@@ -111,7 +111,7 @@
     "webdav": "^5.7.1",
     "y-prosemirror": "^1.2.15",
     "y-protocols": "^1.0.6",
-    "yjs": "^13.6.23"
+    "yjs": "^13.6.24"
   },
   "engines": {
     "node": "^20.0.0",
