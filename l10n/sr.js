@@ -150,6 +150,8 @@ OC.L10N.register(
     "No user found" : "Није пронађен корисник",
     "No suggestion found" : "Није пронађен предлог",
     "Upload" : "Отпреми",
+    "Insert Table" : "Уметни табелу",
+    "Smart Picker" : "Паметни бирач",
     "Edit" : "Измени",
     "Copy code block" : "Копирај блок кôда",
     "Copy code" : "Копирај кôд",
