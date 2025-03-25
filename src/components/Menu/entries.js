@@ -70,6 +70,8 @@ export const ReadOnlyDoneEntries = [{
 	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
 }]
 
+const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
 export const MenuEntries = [
 	{
 		key: 'undo',
@@ -412,7 +414,11 @@ export const MenuEntries = [
 		component: ActionAttachmentUpload,
 		priority: 5,
 	},
-	{
+
+]
+
+if (!isMobileDevice) {
+	MenuEntries.push({
 		key: 'emoji-picker',
 		label: t('text', 'Insert emoji'),
 		icon: Emoticon,
@@ -421,5 +427,5 @@ export const MenuEntries = [
 			return command.emoji(emojiObject)
 		},
 		priority: 6,
-	},
-]
+	})
+}
