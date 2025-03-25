@@ -150,6 +150,8 @@ OC.L10N.register(
     "No user found" : "找不到使用者",
     "No suggestion found" : "找不到建議",
     "Upload" : "上傳",
+    "Insert Table" : "插入表格",
+    "Smart Picker" : "智慧型挑選器",
     "Edit" : "編輯",
     "Copy code block" : "複製程式碼區塊",
     "Copy code" : "複製程式碼",
