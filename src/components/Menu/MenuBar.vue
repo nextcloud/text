@@ -12,7 +12,7 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--hide': isHidden,
-			'text-menubar--is-workspace': $isRichWorkspace
+			'text-menubar--is-workspace': $isRichWorkspace,
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 

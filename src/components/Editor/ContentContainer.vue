@@ -44,9 +44,13 @@ export default {
 <style scoped lang="scss">
 	.editor__content {
 		max-width: min(var(--text-editor-max-width), calc(100vw - 16px));
-		margin: auto;
+		margin: 0 auto;
 		position: relative;
 		width: 100%;
+		:deep([contenteditable]) {
+			// drop off obsolete server styles
+			margin: 0 !important;
+		}
 	}
 
 	.ie {
@@ -59,6 +63,8 @@ export default {
 		--side-width: calc((100% - var(--text-editor-max-width)) / 2);
 		display: grid;
 		grid-template-columns: 1fr auto;
+		overflow: auto;
+		flex: 1;
 		&.--show-outline {
 			grid-template-columns: var(--side-width) auto var(--side-width);
 		}

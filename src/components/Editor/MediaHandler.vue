@@ -6,7 +6,7 @@
 <template>
 	<div class="editor editor-media-handler"
 		data-text-el="editor-media-handler"
-		:class="{ draggedOver }"
+		:class="{ draggedOver, 'editor--mobile': isMobile }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
@@ -28,6 +28,7 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { logger } from '../../helpers/logger.js'
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 
 import {
 	useEditorMixin,
@@ -62,6 +63,12 @@ export default {
 		})
 
 		return val
+	},
+	setup() {
+		const isMobile = useIsMobile()
+		return {
+			isMobile,
+		}
 	},
 	data() {
 		return {
@@ -199,3 +206,14 @@ export default {
 	},
 }
 </script>
+
+<style scoped lang="scss">
+
+.editor--mobile {
+	display: flex;
+	flex-direction: column-reverse;
+	height: 100%;
+	overflow: auto;
+}
+
+</style>

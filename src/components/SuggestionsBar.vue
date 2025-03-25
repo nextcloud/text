@@ -190,7 +190,6 @@ export default {
 
 .container-suggestions {
 	display: flex;
-	flex-grow: 1;
 	margin-left: max(0px, (100% - var(--text-editor-max-width)) / 2);
 }
 
