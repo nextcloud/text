@@ -144,6 +144,7 @@ OC.L10N.register(
     "No command found" : "No s'ha trobat cap ordre",
     "No user found" : "No s'ha trobat cap usuari",
     "No suggestion found" : "No s'ha trobat cap suggeriment",
+    "Upload" : "Puja",
     "Insert Table" : "Insereix taula",
     "Edit" : "Edita",
     "Copy code block" : "Copia el bloc de codi",
