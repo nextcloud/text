@@ -41,26 +41,13 @@
 				{{ t('text', 'Insert Table') }}
 			</template>
 		</NcButton>
-
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="linkPicker">
-			<template #icon>
-				<Shape :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
-				{{ t('text', 'Smart Picker') }}
-			</template>
-		</NcButton>
 	</div>
 </template>
 
 <script>
 import { NcButton } from '@nextcloud/vue'
-import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
+import { Document, Upload, Table as TableIcon } from '../components/icons.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
-import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { useEditorMixin, useFileMixin } from './Editor.provider.js'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
@@ -72,7 +59,6 @@ export default {
 		TableIcon,
 		Document,
 		NcButton,
-		Shape,
 		Upload,
 	},
 	mixins: [
@@ -111,25 +97,6 @@ export default {
 	},
 
 	methods: {
-		/**
-		 * Open smart picker dialog
-		 * Triggered by the "Smart Picker" button
-		 */
-		linkPicker() {
-			getLinkWithPicker(null, true)
-				.then(link => {
-					const chain = this.$editor.chain()
-					if (this.$editor.view.state?.selection.empty) {
-						chain.focus().insertPreview(link).run()
-					} else {
-						chain.setLink({ href: link }).focus().run()
-					}
-				})
-				.catch(error => {
-					console.error('Smart picker promise rejected', error)
-				})
-		},
-
 		/**
 		 * Insert table
 		 * Triggered by the "Insert table" button
