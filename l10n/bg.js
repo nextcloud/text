@@ -113,6 +113,7 @@ OC.L10N.register(
     "No command found" : "Няма намерена команда",
     "No user found" : "Няма намерен потребител",
     "No suggestion found" : "Няма намерена препоръка",
+    "Upload" : "Качване",
     "Insert Table" : "Вмъкване на таблица",
     "Edit" : "Променяне",
     "Source code" : "Изходен код",

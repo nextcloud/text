@@ -18,6 +18,7 @@ OC.L10N.register(
     "Cancel" : "Nullañ",
     "URL" : "URL",
     "Replace" : "Erlec'hiañ",
+    "Upload" : "Enporzhiañ",
     "Edit" : "Cheñch",
     "Done" : "Graet",
     "Details" : "Munudoù",
