@@ -42,6 +42,7 @@ import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
 
 import { MODIFIERS } from './keys.js'
+import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 
 export const OutlineEntries = [{
 	key: 'outline',
@@ -69,8 +70,6 @@ export const ReadOnlyDoneEntries = [{
 	icon: PencilOff,
 	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
 }]
-
-const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
 export const MenuEntries = [
 	{
