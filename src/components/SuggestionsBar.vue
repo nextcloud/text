@@ -4,56 +4,50 @@
 -->
 
 <template>
-	<div v-if="isEmptyContent" class="container-suggestions">
-		<NcButton ref="linkFileOrFolder"
-			type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="linkFile">
-			<template #icon>
-				<Document :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+	<transition name="fade">
+		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
+			<NcButton ref="linkFileOrFolder"
+				type="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="linkFile">
+				<template #icon>
+					<Document :size="20" />
+				</template>
 				{{ t('text', 'Link to file or folder') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="$callChooseLocalAttachment">
-			<template #icon>
-				<Upload :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton type="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="$callChooseLocalAttachment">
+				<template #icon>
+					<Upload :size="20" />
+				</template>
 				{{ t('text', 'Upload') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="insertTable">
-			<template #icon>
-				<TableIcon :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton type="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="insertTable">
+				<template #icon>
+					<TableIcon :size="20" />
+				</template>
 				{{ t('text', 'Insert Table') }}
-			</template>
-		</NcButton>
+			</NcButton>
 
-		<NcButton type="secondary"
-			size="normal"
-			class="suggestions--button"
-			@click="linkPicker">
-			<template #icon>
-				<Shape :size="20" />
-			</template>
-			<template v-if="!isMobile" #default>
+			<NcButton type="secondary"
+				size="normal"
+				class="suggestions--button"
+				@click="linkPicker">
+				<template #icon>
+					<Shape :size="20" />
+				</template>
 				{{ t('text', 'Smart Picker') }}
-			</template>
-		</NcButton>
-	</div>
+			</NcButton>
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -64,7 +58,7 @@ import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { useEditorMixin, useFileMixin } from './Editor.provider.js'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { isMobileDevice } from '../helpers/isMobileDevice.js'
 
 export default {
 	name: 'SuggestionsBar',
@@ -82,9 +76,8 @@ export default {
 	],
 
 	setup() {
-		const isMobile = useIsMobile()
 		return {
-			isMobile,
+			isMobileDevice,
 		}
 	},
 
@@ -191,9 +184,26 @@ export default {
 .container-suggestions {
 	display: flex;
 	margin-left: max(0px, (100% - var(--text-editor-max-width)) / 2);
+	flex-wrap: wrap;
 }
 
 .suggestions--button {
 	margin: 5px;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity var(--animation-slow) ease-in-out;
+}
+
+.fade-enter-to,
+.fade-leave {
+	opacity: 1;
+}
+
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
+}
+
 </style>
