@@ -45,6 +45,7 @@ OC.L10N.register(
     "Replace" : "Asenda",
     "Upload" : "Laadi üles",
     "Edit" : "Redigeeri",
+    "Copy code block" : "Kopeeri koodiplokk",
     "Source code" : "Lähtekood",
     "Done" : "Valmis",
     "Headings" : "Pealkirjad",
