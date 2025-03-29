@@ -28,7 +28,6 @@ class SessionApi {
 			filePath: this.#options.filePath,
 			token: this.#options.shareToken,
 			guestName: this.#options.guestName,
-			forceRecreate: this.#options.forceRecreate,
 		}).then(response => new Connection(response, this.#options))
 	}
 

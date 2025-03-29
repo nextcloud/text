@@ -267,7 +267,6 @@ export default {
 			readOnly: true,
 			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
 			editMode: true,
-			forceRecreate: false,
 			menubarLoaded: false,
 			draggedOver: false,
 
@@ -373,7 +372,6 @@ export default {
 		// });
 		this.$providers = []
 		this.$editor = null
-		this.$api = null
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
@@ -400,20 +398,19 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 
-			this.$api = new SessionApi({
+			const api = new SessionApi({
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				forceRecreate: this.forceRecreate,
 			})
 
 			this.$syncService = new SyncService({
+				api,
 				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
 					: (content) => serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
-				api: this.$api,
 			})
 
 			this.listenSyncServiceEvents()
@@ -426,7 +423,6 @@ export default {
 				disableBC: true,
 			})
 			this.$providers.push(syncServiceProvider)
-			this.forceRecreate = false
 		},
 
 		listenEditorEvents() {
