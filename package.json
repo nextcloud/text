@@ -139,7 +139,7 @@
     "jsdom": "^26.0.0",
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
-    "rollup-plugin-webpack-stats": "^2.0.3",
+    "rollup-plugin-webpack-stats": "^2.0.4",
     "typescript": "^5.8.2",
     "vite": "^6.2.2",
     "vite-plugin-commonjs": "^0.10.4",
