@@ -372,7 +372,6 @@ export default {
 		// });
 		this.$providers = []
 		this.$editor = null
-		this.$api = null
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
@@ -399,19 +398,19 @@ export default {
 			}
 			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
 
-			this.$api = new SessionApi({
+			const api = new SessionApi({
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
 			})
 
 			this.$syncService = new SyncService({
+				api,
 				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
 					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
 					: (content) => serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
-				api: this.$api,
 			})
 
 			this.listenSyncServiceEvents()
