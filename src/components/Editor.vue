@@ -267,7 +267,6 @@ export default {
 			readOnly: true,
 			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
 			editMode: true,
-			forceRecreate: false,
 			menubarLoaded: false,
 			draggedOver: false,
 
@@ -404,7 +403,6 @@ export default {
 				guestName,
 				shareToken: this.shareToken,
 				filePath: this.relativePath,
-				forceRecreate: this.forceRecreate,
 			})
 
 			this.$syncService = new SyncService({
@@ -426,7 +424,6 @@ export default {
 				disableBC: true,
 			})
 			this.$providers.push(syncServiceProvider)
-			this.forceRecreate = false
 		},
 
 		listenEditorEvents() {
