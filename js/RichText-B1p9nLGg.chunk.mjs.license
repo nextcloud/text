@@ -198,7 +198,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 11.11.1
 	- license: BSD-3-Clause
 - lib0
-	- version: 0.2.100
+	- version: 0.2.101
 	- license: MIT
 - linkify-it
 	- version: 5.0.0
