@@ -115,9 +115,6 @@ class PublicSessionController extends PublicShareController implements ISessionA
 		return $this->apiService->save($this->getSession(), $this->getDocument(), $version, $autosaveContent, $documentState, $force, $manualSave, $token);
 	}
 
-	/**
-	 * @psalm-return DataResponse<int, array|null|object|scalar, array<string, mixed>>
-	 */
 	#[NoAdminRequired]
 	#[PublicPage]
 	#[RequireDocumentSession]
