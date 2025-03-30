@@ -63,7 +63,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 3.37.0
 	- license: MIT
 - lib0
-	- version: 0.2.100
+	- version: 0.2.101
 	- license: MIT
 - lodash.get
 	- version: 4.4.2
