@@ -124,7 +124,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 2.9.1
 	- license: MIT
 - @tiptap/extension-floating-menu
-	- version: 2.11.5
+	- version: 2.11.7
 	- license: MIT
 - @tiptap/extension-gapcursor
 	- version: 2.9.1
@@ -190,7 +190,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 2.9.1
 	- license: MIT
 - @tiptap/vue-2
-	- version: 2.11.5
+	- version: 2.11.7
 	- license: MIT
 - entities
 	- version: 4.5.0
