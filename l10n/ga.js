@@ -150,6 +150,8 @@ OC.L10N.register(
     "No user found" : "Níor aimsíodh aon úsáideoir",
     "No suggestion found" : "Níor aimsíodh aon mholadh",
     "Upload" : "Uaslódáil",
+    "Insert Table" : "Ionsáigh Tábla",
+    "Smart Picker" : "Roghnóir Cliste",
     "Edit" : "Cuir in eagar",
     "Copy code block" : "Cóip bloc cód",
     "Copy code" : "Cóipeáil cód",
