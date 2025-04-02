@@ -11,10 +11,9 @@ import Image from './../../nodes/Image.js'
 import ImageInline from './../../nodes/ImageInline.js'
 import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
-import { Italic, Strong, Underline, Link} from './../../marks/index.js'
+import { Italic, Strong, Underline, Link } from './../../marks/index.js'
 import TiptapImage from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
-import { __serializeForClipboard as serializeForClipboard } from '@tiptap/pm/view'
 import { createCustomEditor } from '../helpers.js'
 
 describe('Markdown extension unit', () => {
@@ -153,6 +152,6 @@ describe('Markdown extension integrated in the editor', () => {
 function copyEditorContent(editor) {
 	editor.commands.selectAll()
 	const slice = editor.state.selection.content()
-	const { text } = serializeForClipboard(editor.view, slice)
+	const { text } = editor.view.serializeForClipboard(slice)
 	return text
 }
