@@ -14,7 +14,6 @@ import TaskItem from './../../nodes/TaskItem.js'
 import { Italic, Strong, Underline, Link } from './../../marks/index.js'
 import TiptapImage from '@tiptap/extension-image'
 import { getExtensionField } from '@tiptap/core'
-import { __serializeForClipboard as serializeForClipboard } from '@tiptap/pm/view'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('Markdown extension unit', () => {
@@ -148,6 +147,6 @@ describe('Markdown extension integrated in the editor', () => {
 const copyEditorContent = (editor) => {
 	editor.commands.selectAll()
 	const slice = editor.state.selection.content()
-	const { text } = serializeForClipboard(editor.view, slice)
+	const { text } = editor.view.serializeForClipboard(slice)
 	return text
 }
