@@ -335,8 +335,8 @@ export default {
 			}
 		},
 		floatingOptions() {
-			const buttonSize = 44
-			const topSpacing = 110 + 22
+			const buttonSize = 34
+			const topSpacing = 0
 			const bottomSpacing = 50 + 22
 			return {
 				placement: 'right',
@@ -344,22 +344,16 @@ export default {
 					const editorRect = this.$parent.$el.querySelector('.ProseMirror').getBoundingClientRect()
 					const pos = posToDOMRect(this.$editor.view, this.$editor.state.selection.from, this.$editor.state.selection.to)
 					let rightSpacing = 0
-					let addTopSpacing = 0
 
-					if (editorRect.width < 670) {
-						rightSpacing = 20
-					}
-
-					if (editorRect.width < 425) {
+					if (editorRect.width < 890) {
 						rightSpacing = 66
-						addTopSpacing = 30
 					}
 
 					return {
 						...pos,
 						width: editorRect.width - rightSpacing,
 						height: limitInRange(pos.height, buttonSize, window.innerHeight),
-						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing) + addTopSpacing,
+						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing),
 						left: editorRect.left,
 						right: editorRect.right,
 						bottom: limitInRange(pos.top + buttonSize, bottomSpacing, window.innerHeight - topSpacing) + 22,
