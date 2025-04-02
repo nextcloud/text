@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace OCA\Text\Notification;
 
 use OC\User\NoUserException;
+use OCA\Text\Event\MentionEvent;
+use OCP\EventDispatcher\IEventDispatcher;
+use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotPermittedException;
 use OCP\IURLGenerator;
@@ -24,16 +27,13 @@ class Notifier implements INotifier {
 	public const SUBJECT_MENTIONED_SOURCE_USER = 'sourceUser';
 	public const SUBJECT_MENTIONED_TARGET_USER = 'targetUser';
 
-	private IFactory $factory;
-	private IURLGenerator $url;
-	private IUserManager $userManager;
-	private IRootFolder $rootFolder;
-
-	public function __construct(IFactory $factory, IUserManager $userManager, IURLGenerator $urlGenerator, IRootFolder $rootFolder) {
-		$this->factory = $factory;
-		$this->userManager = $userManager;
-		$this->url = $urlGenerator;
-		$this->rootFolder = $rootFolder;
+	public function __construct(
+		private IFactory $factory,
+		private IUserManager $userManager,
+		private IURLGenerator $urlGenerator,
+		private IRootFolder $rootFolder,
+		private IEventDispatcher $eventDispatcher,
+	) {
 	}
 
 	public function getID(): string {
@@ -50,7 +50,7 @@ class Notifier implements INotifier {
 		}
 
 		$l = $this->factory->get('text', $languageCode);
-
+		$notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath('text', 'app-dark.svg')));
 		switch ($notification->getSubject()) {
 			case self::TYPE_MENTIONED:
 				$parameters = $notification->getSubjectParameters();
@@ -70,12 +70,13 @@ class Notifier implements INotifier {
 				}
 				$node = $userFolder->getFirstNodeById($fileId);
 
-				if ($node === null) {
+				if (!$node instanceof File) {
 					throw new AlreadyProcessedException();
 				}
 
-				$fileLink = $this->url->linkToRouteAbsolute('files.viewcontroller.showFile', ['fileid' => $node->getId()]);
+				$fileLink = $this->urlGenerator->linkToRouteAbsolute('files.viewcontroller.showFile', ['fileid' => $node->getId()]);
 
+				$notification->setLink($fileLink);
 				$notification->setRichSubject($l->t('{user} has mentioned you in the text document {node}'), [
 					'user' => [
 						'type' => 'user',
@@ -90,12 +91,13 @@ class Notifier implements INotifier {
 						'link' => $fileLink,
 					],
 				]);
+
+				$this->eventDispatcher->dispatchTyped(new MentionEvent($notification, $node));
 				break;
 			default:
 				throw new UnknownNotificationException();
 		}
-		$notification->setIcon($this->url->getAbsoluteURL($this->url->imagePath('text', 'app-dark.svg')));
-		$notification->setLink($fileLink);
+
 		$this->setParsedSubjectFromRichSubject($notification);
 		return $notification;
 	}
