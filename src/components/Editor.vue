@@ -327,6 +327,13 @@ export default {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
 		},
+		dirty(val) {
+			if (val) {
+				window.addEventListener('beforeunload', this.saveBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -642,7 +649,7 @@ export default {
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes
+				// ignore initial loading and other automated changes before first user change
 				if (this.$editor
 					&& (this.$editor.can().undo() || this.$editor.can().redo())
 				) {
@@ -834,6 +841,10 @@ export default {
 				return commands.insertContentAt(range, content)
 			})
 			this.translateModal = false
+		},
+
+		saveBeforeUnload() {
+			this.$syncService?.saveViaSendBeacon()
 		},
 	},
 }
