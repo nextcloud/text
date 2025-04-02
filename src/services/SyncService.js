@@ -218,6 +218,7 @@ class SyncService {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FORBIDDEN, data: {} })
 					}
 					// TODO: does response.data ever have a document? maybe for errors?
+					// TODO: `currentVersion` is always 0 nowadays. Check if this is still needed.
 					// Only emit conflict event if we have synced until the latest version
 					if (response.data.document?.currentVersion === this.version) {
 						this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
@@ -297,6 +298,17 @@ class SyncService {
 			logger.error('Failed to save document.', { error: e })
 			throw e
 		}
+	}
+
+	saveViaSendBeacon() {
+		this.#connection.saveViaSendBeacon({
+			version: this.version,
+			autosaveContent: this._getContent(),
+			documentState: this.getDocumentState(),
+			force: false,
+			manualSave: true,
+		})
+		logger.debug('[SyncService] saved using sendBeacon')
 	}
 
 	forceSave() {

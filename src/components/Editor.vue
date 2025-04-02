@@ -346,6 +346,13 @@ export default {
 				this.updateEditorWidth(newWidth)
 			},
 		},
+		dirty(val) {
+			if (val) {
+				window.addEventListener('beforeunload', this.saveBeforeUnload)
+			} else {
+				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
 	},
 	mounted() {
 		if (this.active && (this.hasDocumentParameters)) {
@@ -668,7 +675,7 @@ export default {
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
-				// ignore initial loading and other automated changes
+				// ignore initial loading and other automated changes before first user change
 				if (this.$editor
 					&& (this.$editor.can().undo() || this.$editor.can().redo())
 				) {
@@ -882,6 +889,10 @@ export default {
 		},
 		updateEditorWidth(newWidth) {
 			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
+		},
+
+		saveBeforeUnload() {
+			this.$syncService?.saveViaSendBeacon()
 		},
 	},
 }
