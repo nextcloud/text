@@ -150,9 +150,9 @@
     },
     {
       "matchPackageNames": [
-        "vuex"
+        "vueuse"
       ],
-      "allowedVersions": "<4"
+      "allowedVersions": "<12"
     },
     {
       "matchPackageNames": [
