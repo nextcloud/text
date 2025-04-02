@@ -19,6 +19,7 @@
 			@reconnect="reconnect" />
 
 		<SkeletonLoading v-if="showLoadingSkeleton" />
+		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 		<Wrapper v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="hasConnectionIssue"
