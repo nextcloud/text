@@ -80,7 +80,7 @@ describe('Front matter support', function() {
 				cy.getEditor().find('.text-editor__wrapper').scrollTo('bottom')
 				cy.getContent().find('.split-view__preview').eq(2).should('be.visible')
 				cy.get('.code-block').eq(2).find('code').should('not.be.visible')
-				cy.get('.split-view__preview').find('svg .entityTitleText')
+				cy.get('.split-view__preview').find('svg .erDiagramTitleText')
 					.contains('Order example')
 			})
 	})
@@ -100,7 +100,7 @@ describe('Front matter support', function() {
 		cy.openFile('codeblock.md').then(() => {
 			cy.getContent().find('.split-view__preview').find('svg').should('be.visible')
 			cy.get('.code-block').eq(2).find('code').should('not.be.visible')
-			cy.get('.split-view__preview').find('svg .entityTitleText')
+			cy.get('.split-view__preview').find('svg .erDiagramTitleText')
 				.contains('Order example')
 		})
 	})
