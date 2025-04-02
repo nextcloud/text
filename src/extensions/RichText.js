@@ -106,7 +106,7 @@ export default Extension.create({
 			LinkPicker,
 			Link.configure({
 				openOnClick: true,
-				validate: href => /^https?:\/\//.test(href),
+				shouldAutoLink: href => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
