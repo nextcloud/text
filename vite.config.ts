@@ -1,10 +1,9 @@
 // SPDX-FileCopyrightText: Ferdinand Thiessen <opensource@fthiessen.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-/// <reference types="vitest/config" />
+import type { ViteDevServer, Connect } from 'vite'
 
 import { createAppConfig } from '@nextcloud/vite-config'
-import type { ViteDevServer, Connect } from 'vite'
 import webpackStats from 'rollup-plugin-webpack-stats'
 import path from 'path'
 
@@ -22,7 +21,7 @@ const rewriteMiddlewarePlugin = {
 			}
 			next()
 		})
-	}
+	},
 }
 
 const config = createAppConfig({
@@ -34,6 +33,9 @@ const config = createAppConfig({
 	init: path.join(__dirname, 'src', 'init.js'),
 }, {
 	createEmptyCSSEntryPoints: true,
+	emptyOutputDirectory: {
+		additionalDirectories: ['css/'],
+	},
 	extractLicenseInformation: {
 		overwriteLicenses: {
 			khroma: 'MIT',
@@ -74,7 +76,7 @@ const config = createAppConfig({
 			server: {
 				deps: {
 					inline: [/@nextcloud.*/],
-				}
+				},
 			},
 		},
 		server: {
