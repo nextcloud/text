@@ -27,6 +27,7 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
+import { generateUrl } from '@nextcloud/router'
 import { logger } from '../../helpers/logger.js'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 
@@ -39,6 +40,7 @@ import {
 import {
 	ACTION_ATTACHMENT_PROMPT,
 	ACTION_CHOOSE_LOCAL_ATTACHMENT,
+	ACTION_CREATE_ATTACHMENT,
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
 
@@ -56,6 +58,9 @@ export default {
 			},
 			[ACTION_CHOOSE_LOCAL_ATTACHMENT]: {
 				get: () => this.chooseLocalFile,
+			},
+			[ACTION_CREATE_ATTACHMENT]: {
+				get: () => this.createAttachment,
 			},
 			[STATE_UPLOADING]: {
 				get: () => this.state,
@@ -172,6 +177,26 @@ export default {
 			}).then(() => {
 				this.state.isUploadingAttachments = false
 			})
+		},
+		createAttachment(template) {
+			this.state.isUploadingAttachments = true
+			return this.$syncService.createAttachment(template).then((response) => {
+				this.insertAttachmentPreview(response.data?.id)
+			}).catch((error) => {
+				logger.error('Failed to create attachment', { error })
+				showError(t('text', 'Failed to create attachment'))
+			}).then(() => {
+				this.state.isUploadingAttachments = false
+			})
+		},
+		insertAttachmentPreview(fileId) {
+			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
+			const href = url.href.replaceAll(' ', '%20')
+			this.$editor
+				.chain()
+				.focus()
+				.insertPreview(href)
+				.run()
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
 			// inspired by the fixedEncodeURIComponent function suggested in

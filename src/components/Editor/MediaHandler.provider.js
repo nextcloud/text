@@ -6,6 +6,7 @@
 export const STATE_UPLOADING = Symbol('state:uploading-state')
 export const ACTION_ATTACHMENT_PROMPT = Symbol('editor:action:attachment-prompt')
 export const ACTION_CHOOSE_LOCAL_ATTACHMENT = Symbol('editor:action:upload-attachment')
+export const ACTION_CREATE_ATTACHMENT = Symbol('editor:action:create-attachment')
 
 export const useUploadingStateMixin = {
 	inject: {
@@ -27,5 +28,11 @@ export const useActionAttachmentPromptMixin = {
 export const useActionChooseLocalAttachmentMixin = {
 	inject: {
 		$callChooseLocalAttachment: { from: ACTION_CHOOSE_LOCAL_ATTACHMENT, default: () => {} },
+	},
+}
+
+export const useActionCreateAttachmentMixin = {
+	inject: {
+		$callCreateAttachment: { from: ACTION_CREATE_ATTACHMENT, default: () => (template) => {} },
 	},
 }
