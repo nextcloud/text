@@ -33,7 +33,9 @@ li.ProseMirror-selectednode {
 		content: '';
 		position: absolute;
 		left: -32px;
-		right: -2px; top: -2px; bottom: -2px;
+		right: -2px;
+		top: -2px;
+		bottom: -2px;
 		border: 2px solid #8cf;
 		pointer-events: none;
 	}
@@ -91,7 +93,6 @@ li.ProseMirror-selectednode {
 		transform: translate3d(0, 0, 0);
 	}
 }
-
 
 // from https://github.com/animate-css/animate.css/blob/main/source/fading_entrances/fadeInLeft.css
 @keyframes fadeInLeft {

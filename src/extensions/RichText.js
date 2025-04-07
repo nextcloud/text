@@ -107,7 +107,7 @@ export default Extension.create({
 			LinkPicker,
 			Link.configure({
 				openOnClick: true,
-				shouldAutoLink: href => /^https?:\/\//.test(href),
+				shouldAutoLink: (href) => /^https?:\/\//.test(href),
 				relativePath: this.options.relativePath,
 			}),
 			LinkBubble,
@@ -116,11 +116,12 @@ export default Extension.create({
 				types: ['heading', 'paragraph', 'listItem', 'orderedList'],
 			}),
 		]
-		const additionalExtensionNames = this.options.extensions.map(e => e.name)
+		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
-			...defaultExtensions.filter(e => e && !additionalExtensionNames.includes(e.name)),
+			...defaultExtensions.filter(
+				(e) => e && !additionalExtensionNames.includes(e.name),
+			),
 			...this.options.extensions,
 		]
 	},
-
 })

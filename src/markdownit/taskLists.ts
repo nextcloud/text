@@ -14,9 +14,9 @@ import StateCore from 'markdown-it/lib/rules_core/state_core.mjs'
 import Token from 'markdown-it/lib/token.mjs'
 
 interface TaskListsOptions {
-  enabled: boolean
-  label: boolean
-  lineNumber: boolean
+	enabled: boolean
+	label: boolean
+	lineNumber: boolean
 }
 
 const checkboxRegex = /^ *\[([\sx])] /i
@@ -30,14 +30,17 @@ export default function taskLists(
 	md: MarkdownIt,
 	options: TaskListsOptions = { enabled: false, label: false, lineNumber: false },
 ): void {
-	md.core.ruler.after('inline', 'task-lists', (state) => processToken(state, options))
+	md.core.ruler.after('inline', 'task-lists', (state) =>
+		processToken(state, options),
+	)
 	md.renderer.rules.taskListItemCheckbox = (tokens) => {
 		const token = tokens[0]
 		const checkedAttribute = token.attrGet('checked') ? 'checked="" ' : ''
 		const disabledAttribute = token.attrGet('disabled') ? 'disabled="" ' : ''
 		const line = token.attrGet('line')
 		const idAttribute = `id="${token.attrGet('id')}" `
-		const dataLineAttribute = line && options.lineNumber ? `data-line="${line}" ` : ''
+		const dataLineAttribute =
+			line && options.lineNumber ? `data-line="${line}" ` : ''
 
 		return `<input class="task-list-item-checkbox" type="checkbox" ${checkedAttribute}${disabledAttribute}${dataLineAttribute}${idAttribute}/>`
 	}
@@ -66,7 +69,10 @@ function processToken(state: StateCore, options: TaskListsOptions): boolean {
 		}
 
 		todoify(allTokens[i], options)
-		allTokens[i - 2].attrJoin('class', `task-list-item ${options.enabled ? ' enabled' : ''}`)
+		allTokens[i - 2].attrJoin(
+			'class',
+			`task-list-item ${options.enabled ? ' enabled' : ''}`,
+		)
 
 		const parentToken = findParentToken(allTokens, i - 2)
 		if (parentToken) {
@@ -86,7 +92,11 @@ function processToken(state: StateCore, options: TaskListsOptions): boolean {
  */
 function findParentToken(tokens: Token[], index: number): Token | undefined {
 	const targetLevel = tokens[index].level - 1
-	for (let currentTokenIndex = index - 1; currentTokenIndex >= 0; currentTokenIndex--) {
+	for (
+		let currentTokenIndex = index - 1;
+		currentTokenIndex >= 0;
+		currentTokenIndex--
+	) {
 		if (tokens[currentTokenIndex].level === targetLevel) {
 			return tokens[currentTokenIndex]
 		}
@@ -101,10 +111,10 @@ function findParentToken(tokens: Token[], index: number): Token | undefined {
  */
 function isTodoItem(tokens: Token[], index: number): boolean {
 	return (
-		isInline(tokens[index])
-    && isParagraph(tokens[index - 1])
-    && isListItem(tokens[index - 2])
-    && startsWithTodoMarkdown(tokens[index])
+		isInline(tokens[index]) &&
+		isParagraph(tokens[index - 1]) &&
+		isListItem(tokens[index - 2]) &&
+		startsWithTodoMarkdown(tokens[index])
 	)
 }
 

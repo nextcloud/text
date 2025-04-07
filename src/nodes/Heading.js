@@ -7,18 +7,20 @@ import TipTapHeading from '@tiptap/extension-heading'
 import headingAnchor from '../plugins/headingAnchor.js'
 
 const Heading = TipTapHeading.extend({
-
 	addKeyboardShortcuts() {
-		return this.options.levels.reduce((items, level) => ({
-			...items,
-			[`Mod-Shift-${level}`]: () => this.editor.commands.toggleHeading({ level }),
-		}), {})
+		return this.options.levels.reduce(
+			(items, level) => ({
+				...items,
+				[`Mod-Shift-${level}`]: () =>
+					this.editor.commands.toggleHeading({ level }),
+			}),
+			{},
+		)
 	},
 
 	addProseMirrorPlugins() {
 		return [headingAnchor()]
 	},
-
 })
 
 export default Heading

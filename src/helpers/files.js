@@ -7,7 +7,13 @@ import { dirname } from 'path'
 import { emit } from '@nextcloud/event-bus'
 import { getCurrentUser } from '@nextcloud/auth'
 import { getSharingToken } from '@nextcloud/sharing/public'
-import { Header, addNewFileMenuEntry, Permission, File, NewMenuEntryCategory } from '@nextcloud/files'
+import {
+	Header,
+	addNewFileMenuEntry,
+	Permission,
+	File,
+	NewMenuEntryCategory,
+} from '@nextcloud/files'
 import { imagePath } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, showError } from '@nextcloud/dialogs'
@@ -33,17 +39,28 @@ const registerFileCreate = () => {
 			menu.addMenuEntry({
 				id: 'file',
 				displayName: t('text', 'New text file'),
-				templateName: t('text', 'New text file') + '.' + loadState('text', 'default_file_extension'),
+				templateName:
+					t('text', 'New text file') +
+					'.' +
+					loadState('text', 'default_file_extension'),
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
 				actionLabel: t('text', 'Create new text file'),
 				actionHandler(name) {
-					fileList.createFile(name).then(function(status, data) {
+					fileList.createFile(name).then(function (status, data) {
 						const fileInfoModel = new OCA.Files.FileInfoModel(data)
 						if (typeof OCA.Viewer !== 'undefined') {
-							OCA.Files.fileActions.triggerAction('view', fileInfoModel, fileList)
+							OCA.Files.fileActions.triggerAction(
+								'view',
+								fileInfoModel,
+								fileList,
+							)
 						} else if (typeof OCA.Viewer === 'undefined') {
-							OCA.Files.fileActions.triggerAction(FILE_ACTION_IDENTIFIER, fileInfoModel, fileList)
+							OCA.Files.fileActions.triggerAction(
+								FILE_ACTION_IDENTIFIER,
+								fileInfoModel,
+								fileList,
+							)
 						}
 					})
 				},
@@ -60,60 +77,69 @@ const registerFileActionFallback = () => {
 		const ViewerRoot = document.createElement('div')
 		ViewerRoot.id = 'text-viewer-fallback'
 		document.body.appendChild(ViewerRoot)
-		const registerAction = (mime) => OCA.Files.fileActions.register(
-			mime,
-			FILE_ACTION_IDENTIFIER,
-			OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
-			imagePath('core', 'actions/rename'),
-			(filename) => {
-				const file = window.FileList.findFile(filename)
-				Promise.all([
-					import('vue'),
-					import(/* webpackChunkName: "files-modal" */'./../components/PublicFilesEditor.vue'),
-				]).then((imports) => {
-					const path = window.FileList.getCurrentDirectory() + '/' + filename
-					const Vue = imports[0].default
-					Vue.prototype.t = window.t
-					Vue.prototype.n = window.n
-					Vue.prototype.OCA = window.OCA
-					const Editor = imports[1].default
-					const vm = new Vue({
-						render: function(h) { // eslint-disable-line
-							const self = this
-							return h(Editor, {
-								props: {
-									fileId: file ? file.id : null,
-									active: true,
-									shareToken: sharingToken,
-									relativePath: path,
-									mimeType: file.mimetype,
-								},
-								on: {
-									close: function() { // eslint-disable-line
-										self.$destroy()
+		const registerAction = (mime) =>
+			OCA.Files.fileActions.register(
+				mime,
+				FILE_ACTION_IDENTIFIER,
+				OC.PERMISSION_UPDATE | OC.PERMISSION_READ,
+				imagePath('core', 'actions/rename'),
+				(filename) => {
+					const file = window.FileList.findFile(filename)
+					Promise.all([
+						import('vue'),
+						import(
+							/* webpackChunkName: "files-modal" */ './../components/PublicFilesEditor.vue'
+						),
+					]).then((imports) => {
+						const path =
+							window.FileList.getCurrentDirectory() + '/' + filename
+						const Vue = imports[0].default
+						Vue.prototype.t = window.t
+						Vue.prototype.n = window.n
+						Vue.prototype.OCA = window.OCA
+						const Editor = imports[1].default
+						const vm = new Vue({
+							render: (h) => {
+								// eslint-disable-line
+								const self = this
+								return h(Editor, {
+									props: {
+										fileId: file ? file.id : null,
+										active: true,
+										shareToken: sharingToken,
+										relativePath: path,
+										mimeType: file.mimetype,
 									},
-								},
-							})
-						},
+									on: {
+										close: () => {
+											// eslint-disable-line
+											self.$destroy()
+										},
+									},
+								})
+							},
+						})
+						vm.$mount(ViewerRoot)
 					})
-					vm.$mount(ViewerRoot)
-				})
-			},
-			t('text', 'Edit'),
-		)
+				},
+				t('text', 'Edit'),
+			)
 
 		for (let i = 0; i < openMimetypes.length; i++) {
 			registerAction(openMimetypes[i])
-			OCA.Files.fileActions.setDefault(openMimetypes[i], FILE_ACTION_IDENTIFIER)
+			OCA.Files.fileActions.setDefault(
+				openMimetypes[i],
+				FILE_ACTION_IDENTIFIER,
+			)
 		}
 	}
-
 }
 
 let newWorkspaceCreated = false
 
 export const addMenuRichWorkspace = () => {
-	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
+	const descriptionFile =
+		t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
 		id: 'rich-workspace-init',
 		displayName: t('text', 'Add folder description'),
@@ -129,11 +155,14 @@ export const addMenuRichWorkspace = () => {
 			const contentNames = content.map((node) => node.basename)
 
 			if (contentNames.includes(descriptionFile)) {
-				showError(t('text', '"{name}" already exist!', { name: descriptionFile }))
+				showError(
+					t('text', '"{name}" already exist!', { name: descriptionFile }),
+				)
 				return
 			}
 
-			const source = context.encodedSource + '/' + encodeURIComponent(descriptionFile)
+			const source =
+				context.encodedSource + '/' + encodeURIComponent(descriptionFile)
 			const response = await axios({
 				method: 'PUT',
 				url: source,
@@ -180,13 +209,20 @@ export const FilesWorkspaceHeader = new Header({
 			vm.$destroy()
 			vm = null
 		}
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
-		const path = newWorkspaceCreated ? dirname(newWorkspaceCreated.path) : folder.path
-		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
+		const hasRichWorkspace =
+			!!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
+		const path = newWorkspaceCreated
+			? dirname(newWorkspaceCreated.path)
+			: folder.path
+		const content = newWorkspaceCreated
+			? ''
+			: folder.attributes['rich-workspace']
 
 		newWorkspaceCreated = false
 
-		const { default: RichWorkspace } = await import('./../views/RichWorkspace.vue')
+		const { default: RichWorkspace } = await import(
+			'./../views/RichWorkspace.vue'
+		)
 
 		import('vue').then((module) => {
 			el.id = 'files-workspace-wrapper'
@@ -227,8 +263,4 @@ export const FilesWorkspaceHeader = new Header({
 	},
 })
 
-export {
-	registerFileActionFallback,
-	registerFileCreate,
-	FILE_ACTION_IDENTIFIER,
-}
+export { registerFileActionFallback, registerFileCreate, FILE_ACTION_IDENTIFIER }

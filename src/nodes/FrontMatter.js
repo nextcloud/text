@@ -14,26 +14,31 @@ const FrontMatter = TiptapCodeBlock.extend({
 	renderHTML({ node, HTMLAttributes }) {
 		return this.parent({
 			node,
-			HTMLAttributes:
-			mergeAttributes(HTMLAttributes, { 'data-title': t('text', 'Front matter'), class: 'frontmatter' }),
+			HTMLAttributes: mergeAttributes(HTMLAttributes, {
+				'data-title': t('text', 'Front matter'),
+				class: 'frontmatter',
+			}),
 		})
 	},
 	parseHTML() {
-		return [{
-			tag: 'pre#frontmatter',
-			preserveWhitespace: 'full',
-			priority: 9001,
-			attrs: {
-				language: 'yaml',
+		return [
+			{
+				tag: 'pre#frontmatter',
+				preserveWhitespace: 'full',
+				priority: 9001,
+				attrs: {
+					language: 'yaml',
+				},
 			},
-		}]
+		]
 	},
 	toMarkdown: (state, node) => {
-		if (!state.out.match(/^\s*/)) throw Error('FrontMatter must be the first node of the document!')
+		if (!state.out.match(/^\s*/))
+			throw Error('FrontMatter must be the first node of the document!')
 		const text = node.textContent
 		// Make sure the front matter fences are longer than any dash sequence within it
 		const dashes = text.match(/-{3,}/gm)
-		const separator = dashes ? (dashes.sort().slice(-1)[0] + '-') : '---'
+		const separator = dashes ? dashes.sort().slice(-1)[0] + '-' : '---'
 
 		state.write('')
 		state.out = ''
@@ -51,12 +56,11 @@ const FrontMatter = TiptapCodeBlock.extend({
 				find: /^---$/g,
 				handler: ({ state, range, chain }) => {
 					if (range.from === 1) {
-						if (state.doc.resolve(1).parent.type.name === this.name) return false
-						chain()
-							.deleteRange(range)
-							.insertContentAt(0, {
-								type: this.name,
-							})
+						if (state.doc.resolve(1).parent.type.name === this.name)
+							return false
+						chain().deleteRange(range).insertContentAt(0, {
+							type: this.name,
+						})
 						return true
 					}
 					return false

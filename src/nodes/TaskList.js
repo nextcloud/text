@@ -7,7 +7,6 @@ import TiptapTaskList from '@tiptap/extension-task-list'
 import { mergeAttributes } from '@tiptap/core'
 
 const TaskList = TiptapTaskList.extend({
-
 	parseHTML: [
 		{
 			priority: 100,
@@ -16,7 +15,13 @@ const TaskList = TiptapTaskList.extend({
 	],
 
 	renderHTML({ HTMLAttributes }) {
-		return ['ul', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { class: 'contains-task-list' }), 0]
+		return [
+			'ul',
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+				class: 'contains-task-list',
+			}),
+			0,
+		]
 	},
 
 	addAttributes() {
@@ -38,7 +43,6 @@ const TaskList = TiptapTaskList.extend({
 	toMarkdown: (state, node) => {
 		state.renderList(node, '  ', () => `${node.attrs.bullet} `)
 	},
-
 })
 
 export default TaskList

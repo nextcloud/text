@@ -16,7 +16,7 @@ export default function extractHeadings(doc, oldVal = []) {
 	const counter = new Map()
 	const headings = []
 
-	const getId = text => {
+	const getId = (text) => {
 		const id = slugify(text)
 		if (counter.has(id)) {
 			const next = counter.get(id)

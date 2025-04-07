@@ -37,7 +37,7 @@ const TrailingNode = Extension.create({
 		const plugin = new PluginKey(this.name)
 		const disabledNodes = Object.entries(this.editor.schema.nodes)
 			.map(([, value]) => value)
-			.filter(node => this.options.notAfter.includes(node.name))
+			.filter((node) => this.options.notAfter.includes(node.name))
 
 		return [
 			new Plugin({
@@ -57,7 +57,10 @@ const TrailingNode = Extension.create({
 				state: {
 					init: (_, state) => {
 						const lastNode = state.tr.doc.lastChild
-						return !nodeEqualsType({ node: lastNode, types: disabledNodes })
+						return !nodeEqualsType({
+							node: lastNode,
+							types: disabledNodes,
+						})
 					},
 					apply: (tr, value) => {
 						if (!tr.docChanged) {
@@ -65,7 +68,10 @@ const TrailingNode = Extension.create({
 						}
 
 						const lastNode = tr.doc.lastChild
-						return !nodeEqualsType({ node: lastNode, types: disabledNodes })
+						return !nodeEqualsType({
+							node: lastNode,
+							types: disabledNodes,
+						})
 					},
 				},
 			}),

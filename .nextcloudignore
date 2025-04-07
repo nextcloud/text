@@ -11,6 +11,7 @@
 /.l10nignore
 /.nextcloudignore
 /.php-cs-fixer.dist.php
+/.prettierignore
 /.stylelintrc.js
 /.travis.yml
 /.tx

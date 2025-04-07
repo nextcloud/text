@@ -16,19 +16,23 @@ export default function extractLinkParagraphs(doc) {
 
 	doc.descendants((node, pos) => {
 		if (previewPossible(node)) {
-			paragraphs.push(Object.freeze({
-				pos,
-				nodeSize: node.nodeSize,
-				type: 'text-only',
-				href: extractHref(node.firstChild),
-			}))
+			paragraphs.push(
+				Object.freeze({
+					pos,
+					nodeSize: node.nodeSize,
+					type: 'text-only',
+					href: extractHref(node.firstChild),
+				}),
+			)
 		} else if (node.type.name === 'preview') {
-			paragraphs.push(Object.freeze({
-				pos,
-				nodeSize: node.nodeSize,
-				type: 'link-preview',
-				href: node.attrs.href,
-			}))
+			paragraphs.push(
+				Object.freeze({
+					pos,
+					nodeSize: node.nodeSize,
+					type: 'link-preview',
+					href: node.attrs.href,
+				}),
+			)
 		}
 	})
 	return paragraphs
@@ -56,8 +60,10 @@ function previewPossible(node) {
  * @return {boolean}
  */
 function hasOtherContent(node) {
-	return node.childCount > 2
-		|| (node.childCount === 2 && node.lastChild.textContent.trim())
+	return (
+		node.childCount > 2 ||
+		(node.childCount === 2 && node.lastChild.textContent.trim())
+	)
 }
 
 /**
@@ -69,6 +75,6 @@ function extractHref(node) {
 	if (!node) {
 		return undefined
 	}
-	const link = node.marks.find(mark => mark.type.name === 'link')
+	const link = node.marks.find((mark) => mark.type.name === 'link')
 	return link?.attrs.href
 }

@@ -10,7 +10,6 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Preview from './Preview.vue'
 
 export default Node.create({
-
 	name: 'preview',
 
 	group: 'block',
@@ -33,7 +32,7 @@ export default Node.create({
 	addAttributes() {
 		return {
 			href: { parseHTML: parseHref },
-			title: { parseHTML: el => el.getAttribute('title') },
+			title: { parseHTML: (el) => el.getAttribute('title') },
 		}
 	},
 
@@ -47,11 +46,15 @@ export default Node.create({
 	},
 
 	renderHTML({ node }) {
-		return ['a', {
-			...node.attrs,
-			href: domHref(node, this.options.relativePath),
-			rel: 'noopener noreferrer nofollow',
-		}, 0]
+		return [
+			'a',
+			{
+				...node.attrs,
+				href: domHref(node, this.options.relativePath),
+				rel: 'noopener noreferrer nofollow',
+			},
+			0,
+		]
 	},
 
 	addNodeView() {
@@ -67,51 +70,65 @@ export default Node.create({
 
 	addCommands() {
 		return {
-
 			/**
 			 * Turn a paragraph that contains a single link
 			 * into a preview.
 			 *
 			 */
-			setPreview: () => ({ state, chain }) => {
-				return previewPossible(state)
-					&& chain()
-						.setNode(this.name, previewAttributesFromSelection(state))
-						.run()
-			},
+			setPreview:
+				() =>
+				({ state, chain }) => {
+					return (
+						previewPossible(state) &&
+						chain()
+							.setNode(
+								this.name,
+								previewAttributesFromSelection(state),
+							)
+							.run()
+					)
+				},
 
 			/**
 			 * Turn a preview back into a paragraph with a link.
 			 *
 			 */
-			unsetPreview: () => ({ state, chain }) => {
-				return isActive(this.name, this.attributes, state)
-					&& chain()
-						.setNode('paragraph')
-						.run()
-			},
+			unsetPreview:
+				() =>
+				({ state, chain }) => {
+					return (
+						isActive(this.name, this.attributes, state) &&
+						chain().setNode('paragraph').run()
+					)
+				},
 
 			/**
 			 * Insert a preview for given link.
 			 *
 			 * @param {string} link - the link URL
 			 */
-			insertPreview: (link) => ({ state, chain }) => {
-				return chain()
-					.insertContent({
-						type: 'preview',
-						attrs: { href: link, title: 'preview' },
-						content: [{
-							type: 'text',
-							marks: [{
-								type: 'link',
-								attrs: { href: link },
-							}],
-							text: link,
-						}],
-					})
-					.run()
-			},
+			insertPreview:
+				(link) =>
+				({ state, chain }) => {
+					return chain()
+						.insertContent({
+							type: 'preview',
+							attrs: { href: link, title: 'preview' },
+							content: [
+								{
+									type: 'text',
+									marks: [
+										{
+											type: 'link',
+											attrs: { href: link },
+										},
+									],
+									text: link,
+								},
+							],
+						})
+						.run()
+				},
 		}
 	},
 })
@@ -165,8 +182,10 @@ function previewPossible({ selection }) {
  * @return {boolean}
  */
 function hasOtherContent(node) {
-	return node.childCount > 2
-		|| (node.childCount === 2 && node.lastChild.textContent.trim())
+	return (
+		node.childCount > 2 ||
+		(node.childCount === 2 && node.lastChild.textContent.trim())
+	)
 }
 
 /**
@@ -178,6 +197,6 @@ function extractHref(node) {
 	if (!node) {
 		return undefined
 	}
-	const link = node.marks.find(mark => mark.type.name === 'link')
+	const link = node.marks.find((mark) => mark.type.name === 'link')
 	return link?.attrs.href
 }

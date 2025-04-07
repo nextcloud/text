@@ -4,7 +4,9 @@
 -->
 
 <template>
-	<BaseReader :content="content" @click-link="(e, a) => $emit('click-link', e, a)" />
+	<BaseReader
+		:content="content"
+		@click-link="(e, a) => $emit('click-link', e, a)" />
 </template>
 
 <script>
@@ -39,6 +41,6 @@ export default {
 </script>
 
 <style lang="scss">
-	@import './../css/prosemirror';
-	@import './../css/print';
+@import './../css/prosemirror';
+@import './../css/print';
 </style>

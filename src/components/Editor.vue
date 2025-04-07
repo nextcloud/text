@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div id="editor-container"
+	<div
+		id="editor-container"
 		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
@@ -12,7 +13,8 @@
 		@keydown.stop="onKeyDown">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
-		<Wrapper v-if="displayed"
+		<Wrapper
+			v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
@@ -21,10 +23,13 @@
 			@outline-toggled="outlineToggled">
 			<MainContainer v-if="hasEditor">
 				<!-- Readonly -->
-				<div v-if="readOnly || (openReadOnlyEnabled && !editMode)" class="text-editor--readonly-bar">
+				<div
+					v-if="readOnly || (openReadOnlyEnabled && !editMode)"
+					class="text-editor--readonly-bar">
 					<slot name="readonlyBar">
 						<ReadonlyBar :open-read-only="openReadOnlyEnabled">
-							<Status :document="document"
+							<Status
+								:document="document"
 								:dirty="dirty"
 								:sessions="filteredSessions"
 								:sync-error="syncError"
@@ -34,12 +39,14 @@
 				</div>
 				<!-- Rich Menu -->
 				<template v-else>
-					<MenuBar v-if="renderMenus"
+					<MenuBar
+						v-if="renderMenus"
 						ref="menubar"
 						:is-hidden="hideMenu"
 						:open-read-only="openReadOnlyEnabled"
 						:loaded.sync="menubarLoaded">
-						<Status :document="document"
+						<Status
+							:document="document"
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
@@ -49,21 +56,23 @@
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
 				</template>
-				<ContentContainer v-show="contentLoaded"
-					ref="contentWrapper" />
+				<ContentContainer v-show="contentLoaded" ref="contentWrapper" />
 				<SuggestionsBar v-if="isRichEditor && contentLoaded" />
 			</MainContainer>
-			<Reader v-if="isResolvingConflict"
+			<Reader
+				v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-			<DocumentStatus :idle="idle"
+			<DocumentStatus
+				:idle="idle"
 				:lock="lock"
 				:sync-error="syncError"
 				:has-connection-issue="requireReconnect"
 				@reconnect="reconnect" />
 		</Wrapper>
 		<Assistant v-if="hasEditor" />
-		<Translate :show="translateModal"
+		<Translate
+			:show="translateModal"
 			:content="translateContent"
 			@insert-content="translateInsert"
 			@replace-content="translateReplace"
@@ -140,16 +149,13 @@ export default {
 		ReadonlyBar,
 		ContentContainer,
 		MenuBar,
-		Reader: () => import(/* webpackChunkName: "editor" */'./Reader.vue'),
+		Reader: () => import(/* webpackChunkName: "editor" */ './Reader.vue'),
 		Status,
 		Assistant,
 		Translate,
 		SuggestionsBar,
 	},
-	mixins: [
-		isMobile,
-		setContent,
-	],
+	mixins: [isMobile, setContent],
 
 	provide() {
 		const val = {}
@@ -241,7 +247,7 @@ export default {
 	setup() {
 		const el = ref(null)
 		const { width } = useElementSize(el)
-		watch(width, value => {
+		watch(width, (value) => {
 			const maxWidth = Math.floor(value) - 36
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
@@ -285,7 +291,9 @@ export default {
 			return this.hasSyncCollission && !this.readOnly
 		},
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
@@ -294,10 +302,15 @@ export default {
 			return this.isDirectEditing || isPublicShare()
 		},
 		isRichEditor() {
-			return loadState('text', 'rich_editing_enabled', true) && this.mime === 'text/markdown'
+			return (
+				loadState('text', 'rich_editing_enabled', true) &&
+				this.mime === 'text/markdown'
+			)
 		},
 		fileExtension() {
-			return this.relativePath ? this.relativePath.split('/').pop().split('.').pop() : 'txt'
+			return this.relativePath
+				? this.relativePath.split('/').pop().split('.').pop()
+				: 'txt'
 		},
 		currentDirectory() {
 			return this.relativePath
@@ -311,14 +324,15 @@ export default {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
 		},
 		renderRichEditorMenus() {
-			return this.contentLoaded
-				&& this.isRichEditor
-				&& !this.syncError
-				&& !this.readOnly
+			return (
+				this.contentLoaded &&
+				this.isRichEditor &&
+				!this.syncError &&
+				!this.readOnly
+			)
 		},
 		renderMenus() {
-			return this.contentLoaded
-				&& !this.syncError
+			return this.contentLoaded && !this.syncError
 		},
 		imagePath() {
 			return this.relativePath.split('/').slice(0, -1).join('/')
@@ -365,7 +379,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.active && (this.hasDocumentParameters)) {
+		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
 		}
 		if (!this.richWorkspace) {
@@ -413,7 +427,9 @@ export default {
 				this.emit('error', 'No valid file provided')
 				return
 			}
-			const guestName = localStorage.getItem('nick') ? localStorage.getItem('nick') : ''
+			const guestName = localStorage.getItem('nick')
+				? localStorage.getItem('nick')
+				: ''
 
 			const api = new SessionApi({
 				guestName,
@@ -425,8 +441,12 @@ export default {
 				api,
 				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
-					? (content) => createMarkdownSerializer(this.$editor.schema).serialize(content ?? this.$editor.state.doc)
-					: (content) => serializePlainText(content ?? this.$editor.state.doc),
+					? (content) =>
+							createMarkdownSerializer(this.$editor.schema).serialize(
+								content ?? this.$editor.state.doc,
+							)
+					: (content) =>
+							serializePlainText(content ?? this.$editor.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
@@ -492,14 +512,19 @@ export default {
 
 			// Make sure we get our own session updated
 			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(session => session.id === this.currentSession.id)
+			const currentUpdatedSession = this.sessions.find(
+				(session) => session.id === this.currentSession.id,
+			)
 			set(this, 'currentSession', currentUpdatedSession)
 
 			const currentSessionIds = this.sessions.map((session) => session.userId)
 			const currentGuestIds = this.sessions.map((session) => session.guestId)
 
-			const removedSessions = Object.keys(this.filteredSessions)
-				.filter(sessionId => !currentSessionIds.includes(sessionId) && !currentGuestIds.includes(sessionId))
+			const removedSessions = Object.keys(this.filteredSessions).filter(
+				(sessionId) =>
+					!currentSessionIds.includes(sessionId) &&
+					!currentGuestIds.includes(sessionId),
+			)
 
 			for (const index in removedSessions) {
 				Vue.delete(this.filteredSessions, removedSessions[index])
@@ -509,8 +534,15 @@ export default {
 				const sessionKey = session.displayName ? session.userId : session.id
 				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant
-					if (this.filteredSessions[sessionKey].lastContact < session.lastContact) {
-						set(this.filteredSessions[sessionKey], 'lastContact', session.lastContact)
+					if (
+						this.filteredSessions[sessionKey].lastContact <
+						session.lastContact
+					) {
+						set(
+							this.filteredSessions[sessionKey],
+							'lastContact',
+							session.lastContact,
+						)
 					}
 				} else {
 					set(this.filteredSessions, sessionKey, session)
@@ -541,18 +573,24 @@ export default {
 			if (this.currentSession?.userId && this.relativePath?.length) {
 				const node = new File({
 					id: this.fileId,
-					source: generateRemoteUrl(`dav/files/${this.currentSession.userId}${this.relativePath}`),
+					source: generateRemoteUrl(
+						`dav/files/${this.currentSession.userId}${this.relativePath}`,
+					),
 					mime: this.mime,
 				})
 				fetchNode(node)
-					.then((n) => { this.fileNode = n })
-					.catch(err => logger.warn('Failed to fetch node', { err }))
+					.then((n) => {
+						this.fileNode = n
+					})
+					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
 			if (!documentState) {
-				this.setInitialYjsState(documentSource, { isRichEditor: this.isRichEditor })
+				this.setInitialYjsState(documentSource, {
+					isRichEditor: this.isRichEditor,
+				})
 			}
 
 			this.$baseVersionEtag = document.baseVersionEtag
@@ -572,7 +610,7 @@ export default {
 					user: {
 						name: session?.userId
 							? session.displayName
-							: (session?.guestName || t('text', 'Guest')),
+							: session?.guestName || t('text', 'Guest'),
 						color: session?.color,
 						clientId: this.$ydoc.clientID,
 					},
@@ -588,16 +626,14 @@ export default {
 				this.hasEditor = true
 				this.listenEditorEvents()
 			} else {
-				const language = extensionHighlight[this.fileExtension]
-					|| this.fileExtension
-				loadSyntaxHighlight(language)
-					.then(() => {
-						this.$editor = createPlainEditor({ language, extensions })
-						this.hasEditor = true
-						this.listenEditorEvents()
-					})
+				const language =
+					extensionHighlight[this.fileExtension] || this.fileExtension
+				loadSyntaxHighlight(language).then(() => {
+					this.$editor = createPlainEditor({ language, extensions })
+					this.hasEditor = true
+					this.listenEditorEvents()
+				})
 			}
-
 		},
 
 		onChange({ document, sessions }) {
@@ -628,9 +664,10 @@ export default {
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0
-				|| !this.$providers[0].wsconnected
-				|| this.$syncService.pushError > 0
+			this.hasConnectionIssue =
+				this.$syncService.backend.fetcher === 0 ||
+				!this.$providers[0].wsconnected ||
+				this.$syncService.pushError > 0
 			if (this.$syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.$syncService.sendStepsNow()
@@ -651,15 +688,21 @@ export default {
 				}
 			}
 
-			if (type === ERROR_TYPE.SAVE_COLLISSION && (!this.syncError || this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)) {
+			if (
+				type === ERROR_TYPE.SAVE_COLLISSION &&
+				(!this.syncError ||
+					this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+			) {
 				this.contentLoaded = true
 				this.syncError = {
 					type,
 					data,
 				}
 			}
-			if (type === ERROR_TYPE.CONNECTION_FAILED
-				|| type === ERROR_TYPE.SOURCE_NOT_FOUND) {
+			if (
+				type === ERROR_TYPE.CONNECTION_FAILED ||
+				type === ERROR_TYPE.SOURCE_NOT_FOUND
+			) {
 				this.hasConnectionIssue = true
 			}
 
@@ -684,8 +727,9 @@ export default {
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
-				if (this.$editor
-					&& (this.$editor.can().undo() || this.$editor.can().redo())
+				if (
+					this.$editor &&
+					(this.$editor.can().undo() || this.$editor.can().redo())
 				) {
 					this.dirty = state.dirty
 					if (this.dirty) {
@@ -740,7 +784,7 @@ export default {
 		async disconnect() {
 			await this.$syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach(p => p?.destroy())
+			this.$providers.forEach((p) => p?.destroy())
 			this.$providers = []
 			this.$syncService = null
 			// disallow editing while still showing the content
@@ -748,10 +792,14 @@ export default {
 		},
 
 		async close() {
-			await this.$syncService.sendRemainingSteps()
-				.catch(err => logger.warn('Failed to send remaining steps', { err }))
-			await this.disconnect()
-				.catch(err => logger.warn('Failed to disconnect', { err }))
+			await this.$syncService
+				.sendRemainingSteps()
+				.catch((err) =>
+					logger.warn('Failed to send remaining steps', { err }),
+				)
+			await this.disconnect().catch((err) =>
+				logger.warn('Failed to disconnect', { err }),
+			)
 			if (this.$editor) {
 				try {
 					this.unlistenEditorEvents()
@@ -802,7 +850,9 @@ export default {
 			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
-			logger.debug('markdown, serialized from editor state by prosemirror-markdown')
+			logger.debug(
+				'markdown, serialized from editor state by prosemirror-markdown',
+			)
 			console.debug(proseMirrorMarkdown)
 			logger.debug('HTML, serialized from markdown by markdown-it')
 			console.debug(markdownItHtml)
@@ -847,7 +897,13 @@ export default {
 				return
 			}
 
-			if (event.key === 'Tab' && !event.shiftKey && !event.ctrlKey && !event.metaKey && this.$editor.isActive('codeBlock')) {
+			if (
+				event.key === 'Tab' &&
+				!event.shiftKey &&
+				!event.ctrlKey &&
+				!event.metaKey &&
+				this.$editor.isActive('codeBlock')
+			) {
 				this.$editor.commands.insertContent('\t')
 				this.$editor.commands.focus()
 				event.preventDefault()
@@ -896,7 +952,10 @@ export default {
 			})
 		},
 		updateEditorWidth(newWidth) {
-			document.documentElement.style.setProperty('--text-editor-max-width', newWidth)
+			document.documentElement.style.setProperty(
+				'--text-editor-max-width',
+				newWidth,
+			)
 		},
 
 		saveBeforeUnload() {
@@ -954,8 +1013,10 @@ export default {
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
-	height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-	padding-top:3px;
+	height: var(
+		--default-clickable-area
+	); // important for mobile so that the buttons are always inside the container
+	padding-top: 3px;
 	padding-bottom: 3px;
 }
 
@@ -1005,8 +1066,12 @@ export default {
 }
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 /* Give a remote user a caret */
@@ -1014,8 +1079,8 @@ export default {
 	position: relative;
 	margin-left: -1px;
 	margin-right: -1px;
-	border-left: 1px solid #0D0D0D;
-	border-right: 1px solid #0D0D0D;
+	border-left: 1px solid #0d0d0d;
+	border-right: 1px solid #0d0d0d;
 	word-break: normal;
 	pointer-events: none;
 }
@@ -1030,7 +1095,7 @@ export default {
 	font-weight: 600;
 	line-height: normal;
 	user-select: none;
-	color: #0D0D0D;
+	color: #0d0d0d;
 	padding: 0.1rem 0.3rem;
 	border-radius: 3px 3px 3px 0;
 	white-space: nowrap;

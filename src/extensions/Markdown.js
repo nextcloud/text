@@ -29,7 +29,6 @@ import markdownit from '../markdownit/index.js'
 import transformPastedHTML from './transformPastedHTML.js'
 
 const Markdown = Extension.create({
-
 	name: 'markdown',
 
 	extendMarkSchema(extension) {
@@ -88,12 +87,17 @@ const Markdown = Extension.create({
 							dom.innerHTML = markdownit.render(str)
 						}
 
-						return parser.parseSlice(dom, { preserveWhitespace: true, context: $context })
+						return parser.parseSlice(dom, {
+							preserveWhitespace: true,
+							context: $context,
+						})
 					},
 					clipboardTextSerializer: (slice) => {
 						const traverseNodes = (slice) => {
 							if (slice.content.childCount > 1) {
-								return clipboardSerializer(this.editor.schema).serialize(slice.content)
+								return clipboardSerializer(
+									this.editor.schema,
+								).serialize(slice.content)
 							} else if (slice.isLeaf) {
 								return slice.textContent
 							} else {
@@ -117,7 +121,10 @@ const createMarkdownSerializer = ({ nodes, marks }) => {
 			extractMarksToMarkdown(marks),
 		),
 		serialize(content, options) {
-			return this.serializer.serialize(content, { ...options, tightLists: true })
+			return this.serializer.serialize(content, {
+				...options,
+				tightLists: true,
+			})
 		},
 	}
 }
@@ -129,23 +136,31 @@ const clipboardSerializer = ({ nodes, marks }) => {
 			extractToPlaintext(marks),
 		),
 		serialize(content, options) {
-			return this.serializer.serialize(content, { ...options, tightLists: true })
+			return this.serializer.serialize(content, {
+				...options,
+				tightLists: true,
+			})
 		},
 	}
 }
 
 const extractToPlaintext = (marks) => {
-	const blankMark = { open: '', close: '', mixable: true, expelEnclosingWhitespace: true }
+	const blankMark = {
+		open: '',
+		close: '',
+		mixable: true,
+		expelEnclosingWhitespace: true,
+	}
 	const defaultMarks = convertNames(defaultMarkdownSerializer.marks)
-	const markEntries = Object.entries({ ...defaultMarks, ...marks })
-		.map(([name, _mark]) => [name, blankMark])
+	const markEntries = Object.entries({ ...defaultMarks, ...marks }).map(
+		([name, _mark]) => [name, blankMark],
+	)
 
 	return Object.fromEntries(markEntries)
 }
 
 const extractToMarkdown = (nodesOrMarks) => {
-	const nodeOrMarkEntries = Object
-		.entries(nodesOrMarks)
+	const nodeOrMarkEntries = Object.entries(nodesOrMarks)
 		.map(([name, nodeOrMark]) => [name, nodeOrMark.spec.toMarkdown])
 		.filter(([, toMarkdown]) => toMarkdown)
 
@@ -169,8 +184,7 @@ const convertNames = (object) => {
 		return name.replace(/_(\w)/g, (_m, letter) => letter.toUpperCase())
 	}
 	return Object.fromEntries(
-		Object.entries(object)
-			.map(([name, value]) => [convert(name), value]),
+		Object.entries(object).map(([name, value]) => [convert(name), value]),
 	)
 }
 

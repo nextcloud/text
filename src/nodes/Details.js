@@ -20,9 +20,7 @@ function detailsParentInfo(resolvedPos, schema) {
 		const node = resolvedPos.node(depth)
 		if (node.type === schema.nodes.details) {
 			return {
-				pos: depth > 0
-					? resolvedPos.before(depth)
-					: 0,
+				pos: depth > 0 ? resolvedPos.before(depth) : 0,
 				node,
 			}
 		}
@@ -43,9 +41,7 @@ function childFromNode(node, nodeType) {
 			return false
 		}
 	})
-	return childNodes.length > 0
-		? childNodes[0]
-		: null
+	return childNodes.length > 0 ? childNodes[0] : null
 }
 
 const Details = Node.create({
@@ -57,10 +53,7 @@ const Details = Node.create({
 	allowGapCursor: false,
 
 	addExtensions() {
-		return [
-			DetailsContent,
-			DetailsSummary,
-		]
+		return [DetailsContent, DetailsSummary]
 	},
 
 	addOptions() {
@@ -78,13 +71,19 @@ const Details = Node.create({
 	},
 
 	parseHTML() {
-		return [{
-			tag: 'details',
-		}]
+		return [
+			{
+				tag: 'details',
+			},
+		]
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		return ['details', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+		return [
+			'details',
+			mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+			0,
+		]
 	},
 
 	addNodeView() {
@@ -102,65 +101,84 @@ const Details = Node.create({
 
 	addCommands() {
 		return {
-			setDetails: () => ({ commands, state, chain }) => {
-				const { schema, selection } = state
-				const { $from, $to } = selection
-				const blockRange = $from.blockRange($to)
-				if (!blockRange) {
-					return false
-				}
+			setDetails:
+				() =>
+				({ commands, state, chain }) => {
+					const { schema, selection } = state
+					const { $from, $to } = selection
+					const blockRange = $from.blockRange($to)
+					if (!blockRange) {
+						return false
+					}
 
-				const slice = state.doc.slice(blockRange.start, blockRange.end)
-				if (!schema.nodes.detailsContent.contentMatch.matchFragment(slice.content)) {
-					return false
-				}
-				const sliceContent = slice.toJSON()?.content || []
+					const slice = state.doc.slice(blockRange.start, blockRange.end)
+					if (
+						!schema.nodes.detailsContent.contentMatch.matchFragment(
+							slice.content,
+						)
+					) {
+						return false
+					}
+					const sliceContent = slice.toJSON()?.content || []
 
-				return chain()
-					.insertContentAt({
-						from: blockRange.start,
-						to: blockRange.end,
-					}, {
-						type: this.name,
-						attrs: {
-							openDetails: true,
-						},
-						content: [
-							{ type: 'detailsSummary' },
-							{ type: 'detailsContent', content: sliceContent },
-						],
-					})
-					.setTextSelection(blockRange.start + 2)
-					.run()
-			},
-			unsetDetails: () => ({ state, chain }) => {
-				const { schema, selection } = state
-				const details = detailsParentInfo(selection.$from, schema)
-				if (!details) {
-					return false
-				}
-				const detailsContent = childFromNode(details.node, schema.nodes.detailsContent)
-				if (!detailsContent) {
-					return false
-				}
+					return chain()
+						.insertContentAt(
+							{
+								from: blockRange.start,
+								to: blockRange.end,
+							},
+							{
+								type: this.name,
+								attrs: {
+									openDetails: true,
+								},
+								content: [
+									{ type: 'detailsSummary' },
+									{
+										type: 'detailsContent',
+										content: sliceContent,
+									},
+								],
+							},
+						)
+						.setTextSelection(blockRange.start + 2)
+						.run()
+				},
+			unsetDetails:
+				() =>
+				({ state, chain }) => {
+					const { schema, selection } = state
+					const details = detailsParentInfo(selection.$from, schema)
+					if (!details) {
+						return false
+					}
+					const detailsContent = childFromNode(
+						details.node,
+						schema.nodes.detailsContent,
+					)
+					if (!detailsContent) {
+						return false
+					}
 
-				const content = detailsContent.content.toJSON()
-				const range = {
-					from: details.pos,
-					to: details.pos + details.node.nodeSize,
-				}
+					const content = detailsContent.content.toJSON()
+					const range = {
+						from: details.pos,
+						to: details.pos + details.node.nodeSize,
+					}
 
-				return chain()
-					.insertContentAt(range, content)
-					.setTextSelection(details.pos + 1)
-					.run()
-			},
-			toggleDetails: () => ({ commands, state }) => {
-				if (!isNodeActive(state, this.name)) {
-					return commands.setDetails()
-				}
-				return commands.unsetDetails()
-			},
+					return chain()
+						.insertContentAt(range, content)
+						.setTextSelection(details.pos + 1)
+						.run()
+				},
+			toggleDetails:
+				() =>
+				({ commands, state }) => {
+					if (!isNodeActive(state, this.name)) {
+						return commands.setDetails()
+					}
+					return commands.unsetDetails()
+				},
 		}
 	},
 
@@ -177,10 +195,15 @@ const Details = Node.create({
 
 				const details = detailsParentInfo($from, schema)
 				if (!details.node.attrs.openDetails) {
-					editor.commands.updateAttributes('details', { openDetails: true })
+					editor.commands.updateAttributes('details', {
+						openDetails: true,
+					})
 				}
 
-				const detailsContent = childFromNode(details.node, schema.nodes.detailsContent)
+				const detailsContent = childFromNode(
+					details.node,
+					schema.nodes.detailsContent,
+				)
 				if (!detailsContent) {
 					return false
 				}
@@ -208,7 +231,6 @@ const Details = Node.create({
 				return editor.commands.unsetDetails()
 			},
 		}
-
 	},
 })
 

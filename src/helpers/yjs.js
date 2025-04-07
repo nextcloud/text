@@ -80,12 +80,7 @@ export function applyStep(ydoc, step, origin = 'origin') {
 	}
 	// There are no responses to updates - so this is a dummy.
 	const encoder = encoding.createEncoder()
-	syncProtocol.readSyncMessage(
-		decoder,
-		encoder,
-		ydoc,
-		origin,
-	)
+	syncProtocol.readSyncMessage(decoder, encoder, ydoc, origin)
 }
 
 /**
@@ -104,14 +99,14 @@ export function logStep(step) {
 
 	const encodedStep = encodeArrayBuffer(step)
 	switch (messageType) {
-	case 0:
-		console.debug('y.js message sync', subType, encodedStep, err.stack)
-		break
-	case 3:
-		console.debug('y.js message awareness_query', encodedStep, err.stack)
-		break
-	case 1:
-		console.debug('y.js message awareness', encodedStep, err.stack)
-		break
+		case 0:
+			console.debug('y.js message sync', subType, encodedStep, err.stack)
+			break
+		case 3:
+			console.debug('y.js message awareness_query', encodedStep, err.stack)
+			break
+		case 1:
+			console.debug('y.js message awareness', encodedStep, err.stack)
+			break
 	}
 }

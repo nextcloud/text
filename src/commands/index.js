@@ -5,6 +5,4 @@
 
 import listInputRule from './listInputRule.js'
 
-export {
-	listInputRule,
-}
+export { listInputRule }
