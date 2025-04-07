@@ -32,7 +32,11 @@ export default function previewOptions({ editor }) {
 				const linkParagraphs = extractLinkParagraphs(doc)
 				return {
 					linkParagraphs,
-					decorations: linkParagraphDecorations(doc, linkParagraphs, editor),
+					decorations: linkParagraphDecorations(
+						doc,
+						linkParagraphs,
+						editor,
+					),
 				}
 			},
 			apply(tr, value, _oldState, newState) {
@@ -43,7 +47,9 @@ export default function previewOptions({ editor }) {
 					return value
 				}
 				const linkParagraphs = extractLinkParagraphs(newState.doc)
-				const decorations = mapDecorations(value, tr, linkParagraphs) || linkParagraphDecorations(newState.doc, linkParagraphs, editor)
+				const decorations =
+					mapDecorations(value, tr, linkParagraphs) ||
+					linkParagraphDecorations(newState.doc, linkParagraphs, editor)
 				return { linkParagraphs, decorations }
 			},
 		},
@@ -73,10 +79,12 @@ function mapDecorations(value, tr, linkParagraphs) {
 		return false
 	}
 	let removedDecorations = false
-	const decorations = value.decorations.map(tr.mapping, tr.doc, { onRemove: () => { removedDecorations = true } })
-	return removedDecorations
-		? false
-		: decorations
+	const decorations = value.decorations.map(tr.mapping, tr.doc, {
+		onRemove: () => {
+			removedDecorations = true
+		},
+	})
+	return removedDecorations ? false : decorations
 }
 
 /**
@@ -88,8 +96,7 @@ function mapDecorations(value, tr, linkParagraphs) {
  * @return {boolean}
  */
 function linkParagraphsChanged(current, prev) {
-	return (current.length !== prev.length)
-		|| current.some(isDifferentFrom(prev))
+	return current.length !== prev.length || current.some(isDifferentFrom(prev))
 }
 
 /**
@@ -101,8 +108,10 @@ function linkParagraphsChanged(current, prev) {
  * The returned function takes a linkParagraph and an index (as provided by iterators)
  */
 const isDifferentFrom = (other) => (linkParagraph, i) => {
-	return linkParagraph.type !== other[i].type
-		|| linkParagraph.nodeSize !== other[i].nodeSize
+	return (
+		linkParagraph.type !== other[i].type ||
+		linkParagraph.nodeSize !== other[i].nodeSize
+	)
 }
 
 /**
@@ -115,7 +124,9 @@ const isDifferentFrom = (other) => (linkParagraph, i) => {
  * @return {DecorationSet}
  */
 function linkParagraphDecorations(doc, linkParagraphs, editor) {
-	const decorations = linkParagraphs.map((linkParagraph) => decorationForLinkParagraph(linkParagraph, editor))
+	const decorations = linkParagraphs.map((linkParagraph) =>
+		decorationForLinkParagraph(linkParagraph, editor),
+	)
 	return DecorationSet.create(doc, decorations)
 }
 
@@ -171,7 +182,10 @@ function previewOptionForLinkParagraph({ type, pos, nodeSize }, editor) {
  * @param {object} editor - tiptap editor
  */
 function setPreview(pos, type, editor) {
-	const chain = editor.chain().focus().setTextSelection(pos + 1)
+	const chain = editor
+		.chain()
+		.focus()
+		.setTextSelection(pos + 1)
 	if (type !== 'text-only') {
 		chain.setPreview().run()
 	} else {

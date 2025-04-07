@@ -9,15 +9,17 @@
  * @param callback
  */
 
-const documentReady = function(callback) {
+const documentReady = function (callback) {
 	const fn = () => setTimeout(callback, 0)
-	if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
+	if (
+		document.attachEvent
+			? document.readyState === 'complete'
+			: document.readyState !== 'loading'
+	) {
 		fn()
 	} else {
 		document.addEventListener('DOMContentLoaded', callback)
 	}
 }
 
-export {
-	documentReady,
-}
+export { documentReady }

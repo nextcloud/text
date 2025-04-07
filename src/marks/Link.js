@@ -27,7 +27,6 @@ const extractHrefFromMarkdownLink = (match) => {
 }
 
 const Link = TipTapLink.extend({
-
 	addOptions() {
 		return {
 			...this.parent?.(),
@@ -51,7 +50,7 @@ const Link = TipTapLink.extend({
 	parseHTML: [
 		{
 			tag: 'a[href]',
-			getAttrs: dom => ({
+			getAttrs: (dom) => ({
 				href: parseHref(dom),
 				title: dom.getAttribute('title'),
 			}),
@@ -69,12 +68,16 @@ const Link = TipTapLink.extend({
 		} catch (error) {
 			href = '#'
 		}
-		return ['a', {
-			...mark.attrs,
-			href,
-			'data-md-href': mark.attrs.href,
-			rel: 'noopener noreferrer nofollow',
-		}, 0]
+		return [
+			'a',
+			{
+				...mark.attrs,
+				href,
+				'data-md-href': mark.attrs.href,
+				rel: 'noopener noreferrer nofollow',
+			},
+			0,
+		]
 	},
 
 	addInputRules() {
@@ -90,44 +93,57 @@ const Link = TipTapLink.extend({
 	addCommands() {
 		return {
 			...this.parent?.(),
-			insertOrSetLink: (text, attrs) => ({ state, chain, commands }) => {
-				// Check if any text is selected,
-				// if not insert the link using the given text property
-				if (state.selection.empty) {
-					if (isMarkActive(state, this.name)) {
-
-						// get current href to check what to replace, assumes there's only one link mark on the anchor
-						let href = ''
-						state.selection.$anchor.marks().forEach(item => {
-							if (item.attrs.href && item.type.name === 'link') {
-								href = item.attrs.href
-							}
-						})
-						commands.deleteRange(getMarkRange(state.selection.$anchor, state.schema.marks.link, { href }))
+			insertOrSetLink:
+				(text, attrs) =>
+				({ state, chain, commands }) => {
+					// Check if any text is selected,
+					// if not insert the link using the given text property
+					if (state.selection.empty) {
+						if (isMarkActive(state, this.name)) {
+							// get current href to check what to replace, assumes there's only one link mark on the anchor
+							let href = ''
+							state.selection.$anchor.marks().forEach((item) => {
+								if (item.attrs.href && item.type.name === 'link') {
+									href = item.attrs.href
+								}
+							})
+							commands.deleteRange(
+								getMarkRange(
+									state.selection.$anchor,
+									state.schema.marks.link,
+									{ href },
+								),
+							)
+							return chain().insertContent({
+								type: 'text',
+								marks: [
+									{
+										type: 'link',
+										attrs,
+									},
+								],
+								text,
+							})
+						}
 						return chain().insertContent({
-							type: 'text',
-							marks: [{
-								type: 'link',
-								attrs,
-							}],
-							text,
+							type: 'paragraph',
+							content: [
+								{
+									type: 'text',
+									marks: [
+										{
+											type: 'link',
+											attrs,
+										},
+									],
+									text,
+								},
+							],
 						})
+					} else {
+						return commands.setLink(attrs)
 					}
-					return chain().insertContent({
-						type: 'paragraph',
-						content: [{
-							type: 'text',
-							marks: [{
-								type: 'link',
-								attrs,
-							}],
-							text,
-						}],
-					})
-				} else {
-					return commands.setLink(attrs)
-				}
-			},
+				},
 		}
 	},
 
@@ -135,15 +151,14 @@ const Link = TipTapLink.extend({
 		const plugins = this.parent()
 			// remove upstream link click handle plugin
 			.filter(({ key }) => {
-				return !key.startsWith('handleClickLink') && !key.startsWith('textHandleClickLink')
+				return (
+					!key.startsWith('handleClickLink') &&
+					!key.startsWith('textHandleClickLink')
+				)
 			})
 
 		// Custom click handler plugins
-		return [
-			...plugins,
-			linkClicking(),
-		]
-
+		return [...plugins, linkClicking()]
 	},
 })
 

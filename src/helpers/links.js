@@ -6,7 +6,7 @@
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 
-const domHref = function(node, relativePath) {
+const domHref = function (node, relativePath) {
 	const ref = node.attrs.href
 	if (!ref) {
 		return ref
@@ -33,12 +33,12 @@ const domHref = function(node, relativePath) {
 	const match = ref.match(/^([^?]*)\?fileId=(\d+)/)
 	if (match) {
 		const [, , id] = match
-		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
+		return new URL(generateUrl(`/f/${id}`), window.origin).href
 	}
 	return ref
 }
 
-const parseHref = function(dom) {
+const parseHref = function (dom) {
 	const ref = dom.getAttribute('href')
 	if (!ref) {
 		return ref
@@ -46,18 +46,15 @@ const parseHref = function(dom) {
 	const match = ref.match(/\?dir=([^&]*)&openfile=([^&]*)#relPath=([^&]*)/)
 	if (match) {
 		const [, , id] = match
-		return (new URL(generateUrl(`/f/${id}`), window.origin)).href
+		return new URL(generateUrl(`/f/${id}`), window.origin).href
 	}
 	return ref
 }
 
-const isLinkToSelfWithHash = function(href) {
-	const locationNoHash = window.location.origin + window.location.pathname + window.location.search
+const isLinkToSelfWithHash = function (href) {
+	const locationNoHash =
+		window.location.origin + window.location.pathname + window.location.search
 	return href?.startsWith('#') || href?.startsWith(locationNoHash + '#')
 }
 
-export {
-	domHref,
-	parseHref,
-	isLinkToSelfWithHash,
-}
+export { domHref, parseHref, isLinkToSelfWithHash }

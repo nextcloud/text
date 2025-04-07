@@ -24,9 +24,6 @@ export default Extension.create({
 	},
 
 	addProseMirrorPlugins() {
-		return [
-			searchQuery(),
-			searchDecorations(),
-		]
+		return [searchQuery(), searchDecorations()]
 	},
 })

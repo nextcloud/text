@@ -7,11 +7,11 @@ import { encodeArrayBuffer } from '../helpers/base64.js'
 import { logger } from '../helpers/logger.js'
 
 type Sendable = {
-	steps: string[], awareness: string
+	steps: string[]
+	awareness: string
 }
 
 export default class Outbox {
-
 	#awarenessUpdate = ''
 	#syncUpdate = ''
 	#syncQuery = ''
@@ -35,7 +35,7 @@ export default class Outbox {
 
 	getDataToSend(): Sendable {
 		return {
-			steps: [this.#syncUpdate, this.#syncQuery].filter(s => s),
+			steps: [this.#syncUpdate, this.#syncQuery].filter((s) => s),
 			awareness: this.#awarenessUpdate,
 		}
 	}
@@ -61,5 +61,4 @@ export default class Outbox {
 			this.#awarenessUpdate = ''
 		}
 	}
-
 }

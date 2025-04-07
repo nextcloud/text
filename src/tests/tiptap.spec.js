@@ -21,11 +21,15 @@ describe('TipTap', () => {
 
 	it('render hardbreak', () => {
 		const markdown = 'Hard line break  \nNext Paragraph'
-		expect(renderedHTML(markdown)).toEqual('<p dir="ltr">Hard line break<br>Next Paragraph</p>')
+		expect(renderedHTML(markdown)).toEqual(
+			'<p dir="ltr">Hard line break<br>Next Paragraph</p>',
+		)
 	})
 
 	it('render taskList', () => {
 		const markdown = '* [ ] item 1\n'
-		expect(renderedHTML(markdown)).toEqual('<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p dir="ltr">item 1</p></label></li></ul>')
+		expect(renderedHTML(markdown)).toEqual(
+			'<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p dir="ltr">item 1</p></label></li></ul>',
+		)
 	})
 })

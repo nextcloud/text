@@ -8,9 +8,10 @@ import previewOptions from '../plugins/previewOptions.js'
 import currentLineMenu from '../plugins/currentLineMenu.js'
 
 const Paragraph = TiptapParagraph.extend({
-
 	parseHTML() {
-		return this.parent?.()?.map(rule => Object.assign(rule, { preserveWhitespace: 'full' }))
+		return this.parent?.()?.map((rule) =>
+			Object.assign(rule, { preserveWhitespace: 'full' }),
+		)
 	},
 
 	addKeyboardShortcuts() {
@@ -28,8 +29,10 @@ const Paragraph = TiptapParagraph.extend({
 				const parent = selection.$from.node(selection.$from.depth - 1)
 				const previousNode = parent.child(index - 1)
 				// Check this and the previous sibling are paragraphs
-				if (node.type.name === this.name
-					&& previousNode.type.name === this.name) {
+				if (
+					node.type.name === this.name &&
+					previousNode.type.name === this.name
+				) {
 					return this.editor.chain().joinBackward().setHardBreak().run()
 				}
 				return false

@@ -4,19 +4,26 @@
 -->
 
 <template>
-	<div id="resolve-conflicts" class="collision-resolve-dialog" :class="{'icon-loading': clicked }">
-		<NcButton :wide="true"
+	<div
+		id="resolve-conflicts"
+		class="collision-resolve-dialog"
+		:class="{ 'icon-loading': clicked }">
+		<NcButton
+			:wide="true"
 			size="large"
 			:disabled="clicked"
 			data-cy="resolveThisVersion"
 			@click="resolveThisVersion">
 			{{ t('text', 'Overwrite the file and save the current changes') }}
 		</NcButton>
-		<NcButton :wide="true"
+		<NcButton
+			:wide="true"
 			:disabled="clicked"
 			data-cy="resolveServerVersion"
 			@click="resolveServerVersion">
-			{{ t('text', 'Discard the current changes and load the latest version') }}
+			{{
+				t('text', 'Discard the current changes and load the latest version')
+			}}
 		</NcButton>
 	</div>
 </template>
@@ -34,12 +41,7 @@ export default {
 	components: {
 		NcButton,
 	},
-	mixins: [
-		useEditorMixin,
-		useIsRichEditorMixin,
-		setContent,
-		useSyncServiceMixin,
-	],
+	mixins: [useEditorMixin, useIsRichEditorMixin, setContent, useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -69,12 +71,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	#resolve-conflicts {
-		display: flex;
-		margin: auto;
-		padding: 0 var(--default-grid-baseline);
-		button {
-			margin: 0 var(--default-grid-baseline) ;
-		}
+#resolve-conflicts {
+	display: flex;
+	margin: auto;
+	padding: 0 var(--default-grid-baseline);
+	button {
+		margin: 0 var(--default-grid-baseline);
 	}
+}
 </style>

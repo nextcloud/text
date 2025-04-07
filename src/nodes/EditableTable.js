@@ -28,7 +28,6 @@ function extendNodeWithView(node, view) {
 }
 
 export default Table.extend({
-
 	addNodeView() {
 		return VueNodeViewRenderer(TableView)
 	},

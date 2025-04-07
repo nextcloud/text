@@ -18,7 +18,12 @@ const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
  * @param endLine - end line number
  * @param silent - validation mode
  */
-function parseDetails(state: StateBlock, startLine: number, endLine: number, silent: boolean) {
+function parseDetails(
+	state: StateBlock,
+	startLine: number,
+	endLine: number,
+	silent: boolean,
+) {
 	// let autoClosedBlock = false
 	let start = state.bMarks[startLine] + state.tShift[startLine]
 	let max = state.eMarks[startLine]

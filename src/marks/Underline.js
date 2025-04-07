@@ -8,7 +8,6 @@ import { markInputRule, markPasteRule } from '@tiptap/core'
 import { underscoreInputRegex, underscorePasteRegex } from '@tiptap/extension-bold'
 
 const Underline = TipTapUnderline.extend({
-
 	parseHTML() {
 		return [
 			{
@@ -16,7 +15,7 @@ const Underline = TipTapUnderline.extend({
 			},
 			{
 				style: 'text-decoration',
-				getAttrs: value => value === 'underline',
+				getAttrs: (value) => value === 'underline',
 			},
 		]
 	},
@@ -49,7 +48,6 @@ const Underline = TipTapUnderline.extend({
 			}),
 		]
 	},
-
 })
 
 export default Underline

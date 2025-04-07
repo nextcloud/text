@@ -9,7 +9,6 @@ import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
 
 class LinkBubblePluginView {
-
 	#component = null
 	#editor = null
 
@@ -21,29 +20,19 @@ class LinkBubblePluginView {
 	}
 
 	addEventListeners() {
-		this.view.dom.addEventListener('dragstart',
-			this.closeOnExternalEvents,
-		)
-		document.addEventListener('mousedown',
-			this.closeOnExternalEvents,
-		)
-		document.addEventListener('scroll',
-			this.closeOnExternalEvents,
-			{ capture: true },
-		)
+		this.view.dom.addEventListener('dragstart', this.closeOnExternalEvents)
+		document.addEventListener('mousedown', this.closeOnExternalEvents)
+		document.addEventListener('scroll', this.closeOnExternalEvents, {
+			capture: true,
+		})
 	}
 
 	removeEventListeners() {
-		this.view.dom.removeEventListener('dragstart',
-			this.closeOnExternalEvents,
-		)
-		document.removeEventListener('mousedown',
-			this.closeOnExternalEvents,
-		)
-		document.removeEventListener('scroll',
-			this.closeOnExternalEvents,
-			{ capture: true },
-		)
+		this.view.dom.removeEventListener('dragstart', this.closeOnExternalEvents)
+		document.removeEventListener('mousedown', this.closeOnExternalEvents)
+		document.removeEventListener('scroll', this.closeOnExternalEvents, {
+			capture: true,
+		})
 	}
 
 	closeOnExternalEvents = (event) => {
@@ -132,7 +121,6 @@ class LinkBubblePluginView {
 	destroy() {
 		this.tippy?.destroy()
 	}
-
 }
 
 export default LinkBubblePluginView

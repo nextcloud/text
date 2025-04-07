@@ -25,10 +25,10 @@ div.ProseMirror {
 		scroll-margin-top: 40px;
 	}
 
-	&[contenteditable=true],
-	&[contenteditable=false],
-	[contenteditable=true],
-	[contenteditable=false] {
+	&[contenteditable='true'],
+	&[contenteditable='false'],
+	[contenteditable='true'],
+	[contenteditable='false'] {
 		width: 100%;
 		background-color: transparent;
 		color: var(--color-main-text);
@@ -41,7 +41,8 @@ div.ProseMirror {
 			border: none !important;
 		}
 
-		&:focus, &:focus-visible {
+		&:focus,
+		&:focus-visible {
 			box-shadow: none !important;
 		}
 	}
@@ -52,7 +53,7 @@ div.ProseMirror {
 		// Leave space for checkbox (14px width + 2x 1px border + 6px margin-right)
 		margin-left: -24px;
 
-		input[type=checkbox] {
+		input[type='checkbox'] {
 			display: none;
 		}
 		&:before {
@@ -68,7 +69,7 @@ div.ProseMirror {
 			background-position: center;
 			cursor: pointer;
 		}
-		&.checked{
+		&.checked {
 			&:before {
 				background-image: url('../../img/checkbox-mark.svg');
 				background-color: var(--color-primary-element);
@@ -90,7 +91,12 @@ div.ProseMirror {
 		margin-top: 10px;
 	}
 
-	> h1,h2,h3,h4,h5,h6 {
+	> h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		position: relative;
 
 		&:first-child {
@@ -107,13 +113,13 @@ div.ProseMirror {
 			font-size: max(1em, 16px);
 			position: absolute;
 			text-decoration: none;
-			transition-duration: .15s;
+			transition-duration: 0.15s;
 			transition-property: opacity;
-			transition-timing-function: cubic-bezier(.4,0,.2,1);
+			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		}
 
 		&:hover .heading-anchor {
-			opacity: 0.5!important;
+			opacity: 0.5 !important;
 		}
 
 		&:focus-visible {
@@ -124,7 +130,7 @@ div.ProseMirror {
 	a {
 		color: var(--color-primary-element);
 		text-decoration: underline;
-		padding: .5em 0;
+		padding: 0.5em 0;
 	}
 
 	p {
@@ -271,7 +277,7 @@ div.ProseMirror {
 	p code {
 		background-color: var(--color-background-dark);
 		border-radius: var(--border-radius);
-		padding: .1em .3em;
+		padding: 0.1em 0.3em;
 	}
 
 	li {
@@ -284,15 +290,16 @@ div.ProseMirror {
 		}
 	}
 
-	li [dir="rtl"] {
+	li [dir='rtl'] {
 		text-align: right;
 	}
 
-	li [dir="ltr"] {
+	li [dir='ltr'] {
 		text-align: left;
 	}
 
-	ul, ol {
+	ul,
+	ol {
 		padding-left: 10px;
 		margin-left: 10px;
 		margin-bottom: 1em;
@@ -333,13 +340,15 @@ div.ProseMirror {
 		width: calc(100% - 50px - var(--default-clickable-area));
 		table-layout: auto;
 		white-space: normal; // force text to wrapping
-		margin-bottom: calc(var(--clickable-area-small) + var(--default-clickable-area));
-		&+ * {
+		margin-bottom: calc(
+			var(--clickable-area-small) + var(--default-clickable-area)
+		);
+		& + * {
 			margin-top: 1em;
 		}
 
-
-		td, th {
+		td,
+		th {
 			border: 1px solid var(--table-color-border);
 			border-left: 0;
 			vertical-align: top;
@@ -366,23 +375,31 @@ div.ProseMirror {
 		}
 		tr {
 			background-color: var(--table-color-background);
-			&:hover, &:active, &:focus {
+			&:hover,
+			&:active,
+			&:focus {
 				background-color: var(--table-color-background-hover);
 			}
 		}
 
 		tr:first-child {
-			th:first-child { border-top-left-radius: var(--table-border-radius); }
-			th:last-child { border-top-right-radius: var(--table-border-radius); }
+			th:first-child {
+				border-top-left-radius: var(--table-border-radius);
+			}
+			th:last-child {
+				border-top-right-radius: var(--table-border-radius);
+			}
 		}
 
 		tr:last-child {
-			td:first-child { border-bottom-left-radius: var(--table-border-radius); }
-			td:last-child { border-bottom-right-radius: var(--table-border-radius); }
+			td:first-child {
+				border-bottom-left-radius: var(--table-border-radius);
+			}
+			td:last-child {
+				border-bottom-right-radius: var(--table-border-radius);
+			}
 		}
-
 	}
-
 }
 
 .ProseMirror-focused .ProseMirror-gapcursor {

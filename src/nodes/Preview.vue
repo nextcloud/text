@@ -3,12 +3,14 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NodeViewWrapper data-text-el="preview"
+	<NodeViewWrapper
+		data-text-el="preview"
 		class="preview"
 		as="div"
 		contenteditable="false">
 		<NodeViewContent />
-		<NcReferenceList :text="node.attrs.href"
+		<NcReferenceList
+			:text="node.attrs.href"
 			:limit="1"
 			:interactive="!extension.options.isEmbedded"
 			:display-fallback="true" />
@@ -49,7 +51,7 @@ export default {
 }
 
 :deep(.widget-default--details) {
-	overflow:hidden;
+	overflow: hidden;
 	p {
 		margin-bottom: 4px !important;
 	}
