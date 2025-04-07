@@ -13,7 +13,9 @@ import { listInputRule } from '../commands/index.js'
  */
 const BulletList = TiptapBulletList.extend({
 	parseHTML() {
-		return this.parent().map(rule => Object.assign(rule, { preserveWhitespace: true }))
+		return this.parent().map((rule) =>
+			Object.assign(rule, { preserveWhitespace: true }),
+		)
 	},
 
 	addAttributes() {
@@ -33,14 +35,8 @@ const BulletList = TiptapBulletList.extend({
 	},
 
 	addInputRules() {
-		return [
-			listInputRule(
-				/^\s*([-+*])\s([^\s[]+)$/,
-				this.type,
-			),
-		]
+		return [listInputRule(/^\s*([-+*])\s([^\s[]+)$/, this.type)]
 	},
-
 })
 
 export default BulletList

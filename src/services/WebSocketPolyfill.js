@@ -15,7 +15,6 @@ import getNotifyBus from './NotifyService.js'
  */
 export default function initWebSocketPolyfill(syncService, fileId, initialSession) {
 	return class WebSocketPolyfill {
-
 		#url
 		binaryType
 		onmessage
@@ -29,11 +28,15 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			this.#notifyPushBus = getNotifyBus()
 			this.#notifyPushBus?.on('notify_push', this.#onNotifyPush.bind(this))
 			this.url = url
-			logger.debug('WebSocketPolyfill#constructor', { url, fileId, initialSession })
+			logger.debug('WebSocketPolyfill#constructor', {
+				url,
+				fileId,
+				initialSession,
+			})
 			this.#registerHandlers({
 				sync: ({ steps, version }) => {
 					if (steps) {
-						steps.forEach(s => {
+						steps.forEach((s) => {
 							const data = decodeArrayBuffer(s.step)
 							this.onmessage({ data })
 						})
@@ -51,8 +54,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 
 		#registerHandlers(handlers) {
 			this.#handlers = handlers
-			Object.entries(this.#handlers)
-				.forEach(([key, value]) => syncService.on(key, value))
+			Object.entries(this.#handlers).forEach(([key, value]) =>
+				syncService.on(key, value),
+			)
 		}
 
 		send(step) {
@@ -62,8 +66,9 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 		}
 
 		async close() {
-			Object.entries(this.#handlers)
-				.forEach(([key, value]) => syncService.off(key, value))
+			Object.entries(this.#handlers).forEach(([key, value]) =>
+				syncService.off(key, value),
+			)
 			this.#handlers = []
 
 			this.#notifyPushBus?.off('notify_push', this.#onNotifyPush.bind(this))
@@ -75,11 +80,10 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 			if (messageBody.documentId !== fileId) {
 				return
 			}
-			messageBody.steps.forEach(step => {
+			messageBody.steps.forEach((step) => {
 				const data = decodeArrayBuffer(step)
 				this.onmessage({ data })
 			})
 		}
-
 	}
 }

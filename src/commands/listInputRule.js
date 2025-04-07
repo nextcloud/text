@@ -12,7 +12,7 @@ import { InputRule, wrappingInputRule } from '@tiptap/core'
  * @param {object} type Node Type object
  * @param {*} getAttributes handler to get the attributes
  */
-export default function(find, type, getAttributes) {
+export default function (find, type, getAttributes) {
 	const handler = ({ state, range, match }) => {
 		const wrap = wrappingInputRule({ find, type, getAttributes })
 		wrap.handler({ state, range, match })

@@ -17,7 +17,6 @@ export const headingAnchorPluginKey = new PluginKey('headingAnchor')
  */
 export default function headingAnchor() {
 	return new Plugin({
-
 		key: headingAnchorPluginKey,
 
 		state: {
@@ -33,7 +32,9 @@ export default function headingAnchor() {
 					return value
 				}
 				const headings = extractHeadings(newState.doc)
-				const decorations = mapDecorations(value, tr, headings) || anchorDecorations(newState.doc, headings)
+				const decorations =
+					mapDecorations(value, tr, headings) ||
+					anchorDecorations(newState.doc, headings)
 				return { headings, decorations }
 			},
 		},
@@ -63,10 +64,12 @@ function mapDecorations(value, tr, headings) {
 		return false
 	}
 	let removedDecorations = false
-	const decorations = value.decorations.map(tr.mapping, tr.doc, { onRemove: () => { removedDecorations = true } })
-	return removedDecorations
-		? false
-		: decorations
+	const decorations = value.decorations.map(tr.mapping, tr.doc, {
+		onRemove: () => {
+			removedDecorations = true
+		},
+	})
+	return removedDecorations ? false : decorations
 }
 
 /**
@@ -78,8 +81,7 @@ function mapDecorations(value, tr, headings) {
  * @return {boolean}
  */
 function headingsChanged(current, prev) {
-	return (current.length !== prev.length)
-		|| current.some(isDifferentFrom(prev))
+	return current.length !== prev.length || current.some(isDifferentFrom(prev))
 }
 
 /**
@@ -92,8 +94,7 @@ function headingsChanged(current, prev) {
  * and compares the id and level of the heading to the one in `other` with the same index.
  */
 const isDifferentFrom = (other) => (heading, i) => {
-	return heading.id !== other[i].id
-		|| heading.level !== other[i].level
+	return heading.id !== other[i].id || heading.level !== other[i].level
 }
 
 /**
@@ -113,11 +114,9 @@ function anchorDecorations(doc, headings) {
  * @return {Decoration}
  */
 function decorationForHeading(heading) {
-	return Decoration.widget(
-		heading.offset + 1,
-		anchorForHeading(heading),
-		{ side: -1 },
-	)
+	return Decoration.widget(heading.offset + 1, anchorForHeading(heading), {
+		side: -1,
+	})
 }
 
 /**

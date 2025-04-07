@@ -8,12 +8,13 @@ import spec from './fixtures/spec.js'
 import xssFuzzVectors from './fixtures/xssFuzzVectors.js'
 
 const escapeHTML = (s) => {
+	// prettier-ignore
 	return s.toString()
 		.split('&').join('&amp;')
 		.split('<').join('&lt;')
 		.split('>').join('&gt;')
 		.split('"').join('&quot;')
-		.split('\'').join('&#039;')
+		.split("'").join('&#039;')
 }
 
 const plaintextThroughEditor = (markdown) => {
@@ -26,9 +27,7 @@ const plaintextThroughEditor = (markdown) => {
 describe('commonmark as plaintext', () => {
 	// FIXME: Those two tests currently fail as trailing whitespace seems to be stripped,
 	// if it occurs in the first line which is empty otherwise.
-	const skippedMarkdownTests = [
-		97, 117,
-	]
+	const skippedMarkdownTests = [97, 117]
 
 	spec.forEach((entry) => {
 		if (skippedMarkdownTests.indexOf(entry.example) !== -1) {
@@ -62,7 +61,9 @@ describe('markdown as plaintext', () => {
 		expect(plaintextThroughEditor('1. foo\n2. bar')).toBe('1. foo\n2. bar')
 	})
 	test('paragraph', () => {
-		expect(plaintextThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe('foo\nbar\n\nfoobar\n\tfoobar')
+		expect(plaintextThroughEditor('foo\nbar\n\nfoobar\n\tfoobar')).toBe(
+			'foo\nbar\n\nfoobar\n\tfoobar',
+		)
 	})
 	test('links', () => {
 		expect(plaintextThroughEditor('[test](foo)')).toBe('[test](foo)')
@@ -75,8 +76,9 @@ describe('markdown as plaintext', () => {
 describe('html as plain text', () => {
 	test('link', () => {
 		expect(plaintextThroughEditor('<a>sdf</a>')).toBe('<a>sdf</a>')
-		expect(plaintextThroughEditor('<a href="foobar">sdf</a>')).toBe('<a href="foobar">sdf</a>')
-
+		expect(plaintextThroughEditor('<a href="foobar">sdf</a>')).toBe(
+			'<a href="foobar">sdf</a>',
+		)
 	})
 	test('special characters', () => {
 		expect(plaintextThroughEditor('"\';&.-#><')).toBe('"\';&.-#><')
