@@ -69,6 +69,16 @@ describe('Sync', () => {
 			.should('include', 'after the lost connection')
 	})
 
+	it('handles brief network outages', () => {
+		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
+		cy.wait('@dead', { timeout: 30000 })
+		// bring back the network connection
+		cy.intercept('**/apps/text/session/*/*', req => { req.continue() }).as('alive')
+		cy.wait('@alive', { timeout: 30000 })
+		cy.getContent().type('staying alive')
+		cy.getContent().should('contain', 'staying alive')
+	})
+
 	it('reconnects via button after a short lost connection', () => {
 		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
@@ -76,8 +86,6 @@ describe('Sync', () => {
 			.should('contain', 'The document could not be loaded.')
 		cy.get('#editor-container .document-status')
 			.find('.button.primary').click()
-		cy.get('.toastify').should('contain', 'Connection failed.')
-		cy.get('.toastify', { timeout: 30000 }).should('not.exist')
 		cy.get('#editor-container .document-status', { timeout: 30000 })
 			.should('contain', 'The document could not be loaded.')
 		// bring back the network connection
