@@ -15,13 +15,13 @@
 			:lock="lock"
 			:is-resolving-conflict="isResolvingConflict"
 			:sync-error="syncError"
-			:has-connection-issue="hasConnectionIssue"
+			:has-connection-issue="requireReconnect"
 			@reconnect="reconnect" />
 
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<Wrapper v-if="displayed"
 			:is-resolving-conflict="isResolvingConflict"
-			:has-connection-issue="hasConnectionIssue"
+			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
 			:show-outline-outside="showOutlineOutside"
 			@outline-toggled="outlineToggled">
@@ -34,7 +34,7 @@
 								:dirty="dirty"
 								:sessions="filteredSessions"
 								:sync-error="syncError"
-								:has-connection-issue="hasConnectionIssue" />
+								:has-connection-issue="requireReconnect" />
 						</ReadonlyBar>
 					</slot>
 				</div>
@@ -48,7 +48,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="hasConnectionIssue" />
+							:has-connection-issue="requireReconnect" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -117,6 +117,7 @@ import Assistant from './Assistant.vue'
 import Translate from './Modal/Translate.vue'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
+import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 
 export default {
 	name: 'Editor',
@@ -232,7 +233,9 @@ export default {
 			const maxWidth = Math.floor(value) - 36
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
-		return { el, width }
+		const hasConnectionIssue = ref(false)
+		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
+		return { el, width, hasConnectionIssue, requireReconnect }
 	},
 
 	data() {
@@ -250,7 +253,6 @@ export default {
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
-			hasConnectionIssue: false,
 			hasEditor: false,
 			readOnly: true,
 			forceRecreate: false,
@@ -332,6 +334,14 @@ export default {
 				window.addEventListener('beforeunload', this.saveBeforeUnload)
 			} else {
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
+			}
+		},
+		requireReconnect(val) {
+			if (val) {
+				this.emit('sync-service:error')
+			}
+			if (this.$editor?.isEditable === val) {
+				this.$editor.setEditable(!val)
 			}
 		},
 	},
@@ -585,14 +595,20 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = !this.readOnly && !this.hasConnectionIssue
+			const editable = !this.readOnly && !this.requireReconnect
 			if (this.$editor.isEditable !== editable) {
 				this.$editor.setEditable(editable)
 			}
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0 || !this.$providers[0].wsconnected || this.$syncService.pushError > 0
+			this.hasConnectionIssue = this.$syncService.backend.fetcher === 0
+				|| !this.$providers[0].wsconnected
+				|| this.$syncService.pushError > 0
+			if (this.$syncService.pushError > 0) {
+				// successfully received steps - so let's try and also push
+				this.$syncService.sendStepsNow()
+			}
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
 			})
@@ -602,11 +618,6 @@ export default {
 		},
 
 		onError({ type, data }) {
-			this.$nextTick(() => {
-				this.$editor?.setEditable(false)
-				this.emit('sync-service:error')
-			})
-
 			if (type === ERROR_TYPE.LOAD_ERROR) {
 				this.syncError = {
 					type,
@@ -621,11 +632,8 @@ export default {
 					data,
 				}
 			}
-			if (type === ERROR_TYPE.CONNECTION_FAILED && !this.hasConnectionIssue) {
-				this.hasConnectionIssue = true
-				OC.Notification.showTemporary(t('text', 'Connection failed.'))
-			}
-			if (type === ERROR_TYPE.SOURCE_NOT_FOUND) {
+			if (type === ERROR_TYPE.CONNECTION_FAILED
+				|| type === ERROR_TYPE.SOURCE_NOT_FOUND) {
 				this.hasConnectionIssue = true
 			}
 
