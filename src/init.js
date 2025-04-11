@@ -11,8 +11,8 @@ import 'vite/modulepreload-polyfill'
 
 const workspaceAvailable = loadState('text', 'workspace_available')
 
-registerDavProperty('nc:rich-workspace', { nc: 'http://nextcloud.org/ns' })
-registerDavProperty('nc:rich-workspace-file', { nc: 'http://nextcloud.org/ns' })
+registerDavProperty('nc:rich-workspace-flat', { nc: 'http://nextcloud.org/ns' })
+registerDavProperty('nc:rich-workspace-file-flat', { nc: 'http://nextcloud.org/ns' })
 
 if (workspaceAvailable) {
 	addMenuRichWorkspace()

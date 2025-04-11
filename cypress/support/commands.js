@@ -225,21 +225,15 @@ Cypress.Commands.add('getFileContent', (path) => {
 		.then(response => response.data)
 })
 
-Cypress.Commands.add('propfindFolder', (path, depth = 0) => {
+Cypress.Commands.add('propfindFolder', (path, depth = 0, properties = []) => {
 	return cy.window(silent)
 		.then(win => {
 			const files = win.OC.Files
-			const PROPERTY_WORKSPACE_FILE
-				= `{${files.Client.NS_NEXTCLOUD}}rich-workspace-file`
-			const PROPERTY_WORKSPACE
-				= `{${files.Client.NS_NEXTCLOUD}}rich-workspace`
-			const properties = [
-				...files.getClient().getPropfindProperties(),
-				PROPERTY_WORKSPACE_FILE,
-				PROPERTY_WORKSPACE,
-			]
 			const client = files.getClient().getClient()
-			return client.propFind(client.baseUrl + path, properties, depth)
+			return client.propFind(client.baseUrl + path, [
+				...properties,
+				...files.getClient().getPropfindProperties(),
+			], depth)
 				.then((results) => {
 					cy.log(`Propfind returned ${results.status}`)
 					if (depth) {
