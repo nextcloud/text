@@ -46,7 +46,10 @@ class ConfigService {
 
 	public function isNotifyPushSyncEnabled(): bool {
 		return $this->appConfig->getValueBool(Application::APP_NAME, 'notify_push');
+	}
 
+	public function isExperimentalOfflineTypingEnabled(): bool {
+		return $this->appConfig->getValueBool(Application::APP_NAME, 'experimental_offline_typing');
 	}
 
 	public function isFullWidthEditor(?string $userId): bool {
