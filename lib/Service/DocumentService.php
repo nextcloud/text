@@ -206,7 +206,7 @@ class DocumentService {
 	 */
 	public function addStep(Document $document, Session $session, array $steps, int $version, ?string $shareToken): array {
 		$documentId = $session->getDocumentId();
-		$readOnly = $this->isReadOnly($this->getFileForSession($session, $shareToken), $shareToken);
+		$readOnly = $this->isReadOnlyCached($session, $shareToken);
 		$stepsToInsert = [];
 		$stepsIncludeQuery = false;
 		$documentState = null;
@@ -564,6 +564,18 @@ class DocumentService {
 		throw new \InvalidArgumentException('No proper share data');
 	}
 
+	public function isReadOnlyCached(Session $session, ?string $shareToken = null): bool {
+		$cacheKey = 'read-only-' . $session->getId();
+		$isReadOnly = $this->cache->get($cacheKey);
+		if ($isReadOnly === null) {
+			$file = $this->getFileForSession($session, $shareToken);
+			$isReadOnly = $this->isReadOnly($file, $shareToken);
+			$this->cache->set($cacheKey, $isReadOnly, 60 * 5);
+			return $isReadOnly;
+		}
+
+		return $isReadOnly;
+	}
 
 	public function isReadOnly(File $file, ?string $token): bool {
 		$readOnly = true;
