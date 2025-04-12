@@ -13,6 +13,7 @@ OC.L10N.register(
     "Text" : "Teksts",
     "Translate" : "Tulkot",
     "Guest" : "Viesis",
+    "Open in new tab" : "Atvērt jaunā cilnē",
     "Remove link" : "Noņemt saiti",
     "guest" : "viesis",
     "Offline" : "Bezsaistē",

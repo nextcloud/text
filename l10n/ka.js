@@ -13,6 +13,7 @@ OC.L10N.register(
     "New text file" : "New text file",
     "File not found" : "File not found",
     "Text" : "Text",
+    "Nextcloud Assistant" : "Nextcloud-ის ასისტენტი",
     "Translate" : "Translate",
     "Delete task" : "Delete task",
     "Reload" : "Reload",
