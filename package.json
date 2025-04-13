@@ -140,7 +140,7 @@
     "jest-serializer-vue": "^3.1.0",
     "prosemirror-test-builder": "^1.1.1",
     "raw-loader": "^4.0.2",
-    "vite": "^5.4.11",
+    "vite": "^5.4.18",
     "vite-plugin-commonjs": "^0.10.4",
     "vue-demi": "^0.14.10",
     "vue-template-compiler": "^2.7.16"
