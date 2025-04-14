@@ -74,6 +74,7 @@ OC.L10N.register(
     "Use the saved version" : "Kasuta salvestatud versiooni",
     "Detect language" : "Tuvasta keel",
     "Info" : "Info",
+    "Success" : "Valmis",
     "Warning" : "Hoiatus"
 },
 "nplurals=2; plural=(n != 1);");
