@@ -20,8 +20,7 @@
   "baseBranches": [
     "main",
     "stable31",
-    "stable30",
-    "stable29"
+    "stable30"
   ],
   "enabledManagers": [
     "npm"
@@ -110,6 +109,7 @@
         "minor"
       ],
       "matchBaseBranches": [
+        "stable29",
         "stable28",
         "stable27",
         "stable26"
