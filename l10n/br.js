@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "The file was uploaded" : "Kaset eo bet ar restr",
     "No file was uploaded" : "N'eus restr ebet a zo bet kaset",
+    "File not found" : "Restr ebet kavet",
     "Text" : "Testenn",
     "Translate" : "Treiñ",
     "Reload" : "Adkargañ",
