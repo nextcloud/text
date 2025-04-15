@@ -60,6 +60,7 @@ class ComposerStaticInitText
         'OCA\\Text\\Listeners\\LoadEditorListener' => __DIR__ . '/..' . '/../lib/Listeners/LoadEditorListener.php',
         'OCA\\Text\\Listeners\\LoadViewerListener' => __DIR__ . '/..' . '/../lib/Listeners/LoadViewerListener.php',
         'OCA\\Text\\Listeners\\NodeCopiedListener' => __DIR__ . '/..' . '/../lib/Listeners/NodeCopiedListener.php',
+        'OCA\\Text\\Listeners\\NodeWrittenListener' => __DIR__ . '/..' . '/../lib/Listeners/NodeWrittenListener.php',
         'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
         'OCA\\Text\\Listeners\\RegisterTemplateCreatorListener' => __DIR__ . '/..' . '/../lib/Listeners/RegisterTemplateCreatorListener.php',
         'OCA\\Text\\Listeners\\VersionRestoredListener' => __DIR__ . '/..' . '/../lib/Listeners/VersionRestoredListener.php',

@@ -225,8 +225,7 @@ class ApiService {
 			];
 
 			// ensure file is still present and accessible
-			$file = $this->documentService->getFileForSession($session, $shareToken);
-			$this->documentService->assertNoOutsideConflict($document, $file);
+			$this->documentService->assertNoOutsideConflict($document, $session);
 		} catch (NotPermittedException|NotFoundException|InvalidPathException $e) {
 			$this->logger->info($e->getMessage(), ['exception' => $e]);
 			return new DataResponse([
@@ -239,6 +238,7 @@ class ApiService {
 			], Http::STATUS_NOT_FOUND);
 		} catch (DocumentSaveConflictException) {
 			try {
+				$file = $this->documentService->getFileForSession($session, $shareToken);
 				/** @psalm-suppress PossiblyUndefinedVariable */
 				$result['outsideChange'] = $file->getContent();
 			} catch (LockedException) {
@@ -266,7 +266,7 @@ class ApiService {
 
 		$result = [];
 		try {
-			$result['document'] = $this->documentService->autosave($document, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
+			$result['document'] = $this->documentService->autosave($document, $session, $file, $version, $autosaveContent, $documentState, $force, $manualSave, $shareToken);
 		} catch (DocumentSaveConflictException) {
 			try {
 				$result['outsideChange'] = $file->getContent();

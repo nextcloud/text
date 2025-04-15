@@ -58,6 +58,8 @@ class DocumentService {
 	 */
 	public const AUTOSAVE_MINIMUM_DELAY = 10;
 
+	public const CACHE_TTL = 5 * 60;
+
 	private bool $saveFromText = false;
 
 	private ?string $userId;
@@ -310,21 +312,40 @@ class DocumentService {
 		return $this->stepMapper->find($documentId, $lastVersion);
 	}
 
+	public function setDocumentCache(int $documentId, File $file): void {
+		$this->cache->set('document-fs-' . $documentId . '-etag', $file->getEtag(), self::CACHE_TTL);
+		$this->cache->set('document-fs-' . $documentId . '-mtime', $file->getMtime(), self::CACHE_TTL);
+	}
+
+	public function resetDocumentCache(int $documentId): void {
+		$this->cache->remove('document-fs-' . $documentId . '-etag');
+		$this->cache->remove('document-fs-' . $documentId . '-mtime');
+	}
+
 	/**
 	 * @throws DocumentSaveConflictException
 	 * @throws InvalidPathException
 	 * @throws NotFoundException
 	 */
-	public function assertNoOutsideConflict(Document $document, File $file, bool $force = false, ?string $shareToken = null): void {
+	public function assertNoOutsideConflict(Document $document, Session $session, ?File $file = null, bool $force = false, ?string $shareToken = null): void {
+		$fileEtag = $this->cache->get('document-fs-' . $document->getId() . '-etag');
+		$fileMTime = $this->cache->get('document-fs-' . $document->getId() . '-mtime');
+
+		if ($fileMTime === null || $fileEtag === null) {
+			$file = $file ?? $this->getFileForSession($session, $shareToken);
+			$fileMTime = $file->getMtime();
+			$fileEtag = $file->getEtag();
+			$this->setDocumentCache($document->getId(), $file);
+		}
+
 		$documentId = $document->getId();
-		$savedEtag = $file->getEtag();
 		$lastMTime = $document->getLastSavedVersionTime();
 
 		if ($lastMTime > 0
 			&& $force === false
-			&& !$this->isReadOnly($file, $shareToken)
-			&& $savedEtag !== $document->getLastSavedVersionEtag()
-			&& $lastMTime !== $file->getMtime()
+			&& !$this->isReadOnlyCached($session, $shareToken)
+			&& $fileEtag !== $document->getLastSavedVersionEtag()
+			&& $lastMTime !== $fileMTime
 			&& !$this->cache->get('document-save-lock-' . $documentId)
 		) {
 			throw new DocumentSaveConflictException('File changed in the meantime from outside');
@@ -339,7 +360,7 @@ class DocumentService {
 	 * @throws NotPermittedException
 	 * @throws Exception
 	 */
-	public function autosave(Document $document, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
+	public function autosave(Document $document, Session $session, ?File $file, int $version, ?string $autoSaveDocument, ?string $documentState, bool $force = false, bool $manualSave = false, ?string $shareToken = null): Document {
 		$documentId = $document->getId();
 		if ($file === null) {
 			throw new NotFoundException();
@@ -349,7 +370,7 @@ class DocumentService {
 			return $document;
 		}
 
-		$this->assertNoOutsideConflict($document, $file, $force);
+		$this->assertNoOutsideConflict($document, $session, $file, $force);
 
 		if ($autoSaveDocument === null) {
 			return $document;
@@ -570,7 +591,7 @@ class DocumentService {
 		if ($isReadOnly === null) {
 			$file = $this->getFileForSession($session, $shareToken);
 			$isReadOnly = $this->isReadOnly($file, $shareToken);
-			$this->cache->set($cacheKey, $isReadOnly, 60 * 5);
+			$this->cache->set($cacheKey, $isReadOnly, self::CACHE_TTL);
 			return $isReadOnly;
 		}
 

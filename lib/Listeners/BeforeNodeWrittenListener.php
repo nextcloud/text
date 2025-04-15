@@ -35,6 +35,7 @@ class BeforeNodeWrittenListener implements IEventListener {
 		if (!$node instanceof File) {
 			return;
 		}
+
 		if ($this->documentService->isSaveFromText()) {
 			return;
 		}

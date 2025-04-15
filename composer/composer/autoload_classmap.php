@@ -45,6 +45,7 @@ return array(
     'OCA\\Text\\Listeners\\LoadEditorListener' => $baseDir . '/../lib/Listeners/LoadEditorListener.php',
     'OCA\\Text\\Listeners\\LoadViewerListener' => $baseDir . '/../lib/Listeners/LoadViewerListener.php',
     'OCA\\Text\\Listeners\\NodeCopiedListener' => $baseDir . '/../lib/Listeners/NodeCopiedListener.php',
+    'OCA\\Text\\Listeners\\NodeWrittenListener' => $baseDir . '/../lib/Listeners/NodeWrittenListener.php',
     'OCA\\Text\\Listeners\\RegisterDirectEditorEventListener' => $baseDir . '/../lib/Listeners/RegisterDirectEditorEventListener.php',
     'OCA\\Text\\Listeners\\RegisterTemplateCreatorListener' => $baseDir . '/../lib/Listeners/RegisterTemplateCreatorListener.php',
     'OCA\\Text\\Listeners\\VersionRestoredListener' => $baseDir . '/../lib/Listeners/VersionRestoredListener.php',
