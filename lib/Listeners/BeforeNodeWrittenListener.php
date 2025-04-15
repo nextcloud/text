@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Text\Listeners;
 
+use OCA\Text\AppInfo\Application;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
@@ -32,7 +33,7 @@ class BeforeNodeWrittenListener implements IEventListener {
 			return;
 		}
 		$node = $event->getNode();
-		if (!$node instanceof File) {
+		if (!$node instanceof File || !in_array($node->getMimetype(), Application::SUPPORTED_MIMETYPES, true)) {
 			return;
 		}
 

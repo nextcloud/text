@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace OCA\Text\Listeners;
 
 use OCA\Files_Versions\Events\VersionRestoredEvent;
+use OCA\Text\AppInfo\Application;
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
 use OCA\Text\Service\DocumentService;
 use OCP\EventDispatcher\Event;
@@ -31,7 +32,7 @@ class VersionRestoredListener implements IEventListener {
 		}
 
 		$sourceFile = $event->getVersion()->getSourceFile();
-		if (!$sourceFile instanceof File) {
+		if (!$sourceFile instanceof File || !in_array($sourceFile->getMimetype(), Application::SUPPORTED_MIMETYPES, true)) {
 			return;
 		}
 
