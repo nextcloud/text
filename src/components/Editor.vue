@@ -268,6 +268,7 @@ export default {
 			filteredSessions: {},
 
 			idle: false,
+			lock: null,
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
