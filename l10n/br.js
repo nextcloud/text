@@ -19,6 +19,7 @@ OC.L10N.register(
     "Save changes" : "Enrollañ ar cheñchamantoù",
     "Cancel" : "Nullañ",
     "URL" : "URL",
+    "Translate to" : "Treiñ e",
     "Replace" : "Erlec'hiañ",
     "Upload" : "Enporzhiañ",
     "Edit" : "Cheñch",
