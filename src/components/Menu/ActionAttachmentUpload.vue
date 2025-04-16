@@ -34,23 +34,26 @@
 			</template>
 			{{ t('text', 'Insert from Files') }}
 		</NcActionButton>
-		<NcActionButton v-for="(template, index) in templates"
-			:key="`${template.app}-${index}`"
-			close-after-click
-			:disabled="isUploadingAttachments"
-			:data-text-action-entry="`${actionEntry.key}-add-${template.app}-${index}`"
-			@click="createAttachment(template)">
-			<template #icon>
-				<NcIconSvgWrapper v-if="template.iconSvgInline" :svg="template.iconSvgInline" />
-				<Plus v-else />
-			</template>
-			{{ template.actionLabel }}
-		</NcActionButton>
+		<template v-if="templates.length">
+			<NcActionSeparator />
+			<NcActionButton v-for="(template, index) in templates"
+				:key="`${template.app}-${index}`"
+				close-after-click
+				:disabled="isUploadingAttachments"
+				:data-text-action-entry="`${actionEntry.key}-add-${template.app}-${index}`"
+				@click="createAttachment(template)">
+				<template #icon>
+					<NcIconSvgWrapper v-if="template.iconSvgInline" :svg="template.iconSvgInline" />
+					<Plus v-else />
+				</template>
+				{{ template.actionLabel }}
+			</NcActionButton>
+		</template>
 	</NcActions>
 </template>
 
 <script>
-import { NcActions, NcActionButton, NcIconSvgWrapper } from '@nextcloud/vue'
+import { NcActions, NcActionSeparator, NcActionButton, NcIconSvgWrapper } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { Loading, Folder, Upload, Plus } from '../icons.js'
 import { useIsPublicMixin, useEditorUpload } from '../Editor.provider.js'
@@ -67,6 +70,7 @@ export default {
 	name: 'ActionAttachmentUpload',
 	components: {
 		NcActions,
+		NcActionSeparator,
 		NcActionButton,
 		NcIconSvgWrapper,
 		Loading,
