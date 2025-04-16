@@ -72,7 +72,10 @@ export default {
 
 <style scoped lang="scss">
 #resolve-conflicts {
+	position: sticky;
+	top: 0;
 	display: flex;
+	z-index: 1;
 	margin: auto;
 	padding: 0 var(--default-grid-baseline);
 	button {

@@ -63,13 +63,13 @@
 				v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-			<DocumentStatus
-				:idle="idle"
-				:lock="lock"
-				:sync-error="syncError"
-				:has-connection-issue="requireReconnect"
-				@reconnect="reconnect" />
 		</Wrapper>
+		<DocumentStatus
+			:idle="idle"
+			:lock="lock"
+			:sync-error="syncError"
+			:has-connection-issue="requireReconnect"
+			@reconnect="reconnect" />
 		<Assistant v-if="hasEditor" />
 		<Translate
 			:show="translateModal"
