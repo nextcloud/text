@@ -42,6 +42,33 @@ class AttachmentServiceTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
+	public function testGetAttachmentIdsFromContent() {
+		$urls = [
+			'www.example.com',
+			'http://example.com',
+			'https://www.example.com/path/to/page',
+			'http://sub.domain.co.uk/index.php',
+			'https://1.2.3.4:8080/path',
+			'http://localhost:3000/',
+			'https://[2001:db8::1]/ipv6-check',
+		];
+
+		$id = 1;
+		$content = "some content\n";
+		foreach (self::$attachmentNames as $name) {
+			$linkText = preg_replace('/[[\]]/', '', $name);
+			foreach ($urls as $url) {
+				$addon = $id % 2 ? ' (preview)' : '';
+				$content .= "[{$linkText}]({$url}/f/{$id}{$addon})\n";
+				$id++;
+			}
+		}
+		$content .= 'some content';
+
+		$computedIds = AttachmentService::getAttachmentIdsFromContent($content);
+		$this->assertEquals(range(1, $id - 1), $computedIds);
+	}
+
 	public function testGetUniqueFileName() {
 		$fileNameList = [
 			'foo.png',
