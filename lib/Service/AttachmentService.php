@@ -332,6 +332,35 @@ class AttachmentService {
 	}
 
 	/**
+	 * create a new file in the attachment folder
+	 *
+	 * @param int $documentId
+	 * @param string $userId
+	 *
+	 * @return array
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws InvalidPathException
+	 * @throws NoUserException
+	 */
+	public function createAttachmentFile(int $documentId, string $newFileName, string $userId): array {
+		$textFile = $this->getTextFile($documentId, $userId);
+		if (!$textFile->isUpdateable()) {
+			throw new NotPermittedException('No write permissions');
+		}
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
+		$fileName = self::getUniqueFileName($saveDir, $newFileName);
+		$newFile = $saveDir->newFile($fileName);
+		return [
+			'name' => $fileName,
+			'dirname' => $saveDir->getName(),
+			'id' => $newFile->getId(),
+			'documentId' => $newFile->getId(),
+			'mimetype' => $newFile->getMimetype(),
+		];
+	}
+
+	/**
 	 * @param File $originalFile
 	 * @param Folder $saveDir
 	 * @param File $textFile
