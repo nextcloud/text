@@ -116,8 +116,9 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
  * @param {string} requestAlias Alias of the request we are waiting for
  * @param {number|undefined} index of the attachment
  * @param {boolean} isImage is the attachment an image or a media file?
+ * @param {Function} check function used to check document for attachment
  */
-const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) => {
+const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true, check = checkAttachment) => {
 	return cy.wait('@' + requestAlias)
 		.then((req) => {
 			// the name of the created file on NC side is returned in the response
@@ -125,7 +126,7 @@ const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) =
 			const fileName = req.response.body.name
 			const documentId = req.response.body.documentId
 
-			return checkAttachment(documentId, fileName, fileId, index, isImage)
+			return check(documentId, fileName, fileId, index, isImage)
 		})
 }
 
@@ -281,6 +282,13 @@ describe('Test all attachment insertion methods', () => {
 	})
 
 	it('Create a new text file as an attachment', () => {
+		const check = (documentId, fileName) => {
+			cy.log('Check the attachment is visible and well formed', documentId, fileName)
+			return cy.get(`.text-editor [basename="${fileName}"]`)
+				.find('.text-editor__wrapper')
+				.should('be.visible')
+		}
+
 		cy.visit('/apps/files')
 		cy.openFile('test.md')
 
@@ -289,7 +297,7 @@ describe('Test all attachment insertion methods', () => {
 		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(requestAlias)
 		clickOnAttachmentAction(ACTION_CREATE_NEW_TEXT_FILE)
 			.then(() => {
-				return waitForRequestAndCheckAttachment(requestAlias, undefined, false)
+				return waitForRequestAndCheckAttachment(requestAlias, undefined, false, check)
 			})
 	})
 
