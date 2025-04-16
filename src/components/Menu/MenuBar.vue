@@ -232,8 +232,7 @@ export default {
 		backdrop-filter: var(--background-blur);
 		max-height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
 		border-bottom: 1px solid var(--color-border);
-		padding-top:3px;
-		padding-bottom: 3px;
+		padding-block: var(--default-grid-baseline);
 
 		visibility: hidden;
 

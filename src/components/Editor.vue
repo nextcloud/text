@@ -1016,8 +1016,8 @@ export default {
 	height: var(
 		--default-clickable-area
 	); // important for mobile so that the buttons are always inside the container
-	padding-top: 3px;
-	padding-bottom: 3px;
+	border-bottom: 1px solid var(--color-border);
+	padding-block: var(--default-grid-baseline);
 }
 
 .text-editor--readonly-bar,
@@ -1060,7 +1060,10 @@ export default {
 	width: 50%;
 	#read-only-editor {
 		margin: 0px auto;
-		padding-top: 50px;
+		// Add height of the menubar as padding-top
+		padding-top: calc(
+			var(--default-clickable-area) + 2 * var(--default-grid-baseline)
+		);
 		overflow: initial;
 	}
 }
