@@ -119,7 +119,7 @@ export const addMenuRichWorkspace = () => {
 		displayName: t('text', 'Add folder description'),
 		category: NewMenuEntryCategory.Other,
 		enabled(context) {
-			if (Number(context.attributes['rich-workspace-file'])) {
+			if (Number(context.attributes['rich-workspace-file-flat'])) {
 				return false
 			}
 			return (context.permissions & Permission.CREATE) !== 0
@@ -180,9 +180,9 @@ export const FilesWorkspaceHeader = new Header({
 			vm.$destroy()
 			vm = null
 		}
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file-flat'] || !!newWorkspaceCreated
 		const path = newWorkspaceCreated ? dirname(newWorkspaceCreated.path) : folder.path
-		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
+		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace-flat']
 
 		newWorkspaceCreated = false
 
@@ -220,10 +220,10 @@ export const FilesWorkspaceHeader = new Header({
 		// removing the rendered element from the DOM
 		// This is only relevant if switching to a folder that has no content as then the render function is not called
 
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file-flat']
 		vm.path = folder.path
 		vm.hasRichWorkspace = hasRichWorkspace
-		vm.content = folder.attributes['rich-workspace']
+		vm.content = folder.attributes['rich-workspace-flat']
 	},
 })
 
