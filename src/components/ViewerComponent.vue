@@ -43,6 +43,7 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import { translate, translatePlural } from '@nextcloud/l10n'
+import { getClient, getRootPath } from '@nextcloud/files/dav'
 
 import getEditorInstance from './Editor.singleton.js'
 
@@ -116,16 +117,27 @@ export default {
 		useSourceView() {
 			return (
 				this.source
-				&& (this.fileVersion || !this.fileid || this.isEmbedded)
+				&& (this.fileVersion
+					|| !this.fileid
+					|| this.isEmbedded
+					|| this.isEncrypted)
 				&& !this.hasToggledInteractiveEmbedding
+			)
+		},
+
+		isEncrypted() {
+			return this.$attrs.e2EeIsEncrypted || false
+		},
+
+		isMarkdown() {
+			return (
+				this.mime === 'text/markdown' || this.mime === 'text/x-web-markdown'
 			)
 		},
 
 		/** @return {boolean} */
 		readerComponent() {
-			return this.mime === 'text/markdown'
-				? MarkdownContentEditor
-				: PlainTextReader
+			return this.isMarkdown ? MarkdownContentEditor : PlainTextReader
 		},
 	},
 
@@ -143,14 +155,36 @@ export default {
 		t: translate,
 		async loadFileContent() {
 			if (this.useSourceView) {
-				const response = await axios.get(this.source)
-				this.content = response.data
-				this.contentLoaded = true
+				if (this.isEncrypted) {
+					this.content = await this.fetchDecryptedContent()
+					this.contentLoaded = true
+				} else {
+					const response = await axios.get(this.source)
+					this.content = response.data
+					this.contentLoaded = true
+				}
 			}
 			this.$emit('update:loaded', true)
 		},
 		toggleEdit() {
 			this.hasToggledInteractiveEmbedding = true
+		},
+		async fetchDecryptedContent() {
+			const client = getClient()
+			const response = await client.getFileContents(
+				`${getRootPath()}${this.filename}`,
+				{ details: true },
+			)
+			const blob = new Blob([response.data], {
+				type: response.headers['content-type'],
+			})
+			const reader = new FileReader()
+			reader.readAsText(blob)
+			return new Promise((resolve) => {
+				reader.onload = () => {
+					resolve(reader.result)
+				}
+			})
 		},
 	},
 }
