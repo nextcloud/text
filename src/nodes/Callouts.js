@@ -10,7 +10,6 @@ import { typesAvailable } from './../markdownit/callouts.js'
 import Callout from './Callout.vue'
 
 export default Node.create({
-
 	name: 'callout',
 
 	content: 'paragraph+',
@@ -33,12 +32,16 @@ export default Node.create({
 			type: {
 				default: 'info',
 				rendered: false,
-				parseHTML: element => {
-					return element.getAttribute('data-callout')
-						|| typesAvailable.find((type) => element.classList.contains(type))
-						|| (element.classList.contains('warning') && 'warn')
+				parseHTML: (element) => {
+					return (
+						element.getAttribute('data-callout') ||
+						typesAvailable.find((type) =>
+							element.classList.contains(type),
+						) ||
+						(element.classList.contains('warning') && 'warn')
+					)
 				},
-				renderHTML: attributes => {
+				renderHTML: (attributes) => {
 					return {
 						'data-callout': attributes.type,
 						class: `callout-${attributes.type}`,
@@ -86,23 +89,29 @@ export default Node.create({
 
 	addCommands() {
 		return {
-			setCallout: attributes => ({ commands }) => {
-				return commands.wrapIn(this.name, attributes)
-			},
-			toggleCallout: attributes => ({ commands, state }) => {
-				if (!isNodeActive(state, this.name)) {
-					return commands.setCallout(attributes)
-				}
+			setCallout:
+				(attributes) =>
+				({ commands }) => {
+					return commands.wrapIn(this.name, attributes)
+				},
+			toggleCallout:
+				(attributes) =>
+				({ commands, state }) => {
+					if (!isNodeActive(state, this.name)) {
+						return commands.setCallout(attributes)
+					}
 
-				if (!isNodeActive(state, this.name, attributes)) {
-					return commands.updateAttributes(this.name, attributes)
-				}
+					if (!isNodeActive(state, this.name, attributes)) {
+						return commands.updateAttributes(this.name, attributes)
+					}
 
-				return commands.unsetCallout()
-			},
-			unsetCallout: () => ({ commands }) => {
-				return commands.lift(this.name)
-			},
+					return commands.unsetCallout()
+				},
+			unsetCallout:
+				() =>
+				({ commands }) => {
+					return commands.lift(this.name)
+				},
 		}
 	},
 })

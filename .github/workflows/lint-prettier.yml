@@ -6,7 +6,7 @@
 # SPDX-FileCopyrightText: 2021-2024 Nextcloud GmbH and Nextcloud contributors
 # SPDX-License-Identifier: MIT
 
-name: Lint stylelint
+name: Lint prettier
 
 on: pull_request
 
@@ -14,14 +14,46 @@ permissions:
   contents: read
 
 concurrency:
-  group: lint-stylelint-${{ github.head_ref || github.run_id }}
+  group: lint-prettier-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest-low
+    permissions:
+      contents: read
+      pull-requests: read
+
+    outputs:
+      src: ${{ steps.changes.outputs.src }}
+
+    steps:
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        continue-on-error: true
+        with:
+          filters: |
+            src:
+              - '.github/workflows/**'
+              - 'src/**'
+              - 'appinfo/info.xml'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'tsconfig.json'
+              - '.eslintrc.*'
+              - '.eslintignore'
+              - '.prettierignore'
+              - '**.js'
+              - '**.ts'
+              - '**.vue'
+
   lint:
     runs-on: ubuntu-latest
 
-    name: stylelint
+    needs: changes
+    if: needs.changes.outputs.src != 'false'
+
+    name: prettier
 
     steps:
       - name: Checkout
@@ -47,7 +79,23 @@ jobs:
       - name: Install dependencies
         env:
           CYPRESS_INSTALL_BINARY: 0
+          PUPPETEER_SKIP_DOWNLOAD: true
         run: npm ci
 
       - name: Lint
-        run: npm run stylelint
+        run: npm run prettier
+
+  summary:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest-low
+    needs: [changes, lint]
+
+    if: always()
+
+    # This is the summary, we just avoid to rename it so that branch protection rules still match
+    name: prettier
+
+    steps:
+      - name: Summary status
+        run: if ${{ needs.changes.outputs.src != 'false' && needs.lint.result != 'success' }}; then exit 1; fi

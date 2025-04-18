@@ -15,8 +15,7 @@ import { isLinkToSelfWithHash } from '../helpers/links.js'
  * @params {ResolvedPos} resolved position of the action
  */
 export const setActiveLink = (resolved) => (state, dispatch) => {
-	const mark = resolved.marks()
-		.find(m => m.type.name === 'link')
+	const mark = resolved.marks().find((m) => m.type.name === 'link')
 	if (!mark) {
 		return false
 	}
@@ -62,11 +61,12 @@ export function linkBubble(options) {
 			},
 		},
 
-		view: (view) => new LinkBubblePluginView({
-			view,
-			options,
-			plugin: linkBubblePlugin,
-		}),
+		view: (view) =>
+			new LinkBubblePluginView({
+				view,
+				options,
+				plugin: linkBubblePlugin,
+			}),
 
 		appendTransaction: (transactions, oldState, state) => {
 			// Don't open bubble at editor initialisation
@@ -78,7 +78,9 @@ export function linkBubble(options) {
 			const sameSelection = oldState?.selection.eq(state.selection)
 			const sameDoc = oldState?.doc.eq(state.doc)
 			// Don't open bubble on changes by other session members
-			const noHistory = transactions.every(tr => tr.meta.addToHistory === false)
+			const noHistory = transactions.every(
+				(tr) => tr.meta.addToHistory === false,
+			)
 			if (sameSelection && (noHistory || sameDoc)) {
 				return
 			}
@@ -92,10 +94,12 @@ export function linkBubble(options) {
 			// when clicking a link in read-only mode on Firefox.
 			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
 				// Only regard left clicks without Ctrl/Meta
-				if (!direct
-					|| event.button !== 0
-					|| event.ctrlKey
-					|| event.metaKey) {
+				if (
+					!direct ||
+					event.button !== 0 ||
+					event.ctrlKey ||
+					event.metaKey
+				) {
 					return false
 				}
 				const { state, dispatch } = view
@@ -112,9 +116,7 @@ export function linkBubble(options) {
 					}
 				},
 			},
-
 		},
-
 	})
 	return linkBubblePlugin
 }
@@ -135,7 +137,13 @@ export function linkClicking() {
 			handleDOMEvents: {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
-					if (event.target.closest('a') && event.button === 1 && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+					if (
+						event.target.closest('a') &&
+						event.button === 1 &&
+						!event.ctrlKey &&
+						!event.metaKey &&
+						!event.shiftKey
+					) {
 						event.preventDefault()
 						event.stopImmediatePropagation()
 

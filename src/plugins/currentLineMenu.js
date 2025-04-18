@@ -32,7 +32,11 @@ export default function currentLineMenu({ editor }) {
 				const currentParagraph = getCurrentParagraph(state)
 				return {
 					currentParagraph,
-					decorations: currentParagraphDecorations(state.doc, currentParagraph, editor),
+					decorations: currentParagraphDecorations(
+						state.doc,
+						currentParagraph,
+						editor,
+					),
 				}
 			},
 			apply(tr, value, _oldState, newState) {
@@ -43,8 +47,13 @@ export default function currentLineMenu({ editor }) {
 				if (!currentParagraph) {
 					return { decorations: DecorationSet.empty }
 				}
-				const decorations = mapDecorations(value, tr, currentParagraph)
-					|| currentParagraphDecorations(newState.doc, currentParagraph, editor)
+				const decorations =
+					mapDecorations(value, tr, currentParagraph) ||
+					currentParagraphDecorations(
+						newState.doc,
+						currentParagraph,
+						editor,
+					)
 				return { currentParagraph, decorations }
 			},
 		},
@@ -79,9 +88,7 @@ function mapDecorations(value, tr, currentParagraph) {
 			removedDecorations = true
 		},
 	})
-	return removedDecorations
-		? false
-		: decorations
+	return removedDecorations ? false : decorations
 }
 
 /**
@@ -99,11 +106,13 @@ function getCurrentParagraph({ selection }) {
 	const pos = depth === 0 ? 0 : selection.$anchor.before()
 	const isRootDepth = depth === 1
 	const noLinkPickerYet = !parent.textContent.match(/(^| )\/$/)
-	if (isRootDepth
-		&& noLinkPickerYet
-		&& selection.empty
-		&& parent.isTextblock
-		&& !parent.type.spec.code) {
+	if (
+		isRootDepth &&
+		noLinkPickerYet &&
+		selection.empty &&
+		parent.isTextblock &&
+		!parent.type.spec.code
+	) {
 		return { pos }
 	}
 }

@@ -6,7 +6,6 @@
 import TipTapStrike from '@tiptap/extension-strike'
 
 export default TipTapStrike.extend({
-
 	parseHTML() {
 		return [
 			{
@@ -20,7 +19,7 @@ export default TipTapStrike.extend({
 			},
 			{
 				style: 'text-decoration',
-				getAttrs: value => value === 'line-through',
+				getAttrs: (value) => value === 'line-through',
 			},
 		]
 	},

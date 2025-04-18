@@ -12,19 +12,15 @@ import * as syncProtocol from 'y-protocols/sync'
 
 describe('recorded session', () => {
 	const flattened = recorded.flat()
-	const sync = flattened.filter(step => step.startsWith('AA'))
-	const awareness = flattened.filter(step => /^A[QRSTU]/.test(step))
+	const sync = flattened.filter((step) => step.startsWith('AA'))
+	const awareness = flattened.filter((step) => /^A[QRSTU]/.test(step))
 	const size = (arr) => arr.reduce((total, cur) => total + cur.length, 0)
 	const processStep = (ydoc, step) => {
 		const buf = decodeArrayBuffer(step)
 		const decoder = decoding.createDecoder(buf)
 		const encoder = encoding.createEncoder()
 		decoding.readVarUint(decoder)
-		const inType = syncProtocol.readSyncMessage(
-			decoder,
-			encoder,
-			ydoc,
-		)
+		const inType = syncProtocol.readSyncMessage(decoder, encoder, ydoc)
 		if (!encoding.length(encoder)) {
 			return { inType, length: 0 }
 		}
@@ -71,12 +67,13 @@ describe('recorded session', () => {
 	})
 
 	test('sync messages types', () => {
-		const syncsOfType = type => sync.filter((step) => {
-			const buf = decodeArrayBuffer(step)
-			const decoder = decoding.createDecoder(buf)
-			decoding.readVarUint(decoder)
-			return decoding.peekVarUint(decoder) === type
-		})
+		const syncsOfType = (type) =>
+			sync.filter((step) => {
+				const buf = decodeArrayBuffer(step)
+				const decoder = decoding.createDecoder(buf)
+				decoding.readVarUint(decoder)
+				return decoding.peekVarUint(decoder) === type
+			})
 		const step1s = syncsOfType(syncProtocol.messageYjsSyncStep1)
 		const step2s = syncsOfType(syncProtocol.messageYjsSyncStep2)
 		const updates = syncsOfType(syncProtocol.messageYjsUpdate)
@@ -90,7 +87,7 @@ describe('recorded session', () => {
 
 	test('read messages', () => {
 		const ydoc = new Doc()
-		const responses = sync.map(step => processStep(ydoc, step))
+		const responses = sync.map((step) => processStep(ydoc, step))
 		responses.forEach(({ inType, length }) => {
 			expect([0, 1, 2]).toContain(inType)
 			if (inType !== syncProtocol.messageYjsSyncStep1) {
@@ -103,7 +100,7 @@ describe('recorded session', () => {
 
 	test('analyse responses', () => {
 		const ydoc = new Doc()
-		const responses = sync.map(step => processStep(ydoc, step))
+		const responses = sync.map((step) => processStep(ydoc, step))
 		responses.forEach(({ inType, outType }) => {
 			if (inType === syncProtocol.messageYjsSyncStep1) {
 				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
@@ -115,7 +112,7 @@ describe('recorded session', () => {
 				expect(outType).toBeUndefined()
 			}
 		})
-		const replies = responses.filter(r => r.length)
+		const replies = responses.filter((r) => r.length)
 		expect(replies.length).toBe(344)
 		expect(size(replies)).toBeGreaterThan(500000)
 		expect(size(replies)).toBeLessThan(600000)
@@ -123,8 +120,8 @@ describe('recorded session', () => {
 
 	test('leaving out queries', () => {
 		const ydoc = new Doc()
-		const withoutQueries = sync.filter(step => step > 'AAE')
-		const responses = withoutQueries.map(step => processStep(ydoc, step))
+		const withoutQueries = sync.filter((step) => step > 'AAE')
+		const responses = withoutQueries.map((step) => processStep(ydoc, step))
 		responses.forEach(({ inType, outType }) => {
 			if (inType === syncProtocol.messageYjsSyncStep1) {
 				expect(outType).toBe(syncProtocol.messageYjsSyncStep2)
@@ -136,11 +133,10 @@ describe('recorded session', () => {
 				expect(outType).toBeUndefined()
 			}
 		})
-		const replies = responses.filter(r => r.length)
+		const replies = responses.filter((r) => r.length)
 		expect(encodeStateAsUpdate(ydoc).length).toBeGreaterThan(30000)
 		expect(encodeStateAsUpdate(ydoc).length).toBeLessThan(40000)
 		expect(replies.length).toBe(0)
 		expect(size(replies)).toBe(0)
 	})
-
 })

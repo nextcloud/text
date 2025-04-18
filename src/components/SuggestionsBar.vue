@@ -6,7 +6,8 @@
 <template>
 	<transition name="fade">
 		<div v-if="isEmptyContent && !isMobileDevice" class="container-suggestions">
-			<NcButton ref="linkFileOrFolder"
+			<NcButton
+				ref="linkFileOrFolder"
 				type="secondary"
 				size="normal"
 				class="suggestions--button"
@@ -17,7 +18,8 @@
 				{{ t('text', 'Link to file or folder') }}
 			</NcButton>
 
-			<NcButton type="secondary"
+			<NcButton
+				type="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="$callChooseLocalAttachment">
@@ -27,7 +29,8 @@
 				{{ t('text', 'Upload') }}
 			</NcButton>
 
-			<NcButton type="secondary"
+			<NcButton
+				type="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="insertTable">
@@ -37,7 +40,8 @@
 				{{ t('text', 'Insert Table') }}
 			</NcButton>
 
-			<NcButton type="secondary"
+			<NcButton
+				type="secondary"
 				size="normal"
 				class="suggestions--button"
 				@click="linkPicker">
@@ -69,11 +73,7 @@ export default {
 		Shape,
 		Upload,
 	},
-	mixins: [
-		useActionChooseLocalAttachmentMixin,
-		useEditorMixin,
-		useFileMixin,
-	],
+	mixins: [useActionChooseLocalAttachmentMixin, useEditorMixin, useFileMixin],
 
 	setup() {
 		return {
@@ -110,7 +110,7 @@ export default {
 		 */
 		linkPicker() {
 			getLinkWithPicker(null, true)
-				.then(link => {
+				.then((link) => {
 					const chain = this.$editor.chain()
 					if (this.$editor.view.state?.selection.empty) {
 						chain.focus().insertPreview(link).run()
@@ -118,7 +118,7 @@ export default {
 						chain.setLink({ href: link }).focus().run()
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.error('Smart picker promise rejected', error)
 				})
 		},
@@ -142,13 +142,19 @@ export default {
 
 			const filePicker = buildFilePicker(this.startPath)
 
-			filePicker.pick()
+			filePicker
+				.pick()
 				.then((file) => {
 					const client = OC.Files.getClient()
 					client.getFileInfo(file).then((_status, fileInfo) => {
-						const url = new URL(generateUrl(`/f/${fileInfo.id}`), window.origin)
+						const url = new URL(
+							generateUrl(`/f/${fileInfo.id}`),
+							window.origin,
+						)
 						this.setLink(url.href, fileInfo.name)
-						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
+						this.startPath =
+							fileInfo.path +
+							(fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 					})
 				})
 				.catch(() => {
@@ -180,7 +186,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .container-suggestions {
 	display: flex;
 	margin-left: max(0px, (100% - var(--text-editor-max-width)) / 2);
@@ -205,5 +210,4 @@ export default {
 .fade-leave-to {
 	opacity: 0;
 }
-
 </style>

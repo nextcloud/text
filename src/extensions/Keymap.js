@@ -7,7 +7,6 @@ import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 
 const Keymap = Extension.create({
-
 	name: 'customkeymap',
 
 	addKeyboardShortcuts() {
@@ -20,7 +19,11 @@ const Keymap = Extension.create({
 				props: {
 					handleKeyDown(view, event) {
 						const key = event.key || event.keyCode
-						if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
+						if (
+							(event.ctrlKey || event.metaKey) &&
+							!event.shiftKey &&
+							(key === 'f' || key === 70)
+						) {
 							// We need to stop propagation and dispatch the event on the window
 							// in order to force triggering the browser native search in the text editor
 							event.stopPropagation()
@@ -38,7 +41,6 @@ const Keymap = Extension.create({
 			}),
 		]
 	},
-
 })
 
 export default Keymap

@@ -10,7 +10,9 @@ import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extens
  */
 function showCursorLabel(clientId) {
 	setTimeout(() => {
-		const el = document.getElementById(`collaboration-cursor__label__${clientId}`)
+		const el = document.getElementById(
+			`collaboration-cursor__label__${clientId}`,
+		)
 		if (!el) {
 			return
 		}
@@ -39,7 +41,7 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 				color: null,
 				lastUpdate: getTimestamp(),
 			},
-			render: user => {
+			render: (user) => {
 				const cursor = document.createElement('span')
 
 				cursor.classList.add('collaboration-cursor__caret')
@@ -59,15 +61,18 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 	},
 
 	onCreate() {
-		this.options.provider.awareness.on('change', ({ added, removed, updated }, origin) => {
-			if (origin !== 'local') {
-				for (const clientId of [...added, ...updated]) {
-					if (clientId !== this.options.user.clientId) {
-						showCursorLabel(clientId)
+		this.options.provider.awareness.on(
+			'change',
+			({ added, removed, updated }, origin) => {
+				if (origin !== 'local') {
+					for (const clientId of [...added, ...updated]) {
+						if (clientId !== this.options.user.clientId) {
+							showCursorLabel(clientId)
+						}
 					}
 				}
-			}
-		})
+			},
+		)
 	},
 
 	// Flag own cursor as active on undoable changes to the document state
@@ -75,7 +80,10 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 		const { updated, meta } = transaction
 		if (updated && (meta.addToHistory ?? true) && !meta.pointer) {
 			this.options.user.lastUpdate = getTimestamp()
-			this.options.provider.awareness.setLocalStateField('user', this.options.user)
+			this.options.provider.awareness.setLocalStateField(
+				'user',
+				this.options.user,
+			)
 		}
 	},
 })

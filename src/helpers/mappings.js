@@ -78,6 +78,4 @@ const extensionHighlight = {
 }
 
 export default extensionHighlight
-export {
-	extensionHighlight,
-}
+export { extensionHighlight }

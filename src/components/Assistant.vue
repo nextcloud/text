@@ -4,7 +4,8 @@
 -->
 <template>
 	<div v-if="showAssistant" class="text-assistant">
-		<FloatingMenu v-if="$editor"
+		<FloatingMenu
+			v-if="$editor"
 			plugin-key="assistantMenu"
 			:editor="$editor"
 			:tippy-options="floatingOptions()"
@@ -15,20 +16,28 @@
 				<template #icon>
 					<CreationIcon :size="20" class="icon" />
 				</template>
-				<NcActionButton v-for="type in taskTypes"
+				<NcActionButton
+					v-for="type in taskTypes"
 					:key="type.id"
 					close-after-click
 					@click="openAssistantForm(type.id)">
 					<template #icon>
 						<PencilIcon v-if="type.id == 'core:text2text'" :size="20" />
-						<FormatHeader1 v-else-if="type.id == 'core:text2text:headline'" :size="20" />
-						<Shuffle v-else-if="type.id == 'core:text2text:reformulation'" :size="20" />
-						<TextShort v-else-if="type.id == 'core:text2text:summary'" :size="20" />
+						<FormatHeader1
+							v-else-if="type.id == 'core:text2text:headline'"
+							:size="20" />
+						<Shuffle
+							v-else-if="type.id == 'core:text2text:reformulation'"
+							:size="20" />
+						<TextShort
+							v-else-if="type.id == 'core:text2text:summary'"
+							:size="20" />
 						<CreationIcon v-else />
 					</template>
 					{{ type.name }}
 				</NcActionButton>
-				<NcActionButton v-if="canTranslate"
+				<NcActionButton
+					v-if="canTranslate"
 					data-cy="open-translate"
 					close-after-click
 					@click="openTranslateDialog">
@@ -38,14 +47,18 @@
 					{{ t('text', 'Translate') }}
 				</NcActionButton>
 				<NcActionSeparator />
-				<NcActionButton :disabled="tasks.length < 1" close-after-click @click="showTaskList=true">
+				<NcActionButton
+					:disabled="tasks.length < 1"
+					close-after-click
+					@click="showTaskList = true">
 					<template #icon>
 						<CreationIcon :size="20" />
 					</template>
 					{{ t('text', 'Show assistant results') }}
 				</NcActionButton>
 			</NcActions>
-			<component :is="badgeStateIcon"
+			<component
+				:is="badgeStateIcon"
 				v-if="badgeStateIcon"
 				:size="16"
 				class="floating-menu--badge" />
@@ -60,7 +73,8 @@
 					</span>
 				</h4>
 				<ul v-if="tasks.length > 0">
-					<NcListItem v-for="task in tasks"
+					<NcListItem
+						v-for="task in tasks"
 						:key="task.id"
 						:name="task.title"
 						:bold="false"
@@ -70,13 +84,22 @@
 							{{ task.input.input }}
 						</template>
 						<template #icon>
-							<CheckCircleIcon v-if="task.status === STATUS_SUCCESSFUL" :size="20" class="icon-status--success" />
-							<ErrorIcon v-else-if="task.status === STATUS_FAILED" :size="20" class="icon-status--failed" />
+							<CheckCircleIcon
+								v-if="task.status === STATUS_SUCCESSFUL"
+								:size="20"
+								class="icon-status--success" />
+							<ErrorIcon
+								v-else-if="task.status === STATUS_FAILED"
+								:size="20"
+								class="icon-status--failed" />
 							<ClockOutline v-else :size="20" />
 						</template>
 						<template #indicator>
 							<NcActions :inline="2">
-								<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click.stop="() => copyResult(task)">
+								<NcActionButton
+									v-if="task.status === STATUS_SUCCESSFUL"
+									:title="task.output.output"
+									@click.stop="() => copyResult(task)">
 									<template #icon>
 										<ClipboardTextOutlineIcon :size="20" />
 									</template>
@@ -85,13 +108,19 @@
 							</NcActions>
 						</template>
 						<template #actions>
-							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click.stop="() => openResult(task)">
+							<NcActionButton
+								v-if="task.status === STATUS_SUCCESSFUL"
+								:title="task.output.output"
+								@click.stop="() => openResult(task)">
 								<template #icon>
 									<CreationIcon :size="20" />
 								</template>
 								{{ t('text', 'Show result') }}
 							</NcActionButton>
-							<NcActionButton v-if="task.status === STATUS_SUCCESSFUL" :title="task.output.output" @click="() => insertResult(task)">
+							<NcActionButton
+								v-if="task.status === STATUS_SUCCESSFUL"
+								:title="task.output.output"
+								@click="() => insertResult(task)">
 								<template #icon>
 									<TextBoxPlusOutlineIcon :size="20" />
 								</template>
@@ -128,7 +157,13 @@ import TranslateVariant from 'vue-material-design-icons/TranslateVariant.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
 import { posToDOMRect } from '@tiptap/core'
 import { loadState } from '@nextcloud/initial-state'
-import { NcActions, NcActionButton, NcActionSeparator, NcListItem, NcModal } from '@nextcloud/vue'
+import {
+	NcActions,
+	NcActionButton,
+	NcActionSeparator,
+	NcListItem,
+	NcModal,
+} from '@nextcloud/vue'
 import {
 	useEditorMixin,
 	useIsRichWorkspaceMixin,
@@ -192,18 +227,28 @@ export default {
 			STATUS_UNKNOWN,
 
 			showTaskList: false,
-			canTranslate: loadState('text', 'translation_languages', []).from?.length > 0,
+			canTranslate:
+				loadState('text', 'translation_languages', []).from?.length > 0,
 		}
 	},
 	computed: {
 		showAssistant() {
-			return !this.$isRichWorkspace && !this.$isPublic && window.OCA.Assistant?.openAssistantForm
+			return (
+				!this.$isRichWorkspace &&
+				!this.$isPublic &&
+				window.OCA.Assistant?.openAssistantForm
+			)
 		},
 		identifier() {
 			return 'text-file:' + this.$file.fileId
 		},
 		badgeStateIcon() {
-			if (this.tasks.filter((t) => t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING).length > 0) {
+			if (
+				this.tasks.filter(
+					(t) =>
+						t.status === STATUS_SCHEDULED || t.status === STATUS_RUNNING,
+				).length > 0
+			) {
 				return ClockOutline
 			}
 
@@ -211,7 +256,9 @@ export default {
 				return ErrorIcon
 			}
 
-			if (this.tasks.filter((t) => t.status === STATUS_SUCCESSFUL).length > 0) {
+			if (
+				this.tasks.filter((t) => t.status === STATUS_SUCCESSFUL).length > 0
+			) {
 				return CheckCircleIcon
 			}
 
@@ -240,18 +287,29 @@ export default {
 	},
 	methods: {
 		async fetchTasks() {
-			const result = await axios.get(generateOcsUrl('/taskprocessing/tasks/app/text') + '?customId=' + this.identifier)
+			const result = await axios.get(
+				generateOcsUrl('/taskprocessing/tasks/app/text') +
+					'?customId=' +
+					this.identifier,
+			)
 
-			const filteredTasks = result.data.ocs.data.tasks.filter(t => this.taskTypeIds.includes(t.type))
-			this.tasks = filteredTasks.map((task) => {
-				return {
-					...task,
-					title: this.taskTypes.find(t => t.id === task.type).name,
-				}
-			}).sort((a, b) => b.id - a.id)
+			const filteredTasks = result.data.ocs.data.tasks.filter((t) =>
+				this.taskTypeIds.includes(t.type),
+			)
+			this.tasks = filteredTasks
+				.map((task) => {
+					return {
+						...task,
+						title: this.taskTypes.find((t) => t.id === task.type).name,
+					}
+				})
+				.sort((a, b) => b.id - a.id)
 		},
 		async checkNotification(event) {
-			if (event.notification.app !== 'assistant' || event.notification.actions[0].type !== 'WEB') {
+			if (
+				event.notification.app !== 'assistant' ||
+				event.notification.actions[0].type !== 'WEB'
+			) {
 				return
 			}
 			await this.fetchTasks()
@@ -262,27 +320,26 @@ export default {
 			this.selection = state.doc.textBetween(from, to, ' ')
 		},
 		async openAssistantForm(taskType = null) {
-			await window.OCA.Assistant.openAssistantForm(
-				{
-					appId: 'text',
-					customId: this.identifier,
-					taskType,
-					inputs: {
-						input: this.selection,
-					},
-					isInsideViewer: true,
-					closeOnResult: false,
-					actionButtons: [
-						{
-							type: 'primary',
-							title: t('text', 'Insert result'),
-							label: t('text', 'Insert result'),
-							onClick: (lastTask) => {
-								this.insertResult(lastTask)
-							},
+			await window.OCA.Assistant.openAssistantForm({
+				appId: 'text',
+				customId: this.identifier,
+				taskType,
+				inputs: {
+					input: this.selection,
+				},
+				isInsideViewer: true,
+				closeOnResult: false,
+				actionButtons: [
+					{
+						type: 'primary',
+						title: t('text', 'Insert result'),
+						label: t('text', 'Insert result'),
+						onClick: (lastTask) => {
+							this.insertResult(lastTask)
 						},
-					],
-				}).finally(() => {
+					},
+				],
+			}).finally(() => {
 				this.fetchTasks()
 			})
 		},
@@ -309,7 +366,9 @@ export default {
 		},
 		async insertResult(task) {
 			const isMarkdown = shouldInterpretAsMarkdown(task.output.output)
-			const content = isMarkdown ? markdownit.render(task.output.output) : task.output.output
+			const content = isMarkdown
+				? markdownit.render(task.output.output)
+				: task.output.output
 			this.$editor.commands.insertContent(content)
 			this.showTaskList = false
 		},
@@ -329,7 +388,7 @@ export default {
 			} catch (e) {
 				console.error('Failed to delete task', e)
 			}
-			const taskIndex = this.tasks.findIndex(t => t.id === task.id)
+			const taskIndex = this.tasks.findIndex((t) => t.id === task.id)
 			if (taskIndex > -1) {
 				this.$delete(this.tasks, taskIndex)
 			}
@@ -341,8 +400,14 @@ export default {
 			return {
 				placement: 'right',
 				getReferenceClientRect: () => {
-					const editorRect = this.$parent.$el.querySelector('.ProseMirror').getBoundingClientRect()
-					const pos = posToDOMRect(this.$editor.view, this.$editor.state.selection.from, this.$editor.state.selection.to)
+					const editorRect = this.$parent.$el
+						.querySelector('.ProseMirror')
+						.getBoundingClientRect()
+					const pos = posToDOMRect(
+						this.$editor.view,
+						this.$editor.state.selection.from,
+						this.$editor.state.selection.to,
+					)
 					let rightSpacing = 0
 
 					if (editorRect.width < 890) {
@@ -352,11 +417,24 @@ export default {
 					return {
 						...pos,
 						width: editorRect.width - rightSpacing,
-						height: limitInRange(pos.height, buttonSize, window.innerHeight),
-						top: limitInRange(pos.top, topSpacing, window.innerHeight - bottomSpacing),
+						height: limitInRange(
+							pos.height,
+							buttonSize,
+							window.innerHeight,
+						),
+						top: limitInRange(
+							pos.top,
+							topSpacing,
+							window.innerHeight - bottomSpacing,
+						),
 						left: editorRect.left,
 						right: editorRect.right,
-						bottom: limitInRange(pos.top + buttonSize, bottomSpacing, window.innerHeight - topSpacing) + 22,
+						bottom:
+							limitInRange(
+								pos.top + buttonSize,
+								bottomSpacing,
+								window.innerHeight - topSpacing,
+							) + 22,
 					}
 				},
 			}

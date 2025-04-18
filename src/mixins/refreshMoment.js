@@ -10,7 +10,6 @@
  * given the granularity of moment.js
  */
 export default {
-
 	data() {
 		return {
 			refreshMoment: 0,
@@ -26,5 +25,4 @@ export default {
 	beforeDestroy() {
 		clearInterval(this.$refreshInterval)
 	},
-
 }

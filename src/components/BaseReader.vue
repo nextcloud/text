@@ -4,15 +4,17 @@
 -->
 
 <template>
-	<div data-text-el="editor-content-wrapper"
+	<div
+		data-text-el="editor-content-wrapper"
 		class="content-wrapper text-editor__content-wrapper"
 		:class="{
-			'--show-outline': showOutline
+			'--show-outline': showOutline,
 		}">
 		<div v-if="showOutline" class="text-editor__content-wrapper__left">
 			<EditorOutline />
 		</div>
-		<EditorContent v-if="$editor"
+		<EditorContent
+			v-if="$editor"
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="$editor" />
@@ -24,7 +26,10 @@
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
 import { EDITOR } from './Editor.provider.js'
-import { useOutlineStateMixin, useOutlineActions } from './Editor/Wrapper.provider.js'
+import {
+	useOutlineStateMixin,
+	useOutlineActions,
+} from './Editor/Wrapper.provider.js'
 import EditorOutline from './Editor/EditorOutline.vue'
 
 export default {

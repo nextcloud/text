@@ -13,10 +13,6 @@ export default Extension.create({
 	name: 'PlainText',
 
 	addExtensions() {
-		return [
-			PlainTextDocument,
-			Text,
-		]
+		return [PlainTextDocument, Text]
 	},
-
 })
