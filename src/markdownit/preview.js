@@ -11,15 +11,15 @@
 function isPreviewLinkInParagraph(tokens, i) {
 	const [prev, cur, next] = tokens.slice(i - 1, i + 2)
 	return (
-		prev?.type === 'paragraph_open' &&
-		cur.type === 'inline' &&
-		cur.children &&
-		cur.children.length === 3 &&
-		cur.children[0].type === 'link_open' &&
-		cur.children[0].attrGet('title') === 'preview' &&
-		cur.children[1].type === 'text' &&
-		cur.children[2].type === 'link_close' &&
-		next.type === 'paragraph_close'
+		prev?.type === 'paragraph_open'
+		&& cur.type === 'inline'
+		&& cur.children
+		&& cur.children.length === 3
+		&& cur.children[0].type === 'link_open'
+		&& cur.children[0].attrGet('title') === 'preview'
+		&& cur.children[1].type === 'text'
+		&& cur.children[2].type === 'link_close'
+		&& next.type === 'paragraph_close'
 	)
 }
 

@@ -175,8 +175,8 @@ export default {
 				})
 				.catch((error) => {
 					if (
-						error.response.data.ocs &&
-						error.response.data.ocs.data.folder
+						error.response.data.ocs
+						&& error.response.data.ocs.data.folder
 					) {
 						this.folder = error.response.data.ocs.data.folder
 					} else {
@@ -222,8 +222,8 @@ export default {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
 				this.localHasRichWorkspace = true
 			} else if (
-				node.fileid === this.file?.id &&
-				node.path !== this.file?.path
+				node.fileid === this.file?.id
+				&& node.path !== this.file?.path
 			) {
 				this.localHasRichWorkspace = false
 			}

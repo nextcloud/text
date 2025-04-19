@@ -174,15 +174,15 @@ export default {
 		},
 		showCode() {
 			return (
-				!this.supportPreview ||
-				this.viewMode === 'code' ||
-				this.viewMode === 'side-by-side'
+				!this.supportPreview
+				|| this.viewMode === 'code'
+				|| this.viewMode === 'side-by-side'
 			)
 		},
 		showPreview() {
 			return (
-				this.supportPreview &&
-				(this.viewMode === 'preview' || this.viewMode === 'side-by-side')
+				this.supportPreview
+				&& (this.viewMode === 'preview' || this.viewMode === 'side-by-side')
 			)
 		},
 		defaultMode() {

@@ -31,10 +31,10 @@ export default function searchDecorations() {
 				const matchAllChanged = newSearch.matchAll !== oldSearch.matchAll
 
 				if (
-					tr.docChanged ||
-					queryChanged ||
-					indexChanged ||
-					matchAllChanged
+					tr.docChanged
+					|| queryChanged
+					|| indexChanged
+					|| matchAllChanged
 				) {
 					const { results, total, index } = runSearch(
 						tr.doc,

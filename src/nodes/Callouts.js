@@ -34,11 +34,11 @@ export default Node.create({
 				rendered: false,
 				parseHTML: (element) => {
 					return (
-						element.getAttribute('data-callout') ||
-						typesAvailable.find((type) =>
+						element.getAttribute('data-callout')
+						|| typesAvailable.find((type) =>
 							element.classList.contains(type),
-						) ||
-						(element.classList.contains('warning') && 'warn')
+						)
+						|| (element.classList.contains('warning') && 'warn')
 					)
 				},
 				renderHTML: (attributes) => {

@@ -95,10 +95,10 @@ export function linkBubble(options) {
 			handleClickOn: (view, pos, _node, _nodePos, event, direct) => {
 				// Only regard left clicks without Ctrl/Meta
 				if (
-					!direct ||
-					event.button !== 0 ||
-					event.ctrlKey ||
-					event.metaKey
+					!direct
+					|| event.button !== 0
+					|| event.ctrlKey
+					|| event.metaKey
 				) {
 					return false
 				}
@@ -138,11 +138,11 @@ export function linkClicking() {
 				// Open link in new tab on middle click
 				auxclick: (view, event) => {
 					if (
-						event.target.closest('a') &&
-						event.button === 1 &&
-						!event.ctrlKey &&
-						!event.metaKey &&
-						!event.shiftKey
+						event.target.closest('a')
+						&& event.button === 1
+						&& !event.ctrlKey
+						&& !event.metaKey
+						&& !event.shiftKey
 					) {
 						event.preventDefault()
 						event.stopImmediatePropagation()

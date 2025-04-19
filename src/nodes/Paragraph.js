@@ -30,8 +30,8 @@ const Paragraph = TiptapParagraph.extend({
 				const previousNode = parent.child(index - 1)
 				// Check this and the previous sibling are paragraphs
 				if (
-					node.type.name === this.name &&
-					previousNode.type.name === this.name
+					node.type.name === this.name
+					&& previousNode.type.name === this.name
 				) {
 					return this.editor.chain().joinBackward().setHardBreak().run()
 				}

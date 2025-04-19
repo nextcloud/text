@@ -20,9 +20,9 @@ const Keymap = Extension.create({
 					handleKeyDown(view, event) {
 						const key = event.key || event.keyCode
 						if (
-							(event.ctrlKey || event.metaKey) &&
-							!event.shiftKey &&
-							(key === 'f' || key === 70)
+							(event.ctrlKey || event.metaKey)
+							&& !event.shiftKey
+							&& (key === 'f' || key === 70)
 						) {
 							// We need to stop propagation and dispatch the event on the window
 							// in order to force triggering the browser native search in the text editor

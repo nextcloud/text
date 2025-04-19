@@ -33,8 +33,8 @@ export default function headingAnchor() {
 				}
 				const headings = extractHeadings(newState.doc)
 				const decorations =
-					mapDecorations(value, tr, headings) ||
-					anchorDecorations(newState.doc, headings)
+					mapDecorations(value, tr, headings)
+					|| anchorDecorations(newState.doc, headings)
 				return { headings, decorations }
 			},
 		},

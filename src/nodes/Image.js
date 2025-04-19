@@ -45,8 +45,8 @@ const Image = TiptapImage.extend({
 					handleDrop: (view, event, slice) => {
 						// only catch the drop if it contains files
 						if (
-							event.dataTransfer.files &&
-							event.dataTransfer.files.length > 0
+							event.dataTransfer.files
+							&& event.dataTransfer.files.length > 0
 						) {
 							const coordinates = view.posAtCoords({
 								left: event.clientX,
@@ -66,8 +66,8 @@ const Image = TiptapImage.extend({
 					handlePaste: (view, event, slice) => {
 						// only catch the paste if it contains files
 						if (
-							event.clipboardData.files &&
-							event.clipboardData.files.length > 0
+							event.clipboardData.files
+							&& event.clipboardData.files.length > 0
 						) {
 							// let the editor wrapper catch this custom event
 							const customEvent = new CustomEvent('image-paste', {

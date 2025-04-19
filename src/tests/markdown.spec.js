@@ -112,11 +112,11 @@ describe('Markdown though editor', () => {
 
 	test('escaping', () => {
 		const test =
-			'(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n' +
-			'\n' +
-			'* [asdf asdf asdf/asdf](Asdf Asdf)\n' +
-			'* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n' +
-			'* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
+			'(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n'
+			+ '\n'
+			+ '* [asdf asdf asdf/asdf](Asdf Asdf)\n'
+			+ '* asdf asdf asdf [a--f asdf asdf](a--f Asdf Asdf)\n'
+			+ '* [Asdf asdf asdf asdf asdf asdf](Asdf asdf)'
 		expect(markdownThroughEditor(test)).toBe(test)
 		expect(markdownThroughEditor('This is a [test] for escaping')).toBe(
 			'This is a [test] for escaping',

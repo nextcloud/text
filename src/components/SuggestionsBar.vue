@@ -153,8 +153,8 @@ export default {
 						)
 						this.setLink(url.href, fileInfo.name)
 						this.startPath =
-							fileInfo.path +
-							(fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
+							fileInfo.path
+							+ (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 					})
 				})
 				.catch(() => {

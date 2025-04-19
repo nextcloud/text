@@ -160,15 +160,15 @@ export class Connection {
 		const formData = new FormData()
 		formData.append('file', file)
 		const url =
-			_endpointUrl('attachment/upload') +
-			'?documentId=' +
-			encodeURIComponent(this.#document.id) +
-			'&sessionId=' +
-			encodeURIComponent(this.#session.id) +
-			'&sessionToken=' +
-			encodeURIComponent(this.#session.token) +
-			'&token=' +
-			encodeURIComponent(this.#options.shareToken || '')
+			_endpointUrl('attachment/upload')
+			+ '?documentId='
+			+ encodeURIComponent(this.#document.id)
+			+ '&sessionId='
+			+ encodeURIComponent(this.#session.id)
+			+ '&sessionToken='
+			+ encodeURIComponent(this.#session.token)
+			+ '&token='
+			+ encodeURIComponent(this.#options.shareToken || '')
 		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',

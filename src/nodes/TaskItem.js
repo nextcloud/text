@@ -97,18 +97,18 @@ const TaskItem = TipTapTaskItem.extend({
 							position,
 							function (node) {
 								return (
-									node.type === schema.nodes.taskItem ||
-									node.type === schema.nodes.listItem
+									node.type === schema.nodes.taskItem
+									|| node.type === schema.nodes.listItem
 								)
 							},
 						)
 						const isListClicked =
 							event.target.tagName.toLowerCase() === 'li'
 						if (
-							!isListClicked ||
-							!parentList ||
-							parentList.node.type !== schema.nodes.taskItem ||
-							!view.editable
+							!isListClicked
+							|| !parentList
+							|| parentList.node.type !== schema.nodes.taskItem
+							|| !view.editable
 						) {
 							return
 						}

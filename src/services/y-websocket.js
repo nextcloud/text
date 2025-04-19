@@ -56,8 +56,8 @@ messageHandlers[messageSync] = (
 		return
 	}
 	if (
-		syncMessageType === syncProtocol.messageYjsSyncStep2 ||
-		syncMessageType === syncProtocol.messageYjsUpdate
+		syncMessageType === syncProtocol.messageYjsSyncStep2
+		|| syncMessageType === syncProtocol.messageYjsUpdate
 	) {
 		syncProtocol.readSyncMessage(
 			decoderForRemote,
@@ -419,9 +419,9 @@ export class WebsocketProvider extends Observable {
 		this._checkInterval = /** @type {any} */ (
 			setInterval(() => {
 				if (
-					this.wsconnected &&
-					messageReconnectTimeout <
-						time.getUnixTime() - this.wsLastMessageReceived
+					this.wsconnected
+					&& messageReconnectTimeout
+						< time.getUnixTime() - this.wsLastMessageReceived
 				) {
 					// no message received in a long time - not even your own awareness
 					// updates (which are updated every 15 seconds)
@@ -437,10 +437,10 @@ export class WebsocketProvider extends Observable {
 	get url() {
 		const encodedParams = url.encodeQueryParams(this.params)
 		return (
-			this.serverUrl +
-			'/' +
-			this.roomname +
-			(encodedParams.length === 0 ? '' : '?' + encodedParams)
+			this.serverUrl
+			+ '/'
+			+ this.roomname
+			+ (encodedParams.length === 0 ? '' : '?' + encodedParams)
 		)
 	}
 

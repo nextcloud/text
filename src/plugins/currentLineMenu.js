@@ -48,8 +48,8 @@ export default function currentLineMenu({ editor }) {
 					return { decorations: DecorationSet.empty }
 				}
 				const decorations =
-					mapDecorations(value, tr, currentParagraph) ||
-					currentParagraphDecorations(
+					mapDecorations(value, tr, currentParagraph)
+					|| currentParagraphDecorations(
 						newState.doc,
 						currentParagraph,
 						editor,
@@ -107,11 +107,11 @@ function getCurrentParagraph({ selection }) {
 	const isRootDepth = depth === 1
 	const noLinkPickerYet = !parent.textContent.match(/(^| )\/$/)
 	if (
-		isRootDepth &&
-		noLinkPickerYet &&
-		selection.empty &&
-		parent.isTextblock &&
-		!parent.type.spec.code
+		isRootDepth
+		&& noLinkPickerYet
+		&& selection.empty
+		&& parent.isTextblock
+		&& !parent.type.spec.code
 	) {
 		return { pos }
 	}

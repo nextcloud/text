@@ -137,8 +137,8 @@ export default class AttachmentResolver {
  */
 function isDirectUrl(src) {
 	return (
-		src.startsWith('http://') ||
-		src.startsWith('https://') ||
-		src.startsWith('data:')
+		src.startsWith('http://')
+		|| src.startsWith('https://')
+		|| src.startsWith('data:')
 	)
 }
