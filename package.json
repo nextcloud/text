@@ -123,7 +123,7 @@
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/e2e-test-server": "^0.2.1",
     "@nextcloud/eslint-config": "^8.4.2",
-    "@nextcloud/prettier-config": "^1.1.0",
+    "@nextcloud/prettier-config": "^1.2.0",
     "@nextcloud/vite-config": "^1.5.3",
     "@types/markdown-it": "^14.1.2",
     "@vitest/coverage-v8": "^3.1.1",
