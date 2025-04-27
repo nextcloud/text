@@ -70,6 +70,7 @@ OC.L10N.register(
     "Headings" : "Pealkirjad",
     "Lists" : "Loendid",
     "Details" : "Üksikasjad",
+    "Ctrl" : "Ctrl",
     "Formatting" : "Vorming",
     "Select file or folder to link to" : "Vali lingitav fail või kaust",
     "Add folder description" : "Lisa kausta kirjeldus",
