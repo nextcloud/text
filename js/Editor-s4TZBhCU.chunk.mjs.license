@@ -74,7 +74,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 5.3.1
 	- license: MIT
 - y-prosemirror
-	- version: 1.3.3
+	- version: 1.3.4
 	- license: MIT
 - y-protocols
 	- version: 1.0.6
