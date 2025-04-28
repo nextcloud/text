@@ -141,6 +141,8 @@ class ApiService {
 			$lockInfo = null;
 		}
 
+		$hasOwner = $file->getOwner() !== null;
+
 		if (!$readOnly) {
 			$isLocked = $this->documentService->lock($file->getId());
 			if (!$isLocked) {
@@ -155,6 +157,7 @@ class ApiService {
 			'content' => $content,
 			'documentState' => $documentState,
 			'lock' => $lockInfo,
+			'hasOwner' => $hasOwner,
 		]);
 	}
 
