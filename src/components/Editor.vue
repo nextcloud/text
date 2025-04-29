@@ -15,6 +15,7 @@
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 		<Wrapper
 			v-if="displayed"
+			:is-mobile="isMobile"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
@@ -984,7 +985,9 @@ export default {
 }
 
 .text-editor .text-editor__wrapper.has-conflicts {
-	height: calc(100% - 50px);
+	// Make space for document status and conflict resolving dialog
+	height: calc(100% - 48px - 54px);
+	overflow-y: auto;
 }
 
 #body-public {

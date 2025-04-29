@@ -6,7 +6,7 @@
 <template>
 	<div class="editor editor-media-handler"
 		data-text-el="editor-media-handler"
-		:class="{ draggedOver, 'editor--mobile': isMobile }"
+		:class="{ draggedOver, 'is-mobile': isMobile }"
 		@image-paste="onPaste"
 		@dragover.prevent.stop="setDraggedOver(true)"
 		@dragleave.prevent.stop="setDraggedOver(false)"
@@ -206,14 +206,3 @@ export default {
 	},
 }
 </script>
-
-<style scoped lang="scss">
-
-.editor--mobile {
-	display: flex;
-	flex-direction: column-reverse;
-	height: 100%;
-	overflow: auto;
-}
-
-</style>

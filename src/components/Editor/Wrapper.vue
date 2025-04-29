@@ -6,6 +6,7 @@
 <template>
 	<div class="text-editor__wrapper"
 		:class="{
+			'is-mobile': isMobile,
 			'has-conflicts': isResolvingConflict,
 			'is-rich-workspace': $isRichWorkspace,
 			'is-rich-editor': $isRichEditor,
@@ -44,9 +45,13 @@ export default {
 	},
 
 	props: {
-		isResolvingConflict: {
+		isMobile: {
 			type: Boolean,
 			require: true,
+		},
+		isResolvingConflict: {
+			type: Boolean,
+			default: false,
 		},
 		hasConnectionIssue: {
 			type: Boolean,
@@ -128,8 +133,12 @@ export default {
 
 	.text-editor__wrapper {
 		display: flex;
+
 		width: 100%;
-		height: 100%;
+		&.is-mobile {
+			// Required for sticky bottom toolbar
+			height: 100%;
+		}
 
 		.ProseMirror {
 			margin-top: 0 !important;

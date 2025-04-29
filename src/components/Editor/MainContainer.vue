@@ -37,4 +37,14 @@ export default {
 		position: relative;
 		width: 100%;
 	}
+
+	.text-editor__main {
+		display: flex;
+		flex-direction: column;
+
+		&.is-mobile {
+			flex-direction: column-reverse;
+			height: 100%;
+		}
+	}
 </style>
