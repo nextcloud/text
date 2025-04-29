@@ -59,7 +59,7 @@ import { NcButton } from '@nextcloud/vue'
 import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { useEditorMixin, useFileMixin } from './Editor.provider.js'
+import { useEditorMixin, useFileMixin, useSyncServerMixin } from './Editor.provider.js'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
@@ -73,7 +73,12 @@ export default {
 		Shape,
 		Upload,
 	},
-	mixins: [useActionChooseLocalAttachmentMixin, useEditorMixin, useFileMixin],
+	mixins: [
+		useActionChooseLocalAttachmentMixin,
+		useEditorMixin,
+		useFileMixin,
+		useSyncServiceMixin,
+	],
 
 	setup() {
 		return {
