@@ -48,8 +48,8 @@ export default function previewOptions({ editor }) {
 				}
 				const linkParagraphs = extractLinkParagraphs(newState.doc)
 				const decorations =
-					mapDecorations(value, tr, linkParagraphs) ||
-					linkParagraphDecorations(newState.doc, linkParagraphs, editor)
+					mapDecorations(value, tr, linkParagraphs)
+					|| linkParagraphDecorations(newState.doc, linkParagraphs, editor)
 				return { linkParagraphs, decorations }
 			},
 		},
@@ -109,8 +109,8 @@ function linkParagraphsChanged(current, prev) {
  */
 const isDifferentFrom = (other) => (linkParagraph, i) => {
 	return (
-		linkParagraph.type !== other[i].type ||
-		linkParagraph.nodeSize !== other[i].nodeSize
+		linkParagraph.type !== other[i].type
+		|| linkParagraph.nodeSize !== other[i].nodeSize
 	)
 }
 

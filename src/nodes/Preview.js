@@ -79,8 +79,8 @@ export default Node.create({
 				() =>
 				({ state, chain }) => {
 					return (
-						previewPossible(state) &&
-						chain()
+						previewPossible(state)
+						&& chain()
 							.setNode(
 								this.name,
 								previewAttributesFromSelection(state),
@@ -97,8 +97,8 @@ export default Node.create({
 				() =>
 				({ state, chain }) => {
 					return (
-						isActive(this.name, this.attributes, state) &&
-						chain().setNode('paragraph').run()
+						isActive(this.name, this.attributes, state)
+						&& chain().setNode('paragraph').run()
 					)
 				},
 
@@ -183,8 +183,8 @@ function previewPossible({ selection }) {
  */
 function hasOtherContent(node) {
 	return (
-		node.childCount > 2 ||
-		(node.childCount === 2 && node.lastChild.textContent.trim())
+		node.childCount > 2
+		|| (node.childCount === 2 && node.lastChild.textContent.trim())
 	)
 }
 

@@ -17,9 +17,9 @@ export default TipTapMention.extend({
 					return {
 						id: decodeURIComponent(element.getAttribute('data-id')),
 						label:
-							element.innerText ||
-							element.textContent ||
-							element.getAttribute('data-label'),
+							element.innerText
+							|| element.textContent
+							|| element.getAttribute('data-label'),
 					}
 				},
 				priority: 100,

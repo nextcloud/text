@@ -250,8 +250,8 @@ class SyncService {
 		const awareness = sessions
 			.filter(
 				(s) =>
-					s.lastContact >
-					Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME,
+					s.lastContact
+					> Math.floor(Date.now() / 1000) - COLLABORATOR_DISCONNECT_TIME,
 			)
 			.filter((s) => s.lastAwarenessMessage)
 			.map((s) => {

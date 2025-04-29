@@ -61,8 +61,8 @@ function previewPossible(node) {
  */
 function hasOtherContent(node) {
 	return (
-		node.childCount > 2 ||
-		(node.childCount === 2 && node.lastChild.textContent.trim())
+		node.childCount > 2
+		|| (node.childCount === 2 && node.lastChild.textContent.trim())
 	)
 }
 

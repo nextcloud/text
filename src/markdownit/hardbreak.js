@@ -16,9 +16,9 @@ export default function keepHardbreakSyntax(md) {
 	md.inline.ruler.at('newline', (state, silent) => {
 		const rval = markdownitNewline(state, silent)
 		if (
-			rval &&
-			state.tokens.length &&
-			state.tokens[state.tokens.length - 1].type === 'hardbreak'
+			rval
+			&& state.tokens.length
+			&& state.tokens[state.tokens.length - 1].type === 'hardbreak'
 		)
 			state.tokens[state.tokens.length - 1].attrSet('syntax', '  ')
 		return rval
@@ -28,9 +28,9 @@ export default function keepHardbreakSyntax(md) {
 	md.inline.ruler.at('escape', (state, silent) => {
 		const rval = markdownitEscape(state, silent)
 		if (
-			rval &&
-			state.tokens.length &&
-			state.tokens[state.tokens.length - 1].type === 'hardbreak'
+			rval
+			&& state.tokens.length
+			&& state.tokens[state.tokens.length - 1].type === 'hardbreak'
 		)
 			state.tokens[state.tokens.length - 1].attrSet('syntax', '\\')
 		return rval

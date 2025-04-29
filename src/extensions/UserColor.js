@@ -17,11 +17,11 @@ const UserColor = Extension.create({
 			clientID: 0,
 			color: (clientID) => {
 				return (
-					'#' +
-					Math.floor(
+					'#'
+					+ Math.floor(
 						Math.abs(Math.sin(clientID) * 16777215) % 16777215,
-					).toString(16) +
-					'aa'
+					).toString(16)
+					+ 'aa'
 				)
 			},
 			name: (clientID) => {
@@ -76,9 +76,9 @@ const UserColor = Extension.create({
 								return Decoration.inline(span.from, span.to, {
 									class: 'author-annotation',
 									style:
-										'background-color: ' +
-										this.spec.color(clientID) +
-										'66;',
+										'background-color: '
+										+ this.spec.color(clientID)
+										+ '66;',
 									title: this.spec.name(clientID),
 								})
 							})

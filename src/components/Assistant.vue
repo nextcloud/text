@@ -234,9 +234,9 @@ export default {
 	computed: {
 		showAssistant() {
 			return (
-				!this.$isRichWorkspace &&
-				!this.$isPublic &&
-				window.OCA.Assistant?.openAssistantForm
+				!this.$isRichWorkspace
+				&& !this.$isPublic
+				&& window.OCA.Assistant?.openAssistantForm
 			)
 		},
 		identifier() {
@@ -288,9 +288,9 @@ export default {
 	methods: {
 		async fetchTasks() {
 			const result = await axios.get(
-				generateOcsUrl('/taskprocessing/tasks/app/text') +
-					'?customId=' +
-					this.identifier,
+				generateOcsUrl('/taskprocessing/tasks/app/text')
+					+ '?customId='
+					+ this.identifier,
 			)
 
 			const filteredTasks = result.data.ocs.data.tasks.filter((t) =>
@@ -307,8 +307,8 @@ export default {
 		},
 		async checkNotification(event) {
 			if (
-				event.notification.app !== 'assistant' ||
-				event.notification.actions[0].type !== 'WEB'
+				event.notification.app !== 'assistant'
+				|| event.notification.actions[0].type !== 'WEB'
 			) {
 				return
 			}

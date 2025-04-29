@@ -111,10 +111,10 @@ function findParentToken(tokens: Token[], index: number): Token | undefined {
  */
 function isTodoItem(tokens: Token[], index: number): boolean {
 	return (
-		isInline(tokens[index]) &&
-		isParagraph(tokens[index - 1]) &&
-		isListItem(tokens[index - 2]) &&
-		startsWithTodoMarkdown(tokens[index])
+		isInline(tokens[index])
+		&& isParagraph(tokens[index - 1])
+		&& isListItem(tokens[index - 2])
+		&& startsWithTodoMarkdown(tokens[index])
 	)
 }
 

@@ -293,14 +293,14 @@ export default {
 		handleAttachmentClick() {
 			// Open in viewer if possible
 			if (
-				OCA.Viewer &&
+				OCA.Viewer
 				// Viewer is not in use
-				!OCA.Viewer.file &&
+				&& !OCA.Viewer.file
 				// Viewer supports mimetype
-				OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1 &&
+				&& OCA.Viewer.mimetypes.indexOf(this.attachment.mimetype) !== -1
 				// Attachment has davPath, i.e. is native attachment and not in public share
 				//  (in public share we probably don't have DAV access)
-				this.attachment.davPath
+				&& this.attachment.davPath
 			) {
 				// Viewer exists, is not in use and supports mimetype
 				OCA.Viewer.open({ path: this.attachment.davPath })

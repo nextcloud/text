@@ -40,9 +40,9 @@ const registerFileCreate = () => {
 				id: 'file',
 				displayName: t('text', 'New text file'),
 				templateName:
-					t('text', 'New text file') +
-					'.' +
-					loadState('text', 'default_file_extension'),
+					t('text', 'New text file')
+					+ '.'
+					+ loadState('text', 'default_file_extension'),
 				iconClass: 'icon-filetype-text',
 				fileType: 'file',
 				actionLabel: t('text', 'Create new text file'),

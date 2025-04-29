@@ -25,8 +25,8 @@ export default function splitMixedLists(md) {
 			}
 			const splitBefore = findChildOf(tokens, i, (child) => {
 				return (
-					child.nesting === 1 &&
-					includesClass(child, 'task-list-item') !== startsWithTask
+					child.nesting === 1
+					&& includesClass(child, 'task-list-item') !== startsWithTask
 				)
 			})
 			if (splitBefore > i) {

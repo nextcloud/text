@@ -303,8 +303,8 @@ export default {
 		},
 		isRichEditor() {
 			return (
-				loadState('text', 'rich_editing_enabled', true) &&
-				this.mime === 'text/markdown'
+				loadState('text', 'rich_editing_enabled', true)
+				&& this.mime === 'text/markdown'
 			)
 		},
 		fileExtension() {
@@ -325,10 +325,10 @@ export default {
 		},
 		renderRichEditorMenus() {
 			return (
-				this.contentLoaded &&
-				this.isRichEditor &&
-				!this.syncError &&
-				!this.readOnly
+				this.contentLoaded
+				&& this.isRichEditor
+				&& !this.syncError
+				&& !this.readOnly
 			)
 		},
 		renderMenus() {
@@ -522,8 +522,8 @@ export default {
 
 			const removedSessions = Object.keys(this.filteredSessions).filter(
 				(sessionId) =>
-					!currentSessionIds.includes(sessionId) &&
-					!currentGuestIds.includes(sessionId),
+					!currentSessionIds.includes(sessionId)
+					&& !currentGuestIds.includes(sessionId),
 			)
 
 			for (const index in removedSessions) {
@@ -535,8 +535,8 @@ export default {
 				if (this.filteredSessions[sessionKey]) {
 					// update timestamp if relevant
 					if (
-						this.filteredSessions[sessionKey].lastContact <
-						session.lastContact
+						this.filteredSessions[sessionKey].lastContact
+						< session.lastContact
 					) {
 						set(
 							this.filteredSessions[sessionKey],
@@ -665,9 +665,9 @@ export default {
 
 		onSync({ steps, document }) {
 			this.hasConnectionIssue =
-				this.$syncService.backend.fetcher === 0 ||
-				!this.$providers[0].wsconnected ||
-				this.$syncService.pushError > 0
+				this.$syncService.backend.fetcher === 0
+				|| !this.$providers[0].wsconnected
+				|| this.$syncService.pushError > 0
 			if (this.$syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.$syncService.sendStepsNow()
@@ -689,9 +689,9 @@ export default {
 			}
 
 			if (
-				type === ERROR_TYPE.SAVE_COLLISSION &&
-				(!this.syncError ||
-					this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
+				type === ERROR_TYPE.SAVE_COLLISSION
+				&& (!this.syncError
+					|| this.syncError.type !== ERROR_TYPE.SAVE_COLLISSION)
 			) {
 				this.contentLoaded = true
 				this.syncError = {
@@ -700,8 +700,8 @@ export default {
 				}
 			}
 			if (
-				type === ERROR_TYPE.CONNECTION_FAILED ||
-				type === ERROR_TYPE.SOURCE_NOT_FOUND
+				type === ERROR_TYPE.CONNECTION_FAILED
+				|| type === ERROR_TYPE.SOURCE_NOT_FOUND
 			) {
 				this.hasConnectionIssue = true
 			}
@@ -728,8 +728,8 @@ export default {
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
 				if (
-					this.$editor &&
-					(this.$editor.can().undo() || this.$editor.can().redo())
+					this.$editor
+					&& (this.$editor.can().undo() || this.$editor.can().redo())
 				) {
 					this.dirty = state.dirty
 					if (this.dirty) {
@@ -898,11 +898,11 @@ export default {
 			}
 
 			if (
-				event.key === 'Tab' &&
-				!event.shiftKey &&
-				!event.ctrlKey &&
-				!event.metaKey &&
-				this.$editor.isActive('codeBlock')
+				event.key === 'Tab'
+				&& !event.shiftKey
+				&& !event.ctrlKey
+				&& !event.metaKey
+				&& this.$editor.isActive('codeBlock')
 			) {
 				this.$editor.commands.insertContent('\t')
 				this.$editor.commands.focus()

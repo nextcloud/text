@@ -115,9 +115,9 @@ export default {
 		/** @return {boolean} */
 		useSourceView() {
 			return (
-				this.source &&
-				(this.fileVersion || !this.fileid || this.isEmbedded) &&
-				!this.hasToggledInteractiveEmbedding
+				this.source
+				&& (this.fileVersion || !this.fileid || this.isEmbedded)
+				&& !this.hasToggledInteractiveEmbedding
 			)
 		},
 

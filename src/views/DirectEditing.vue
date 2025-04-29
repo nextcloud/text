@@ -50,8 +50,8 @@ const callMobileMessage = (messageName, attributes) => {
 
 	// Forward to mobile handler
 	if (
-		window.DirectEditingMobileInterface &&
-		typeof window.DirectEditingMobileInterface[messageName] === 'function'
+		window.DirectEditingMobileInterface
+		&& typeof window.DirectEditingMobileInterface[messageName] === 'function'
 	) {
 		if (attributesString === null || typeof attributesString === 'undefined') {
 			window.DirectEditingMobileInterface[messageName]()
@@ -62,9 +62,9 @@ const callMobileMessage = (messageName, attributes) => {
 
 	// iOS webkit fallback
 	if (
-		window.webkit &&
-		window.webkit.messageHandlers &&
-		window.webkit.messageHandlers.DirectEditingMobileInterface
+		window.webkit
+		&& window.webkit.messageHandlers
+		&& window.webkit.messageHandlers.DirectEditingMobileInterface
 	) {
 		window.webkit.messageHandlers.DirectEditingMobileInterface.postMessage(
 			message,
@@ -96,10 +96,10 @@ export default {
 		},
 		isMobile() {
 			return (
-				window.DirectEditingMobileInterface ||
-				(window.webkit &&
-					window.webkit.messageHandlers &&
-					window.webkit.messageHandlers.DirectEditingMobileInterface)
+				window.DirectEditingMobileInterface
+				|| (window.webkit
+					&& window.webkit.messageHandlers
+					&& window.webkit.messageHandlers.DirectEditingMobileInterface)
 			)
 		},
 	},
