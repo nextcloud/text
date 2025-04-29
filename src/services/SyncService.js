@@ -88,6 +88,10 @@ class SyncService {
 		return this.#connection.state.document.readOnly
 	}
 
+	get hasOwner() {
+		return this.#connection?.hasOwner
+	}
+
 	get guestName() {
 		return this.#connection.session.guestName
 	}
