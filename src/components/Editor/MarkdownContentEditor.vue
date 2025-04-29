@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true"
+	<Wrapper :is-mobile="isMobile"
+		:content-loaded="true"
 		:show-outline-outside="showOutlineOutside"
 		@outline-toggled="outlineToggled">
 		<MainContainer>
@@ -34,10 +35,12 @@ import markdownit from '../../markdownit/index.js'
 import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
+import isMobile from '../../mixins/isMobile.js'
 
 export default {
 	name: 'MarkdownContentEditor',
 	components: { ContentContainer, ReadonlyBar, MenuBar, MainContainer, Wrapper },
+	mixins: [isMobile],
 	provide() {
 		const val = {}
 
