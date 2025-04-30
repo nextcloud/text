@@ -6,7 +6,8 @@
 	<NcActions class="entry-action entry-action__image-upload"
 		:data-text-action-entry="actionEntry.key"
 		:name="actionEntry.label"
-		:title="actionEntry.label"
+		:disabled="isUploadDisabled"
+		:title="menuTitle"
 		:aria-label="actionEntry.label"
 		:container="menuIDSelector">
 		<template #icon>
@@ -56,7 +57,11 @@
 import { NcActions, NcActionSeparator, NcActionButton, NcIconSvgWrapper } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
 import { Loading, Folder, Upload, Plus } from '../icons.js'
-import { useIsPublicMixin, useEditorUpload } from '../Editor.provider.js'
+import {
+	useIsPublicMixin,
+	useEditorUpload,
+	useSyncServiceMixin,
+} from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import {
@@ -82,6 +87,7 @@ export default {
 	mixins: [
 		useIsPublicMixin,
 		useEditorUpload,
+		useSyncServiceMixin,
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,
@@ -99,6 +105,17 @@ export default {
 		},
 		templates() {
 			return loadState('files', 'templates', [])
+		},
+		isUploadDisabled() {
+			return !this.$syncService.hasOwner
+		},
+		menuTitle() {
+			return this.isUploadDisabled
+				? t(
+					'text',
+					"Attachments cannot be created or uploaded because this file is shared from another cloud."
+				)
+				: this.actionEntry.label
 		},
 	},
 	methods: {
