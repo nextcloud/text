@@ -29,6 +29,8 @@ export default {
 
 <style scoped lang="scss">
 	.text-editor__main, .editor {
+		display: flex;
+		flex-direction: column;
 		background: var(--color-main-background);
 		color: var(--color-main-text);
 		background-clip: padding-box;
@@ -39,12 +41,9 @@ export default {
 	}
 
 	.text-editor__main {
-		display: flex;
-		flex-direction: column;
-
 		&.is-mobile {
+			flex-grow: 1;
 			flex-direction: column-reverse;
-			height: 100%;
 		}
 	}
 </style>
