@@ -171,8 +171,8 @@ export const FilesWorkspaceHeader = new Header({
 	id: 'workspace',
 	order: 10,
 
-	enabled(folder, view) {
-		return view.id === 'files' || view.id === 'favorites'
+	enabled(_, view) {
+		return ['files', 'favorites', 'public-share'].includes(view.id)
 	},
 
 	async render(el, folder, view) {
