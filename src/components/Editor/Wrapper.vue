@@ -46,7 +46,7 @@ export default {
 	props: {
 		isResolvingConflict: {
 			type: Boolean,
-			require: true,
+			default: false,
 		},
 		hasConnectionIssue: {
 			type: Boolean,
@@ -125,16 +125,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 	.text-editor__wrapper {
 		display: flex;
+		flex-grow: 1;
+
 		width: 100%;
-		height: 100%;
-		overflow: auto;
 
 		.ProseMirror {
 			margin-top: 0 !important;
 		}
 	}
-
 </style>
