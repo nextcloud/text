@@ -74,7 +74,7 @@ export default {
 		bottom: calc(var(--default-grid-baseline) * 2);
 		z-index: 100000;
 		// max-height: 50px;
-		margin: auto;
+		margin-inline: auto;
 		display: flex;
 		width: 100%;
 		justify-content: center;

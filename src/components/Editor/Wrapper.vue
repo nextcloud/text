@@ -130,9 +130,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 	.text-editor__wrapper {
 		display: flex;
+		flex-grow: 1;
 
 		width: 100%;
 		&.is-mobile {
@@ -144,5 +144,4 @@ export default {
 			margin-top: 0 !important;
 		}
 	}
-
 </style>
