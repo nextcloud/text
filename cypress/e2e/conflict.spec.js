@@ -9,13 +9,13 @@ const variants = [
 	{ fixture: 'lines.txt', mime: 'text/plain' },
 	{ fixture: 'test.md', mime: 'text/markdown' },
 ]
+const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 variants.forEach(function({ fixture, mime }) {
 	const user = randUser()
 	const fileName = fixture
 	const prefix = mime.replaceAll('/', '-')
 	describe(`${mime} (${fileName})`, function() {
-		const getWrapper = () => cy.get('.text-editor__wrapper.has-conflicts')
 
 		before(() => {
 			cy.createUser(user)
@@ -114,6 +114,36 @@ variants.forEach(function({ fixture, mime }) {
 			getWrapper().should('not.exist')
 		})
 
+	})
+})
+
+describe('conflict dialog scroll behaviour', function() {
+	const user = randUser()
+	const fileName = 'long.md'
+
+	before(() => {
+		cy.createUser(user)
+	})
+
+	it('document status and collision resolution dialog elements are sticky', function() {
+		cy.login(user)
+		cy.createTestFolder()
+
+		createConflict(fileName, 'text/markdown')
+
+		cy.openFile(fileName)
+
+		cy.get('.text-editor .document-status')
+			.should('contain', 'The file was overwritten.')
+		getWrapper()
+			.find('.text-editor__main h2')
+			.contains('Third subheading')
+			.scrollIntoView()
+
+		cy.get('.text-editor #resolve-conflicts')
+			.should('be.visible')
+		cy.get('.text-editor .document-status')
+			.should('be.visible')
 	})
 })
 

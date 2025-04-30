@@ -8,6 +8,7 @@
 		ref="el"
 		data-text-el="editor-container"
 		class="text-editor"
+		:class="{ 'is-mobile': isMobile }"
 		tabindex="-1"
 		@keydown.stop="onKeyDown">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
@@ -55,12 +56,12 @@
 			<Reader v-if="isResolvingConflict"
 				:content="syncError.data.outsideChange"
 				:is-rich-editor="isRichEditor" />
-			<DocumentStatus :idle="idle"
-				:lock="lock"
-				:sync-error="syncError"
-				:has-connection-issue="requireReconnect"
-				@reconnect="reconnect" />
 		</Wrapper>
+		<DocumentStatus :idle="idle"
+			:lock="lock"
+			:sync-error="syncError"
+			:has-connection-issue="requireReconnect"
+			@reconnect="reconnect" />
 		<Assistant v-if="hasEditor" />
 		<Translate :show="translateModal"
 			:content="translateContent"
@@ -259,6 +260,7 @@ export default {
 			filteredSessions: {},
 
 			idle: false,
+			lock: null,
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
@@ -911,10 +913,18 @@ export default {
 .modal-container .text-editor {
 	top: 0;
 	height: calc(100vh - var(--header-height));
+
+	&.is-mobile {
+		// TODO: Why is this required to prevent small scrolling container on mobile with short content?
+		height: calc(
+			100vh - var(--header-height) - 2 * var(--default-grid-baseline)
+		);
+	}
 }
 
 .text-editor {
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	max-width: 100%;
 	height: 100%;
@@ -925,7 +935,9 @@ export default {
 }
 
 .text-editor .text-editor__wrapper.has-conflicts {
-	height: calc(100% - 50px);
+	// Make space for document status and conflict resolving dialog
+	height: calc(100% - 48px - 54px);
+	overflow-y: auto;
 }
 
 #body-public {
@@ -955,9 +967,11 @@ export default {
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
-	height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-	padding-top:3px;
-	padding-bottom: 3px;
+	height: var(
+		--default-clickable-area
+	); // important for mobile so that the buttons are always inside the container
+	border-bottom: 1px solid var(--color-border);
+	padding-block: var(--default-grid-baseline);
 }
 
 .text-editor--readonly-bar,
@@ -1000,7 +1014,10 @@ export default {
 	width: 50%;
 	#read-only-editor {
 		margin: 0px auto;
-		padding-top: 50px;
+		// Add height of the menubar as padding-top
+		padding-top: calc(
+			var(--default-clickable-area) + 2 * var(--default-grid-baseline)
+		);
 		overflow: initial;
 	}
 }
