@@ -15,7 +15,6 @@
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 		<Wrapper
 			v-if="displayed"
-			:is-mobile="isMobile"
 			:is-resolving-conflict="isResolvingConflict"
 			:has-connection-issue="requireReconnect"
 			:content-loaded="contentLoaded"
