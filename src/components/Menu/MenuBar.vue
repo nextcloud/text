@@ -12,7 +12,8 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--hide': isHidden,
-			'text-menubar--is-workspace': $isRichWorkspace
+			'text-menubar--is-workspace': $isRichWorkspace,
+			'is-mobile': $isMobile,
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
@@ -241,6 +242,11 @@ export default {
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
+
+		&.is-mobile {
+			border-top: 1px solid var(--color-border);
+			border-bottom: unset;
+		}
 
 		&.text-menubar--ready:not(.text-menubar--hide) {
 			visibility: visible;
