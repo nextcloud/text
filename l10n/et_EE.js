@@ -21,6 +21,7 @@ OC.L10N.register(
     "Text" : "Tekst",
     "📝 Collaborative document editing" : "Ühistegevuslik dokumendikoostamine",
     "Insert result" : "Lisa tulemus",
+    "Nextcloud Assistant" : "Nextcloudi Abiline",
     "Translate" : "Tõlgi",
     "Show result" : "Näita tulemust",
     "Delete task" : "Kustuta ülesanne",
