@@ -12,6 +12,7 @@ const attachmentFileNameToId = {}
 
 const ACTION_UPLOAD_LOCAL_FILE = 'insert-attachment-upload'
 const ACTION_INSERT_FROM_FILES = 'insert-attachment-insert'
+const ACTION_CREATE_NEW_TEXT_FILE = 'insert-attachment-add-text-0'
 
 /**
  * @param {string} name name of file
@@ -115,8 +116,9 @@ const checkAttachment = (documentId, fileName, fileId, index, isImage = true) =>
  * @param {string} requestAlias Alias of the request we are waiting for
  * @param {number|undefined} index of the attachment
  * @param {boolean} isImage is the attachment an image or a media file?
+ * @param {Function} check function used to check document for attachment
  */
-const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) => {
+const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true, check = checkAttachment) => {
 	return cy.wait('@' + requestAlias)
 		.then((req) => {
 			// the name of the created file on NC side is returned in the response
@@ -124,7 +126,7 @@ const waitForRequestAndCheckAttachment = (requestAlias, index, isImage = true) =
 			const fileName = req.response.body.name
 			const documentId = req.response.body.documentId
 
-			return checkAttachment(documentId, fileName, fileId, index, isImage)
+			return check(documentId, fileName, fileId, index, isImage)
 		})
 }
 
@@ -277,6 +279,26 @@ describe('Test all attachment insertion methods', () => {
 		cy.getEditor().find('[data-component="image-view"]')
 			.should('have.length', 3)
 		cy.closeFile()
+	})
+
+	it('Create a new text file as an attachment', () => {
+		const check = (documentId, fileName) => {
+			cy.log('Check the attachment is visible and well formed', documentId, fileName)
+			return cy.get(`.text-editor [basename="${fileName}"]`)
+				.find('.text-editor__wrapper')
+				.should('be.visible')
+		}
+
+		cy.visit('/apps/files')
+		cy.openFile('test.md')
+
+		cy.log('Create a new text file as an attachment')
+		const requestAlias = 'create-attachment-request'
+		cy.intercept({ method: 'POST', url: '**/text/attachment/create' }).as(requestAlias)
+		clickOnAttachmentAction(ACTION_CREATE_NEW_TEXT_FILE)
+			.then(() => {
+				return waitForRequestAndCheckAttachment(requestAlias, undefined, false, check)
+			})
 	})
 
 	it('test if attachment files are in the attachment folder', () => {

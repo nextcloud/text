@@ -34,12 +34,28 @@
 			</template>
 			{{ t('text', 'Insert from Files') }}
 		</NcActionButton>
+		<template v-if="templates.length">
+			<NcActionSeparator />
+			<NcActionButton v-for="(template, index) in templates"
+				:key="`${template.app}-${index}`"
+				close-after-click
+				:disabled="isUploadingAttachments"
+				:data-text-action-entry="`${actionEntry.key}-add-${template.app}-${index}`"
+				@click="createAttachment(template)">
+				<template #icon>
+					<NcIconSvgWrapper v-if="template.iconSvgInline" :svg="template.iconSvgInline" />
+					<Plus v-else />
+				</template>
+				{{ template.actionLabel }}
+			</NcActionButton>
+		</template>
 	</NcActions>
 </template>
 
 <script>
-import { NcActions, NcActionButton } from '@nextcloud/vue'
-import { Loading, Folder, Upload } from '../icons.js'
+import { NcActions, NcActionSeparator, NcActionButton, NcIconSvgWrapper } from '@nextcloud/vue'
+import { loadState } from '@nextcloud/initial-state'
+import { Loading, Folder, Upload, Plus } from '../icons.js'
 import { useIsPublicMixin, useEditorUpload } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -47,16 +63,20 @@ import {
 	useActionAttachmentPromptMixin,
 	useUploadingStateMixin,
 	useActionChooseLocalAttachmentMixin,
+	useActionCreateAttachmentMixin,
 } from '../Editor/MediaHandler.provider.js'
 
 export default {
 	name: 'ActionAttachmentUpload',
 	components: {
 		NcActions,
+		NcActionSeparator,
 		NcActionButton,
+		NcIconSvgWrapper,
 		Loading,
 		Folder,
 		Upload,
+		Plus,
 	},
 	extends: BaseActionEntry,
 	mixins: [
@@ -65,6 +85,7 @@ export default {
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,
+		useActionCreateAttachmentMixin,
 		useMenuIDMixin,
 	],
 	computed: {
@@ -75,6 +96,14 @@ export default {
 		},
 		isUploadingAttachments() {
 			return this.$uploadingState.isUploadingAttachments
+		},
+		templates() {
+			return loadState('files', 'templates', [])
+		},
+	},
+	methods: {
+		createAttachment(template) {
+			this.$callCreateAttachment(template)
 		},
 	},
 }

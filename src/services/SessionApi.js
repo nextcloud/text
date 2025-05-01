@@ -176,6 +176,15 @@ export class Connection {
 		})
 	}
 
+	createAttachment(template) {
+		return this.#post(_endpointUrl('attachment/create'), {
+			documentId: this.#document.id,
+			sessionId: this.#session.id,
+			sessionToken: this.#session.token,
+			fileName: `${template.app}${template.extension}`,
+		})
+	}
+
 	insertAttachmentFile(filePath) {
 		return this.#post(_endpointUrl('attachment/filepath'), {
 			documentId: this.#document.id,

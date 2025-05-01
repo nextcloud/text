@@ -332,6 +332,35 @@ class AttachmentService {
 	}
 
 	/**
+	 * create a new file in the attachment folder
+	 *
+	 * @param int $documentId
+	 * @param string $userId
+	 *
+	 * @return array
+	 * @throws NotFoundException
+	 * @throws NotPermittedException
+	 * @throws InvalidPathException
+	 * @throws NoUserException
+	 */
+	public function createAttachmentFile(int $documentId, string $newFileName, string $userId): array {
+		$textFile = $this->getTextFile($documentId, $userId);
+		if (!$textFile->isUpdateable()) {
+			throw new NotPermittedException('No write permissions');
+		}
+		$saveDir = $this->getAttachmentDirectoryForFile($textFile, true);
+		$fileName = self::getUniqueFileName($saveDir, $newFileName);
+		$newFile = $saveDir->newFile($fileName);
+		return [
+			'name' => $newFile->getName(),
+			'dirname' => $saveDir->getName(),
+			'id' => $newFile->getId(),
+			'documentId' => $textFile->getId(),
+			'mimetype' => $newFile->getMimetype(),
+		];
+	}
+
+	/**
 	 * @param File $originalFile
 	 * @param Folder $saveDir
 	 * @param File $textFile
@@ -552,16 +581,17 @@ class AttachmentService {
 					// this only happens if the attachment dir was deleted by the user while editing the document
 					return 0;
 				}
-				$attachmentsByName = [];
-				foreach ($attachmentDir->getDirectoryListing() as $attNode) {
-					$attachmentsByName[$attNode->getName()] = $attNode;
-				}
-
+				$contentAttachmentFileIds = self::getAttachmentIdsFromContent($textFile->getContent());
 				$contentAttachmentNames = self::getAttachmentNamesFromContent($textFile->getContent(), $fileId);
 
-				$toDelete = array_diff(array_keys($attachmentsByName), $contentAttachmentNames);
-				foreach ($toDelete as $name) {
-					$attachmentsByName[$name]->delete();
+				$toDelete = array_filter($attachmentDir->getDirectoryListing(),
+					function ($node) use ($contentAttachmentFileIds, $contentAttachmentNames) {
+						return !in_array($node->getName(), $contentAttachmentNames) &&
+							!in_array($node->getId(), $contentAttachmentFileIds);
+					}
+				);
+				foreach ($toDelete as $node) {
+					$node->delete();
 				}
 				return count($toDelete);
 			}
@@ -569,6 +599,26 @@ class AttachmentService {
 		return 0;
 	}
 
+	/**
+	 * Get attachment file ids listed in the markdown file content
+	 *
+	 * @param string $content
+	 *
+	 * @return array
+	 */
+	public static function getAttachmentIdsFromContent(string $content): array {
+		$matches = [];
+		// matches [ANY_CONSIDERED_CORRECT_BY_PHP-MARKDOWN](ANY_URL/f/FILE_ID and captures FILE_ID
+		preg_match_all(
+			'/\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[(?>[^\[\]]+|\[\])*\])*\])*\])*\])*\])*\]\(\S+\/f\/(\d+)/',
+			$content,
+			$matches,
+			PREG_SET_ORDER
+		);
+		return array_map(static function (array $match) {
+			return intval($match[1]);
+		}, $matches);
+	}
 
 	/**
 	 * Get attachment file names listed in the markdown file content

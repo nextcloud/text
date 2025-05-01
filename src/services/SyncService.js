@@ -375,6 +375,10 @@ class SyncService {
 		return this.#connection.insertAttachmentFile(filePath)
 	}
 
+	createAttachment(template) {
+		return this.#connection.createAttachment(template)
+	}
+
 	on(event, callback) {
 		this._bus.on(event, callback)
 		return this
