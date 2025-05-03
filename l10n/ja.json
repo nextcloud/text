@@ -48,6 +48,7 @@
     "Uploading attachment failed." : "添付ファイルのアップロードに失敗しました。",
     "Insert an attachment" : "添付ファイルを挿入する",
     "Failed to insert from Files" : "ファイルからの挿入に失敗しました",
+    "Failed to create attachment" : "添付ファイルの作成に失敗しました",
     "Preview options" : "プレビューオプション",
     "Text only" : "テキストのみ",
     "Show link preview" : "リンクのプレビューを表示",

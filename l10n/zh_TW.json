@@ -48,6 +48,7 @@
     "Uploading attachment failed." : "上傳附件失敗。",
     "Insert an attachment" : "插入附件",
     "Failed to insert from Files" : "從檔案插入失敗",
+    "Failed to create attachment" : "建立附件失敗",
     "Preview options" : "預覽選項",
     "Text only" : "僅文字",
     "Show link preview" : "顯示連結預覽",

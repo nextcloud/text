@@ -66,6 +66,7 @@ OC.L10N.register(
     "Edit" : "Redigeeri",
     "Copy code block" : "Kopeeri koodiplokk",
     "Source code" : "Lähtekood",
+    "Both" : "Mõlemad",
     "Add row below" : "Lisa rida allapoole",
     "Done" : "Valmis",
     "Headings" : "Pealkirjad",
