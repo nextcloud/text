@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Nahrávání přílohy se nezdařilo.",
     "Insert an attachment" : "Vložit přílohu",
     "Failed to insert from Files" : "Nepodařilo se vložit ze Souborů",
+    "Failed to create attachment" : "Nepodařilo se vytvořit přílohu",
     "Preview options" : "Předvolby náhledu",
     "Text only" : "Pouze text",
     "Show link preview" : "Zobrazit náhled odkazu",

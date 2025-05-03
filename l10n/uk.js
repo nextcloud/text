@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Завантаження вкладення не вдалося.",
     "Insert an attachment" : "Вставте вкладення",
     "Failed to insert from Files" : "Не вдалося вставити з Файлів",
+    "Failed to create attachment" : "Не вдалося створити вкладення",
     "Preview options" : "Параметри попереднього перегляду",
     "Text only" : "Лише текст",
     "Show link preview" : "Посилання попереднього перегляду",

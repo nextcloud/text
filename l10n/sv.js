@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Det gick inte att ladda upp bilagan.",
     "Insert an attachment" : "Infoga en bilaga",
     "Failed to insert from Files" : "Det gick inte att infoga från Filer",
+    "Failed to create attachment" : "Kunde inte skapa bilaga",
     "Preview options" : "Förhandsgranskning alternativ",
     "Text only" : "Endast text",
     "Show link preview" : "Visa förhandsgranskning för länk",
