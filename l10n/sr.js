@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Није успело отпремање прилога.",
     "Insert an attachment" : "Уметни прилог",
     "Failed to insert from Files" : "Није успело уметање из апликације Фајлови",
+    "Failed to create attachment" : "Није успело креирање прилога",
     "Preview options" : "Опције прегледа",
     "Text only" : "Само текст",
     "Show link preview" : "Прикажи преглед линка",

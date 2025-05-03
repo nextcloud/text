@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Das Hochladen des Anhangs ist fehlgeschlagen.",
     "Insert an attachment" : "Einen Anhang einfügen",
     "Failed to insert from Files" : "Einfügen von Dateien fehlgeschlagen",
+    "Failed to create attachment" : "Anhang konnte nicht erstellt werden",
     "Preview options" : "Vorschauoptionen",
     "Text only" : "Nur Text",
     "Show link preview" : "Link-Vorschau anzeigen",
