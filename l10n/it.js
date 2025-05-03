@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Caricamento dell'allegato fallito.",
     "Insert an attachment" : "Inserisci un allegato",
     "Failed to insert from Files" : "Inserimento da File fallito",
+    "Failed to create attachment" : "Impossibile creare l'allegato",
     "Preview options" : "Opzioni di anteprima",
     "Text only" : "Solo testo",
     "Show link preview" : "Mostra anteprima collegamento",
