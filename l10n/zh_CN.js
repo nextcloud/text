@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "上传附件失败。",
     "Insert an attachment" : "插入附件",
     "Failed to insert from Files" : "无法从文件插入",
+    "Failed to create attachment" : "无法创建附件",
     "Preview options" : "预览选项",
     "Text only" : "仅文字",
     "Show link preview" : "显示链接预览",
