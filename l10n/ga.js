@@ -50,6 +50,7 @@ OC.L10N.register(
     "Uploading attachment failed." : "Theip ar uaslódáil ceangaltán.",
     "Insert an attachment" : "Cuir isteach ceangaltán",
     "Failed to insert from Files" : "Theip ar chur isteach ó Chomhaid",
+    "Failed to create attachment" : "Theip ar an gceangaltán a chruthú",
     "Preview options" : "Roghanna réamhamhairc",
     "Text only" : "Téacs amháin",
     "Show link preview" : "Taispeáin réamhamharc ar an nasc",
