@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-const openMimetypesMarkdown = ['text/markdown']
+const openMimetypesMarkdown = ['text/markdown', 'text/x-web-markdown']
 
 const openMimetypesPlainText = [
 	'text/plain',
