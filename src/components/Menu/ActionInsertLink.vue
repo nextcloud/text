@@ -160,7 +160,7 @@ export default {
 				})
 				.catch(() => {
 					// do not close menu but keep focus
-					this.$refs.buttonFile.$el.focus()
+					this.$refs.buttonFile?.$el.focus()
 				})
 		},
 
