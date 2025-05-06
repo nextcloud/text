@@ -88,6 +88,20 @@ const Link = TipTapLink.extend({
 		]
 	},
 
+	addKeyboardShortcuts() {
+		return {
+			'Mod-k': () => {
+				const { empty } = this.editor.state.selection
+				if (empty) {
+					console.debug('empty selection')
+					return false
+				}
+				console.debug('toggle link for selection')
+				return this.editor.commands.toggleLink({ href: '' })
+			},
+		}
+	},
+
 	addProseMirrorPlugins() {
 		const plugins = this.parent()
 			// remove upstream link click handle plugin
