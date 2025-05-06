@@ -411,8 +411,9 @@ class AttachmentService {
 					[IShare::TYPE_LINK, IShare::TYPE_EMAIL, IShare::TYPE_ROOM],
 					true
 				)
-				&& $share->getPermissions() & Constants::PERMISSION_UPDATE);
-		} catch (ShareNotFound $e) {
+				&& $share->getPermissions() & Constants::PERMISSION_UPDATE
+				&& $share->getNode()->getPermissions() & Constants::PERMISSION_UPDATE);
+		} catch (ShareNotFound|NotFoundException $e) {
 			return false;
 		}
 	}
