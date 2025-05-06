@@ -48,11 +48,19 @@ export class Connection {
 	#session
 	#lock
 	#readOnly
+	#hasOwner
 	#options
 
 	constructor(response, options) {
-		const { document, session, lock, readOnly, content, documentState } =
-			response.data
+		const {
+			document,
+			session,
+			lock,
+			readOnly,
+			content,
+			documentState,
+			hasOwner,
+		} = response.data
 		this.#document = document
 		this.#session = session
 		this.#lock = lock
@@ -60,6 +68,7 @@ export class Connection {
 		this.#content = content
 		this.#documentState = documentState
 		this.#options = options
+		this.#hasOwner = hasOwner
 		this.isPublic = !!options.shareToken
 		this.closed = false
 	}
@@ -87,6 +96,10 @@ export class Connection {
 
 	get isClosed() {
 		return this.closed
+	}
+
+	get hasOwner() {
+		return this.#hasOwner
 	}
 
 	get #defaultParams() {

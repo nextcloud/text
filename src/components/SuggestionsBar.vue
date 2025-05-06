@@ -22,6 +22,8 @@
 				type="secondary"
 				size="normal"
 				class="suggestions--button"
+				:disabled="isUploadDisabled"
+				:title="uploadTitle"
 				@click="$callChooseLocalAttachment">
 				<template #icon>
 					<Upload :size="20" />
@@ -59,7 +61,11 @@ import { NcButton } from '@nextcloud/vue'
 import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { useEditorMixin, useFileMixin } from './Editor.provider.js'
+import {
+	useEditorMixin,
+	useFileMixin,
+	useSyncServiceMixin,
+} from './Editor.provider.js'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
@@ -73,7 +79,13 @@ export default {
 		Shape,
 		Upload,
 	},
-	mixins: [useActionChooseLocalAttachmentMixin, useEditorMixin, useFileMixin],
+
+	mixins: [
+		useActionChooseLocalAttachmentMixin,
+		useEditorMixin,
+		useFileMixin,
+		useSyncServiceMixin,
+	],
 
 	setup() {
 		return {
@@ -91,6 +103,18 @@ export default {
 	computed: {
 		relativePath() {
 			return this.$file?.relativePath ?? '/'
+		},
+		isUploadDisabled() {
+			return !this.$syncService.hasOwner
+		},
+		uploadTitle() {
+			return (
+				this.isUploadDisabled
+				&& t(
+					'text',
+					'Uploading attachments is disabled because the file is shared from another cloud.',
+				)
+			)
 		},
 	},
 
