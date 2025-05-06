@@ -118,6 +118,7 @@ td {
 	.content {
 		flex: 1 1 0;
 		margin: 0;
+		padding: calc((var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2) 0.75em;
 	}
 
 	.action-item {
