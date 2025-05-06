@@ -181,12 +181,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+div[contenteditable=true] th .content {
+	padding-right: 0;
+}
 th {
 
 	.content {
 		margin: 0;
 		flex-grow: 1;
+		padding: calc((var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2) 0.75em;
 	}
+
 	.action-item {
 		opacity: 50%;
 	}

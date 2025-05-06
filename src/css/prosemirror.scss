@@ -353,18 +353,15 @@ div.ProseMirror {
 			border-left: 0;
 			vertical-align: top;
 			max-width: 100%;
-			line-height: var(--default-clickable-area);
 			&:first-child {
 				border-left: 1px solid var(--table-color-border);
 			}
 		}
 		td {
-			padding: 0 0 0 0.75em;
 			border-top: 0;
 			color: var(--color-main-text);
 		}
 		th {
-			padding: 0 0 0 0.75em;
 			font-weight: normal;
 			border-bottom-color: var(--table-color-heading-border);
 			color: var(--table-color-heading);
