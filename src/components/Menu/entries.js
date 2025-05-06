@@ -401,6 +401,8 @@ export const MenuEntries = [
 	{
 		key: 'insert-link',
 		label: t('text', 'Insert link'),
+		keyChar: 'k',
+		keyModifiers: [MODIFIERS.Mod],
 		isActive: 'link',
 		icon: LinkIcon,
 		component: ActionInsertLink,
