@@ -7,16 +7,19 @@
 	<NcPopover class="session-list" placement="bottom">
 		<template #trigger="{ attrs }">
 			<div>
-				<button :title="label"
+				<NcButton :title="label"
 					:aria-label="label"
+					type="tertiary"
 					class="avatar-list"
 					v-bind="attrs">
-					<div class="avatardiv icon-group" />
-					<AvatarWrapper v-for="session in sessionsVisible"
-						:key="session.id"
-						:session="session"
-						:size="30" />
-				</button>
+					<template #icon>
+						<AccountMultipleIcon :size="20" />
+						<AvatarWrapper v-for="session in sessionsVisible"
+							:key="session.id"
+							:session="session"
+							:size="28" />
+					</template>
+				</NcButton>
 			</div>
 		</template>
 		<template #default>
@@ -47,7 +50,8 @@
 </template>
 
 <script>
-import { NcCheckboxRadioSwitch, NcPopover } from '@nextcloud/vue'
+import { NcButton, NcCheckboxRadioSwitch, NcPopover } from '@nextcloud/vue'
+import AccountMultipleIcon from 'vue-material-design-icons/AccountMultiple.vue'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.js'
 import { loadState } from '@nextcloud/initial-state'
@@ -57,7 +61,9 @@ import { generateUrl } from '@nextcloud/router'
 export default {
 	name: 'SessionList',
 	components: {
+		AccountMultipleIcon,
 		AvatarWrapper,
+		NcButton,
 		NcPopover,
 		NcCheckboxRadioSwitch,
 	},
@@ -129,31 +135,18 @@ export default {
 }
 
 .avatar-list {
-	border: none;
-	background-color: var(--color-main-background);
-	padding: 0;
-	margin: 0;
-	padding-left: 3px;
-	display: inline-flex;
-	flex-direction: row-reverse;
+	width: min-content !important;
+	padding-inline: var(--default-grid-baseline);
 
-	.avatar-wrapper {
-		margin: 0 -12px 0 0;
-		z-index: 1;
-		border-radius: 50%;
-		overflow: hidden;
-		box-sizing: content-box !important;
-		height: calc(var(--default-clickable-area) - 4px);
-		width: calc(var(--default-clickable-area) - 4px);
-	}
+	:deep(.button-vue__icon) {
+		display: inline-flex;
+		flex-direction: row-reverse;
+		width: min-content;
 
-	.icon-more, .icon-group, .icon-settings-dark {
-		width: var(--default-clickable-area);
-		height: var(--default-clickable-area);
-		margin: 0 3px 0 0;
-
-		&:hover {
-			background-color: var(--color-background-hover);
+		.avatar-wrapper {
+			margin: 3px -12px 3px 0;
+			z-index: 1;
+			overflow: hidden;
 		}
 	}
 }
