@@ -614,7 +614,7 @@ class DocumentService {
 			throw new NotFoundException();
 		}
 
-		if (($share->getPermissions() & $permission) === 0) {
+		if (($share->getPermissions() & $permission) === 0 || ($share->getNode()->getPermissions() & $permission) === 0) {
 			throw new NotFoundException();
 		}
 	}
