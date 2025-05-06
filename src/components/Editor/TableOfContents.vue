@@ -47,10 +47,9 @@ export default {
 	},
 	methods: {
 		goto(heading) {
-			document.getElementById(heading.id).scrollIntoView()
-
+			document.getElementById(heading.id).scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" })
 			this.$nextTick(() => {
-				window.location.hash = heading.id
+				window.history.replaceState({}, '', `#${heading.id}`)
 			})
 		},
 		updateHeadings() {
