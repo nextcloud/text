@@ -203,6 +203,8 @@ OC.L10N.register(
     "Option" : "Option",
     "Formatting" : "Formatting",
     "Select file or folder to link to" : "Select file or folder to link to",
+    "Choose" : "Choose",
+    "Choose {file}" : "Choose {file}",
     "Add folder description" : "Add folder description",
     "\"{name}\" already exist!" : "\"{name}\" already exist!",
     "Created \"{name}\"" : "Created \"{name}\"",

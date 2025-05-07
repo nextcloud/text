@@ -195,6 +195,8 @@ OC.L10N.register(
     "Option" : "Valkostur",
     "Formatting" : "Sniðmótun",
     "Select file or folder to link to" : "Veldu skrá eða möppu til að tengja í",
+    "Choose" : "Velja",
+    "Choose {file}" : "Veldu {file}",
     "Add folder description" : "Bæta við lýsingu á möppu",
     "\"{name}\" already exist!" : "\"{name}\" er þegar til staðar!",
     "Created \"{name}\"" : "Bjó til \"{name}\"",

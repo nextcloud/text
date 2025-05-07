@@ -187,6 +187,8 @@ OC.L10N.register(
     "Option" : "Вариант",
     "Formatting" : "Форматирование",
     "Select file or folder to link to" : "Выберите файл или папку для создания ссылки",
+    "Choose" : "Выберите",
+    "Choose {file}" : "Выбран «{file}»",
     "Add folder description" : "Добавить описание папки",
     "\"{name}\" already exist!" : "\"{name}\" уже существует!",
     "Created \"{name}\"" : "Создан \"{name}\"",

@@ -26,6 +26,7 @@ OC.L10N.register(
     "Done" : "Graet",
     "Details" : "Munudoù",
     "Command" : "Urzh",
+    "Choose" : "Dibab",
     "Add folder description" : "Ouzhpennañ un deskrivadur evit ar renkell",
     "Use current version" : "Implij stumm hiziv",
     "Use the saved version" : "Implij ",

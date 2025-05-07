@@ -28,6 +28,7 @@ OC.L10N.register(
     "Source code" : "კოდი",
     "Done" : "დასრულდა",
     "Details" : "დეტალები",
+    "Choose" : "აირჩიეთ",
     "Info" : "ინფორმაცია",
     "Success" : "წარმატება",
     "Warning" : "გაფრთხილება"

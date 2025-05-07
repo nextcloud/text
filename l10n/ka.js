@@ -51,6 +51,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Formatting" : "Formatting",
     "Select file or folder to link to" : "Select file or folder to link to",
+    "Choose" : "Choose",
+    "Choose {file}" : "Choose {file}",
     "Info" : "Info",
     "Warning" : "Warning"
 },

@@ -98,6 +98,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Option" : "Опции",
     "Select file or folder to link to" : "Изберете датотека или папка за линк до",
+    "Choose" : "Избери",
+    "Choose {file}" : "Избери {file}",
     "Use current version" : "Користи ја моменталната верзија",
     "Use the saved version" : "Користи ја зачуваната верзија",
     "Document idle for {timeout} minutes, click to continue editing" : "Документот е неактивен {timeout} минути, кликни за да продолжиш со уредување",

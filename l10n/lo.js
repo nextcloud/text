@@ -12,6 +12,7 @@ OC.L10N.register(
     "Upload" : "ອັບໂຫຼດ",
     "Edit" : "ແກ້ໄຂ",
     "Details" : "ລາຍລະອຽດ",
+    "Choose" : "ເລືອກ",
     "Info" : "ຂໍ້ມຸນ",
     "Success" : "ຄວາມສໍາເລັດ",
     "Warning" : "ແຈ້ງເຕືອນ"
