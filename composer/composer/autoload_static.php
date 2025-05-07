@@ -44,6 +44,7 @@ class ComposerStaticInitText
         'OCA\\Text\\DirectEditing\\TextDirectEditor' => __DIR__ . '/..' . '/../lib/DirectEditing/TextDirectEditor.php',
         'OCA\\Text\\DirectEditing\\TextDocumentCreator' => __DIR__ . '/..' . '/../lib/DirectEditing/TextDocumentCreator.php',
         'OCA\\Text\\Event\\LoadEditor' => __DIR__ . '/..' . '/../lib/Event/LoadEditor.php',
+        'OCA\\Text\\Event\\MentionEvent' => __DIR__ . '/..' . '/../lib/Event/MentionEvent.php',
         'OCA\\Text\\Exception\\DocumentHasUnsavedChangesException' => __DIR__ . '/..' . '/../lib/Exception/DocumentHasUnsavedChangesException.php',
         'OCA\\Text\\Exception\\DocumentSaveConflictException' => __DIR__ . '/..' . '/../lib/Exception/DocumentSaveConflictException.php',
         'OCA\\Text\\Exception\\InvalidDocumentBaseVersionEtagException' => __DIR__ . '/..' . '/../lib/Exception/InvalidDocumentBaseVersionEtagException.php',
