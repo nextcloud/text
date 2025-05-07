@@ -14,6 +14,7 @@ OC.L10N.register(
     "to" : "do",
     "Upload" : "Učitaj",
     "Edit" : "Izmjeni",
+    "Choose" : "Izaberite",
     "Info" : "Info",
     "Warning" : "Upozorenje"
 },

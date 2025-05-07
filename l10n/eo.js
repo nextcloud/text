@@ -54,6 +54,8 @@ OC.L10N.register(
     "Heading 5" : "Titolo 5",
     "Details" : "Detaloj",
     "Insert attachment" : "Enmeti aldonitan dosieron",
+    "Choose" : "Elekti",
+    "Choose {file}" : "Elekti {file}",
     "Use current version" : "Uzi nunan version",
     "Use the saved version" : "Uzi la konservitan version",
     "Info" : "Info",

@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Option",
     "Formatting" : "Formatierung",
     "Select file or folder to link to" : "Datei oder Ordner zum Verknüpfen auswählen",
+    "Choose" : "Auswählen",
+    "Choose {file}" : "{file} auswählen",
     "Add folder description" : "Ordnerbeschreibung hinzufügen",
     "\"{name}\" already exist!" : "{name} existiert bereits!",
     "Created \"{name}\"" : "\"{name}\" erstellt",

@@ -20,6 +20,7 @@ OC.L10N.register(
     "Edit" : "մշակել",
     "Source code" : "ծրագրի կոդը",
     "Details" : "Մանրամասներ",
+    "Choose" : "Ընտրել",
     "Info" : "Info",
     "Warning" : "Զգուշացում"
 },

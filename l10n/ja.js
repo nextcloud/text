@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Option",
     "Formatting" : "フォーマット",
     "Select file or folder to link to" : "リンク先のファイルまたはフォルダを選択",
+    "Choose" : "選択",
+    "Choose {file}" : "{file}を選択",
     "Add folder description" : "フォルダーの説明を追加",
     "\"{name}\" already exist!" : "\"{name}\" は既に存在します",
     "Created \"{name}\"" : "\"{name}\" を作成しました",

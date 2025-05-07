@@ -17,6 +17,7 @@ OC.L10N.register(
     "Edit" : "Golygu",
     "Source code" : "Cod ffynhonnell",
     "Details" : "Manylion",
+    "Choose" : "Dewisa",
     "Info" : "Info",
     "Warning" : "Rhybudd"
 },

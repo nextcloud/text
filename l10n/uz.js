@@ -31,6 +31,8 @@ OC.L10N.register(
     "Table" : "Jadval",
     "Details" : "Details",
     "Formatting" : "Formatlash",
+    "Choose" : "Tanlang",
+    "Choose {file}" : " {file}ta tanlash",
     "Success" : "Success"
 },
 "nplurals=1; plural=0;");

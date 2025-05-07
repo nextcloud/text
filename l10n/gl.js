@@ -196,6 +196,8 @@ OC.L10N.register(
     "Option" : "Opción",
     "Formatting" : "Formatado",
     "Select file or folder to link to" : "Seleccione o ficheiro ou cartafol ao que ligar",
+    "Choose" : "Escoller",
+    "Choose {file}" : "Escoller  {file}",
     "Add folder description" : "Engadir a descrición do cartafol",
     "\"{name}\" already exist!" : "Xa existe «{name}»!",
     "Created \"{name}\"" : "Creouse «{name}»",

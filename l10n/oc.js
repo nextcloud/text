@@ -64,6 +64,7 @@ OC.L10N.register(
     "Insert link" : "Inserir un ligam",
     "Insert attachment" : "Inserir una pèça junta",
     "Command" : "Comanda",
+    "Choose" : "Causir",
     "Use current version" : "Utilizar la version actuala",
     "Use the saved version" : "Utilizar la version salvada",
     "Show author colors" : "Afichar las colors dels utilizaires",

@@ -200,6 +200,8 @@ OC.L10N.register(
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
     "Select file or folder to link to" : "Välj fil eller mapp att länka till",
+    "Choose" : "Välj",
+    "Choose {file}" : "Välj {file}",
     "Add folder description" : "Lägg till mappbeskrivning",
     "\"{name}\" already exist!" : "\"{name}\" finns redan!",
     "Created \"{name}\"" : "Skapade \"{name}\"",

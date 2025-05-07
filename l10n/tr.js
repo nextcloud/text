@@ -203,6 +203,8 @@ OC.L10N.register(
     "Option" : "Seçenek",
     "Formatting" : "Biçimlendirme",
     "Select file or folder to link to" : "Bağlantı verilecek dosya ya da klasörü seçin",
+    "Choose" : "Seçin",
+    "Choose {file}" : "{file} seçin",
     "Add folder description" : "Klasör açıklaması ekle",
     "\"{name}\" already exist!" : "\"{name}\" zaten var!",
     "Created \"{name}\"" : "\"{name}\" oluşturuldu",

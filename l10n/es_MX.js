@@ -179,6 +179,8 @@ OC.L10N.register(
     "Option" : "Opción",
     "Formatting" : "Formato",
     "Select file or folder to link to" : "Seleccionar archivo o carpeta para enlazar.",
+    "Choose" : "Elegir",
+    "Choose {file}" : "Elegir {file}",
     "Add folder description" : "Añadir descripción de carpeta",
     "\"{name}\" already exist!" : "¡\"{name}\" ya existe!",
     "Created \"{name}\"" : "\"{name}\" creado",

@@ -198,6 +198,8 @@
     "Option" : "옵션",
     "Formatting" : "서식",
     "Select file or folder to link to" : "링크할 파일이나 폴더 선택",
+    "Choose" : "선택",
+    "Choose {file}" : "{file} 선택",
     "Add folder description" : "폴더 설명 추가",
     "\"{name}\" already exist!" : "\"{name}\" (이)가 이미 존재합니다!",
     "Created \"{name}\"" : "\"{name}\" 생성함",

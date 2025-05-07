@@ -190,6 +190,8 @@ OC.L10N.register(
     "Option" : "تاللاش",
     "Formatting" : "فورماتلاش",
     "Select file or folder to link to" : "ئۇلىنىدىغان ھۆججەت ياكى ھۆججەت قىسقۇچنى تاللاڭ",
+    "Choose" : "تاللاڭ",
+    "Choose {file}" : "{file} نى تاللاڭ",
     "Add folder description" : "ھۆججەت قىسقۇچ چۈشەندۈرۈشىنى قوشۇڭ",
     "\"{name}\" already exist!" : "\"{name}\" ئاللىبۇرۇن مەۋجۇت!",
     "Created \"{name}\"" : "\"{name}\" قۇرۇلدى",

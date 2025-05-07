@@ -152,6 +152,8 @@ OC.L10N.register(
     "Command" : "Komento",
     "Formatting" : "Muotoilu",
     "Select file or folder to link to" : "Valitse tiedosto tai kansio, johon linkitetään",
+    "Choose" : "Valitse",
+    "Choose {file}" : "Valitse {file}",
     "Add folder description" : "Lisään kansion kuvaus",
     "\"{name}\" already exist!" : "\"{name}\" on jo olemassa!",
     "Created \"{name}\"" : "Luotu \"{name}\"",

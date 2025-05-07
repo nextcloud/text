@@ -16,6 +16,7 @@ OC.L10N.register(
     "Edit" : "Ẓreg",
     "Done" : "Immed",
     "Details" : "Talqayt",
+    "Choose" : "Fren",
     "Warning" : "Alɣu"
 },
 "nplurals=2; plural=(n != 1);");

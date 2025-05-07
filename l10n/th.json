@@ -29,6 +29,8 @@
     "Source code" : "โค้ดต้นฉบับ",
     "Details" : "รายละเอียด",
     "Formatting" : "การจัดรูปแบบ",
+    "Choose" : "เลือก",
+    "Choose {file}" : "เลือก {file}",
     "Info" : "ข้อมูล",
     "Success" : "สำเร็จ",
     "Warning" : "คำเตือน"
