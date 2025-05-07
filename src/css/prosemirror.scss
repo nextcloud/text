@@ -421,3 +421,9 @@ div.ProseMirror {
 .tippy-content div {
 	visibility: visible !important;
 }
+
+div.ProseMirror[contenteditable='false'] {
+	table {
+		width: 100%;
+	}
+}
