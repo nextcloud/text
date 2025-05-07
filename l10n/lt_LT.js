@@ -129,6 +129,8 @@ OC.L10N.register(
     "Command" : "Komanda",
     "Ctrl" : "Vald",
     "Formatting" : "Formatavimas",
+    "Choose" : "Pasirinkite",
+    "Choose {file}" : "Pasirinkti{file}",
     "Add folder description" : "Pridėti aplanko aprašą",
     "\"{name}\" already exist!" : "„{name}“ jau yra!",
     "Copied to the clipboard" : "Nukopijuota į iškarpinę",

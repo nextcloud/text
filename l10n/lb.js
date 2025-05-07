@@ -13,6 +13,7 @@ OC.L10N.register(
     "Upload" : "Eroplueden",
     "Edit" : "Änneren",
     "Details" : "Detailer",
+    "Choose" : "Auswielen",
     "Info" : "Info",
     "Warning" : "Warnung"
 },

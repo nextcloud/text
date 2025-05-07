@@ -150,6 +150,8 @@ OC.L10N.register(
     "Option" : "Možnosti",
     "Formatting" : "Oblikovanje",
     "Select file or folder to link to" : "Izbor datoteke ali mape za povezavo",
+    "Choose" : "Izbor",
+    "Choose {file}" : "Izberite datoteko {file}",
     "Front matter" : "Uvodne strani",
     "Link to this section" : "Poveži s tem odsekom",
     "Use current version" : "Uporabi trenutno različico",

@@ -75,6 +75,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Formatting" : "Vorming",
     "Select file or folder to link to" : "Vali lingitav fail või kaust",
+    "Choose" : "Vali",
+    "Choose {file}" : "Vali „{file}“",
     "Add folder description" : "Lisa kausta kirjeldus",
     "Use current version" : "Kasuta praegust versiooni",
     "Use the saved version" : "Kasuta salvestatud versiooni",

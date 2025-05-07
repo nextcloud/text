@@ -197,6 +197,8 @@ OC.L10N.register(
     "Option" : "Opció",
     "Formatting" : "Format",
     "Select file or folder to link to" : "Seleccioneu el fitxer o la carpeta que voleu enllaçar",
+    "Choose" : "Tria",
+    "Choose {file}" : "Tria {file}",
     "Add folder description" : "Afegiu una descripció per a la carpeta",
     "\"{name}\" already exist!" : "«{name}» ja existeix!",
     "Created \"{name}\"" : "S'ha creat «{name}»",

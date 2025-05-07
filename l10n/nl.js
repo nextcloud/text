@@ -169,6 +169,8 @@ OC.L10N.register(
     "Option" : "Optie",
     "Formatting" : "Opmaak",
     "Select file or folder to link to" : "Selecteer een bestand of map om naar te linken",
+    "Choose" : "Kies",
+    "Choose {file}" : "Kies {file}",
     "Add folder description" : "Mapomschrijving toevoegen",
     "Use current version" : "Gebruik huidige versie",
     "Use the saved version" : "Gebruik opgeslagen versie",

@@ -162,6 +162,8 @@
     "Option" : "Option",
     "Formatting" : "قالب‌بندی",
     "Select file or folder to link to" : "فایل یا پوشه را برای پیوند انتخاب کنید",
+    "Choose" : "انتخاب کنید",
+    "Choose {file}" : "انتخاب {file}",
     "Copied to the clipboard" : "Copied to the clipboard",
     "Front matter" : "Front matter",
     "Link to this section" : "Link to this section",

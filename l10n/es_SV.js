@@ -31,6 +31,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Source code" : "Código fuente",
     "Details" : "Detalles",
+    "Choose" : "Seleccionar",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia"

@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Opzione",
     "Formatting" : "Formattazione",
     "Select file or folder to link to" : "Seleziona un file o una cartella da collegare",
+    "Choose" : "Scegli",
+    "Choose {file}" : "Scegli {file}",
     "Add folder description" : "Aggiungi descrizione cartella",
     "\"{name}\" already exist!" : "\"{name}\" esiste già!",
     "Created \"{name}\"" : "Creato \"{name}\"",

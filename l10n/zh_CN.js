@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "选项",
     "Formatting" : "格式",
     "Select file or folder to link to" : "选择需要链接的文件或文件夹",
+    "Choose" : "选择",
+    "Choose {file}" : "选择 {file}",
     "Add folder description" : "添加文件夹描述",
     "\"{name}\" already exist!" : "\"{name}\" 已存在！",
     "Created \"{name}\"" : "创建 \"{name}\"",

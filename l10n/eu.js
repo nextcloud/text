@@ -195,6 +195,8 @@ OC.L10N.register(
     "Option" : "Aukera",
     "Formatting" : "Formatua",
     "Select file or folder to link to" : "Hautatu estekatzeko fitxategia edo karpeta",
+    "Choose" : "Aukeratu",
+    "Choose {file}" : "Aukeratu {file}",
     "Add folder description" : "Gehitu karpetaren deskribapena",
     "\"{name}\" already exist!" : "\"{name}\" badago dagoeneko!",
     "Created \"{name}\"" : "\"{name}\" sortu da",

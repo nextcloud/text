@@ -57,6 +57,8 @@ OC.L10N.register(
     "Details" : "Detalhes",
     "Ctrl" : "Ctrl",
     "Formatting" : "Formação ",
+    "Choose" : "Escolher",
+    "Choose {file}" : "Escolher {file}",
     "Add folder description" : "Adicionar descrição da pasta",
     "Use current version" : "Usar esta versão",
     "Use the saved version" : "Usar a versão guardada",

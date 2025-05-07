@@ -45,6 +45,7 @@ OC.L10N.register(
     "Details" : "Detaļas",
     "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",
+    "Choose" : "Izvēlēties",
     "Add folder description" : "Pievienot mapes aprakstu",
     "Use current version" : "Izmantot pašreizējo versiju",
     "Info" : "Info",

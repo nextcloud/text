@@ -121,6 +121,8 @@ OC.L10N.register(
     "Ctrl" : "Ctrl",
     "Formatting" : "Διαμόρφωση σε εξέλιξη",
     "Select file or folder to link to" : "Επιλέξτε αρχείο ή φάκελο για σύνδεση",
+    "Choose" : "Επιλογή",
+    "Choose {file}" : "Επιλέξτε {file}",
     "Add folder description" : "Προσθήκη περιγραφής φακέλου",
     "Use current version" : "Χρήση τρέχουσας έκδοσης",
     "Use the saved version" : "Χρήση αποθηκευμένης έκδοσης",

@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Варіант",
     "Formatting" : "Форматування",
     "Select file or folder to link to" : "Виберіть файл або каталог, до якого потрібно застосувати посилання",
+    "Choose" : "Вибрати",
+    "Choose {file}" : "Виберіть {file}",
     "Add folder description" : "Додати опис каталогу",
     "\"{name}\" already exist!" : "\"{name}\" вже присутній!",
     "Created \"{name}\"" : "Створено \"{name}\"",

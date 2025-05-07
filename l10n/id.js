@@ -40,6 +40,7 @@ OC.L10N.register(
     "Details" : "Detail",
     "Formatting" : "Pemformatan",
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
+    "Choose" : "Pilih",
     "Info" : "Info",
     "Success" : "Berhasil",
     "Warning" : "Peringatan",
