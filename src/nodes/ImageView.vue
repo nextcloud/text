@@ -164,6 +164,7 @@ export default {
 			showImageModal: false,
 			imageIndex: null,
 			isEditable: false,
+			isLastInserted: false,
 			embeddedImageList: [],
 		}
 	},
@@ -220,6 +221,12 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
+		this.editor.on('transaction', ({ transaction }) => {
+			const trMeta = transaction.getMeta('insertedAttachmentSrc')
+			if (trMeta?.src === this.src) {
+				this.isLastInserted = true
+			}
+		})
 		this.loadPreview()
 			.catch(this.onImageLoadFailure)
 	},
@@ -263,7 +270,9 @@ export default {
 		onLoaded() {
 			this.loaded = true
 			this.$nextTick(() => {
-				this.$refs.altInput?.focus()
+				if (this.isLastInserted) {
+					this.$refs.altInput?.focus()
+				}
 			})
 		},
 		async updateEmbeddedImageList() {
