@@ -172,6 +172,8 @@ OC.L10N.register(
     "Option" : "Opcja",
     "Formatting" : "Formatowanie",
     "Select file or folder to link to" : "Wybierz plik lub katalog do linku",
+    "Choose" : "Wybierz",
+    "Choose {file}" : "Wybierz {file}",
     "Add folder description" : "Dodaj opis katalogu",
     "\"{name}\" already exist!" : "\"{name}\" już istnieje!",
     "Created \"{name}\"" : "Utworzono \"{name}\"",

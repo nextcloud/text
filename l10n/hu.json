@@ -167,6 +167,8 @@
     "Option" : "Option",
     "Formatting" : "Formázás",
     "Select file or folder to link to" : "Válassza ki a hivatkozandó fájlt vagy mappát",
+    "Choose" : "Válasszon",
+    "Choose {file}" : "{file} kiválasztása",
     "Add folder description" : "Mappaleírás hozzáadása",
     "Copied to the clipboard" : "Vágólapra másolva",
     "Front matter" : "Előlap",

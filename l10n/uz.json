@@ -29,6 +29,8 @@
     "Table" : "Jadval",
     "Details" : "Details",
     "Formatting" : "Formatlash",
+    "Choose" : "Tanlang",
+    "Choose {file}" : " {file}ta tanlash",
     "Success" : "Success"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -72,6 +72,7 @@ OC.L10N.register(
     "Insert attachment" : "Umetni privitak",
     "Command" : "Naredba",
     "Formatting" : "Oblikovanje",
+    "Choose" : "Odaberite",
     "Use current version" : "Koristi trenutnu verziju",
     "Use the saved version" : "Koristi spremljenu verziju",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument ne reagira {timeout} minuta, kliknite za nastavak uređivanja",

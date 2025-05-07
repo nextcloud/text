@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Volba",
     "Formatting" : "Formátování",
     "Select file or folder to link to" : "Vyberte soubor nebo složku na kterou odkazovat",
+    "Choose" : "Vybrat",
+    "Choose {file}" : "Zvolit {file}",
     "Add folder description" : "Přidat popis složky",
     "\"{name}\" already exist!" : "„{name}“ už existuje!",
     "Created \"{name}\"" : "Vytvořeno „{name}“",

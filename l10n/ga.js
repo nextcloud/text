@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Rogha",
     "Formatting" : "Formáidiú",
     "Select file or folder to link to" : "Roghnaigh comhad nó fillteán le nascadh leis",
+    "Choose" : "Roghnaigh",
+    "Choose {file}" : "Roghnaigh {file}",
     "Add folder description" : "Cuir cur síos ar fhillteán leis",
     "\"{name}\" already exist!" : "Tá \"{name}\" ann cheana féin!",
     "Created \"{name}\"" : "Cruthaithe \"{name}\"",

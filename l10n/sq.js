@@ -39,6 +39,7 @@ OC.L10N.register(
     "Source code" : "Kodi burim",
     "Done" : "U bë",
     "Details" : "Detajet",
+    "Choose" : "Zgjidhni",
     "Use current version" : "Përdor versionin aktual",
     "Use the saved version" : "Përdor versionin e ruajtur",
     "Info" : "Info",

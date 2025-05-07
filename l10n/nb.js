@@ -187,6 +187,8 @@ OC.L10N.register(
     "Option" : "Alternativ",
     "Formatting" : "Formatering",
     "Select file or folder to link to" : "Velg fil eller mappe å koble til",
+    "Choose" : "Velg",
+    "Choose {file}" : "Velg {file}",
     "Add folder description" : "Legg til mappebeskrivelse",
     "\"{name}\" already exist!" : "\"{name}\" finnes allerede!",
     "Created \"{name}\"" : "Opprettet \"{name}\"",

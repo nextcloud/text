@@ -201,6 +201,8 @@
     "Option" : "Valgmulighed",
     "Formatting" : "Formatering",
     "Select file or folder to link to" : "Link til fil eller mappe",
+    "Choose" : "Vælg",
+    "Choose {file}" : "Vælg {file}",
     "Add folder description" : "Tilføj mappebeskrivelse",
     "\"{name}\" already exist!" : "\"{name}\" allerede eksisterer!",
     "Created \"{name}\"" : "Oprettet \"{name}\"",

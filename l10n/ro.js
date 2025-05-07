@@ -41,6 +41,8 @@ OC.L10N.register(
     "Details" : "Detalii",
     "Formatting" : "Formatare",
     "Select file or folder to link to" : "Selectați fișierul sau folderul țintă a link-ului",
+    "Choose" : "Alege",
+    "Choose {file}" : "Selectați {file}",
     "Add folder description" : "Adăugați descrierea directorului",
     "Use current version" : "Folosește versiunea curentă",
     "Use the saved version" : "Folosește versiuna salvată",

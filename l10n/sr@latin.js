@@ -26,6 +26,7 @@ OC.L10N.register(
     "Source code" : "Izvorni kôd",
     "Done" : "Gotovo",
     "Details" : "Detalji",
+    "Choose" : "Odaberi",
     "Info" : "Info",
     "Warning" : "Upozorenje"
 },

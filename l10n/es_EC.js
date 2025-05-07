@@ -146,6 +146,7 @@ OC.L10N.register(
     "Option" : "Opción",
     "Formatting" : "Formato",
     "Select file or folder to link to" : "Seleccionar archivo o carpeta para enlazar.",
+    "Choose" : "Seleccionar",
     "Copied to the clipboard" : "Copiado al portapapeles",
     "Front matter" : "Materias principales",
     "Link to this section" : "Enlace a esta sección",

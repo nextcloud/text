@@ -203,6 +203,8 @@ OC.L10N.register(
     "Option" : "選項",
     "Formatting" : "正在格式化",
     "Select file or folder to link to" : "選擇要連結的檔案或資料夾",
+    "Choose" : "選擇",
+    "Choose {file}" : "選擇 {file}",
     "Add folder description" : "新增資料夾描述",
     "\"{name}\" already exist!" : "「{name}」已存在！",
     "Created \"{name}\"" : "已建立「{name}」",

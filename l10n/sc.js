@@ -74,6 +74,8 @@ OC.L10N.register(
     "Command" : "Cumandu",
     "Formatting" : "Formatatzione",
     "Select file or folder to link to" : "Seletziona un'archìviu o una cartella de ligongiare",
+    "Choose" : "Sèbera",
+    "Choose {file}" : "Sèbera {file}",
     "Use current version" : "Imprea sa versione currente",
     "Use the saved version" : "Imprea sa versione sarvada",
     "Document idle for {timeout} minutes, click to continue editing" : "Archìviu no ativu pro {timeout} minutos, incarca pro sighire cun sa modìfica",

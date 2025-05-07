@@ -73,6 +73,7 @@ OC.L10N.register(
     "Insert attachment" : "הוספת קובץ מצורף",
     "Command" : "פקודה",
     "Formatting" : "עיצוב",
+    "Choose" : "בחר",
     "Use current version" : "להשתמש בגרסה הנוכחית",
     "Use the saved version" : "להשתמש בגרסה השמורה",
     "Document idle for {timeout} minutes, click to continue editing" : "מסמך אינו פעיל למשך {timeout} דקות, לחץ כדי להמשיך בעריכה",

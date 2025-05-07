@@ -36,6 +36,7 @@ OC.L10N.register(
     "Done" : "Terminado",
     "Table" : "Tabla",
     "Details" : "Detalles",
+    "Choose" : "Elige",
     "Add folder description" : "Agregar una descripción a la carpeta",
     "Info" : "Info",
     "Warning" : "Advertencia"

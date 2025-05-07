@@ -203,6 +203,8 @@ OC.L10N.register(
     "Option" : "Možnosť",
     "Formatting" : "Formátovanie",
     "Select file or folder to link to" : "Vyberte súbor alebo priečinok na ktorý odkazovať",
+    "Choose" : "Vybrať",
+    "Choose {file}" : "Vyberte {file}",
     "Add folder description" : "Pridať popis adresára",
     "\"{name}\" already exist!" : "\"{name}\" už existuje!",
     "Created \"{name}\"" : "Vytvorené \"{name}\"",

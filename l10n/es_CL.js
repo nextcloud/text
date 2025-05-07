@@ -30,6 +30,7 @@ OC.L10N.register(
     "Upload" : "Cargar",
     "Edit" : "Editar",
     "Source code" : "Código fuente",
+    "Choose" : "Seleccionar",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia"

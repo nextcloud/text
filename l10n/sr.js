@@ -204,6 +204,8 @@ OC.L10N.register(
     "Option" : "Опција",
     "Formatting" : "Форматирање",
     "Select file or folder to link to" : "Изаберите фајл или фордер на који показује линк",
+    "Choose" : "Изаберите",
+    "Choose {file}" : "Изабери {file}",
     "Add folder description" : "Додај опис фолдера",
     "\"{name}\" already exist!" : "„{name}” већ постоји!",
     "Created \"{name}\"" : "„{name}” је креирано",
