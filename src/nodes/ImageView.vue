@@ -164,6 +164,7 @@ export default {
 			showImageModal: false,
 			imageIndex: null,
 			isEditable: false,
+			isLastInserted: false,
 			embeddedImageList: [],
 		}
 	},
@@ -263,7 +264,9 @@ export default {
 		onLoaded() {
 			this.loaded = true
 			this.$nextTick(() => {
-				this.$refs.altInput?.focus()
+				if (this.isLastInserted) {
+					this.$refs.altInput?.focus()
+				}
 			})
 		},
 		async updateEmbeddedImageList() {
