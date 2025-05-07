@@ -26,7 +26,7 @@ describe('Details extension', () => {
 		)
 	})
 	it('renders with spaces', () => {
-		const rendered = markdownit.render('  <details>  \n <summary>summary </summary> \n  content \n  </details>')
+		const rendered = markdownit.render('  <details>  \n <summary> summary </summary> \n  content \n  </details>  ')
 		expect(stripIndent(rendered)).toBe(
 			'<details><summary>summary</summary><p>content</p></details>',
 		)
@@ -55,10 +55,10 @@ describe('Details extension', () => {
 			'<details><summary>summary</summary><details><summary>nested summary</summary><p>nested content</p></details><p>content</p></details>',
 		)
 	})
-	it('does not render with missing linebreak after details open', () => {
+	it('renders without linebreak after details open', () => {
 		const rendered = markdownit.render('<details><summary>summary</summary>\ncontent\n</details>')
 		expect(stripIndent(rendered)).toBe(
-			'<p>&lt;details&gt;&lt;summary&gt;summary&lt;/summary&gt;content&lt;/details&gt;</p>',
+			'<details><summary>summary</summary><p>content</p></details>',
 		)
 	})
 	it('does not render with missing linebreak after summary', () => {
