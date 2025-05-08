@@ -67,7 +67,8 @@
 
 		<!-- link edit form -->
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
-			<NcTextField name="newHref"
+			<NcTextField ref="hrefField"
+				name="newHref"
 				:label="t('text', 'URL')"
 				:value.sync="newHref"
 				@keypress.enter.prevent="updateLink" />
@@ -174,6 +175,7 @@ export default {
 	watch: {
 		key() {
 			this.resetBubble()
+			this.startEditIfEmpty()
 		},
 	},
 
@@ -182,6 +184,10 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
+	},
+
+	mounted() {
+		this.startEditIfEmpty()
 	},
 
 	methods: {
@@ -204,6 +210,15 @@ export default {
 		startEdit() {
 			this.edit = true
 			this.newHref = this.href
+			this.$nextTick(() => {
+				this.$refs.hrefField.focus()
+			})
+		},
+
+		startEditIfEmpty() {
+			if (this.isEditable && !this.href) {
+				this.startEdit()
+			}
 		},
 
 		stopEdit() {
