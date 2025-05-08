@@ -5,7 +5,8 @@
 
 import TiptapCodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
-import CodeBlockView from './CodeBlockView.vue'
+import codeBlockShortcuts from './CodeBlock/codeBlockShortcuts.js'
+import CodeBlockView from './CodeBlock/CodeBlockView.vue'
 
 const CodeBlock = TiptapCodeBlockLowlight.extend({
 
@@ -52,21 +53,7 @@ const CodeBlock = TiptapCodeBlockLowlight.extend({
 	},
 
 	addKeyboardShortcuts() {
-		return {
-			'Mod-a': () => {
-				if (!this.editor.isActive('codeBlock')) {
-					return
-				}
-
-				const nodeSize = this.editor.state.selection.$from.node().nodeSize
-				this.editor.commands.selectParentNode()
-				const from = this.editor.state.selection.$from.pos
-				const to = from + nodeSize
-				this.editor.commands.setTextSelection({ from, to })
-
-				return true
-			},
-		}
+		return codeBlockShortcuts
 	},
 
 })
