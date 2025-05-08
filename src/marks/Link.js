@@ -90,6 +90,7 @@ const Link = TipTapLink.extend({
 			}),
 		]
 	},
+
 	addCommands() {
 		return {
 			...this.parent?.(),
@@ -144,6 +145,20 @@ const Link = TipTapLink.extend({
 						return commands.setLink(attrs)
 					}
 				},
+		}
+	},
+
+	addKeyboardShortcuts() {
+		return {
+			'Mod-k': () => {
+				const { empty } = this.editor.state.selection
+				if (empty) {
+					console.debug('empty selection')
+					return false
+				}
+				console.debug('toggle link for selection')
+				return this.editor.commands.toggleLink({ href: '' })
+			},
 		}
 	},
 
