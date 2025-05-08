@@ -6,7 +6,6 @@
 import CollaborationCursor from './CollaborationCursor.js'
 import Emoji from './Emoji.js'
 import FocusTrap from './FocusTrap.js'
-import Keymap from './Keymap.js'
 import UserColor from './UserColor.js'
 import Markdown from './Markdown.js'
 import PlainText from './PlainText.js'
@@ -18,7 +17,6 @@ export {
 	CollaborationCursor,
 	Emoji,
 	FocusTrap,
-	Keymap,
 	UserColor,
 	Markdown,
 	PlainText,
