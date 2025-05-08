@@ -12,6 +12,14 @@ const Keymap = Extension.create({
 
 	addKeyboardShortcuts() {
 		return {
+			/**
+			 * <Mod>-<Alt>-<H>
+			 * Toggle editor outline
+			 */
+			'Mod-Alt-h': () => {
+				emit('text:keyboard:outline')
+				return true
+			},
 		}
 	},
 
