@@ -71,7 +71,7 @@
 				name="newHref"
 				:label="t('text', 'URL')"
 				:value.sync="newHref"
-				@keypress.enter.prevent="updateLink" />
+				@keyup.enter.prevent="updateLink" />
 		</div>
 
 		<!-- link preview -->
