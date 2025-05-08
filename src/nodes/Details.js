@@ -184,7 +184,13 @@ const Details = Node.create({
 
 	addKeyboardShortcuts() {
 		return {
-			// If in detailsSummary: Make sure details is open and jump to content
+			/**
+			 * <Enter> in summary
+			 * Expand details and jump to content
+			 *
+			 * @param {object} object - object
+			 * @param {object} object.editor - the editor
+			 */
 			Enter: ({ editor }) => {
 				const { state } = editor
 				const { schema, selection } = state
@@ -216,7 +222,14 @@ const Details = Node.create({
 
 				return editor.commands.setTextSelection($from.after())
 			},
-			// Unset details with backspace in empty summary
+
+			/**
+			 * <Backspace> in empty summary
+			 * Unset details
+			 *
+			 * @param {object} object - object
+			 * @param {object} object.editor - the editor
+			 */
 			Backspace: ({ editor }) => {
 				const { state } = editor
 				const { schema, selection } = state

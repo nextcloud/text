@@ -16,6 +16,10 @@ const Paragraph = TiptapParagraph.extend({
 
 	addKeyboardShortcuts() {
 		return {
+			/**
+			 * <Backspace> at beginning of new paragraph
+			 * Convert leading paragraph break into hard break
+			 */
 			Backspace: () => {
 				// Check that cursor is at beginning of text
 				const selection = this.editor.state.selection
