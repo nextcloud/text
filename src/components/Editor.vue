@@ -845,12 +845,13 @@ export default {
 		},
 
 		onKeyDown(event) {
-			if (event.key === 'Escape') {
-				event.preventDefault()
-				return
-			}
-
-			if (event.key === 'Tab' && !event.shiftKey && !event.ctrlKey && !event.metaKey && this.$editor.isActive('codeBlock')) {
+			if (
+				event.key === 'Tab'
+				&& !event.shiftKey
+				&& !event.ctrlKey
+				&& !event.metaKey
+				&& this.$editor.isActive('codeBlock')
+			) {
 				this.$editor.commands.insertContent('\t')
 				this.$editor.commands.focus()
 				event.preventDefault()
