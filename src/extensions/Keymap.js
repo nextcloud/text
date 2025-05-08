@@ -21,6 +21,16 @@ const Keymap = Extension.create({
 						const key = event.key || event.keyCode
 
 						/**
+						 * <Esc>
+						 * Overwrite Viewer keybinding to close viewer
+						 */
+						if (event.key === 'Escape') {
+							event.preventDefault()
+							event.stopPropagation()
+							return true
+						}
+
+						/**
 						 * <Mod>-<Del>
 						 * Overwrite Viewer keybinding to delete the file
 						 */
