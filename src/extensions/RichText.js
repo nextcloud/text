@@ -27,21 +27,22 @@ import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import Image from './../nodes/Image.js'
 import ImageInline from './../nodes/ImageInline.js'
 import KeepSyntax from './KeepSyntax.js'
-import LinkPicker from './../extensions/LinkPicker.js'
+import Keymap from './Keymap.js'
 import LinkBubble from './../extensions/LinkBubble.js'
+import LinkPicker from './../extensions/LinkPicker.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
-import Search from './../extensions/Search.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
 import Preview from './../nodes/Preview.js'
+import Search from './../extensions/Search.js'
 import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
-import TrailingNode from './../nodes/TrailingNode.js'
 import TextDirection from 'tiptap-text-direction'
+import TrailingNode from './../nodes/TrailingNode.js'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -98,6 +99,7 @@ export default Extension.create({
 			Dropcursor,
 			Gapcursor,
 			KeepSyntax,
+			Keymap,
 			FrontMatter,
 			Mention,
 			Search,
