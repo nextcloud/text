@@ -894,11 +894,6 @@ export default {
 		},
 
 		onKeyDown(event) {
-			if (event.key === 'Escape') {
-				event.preventDefault()
-				return
-			}
-
 			if (
 				event.key === 'Tab'
 				&& !event.shiftKey
