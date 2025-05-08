@@ -226,6 +226,9 @@ export default {
 			// Scroll image into view
 			this.$editor.commands.scrollIntoView()
 
+			// Store last inserted attachment src to focus it in ImageView.vue
+			this.$editor.commands.setMeta('insertedAttachmentSrc', { src })
+
 			emit('text:image-node:add', null)
 		},
 	},
