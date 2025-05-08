@@ -5,12 +5,14 @@
 
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
+import { emit } from '@nextcloud/event-bus'
 
 const Keymap = Extension.create({
-	name: 'Keymap',
+	name: 'CustomKeymap',
 
 	addKeyboardShortcuts() {
-		return this.options
+		return {
+		}
 	},
 
 	addProseMirrorPlugins() {
@@ -18,7 +20,20 @@ const Keymap = Extension.create({
 			new Plugin({
 				props: {
 					handleKeyDown(view, event) {
-						const key = event.key || event.keyCode
+						/**
+						 * <Mod>-<S>
+						 * Save editor content
+						 */
+						if (
+							(event.ctrlKey || event.metaKey)
+							&& !event.shiftKey
+							&& event.key === 's'
+						) {
+							event.preventDefault()
+							event.stopPropagation()
+							emit('text:keyboard:save')
+							return true
+						}
 
 						/**
 						 * <Esc>
@@ -40,7 +55,6 @@ const Keymap = Extension.create({
 							&& event.key === 'Delete'
 						) {
 							event.stopPropagation()
-							window.dispatchEvent(event)
 							return true
 						}
 					},

@@ -374,6 +374,7 @@ export default {
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
+		subscribe('text:keyboard:save', this.onKeyboardSave)
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
@@ -398,6 +399,7 @@ export default {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
+		unsubscribe('text:keyboard:save', this.onKeyboardSave)
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
@@ -728,6 +730,10 @@ export default {
 			this.emit('blur')
 		},
 
+		onKeyboardSave() {
+			this.$syncService.save()
+		},
+
 		onAddImageNode() {
 			this.emit('add-image-node')
 		},
@@ -857,11 +863,6 @@ export default {
 				event.preventDefault()
 				event.stopPropagation()
 				return
-			}
-
-			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-				this.$syncService.save()
-				event.preventDefault()
 			}
 		},
 
