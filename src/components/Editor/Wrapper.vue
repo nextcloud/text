@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
 import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 import useStore from '../../mixins/store.js'
@@ -96,6 +97,7 @@ export default {
 	},
 
 	mounted() {
+		subscribe('text:keyboard:outline', this.outlineToggle)
 		this.outline.enable = this.isAbleToShowOutline
 
 		this.$watch(
@@ -105,21 +107,16 @@ export default {
 				Object.assign(this.outline, { enable })
 			},
 		)
+	},
 
-		document.addEventListener('keydown', this.handleKeyDown)
-	},
 	beforeDestroy() {
-		document.removeEventListener('keydown', this.handleKeyDown)
+		unsubscribe('text:keyboard:outline', this.outlineToggle)
 	},
+
 	methods: {
 		outlineToggle() {
 			this.outline.visible = !this.outline.visible
 			this.$emit('outline-toggled', this.outline.visible)
-		},
-		handleKeyDown(event) {
-			if (event.ctrlKey && event.altKey && event.key === 'h') {
-				this.outlineToggle()
-			}
 		},
 		readOnlyToggle() {
 			this.$emit('read-only-toggled')
