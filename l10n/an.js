@@ -12,6 +12,7 @@ OC.L10N.register(
     "File not found" : "Fichero no trobau",
     "Cancel" : "Cancelar",
     "Done" : "Feito",
-    "Details" : "Detalles"
+    "Details" : "Detalles",
+    "Choose" : "Eslechir"
 },
 "nplurals=2; plural=(n != 1);");
