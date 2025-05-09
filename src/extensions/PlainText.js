@@ -5,14 +5,16 @@
 
 import { Extension } from '@tiptap/core'
 
+import CodeBlockPlainText from './../nodes/CodeBlockPlainText.js'
+import Keymap from './Keymap.js'
+import PlainTextDocument from './../nodes/PlainTextDocument.js'
 /* eslint-disable import/no-named-as-default */
 import Text from '@tiptap/extension-text'
-import PlainTextDocument from './../nodes/PlainTextDocument.js'
 
 export default Extension.create({
 	name: 'PlainText',
 
 	addExtensions() {
-		return [PlainTextDocument, Text]
+		return [CodeBlockPlainText, Keymap, PlainTextDocument, Text]
 	},
 })

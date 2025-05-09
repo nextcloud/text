@@ -238,7 +238,19 @@ export default Table.extend({
 	addKeyboardShortcuts() {
 		return {
 			...this.parent(),
+			/**
+			 * <Tab> inside a table cell
+			 * Jump to next cell or outside table if already in last cell
+			 */
 			Tab: () => this.editor.commands.goToNextCell() || this.editor.commands.leaveTable(),
+
+			/**
+			 * <Enter> inside a table
+			 * Insert newline or jump to next row if already in new line
+			 *
+			 * @param {object} object - object
+			 * @param {object} object.editor - the editor
+			 */
 			Enter: ({ editor }) => {
 				const { selection } = editor.state
 				if (!selection.$from.parent.type.name.startsWith('table')) return false

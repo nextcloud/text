@@ -8,9 +8,4 @@ import { Node } from '@tiptap/core'
 export default Node.create({
 	name: 'doc',
 	content: 'block',
-	addKeyboardShortcuts() {
-		return {
-			Tab: () => this.editor.commands.insertContent('\t'),
-		}
-	},
 })
