@@ -203,6 +203,8 @@ OC.L10N.register(
     "Option" : "خيار",
     "Formatting" : "التنسيق",
     "Select file or folder to link to" : "اختر ملف أو مجلد للربط معه",
+    "Choose" : "إختر",
+    "Choose {file}" : "إختر {file}",
     "Add folder description" : "أضِف وصفاً للمجلد",
     "\"{name}\" already exist!" : "\"{name}\" موجودٌ مُسبقاً!",
     "Created \"{name}\"" : "تمّ إنشاء \"{name}\"",

@@ -19,6 +19,8 @@
     "Edit" : "Dəyişiklik et",
     "Done" : "Edildi",
     "Details" : "Detallar",
+    "Choose" : "Seç",
+    "Choose {file}" : "{file} seçin",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

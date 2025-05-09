@@ -21,6 +21,8 @@ OC.L10N.register(
     "Edit" : "Dəyişiklik et",
     "Done" : "Edildi",
     "Details" : "Detallar",
+    "Choose" : "Seç",
+    "Choose {file}" : "{file} seçin",
     "Info" : "Info",
     "Warning" : "Xəbərdarlıq"
 },

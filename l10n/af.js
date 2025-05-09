@@ -38,6 +38,7 @@ OC.L10N.register(
     "Heading 4" : "Kop 4",
     "Heading 5" : "Kop 5",
     "Details" : "Besonderhede",
+    "Choose" : "Kies",
     "Use current version" : "Gebruik huidige weergawe",
     "Use the saved version" : "Gebruik die bewaarde weergawe",
     "Show author colors" : "Toon outeurkleure",
