@@ -140,6 +140,8 @@ OC.L10N.register(
     "Option" : "Opción",
     "Formatting" : "Formatu",
     "Select file or folder to link to" : "Seleicionar un ficheru o una carpeta a la qu'enllaciar",
+    "Choose" : "Escoyer",
+    "Choose {file}" : "Escoyer «{file}»",
     "\"{name}\" already exist!" : "¡«{name}» yá esiste!",
     "Copied to the clipboard" : "Copióse nel cartafueyu",
     "Could not copy to the clipboard" : "Nun se pudo copiar nel cartafueyu",
