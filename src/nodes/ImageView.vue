@@ -230,7 +230,23 @@ export default {
 				this.isLastInserted = true
 			}
 		})
-		this.loadPreview().catch(this.onImageLoadFailure)
+	},
+	mounted() {
+		this.$nextTick(() => {
+			// nextTick is necessary, intersection detection is slightly unreliable without it
+			const options = {
+				root: null,
+				threshold: 0,
+			}
+			const startImageLoad = (entries, observer) => {
+				if (entries[0].isIntersecting) {
+					observer.disconnect()
+					this.loadPreview().catch(this.onImageLoadFailure)
+				}
+			}
+			const observer = new IntersectionObserver(startImageLoad, options)
+			observer.observe(this.$el)
+		})
 	},
 	methods: {
 		async loadPreview() {
