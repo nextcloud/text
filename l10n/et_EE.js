@@ -100,6 +100,7 @@ OC.L10N.register(
     "Increase indentation" : "Suurenda taandrida",
     "Decrease indentation" : "Vähenda taandrida",
     "Details" : "Üksikasjad",
+    "Command" : "Käsk",
     "Ctrl" : "Ctrl",
     "Formatting" : "Vorming",
     "Select file or folder to link to" : "Vali lingitav fail või kaust",
