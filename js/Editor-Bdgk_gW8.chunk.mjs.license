@@ -7,6 +7,7 @@ SPDX-FileCopyrightText: @tiptap/extension-collaboration developers
 SPDX-FileCopyrightText: Andris Reinman
 SPDX-FileCopyrightText: Christoph Wurst
 SPDX-FileCopyrightText: Denis Pushkarev
+SPDX-FileCopyrightText: Evan You
 SPDX-FileCopyrightText: Iskren Ivov Chernev <iskren.chernev@gmail.com> (https://github.com/ichernev)
 SPDX-FileCopyrightText: John Molakvoæ (skjnldsv) <skjnldsv@protonmail.com>
 SPDX-FileCopyrightText: John-David Dalton <john.david.dalton@gmail.com> (http://allyoucanleet.com/)
@@ -83,6 +84,9 @@ This file is generated from multiple sources. Included packages:
 - text
 	- version: 6.0.0-dev.0
 	- license: AGPL-3.0-or-later
+- vite
+	- version: 6.3.4
+	- license: MIT
 - vue-material-design-icons
 	- version: 5.3.1
 	- license: MIT
