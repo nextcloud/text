@@ -76,6 +76,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Seletziona un'archìviu o una cartella de ligongiare",
     "Choose" : "Sèbera",
     "Choose {file}" : "Sèbera {file}",
+    "Add folder description" : "Agiunghe una descritzione de sa cartella",
     "Use current version" : "Imprea sa versione currente",
     "Use the saved version" : "Imprea sa versione sarvada",
     "Document idle for {timeout} minutes, click to continue editing" : "Archìviu no ativu pro {timeout} minutos, incarca pro sighire cun sa modìfica",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "Success" : "Sutzessu",
     "Warning" : "Avisu",
     "Control" : "Controllu",
-    "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …"
+    "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
+    "Start writing, or try '/' to add, '@' to mention…" : "Cumintza a iscrìere, o proa '/' pro agiùnghere, '@' pro mentovare..."
 },
 "nplurals=2; plural=(n != 1);");
