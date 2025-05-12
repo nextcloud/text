@@ -34,6 +34,7 @@ const Keymap = Extension.create({
 						 */
 						if (
 							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
 							&& !event.shiftKey
 							&& event.key === 's'
 						) {
@@ -47,7 +48,13 @@ const Keymap = Extension.create({
 						 * <Esc>
 						 * Overwrite Viewer keybinding to close viewer
 						 */
-						if (event.key === 'Escape') {
+						if (
+							!event.ctrlKey
+							&& !event.metaKey
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 'Escape'
+						) {
 							event.preventDefault()
 							event.stopPropagation()
 							return true
@@ -59,6 +66,7 @@ const Keymap = Extension.create({
 						 */
 						if (
 							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
 							&& !event.shiftKey
 							&& event.key === 'Delete'
 						) {
