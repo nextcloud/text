@@ -172,6 +172,7 @@ export default {
 			isEditable: false,
 			isLastInserted: false,
 			embeddedImageList: [],
+			loadIntersectionObserver: null,
 		}
 	},
 	computed: {
@@ -230,7 +231,29 @@ export default {
 				this.isLastInserted = true
 			}
 		})
-		this.loadPreview().catch(this.onImageLoadFailure)
+	},
+	mounted() {
+		this.$nextTick(() => {
+			// nextTick is necessary, intersection detection is slightly unreliable without it
+			const options = {
+				root: null,
+				threshold: 0,
+			}
+			const startImageLoad = (entries, observer) => {
+				if (entries[0].isIntersecting) {
+					observer.disconnect()
+					this.loadPreview().catch(this.onImageLoadFailure)
+				}
+			}
+			this.loadIntersectionObserver = new IntersectionObserver(
+				startImageLoad,
+				options,
+			)
+			this.loadIntersectionObserver.observe(this.$el)
+		})
+	},
+	beforeUnmount() {
+		this.loadIntersectionObserver?.disconnect()
 	},
 	methods: {
 		async loadPreview() {
