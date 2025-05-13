@@ -80,7 +80,7 @@
 <script>
 import { NcActions, NcActionButton, NcActionInput } from '@nextcloud/vue'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs'
+import { getFilePickerBuilder } from '@nextcloud/dialogs'
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 
@@ -140,7 +140,25 @@ export default {
 				.startAt(this.startPath)
 				.allowDirectories(true)
 				.setMultiSelect(false)
-				.setType(FilePickerType.Choose)
+				.setButtonFactory((nodes, path) => {
+					const buttons = []
+					const node = nodes?.[0]?.attributes?.displayName || nodes?.[0]?.basename
+					const isRoot = nodes?.[0]?.root === nodes?.[0]?.attributes?.filename
+					let label = t('text', 'Choose')
+
+					if (nodes.length === 1 && !isRoot) {
+						label = t('text', 'Choose {file}', { file: node })
+					}
+
+					buttons.push({
+						callback: () => {},
+						type: 'primary',
+						label,
+						disabled: isRoot,
+					})
+
+					return buttons
+				})
 				.build()
 
 			filePicker.pick()
