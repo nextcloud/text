@@ -17,6 +17,7 @@ use OCP\DirectEditing\IToken;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\Util;
 
@@ -31,10 +32,16 @@ class TextDirectEditor implements IEditor {
 	/** @var ApiService */
 	private $apiService;
 
-	public function __construct(IL10N $l10n, InitialStateProvider $initialStateProvider, ApiService $apiService) {
+	/**
+	 * @var IAppConfig
+	 */
+	private $appConfig;
+
+	public function __construct(IL10N $l10n, InitialStateProvider $initialStateProvider, ApiService $apiService, IAppConfig $appConfig) {
 		$this->l10n = $l10n;
 		$this->initialStateProvider = $initialStateProvider;
 		$this->apiService = $apiService;
+		$this->appConfig = $appConfig;
 	}
 
 	/**
@@ -108,7 +115,7 @@ class TextDirectEditor implements IEditor {
 	 */
 	public function getCreators(): array {
 		return [
-			new TextDocumentCreator($this->l10n),
+			new TextDocumentCreator($this->l10n, $this->appConfig),
 		];
 	}
 
