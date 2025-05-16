@@ -66,7 +66,7 @@ export default defineComponent({
 
 		/**
 		 * Handle navigation in toolbar
-		 * @param {KeyboardEvent} event The keydown event
+		 * @param {KeyboardEvent} event The keyup event
 		 */
 		handleToolbarNavigation(event) {
 			if (event.key === 'ArrowRight') {
