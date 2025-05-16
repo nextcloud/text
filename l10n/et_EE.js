@@ -94,6 +94,8 @@ OC.L10N.register(
     "Could not find image in attachments list." : "Manuste loendist ei õnnestunud leida pilti.",
     "Add row below" : "Lisa rida allapoole",
     "Show folder description" : "Näita kausta kirjeldust",
+    "Hide outline" : "Peida ülevaade",
+    "Show outline" : "Näita ülevaadet",
     "Done" : "Valmis",
     "Headings" : "Pealkirjad",
     "Lists" : "Loendid",
