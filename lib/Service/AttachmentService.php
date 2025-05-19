@@ -665,4 +665,24 @@ class AttachmentService {
 			}
 		}
 	}
+
+	public static function replaceAttachmentFolderId(File $source, File $target): void {
+		$sourceId = $source->getId();
+		$targetId = $target->getId();
+		$patterns = [
+			// Replace `[title](.attachments.1/file.png)` with `[title](attachments.2/file.png)`
+			// '/(\[[^]]+\]\(\s*\<?\.attachments\.)' . $sourceId . '(\/[^)]+\>?\s*\))/',
+			'/(\[(?:\\\]|[^]])+\]\(\s*\<?\.attachments\.)' . $sourceId . '(\/[^)]+\>?\s*\))/',
+			// Replace `[ref]: .attachments.1/file.png` with `[ref]: .attachments.2/file.png`
+			'/(\[(?:\\\]|[^]])+\]:\s+.attachments\.)' . $sourceId . '(\/[^\s]+)/',
+		];
+		$replacements = [
+			'${1}' . $targetId . '${2}',
+			'${1}' . $targetId . '${2}',
+		];
+		$content = preg_replace($patterns, $replacements, $target->getContent());
+		if ($content !== null) {
+			$target->putContent($content);
+		}
+	}
 }
