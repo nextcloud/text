@@ -8,6 +8,8 @@ import type StateBlock from 'markdown-it/lib/rules_block/state_block.mjs'
 import type Token from 'markdown-it/lib/token.mjs'
 
 const DETAILS_START_REGEX = /^<details>\s*$/
+const DETAILS_AND_SUMMARY_START_REGEX
+	= /(?<=^<details>\s*<summary>).*(?=<\/summary>\s*$)/
 const DETAILS_END_REGEX = /^<\/details>\s*$/
 const SUMMARY_REGEX = /(?<=^<summary>).*(?=<\/summary>\s*$)/
 
@@ -23,8 +25,17 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 	let start = state.bMarks[startLine] + state.tShift[startLine]
 	let max = state.eMarks[startLine]
 
-	// Details block start
-	if (!state.src.slice(start, max).match(DETAILS_START_REGEX)) {
+	let detailsFound = false
+	let detailsSummary = null
+	let startLineCount = 2
+
+	const m = state.src.slice(start, max).match(DETAILS_AND_SUMMARY_START_REGEX)
+	if (m) {
+		// Details block start and summary in same line
+		detailsSummary = m[0].trim()
+		startLineCount = 1
+	} else if (!state.src.slice(start, max).match(DETAILS_START_REGEX)) {
+		// Details block start in separate line
 		return false
 	}
 
@@ -33,8 +44,6 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 		return true
 	}
 
-	let detailsFound = false
-	let detailsSummary = null
 	let nestedCount = 0
 	let nextLine = startLine
 	for (;;) {
@@ -107,7 +116,7 @@ function parseDetails(state: StateBlock, startLine: number, endLine: number, sil
 
 	token = state.push('details_summary', 'summary', -1)
 
-	state.md.block.tokenize(state, startLine + 2, nextLine)
+	state.md.block.tokenize(state, startLine + startLineCount, nextLine)
 
 	token = state.push('details_close', 'details', -1)
 	token.block = true
