@@ -190,7 +190,11 @@
 					<td>
 						<code>[Title](https://example.org)</code>
 					</td>
-					<td v-if="!isMobileCached" />
+					<td v-if="!isMobileCached">
+						<kbd>{{ ctrlOrModKey }}</kbd>
+						+
+						<kbd>K</kbd>
+					</td>
 				</tr>
 				<tr>
 					<td>{{ t('text', 'Insert emoji') }}</td>
