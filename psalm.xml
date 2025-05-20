@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="2"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    errorBaseline="tests/psalm-baseline.xml"
-    findUnusedCode="false"
-    phpVersion="8.1"
+	errorLevel="2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://getpsalm.org/schema/config"
+	xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+	errorBaseline="tests/psalm-baseline.xml"
+	findUnusedCode="false"
+	phpVersion="8.1"
 >
 	<stubs>
 		<file name="tests/stub.php" preloadClasses="true"/>
 	</stubs>
-    <projectFiles>
-        <directory name="lib" />
-        <ignoreFiles>
-            <directory name="vendor" />
-        </ignoreFiles>
-    </projectFiles>
-    <extraFiles>
-        <directory name="vendor/nextcloud/ocp" />
-    </extraFiles>
+	<projectFiles>
+		<directory name="lib" />
+		<ignoreFiles>
+			<directory name="vendor" />
+		</ignoreFiles>
+	</projectFiles>
+	<extraFiles>
+		<directory name="vendor/nextcloud/ocp" />
+	</extraFiles>
 	<issueHandlers>
 		<UndefinedClass>
 			<errorLevel type="suppress">
@@ -37,5 +37,40 @@
 				<referencedClass name="Doctrine\DBAL\Statement" />
 			</errorLevel>
 		</UndefinedDocblockClass>
+		<DeprecatedClass>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedClass>
+		<DeprecatedConstant>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedConstant>
+		<DeprecatedFunction>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedFunction>
+		<DeprecatedInterface>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedInterface>
+		<DeprecatedMethod>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedMethod>
+		<DeprecatedProperty>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedProperty>
+		<DeprecatedTrait>
+			<errorLevel type="suppress">
+				<directory name="lib" />
+			</errorLevel>
+		</DeprecatedTrait>
 	</issueHandlers>
 </psalm>
