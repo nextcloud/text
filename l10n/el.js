@@ -127,15 +127,11 @@ OC.L10N.register(
     "Use current version" : "Χρήση τρέχουσας έκδοσης",
     "Use the saved version" : "Χρήση αποθηκευμένης έκδοσης",
     "Document idle for {timeout} minutes, click to continue editing" : "Έγγραφο σε αναμονή για {timeout} λεπτά, κάντε κλικ για να συνεχίσετε την επεξεργασία",
-    "Show author colors" : "Εμφάνιση χρωμάτων συντάκτη",
-    "Author colors are only shown until everyone has closed the document." : "Τα χρώματα του συντάκτη εμφανίζονται μόνο μέχρι να κλείσουν όλοι το έγγραφο.",
     "Detect language" : "Ανίχνευση γλώσσας",
     "Callouts" : "Επεξηγήσεις (Callouts)",
     "Info" : "Πληροφόρηση",
     "Success" : "Επιτυχία",
     "Warning" : "Προειδοποίηση",
-    "Danger" : "Κίνδυνος",
-    "Control" : "Έλεγχος",
-    "Add notes, lists or links …" : "Προσθήκη σημειώσεων, λίστας ή συνδέσμων …"
+    "Danger" : "Κίνδυνος"
 },
 "nplurals=2; plural=(n != 1);");

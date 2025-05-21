@@ -76,12 +76,8 @@ OC.L10N.register(
     "Use current version" : "Koristi trenutnu verziju",
     "Use the saved version" : "Koristi spremljenu verziju",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument ne reagira {timeout} minuta, kliknite za nastavak uređivanja",
-    "Show author colors" : "Prikaži boje autora",
-    "Author colors are only shown until everyone has closed the document." : "Boje autora prikazuju se samo dok svi ne zatvore dokument.",
     "Info" : "Informacije",
     "Success" : "Uspjeh",
-    "Warning" : "Upozorenje",
-    "Control" : "Kontrola",
-    "Add notes, lists or links …" : "Dodajte bilješke, popise ili poveznice…"
+    "Warning" : "Upozorenje"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

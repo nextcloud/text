@@ -204,17 +204,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "ھۆججەت تەھرىرلىگۈچنىڭ سىرتىدا ئۆزگەرتىلدى. ئۆزگەرتىشلەرنى قوللىنىشقا بولمايدۇ",
     "Document could not be loaded. Please check your internet connection." : "ھۆججەتنى يۈكلەشكە بولمىدى. تور ئۇلىنىشىڭىزنى تەكشۈرۈپ بېقىڭ.",
     "Document idle for {timeout} minutes, click to continue editing" : "{timeout} چېكى} مىنۇتلۇق ھۆججەت بىكار ، چېكىپ تەھرىرلەشنى داۋاملاشتۇرۇڭ",
-    "Show author colors" : "ئاپتورنىڭ رەڭگىنى كۆرسىتىش",
-    "Author colors are only shown until everyone has closed the document." : "ئاپتور رەڭلىرى پەقەت ھۆججەتنى تاقاپ بولغۇچە كۆرسىتىلىدۇ.",
-    "Connection failed." : "ئۇلىنىش مەغلۇپ بولدى.",
     "Detect language" : "تىلنى ئېنىقلاش",
     "Callouts" : "چاقىرىش",
     "Info" : "Info",
     "Success" : "مۇۋەپپەقىيەت",
     "Warning" : "ئاگاھلاندۇرۇش",
     "Danger" : "خەتەر",
-    "Control" : "كونترول",
-    "Add notes, lists or links …" : "خاتىرە ، تىزىملىك ياكى ئۇلىنىش قوشۇڭ…",
     "Start writing, or try '/' to add, '@' to mention…" : "يېزىشنى باشلاڭ ياكى «/» نى قوشۇپ ، «@» نى تىلغا ئېلىڭ."
 },
 "nplurals=2; plural=(n != 1);");

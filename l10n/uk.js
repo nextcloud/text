@@ -218,17 +218,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Документ було змінено ззовні. Неможливо зберегти зміни.",
     "Document could not be loaded. Please check your internet connection." : "Неможливо завантажити документ. Перевірте ваше з'єднання з мережею.",
     "Document idle for {timeout} minutes, click to continue editing" : "Документ неактивний протягом {timeout} хвилин, натисніть, щоб продовжити редагування",
-    "Show author colors" : "Показати кольори автора",
-    "Author colors are only shown until everyone has closed the document." : "Кольори автора відображаються, лише доки всі не закриють документ.",
-    "Connection failed." : "Відсутнє з'єднання",
     "Detect language" : "Визначити мову",
     "Callouts" : "Виноска",
     "Info" : "Info",
     "Success" : "Успіх",
     "Warning" : "Увага",
     "Danger" : "Небезпека",
-    "Control" : "Контроль",
-    "Add notes, lists or links …" : "Додавайте примітки, створюйте списки та посилання...",
     "Start writing, or try '/' to add, '@' to mention…" : "Почніть вводити текст або введіть '/' для додавання, '@' для згадки..."
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

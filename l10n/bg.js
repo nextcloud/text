@@ -156,15 +156,11 @@ OC.L10N.register(
     "Use current version" : "Използване на текуща версия",
     "Use the saved version" : "Използване на запазената версия",
     "Document idle for {timeout} minutes, click to continue editing" : "Документът е неактивен за {timeout} минути, щракнете, за да продължите да редактирате",
-    "Show author colors" : "Показване на цветовете на автора",
-    "Author colors are only shown until everyone has closed the document." : "Цветовете на автора се показват само докато всички не затворят документа.",
     "Detect language" : "Разпознаване на език",
     "Callouts" : "Изнесени означения",
     "Info" : "Информация",
     "Success" : "Успех",
     "Warning" : "Внимание",
-    "Danger" : "Опасност",
-    "Control" : "Control Center",
-    "Add notes, lists or links …" : "Добавяне на бележки, списъци или връзки..."
+    "Danger" : "Опасност"
 },
 "nplurals=2; plural=(n != 1);");

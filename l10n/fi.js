@@ -163,14 +163,9 @@ OC.L10N.register(
     "Use current version" : "Käytä nykyistä versiota",
     "Use the saved version" : "Käytä tallennettua versiota",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentti on ollut käyttämättömänä {timeout} minuuttia, klikkaa jatkaaksesi muokkausta",
-    "Show author colors" : "Näytä tekijän värit",
-    "Author colors are only shown until everyone has closed the document." : "Tekijöiden värit näytetään siihen asti, kunnes kaikki ovat sulkeneet asiakirjan.",
-    "Connection failed." : "Yhteys epäonnistui.",
     "Detect language" : "Havaitse kieli",
     "Info" : "Tietoa",
     "Success" : "Onnistui",
-    "Warning" : "Varoitus",
-    "Control" : "Hallinta",
-    "Add notes, lists or links …" : "Lisää muistiinpanoja, listoja tai linkkejä..."
+    "Warning" : "Varoitus"
 },
 "nplurals=2; plural=(n != 1);");

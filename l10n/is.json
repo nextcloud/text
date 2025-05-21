@@ -207,17 +207,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Skjalinu hefur verið breytt utan ritilsins. Ekki var hægt að framkvæma breytingarnar",
     "Document could not be loaded. Please check your internet connection." : "Ekki var hægt að hlaða inn skjalinu. Athugaðu nettenginguna þína.",
     "Document idle for {timeout} minutes, click to continue editing" : "Skjal aðgerðalaust í {timeout} mínútur, smelltu til að halda áfram með breytingar",
-    "Show author colors" : "Sýna liti höfunda",
-    "Author colors are only shown until everyone has closed the document." : "Litir höfunda eru aðeins sýndir þar til allir hafa lokað skjalinu.",
-    "Connection failed." : "Tenging mistókst.",
     "Detect language" : "Greina tungumál",
     "Callouts" : "Talblöðrur",
     "Info" : "Upplýsingar",
     "Success" : "Tókst",
     "Warning" : "Aðvörun",
     "Danger" : "Hættulegt",
-    "Control" : "Stjórnun",
-    "Add notes, lists or links …" : "Bættu við minnispunktum, listum eða tenglum …",
     "Start writing, or try '/' to add, '@' to mention…" : "Byrja að skrifa eða prófaðu'/' til að bæta við, '@' til að minnast á…"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

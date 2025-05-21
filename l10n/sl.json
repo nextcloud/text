@@ -155,15 +155,11 @@
     "Use current version" : "Uporabi trenutno različico",
     "Use the saved version" : "Uporabi shranjeno različico",
     "Document idle for {timeout} minutes, click to continue editing" : "Na dokumentu ni zaznane dejavnosti že {timeout} minut. Kliknite za nadaljevanje urejanja.",
-    "Show author colors" : "Pokaži barve avtorja",
-    "Author colors are only shown until everyone has closed the document." : "Barve avtorjev so prikazane le dokler zadnji uporabnik ne zapre dokumenta.",
     "Detect language" : "Zaznava jezika",
     "Callouts" : "Oblački",
     "Info" : "Podrobnosti",
     "Success" : "Uspešno končano",
     "Warning" : "Opozorilo",
-    "Danger" : "Nevarnost",
-    "Control" : "Nadzor",
-    "Add notes, lists or links …" : "Dodajte sporočilca, sezname ali povezave ..."
+    "Danger" : "Nevarnost"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

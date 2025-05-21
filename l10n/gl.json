@@ -208,17 +208,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "O documento foi modificado fora do editor. Non é posíbel aplicar os cambios.",
     "Document could not be loaded. Please check your internet connection." : "Non foi posíbel cargar o documento. Comprobe a súa conexión a Internet.",
     "Document idle for {timeout} minutes, click to continue editing" : "Documento inactivo durante {timeout} minutos; prema para continuar coa edición",
-    "Show author colors" : "Amosar as cores do autor",
-    "Author colors are only shown until everyone has closed the document." : "As cores do autor só se amosan ata que todos pechen o documento.",
-    "Connection failed." : "Produciuse un fallo de conexión.",
     "Detect language" : "Detectar o idioma",
     "Callouts" : "Lendas",
     "Info" : "Información",
     "Success" : "Correcto",
     "Warning" : "Advertencia",
     "Danger" : "Perigo",
-    "Control" : "Control",
-    "Add notes, lists or links …" : "Engadir notas, listas ou ligazóns…",
     "Start writing, or try '/' to add, '@' to mention…" : "Comece a escribir, ou probe con «/» para engadir, «@» para mencionar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

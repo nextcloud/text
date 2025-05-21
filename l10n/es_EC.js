@@ -153,15 +153,11 @@ OC.L10N.register(
     "Use current version" : "Usar la versión actual",
     "Use the saved version" : "Usar la versión guardada",
     "Document idle for {timeout} minutes, click to continue editing" : "Documento inactivo durante {timeout} minutos, haz clic para continuar editando",
-    "Show author colors" : "Mostrar colores de autor",
-    "Author colors are only shown until everyone has closed the document." : "Los colores de autor solo se muestran hasta que todos hayan cerrado el documento.",
     "Detect language" : "Detectar idioma",
     "Callouts" : "Avisos",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia",
-    "Danger" : "Peligro",
-    "Control" : "Control",
-    "Add notes, lists or links …" : "Agregar notas, listas o enlaces..."
+    "Danger" : "Peligro"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

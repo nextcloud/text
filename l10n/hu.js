@@ -178,15 +178,11 @@ OC.L10N.register(
     "Use current version" : "Jelenlegi verzió használata",
     "Use the saved version" : "A mentett verzió használata",
     "Document idle for {timeout} minutes, click to continue editing" : "A dokumentum {timeout} percig tétlen volt, kattintson a szerkesztés folytatásához ",
-    "Show author colors" : "Szerzők színének megjelenítése",
-    "Author colors are only shown until everyone has closed the document." : "A szerzők színei csak addig jelennek meg, amíg mindenki le nem zárta a dokumentumot.",
     "Detect language" : "Nyelv észlelése",
     "Callouts" : "Kiemelések",
     "Info" : "Információ",
     "Success" : "Siker",
     "Warning" : "Figyelmeztetés",
-    "Danger" : "Veszély",
-    "Control" : "Control",
-    "Add notes, lists or links …" : "Jegyzetek, listák vagy hivatkozások hozzáadása…"
+    "Danger" : "Veszély"
 },
 "nplurals=2; plural=(n != 1);");

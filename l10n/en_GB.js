@@ -220,17 +220,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Document has been changed outside of the editor. The changes cannot be applied",
     "Document could not be loaded. Please check your internet connection." : "Document could not be loaded. Please check your internet connection.",
     "Document idle for {timeout} minutes, click to continue editing" : "Document idle for {timeout} minutes, click to continue editing",
-    "Show author colors" : "Show author colors",
-    "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
-    "Connection failed." : "Connection failed.",
     "Detect language" : "Detect language",
     "Callouts" : "Callouts",
     "Info" : "Info",
     "Success" : "Success",
     "Warning" : "Warning",
     "Danger" : "Danger",
-    "Control" : "Control",
-    "Add notes, lists or links …" : "Add notes, lists or links …",
     "Start writing, or try '/' to add, '@' to mention…" : "Start writing, or try '/' to add, '@' to mention…"
 },
 "nplurals=2; plural=(n != 1);");

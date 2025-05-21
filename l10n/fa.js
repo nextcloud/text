@@ -172,15 +172,11 @@ OC.L10N.register(
     "Use current version" : "از نسخه فعلی استفاده کنید",
     "Use the saved version" : "Use the saved version",
     "Document idle for {timeout} minutes, click to continue editing" : "Document idle for {timeout} minutes, click to continue editing",
-    "Show author colors" : "Show author colors",
-    "Author colors are only shown until everyone has closed the document." : "Author colors are only shown until everyone has closed the document.",
     "Detect language" : "Detect language",
     "Callouts" : "Callouts",
     "Info" : "اطلاعات",
     "Success" : "موفقیت",
     "Warning" : "هشدار",
-    "Danger" : "Danger",
-    "Control" : "کنترل",
-    "Add notes, lists or links …" : "Add notes, lists or links …"
+    "Danger" : "Danger"
 },
 "nplurals=2; plural=(n > 1);");

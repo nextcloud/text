@@ -217,17 +217,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "المستند تمّ تعديله خارج محرر النصوص. التعديلات لا يمكن تطبيقها",
     "Document could not be loaded. Please check your internet connection." : "لا يمكن تحميل المستند. الرجاء التحقق من اتصالك بالانترنت.",
     "Document idle for {timeout} minutes, click to continue editing" : "المستند خامل idel منذ {timeout} دقيقة ، أنقر لمتابعة التحرير",
-    "Show author colors" : "إعرض ألوان الكُتّاب",
-    "Author colors are only shown until everyone has closed the document." : "ألوان الكُتّاب تُعرض فقط إلى حين يقوم الجميع بإغلاق المستند",
-    "Connection failed." : "تعذّر الاتصال.",
     "Detect language" : "إكتشف اللغة",
     "Callouts" : "توضيحات callouts",
     "Info" : "معلومات",
     "Success" : "نجاح",
     "Warning" : "تحذير",
     "Danger" : "خطر",
-    "Control" : "تحكُّم",
-    "Add notes, lists or links …" : "أضِف ملاحظات، و قوائم، و روابط ...",
     "Start writing, or try '/' to add, '@' to mention…" : "إبدأ الكتابة، أو جرِّب '/' للإضافة، أو  '@' للإشارة …"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

@@ -216,17 +216,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet har ändrats utanför text-appen. Ändringarna kan inte tillämpas.",
     "Document could not be loaded. Please check your internet connection." : "Dokumentet kunde inte laddas. Kontrollera din internetanslutning.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentet inaktivt {timeout} minuter, klicka för att fortsätta redigera",
-    "Show author colors" : "Visa författarfärger",
-    "Author colors are only shown until everyone has closed the document." : "Författarfärger visas bara tills alla har stängt dokumentet.",
-    "Connection failed." : "Anslutningen misslyckades.",
     "Detect language" : "Upptäck språk",
     "Callouts" : "Status",
     "Info" : "Info",
     "Success" : "Lyckades",
     "Warning" : "Varning",
     "Danger" : "Fara",
-    "Control" : "Kontroll",
-    "Add notes, lists or links …" : "Lägg till anteckningar, listor eller länkar ...",
     "Start writing, or try '/' to add, '@' to mention…" : "Börja skriva, eller använd '/' för att lägga till, '@' för att nämna..."
 },
 "nplurals=2; plural=(n != 1);");

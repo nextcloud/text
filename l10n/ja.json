@@ -218,17 +218,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "ドキュメントがエディター外で変更されました。変更を適用できません",
     "Document could not be loaded. Please check your internet connection." : "ドキュメントを読み込めませんでした。インターネット接続を確認してください。",
     "Document idle for {timeout} minutes, click to continue editing" : "ドキュメントが{timeout}分間アイドル状態です。クリックして編集を続行します",
-    "Show author colors" : "記入者の色をつける",
-    "Author colors are only shown until everyone has closed the document." : "記入者の色は、全員がドキュメントを閉じるまで表示されます。",
-    "Connection failed." : "接続に失敗しました。",
     "Detect language" : "言語を検出する",
     "Callouts" : "コールアウト",
     "Info" : "情報",
     "Success" : "完了",
     "Warning" : "警告",
     "Danger" : "危険",
-    "Control" : "コントロール",
-    "Add notes, lists or links …" : "ノート、リスト、リンクを追加...",
     "Start writing, or try '/' to add, '@' to mention…" : "書き始めるか、「/」で追加、「@」でメンション...。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

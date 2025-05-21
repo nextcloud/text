@@ -67,10 +67,8 @@ OC.L10N.register(
     "Choose" : "Causir",
     "Use current version" : "Utilizar la version actuala",
     "Use the saved version" : "Utilizar la version salvada",
-    "Show author colors" : "Afichar las colors dels utilizaires",
     "Info" : "Info",
     "Success" : "Succès",
-    "Warning" : "Avertiment",
-    "Add notes, lists or links …" : "Apondre nòtas, listas o ligams…"
+    "Warning" : "Avertiment"
 },
 "nplurals=2; plural=(n > 1);");

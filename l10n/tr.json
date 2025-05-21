@@ -215,17 +215,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Belge, düzenleyici dışında başka bir uygulama ile değiştirilmiş. Değişiklikler uygulanamayacak.",
     "Document could not be loaded. Please check your internet connection." : "Belge, yüklenemedi. Lütfen İnternet bağlantınızı denetleyin.",
     "Document idle for {timeout} minutes, click to continue editing" : "Belge {timeout} dakika süreyle boşta bekledi. Düzenleme işlemini sürdürmek için tıklayın",
-    "Show author colors" : "Yazar renkleri görüntülensin",
-    "Author colors are only shown until everyone has closed the document." : "Yazar renkleri herkes belgeyi kapatana kadar görüntülenir.",
-    "Connection failed." : "Bağlantı kurulamadı.",
     "Detect language" : "Dili algıla",
     "Callouts" : "Metin notları",
     "Info" : "Bilgiler",
     "Success" : "Başarılı",
     "Warning" : "Uyarı",
     "Danger" : "Tehlikeli",
-    "Control" : "Denetim",
-    "Add notes, lists or links …" : "Not, liste yada bağlantı ekle …",
     "Start writing, or try '/' to add, '@' to mention…" : "Yazmaya başlayın ya da eklemek için '/', anmak için '@' kullanın…"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

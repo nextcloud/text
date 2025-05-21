@@ -214,17 +214,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "문서가 에디터 밖에서 변경되었습니다. 변경사항이 적용되지 않습니다.",
     "Document could not be loaded. Please check your internet connection." : "문서를 가져올 수 없습니다. 인터넷 연결을 확인해주십시오.",
     "Document idle for {timeout} minutes, click to continue editing" : "문서가 {timeout}분동안 유휴 상태입니다. 클릭하여 편집을 계속하세요.",
-    "Show author colors" : "작성자 색상 표시",
-    "Author colors are only shown until everyone has closed the document." : "작성자 색상은 모두가 문서를 닫았을 때까지만 표시됩니다.",
-    "Connection failed." : "연결에 실패했습니다.",
     "Detect language" : "언어 감지",
     "Callouts" : "설명선",
     "Info" : "정보",
     "Success" : "성공",
     "Warning" : "경고",
     "Danger" : "위험",
-    "Control" : "제어:",
-    "Add notes, lists or links …" : "메모나 목록, 링크를 추가하세요...",
     "Start writing, or try '/' to add, '@' to mention…" : "글쓰기를 시작하거나, '/' 로 추가하고 '@'로 언급하세요..."
 },
 "nplurals=1; plural=0;");

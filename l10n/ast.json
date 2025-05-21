@@ -148,13 +148,9 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "El documentu caducó fuera del editor. Nun se puen aplicar los cambeos",
     "Document could not be loaded. Please check your internet connection." : "Nun se pudo cargar el documentu. Comprueba la conexón a internet.",
     "Document idle for {timeout} minutes, click to continue editing" : "El documentu tuvo inactivu {timeout}, calca pa siguir cola edición",
-    "Show author colors" : "Amosar los colores de los autores",
-    "Author colors are only shown until everyone has closed the document." : "Los colores del autor namás s'amuesen hasta que tol mundu zarró'l documentu.",
-    "Connection failed." : "La conexón falló.",
     "Detect language" : "Detectar la llingua",
     "Info" : "Información",
     "Warning" : "Alvertencia",
-    "Danger" : "Peligru",
-    "Control" : "Control"
+    "Danger" : "Peligru"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

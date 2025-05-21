@@ -62,12 +62,8 @@ OC.L10N.register(
     "Add folder description" : "Adicionar descrição da pasta",
     "Use current version" : "Usar esta versão",
     "Use the saved version" : "Usar a versão guardada",
-    "Show author colors" : "Mostrar cores do autor ",
-    "Author colors are only shown until everyone has closed the document." : "As cores do autor só são exibidas até que todos tenham fechado o documento. ",
     "Info" : "Informação",
     "Success" : "Sucesso",
-    "Warning" : "Aviso",
-    "Control" : "Controle",
-    "Add notes, lists or links …" : "Adicionar observações, listas ou hiperligações..."
+    "Warning" : "Aviso"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

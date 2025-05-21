@@ -41,8 +41,6 @@ OC.L10N.register(
     "Choose" : "Kies",
     "Use current version" : "Gebruik huidige weergawe",
     "Use the saved version" : "Gebruik die bewaarde weergawe",
-    "Show author colors" : "Toon outeurkleure",
-    "Author colors are only shown until everyone has closed the document." : "Outeurkleure word slegs getoon tot almal die dokument toegemaak het.",
     "Info" : "Inligting",
     "Success" : "Sukses",
     "Warning" : "Waarskuwing"

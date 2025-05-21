@@ -59,8 +59,6 @@ OC.L10N.register(
     "Use current version" : "Uzi nunan version",
     "Use the saved version" : "Uzi la konservitan version",
     "Info" : "Info",
-    "Warning" : "Averto",
-    "Control" : "Kontrolo",
-    "Add notes, lists or links …" : "Aldoni notojn, listojn aŭ ligilojn..."
+    "Warning" : "Averto"
 },
 "nplurals=2; plural=(n != 1);");
