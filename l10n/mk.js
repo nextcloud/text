@@ -103,12 +103,8 @@ OC.L10N.register(
     "Use current version" : "Користи ја моменталната верзија",
     "Use the saved version" : "Користи ја зачуваната верзија",
     "Document idle for {timeout} minutes, click to continue editing" : "Документот е неактивен {timeout} минути, кликни за да продолжиш со уредување",
-    "Show author colors" : "Прикажи ги боите на авторот",
-    "Author colors are only shown until everyone has closed the document." : "Боите на авторот се прикажуваат само кога сите ќе го затворат документот.",
     "Info" : "Инфо",
     "Success" : "Успешно",
-    "Warning" : "Предупредување",
-    "Control" : "Контрола",
-    "Add notes, lists or links …" : "Додади белешки, листи или линкови ..."
+    "Warning" : "Предупредување"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

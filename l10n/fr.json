@@ -214,17 +214,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Le document a été modifié par un autre programme que l'éditeur. Les changements ne peuvent être appliqués",
     "Document could not be loaded. Please check your internet connection." : "Le document n'a pu être chargé. Vérifiez votre connexion Internet.",
     "Document idle for {timeout} minutes, click to continue editing" : "Document sans activité depuis {timeout} minutes, cliquez pour continuer les modifications",
-    "Show author colors" : "Afficher les couleurs de l'auteur",
-    "Author colors are only shown until everyone has closed the document." : "Les couleurs de l’auteur ne sont affichées que jusqu’à ce que tout le monde ait fermé le document.",
-    "Connection failed." : "Échec de la connexion.",
     "Detect language" : "Détecter la langue",
     "Callouts" : "Légendes",
     "Info" : "Info",
     "Success" : "Succès",
     "Warning" : "Avertissement",
     "Danger" : "Danger",
-    "Control" : "Contrôler",
-    "Add notes, lists or links …" : "Ajoutez des notes, listes ou liens …",
     "Start writing, or try '/' to add, '@' to mention…" : "Commencez à écrire, ou essayez '/' pour ajouter, '@' pour mentionner..."
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

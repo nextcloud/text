@@ -175,15 +175,11 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Document is gewijzigd buiten de editor. De wijzigingen kunnen niet worden toegepast",
     "Document could not be loaded. Please check your internet connection." : "Document kon niet worden geladen. Controleer de internetverbinding.",
     "Document idle for {timeout} minutes, click to continue editing" : "Document inactief voor {timeout} minuten, klik om door te gaan met bewerken",
-    "Show author colors" : "Tonen auteurskleuren",
-    "Author colors are only shown until everyone has closed the document." : "Auteurskleuren worden pas weergegeven als iedereen het document heeft gesloten.",
     "Detect language" : "Detecteer taal",
     "Info" : "Info",
     "Success" : "Geslaagd",
     "Warning" : "Waarschuwing",
     "Danger" : "Gevaar",
-    "Control" : "Controle",
-    "Add notes, lists or links …" : "Notities, lijsten of links toevoegen...",
     "Start writing, or try '/' to add, '@' to mention…" : "Begin met schrijven, of probeer '/' om toe te voegen, '@' om te vermelden..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

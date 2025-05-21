@@ -217,17 +217,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet er blevet ændret uden for editoren. Ændringerne kan ikke anvendes.",
     "Document could not be loaded. Please check your internet connection." : "Dokumentet kunne ikke indlæses. Tjek din internetforbindelse.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter. Klik for at fortsætte med at redigere",
-    "Show author colors" : "Vis forfatterens farver",
-    "Author colors are only shown until everyone has closed the document." : "Forfatterfarver vises kun, indtil alle har lukket dokumentet.",
-    "Connection failed." : "Forbindelsen mislykkedes.",
     "Detect language" : "Detekter sprog",
     "Callouts" : "Callouts",
     "Info" : "Info",
     "Success" : "Succes",
     "Warning" : "Advarsler",
     "Danger" : "Fare",
-    "Control" : "Kontrol",
-    "Add notes, lists or links …" : "Tilføj noter, lister eller links ...",
     "Start writing, or try '/' to add, '@' to mention…" : "Begynd at skrive, eller prøv '/' for at tilføje, '@' for at nævne.."
 },
 "nplurals=2; plural=(n != 1);");

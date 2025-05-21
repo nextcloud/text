@@ -199,16 +199,11 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentet har blitt endret utenfor programmet. Endringene kan ikke benyttes.",
     "Document could not be loaded. Please check your internet connection." : "Dokumentet kan ikke lastes inn. Kontroller internettforbindelsen din.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument inaktiv i {timeout} minutter, klikk for å fortsette redigeringen",
-    "Show author colors" : "Vis forfatterfarger",
-    "Author colors are only shown until everyone has closed the document." : "Forfatterfarger vises bare til alle har lukket dokumentet.",
-    "Connection failed." : "Tilkobling feilet.",
     "Detect language" : "Oppdag språk",
     "Callouts" : "Bildeforklaringer",
     "Info" : "Info",
     "Success" : "Vellykket",
     "Warning" : "Advarsel",
-    "Danger" : "Fare",
-    "Control" : "Kontroll",
-    "Add notes, lists or links …" : "Legg til notater, lister eller lenker ..."
+    "Danger" : "Fare"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

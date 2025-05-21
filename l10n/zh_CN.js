@@ -220,17 +220,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "文档已在编辑器外被更改。无法应用更改。",
     "Document could not be loaded. Please check your internet connection." : "文档无法被加载。请检查你的网络连接。",
     "Document idle for {timeout} minutes, click to continue editing" : "文档已闲置 {timeout} 分钟，点击以继续编辑",
-    "Show author colors" : "显示作者颜色",
-    "Author colors are only shown until everyone has closed the document." : "直到所有人都关闭了文档，才会显示作者颜色。",
-    "Connection failed." : "连接失败。",
     "Detect language" : "检测语言",
     "Callouts" : "标注",
     "Info" : "信息",
     "Success" : "成功",
     "Warning" : "警告",
     "Danger" : "重要",
-    "Control" : "控制",
-    "Add notes, lists or links …" : "添加笔记、列表或链接...",
     "Start writing, or try '/' to add, '@' to mention…" : "开始写作，或尝试用 “/” 添加，用 “@” 提及…"
 },
 "nplurals=1; plural=0;");

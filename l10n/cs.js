@@ -220,17 +220,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokument byl mezitím změněn mimo editor. Změny provedené v editoru proto nelze uplatnit.",
     "Document could not be loaded. Please check your internet connection." : "Dokument se nepodařilo načíst. Zkontrolujte své připojení k Internetu.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument nečinný po dobu {timeout} minut, kliknutím pokračujte v úpravách",
-    "Show author colors" : "Zobrazit barvy autorů",
-    "Author colors are only shown until everyone has closed the document." : "Barvy autorů se zobrazují pouze tehdy, když všichni zavřou dokument.",
-    "Connection failed." : "Připojení se nezdařilo.",
     "Detect language" : "Zjistit jazyk",
     "Callouts" : "Popisky",
     "Info" : "Informace",
     "Success" : "Úspěch",
     "Warning" : "Varování",
     "Danger" : "Nebezpečí",
-    "Control" : "Kontrola",
-    "Add notes, lists or links …" : "Přidat poznámky, seznamy nebo odkazy…",
     "Start writing, or try '/' to add, '@' to mention…" : "Začněte psát nebo zkuste přidat pomocí „/“, zmínit pomocí „@“… "
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

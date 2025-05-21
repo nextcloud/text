@@ -209,17 +209,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "El document s'ha modificat fora de l'editor. No es poden aplicar els canvis",
     "Document could not be loaded. Please check your internet connection." : "No s'ha pogut carregar el document. Comproveu la connexió a Internet.",
     "Document idle for {timeout} minutes, click to continue editing" : "El document ha estat inactiu durant {timeout} minuts, feu clic per a seguir editant-lo",
-    "Show author colors" : "Mostra els colors de l'autor",
-    "Author colors are only shown until everyone has closed the document." : "Els colors de l'autor només es mostren fins que tothom ha tancat el document.",
-    "Connection failed." : "S'ha produït un error de connexió.",
     "Detect language" : "Detecta la llengua",
     "Callouts" : "Notificacions",
     "Info" : "Informació",
     "Success" : "Correcte",
     "Warning" : "Avís",
     "Danger" : "Perill",
-    "Control" : "Control",
-    "Add notes, lists or links …" : "Afegiu notes, llistes o enllaços…",
     "Start writing, or try '/' to add, '@' to mention…" : "Comença a escriure o prova '/' per afegir, '@' per esmentar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

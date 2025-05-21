@@ -199,17 +199,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Документ был изменен вне редактора. Изменения не могут быть применены",
     "Document could not be loaded. Please check your internet connection." : "Документ не удалось загрузить. Пожалуйста, проверьте ваше интернет-соединение.",
     "Document idle for {timeout} minutes, click to continue editing" : "Документ простаивает {timeout} мин., Нажмите, чтобы продолжить редактирование",
-    "Show author colors" : "Выделить правки цветами",
-    "Author colors are only shown until everyone has closed the document." : "Выделение цветом правок разных авторов будет показано до тех пор, пока документ не будет закрыт всеми пользователями.",
-    "Connection failed." : "Соединение не удалось.",
     "Detect language" : "Определить язык",
     "Callouts" : "Выноски",
     "Info" : "Информация",
     "Success" : "Выполнено",
     "Warning" : "Предупреждение",
     "Danger" : "Опасность",
-    "Control" : "Контроль",
-    "Add notes, lists or links …" : "Добавить файл, содержащий примечания, списки или ссылки (Readme.md)",
     "Start writing, or try '/' to add, '@' to mention…" : "Начните писать, или используйте '/', чтобы добавить объект, а '@', чтобы упомянуть..."
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

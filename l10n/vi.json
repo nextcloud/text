@@ -96,12 +96,8 @@
     "Use current version" : "Sử dụng phiên bản hiện tại",
     "Use the saved version" : "Sử dụng phiên bản đã lưu",
     "Document idle for {timeout} minutes, click to continue editing" : "Tài liệu không hoạt động trong {timeout} phút, nhấp để tiếp tục chỉnh sửa",
-    "Show author colors" : "Hiển thị màu sắc của tác giả",
-    "Author colors are only shown until everyone has closed the document." : "Màu tác giả chỉ được hiển thị cho đến khi mọi người đóng tài liệu.",
     "Info" : "Thông tin",
     "Success" : "Thành công",
-    "Warning" : "Cảnh báo",
-    "Control" : "Kiểm soát",
-    "Add notes, lists or links …" : "Thêm ghi chú, danh sách hoặc đường dẫn"
+    "Warning" : "Cảnh báo"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
