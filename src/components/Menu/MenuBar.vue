@@ -22,8 +22,8 @@
 			role="toolbar"
 			class="text-menubar__entries"
 			:aria-label="t('text', 'Formatting menu bar')"
-			@keydown.left.stop="handleToolbarNavigation"
-			@keydown.right.stop="handleToolbarNavigation">
+			@keyup.left.stop="handleToolbarNavigation"
+			@keyup.right.stop="handleToolbarNavigation">
 			<!-- The visible inline actions -->
 			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
 				v-for="(actionEntry, index) in visibleEntries"

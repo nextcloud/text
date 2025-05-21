@@ -5,13 +5,22 @@
 
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
+import { emit } from '@nextcloud/event-bus'
 
 const Keymap = Extension.create({
-
-	name: 'customkeymap',
+	name: 'CustomKeymap',
 
 	addKeyboardShortcuts() {
-		return this.options
+		return {
+			/**
+			 * <Mod>-<Alt>-<H>
+			 * Toggle editor outline
+			 */
+			'Mod-Alt-h': () => {
+				emit('text:keyboard:outline')
+				return true
+			},
+		}
 	},
 
 	addProseMirrorPlugins() {
@@ -19,18 +28,49 @@ const Keymap = Extension.create({
 			new Plugin({
 				props: {
 					handleKeyDown(view, event) {
-						const key = event.key || event.keyCode
-						if ((event.ctrlKey || event.metaKey) && !event.shiftKey && (key === 'f' || key === 70)) {
-							// We need to stop propagation and dispatch the event on the window
-							// in order to force triggering the browser native search in the text editor
+						/**
+						 * <Mod>-<S>
+						 * Save editor content
+						 */
+						if (
+							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 's'
+						) {
+							event.preventDefault()
 							event.stopPropagation()
-							window.dispatchEvent(event)
+							emit('text:keyboard:save')
 							return true
 						}
-						if (event.key === 'Delete' && event.ctrlKey === true) {
-							// Prevent deleting the file, by core Viewer.vue
+
+						/**
+						 * <Esc>
+						 * Overwrite Viewer keybinding to close viewer
+						 */
+						if (
+							!event.ctrlKey
+							&& !event.metaKey
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 'Escape'
+						) {
+							event.preventDefault()
 							event.stopPropagation()
-							window.dispatchEvent(event)
+							return true
+						}
+
+						/**
+						 * <Mod>-<Del>
+						 * Overwrite Viewer keybinding to delete the file
+						 */
+						if (
+							(event.ctrlKey || event.metaKey)
+							&& !event.altKey
+							&& !event.shiftKey
+							&& event.key === 'Delete'
+						) {
+							event.stopPropagation()
 							return true
 						}
 					},

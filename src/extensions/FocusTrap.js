@@ -7,13 +7,29 @@ import { Extension } from '@tiptap/core'
 
 let ownPaused = false
 
+const checkHasExtension = (editor, extensionName) => {
+	return editor.extensionManager.extensions.some(
+		(extension) => extension.name === extensionName,
+	)
+}
+
+const checkHasListExtension = (editor) => {
+	return (
+		checkHasExtension(editor, 'bulletList')
+		|| checkHasExtension(editor, 'orderedList')
+		|| checkHasExtension(editor, 'taskList')
+	)
+}
+
 const toggleFocusTrap = ({ editor }) => {
 	const trapStack = window._nc_focus_trap ?? []
 	const activeTrap = trapStack[trapStack.length - 1]
 
-	const possibleEditorTabCommand = editor.can().sinkListItem('listItem')
-		|| editor.can().goToNextCell()
-		|| editor.can().goToPreviousCell()
+	const possibleEditorTabCommand
+		= (checkHasListExtension(editor) && editor.can().sinkListItem('listItem'))
+		|| (checkHasExtension(editor, 'table') && editor.can().goToNextCell())
+		|| (checkHasExtension(editor, 'table') && editor.can().goToPreviousCell())
+		|| (checkHasExtension(editor, 'codeBlock') && editor.isActive('codeBlock'))
 
 	if (possibleEditorTabCommand) {
 		activeTrap?.pause()

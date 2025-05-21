@@ -71,6 +71,7 @@ const createPlainEditor = ({ language, extensions = [] } = {}) => {
 				defaultLanguage: language,
 				exitOnTripleEnter: false,
 			}),
+			FocusTrap,
 			...extensions,
 		],
 	})
