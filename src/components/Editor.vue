@@ -10,8 +10,7 @@
 		data-text-el="editor-container"
 		class="text-editor"
 		:class="{ 'is-mobile': isMobile }"
-		tabindex="-1"
-		@keydown.stop="onKeyDown">
+		tabindex="-1">
 		<SkeletonLoading v-if="showLoadingSkeleton" />
 		<CollisionResolveDialog v-if="isResolvingConflict" :sync-error="syncError" />
 		<Wrapper
@@ -390,6 +389,7 @@ export default {
 			window.addEventListener('beforeprint', this.preparePrinting)
 			window.addEventListener('afterprint', this.preparePrinting)
 		}
+		subscribe('text:keyboard:save', this.onKeyboardSave)
 		subscribe('text:image-node:add', this.onAddImageNode)
 		subscribe('text:image-node:delete', this.onDeleteImageNode)
 		this.emit('update:loaded', true)
@@ -413,6 +413,7 @@ export default {
 			window.removeEventListener('beforeprint', this.preparePrinting)
 			window.removeEventListener('afterprint', this.preparePrinting)
 		}
+		unsubscribe('text:keyboard:save', this.onKeyboardSave)
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
@@ -771,6 +772,10 @@ export default {
 			this.emit('blur')
 		},
 
+		onKeyboardSave() {
+			this.$syncService.save()
+		},
+
 		onAddImageNode() {
 			this.emit('add-image-node')
 		},
@@ -891,32 +896,6 @@ export default {
 			}
 			this.editMode = !this.editMode
 			this.$editor.setEditable(this.editMode)
-		},
-
-		onKeyDown(event) {
-			if (event.key === 'Escape') {
-				event.preventDefault()
-				return
-			}
-
-			if (
-				event.key === 'Tab'
-				&& !event.shiftKey
-				&& !event.ctrlKey
-				&& !event.metaKey
-				&& this.$editor.isActive('codeBlock')
-			) {
-				this.$editor.commands.insertContent('\t')
-				this.$editor.commands.focus()
-				event.preventDefault()
-				event.stopPropagation()
-				return
-			}
-
-			if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-				this.$syncService.save()
-				event.preventDefault()
-			}
 		},
 
 		showTranslateModal(e) {

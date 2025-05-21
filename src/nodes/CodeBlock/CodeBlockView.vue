@@ -117,7 +117,7 @@ import Help from 'vue-material-design-icons/Help.vue'
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import Check from 'vue-material-design-icons/Check.vue'
 
-import CopyToClipboardMixin from '../mixins/CopyToClipboardMixin.js'
+import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
 export default {
 	name: 'CodeBlockView',

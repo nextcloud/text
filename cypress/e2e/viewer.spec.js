@@ -80,6 +80,11 @@ describe('Open test.md in viewer', function() {
 
 		cy.insertLine('- test')
 
+		// Ignore TypeError thrown by cypress keydown + keyup
+		cy.on('uncaught:exception', (err) => {
+			return !err.message.includes('Cannot read properties of undefined (reading \'toLowerCase\')')
+		})
+
 		// Cypress does not have native tab key support, though this seems to work
 		// for triggering the key handler of tiptap
 		// https://github.com/cypress-io/cypress/issues/311
