@@ -207,17 +207,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokumentua editoretik kanpo aldatu da. Aldaketak ezin dira aplikatu",
     "Document could not be loaded. Please check your internet connection." : "Ezin izan da dokumentua kargatu. Egiaztatu zure internet konexioa.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentu inaktiboa {timeout} minutuz, egin klik editatzen jarraitzeko",
-    "Show author colors" : "Erakutsi egilearen koloreak",
-    "Author colors are only shown until everyone has closed the document." : "Egile-koloreak erakutsiko dira denek dokumentua itxi arte soilik.",
-    "Connection failed." : "Konexioak huts egin du",
     "Detect language" : "Detektatu hizkuntza",
     "Callouts" : "Deialdiak",
     "Info" : "Informazioa",
     "Success" : "Arrakasta",
     "Warning" : "Oharra",
     "Danger" : "Arriskua",
-    "Control" : "Kontrola",
-    "Add notes, lists or links …" : "Gehitu oharrak, zerrendak edo estekak…",
     "Start writing, or try '/' to add, '@' to mention…" : "Hasi idazten, edo saiatu '/' gehitzeko, '@' aipatzeko..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

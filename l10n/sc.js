@@ -80,13 +80,9 @@ OC.L10N.register(
     "Use current version" : "Imprea sa versione currente",
     "Use the saved version" : "Imprea sa versione sarvada",
     "Document idle for {timeout} minutes, click to continue editing" : "Archìviu no ativu pro {timeout} minutos, incarca pro sighire cun sa modìfica",
-    "Show author colors" : "Mustra is colores de sa persone autora",
-    "Author colors are only shown until everyone has closed the document." : "Is colores de sa persone autora si mustrant isceti finas a cando totus ant serradu s'archìviu.",
     "Info" : "Informatziones",
     "Success" : "Sutzessu",
     "Warning" : "Avisu",
-    "Control" : "Controllu",
-    "Add notes, lists or links …" : "Agiunghe notas, listas o ligòngios …",
     "Start writing, or try '/' to add, '@' to mention…" : "Cumintza a iscrìere, o proa '/' pro agiùnghere, '@' pro mentovare..."
 },
 "nplurals=2; plural=(n != 1);");

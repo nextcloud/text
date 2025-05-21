@@ -43,8 +43,6 @@ OC.L10N.register(
     "Choose" : "Pilih",
     "Info" : "Info",
     "Success" : "Berhasil",
-    "Warning" : "Peringatan",
-    "Control" : "Kendali",
-    "Add notes, lists or links …" : "Tambahkan catatan, daftar, atau tautan..."
+    "Warning" : "Peringatan"
 },
 "nplurals=1; plural=0;");

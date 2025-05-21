@@ -138,15 +138,11 @@ OC.L10N.register(
     "Use current version" : "Naudoti esamą versiją",
     "Use the saved version" : "Naudoti įrašytą versiją",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokumentas {timeout} min. neveiklus, spustelėkite norėdami tęsti taisymą",
-    "Show author colors" : "Rodyti autoriaus spalvas",
-    "Author colors are only shown until everyone has closed the document." : "Autoriaus spalvos yra rodomos tik tol, kol visi neužvers dokumento.",
     "Detect language" : "Aptikti kalbą",
     "Callouts" : "Paaiškinimo išnašos",
     "Info" : "Informacija",
     "Success" : "Pavyko",
     "Warning" : "Įspėjimas",
-    "Danger" : "Pavojus",
-    "Control" : "Valdoma",
-    "Add notes, lists or links …" : "Pridėkite užrašus, sąrašus ar nuorodas…"
+    "Danger" : "Pavojus"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

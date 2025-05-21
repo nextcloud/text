@@ -185,16 +185,12 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "Dokument został zmieniony poza edytorem. Zmiany nie mogą zostać zastosowane",
     "Document could not be loaded. Please check your internet connection." : "Nie można wczytać dokumentu. Proszę sprawdzić swoje połączenie z internetem.",
     "Document idle for {timeout} minutes, click to continue editing" : "Dokument bezczynny przez {timeout} min. Kliknij, aby kontynuować edycję",
-    "Show author colors" : "Pokaż kolory autora",
-    "Author colors are only shown until everyone has closed the document." : "Kolory autora są pokazane tylko do czasu zamknięcia dokumentu.",
     "Detect language" : "Wykryj język",
     "Callouts" : "Objaśnienia",
     "Info" : "Informacje",
     "Success" : "Powiodło się",
     "Warning" : "Ostrzeżenie",
     "Danger" : "Zagrożenie",
-    "Control" : "Kontrola",
-    "Add notes, lists or links …" : "Dodaj notatki, listy lub linki…",
     "Start writing, or try '/' to add, '@' to mention…" : "Zacznij pisać, lub spróbuj \"/\", aby dodać; '@', aby wspomnieć o..."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

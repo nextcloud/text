@@ -218,17 +218,12 @@
     "Document has been changed outside of the editor. The changes cannot be applied" : "Athraíodh an doiciméad lasmuigh den eagarthóir. Ní féidir na hathruithe a chur i bhfeidhm",
     "Document could not be loaded. Please check your internet connection." : "Níorbh fhéidir an doiciméad a lódáil. Seiceáil do nasc idirlín le do thoil.",
     "Document idle for {timeout} minutes, click to continue editing" : "Doiciméad díomhaoin ar feadh {timeout} nóiméad, cliceáil chun leanúint ar aghaidh leis an eagarthóireacht",
-    "Show author colors" : "Taispeáin dathanna an údair",
-    "Author colors are only shown until everyone has closed the document." : "Ní thaispeántar dathanna an údair ach go dtí go mbíonn an doiciméad dúnta ag gach duine.",
-    "Connection failed." : "Theip ar an gceangal.",
     "Detect language" : "Braith teanga",
     "Callouts" : "Glaonna",
     "Info" : "Eolas",
     "Success" : "Rath",
     "Warning" : "Rabhadh",
     "Danger" : "Contúirt",
-    "Control" : "Smacht",
-    "Add notes, lists or links …" : "Cuir nótaí, liostaí nó naisc leis…",
     "Start writing, or try '/' to add, '@' to mention…" : "Tosaigh ag scríobh, nó déan iarracht '/' a chur leis, '@' a lua…"
 },"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"
 }
