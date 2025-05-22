@@ -2,11 +2,11 @@
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+// eslint-disable-next-line import/no-unresolved, n/no-missing-import
+import 'vite/modulepreload-polyfill'
 
 import { logger } from './helpers/logger.js'
 import { openMimetypesMarkdown, openMimetypesPlainText } from './helpers/mime.js'
-// eslint-disable-next-line import/no-unresolved, n/no-missing-import
-import 'vite/modulepreload-polyfill'
 
 /**
  * Wrapper for async registration of ViewerComponent.
