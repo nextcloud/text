@@ -42,6 +42,7 @@ OC.L10N.register(
     "Uploading attachment failed: {error}" : "Manust polnud võimalik üles laadida: {error}",
     "Uploading attachment failed." : "Manuse üleslaadimine ei õnnestunud.",
     "Failed to insert from Files" : "Failirakendusest lisamine ei õnnestunud.",
+    "Failed to create attachment" : "Manuse koostamine ei õnnestunud",
     "Show link preview" : "Näita lingi eelvaadet",
     "Open in new tab" : "Ava uuel vahekaardil",
     "Remove link" : "Eemalda link",
