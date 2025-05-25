@@ -193,6 +193,6 @@
     "transformIgnorePatterns": []
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.40.1"
+    "@rollup/rollup-linux-x64-gnu": "^4.41.1"
   }
 }
