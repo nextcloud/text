@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace OCA\Text\Cron;
 
 use OCA\Text\Exception\DocumentHasUnsavedChangesException;
+use OCA\Text\Service\AttachmentService;
 use OCA\Text\Service\DocumentService;
 use OCA\Text\Service\SessionService;
 use OCP\AppFramework\Utility\ITimeFactory;
@@ -19,18 +20,14 @@ use OCP\BackgroundJob\TimedJob;
 use Psr\Log\LoggerInterface;
 
 class Cleanup extends TimedJob {
-	private SessionService $sessionService;
-	private DocumentService $documentService;
-	private LoggerInterface $logger;
-
-	public function __construct(ITimeFactory $time,
-		SessionService $sessionService,
-		DocumentService $documentService,
-		LoggerInterface $logger) {
+	public function __construct(
+		ITimeFactory $time,
+		private readonly SessionService $sessionService,
+		private readonly DocumentService $documentService,
+		private readonly AttachmentService $attachmentService,
+		private readonly LoggerInterface $logger,
+	) {
 		parent::__construct($time);
-		$this->sessionService = $sessionService;
-		$this->documentService = $documentService;
-		$this->logger = $logger;
 		$this->setInterval(SessionService::SESSION_VALID_TIME);
 	}
 
@@ -50,10 +47,11 @@ class Cleanup extends TimedJob {
 				$this->documentService->resetDocument($document->getId());
 			} catch (DocumentHasUnsavedChangesException) {
 			}
+			$this->attachmentService->cleanupAttachments($document->getId());
 		}
 
 		$this->logger->debug('Run cleanup job for text sessions');
-		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps(null);
+		$removedSessions = $this->sessionService->removeInactiveSessionsWithoutSteps();
 		$this->logger->debug('Removed ' . $removedSessions . ' inactive sessions');
 
 		$this->logger->debug('Run cleanup job for obsolete documents folders');
