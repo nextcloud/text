@@ -159,8 +159,10 @@ export default Extension.create({
 										const rect = absoluteRect(node)
 										const win = node.ownerDocument.defaultView
 
-										rect.top += win.pageYOffset + (lineHeight - 24) / 2 + top
-										rect.left += win.pageXOffset
+										// calculate the top space of '.ProseMirror'
+										rect.top += win.pageYOffset + (lineHeight - 24) / 2 + top - 93
+										// calculate the left space of '.text-editor__content'
+										rect.left += win.pageXOffset - 1045
 										rect.width = `${WIDTH}px`
 
 										dropElement.style.left = `${-WIDTH + rect.left}px`
