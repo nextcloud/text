@@ -220,7 +220,7 @@ OC.L10N.register(
     "Document has been changed outside of the editor. The changes cannot be applied" : "O documento foi alterado fora do editor. As alterações não podem ser aplicadas",
     "Document could not be loaded. Please check your internet connection." : "Não foi possível carregar o documento. Por favor, verifique sua conexão à internet.",
     "Document idle for {timeout} minutes, click to continue editing" : "Documento inativo por {timeout} minutos, clique para continuar editando",
-    "Detect language" : "Detect language",
+    "Detect language" : "Detectar idioma",
     "Callouts" : "Frases de destaque",
     "Info" : "Info",
     "Success" : "Sucesso",
