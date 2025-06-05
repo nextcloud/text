@@ -19,6 +19,7 @@ OC.L10N.register(
     "Action" : "Acción",
     "Undo" : "Deshacer",
     "Save changes" : "Guardar Cambios",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Ayuda de formato",
     "Select language" : "Seleccionar idioma",

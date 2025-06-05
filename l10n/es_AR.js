@@ -25,6 +25,7 @@ OC.L10N.register(
     "Action" : "Acción",
     "Undo" : "Deshacer",
     "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Ayuda de formato",
     "Select language" : "Seleccionar idioma",

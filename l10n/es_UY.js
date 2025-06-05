@@ -17,6 +17,7 @@ OC.L10N.register(
     "Link" : "Ligas",
     "Action" : "Acción",
     "Undo" : "Deshacer",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Ayuda de formato",
     "Select language" : "Seleccionar idioma",

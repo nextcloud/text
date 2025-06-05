@@ -21,6 +21,7 @@ OC.L10N.register(
     "name" : "nombre",
     "Action" : "Acción",
     "Undo" : "Deshacer",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "Formatting help" : "Ayuda de formato",
     "Select language" : "Selecciona el idioma",

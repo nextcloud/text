@@ -11,6 +11,7 @@ OC.L10N.register(
     "Italic" : "Italig",
     "Link" : "Dolen",
     "Undo" : "Dadwneud",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "to" : "at",
     "Upload" : "Llwytho i fyny",

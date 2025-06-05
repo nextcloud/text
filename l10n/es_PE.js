@@ -18,6 +18,7 @@ OC.L10N.register(
     "Action" : "Acción",
     "Undo" : "Deshacer",
     "Save changes" : "Guardar cambios",
+    "Cancel" : "Cancel",
     "Formatting help" : "Ayuda de formato",
     "Select language" : "Seleccionar idioma",
     "to" : "para",
