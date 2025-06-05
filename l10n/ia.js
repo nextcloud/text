@@ -11,6 +11,7 @@ OC.L10N.register(
     "Keyboard shortcuts" : "Combinationes de claves",
     "Link" : "Ligamine",
     "Undo" : "Disfacer",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "to" : "a",
     "Upload" : "Incargar",

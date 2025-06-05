@@ -10,6 +10,7 @@ OC.L10N.register(
     "Saved" : "Lagra",
     "Keyboard shortcuts" : "Tastatursnarvegar",
     "Link" : "Lenkje",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "Select language" : "Vel språk",
     "to" : "til",
