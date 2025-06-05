@@ -29,6 +29,7 @@ OC.L10N.register(
     "Unordered list" : "Ongesorteerde lys",
     "Ordered list" : "Gesorteerde lys",
     "Blockquote" : "Blokaanhaling",
+    "Cancel" : "Cancel",
     "to" : "aan",
     "Upload" : "Oplaai",
     "Edit" : "Wysig",

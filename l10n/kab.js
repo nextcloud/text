@@ -11,6 +11,7 @@ OC.L10N.register(
     "Backspace" : "Retour",
     "Link" : "Aseɣwen",
     "Save changes" : "Sekles asnifel",
+    "Cancel" : "Cancel",
     "Replace" : "Semselsi",
     "Upload" : "Sili",
     "Edit" : "Ẓreg",

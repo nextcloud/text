@@ -14,6 +14,7 @@ OC.L10N.register(
     "guest" : "Qonaq",
     "Saved" : "Saxlanıldı",
     "Save changes" : "Dəyişiklikləri yaddaşa ver",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "to" : "doğru",
     "Replace" : "Əvəz edin",

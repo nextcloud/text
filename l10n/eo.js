@@ -40,6 +40,7 @@ OC.L10N.register(
     "Redo" : "Refari",
     "Cannot copy, please copy the link manually" : "Ne eblis kopii la ligilon; kopiu ĝin permane.",
     "Save changes" : "Konservi ŝanĝojn",
+    "Cancel" : "Cancel",
     "URL" : "Retadreso",
     "Formatting help" : "Helpo pri tekstaranĝo",
     "to" : "al",

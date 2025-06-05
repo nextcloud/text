@@ -6,6 +6,7 @@ OC.L10N.register(
     "Missing a temporary folder" : "Direktori sementara hilang",
     "Translate" : "Translate",
     "Saved" : "Disimpan",
+    "Cancel" : "Cancel",
     "URL" : "URL",
     "to" : "kepada",
     "Upload" : "Muat naik",
