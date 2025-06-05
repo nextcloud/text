@@ -137,6 +137,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
+import { DragDrop } from '../extensions/index.js'
 
 export default {
 	name: 'Editor',
@@ -618,6 +619,7 @@ export default {
 						clientId: this.$ydoc.clientID,
 					},
 				}),
+				DragDrop,
 			]
 			if (this.isRichEditor) {
 				this.$editor = createRichEditor({
@@ -1102,5 +1104,27 @@ export default {
 	&:not(.collaboration-cursor__label__active) {
 		transition: opacity 0.2s 5s;
 	}
+}
+
+.global-drag-handle {
+	position: absolute;
+
+	&::after {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1rem;
+		height: 1.25rem;
+		content: '⠿';
+		font-weight: 700;
+		cursor: grab;
+		background: #0d0d0d10;
+		color: #0d0d0d50;
+		border-radius: 0.25rem;
+	}
+}
+
+.ProseMirror-selectednode {
+	outline: 2px solid #70cff8;
 }
 </style>

@@ -87,6 +87,7 @@
     "@tiptap/extension-underline": "^2.12.0",
     "@tiptap/pm": "^2.12.0",
     "@tiptap/suggestion": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
     "@tiptap/vue-2": "^2.12.0",
     "@vueuse/shared": "^11.3.0",
     "debounce": "^2.2.0",
