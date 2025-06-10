@@ -116,6 +116,9 @@ div.ProseMirror {
 			transition-duration: 0.15s;
 			transition-property: opacity;
 			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			scroll-margin-top: calc(
+				var(--default-clickable-area) + 4 * var(--default-grid-baseline)
+			);
 		}
 
 		&:hover .heading-anchor {

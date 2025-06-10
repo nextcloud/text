@@ -14,7 +14,7 @@
 					[`editor--toc__item--${heading.level}`]: true,
 					[`editor--toc__item--previous-${heading.previous}`]: heading.previous > 0,
 				}">
-				<a :href="`#${heading.id}`" @click.prevent="goto(heading)">
+				<a :href="`#${heading.id}`" class="editor--toc__item-link" @click.prevent="goto(heading)">
 					{{ heading.text }}
 				</a>
 			</li>
@@ -47,10 +47,10 @@ export default {
 	},
 	methods: {
 		goto(heading) {
-			document.getElementById(heading.id).scrollIntoView()
-
+			const element = this.$root.$el.querySelector(`#${heading.id}`)
+			element.scrollIntoView({ block: 'start', behavior: 'smooth' })
 			this.$nextTick(() => {
-				window.location.hash = heading.id
+				window.history.replaceState(window.history.state, '', `#${heading.id}`)
 			})
 		},
 		updateHeadings() {
@@ -100,6 +100,10 @@ export default {
 
 		a:hover {
 			color: var(--color-primary-element-hover);
+		}
+
+		&-link {
+			scroll-margin-top: calc(var(--default-clickable-area) + 4 * var(--default-grid-baseline));
 		}
 
 		&--1 {
