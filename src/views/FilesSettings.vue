@@ -15,7 +15,7 @@
 <script>
 import { emit } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
-import { NcCheckboxRadioSwitch } from '@nextcloud/vue'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import { generateUrl } from '@nextcloud/router'
 
 export default {

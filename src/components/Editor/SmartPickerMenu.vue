@@ -15,7 +15,7 @@
 
 <script>
 import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import { NcButton } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 export default {
 	name: 'SmartPickerMenu',

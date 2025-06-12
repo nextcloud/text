@@ -46,7 +46,11 @@
 </template>
 
 <script>
-import { NcActions, NcActionButton, NcActionRadio, NcActionCaption, NcActionSeparator } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionRadio from '@nextcloud/vue/components/NcActionRadio'
+import NcActionCaption from '@nextcloud/vue/components/NcActionCaption'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'

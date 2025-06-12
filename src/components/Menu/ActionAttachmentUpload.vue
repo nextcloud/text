@@ -54,7 +54,10 @@
 </template>
 
 <script>
-import { NcActions, NcActionSeparator, NcActionButton, NcIconSvgWrapper } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import { loadState } from '@nextcloud/initial-state'
 import { Loading, Folder, Upload, Plus } from '../icons.js'
 import {

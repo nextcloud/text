@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { NcModal } from '@nextcloud/vue'
+import NcModal from '@nextcloud/vue/components/NcModal'
 
 export default {
 	name: 'PublicFilesEditor',
