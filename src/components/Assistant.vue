@@ -157,13 +157,11 @@ import TranslateVariant from 'vue-material-design-icons/TranslateVariant.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
 import { posToDOMRect } from '@tiptap/core'
 import { loadState } from '@nextcloud/initial-state'
-import {
-	NcActions,
-	NcActionButton,
-	NcActionSeparator,
-	NcListItem,
-	NcModal,
-} from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcListItem from '@nextcloud/vue/components/NcListItem'
+import NcModal from '@nextcloud/vue/components/NcModal'
 import {
 	useEditorMixin,
 	useIsRichWorkspaceMixin,

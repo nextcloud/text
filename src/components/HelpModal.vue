@@ -268,7 +268,7 @@
 </template>
 
 <script>
-import { NcDialog } from '@nextcloud/vue'
+import NcDialog from '@nextcloud/vue/components/NcDialog'
 import { isMobilePlatform } from '../helpers/platform.js'
 import { TRANSLATIONS, MODIFIERS } from './Menu/keys.js'
 

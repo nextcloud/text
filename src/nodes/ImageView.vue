@@ -127,7 +127,7 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
-import { NcButton } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { useAttachmentResolver } from '../components/Editor.provider.js'

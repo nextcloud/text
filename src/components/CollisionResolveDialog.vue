@@ -34,7 +34,7 @@ import {
 	useIsRichEditorMixin,
 	useSyncServiceMixin,
 } from './Editor.provider.js'
-import { NcButton } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import setContent from './../mixins/setContent.js'
 export default {
 	name: 'CollisionResolveDialog',

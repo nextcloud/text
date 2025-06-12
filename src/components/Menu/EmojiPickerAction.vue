@@ -22,7 +22,8 @@
 
 <script>
 import { BaseActionEntry } from './BaseActionEntry.js'
-import { NcEmojiPicker, NcButton } from '@nextcloud/vue'
+import NcEmojiPicker from '@nextcloud/vue/components/NcEmojiPicker'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {

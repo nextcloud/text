@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import { NcActions, NcActionSeparator } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import ActionListItem from './ActionListItem.vue'
 import { getActionState, getIsActive } from './utils.js'
