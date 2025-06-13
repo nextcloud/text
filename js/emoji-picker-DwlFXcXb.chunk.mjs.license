@@ -1,0 +1,12 @@
+SPDX-License-Identifier: BSD-3-Clause
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Borys Serebrov
+SPDX-FileCopyrightText: Evan You
+
+This file is generated from multiple sources. Included packages:
+- emoji-mart-vue-fast
+	- version: 15.0.4
+	- license: BSD-3-Clause
+- vite
+	- version: 6.3.5
+	- license: MIT

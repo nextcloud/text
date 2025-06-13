@@ -1,0 +1,2 @@
+import{g as s}from"./emoji-picker-DwlFXcXb.chunk.mjs";import{r as c}from"./sqf-l5F8M2Sq.chunk.mjs";function f(r,i){for(var o=0;o<i.length;o++){const e=i[o];if(typeof e!="string"&&!Array.isArray(e)){for(const t in e)if(t!=="default"&&!(t in r)){const n=Object.getOwnPropertyDescriptor(e,t);n&&Object.defineProperty(r,t,n.get?n:{enumerable:!0,get:()=>e[t]})}}}return Object.freeze(Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}))}var a=c();const l=s(a),u=f({__proto__:null,default:l},[a]);export{u as s};
+//# sourceMappingURL=sqf-B1yg3RmC.chunk.mjs.map
