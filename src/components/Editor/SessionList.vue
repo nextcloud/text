@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { NcPopover } from '@nextcloud/vue'
+import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { COLLABORATOR_IDLE_TIME, COLLABORATOR_DISCONNECT_TIME } from '../../services/SyncService.js'
 

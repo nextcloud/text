@@ -82,7 +82,12 @@
 <script>
 import debounce from 'debounce'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcActionInput, NcActionLink, NcActionSeparator, NcLoadingIcon } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionInput from '@nextcloud/vue/components/NcActionInput'
+import NcActionLink from '@nextcloud/vue/components/NcActionLink'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import { v4 as uuidv4 } from 'uuid'
 
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'

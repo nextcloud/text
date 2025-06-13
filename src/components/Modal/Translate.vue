@@ -75,7 +75,11 @@
 import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
 import { generateOcsUrl } from '@nextcloud/router'
-import { NcModal, NcButton, NcSelect, NcLoadingIcon, NcTextArea } from '@nextcloud/vue'
+import NcModal from '@nextcloud/vue/components/NcModal'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
+import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import NcTextArea from '@nextcloud/vue/components/NcTextArea'
 import { useIsMobileMixin } from '../Editor.provider.js'
 
 const detectLanguageEntry = {
