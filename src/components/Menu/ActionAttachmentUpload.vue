@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import { NcActions, NcActionButton } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { Loading, Folder, Upload } from '../icons.js'
 import {
 	useIsPublicMixin,

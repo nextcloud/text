@@ -50,7 +50,9 @@
 </template>
 
 <script>
-import { NcButton, NcCheckboxRadioSwitch, NcPopover } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleIcon from 'vue-material-design-icons/AccountMultiple.vue'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.js'
