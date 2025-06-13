@@ -86,7 +86,8 @@ import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import { defineComponent, ref, shallowRef, watch } from 'vue'
-import { Doc } from 'yjs'
+import { IndexeddbPersistence } from 'y-indexeddb'
+import { Doc, logUpdate } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
 import { provideEditor } from '../composables/useEditor.ts'
@@ -399,11 +400,15 @@ export default defineComponent({
 		exposeForDebugging(this)
 	},
 	created() {
+		this.$indexedDbProvider = new IndexeddbPersistence(this.fileId, this.ydoc)
+		this.$indexedDbProvider.on('synced', (provider) => {
+			console.info('synced from indexeddb', provider)
+		})
 		// The following can be useful for debugging ydoc updates
-		// this.ydoc.on('update', function(update, origin, doc, tr) {
-		//   console.debug('ydoc update', update, origin, doc, tr)
-		//   Y.logUpdate(update)
-		// });
+		this.ydoc.on('update', function (update, origin, doc, tr) {
+			console.debug('ydoc update', update, origin, doc, tr)
+			logUpdate(update)
+		})
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
@@ -527,7 +532,7 @@ export default defineComponent({
 			this.document = document
 
 			this.syncError = null
-			this.setEditable(this.editMode && !this.requireReconnect)
+			this.setEditable(this.editMode) // && !this.requireReconnect)
 		},
 
 		onCreate({ editor }) {
