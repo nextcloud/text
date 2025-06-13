@@ -135,7 +135,7 @@
     "cypress-visual-regression": "^5.3.0",
     "cypress-vite": "^1.6.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-cypress": "^3.6.0",
+    "eslint-plugin-cypress": "^5.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^26.1.0",
     "prosemirror-test-builder": "^1.1.1",
