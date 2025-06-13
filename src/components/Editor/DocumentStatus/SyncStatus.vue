@@ -15,7 +15,7 @@
 <script>
 
 import { ERROR_TYPE } from '../../../services/SyncService.js'
-import { NcNoteCard } from '@nextcloud/vue'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 
 export default {
 	name: 'SyncStatus',

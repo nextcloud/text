@@ -9,7 +9,7 @@
 			:user="session.userId ? session.userId : session.guestName"
 			:is-guest="session.userId === null"
 			:disable-menu="true"
-			:show-user-status="false"
+			hide-status
 			:disable-tooltip="true"
 			:size="size" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { NcAvatar } from '@nextcloud/vue'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 export default {
 	name: 'AvatarWrapper',
 	components: {

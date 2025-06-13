@@ -29,7 +29,8 @@
 
 import { ERROR_TYPE } from '../../services/SyncService.js'
 import moment from '@nextcloud/moment'
-import { NcButton, NcSavingIndicatorIcon } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,

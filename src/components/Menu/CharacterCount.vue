@@ -17,7 +17,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { translatePlural as n } from '@nextcloud/l10n'
-import { NcActionText } from '@nextcloud/vue'
+import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { AlphabeticalVariant } from '../icons.js'
 import { useEditorMixin } from '../Editor.provider.js'
 
