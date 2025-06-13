@@ -313,6 +313,23 @@ describe('Markdown serializer from html', () => {
 			'<details>\n<summary>**summary**</summary>\n```\ncode\n```\n\n</details>\n',
 		)
 	})
+
+	const assertKeepSyntax = (source) => {
+		const tiptap = createRichEditor()
+		tiptap.commands.setContent(markdownit.render(source))
+
+		const end = tiptap.state.doc.content.size - 1
+		tiptap.commands.insertContentAt(end, ' editing')
+
+		const serializer = createMarkdownSerializer(tiptap.schema)
+		const md = serializer.serialize(tiptap.state.doc)
+		expect(md).toBe(source + ' editing')
+	}
+
+	test('keep syntax for brackets', () => {
+		assertKeepSyntax('test [[foo]] bar')
+		assertKeepSyntax('test ![[foo]] bar')
+	})
 })
 
 describe('Trailing nodes', () => {
