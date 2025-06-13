@@ -144,6 +144,7 @@ function anchorForHeading(heading) {
  */
 function handleClick(event) {
 	event.stopPropagation()
-	event.target.scrollIntoView()
-	window.location.hash = event.target.getAttribute('href')
+	event.preventDefault()
+	event.target.scrollIntoView({ block: 'start', behavior: 'smooth' })
+	window.history.replaceState({}, '', event.target.getAttribute('href'))
 }
