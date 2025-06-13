@@ -67,7 +67,16 @@ export default Extension.create({
 		const defaultExtensions = [
 			this.options.editing ? Markdown : null,
 			Document,
-			Text,
+			Text.extend({
+				toMarkdown(state, node) {
+					const originalEsc = state.esc
+					state.esc = (text) => {
+						text = originalEsc.bind(state)(text)
+						return text.replace(/\\\[/g, '[').replace(/\\\]/g, ']')
+					}
+					state.text(node.textContent)
+				},
+			}),
 			Paragraph,
 			HardBreak,
 			Heading,
