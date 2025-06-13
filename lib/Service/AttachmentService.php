@@ -23,6 +23,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Files\SimpleFS\ISimpleFile;
+use OCP\FilesMetadata\IFilesMetadataManager;
 use OCP\IPreview;
 use OCP\IURLGenerator;
 use OCP\Lock\LockedException;
@@ -39,6 +40,7 @@ class AttachmentService {
 		private IMimeTypeDetector $mimeTypeDetector,
 		private IURLGenerator $urlGenerator,
 		private IFilenameValidator $filenameValidator,
+		private IFilesMetadataManager $filesMetadataManager,
 	) {
 	}
 
@@ -219,21 +221,34 @@ class AttachmentService {
 
 		$attachments = [];
 		$userFolder = $userId !== null ? $this->rootFolder->getUserFolder($userId) : null;
+
+		$fileNodes = [];
+		$fileIds = [];
 		foreach ($attachmentDir->getDirectoryListing() as $node) {
-			if (!($node instanceof File)) {
-				// Ignore anything but files
-				continue;
+			if ($node instanceof File) {
+				// we only want Files
+				$fileNodes[] = $node;
+				$fileIds[] = $node->getId();
 			}
+		}
+
+		// this is done outside the loop for efficiency
+		$metadataMap = $this->filesMetadataManager->getMetadataForFiles($fileIds);
+
+		foreach ($fileNodes as $node) {
 			$isImage = in_array($node->getMimetype(), AttachmentController::IMAGE_MIME_TYPES, true);
 			$name = $node->getName();
+			$fileId = $node->getId();
+			$metadata = $metadataMap[$fileId] ?? null;
 			$attachments[] = [
-				'fileId' => $node->getId(),
+				'fileId' => $fileId,
 				'name' => $name,
 				'size' => Util::humanFileSize($node->getSize()),
 				'mimetype' => $node->getMimeType(),
 				'mtime' => $node->getMTime(),
 				'isImage' => $isImage,
 				'davPath' => $userFolder?->getRelativePath($node->getPath()),
+				'metadata' => $metadata,
 				'fullUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
 					: $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getMediaFile') . $urlParamsBase . '&mediaFileName=' . rawurlencode($name),
