@@ -42,7 +42,7 @@
 
 import { ERROR_TYPE, IDLE_TIMEOUT } from './../../services/SyncService.js'
 import Lock from 'vue-material-design-icons/Lock.vue'
-import { NcNoteCard } from '@nextcloud/vue'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import CollisionResolveDialog from '../CollisionResolveDialog.vue'
 
 export default {

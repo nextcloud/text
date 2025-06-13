@@ -115,7 +115,7 @@
 <script>
 import ClickOutside from 'vue-click-outside'
 import { mapGetters } from 'vuex'
-import { NcButton } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import { showError } from '@nextcloud/dialogs'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import store from '../mixins/store.js'

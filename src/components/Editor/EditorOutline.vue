@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { NcButton } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'

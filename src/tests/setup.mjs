@@ -65,6 +65,8 @@ Vue.prototype.t = global.t
 Vue.prototype.n = global.n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA
+// suppress errors from not-explicitly-imported @nc-vue component
+global.appName = 'text'
 
 // Mock ClipboardEvent and DragEvent as long as jsdom is used
 // https://github.com/ueberdosis/tiptap/issues/4455

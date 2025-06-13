@@ -60,7 +60,8 @@
 
 <script>
 import { ref } from 'vue'
-import { NcActionSeparator, NcActionButton } from '@nextcloud/vue'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { loadState } from '@nextcloud/initial-state'
 import { useElementSize } from '@vueuse/core'
 import { emit } from '@nextcloud/event-bus'

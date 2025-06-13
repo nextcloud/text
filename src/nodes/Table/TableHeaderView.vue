@@ -73,7 +73,9 @@
 
 <script>
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { NcActions, NcActionButton, NcActionButtonGroup } from '@nextcloud/vue'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
