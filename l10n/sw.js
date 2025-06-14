@@ -3,20 +3,27 @@ OC.L10N.register(
     {
     "The file was uploaded" : "Faili lilipakiwa",
     "The uploaded file exceeds the upload_max_filesize directive in php.ini" : "Faili lililopakiwa linazidi kiwango cha juu cha ukubwa wa faili linalielekea katika php.ini",
+    "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" : "Faili iliyopakiliwa imezidi kiwango cha ukubwa wa faili iliyoelekezwa maalum katika fomu ya HTML",
     "The file was only partially uploaded" : "Faili lilipakiwa kwa sehemu ndogo tu",
     "No file was uploaded" : "Hakuna faili lililopakiwa",
     "Missing a temporary folder" : "Imekosa faili la muda",
     "Could not write file to disk" : "Haikuweza kuandika faili kwenye disk",
     "A PHP extension stopped the file upload" : "Uongezaji wa PHP umesimamisha upakiaji wa faili",
     "No file uploaded or file size exceeds maximum of %s" : "Hakuna faili lililopakiwa au faili lilizidi kiwango cha juu cha %s",
+    "Text" : "Maandishi",
+    "Remove link" : "Ondoa kiungio",
     "Keyboard shortcuts" : "Mikato ya keyboard",
+    "Enter" : "Ingiza",
+    "Shift" : "Hamisha",
     "Action" : "Vitendo",
     "Undo" : "Tendua",
+    "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
     "Cancel" : "Cancel",
     "Formatting help" : "Uasidizi wa uambizaji",
     "to" : "kwa",
     "Edit" : "Hariri",
     "Done" : "Imefanyika",
-    "Details" : "Maelezo ya kina"
+    "Details" : "Maelezo ya kina",
+    "Ctrl" : "Dhibiti"
 },
 "nplurals=2; plural=(n != 1);");
