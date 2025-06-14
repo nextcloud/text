@@ -34,7 +34,7 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import {
 	useEditorMixin,
 	useFileMixin,
-	useSyncServiceMixin,
+	useConnectionMixin,
 } from '../Editor.provider.js'
 
 import {
@@ -48,7 +48,7 @@ const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
 export default {
 	name: 'MediaHandler',
-	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
+	mixins: [useEditorMixin, useFileMixin, useConnectionMixin],
 	provide() {
 		const val = {}
 

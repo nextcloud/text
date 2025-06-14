@@ -5,14 +5,14 @@
 
 import { logger } from '../helpers/logger.js'
 
+export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const EDITOR = Symbol('tiptap:editor')
 export const FILE = Symbol('editor:file')
-export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
 export const IS_PUBLIC = Symbol('editor:is-public')
 export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
 export const IS_RICH_WORKSPACE = Symbol('editor:is-rich-woskapace')
-export const SYNC_SERVICE = Symbol('sync:service')
+export const CONNECTION = Symbol('connection')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
@@ -23,9 +23,9 @@ export const useEditorMixin = {
 	},
 }
 
-export const useSyncServiceMixin = {
+export const useConnectionMixin = {
 	inject: {
-		$syncService: { from: SYNC_SERVICE, default: null },
+		$connection: { from: CONNECTION, default: null },
 	},
 }
 
