@@ -50,6 +50,7 @@
     "@nextcloud/router": "^3.0.1",
     "@nextcloud/sharing": "^0.2.4",
     "@nextcloud/vue": "^8.27.0",
+    "@nextcloud/y-http": "^0.2.2",
     "@quartzy/markdown-it-mentions": "^0.2.0",
     "@tiptap/core": "^2.22.3",
     "@tiptap/extension-blockquote": "^2.22.3",

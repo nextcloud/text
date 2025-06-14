@@ -93,6 +93,7 @@ import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
 
 import {
+	CONNECTION,
 	EDITOR,
 	FILE,
 	ATTACHMENT_RESOLVER,
@@ -100,15 +101,11 @@ import {
 	IS_PUBLIC,
 	IS_RICH_EDITOR,
 	IS_RICH_WORKSPACE,
-	SYNC_SERVICE,
 } from './Editor.provider.js'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.js'
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import SessionApi from '../services/SessionApi.js'
-import createSyncServiceProvider from './../services/SyncServiceProvider.js'
+import { ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import { extensionHighlight } from '../helpers/mappings.js'
 import {
@@ -137,6 +134,8 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
+import { yHttpClient } from '../services/yHttpClient.ts'
+import { HttpProvider } from '@nextcloud/y-http'
 
 export default {
 	name: 'Editor',
@@ -155,6 +154,7 @@ export default {
 		Translate,
 		SuggestionsBar,
 	},
+	// TODO: check setContent mixin
 	mixins: [isMobile, setContent],
 
 	provide() {
@@ -168,8 +168,8 @@ export default {
 			[EDITOR]: {
 				get: () => this.$editor,
 			},
-			[SYNC_SERVICE]: {
-				get: () => this.$syncService,
+			[CONNECTION]: {
+				get: () => this.$provider.connection,
 			},
 			[FILE]: {
 				get: () => this.fileData,
@@ -372,6 +372,7 @@ export default {
 		},
 		requireReconnect(val) {
 			if (val) {
+				// TODO: check what this does and where it's coming from
 				this.emit('sync-service:error')
 			}
 			if (this.$editor?.isEditable === val) {
@@ -403,9 +404,14 @@ export default {
 		//   console.debug('ydoc update', update, origin, doc, tr)
 		//   Y.logUpdate(update)
 		// });
-		this.$providers = []
+		const client = yHttpClient({
+			fileId: this.fileId,
+			filePath: this.filePath,
+			token: this.shareToken,
+		})
+		// TODO: handle initial session!
+		this.$provider = new HttpProvider(this.$ydoc, client)
 		this.$editor = null
-		this.$syncService = null
 		this.$attachmentResolver = null
 	},
 	async beforeDestroy() {
@@ -417,52 +423,33 @@ export default {
 		unsubscribe('text:image-node:add', this.onAddImageNode)
 		unsubscribe('text:image-node:delete', this.onDeleteImageNode)
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
-		if (this.dirty) {
-			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
+		// TODO: save on exit
+/* 		if (this.dirty) {
+			const timeout = new Promise((resolve) => setTimeout(resolve, 2001))
 			await Promise.any([timeout, this.$syncService.save()])
 		}
+ */
 		await this.close()
 		removeFromDebugging(this)
 	},
 	methods: {
-		initSession() {
+		async initSession() {
 			if (!this.hasDocumentParameters) {
 				this.emit('error', 'No valid file provided')
 				return
 			}
-			const guestName = localStorage.getItem('nick')
+			// TODO: handle guest name - in awareness most likely.
+			/* const guestName = localStorage.getItem('nick')
 				? localStorage.getItem('nick')
 				: ''
+ */
+			const { data } = await this.$provider.connect()
+			this.onOpened(data)
+			this.onLoaded(data)
 
-			const api = new SessionApi({
-				guestName,
-				shareToken: this.shareToken,
-				filePath: this.relativePath,
-			})
-
-			this.$syncService = new SyncService({
-				api,
-				baseVersionEtag: this.$baseVersionEtag,
-				serialize: this.isRichEditor
-					? (content) =>
-							createMarkdownSerializer(this.$editor.schema).serialize(
-								content ?? this.$editor.state.doc,
-							)
-					: (content) =>
-							serializePlainText(content ?? this.$editor.state.doc),
-				getDocumentState: () => getDocumentState(this.$ydoc),
-			})
-
-			this.listenSyncServiceEvents()
-
-			const syncServiceProvider = createSyncServiceProvider({
-				ydoc: this.$ydoc,
-				syncService: this.$syncService,
-				fileId: this.fileId,
-				initialSession: this.initialSession,
-				disableBC: true,
-			})
-			this.$providers.push(syncServiceProvider)
+			// TODO: setup auto save document
+			// previously done with sync service and serialize and getDocumentState functions
+			// TODO: replace remaining sync service events this.listenSyncServiceEvents()
 		},
 
 		listenEditorEvents() {
@@ -479,11 +466,9 @@ export default {
 			this.$editor.off('update', this.onUpdate)
 		},
 
-		listenSyncServiceEvents() {
+/* 		listenSyncServiceEvents() {
 			this.$syncService
-				.on('opened', this.onOpened)
 				.on('change', this.onChange)
-				.on('loaded', this.onLoaded)
 				.on('sync', this.onSync)
 				.on('error', this.onError)
 				.on('stateChange', this.onStateChange)
@@ -493,15 +478,13 @@ export default {
 
 		unlistenSyncServiceEvents() {
 			this.$syncService
-				.off('opened', this.onOpened)
 				.off('change', this.onChange)
-				.off('loaded', this.onLoaded)
 				.off('sync', this.onSync)
 				.off('error', this.onError)
 				.off('stateChange', this.onStateChange)
 				.off('idle', this.onIdle)
 				.off('save', this.onSave)
-		},
+		}, */
 
 		reconnect() {
 			this.contentLoaded = false
@@ -556,16 +539,16 @@ export default {
 			}
 		},
 
-		onOpened({ document, session }) {
+		onOpened({ document, readOnly, session, lock }) {
 			this.currentSession = session
 			this.document = document
-			this.readOnly = document.readOnly
-			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.readOnly = readOnly
+			this.editMode = !readOnly && !this.openReadOnlyEnabled
+			this.lock = lock
 
 			if (this.$editor) {
 				this.$editor.setEditable(this.editMode)
 			}
-			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
@@ -589,18 +572,24 @@ export default {
 			}
 		},
 
-		onLoaded({ document, documentSource, documentState }) {
+		onLoaded({ content, document, documentState }) {
 			if (!documentState) {
-				this.setInitialYjsState(documentSource, {
+				this.setInitialYjsState(content, {
 					isRichEditor: this.isRichEditor,
 				})
 			}
 
-			this.$baseVersionEtag = document.baseVersionEtag
+			if (!this.contentLoaded) {
+				this.contentLoaded = true
+				if (this.autofocus && !this.readOnly) {
+					this.$nextTick(() => {
+						this.$editor.commands.autofocus()
+					})
+				}
+				this.emit('ready')
+			}
 			this.hasConnectionIssue = false
 			if (this.$editor) {
-				// $editor already existed. So this is a reconnect.
-				this.$syncService.startSync()
 				return
 			}
 
@@ -609,7 +598,7 @@ export default {
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.$ydoc }),
 				CollaborationCursor.configure({
-					provider: this.$providers[0],
+					provider: this.$provider, // TODO, check what this needs
 					user: {
 						name: session?.userId
 							? session.displayName
@@ -650,9 +639,18 @@ export default {
 			}
 		},
 
+		// TODO: clean up the content redundancy
+		// it should not matter if it comes from this.$editor or the editor handed to the callbacks below.
+		serialize(content) {
+			content ??= this.$editor.state.doc
+			return this.isRichEditor
+					? createMarkdownSerializer(this.$editor.schema)
+						.serialize(content)
+					: serializePlainText(content)
+		},
+
 		onCreate({ editor }) {
-			this.$syncService.startSync()
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize(editor.state.doc)
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -660,17 +658,15 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize(editor.state.doc)
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
 		},
 
 		onSync({ steps, document }) {
-			this.hasConnectionIssue =
-				this.$syncService.backend.fetcher === 0
-				|| !this.$providers[0].wsconnected
-				|| this.$syncService.pushError > 0
+			this.hasConnectionIssue = !this.$provider.isConnected
+				// TODO: handle errors || this.$syncService.pushError > 0
 			if (this.$syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
 				this.$syncService.sendStepsNow()
@@ -719,15 +715,6 @@ export default {
 		},
 
 		onStateChange(state) {
-			if (state.initialLoading && !this.contentLoaded) {
-				this.contentLoaded = true
-				if (this.autofocus && !this.readOnly) {
-					this.$nextTick(() => {
-						this.$editor.commands.autofocus()
-					})
-				}
-				this.emit('ready')
-			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
 				if (
@@ -789,21 +776,19 @@ export default {
 		},
 
 		async disconnect() {
+/*
 			await this.$syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach((p) => p?.destroy())
-			this.$providers = []
 			this.$syncService = null
+ */
+			this.$provider.disconnect()
 			// disallow editing while still showing the content
 			this.readOnly = true
 		},
 
 		async close() {
-			await this.$syncService
-				.sendRemainingSteps()
-				.catch((err) =>
-					logger.warn('Failed to send remaining steps', { err }),
-				)
+			// TODO: await send remaining steps
+
 			await this.disconnect().catch((err) =>
 				logger.warn('Failed to disconnect', { err }),
 			)
@@ -892,7 +877,7 @@ export default {
 
 		readOnlyToggled() {
 			if (this.editMode) {
-				this.$syncService.save()
+				// this.$syncService.save()
 			}
 			this.editMode = !this.editMode
 			this.$editor.setEditable(this.editMode)
@@ -940,7 +925,7 @@ export default {
 		},
 
 		saveBeforeUnload() {
-			this.$syncService?.saveViaSendBeacon()
+			// this.$syncService?.saveViaSendBeacon()
 		},
 	},
 }

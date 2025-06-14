@@ -34,7 +34,7 @@ import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIc
 import {
 	useIsMobileMixin,
 	useIsPublicMixin,
-	useSyncServiceMixin,
+	useConnectionMixin,
 } from '../Editor.provider.js'
 import refreshMoment from '../../mixins/refreshMoment.js'
 
@@ -51,7 +51,7 @@ export default {
 	mixins: [
 		useIsMobileMixin,
 		useIsPublicMixin,
-		useSyncServiceMixin,
+		useConnectionMixin,
 		refreshMoment,
 	],
 
