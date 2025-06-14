@@ -187,4 +187,84 @@ class AttachmentServiceTest extends TestCase {
 		AttachmentService::replaceAttachmentFolderId($source, $target);
 		$this->assertEquals($sourceContent, $replacedContent);
 	}
+
+	// Replacement expected
+	public static function contentReplaceAttachmentFileIdProvider(): array {
+		return [
+			['[image.png](https://localhost:8000/f/1)', '[image.png](https://localhost:8000/f/2)'],
+			['[image.png](https://localhost:8000/f/1(preview))', '[image.png](https://localhost:8000/f/2(preview))'],
+			['[image.png](https://localhost:8000/f/1 (preview))', '[image.png](https://localhost:8000/f/2 (preview))'],
+			// Link in title
+			['[https://localhost:8000/f/1](https://localhost:8000/f/1)', '[https://localhost:8000/f/1](https://localhost:8000/f/2)'],
+			['[https://localhost:8000/f/1](https://localhost:8000/f/1 (preview))', '[https://localhost:8000/f/1](https://localhost:8000/f/2 (preview))'],
+			// Spaces surrounding link URL
+			['[image.png](  https://localhost:8000/f/1  )', '[image.png](  https://localhost:8000/f/2  )'],
+			['[image.png](  https://localhost:8000/f/1   (preview))', '[image.png](  https://localhost:8000/f/2   (preview))'],
+			['[image.png](  https://localhost:8000/f/1   (preview)  )', '[image.png](  https://localhost:8000/f/2   (preview)  )'],
+			// Escaped square brackets in title
+			['[title \[#1\]](https://localhost:8000/f/1)', '[title \[#1\]](https://localhost:8000/f/2)'],
+			['[title \[#1\]](https://localhost:8000/f/1 (preview))', '[title \[#1\]](https://localhost:8000/f/2 (preview))'],
+			// Spaces in title
+			['[title with space](https://localhost:8000/f/1)', '[title with space](https://localhost:8000/f/2)'],
+			['[title with space](https://localhost:8000/f/1 (preview))', '[title with space](https://localhost:8000/f/2 (preview))'],
+			// Several links in a row
+			['Some text\n\n[image.png](https://localhost:8000/f/1 (preview))\n\nMore text. [file.tar.gz](https://localhost:8000/f/3) ...', 'Some text\n\n[image.png](https://localhost:8000/f/2 (preview))\n\nMore text. [file.tar.gz](https://localhost:8000/f/4) ...'],
+		];
+	}
+
+	/**
+	 * @dataProvider contentReplaceAttachmentFileIdProvider
+	 */
+	public function testReplaceAttachmentFileId(string $sourceContent, string $targetContent): void {
+		$target = $this->createMock(File::class);
+		$target->method('getId')->willReturn(2);
+		$target->method('getContent')->willReturn($sourceContent);
+		$replacedContent = '';
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+			$replacedContent = $content;
+		});
+
+		$fileIdMapping = [
+			[1, 2],
+			[3, 4],
+		];
+		AttachmentService::replaceAttachmentFileIds($target, $fileIdMapping);
+		$this->assertEquals($targetContent, $replacedContent);
+	}
+
+	// No replacement expected
+	public static function contentReplaceAttachmentFileIdNoReplaceProvider(): array {
+		return [
+			// Empty title
+			[ '[](https://localhost:8000/f/1)' ],
+			// Different url
+			[ '[title](https://localhost:8000/f/1/a/asdf.png)' ],
+			// Wrong fileId #1
+			[ '[image.png](https://localhost:8000/f/112)' ],
+			// Wrong fileId #2
+			[ '[image.png](https://localhost:8000/f/12)' ],
+			// Normal brackets around title
+			[ '(image.png)(https://localhost:8000/f/1)' ],
+			// Square brackets in title
+			['[title [#1]](https://localhost:8000/f/1)' ],
+			// Space between brackets
+			['[title] (https://localhost:8000/f/1)' ],
+		];
+	}
+
+	/**
+	 * @dataProvider contentReplaceAttachmentFileIdNoReplaceProvider
+	 */
+	public function testReplaceAttachmentFileIdNoReplace(string $sourceContent): void {
+		$target = $this->createMock(File::class);
+		$target->method('getId')->willReturn(2);
+		$target->method('getContent')->willReturn($sourceContent);
+		$replacedContent = '';
+		$target->method('putContent')->willReturnCallback(function (string $content) use (&$replacedContent) {
+			$replacedContent = $content;
+		});
+
+		AttachmentService::replaceAttachmentFileIds($target, [[1, 2]]);
+		$this->assertEquals($sourceContent, $replacedContent);
+	}
 }
