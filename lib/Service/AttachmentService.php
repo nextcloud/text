@@ -643,27 +643,34 @@ class AttachmentService {
 	 * @param File $source
 	 * @param File $target
 	 *
+	 * @return array file id translation map
 	 * @throws InvalidPathException
 	 * @throws NoUserException
 	 * @throws NotFoundException
 	 * @throws NotPermittedException
 	 * @throws LockedException
 	 */
-	public function copyAttachments(File $source, File $target): void {
+	public function copyAttachments(File $source, File $target): array {
 		try {
 			$sourceAttachmentDir = $this->getAttachmentDirectoryForFile($source);
 		} catch (NotFoundException $e) {
 			// silently return if no attachment dir was found for source file
-			return;
+			return [];
 		}
 		// create a new attachment dir next to the new file
 		$targetAttachmentDir = $this->getAttachmentDirectoryForFile($target, true);
 		// copy the attachment files
+		$fileIdMapping = [];
 		foreach ($sourceAttachmentDir->getDirectoryListing() as $sourceAttachment) {
 			if ($sourceAttachment instanceof File) {
-				$targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
+				$newFile = $targetAttachmentDir->newFile($sourceAttachment->getName(), $sourceAttachment->getContent());
+				$fileIdMapping[] = [
+					$sourceAttachment->getId(),
+					$newFile->getId()
+				];
 			}
 		}
+		return $fileIdMapping;
 	}
 
 	public static function replaceAttachmentFolderId(File $source, File $target): void {
@@ -680,6 +687,20 @@ class AttachmentService {
 			'${1}' . $targetId . '${2}',
 			'${1}' . $targetId . '${2}',
 		];
+		$content = preg_replace($patterns, $replacements, $target->getContent());
+		if ($content !== null) {
+			$target->putContent($content);
+		}
+	}
+
+	public static function replaceAttachmentFileIds(File $target, array $fileIdMapping): void {
+		$patterns = [];
+		$replacements = [];
+		foreach ($fileIdMapping as $mapping) {
+			$patterns[] = '/(\[(?:\\\]|[^]])+\]\(\s*\S+\/f\/)' . $mapping[0] . '(\s*)(\(preview\)\s*)?\)/';
+			// Replace `[title](URL/f/sourceId (preview))` with `[title](URL/f/targetId (preview))`
+			$replacements[] = '${1}' . $mapping[1] . '${2}${3})';
+		}
 		$content = preg_replace($patterns, $replacements, $target->getContent());
 		if ($content !== null) {
 			$target->putContent($content);
