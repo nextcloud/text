@@ -216,13 +216,18 @@ class AttachmentController extends ApiController implements ISessionAwareControl
 				$userId = $this->getUserId();
 				$imageFile = $this->attachmentService->getImageFile($documentId, $imageFileName, $userId, $preferRawImage === 1);
 			}
-			return $imageFile !== null
-				? new DataDownloadResponse(
+
+			if ($imageFile !== null) {
+				$response = new DataDownloadResponse(
 					$imageFile->getContent(),
 					$imageFile->getName(),
 					$this->getSecureMimeType($imageFile->getMimeType())
-				)
-				: new DataResponse('', Http::STATUS_NOT_FOUND);
+				);
+				$response->cacheFor(3600 * 24, false, true);
+				return $response;
+			}
+
+			return  new DataResponse('', Http::STATUS_NOT_FOUND);
 		} catch (Exception $e) {
 			$this->logger->error('getImageFile error', ['exception' => $e]);
 			return new DataResponse('', Http::STATUS_NOT_FOUND);
