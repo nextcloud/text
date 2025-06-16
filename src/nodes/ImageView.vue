@@ -6,6 +6,7 @@
 <template>
 	<NodeViewWrapper :contenteditable="isEditable">
 		<figure
+			ref="wrapper"
 			class="image image-view"
 			data-component="image-view"
 			:data-attachment-type="attachmentType"
@@ -105,6 +106,12 @@
 						@close="showImageModal = false" />
 				</div>
 			</div>
+			<div v-else-if="canDisplayPlaceholder" class="image__placeholder">
+				<NcBlurHash
+					:hash="imageBlurhash"
+					:style="blurhashSize"
+					aria-hidden="true" />
+			</div>
 			<div v-else class="image-view__cant_display">
 				<transition name="fade">
 					<div v-show="loaded" class="image__caption">
@@ -128,7 +135,9 @@
 <script>
 import ClickOutside from 'vue-click-outside'
 import NcButton from '@nextcloud/vue/components/NcButton'
+import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
 import { showError } from '@nextcloud/dialogs'
+import { logger } from '../helpers/logger.js'
 import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
 import { useAttachmentResolver } from '../components/Editor.provider.js'
 import { emit } from '@nextcloud/event-bus'
@@ -149,6 +158,7 @@ export default {
 		ImageIcon,
 		DeleteIcon,
 		NcButton,
+		NcBlurHash,
 		ShowImageModal,
 		NodeViewWrapper,
 	},
@@ -160,7 +170,13 @@ export default {
 	data() {
 		return {
 			attachment: null,
+			attachmentPromise: null,
 			imageLoaded: false,
+			imageWidth: 0,
+			imageHeight: 0,
+			wrapperWidth: 0,
+			resizeObserver: null,
+			imageBlurhash: null,
 			loaded: false,
 			failed: false,
 			showIcons: false,
@@ -199,6 +215,25 @@ export default {
 
 			return this.loaded && this.imageLoaded
 		},
+		canDisplayPlaceholder() {
+			return this.imageHeight > 0
+		},
+		blurhashSize() {
+			if (this.imageWidth > 0 && this.imageHeight > 0) {
+				const ratio = this.imageWidth / this.imageHeight
+				const newWidth =
+					this.wrapperWidth - 12 > this.imageWidth
+						? this.imageWidth
+						: this.wrapperWidth - 12
+				const newHeight = newWidth / ratio
+
+				return {
+					width: `${newWidth}px`,
+					height: `${newHeight}px`,
+				}
+			}
+			return {}
+		},
 		src: {
 			get() {
 				return this.node.attrs.src || ''
@@ -233,6 +268,10 @@ export default {
 		})
 	},
 	mounted() {
+		this.attachmentPromise = this.$attachmentResolver.resolve(this.src)
+		this.loadAttachmentMetadata()
+		this.setupResizeObserver()
+
 		this.$nextTick(() => {
 			// nextTick is necessary, intersection detection is slightly unreliable without it
 			const options = {
@@ -254,10 +293,43 @@ export default {
 	},
 	beforeUnmount() {
 		this.loadIntersectionObserver?.disconnect()
+		this.resizeObserver?.disconnect()
 	},
 	methods: {
+		setupResizeObserver() {
+			if (!this.$refs.wrapper) return
+
+			this.resizeObserver = new ResizeObserver((entries) => {
+				const width = entries[0].contentRect.width
+				if (width > 0) {
+					this.wrapperWidth = width
+				}
+			})
+
+			this.resizeObserver.observe(this.$refs.wrapper)
+		},
+		async loadAttachmentMetadata() {
+			try {
+				this.attachment = await this.attachmentPromise
+
+				const metadata = this.attachment?.metadata || null
+
+				if (metadata) {
+					const size = metadata['photos-size']?.value
+					this.imageWidth = size?.width || 0
+					this.imageHeight = size?.height || 0
+
+					this.imageBlurhash = metadata.blurhash?.value || null
+				}
+			} catch (err) {
+				// TODO: bump up to warn when the Photos dependency is gone (i.e., we can expect the metadata to exist)
+				logger.debug('Failed to load attachment metadata', { err })
+			}
+		},
 		async loadPreview() {
-			this.attachment = await this.$attachmentResolver.resolve(this.src)
+			if (!this.attachment) {
+				this.attachment = await this.attachmentPromise
+			}
 			if (!this.attachment.previewUrl) {
 				throw new Error('Attachment source was not resolved')
 			}
@@ -268,6 +340,9 @@ export default {
 					this.imageLoaded = true
 					this.loaded = true
 					this.attachmentSize = this.attachment.size
+					// once the image is loaded, we can stop tracking the container width
+					//  since we only use it for sizing the placeholder
+					this.resizeObserver?.disconnect()
 				}
 				img.onerror = (e) => {
 					reject(new LoadImageError(e, this.attachment.previewUrl))
@@ -424,6 +499,12 @@ export default {
 
 .image__loading {
 	height: 100px;
+}
+
+.image__placeholder {
+	padding: 7px 6px;
+	margin-bottom: 26px;
+	position: relative;
 }
 
 .image__main {
