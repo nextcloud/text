@@ -46,7 +46,7 @@ export default {
 	},
 
 	mounted() {
-		this.$editor.on('transaction', () => this.updateState())
+		this.editor?.on('transaction', () => this.updateState())
 	},
 
 	methods: {
@@ -58,7 +58,7 @@ export default {
 			} else {
 				// Some actions run themselves.
 				// others still need to have .run() called upon them.
-				actionEntry.action(this.$editor.chain().focus(), this.$editor)?.run()
+				actionEntry.action(this.editor?.chain().focus(), this.editor)?.run()
 			}
 
 			this.$nextTick(() => {

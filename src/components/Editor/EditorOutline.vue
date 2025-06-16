@@ -25,7 +25,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
-import { useIsMobileMixin } from '../Editor.provider.js'
+import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
 	name: 'EditorOutline',

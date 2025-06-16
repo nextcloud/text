@@ -20,7 +20,7 @@
 <script>
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { useSyncServiceMixin } from '../Editor.provider.js'
+import { useSyncServiceMixin } from '../Editor.provider.ts'
 
 export default {
 	name: 'GuestNameDialog',

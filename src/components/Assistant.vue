@@ -5,9 +5,9 @@
 <template>
 	<div v-if="showAssistant" class="text-assistant">
 		<FloatingMenu
-			v-if="$editor"
+			v-if="editor"
 			plugin-key="assistantMenu"
-			:editor="$editor"
+			:editor="editor"
 			:tippy-options="floatingOptions()"
 			:should-show="floatingShow"
 			class="floating-menu"
@@ -163,11 +163,11 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import {
-	useEditorMixin,
+	useEditor,
 	useIsRichWorkspaceMixin,
 	useFileMixin,
 	useIsPublicMixin,
-} from './Editor.provider.js'
+} from './Editor.provider.ts'
 import { FloatingMenu } from '@tiptap/vue-2'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import markdownit from '../markdownit/index.js'
@@ -206,12 +206,11 @@ export default {
 		NcListItem,
 		NcModal,
 	},
-	mixins: [
-		useEditorMixin,
-		useIsPublicMixin,
-		useIsRichWorkspaceMixin,
-		useFileMixin,
-	],
+	mixins: [useIsPublicMixin, useIsRichWorkspaceMixin, useFileMixin],
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
+	},
 	data() {
 		return {
 			taskTypes: OCP.InitialState.loadState('text', 'taskprocessing'),
@@ -271,7 +270,7 @@ export default {
 			return
 		}
 
-		this.$editor.on('selectionUpdate', this.onSelection)
+		this.editor?.on('selectionUpdate', this.onSelection)
 		this.fetchTasks()
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
@@ -280,7 +279,7 @@ export default {
 			return
 		}
 
-		this.$editor.off('selectionUpdate', this.onSelection)
+		this.editor?.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
 	methods: {
@@ -313,7 +312,10 @@ export default {
 			await this.fetchTasks()
 		},
 		onSelection() {
-			const { state } = this.$editor
+			const { state } = this.editor ?? {}
+			if (!state) {
+				return
+			}
 			const { from, to } = state.selection
 			this.selection = state.doc.textBetween(from, to, ' ')
 		},
@@ -343,7 +345,7 @@ export default {
 		},
 		openTranslateDialog() {
 			if (!this.selection.trim().length) {
-				this.$editor.commands.selectAll()
+				this.editor?.commands.selectAll()
 			}
 			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
@@ -367,7 +369,7 @@ export default {
 			const content = isMarkdown
 				? markdownit.render(task.output.output)
 				: task.output.output
-			this.$editor.commands.insertContent(content)
+			this.editor?.commands.insertContent(content)
 			this.showTaskList = false
 		},
 		async copyResult(task) {
@@ -402,9 +404,9 @@ export default {
 						.querySelector('.ProseMirror')
 						.getBoundingClientRect()
 					const pos = posToDOMRect(
-						this.$editor.view,
-						this.$editor.state.selection.from,
-						this.$editor.state.selection.to,
+						this.editor?.view,
+						this.editor?.state.selection.from,
+						this.editor?.state.selection.to,
 					)
 					let rightSpacing = 0
 
