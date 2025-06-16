@@ -17,8 +17,8 @@ export default {
 			const html = isRichEditor
 				? markdownit.render(content) + '<p/>'
 				: `<pre>${escapeHtml(content)}</pre>`
-			this.$editor
-				.chain()
+			this.editor
+				?.chain()
 				.setContent(html, addToHistory)
 				.command(({ tr }) => {
 					tr.setMeta('addToHistory', addToHistory)

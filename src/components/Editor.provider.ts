@@ -3,9 +3,34 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { Editor } from '@tiptap/core'
 import { logger } from '../helpers/logger.js'
+import { provide, inject, shallowRef } from 'vue'
+import type { InjectionKey, ShallowRef } from 'vue'
 
-export const EDITOR = Symbol('tiptap:editor')
+export const editorKey = Symbol('tiptap:editor') as InjectionKey<
+	ShallowRef<Editor | undefined>
+>
+export const provideEditor = () => {
+	const editor: ShallowRef<Editor | undefined> = shallowRef(undefined)
+	provide(editorKey, editor)
+	const setEditable = (val: boolean) => {
+		if (editor.value && editor.value.isEditable !== val) {
+			editor.value.setEditable(val)
+		}
+	}
+	return { editor, setEditable }
+}
+export const useEditor = () => {
+	const editor = inject(editorKey, shallowRef(undefined))
+	const setEditable = (val: boolean) => {
+		if (editor.value && editor.value.isEditable !== val) {
+			editor.value.setEditable(val)
+		}
+	}
+	return { editor, setEditable }
+}
+
 export const FILE = Symbol('editor:file')
 export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
@@ -16,12 +41,6 @@ export const SYNC_SERVICE = Symbol('sync:service')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
-
-export const useEditorMixin = {
-	inject: {
-		$editor: { from: EDITOR, default: null },
-	},
-}
 
 export const useSyncServiceMixin = {
 	inject: {
@@ -71,7 +90,7 @@ export const useAttachmentResolver = {
 		$attachmentResolver: {
 			from: ATTACHMENT_RESOLVER,
 			default: {
-				resolve(src) {
+				resolve(src: string) {
 					logger.warn(
 						'No attachment resolver provided. Some attachment sources cannot be resolved.',
 					)

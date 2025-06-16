@@ -21,7 +21,7 @@
 			:show-outline-outside="showOutlineOutside"
 			@read-only-toggled="readOnlyToggled"
 			@outline-toggled="outlineToggled">
-			<MainContainer v-if="hasEditor">
+			<MainContainer v-if="editor">
 				<!-- Readonly -->
 				<div
 					v-if="readOnly || (openReadOnlyEnabled && !editMode)"
@@ -70,7 +70,7 @@
 			:sync-error="syncError"
 			:has-connection-issue="requireReconnect"
 			@reconnect="reconnect" />
-		<Assistant v-if="hasEditor" />
+		<Assistant v-if="editor" />
 		<Translate
 			:show="translateModal"
 			:content="translateContent"
@@ -93,7 +93,7 @@ import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
 
 import {
-	EDITOR,
+	provideEditor,
 	FILE,
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
@@ -101,7 +101,7 @@ import {
 	IS_RICH_EDITOR,
 	IS_RICH_WORKSPACE,
 	SYNC_SERVICE,
-} from './Editor.provider.js'
+} from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
@@ -161,13 +161,9 @@ export default {
 		const val = {}
 
 		// providers aren't naturally reactive
-		// and $editor will start as null
 		// using getters we can always provide the
-		// actual $editor, and other values without being reactive
+		// actual values without being reactive
 		Object.defineProperties(val, {
-			[EDITOR]: {
-				get: () => this.$editor,
-			},
 			[SYNC_SERVICE]: {
 				get: () => this.$syncService,
 			},
@@ -253,7 +249,15 @@ export default {
 		})
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		return { el, width, hasConnectionIssue, requireReconnect }
+		const { editor, setEditable } = provideEditor()
+		return {
+			el,
+			width,
+			hasConnectionIssue,
+			requireReconnect,
+			editor,
+			setEditable,
+		}
 	},
 
 	data() {
@@ -272,7 +276,6 @@ export default {
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
-			hasEditor: false,
 			readOnly: true,
 			openReadOnlyEnabled: OCA.Text.OpenReadOnlyEnabled,
 			editMode: true,
@@ -374,9 +377,7 @@ export default {
 			if (val) {
 				this.emit('sync-service:error')
 			}
-			if (this.$editor?.isEditable === val) {
-				this.$editor.setEditable(!val)
-			}
+			this.setEditable(!val)
 		},
 	},
 	mounted() {
@@ -404,7 +405,6 @@ export default {
 		//   Y.logUpdate(update)
 		// });
 		this.$providers = []
-		this.$editor = null
 		this.$syncService = null
 		this.$attachmentResolver = null
 	},
@@ -445,11 +445,11 @@ export default {
 				baseVersionEtag: this.$baseVersionEtag,
 				serialize: this.isRichEditor
 					? (content) =>
-							createMarkdownSerializer(this.$editor.schema).serialize(
-								content ?? this.$editor.state.doc,
+							createMarkdownSerializer(this.editor?.schema).serialize(
+								content ?? this.editor?.state.doc,
 							)
 					: (content) =>
-							serializePlainText(content ?? this.$editor.state.doc),
+							serializePlainText(content ?? this.editor?.state.doc),
 				getDocumentState: () => getDocumentState(this.$ydoc),
 			})
 
@@ -466,17 +466,17 @@ export default {
 		},
 
 		listenEditorEvents() {
-			this.$editor.on('focus', this.onFocus)
-			this.$editor.on('blur', this.onBlur)
-			this.$editor.on('create', this.onCreate)
-			this.$editor.on('update', this.onUpdate)
+			this.editor?.on('focus', this.onFocus)
+			this.editor?.on('blur', this.onBlur)
+			this.editor?.on('create', this.onCreate)
+			this.editor?.on('update', this.onUpdate)
 		},
 
 		unlistenEditorEvents() {
-			this.$editor.off('focus', this.onFocus)
-			this.$editor.off('blur', this.onBlur)
-			this.$editor.off('create', this.onCreate)
-			this.$editor.off('update', this.onUpdate)
+			this.editor?.off('focus', this.onFocus)
+			this.editor?.off('blur', this.onBlur)
+			this.editor?.off('create', this.onCreate)
+			this.editor?.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -562,9 +562,7 @@ export default {
 			this.readOnly = document.readOnly
 			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
 
-			if (this.$editor) {
-				this.$editor.setEditable(this.editMode)
-			}
+			this.setEditable(this.editMode)
 			this.lock = this.$syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
@@ -598,8 +596,8 @@ export default {
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
-			if (this.$editor) {
-				// $editor already existed. So this is a reconnect.
+			if (this.editor) {
+				// editor already existed. So this is a reconnect.
 				this.$syncService.startSync()
 				return
 			}
@@ -620,20 +618,18 @@ export default {
 				}),
 			]
 			if (this.isRichEditor) {
-				this.$editor = createRichEditor({
+				this.editor = createRichEditor({
 					relativePath: this.relativePath,
 					session,
 					extensions,
 					isEmbedded: this.isEmbedded,
 				})
-				this.hasEditor = true
 				this.listenEditorEvents()
 			} else {
 				const language =
 					extensionHighlight[this.fileExtension] || this.fileExtension
 				loadSyntaxHighlight(language).then(() => {
-					this.$editor = createPlainEditor({ language, extensions })
-					this.hasEditor = true
+					this.editor = createPlainEditor({ language, extensions })
 					this.listenEditorEvents()
 				})
 			}
@@ -644,10 +640,7 @@ export default {
 			this.document = document
 
 			this.syncError = null
-			const editable = this.editMode && !this.requireReconnect
-			if (this.$editor.isEditable !== editable) {
-				this.$editor.setEditable(editable)
-			}
+			this.setEditable(this.editMode && !this.requireReconnect)
 		},
 
 		onCreate({ editor }) {
@@ -719,21 +712,22 @@ export default {
 		},
 
 		onStateChange(state) {
+			const editor = this.editor
+			if (!editor) {
+				return
+			}
 			if (state.initialLoading && !this.contentLoaded) {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
 					this.$nextTick(() => {
-						this.$editor.commands.autofocus()
+						editor.commands.autofocus()
 					})
 				}
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
-				if (
-					this.$editor
-					&& (this.$editor.can().undo() || this.$editor.can().redo())
-				) {
+				if (editor.can().undo() || editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
 						this.$syncService.autosave()
@@ -747,7 +741,7 @@ export default {
 			this.idle = true
 			this.readOnly = true
 			this.editMode = false
-			this.$editor.setEditable(this.editMode)
+			this.setEditable(this.editMode)
 
 			this.$nextTick(() => {
 				this.emit('sync-service:idle')
@@ -807,12 +801,11 @@ export default {
 			await this.disconnect().catch((err) =>
 				logger.warn('Failed to disconnect', { err }),
 			)
-			if (this.$editor) {
+			if (this.editor) {
 				try {
 					this.unlistenEditorEvents()
-					this.$editor.destroy()
-					this.$editor = null
-					this.hasEditor = false
+					this.editor.destroy()
+					this.editor = undefined
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}
@@ -895,7 +888,7 @@ export default {
 				this.$syncService.save()
 			}
 			this.editMode = !this.editMode
-			this.$editor.setEditable(this.editMode)
+			this.setEditable(this.editMode)
 		},
 
 		showTranslateModal(e) {
@@ -905,14 +898,17 @@ export default {
 		hideTranslate() {
 			this.translateModal = false
 		},
+		applyCommand(fn) {
+			this.editor?.commands?.command(fn)
+		},
 		translateInsert(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
+			this.applyCommand(({ tr, commands }) => {
 				return commands.insertContentAt(tr.selection.to, content)
 			})
 			this.translateModal = false
 		},
 		translateReplace(content) {
-			this.$editor.commands.command(({ tr, commands }) => {
+			this.applyCommand(({ tr, commands }) => {
 				const selection = tr.selection
 				const range = {
 					from: selection.from,
@@ -926,10 +922,8 @@ export default {
 		handleEditorWidthChange(newWidth) {
 			this.updateEditorWidth(newWidth)
 			this.$nextTick(() => {
-				if (this.$editor) {
-					this.$editor.view.updateState(this.$editor.view.state)
-					this.$editor.commands.focus()
-				}
+				this.editor?.view.updateState(this.editor?.view.state)
+				this.editor?.commands.focus()
 			})
 		},
 		updateEditorWidth(newWidth) {

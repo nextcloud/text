@@ -15,14 +15,14 @@
 		<slot />
 		<EditorContent role="document"
 			class="editor__content text-editor__content"
-			:editor="$editor" />
+			:editor="editor" />
 		<div class="text-editor__content-wrapper__right" />
 	</div>
 </template>
 
 <script>
 import { EditorContent } from '@tiptap/vue-2'
-import { useEditorMixin } from '../Editor.provider.js'
+import { useEditor } from '../Editor.provider.ts'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
 import EditorOutline from './EditorOutline.vue'
 
@@ -32,7 +32,11 @@ export default {
 		EditorContent,
 		EditorOutline,
 	},
-	mixins: [useEditorMixin, useOutlineStateMixin],
+	mixins: [useOutlineStateMixin],
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
+	},
 	computed: {
 		showOutline() {
 			return this.$outlineState.visible

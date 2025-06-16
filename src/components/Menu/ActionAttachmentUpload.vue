@@ -64,7 +64,7 @@ import {
 	useIsPublicMixin,
 	useEditorUpload,
 	useSyncServiceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import {

@@ -35,11 +35,11 @@ const getKeys = (isMobile, { keyChar, keyModifiers }) => {
 		: ''
 }
 
-const isDisabled = (actionEntry, $editor) => {
-	return actionEntry.action && !actionEntry.action($editor.can(), $editor)
+const isDisabled = (actionEntry, editor) => {
+	return actionEntry.action && !actionEntry.action(editor.can(), editor)
 }
 
-const getIsActive = ({ isActive }, $editor) => {
+const getIsActive = ({ isActive }, editor) => {
 	if (!isActive) {
 		return false
 	}
@@ -60,7 +60,7 @@ const getIsActive = ({ isActive }, $editor) => {
 		} else {
 			args = [type]
 		}
-		if ($editor.isActive(...args)) {
+		if (editor.isActive(...args)) {
 			return true
 		}
 	}
@@ -92,11 +92,11 @@ const getType = (actionEntry) => {
 	return 'button'
 }
 
-const getActionState = (actionEntry, $editor) => {
-	const active = getIsActive(actionEntry, $editor)
+const getActionState = (actionEntry, editor) => {
+	const active = getIsActive(actionEntry, editor)
 
 	return {
-		disabled: isDisabled(actionEntry, $editor),
+		disabled: isDisabled(actionEntry, editor),
 		class: getEntryClasses(actionEntry, active),
 		active,
 		type: getType(actionEntry),

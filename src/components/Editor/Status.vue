@@ -35,7 +35,7 @@ import {
 	useIsMobileMixin,
 	useIsPublicMixin,
 	useSyncServiceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 
 export default {

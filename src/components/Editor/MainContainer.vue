@@ -14,7 +14,7 @@
 
 <script>
 import MediaHandler from './MediaHandler.vue'
-import { useEditorUpload } from '../Editor.provider.js'
+import { useEditorUpload } from '../Editor.provider.ts'
 
 export default {
 	name: 'MainContainer',

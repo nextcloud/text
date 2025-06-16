@@ -32,10 +32,10 @@ import { logger } from '../../helpers/logger.js'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 
 import {
-	useEditorMixin,
+	useEditor,
 	useFileMixin,
 	useSyncServiceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
 
 import {
 	ACTION_ATTACHMENT_PROMPT,
@@ -48,7 +48,7 @@ const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
 export default {
 	name: 'MediaHandler',
-	mixins: [useEditorMixin, useFileMixin, useSyncServiceMixin],
+	mixins: [ useFileMixin, useSyncServiceMixin],
 	provide() {
 		const val = {}
 
@@ -71,8 +71,9 @@ export default {
 	},
 	setup() {
 		const isMobile = useIsMobile()
+		const { editor } = useEditor()
 		return {
-			isMobile,
+			editor, isMobile,
 		}
 	},
 	data() {
@@ -192,8 +193,7 @@ export default {
 		insertAttachmentPreview(fileId) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
-			this.$editor
-				.chain()
+			this.editor?.chain()
 				.focus()
 				.insertPreview(href)
 				.run()
@@ -209,25 +209,28 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 
+			if (!this.editor) {
+				return
+			}
 			const chain = position
-				? this.$editor.chain().focus(position)
-				: this.$editor.chain()
+				? this.editor.chain().focus(position)
+				: this.editor.chain()
 
 			chain.setImage({ src, alt }).run()
 
-			const selection = this.$editor.view.state.selection
+			const selection = this.editor.view.state.selection
 			if (!selection.empty) {
 				// If inserted image is first element, it is selected and would get overwritten by
 				// subsequent editor inserts (see tiptap#3355). So unselect the image by placing
 				// the cursor at the end of the selection.
-				this.$editor.commands.focus(selection.to)
+				this.editor.commands.focus(selection.to)
 			}
 
 			// Scroll image into view
-			this.$editor.commands.scrollIntoView()
+			this.editor.commands.scrollIntoView()
 
 			// Store last inserted attachment src to focus it in ImageView.vue
-			this.$editor.commands.setMeta('insertedAttachmentSrc', { src })
+			this.editor.commands.setMeta('insertedAttachmentSrc', { src })
 
 			emit('text:image-node:add', null)
 		},

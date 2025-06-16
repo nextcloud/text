@@ -27,7 +27,7 @@ import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
-import { ATTACHMENT_RESOLVER, EDITOR, IS_RICH_EDITOR } from '../Editor.provider.js'
+import { provideEditor, ATTACHMENT_RESOLVER, IS_RICH_EDITOR } from '../Editor.provider.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
@@ -42,9 +42,6 @@ export default {
 		const val = {}
 
 		Object.defineProperties(val, {
-			[EDITOR]: {
-				get: () => this.$editor,
-			},
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver ?? null,
 			},
@@ -88,6 +85,11 @@ export default {
 	},
 	emits: ['update:content'],
 
+	setup() {
+		const { editor, setEditable } = provideEditor()
+		return { editor, setEditable }
+	},
+
 	computed: {
 		htmlContent() {
 			return this.renderHtml(this.content)
@@ -101,8 +103,8 @@ export default {
 	},
 
 	created() {
-		this.$editor = this.createEditor()
-		this.$editor.setEditable(!this.readOnly)
+		this.editor = this.createEditor()
+		this.setEditable(!this.readOnly)
 		if (this.fileId) {
 			this.$attachmentResolver = new AttachmentResolver({
 				currentDirectory: this.relativePath?.match(/.*\//),
@@ -114,11 +116,11 @@ export default {
 	},
 
 	updated() {
-		this.$editor.setEditable(!this.readOnly)
+		this.setEditable(!this.readOnly)
 	},
 
 	beforeDestroy() {
-		this.$editor.destroy()
+		this.editor.destroy()
 	},
 
 	methods: {
@@ -141,7 +143,7 @@ export default {
 				content: this.htmlContent,
 				extensions: this.extensions(),
 				onUpdate: ({ editor }) => {
-					const markdown = (createMarkdownSerializer(this.$editor.schema)).serialize(editor.state.doc)
+					const markdown = (createMarkdownSerializer(this.editor?.schema)).serialize(editor.state.doc)
 					this.emit('update:content', {
 						json: editor.state.doc,
 						markdown,
@@ -155,7 +157,7 @@ export default {
 		},
 
 		updateContent() {
-			this.$editor.commands.setContent(this.htmlContent, true)
+			this.editor?.commands.setContent(this.htmlContent, true)
 		},
 
 		outlineToggled(visible) {

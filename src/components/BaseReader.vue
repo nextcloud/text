@@ -14,10 +14,10 @@
 			<EditorOutline />
 		</div>
 		<EditorContent
-			v-if="$editor"
+			v-if="editor"
 			id="read-only-editor"
 			class="editor__content text-editor__content"
-			:editor="$editor" />
+			:editor="editor" />
 		<div class="text-editor__content-wrapper__right" />
 	</div>
 </template>
@@ -25,7 +25,7 @@
 <script>
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
-import { EDITOR } from './Editor.provider.js'
+import { provideEditor } from './Editor.provider.ts'
 import {
 	useOutlineStateMixin,
 	useOutlineActions,
@@ -41,18 +41,6 @@ export default {
 
 	mixins: [useOutlineStateMixin, useOutlineActions],
 
-	provide() {
-		const val = {}
-
-		Object.defineProperties(val, {
-			[EDITOR]: {
-				get: () => this.$editor,
-			},
-		})
-
-		return val
-	},
-
 	// extensions is a factory building a list of extensions for the editor
 	inject: ['renderHtml', 'extensions'],
 
@@ -61,6 +49,11 @@ export default {
 			type: String,
 			required: true,
 		},
+	},
+
+	setup() {
+		const { editor, setEditable } = provideEditor()
+		return { editor, setEditable }
 	},
 
 	computed: {
@@ -79,12 +72,12 @@ export default {
 	},
 
 	created() {
-		this.$editor = this.createEditor()
-		this.$editor.setEditable(false)
+		this.editor = this.createEditor()
+		this.setEditable(false)
 	},
 
 	beforeDestroy() {
-		this.$editor.destroy()
+		this.editor.destroy()
 	},
 
 	methods: {
@@ -96,7 +89,7 @@ export default {
 		},
 
 		updateContent() {
-			this.$editor.commands.setContent(this.htmlContent, true)
+			this.editor.commands.setContent(this.htmlContent, true)
 		},
 	},
 }

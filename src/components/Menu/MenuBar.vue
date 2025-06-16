@@ -77,11 +77,11 @@ import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
-	useEditorMixin,
+	useEditor,
 	useIsMobileMixin,
 	useIsRichEditorMixin,
 	useIsRichWorkspaceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
 
 export default {
 	name: 'MenuBar',
@@ -97,7 +97,6 @@ export default {
 	},
 	extends: ToolBarLogic,
 	mixins: [
-		useEditorMixin,
 		useIsMobileMixin,
 		useIsRichEditorMixin,
 		useIsRichWorkspaceMixin,
@@ -125,9 +124,10 @@ export default {
 	},
 
 	setup() {
+		const editor = useEditor()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { menubar, width }
+		return { editor, menubar, width }
 	},
 
 	data() {
@@ -209,15 +209,19 @@ export default {
 			this.displayHelp = false
 		},
 		showTranslate() {
-			const { from, to } = this.$editor.view.state.selection
-			let selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
+			if(!this.editor) {
+				return
+			}
+			const { commands, view: { state }} = this.editor
+			const { from, to } = state.selection
+			let selectedText = state.doc.textBetween(from, to, ' ')
 
 			if (!selectedText.trim().length) {
-				this.$editor.commands.selectAll()
-				selectedText = this.$editor.view.state.doc.textContent
+				commands.selectAll()
+				selectedText = state.doc.textContent
 			}
 
-			console.debug('translation click', this.$editor.view.state.selection, selectedText)
+			console.debug('translation click', state.selection, selectedText)
 			emit('text:translate-modal:show', { content: selectedText })
 		},
 	},

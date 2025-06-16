@@ -16,7 +16,7 @@
 
 <script>
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
+import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from '../Editor.provider.ts'
 import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 
 export default {
