@@ -31,6 +31,7 @@ import {
 	useOutlineActions,
 } from './Editor/Wrapper.provider.js'
 import EditorOutline from './Editor/EditorOutline.vue'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
 
 export default {
 	name: 'BaseReader',
@@ -52,7 +53,8 @@ export default {
 	},
 
 	setup() {
-		const { editor, setEditable } = provideEditor()
+		const { editor } = provideEditor()
+		const { setEditable } = useEditorMethods(editor)
 		return { editor, setEditable }
 	},
 
@@ -77,7 +79,7 @@ export default {
 	},
 
 	beforeDestroy() {
-		this.editor.destroy()
+		this.editor?.destroy()
 	},
 
 	methods: {
@@ -89,7 +91,7 @@ export default {
 		},
 
 		updateContent() {
-			this.editor.commands.setContent(this.htmlContent, true)
+			this.editor?.commands.setContent(this.htmlContent, true)
 		},
 	},
 }

@@ -14,21 +14,11 @@ export const editorKey = Symbol('tiptap:editor') as InjectionKey<
 export const provideEditor = () => {
 	const editor: ShallowRef<Editor | undefined> = shallowRef(undefined)
 	provide(editorKey, editor)
-	const setEditable = (val: boolean) => {
-		if (editor.value && editor.value.isEditable !== val) {
-			editor.value.setEditable(val)
-		}
-	}
-	return { editor, setEditable }
+	return { editor }
 }
 export const useEditor = () => {
 	const editor = inject(editorKey, shallowRef(undefined))
-	const setEditable = (val: boolean) => {
-		if (editor.value && editor.value.isEditable !== val) {
-			editor.value.setEditable(val)
-		}
-	}
-	return { editor, setEditable }
+	return { editor }
 }
 
 export const FILE = Symbol('editor:file')

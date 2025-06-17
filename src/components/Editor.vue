@@ -123,7 +123,7 @@ import { exposeForDebugging, removeFromDebugging } from '../helpers/debug.js'
 import { CollaborationCursor } from '../extensions/index.js'
 import DocumentStatus from './Editor/DocumentStatus.vue'
 import isMobile from './../mixins/isMobile.js'
-import setContent from './../mixins/setContent.js'
+import { setInitialYjsState } from '../helpers/setInitialYjsState.js'
 import MenuBar from './Menu/MenuBar.vue'
 import ContentContainer from './Editor/ContentContainer.vue'
 import Status from './Editor/Status.vue'
@@ -137,6 +137,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
 
 export default {
 	name: 'Editor',
@@ -155,7 +156,7 @@ export default {
 		Translate,
 		SuggestionsBar,
 	},
-	mixins: [isMobile, setContent],
+	mixins: [isMobile],
 
 	provide() {
 		const val = {}
@@ -249,7 +250,8 @@ export default {
 		})
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		const { editor, setEditable } = provideEditor()
+		const { editor } = provideEditor()
+		const { setEditable } = useEditorMethods(editor)
 		return {
 			el,
 			width,
@@ -589,7 +591,7 @@ export default {
 
 		onLoaded({ document, documentSource, documentState }) {
 			if (!documentState) {
-				this.setInitialYjsState(documentSource, {
+				setInitialYjsState(this.$ydoc, documentSource, {
 					isRichEditor: this.isRichEditor,
 				})
 			}
