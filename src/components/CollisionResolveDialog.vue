@@ -35,13 +35,13 @@ import {
 	useSyncServiceMixin,
 } from './Editor.provider.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import setContent from './../mixins/setContent.js'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
 	},
-	mixins: [useIsRichEditorMixin, setContent, useSyncServiceMixin],
+	mixins: [useIsRichEditorMixin, useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -50,8 +50,9 @@ export default {
 	},
 	setup() {
 		// editor is needed for the setContent mixin
-		const { editor, setEditable } = useEditor()
-		return { editor, setEditable }
+		const { editor } = useEditor()
+		const { setContent, setEditable } = useEditorMethods(editor)
+		return { editor, setContent, setEditable }
 	},
 	data() {
 		return {

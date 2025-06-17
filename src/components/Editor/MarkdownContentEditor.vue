@@ -34,6 +34,7 @@ import markdownit from '../../markdownit/index.js'
 import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
+import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -86,7 +87,8 @@ export default {
 	emits: ['update:content'],
 
 	setup() {
-		const { editor, setEditable } = provideEditor()
+		const { editor } = provideEditor()
+		const { setEditable } = useEditorMethods(editor)
 		return { editor, setEditable }
 	},
 
@@ -120,7 +122,7 @@ export default {
 	},
 
 	beforeDestroy() {
-		this.editor.destroy()
+		this.editor?.destroy()
 	},
 
 	methods: {
