@@ -329,6 +329,11 @@ describe('Markdown serializer from html', () => {
 	test('keep syntax for brackets', () => {
 		assertKeepSyntax('test [[foo]] bar')
 		assertKeepSyntax('test ![[foo]] bar')
+		assertKeepSyntax('test ![[note#^block]] bar')
+		assertKeepSyntax('test [mytest] foo')
+		assertKeepSyntax('test [[mytest]] [abc](test) foo')
+		assertKeepSyntax('test #foo test')
+		assertKeepSyntax('\\\\[ test')
 	})
 })
 
