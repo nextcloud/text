@@ -63,7 +63,7 @@ import { Loading, Folder, Upload, Plus } from '../icons.js'
 import {
 	useIsPublicMixin,
 	useEditorUpload,
-	useSyncServiceMixin,
+	useConnectionMixin,
 } from '../Editor.provider.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -90,7 +90,7 @@ export default {
 	mixins: [
 		useIsPublicMixin,
 		useEditorUpload,
-		useSyncServiceMixin,
+		useConnectionMixin,
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,
