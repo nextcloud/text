@@ -27,7 +27,7 @@ import { Editor } from '@tiptap/core'
 /* eslint-disable import/no-named-as-default */
 import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
-import { provideEditor, ATTACHMENT_RESOLVER, IS_RICH_EDITOR } from '../Editor.provider.ts'
+import { provideEditor, ATTACHMENT_RESOLVER, editorFlagsKey } from '../Editor.provider.ts'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
@@ -35,6 +35,7 @@ import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { provide, ref } from 'vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -45,9 +46,6 @@ export default {
 		Object.defineProperties(val, {
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver ?? null,
-			},
-			[IS_RICH_EDITOR]: {
-				get: () => true,
 			},
 		})
 
@@ -89,6 +87,11 @@ export default {
 	setup() {
 		const { editor } = provideEditor()
 		const { setEditable } = useEditorMethods(editor)
+		provide(editorFlagsKey, {
+			isPublic: ref(false),
+			isRichEditor: ref(true),
+			isRichWorkspace: ref(false),
+		})
 		return { editor, setEditable }
 	},
 

@@ -162,12 +162,7 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcListItem from '@nextcloud/vue/components/NcListItem'
 import NcModal from '@nextcloud/vue/components/NcModal'
-import {
-	useEditor,
-	useIsRichWorkspaceMixin,
-	useFileMixin,
-	useIsPublicMixin,
-} from './Editor.provider.ts'
+import { useEditor, useEditorFlags, useFileMixin } from './Editor.provider.ts'
 import { FloatingMenu } from '@tiptap/vue-2'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import markdownit from '../markdownit/index.js'
@@ -206,10 +201,11 @@ export default {
 		NcListItem,
 		NcModal,
 	},
-	mixins: [useIsPublicMixin, useIsRichWorkspaceMixin, useFileMixin],
+	mixins: [useFileMixin],
 	setup() {
 		const { editor } = useEditor()
-		return { editor }
+		const { isPublic, isRichWorkspace } = useEditorFlags()
+		return { editor, isPublic, isRichWorkspace }
 	},
 	data() {
 		return {
@@ -231,8 +227,8 @@ export default {
 	computed: {
 		showAssistant() {
 			return (
-				!this.$isRichWorkspace
-				&& !this.$isPublic
+				!this.isRichWorkspace
+				&& !this.isPublic
 				&& window.OCA.Assistant?.openAssistantForm
 			)
 		},

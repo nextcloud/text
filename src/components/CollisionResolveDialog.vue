@@ -29,11 +29,7 @@
 </template>
 
 <script>
-import {
-	useEditor,
-	useIsRichEditorMixin,
-	useSyncServiceMixin,
-} from './Editor.provider.ts'
+import { useEditor, useEditorFlags, useSyncServiceMixin } from './Editor.provider.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 export default {
@@ -41,7 +37,7 @@ export default {
 	components: {
 		NcButton,
 	},
-	mixins: [useIsRichEditorMixin, useSyncServiceMixin],
+	mixins: [useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -52,7 +48,8 @@ export default {
 		// editor is needed for the setContent mixin
 		const { editor } = useEditor()
 		const { setContent, setEditable } = useEditorMethods(editor)
-		return { editor, setContent, setEditable }
+		const { isRichEditor } = useEditorFlags()
+		return { editor, isRichEditor, setContent, setEditable }
 	},
 	data() {
 		return {
@@ -69,7 +66,7 @@ export default {
 			const { outsideChange } = this.syncError.data
 			this.clicked = true
 			this.setEditable(!this.readOnly)
-			this.setContent(outsideChange, { isRichEditor: this.$isRichEditor })
+			this.setContent(outsideChange, { isRichEditor: this.isRichEditor })
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
