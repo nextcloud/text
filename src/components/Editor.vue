@@ -84,7 +84,6 @@
 import Vue, { ref, set, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
-import { isPublicShare } from '@nextcloud/sharing/public'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
@@ -97,10 +96,8 @@ import {
 	FILE,
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
-	IS_PUBLIC,
-	IS_RICH_EDITOR,
-	IS_RICH_WORKSPACE,
 	SYNC_SERVICE,
+	provideEditorFlags,
 } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
@@ -174,15 +171,6 @@ export default {
 			[ATTACHMENT_RESOLVER]: {
 				get: () => this.$attachmentResolver,
 			},
-			[IS_PUBLIC]: {
-				get: () => this.isPublic,
-			},
-			[IS_RICH_EDITOR]: {
-				get: () => this.isRichEditor,
-			},
-			[IS_RICH_WORKSPACE]: {
-				get: () => this.isRichWorkspace,
-			},
 			[IS_MOBILE]: {
 				get: () => this.isMobile,
 			},
@@ -241,7 +229,7 @@ export default {
 		},
 	},
 
-	setup() {
+	setup(props) {
 		const el = ref(null)
 		const { width } = useElementSize(el)
 		watch(width, (value) => {
@@ -252,6 +240,7 @@ export default {
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { editor } = provideEditor()
 		const { setEditable } = useEditorMethods(editor)
+		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
 		return {
 			el,
 			width,
@@ -259,6 +248,9 @@ export default {
 			requireReconnect,
 			editor,
 			setEditable,
+			isPublic,
+			isRichEditor,
+			isRichWorkspace,
 		}
 	},
 
@@ -290,9 +282,6 @@ export default {
 		}
 	},
 	computed: {
-		isRichWorkspace() {
-			return this.richWorkspace
-		},
 		isResolvingConflict() {
 			return this.hasSyncCollission && !this.readOnly
 		},
@@ -303,15 +292,6 @@ export default {
 		},
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
-		},
-		isPublic() {
-			return this.isDirectEditing || isPublicShare()
-		},
-		isRichEditor() {
-			return (
-				loadState('text', 'rich_editing_enabled', true)
-				&& this.mime === 'text/markdown'
-			)
 		},
 		fileExtension() {
 			return this.relativePath

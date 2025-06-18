@@ -12,12 +12,12 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--hide': isHidden,
-			'text-menubar--is-workspace': $isRichWorkspace,
+			'text-menubar--is-workspace': isRichWorkspace,
 			'is-mobile': $isMobile,
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
-		<div v-if="$isRichEditor"
+		<div v-if="isRichEditor"
 			ref="menubar"
 			role="toolbar"
 			class="text-menubar__entries"
@@ -78,9 +78,8 @@ import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
 	useEditor,
+	useEditorFlags,
 	useIsMobileMixin,
-	useIsRichEditorMixin,
-	useIsRichWorkspaceMixin,
 } from '../Editor.provider.ts'
 
 export default {
@@ -98,8 +97,6 @@ export default {
 	extends: ToolBarLogic,
 	mixins: [
 		useIsMobileMixin,
-		useIsRichEditorMixin,
-		useIsRichWorkspaceMixin,
 	],
 	provide() {
 		const val = {}
@@ -125,9 +122,10 @@ export default {
 
 	setup() {
 		const editor = useEditor()
+		const { isRichEditor, isRichWorkspace } = useEditorFlags()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { editor, menubar, width }
+		return { editor, isRichEditor, isRichWorkspace, menubar, width }
 	},
 
 	data() {

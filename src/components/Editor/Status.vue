@@ -20,7 +20,7 @@
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog v-if="$isPublic && currentSession && !currentSession.userId" :session="currentSession" />
+			<GuestNameDialog v-if="isPublic && currentSession && !currentSession.userId" :session="currentSession" />
 		</SessionList>
 	</div>
 </template>
@@ -32,8 +32,8 @@ import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import {
+	useEditorFlags,
 	useIsMobileMixin,
-	useIsPublicMixin,
 	useSyncServiceMixin,
 } from '../Editor.provider.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
@@ -50,7 +50,6 @@ export default {
 
 	mixins: [
 		useIsMobileMixin,
-		useIsPublicMixin,
 		useSyncServiceMixin,
 		refreshMoment,
 	],
@@ -78,6 +77,11 @@ export default {
 				return {}
 			},
 		},
+	},
+
+	setup() {
+		const { isPublic } = useEditorFlags()
+		return { isPublic }
 	},
 
 	computed: {
