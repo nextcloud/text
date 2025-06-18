@@ -45,7 +45,6 @@ export default {
 		},
 	},
 	setup() {
-		// editor is needed for the setContent mixin
 		const { editor } = useEditor()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		const { isRichEditor } = useEditorFlags()

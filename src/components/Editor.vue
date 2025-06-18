@@ -694,22 +694,21 @@ export default {
 		},
 
 		onStateChange(state) {
-			const editor = this.editor
-			if (!editor) {
+			if (!this.editor) {
 				return
 			}
 			if (state.initialLoading && !this.contentLoaded) {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
 					this.$nextTick(() => {
-						editor.commands.autofocus()
+						this.editor.commands.autofocus()
 					})
 				}
 				this.emit('ready')
 			}
 			if (Object.prototype.hasOwnProperty.call(state, 'dirty')) {
 				// ignore initial loading and other automated changes before first user change
-				if (editor.can().undo() || editor.can().redo()) {
+				if (this.editor.can().undo() || this.editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
 						this.$syncService.autosave()

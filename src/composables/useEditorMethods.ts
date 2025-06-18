@@ -5,14 +5,13 @@
 
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
-import { unref, type ShallowRef } from 'vue'
+import type { ShallowRef } from 'vue'
 import markdownit from '../markdownit/index.js'
 
 export const useEditorMethods = (editor: ShallowRef<Editor | undefined>) => {
 	const setEditable = (val: boolean) => {
-		const ed = unref(editor)
-		if (ed && ed.isEditable !== val) {
-			ed.setEditable(val)
+		if (editor.value && editor.value.isEditable !== val) {
+			editor.value.setEditable(val)
 		}
 	}
 
