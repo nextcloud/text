@@ -14,7 +14,24 @@ import Text from '@tiptap/extension-text'
 export default Extension.create({
 	name: 'PlainText',
 
+	addOptions() {
+		return {
+			...this.parent?.(),
+			lowlight: undefined,
+			defaultLanguage: undefined,
+		}
+	},
+
 	addExtensions() {
-		return [CodeBlockPlainText, Keymap, PlainTextDocument, Text]
+		return [
+			CodeBlockPlainText.configure({
+				lowlight: this.options.lowlight,
+				defaultLanguage: this.options.defaultLanguage,
+				exitOnTripleEnter: false,
+			}),
+			Keymap,
+			PlainTextDocument,
+			Text,
+		]
 	},
 })
