@@ -13,8 +13,6 @@ import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
 import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
-// eslint-disable-next-line import/no-named-as-default
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
 const lowlight = createLowlight()
 
@@ -65,11 +63,10 @@ const createPlainEditor = ({ language, extensions = [] } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
-			PlainText,
-			CodeBlockLowlight.configure({
+			PlainText.configure({
+				// Options to be passed through to `CodeBlockPlainText`
 				lowlight,
 				defaultLanguage: language,
-				exitOnTripleEnter: false,
 			}),
 			FocusTrap,
 			...extensions,
