@@ -148,6 +148,6 @@
     "vue-template-compiler": "^2.7.16"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.42.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.44.0"
   }
 }
