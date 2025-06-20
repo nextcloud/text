@@ -107,12 +107,10 @@ import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService
 import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
-import { extensionHighlight } from '../helpers/mappings.js'
 import {
 	createRichEditor,
 	createPlainEditor,
 	serializePlainText,
-	loadSyntaxHighlight,
 } from './../EditorFactory.js'
 import { createMarkdownSerializer } from './../extensions/Markdown.js'
 import markdownit from './../markdownit/index.js'
@@ -135,6 +133,7 @@ import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { Session } from '../extensions/Session.ts'
 
 export default {
@@ -242,6 +241,10 @@ export default {
 		const { editor } = provideEditor()
 		const { setEditable } = useEditorMethods(editor)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
+		const { language, lowlightLoaded } = useSyntaxHighlighting(
+			isRichEditor,
+			props,
+		)
 		return {
 			el,
 			width,
@@ -252,6 +255,8 @@ export default {
 			isPublic,
 			isRichEditor,
 			isRichWorkspace,
+			language,
+			lowlightLoaded,
 		}
 	},
 
@@ -567,18 +572,16 @@ export default {
 
 		onLoaded({ document, documentSource, documentState }) {
 			if (!documentState) {
-				setInitialYjsState(this.$ydoc, documentSource, {
-					isRichEditor: this.isRichEditor,
+				this.lowlightLoaded.then(() => {
+					// only add the content once the syntax highlighting is ready
+					setInitialYjsState(this.$ydoc, documentSource, {
+						isRichEditor: this.isRichEditor,
+					})
 				})
 			}
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
-			if (this.editor) {
-				// editor already existed. So this is a reconnect.
-				this.$syncService.startSync()
-				return
-			}
 
 			const session = this.currentSession
 			const user = {
@@ -589,33 +592,29 @@ export default {
 				clientId: this.$ydoc.clientID,
 			}
 
+			if (this.editor) {
+				// editor already existed. So this is a reconnect.
+				this.$syncService.startSync()
+				this.editor.commands.setSession(this.currentSession)
+				this.editor.commands.updateUser(user)
+				return
+			}
 			const extensions = [
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.$ydoc }),
 				CollaborationCursor.configure({ provider: this.$providers[0] }),
 				Session,
 			]
-			if (this.isRichEditor) {
-				this.editor = createRichEditor({
-					relativePath: this.relativePath,
-					extensions,
-					isEmbedded: this.isEmbedded,
-				})
-				this.listenEditorEvents()
-				this.editor.commands.setSession(this.currentSession)
-				this.editor.commands.updateUser(user)
-			} else {
-				const extension = this.relativePath
-					?.split('/').pop().split('.').pop()
-					?? 'txt'
-				const language = extensionHighlight[extension] || extension
-				loadSyntaxHighlight(language).then(() => {
-					this.editor = createPlainEditor({ language, extensions })
-					this.listenEditorEvents()
-					this.editor.commands.setSession(this.currentSession)
-					this.editor.commands.updateUser(user)
-				})
-			}
+			this.editor = this.isRichEditor
+				? createRichEditor({
+						relativePath: this.relativePath,
+						extensions,
+						isEmbedded: this.isEmbedded,
+					})
+				: createPlainEditor({ language: this.language, extensions })
+			this.listenEditorEvents()
+			this.editor.commands.setSession(this.currentSession)
+			this.editor.commands.updateUser(user)
 		},
 
 		onChange({ document, sessions }) {
@@ -627,7 +626,10 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			this.$syncService.startSync()
+			// Fetch the document state after syntax highlights are loaded.
+			this.lowlightLoaded.then(() => {
+				this.$syncService.startSync()
+			})
 			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
@@ -966,6 +968,7 @@ export default {
 			overflow: auto;
 			z-index: 20;
 		}
+
 		.has-conflicts .text-editor__main {
 			padding-top: 0;
 		}
@@ -1013,6 +1016,7 @@ export default {
 		&.draggedOver {
 			background-color: var(--color-primary-element-light);
 		}
+
 		.text-editor__content-wrapper {
 			position: relative;
 		}
@@ -1025,6 +1029,7 @@ export default {
 
 .text-editor__wrapper.has-conflicts > .content-wrapper {
 	width: 50%;
+
 	#read-only-editor {
 		margin: 0px auto;
 		// Add height of the menubar as padding-top
@@ -1039,6 +1044,7 @@ export default {
 	0% {
 		transform: rotate(0deg);
 	}
+
 	100% {
 		transform: rotate(360deg);
 	}
