@@ -37,7 +37,7 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded = false } = {}) => {
+const createRichEditor = ({ extensions = [], relativePath, isEmbedded = false } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -47,9 +47,7 @@ const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded =
 				component: this,
 				extensions: [
 					Mention.configure({
-						suggestion: MentionSuggestion({
-							session,
-						}),
+						suggestion: MentionSuggestion()
 					}),
 				],
 			}),

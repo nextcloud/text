@@ -12,34 +12,33 @@ const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
 const emitMention = ({ session, props }) => {
 	const documentId = session.documentId
+	if (!session.documentId) {
+		// TODO: emit the mention on reconnect
+		console.warn('Disconnected. Could not notify user about mention.', { user: props.id })
+		return
+	}
 	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
-		documentId,
-		sessionId: session.id,
-		sessionToken: session.token,
+		...session,
 		mention: props.id,
 		scope: window.location,
 	})
 }
 
-export default ({ session, params }) => createSuggestions({
+export default ({ params } = {}) => createSuggestions({
 	listComponent: MentionList,
-	items: async ({ query }) => {
+	items: async ({ editor, query }) => {
+		const session = editor.storage.session
+		if (!session.documentId) {
+			// looks like we're not connected right now.
+			return []
+		}
 		const params = {
-			documentId: session.documentId,
-			sessionId: session.id,
-			sessionToken: session.token,
+			...session,
 			filter: query,
 		}
 		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)
 		const users = JSON.parse(JSON.stringify(response.data))
-		const result = []
-
-		Object.keys(users).map(key => result.push({
-			id: key,
-			label: users[key],
-		}))
-
-		return result
+		return Object.entries(users).map(([id, label]) => ({ id, label }))
 	},
 
 	command: ({ editor, range, props }) => {
@@ -47,7 +46,7 @@ export default ({ session, params }) => createSuggestions({
 			params.emitMention({ props })
 		} else {
 			emitMention({
-				session,
+				session: editor.storage.session,
 				props,
 			})
 		}
