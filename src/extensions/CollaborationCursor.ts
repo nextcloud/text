@@ -6,9 +6,9 @@
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
 /**
- * @param {number} clientId The Yjs client ID
+ * @param clientId The Yjs client ID
  */
-function showCursorLabel(clientId) {
+function showCursorLabel(clientId: number) {
 	setTimeout(() => {
 		const el = document.getElementById(
 			`collaboration-cursor__label__${clientId}`,
@@ -34,6 +34,7 @@ function getTimestamp() {
 const CollaborationCursor = TiptapCollaborationCursor.extend({
 	addOptions() {
 		return {
+			...this.parent?.(),
 			provider: null,
 			user: {
 				name: null,
@@ -63,7 +64,10 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 	onCreate() {
 		this.options.provider.awareness.on(
 			'change',
-			({ added, removed, updated }, origin) => {
+			(
+				{ added, updated }: { added: number[]; updated: number[] },
+				origin: unknown,
+			) => {
 				if (origin !== 'local') {
 					for (const clientId of [...added, ...updated]) {
 						if (clientId !== this.options.user.clientId) {
@@ -77,8 +81,10 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 
 	// Flag own cursor as active on undoable changes to the document state
 	onTransaction({ transaction }) {
-		const { updated, meta } = transaction
-		if (updated && (meta.addToHistory ?? true) && !meta.pointer) {
+		const addToHistory = transaction.getMeta('addToHistory') ?? true
+		const pointer = transaction.getMeta('pointer')
+		const updated = transaction.docChanged
+		if (updated && addToHistory && !pointer) {
 			this.options.user.lastUpdate = getTimestamp()
 			this.options.provider.awareness.setLocalStateField(
 				'user',
