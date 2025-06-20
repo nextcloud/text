@@ -13,6 +13,7 @@ OC.L10N.register(
     "File not found" : "Faili halipatikani",
     "Text" : "Maandishi",
     "Remove link" : "Ondoa kiungio",
+    "Saving …" : "Inahifadhi...",
     "Keyboard shortcuts" : "Mikato ya keyboard",
     "Enter" : "Ingiza",
     "Shift" : "Hamisha",
@@ -27,6 +28,7 @@ OC.L10N.register(
     "Details" : "Maelezo ya kina",
     "Ctrl" : "Dhibiti",
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
+    "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}"
 },
 "nplurals=2; plural=(n != 1);");
