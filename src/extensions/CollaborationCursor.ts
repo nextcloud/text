@@ -35,13 +35,6 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 	addOptions() {
 		return {
 			...this.parent?.(),
-			provider: null,
-			user: {
-				name: null,
-				clientId: null,
-				color: null,
-				lastUpdate: getTimestamp(),
-			},
 			render: (user) => {
 				const cursor = document.createElement('span')
 
@@ -80,16 +73,15 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 	},
 
 	// Flag own cursor as active on undoable changes to the document state
-	onTransaction({ transaction }) {
+	onTransaction({ transaction, editor }) {
 		const addToHistory = transaction.getMeta('addToHistory') ?? true
 		const pointer = transaction.getMeta('pointer')
 		const updated = transaction.docChanged
 		if (updated && addToHistory && !pointer) {
-			this.options.user.lastUpdate = getTimestamp()
-			this.options.provider.awareness.setLocalStateField(
-				'user',
-				this.options.user,
-			)
+			editor.commands.updateUser({
+				...this.options.user,
+				lastUpdate: getTimestamp(),
+			})
 		}
 	},
 })
