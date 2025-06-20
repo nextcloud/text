@@ -366,6 +366,20 @@ export default {
 	mounted() {
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
+			const extensions = [
+				Autofocus.configure({ fileId: this.fileId }),
+				Collaboration.configure({ document: this.$ydoc }),
+				CollaborationCursor.configure({ provider: this.$providers[0] }),
+				Session,
+			]
+			this.editor = this.isRichEditor
+				? createRichEditor({
+						relativePath: this.relativePath,
+						extensions,
+						isEmbedded: this.isEmbedded,
+					})
+				: createPlainEditor({ language: this.language, extensions })
+			this.listenEditorEvents()
 		}
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
@@ -489,7 +503,9 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.disconnect().then(this.initSession)
+			this.disconnect().then(() => {
+				this.initSession()
+			})
 			this.idle = false
 		},
 
@@ -571,14 +587,15 @@ export default {
 		},
 
 		onLoaded({ document, documentSource, documentState }) {
-			if (!documentState) {
-				this.lowlightLoaded.then(() => {
-					// only add the content once the syntax highlighting is ready
+			// Fetch the document state after syntax highlights are loaded
+			this.lowlightLoaded.then(() => {
+				this.$syncService.startSync()
+				if (!documentState) {
 					setInitialYjsState(this.$ydoc, documentSource, {
 						isRichEditor: this.isRichEditor,
 					})
-				})
-			}
+				}
+			})
 
 			this.$baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
@@ -591,28 +608,6 @@ export default {
 				color: session?.color,
 				clientId: this.$ydoc.clientID,
 			}
-
-			if (this.editor) {
-				// editor already existed. So this is a reconnect.
-				this.$syncService.startSync()
-				this.editor.commands.setSession(this.currentSession)
-				this.editor.commands.updateUser(user)
-				return
-			}
-			const extensions = [
-				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.$ydoc }),
-				CollaborationCursor.configure({ provider: this.$providers[0] }),
-				Session,
-			]
-			this.editor = this.isRichEditor
-				? createRichEditor({
-						relativePath: this.relativePath,
-						extensions,
-						isEmbedded: this.isEmbedded,
-					})
-				: createPlainEditor({ language: this.language, extensions })
-			this.listenEditorEvents()
 			this.editor.commands.setSession(this.currentSession)
 			this.editor.commands.updateUser(user)
 		},
@@ -626,10 +621,6 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			// Fetch the document state after syntax highlights are loaded.
-			this.lowlightLoaded.then(() => {
-				this.$syncService.startSync()
-			})
 			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
