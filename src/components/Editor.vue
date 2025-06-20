@@ -586,19 +586,18 @@ export default {
 			}
 
 			const session = this.currentSession
+			const user = {
+				name: session?.userId
+					? session.displayName
+					: session?.guestName || t('text', 'Guest'),
+				color: session?.color,
+				clientId: this.$ydoc.clientID,
+			}
+
 			const extensions = [
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.$ydoc }),
-				CollaborationCursor.configure({
-					provider: this.$providers[0],
-					user: {
-						name: session?.userId
-							? session.displayName
-							: session?.guestName || t('text', 'Guest'),
-						color: session?.color,
-						clientId: this.$ydoc.clientID,
-					},
-				}),
+				CollaborationCursor.configure({ provider: this.$providers[0] }),
 				Session,
 			]
 			if (this.isRichEditor) {
@@ -609,6 +608,7 @@ export default {
 				})
 				this.listenEditorEvents()
 				this.editor.commands.setSession(this.currentSession)
+				this.editor.commands.updateUser(user)
 			} else {
 				const language =
 					extensionHighlight[this.fileExtension] || this.fileExtension
@@ -616,6 +616,7 @@ export default {
 					this.editor = createPlainEditor({ language, extensions })
 					this.listenEditorEvents()
 					this.editor.commands.setSession(this.currentSession)
+					this.editor.commands.updateUser(user)
 				})
 			}
 		},
