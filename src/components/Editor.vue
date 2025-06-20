@@ -135,6 +135,7 @@ import { fetchNode } from '../services/WebdavClient.ts'
 import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { Session } from '../extensions/Session.ts'
 
 export default {
 	name: 'Editor',
@@ -598,21 +599,23 @@ export default {
 						clientId: this.$ydoc.clientID,
 					},
 				}),
+				Session,
 			]
 			if (this.isRichEditor) {
 				this.editor = createRichEditor({
 					relativePath: this.relativePath,
-					session,
 					extensions,
 					isEmbedded: this.isEmbedded,
 				})
 				this.listenEditorEvents()
+				this.editor.commands.setSession(this.currentSession)
 			} else {
 				const language =
 					extensionHighlight[this.fileExtension] || this.fileExtension
 				loadSyntaxHighlight(language).then(() => {
 					this.editor = createPlainEditor({ language, extensions })
 					this.listenEditorEvents()
+					this.editor.commands.setSession(this.currentSession)
 				})
 			}
 		},
