@@ -294,11 +294,6 @@ export default {
 		hasDocumentParameters() {
 			return this.fileId || this.shareToken || this.initialSession
 		},
-		fileExtension() {
-			return this.relativePath
-				? this.relativePath.split('/').pop().split('.').pop()
-				: 'txt'
-		},
 		currentDirectory() {
 			return this.relativePath
 				? this.relativePath.split('/').slice(0, -1).join('/')
@@ -610,8 +605,10 @@ export default {
 				this.editor.commands.setSession(this.currentSession)
 				this.editor.commands.updateUser(user)
 			} else {
-				const language =
-					extensionHighlight[this.fileExtension] || this.fileExtension
+				const extension = this.relativePath
+					?.split('/').pop().split('.').pop()
+					?? 'txt'
+				const language = extensionHighlight[extension] || extension
 				loadSyntaxHighlight(language).then(() => {
 					this.editor = createPlainEditor({ language, extensions })
 					this.listenEditorEvents()
