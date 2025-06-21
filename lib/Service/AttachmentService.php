@@ -602,8 +602,8 @@ class AttachmentService {
 
 				$toDelete = array_filter($attachmentDir->getDirectoryListing(),
 					function ($node) use ($contentAttachmentFileIds, $contentAttachmentNames) {
-						return !in_array($node->getName(), $contentAttachmentNames) &&
-							!in_array($node->getId(), $contentAttachmentFileIds);
+						return !in_array($node->getName(), $contentAttachmentNames)
+							&& !in_array($node->getId(), $contentAttachmentFileIds);
 					}
 				);
 				foreach ($toDelete as $node) {
