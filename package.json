@@ -97,7 +97,7 @@
     "markdown-it-container": "^4.0.0",
     "markdown-it-front-matter": "^0.2.4",
     "markdown-it-image-figures": "^2.1.1",
-    "mermaid": "^11.6.0",
+    "mermaid": "^11.7.0",
     "mitt": "^3.0.1",
     "path-normalize": "^6.0.13",
     "proxy-polyfill": "^0.3.2",
