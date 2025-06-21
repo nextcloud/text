@@ -12,7 +12,7 @@ const FLAGS = ['idle', 'hasConnectionIssue']
 
 test('is empty without props', () => {
 	const wrapper = shallowMount(SyncStatus)
-	expect(wrapper.contains('p')).toBe(false)
+	expect(wrapper.find('p').exists()).toBe(false)
 	expect(wrapper.html()).toBe('')
 })
 

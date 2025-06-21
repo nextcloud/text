@@ -19,7 +19,7 @@ import { defineComponent } from 'vue'
 import { translatePlural as n } from '@nextcloud/l10n'
 import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { AlphabeticalVariant } from '../icons.js'
-import { useEditorMixin } from '../Editor.provider.js'
+import { useEditor } from '../Editor.provider.ts'
 
 export default defineComponent({
 	name: 'CharacterCount',
@@ -27,9 +27,12 @@ export default defineComponent({
 		AlphabeticalVariant,
 		NcActionText,
 	},
-	mixins: [useEditorMixin],
 	props: {
 		visible: Boolean,
+	},
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
 	},
 	data: () => ({
 		wordCount: 0,
@@ -49,8 +52,8 @@ export default defineComponent({
 	methods: {
 		refresh() {
 			// characterCount is not reactive so we need this workaround
-			this.wordCount = this.$editor.storage.characterCount.words()
-			this.charCount = this.$editor.storage.characterCount.characters()
+			this.wordCount = this.editor?.storage.characterCount.words()
+			this.charCount = this.editor?.storage.characterCount.characters()
 		},
 	},
 })

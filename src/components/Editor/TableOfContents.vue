@@ -23,19 +23,22 @@
 </template>
 
 <script>
-import { useEditorMixin } from '../../components/Editor.provider.js'
+import { useEditor } from '../Editor.provider.ts'
 import { headingAnchorPluginKey } from '../../plugins/headingAnchor.js'
 
 export default {
 	name: 'TableOfContents',
-	mixins: [useEditorMixin],
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
+	},
 	data: () => ({
 		initialRender: true,
 		headings: [],
 	}),
 	mounted() {
-		if (this.$editor) {
-			this.$editor.on('update', this.updateHeadings)
+		if (this.editor) {
+			this.editor.on('update', this.updateHeadings)
 			this.updateHeadings()
 		}
 		setTimeout(() => {
@@ -43,7 +46,7 @@ export default {
 		}, 1000)
 	},
 	beforeDestroy() {
-		this.$editor.off('update', this.updateHeadings)
+		this.editor.off('update', this.updateHeadings)
 	},
 	methods: {
 		goto(heading) {
@@ -55,7 +58,7 @@ export default {
 		},
 		updateHeadings() {
 			this.headings = headingAnchorPluginKey
-				.getState(this.$editor.state)?.headings ?? []
+				.getState(this.editor?.state)?.headings ?? []
 		},
 	},
 }

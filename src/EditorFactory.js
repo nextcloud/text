@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
 
 import 'proxy-polyfill'
 
@@ -12,7 +11,7 @@ import { createLowlight } from 'lowlight'
 import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
-import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
+import { FocusTrap, PlainText, RichText } from './extensions/index.js'
 
 const lowlight = createLowlight()
 
@@ -37,7 +36,7 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded = false } = {}) => {
+const createRichEditor = ({ extensions = [], relativePath, isEmbedded = false } = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -45,13 +44,6 @@ const createRichEditor = ({ extensions = [], session, relativePath, isEmbedded =
 				relativePath,
 				isEmbedded,
 				component: this,
-				extensions: [
-					Mention.configure({
-						suggestion: MentionSuggestion({
-							session,
-						}),
-					}),
-				],
 			}),
 			FocusTrap,
 			...extensions,

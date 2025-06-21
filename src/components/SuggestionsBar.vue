@@ -61,11 +61,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import {
-	useEditorMixin,
-	useFileMixin,
-	useSyncServiceMixin,
-} from './Editor.provider.js'
+import { useEditor, useFileMixin, useSyncServiceMixin } from './Editor.provider.ts'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
@@ -80,15 +76,12 @@ export default {
 		Upload,
 	},
 
-	mixins: [
-		useActionChooseLocalAttachmentMixin,
-		useEditorMixin,
-		useFileMixin,
-		useSyncServiceMixin,
-	],
+	mixins: [useActionChooseLocalAttachmentMixin, useFileMixin, useSyncServiceMixin],
 
 	setup() {
+		const { editor } = useEditor()
 		return {
+			editor,
 			isMobileDevice,
 		}
 	},
@@ -119,12 +112,12 @@ export default {
 	},
 
 	mounted() {
-		this.$editor.on('update', this.onUpdate)
-		this.onUpdate({ editor: this.$editor })
+		this.editor?.on('update', this.onUpdate)
+		this.onUpdate({ editor: this.editor })
 	},
 
 	beforeDestroy() {
-		this.$editor.off('update', this.onUpdate)
+		this.editor?.off('update', this.onUpdate)
 	},
 
 	methods: {
@@ -135,8 +128,8 @@ export default {
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then((link) => {
-					const chain = this.$editor.chain()
-					if (this.$editor.view.state?.selection.empty) {
+					const chain = this.editor?.chain()
+					if (this.editor?.view.state?.selection.empty) {
 						chain.focus().insertPreview(link).run()
 					} else {
 						chain.setLink({ href: link }).focus().run()
@@ -152,7 +145,7 @@ export default {
 		 * Triggered by the "Insert table" button
 		 */
 		insertTable() {
-			this.$editor.chain().focus().insertTable()?.run()
+			this.editor?.chain().focus().insertTable()?.run()
 		},
 
 		/**
@@ -195,7 +188,7 @@ export default {
 		 * @param {string} text Text part of the link
 		 */
 		setLink(url, text) {
-			this.$editor.chain().insertOrSetLink(text, { href: url }).focus().run()
+			this.editor?.chain().insertOrSetLink(text, { href: url }).focus().run()
 		},
 
 		onUpdate({ editor }) {
