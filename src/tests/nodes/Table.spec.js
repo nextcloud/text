@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { test as baseTest } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 
@@ -19,16 +20,24 @@ import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
 
 import { br, table, td, th, thead, tr, expectDocument } from '../testHelpers/builders.js'
 
+const test = baseTest.extend({
+	editor: async ({ task: _ }, use) => {
+		const editor = createRichEditor()
+		await use(editor)
+		editor.destroy()
+	}
+})
+
 describe('Table', () => {
-	it('Markdown-IT renders tables', () => {
+	test('Markdown-IT renders tables', () => {
 		const rendered = markdownit.render(input)
 		expect(rendered).toBe(output)
 	})
 
-	test('Load into editor', () => {
-		const tiptap = editorWithContent(markdownit.render(input))
+	test('Load into editor', ({ editor }) => {
+		editor.commands.setContent(markdownit.render(input))
 
-		expectDocument(tiptap.state.doc,
+		expectDocument(editor.state.doc,
 			table(
 				thead(
 					th({ textAlign: 'center' }, 'heading'),
@@ -44,10 +53,10 @@ describe('Table', () => {
 		)
 	})
 
-	test('load html table with other structure', () => {
-		const tiptap = editorWithContent(otherStructure.replace(/\n\s*/g, ''))
+	test('load html table with other structure', ({ editor }) => {
+		editor.commands.setContent(otherStructure.replace(/\n\s*/g, ''))
 
-		expectDocument(tiptap.state.doc,
+		expectDocument(editor.state.doc,
 			table(
 				thead(
 					th({ textAlign: 'center' }, 'heading'),
@@ -63,24 +72,18 @@ describe('Table', () => {
 		)
 	})
 
-	test('handle html table from handbook', () => {
-		const tiptap = editorWithContent(handbook.replace(/\n\s*/g, ''))
-		expect(formatHTML(tiptap.getHTML())).toBe(formatHTML(handbookOut))
+	test('handle html table from handbook', ({ editor }) => {
+		editor.commands.setContent(handbook.replace(/\n\s*/g, ''))
+		expect(formatHTML(editor.getHTML())).toBe(formatHTML(handbookOut))
 	})
 
-	test('serialize from editor', () => {
-		const tiptap = editorWithContent(markdownit.render(input))
-		const serializer = createMarkdownSerializer(tiptap.schema)
+	test('serialize from editor', ({ editor }) => {
+		editor.commands.setContent(markdownit.render(input))
+		const serializer = createMarkdownSerializer(editor.schema)
 
-		expect(serializer.serialize(tiptap.state.doc)).toBe(input)
+		expect(serializer.serialize(editor.state.doc)).toBe(input)
 	})
 })
-
-const editorWithContent = (content) => {
-	const editor = createRichEditor()
-	editor.commands.setContent(content)
-	return editor
-}
 
 const formatHTML = (html) => {
 	return html.replaceAll('><', '>\n<').replace(/\n$/, '')

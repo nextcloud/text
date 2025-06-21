@@ -10,7 +10,9 @@ const renderedHTML = (markdown) => {
 	const editor = createRichEditor()
 	editor.commands.setContent(markdownit.render(markdown))
 	// Remove TrailingNode
-	return editor.getHTML().replace(/<p><\/p>$/, '')
+	const res = editor.getHTML().replace(/<p><\/p>$/, '')
+	editor.destroy()
+	return res
 }
 
 describe('TipTap', () => {
