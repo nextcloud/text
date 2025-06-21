@@ -5,19 +5,11 @@
 
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
+import Vue from 'vue'
+import DirectEditing from './views/DirectEditing.vue'
 
-if (document.getElementById('app-content')) {
-	Promise.all([
-		import(/* webpackChunkName: "editor" */'vue'),
-		import(/* webpackChunkName: "editor" */'./views/DirectEditing.vue'),
-	]).then((imports) => {
-		const Vue = imports[0].default
-		Vue.prototype.t = window.t
-		Vue.prototype.OCA = window.OCA
-		const DirectEditing = imports[1].default
-		const vm = new Vue({
-			render: h => h(DirectEditing),
-		})
-		vm.$mount(document.getElementById('app-content'))
-	})
-}
+Vue.prototype.t = window.t
+Vue.prototype.OCA = window.OCA
+
+const DirectView = Vue.extend(DirectEditing)
+new DirectView().$mount('#app-content')
