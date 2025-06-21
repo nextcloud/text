@@ -69,11 +69,11 @@ describe('Assistant', () => {
 		cy.wait(2000)
 
 		cy.get('.assistant-modal--content button')
-			.contains('Run task in the background and get notified')
+			.contains('Get notified')
 			.click()
 
-		cy.get('.assistant-modal--content')
-			.should('contain', 'Your task has been scheduled')
+		cy.get('.assistant-modal--content button .bell-ring-outline-icon')
+			.should('be.visible')
 
 		cy.get('.assistant-modal--content .close-button')
 			.click()
