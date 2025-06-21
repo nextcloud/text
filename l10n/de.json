@@ -12,7 +12,7 @@
     "text document" : "Textdokument",
     "New text file" : "Neue Textdatei",
     "Create new text file" : "Neue Textdatei erstellen",
-    "Editing session has expired. Please reload the page." : "Die Bearbeitungssitzung ist abgelaufen. Bitte lade die Seite neu.",
+    "Editing session has expired. Please reload the page." : "Die Bearbeitungssitzung ist abgelaufen. Bitte die Seite neu laden\n.",
     "{user} has mentioned you in the text document {node}" : "{user} hat dich in dem Textdokument {node} erwähnt.",
     "This file cannot be displayed as download is disabled by the share" : "Diese Datei kann nicht angezeigt werden, da das Herunterladen durch die Freigabe deaktiviert ist",
     "File not found" : "Datei nicht gefunden",
