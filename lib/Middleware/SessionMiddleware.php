@@ -129,7 +129,7 @@ class SessionMiddleware extends Middleware {
 				return;
 			}
 		}
-	
+
 		if ('' !== $shareToken = (string)$this->request->getParam('shareToken')) {
 			try {
 				$share = $this->shareManager->getShareByToken($shareToken);
