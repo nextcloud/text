@@ -151,9 +151,9 @@ export default {
 				.build()
 
 			filePicker.pick()
-				.then((files) => {
+				.then((file) => {
 					const client = OC.Files.getClient()
-					client.getFileInfo(files[0]).then((_status, fileInfo) => {
+					client.getFileInfo(file).then((_status, fileInfo) => {
 						const url = new URL(generateUrl(`/f/${fileInfo.id}`), window.origin)
 						this.setLink(url.href, fileInfo.name)
 						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
@@ -165,7 +165,6 @@ export default {
 					this.$refs.buttonFile?.$el.focus()
 				})
 		},
-
 		/**
 		 * Allow user to enter an URL manually
 		 * Triggered when by the "link url" button
@@ -187,7 +186,6 @@ export default {
 			}
 			this.isInputMode = true
 		},
-
 		/**
 		 * Save user entered URL as a link markup
 		 * Triggered when the user submits the ActionInput
@@ -232,7 +230,6 @@ export default {
 			}
 			chain.focus().run()
 		},
-
 		/**
 		 * Remove link markup at current position
 		 * Triggered by the "remove link" button
@@ -241,7 +238,6 @@ export default {
 			this.$editor.chain().unsetLink().focus().run()
 			this.menuOpen = false
 		},
-
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then(link => {
