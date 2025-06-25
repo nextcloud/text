@@ -15,7 +15,7 @@ export const client = davGetClient()
 
 export const fetchNode = async (node: Node): Promise<Node> => {
 	const propfindPayload = davGetDefaultPropfind()
-	const result = (await client.stat(`${davRootPath}${node.path}`, {
+	const result = (await client.stat(`${node.root}${node.path}`, {
 		details: true,
 		data: propfindPayload,
 	})) as ResponseDataDetailed<FileStat>
