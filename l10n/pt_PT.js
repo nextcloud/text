@@ -41,6 +41,7 @@ OC.L10N.register(
     "Undo" : "Desfazer",
     "Redo" : "Repetir",
     "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente",
+    "Save changes" : "Save changes",
     "Cancel" : "Cancelar",
     "URL" : "URL",
     "to" : "Para",
