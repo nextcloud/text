@@ -51,9 +51,17 @@ export default defineComponent({
 	},
 	methods: {
 		refresh() {
+			if (!this.editor) {
+				this.wordCount = 0
+				this.charCount = 0
+				return
+			}
+			const { storage, state } = this.editor
 			// characterCount is not reactive so we need this workaround
-			this.wordCount = this.editor?.storage.characterCount.words()
-			this.charCount = this.editor?.storage.characterCount.characters()
+			// We also need to provide the doc as storage is a singleton in tiptap v2.
+			// See ueberdosis/tiptap#6060
+			this.wordCount = storage.characterCount.words(state.doc)
+			this.charCount = storage.characterCount.characters(state.doc)
 		},
 	},
 })
