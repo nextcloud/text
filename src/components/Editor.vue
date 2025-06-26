@@ -21,7 +21,7 @@
 			:show-outline-outside="showOutlineOutside"
 			@read-only-toggled="readOnlyToggled"
 			@outline-toggled="outlineToggled">
-			<MainContainer v-if="editor">
+			<MainContainer v-if="contentLoaded">
 				<!-- Readonly -->
 				<div
 					v-if="readOnly || (openReadOnlyEnabled && !editMode)"
