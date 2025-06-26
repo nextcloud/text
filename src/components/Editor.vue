@@ -236,6 +236,7 @@ export default {
 			const maxWidth = Math.floor(value) - 36
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
+		const ydoc = new Doc()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { editor } = provideEditor()
@@ -257,6 +258,7 @@ export default {
 			isRichWorkspace,
 			language,
 			lowlightLoaded,
+			ydoc,
 		}
 	},
 
@@ -378,9 +380,8 @@ export default {
 		exposeForDebugging(this)
 	},
 	created() {
-		this.$ydoc = new Doc()
 		// The following can be useful for debugging ydoc updates
-		// this.$ydoc.on('update', function(update, origin, doc, tr) {
+		// this.ydoc.on('update', function(update, origin, doc, tr) {
 		//   console.debug('ydoc update', update, origin, doc, tr)
 		//   Y.logUpdate(update)
 		// });
@@ -391,7 +392,7 @@ export default {
 			this.initSession()
 			const extensions = [
 				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.$ydoc }),
+				Collaboration.configure({ document: this.ydoc }),
 				CollaborationCursor.configure({ provider: this.$providers[0] }),
 				Session,
 			]
@@ -447,13 +448,13 @@ export default {
 							)
 					: (content) =>
 							serializePlainText(content ?? this.editor?.state.doc),
-				getDocumentState: () => getDocumentState(this.$ydoc),
+				getDocumentState: () => getDocumentState(this.ydoc),
 			})
 
 			this.listenSyncServiceEvents()
 
 			const syncServiceProvider = createSyncServiceProvider({
-				ydoc: this.$ydoc,
+				ydoc: this.ydoc,
 				syncService: this.$syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
@@ -591,7 +592,7 @@ export default {
 			this.lowlightLoaded.then(() => {
 				this.$syncService.startSync()
 				if (!documentState) {
-					setInitialYjsState(this.$ydoc, documentSource, {
+					setInitialYjsState(this.ydoc, documentSource, {
 						isRichEditor: this.isRichEditor,
 					})
 				}
@@ -606,7 +607,7 @@ export default {
 					? session.displayName
 					: session?.guestName || t('text', 'Guest'),
 				color: session?.color,
-				clientId: this.$ydoc.clientID,
+				clientId: this.ydoc.clientID,
 			}
 			this.editor.commands.setSession(this.currentSession)
 			this.editor.commands.updateUser(user)
@@ -842,12 +843,12 @@ export default {
 			const yjsData = {
 				fileId: this.fileId,
 				filePath: this.relativePath,
-				clientId: this.$ydoc.clientID,
-				pendingStructs: this.$ydoc.store.pendingStructs,
+				clientId: this.ydoc.clientID,
+				pendingStructs: this.ydoc.store.pendingStructs,
 				clientVectors: [],
 				documentState: this.$syncService?.getDocumentState(),
 			}
-			for (const client of this.$ydoc.store.clients.values()) {
+			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
 			}
 
