@@ -364,23 +364,6 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.active && this.hasDocumentParameters) {
-			this.initSession()
-			const extensions = [
-				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.$ydoc }),
-				CollaborationCursor.configure({ provider: this.$providers[0] }),
-				Session,
-			]
-			this.editor = this.isRichEditor
-				? createRichEditor({
-						relativePath: this.relativePath,
-						extensions,
-						isEmbedded: this.isEmbedded,
-					})
-				: createPlainEditor({ language: this.language, extensions })
-			this.listenEditorEvents()
-		}
 		if (!this.richWorkspace) {
 			/* If the editor is shown in the viewer we need to hide the content,
 			   if richt workspace is used we **must** not hide the content */
@@ -404,6 +387,23 @@ export default {
 		this.$providers = []
 		this.$syncService = null
 		this.$attachmentResolver = null
+		if (this.active && this.hasDocumentParameters) {
+			this.initSession()
+			const extensions = [
+				Autofocus.configure({ fileId: this.fileId }),
+				Collaboration.configure({ document: this.$ydoc }),
+				CollaborationCursor.configure({ provider: this.$providers[0] }),
+				Session,
+			]
+			this.editor = this.isRichEditor
+				? createRichEditor({
+						relativePath: this.relativePath,
+						extensions,
+						isEmbedded: this.isEmbedded,
+					})
+				: createPlainEditor({ language: this.language, extensions })
+			this.listenEditorEvents()
+		}
 	},
 	async beforeDestroy() {
 		if (!this.richWorkspace) {
