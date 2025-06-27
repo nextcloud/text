@@ -30,6 +30,7 @@ OC.L10N.register(
     "Action" : "Darbība",
     "Undo" : "Atsaukt",
     "Redo" : "Atcelt atsaukšanu",
+    "Copy link to clipboard" : "Ievietot saiti starpliktuvē",
     "Save changes" : "Saglabāt izmaiņas",
     "Cancel" : "Atcelt",
     "URL" : "URL",
