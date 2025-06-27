@@ -6,7 +6,6 @@
 import escapeHtml from 'escape-html'
 import markdownit from '../markdownit/index.js'
 import { Doc, encodeStateAsUpdate, XmlFragment, applyUpdate } from 'yjs'
-import { generateJSON } from '@tiptap/core'
 import { prosemirrorToYXmlFragment } from 'y-prosemirror'
 import { Node } from '@tiptap/pm/model'
 import { createRichEditor, createPlainEditor } from '../EditorFactory.js'
@@ -17,8 +16,9 @@ export const setInitialYjsState = (ydoc, content, { isRichEditor }) => {
 		: `<pre>${escapeHtml(content)}</pre>`
 
 	const editor = isRichEditor ? createRichEditor() : createPlainEditor()
+	editor.commands.setContent(html)
 
-	const json = generateJSON(html, editor.options.extensions)
+	const json = editor.getJSON()
 
 	const node = Node.fromJSON(editor.schema, json)
 	const getBaseDoc = (node) => {
