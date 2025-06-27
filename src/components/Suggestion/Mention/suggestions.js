@@ -7,33 +7,38 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import MentionList from './MentionList.vue'
 import createSuggestions from '../suggestions.js'
+import { unref } from 'vue'
 
 const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
-const emitMention = ({ session, props }) => {
-	const documentId = session.documentId
-	if (!session.documentId) {
+const emitMention = ({ connection, props }) => {
+	const { documentId, id, token } = unref(connection) ?? {}
+	if (!documentId) {
 		// TODO: emit the mention on reconnect
 		console.warn('Disconnected. Could not notify user about mention.', { user: props.id })
 		return
 	}
 	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
-		...session,
+		documentId,
+		sessionId: id,
+		sessionToken: token,
 		mention: props.id,
 		scope: window.location,
 	})
 }
 
-export default ({ params } = {}) => createSuggestions({
+export default ({ connection, options } = {}) => createSuggestions({
 	listComponent: MentionList,
-	items: async ({ editor, query }) => {
-		const session = editor.storage.session
-		if (!session.documentId) {
+	items: async ({ query }) => {
+		const { documentId, id, token } = unref(connection) ?? {}
+		if (!documentId) {
 			// looks like we're not connected right now.
 			return []
 		}
 		const params = {
-			...session,
+			documentId,
+			sessionId: id,
+			sessionToken: token,
 			filter: query,
 		}
 		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)
@@ -42,11 +47,11 @@ export default ({ params } = {}) => createSuggestions({
 	},
 
 	command: ({ editor, range, props }) => {
-		if (params?.emitMention) {
-			params.emitMention({ props })
+		if (options?.emitMention) {
+			options.emitMention({ props })
 		} else {
 			emitMention({
-				session: editor.storage.session,
+				connection,
 				props,
 			})
 		}
@@ -80,5 +85,5 @@ export default ({ params } = {}) => createSuggestions({
 
 		window.getSelection()?.collapseToEnd()
 	},
-	...params,
+	...options,
 })

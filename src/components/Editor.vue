@@ -134,7 +134,7 @@ import SuggestionsBar from './SuggestionsBar.vue'
 import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
-import { Session } from '../extensions/Session.ts'
+import { provideConnection } from '../composables/useConnection.ts'
 
 export default {
 	name: 'Editor',
@@ -237,6 +237,8 @@ export default {
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
 		const ydoc = new Doc()
+		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
+		const wrappedConnection = provideConnection()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { editor } = provideEditor()
@@ -247,6 +249,7 @@ export default {
 			props,
 		)
 		return {
+			wrappedConnection,
 			el,
 			width,
 			hasConnectionIssue,
@@ -394,10 +397,10 @@ export default {
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.ydoc }),
 				CollaborationCursor.configure({ provider: this.$providers[0] }),
-				Session,
 			]
 			this.editor = this.isRichEditor
 				? createRichEditor({
+						...this.wrappedConnection,
 						relativePath: this.relativePath,
 						extensions,
 						isEmbedded: this.isEmbedded,
@@ -504,6 +507,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
+			this.wrappedConnection.connection.value = undefined
 			this.disconnect().then(() => {
 				this.initSession()
 			})
@@ -609,7 +613,9 @@ export default {
 				color: session?.color,
 				clientId: this.ydoc.clientID,
 			}
-			this.editor.commands.setSession(this.currentSession)
+			this.wrappedConnection.connection.value = {
+				...this.currentSession,
+			}
 			this.editor.commands.updateUser(user)
 		},
 
