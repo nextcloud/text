@@ -96,8 +96,8 @@ import {
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
 	SYNC_SERVICE,
-	provideEditorFlags,
 } from './Editor.provider.ts'
+import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { provideEditor } from '../composables/useEditor.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 

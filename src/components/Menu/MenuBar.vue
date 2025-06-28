@@ -77,9 +77,9 @@ import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
-	useEditorFlags,
 	useIsMobileMixin,
 } from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 
 export default {

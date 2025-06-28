@@ -63,8 +63,8 @@ import { Loading, Folder, Upload, Plus } from '../icons.js'
 import {
 	useEditorUpload,
 	useSyncServiceMixin,
-	useEditorFlags,
 } from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import {

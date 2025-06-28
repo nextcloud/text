@@ -32,10 +32,10 @@ import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import {
-	useEditorFlags,
 	useIsMobileMixin,
 	useSyncServiceMixin,
 } from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 
 export default {

@@ -16,7 +16,7 @@
 
 <script>
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import { useEditorFlags } from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 
 export default {
