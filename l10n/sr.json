@@ -127,6 +127,7 @@
     "Link to file or folder" : "Линк на фајл или фолдер",
     "Link to website" : "Линк на веб сајт",
     "Update link" : "Ажурирај везу",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "Изабрано је {menuItemName}, „{selectedSubMenuItemName}”",
     "_%n word_::_%n words_" : ["%n реч","%n речи","%n речи"],
     "_%n char_::_%n chars_" : ["%n карактер","%n карактера","%n карактера"],
     "Remaining actions" : "Преостале акције",

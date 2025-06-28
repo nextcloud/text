@@ -121,6 +121,7 @@ OC.L10N.register(
     "Link to file or folder" : "Tengill á skrá eða möppu",
     "Link to website" : "Tengill á vefsvæði",
     "Update link" : "Uppfæra tengil",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" er valið",
     "_%n word_::_%n words_" : ["%n orð","%n orð"],
     "_%n char_::_%n chars_" : ["%n stafur","%n stafir"],
     "Remaining actions" : "Eftirliggjandi aðgerðir",

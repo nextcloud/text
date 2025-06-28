@@ -129,6 +129,7 @@ OC.L10N.register(
     "Link to file or folder" : "Nasc chuig comhad nó fillteán",
     "Link to website" : "Nasc chuig an suíomh Gréasáin",
     "Update link" : "Nuashonraigh nasc",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, tá \"{selectedSubMenuItemName}\" roghnaithe",
     "_%n word_::_%n words_" : ["%n focal","%n focail","%n focail","%n focail","%n focail"],
     "_%n char_::_%n chars_" : ["%n char","%n chars","%n chars","%n chars","%n chars"],
     "Remaining actions" : "Gníomhartha fágtha",
