@@ -129,6 +129,7 @@ OC.L10N.register(
     "Link to file or folder" : "ファイルやフォルダーへのリンク",
     "Link to website" : "ウェブサイトへのリンク",
     "Update link" : "リンクの更新",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" が選択されました",
     "_%n word_::_%n words_" : ["%n語"],
     "_%n char_::_%n chars_" : ["%n文字"],
     "Remaining actions" : "残りのアクション",

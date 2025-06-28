@@ -129,6 +129,7 @@ OC.L10N.register(
     "Link to file or folder" : "Link zu Datei oder Ordner",
     "Link to website" : "Link zu Website",
     "Update link" : "Link aktualisieren",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "\"{menuItemName}, \"{selectedSubMenuItemName}\" ist ausgewählt",
     "_%n word_::_%n words_" : ["%n Wort","%n Wörter"],
     "_%n char_::_%n chars_" : ["%n Zeichen","%n Zeichen"],
     "Remaining actions" : "Verbleibende Aktionen",

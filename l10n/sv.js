@@ -129,6 +129,7 @@ OC.L10N.register(
     "Link to file or folder" : "Länk till fil eller mapp",
     "Link to website" : "Länk till webbplats",
     "Update link" : "Uppdatera länk",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{text_to_translate} \"{selectedSubMenuItemName}\" är vald",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tecken","%n tecken"],
     "Remaining actions" : "Återstående åtgärder",

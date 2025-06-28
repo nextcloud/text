@@ -98,6 +98,7 @@ OC.L10N.register(
     "Link to file or folder" : "Linkki tiedostoon tai kansioon",
     "Link to website" : "Linkki verkkosivulle",
     "Update link" : "Päivitä linkki",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" on valittu",
     "_%n word_::_%n words_" : ["%n sana","%n sanaa"],
     "_%n char_::_%n chars_" : ["%n merkki","%n merkkiä"],
     "Formatting menu bar" : "Muotoiluvalikko",

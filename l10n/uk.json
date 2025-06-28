@@ -127,6 +127,7 @@
     "Link to file or folder" : "Посилання на файл або каталог",
     "Link to website" : "Посилання на вебсайт",
     "Update link" : "Оновити посилання",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "Вибрано {menuItemName}, \"{selectedSubMenuItemName}\"",
     "_%n word_::_%n words_" : ["%n слово","%n слова","%n слів","%n слів"],
     "_%n char_::_%n chars_" : ["%n символ","%n символи","%n символів","%n символів"],
     "Remaining actions" : "Решта дій",
