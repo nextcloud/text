@@ -127,6 +127,7 @@ OC.L10N.register(
     "Link to file or folder" : "Dosya ya da klasör bağlantısı",
     "Link to website" : "Site bağlantısı",
     "Update link" : "Bağlantıyı güncelle",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" seçilmiş",
     "_%n word_::_%n words_" : ["%n sözcük","%n sözcük"],
     "_%n char_::_%n chars_" : ["%n karakter","%n karakter"],
     "Remaining actions" : "Yeniden adlandırma işlemleri",

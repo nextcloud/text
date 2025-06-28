@@ -120,6 +120,7 @@ OC.L10N.register(
     "Link to file or folder" : "Kobling til fil eller mappe",
     "Link to website" : "Kobling til nettsted",
     "Update link" : "Oppdater kobling",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" er valgt",
     "_%n word_::_%n words_" : ["%n ord","%n ord"],
     "_%n char_::_%n chars_" : ["%n tegn","%n tegn"],
     "Remaining actions" : "Gjenstående handlinger",

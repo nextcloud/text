@@ -127,6 +127,7 @@
     "Link to file or folder" : "連結至檔案或資料夾",
     "Link to website" : "連結至網站",
     "Update link" : "更新連結",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}，已選取「{selectedSubMenuItemName}」",
     "_%n word_::_%n words_" : ["%n 個字"],
     "_%n char_::_%n chars_" : ["%n 個字元"],
     "Remaining actions" : "剩餘動作",

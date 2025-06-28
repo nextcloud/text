@@ -119,6 +119,7 @@ OC.L10N.register(
     "Link to file or folder" : "ھۆججەت ياكى ھۆججەت قىسقۇچقا ئۇلىنىش",
     "Link to website" : "توربېكەتكە ئۇلىنىش",
     "Update link" : "ئۇلىنىشنى يېڭىلاش",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تاللانغان",
     "Remaining actions" : "قالغان ھەرىكەتلەر",
     "Editor actions" : "تەھرىرلىگۈچ ھەرىكىتى",
     "Formatting menu bar" : "تىزىملىك بالدىقىنى فورماتلاش",

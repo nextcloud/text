@@ -127,6 +127,7 @@ OC.L10N.register(
     "Link to file or folder" : "Odkaz na priečinok alebo súbor",
     "Link to website" : "Odkaz na webstránku",
     "Update link" : "Aktualizovať odkaz",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" je vybrané",
     "_%n word_::_%n words_" : ["%n slovo","%n slová","%n slov"," %n slová"],
     "_%n char_::_%n chars_" : ["%n znak","%n znaky","%n znakov","%n znaky"],
     "Remaining actions" : "Zostávajúce akcie",

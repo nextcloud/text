@@ -129,6 +129,7 @@ OC.L10N.register(
     "Link to file or folder" : "链接至文件或文件夹",
     "Link to website" : "链接至网站",
     "Update link" : "更新链接",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" 已选择",
     "_%n word_::_%n words_" : ["%n 字"],
     "_%n char_::_%n chars_" : ["%n 字符"],
     "Remaining actions" : "重命名操作",

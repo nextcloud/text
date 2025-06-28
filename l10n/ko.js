@@ -126,6 +126,7 @@ OC.L10N.register(
     "Link to file or folder" : "파일이나 폴더로 링크",
     "Link to website" : "웹사이트로 링크",
     "Update link" : "링크 갱신",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\"(이)가 선택되었습니다.",
     "_%n word_::_%n words_" : ["%n개 단어"],
     "_%n char_::_%n chars_" : ["%n개 글자"],
     "Remaining actions" : "남은 동작",
