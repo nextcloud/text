@@ -22,7 +22,7 @@
 
 <script>
 import { EditorContent } from '@tiptap/vue-2'
-import { useEditor } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
 import EditorOutline from './EditorOutline.vue'
 

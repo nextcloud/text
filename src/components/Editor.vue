@@ -92,13 +92,13 @@ import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
 
 import {
-	provideEditor,
 	FILE,
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
 	SYNC_SERVICE,
 	provideEditorFlags,
 } from './Editor.provider.ts'
+import { provideEditor } from '../composables/useEditor.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'

@@ -32,10 +32,10 @@ import { logger } from '../../helpers/logger.js'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 
 import {
-	useEditor,
 	useFileMixin,
 	useSyncServiceMixin,
 } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 
 import {
 	ACTION_ATTACHMENT_PROMPT,

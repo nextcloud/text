@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { useEditor } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 import { headingAnchorPluginKey } from '../../plugins/headingAnchor.js'
 
 export default {

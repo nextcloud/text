@@ -16,7 +16,7 @@ import { defineComponent, ref } from 'vue'
 import { translatePlural as n } from '@nextcloud/l10n'
 import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { AlphabeticalVariant } from '../icons.js'
-import { useEditor } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 
 export default defineComponent({
 	name: 'CharacterCount',

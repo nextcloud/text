@@ -6,7 +6,7 @@
 import { nextTick, shallowRef } from 'vue'
 import { mount } from '@vue/test-utils'
 import TableOfContents from '../../../components/Editor/TableOfContents.vue'
-import { editorKey } from '../../../components/Editor.provider.ts'
+import { editorKey } from '../../../composables/useEditor.ts'
 import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 import Heading from '../../../nodes/Heading.js'
 import { test, vi } from 'vitest'

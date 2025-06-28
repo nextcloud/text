@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import { useEditor, useEditorFlags, useSyncServiceMixin } from './Editor.provider.ts'
+import { useEditorFlags, useSyncServiceMixin } from './Editor.provider.ts'
+import { useEditor } from '../composables/useEditor.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 export default {

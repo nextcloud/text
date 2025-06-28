@@ -3,25 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Editor } from '@tiptap/core'
 import { logger } from '../helpers/logger.js'
-import { provide, inject, shallowRef, ref, computed } from 'vue'
-import type { InjectionKey, Ref, ShallowReactive, ShallowRef } from 'vue'
+import { provide, inject, ref, computed } from 'vue'
+import type { InjectionKey, Ref, ShallowReactive } from 'vue'
 import { isPublicShare } from '@nextcloud/sharing/public'
 import { loadState } from '@nextcloud/initial-state'
-
-export const editorKey = Symbol('tiptap:editor') as InjectionKey<
-	ShallowRef<Editor | undefined>
->
-export const provideEditor = () => {
-	const editor: ShallowRef<Editor | undefined> = shallowRef(undefined)
-	provide(editorKey, editor)
-	return { editor }
-}
-export const useEditor = () => {
-	const editor = inject(editorKey, shallowRef(undefined))
-	return { editor }
-}
 
 export interface EditorFlags {
 	isPublic: Ref<boolean>

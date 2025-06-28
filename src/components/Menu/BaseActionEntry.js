@@ -7,7 +7,8 @@
 
 import debounce from 'debounce'
 
-import { useEditor, useIsMobileMixin } from '../Editor.provider.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 import { useOutlineActions, useOutlineStateMixin, useReadOnlyActions } from '../Editor/Wrapper.provider.js'
 import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
 

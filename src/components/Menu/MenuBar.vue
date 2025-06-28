@@ -77,10 +77,10 @@ import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
-	useEditor,
 	useEditorFlags,
 	useIsMobileMixin,
 } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 
 export default {
 	name: 'MenuBar',
