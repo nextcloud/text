@@ -112,6 +112,7 @@ OC.L10N.register(
     "Link to file or folder" : "Link failile või kaustale",
     "Link to website" : "Link veebisaidile",
     "Update link" : "Uuenda linki",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, „{selectedSubMenuItemName}“ on valitud",
     "_%n word_::_%n words_" : ["%n sõna","%n sõna"],
     "_%n char_::_%n chars_" : ["%n tähemärk","%n tähemärki"],
     "Translate from {language}" : "Tõlkimise lähtekeel: {language}",
