@@ -1,0 +1,8 @@
+# These commits will be ignored during git blame if you run
+# `git config blame.ignoreRevsFile .git-blame-ignore-revs`
+#
+# Note that this needs to set per-project
+# as `git blame` will error if it cannot find the file.
+
+# Introduce prettier
+810eb74a3f5502ef6485efdda7066c6848878bff
