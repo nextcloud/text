@@ -270,6 +270,7 @@ export default {
 				getDocumentState: () => getDocumentState(ydoc),
 			})
 		}
+		const syncProvider = shallowRef(null)
 
 		return {
 			baseVersionEtag,
@@ -284,6 +285,7 @@ export default {
 			lowlightLoaded,
 			requireReconnect,
 			setEditable,
+			syncProvider,
 			syncService,
 			width,
 			wrappedConnection,
@@ -414,14 +416,13 @@ export default {
 		//   console.debug('ydoc update', update, origin, doc, tr)
 		//   Y.logUpdate(update)
 		// });
-		this.$providers = []
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
 			const extensions = [
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.ydoc }),
-				CollaborationCursor.configure({ provider: this.$providers[0] }),
+				CollaborationCursor.configure({ provider: this.syncProvider }),
 			]
 			this.editor = this.isRichEditor
 				? createRichEditor({
@@ -454,14 +455,13 @@ export default {
 		initSession() {
 			this.connectSyncService()
 			this.listenSyncServiceEvents()
-			const syncServiceProvider = createSyncServiceProvider({
+			this.syncProvider = createSyncServiceProvider({
 				ydoc: this.ydoc,
 				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
 				disableBC: true,
 			})
-			this.$providers.push(syncServiceProvider)
 		},
 
 		listenEditorEvents() {
@@ -643,7 +643,7 @@ export default {
 		onSync({ steps, document }) {
 			this.hasConnectionIssue =
 				this.syncService.backend.fetcher === 0
-				|| !this.$providers[0].wsconnected
+				|| !this.syncProvider?.wsconnected
 				|| this.syncService.pushError > 0
 			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
@@ -765,8 +765,7 @@ export default {
 		async disconnect() {
 			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach((p) => p?.destroy())
-			this.$providers = []
+			this.syncProvider?.destroy()
 			// disallow editing while still showing the content
 			this.readOnly = true
 		},
