@@ -274,6 +274,20 @@ export default {
 		}
 		const syncProvider = shallowRef(null)
 
+		const extensions = [
+			Autofocus.configure({ fileId: props.fileId }),
+			Collaboration.configure({ document: ydoc }),
+			CollaborationCursor.configure({ provider: { awareness } }),
+		]
+		editor.value = isRichEditor
+			? createRichEditor({
+					...wrappedConnection,
+					relativePath: props.relativePath,
+					extensions,
+					isEmbedded: props.isEmbedded,
+				})
+			: createPlainEditor({ language, extensions })
+
 		return {
 			awareness,
 			baseVersionEtag,
@@ -422,21 +436,6 @@ export default {
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
-			const extensions = [
-				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.ydoc }),
-				CollaborationCursor.configure({
-					provider: { awareness: this.awareness },
-				}),
-			]
-			this.editor = this.isRichEditor
-				? createRichEditor({
-						...this.wrappedConnection,
-						relativePath: this.relativePath,
-						extensions,
-						isEmbedded: this.isEmbedded,
-					})
-				: createPlainEditor({ language: this.language, extensions })
 			this.listenEditorEvents()
 		}
 	},
