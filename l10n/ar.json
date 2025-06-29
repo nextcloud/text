@@ -125,6 +125,7 @@
     "Link to file or folder" : "ربط إلى ملف أو مجلد",
     "Link to website" : "ربط مع موقع وِب",
     "Update link" : "تحديث الرابط",
+    "{menuItemName}, \"{selectedSubMenuItemName}\" is selected" : "{menuItemName}, \"{selectedSubMenuItemName}\" تمّ اختياره",
     "_%n word_::_%n words_" : ["%n كلمات","%n كلمة","%n كلمات","%n كلمات","%n كلمات","%n كلمات"],
     "_%n char_::_%n chars_" : ["%n حروف","%n حرف","%n حروف","%n حروف","%n حروف","%n حروف"],
     "Remaining actions" : "الإجراءات المتبقية",
