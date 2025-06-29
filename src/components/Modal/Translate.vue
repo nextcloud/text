@@ -80,7 +80,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextArea from '@nextcloud/vue/components/NcTextArea'
-import { useIsMobileMixin } from '../Editor.provider.js'
+import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
 	name: 'Translate',

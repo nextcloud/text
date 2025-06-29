@@ -7,47 +7,51 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import MentionList from './MentionList.vue'
 import createSuggestions from '../suggestions.js'
+import { unref } from 'vue'
 
 const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
-const emitMention = ({ session, props }) => {
-	const documentId = session.documentId
+const emitMention = ({ connection, props }) => {
+	const { documentId, id, token } = unref(connection) ?? {}
+	if (!documentId) {
+		// TODO: emit the mention on reconnect
+		console.warn('Disconnected. Could not notify user about mention.', { user: props.id })
+		return
+	}
 	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
 		documentId,
-		sessionId: session.id,
-		sessionToken: session.token,
+		sessionId: id,
+		sessionToken: token,
 		mention: props.id,
 		scope: window.location,
 	})
 }
 
-export default ({ session, params }) => createSuggestions({
+export default ({ connection, options } = {}) => createSuggestions({
 	listComponent: MentionList,
 	items: async ({ query }) => {
+		const { documentId, id, token } = unref(connection) ?? {}
+		if (!documentId) {
+			// looks like we're not connected right now.
+			return []
+		}
 		const params = {
-			documentId: session.documentId,
-			sessionId: session.id,
-			sessionToken: session.token,
+			documentId,
+			sessionId: id,
+			sessionToken: token,
 			filter: query,
 		}
 		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)
 		const users = JSON.parse(JSON.stringify(response.data))
-		const result = []
-
-		Object.keys(users).map(key => result.push({
-			id: key,
-			label: users[key],
-		}))
-
-		return result
+		return Object.entries(users).map(([id, label]) => ({ id, label }))
 	},
 
 	command: ({ editor, range, props }) => {
-		if (params?.emitMention) {
-			params.emitMention({ props })
+		if (options?.emitMention) {
+			options.emitMention({ props })
 		} else {
 			emitMention({
-				session,
+				connection,
 				props,
 			})
 		}
@@ -81,5 +85,5 @@ export default ({ session, params }) => createSuggestions({
 
 		window.getSelection()?.collapseToEnd()
 	},
-	...params,
+	...options,
 })

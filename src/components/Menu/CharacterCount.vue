@@ -4,22 +4,19 @@
 -->
 
 <template>
-	<NcActionText data-text-action-entry="character-count">
+	<NcActionText data-text-action-entry="character-count" :name="countString">
 		<template #icon>
 			<AlphabeticalVariant />
-		</template>
-		<template #default>
-			{{ countString }}
 		</template>
 	</NcActionText>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { translatePlural as n } from '@nextcloud/l10n'
 import NcActionText from '@nextcloud/vue/components/NcActionText'
 import { AlphabeticalVariant } from '../icons.js'
-import { useEditorMixin } from '../Editor.provider.js'
+import { useEditor } from '../../composables/useEditor.ts'
 
 export default defineComponent({
 	name: 'CharacterCount',
@@ -27,31 +24,34 @@ export default defineComponent({
 		AlphabeticalVariant,
 		NcActionText,
 	},
-	mixins: [useEditorMixin],
 	props: {
 		visible: Boolean,
 	},
-	data: () => ({
-		wordCount: 0,
-		charCount: 0,
-	}),
-	computed: {
-		countString() {
-			return `${n('text', '%n word', '%n words', this.wordCount)}, ${n('text', '%n char', '%n chars', this.charCount)}`
-		},
+	setup() {
+		const { editor } = useEditor()
+		const countString = ref('')
+		const refresh = () => {
+			if (!editor.value) {
+				return
+			}
+			const { storage, state } = editor.value
+			// characterCount is not reactive so we need this workaround
+			// We also need to provide the doc as storage is a singleton in tiptap v2.
+			// See ueberdosis/tiptap#6060
+			const wordCount = storage.characterCount.words({ node: state.doc })
+			const charCount = storage.characterCount.characters({ node: state.doc })
+			const words = n('text', '%n word', '%n words', wordCount)
+			const chars = n('text', '%n char', '%n chars', charCount)
+			countString.value = [words, chars].join(', ')
+			console.debug({ wordCount, charCount, countString: countString.value })
+		}
+		return { countString, editor, refresh }
 	},
 	watch: {
 		visible: 'refresh',
 	},
 	created() {
 		this.refresh()
-	},
-	methods: {
-		refresh() {
-			// characterCount is not reactive so we need this workaround
-			this.wordCount = this.$editor.storage.characterCount.words()
-			this.charCount = this.$editor.storage.characterCount.characters()
-		},
 	},
 })
 </script>

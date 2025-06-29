@@ -75,7 +75,7 @@ import { getMarkAttributes, isActive } from '@tiptap/core'
 
 import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
 import { BaseActionEntry } from './BaseActionEntry.js'
-import { useFileMixin } from '../Editor.provider.js'
+import { useFileMixin } from '../Editor.provider.ts'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import { buildFilePicker } from '../../helpers/filePicker.js'
 
@@ -156,8 +156,8 @@ export default {
 				return this.setLink(href, href)
 			}
 
-			if (isActive(this.$editor.state, 'link')) {
-				const attrs = getMarkAttributes(this.$editor.state, 'link')
+			if (isActive(this.editor?.state, 'link')) {
+				const attrs = getMarkAttributes(this.editor?.state, 'link')
 				this.href = attrs.href
 			}
 			this.isInputMode = true
@@ -185,7 +185,7 @@ export default {
 
 			// Avoid issues when parsing urls later on in markdown that might be entered in an invalid format (e.g. "mailto: example@example.com")
 			const href = url.replaceAll(' ', '%20')
-			const chain = this.$editor.chain()
+			const chain = this.editor?.chain()
 			chain.insertOrSetLink(text, { href })
 			chain.focus().run()
 		},
@@ -194,14 +194,14 @@ export default {
 		 * Triggered by the "remove link" button
 		 */
 		removeLink() {
-			this.$editor.chain().unsetLink().focus().run()
+			this.editor?.chain().unsetLink().focus().run()
 			this.menuOpen = false
 		},
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then(link => {
-					const chain = this.$editor.chain()
-					if (this.$editor.view.state?.selection.empty) {
+					const chain = this.editor?.chain()
+					if (this.editor?.view.state?.selection.empty) {
 						chain.focus().insertPreview(link).run()
 					} else {
 						chain.setLink({ href: link }).focus().run()

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { nextTick } from 'vue'
+import { nextTick, shallowRef } from 'vue'
 import { mount } from '@vue/test-utils'
 import TableOfContents from '../../../components/Editor/TableOfContents.vue'
-import { EDITOR } from '../../../components/Editor.provider.js'
+import { editorKey } from '../../../composables/useEditor.ts'
 import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 import Heading from '../../../nodes/Heading.js'
 import { test, vi } from 'vitest'
@@ -20,7 +20,7 @@ const headingsForContent = [
 const createEditor = (content = '') => createCustomEditor(content, [Heading])
 const mountWithEditor = (editor) => {
 	return mount(TableOfContents, {
-		provide: { [EDITOR]: editor },
+		provide: { [editorKey]: shallowRef(editor) },
 	})
 }
 

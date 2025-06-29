@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import CollaborationCursor from './CollaborationCursor.js'
+import CollaborationCursor from './CollaborationCursor.ts'
 import Emoji from './Emoji.js'
 import FocusTrap from './FocusTrap.js'
 import UserColor from './UserColor.js'

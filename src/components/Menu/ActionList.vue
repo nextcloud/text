@@ -65,7 +65,7 @@ export default {
 		currentChild() {
 			const {
 				state,
-				$editor,
+				editor,
 				actionEntry: { children },
 			} = this
 
@@ -74,7 +74,7 @@ export default {
 			}
 
 			return children.find(child => {
-				return getIsActive(child, $editor)
+				return getIsActive(child, editor)
 			})
 		},
 		icon() {
@@ -118,12 +118,12 @@ export default {
 	},
 	mounted() {
 		this.$_updateState = debounce(this.checkStateOfChildren.bind(this), 50)
-		this.$editor.on('update', this.$_updateState)
-		this.$editor.on('selectionUpdate', this.$_updateState)
+		this.editor?.on('update', this.$_updateState)
+		this.editor?.on('selectionUpdate', this.$_updateState)
 	},
 	beforeDestroy() {
-		this.$editor.off('update', this.$_updateState)
-		this.$editor.off('selectionUpdate', this.$_updateState)
+		this.editor?.off('update', this.$_updateState)
+		this.editor?.off('selectionUpdate', this.$_updateState)
 	},
 	methods: {
 		onOpenChange(val) {
@@ -136,7 +136,7 @@ export default {
 			if (entry?.click) {
 				return
 			}
-			this.$editor.chain().focus().run()
+			this.editor?.chain().focus().run()
 			this.$emit('trigged', entry)
 		},
 		checkStateOfChildren() {
@@ -144,7 +144,7 @@ export default {
 		},
 		isChildEnabled(child) {
 			return !child.isSeparator
-				&& !getActionState(child, this.$editor).disabled
+				&& !getActionState(child, this.editor).disabled
 		},
 	},
 }

@@ -7,8 +7,8 @@
 	<div class="text-editor__wrapper"
 		:class="{
 			'has-conflicts': isResolvingConflict,
-			'is-rich-workspace': $isRichWorkspace,
-			'is-rich-editor': $isRichEditor,
+			'is-rich-workspace': isRichWorkspace,
+			'is-rich-editor': isRichEditor,
 		}">
 		<slot />
 	</div>
@@ -16,12 +16,11 @@
 
 <script>
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
-import { useIsRichEditorMixin, useIsRichWorkspaceMixin } from './../Editor.provider.js'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
 
 export default {
 	name: 'Wrapper',
-	mixins: [useIsRichEditorMixin, useIsRichWorkspaceMixin],
 	provide() {
 		const val = {}
 
@@ -63,6 +62,11 @@ export default {
 		},
 	},
 
+	setup() {
+		const { isRichEditor, isRichWorkspace } = useEditorFlags()
+		return { isRichEditor, isRichWorkspace }
+	},
+
 	data: () => ({
 		outline: {
 			visible: false,
@@ -77,7 +81,7 @@ export default {
 				: false
 		},
 		isAbleToShowOutline() {
-			if (this.$isRichWorkspace) {
+			if (this.isRichWorkspace) {
 				return false
 			}
 
