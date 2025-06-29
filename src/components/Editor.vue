@@ -767,7 +767,6 @@ export default {
 			this.unlistenSyncServiceEvents()
 			this.$providers.forEach((p) => p?.destroy())
 			this.$providers = []
-			this.syncService = null
 			// disallow editing while still showing the content
 			this.readOnly = true
 		},
@@ -785,12 +784,10 @@ export default {
 				try {
 					this.unlistenEditorEvents()
 					this.editor.destroy()
-					this.editor = undefined
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
-			return true
 		},
 
 		/**
