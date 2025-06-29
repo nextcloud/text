@@ -32,7 +32,7 @@
 import {
 	useEditorMixin,
 	useIsRichEditorMixin,
-	useSyncServiceMixin,
+	useConnectionMixin,
 } from './Editor.provider.js'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import setContent from './../mixins/setContent.js'
@@ -41,7 +41,7 @@ export default {
 	components: {
 		NcButton,
 	},
-	mixins: [useEditorMixin, useIsRichEditorMixin, setContent, useSyncServiceMixin],
+	mixins: [useEditorMixin, useIsRichEditorMixin, setContent, useConnectionMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -56,7 +56,8 @@ export default {
 	methods: {
 		resolveThisVersion() {
 			this.clicked = true
-			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
+			// TODO: implement saving based on connection
+			// this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 			this.$editor.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
@@ -64,7 +65,8 @@ export default {
 			this.clicked = true
 			this.$editor.setEditable(!this.readOnly)
 			this.setContent(outsideChange, { isRichEditor: this.$isRichEditor })
-			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
+			// TODO: implement saving based on connection
+			// this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
 }

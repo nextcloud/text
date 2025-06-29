@@ -64,7 +64,7 @@ import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import {
 	useEditorMixin,
 	useFileMixin,
-	useSyncServiceMixin,
+	useConnectionMixin,
 } from './Editor.provider.js'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
@@ -84,7 +84,7 @@ export default {
 		useActionChooseLocalAttachmentMixin,
 		useEditorMixin,
 		useFileMixin,
-		useSyncServiceMixin,
+		useConnectionMixin,
 	],
 
 	setup() {
