@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-const extensionHighlight = {
+const extensionHighlight: Record<string, string> = {
 	py: 'python',
 	gyp: 'python',
 	wsgi: 'python',
@@ -77,5 +77,4 @@ const extensionHighlight = {
 	vbs: 'vbscript',
 }
 
-export default extensionHighlight
 export { extensionHighlight }

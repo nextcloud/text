@@ -16,6 +16,7 @@ import { logger } from '../helpers/logger.js'
  * @param {number} options.queue - queue for outgoing steps
  * @param {object} options.initialSession - initialSession to start from
  * @param {boolean} options.disableBc - disable broadcast channel synchronization (default: disabled in debug mode, enabled otherwise)
+ * @param {object} options.awareness - awareness instance for the provider
  */
 export default function createSyncServiceProvider({
 	ydoc,
@@ -23,6 +24,7 @@ export default function createSyncServiceProvider({
 	fileId,
 	initialSession,
 	queue,
+	awareness,
 	disableBc,
 }) {
 	if (!fileId) {
@@ -40,7 +42,7 @@ export default function createSyncServiceProvider({
 		'ws://localhost:1234',
 		'file:' + fileId,
 		ydoc,
-		{ WebSocketPolyfill, disableBc },
+		{ WebSocketPolyfill, awareness, disableBc },
 	)
 	websocketProvider.on('status', (event) => logger.debug('status', event))
 	return websocketProvider

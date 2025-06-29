@@ -5,7 +5,7 @@
 
 import Vue from 'vue'
 import { subscribe } from '@nextcloud/event-bus'
-import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.js'
+import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
@@ -90,18 +90,18 @@ class TextEditorEmbed {
 	}
 
 	setSearchQuery(query, matchAll) {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.setSearchQuery(query, matchAll)
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.setSearchQuery(query, matchAll)
 	}
 
 	searchNext() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.nextMatch()
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.nextMatch()
 	}
 
 	searchPrevious() {
-		const editor = this.#getEditorComponent()?.$editor
-		editor.commands.previousMatch()
+		const editor = this.#getEditorComponent()?.editor
+		editor?.commands.previousMatch()
 	}
 
 	async save() {
@@ -124,11 +124,11 @@ class TextEditorEmbed {
 	}
 
 	insertAtCursor(content) {
-		this.#getEditorComponent().$editor.chain().insertContent(content).focus().run()
+		this.#getEditorComponent().editor?.chain().insertContent(content).focus().run()
 	}
 
 	focus() {
-		this.#getEditorComponent().$editor.commands.focus()
+		this.#getEditorComponent().editor?.commands.focus()
 	}
 
 	debugYjs() {
