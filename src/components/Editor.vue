@@ -135,6 +135,7 @@ import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { provideConnection } from '../composables/useConnection.ts'
+import { Awareness } from 'y-protocols/awareness.js'
 
 export default {
 	name: 'Editor',
@@ -237,6 +238,7 @@ export default {
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
 		const ydoc = new Doc()
+		const awareness = new Awareness(ydoc)
 		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
 		const wrappedConnection = provideConnection()
 		const hasConnectionIssue = ref(false)
@@ -273,6 +275,7 @@ export default {
 		const syncProvider = shallowRef(null)
 
 		return {
+			awareness,
 			baseVersionEtag,
 			connectSyncService,
 			editor,
@@ -422,7 +425,9 @@ export default {
 			const extensions = [
 				Autofocus.configure({ fileId: this.fileId }),
 				Collaboration.configure({ document: this.ydoc }),
-				CollaborationCursor.configure({ provider: this.syncProvider }),
+				CollaborationCursor.configure({
+					provider: { awareness: this.awareness },
+				}),
 			]
 			this.editor = this.isRichEditor
 				? createRichEditor({
@@ -461,6 +466,7 @@ export default {
 				fileId: this.fileId,
 				initialSession: this.initialSession,
 				disableBC: true,
+				awareness: this.awareness,
 			})
 		},
 
