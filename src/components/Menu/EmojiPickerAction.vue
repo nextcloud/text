@@ -37,7 +37,7 @@ export default {
 	methods: {
 		addEmoji({ id, native }) {
 			this.actionEntry
-				.action(this.$editor.chain(), { id, native })
+				.action(this.editor?.chain(), { id, native })
 				.focus()
 				.run()
 		},

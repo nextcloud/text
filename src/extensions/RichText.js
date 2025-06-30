@@ -33,6 +33,7 @@ import LinkPicker from './../extensions/LinkPicker.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
+import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
 import Preview from './../nodes/Preview.js'
@@ -101,7 +102,9 @@ export default Extension.create({
 			KeepSyntax,
 			Keymap,
 			FrontMatter,
-			Mention,
+			Mention.configure({
+				suggestion: MentionSuggestion(),
+			}),
 			Search,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),

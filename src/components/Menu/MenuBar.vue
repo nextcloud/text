@@ -12,12 +12,12 @@
 		:class="{
 			'text-menubar--ready': isReady,
 			'text-menubar--hide': isHidden,
-			'text-menubar--is-workspace': $isRichWorkspace,
+			'text-menubar--is-workspace': isRichWorkspace,
 			'is-mobile': $isMobile,
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
-		<div v-if="$isRichEditor"
+		<div v-if="isRichEditor"
 			ref="menubar"
 			role="toolbar"
 			class="text-menubar__entries"
@@ -77,11 +77,10 @@ import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import {
-	useEditorMixin,
 	useIsMobileMixin,
-	useIsRichEditorMixin,
-	useIsRichWorkspaceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 
 export default {
 	name: 'MenuBar',
@@ -97,10 +96,7 @@ export default {
 	},
 	extends: ToolBarLogic,
 	mixins: [
-		useEditorMixin,
 		useIsMobileMixin,
-		useIsRichEditorMixin,
-		useIsRichWorkspaceMixin,
 	],
 	provide() {
 		const val = {}
@@ -125,9 +121,11 @@ export default {
 	},
 
 	setup() {
+		const editor = useEditor()
+		const { isRichEditor, isRichWorkspace } = useEditorFlags()
 		const menubar = ref()
 		const { width } = useElementSize(menubar)
-		return { menubar, width }
+		return { editor, isRichEditor, isRichWorkspace, menubar, width }
 	},
 
 	data() {
@@ -209,15 +207,19 @@ export default {
 			this.displayHelp = false
 		},
 		showTranslate() {
-			const { from, to } = this.$editor.view.state.selection
-			let selectedText = this.$editor.view.state.doc.textBetween(from, to, ' ')
+			if(!this.editor) {
+				return
+			}
+			const { commands, view: { state }} = this.editor
+			const { from, to } = state.selection
+			let selectedText = state.doc.textBetween(from, to, ' ')
 
 			if (!selectedText.trim().length) {
-				this.$editor.commands.selectAll()
-				selectedText = this.$editor.view.state.doc.textContent
+				commands.selectAll()
+				selectedText = state.doc.textContent
 			}
 
-			console.debug('translation click', this.$editor.view.state.selection, selectedText)
+			console.debug('translation click', state.selection, selectedText)
 			emit('text:translate-modal:show', { content: selectedText })
 		},
 	},

@@ -7,7 +7,8 @@
 
 import debounce from 'debounce'
 
-import { useEditorMixin, useIsMobileMixin } from '../Editor.provider.js'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import { useEditor } from '../../composables/useEditor.ts'
 import { useOutlineActions, useOutlineStateMixin, useReadOnlyActions } from '../Editor/Wrapper.provider.js'
 import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
 
@@ -18,12 +19,15 @@ import './ActionEntry.scss'
  */
 const BaseActionEntry = {
 	mixins: [
-		useEditorMixin,
 		useIsMobileMixin,
 		useOutlineActions,
 		useOutlineStateMixin,
 		useReadOnlyActions,
 	],
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
+	},
 	props: {
 		actionEntry: {
 			type: Object,
@@ -36,7 +40,7 @@ const BaseActionEntry = {
 	},
 	data() {
 		return {
-			state: getActionState(this.actionEntry, this.$editor),
+			state: getActionState(this.actionEntry, this.editor),
 		}
 	},
 	computed: {
@@ -73,20 +77,20 @@ const BaseActionEntry = {
 	},
 	mounted() {
 		this.$_updateState = debounce(this.updateState.bind(this), 50)
-		this.$editor.on('update', this.$_updateState)
-		this.$editor.on('selectionUpdate', this.$_updateState)
+		this.editor?.on('update', this.$_updateState)
+		this.editor?.on('selectionUpdate', this.$_updateState)
 		// Initially emit the disabled event to set the state in parent
 		this.$emit('disabled', this.state.disabled)
 		// Initially set the tabindex
 		this.setTabIndexOnButton()
 	},
 	beforeDestroy() {
-		this.$editor.off('update', this.$_updateState)
-		this.$editor.off('selectionUpdate', this.$_updateState)
+		this.editor?.off('update', this.$_updateState)
+		this.editor?.off('selectionUpdate', this.$_updateState)
 	},
 	methods: {
 		updateState() {
-			this.state = getActionState(this.actionEntry, this.$editor)
+			this.state = getActionState(this.actionEntry, this.editor)
 			this.$emit('disabled', this.state.disabled)
 		},
 		setTabIndexOnButton() {

@@ -29,24 +29,28 @@
 </template>
 
 <script>
-import {
-	useEditorMixin,
-	useIsRichEditorMixin,
-	useSyncServiceMixin,
-} from './Editor.provider.js'
+import { useSyncServiceMixin } from './Editor.provider.ts'
+import { useEditorFlags } from '../composables/useEditorFlags.ts'
+import { useEditor } from '../composables/useEditor.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import setContent from './../mixins/setContent.js'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
 		NcButton,
 	},
-	mixins: [useEditorMixin, useIsRichEditorMixin, setContent, useSyncServiceMixin],
+	mixins: [useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
 			default: null,
 		},
+	},
+	setup() {
+		const { editor } = useEditor()
+		const { setContent, setEditable } = useEditorMethods(editor)
+		const { isRichEditor } = useEditorFlags()
+		return { editor, isRichEditor, setContent, setEditable }
 	},
 	data() {
 		return {
@@ -57,13 +61,13 @@ export default {
 		resolveThisVersion() {
 			this.clicked = true
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
-			this.$editor.setEditable(!this.readOnly)
+			this.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
 			const { outsideChange } = this.syncError.data
 			this.clicked = true
-			this.$editor.setEditable(!this.readOnly)
-			this.setContent(outsideChange, { isRichEditor: this.$isRichEditor })
+			this.setEditable(!this.readOnly)
+			this.setContent(outsideChange, { isRichEditor: this.isRichEditor })
 			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},

@@ -5,45 +5,17 @@
 
 import { logger } from '../helpers/logger.js'
 
-export const EDITOR = Symbol('tiptap:editor')
 export const FILE = Symbol('editor:file')
 export const ATTACHMENT_RESOLVER = Symbol('attachment:resolver')
 export const IS_MOBILE = Symbol('editor:is-mobile')
-export const IS_PUBLIC = Symbol('editor:is-public')
-export const IS_RICH_EDITOR = Symbol('editor:is-rich-editor')
-export const IS_RICH_WORKSPACE = Symbol('editor:is-rich-woskapace')
 export const SYNC_SERVICE = Symbol('sync:service')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
 
-export const useEditorMixin = {
-	inject: {
-		$editor: { from: EDITOR, default: null },
-	},
-}
-
 export const useSyncServiceMixin = {
 	inject: {
 		$syncService: { from: SYNC_SERVICE, default: null },
-	},
-}
-
-export const useIsPublicMixin = {
-	inject: {
-		$isPublic: { from: IS_PUBLIC, default: false },
-	},
-}
-
-export const useIsRichWorkspaceMixin = {
-	inject: {
-		$isRichWorkspace: { from: IS_RICH_WORKSPACE, default: false },
-	},
-}
-
-export const useIsRichEditorMixin = {
-	inject: {
-		$isRichEditor: { from: IS_RICH_EDITOR, default: false },
 	},
 }
 
@@ -71,7 +43,7 @@ export const useAttachmentResolver = {
 		$attachmentResolver: {
 			from: ATTACHMENT_RESOLVER,
 			default: {
-				resolve(src) {
+				resolve(src: string) {
 					logger.warn(
 						'No attachment resolver provided. Some attachment sources cannot be resolved.',
 					)

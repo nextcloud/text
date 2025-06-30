@@ -25,7 +25,7 @@
 			</template>
 			{{ t('text', 'Upload from computer') }}
 		</NcActionButton>
-		<NcActionButton v-if="!$isPublic"
+		<NcActionButton v-if="!isPublic"
 			close-after-click
 			:disabled="isUploadingAttachments"
 			:data-text-action-entry="`${actionEntry.key}-insert`"
@@ -61,10 +61,10 @@ import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import { loadState } from '@nextcloud/initial-state'
 import { Loading, Folder, Upload, Plus } from '../icons.js'
 import {
-	useIsPublicMixin,
 	useEditorUpload,
 	useSyncServiceMixin,
-} from '../Editor.provider.js'
+} from '../Editor.provider.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import {
@@ -88,7 +88,6 @@ export default {
 	},
 	extends: BaseActionEntry,
 	mixins: [
-		useIsPublicMixin,
 		useEditorUpload,
 		useSyncServiceMixin,
 		useActionAttachmentPromptMixin,
@@ -97,6 +96,10 @@ export default {
 		useActionCreateAttachmentMixin,
 		useMenuIDMixin,
 	],
+	setup() {
+		const { isPublic } = useEditorFlags()
+		return { isPublic }
+	},
 	computed: {
 		icon() {
 			return this.isUploadingAttachments
