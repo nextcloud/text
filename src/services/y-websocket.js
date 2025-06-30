@@ -289,7 +289,7 @@ export class WebsocketProvider extends Observable {
 			params = {},
 			protocols = [],
 			WebSocketPolyfill = WebSocket,
-			resyncInterval = -1,
+			resyncInterval = 30_000,
 			maxBackoffTime = 2500,
 			disableBc = false,
 		} = {},
@@ -345,7 +345,11 @@ export class WebsocketProvider extends Observable {
 		if (resyncInterval > 0) {
 			this._resyncInterval = /** @type {any} */ (
 				setInterval(() => {
-					if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+					if (
+						this.ws
+						&& this.ws.readyState === WebSocket.OPEN
+						&& doc.store.pendingStructs
+					) {
 						// resend sync step 1
 						const encoder = encoding.createEncoder()
 						encoding.writeVarUint(encoder, messageSync)
