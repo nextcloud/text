@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import Vue, { ref, set, watch } from 'vue'
+import Vue, { ref, set, shallowRef, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -135,6 +135,7 @@ import { useDelayedFlag } from './Editor/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { provideConnection } from '../composables/useConnection.ts'
+import { Awareness } from 'y-protocols/awareness.js'
 
 export default {
 	name: 'Editor',
@@ -163,7 +164,7 @@ export default {
 		// actual values without being reactive
 		Object.defineProperties(val, {
 			[SYNC_SERVICE]: {
-				get: () => this.$syncService,
+				get: () => this.syncService,
 			},
 			[FILE]: {
 				get: () => this.fileData,
@@ -237,6 +238,7 @@ export default {
 			el.value.style.setProperty('--widget-full-width', `${maxWidth}px`)
 		})
 		const ydoc = new Doc()
+		const awareness = new Awareness(ydoc)
 		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
 		const wrappedConnection = provideConnection()
 		const hasConnectionIssue = ref(false)
@@ -248,19 +250,62 @@ export default {
 			isRichEditor,
 			props,
 		)
+		const baseVersionEtag = shallowRef(null)
+		const syncService = shallowRef(null)
+		const connectSyncService = () => {
+			const guestName = localStorage.getItem('nick') ?? ''
+			const api = new SessionApi({
+				guestName,
+				shareToken: props.shareToken,
+				filePath: props.relativePath,
+			})
+			syncService.value = new SyncService({
+				api,
+				baseVersionEtag: baseVersionEtag.value,
+				serialize: isRichEditor.value
+					? (content) =>
+							createMarkdownSerializer(editor.value?.schema).serialize(
+								content ?? editor.value?.state.doc,
+							)
+					: (content) =>
+							serializePlainText(content ?? editor.value?.state.doc),
+				getDocumentState: () => getDocumentState(ydoc),
+			})
+		}
+		const syncProvider = shallowRef(null)
+
+		const extensions = [
+			Autofocus.configure({ fileId: props.fileId }),
+			Collaboration.configure({ document: ydoc }),
+			CollaborationCursor.configure({ provider: { awareness } }),
+		]
+		editor.value = isRichEditor
+			? createRichEditor({
+					...wrappedConnection,
+					relativePath: props.relativePath,
+					extensions,
+					isEmbedded: props.isEmbedded,
+				})
+			: createPlainEditor({ language, extensions })
+
 		return {
-			wrappedConnection,
-			el,
-			width,
-			hasConnectionIssue,
-			requireReconnect,
+			awareness,
+			baseVersionEtag,
+			connectSyncService,
 			editor,
-			setEditable,
+			el,
+			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
 			isRichWorkspace,
 			language,
 			lowlightLoaded,
+			requireReconnect,
+			setEditable,
+			syncProvider,
+			syncService,
+			width,
+			wrappedConnection,
 			ydoc,
 		}
 	},
@@ -388,24 +433,9 @@ export default {
 		//   console.debug('ydoc update', update, origin, doc, tr)
 		//   Y.logUpdate(update)
 		// });
-		this.$providers = []
-		this.$syncService = null
 		this.$attachmentResolver = null
 		if (this.active && this.hasDocumentParameters) {
 			this.initSession()
-			const extensions = [
-				Autofocus.configure({ fileId: this.fileId }),
-				Collaboration.configure({ document: this.ydoc }),
-				CollaborationCursor.configure({ provider: this.$providers[0] }),
-			]
-			this.editor = this.isRichEditor
-				? createRichEditor({
-						...this.wrappedConnection,
-						relativePath: this.relativePath,
-						extensions,
-						isEmbedded: this.isEmbedded,
-					})
-				: createPlainEditor({ language: this.language, extensions })
 			this.listenEditorEvents()
 		}
 	},
@@ -420,50 +450,23 @@ export default {
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.$syncService.save()])
+			await Promise.any([timeout, this.syncService.save()])
 		}
 		await this.close()
 		removeFromDebugging(this)
 	},
 	methods: {
 		initSession() {
-			if (!this.hasDocumentParameters) {
-				this.emit('error', 'No valid file provided')
-				return
-			}
-			const guestName = localStorage.getItem('nick')
-				? localStorage.getItem('nick')
-				: ''
-
-			const api = new SessionApi({
-				guestName,
-				shareToken: this.shareToken,
-				filePath: this.relativePath,
-			})
-
-			this.$syncService = new SyncService({
-				api,
-				baseVersionEtag: this.$baseVersionEtag,
-				serialize: this.isRichEditor
-					? (content) =>
-							createMarkdownSerializer(this.editor?.schema).serialize(
-								content ?? this.editor?.state.doc,
-							)
-					: (content) =>
-							serializePlainText(content ?? this.editor?.state.doc),
-				getDocumentState: () => getDocumentState(this.ydoc),
-			})
-
+			this.connectSyncService()
 			this.listenSyncServiceEvents()
-
-			const syncServiceProvider = createSyncServiceProvider({
+			this.syncProvider = createSyncServiceProvider({
 				ydoc: this.ydoc,
-				syncService: this.$syncService,
+				syncService: this.syncService,
 				fileId: this.fileId,
 				initialSession: this.initialSession,
 				disableBC: true,
+				awareness: this.awareness,
 			})
-			this.$providers.push(syncServiceProvider)
 		},
 
 		listenEditorEvents() {
@@ -481,7 +484,7 @@ export default {
 		},
 
 		listenSyncServiceEvents() {
-			this.$syncService
+			this.syncService
 				.on('opened', this.onOpened)
 				.on('change', this.onChange)
 				.on('loaded', this.onLoaded)
@@ -493,7 +496,7 @@ export default {
 		},
 
 		unlistenSyncServiceEvents() {
-			this.$syncService
+			this.syncService
 				.off('opened', this.onOpened)
 				.off('change', this.onChange)
 				.off('loaded', this.onLoaded)
@@ -567,7 +570,7 @@ export default {
 			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
 
 			this.setEditable(this.editMode)
-			this.lock = this.$syncService.lock
+			this.lock = this.syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
@@ -594,7 +597,7 @@ export default {
 		onLoaded({ document, documentSource, documentState }) {
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
-				this.$syncService.startSync()
+				this.syncService.startSync()
 				if (!documentState) {
 					setInitialYjsState(this.ydoc, documentSource, {
 						isRichEditor: this.isRichEditor,
@@ -602,7 +605,7 @@ export default {
 				}
 			})
 
-			this.$baseVersionEtag = document.baseVersionEtag
+			this.baseVersionEtag = document.baseVersionEtag
 			this.hasConnectionIssue = false
 
 			const session = this.currentSession
@@ -628,7 +631,7 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -636,7 +639,7 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -644,12 +647,12 @@ export default {
 
 		onSync({ steps, document }) {
 			this.hasConnectionIssue =
-				this.$syncService.backend.fetcher === 0
-				|| !this.$providers[0].wsconnected
-				|| this.$syncService.pushError > 0
-			if (this.$syncService.pushError > 0) {
+				this.syncService.backend.fetcher === 0
+				|| !this.syncProvider?.wsconnected
+				|| this.syncService.pushError > 0
+			if (this.syncService.pushError > 0) {
 				// successfully received steps - so let's try and also push
-				this.$syncService.sendStepsNow()
+				this.syncService.sendStepsNow()
 			}
 			this.$nextTick(() => {
 				this.emit('sync-service:sync')
@@ -712,14 +715,14 @@ export default {
 				if (this.editor.can().undo() || this.editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
-						this.$syncService.autosave()
+						this.syncService.autosave()
 					}
 				}
 			}
 		},
 
 		onIdle() {
-			this.$syncService.close()
+			this.syncService.close()
 			this.idle = true
 			this.readOnly = true
 			this.editMode = false
@@ -749,7 +752,7 @@ export default {
 		},
 
 		onKeyboardSave() {
-			this.$syncService.save()
+			this.syncService.save()
 		},
 
 		onAddImageNode() {
@@ -761,21 +764,19 @@ export default {
 		},
 
 		async save() {
-			await this.$syncService.save()
+			await this.syncService.save()
 		},
 
 		async disconnect() {
-			await this.$syncService.close()
+			await this.syncService.close()
 			this.unlistenSyncServiceEvents()
-			this.$providers.forEach((p) => p?.destroy())
-			this.$providers = []
-			this.$syncService = null
+			this.syncProvider?.destroy()
 			// disallow editing while still showing the content
 			this.readOnly = true
 		},
 
 		async close() {
-			await this.$syncService
+			await this.syncService
 				.sendRemainingSteps()
 				.catch((err) =>
 					logger.warn('Failed to send remaining steps', { err }),
@@ -787,12 +788,10 @@ export default {
 				try {
 					this.unlistenEditorEvents()
 					this.editor.destroy()
-					this.editor = undefined
 				} catch (error) {
 					logger.warn('Failed to destroy editor', { error })
 				}
 			}
-			return true
 		},
 
 		/**
@@ -829,7 +828,7 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.$syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
 			logger.debug(
@@ -852,7 +851,7 @@ export default {
 				clientId: this.ydoc.clientID,
 				pendingStructs: this.ydoc.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.$syncService?.getDocumentState(),
+				documentState: this.syncService?.getDocumentState(),
 			}
 			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
@@ -867,7 +866,7 @@ export default {
 
 		readOnlyToggled() {
 			if (this.editMode) {
-				this.$syncService.save()
+				this.syncService.save()
 			}
 			this.editMode = !this.editMode
 			this.setEditable(this.editMode)
@@ -916,7 +915,7 @@ export default {
 		},
 
 		saveBeforeUnload() {
-			this.$syncService?.saveViaSendBeacon()
+			this.syncService?.saveViaSendBeacon()
 		},
 	},
 }
