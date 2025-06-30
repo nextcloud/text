@@ -44,12 +44,24 @@ messageHandlers[messageSync] = (
 ) => {
 	encoding.writeVarUint(encoder, messageSync)
 	const decoderForRemote = decoding.clone(decoder)
+	const pendingStructsBefore = provider.doc.store.pendingStructs
 	const syncMessageType = syncProtocol.readSyncMessage(
 		decoder,
 		encoder,
 		provider.doc,
 		provider,
 	)
+	if (
+		!pendingStructsBefore
+		&& provider.doc.store.pendingStructs
+		&& !encoder.hasContent
+	) {
+		// The message received left pending structs behind.
+		// Send SyncStep1 to resync.
+		console.error('Failed to integrate yjs message. Trying to resync.')
+		encoding.writeVarUint(encoder, messageSync)
+		syncProtocol.writeSyncStep1(encoder, provider.doc)
+	}
 	// Message came from the broadcast channel
 	// Do not track in this.remote and do not emit sync.
 	if (!emitSynced) {
