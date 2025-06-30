@@ -70,6 +70,7 @@ OC.L10N.register(
     "Syntax" : "Süntaks",
     "Keyboard shortcuts" : "Klaviatuuri kiirklahvid",
     "New paragraph" : "Uus lõik",
+    "Enter" : "Sisestusklahv",
     "Backspace" : "Tagasivõtuklahv",
     "Shift" : "Nihuta",
     "Bold" : "Paks kiri",
