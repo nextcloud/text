@@ -4,12 +4,9 @@
 -->
 
 <template>
-	<NcActionText data-text-action-entry="character-count">
+	<NcActionText data-text-action-entry="character-count" :name="countString">
 		<template #icon>
 			<AlphabeticalVariant />
-		</template>
-		<template #default>
-			{{ countString }}
 		</template>
 	</NcActionText>
 </template>
