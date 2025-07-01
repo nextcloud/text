@@ -30,6 +30,7 @@ use OCP\ISession;
 use OCP\IUserSession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager as ShareManager;
+use Psr\Log\LoggerInterface;
 use ReflectionException;
 
 class SessionMiddleware extends Middleware {
@@ -43,6 +44,7 @@ class SessionMiddleware extends Middleware {
 		private IRootFolder $rootFolder,
 		private ShareManager $shareManager,
 		private IL10N $l10n,
+		private LoggerInterface $logger,
 	) {
 	}
 
@@ -99,11 +101,15 @@ class SessionMiddleware extends Middleware {
 
 		$session = $this->sessionService->getValidSession($documentId, $sessionId, $token);
 		if (!$session) {
+			// We spotted occurrences of this in combination with out-of-sync situations, so let's log it for now.
+			$this->logger->error('Could not find document session for document id' . $documentId . ' and session id ' . $sessionId);
 			throw new InvalidSessionException();
 		}
 
 		$document = $this->documentService->getDocument($documentId);
 		if (!$document) {
+			// We spotted occurrences of this in combination with out-of-sync situations, so let's log it for now.
+			$this->logger->error('Could not find document for documentId ' . $documentId);
 			throw new InvalidSessionException();
 		}
 
