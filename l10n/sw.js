@@ -14,6 +14,7 @@ OC.L10N.register(
     "Text" : "Maandishi",
     "Translate" : "Tafsiri",
     "Delete task" : "Futa jukumu",
+    "Guest" : "Mgeni",
     "Remove link" : "Ondoa kiungio",
     "Offline" : "Nje ya mtandao",
     "Saving …" : "Inahifadhi...",
@@ -28,6 +29,7 @@ OC.L10N.register(
     "Cancel" : "Cancel",
     "URL" : "Url",
     "Formatting help" : "Uasidizi wa uambizaji",
+    "Translation failed" : "Utafsiri umeshindikana",
     "to" : "kwa",
     "Edit" : "Hariri",
     "Source code" : "Msimbo wa chanzo",
@@ -36,6 +38,8 @@ OC.L10N.register(
     "Ctrl" : "Dhibiti",
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
-    "Choose {file}" : "Chagua {file}"
+    "Choose {file}" : "Chagua {file}",
+    "Detect language" : "Lugha iliyotambuliwa",
+    "Warning" : "Onyo"
 },
 "nplurals=2; plural=(n != 1);");
