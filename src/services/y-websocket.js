@@ -44,12 +44,24 @@ messageHandlers[messageSync] = (
 ) => {
 	encoding.writeVarUint(encoder, messageSync)
 	const decoderForRemote = decoding.clone(decoder)
+	const pendingStructsBefore = provider.doc.store.pendingStructs
 	const syncMessageType = syncProtocol.readSyncMessage(
 		decoder,
 		encoder,
 		provider.doc,
 		provider,
 	)
+	if (
+		!pendingStructsBefore
+		&& provider.doc.store.pendingStructs
+		&& !encoder.hasContent
+	) {
+		// The message received left pending structs behind.
+		// Send SyncStep1 to resync.
+		console.error('Failed to integrate yjs message. Trying to resync.')
+		encoding.writeVarUint(encoder, messageSync)
+		syncProtocol.writeSyncStep1(encoder, provider.doc)
+	}
 	// Message came from the broadcast channel
 	// Do not track in this.remote and do not emit sync.
 	if (!emitSynced) {
@@ -289,7 +301,7 @@ export class WebsocketProvider extends Observable {
 			params = {},
 			protocols = [],
 			WebSocketPolyfill = WebSocket,
-			resyncInterval = -1,
+			resyncInterval = 30_000,
 			maxBackoffTime = 2500,
 			disableBc = false,
 		} = {},
@@ -345,7 +357,11 @@ export class WebsocketProvider extends Observable {
 		if (resyncInterval > 0) {
 			this._resyncInterval = /** @type {any} */ (
 				setInterval(() => {
-					if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+					if (
+						this.ws
+						&& this.ws.readyState === WebSocket.OPEN
+						&& doc.store.pendingStructs
+					) {
 						// resend sync step 1
 						const encoder = encoding.createEncoder()
 						encoding.writeVarUint(encoder, messageSync)
