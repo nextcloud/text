@@ -827,6 +827,7 @@ export default {
 				filePath: this.relativePath,
 				clientId: this.$ydoc.clientID,
 				pendingStructs: this.$ydoc.store.pendingStructs,
+				pendingStructsRemote: this.$providers[0]?.remote.store.pendingStructs,
 				clientVectors: [],
 				documentState: this.$syncService?.getDocumentState(),
 			}
