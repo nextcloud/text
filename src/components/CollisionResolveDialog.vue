@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { useSyncServiceMixin } from './Editor.provider.ts'
+import { useSaveServiceMixin, useSyncServiceMixin } from './Editor.provider.ts'
 import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditor } from '../composables/useEditor.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -39,7 +39,7 @@ export default {
 	components: {
 		NcButton,
 	},
-	mixins: [useSyncServiceMixin],
+	mixins: [useSaveServiceMixin, useSyncServiceMixin],
 	props: {
 		syncError: {
 			type: Object,
@@ -60,7 +60,7 @@ export default {
 	methods: {
 		resolveThisVersion() {
 			this.clicked = true
-			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
+			this.$saveService.forceSave().then(() => this.$syncService.syncUp())
 			this.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
@@ -68,7 +68,7 @@ export default {
 			this.clicked = true
 			this.setEditable(!this.readOnly)
 			this.setContent(outsideChange, { isRichEditor: this.isRichEditor })
-			this.$syncService.forceSave().then(() => this.$syncService.syncUp())
+			this.$saveService.forceSave().then(() => this.$syncService.syncUp())
 		},
 	},
 }

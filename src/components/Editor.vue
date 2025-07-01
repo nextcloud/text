@@ -95,6 +95,7 @@ import {
 	FILE,
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
+	SAVE_SERVICE,
 	SYNC_SERVICE,
 } from './Editor.provider.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
@@ -103,7 +104,8 @@ import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
 import { getDocumentState } from '../helpers/yjs.js'
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
+import { SaveService } from '../services/SaveService.js'
+import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.js'
 import SessionApi from '../services/SessionApi.js'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -163,6 +165,9 @@ export default {
 		// using getters we can always provide the
 		// actual values without being reactive
 		Object.defineProperties(val, {
+			[SAVE_SERVICE]: {
+				get: () => this.saveService,
+			},
 			[SYNC_SERVICE]: {
 				get: () => this.syncService,
 			},
@@ -252,6 +257,7 @@ export default {
 		)
 		const baseVersionEtag = shallowRef(null)
 		const syncService = shallowRef(null)
+		const saveService = shallowRef(null)
 		const connectSyncService = () => {
 			const guestName = localStorage.getItem('nick') ?? ''
 			const api = new SessionApi({
@@ -262,6 +268,9 @@ export default {
 			syncService.value = new SyncService({
 				api,
 				baseVersionEtag: baseVersionEtag.value,
+			})
+			saveService.value = new SaveService({
+				syncService: syncService.value,
 				serialize: isRichEditor.value
 					? (content) =>
 							createMarkdownSerializer(editor.value?.schema).serialize(
@@ -301,6 +310,7 @@ export default {
 			language,
 			lowlightLoaded,
 			requireReconnect,
+			saveService,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -450,7 +460,7 @@ export default {
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.syncService.save()])
+			await Promise.any([timeout, this.saveService.save()])
 		}
 		await this.close()
 		removeFromDebugging(this)
@@ -631,7 +641,7 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -639,7 +649,7 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -715,7 +725,7 @@ export default {
 				if (this.editor.can().undo() || this.editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
-						this.syncService.autosave()
+						this.saveService.autosave()
 					}
 				}
 			}
@@ -752,7 +762,7 @@ export default {
 		},
 
 		onKeyboardSave() {
-			this.syncService.save()
+			this.saveService.save()
 		},
 
 		onAddImageNode() {
@@ -764,7 +774,7 @@ export default {
 		},
 
 		async save() {
-			await this.syncService.save()
+			await this.saveService.save()
 		},
 
 		async disconnect() {
@@ -828,7 +838,7 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
 			logger.debug(
@@ -852,7 +862,7 @@ export default {
 				pendingStructs: this.ydoc.store.pendingStructs,
 				pendingStructsRemote: this.syncProvider?.remote.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.syncService?.getDocumentState(),
+				documentState: this.saveService?.getDocumentState(),
 			}
 			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
@@ -867,7 +877,7 @@ export default {
 
 		readOnlyToggled() {
 			if (this.editMode) {
-				this.syncService.save()
+				this.saveService.save()
 			}
 			this.editMode = !this.editMode
 			this.setEditable(this.editMode)
@@ -916,7 +926,7 @@ export default {
 		},
 
 		saveBeforeUnload() {
-			this.syncService?.saveViaSendBeacon()
+			this.saveService?.saveViaSendBeacon()
 		},
 	},
 }

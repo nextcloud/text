@@ -6,7 +6,6 @@
 /* eslint-disable jsdoc/valid-types */
 
 import mitt from 'mitt'
-import debounce from 'debounce'
 
 import PollingBackend from './PollingBackend.js'
 import Outbox from './Outbox.ts'
@@ -21,13 +20,6 @@ import { logger } from '../helpers/logger.js'
  * @type {number}
  */
 const IDLE_TIMEOUT = 1440
-
-/**
- * Interval to save the serialized document and the document state
- *
- * @type {number} time in ms
- */
-const AUTOSAVE_INTERVAL = 30000
 
 const COLLABORATOR_IDLE_TIME = 60
 
@@ -55,17 +47,15 @@ const ERROR_TYPE = {
 
 class SyncService {
 	#sendIntervalId
-	#connection
+	connection
 	#outbox = new Outbox()
 
-	constructor({ baseVersionEtag, serialize, getDocumentState, api }) {
+	constructor({ baseVersionEtag, api }) {
 		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
 		this._bus = mitt()
 
-		this.serialize = serialize
-		this.getDocumentState = getDocumentState
 		this._api = api
-		this.#connection = null
+		this.connection = null
 
 		this.stepClientIDs = []
 
@@ -76,35 +66,33 @@ class SyncService {
 		this.sending = false
 		this.#sendIntervalId = null
 
-		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
-
 		this.pushError = 0
 
 		return this
 	}
 
 	get isReadOnly() {
-		return this.#connection.state.document.readOnly
+		return this.connection.state.document.readOnly
 	}
 
 	get hasOwner() {
-		return this.#connection?.hasOwner
+		return this.connection?.hasOwner
 	}
 
 	get guestName() {
-		return this.#connection.session.guestName
+		return this.connection.session.guestName
 	}
 
 	get hasActiveConnection() {
-		return this.#connection && !this.#connection.isClosed
+		return this.connection && !this.connection.isClosed
 	}
 
 	get connectionState() {
-		if (!this.#connection || this.version === undefined) {
+		if (!this.connection || this.version === undefined) {
 			return null
 		}
 		return {
-			...this.#connection.state,
+			...this.connection.state,
 			version: this.version,
 		}
 	}
@@ -118,14 +106,14 @@ class SyncService {
 			: this._api
 					.open({ fileId, baseVersionEtag: this.baseVersionEtag })
 					.catch((error) => this._emitError(error))
-		this.#connection = await connect
-		if (!this.#connection) {
+		this.connection = await connect
+		if (!this.connection) {
 			// Error was already emitted in connect
 			return null
 		}
-		this.backend = new PollingBackend(this, this.#connection)
-		this.version = this.#connection.docStateVersion
-		this.baseVersionEtag = this.#connection.document.baseVersionEtag
+		this.backend = new PollingBackend(this, this.connection)
+		this.version = this.connection.docStateVersion
+		this.baseVersionEtag = this.connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
 
@@ -149,10 +137,10 @@ class SyncService {
 	}
 
 	updateSession(guestName) {
-		if (!this.#connection.isPublic) {
+		if (!this.connection.isPublic) {
 			return Promise.reject(new Error())
 		}
-		return this.#connection.update(guestName).catch((error) => {
+		return this.connection.update(guestName).catch((error) => {
 			logger.error('Failed to update the session', { error })
 			return Promise.reject(error)
 		})
@@ -169,7 +157,7 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.#connection && !this.sending) {
+			if (this.connection && !this.sending) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
@@ -186,7 +174,7 @@ class SyncService {
 		if (!this.hasActiveConnection) {
 			return
 		}
-		return this.#connection
+		return this.connection
 			.push({ ...sendable, version: this.version })
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
@@ -196,7 +184,7 @@ class SyncService {
 					this.emit('sync', {
 						version: this.version,
 						steps: [documentStateStep],
-						document: this.#connection.document,
+						document: this.connection.document,
 					})
 				}
 				this.pushError = 0
@@ -299,53 +287,6 @@ class SyncService {
 		return false
 	}
 
-	_getContent() {
-		return this.serialize()
-	}
-
-	async save({ force = false, manualSave = true } = {}) {
-		logger.debug('[SyncService] saving', arguments[0])
-		try {
-			const response = await this.#connection.save({
-				version: this.version,
-				autosaveContent: this._getContent(),
-				documentState: this.getDocumentState(),
-				force,
-				manualSave,
-			})
-			this.emit('stateChange', { dirty: false })
-			this.#connection.document.lastSavedVersionTime = Date.now() / 1000
-			logger.debug('[SyncService] saved', response)
-			const { document, sessions } = response.data
-			this.emit('save', { document, sessions })
-			this.autosave.clear()
-		} catch (e) {
-			logger.error('Failed to save document.', { error: e })
-			throw e
-		}
-	}
-
-	saveViaSendBeacon() {
-		this.#connection.saveViaSendBeacon({
-			version: this.version,
-			autosaveContent: this._getContent(),
-			documentState: this.getDocumentState(),
-			force: false,
-			manualSave: true,
-		})
-		logger.debug('[SyncService] saved using sendBeacon')
-	}
-
-	forceSave() {
-		return this.save({ force: true })
-	}
-
-	_autosave() {
-		return this.save({ manualSave: false }).catch((error) => {
-			logger.error('Failed to autosave document.', { error })
-		})
-	}
-
 	async sendRemainingSteps() {
 		if (!this.#outbox.hasUpdate) {
 			return
@@ -356,13 +297,12 @@ class SyncService {
 
 	async close() {
 		// Make sure to leave no pending requests behind.
-		this.autosave.clear()
 		this.backend?.disconnect()
 		if (!this.hasActiveConnection) {
 			return
 		}
 		return (
-			this.#connection
+			this.connection
 				.close()
 				// Log and ignore possible network issues.
 				.catch((e) => {
@@ -372,15 +312,15 @@ class SyncService {
 	}
 
 	uploadAttachment(file) {
-		return this.#connection.uploadAttachment(file)
+		return this.connection.uploadAttachment(file)
 	}
 
 	insertAttachmentFile(filePath) {
-		return this.#connection.insertAttachmentFile(filePath)
+		return this.connection.insertAttachmentFile(filePath)
 	}
 
 	createAttachment(template) {
-		return this.#connection.createAttachment(template)
+		return this.connection.createAttachment(template)
 	}
 
 	on(event, callback) {
