@@ -61,11 +61,12 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
 import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { useFileMixin, useSyncServiceMixin } from './Editor.provider.ts'
+import { useFileMixin } from './Editor.provider.ts'
 import { useEditor } from '../composables/useEditor.ts'
 import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
+import { useSyncService } from '../composables/useSyncService.ts'
 
 export default {
 	name: 'SuggestionsBar',
@@ -77,13 +78,15 @@ export default {
 		Upload,
 	},
 
-	mixins: [useActionChooseLocalAttachmentMixin, useFileMixin, useSyncServiceMixin],
+	mixins: [useActionChooseLocalAttachmentMixin, useFileMixin],
 
 	setup() {
 		const { editor } = useEditor()
+		const { syncService } = useSyncService()
 		return {
 			editor,
 			isMobileDevice,
+			syncService,
 		}
 	},
 
@@ -99,7 +102,7 @@ export default {
 			return this.$file?.relativePath ?? '/'
 		},
 		isUploadDisabled() {
-			return !this.$syncService.hasOwner
+			return !this.syncService?.hasOwner
 		},
 		uploadTitle() {
 			return (

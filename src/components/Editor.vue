@@ -96,7 +96,6 @@ import {
 	ATTACHMENT_RESOLVER,
 	IS_MOBILE,
 	SAVE_SERVICE,
-	SYNC_SERVICE,
 } from './Editor.provider.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { provideEditor } from '../composables/useEditor.ts'
@@ -138,6 +137,7 @@ import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { provideConnection } from '../composables/useConnection.ts'
 import { Awareness } from 'y-protocols/awareness.js'
+import { provideSyncService } from '../composables/useSyncService.ts'
 
 export default {
 	name: 'Editor',
@@ -167,9 +167,6 @@ export default {
 		Object.defineProperties(val, {
 			[SAVE_SERVICE]: {
 				get: () => this.saveService,
-			},
-			[SYNC_SERVICE]: {
-				get: () => this.syncService,
 			},
 			[FILE]: {
 				get: () => this.fileData,
@@ -256,8 +253,8 @@ export default {
 			props,
 		)
 		const baseVersionEtag = shallowRef(null)
-		const syncService = shallowRef(null)
 		const saveService = shallowRef(null)
+		const { syncService } = provideSyncService()
 		const connectSyncService = () => {
 			const guestName = localStorage.getItem('nick') ?? ''
 			const api = new SessionApi({
