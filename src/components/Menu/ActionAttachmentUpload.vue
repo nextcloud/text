@@ -60,10 +60,7 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import { loadState } from '@nextcloud/initial-state'
 import { Loading, Folder, Upload, Plus } from '../icons.js'
-import {
-	useEditorUpload,
-	useSyncServiceMixin,
-} from '../Editor.provider.ts'
+import { useEditorUpload } from '../Editor.provider.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { BaseActionEntry } from './BaseActionEntry.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
@@ -73,6 +70,7 @@ import {
 	useActionChooseLocalAttachmentMixin,
 	useActionCreateAttachmentMixin,
 } from '../Editor/MediaHandler.provider.js'
+import { useSyncService } from '../../composables/useSyncService.ts'
 
 export default {
 	name: 'ActionAttachmentUpload',
@@ -89,7 +87,6 @@ export default {
 	extends: BaseActionEntry,
 	mixins: [
 		useEditorUpload,
-		useSyncServiceMixin,
 		useActionAttachmentPromptMixin,
 		useUploadingStateMixin,
 		useActionChooseLocalAttachmentMixin,
@@ -98,7 +95,8 @@ export default {
 	],
 	setup() {
 		const { isPublic } = useEditorFlags()
-		return { isPublic }
+		const { syncService } = useSyncService()
+		return { isPublic, syncService }
 	},
 	computed: {
 		icon() {
@@ -113,7 +111,7 @@ export default {
 			return loadState('files', 'templates', [])
 		},
 		isUploadDisabled() {
-			return !this.$syncService.hasOwner
+			return !this.syncService?.hasOwner
 		},
 		menuTitle() {
 			return this.isUploadDisabled
