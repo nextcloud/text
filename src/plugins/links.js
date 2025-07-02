@@ -153,21 +153,26 @@ export function linkClicking() {
 						event.stopImmediatePropagation()
 					}
 				},
-				// Prevent open link (except anchor links) on left click (required for read-only mode)
-				// Open link in new tab on Ctrl/Cmd + left click
+				// Prevent open link for text-only links on left click. Required for read-only mode.
 				click: (view, event) => {
 					const linkEl = event.target.closest('a')
-					if (event.button === 0 && linkEl) {
-						// No special handling in mermaid diagrams to not break links there
-						if (linkEl.closest('svg[id^="mermaid-view"]')) {
-							return false
-						}
+					// Only text-only links need special handling (e.g. don't handle links inside preview or mermaid diagrams)
+					if (
+						!linkEl
+						|| !linkEl.matches('a[data-text-el="text-only-link"]')
+					) {
+						return false
+					}
 
+					if (event.button === 0) {
+						// Stop browser from opening the link
 						event.preventDefault()
+
 						if (isLinkToSelfWithHash(linkEl.attributes.href?.value)) {
 							// Open anchor links directly
 							location.href = linkEl.attributes.href.value
 						} else if (event.ctrlKey || event.metaKey) {
+							// Open link in new tab on Ctrl/Cmd + left click
 							window.open(linkEl.href, '_blank')
 						}
 					}
