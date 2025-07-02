@@ -5,11 +5,11 @@
 
 /* eslint-disable jsdoc/valid-types */
 
-import mitt from 'mitt'
+import mitt, { type Handler } from 'mitt'
 
 import PollingBackend from './PollingBackend.js'
-import Outbox from './Outbox.ts'
-import { Connection } from './SessionApi.js'
+import Outbox from './Outbox.js'
+import SessionApi, { Connection } from './SessionApi.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 
@@ -45,34 +45,73 @@ const ERROR_TYPE = {
 	PUSH_FORBIDDEN: 5,
 }
 
+/**
+ * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+export declare type EventTypes = {
+	/* Document state */
+	opened: unknown
+	loaded: unknown
+
+	/* All initial steps fetched */
+	fetched: unknown
+
+	/* received new steps */
+	sync: unknown
+
+	/* state changed (dirty) */
+	stateChange: unknown
+
+	/* error */
+	error: unknown
+
+	/* Events for session and document meta data */
+	change: unknown
+
+	/* Emitted after successful save */
+	save: unknown
+
+	/* Emitted once a document becomes idle */
+	idle: unknown
+}
+
+/*
+ * Step as what we expect to be returned from the server right now.
+ */
+interface Step {
+	data: string[]
+	version: number
+	sessionId: number
+}
+
 class SyncService {
-	#sendIntervalId
-	connection
+	connection?: Connection
+	version = -1
+	pushError = 0
+	backend?: PollingBackend
+	#sendIntervalId?: NodeJS.Timeout
 	#outbox = new Outbox()
+	#bus = mitt<EventTypes>()
+	#api: SessionApi
+	#lastStepPush = Date.now()
+	#baseVersionEtag?: string
+	#sending = false
 
-	constructor({ baseVersionEtag, api }) {
-		/** @type {import('mitt').Emitter<import('./SyncService').EventTypes>} _bus */
-		this._bus = mitt()
-
-		this._api = api
-		this.connection = null
-
-		this.stepClientIDs = []
-
-		this.lastStepPush = Date.now()
-
-		this.version = null
-		this.baseVersionEtag = baseVersionEtag
-		this.sending = false
-		this.#sendIntervalId = null
-
-		this.pushError = 0
-
-		return this
+	constructor({
+		baseVersionEtag,
+		api,
+	}: {
+		baseVersionEtag?: string
+		api: SessionApi
+	}) {
+		this.#api = api
+		this.#baseVersionEtag = baseVersionEtag
 	}
 
 	get isReadOnly() {
-		return this.connection.state.document.readOnly
+		return this.connection?.state.document.readOnly
 	}
 
 	get hasOwner() {
@@ -80,15 +119,15 @@ class SyncService {
 	}
 
 	get guestName() {
-		return this.connection.session.guestName
+		return this.connection?.session.guestName
 	}
 
-	get hasActiveConnection() {
-		return this.connection && !this.connection.isClosed
+	hasActiveConnection(): this is { connection: Connection } {
+		return !!this.connection && !this.connection.isClosed
 	}
 
 	get connectionState() {
-		if (!this.connection || this.version === undefined) {
+		if (!this.connection || this.version === -1) {
 			return null
 		}
 		return {
@@ -97,15 +136,24 @@ class SyncService {
 		}
 	}
 
-	async open({ fileId, initialSession }) {
-		if (this.hasActiveConnection) {
+	async open({
+		fileId,
+		initialSession,
+	}: {
+		fileId: number
+		initialSession: object
+	}) {
+		if (this.hasActiveConnection()) {
 			return this.connectionState
 		}
 		const connect = initialSession
 			? Promise.resolve(new Connection({ data: initialSession }, {}))
-			: this._api
-					.open({ fileId, baseVersionEtag: this.baseVersionEtag })
-					.catch((error) => this._emitError(error))
+			: this.#api
+					.open({ fileId, baseVersionEtag: this.#baseVersionEtag })
+					.catch((error) => {
+						this._emitError(error)
+						return undefined // connection remains undefined
+					})
 		this.connection = await connect
 		if (!this.connection) {
 			// Error was already emitted in connect
@@ -113,7 +161,7 @@ class SyncService {
 		}
 		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
-		this.baseVersionEtag = this.connection.document.baseVersionEtag
+		this.#baseVersionEtag = this.connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
 		this.emit('loaded', this.connectionState)
 
@@ -121,14 +169,14 @@ class SyncService {
 	}
 
 	startSync() {
-		this.backend.connect()
+		this.backend?.connect()
 	}
 
 	syncUp() {
-		this.backend.resetRefetchTimer()
+		this.backend?.resetRefetchTimer()
 	}
 
-	_emitError(error) {
+	_emitError(error: { response?: object; code?: string }) {
 		if (!error.response || error.code === 'ECONNABORTED') {
 			this.emit('error', { type: ERROR_TYPE.CONNECTION_FAILED, data: {} })
 		} else {
@@ -136,8 +184,8 @@ class SyncService {
 		}
 	}
 
-	updateSession(guestName) {
-		if (!this.connection.isPublic) {
+	updateSession(guestName: string) {
+		if (!this.connection?.isPublic) {
 			return Promise.reject(new Error())
 		}
 		return this.connection.update(guestName).catch((error) => {
@@ -146,7 +194,7 @@ class SyncService {
 		})
 	}
 
-	sendStep(step) {
+	sendStep(step: ArrayBuffer) {
 		this.#outbox.storeStep(step)
 		this.sendSteps()
 	}
@@ -157,28 +205,31 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.connection && !this.sending) {
+			if (this.connection && !this.#sending) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
 	}
 
 	async sendStepsNow() {
-		this.sending = true
+		this.#sending = true
 		clearInterval(this.#sendIntervalId)
-		this.#sendIntervalId = null
+		this.#sendIntervalId = undefined
 		const sendable = this.#outbox.getDataToSend()
 		if (sendable.steps.length > 0) {
 			this.emit('stateChange', { dirty: true })
 		}
-		if (!this.hasActiveConnection) {
+		if (!this.hasActiveConnection()) {
 			return
 		}
 		return this.connection
 			.push({ ...sendable, version: this.version })
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
-				const { steps, documentState } = response.data
+				const { steps, documentState } = response.data as {
+					steps: Step[]
+					documentState: string
+				}
 				if (documentState) {
 					const documentStateStep = documentStateToStep(documentState)
 					this.emit('sync', {
@@ -188,14 +239,14 @@ class SyncService {
 					})
 				}
 				this.pushError = 0
-				this.sending = false
+				this.#sending = false
 				if (steps?.length > 0) {
 					this.receiveSteps({ steps })
 				}
 			})
 			.catch((err) => {
 				const { response, code } = err
-				this.sending = false
+				this.#sending = false
 				this.pushError++
 				logger.error('Failed to push the steps to the server', err)
 				if (!response || code === 'ECONNABORTED') {
@@ -210,27 +261,12 @@ class SyncService {
 						data: response,
 					})
 				} else if (response?.status === 403) {
-					// TODO: is this really about sendable?
-					if (!sendable.document) {
-						// either the session is invalid or the document is read only.
-						logger.error('failed to write to document - not allowed')
-						this.emit('error', {
-							type: ERROR_TYPE.PUSH_FORBIDDEN,
-							data: {},
-						})
-					}
-					// TODO: does response.data ever have a document? maybe for errors?
-					// TODO: `currentVersion` is always 0 nowadays. Check if this is still needed.
-					// Only emit conflict event if we have synced until the latest version
-					if (response.data.document?.currentVersion === this.version) {
-						this.emit('error', {
-							type: ERROR_TYPE.PUSH_FAILURE,
-							data: {},
-						})
-						OC.Notification.showTemporary(
-							'Changes could not be sent yet',
-						)
-					}
+					// either the session is invalid or the document is read only.
+					logger.error('failed to write to document - not allowed')
+					this.emit('error', {
+						type: ERROR_TYPE.PUSH_FORBIDDEN,
+						data: {},
+					})
 				} else {
 					this.emit('error', { type: ERROR_TYPE.PUSH_FAILURE, data: {} })
 				}
@@ -238,7 +274,19 @@ class SyncService {
 			})
 	}
 
-	receiveSteps({ steps, document = null, sessions = [] }) {
+	receiveSteps({
+		steps,
+		document,
+		sessions = [],
+	}: {
+		steps: { data: string[]; version: number; sessionId: number }[]
+		document?: object
+		sessions?: {
+			lastContact: number
+			lastAwarenessMessage: string
+			clientId: number
+		}[]
+	}) {
 		const awareness = sessions
 			.filter(
 				(s) =>
@@ -263,11 +311,11 @@ class SyncService {
 			singleSteps.forEach((step) => {
 				newSteps.push({
 					step,
-					clientID: steps[i].sessionId,
+					clientId: steps[i].sessionId,
 				})
 			})
 		}
-		this.lastStepPush = Date.now()
+		this.#lastStepPush = Date.now()
 		this.emit('sync', {
 			steps: newSteps,
 			document,
@@ -276,10 +324,10 @@ class SyncService {
 	}
 
 	checkIdle() {
-		const lastPushMinutesAgo = (Date.now() - this.lastStepPush) / 1000 / 60
+		const lastPushMinutesAgo = (Date.now() - this.#lastStepPush) / 1000 / 60
 		if (lastPushMinutesAgo > IDLE_TIMEOUT) {
 			logger.debug(
-				`[SyncService] Document is idle for ${this.IDLE_TIMEOUT} minutes, suspending connection`,
+				`[SyncService] Document is idle for ${IDLE_TIMEOUT} minutes, suspending connection`,
 			)
 			this.emit('idle')
 			return true
@@ -298,7 +346,7 @@ class SyncService {
 	async close() {
 		// Make sure to leave no pending requests behind.
 		this.backend?.disconnect()
-		if (!this.hasActiveConnection) {
+		if (!this.hasActiveConnection()) {
 			return
 		}
 		return (
@@ -311,30 +359,39 @@ class SyncService {
 		)
 	}
 
-	uploadAttachment(file) {
+	uploadAttachment(file: object) {
+		if (!this.hasActiveConnection()) {
+			throw new Error('Not connected to server.')
+		}
 		return this.connection.uploadAttachment(file)
 	}
 
-	insertAttachmentFile(filePath) {
+	insertAttachmentFile(filePath: string) {
+		if (!this.hasActiveConnection()) {
+			throw new Error('Not connected to server.')
+		}
 		return this.connection.insertAttachmentFile(filePath)
 	}
 
-	createAttachment(template) {
+	createAttachment(template: object) {
+		if (!this.hasActiveConnection()) {
+			throw new Error('Not connected to server.')
+		}
 		return this.connection.createAttachment(template)
 	}
 
-	on(event, callback) {
-		this._bus.on(event, callback)
+	on(event: keyof EventTypes, callback: Handler<unknown>) {
+		this.#bus.on(event, callback)
 		return this
 	}
 
-	off(event, callback) {
-		this._bus.off(event, callback)
+	off(event: keyof EventTypes, callback: Handler<unknown>) {
+		this.#bus.off(event, callback)
 		return this
 	}
 
-	emit(event, data) {
-		this._bus.emit(event, data)
+	emit(event: keyof EventTypes, data?: unknown) {
+		this.#bus.emit(event, data)
 	}
 }
 

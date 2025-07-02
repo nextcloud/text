@@ -55,7 +55,7 @@ import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwit
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleIcon from 'vue-material-design-icons/AccountMultiple.vue'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.js'
+import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
 import { loadState } from '@nextcloud/initial-state'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'

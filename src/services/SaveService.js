@@ -36,10 +36,6 @@ class SaveService {
 		return this.syncService.emit.bind(this.syncService)
 	}
 
-	get hasActiveConnection() {
-		return this.connection && !this.connection.isClosed
-	}
-
 	_getContent() {
 		return this.serialize()
 	}
