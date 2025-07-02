@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import { logger } from '../helpers/logger.js'
-import { SyncService, ERROR_TYPE } from './SyncService.js'
+import { SyncService, ERROR_TYPE } from './SyncService.ts'
 import { Connection } from './SessionApi.js'
 import getNotifyBus from './NotifyService.js'
 

@@ -6,7 +6,7 @@
 import { expect, test } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import SyncStatus from '../../components/Editor/DocumentStatus/SyncStatus.vue'
-import { ERROR_TYPE } from '../../services/SyncService.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
 
 const FLAGS = ['idle', 'hasConnectionIssue']
 
