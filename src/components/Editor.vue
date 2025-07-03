@@ -232,7 +232,7 @@ export default {
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
 		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
-		const wrappedConnection = provideConnection()
+		const { connection } = provideConnection()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
@@ -247,7 +247,7 @@ export default {
 		]
 		const editor = isRichEditor
 			? createRichEditor({
-					...wrappedConnection,
+					connection,
 					relativePath: props.relativePath,
 					extensions,
 					isEmbedded: props.isEmbedded,
@@ -289,7 +289,7 @@ export default {
 			syncProvider,
 			syncService,
 			width,
-			wrappedConnection,
+			connection,
 			ydoc,
 		}
 	},
@@ -494,7 +494,7 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.wrappedConnection.connection.value = undefined
+			this.connection = undefined
 			this.disconnect().then(() => {
 				this.initSession()
 			})
@@ -600,9 +600,7 @@ export default {
 				color: session?.color,
 				clientId: this.ydoc.clientID,
 			}
-			this.wrappedConnection.connection.value = {
-				...this.currentSession,
-			}
+			this.connection = { ...this.currentSession }
 			this.editor.commands.updateUser(user)
 		},
 
