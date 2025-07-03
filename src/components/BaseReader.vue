@@ -42,9 +42,6 @@ export default {
 
 	mixins: [useOutlineStateMixin, useOutlineActions],
 
-	// extensions is a factory building a list of extensions for the editor
-	inject: ['renderHtml', 'extensions'],
-
 	props: {
 		content: {
 			type: String,
@@ -53,6 +50,7 @@ export default {
 	},
 
 	setup(props) {
+		// extensions is a factory building a list of extensions for the editor
 		const extensions = inject('extensions')
 		const renderHtml = inject('renderHtml')
 		const editor = new Editor({
