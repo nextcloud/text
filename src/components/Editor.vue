@@ -104,8 +104,7 @@ import ReadonlyBar from './Menu/ReadonlyBar.vue'
 import { logger } from '../helpers/logger.js'
 import { getDocumentState } from '../helpers/yjs.js'
 import { SaveService } from '../services/SaveService.js'
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
-import SessionApi from '../services/SessionApi.js'
+import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import {
@@ -252,21 +251,10 @@ export default {
 			isRichEditor,
 			props,
 		)
-		const baseVersionEtag = shallowRef(null)
+		const { syncService, connectSyncService, baseVersionEtag } =
+			provideSyncService(props)
+
 		const saveService = shallowRef(null)
-		const { syncService } = provideSyncService()
-		const connectSyncService = () => {
-			const guestName = localStorage.getItem('nick') ?? ''
-			const api = new SessionApi({
-				guestName,
-				shareToken: props.shareToken,
-				filePath: props.relativePath,
-			})
-			syncService.value = new SyncService({
-				api,
-				baseVersionEtag: baseVersionEtag.value,
-			})
-		}
 		watch(syncService, (newSyncService) => {
 			if (!newSyncService) {
 				saveService.value = null
