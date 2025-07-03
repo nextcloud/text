@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { useEditorFlags } from '../composables/useEditorFlags.ts'
 import { useEditor } from '../composables/useEditor.ts'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
@@ -51,10 +50,8 @@ export default {
 		const { syncService } = useSyncService()
 		const { saveService } = useSaveService()
 		const { setContent, setEditable } = useEditorMethods(editor)
-		const { isRichEditor } = useEditorFlags()
 		return {
 			editor,
-			isRichEditor,
 			setContent,
 			setEditable,
 			saveService,
@@ -76,7 +73,7 @@ export default {
 			const { outsideChange } = this.syncError.data
 			this.clicked = true
 			this.setEditable(!this.readOnly)
-			this.setContent(outsideChange, { isRichEditor: this.isRichEditor })
+			this.setContent(outsideChange)
 			this.saveService?.forceSave().then(() => this.syncService?.syncUp())
 		},
 	},
