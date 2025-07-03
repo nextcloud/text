@@ -37,7 +37,7 @@ import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import { provide, ref, watch } from 'vue'
+import { provide, watch } from 'vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -110,9 +110,9 @@ export default {
 
 		provideEditor(editor)
 		provide(editorFlagsKey, {
-			isPublic: ref(false),
-			isRichEditor: ref(true),
-			isRichWorkspace: ref(false),
+			isPublic: false,
+			isRichEditor: true,
+			isRichWorkspace: false,
 		})
 		return { editor }
 	},

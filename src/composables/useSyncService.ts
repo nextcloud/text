@@ -3,14 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import {
-	type InjectionKey,
-	type ShallowRef,
-	shallowRef,
-	provide,
-	inject,
-	type Ref,
-} from 'vue'
+import { type InjectionKey, type ShallowRef, shallowRef, provide, inject } from 'vue'
 import { SyncService } from '../services/SyncService.js'
 import SessionApi from '../services/SessionApi.js'
 
@@ -25,8 +18,8 @@ const syncServiceKey = Symbol('text:sync') as InjectionKey<
  * @param props.shareToken Share token of the file.
  */
 export function provideSyncService(props: {
-	relativePath: Ref<string>
-	shareToken: Ref<string | null>
+	relativePath: string
+	shareToken?: string
 }) {
 	const syncService: ShallowRef<SyncService | undefined> = shallowRef(undefined)
 	const baseVersionEtag = shallowRef(undefined)

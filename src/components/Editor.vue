@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import Vue, { ref, set, shallowRef, watch } from 'vue'
+import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -132,7 +132,7 @@ import { Awareness } from 'y-protocols/awareness.js'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 
-export default {
+export default defineComponent({
 	name: 'Editor',
 	components: {
 		CollisionResolveDialog,
@@ -259,7 +259,7 @@ export default {
 		const { syncService, connectSyncService, baseVersionEtag } =
 			provideSyncService(props)
 
-		const serialize = isRichEditor.value
+		const serialize = isRichEditor
 			? () =>
 					createMarkdownSerializer(editor.schema).serialize(
 						editor.state.doc,
@@ -898,7 +898,7 @@ export default {
 			this.saveService?.saveViaSendBeacon()
 		},
 	},
-}
+})
 </script>
 
 <style scoped lang="scss">
