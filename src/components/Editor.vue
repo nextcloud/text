@@ -91,19 +91,12 @@ import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
 
-import {
-	FILE,
-	ATTACHMENT_RESOLVER,
-	IS_MOBILE,
-	SAVE_SERVICE,
-} from './Editor.provider.ts'
+import { FILE, ATTACHMENT_RESOLVER, IS_MOBILE } from './Editor.provider.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { provideEditor } from '../composables/useEditor.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.js'
-import { SaveService } from '../services/SaveService.js'
 import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
@@ -137,6 +130,7 @@ import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { provideConnection } from '../composables/useConnection.ts'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideSyncService } from '../composables/useSyncService.ts'
+import { provideSaveService } from '../composables/useSaveService.ts'
 
 export default {
 	name: 'Editor',
@@ -164,9 +158,6 @@ export default {
 		// using getters we can always provide the
 		// actual values without being reactive
 		Object.defineProperties(val, {
-			[SAVE_SERVICE]: {
-				get: () => this.saveService,
-			},
 			[FILE]: {
 				get: () => this.fileData,
 			},
@@ -254,24 +245,14 @@ export default {
 		const { syncService, connectSyncService, baseVersionEtag } =
 			provideSyncService(props)
 
-		const saveService = shallowRef(null)
-		watch(syncService, (newSyncService) => {
-			if (!newSyncService) {
-				saveService.value = null
-				return
-			}
-			saveService.value = new SaveService({
-				syncService: newSyncService,
-				serialize: isRichEditor.value
-					? (content) =>
-							createMarkdownSerializer(editor.value?.schema).serialize(
-								content ?? editor.value?.state.doc,
-							)
-					: (content) =>
-							serializePlainText(content ?? editor.value?.state.doc),
-				getDocumentState: () => getDocumentState(ydoc),
-			})
-		})
+		const serialize = isRichEditor.value
+			? () =>
+					createMarkdownSerializer(editor.value?.schema).serialize(
+						editor.value?.state.doc,
+					)
+			: () => serializePlainText(editor.value?.state.doc)
+
+		const { saveService } = provideSaveService(syncService, serialize, ydoc)
 
 		const syncProvider = shallowRef(null)
 
@@ -303,6 +284,7 @@ export default {
 			lowlightLoaded,
 			requireReconnect,
 			saveService,
+			serialize,
 			setEditable,
 			syncProvider,
 			syncService,
@@ -633,7 +615,7 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -641,7 +623,7 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -830,7 +812,7 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.saveService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
 			logger.debug(
