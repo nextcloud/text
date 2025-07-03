@@ -58,10 +58,13 @@ export default {
 			extensions: extensions(),
 		})
 		provideEditor(editor)
-		watch(() => props.content, (content) => {
-			console.warn({content})
-			editor.commands.setContent(renderHtml(content), true)
-		})
+		watch(
+			() => props.content,
+			(content) => {
+				console.warn({ content })
+				editor.commands.setContent(renderHtml(content), true)
+			},
+		)
 		const { setEditable } = useEditorMethods(editor)
 		setEditable(false)
 		return { editor }
