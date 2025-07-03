@@ -77,16 +77,16 @@ const BaseActionEntry = {
 	},
 	mounted() {
 		this.$_updateState = debounce(this.updateState.bind(this), 50)
-		this.editor?.on('update', this.$_updateState)
-		this.editor?.on('selectionUpdate', this.$_updateState)
+		this.editor.on('update', this.$_updateState)
+		this.editor.on('selectionUpdate', this.$_updateState)
 		// Initially emit the disabled event to set the state in parent
 		this.$emit('disabled', this.state.disabled)
 		// Initially set the tabindex
 		this.setTabIndexOnButton()
 	},
 	beforeDestroy() {
-		this.editor?.off('update', this.$_updateState)
-		this.editor?.off('selectionUpdate', this.$_updateState)
+		this.editor.off('update', this.$_updateState)
+		this.editor.off('selectionUpdate', this.$_updateState)
 	},
 	methods: {
 		updateState() {

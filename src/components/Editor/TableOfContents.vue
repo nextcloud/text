@@ -37,10 +37,8 @@ export default {
 		headings: [],
 	}),
 	mounted() {
-		if (this.editor) {
-			this.editor.on('update', this.updateHeadings)
-			this.updateHeadings()
-		}
+		this.editor.on('update', this.updateHeadings)
+		this.updateHeadings()
 		setTimeout(() => {
 			this.initialRender = false
 		}, 1000)
@@ -58,7 +56,7 @@ export default {
 		},
 		updateHeadings() {
 			this.headings = headingAnchorPluginKey
-				.getState(this.editor?.state)?.headings ?? []
+				.getState(this.editor.state)?.headings ?? []
 		},
 	},
 }

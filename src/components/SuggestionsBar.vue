@@ -116,12 +116,12 @@ export default {
 	},
 
 	mounted() {
-		this.editor?.on('update', this.onUpdate)
+		this.editor.on('update', this.onUpdate)
 		this.onUpdate({ editor: this.editor })
 	},
 
 	beforeDestroy() {
-		this.editor?.off('update', this.onUpdate)
+		this.editor.off('update', this.onUpdate)
 	},
 
 	methods: {
@@ -132,8 +132,8 @@ export default {
 		linkPicker() {
 			getLinkWithPicker(null, true)
 				.then((link) => {
-					const chain = this.editor?.chain()
-					if (this.editor?.view.state?.selection.empty) {
+					const chain = this.editor.chain()
+					if (this.editor.view.state?.selection.empty) {
 						chain.focus().insertPreview(link).run()
 					} else {
 						chain.setLink({ href: link }).focus().run()
@@ -149,7 +149,7 @@ export default {
 		 * Triggered by the "Insert table" button
 		 */
 		insertTable() {
-			this.editor?.chain().focus().insertTable()?.run()
+			this.editor.chain().focus().insertTable()?.run()
 		},
 
 		/**
@@ -192,7 +192,7 @@ export default {
 		 * @param {string} text Text part of the link
 		 */
 		setLink(url, text) {
-			this.editor?.chain().insertOrSetLink(text, { href: url }).focus().run()
+			this.editor.chain().insertOrSetLink(text, { href: url }).focus().run()
 		},
 
 		onUpdate({ editor }) {

@@ -268,7 +268,7 @@ export default {
 			return
 		}
 
-		this.editor?.on('selectionUpdate', this.onSelection)
+		this.editor.on('selectionUpdate', this.onSelection)
 		this.fetchTasks()
 		subscribe('notifications:notification:received', this.checkNotification)
 	},
@@ -277,7 +277,7 @@ export default {
 			return
 		}
 
-		this.editor?.off('selectionUpdate', this.onSelection)
+		this.editor.off('selectionUpdate', this.onSelection)
 		unsubscribe('notifications:notification:received', this.checkNotification)
 	},
 	methods: {
@@ -310,12 +310,8 @@ export default {
 			await this.fetchTasks()
 		},
 		onSelection() {
-			const { state } = this.editor ?? {}
-			if (!state) {
-				return
-			}
-			const { from, to } = state.selection
-			this.selection = state.doc.textBetween(from, to, ' ')
+			const { selection, doc } = this.editor.state
+			this.selection = doc.textBetween(selection.from, selection.to, ' ')
 		},
 		async openAssistantForm(taskType = null) {
 			await window.OCA.Assistant.openAssistantForm({
@@ -343,7 +339,7 @@ export default {
 		},
 		openTranslateDialog() {
 			if (!this.selection.trim().length) {
-				this.editor?.commands.selectAll()
+				this.editor.commands.selectAll()
 			}
 			emit('text:translate-modal:show', { content: this.selection || '' })
 		},
@@ -367,7 +363,7 @@ export default {
 			const content = isMarkdown
 				? markdownit.render(task.output.output)
 				: task.output.output
-			this.editor?.commands.insertContent(content)
+			this.editor.commands.insertContent(content)
 			this.showTaskList = false
 		},
 		async copyResult(task) {
@@ -402,9 +398,9 @@ export default {
 						.querySelector('.ProseMirror')
 						.getBoundingClientRect()
 					const pos = posToDOMRect(
-						this.editor?.view,
-						this.editor?.state.selection.from,
-						this.editor?.state.selection.to,
+						this.editor.view,
+						this.editor.state.selection.from,
+						this.editor.state.selection.to,
 					)
 					let rightSpacing = 0
 

@@ -3,18 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Editor } from '@tiptap/core'
-import { type InjectionKey, type ShallowRef, shallowRef, provide, inject } from 'vue'
+import { Editor } from '@tiptap/core'
+import { type InjectionKey, provide, inject } from 'vue'
 
-export const editorKey = Symbol('tiptap:editor') as InjectionKey<
-	ShallowRef<Editor | undefined>
->
-export const provideEditor = () => {
-	const editor: ShallowRef<Editor | undefined> = shallowRef(undefined)
+export const editorKey = Symbol('tiptap:editor') as InjectionKey<Editor>
+export const provideEditor = (editor: Editor) => {
 	provide(editorKey, editor)
-	return { editor }
 }
 export const useEditor = () => {
-	const editor = inject(editorKey, shallowRef(undefined))
-	return { editor }
+	const editor = inject(editorKey)
+	if (!editor) {
+		throw new Error('Failed to inject Editor')
+	}
+	return { editor: editor as Editor }
 }

@@ -58,7 +58,6 @@ export default Extension.create({
 		return {
 			editing: true,
 			extensions: [],
-			component: null,
 			relativePath: null,
 			isEmbedded: false,
 		}
