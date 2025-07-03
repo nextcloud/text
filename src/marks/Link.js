@@ -73,6 +73,7 @@ const Link = TipTapLink.extend({
 			{
 				...mark.attrs,
 				href,
+				'data-text-el': 'text-only-link',
 				'data-md-href': mark.attrs.href,
 				rel: 'noopener noreferrer nofollow',
 			},
