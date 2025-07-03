@@ -266,8 +266,14 @@ export default {
 				api,
 				baseVersionEtag: baseVersionEtag.value,
 			})
+		}
+		watch(syncService, (newSyncService) => {
+			if (!newSyncService) {
+				saveService.value = null
+				return
+			}
 			saveService.value = new SaveService({
-				syncService: syncService.value,
+				syncService: newSyncService,
 				serialize: isRichEditor.value
 					? (content) =>
 							createMarkdownSerializer(editor.value?.schema).serialize(
@@ -277,7 +283,8 @@ export default {
 							serializePlainText(content ?? editor.value?.state.doc),
 				getDocumentState: () => getDocumentState(ydoc),
 			})
-		}
+		})
+
 		const syncProvider = shallowRef(null)
 
 		const extensions = [
