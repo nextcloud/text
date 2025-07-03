@@ -18,6 +18,7 @@ OC.L10N.register(
     "Remove link" : "Ondoa kiungio",
     "Offline" : "Nje ya mtandao",
     "Saving …" : "Inahifadhi...",
+    "Saved" : "Imehifadhiwa",
     "Unsaved changes" : "Mabadiliko yasiyohifadhiwa",
     "Keyboard shortcuts" : "Mikato ya keyboard",
     "Enter" : "Ingiza",
