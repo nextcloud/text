@@ -235,33 +235,17 @@ export default {
 		const wrappedConnection = provideConnection()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		const { editor } = provideEditor()
-		const { setEditable } = useEditorMethods(editor)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
 		)
-		const { syncService, connectSyncService, baseVersionEtag } =
-			provideSyncService(props)
-
-		const serialize = isRichEditor.value
-			? () =>
-					createMarkdownSerializer(editor.value?.schema).serialize(
-						editor.value?.state.doc,
-					)
-			: () => serializePlainText(editor.value?.state.doc)
-
-		const { saveService } = provideSaveService(syncService, serialize, ydoc)
-
-		const syncProvider = shallowRef(null)
-
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCursor.configure({ provider: { awareness } }),
 		]
-		editor.value = isRichEditor
+		const editor = isRichEditor
 			? createRichEditor({
 					...wrappedConnection,
 					relativePath: props.relativePath,
@@ -269,6 +253,22 @@ export default {
 					isEmbedded: props.isEmbedded,
 				})
 			: createPlainEditor({ language, extensions })
+		provideEditor(editor)
+
+		const { setEditable } = useEditorMethods(editor)
+		const { syncService, connectSyncService, baseVersionEtag } =
+			provideSyncService(props)
+
+		const serialize = isRichEditor.value
+			? () =>
+					createMarkdownSerializer(editor.schema).serialize(
+						editor.state.doc,
+					)
+			: () => serializePlainText(editor.state.doc)
+
+		const { saveService } = provideSaveService(syncService, serialize, ydoc)
+
+		const syncProvider = shallowRef(null)
 
 		return {
 			awareness,
@@ -454,17 +454,17 @@ export default {
 		},
 
 		listenEditorEvents() {
-			this.editor?.on('focus', this.onFocus)
-			this.editor?.on('blur', this.onBlur)
-			this.editor?.on('create', this.onCreate)
-			this.editor?.on('update', this.onUpdate)
+			this.editor.on('focus', this.onFocus)
+			this.editor.on('blur', this.onBlur)
+			this.editor.on('create', this.onCreate)
+			this.editor.on('update', this.onUpdate)
 		},
 
 		unlistenEditorEvents() {
-			this.editor?.off('focus', this.onFocus)
-			this.editor?.off('blur', this.onBlur)
-			this.editor?.off('create', this.onCreate)
-			this.editor?.off('update', this.onUpdate)
+			this.editor.off('focus', this.onFocus)
+			this.editor.off('blur', this.onBlur)
+			this.editor.off('create', this.onCreate)
+			this.editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -682,9 +682,6 @@ export default {
 		},
 
 		onStateChange(state) {
-			if (!this.editor) {
-				return
-			}
 			if (state.initialLoading && !this.contentLoaded) {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
@@ -865,7 +862,7 @@ export default {
 			this.translateModal = false
 		},
 		applyCommand(fn) {
-			this.editor?.commands?.command(fn)
+			this.editor.commands?.command(fn)
 		},
 		translateInsert(content) {
 			this.applyCommand(({ tr, commands }) => {
@@ -888,8 +885,8 @@ export default {
 		handleEditorWidthChange(newWidth) {
 			this.updateEditorWidth(newWidth)
 			this.$nextTick(() => {
-				this.editor?.view.updateState(this.editor?.view.state)
-				this.editor?.commands.focus()
+				this.editor.view.updateState(this.editor.view.state)
+				this.editor.commands.focus()
 			})
 		},
 		updateEditorWidth(newWidth) {

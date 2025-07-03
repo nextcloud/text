@@ -14,7 +14,6 @@
 			<EditorOutline />
 		</div>
 		<EditorContent
-			v-if="editor"
 			id="read-only-editor"
 			class="editor__content text-editor__content"
 			:editor="editor" />
@@ -32,6 +31,7 @@ import {
 } from './Editor/Wrapper.provider.js'
 import EditorOutline from './Editor/EditorOutline.vue'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { inject, watch } from 'vue'
 
 export default {
 	name: 'BaseReader',
@@ -52,47 +52,31 @@ export default {
 		},
 	},
 
-	setup() {
-		const { editor } = provideEditor()
+	setup(props) {
+		const extensions = inject('extensions')
+		const renderHtml = inject('renderHtml')
+		const editor = new Editor({
+			content: renderHtml(props.content),
+			extensions: extensions(),
+		})
+		provideEditor(editor)
+		watch(() => props.content, (content) => {
+			console.warn({content})
+			editor.commands.setContent(renderHtml(content), true)
+		})
 		const { setEditable } = useEditorMethods(editor)
-		return { editor, setEditable }
+		setEditable(false)
+		return { editor }
 	},
 
 	computed: {
-		htmlContent() {
-			return this.renderHtml(this.content)
-		},
 		showOutline() {
 			return this.$outlineState.visible
 		},
 	},
 
-	watch: {
-		content() {
-			this.updateContent()
-		},
-	},
-
-	created() {
-		this.editor = this.createEditor()
-		this.setEditable(false)
-	},
-
 	beforeDestroy() {
 		this.editor?.destroy()
-	},
-
-	methods: {
-		createEditor() {
-			return new Editor({
-				content: this.htmlContent,
-				extensions: this.extensions(),
-			})
-		},
-
-		updateContent() {
-			this.editor?.commands.setContent(this.htmlContent, true)
-		},
 	},
 }
 </script>

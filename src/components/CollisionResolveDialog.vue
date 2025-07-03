@@ -51,7 +51,6 @@ export default {
 		const { saveService } = useSaveService()
 		const { setContent, setEditable } = useEditorMethods(editor)
 		return {
-			editor,
 			setContent,
 			setEditable,
 			saveService,

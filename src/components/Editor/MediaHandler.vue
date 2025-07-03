@@ -194,7 +194,7 @@ export default {
 		insertAttachmentPreview(fileId) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
-			this.editor?.chain()
+			this.editor.chain()
 				.focus()
 				.insertPreview(href)
 				.run()
@@ -210,9 +210,6 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 
-			if (!this.editor) {
-				return
-			}
 			const chain = position
 				? this.editor.chain().focus(position)
 				: this.editor.chain()
