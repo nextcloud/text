@@ -96,7 +96,7 @@ export default {
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
-		return { isPublic, syncService }
+		return { ...BaseActionEntry.setup(), isPublic, syncService }
 	},
 	computed: {
 		icon() {
