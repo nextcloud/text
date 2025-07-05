@@ -62,8 +62,12 @@ export interface Session {
 
 export declare type EventTypes = {
 	/* Document state */
-	opened: { document: object; session: Session }
-	loaded: { session: object }
+	opened: {
+		document: object
+		session: Session
+		documentSource: string
+		documentState: string
+	}
 
 	/* All initial steps fetched */
 	fetched: unknown
@@ -164,7 +168,6 @@ class SyncService {
 		this.version = this.connection.docStateVersion
 		this.#baseVersionEtag = this.connection.document.baseVersionEtag
 		this.emit('opened', this.connectionState)
-		this.emit('loaded', this.connectionState)
 	}
 
 	startSync() {
