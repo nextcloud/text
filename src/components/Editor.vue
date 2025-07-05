@@ -244,9 +244,9 @@ export default defineComponent({
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCursor.configure({ provider: { awareness } }),
 		]
-		const { syncService, connectSyncService, baseVersionEtag } =
-			provideSyncService(props)
-		const { connection } = provideConnection(syncService)
+		const { connection, openConnection, baseVersionEtag } =
+			provideConnection(props)
+		const { syncService } = provideSyncService(connection, openConnection, props)
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,
@@ -273,7 +273,6 @@ export default defineComponent({
 		return {
 			awareness,
 			baseVersionEtag,
-			connectSyncService,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -441,7 +440,6 @@ export default defineComponent({
 	},
 	methods: {
 		initSession() {
-			this.connectSyncService()
 			this.listenSyncServiceEvents()
 			this.syncProvider = createSyncServiceProvider({
 				ydoc: this.ydoc,

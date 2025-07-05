@@ -8,6 +8,7 @@
 import debounce from 'debounce'
 
 import { logger } from '../helpers/logger.js'
+import type { SyncService } from './SyncService.js'
 
 /**
  * Interval to save the serialized document and the document state
@@ -20,8 +21,17 @@ class SaveService {
 	syncService
 	serialize
 	getDocumentState
+	autosave
 
-	constructor({ syncService, serialize, getDocumentState }) {
+	constructor({
+		syncService,
+		serialize,
+		getDocumentState,
+	}: {
+		syncService: SyncService
+		serialize: () => string
+		getDocumentState: () => string
+	}) {
 		this.syncService = syncService
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
@@ -29,7 +39,11 @@ class SaveService {
 	}
 
 	get connection() {
-		return this.syncService.connection
+		return this.syncService.sessionConnection
+	}
+
+	get version() {
+		return this.syncService.version
 	}
 
 	get emit() {
@@ -41,7 +55,11 @@ class SaveService {
 	}
 
 	async save({ force = false, manualSave = true } = {}) {
-		logger.debug('[SaveService] saving', arguments[0])
+		logger.debug('[SaveService] saving', { force, manualSave })
+		if (!this.connection) {
+			logger.warn('Could not save due to missing connection')
+			return
+		}
 		try {
 			const response = await this.connection.save({
 				version: this.version,
@@ -51,10 +69,8 @@ class SaveService {
 				manualSave,
 			})
 			this.emit('stateChange', { dirty: false })
-			this.connection.document.lastSavedVersionTime = Date.now() / 1000
-			logger.debug('[SaveService] saved', response)
-			const { document, sessions } = response.data
-			this.emit('save', { document, sessions })
+			logger.debug('[SaveService] saved', { response })
+			this.emit('save', response.data)
 			this.autosave.clear()
 		} catch (e) {
 			logger.error('Failed to save document.', { error: e })
@@ -63,14 +79,13 @@ class SaveService {
 	}
 
 	saveViaSendBeacon() {
-		this.connection.saveViaSendBeacon({
+		this.connection?.saveViaSendBeacon({
 			version: this.version,
 			autosaveContent: this._getContent(),
 			documentState: this.getDocumentState(),
 			force: false,
 			manualSave: true,
-		})
-		logger.debug('[SaveService] saved using sendBeacon')
+		}) && logger.debug('[SaveService] saved using sendBeacon')
 	}
 
 	forceSave() {

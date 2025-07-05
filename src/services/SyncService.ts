@@ -9,9 +9,12 @@ import mitt, { type Handler } from 'mitt'
 
 import PollingBackend from './PollingBackend.js'
 import Outbox from './Outbox.js'
-import SessionApi, { Connection } from './SessionApi.js'
+import { Connection as SessionConnection } from './SessionApi.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
+import type { ShallowRef } from 'vue'
+import type { InitialData, Connection } from '../composables/useConnection.js'
+import { close } from '../apis/Connect.js'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -55,15 +58,29 @@ interface Step {
 }
 
 export interface Session {
-	documentId: number
 	id: number
+	userId: string
 	token: string
+	color: string
+	lastAwarenessMessage: string
+	lastContact: number
+	guestName?: string
+	documentId: number
+	displayName: string
+}
+
+export interface Document {
+	id: number
+	lastSavedVersion: number
+	lastSavedVersionTime: number
+	baseVersionEtag: string
+	initialVersion: number
 }
 
 export declare type EventTypes = {
 	/* Document state */
 	opened: {
-		document: object
+		document: Document
 		session: Session
 		documentSource: string
 		documentState: string
@@ -92,72 +109,67 @@ export declare type EventTypes = {
 }
 
 class SyncService {
-	connection?: Connection
+	#connection: ShallowRef<Connection | undefined>
+	sessionConnection?: SessionConnection
 	version = -1
 	pushError = 0
 	backend?: PollingBackend
 	#sendIntervalId?: NodeJS.Timeout
 	#outbox = new Outbox()
 	bus = mitt<EventTypes>()
-	#api: SessionApi
+	#openConnection: () => Promise<InitialData>
 	#lastStepPush = Date.now()
-	#baseVersionEtag?: string
 	#sending = false
+	#filePath?: string
+	#shareToken?: string
 
 	constructor({
-		baseVersionEtag,
-		api,
+		connection,
+		openConnection,
+		filePath,
+		shareToken,
 	}: {
-		baseVersionEtag?: string
-		api: SessionApi
+		connection: ShallowRef<Connection | undefined>
+		openConnection: () => Promise<InitialData>
+		filePath?: string
+		shareToken?: string
 	}) {
-		this.#api = api
-		this.#baseVersionEtag = baseVersionEtag
+		this.#connection = connection
+		this.#openConnection = openConnection
+		this.#filePath = filePath
+		this.#shareToken = shareToken
 	}
 
 	get isReadOnly() {
-		return this.connection?.state.document.readOnly
+		return this.sessionConnection?.state.document.readOnly
 	}
 
 	get hasOwner() {
-		return this.connection?.hasOwner
+		return this.sessionConnection?.hasOwner
 	}
 
 	get guestName() {
-		return this.connection?.session.guestName
+		return this.sessionConnection?.session.guestName
 	}
 
-	hasActiveConnection(): this is { connection: Connection } {
-		return !!this.connection && !this.connection.isClosed
+	hasActiveConnection(): this is { sessionConnection: SessionConnection } {
+		return !!this.sessionConnection && !this.sessionConnection.isClosed
 	}
 
-	async open({
-		fileId,
-		initialSession,
-	}: {
-		fileId: number
-		initialSession: object
-	}): Promise<void> {
+	async open() {
 		if (this.hasActiveConnection()) {
 			return
 		}
-		const connect = initialSession
-			? Promise.resolve(new Connection({ data: initialSession }, {}))
-			: this.#api
-					.open({ fileId, baseVersionEtag: this.#baseVersionEtag })
-					.catch((error) => {
-						this._emitError(error)
-						return undefined // connection remains undefined
-					})
-		this.connection = await connect
-		if (!this.connection) {
-			// Error was already emitted in connect
+		const data = await this.#openConnection().catch((e) => this._emitError(e))
+		if (!data) {
+			// Error was already emitted above
 			return
 		}
-		this.backend = new PollingBackend(this, this.connection)
-		this.version = this.connection.docStateVersion
-		this.#baseVersionEtag = this.connection.document.baseVersionEtag
-		this.emit('opened', this.connection.state)
+		const options = { shareToken: this.#shareToken, filePath: this.#filePath }
+		this.sessionConnection = new SessionConnection({ data }, options)
+		this.backend = new PollingBackend(this, this.sessionConnection)
+		this.version = this.sessionConnection.docStateVersion
+		this.emit('opened', this.sessionConnection.state)
 	}
 
 	startSync() {
@@ -177,10 +189,10 @@ class SyncService {
 	}
 
 	updateSession(guestName: string) {
-		if (!this.connection?.isPublic) {
+		if (!this.sessionConnection?.isPublic) {
 			return Promise.reject(new Error())
 		}
-		return this.connection.update(guestName).catch((error) => {
+		return this.sessionConnection.update(guestName).catch((error) => {
 			logger.error('Failed to update the session', { error })
 			return Promise.reject(error)
 		})
@@ -197,7 +209,7 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.connection && !this.#sending) {
+			if (this.sessionConnection && !this.#sending) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
@@ -214,7 +226,7 @@ class SyncService {
 		if (!this.hasActiveConnection()) {
 			return
 		}
-		return this.connection
+		return this.sessionConnection
 			.push({ ...sendable, version: this.version })
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
@@ -227,7 +239,7 @@ class SyncService {
 					this.emit('sync', {
 						version: this.version,
 						steps: [documentStateStep],
-						document: this.connection.document,
+						document: this.sessionConnection.document,
 					})
 				}
 				this.pushError = 0
@@ -338,12 +350,11 @@ class SyncService {
 	async close() {
 		// Make sure to leave no pending requests behind.
 		this.backend?.disconnect()
-		if (!this.hasActiveConnection()) {
+		if (!this.#connection.value) {
 			return
 		}
 		return (
-			this.connection
-				.close()
+			close(this.#connection.value)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })
@@ -355,21 +366,21 @@ class SyncService {
 		if (!this.hasActiveConnection()) {
 			throw new Error('Not connected to server.')
 		}
-		return this.connection.uploadAttachment(file)
+		return this.sessionConnection.uploadAttachment(file)
 	}
 
 	insertAttachmentFile(filePath: string) {
 		if (!this.hasActiveConnection()) {
 			throw new Error('Not connected to server.')
 		}
-		return this.connection.insertAttachmentFile(filePath)
+		return this.sessionConnection.insertAttachmentFile(filePath)
 	}
 
 	createAttachment(template: object) {
 		if (!this.hasActiveConnection()) {
 			throw new Error('Not connected to server.')
 		}
-		return this.connection.createAttachment(template)
+		return this.sessionConnection.createAttachment(template)
 	}
 
 	// For better typing use the bus directly: `syncService.bus.on()`.

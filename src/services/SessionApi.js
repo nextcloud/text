@@ -15,34 +15,9 @@ export class ConnectionClosedError extends Error {
 	}
 }
 
-class SessionApi {
-	#options
-
-	constructor(options = {}) {
-		this.#options = options
-	}
-
-	open({ fileId, baseVersionEtag }) {
-		return axios
-			.put(this.#url(`session/${fileId}/create`), {
-				fileId,
-				baseVersionEtag,
-				filePath: this.#options.filePath,
-				token: this.#options.shareToken,
-				guestName: this.#options.guestName,
-			})
-			.then((response) => new Connection(response, this.#options))
-	}
-
-	#url(endpoint) {
-		const isPublic = !!this.#options.shareToken
-		return _endpointUrl(endpoint, isPublic)
-	}
-}
-
 export class Connection {
 	#content
-	#closed
+	closed
 	#documentState
 	#document
 	#session
@@ -67,8 +42,8 @@ export class Connection {
 		this.#readOnly = readOnly
 		this.#content = content
 		this.#documentState = documentState
-		this.#options = options
 		this.#hasOwner = hasOwner
+		this.#options = options
 		this.isPublic = !!options.shareToken
 		this.closed = false
 	}
@@ -246,5 +221,3 @@ function _endpointUrl(endpoint, isPublic = false) {
 	}
 	return `${_baseUrl}/${endpoint}`
 }
-
-export default SessionApi
