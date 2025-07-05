@@ -14,6 +14,7 @@ OC.L10N.register(
     "File not found" : "Berkas tidak ditemukan",
     "Text" : "Teks",
     "Translate" : "Terjemahkan",
+    "Delete task" : "Hapus tugas",
     "Reload" : "Muat ulang",
     "Edit guest name" : "Edit nama tamu",
     "Guest" : "Tamu",
@@ -41,6 +42,7 @@ OC.L10N.register(
     "Formatting" : "Pemformatan",
     "Select file or folder to link to" : "Pilih berkas atau folder untuk ditautkan",
     "Choose" : "Pilih",
+    "Add folder description" : "Tambahkan deskripsi folder",
     "Info" : "Info",
     "Success" : "Berhasil",
     "Warning" : "Peringatan"
