@@ -45,7 +45,7 @@ export default function initWebSocketPolyfill(syncService, fileId, initialSessio
 				},
 			})
 
-			syncService.open({ fileId, initialSession }).then((data) => {
+			syncService.open({ fileId, initialSession }).then(() => {
 				if (syncService.hasActiveConnection) {
 					this.onopen?.()
 				}
