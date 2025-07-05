@@ -45,15 +45,25 @@ const ERROR_TYPE = {
 	PUSH_FORBIDDEN: 5,
 }
 
-/**
- * SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
- * SPDX-License-Identifier: AGPL-3.0-or-later
+/*
+ * Step as what we expect to be returned from the server right now.
  */
+interface Step {
+	data: string[]
+	version: number
+	sessionId: number
+}
+
+export interface Session {
+	documentId: number
+	id: number
+	token: string
+}
 
 export declare type EventTypes = {
 	/* Document state */
-	opened: unknown
-	loaded: unknown
+	opened: { document: object; session: Session }
+	loaded: { session: object }
 
 	/* All initial steps fetched */
 	fetched: unknown
@@ -77,15 +87,6 @@ export declare type EventTypes = {
 	idle: unknown
 }
 
-/*
- * Step as what we expect to be returned from the server right now.
- */
-interface Step {
-	data: string[]
-	version: number
-	sessionId: number
-}
-
 class SyncService {
 	connection?: Connection
 	version = -1
@@ -93,7 +94,7 @@ class SyncService {
 	backend?: PollingBackend
 	#sendIntervalId?: NodeJS.Timeout
 	#outbox = new Outbox()
-	#bus = mitt<EventTypes>()
+	bus = mitt<EventTypes>()
 	#api: SessionApi
 	#lastStepPush = Date.now()
 	#baseVersionEtag?: string
@@ -380,18 +381,19 @@ class SyncService {
 		return this.connection.createAttachment(template)
 	}
 
+	// For better typing use the bus directly: `syncService.bus.on()`.
 	on(event: keyof EventTypes, callback: Handler<unknown>) {
-		this.#bus.on(event, callback)
+		this.bus.on(event, callback)
 		return this
 	}
 
 	off(event: keyof EventTypes, callback: Handler<unknown>) {
-		this.#bus.off(event, callback)
+		this.bus.off(event, callback)
 		return this
 	}
 
 	emit(event: keyof EventTypes, data?: unknown) {
-		this.#bus.emit(event, data)
+		this.bus.emit(event, data)
 	}
 }
 
