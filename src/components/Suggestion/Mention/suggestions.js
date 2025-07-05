@@ -3,46 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import MentionList from './MentionList.vue'
 import createSuggestions from '../suggestions.js'
-import { unref } from 'vue'
+import { emitMention, getUsers } from '../../../apis/Mention.ts'
 
-const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
-
-const emitMention = ({ connection, props }) => {
-	const { documentId, sessionId, sessionToken } = unref(connection) ?? {}
-	if (!documentId) {
-		// TODO: emit the mention on reconnect
-		console.warn('Disconnected. Could not notify user about mention.', { user: props.id })
-		return
-	}
-	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
-		documentId,
-		sessionId,
-		sessionToken,
-		mention: props.id,
-		scope: window.location,
-	})
-}
-
-export default ({ connection, options } = {}) => createSuggestions({
+export default ({ connection, options }) => createSuggestions({
 	listComponent: MentionList,
 	items: async ({ query }) => {
-		const { documentId, sessionId, sessionToken } = unref(connection) ?? {}
-		if (!documentId) {
-			// looks like we're not connected right now.
-			return []
-		}
-		const params = {
-			documentId,
-			sessionId,
-			sessionToken,
-			filter: query,
-		}
-		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)
-		const users = JSON.parse(JSON.stringify(response.data))
+		const users = await getUsers(query, { connection })
 		return Object.entries(users).map(([id, label]) => ({ id, label }))
 	},
 
@@ -50,10 +18,7 @@ export default ({ connection, options } = {}) => createSuggestions({
 		if (options?.emitMention) {
 			options.emitMention({ props })
 		} else {
-			emitMention({
-				connection,
-				props,
-			})
+			emitMention(props.id, window.location, { connection })
 		}
 
 		// Insert mention
