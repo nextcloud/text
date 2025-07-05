@@ -131,16 +131,6 @@ class SyncService {
 		return !!this.connection && !this.connection.isClosed
 	}
 
-	get connectionState() {
-		if (!this.connection || this.version === -1) {
-			return null
-		}
-		return {
-			...this.connection.state,
-			version: this.version,
-		}
-	}
-
 	async open({
 		fileId,
 		initialSession,
@@ -167,7 +157,7 @@ class SyncService {
 		this.backend = new PollingBackend(this, this.connection)
 		this.version = this.connection.docStateVersion
 		this.#baseVersionEtag = this.connection.document.baseVersionEtag
-		this.emit('opened', this.connectionState)
+		this.emit('opened', this.connection.state)
 	}
 
 	startSync() {
