@@ -27,6 +27,7 @@ OC.L10N.register(
     "Action" : "Vitendo",
     "Undo" : "Tendua",
     "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
+    "Edit link" : "Hariri kiungo",
     "Cancel" : "Cancel",
     "URL" : "Url",
     "Formatting help" : "Uasidizi wa uambizaji",
