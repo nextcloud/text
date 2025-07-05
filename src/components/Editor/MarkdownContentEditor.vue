@@ -37,7 +37,7 @@ import { RichText, FocusTrap } from '../../extensions/index.js'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import { provide, ref } from 'vue'
+import { provide, watch } from 'vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -86,32 +86,49 @@ export default {
 	},
 	emits: ['update:content'],
 
-	setup() {
-		const { editor } = provideEditor()
-		const { setEditable } = useEditorMethods(editor)
-		provide(editorFlagsKey, {
-			isPublic: ref(false),
-			isRichEditor: ref(true),
-			isRichWorkspace: ref(false),
+	setup(props) {
+		const extensions = [
+			RichText.configure({
+				extensions: [ History ],
+			}),
+			FocusTrap,
+		]
+		const editor = new Editor({
+			content: markdownit.render(props.content),
+			extensions,
 		})
-		return { editor, setEditable }
-	},
 
-	computed: {
-		htmlContent() {
-			return this.renderHtml(this.content)
-		},
-	},
+		const { setEditable, setContent } = useEditorMethods(editor)
+		watch(() => props.content, (content) => {
+			setContent(content)
+		})
 
-	watch: {
-		content() {
-			this.updateContent()
-		},
+		setEditable(!props.readOnly)
+		watch(() => props.readOnly, (readOnly) => {
+			setEditable(!readOnly)
+		})
+
+		provideEditor(editor)
+		provide(editorFlagsKey, {
+			isPublic: false,
+			isRichEditor: true,
+			isRichWorkspace: false,
+		})
+		return { editor }
 	},
 
 	created() {
-		this.editor = this.createEditor()
-		this.setEditable(!this.readOnly)
+		this.editor.on('create', () => {
+			this.$emit('ready')
+			this.$parent.$emit('ready')
+		})
+		this.editor.on('update', ({ editor }) => {
+			const markdown = (createMarkdownSerializer(editor.schema)).serialize(editor.state.doc)
+			this.emit('update:content', {
+				json: editor.state.doc,
+				markdown,
+			})
+		})
 		if (this.fileId) {
 			this.$attachmentResolver = new AttachmentResolver({
 				currentDirectory: this.relativePath?.match(/.*\//),
@@ -122,50 +139,11 @@ export default {
 		}
 	},
 
-	updated() {
-		this.setEditable(!this.readOnly)
-	},
-
 	beforeDestroy() {
-		this.editor?.destroy()
+		this.editor.destroy()
 	},
 
 	methods: {
-		renderHtml(content) {
-			return markdownit.render(content)
-		},
-		extensions() {
-			return [
-				RichText.configure({
-					component: this,
-					extensions: [
-						History,
-					],
-				}),
-				FocusTrap,
-			]
-		},
-		createEditor() {
-			return new Editor({
-				content: this.htmlContent,
-				extensions: this.extensions(),
-				onUpdate: ({ editor }) => {
-					const markdown = (createMarkdownSerializer(this.editor?.schema)).serialize(editor.state.doc)
-					this.emit('update:content', {
-						json: editor.state.doc,
-						markdown,
-					})
-				},
-				onCreate: ({ editor }) => {
-					this.$emit('ready')
-					this.$parent.$emit('ready')
-				},
-			})
-		},
-
-		updateContent() {
-			this.editor?.commands.setContent(this.htmlContent, true)
-		},
 
 		outlineToggled(visible) {
 			this.emit('outline-toggled', visible)

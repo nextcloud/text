@@ -41,17 +41,9 @@ const createRichEditor = ({ extensions = [], connection, relativePath, isEmbedde
 	return new Editor({
 		editorProps,
 		extensions: [
-			RichText.configure({
-				relativePath,
-				isEmbedded,
-				component: this,
-				extensions: [
-					Mention.configure({
-						suggestion: MentionSuggestion({
-							connection,
-						}),
-					}),
-				],
+			RichText.configure({ relativePath, isEmbedded }),
+			Mention.configure({
+				suggestion: MentionSuggestion({ connection }),
 			}),
 			FocusTrap,
 			...extensions,

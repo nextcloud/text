@@ -31,10 +31,7 @@ export default defineComponent({
 		const { editor } = useEditor()
 		const countString = ref('')
 		const refresh = () => {
-			if (!editor.value) {
-				return
-			}
-			const { storage, state } = editor.value
+			const { storage, state } = editor
 			// characterCount is not reactive so we need this workaround
 			// We also need to provide the doc as storage is a singleton in tiptap v2.
 			// See ueberdosis/tiptap#6060
@@ -45,7 +42,7 @@ export default defineComponent({
 			countString.value = [words, chars].join(', ')
 			console.debug({ wordCount, charCount, countString: countString.value })
 		}
-		return { countString, editor, refresh }
+		return { countString, refresh }
 	},
 	watch: {
 		visible: 'refresh',

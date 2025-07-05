@@ -24,12 +24,6 @@ const mountWithEditor = (editor) => {
 	})
 }
 
-test('mounts without editor', () => {
-	const wrapper = mount(TableOfContents, {})
-	expect(wrapper.text()).toEqual('')
-	expect(wrapper.vm.headings).toEqual([])
-})
-
 test('renders nothing for editor without headings', () => {
 	const editor = createEditor('no heading here')
 	const wrapper = mountWithEditor(editor)
