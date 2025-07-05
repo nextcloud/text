@@ -546,11 +546,13 @@ export default defineComponent({
 			}
 		},
 
-		onOpened({ document, session }) {
+		onOpened({ document, session, documentSource, documentState }) {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
+			this.baseVersionEtag = document.baseVersionEtag
 			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
 			this.lock = this.syncService.lock
@@ -575,9 +577,6 @@ export default defineComponent({
 					})
 					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-		},
-
-		onLoaded({ document, documentSource, documentState }) {
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
@@ -587,11 +586,6 @@ export default defineComponent({
 					})
 				}
 			})
-
-			this.baseVersionEtag = document.baseVersionEtag
-			this.hasConnectionIssue = false
-
-			const session = this.currentSession
 			const user = {
 				name: session?.userId
 					? session.displayName
