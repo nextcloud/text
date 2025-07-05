@@ -12,7 +12,7 @@ import { unref } from 'vue'
 const USERS_LIST_ENDPOINT_URL = generateUrl('apps/text/api/v1/users')
 
 const emitMention = ({ connection, props }) => {
-	const { documentId, id, token } = unref(connection) ?? {}
+	const { documentId, sessionId, sessionToken } = unref(connection) ?? {}
 	if (!documentId) {
 		// TODO: emit the mention on reconnect
 		console.warn('Disconnected. Could not notify user about mention.', { user: props.id })
@@ -20,8 +20,8 @@ const emitMention = ({ connection, props }) => {
 	}
 	axios.put(generateUrl(`apps/text/session/${documentId}/mention`), {
 		documentId,
-		sessionId: id,
-		sessionToken: token,
+		sessionId,
+		sessionToken,
 		mention: props.id,
 		scope: window.location,
 	})
@@ -30,15 +30,15 @@ const emitMention = ({ connection, props }) => {
 export default ({ connection, options } = {}) => createSuggestions({
 	listComponent: MentionList,
 	items: async ({ query }) => {
-		const { documentId, id, token } = unref(connection) ?? {}
+		const { documentId, sessionId, sessionToken } = unref(connection) ?? {}
 		if (!documentId) {
 			// looks like we're not connected right now.
 			return []
 		}
 		const params = {
 			documentId,
-			sessionId: id,
-			sessionToken: token,
+			sessionId,
+			sessionToken,
 			filter: query,
 		}
 		const response = await axios.post(USERS_LIST_ENDPOINT_URL, params)

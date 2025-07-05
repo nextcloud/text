@@ -232,7 +232,6 @@ export default defineComponent({
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
 		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
-		const { connection } = provideConnection()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
@@ -245,6 +244,9 @@ export default defineComponent({
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCursor.configure({ provider: { awareness } }),
 		]
+		const { syncService, connectSyncService, baseVersionEtag } =
+			provideSyncService(props)
+		const { connection } = provideConnection(syncService)
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,
@@ -256,8 +258,6 @@ export default defineComponent({
 		provideEditor(editor)
 
 		const { setEditable } = useEditorMethods(editor)
-		const { syncService, connectSyncService, baseVersionEtag } =
-			provideSyncService(props)
 
 		const serialize = isRichEditor
 			? () =>
@@ -494,7 +494,6 @@ export default defineComponent({
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.connection = undefined
 			this.disconnect().then(() => {
 				this.initSession()
 			})
@@ -600,7 +599,6 @@ export default defineComponent({
 				color: session?.color,
 				clientId: this.ydoc.clientID,
 			}
-			this.connection = { ...this.currentSession }
 			this.editor.commands.updateUser(user)
 		},
 
