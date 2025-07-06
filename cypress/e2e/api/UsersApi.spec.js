@@ -44,7 +44,7 @@ describe('The user mention API', function() {
 	})
 
 	it('rejects closed sessions', function() {
-		cy.then(() => this.connection.close())
+		cy.destroySession(this.connection)
 		cy.sessionUsers(this.connection)
 			.its('status').should('eq', 403)
 	})

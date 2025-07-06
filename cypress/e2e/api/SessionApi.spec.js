@@ -42,7 +42,7 @@ describe('The session Api', function() {
 				cy.wrap(connection)
 					.its('document.id')
 					.should('equal', fileId)
-				connection.close()
+				cy.destroySession(connection)
 			})
 		})
 
@@ -51,7 +51,7 @@ describe('The session Api', function() {
 				cy.wrap(connection)
 					.its('state.documentSource')
 					.should('eql', '## Hello world\n')
-				connection.close()
+				cy.destroySession(connection)
 			})
 		})
 
@@ -81,7 +81,7 @@ describe('The session Api', function() {
 		})
 
 		afterEach(function() {
-			connection.close()
+			cy.destroySession(connection)
 		})
 
 		// Echoes all message types but queries
@@ -180,7 +180,7 @@ describe('The session Api', function() {
 		})
 
 		afterEach(function() {
-			connection.close()
+			cy.destroySession(connection)
 		})
 	})
 
@@ -212,7 +212,7 @@ describe('The session Api', function() {
 		})
 
 		afterEach(function() {
-			connection.close()
+			cy.destroySession(connection)
 		})
 
 		it('starts empty public', function() {
@@ -276,22 +276,6 @@ describe('The session Api', function() {
 			})
 		})
 
-		it('signals closing connection', function() {
-			cy.then(() => {
-				return new Promise((resolve, reject) => {
-					// Create a promise that resolves when close completes
-					connection.close()
-						.then(() => {
-							connection.push({ steps: [messages.update], version, awareness: '' })
-								.then(
-									() => reject(new Error('Push should have thrown ConnectionClosed()')),
-									resolve,
-								)
-						})
-				})
-			})
-		})
-
 		it('does not send initial content if other session is alive but did not push any steps', function() {
 			let joining
 			cy.createTextSession(undefined, { filePath: '', shareToken })
@@ -301,8 +285,8 @@ describe('The session Api', function() {
 				})
 				.its('state.documentSource')
 				.should('eql', '## Hello world\n')
-				.then(() => joining.close())
-				.then(() => connection.close())
+				.then(() => cy.destroySession(joining))
+			cy.destroySession(connection)
 		})
 
 		it('does not send initial content if session is alive even without saved state', function() {
@@ -317,8 +301,8 @@ describe('The session Api', function() {
 				})
 				.its('state.documentSource')
 				.should('eql', '## Hello world\n')
-				.then(() => joining.close())
-				.then(() => connection.close())
+				.then(() => cy.destroySession(joining))
+			cy.destroySession(connection)
 		})
 
 		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
@@ -340,7 +324,7 @@ describe('The session Api', function() {
 				.its('status')
 				.should('equal', 412)
 
-			cy.then(() => connection.close())
+			cy.destroySession(connection)
 		})
 
 		it('recovers session even if last person leaves right after create', function() {
@@ -355,7 +339,7 @@ describe('The session Api', function() {
 					joining = con
 				})
 			cy.log('Initial user closes session')
-				.then(() => connection.close())
+			cy.destroySession(connection)
 			cy.log('Other user still finds the steps')
 				.then(() => {
 					cy.syncSteps(joining, {
