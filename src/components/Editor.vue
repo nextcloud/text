@@ -821,7 +821,7 @@ export default defineComponent({
 				pendingStructs: this.ydoc.store.pendingStructs,
 				pendingStructsRemote: this.syncProvider?.remote.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.saveService?.getDocumentState(),
+				documentState: this.saveService.getDocumentState(),
 			}
 			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
@@ -885,7 +885,7 @@ export default defineComponent({
 		},
 
 		saveBeforeUnload() {
-			this.saveService?.saveViaSendBeacon()
+			this.saveService.saveViaSendBeacon()
 		},
 	},
 })

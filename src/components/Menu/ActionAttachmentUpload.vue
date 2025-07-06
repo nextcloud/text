@@ -111,7 +111,7 @@ export default {
 			return loadState('files', 'templates', [])
 		},
 		isUploadDisabled() {
-			return !this.syncService?.hasOwner
+			return !this.syncService.hasOwner
 		},
 		menuTitle() {
 			return this.isUploadDisabled

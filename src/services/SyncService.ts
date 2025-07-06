@@ -9,7 +9,7 @@ import mitt, { type Handler } from 'mitt'
 
 import PollingBackend from './PollingBackend.js'
 import Outbox from './Outbox.js'
-import { Connection as SessionConnection } from './SessionApi.js'
+import { SessionConnection } from './SessionConnection.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 import type { ShallowRef } from 'vue'
@@ -350,16 +350,15 @@ class SyncService {
 	async close() {
 		// Make sure to leave no pending requests behind.
 		this.backend?.disconnect()
-		if (!this.#connection.value) {
-			return
-		}
-		return (
+		if (this.#connection.value) {
 			close(this.#connection.value)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })
 				})
-		)
+		}
+		// Mark sessionConnection closed so hasActiveConnection turns false and we can reconnect.
+		this.sessionConnection?.close()
 	}
 
 	uploadAttachment(file: object) {

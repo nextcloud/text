@@ -56,13 +56,13 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.guestName = this.syncService?.guestName
+		this.guestName = this.syncService.guestName
 		this.updateBufferedGuestName()
 	},
 	methods: {
 		setGuestName() {
-			const previousGuestName = this.syncService?.guestName
-			this.syncService?.updateSession(this.guestName).then(() => {
+			const previousGuestName = this.syncService.guestName
+			this.syncService.updateSession(this.guestName).then(() => {
 				localStorage.setItem('nick', this.guestName)
 				this.updateBufferedGuestName()
 			}).catch((e) => {

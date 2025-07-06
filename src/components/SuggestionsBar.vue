@@ -102,7 +102,7 @@ export default {
 			return this.$file?.relativePath ?? '/'
 		},
 		isUploadDisabled() {
-			return !this.syncService?.hasOwner
+			return !this.syncService.hasOwner
 		},
 		uploadTitle() {
 			return (

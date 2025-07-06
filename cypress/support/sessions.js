@@ -4,18 +4,18 @@
  */
 
 import axios from '@nextcloud/axios'
-import { Connection } from '../../src/services/SessionApi.js'
+import { SessionConnection } from '../../src/services/SessionConnection.js'
 import { open } from '../../src/apis/Connect.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
 Cypress.Commands.add('createTextSession', async (fileId, options = {}) => {
-	const { data } = await open({ fileId, ...options })
-	return new Connection({ data }, options)
+	const { data } = await open({ fileId, token: options.shareToken, ...options })
+	return new SessionConnection({ data }, options)
 })
 
 Cypress.Commands.add('failToCreateTextSession', (fileId, baseVersionEtag = null, options = {}) => {
-	open({ fileId, ...options, baseVersionEtag })
+	return open({ fileId, ...options, baseVersionEtag })
 		.then((_response) => {
 			throw new Error('Expected request to fail - but it succeeded!')
 		}, (err) => err.response)

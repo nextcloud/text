@@ -65,7 +65,7 @@ export default {
 	methods: {
 		resolveThisVersion() {
 			this.clicked = true
-			this.saveService?.forceSave().then(() => this.syncService?.syncUp())
+			this.saveService.forceSave().then(() => this.syncService.syncUp())
 			this.setEditable(!this.readOnly)
 		},
 		resolveServerVersion() {
@@ -73,7 +73,7 @@ export default {
 			this.clicked = true
 			this.setEditable(!this.readOnly)
 			this.setContent(outsideChange)
-			this.saveService?.forceSave().then(() => this.syncService?.syncUp())
+			this.saveService.forceSave().then(() => this.syncService.syncUp())
 		},
 	},
 }

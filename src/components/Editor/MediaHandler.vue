@@ -134,7 +134,7 @@ export default {
 		async uploadAttachmentFile(file, position = null) {
 			this.state.isUploadingAttachments = true
 
-			return this.syncService?.uploadAttachment(file)
+			return this.syncService.uploadAttachment(file)
 				.then((response) => {
 					this.insertAttachment(
 						response.data?.name, response.data?.id, file.type,
@@ -168,7 +168,7 @@ export default {
 
 			this.state.isUploadingAttachments = true
 
-			return this.syncService?.insertAttachmentFile(filePath).then((response) => {
+			return this.syncService.insertAttachmentFile(filePath).then((response) => {
 				this.insertAttachment(
 					response.data?.name, response.data?.id, response.data?.mimetype,
 					null, response.data?.dirname,
@@ -182,7 +182,7 @@ export default {
 		},
 		createAttachment(template) {
 			this.state.isUploadingAttachments = true
-			return this.syncService?.createAttachment(template).then((response) => {
+			return this.syncService.createAttachment(template).then((response) => {
 				this.insertAttachmentPreview(response.data?.id)
 			}).catch((error) => {
 				logger.error('Failed to create attachment', { error })

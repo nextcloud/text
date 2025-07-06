@@ -4,7 +4,7 @@
  */
 import { logger } from '../helpers/logger.js'
 import { SyncService, ERROR_TYPE } from './SyncService.ts'
-import { Connection } from './SessionApi.js'
+import { SessionConnection } from './SessionConnection.js'
 import getNotifyBus from './NotifyService.js'
 
 /**
@@ -56,7 +56,7 @@ const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 class PollingBackend {
 	/** @type {SyncService} */
 	#syncService
-	/** @type {Connection} */
+	/** @type {SessionConnection} */
 	#connection
 
 	#lastPoll

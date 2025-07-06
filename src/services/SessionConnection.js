@@ -15,7 +15,7 @@ export class ConnectionClosedError extends Error {
 	}
 }
 
-export class Connection {
+export class SessionConnection {
 	#content
 	closed
 	#documentState
@@ -183,12 +183,7 @@ export class Connection {
 	}
 
 	close() {
-		return this.#post(
-			this.#url(`session/${this.#document.id}/close`),
-			this.#defaultParams,
-		).then(() => {
-			this.closed = true
-		})
+		this.closed = true
 	}
 
 	// To be used in Cypress tests only

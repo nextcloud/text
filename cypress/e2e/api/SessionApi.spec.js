@@ -322,7 +322,7 @@ describe('The session Api', function() {
 		})
 
 		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
-			cy.failToCreateTextSession(undefined, 'wrongBaseVersionEtag', { filePath: '', shareToken })
+			cy.failToCreateTextSession(undefined, 'wrongBaseVersionEtag', { filePath: '', token: shareToken })
 				.its('status')
 				.should('eql', 412)
 
