@@ -12,7 +12,7 @@ const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
 Cypress.Commands.add('createTextSession', async (fileId, options = {}) => {
 	const { connection, data } = await open({ fileId, token: options.shareToken, ...options })
-	return new SessionConnection({ data }, connection)
+	return new SessionConnection(data, connection)
 })
 
 Cypress.Commands.add('destroySession', async (sessionConnection) => {

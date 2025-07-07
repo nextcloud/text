@@ -26,7 +26,7 @@ export class SessionConnection {
 	#hasOwner
 	connection
 
-	constructor(response, connection) {
+	constructor(data, connection) {
 		const {
 			document,
 			session,
@@ -35,7 +35,7 @@ export class SessionConnection {
 			content,
 			documentState,
 			hasOwner,
-		} = response.data
+		} = data
 		this.#document = document
 		this.#session = session
 		this.#lock = lock

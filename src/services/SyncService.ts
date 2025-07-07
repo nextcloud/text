@@ -161,10 +161,7 @@ class SyncService {
 			// Error was already emitted above
 			return
 		}
-		this.sessionConnection = new SessionConnection(
-			{ data },
-			this.connection.value,
-		)
+		this.sessionConnection = new SessionConnection(data, this.connection.value)
 		this.backend = new PollingBackend(this, this.sessionConnection)
 		this.version = this.sessionConnection.docStateVersion
 		this.emit('opened', this.sessionConnection.state)
