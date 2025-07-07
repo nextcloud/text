@@ -35,6 +35,9 @@ export async function open(
 		documentId: document.id,
 		sessionId: session.id,
 		sessionToken: session.token,
+		baseVersionEtag: document.baseVersionEtag,
+		filePath: params.filePath,
+		shareToken: params.token,
 	}
 	return { connection, data: response.data }
 }
@@ -46,6 +49,10 @@ export async function open(
 export async function close(connection: Connection) {
 	const id = connection.documentId
 	const url = generateUrl(`/apps/text/session/${id}/close`)
-	const response = await axios.post(url, connection)
+	const response = await axios.post(url, {
+		documentId: connection.documentId,
+		sessionId: connection.sessionId,
+		sessionToken: connection.sessionToken,
+	})
 	return response.data
 }

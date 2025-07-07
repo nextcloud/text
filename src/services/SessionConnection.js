@@ -24,9 +24,9 @@ export class SessionConnection {
 	#lock
 	#readOnly
 	#hasOwner
-	#options
+	connection
 
-	constructor(response, options) {
+	constructor(response, connection) {
 		const {
 			document,
 			session,
@@ -43,8 +43,8 @@ export class SessionConnection {
 		this.#content = content
 		this.#documentState = documentState
 		this.#hasOwner = hasOwner
-		this.#options = options
-		this.isPublic = !!options.shareToken
+		this.connection = connection
+		this.isPublic = !!connection.shareToken
 		this.closed = false
 	}
 
@@ -82,14 +82,14 @@ export class SessionConnection {
 			documentId: this.#document.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
-			token: this.#options.shareToken,
+			token: this.connection.shareToken,
 		}
 	}
 
 	sync({ version }) {
 		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 		})
@@ -99,7 +99,7 @@ export class SessionConnection {
 		const url = this.#url(`session/${this.#document.id}/save`)
 		const postData = {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			...data,
 		}
@@ -111,7 +111,7 @@ export class SessionConnection {
 		const url = this.#url(`session/${this.#document.id}/save`)
 		const postData = {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			...data,
 			requestToken: getRequestToken() ?? '',
@@ -121,17 +121,6 @@ export class SessionConnection {
 			type: 'application/json',
 		})
 		return navigator.sendBeacon(url, blob)
-	}
-
-	push({ steps, version, awareness }) {
-		return this.#post(this.#url(`session/${this.#document.id}/push`), {
-			...this.#defaultParams,
-			filePath: this.#options.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			steps,
-			version,
-			awareness,
-		})
 	}
 
 	// TODO: maybe return a new connection here so connections have immutable state
@@ -156,7 +145,7 @@ export class SessionConnection {
 			+ '&sessionToken='
 			+ encodeURIComponent(this.#session.token)
 			+ '&token='
-			+ encodeURIComponent(this.#options.shareToken || '')
+			+ encodeURIComponent(this.connection.shareToken || '')
 		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',

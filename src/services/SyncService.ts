@@ -13,8 +13,9 @@ import { SessionConnection } from './SessionConnection.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 import type { ShallowRef } from 'vue'
-import type { InitialData, Connection } from '../composables/useConnection.js'
-import { close } from '../apis/Connect.js'
+import type { Connection } from '../composables/useConnection.js'
+import { close, type OpenData } from '../apis/Connect.js'
+import { push } from '../apis/Sync.js'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -51,7 +52,7 @@ const ERROR_TYPE = {
 /*
  * Step as what we expect to be returned from the server right now.
  */
-interface Step {
+export interface Step {
 	data: string[]
 	version: number
 	sessionId: number
@@ -109,7 +110,7 @@ export declare type EventTypes = {
 }
 
 class SyncService {
-	#connection: ShallowRef<Connection | undefined>
+	connection: ShallowRef<Connection | undefined>
 	sessionConnection?: SessionConnection
 	version = -1
 	pushError = 0
@@ -117,27 +118,19 @@ class SyncService {
 	#sendIntervalId?: NodeJS.Timeout
 	#outbox = new Outbox()
 	bus = mitt<EventTypes>()
-	#openConnection: () => Promise<InitialData>
+	#openConnection: () => Promise<OpenData>
 	#lastStepPush = Date.now()
 	#sending = false
-	#filePath?: string
-	#shareToken?: string
 
 	constructor({
 		connection,
 		openConnection,
-		filePath,
-		shareToken,
 	}: {
 		connection: ShallowRef<Connection | undefined>
-		openConnection: () => Promise<InitialData>
-		filePath?: string
-		shareToken?: string
+		openConnection: () => Promise<OpenData>
 	}) {
-		this.#connection = connection
+		this.connection = connection
 		this.#openConnection = openConnection
-		this.#filePath = filePath
-		this.#shareToken = shareToken
 	}
 
 	get isReadOnly() {
@@ -152,7 +145,10 @@ class SyncService {
 		return this.sessionConnection?.session.guestName
 	}
 
-	hasActiveConnection(): this is { sessionConnection: SessionConnection } {
+	hasActiveConnection(): this is {
+		sessionConnection: SessionConnection
+		connection: ShallowRef<Connection>
+	} {
 		return !!this.sessionConnection && !this.sessionConnection.isClosed
 	}
 
@@ -165,8 +161,10 @@ class SyncService {
 			// Error was already emitted above
 			return
 		}
-		const options = { shareToken: this.#shareToken, filePath: this.#filePath }
-		this.sessionConnection = new SessionConnection({ data }, options)
+		this.sessionConnection = new SessionConnection(
+			{ data },
+			this.connection.value,
+		)
 		this.backend = new PollingBackend(this, this.sessionConnection)
 		this.version = this.sessionConnection.docStateVersion
 		this.emit('opened', this.sessionConnection.state)
@@ -226,8 +224,10 @@ class SyncService {
 		if (!this.hasActiveConnection()) {
 			return
 		}
-		return this.sessionConnection
-			.push({ ...sendable, version: this.version })
+		return push(this.connection, {
+			version: this.version,
+			...sendable,
+		})
 			.then((response) => {
 				this.#outbox.clearSentData(sendable)
 				const { steps, documentState } = response.data as {
@@ -350,8 +350,8 @@ class SyncService {
 	async close() {
 		// Make sure to leave no pending requests behind.
 		this.backend?.disconnect()
-		if (this.#connection.value) {
-			close(this.#connection.value)
+		if (this.connection.value) {
+			close(this.connection.value)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })

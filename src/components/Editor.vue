@@ -239,14 +239,14 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
+		const { connection, openConnection, baseVersionEtag } =
+			provideConnection(props)
+		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCursor.configure({ provider: { awareness } }),
 		]
-		const { connection, openConnection, baseVersionEtag } =
-			provideConnection(props)
-		const { syncService } = provideSyncService(connection, openConnection, props)
 		const editor = isRichEditor
 			? createRichEditor({
 					connection,

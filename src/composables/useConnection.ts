@@ -11,6 +11,9 @@ export interface Connection {
 	documentId: number
 	sessionId: number
 	sessionToken: string
+	baseVersionEtag: string
+	filePath: string
+	shareToken?: string
 }
 
 export interface InitialData {
@@ -70,14 +73,24 @@ export const useConnection = () => {
 /**
  * Get the connection and additional data from the initial session if available.
  * @param props Props of the editor component
- * @param props.initialSession InitialSession to use.
+ * @param props.relativePath Relative path to the file.
+ * @param props.initialSession Initial session handed to the editor in direct editing
+ * @param props.shareToken Share token of the file.
  */
-function openInitialSession(props: { initialSession?: InitialData }) {
+function openInitialSession(props: {
+	relativePath: string
+	initialSession?: InitialData
+	shareToken?: string
+}) {
 	if (props.initialSession) {
+		const { document, session } = props.initialSession
 		const connection = {
-			documentId: props.initialSession.document.id,
-			sessionId: props.initialSession.session.id,
-			sessionToken: props.initialSession.session.token,
+			documentId: document.id,
+			sessionId: session.id,
+			sessionToken: session.token,
+			baseVersionEtag: document.baseVersionEtag,
+			filePath: props.relativePath,
+			shareToken: props.shareToken,
 		}
 		return { connection, data: props.initialSession }
 	}

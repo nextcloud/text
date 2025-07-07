@@ -13,20 +13,14 @@ const syncServiceKey = Symbol('text:sync') as InjectionKey<SyncService>
  * Define a sync service and provide it to child components
  * @param connection Connection to the text api.
  * @param openConnection Function to open the connection.
- * @param props Props of the editor component.
- * @param props.shareToken Share token of the file.
- * @param props.relativePath Relative path to the file.
  */
 export function provideSyncService(
 	connection: ShallowRef<Connection>,
 	openConnection: () => Promise<InitialData>,
-	props: { shareToken: string; relativePath: string },
 ) {
 	const syncService = new SyncService({
 		connection,
 		openConnection,
-		shareToken: props.shareToken,
-		filePath: props.relativePath,
 	})
 	provide(syncServiceKey, syncService)
 	return { syncService }

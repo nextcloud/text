@@ -18,7 +18,7 @@ import { unref, type ShallowRef } from 'vue'
 export function emitMention(
 	mention: string,
 	scope: object,
-	{ connection }: { connection: ShallowRef<Connection> },
+	{ connection }: { connection: ShallowRef<Connection> | Connection },
 ): Promise<void> {
 	// TODO: Require actual connection - handle disconnected state early on
 	const con = unref(connection)
@@ -27,8 +27,11 @@ export function emitMention(
 		console.warn(err.message, { err, mention })
 		return Promise.resolve()
 	}
-	return axios.put(generateUrl(`apps/text/session/${con.documentId}/mention`), {
-		...con,
+	const url = generateUrl(`apps/text/session/${con.documentId}/mention`)
+	return axios.put(url, {
+		documentId: con.documentId,
+		sessionId: con.sessionId,
+		sessionToken: con.sessionToken,
 		mention,
 		scope,
 	})

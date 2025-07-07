@@ -5,14 +5,19 @@
 
 import { describe, it, vi, expect } from 'vitest'
 import { SyncService } from '../../services/SyncService.js'
-import { shallowRef } from 'vue'
+import { provideConnection } from '../../composables/useConnection.js'
+import * as connect from '../../apis/Connect'
+
+const connection = { documentId: 123, sessionId: 345, sessionToken: 'sessionToken', filePath: './', baseVersionEtag: 'etag'}
+const initialData = { session: { id: 345 }, document: { id: 123, baseVersionEtag: 'etag' }, readOnly: false, content: '', hasOwner: true }
+
+const openData = { connection, data: initialData }
 
 describe('Sync service', () => {
-
 	it('opens a connection', async () => {
-		const initialData = { session: { id: 123 }, hasOwner: true }
-		const connection = shallowRef(undefined)
-		const openConnection = vi.fn().mockResolvedValue(initialData)
+		const { connection, openConnection } = provideConnection({ fileId: 123, relativePath: './', })
+		vi.mock('../../apis/Connect.ts')
+		vi.mocked(connect.open).mockResolvedValue(openData)
 		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
 		service.on('opened', openHandler)

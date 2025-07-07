@@ -6,12 +6,13 @@
 import axios from '@nextcloud/axios'
 import { SessionConnection } from '../../src/services/SessionConnection.js'
 import { open, close } from '../../src/apis/Connect.ts'
+import { push } from '../../src/apis/Sync.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 
 Cypress.Commands.add('createTextSession', async (fileId, options = {}) => {
-	const { data } = await open({ fileId, token: options.shareToken, ...options })
-	return new SessionConnection({ data }, options)
+	const { connection, data } = await open({ fileId, token: options.shareToken, ...options })
+	return new SessionConnection({ data }, connection)
 })
 
 Cypress.Commands.add('destroySession', async (sessionConnection) => {
@@ -27,16 +28,20 @@ Cypress.Commands.add('failToCreateTextSession', (fileId, baseVersionEtag = null,
 		}, (err) => err.response)
 })
 
-Cypress.Commands.add('pushSteps', ({ connection, steps, version, awareness = '' }) => {
-	return connection.push({ steps, version, awareness })
-		.then(response => response.data)
+Cypress.Commands.add('pushSteps', ({ connection: sessionConnection, steps, version, awareness = '' }) => {
+	return push(
+		sessionConnection.connection,
+		{ steps, version, awareness }
+	).then(response => response.data)
 })
 
-Cypress.Commands.add('failToPushSteps', ({ connection, steps, version, awareness = '' }) => {
-	return connection.push({ steps, version, awareness })
-		.then((response) => {
-			throw new Error('Expected request to fail - but it succeeded!')
-		}, (err) => err.response)
+Cypress.Commands.add('failToPushSteps', ({ connection: sessionConnection, steps, version, awareness = '' }) => {
+	return push(
+		sessionConnection.connection,
+		{ steps, version, awareness }
+	).then((_response) => {
+		throw new Error('Expected request to fail - but it succeeded!')
+	}, (err) => err.response)
 })
 
 Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
