@@ -31,13 +31,14 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
-import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
+import { loadState } from '@nextcloud/initial-state'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import axios from '@nextcloud/axios'
+
 import getEditorInstance from '../components/Editor.singleton.js'
 import RichTextReader from '../components/RichTextReader.vue'
-import { loadState } from '@nextcloud/initial-state'
 
 const IS_PUBLIC = isPublicShare()
 const WORKSPACE_URL = generateOcsUrl(
@@ -88,8 +89,8 @@ export default {
 			ready: false,
 			autofocus: false,
 			hideMenu: true,
-			darkTheme: OCA.Accessibility && OCA.Accessibility.theme === 'dark',
-			enabled: OCA.Text.RichWorkspaceEnabled,
+			darkTheme: window?.OCA?.Accessibility?.theme === 'dark',
+			enabled: window?.OCA?.Text?.RichWorkspaceEnabled,
 		}
 	},
 	computed: {
