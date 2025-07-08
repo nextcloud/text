@@ -133,7 +133,7 @@ export default {
 			getLinkWithPicker(null, true)
 				.then((link) => {
 					const chain = this.editor.chain()
-					if (this.editor.view.state?.selection.empty) {
+					if (this.editor.view.state.selection.empty) {
 						chain.focus().insertPreview(link).run()
 					} else {
 						chain.setLink({ href: link }).focus().run()

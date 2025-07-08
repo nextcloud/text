@@ -850,7 +850,7 @@ export default defineComponent({
 			this.translateModal = false
 		},
 		applyCommand(fn) {
-			this.editor.commands?.command(fn)
+			this.editor.commands.command(fn)
 		},
 		translateInsert(content) {
 			this.applyCommand(({ tr, commands }) => {
