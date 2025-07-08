@@ -20,24 +20,15 @@ export class SessionConnection {
 	#documentState
 	#document
 	#session
-	#lock
 	#readOnly
 	#hasOwner
 	connection
 
 	constructor(data, connection) {
-		const {
-			document,
-			session,
-			lock,
-			readOnly,
-			content,
-			documentState,
-			hasOwner,
-		} = data
+		const { document, session, readOnly, content, documentState, hasOwner } =
+			data
 		this.#document = document
 		this.#session = session
-		this.#lock = lock
 		this.#readOnly = readOnly
 		this.#content = content
 		this.#documentState = documentState
