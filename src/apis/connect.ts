@@ -6,6 +6,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import type { Connection } from '../composables/useConnection.js'
+import type { Document, Session } from '../services/SyncService.js'
 
 export interface OpenParams {
 	fileId?: number
@@ -16,7 +17,13 @@ export interface OpenParams {
 }
 
 export interface OpenData {
-	document: { baseVersionEtag: string }
+	document: Document
+	session: Session
+	readOnly: boolean
+	content: string
+	documentState?: string
+	lock?: object
+	hasOwner: boolean
 }
 
 /**

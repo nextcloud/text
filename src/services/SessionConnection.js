@@ -21,18 +21,15 @@ export class SessionConnection {
 	#document
 	#session
 	#readOnly
-	#hasOwner
 	connection
 
 	constructor(data, connection) {
-		const { document, session, readOnly, content, documentState, hasOwner } =
-			data
+		const { document, session, readOnly, content, documentState } = data
 		this.#document = document
 		this.#session = session
 		this.#readOnly = readOnly
 		this.#content = content
 		this.#documentState = documentState
-		this.#hasOwner = hasOwner
 		this.connection = connection
 		this.isPublic = !!connection.shareToken
 		this.closed = false
@@ -61,10 +58,6 @@ export class SessionConnection {
 
 	get isClosed() {
 		return this.closed
-	}
-
-	get hasOwner() {
-		return this.#hasOwner
 	}
 
 	get #defaultParams() {
