@@ -231,7 +231,6 @@ export default defineComponent({
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
