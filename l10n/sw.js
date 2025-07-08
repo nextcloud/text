@@ -10,6 +10,7 @@ OC.L10N.register(
     "Could not write file to disk" : "Haikuweza kuandika faili kwenye disk",
     "A PHP extension stopped the file upload" : "Uongezaji wa PHP umesimamisha upakiaji wa faili",
     "No file uploaded or file size exceeds maximum of %s" : "Hakuna faili lililopakiwa au faili lilizidi kiwango cha juu cha %s",
+    "New text file" : "New text file",
     "File not found" : "Faili halipatikani",
     "Text" : "Maandishi",
     "Translate" : "Tafsiri",
