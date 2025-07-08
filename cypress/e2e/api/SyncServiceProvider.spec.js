@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { watch } from 'vue'
 import { Doc } from 'yjs'
 import { provideConnection } from '../../../src/composables/useConnection.ts'
 import { provideSyncService } from '../../../src/composables/useSyncService.ts'
@@ -53,7 +54,12 @@ describe('Sync service provider', function () {
 			baseVersionEtag,
 		)
 		const queue = []
-		syncService.on('opened', () => syncService.startSync())
+		watch(connection, (cur, old) => {
+			// start the sync when the connection was established.
+			if (cur && !old) {
+				syncService.startSync()
+			}
+		})
 		return createSyncServiceProvider({
 			ydoc,
 			syncService,

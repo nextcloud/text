@@ -49,13 +49,8 @@ describe('Sync service', () => {
 		})
 		vi.mock('../../apis/connect')
 		vi.mocked(connect.open).mockResolvedValue(openResult)
-		const openHandler = vi.fn()
 		const service = new SyncService({ connection, openConnection })
-		service.on('opened', openHandler)
 		await service.open()
-		expect(openHandler).toHaveBeenCalledWith(
-			expect.objectContaining({ session: initialData.session }),
-		)
 		expect(openData.value?.hasOwner).toBe(true)
 	})
 })

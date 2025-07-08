@@ -48,9 +48,8 @@ export function provideConnection(props: {
 	initialSession?: InitialData
 	shareToken?: string
 }) {
-	const baseVersionEtag = shallowRef<string | undefined>(undefined)
-	const connection = shallowRef<Connection | undefined>(undefined)
 	const openData = shallowRef<OpenData | undefined>(undefined)
+	const connection = shallowRef<Connection | undefined>(undefined)
 	const openConnection = async () => {
 		const guestName = localStorage.getItem('nick') ?? ''
 		const { connection: opened, data } =
@@ -60,11 +59,11 @@ export function provideConnection(props: {
 				guestName,
 				token: props.shareToken,
 				filePath: props.relativePath,
-				baseVersionEtag: baseVersionEtag.value,
+				baseVersionEtag: openData.value?.document.baseVersionEtag,
 			}))
-		baseVersionEtag.value = data.document.baseVersionEtag
-		connection.value = opened
 		openData.value = data
+		connection.value = opened
+
 		return data
 	}
 	provide(connectionKey, connection)

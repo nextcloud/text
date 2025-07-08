@@ -80,14 +80,6 @@ export interface Document {
 }
 
 export declare type EventTypes = {
-	/* Document state */
-	opened: {
-		document: Document
-		session: Session
-		documentSource: string
-		documentState: string
-	}
-
 	/* All initial steps fetched */
 	fetched: unknown
 
@@ -168,8 +160,7 @@ class SyncService {
 			return
 		}
 		this.backend = new PollingBackend(this, this.connection.value)
-		// Make sure to only emit this once the backend is in place.
-		this.emit('opened', this.sessionConnection.state)
+		this.startSync()
 	}
 
 	startSync() {

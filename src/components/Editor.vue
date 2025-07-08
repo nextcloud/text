@@ -65,7 +65,7 @@
 		</Wrapper>
 		<DocumentStatus
 			:idle="idle"
-			:lock="lock"
+			:lock="openData?.lock"
 			:sync-error="syncError"
 			:has-connection-issue="requireReconnect"
 			@reconnect="reconnect" />
@@ -238,8 +238,7 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection, baseVersionEtag } =
-			provideConnection(props)
+		const { connection, openConnection, openData } = provideConnection(props)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
@@ -279,7 +278,7 @@ export default defineComponent({
 
 		return {
 			awareness,
-			baseVersionEtag,
+			connection,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -288,6 +287,7 @@ export default defineComponent({
 			isRichWorkspace,
 			language,
 			lowlightLoaded,
+			openData,
 			requireReconnect,
 			saveService,
 			serialize,
@@ -295,7 +295,6 @@ export default defineComponent({
 			syncProvider,
 			syncService,
 			width,
-			connection,
 			ydoc,
 		}
 	},
@@ -312,7 +311,6 @@ export default defineComponent({
 			filteredSessions: {},
 
 			idle: false,
-			lock: null,
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
@@ -386,6 +384,9 @@ export default defineComponent({
 			} else {
 				window.removeEventListener('beforeunload', this.saveBeforeUnload)
 			}
+		},
+		openData(val) {
+			this.onOpened(val)
 		},
 		requireReconnect(val) {
 			if (val) {
@@ -465,7 +466,6 @@ export default defineComponent({
 
 		listenSyncServiceEvents() {
 			this.syncService
-				.on('opened', this.onOpened)
 				.on('change', this.onChange)
 				.on('loaded', this.onLoaded)
 				.on('sync', this.onSync)
@@ -477,7 +477,6 @@ export default defineComponent({
 
 		unlistenSyncServiceEvents() {
 			this.syncService
-				.off('opened', this.onOpened)
 				.off('change', this.onChange)
 				.off('loaded', this.onLoaded)
 				.off('sync', this.onSync)
@@ -542,16 +541,14 @@ export default defineComponent({
 			}
 		},
 
-		onOpened({ document, session, documentSource, documentState }) {
+		onOpened({ document, readOnly, session, content: documentSource, documentState }) {
 			this.currentSession = session
 			this.document = document
-			this.readOnly = document.readOnly
-			this.baseVersionEtag = document.baseVersionEtag
-			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.readOnly = readOnly
+			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
-			this.lock = this.syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
@@ -575,7 +572,6 @@ export default defineComponent({
 			}
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
-				this.syncService.startSync()
 				if (!documentState) {
 					setInitialYjsState(this.ydoc, documentSource, {
 						isRichEditor: this.isRichEditor,
