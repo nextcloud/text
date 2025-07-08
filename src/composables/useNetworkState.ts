@@ -8,7 +8,7 @@ import { computed, ref } from 'vue'
 
 declare module '@nextcloud/event-bus' {
 	export interface NextcloudEvents {
-		'networkOnline': { success: boolean }
+		networkOnline: { success: boolean }
 	}
 }
 

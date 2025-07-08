@@ -20,7 +20,9 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions">
+		<SessionList
+			v-if="networkOnline"
+			:sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
@@ -28,6 +30,7 @@
 				v-if="isPublic && currentSession && !currentSession.userId"
 				:session="currentSession" />
 		</SessionList>
+		<OfflineState v-else :offline-since="offlineSince" />
 	</div>
 </template>
 
@@ -37,21 +40,24 @@ import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 import { ERROR_TYPE } from '../../services/SyncService.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
+import OfflineState from './OfflineState.vue'
 
 export default {
 	name: 'Status',
 
 	components: {
-		NcButton,
-		NcSavingIndicatorIcon,
-		SessionList: () =>
-			import(/* webpackChunkName: "editor-collab" */ './SessionList.vue'),
 		GuestNameDialog: () =>
 			import(/* webpackChunkName: "editor-guest" */ './GuestNameDialog.vue'),
+		NcButton,
+		NcSavingIndicatorIcon,
+		OfflineState,
+		SessionList: () =>
+			import(/* webpackChunkName: "editor-collab" */ './SessionList.vue'),
 	},
 
 	mixins: [useIsMobileMixin, refreshMoment],
@@ -83,8 +89,9 @@ export default {
 
 	setup() {
 		const { isPublic } = useEditorFlags()
+		const { networkOnline, offlineSince } = useNetworkState()
 		const { saveService } = useSaveService()
-		return { isPublic, saveService }
+		return { isPublic, networkOnline, offlineSince, saveService }
 	},
 
 	computed: {
@@ -123,7 +130,10 @@ export default {
 			)
 		},
 		saveStatusClass() {
-			if (this.syncError && this.lastSavedString !== '') {
+			if (
+				(this.dirtyStateIndicator && !this.networkOnline)
+				|| (this.syncError && this.lastSavedString !== '')
+			) {
 				return 'error'
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
