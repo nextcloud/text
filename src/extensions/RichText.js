@@ -32,8 +32,6 @@ import LinkBubble from './../extensions/LinkBubble.js'
 import LinkPicker from './../extensions/LinkPicker.js'
 import ListItem from '@tiptap/extension-list-item'
 import Markdown from './../extensions/Markdown.js'
-import Mention from './../extensions/Mention.js'
-import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import OrderedList from './../nodes/OrderedList.js'
 import Paragraph from './../nodes/Paragraph.js'
 import Preview from './../nodes/Preview.js'
@@ -58,7 +56,6 @@ export default Extension.create({
 		return {
 			editing: true,
 			extensions: [],
-			component: null,
 			relativePath: null,
 			isEmbedded: false,
 		}
@@ -102,9 +99,6 @@ export default Extension.create({
 			KeepSyntax,
 			Keymap,
 			FrontMatter,
-			Mention.configure({
-				suggestion: MentionSuggestion(),
-			}),
 			Search,
 			Emoji.configure({
 				suggestion: EmojiSuggestion(),

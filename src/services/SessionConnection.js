@@ -15,43 +15,18 @@ export class ConnectionClosedError extends Error {
 	}
 }
 
-class SessionApi {
-	#options
-
-	constructor(options = {}) {
-		this.#options = options
-	}
-
-	open({ fileId, baseVersionEtag }) {
-		return axios
-			.put(this.#url(`session/${fileId}/create`), {
-				fileId,
-				baseVersionEtag,
-				filePath: this.#options.filePath,
-				token: this.#options.shareToken,
-				guestName: this.#options.guestName,
-			})
-			.then((response) => new Connection(response, this.#options))
-	}
-
-	#url(endpoint) {
-		const isPublic = !!this.#options.shareToken
-		return _endpointUrl(endpoint, isPublic)
-	}
-}
-
-export class Connection {
+export class SessionConnection {
 	#content
-	#closed
+	closed
 	#documentState
 	#document
 	#session
 	#lock
 	#readOnly
 	#hasOwner
-	#options
+	connection
 
-	constructor(response, options) {
+	constructor(data, connection) {
 		const {
 			document,
 			session,
@@ -60,16 +35,16 @@ export class Connection {
 			content,
 			documentState,
 			hasOwner,
-		} = response.data
+		} = data
 		this.#document = document
 		this.#session = session
 		this.#lock = lock
 		this.#readOnly = readOnly
 		this.#content = content
 		this.#documentState = documentState
-		this.#options = options
 		this.#hasOwner = hasOwner
-		this.isPublic = !!options.shareToken
+		this.connection = connection
+		this.isPublic = !!connection.shareToken
 		this.closed = false
 	}
 
@@ -107,14 +82,14 @@ export class Connection {
 			documentId: this.#document.id,
 			sessionId: this.#session.id,
 			sessionToken: this.#session.token,
-			token: this.#options.shareToken,
+			token: this.connection.shareToken,
 		}
 	}
 
 	sync({ version }) {
 		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 		})
@@ -124,7 +99,7 @@ export class Connection {
 		const url = this.#url(`session/${this.#document.id}/save`)
 		const postData = {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			...data,
 		}
@@ -136,7 +111,7 @@ export class Connection {
 		const url = this.#url(`session/${this.#document.id}/save`)
 		const postData = {
 			...this.#defaultParams,
-			filePath: this.#options.filePath,
+			filePath: this.connection.filePath,
 			baseVersionEtag: this.#document.baseVersionEtag,
 			...data,
 			requestToken: getRequestToken() ?? '',
@@ -146,17 +121,6 @@ export class Connection {
 			type: 'application/json',
 		})
 		return navigator.sendBeacon(url, blob)
-	}
-
-	push({ steps, version, awareness }) {
-		return this.#post(this.#url(`session/${this.#document.id}/push`), {
-			...this.#defaultParams,
-			filePath: this.#options.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			steps,
-			version,
-			awareness,
-		})
 	}
 
 	// TODO: maybe return a new connection here so connections have immutable state
@@ -181,7 +145,7 @@ export class Connection {
 			+ '&sessionToken='
 			+ encodeURIComponent(this.#session.token)
 			+ '&token='
-			+ encodeURIComponent(this.#options.shareToken || '')
+			+ encodeURIComponent(this.connection.shareToken || '')
 		return this.#post(url, formData, {
 			headers: {
 				'Content-Type': 'multipart/form-data',
@@ -208,12 +172,7 @@ export class Connection {
 	}
 
 	close() {
-		return this.#post(
-			this.#url(`session/${this.#document.id}/close`),
-			this.#defaultParams,
-		).then(() => {
-			this.closed = true
-		})
+		this.closed = true
 	}
 
 	// To be used in Cypress tests only
@@ -246,5 +205,3 @@ function _endpointUrl(endpoint, isPublic = false) {
 	}
 	return `${_baseUrl}/${endpoint}`
 }
-
-export default SessionApi

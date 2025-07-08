@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import Vue, { ref, set, shallowRef, watch } from 'vue'
+import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
 import { getCurrentUser } from '@nextcloud/auth'
 import { loadState } from '@nextcloud/initial-state'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
@@ -91,20 +91,13 @@ import Autofocus from '../extensions/Autofocus.js'
 import { Doc } from 'yjs'
 import { useElementSize } from '@vueuse/core'
 
-import {
-	FILE,
-	ATTACHMENT_RESOLVER,
-	IS_MOBILE,
-	SYNC_SERVICE,
-} from './Editor.provider.ts'
+import { FILE, ATTACHMENT_RESOLVER, IS_MOBILE } from './Editor.provider.ts'
 import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { provideEditor } from '../composables/useEditor.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
 import { logger } from '../helpers/logger.js'
-import { getDocumentState } from '../helpers/yjs.js'
-import { SyncService, ERROR_TYPE, IDLE_TIMEOUT } from './../services/SyncService.js'
-import SessionApi from '../services/SessionApi.js'
+import { ERROR_TYPE, IDLE_TIMEOUT } from '../services/SyncService.ts'
 import createSyncServiceProvider from './../services/SyncServiceProvider.js'
 import AttachmentResolver from './../services/AttachmentResolver.js'
 import {
@@ -136,8 +129,10 @@ import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { provideConnection } from '../composables/useConnection.ts'
 import { Awareness } from 'y-protocols/awareness.js'
+import { provideSyncService } from '../composables/useSyncService.ts'
+import { provideSaveService } from '../composables/useSaveService.ts'
 
-export default {
+export default defineComponent({
 	name: 'Editor',
 	components: {
 		CollisionResolveDialog,
@@ -163,9 +158,6 @@ export default {
 		// using getters we can always provide the
 		// actual values without being reactive
 		Object.defineProperties(val, {
-			[SYNC_SERVICE]: {
-				get: () => this.syncService,
-			},
 			[FILE]: {
 				get: () => this.fileData,
 			},
@@ -239,59 +231,47 @@ export default {
 		})
 		const ydoc = new Doc()
 		const awareness = new Awareness(ydoc)
-		// Wrap the connection in an object so we can hand it to the Mention extension as a ref.
-		const wrappedConnection = provideConnection()
 		const hasConnectionIssue = ref(false)
 		const { delayed: requireReconnect } = useDelayedFlag(hasConnectionIssue)
-		const { editor } = provideEditor()
-		const { setEditable } = useEditorMethods(editor)
 		const { isPublic, isRichEditor, isRichWorkspace } = provideEditorFlags(props)
 		const { language, lowlightLoaded } = useSyntaxHighlighting(
 			isRichEditor,
 			props,
 		)
-		const baseVersionEtag = shallowRef(null)
-		const syncService = shallowRef(null)
-		const connectSyncService = () => {
-			const guestName = localStorage.getItem('nick') ?? ''
-			const api = new SessionApi({
-				guestName,
-				shareToken: props.shareToken,
-				filePath: props.relativePath,
-			})
-			syncService.value = new SyncService({
-				api,
-				baseVersionEtag: baseVersionEtag.value,
-				serialize: isRichEditor.value
-					? (content) =>
-							createMarkdownSerializer(editor.value?.schema).serialize(
-								content ?? editor.value?.state.doc,
-							)
-					: (content) =>
-							serializePlainText(content ?? editor.value?.state.doc),
-				getDocumentState: () => getDocumentState(ydoc),
-			})
-		}
-		const syncProvider = shallowRef(null)
-
+		const { connection, openConnection, baseVersionEtag } =
+			provideConnection(props)
+		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
 			CollaborationCursor.configure({ provider: { awareness } }),
 		]
-		editor.value = isRichEditor
+		const editor = isRichEditor
 			? createRichEditor({
-					...wrappedConnection,
+					connection,
 					relativePath: props.relativePath,
 					extensions,
 					isEmbedded: props.isEmbedded,
 				})
 			: createPlainEditor({ language, extensions })
+		provideEditor(editor)
+
+		const { setEditable } = useEditorMethods(editor)
+
+		const serialize = isRichEditor
+			? () =>
+					createMarkdownSerializer(editor.schema).serialize(
+						editor.state.doc,
+					)
+			: () => serializePlainText(editor.state.doc)
+
+		const { saveService } = provideSaveService(syncService, serialize, ydoc)
+
+		const syncProvider = shallowRef(null)
 
 		return {
 			awareness,
 			baseVersionEtag,
-			connectSyncService,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -301,11 +281,13 @@ export default {
 			language,
 			lowlightLoaded,
 			requireReconnect,
+			saveService,
+			serialize,
 			setEditable,
 			syncProvider,
 			syncService,
 			width,
-			wrappedConnection,
+			connection,
 			ydoc,
 		}
 	},
@@ -450,14 +432,13 @@ export default {
 		unsubscribe('text:translate-modal:show', this.showTranslateModal)
 		if (this.dirty) {
 			const timeout = new Promise((resolve) => setTimeout(resolve, 2000))
-			await Promise.any([timeout, this.syncService.save()])
+			await Promise.any([timeout, this.saveService.save()])
 		}
 		await this.close()
 		removeFromDebugging(this)
 	},
 	methods: {
 		initSession() {
-			this.connectSyncService()
 			this.listenSyncServiceEvents()
 			this.syncProvider = createSyncServiceProvider({
 				ydoc: this.ydoc,
@@ -470,17 +451,17 @@ export default {
 		},
 
 		listenEditorEvents() {
-			this.editor?.on('focus', this.onFocus)
-			this.editor?.on('blur', this.onBlur)
-			this.editor?.on('create', this.onCreate)
-			this.editor?.on('update', this.onUpdate)
+			this.editor.on('focus', this.onFocus)
+			this.editor.on('blur', this.onBlur)
+			this.editor.on('create', this.onCreate)
+			this.editor.on('update', this.onUpdate)
 		},
 
 		unlistenEditorEvents() {
-			this.editor?.off('focus', this.onFocus)
-			this.editor?.off('blur', this.onBlur)
-			this.editor?.off('create', this.onCreate)
-			this.editor?.off('update', this.onUpdate)
+			this.editor.off('focus', this.onFocus)
+			this.editor.off('blur', this.onBlur)
+			this.editor.off('create', this.onCreate)
+			this.editor.off('update', this.onUpdate)
 		},
 
 		listenSyncServiceEvents() {
@@ -510,7 +491,6 @@ export default {
 		reconnect() {
 			this.contentLoaded = false
 			this.hasConnectionIssue = false
-			this.wrappedConnection.connection.value = undefined
 			this.disconnect().then(() => {
 				this.initSession()
 			})
@@ -563,11 +543,13 @@ export default {
 			}
 		},
 
-		onOpened({ document, session }) {
+		onOpened({ document, session, documentSource, documentState }) {
 			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
+			this.baseVersionEtag = document.baseVersionEtag
 			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
 			this.lock = this.syncService.lock
@@ -592,9 +574,6 @@ export default {
 					})
 					.catch((err) => logger.warn('Failed to fetch node', { err }))
 			}
-		},
-
-		onLoaded({ document, documentSource, documentState }) {
 			// Fetch the document state after syntax highlights are loaded
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
@@ -604,20 +583,12 @@ export default {
 					})
 				}
 			})
-
-			this.baseVersionEtag = document.baseVersionEtag
-			this.hasConnectionIssue = false
-
-			const session = this.currentSession
 			const user = {
 				name: session?.userId
 					? session.displayName
 					: session?.guestName || t('text', 'Guest'),
 				color: session?.color,
 				clientId: this.ydoc.clientID,
-			}
-			this.wrappedConnection.connection.value = {
-				...this.currentSession,
 			}
 			this.editor.commands.updateUser(user)
 		},
@@ -631,7 +602,7 @@ export default {
 		},
 
 		onCreate({ editor }) {
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('create:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -639,7 +610,7 @@ export default {
 
 		onUpdate({ editor }) {
 			// this.debugContent(editor)
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			this.emit('update:content', {
 				markdown: proseMirrorMarkdown,
 			})
@@ -698,9 +669,6 @@ export default {
 		},
 
 		onStateChange(state) {
-			if (!this.editor) {
-				return
-			}
 			if (state.initialLoading && !this.contentLoaded) {
 				this.contentLoaded = true
 				if (this.autofocus && !this.readOnly) {
@@ -715,7 +683,7 @@ export default {
 				if (this.editor.can().undo() || this.editor.can().redo()) {
 					this.dirty = state.dirty
 					if (this.dirty) {
-						this.syncService.autosave()
+						this.saveService.autosave()
 					}
 				}
 			}
@@ -752,7 +720,7 @@ export default {
 		},
 
 		onKeyboardSave() {
-			this.syncService.save()
+			this.saveService.save()
 		},
 
 		onAddImageNode() {
@@ -764,7 +732,7 @@ export default {
 		},
 
 		async save() {
-			await this.syncService.save()
+			await this.saveService.save()
 		},
 
 		async disconnect() {
@@ -828,7 +796,7 @@ export default {
 		 * @param {object} editor The Tiptap editor
 		 */
 		debugContent(editor) {
-			const proseMirrorMarkdown = this.syncService.serialize(editor.state.doc)
+			const proseMirrorMarkdown = this.serialize()
 			const markdownItHtml = markdownit.render(proseMirrorMarkdown)
 
 			logger.debug(
@@ -852,7 +820,7 @@ export default {
 				pendingStructs: this.ydoc.store.pendingStructs,
 				pendingStructsRemote: this.syncProvider?.remote.store.pendingStructs,
 				clientVectors: [],
-				documentState: this.syncService?.getDocumentState(),
+				documentState: this.saveService.getDocumentState(),
 			}
 			for (const client of this.ydoc.store.clients.values()) {
 				yjsData.clientVectors.push(client.at(-1).id)
@@ -867,7 +835,7 @@ export default {
 
 		readOnlyToggled() {
 			if (this.editMode) {
-				this.syncService.save()
+				this.saveService.save()
 			}
 			this.editMode = !this.editMode
 			this.setEditable(this.editMode)
@@ -881,7 +849,7 @@ export default {
 			this.translateModal = false
 		},
 		applyCommand(fn) {
-			this.editor?.commands?.command(fn)
+			this.editor.commands.command(fn)
 		},
 		translateInsert(content) {
 			this.applyCommand(({ tr, commands }) => {
@@ -904,8 +872,8 @@ export default {
 		handleEditorWidthChange(newWidth) {
 			this.updateEditorWidth(newWidth)
 			this.$nextTick(() => {
-				this.editor?.view.updateState(this.editor?.view.state)
-				this.editor?.commands.focus()
+				this.editor.view.updateState(this.editor.view.state)
+				this.editor.commands.focus()
 			})
 		},
 		updateEditorWidth(newWidth) {
@@ -916,10 +884,10 @@ export default {
 		},
 
 		saveBeforeUnload() {
-			this.syncService?.saveViaSendBeacon()
+			this.saveService.saveViaSendBeacon()
 		},
 	},
-}
+})
 </script>
 
 <style scoped lang="scss">

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { Ref } from 'vue'
 import { extensionHighlight } from '../helpers/mappings'
 import { loadSyntaxHighlight } from '../EditorFactory.js'
 
@@ -14,13 +13,13 @@ import { loadSyntaxHighlight } from '../EditorFactory.js'
  * @param props.relativePath Relative path to the file.
  */
 export function useSyntaxHighlighting(
-	isRichEditor: Ref<boolean>,
-	props: { relativePath: Ref<string> },
+	isRichEditor: boolean,
+	props: { relativePath: string },
 ) {
-	if (isRichEditor.value) {
+	if (isRichEditor) {
 		return { language: 'md', lowlightLoaded: Promise.resolve() }
 	}
-	const filename = props.relativePath.value?.split('/').pop()
+	const filename = props.relativePath.split('/').pop()
 	const extension = filename?.split('.').pop() ?? 'txt'
 	const language = extensionHighlight[extension] || extension
 	const lowlightLoaded = loadSyntaxHighlight(language)

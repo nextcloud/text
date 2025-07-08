@@ -207,9 +207,6 @@ export default {
 			this.displayHelp = false
 		},
 		showTranslate() {
-			if(!this.editor) {
-				return
-			}
 			const { commands, view: { state }} = this.editor
 			const { from, to } = state.selection
 			let selectedText = state.doc.textBetween(from, to, ' ')

@@ -5,25 +5,27 @@
 
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
-import type { ShallowRef } from 'vue'
 import markdownit from '../markdownit/index.js'
+import Markdown from '../extensions/Markdown.js'
 
-export const useEditorMethods = (editor: ShallowRef<Editor | undefined>) => {
+export const useEditorMethods = (editor: Editor) => {
 	const setEditable = (val: boolean) => {
-		if (editor.value && editor.value.isEditable !== val) {
-			editor.value.setEditable(val)
+		if (editor && editor.isEditable !== val) {
+			editor.setEditable(val)
 		}
 	}
 
 	const setContent: (
 		content: string,
-		options: { isRichEditor?: boolean; addToHistory?: boolean },
-	) => void = (content, { isRichEditor, addToHistory = true } = {}) => {
-		const html = isRichEditor
+		options: { addToHistory?: boolean },
+	) => void = (content, { addToHistory = true } = {}) => {
+		const hasMarkdownContent =
+			editor.extensionManager.extensions.includes(Markdown)
+		const html = hasMarkdownContent
 			? markdownit.render(content) + '<p/>'
 			: `<pre>${escapeHtml(content)}</pre>`
-		editor.value
-			?.chain()
+		editor
+			.chain()
 			.setContent(html, addToHistory)
 			.command(({ tr }) => {
 				tr.setMeta('addToHistory', addToHistory)

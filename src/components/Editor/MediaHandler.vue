@@ -33,7 +33,6 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 
 import {
 	useFileMixin,
-	useSyncServiceMixin,
 } from '../Editor.provider.ts'
 import { useEditor } from '../../composables/useEditor.ts'
 
@@ -43,12 +42,13 @@ import {
 	ACTION_CREATE_ATTACHMENT,
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
+import { useSyncService } from '../../composables/useSyncService.ts'
 
 const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
 export default {
 	name: 'MediaHandler',
-	mixins: [ useFileMixin, useSyncServiceMixin],
+	mixins: [ useFileMixin],
 	provide() {
 		const val = {}
 
@@ -72,8 +72,9 @@ export default {
 	setup() {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
+		const { syncService } = useSyncService()
 		return {
-			editor, isMobile,
+			editor, isMobile, syncService
 		}
 	},
 	data() {
@@ -133,7 +134,7 @@ export default {
 		async uploadAttachmentFile(file, position = null) {
 			this.state.isUploadingAttachments = true
 
-			return this.$syncService.uploadAttachment(file)
+			return this.syncService.uploadAttachment(file)
 				.then((response) => {
 					this.insertAttachment(
 						response.data?.name, response.data?.id, file.type,
@@ -167,7 +168,7 @@ export default {
 
 			this.state.isUploadingAttachments = true
 
-			return this.$syncService.insertAttachmentFile(filePath).then((response) => {
+			return this.syncService.insertAttachmentFile(filePath).then((response) => {
 				this.insertAttachment(
 					response.data?.name, response.data?.id, response.data?.mimetype,
 					null, response.data?.dirname,
@@ -181,7 +182,7 @@ export default {
 		},
 		createAttachment(template) {
 			this.state.isUploadingAttachments = true
-			return this.$syncService.createAttachment(template).then((response) => {
+			return this.syncService.createAttachment(template).then((response) => {
 				this.insertAttachmentPreview(response.data?.id)
 			}).catch((error) => {
 				logger.error('Failed to create attachment', { error })
@@ -193,7 +194,7 @@ export default {
 		insertAttachmentPreview(fileId) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
-			this.editor?.chain()
+			this.editor.chain()
 				.focus()
 				.insertPreview(href)
 				.run()
@@ -209,9 +210,6 @@ export default {
 			// as it does not need to be unique and matching the real file name
 			const alt = name.replaceAll(/[[\]]/g, '')
 
-			if (!this.editor) {
-				return
-			}
 			const chain = position
 				? this.editor.chain().focus(position)
 				: this.editor.chain()

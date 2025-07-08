@@ -5,20 +5,12 @@
 
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
-import {
-	type Ref,
-	type InjectionKey,
-	type ShallowReactive,
-	computed,
-	provide,
-	inject,
-	ref,
-} from 'vue'
+import { type InjectionKey, provide, inject } from 'vue'
 
 export interface EditorFlags {
-	isPublic: Ref<boolean>
-	isRichEditor: Ref<boolean>
-	isRichWorkspace: Ref<boolean>
+	isPublic: boolean
+	isRichEditor: boolean
+	isRichWorkspace: boolean
 }
 interface Props {
 	isDirectEditing: boolean
@@ -26,22 +18,20 @@ interface Props {
 	mime: string
 }
 export const editorFlagsKey = Symbol('editor:flags') as InjectionKey<EditorFlags>
-export const provideEditorFlags = (props: ShallowReactive<Props>) => {
-	const isPublic = computed(() => props.isDirectEditing || isPublicShare())
-	const isRichWorkspace = computed(() => props.richWorkspace ?? false)
-	const isRichEditor = computed(
-		() =>
-			loadState('text', 'rich_editing_enabled', true)
-			&& props.mime === 'text/markdown',
-	)
+export const provideEditorFlags = (props: Props) => {
+	const isPublic = props.isDirectEditing || isPublicShare()
+	const isRichWorkspace = props.richWorkspace ?? false
+	const isRichEditor =
+		loadState('text', 'rich_editing_enabled', true)
+		&& props.mime === 'text/markdown'
 	provide(editorFlagsKey, { isPublic, isRichEditor, isRichWorkspace })
 	return { isPublic, isRichEditor, isRichWorkspace }
 }
 export const useEditorFlags = () => {
 	const { isPublic, isRichEditor, isRichWorkspace } = inject(editorFlagsKey, {
-		isPublic: ref(false),
-		isRichEditor: ref(false),
-		isRichWorkspace: ref(false),
+		isPublic: false,
+		isRichEditor: false,
+		isRichWorkspace: false,
 	})
 	return { isPublic, isRichEditor, isRichWorkspace }
 }

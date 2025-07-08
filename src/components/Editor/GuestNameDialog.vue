@@ -20,21 +20,22 @@
 <script>
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
-import { useSyncServiceMixin } from '../Editor.provider.ts'
+import { useSyncService } from '../../composables/useSyncService.ts'
 
 export default {
 	name: 'GuestNameDialog',
 	components: {
 		AvatarWrapper,
 	},
-	mixins: [
-		useSyncServiceMixin,
-	],
 	props: {
 		session: {
 			type: Object,
 			required: true,
 		},
+	},
+	setup() {
+		const { syncService } = useSyncService()
+		return { syncService }
 	},
 	data() {
 		return {
@@ -55,13 +56,13 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.guestName = this.$syncService.guestName
+		this.guestName = this.syncService.guestName
 		this.updateBufferedGuestName()
 	},
 	methods: {
 		setGuestName() {
-			const previousGuestName = this.$syncService.guestName
-			this.$syncService.updateSession(this.guestName).then(() => {
+			const previousGuestName = this.syncService.guestName
+			this.syncService.updateSession(this.guestName).then(() => {
 				localStorage.setItem('nick', this.guestName)
 				this.updateBufferedGuestName()
 			}).catch((e) => {

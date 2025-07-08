@@ -27,16 +27,16 @@
 
 <script>
 
-import { ERROR_TYPE } from '../../services/SyncService.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
 import {
 	useIsMobileMixin,
-	useSyncServiceMixin,
 } from '../Editor.provider.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
+import { useSaveService } from '../../composables/useSaveService.ts'
 
 export default {
 	name: 'Status',
@@ -50,7 +50,6 @@ export default {
 
 	mixins: [
 		useIsMobileMixin,
-		useSyncServiceMixin,
 		refreshMoment,
 	],
 
@@ -81,7 +80,8 @@ export default {
 
 	setup() {
 		const { isPublic } = useEditorFlags()
-		return { isPublic }
+		const { saveService } = useSaveService()
+		return { isPublic, saveService }
 	},
 
 	computed: {
@@ -130,7 +130,7 @@ export default {
 	methods: {
 		onClickSave() {
 			if (this.dirtyStateIndicator) {
-				this.$syncService.forceSave()
+				this.saveService.forceSave()
 			}
 		},
 		onEditorWidthChange(newWidth) {

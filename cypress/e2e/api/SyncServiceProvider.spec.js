@@ -4,8 +4,8 @@
  */
 
 import { randUser } from '../../utils/index.js'
-import SessionApi from '../../../src/services/SessionApi.js'
-import { SyncService } from '../../../src/services/SyncService.js'
+import { provideConnection } from '../../../src/composables/useConnection.ts'
+import { provideSyncService  } from '../../../src/composables/useSyncService.ts'
 import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
 import { Doc } from 'yjs'
 
@@ -39,13 +39,10 @@ describe('Sync service provider', function() {
 	 * @param {object} ydoc Yjs document
 	 */
 	function createProvider(ydoc) {
+		const relativePath = '.'
+		const { connection, openConnection, baseVersionEtag } = provideConnection({ fileId, relativePath })
+		const { syncService } = provideSyncService( connection, openConnection, baseVersionEtag )
 		const queue = []
-		const api = new SessionApi()
-		const syncService = new SyncService({
-			serialize: () => 'Serialized',
-			getDocumentState: () => null,
-			api,
-		})
 		syncService.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({
 			ydoc,
