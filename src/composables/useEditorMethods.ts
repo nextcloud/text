@@ -15,13 +15,13 @@ export const useEditorMethods = (editor: Editor) => {
 		}
 	}
 
-	const isRichEditor = editor.extensionManager.extensions.includes(Markdown)
-
 	const setContent: (
 		content: string,
 		options: { addToHistory?: boolean },
 	) => void = (content, { addToHistory = true } = {}) => {
-		const html = isRichEditor
+		const hasMarkdownContent =
+			editor.extensionManager.extensions.includes(Markdown)
+		const html = hasMarkdownContent
 			? markdownit.render(content) + '<p/>'
 			: `<pre>${escapeHtml(content)}</pre>`
 		editor
