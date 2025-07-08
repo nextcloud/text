@@ -265,7 +265,12 @@ export default defineComponent({
 					)
 			: () => serializePlainText(editor.state.doc)
 
-		const { saveService } = provideSaveService(syncService, serialize, ydoc)
+		const { saveService } = provideSaveService(
+			connection,
+			syncService,
+			serialize,
+			ydoc,
+		)
 
 		const syncProvider = shallowRef(null)
 

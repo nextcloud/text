@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-/* eslint-disable jsdoc/valid-types */
-
 import debounce from 'debounce'
 
+import type { ShallowRef } from 'vue'
 import { logger } from '../helpers/logger.js'
 import type { SyncService } from './SyncService.js'
+import type { Connection } from '../composables/useConnection.ts'
+import { save, saveViaSendBeacon } from '../apis/Save'
 
 /**
  * Interval to save the serialized document and the document state
@@ -18,20 +19,24 @@ import type { SyncService } from './SyncService.js'
 const AUTOSAVE_INTERVAL = 30000
 
 class SaveService {
+	connection: ShallowRef<Connection | undefined>
 	syncService
 	serialize
 	getDocumentState
 	autosave
 
 	constructor({
+		connection,
 		syncService,
 		serialize,
 		getDocumentState,
 	}: {
+		connection: ShallowRef<Connection | undefined>
 		syncService: SyncService
 		serialize: () => string
 		getDocumentState: () => string
 	}) {
+		this.connection = connection
 		this.syncService = syncService
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
@@ -39,10 +44,6 @@ class SaveService {
 		this.syncService.on('close', () => {
 			this.autosave.clear()
 		})
-	}
-
-	get connection() {
-		return this.syncService.sessionConnection
 	}
 
 	get version() {
@@ -59,12 +60,12 @@ class SaveService {
 
 	async save({ force = false, manualSave = true } = {}) {
 		logger.debug('[SaveService] saving', { force, manualSave })
-		if (!this.connection) {
+		if (!this.connection.value) {
 			logger.warn('Could not save due to missing connection')
 			return
 		}
 		try {
-			const response = await this.connection.save({
+			const response = await save(this.connection.value, {
 				version: this.version,
 				autosaveContent: this._getContent(),
 				documentState: this.getDocumentState(),
@@ -82,12 +83,13 @@ class SaveService {
 	}
 
 	saveViaSendBeacon() {
-		this.connection?.saveViaSendBeacon({
+		if (!this.connection.value) {
+			return
+		}
+		saveViaSendBeacon(this.connection.value, {
 			version: this.version,
 			autosaveContent: this._getContent(),
 			documentState: this.getDocumentState(),
-			force: false,
-			manualSave: true,
 		}) && logger.debug('[SaveService] saved using sendBeacon')
 	}
 

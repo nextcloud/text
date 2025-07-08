@@ -46,6 +46,15 @@ describe('Sync', () => {
 			.should('include', 'saves the doc state')
 	})
 
+	it('saves via sendBeacon on unload', () => {
+		cy.visit('https://example.org')
+		cy.wait('@save').its('response.statusCode').should('eq', 200)
+		cy.testName()
+			.then(name => cy.downloadFile(`/${name}.md`))
+			.its('data')
+			.should('include', 'saves the doc state')
+	})
+
 	it('recovers from a short lost connection', () => {
 		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
