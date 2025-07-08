@@ -107,6 +107,9 @@ export declare type EventTypes = {
 
 	/* Emitted once a document becomes idle */
 	idle: unknown
+
+	/* Emitted if the connection has been closed */
+	close: void
 }
 
 class SyncService {
@@ -345,7 +348,6 @@ class SyncService {
 	}
 
 	async close() {
-		// Make sure to leave no pending requests behind.
 		this.backend?.disconnect()
 		if (this.connection.value) {
 			close(this.connection.value)
@@ -356,6 +358,7 @@ class SyncService {
 		}
 		// Mark sessionConnection closed so hasActiveConnection turns false and we can reconnect.
 		this.sessionConnection?.close()
+		this.emit('close')
 	}
 
 	uploadAttachment(file: object) {

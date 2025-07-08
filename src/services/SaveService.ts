@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
@@ -36,6 +36,9 @@ class SaveService {
 		this.serialize = serialize
 		this.getDocumentState = getDocumentState
 		this.autosave = debounce(this._autosave.bind(this), AUTOSAVE_INTERVAL)
+		this.syncService.on('close', () => {
+			this.autosave.clear()
+		})
 	}
 
 	get connection() {
