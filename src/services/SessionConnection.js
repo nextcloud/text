@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import axios from '@nextcloud/axios'
-import { getRequestToken } from '@nextcloud/auth'
 import { generateUrl } from '@nextcloud/router'
 
 export class ConnectionClosedError extends Error {
@@ -93,34 +92,6 @@ export class SessionConnection {
 			baseVersionEtag: this.#document.baseVersionEtag,
 			version,
 		})
-	}
-
-	save(data) {
-		const url = this.#url(`session/${this.#document.id}/save`)
-		const postData = {
-			...this.#defaultParams,
-			filePath: this.connection.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			...data,
-		}
-
-		return this.#post(url, postData)
-	}
-
-	saveViaSendBeacon(data) {
-		const url = this.#url(`session/${this.#document.id}/save`)
-		const postData = {
-			...this.#defaultParams,
-			filePath: this.connection.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			...data,
-			requestToken: getRequestToken() ?? '',
-		}
-
-		const blob = new Blob([JSON.stringify(postData)], {
-			type: 'application/json',
-		})
-		return navigator.sendBeacon(url, blob)
 	}
 
 	// TODO: maybe return a new connection here so connections have immutable state
