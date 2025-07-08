@@ -77,7 +77,7 @@ export function saveViaSendBeacon(
 				documentState: data.documentState,
 				force: false,
 				manualSave: true,
-				requestToken: getRequestToken() ?? '',
+				requesttoken: getRequestToken() ?? '',
 			}),
 		],
 		{
