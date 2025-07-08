@@ -5,7 +5,7 @@
 
 import { logger } from '../helpers/logger.js'
 import { decodeArrayBuffer } from '../helpers/base64.ts'
-import getNotifyBus from './NotifyService.js'
+import getNotifyBus from './NotifyService.ts'
 
 /**
  *

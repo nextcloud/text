@@ -68,6 +68,7 @@ export interface Session {
 	guestName?: string
 	documentId: number
 	displayName: string
+	clientId: number
 }
 
 export interface Document {

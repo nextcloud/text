@@ -3,42 +3,42 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import { logger } from '../helpers/logger.js'
-import { SyncService, ERROR_TYPE } from './SyncService.ts'
-import { SessionConnection } from './SessionConnection.js'
-import getNotifyBus from './NotifyService.js'
+import {
+	type Session,
+	type Step,
+	type SyncService,
+	ERROR_TYPE,
+} from './SyncService.js'
+import { type SessionConnection } from './SessionConnection.js'
+import getNotifyBus, { type EventTypes } from './NotifyService'
+import type { Emitter } from 'mitt'
 
 /**
- * Minimum inverval to refetch the document changes
- *
- * @type {number} time in ms
+ * Minimum inverval to refetch the document changes in ms.
  */
 const FETCH_INTERVAL = 300
 
 /**
- * Maximum interval between refetches of document state if multiple users have joined
- *
- * @type {number} time in ms
+ * Maximum interval between refetches of document state in ms
+ * if multiple users have joined
  */
 const FETCH_INTERVAL_MAX = 5000
 
 /**
- * Interval to check for changes when there is only one user joined
- *
- * @type {number} time in ms
+ * Interval to check for changes in ms
+ * when there is only one user joined
  */
 const FETCH_INTERVAL_SINGLE_EDITOR = 5000
 
 /**
- * Interval to check for changes for read only users
- * @type {number}
+ * Interval to check for changes in ms for read only users
  */
 const FETCH_INTERVAL_READ_ONLY = 30000
 
 /**
- * Interval to fetch for changes when a browser window is considered invisible by the
- * page visibility API https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
- *
- * @type {number} time in ms
+ * Interval to fetch for changes in ms
+ * when a browser window is considered invisible by the page visibility API
+ * https://developer.mozilla.org/de/docs/Web/API/Page_Visibility_API
  */
 const FETCH_INTERVAL_INVISIBLE = 30000
 
@@ -53,20 +53,36 @@ const MAX_RETRY_FETCH_COUNT = 5
  */
 const COLLABORATOR_DISCONNECT_TIME = FETCH_INTERVAL_INVISIBLE * 1.5
 
+interface PollData {
+	document: Document
+	sessions: Session[]
+	steps: Step[]
+}
+
+interface ConflictData extends PollData {
+	outsideChange: string
+}
+
 class PollingBackend {
-	/** @type {SyncService} */
-	#syncService
-	/** @type {SessionConnection} */
-	#connection
+	#syncService: SyncService
+	#connection: SessionConnection
 
 	#lastPoll
-	#fetchInterval
-	#fetchRetryCounter
-	#pollActive
-	#initialLoadingFinished
-	#notifyPushBus
+	#fetchInterval: number
+	#fetchRetryCounter: number
+	fetcher: NodeJS.Timeout | undefined
+	#pollActive = false
+	#initialLoadingFinished = false
+	#notifyPushBus: Emitter<EventTypes> | undefined
+	visibilitychange = () => {
+		if (document.visibilityState === 'hidden') {
+			this.#fetchInterval = FETCH_INTERVAL_INVISIBLE
+		} else {
+			this.resetRefetchTimer()
+		}
+	}
 
-	constructor(syncService, connection) {
+	constructor(syncService: SyncService, connection: SessionConnection) {
 		this.#syncService = syncService
 		this.#connection = connection
 		this.#fetchInterval = FETCH_INTERVAL
@@ -75,16 +91,13 @@ class PollingBackend {
 	}
 
 	connect() {
-		if (this.fetcher > 0) {
+		if (this.fetcher) {
 			console.error('Trying to connect, but already connected')
 			return
 		}
 		this.#initialLoadingFinished = false
 		this.fetcher = setInterval(this._fetchSteps.bind(this), 50)
-		document.addEventListener(
-			'visibilitychange',
-			this.visibilitychange.bind(this),
-		)
+		document.addEventListener('visibilitychange', this.visibilitychange)
 		this.#notifyPushBus = getNotifyBus()
 	}
 
@@ -109,7 +122,9 @@ class PollingBackend {
 
 		this.#pollActive = true
 
-		logger.debug('[PollingBackend] Fetching steps', this.#syncService.version)
+		logger.debug('[PollingBackend] Fetching steps', {
+			version: this.#syncService.version,
+		})
 		await this.#connection
 			.sync({
 				version: this.#syncService.version,
@@ -119,14 +134,20 @@ class PollingBackend {
 		this.#pollActive = false
 	}
 
-	handleNotifyPush({ messageType, messageBody }) {
+	handleNotifyPush({
+		messageType: _,
+		messageBody,
+	}: {
+		messageType: unknown
+		messageBody: { documentId: number; response: PollData }
+	}) {
 		if (messageBody.documentId !== this.#connection.document.id) {
 			return
 		}
 		this._handleResponse({ data: messageBody.response })
 	}
 
-	_handleResponse({ data }) {
+	_handleResponse({ data }: { data: PollData }) {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
@@ -158,7 +179,10 @@ class PollingBackend {
 		}
 	}
 
-	_handleError(e) {
+	_handleError(e: {
+		response?: { status: number; data: ConflictData }
+		code?: string
+	}) {
 		if (!e.response || e.code === 'ECONNABORTED') {
 			if (this.#fetchRetryCounter++ >= MAX_RETRY_FETCH_COUNT) {
 				logger.error(
@@ -216,11 +240,8 @@ class PollingBackend {
 
 	disconnect() {
 		clearInterval(this.fetcher)
-		this.fetcher = 0
-		document.removeEventListener(
-			'visibilitychange',
-			this.visibilitychange.bind(this),
-		)
+		this.fetcher = undefined
+		document.removeEventListener('visibilitychange', this.visibilitychange)
 	}
 
 	resetRefetchTimer() {
@@ -249,14 +270,6 @@ class PollingBackend {
 
 	maximumReadOnlyTimer() {
 		this.#fetchInterval = FETCH_INTERVAL_READ_ONLY
-	}
-
-	visibilitychange() {
-		if (document.visibilityState === 'hidden') {
-			this.#fetchInterval = FETCH_INTERVAL_INVISIBLE
-		} else {
-			this.resetRefetchTimer()
-		}
 	}
 }
 
