@@ -141,10 +141,6 @@ class SyncService {
 		return this.sessionConnection?.state.document.readOnly
 	}
 
-	get hasOwner() {
-		return this.sessionConnection?.hasOwner
-	}
-
 	get guestName() {
 		return this.sessionConnection?.session.guestName
 	}

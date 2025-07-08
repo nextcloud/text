@@ -4,7 +4,7 @@
  */
 
 import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
-import { open } from '../apis/connect'
+import { open, type OpenData } from '../apis/connect'
 import type { Document, Session } from '../services/SyncService.js'
 
 export interface Connection {
@@ -30,6 +30,10 @@ export const connectionKey = Symbol('text:connection') as InjectionKey<
 	ShallowRef<Connection | undefined>
 >
 
+export const openDataKey = Symbol('text:opendata') as InjectionKey<
+	ShallowRef<OpenData | undefined>
+>
+
 /**
  * Handle the connection to the text api and provide it to child components
  * @param props Props of the editor component.
@@ -46,6 +50,7 @@ export function provideConnection(props: {
 }) {
 	const baseVersionEtag = shallowRef<string | undefined>(undefined)
 	const connection = shallowRef<Connection | undefined>(undefined)
+	const openData = shallowRef<OpenData | undefined>(undefined)
 	const openConnection = async () => {
 		const guestName = localStorage.getItem('nick') ?? ''
 		const { connection: opened, data } =
@@ -59,15 +64,18 @@ export function provideConnection(props: {
 			}))
 		baseVersionEtag.value = data.document.baseVersionEtag
 		connection.value = opened
+		openData.value = data
 		return data
 	}
 	provide(connectionKey, connection)
-	return { connection, openConnection, baseVersionEtag }
+	provide(openDataKey, openData)
+	return { connection, openConnection, openData }
 }
 
 export const useConnection = () => {
 	const connection = inject(connectionKey)
-	return { connection }
+	const openData = inject(openDataKey)
+	return { connection, openData }
 }
 
 /**
