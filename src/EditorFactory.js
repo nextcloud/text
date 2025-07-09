@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import MentionSuggestion from './components/Suggestion/Mention/suggestions.js'
-
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
@@ -12,7 +10,7 @@ import { createLowlight } from 'lowlight'
 import hljs from 'highlight.js/lib/core'
 
 import { logger } from './helpers/logger.js'
-import { FocusTrap, Mention, PlainText, RichText } from './extensions/index.js'
+import { FocusTrap, PlainText, RichText } from './extensions/index.js'
 
 const lowlight = createLowlight()
 
@@ -41,10 +39,7 @@ const createRichEditor = ({ extensions = [], connection, relativePath, isEmbedde
 	return new Editor({
 		editorProps,
 		extensions: [
-			RichText.configure({ relativePath, isEmbedded }),
-			Mention.configure({
-				suggestion: MentionSuggestion({ connection }),
-			}),
+			RichText.configure({ connection, relativePath, isEmbedded }),
 			FocusTrap,
 			...extensions,
 		],
