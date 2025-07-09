@@ -43,7 +43,7 @@ OC.L10N.register(
     "Edit" : "Labot",
     "Source code" : "Izejas kods",
     "Done" : "Pabeigts",
-    "Details" : "Detaļas",
+    "Details" : "Informācija",
     "Insert link" : "Ievietojiet saiti",
     "Command" : "Komanda",
     "Choose" : "Izvēlēties",
