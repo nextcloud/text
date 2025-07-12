@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { dirname } from 'path'
 import { emit } from '@nextcloud/event-bus'
 import { getCurrentUser } from '@nextcloud/auth'
 import { getSharingToken } from '@nextcloud/sharing/public'
@@ -17,6 +16,7 @@ import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 import { openMimetypes } from './mime.js'
 import store from '../store/index.js'
+import Vue from 'vue'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -111,8 +111,6 @@ const registerFileActionFallback = () => {
 
 }
 
-let newWorkspaceCreated = false
-
 export const addMenuRichWorkspace = () => {
 	const descriptionFile = t('text', 'Readme') + '.' + loadState('text', 'default_file_extension')
 	addNewFileMenuEntry({
@@ -155,17 +153,17 @@ export const addMenuRichWorkspace = () => {
 
 			showSuccess(t('text', 'Created "{name}"', { name: descriptionFile }))
 
-			if (contentNames.length === 0) {
-				// We currently have no way to reliably trigger the filelist header rendering
-				// When starting off in a new empty folder the header will only be rendered on a new PROPFIND
-				newWorkspaceCreated = file
-			}
+			context.attributes['rich-workspace-file'] = fileid
+			context.attributes['rich-workspace'] = ''
+
 			emit('files:node:created', file)
+			emit('files:node:updated', context)
 		},
 	})
 }
 
-let vm = null
+let FilesHeaderRichWorkspaceView
+let FilesHeaderRichWorkspaceInstance
 
 export const FilesWorkspaceHeader = new Header({
 	id: 'workspace',
@@ -174,58 +172,49 @@ export const FilesWorkspaceHeader = new Header({
 	enabled(_, view) {
 		return ['files', 'favorites', 'public-share'].includes(view.id)
 	},
-
-	async render(el, folder, view) {
-		if (vm) {
-			// Enforce destroying of the old rendering and rerender as the FilesListHeader calls render on every folder change
-			vm.$destroy()
-			vm = null
+	render: async (el, folder) => {
+		// Import the RichWorkspace component only when needed
+		if (!FilesHeaderRichWorkspaceView) {
+			FilesHeaderRichWorkspaceView = (
+				await import('../views/RichWorkspace.vue')
+			).default
 		}
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] || !!newWorkspaceCreated
-		const path = newWorkspaceCreated ? dirname(newWorkspaceCreated.path) : folder.path
-		const content = newWorkspaceCreated ? '' : folder.attributes['rich-workspace']
 
-		newWorkspaceCreated = false
+		// If an instance already exists, destroy it before creating a new one
+		if (FilesHeaderRichWorkspaceInstance) {
+			FilesHeaderRichWorkspaceInstance.$destroy()
+			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
+		}
 
-		const { default: RichWorkspace } = await import('./../views/RichWorkspace.vue')
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
+		const content = folder.attributes['rich-workspace'] || ''
+		const path = folder.path || ''
 
-		import('vue').then((module) => {
-			el.id = 'files-workspace-wrapper'
+		// Create a new instance of the RichWorkspace component
+		FilesHeaderRichWorkspaceInstance = new Vue({
+			extends: FilesHeaderRichWorkspaceView,
+			propsData: {
+				content,
+				hasRichWorkspace,
+				path,
+			},
+			store,
+		}).$mount(el)
 
-			// Todo: remove this hack
-			const Vue = module.default
-			Vue.prototype.t = window.t
-			Vue.prototype.n = window.n
-			Vue.prototype.OCA = window.OCA
-
-			const View = Vue.extend(RichWorkspace)
-			vm = new View({
-				propsData: {
-					path,
-					hasRichWorkspace,
-					content,
-				},
-				store,
-			}).$mount(el)
-		})
+		window.FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceInstance
 	},
 
-	updated(folder, view) {
-		newWorkspaceCreated = false
-
-		if (!vm) {
-			console.warn('No vue instance found for FilesWorkspaceHeader')
+	updated(folder) {
+		if (!FilesHeaderRichWorkspaceInstance) {
+			console.error('No vue instance found for FilesWorkspaceHeader')
 			return
 		}
 
-		// Currently there is not much use in updating the vue instance props since render is called on every folder change
-		// removing the rendered element from the DOM
-		// This is only relevant if switching to a folder that has no content as then the render function is not called
-
 		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
-		vm.path = folder.path
-		vm.hasRichWorkspace = hasRichWorkspace
-		vm.content = folder.attributes['rich-workspace']
+		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
+		FilesHeaderRichWorkspaceInstance.content
+			= folder.attributes['rich-workspace'] || ''
+		FilesHeaderRichWorkspaceInstance.path = folder.path || ''
 	},
 })
 
