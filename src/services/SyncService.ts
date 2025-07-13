@@ -367,27 +367,6 @@ class SyncService {
 		this.emit('close')
 	}
 
-	uploadAttachment(file: object) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.uploadAttachment(file)
-	}
-
-	insertAttachmentFile(filePath: string) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.insertAttachmentFile(filePath)
-	}
-
-	createAttachment(template: object) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.createAttachment(template)
-	}
-
 	// For better typing use the bus directly: `syncService.bus.on()`.
 	on(event: keyof EventTypes, callback: Handler<unknown>) {
 		this.bus.on(event, callback)

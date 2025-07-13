@@ -28,8 +28,9 @@ import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
-import { logger } from '../../helpers/logger.js'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
+import { logger } from '../../helpers/logger.js'
+import { createAttachment, insertAttachmentFile, uploadAttachment } from '../../apis/Attach.ts'
 
 import {
 	useFileMixin,
@@ -42,7 +43,7 @@ import {
 	ACTION_CREATE_ATTACHMENT,
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
-import { useSyncService } from '../../composables/useSyncService.ts'
+import { useConnection } from '../../composables/useConnection.ts'
 
 const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
@@ -70,11 +71,11 @@ export default {
 		return val
 	},
 	setup() {
+		const { connection } = useConnection()
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
-		const { syncService } = useSyncService()
 		return {
-			editor, isMobile, syncService
+			connection, editor, isMobile
 		}
 	},
 	data() {
@@ -134,7 +135,7 @@ export default {
 		async uploadAttachmentFile(file, position = null) {
 			this.state.isUploadingAttachments = true
 
-			return this.syncService.uploadAttachment(file)
+			return uploadAttachment(this.connection, file)
 				.then((response) => {
 					this.insertAttachment(
 						response.data?.name, response.data?.id, file.type,
@@ -168,7 +169,7 @@ export default {
 
 			this.state.isUploadingAttachments = true
 
-			return this.syncService.insertAttachmentFile(filePath).then((response) => {
+			return insertAttachmentFile(this.connection, filePath).then((response) => {
 				this.insertAttachment(
 					response.data?.name, response.data?.id, response.data?.mimetype,
 					null, response.data?.dirname,
@@ -182,7 +183,7 @@ export default {
 		},
 		createAttachment(template) {
 			this.state.isUploadingAttachments = true
-			return this.syncService.createAttachment(template).then((response) => {
+			return createAttachment(this.connection, template).then((response) => {
 				this.insertAttachmentPreview(response.data?.id)
 			}).catch((error) => {
 				logger.error('Failed to create attachment', { error })
