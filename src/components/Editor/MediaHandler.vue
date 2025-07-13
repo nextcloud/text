@@ -30,7 +30,7 @@ import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
 import { logger } from '../../helpers/logger.js'
-import { createAttachment, insertAttachmentFile, uploadAttachment } from '../../apis/Attach.ts'
+import { createAttachment, insertAttachmentFile, uploadAttachment } from '../../apis/attach.ts'
 
 import {
 	useFileMixin,

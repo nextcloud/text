@@ -14,8 +14,8 @@ import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.js'
-import { close, type OpenData } from '../apis/Connect.js'
-import { push } from '../apis/Sync.js'
+import { close, type OpenData } from '../apis/connect'
+import { push } from '../apis/sync'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle

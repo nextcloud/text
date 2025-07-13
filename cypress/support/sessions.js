@@ -4,9 +4,9 @@
  */
 
 import axios from '@nextcloud/axios'
-import { open, close } from '../../src/apis/Connect.ts'
-import { push, sync } from '../../src/apis/Sync.ts'
-import { save } from '../../src/apis/Save.ts'
+import { open, close } from '../../src/apis/connect.ts'
+import { push, sync } from '../../src/apis/sync.ts'
+import { save } from '../../src/apis/save.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
 

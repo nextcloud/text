@@ -12,7 +12,7 @@ import {
 import getNotifyBus, { type EventTypes } from './NotifyService'
 import type { Emitter } from 'mitt'
 import type { Connection } from '../composables/useConnection.js'
-import { sync } from '../apis/Sync.js'
+import { sync } from '../apis/sync'
 
 /**
  * Minimum inverval to refetch the document changes in ms.
