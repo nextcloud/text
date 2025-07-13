@@ -9,9 +9,10 @@ import {
 	type SyncService,
 	ERROR_TYPE,
 } from './SyncService.js'
-import { type SessionConnection } from './SessionConnection.js'
 import getNotifyBus, { type EventTypes } from './NotifyService'
 import type { Emitter } from 'mitt'
+import type { Connection } from '../composables/useConnection.js'
+import { sync } from '../apis/Sync.js'
 
 /**
  * Minimum inverval to refetch the document changes in ms.
@@ -65,7 +66,7 @@ interface ConflictData extends PollData {
 
 class PollingBackend {
 	#syncService: SyncService
-	#connection: SessionConnection
+	#connection: Connection
 
 	#lastPoll
 	#fetchInterval: number
@@ -82,7 +83,7 @@ class PollingBackend {
 		}
 	}
 
-	constructor(syncService: SyncService, connection: SessionConnection) {
+	constructor(syncService: SyncService, connection: Connection) {
 		this.#syncService = syncService
 		this.#connection = connection
 		this.#fetchInterval = FETCH_INTERVAL
@@ -125,11 +126,9 @@ class PollingBackend {
 		logger.debug('[PollingBackend] Fetching steps', {
 			version: this.#syncService.version,
 		})
-		await this.#connection
-			.sync({
-				version: this.#syncService.version,
-			})
-			.then(this._handleResponse.bind(this), this._handleError.bind(this))
+		await sync(this.#connection, {
+			version: this.#syncService.version,
+		}).then(this._handleResponse.bind(this), this._handleError.bind(this))
 		this.#lastPoll = Date.now()
 		this.#pollActive = false
 	}
@@ -141,7 +140,7 @@ class PollingBackend {
 		messageType: unknown
 		messageBody: { documentId: number; response: PollData }
 	}) {
-		if (messageBody.documentId !== this.#connection.document.id) {
+		if (messageBody.documentId !== this.#connection.documentId) {
 			return
 		}
 		this._handleResponse({ data: messageBody.response })

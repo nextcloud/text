@@ -7,7 +7,7 @@ import mitt, { type Emitter } from 'mitt'
 import { listen } from '@nextcloud/notify_push'
 import { loadState } from '@nextcloud/initial-state'
 
-declare type EventTypes = {
+export declare type EventTypes = {
 	notify_push: { messageType: unknown; messageBody: object }
 }
 

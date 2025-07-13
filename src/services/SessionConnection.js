@@ -76,15 +76,6 @@ export class SessionConnection {
 		}
 	}
 
-	sync({ version }) {
-		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
-			...this.#defaultParams,
-			filePath: this.connection.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			version,
-		})
-	}
-
 	// TODO: maybe return a new connection here so connections have immutable state
 	update(guestName) {
 		return this.#post(this.#url(`session/${this.#document.id}/session`), {

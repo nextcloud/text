@@ -6,7 +6,7 @@
 import axios from '@nextcloud/axios'
 import { SessionConnection } from '../../src/services/SessionConnection.js'
 import { open, close } from '../../src/apis/Connect.ts'
-import { push } from '../../src/apis/Sync.ts'
+import { push, sync } from '../../src/apis/Sync.ts'
 import { save } from '../../src/apis/Save.ts'
 
 const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
@@ -45,14 +45,14 @@ Cypress.Commands.add('failToPushSteps', ({ connection: sessionConnection, steps,
 	}, (err) => err.response)
 })
 
-Cypress.Commands.add('syncSteps', (connection, options = { version: 0 }) => {
-	return connection.sync(options)
+Cypress.Commands.add('syncSteps', (sessionConnection, options = { version: 0 }) => {
+	return sync(sessionConnection.connection, options)
 		.then(response => response.data)
 })
 
-Cypress.Commands.add('failToSyncSteps', (connection, options = { version: 0 }) => {
-	return connection.sync(options)
-		.then((response) => {
+Cypress.Commands.add('failToSyncSteps', (sessionConnection, options = { version: 0 }) => {
+	return sync(sessionConnection.connection, options)
+		.then((_response) => {
 			throw new Error('Expected request to fail - but it succeeded!')
 		}, (err) => err.response)
 })

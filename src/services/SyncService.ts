@@ -166,8 +166,13 @@ class SyncService {
 			return
 		}
 		this.sessionConnection = new SessionConnection(data, this.connection.value)
-		this.backend = new PollingBackend(this, this.sessionConnection)
 		this.version = this.sessionConnection.docStateVersion
+		if (!this.connection.value) {
+			console.error('Opened the connection but now it is undefined')
+			return
+		}
+		this.backend = new PollingBackend(this, this.connection.value)
+		// Make sure to only emit this once the backend is in place.
 		this.emit('opened', this.sessionConnection.state)
 	}
 
