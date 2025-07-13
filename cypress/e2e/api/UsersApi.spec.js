@@ -16,22 +16,22 @@ describe('The user mention API', function() {
 	beforeEach(function() {
 		cy.login(user)
 		cy.uploadTestFile('test.md').as('fileId')
-			.then(cy.createTextSession).as('connection')
-	})
-
-	afterEach(function() {
-		cy.get('@connection').then(c => c.closed || c.close())
+			.then((fileId) => cy.openConnection({ fileId }))
+			.its('connection')
+			.as('connection')
 	})
 
 	it('has a valid connection', function() {
 		cy.get('@connection')
-			.its('document.id')
+			.its('documentId')
 			.should('equal', this.fileId)
+		cy.closeConnection(this.connection)
 	})
 
 	it('fetches users with valid session', function() {
 		cy.sessionUsers(this.connection)
 			.its('status').should('eq', 200)
+		cy.closeConnection(this.connection)
 	})
 
 	it('rejects invalid sessions', function() {
@@ -41,10 +41,11 @@ describe('The user mention API', function() {
 			.its('status').should('eq', 403)
 		cy.sessionUsers(this.connection, { documentId: 0 })
 			.its('status').should('eq', 403)
+		cy.closeConnection(this.connection)
 	})
 
 	it('rejects closed sessions', function() {
-		cy.destroySession(this.connection)
+		cy.closeConnection(this.connection)
 		cy.sessionUsers(this.connection)
 			.its('status').should('eq', 403)
 	})
