@@ -23,17 +23,13 @@ export function uploadAttachment(
 		sessionToken,
 		shareToken: token,
 	} = unref(connection)
-	const params = Object.entries({ documentId, sessionId, sessionToken, token })
-		.map(([k, v]) => v && [k, v.toString()]) // convert numbers to strings
-		.filter((pair) => !!pair) // leave out token if it's undefined.
 	const formData = new FormData()
 	formData.append('file', file)
 	const pub = token ? '/public' : ''
-	const url =
-		generateUrl(`apps/text${pub}/attachment/upload?`)
-		+ new URLSearchParams(params)
+	const url = generateUrl(`apps/text${pub}/attachment/upload?`)
 	return axios.post(url, formData, {
 		headers: { 'Content-Type': 'multipart/form-data' },
+		params: { documentId, sessionId, sessionToken, token },
 	})
 }
 
