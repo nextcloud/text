@@ -164,6 +164,7 @@ export const addMenuRichWorkspace = () => {
 
 let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
+let latestFolder
 
 export const FilesWorkspaceHeader = new Header({
 	id: 'workspace',
@@ -173,6 +174,7 @@ export const FilesWorkspaceHeader = new Header({
 		return ['files', 'favorites', 'public-share'].includes(view.id)
 	},
 	render: async (el, folder) => {
+		latestFolder = folder
 		// Import the RichWorkspace component only when needed
 		if (!FilesHeaderRichWorkspaceView) {
 			FilesHeaderRichWorkspaceView = (
@@ -186,9 +188,9 @@ export const FilesWorkspaceHeader = new Header({
 			console.debug('Destroying existing FilesHeaderRichWorkspaceInstance')
 		}
 
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
-		const content = folder.attributes['rich-workspace'] || ''
-		const path = folder.path || ''
+		const hasRichWorkspace = !!latestFolder.attributes['rich-workspace-file']
+		const content = latestFolder.attributes['rich-workspace'] || ''
+		const path = latestFolder.path || ''
 
 		// Create a new instance of the RichWorkspace component
 		FilesHeaderRichWorkspaceInstance = new Vue({
@@ -205,6 +207,7 @@ export const FilesWorkspaceHeader = new Header({
 	},
 
 	updated(folder) {
+		latestFolder = folder
 		if (!FilesHeaderRichWorkspaceInstance) {
 			console.error('No vue instance found for FilesWorkspaceHeader')
 			return
