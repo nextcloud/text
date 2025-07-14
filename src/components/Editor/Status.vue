@@ -37,6 +37,7 @@ import {
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
 import { useSaveService } from '../../composables/useSaveService.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'Status',
@@ -136,6 +137,7 @@ export default {
 		onEditorWidthChange(newWidth) {
 			this.$emit('editor-width-change', newWidth)
 		},
+		t,
 	},
 }
 </script>

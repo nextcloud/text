@@ -59,6 +59,7 @@ import { COLLABORATOR_DISCONNECT_TIME, COLLABORATOR_IDLE_TIME } from '../../serv
 import { loadState } from '@nextcloud/initial-state'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'SessionList',
@@ -127,6 +128,7 @@ export default {
 				value: checked ? '1' : '0',
 			})
 		},
+		t,
 	},
 }
 </script>

@@ -16,6 +16,7 @@
 
 import { ERROR_TYPE } from '../../../services/SyncService.ts'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'SyncStatus',

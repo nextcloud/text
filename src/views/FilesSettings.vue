@@ -17,6 +17,7 @@ import { emit } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import { generateUrl } from '@nextcloud/router'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'FilesSettings',
@@ -45,6 +46,7 @@ export default {
 				})
 			}
 		},
+		t,
 	},
 }
 </script>

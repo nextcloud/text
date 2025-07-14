@@ -36,6 +36,7 @@ import { getSharingToken, isPublicShare } from '@nextcloud/sharing/public'
 import { loadState } from '@nextcloud/initial-state'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
+import { t } from '@nextcloud/l10n'
 
 import getEditorInstance from '../components/Editor.singleton.js'
 import RichTextReader from '../components/RichTextReader.vue'
@@ -229,6 +230,7 @@ export default {
 				this.localHasRichWorkspace = false
 			}
 		},
+		t,
 	},
 }
 </script>

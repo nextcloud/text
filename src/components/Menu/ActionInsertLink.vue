@@ -78,6 +78,7 @@ import { BaseActionEntry } from './BaseActionEntry.js'
 import { useFileMixin } from '../Editor.provider.ts'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import { buildFilePicker } from '../../helpers/filePicker.js'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'ActionInsertLink',
@@ -211,6 +212,7 @@ export default {
 					console.error('Smart picker promise rejected', error)
 				})
 		},
+		t,
 	},
 }
 </script>

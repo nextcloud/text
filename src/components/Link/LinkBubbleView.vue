@@ -91,12 +91,12 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { translate as t } from '@nextcloud/l10n'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import { t } from '@nextcloud/l10n'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
@@ -193,8 +193,6 @@ export default {
 	},
 
 	methods: {
-		t,
-
 		resetBubble() {
 			this.edit = false
 			this.newHref = null
@@ -260,6 +258,7 @@ export default {
 				.run()
 			this.stopEdit()
 		},
+		t,
 	},
 }
 </script>

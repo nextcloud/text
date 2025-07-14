@@ -22,6 +22,7 @@ import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
 import { openMimetypes } from './mime.js'
 import Vue from 'vue'
+import { t } from '@nextcloud/l10n'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -94,9 +95,6 @@ const registerFileActionFallback = () => {
 						const path =
 							window.FileList.getCurrentDirectory() + '/' + filename
 						const Vue = imports[0].default
-						Vue.prototype.t = window.t
-						Vue.prototype.n = window.n
-						Vue.prototype.OCA = window.OCA
 						const Editor = imports[1].default
 						const vm = new Vue({
 							render: (h) => {

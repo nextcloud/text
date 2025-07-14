@@ -43,6 +43,7 @@ import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { TableAddRowBefore, TableAddRowAfter, Delete } from '../../components/icons.js'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'TableCellView',
@@ -103,6 +104,7 @@ export default {
 				.addRowAfter()
 				.run()
 		},
+		t,
 	},
 }
 </script>

@@ -26,6 +26,7 @@ import TableOfContents from './TableOfContents.vue'
 import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
 import { Close } from './../icons.js'
 import { useIsMobileMixin } from '../Editor.provider.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'EditorOutline',
@@ -39,6 +40,9 @@ export default {
 		useOutlineStateMixin,
 		useOutlineActions,
 	],
+	methods: {
+		t,
+	},
 }
 </script>
 

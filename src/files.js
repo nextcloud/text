@@ -23,9 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const { default: Vue } = await import('vue')
 		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
 
-		Vue.prototype.t = window.t
-		Vue.prototype.n = window.n
-		Vue.prototype.OCA = window.OCA
 		const vm = new Vue({
 			render: h => h(FilesSettings, {}),
 		})

@@ -81,6 +81,7 @@ import {
 } from '../Editor.provider.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useEditor } from '../../composables/useEditor.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'MenuBar',
@@ -219,6 +220,7 @@ export default {
 			console.debug('translation click', state.selection, selectedText)
 			emit('text:translate-modal:show', { content: selectedText })
 		},
+		t,
 	},
 }
 </script>

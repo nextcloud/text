@@ -17,6 +17,7 @@
 import { defineComponent } from 'vue'
 import NextcloudVueNcActionButton from '@nextcloud/vue/components/NcActionButton'
 import { Help } from '../icons.js'
+import { t } from '@nextcloud/l10n'
 
 export default defineComponent({
 	// This component is used as a direct child of NcActions.
@@ -29,5 +30,8 @@ export default defineComponent({
 		NextcloudVueNcActionButton,
 		Help,
 	},
+	methods: {
+		t,
+	}
 })
 </script>

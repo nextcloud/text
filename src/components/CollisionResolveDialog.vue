@@ -34,6 +34,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { useSyncService } from '../composables/useSyncService.ts'
 import { useSaveService } from '../composables/useSaveService.ts'
+import { t } from '@nextcloud/l10n'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {
@@ -55,6 +56,7 @@ export default {
 			setEditable,
 			saveService,
 			syncService,
+			t,
 		}
 	},
 	data() {

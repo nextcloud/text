@@ -21,6 +21,7 @@
 import { generateUrl } from '@nextcloud/router'
 import AvatarWrapper from './AvatarWrapper.vue'
 import { useSyncService } from '../../composables/useSyncService.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'GuestNameDialog',
@@ -72,6 +73,7 @@ export default {
 		updateBufferedGuestName() {
 			this.guestNameBuffered = this.guestName
 		},
+		t,
 	},
 }
 </script>

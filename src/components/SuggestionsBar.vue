@@ -67,6 +67,7 @@ import { generateUrl } from '@nextcloud/router'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
 import { useSyncService } from '../composables/useSyncService.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'SuggestionsBar',
@@ -87,6 +88,7 @@ export default {
 			editor,
 			isMobileDevice,
 			syncService,
+			t,
 		}
 	},
 

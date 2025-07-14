@@ -43,6 +43,7 @@ import ActionInsertLink from './ActionInsertLink.vue'
 
 import { MODIFIERS } from './keys.js'
 import { isMobileDevice } from '../../helpers/isMobileDevice.js'
+import { t } from '@nextcloud/l10n'
 
 export const OutlineEntries = [{
 	key: 'outline',

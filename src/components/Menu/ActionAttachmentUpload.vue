@@ -71,6 +71,7 @@ import {
 	useActionCreateAttachmentMixin,
 } from '../Editor/MediaHandler.provider.js'
 import { useSyncService } from '../../composables/useSyncService.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'ActionAttachmentUpload',
@@ -126,6 +127,7 @@ export default {
 		createAttachment(template) {
 			this.$callCreateAttachment(template)
 		},
+		t,
 	},
 }
 </script>

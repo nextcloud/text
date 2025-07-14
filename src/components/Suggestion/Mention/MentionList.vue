@@ -22,6 +22,7 @@
 import { NcAutoCompleteResult } from '@nextcloud/vue'
 
 import SuggestionListWrapper from '../SuggestionListWrapper.vue'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	components: {
@@ -39,6 +40,7 @@ export default {
 		},
 	},
 	methods: {
+		t,
 		onKeyDown({ event }) {
 			// Ignore any key modifier combinations
 			return this.$refs.suggestionList?.onKeyDown({ event })
