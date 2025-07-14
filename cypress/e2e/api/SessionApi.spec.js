@@ -38,20 +38,20 @@ describe('The session Api', function() {
 		})
 
 		it('returns connection', function() {
-			cy.createTextSession(fileId).then(connection => {
+			cy.openConnection({ fileId }).then(({ connection }) => {
 				cy.wrap(connection)
-					.its('document.id')
+					.its('documentId')
 					.should('equal', fileId)
-				cy.destroySession(connection)
+				cy.closeConnection(connection)
 			})
 		})
 
 		it('provides initial content', function() {
-			cy.createTextSession(fileId, { filePath }).then(connection => {
-				cy.wrap(connection)
-					.its('state.documentSource')
+			cy.openConnection({fileId, filePath }).then(({ connection, data }) => {
+				cy.wrap(data)
+					.its('content')
 					.should('eql', '## Hello world\n')
-				cy.destroySession(connection)
+				cy.closeConnection(connection)
 			})
 		})
 
@@ -74,14 +74,14 @@ describe('The session Api', function() {
 
 		beforeEach(function() {
 			cy.uploadTestFile()
-				.then(cy.createTextSession)
-				.then(con => {
+				.then((fileId) => cy.openConnection({ fileId }))
+				.then(({ connection: con }) => {
 					connection = con
 				})
 		})
 
 		afterEach(function() {
-			cy.destroySession(connection)
+			cy.closeConnection(connection)
 		})
 
 		// Echoes all message types but queries
@@ -135,9 +135,9 @@ describe('The session Api', function() {
 			cy.uploadTestFile()
 				.then(id => {
 					fileId = id
-					return cy.createTextSession(fileId, { filePath })
+					return cy.openConnection({ fileId, filePath })
 				})
-				.then(con => {
+				.then(({ connection: con }) => {
 					connection = con
 				})
 		})
@@ -169,18 +169,18 @@ describe('The session Api', function() {
 				documentState,
 				manualSave: true,
 			})
-			cy.createTextSession(fileId, { filePath })
-				.then(con => {
+			cy.openConnection({ fileId, filePath })
+				.then(({ connection: con, data }) => {
 					joining = con
-					return joining
+					return data
 				})
-				.its('state.documentState')
+				.its('documentState')
 				.should('eql', documentState)
-				.then(() => joining.close())
+			cy.closeConnection(joining)
 		})
 
 		afterEach(function() {
-			cy.destroySession(connection)
+			cy.closeConnection(connection)
 		})
 	})
 
@@ -204,15 +204,15 @@ describe('The session Api', function() {
 				})
 				.then(() => cy.clearCookies())
 				.then(() => {
-					return cy.createTextSession(undefined, { filePath: '', shareToken })
-						.then(con => {
+					return cy.openConnection({ filePath: '', token: shareToken })
+						.then(({ connection: con }) => {
 							connection = con
 						})
 				})
 		})
 
 		afterEach(function() {
-			cy.destroySession(connection)
+			cy.closeConnection(connection)
 		})
 
 		it('starts empty public', function() {
@@ -243,14 +243,14 @@ describe('The session Api', function() {
 				documentState,
 				manualSave: true,
 			})
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
+			cy.openConnection({ filePath: '', token: shareToken })
+				.then(({ connection: con, data }) => {
 					joining = con
-					return con
+					return data
 				})
-				.its('state.documentState')
+				.its('documentState')
 				.should('eql', documentState)
-				.then(() => joining.close())
+			cy.closeConnection(joining)
 		})
 
 	})
@@ -269,8 +269,8 @@ describe('The session Api', function() {
 				cy.log(token)
 				shareToken = token
 				cy.clearCookies()
-				cy.createTextSession(undefined, { filePath: '', shareToken })
-					.then(con => {
+				cy.openConnection({ filePath: '', token: shareToken })
+					.then(({ connection: con }) => {
 						connection = con
 					})
 			})
@@ -278,15 +278,15 @@ describe('The session Api', function() {
 
 		it('does not send initial content if other session is alive but did not push any steps', function() {
 			let joining
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
+			cy.openConnection({ filePath: '', token: shareToken })
+				.then(({ connection: con, data }) => {
 					joining = con
-					return con
+					return data
 				})
-				.its('state.documentSource')
+				.its('content')
 				.should('eql', '## Hello world\n')
-				.then(() => cy.destroySession(joining))
-			cy.destroySession(connection)
+				.then(() => cy.closeConnection(joining))
+			cy.closeConnection(connection)
 		})
 
 		it('does not send initial content if session is alive even without saved state', function() {
@@ -294,15 +294,15 @@ describe('The session Api', function() {
 			cy.pushSteps({ connection, steps: [messages.update], version })
 				.its('version')
 				.should('be.at.least', 1)
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
+			cy.openConnection({ filePath: '', token: shareToken })
+				.then(({ connection: con, data }) => {
 					joining = con
-					return con
+					return data
 				})
-				.its('state.documentSource')
+				.its('content')
 				.should('eql', '## Hello world\n')
-				.then(() => cy.destroySession(joining))
-			cy.destroySession(connection)
+				.then(() => cy.closeConnection(joining))
+			cy.closeConnection(connection)
 		})
 
 		it('refuses create,push,sync,save with non-matching baseVersionEtag', function() {
@@ -310,8 +310,7 @@ describe('The session Api', function() {
 				.its('status')
 				.should('eql', 412)
 
-			connection.setBaseVersionEtag('wrongBaseVersionEtag')
-			connection.connection.baseVersionEtag = 'wrongBaseVersionEtag'
+			connection.baseVersionEtag = 'wrongBaseVersionEtag'
 
 			cy.failToPushSteps({ connection, steps: [messages.update], version })
 				.its('status')
@@ -325,7 +324,7 @@ describe('The session Api', function() {
 				.its('status')
 				.should('equal', 412)
 
-			cy.destroySession(connection)
+			cy.closeConnection(connection)
 		})
 
 		it('recovers session even if last person leaves right after create', function() {
@@ -335,12 +334,12 @@ describe('The session Api', function() {
 				.its('version')
 				.should('be.at.least', 1)
 			cy.log('Other user creates session')
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
+			cy.openConnection({ filePath: '', token: shareToken })
+				.then(({ connection: con }) => {
 					joining = con
 				})
 			cy.log('Initial user closes session')
-			cy.destroySession(connection)
+			cy.closeConnection(connection)
 			cy.log('Other user still finds the steps')
 				.then(() => {
 					cy.syncSteps(joining, {
@@ -354,11 +353,12 @@ describe('The session Api', function() {
 		// Skipped for now since the behaviour chanced by not cleaning up the state on close/create
 		it.skip('ignores steps stored after close cleaned up', function() {
 			cy.pushAndClose({ connection, steps: [messages.update], version })
-			cy.createTextSession(undefined, { filePath: '', shareToken })
-				.then(con => {
+			cy.openConnection({ filePath: '', token: shareToken })
+				.then(({ connection: con, data }) => {
 					connection = con
+					return data
 				})
-				.its('state.documentSource')
+				.its('content')
 				.should('eql', '## Hello world\n')
 		})
 

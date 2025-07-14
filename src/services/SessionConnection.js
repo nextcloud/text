@@ -76,15 +76,6 @@ export class SessionConnection {
 		}
 	}
 
-	sync({ version }) {
-		return this.#post(this.#url(`session/${this.#document.id}/sync`), {
-			...this.#defaultParams,
-			filePath: this.connection.filePath,
-			baseVersionEtag: this.#document.baseVersionEtag,
-			version,
-		})
-	}
-
 	// TODO: maybe return a new connection here so connections have immutable state
 	update(guestName) {
 		return this.#post(this.#url(`session/${this.#document.id}/session`), {
@@ -92,44 +83,6 @@ export class SessionConnection {
 			guestName,
 		}).then(({ data }) => {
 			this.#session = data
-		})
-	}
-
-	uploadAttachment(file) {
-		const formData = new FormData()
-		formData.append('file', file)
-		const url =
-			_endpointUrl('attachment/upload')
-			+ '?documentId='
-			+ encodeURIComponent(this.#document.id)
-			+ '&sessionId='
-			+ encodeURIComponent(this.#session.id)
-			+ '&sessionToken='
-			+ encodeURIComponent(this.#session.token)
-			+ '&token='
-			+ encodeURIComponent(this.connection.shareToken || '')
-		return this.#post(url, formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		})
-	}
-
-	createAttachment(template) {
-		return this.#post(_endpointUrl('attachment/create'), {
-			documentId: this.#document.id,
-			sessionId: this.#session.id,
-			sessionToken: this.#session.token,
-			fileName: `${template.app}${template.extension}`,
-		})
-	}
-
-	insertAttachmentFile(filePath) {
-		return this.#post(_endpointUrl('attachment/filepath'), {
-			documentId: this.#document.id,
-			sessionId: this.#session.id,
-			sessionToken: this.#session.token,
-			filePath,
 		})
 	}
 

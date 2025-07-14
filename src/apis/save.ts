@@ -8,7 +8,7 @@ import { getRequestToken } from '@nextcloud/auth'
 import type { Connection } from '../composables/useConnection.js'
 import { unref, type ShallowRef } from 'vue'
 import { generateUrl } from '@nextcloud/router'
-import type { Document } from '../services/SyncService.ts'
+import type { Document } from '../services/SyncService.js'
 
 interface SaveData {
 	version: number

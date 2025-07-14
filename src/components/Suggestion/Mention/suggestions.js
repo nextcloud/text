@@ -5,7 +5,7 @@
 
 import MentionList from './MentionList.vue'
 import createSuggestions from '../suggestions.js'
-import { emitMention, getUsers } from '../../../apis/Mention.ts'
+import { emitMention, getUsers } from '../../../apis/mention.ts'
 
 export default ({ connection, options }) => createSuggestions({
 	listComponent: MentionList,

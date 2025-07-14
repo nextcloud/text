@@ -14,8 +14,8 @@ import { documentStateToStep } from '../helpers/yjs.js'
 import { logger } from '../helpers/logger.js'
 import type { ShallowRef } from 'vue'
 import type { Connection } from '../composables/useConnection.js'
-import { close, type OpenData } from '../apis/Connect.js'
-import { push } from '../apis/Sync.js'
+import { close, type OpenData } from '../apis/connect'
+import { push } from '../apis/sync'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -68,6 +68,7 @@ export interface Session {
 	guestName?: string
 	documentId: number
 	displayName: string
+	clientId: number
 }
 
 export interface Document {
@@ -165,8 +166,13 @@ class SyncService {
 			return
 		}
 		this.sessionConnection = new SessionConnection(data, this.connection.value)
-		this.backend = new PollingBackend(this, this.sessionConnection)
 		this.version = this.sessionConnection.docStateVersion
+		if (!this.connection.value) {
+			console.error('Opened the connection but now it is undefined')
+			return
+		}
+		this.backend = new PollingBackend(this, this.connection.value)
+		// Make sure to only emit this once the backend is in place.
 		this.emit('opened', this.sessionConnection.state)
 	}
 
@@ -359,27 +365,6 @@ class SyncService {
 		// Mark sessionConnection closed so hasActiveConnection turns false and we can reconnect.
 		this.sessionConnection?.close()
 		this.emit('close')
-	}
-
-	uploadAttachment(file: object) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.uploadAttachment(file)
-	}
-
-	insertAttachmentFile(filePath: string) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.insertAttachmentFile(filePath)
-	}
-
-	createAttachment(template: object) {
-		if (!this.hasActiveConnection()) {
-			throw new Error('Not connected to server.')
-		}
-		return this.sessionConnection.createAttachment(template)
 	}
 
 	// For better typing use the bus directly: `syncService.bus.on()`.

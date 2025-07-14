@@ -4,7 +4,7 @@
  */
 
 import { inject, provide, shallowRef, type InjectionKey, type ShallowRef } from 'vue'
-import { open } from '../apis/Connect.js'
+import { open } from '../apis/connect'
 import type { Document, Session } from '../services/SyncService.js'
 
 export interface Connection {
