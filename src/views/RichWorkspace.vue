@@ -112,6 +112,9 @@ export default {
 		},
 		hasRichWorkspace(value) {
 			this.localHasRichWorkspace = value
+			if (value) {
+				this.getFileInfo()
+			}
 		},
 	},
 	mounted() {
