@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { domHref, parseHref } from '../../helpers/links.js'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { domHref, parseHref } from '../../helpers/links.js'
 
 // import loadState so we can mock it
 // eslint-disable-next-line no-unused-vars
-import { loadState } from '@nextcloud/initial-state'
 
 global.OCA = {
 	Viewer: {
@@ -39,7 +38,7 @@ vi.mock('@nextcloud/initial-state', async (importOriginal) => {
 	}
 })
 
-const linkTo = href => domHref({ attrs: { href } })
+const linkTo = (href) => domHref({ attrs: { href } })
 
 describe('Preparing href attributes for the DOM', () => {
 	beforeEach(() => setApp('files'))
@@ -57,33 +56,33 @@ describe('Preparing href attributes for the DOM', () => {
 	})
 
 	test('other protocols', () => {
-		expect(linkTo('mailto:name@otherdomain.tld')).toBe('mailto:name@otherdomain.tld')
+		expect(linkTo('mailto:name@otherdomain.tld')).toBe(
+			'mailto:name@otherdomain.tld',
+		)
 	})
 
 	test('relative link with fileid (old format from file picker)', () => {
-		expect(linkTo('otherfile?fileId=123'))
-			.toBe('http://localhost:3000/f/123')
+		expect(linkTo('otherfile?fileId=123')).toBe('http://localhost:3000/f/123')
 	})
 
 	test('relative path with ../ (old format from file picker)', () => {
-		expect(linkTo('../other/otherfile?fileId=123'))
-			.toBe('http://localhost:3000/f/123')
+		expect(linkTo('../other/otherfile?fileId=123')).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('absolute path (old format from file picker)', () => {
-		expect(linkTo('/other/otherfile?fileId=123'))
-			.toBe('http://localhost:3000/f/123')
+		expect(linkTo('/other/otherfile?fileId=123')).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('absolute path (old format from file picker)', () => {
-		expect(linkTo('/otherfile?fileId=123'))
-			.toBe('http://localhost:3000/f/123')
+		expect(linkTo('/otherfile?fileId=123')).toBe('http://localhost:3000/f/123')
 	})
-
 })
 
 describe('Extracting short urls from the DOM', () => {
-
 	beforeEach(() => setApp('files'))
 
 	const domStub = (href) => ({
@@ -101,10 +100,12 @@ describe('Extracting short urls from the DOM', () => {
 	})
 
 	test('relative link with fileid (old format from file picker)', () => {
-		expect(parseHref(domStub('?dir=/other&openfile=123#relPath=../other/otherfile')))
-			.toBe('http://localhost:3000/f/123')
+		expect(
+			parseHref(
+				domStub('?dir=/other&openfile=123#relPath=../other/otherfile'),
+			),
+		).toBe('http://localhost:3000/f/123')
 	})
-
 })
 
 describe('Inserting hrefs into the dom and extracting them again', () => {
@@ -129,37 +130,40 @@ describe('Inserting hrefs into the dom and extracting them again', () => {
 	})
 
 	test('old relative link format (from file picker) is rewritten', () => {
-		expect(insertAndExtract({ href: 'otherfile?fileId=123' }))
-			.toBe('http://localhost:3000/f/123')
+		expect(insertAndExtract({ href: 'otherfile?fileId=123' })).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('old relative link format with ../ (from file picker) is rewritten', () => {
-		expect(insertAndExtract({ href: '../otherfile?fileId=123' }))
-			.toBe('http://localhost:3000/f/123')
+		expect(insertAndExtract({ href: '../otherfile?fileId=123' })).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('old absolute link format (from file picker) is rewritten', () => {
-		expect(insertAndExtract({ href: '/otherfile?fileId=123' }))
-			.toBe('http://localhost:3000/f/123')
+		expect(insertAndExtract({ href: '/otherfile?fileId=123' })).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('default full URL link format is unchanged', () => {
-		expect(insertAndExtract({ href: 'http://localhost:3000/f/123' }))
-			.toBe('http://localhost:3000/f/123')
+		expect(insertAndExtract({ href: 'http://localhost:3000/f/123' })).toBe(
+			'http://localhost:3000/f/123',
+		)
 	})
 
 	test('absolute link to collectives page is unchanged', () => {
-		expect(insertAndExtract({ href: '/apps/collectives/page?fileId=123' }))
-			.toBe('/apps/collectives/page?fileId=123')
+		expect(insertAndExtract({ href: '/apps/collectives/page?fileId=123' })).toBe(
+			'/apps/collectives/page?fileId=123',
+		)
 	})
-
 })
 
 describe('Preparing href attributes for the DOM in Collectives app', () => {
 	beforeEach(() => setApp('collectives'))
 
 	test('relative link with fileid in Collectives', () => {
-		expect(linkTo('otherfile?fileId=123'))
-			.toBe('otherfile?fileId=123')
+		expect(linkTo('otherfile?fileId=123')).toBe('otherfile?fileId=123')
 	})
 })

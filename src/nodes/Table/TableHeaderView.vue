@@ -7,12 +7,14 @@
 	<NodeViewWrapper data-text-el="table-header" as="th" :style="textAlign">
 		<div>
 			<NodeViewContent class="content" />
-			<NcActions v-if="isEditable"
+			<NcActions
+				v-if="isEditable"
 				ref="menu"
 				type="tertiary-no-background"
 				data-text-table-actions="header">
 				<NcActionButtonGroup>
-					<NcActionButton data-text-table-action="align-column-left"
+					<NcActionButton
+						data-text-table-action="align-column-left"
 						:aria-label="t('text', 'Left align column')"
 						type="radio"
 						value="left"
@@ -22,7 +24,8 @@
 							<AlignHorizontalLeft />
 						</template>
 					</NcActionButton>
-					<NcActionButton data-text-table-action="align-column-center"
+					<NcActionButton
+						data-text-table-action="align-column-center"
 						:aria-label="t('text', 'Center align column')"
 						type="radio"
 						value="center"
@@ -32,7 +35,8 @@
 							<AlignHorizontalCenter />
 						</template>
 					</NcActionButton>
-					<NcActionButton data-text-table-action="align-column-right"
+					<NcActionButton
+						data-text-table-action="align-column-right"
 						:aria-label="t('text', 'Right align column')"
 						type="radio"
 						value="right"
@@ -43,7 +47,8 @@
 						</template>
 					</NcActionButton>
 				</NcActionButtonGroup>
-				<NcActionButton data-text-table-action="add-column-before"
+				<NcActionButton
+					data-text-table-action="add-column-before"
 					close-after-click
 					@click="addColumnBefore">
 					<template #icon>
@@ -51,7 +56,8 @@
 					</template>
 					{{ t('text', 'Add column before') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="add-column-after"
+				<NcActionButton
+					data-text-table-action="add-column-after"
 					close-after-click
 					@click="addColumnAfter">
 					<template #icon>
@@ -59,7 +65,8 @@
 					</template>
 					{{ t('text', 'Add column after') }}
 				</NcActionButton>
-				<NcActionButton data-text-table-action="remove-column"
+				<NcActionButton
+					data-text-table-action="remove-column"
 					close-after-click
 					@click="deleteColumn">
 					<template #icon>
@@ -73,19 +80,19 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import NcActions from '@nextcloud/vue/components/NcActions'
+import { t } from '@nextcloud/l10n'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionButtonGroup from '@nextcloud/vue/components/NcActionButtonGroup'
+import NcActions from '@nextcloud/vue/components/NcActions'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 import {
 	AlignHorizontalCenter,
 	AlignHorizontalLeft,
 	AlignHorizontalRight,
 	Delete,
-	TableAddColumnBefore,
 	TableAddColumnAfter,
+	TableAddColumnBefore,
 } from '../../components/icons.js'
-import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'TableHeaderView',
@@ -143,7 +150,8 @@ export default {
 			this.align('right')
 		},
 		align(textAlign) {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.setCellAttribute('textAlign', textAlign)
@@ -152,28 +160,28 @@ export default {
 				this.editor.commands.setCellAttribute('textAlign', textAlign)
 			}
 			// Set focus back to first row
-			this.editor.chain()
-				.setTextSelection(this.getPos())
-				.focus()
-				.run()
+			this.editor.chain().setTextSelection(this.getPos()).focus().run()
 			this.$refs.menu.closeMenu(false)
 		},
 		deleteColumn() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.deleteColumn()
 				.run()
 		},
 		addColumnBefore() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addColumnBefore()
 				.run()
 		},
 		addColumnAfter() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				.focus()
 				.setTextSelection(this.getPos())
 				.addColumnAfter()
@@ -185,22 +193,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div[contenteditable=true] th .content {
+div[contenteditable='true'] th .content {
 	padding-right: 0;
 }
 th {
-
 	.content {
 		margin: 0;
 		flex-grow: 1;
-		padding: calc((var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2) 0.75em;
+		padding: calc(
+				(var(--default-clickable-area) - var(--default-font-size) * 1.5) / 2
+			)
+			0.75em;
 	}
 
 	.action-item {
 		opacity: 50%;
 	}
 
-	&:hover, &:active, &:focus, &:focus-within {
+	&:hover,
+	&:active,
+	&:focus,
+	&:focus-within {
 		.action-item {
 			opacity: 100%;
 		}

@@ -5,17 +5,14 @@
 
 module.exports = {
 	root: true,
-	extends: [
-		'@nextcloud',
-		'prettier',
-	],
-	"overrides": [
+	extends: ['@nextcloud', 'prettier'],
+	overrides: [
 		{
-			"files": ["**/*.vue"],
-			"rules": {
-				"vue/first-attribute-linebreak": "off"
-			}
-		}
+			files: ['**/*.vue'],
+			rules: {
+				'vue/first-attribute-linebreak': 'off',
+			},
+		},
 	],
 	rules: {
 		'import/no-unresolved': [1, { ignore: ['\\.svg\\?raw$'] }],

@@ -16,9 +16,9 @@
 </template>
 
 <script>
+import { getCurrentUser } from '@nextcloud/auth'
 import NcUserBubble from '@nextcloud/vue/components/NcUserBubble'
 import { NodeViewWrapper } from '@tiptap/vue-2'
-import { getCurrentUser } from '@nextcloud/auth'
 
 export default {
 	name: 'Mention',

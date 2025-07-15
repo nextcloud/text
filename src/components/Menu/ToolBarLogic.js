@@ -21,7 +21,10 @@ export default defineComponent({
 	watch: {
 		visibleEntries() {
 			this.$nextTick(() => {
-				if (this.activeMenuEntry > this.visibleEntries.length || this.visibleEntries[this.activeMenuEntry]?.disabled) {
+				if (
+					this.activeMenuEntry > this.visibleEntries.length
+					|| this.visibleEntries[this.activeMenuEntry]?.disabled
+				) {
 					this.setNextMenuEntry()
 				}
 			})
@@ -45,23 +48,31 @@ export default defineComponent({
 		 */
 		setNextMenuEntry() {
 			// refs is not reactive so we must check this every time
-			const modulo = this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
+			const modulo =
+				this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
 
 			do {
 				this.activeMenuEntry = (this.activeMenuEntry + 1) % modulo
-			} while (this.activeMenuEntry < this.visibleEntries.length && this.visibleEntries[this.activeMenuEntry].disabled)
+			} while (
+				this.activeMenuEntry < this.visibleEntries.length
+				&& this.visibleEntries[this.activeMenuEntry].disabled
+			)
 		},
 		/**
 		 * Set the active menu entry to the previous one (or reset to last entry (remaining actions))
 		 */
 		setPreviousMenuEntry() {
 			// refs is not reactive so we must check this every time
-			const modulo = this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
+			const modulo =
+				this.visibleEntries.length + (this.$refs.remainingEntries ? 1 : 0)
 
 			do {
 				const index = this.activeMenuEntry - 1
 				this.activeMenuEntry = ((index % modulo) + modulo) % modulo // needed as JS does not work with negative modulos
-			} while (this.activeMenuEntry < this.visibleEntries.length && this.visibleEntries[this.activeMenuEntry].disabled)
+			} while (
+				this.activeMenuEntry < this.visibleEntries.length
+				&& this.visibleEntries[this.activeMenuEntry].disabled
+			)
 		},
 
 		/**
@@ -79,7 +90,15 @@ export default defineComponent({
 				this.$refs.remainingEntries?.focusButton?.()
 			} else {
 				// The ref is in no order (ordered by the time they needed to mount), so we need to order them like they are shown on the menu
-				const entries = [...this.$refs.menuEntries].sort((a, b) => this.visibleEntries.findIndex(({ key }) => key === a.$vnode.data.key) - this.visibleEntries.findIndex(({ key }) => key === b.$vnode.data.key))
+				const entries = [...this.$refs.menuEntries].sort(
+					(a, b) =>
+						this.visibleEntries.findIndex(
+							({ key }) => key === a.$vnode.data.key,
+						)
+						- this.visibleEntries.findIndex(
+							({ key }) => key === b.$vnode.data.key,
+						),
+				)
 				entries[this.activeMenuEntry].focusButton()
 			}
 		},

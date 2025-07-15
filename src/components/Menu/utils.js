@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import {
-	TRANSLATIONS,
-	MODIFIERS,
-} from './keys.js'
+import { MODIFIERS, TRANSLATIONS } from './keys.js'
 
 const getEntryClasses = (actionEntry, isActive) => {
 	return {
@@ -17,22 +14,20 @@ const getEntryClasses = (actionEntry, isActive) => {
 
 const keysString = (keyChar, modifiers = []) => {
 	return modifiers
-		.map(mod => TRANSLATIONS[mod])
+		.map((mod) => TRANSLATIONS[mod])
 		.concat(keyChar.toUpperCase())
 		.join('+')
 }
 
 const getKeyshortcuts = ({ keyChar, keyModifiers = [] }) => {
 	return keyModifiers
-		.map(mod => MODIFIERS[mod])
+		.map((mod) => MODIFIERS[mod])
 		.concat(keyChar)
 		.join('+')
 }
 
 const getKeys = (isMobile, { keyChar, keyModifiers }) => {
-	return (!isMobile && keyChar)
-		? `(${keysString(keyChar, keyModifiers)})`
-		: ''
+	return !isMobile && keyChar ? `(${keysString(keyChar, keyModifiers)})` : ''
 }
 
 const isDisabled = (actionEntry, editor) => {
@@ -45,9 +40,7 @@ const getIsActive = ({ isActive }, editor) => {
 	}
 
 	// Supports either one type or an array of types
-	const types = Array.isArray(isActive)
-		? isActive
-		: [isActive]
+	const types = Array.isArray(isActive) ? isActive : [isActive]
 
 	for (const type of types) {
 		let args
@@ -104,10 +97,10 @@ const getActionState = (actionEntry, editor) => {
 }
 
 export {
-	isDisabled,
+	getActionState,
+	getEntryClasses,
 	getIsActive,
 	getKeys,
 	getKeyshortcuts,
-	getEntryClasses,
-	getActionState,
+	isDisabled,
 }

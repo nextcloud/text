@@ -133,17 +133,17 @@
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside'
-import NcButton from '@nextcloud/vue/components/NcButton'
-import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
 import { showError } from '@nextcloud/dialogs'
-import { logger } from '../helpers/logger.js'
-import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
-import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { emit } from '@nextcloud/event-bus'
-import { NodeViewWrapper } from '@tiptap/vue-2'
-import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
 import { t } from '@nextcloud/l10n'
+import NcBlurHash from '@nextcloud/vue/components/NcBlurHash'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { NodeViewWrapper } from '@tiptap/vue-2'
+import ClickOutside from 'vue-click-outside'
+import { useAttachmentResolver } from '../components/Editor.provider.ts'
+import { Delete as DeleteIcon, Image as ImageIcon } from '../components/icons.js'
+import ShowImageModal from '../components/ImageView/ShowImageModal.vue'
+import { logger } from '../helpers/logger.js'
 
 class LoadImageError extends Error {
 	constructor(reason, imageUrl) {

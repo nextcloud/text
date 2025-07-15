@@ -9,8 +9,8 @@
 
 <script>
 import escapeHtml from 'escape-html'
-import BaseReader from './BaseReader.vue'
 import { PlainText } from './../extensions/index.js'
+import BaseReader from './BaseReader.vue'
 
 export default {
 	name: 'PlainTextReader',

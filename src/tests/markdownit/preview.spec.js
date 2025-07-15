@@ -6,7 +6,6 @@
 import markdownit from '../../markdownit/index.js'
 
 describe('Preview extension', () => {
-
 	const link = {
 		md: '[link](https://nextcloud.com)',
 		html: '<a href="https://nextcloud.com">link</a>',
@@ -17,10 +16,9 @@ describe('Preview extension', () => {
 	}
 
 	it('wraps', () => {
-		expect(markdownit.render('[link](https://nextcloud.com)'))
-			.toBe(
-				'<p><a href="https://nextcloud.com">link</a></p>\n',
-			)
+		expect(markdownit.render('[link](https://nextcloud.com)')).toBe(
+			'<p><a href="https://nextcloud.com">link</a></p>\n',
+		)
 	})
 
 	it('unwraps preview from paragraph', () => {
@@ -30,16 +28,11 @@ describe('Preview extension', () => {
 
 	it('leaves non-preview links alone', () => {
 		const rendered = markdownit.render(link.md)
-		expect(rendered).toBe(
-			`<p>${link.html}</p>\n`,
-		)
+		expect(rendered).toBe(`<p>${link.html}</p>\n`)
 	})
 
 	it('leaves two previews in one paragraph', () => {
 		const rendered = markdownit.render(`${preview.md}\n${preview.md}`)
-		expect(rendered).toBe(
-			`<p>${preview.html}\n${preview.html}</p>\n`,
-		)
+		expect(rendered).toBe(`<p>${preview.html}\n${preview.html}</p>\n`)
 	})
-
 })

@@ -5,39 +5,42 @@
 
 <template>
 	<div class="text-editor__session-list">
-		<div :title="lastSavedStatusTooltip" class="save-status" :class="saveStatusClass">
-			<NcButton type="tertiary"
+		<div
+			:title="lastSavedStatusTooltip"
+			class="save-status"
+			:class="saveStatusClass">
+			<NcButton
+				type="tertiary"
 				:aria-label="t('text', 'Save document')"
 				@click="onClickSave">
 				<template #icon>
-					<NcSavingIndicatorIcon :saving="saveStatusClass === 'saving'"
+					<NcSavingIndicatorIcon
+						:saving="saveStatusClass === 'saving'"
 						:error="saveStatusClass === 'error'" />
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions"
-			@editor-width-change="onEditorWidthChange">
+		<SessionList :sessions="sessions" @editor-width-change="onEditorWidthChange">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog v-if="isPublic && currentSession && !currentSession.userId" :session="currentSession" />
+			<GuestNameDialog
+				v-if="isPublic && currentSession && !currentSession.userId"
+				:session="currentSession" />
 		</SessionList>
 	</div>
 </template>
 
 <script>
-
-import { ERROR_TYPE } from '../../services/SyncService.ts'
+import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
-import {
-	useIsMobileMixin,
-} from '../Editor.provider.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import refreshMoment from '../../mixins/refreshMoment.js'
 import { useSaveService } from '../../composables/useSaveService.ts'
-import { t } from '@nextcloud/l10n'
+import refreshMoment from '../../mixins/refreshMoment.js'
+import { ERROR_TYPE } from '../../services/SyncService.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
 
 export default {
 	name: 'Status',
@@ -45,14 +48,13 @@ export default {
 	components: {
 		NcButton,
 		NcSavingIndicatorIcon,
-		SessionList: () => import(/* webpackChunkName: "editor-collab" */'./SessionList.vue'),
-		GuestNameDialog: () => import(/* webpackChunkName: "editor-guest" */'./GuestNameDialog.vue'),
+		SessionList: () =>
+			import(/* webpackChunkName: "editor-collab" */ './SessionList.vue'),
+		GuestNameDialog: () =>
+			import(/* webpackChunkName: "editor-guest" */ './GuestNameDialog.vue'),
 	},
 
-	mixins: [
-		useIsMobileMixin,
-		refreshMoment,
-	],
+	mixins: [useIsMobileMixin, refreshMoment],
 
 	props: {
 		hasConnectionIssue: {
@@ -92,15 +94,22 @@ export default {
 					? t('text', 'Offline')
 					: t('text', 'Offline, changes will be saved when online')
 			}
-			return this.dirtyStateIndicator ? t('text', 'Saving …') : t('text', 'Saved')
+			return this.dirtyStateIndicator
+				? t('text', 'Saving …')
+				: t('text', 'Saved')
 		},
 		dirtyStateIndicator() {
 			return this.dirty
 		},
 		lastSavedStatusTooltip() {
-			let message = t('text', 'Last saved {lastSave}', { lastSave: this.lastSavedString })
+			let message = t('text', 'Last saved {lastSave}', {
+				lastSave: this.lastSavedString,
+			})
 			if (this.hasSyncCollission) {
-				message = t('text', 'The document has been changed outside of the editor. The changes cannot be applied.')
+				message = t(
+					'text',
+					'The document has been changed outside of the editor. The changes cannot be applied.',
+				)
 			}
 			if (this.dirty) {
 				message += ' - ' + t('text', 'Unsaved changes')
@@ -109,7 +118,9 @@ export default {
 		},
 
 		hasSyncCollission() {
-			return this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			return (
+				this.syncError && this.syncError.type === ERROR_TYPE.SAVE_COLLISSION
+			)
 		},
 		saveStatusClass() {
 			if (this.syncError && this.lastSavedString !== '') {
@@ -146,7 +157,8 @@ export default {
 .text-editor__session-list {
 	display: flex;
 
-	input, div {
+	input,
+	div {
 		vertical-align: middle;
 		margin-left: 3px;
 	}

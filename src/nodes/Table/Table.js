@@ -5,11 +5,7 @@
 
 import { mergeAttributes } from '@tiptap/core'
 import { Table } from '@tiptap/extension-table'
-import TableCaption from './TableCaption.js'
-import TableCell from './TableCell.js'
-import TableHeader from './TableHeader.js'
-import TableHeadRow from './TableHeadRow.js'
-import TableRow from './TableRow.js'
+import { Node } from '@tiptap/pm/model'
 import { TextSelection } from '@tiptap/pm/state'
 import {
 	addRowAfter,
@@ -19,7 +15,11 @@ import {
 	selectedRect,
 	selectionCell,
 } from '@tiptap/pm/tables'
-import { Node } from '@tiptap/pm/model'
+import TableCaption from './TableCaption.js'
+import TableCell from './TableCell.js'
+import TableHeader from './TableHeader.js'
+import TableHeadRow from './TableHeadRow.js'
+import TableRow from './TableRow.js'
 
 /**
  *
@@ -103,8 +103,8 @@ function calculateColumnWidths(columns) {
 
 		column.forEach((cell) => {
 			let cellWidth = 0
-			cell.content.forEach(node => {
-				cellWidth += (node.text?.length || 6)
+			cell.content.forEach((node) => {
+				cellWidth += node.text?.length || 6
 				if (node.text?.includes('|')) cellWidth += 1
 			})
 			maxWidth = Math.max(maxWidth, cellWidth)
@@ -120,102 +120,113 @@ export default Table.extend({
 	content: 'tableCaption? tableHeadRow tableRow*',
 
 	addExtensions() {
-		return [
-			TableCaption,
-			TableCell,
-			TableHeader,
-			TableHeadRow,
-			TableRow,
-		]
+		return [TableCaption, TableCell, TableHeader, TableHeadRow, TableRow]
 	},
 
 	addCommands() {
 		return {
 			...this.parent(),
-			addRowAfter: () => ({ chain, dispatch }) => {
-				return chain()
-					.command(({ state }) => addRowAfter(state, dispatch))
-					.command(({ state, tr }) => {
-						const { tableStart, table, bottom } = selectedRect(state)
+			addRowAfter:
+				() =>
+				({ chain, dispatch }) => {
+					return chain()
+						.command(({ state }) => addRowAfter(state, dispatch))
+						.command(({ state, tr }) => {
+							const { tableStart, table, bottom } = selectedRect(state)
 
-						if (dispatch) {
-							const lastRow = table.child(bottom - 1)
-							const newRow = table.child(bottom)
-							let pos = tableStart + 1
-							for (let i = 0; i < bottom; i++) { pos += table.child(i).nodeSize }
+							if (dispatch) {
+								const lastRow = table.child(bottom - 1)
+								const newRow = table.child(bottom)
+								let pos = tableStart + 1
+								for (let i = 0; i < bottom; i++) {
+									pos += table.child(i).nodeSize
+								}
 
-							for (let i = 0; i < lastRow.childCount; i++) {
-								tr.setNodeAttribute(
-									pos,
-									'textAlign',
-									lastRow.child(i).attrs.textAlign,
-								)
-								pos += newRow.child(i).nodeSize
+								for (let i = 0; i < lastRow.childCount; i++) {
+									tr.setNodeAttribute(
+										pos,
+										'textAlign',
+										lastRow.child(i).attrs.textAlign,
+									)
+									pos += newRow.child(i).nodeSize
+								}
 							}
-						}
-						return true
-					})
-					.run()
-			},
-			addRowBefore: () => ({ chain, dispatch }) =>
-				chain()
-					.command(({ state }) => addRowBefore(state, dispatch))
-					.command(({ state, tr }) => {
-						const { tableStart, table, top } = selectedRect(state)
-						if (dispatch) {
-							const lastRow = table.child(top)
-							const newRow = table.child(top - 1)
-							let pos = tableStart + 1
-							for (let i = 0; i < (top - 1); i++) { pos += table.child(i).nodeSize }
+							return true
+						})
+						.run()
+				},
+			addRowBefore:
+				() =>
+				({ chain, dispatch }) =>
+					chain()
+						.command(({ state }) => addRowBefore(state, dispatch))
+						.command(({ state, tr }) => {
+							const { tableStart, table, top } = selectedRect(state)
+							if (dispatch) {
+								const lastRow = table.child(top)
+								const newRow = table.child(top - 1)
+								let pos = tableStart + 1
+								for (let i = 0; i < top - 1; i++) {
+									pos += table.child(i).nodeSize
+								}
 
-							for (let i = 0; i < lastRow.childCount; i++) {
-								tr.setNodeAttribute(
-									pos,
-									'textAlign',
-									lastRow.child(i).attrs.textAlign,
-								)
-								pos += newRow.child(i).nodeSize
+								for (let i = 0; i < lastRow.childCount; i++) {
+									tr.setNodeAttribute(
+										pos,
+										'textAlign',
+										lastRow.child(i).attrs.textAlign,
+									)
+									pos += newRow.child(i).nodeSize
+								}
 							}
-						}
-						return true
-					})
-					.run(),
-			insertTable: () => ({ tr, dispatch, editor }) => {
-				if (isInTable(tr)) return false
-				const node = createTable(editor.schema, 3, 3, true)
-				if (dispatch) {
-					const offset = tr.selection.anchor + 1
-					tr.replaceSelectionWith(node)
-						.scrollIntoView()
-						.setSelection(TextSelection.near(tr.doc.resolve(offset)))
-				}
-				return true
-			},
+							return true
+						})
+						.run(),
+			insertTable:
+				() =>
+				({ tr, dispatch, editor }) => {
+					if (isInTable(tr)) return false
+					const node = createTable(editor.schema, 3, 3, true)
+					if (dispatch) {
+						const offset = tr.selection.anchor + 1
+						tr.replaceSelectionWith(node)
+							.scrollIntoView()
+							.setSelection(TextSelection.near(tr.doc.resolve(offset)))
+					}
+					return true
+				},
 			// move to the next node after the table from the last cell
-			leaveTable: () => ({ tr, dispatch, editor }) => {
-				if (!isInTable(tr)) return false
-				const { $head, empty } = tr.selection
-				if (!empty) return false
-				// the selection can temporarily be inside the table but outside of cells.
-				const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
-				if (dispatch) {
-					const $next = tr.doc.resolve($head.after(tableDepth) + 1)
-					const selection = TextSelection.near($next)
-					dispatch(tr.setSelection(selection).scrollIntoView())
-				}
-				return true
-			},
-			goToNextRow: () => ({ tr, dispatch, editor }) => {
-				if (!isInTable(tr)) return false
-				const cell = findSameCellInNextRow(selectionCell(tr))
-				if (cell == null) return
-				if (dispatch) {
-					const $cell = tr.doc.resolve(cell)
-					const selection = TextSelection.between($cell, moveCellForward($cell))
-					dispatch(tr.setSelection(selection).scrollIntoView())
-				}
-				return true
-			},
+			leaveTable:
+				() =>
+				({ tr, dispatch, editor }) => {
+					if (!isInTable(tr)) return false
+					const { $head, empty } = tr.selection
+					if (!empty) return false
+					// the selection can temporarily be inside the table but outside of cells.
+					const tableDepth = $head.depth < 3 ? 1 : $head.depth - 2
+					if (dispatch) {
+						const $next = tr.doc.resolve($head.after(tableDepth) + 1)
+						const selection = TextSelection.near($next)
+						dispatch(tr.setSelection(selection).scrollIntoView())
+					}
+					return true
+				},
+			goToNextRow:
+				() =>
+				({ tr, dispatch, editor }) => {
+					if (!isInTable(tr)) return false
+					const cell = findSameCellInNextRow(selectionCell(tr))
+					if (cell == null) return
+					if (dispatch) {
+						const $cell = tr.doc.resolve(cell)
+						const selection = TextSelection.between(
+							$cell,
+							moveCellForward($cell),
+						)
+						dispatch(tr.setSelection(selection).scrollIntoView())
+					}
+					return true
+				},
 		}
 	},
 
@@ -223,7 +234,11 @@ export default Table.extend({
 		return [
 			'div',
 			{ class: 'table-wrapper', style: 'overflow-x: auto;' },
-			['table', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0],
+			[
+				'table',
+				mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+				0,
+			],
 		]
 	},
 
@@ -242,7 +257,9 @@ export default Table.extend({
 			 * <Tab> inside a table cell
 			 * Jump to next cell or outside table if already in last cell
 			 */
-			Tab: () => this.editor.commands.goToNextCell() || this.editor.commands.leaveTable(),
+			Tab: () =>
+				this.editor.commands.goToNextCell()
+				|| this.editor.commands.leaveTable(),
 
 			/**
 			 * <Enter> inside a table
@@ -253,13 +270,18 @@ export default Table.extend({
 			 */
 			Enter: ({ editor }) => {
 				const { selection } = editor.state
-				if (!selection.$from.parent.type.name.startsWith('table')) return false
+				if (!selection.$from.parent.type.name.startsWith('table'))
+					return false
 
 				if (selection.$from.nodeBefore?.type.name === 'hardBreak') {
 					if (editor.can().goToNextRow() || editor.can().addRowAfter()) {
 						// Remove previous hard break and move to next row instead
-						editor.chain()
-							.setTextSelection({ from: selection.from - 1, to: selection.from })
+						editor
+							.chain()
+							.setTextSelection({
+								from: selection.from - 1,
+								to: selection.from,
+							})
 							.deleteSelection()
 							.run()
 						if (editor.commands.goToNextRow()) return true
@@ -267,7 +289,8 @@ export default Table.extend({
 					}
 					return false
 				} else {
-					return editor.chain()
+					return editor
+						.chain()
 						.insertContent('<br data-syntax="html" />')
 						.focus()
 						.run()
@@ -275,5 +298,4 @@ export default Table.extend({
 			},
 		}
 	},
-
 })

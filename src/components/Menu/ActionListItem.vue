@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NextcloudVueNcActionButton class="entry-single-action entry-action entry-action-item"
+	<NextcloudVueNcActionButton
+		class="entry-single-action entry-action entry-action-item"
 		:title="listItemTooltip || undefined"
 		:class="state.class"
 		:disabled="state.disabled"

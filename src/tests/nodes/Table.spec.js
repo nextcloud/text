@@ -11,21 +11,29 @@ import markdownit from '../../markdownit/index.js'
 
 // Eslint does not know about ?raw suffix it seems.
 /* eslint-disable import/no-unresolved */
-import input from '../fixtures/tables/basic/table.md?raw'
 import output from '../fixtures/tables/basic/table.html?raw'
+import input from '../fixtures/tables/basic/table.md?raw'
 import otherStructure from '../fixtures/tables/basic/table.structure.html?raw'
 import handbook from '../fixtures/tables/handbook/handbook.html?raw'
 import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
 /* eslint-enable import/no-unresolved */
 
-import { br, table, td, th, thead, tr, expectDocument } from '../testHelpers/builders.js'
+import {
+	br,
+	expectDocument,
+	table,
+	td,
+	th,
+	thead,
+	tr,
+} from '../testHelpers/builders.js'
 
 const test = baseTest.extend({
 	editor: async ({ task: _ }, use) => {
 		const editor = createRichEditor()
 		await use(editor)
 		editor.destroy()
-	}
+	},
 })
 
 describe('Table', () => {
@@ -37,7 +45,8 @@ describe('Table', () => {
 	test('Load into editor', ({ editor }) => {
 		editor.commands.setContent(markdownit.render(input))
 
-		expectDocument(editor.state.doc,
+		expectDocument(
+			editor.state.doc,
 			table(
 				thead(
 					th({ textAlign: 'center' }, 'heading'),
@@ -56,7 +65,8 @@ describe('Table', () => {
 	test('load html table with other structure', ({ editor }) => {
 		editor.commands.setContent(otherStructure.replace(/\n\s*/g, ''))
 
-		expectDocument(editor.state.doc,
+		expectDocument(
+			editor.state.doc,
 			table(
 				thead(
 					th({ textAlign: 'center' }, 'heading'),

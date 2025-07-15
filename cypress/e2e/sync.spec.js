@@ -16,8 +16,12 @@ describe('Sync', () => {
 		cy.login(user)
 		cy.uploadTestFile('test.md')
 		cy.visit('/apps/files')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as('sync')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as('save')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
+			'sync',
+		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/save' }).as(
+			'save',
+		)
 		cy.openTestFile()
 		cy.wait('@sync', { timeout: 10000 })
 		cy.getContent().find('h2').should('contain', 'Hello world')
@@ -27,11 +31,12 @@ describe('Sync', () => {
 
 	it('saves the actual file and document state', () => {
 		cy.getContent().type('{ctrl+s}')
-		cy.wait('@save').its('request.body')
+		cy.wait('@save')
+			.its('request.body')
 			.should('have.property', 'documentState')
 			.should('not.be.empty')
 		cy.testName()
-			.then(name => cy.downloadFile(`/${name}.md`))
+			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'saves the doc state')
 		cy.closeFile()
@@ -41,7 +46,7 @@ describe('Sync', () => {
 		cy.closeFile()
 		cy.wait('@save')
 		cy.testName()
-			.then(name => cy.downloadFile(`/${name}.md`))
+			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'saves the doc state')
 	})
@@ -50,58 +55,69 @@ describe('Sync', () => {
 		cy.visit('https://example.org')
 		cy.wait('@save').its('response.statusCode').should('eq', 200)
 		cy.testName()
-			.then(name => cy.downloadFile(`/${name}.md`))
+			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'saves the doc state')
 	})
 
 	it('recovers from a short lost connection', () => {
-		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'The document could not be loaded.')
-		cy.intercept('**/apps/text/session/*/*', req => req.continue()).as('alive')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'contain',
+			'The document could not be loaded.',
+		)
+		cy.intercept('**/apps/text/session/*/*', (req) => req.continue()).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
-			.as('syncAfterRecovery')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
+			'syncAfterRecovery',
+		)
 		cy.wait('@syncAfterRecovery', { timeout: 30000 })
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'The document could not be loaded.')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'not.contain',
+			'The document could not be loaded.',
+		)
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.insertLine('* more content added after the lost connection')
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.closeFile()
 		cy.testName()
-			.then(name => cy.downloadFile(`/${name}.md`))
+			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'after the lost connection')
 	})
 
 	it('handles brief network outages', () => {
-		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
 		// bring back the network connection
-		cy.intercept('**/apps/text/session/*/*', req => { req.continue() }).as('alive')
+		cy.intercept('**/apps/text/session/*/*', (req) => {
+			req.continue()
+		}).as('alive')
 		cy.wait('@alive', { timeout: 30000 })
 		cy.getContent().type('staying alive')
 		cy.getContent().should('contain', 'staying alive')
 	})
 
 	it('reconnects via button after a short lost connection', () => {
-		cy.intercept('**/apps/text/session/*/*', req => req.destroy()).as('dead')
+		cy.intercept('**/apps/text/session/*/*', (req) => req.destroy()).as('dead')
 		cy.wait('@dead', { timeout: 30000 })
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'The document could not be loaded.')
-		cy.get('#editor-container .document-status')
-			.find('.button.primary').click()
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'The document could not be loaded.')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'contain',
+			'The document could not be loaded.',
+		)
+		cy.get('#editor-container .document-status').find('.button.primary').click()
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'contain',
+			'The document could not be loaded.',
+		)
 		// bring back the network connection
-		cy.intercept('**/apps/text/session/*/*', req => { req.continue() }).as('alive')
+		cy.intercept('**/apps/text/session/*/*', (req) => {
+			req.continue()
+		}).as('alive')
 		cy.intercept('**/apps/text/session/*/create').as('create')
-		cy.get('#editor-container .document-status')
-			.find('.button.primary').click()
+		cy.get('#editor-container .document-status').find('.button.primary').click()
 		cy.wait('@alive', { timeout: 30000 })
 		cy.wait('@create', { timeout: 10000 })
 			.its('request.body')
@@ -113,7 +129,11 @@ describe('Sync', () => {
 		let reconnect = false
 		// block all requests until the session is closed and reopened
 		cy.intercept('**/apps/text/session/*/*', (req) => {
-			if (req.url.includes('close') || req.url.includes('create') || reconnect) {
+			if (
+				req.url.includes('close')
+				|| req.url.includes('create')
+				|| reconnect
+			) {
 				req.continue()
 				req.alias = 'syncAfterRecovery'
 				reconnect = true
@@ -123,8 +143,10 @@ describe('Sync', () => {
 		}).as('sessionRequests')
 
 		cy.wait('@sessionRequests', { timeout: 30000 })
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'The document could not be loaded.')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'contain',
+			'The document could not be loaded.',
+		)
 
 		// Reconnect button works - it closes and reopens the session
 		cy.get('#editor-container .document-status a.button')
@@ -133,27 +155,30 @@ describe('Sync', () => {
 
 		cy.wait('@syncAfterRecovery', { timeout: 60000 })
 
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('not.contain', 'The document could not be loaded.')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'not.contain',
+			'The document could not be loaded.',
+		)
 		// FIXME: There seems to be a bug where typed words maybe lost if not waiting for the new session
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.insertLine('* more content added after the lost connection')
 		cy.wait('@syncAfterRecovery', { timeout: 10000 })
 		cy.closeFile()
 		cy.testName()
-			.then(name => cy.downloadFile(`/${name}.md`))
+			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
 			.should('include', 'after the lost connection')
 	})
 
 	it('asks to reload page when document session got cleaned up', () => {
-		cy.get('.save-status button')
-			.click()
+		cy.get('.save-status button').click()
 		cy.wait('@save')
 		cy.uploadTestFile('test.md')
 
-		cy.get('#editor-container .document-status', { timeout: 30000 })
-			.should('contain', 'Editing session has expired.')
+		cy.get('#editor-container .document-status', { timeout: 30000 }).should(
+			'contain',
+			'Editing session has expired.',
+		)
 
 		// Reload button works
 		cy.get('#editor-container .document-status a.button')
@@ -161,21 +186,23 @@ describe('Sync', () => {
 			.click()
 
 		cy.getContent()
-		cy.get('#editor-container .document-status .notecard')
-			.should('not.exist')
+		cy.get('#editor-container .document-status .notecard').should('not.exist')
 	})
 
 	it('passes the doc content from one session to the next', () => {
 		cy.closeFile()
-		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' })
-			.as('create')
+		cy.intercept({ method: 'PUT', url: '**/apps/text/session/*/create' }).as(
+			'create',
+		)
 		cy.openTestFile()
 		cy.wait('@create', { timeout: 10000 })
 			.its('response.body')
 			.should('have.property', 'documentState')
 			.should('not.be.empty')
 		cy.getContent().find('h2').should('contain', 'Hello world')
-		cy.getContent().find('li').should('contain', 'Saving the doc saves the doc state')
+		cy.getContent()
+			.find('li')
+			.should('contain', 'Saving the doc saves the doc state')
 		cy.getContent().type('recovered')
 		cy.closeFile()
 	})
@@ -189,5 +216,4 @@ describe('Sync', () => {
 		// reuse @close intercepted in closeFile()
 		cy.get('@close.all').should('have.length', 1)
 	})
-
 })

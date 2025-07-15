@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import { useEditor } from '../composables/useEditor.ts'
-import NcButton from '@nextcloud/vue/components/NcButton'
-import { useEditorMethods } from '../composables/useEditorMethods.ts'
-import { useSyncService } from '../composables/useSyncService.ts'
-import { useSaveService } from '../composables/useSaveService.ts'
 import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { useEditor } from '../composables/useEditor.ts'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { useSaveService } from '../composables/useSaveService.ts'
+import { useSyncService } from '../composables/useSyncService.ts'
 export default {
 	name: 'CollisionResolveDialog',
 	components: {

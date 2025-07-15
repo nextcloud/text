@@ -3,34 +3,37 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { randUser } from '../../utils/index.js'
-import { provideConnection } from '../../../src/composables/useConnection.ts'
-import { provideSyncService  } from '../../../src/composables/useSyncService.ts'
-import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
 import { Doc } from 'yjs'
+import { provideConnection } from '../../../src/composables/useConnection.ts'
+import { provideSyncService } from '../../../src/composables/useSyncService.ts'
+import createSyncServiceProvider from '../../../src/services/SyncServiceProvider.js'
+import { randUser } from '../../utils/index.js'
 
 const user = randUser()
 
-describe('Sync service provider', function() {
+describe('Sync service provider', function () {
 	let fileId
 
-	before(function() {
+	before(function () {
 		cy.createUser(user)
 	})
 
-	beforeEach(function() {
+	beforeEach(function () {
 		cy.login(user)
-		cy.uploadTestFile('test.md')
-			.then(id => {
-				fileId = id
-			})
+		cy.uploadTestFile('test.md').then((id) => {
+			fileId = id
+		})
 		cy.wrap(new Doc()).as('source')
 		cy.wrap(new Doc()).as('target')
-		cy.get('@source').then(source => createProvider(source)).as('sourceProvider')
-		cy.get('@target').then(target => createProvider(target)).as('targetProvider')
+		cy.get('@source')
+			.then((source) => createProvider(source))
+			.as('sourceProvider')
+		cy.get('@target')
+			.then((target) => createProvider(target))
+			.as('targetProvider')
 	})
 
-	afterEach(function() {
+	afterEach(function () {
 		this.sourceProvider?.destroy()
 		this.targetProvider?.destroy()
 	})
@@ -40,8 +43,15 @@ describe('Sync service provider', function() {
 	 */
 	function createProvider(ydoc) {
 		const relativePath = '.'
-		const { connection, openConnection, baseVersionEtag } = provideConnection({ fileId, relativePath })
-		const { syncService } = provideSyncService( connection, openConnection, baseVersionEtag )
+		const { connection, openConnection, baseVersionEtag } = provideConnection({
+			fileId,
+			relativePath,
+		})
+		const { syncService } = provideSyncService(
+			connection,
+			openConnection,
+			baseVersionEtag,
+		)
 		const queue = []
 		syncService.on('opened', () => syncService.startSync())
 		return createSyncServiceProvider({
@@ -54,13 +64,15 @@ describe('Sync service provider', function() {
 		})
 	}
 
-	it('recovers from a dropped message', function() {
+	it('recovers from a dropped message', function () {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' })
-			.as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
-			.as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as(
+			'push',
+		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
+			'sync',
+		)
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')
@@ -73,17 +85,20 @@ describe('Sync service provider', function() {
 		cy.then(() => {
 			expect(targetMap.get('keyA')).to.be.eq('valueA')
 		})
-		cy.intercept({
-			method: 'POST',
-			url: '**/apps/text/session/*/push',
-		}, req => {
-			if (req.body.steps) {
-				req.reply({ forceNetworkError: true })
-				req.alias = 'dead'
-			} else {
-				req.continue()
-			}
-		})
+		cy.intercept(
+			{
+				method: 'POST',
+				url: '**/apps/text/session/*/push',
+			},
+			(req) => {
+				if (req.body.steps) {
+					req.reply({ forceNetworkError: true })
+					req.alias = 'dead'
+				} else {
+					req.continue()
+				}
+			},
+		)
 		cy.then(() => {
 			sourceMap.set('keyB', 'valueB')
 			expect(targetMap.get('keyB')).to.be.eq(undefined)
@@ -92,17 +107,20 @@ describe('Sync service provider', function() {
 		cy.then(() => {
 			expect(targetMap.get('keyB')).to.be.eq(undefined)
 		})
-		cy.intercept({
-			method: 'POST',
-			url: '**/apps/text/session/*/push',
-		}, req => {
-			if (req.body.steps) {
-				req.alias = 'alive'
-				req.continue()
-			} else {
-				req.continue()
-			}
-		})
+		cy.intercept(
+			{
+				method: 'POST',
+				url: '**/apps/text/session/*/push',
+			},
+			(req) => {
+				if (req.body.steps) {
+					req.alias = 'alive'
+					req.continue()
+				} else {
+					req.continue()
+				}
+			},
+		)
 		cy.then(() => {
 			sourceMap.set('keyC', 'valueC')
 			expect(targetMap.get('keyB')).to.be.eq(undefined)
@@ -120,13 +138,15 @@ describe('Sync service provider', function() {
 	 * Counts the amount of push and sync requests in one minute.
 	 * Skipped per default, useful for comparison before/after changes to SyncProvider or PollingBackend.
 	 */
-	it.skip('is not too chatty', function() {
+	it.skip('is not too chatty', function () {
 		const sourceMap = this.source.getMap()
 		const targetMap = this.target.getMap()
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' })
-			.as('push')
-		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' })
-			.as('sync')
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/push' }).as(
+			'push',
+		)
+		cy.intercept({ method: 'POST', url: '**/apps/text/session/*/sync' }).as(
+			'sync',
+		)
 		cy.wait('@push')
 		cy.then(() => {
 			sourceMap.set('keyA', 'valueA')

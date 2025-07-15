@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
 	name: 'DetailsContent',

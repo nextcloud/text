@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { describe, it, vi, expect } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import initWebSocketPolyfill from '../../services/WebSocketPolyfill.js'
 
 describe('Init function', () => {
@@ -33,11 +33,10 @@ describe('Init function', () => {
 	it('opens sync service', () => {
 		const syncService = mockSyncService()
 		const fileId = 123
-		const initialSession = { }
+		const initialSession = {}
 		const Polyfill = initWebSocketPolyfill(syncService, fileId, initialSession)
 		const websocket = new Polyfill('url')
 		expect(websocket).toBeInstanceOf(Polyfill)
 		expect(syncService.open).toHaveBeenCalledWith({ fileId, initialSession })
 	})
-
 })

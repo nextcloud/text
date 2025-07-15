@@ -4,15 +4,15 @@
  */
 
 import { afterEach, expect, test, vi } from 'vitest'
-import { useDelayedFlag } from './useDelayedFlag'
 import { nextTick, ref, watch } from 'vue'
+import { useDelayedFlag } from './useDelayedFlag'
 
 afterEach(() => {
 	vi.useRealTimers()
 })
 
 test('useDelayedFlag defaults to provided ref value', () => {
-	[true, false].forEach(val => {
+	;[true, false].forEach((val) => {
 		const { delayed } = useDelayedFlag(ref(val))
 		expect(delayed.value).toBe(val)
 	})

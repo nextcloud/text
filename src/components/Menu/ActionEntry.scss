@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-.text-menubar, .v-popper__inner {
+.text-menubar,
+.v-popper__inner {
 	.entry-action__emoji button.entry-action__button {
 		&:hover,
 		&:focus,
@@ -51,7 +52,6 @@
 		&:focus-visible {
 			box-shadow: var(--color-primary-element);
 		}
-
 	}
 
 	.button-vue {

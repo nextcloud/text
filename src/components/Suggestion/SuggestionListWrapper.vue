@@ -10,12 +10,20 @@
 				<div v-if="hasGroups" class="suggestion-list__group">
 					{{ key }}
 				</div>
-				<div v-for="(item, index) in groupItems"
+				<div
+					v-for="(item, index) in groupItems"
 					:key="combineIndex(groupIndex, index)"
 					class="suggestion-list__item"
-					:class="{ 'is-selected': combineIndex(groupIndex, index) === selectedIndex }"
+					:class="{
+						'is-selected':
+							combineIndex(groupIndex, index) === selectedIndex,
+					}"
 					@click="selectItem(combineIndex(groupIndex, index))">
-					<slot :item="item" :active="combineIndex(groupIndex, index) === selectedIndex" />
+					<slot
+						:item="item"
+						:active="
+							combineIndex(groupIndex, index) === selectedIndex
+						" />
 				</div>
 			</div>
 		</template>
@@ -58,8 +66,11 @@ export default {
 		itemInsideScrollView() {
 			// If upper border of item is bigger or equal than scroll top
 			// and lower end of item is smaller or equal than scroll bottom
-			return this.selectedIndex * this.itemHeight >= this.$el.scrollTop
-				&& (this.selectedIndex + 1) * this.itemHeight <= this.$el.scrollTop + this.$el.clientHeight
+			return (
+				this.selectedIndex * this.itemHeight >= this.$el.scrollTop
+				&& (this.selectedIndex + 1) * this.itemHeight
+					<= this.$el.scrollTop + this.$el.clientHeight
+			)
 		},
 		itemGroups() {
 			const groups = {}
@@ -97,7 +108,8 @@ export default {
 			}
 
 			if (event.key === 'ArrowUp') {
-				this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
+				this.selectedIndex =
+					(this.selectedIndex + this.items.length - 1) % this.items.length
 				if (!this.itemInsideScrollView) {
 					this.$el.scrollTop = this.selectedIndex * this.itemHeight
 				}
@@ -107,7 +119,9 @@ export default {
 			if (event.key === 'ArrowDown') {
 				this.selectedIndex = (this.selectedIndex + 1) % this.items.length
 				if (!this.itemInsideScrollView) {
-					this.$el.scrollTop = (this.selectedIndex + 1) * this.itemHeight - this.$el.clientHeight
+					this.$el.scrollTop =
+						(this.selectedIndex + 1) * this.itemHeight
+						- this.$el.clientHeight
 				}
 				return true
 			}
@@ -155,7 +169,7 @@ export default {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		opacity: .7;
+		opacity: 0.7;
 		box-shadow: none !important;
 		flex-shrink: 0;
 		padding-left: 8px;

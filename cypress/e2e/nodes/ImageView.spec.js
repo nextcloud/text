@@ -16,7 +16,6 @@ describe('Image View', () => {
 		cy.createFolder('child-folder')
 		cy.uploadFile('github.png', 'image/png')
 		cy.uploadFile('github.png', 'image/png', 'child-folder/github.png')
-
 	})
 
 	beforeEach(() => {
@@ -46,7 +45,10 @@ describe('Image View', () => {
 		it('from child folder', () => {
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			cy.createMarkdown(fileName, '# from child\n\n ![git](child-folder/github.png)')
+			cy.createMarkdown(
+				fileName,
+				'# from child\n\n ![git](child-folder/github.png)',
+			)
 
 			cy.openFile(fileName)
 
@@ -58,7 +60,10 @@ describe('Image View', () => {
 			cy.getContent()
 				.find('[data-component="image-view"] img')
 				.should('have.attr', 'src')
-				.should('contains', `/dav/files/${user.userId}/child-folder/github.png`)
+				.should(
+					'contains',
+					`/dav/files/${user.userId}/child-folder/github.png`,
+				)
 		})
 
 		it('from parent folder', () => {
@@ -66,7 +71,10 @@ describe('Image View', () => {
 
 			const fileName = `${Cypress.currentTest.title}.md`
 
-			cy.createMarkdown(`/child-folder/${fileName}`, '# from parent\n\n ![git](../github.png)')
+			cy.createMarkdown(
+				`/child-folder/${fileName}`,
+				'# from parent\n\n ![git](../github.png)',
+			)
 
 			cy.openFile(fileName, { force: true })
 
@@ -112,11 +120,22 @@ describe('Image View', () => {
 		before(() => {
 			cy.login(user)
 			const fileName = 'native attachments.md'
-			cy.createFile(fileName, '# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)').then((fileId) => {
+			cy.createFile(
+				fileName,
+				'# open image in modal\n\n ![git](.attachments.123/github.png)\n\n ![file.txt.gz](.attachments.123/file.txt.gz)',
+			).then((fileId) => {
 				const attachmentsFolder = `.attachments.${fileId}`
 				cy.createFolder(attachmentsFolder)
-				cy.uploadFile('github.png', 'image/png', `${attachmentsFolder}/github.png`)
-				cy.uploadFile('file.txt.gz', 'application/gzip', `${attachmentsFolder}/file.txt.gz`)
+				cy.uploadFile(
+					'github.png',
+					'image/png',
+					`${attachmentsFolder}/github.png`,
+				)
+				cy.uploadFile(
+					'file.txt.gz',
+					'application/gzip',
+					`${attachmentsFolder}/file.txt.gz`,
+				)
 			})
 		})
 
@@ -125,7 +144,9 @@ describe('Image View', () => {
 			cy.openFile(fileName)
 
 			cy.getContent()
-				.find('[data-component="image-view"][data-src=".attachments.123/github.png"] img')
+				.find(
+					'[data-component="image-view"][data-src=".attachments.123/github.png"] img',
+				)
 				.click()
 
 			cy.get('.modal__content img')
@@ -138,7 +159,9 @@ describe('Image View', () => {
 			cy.openFile(fileName)
 
 			cy.getContent()
-				.find('[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img')
+				.find(
+					'[data-component="image-view"][data-src=".attachments.123/file.txt.gz"] img',
+				)
 				.click()
 
 			const downloadsFolder = Cypress.config('downloadsFolder')

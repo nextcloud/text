@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcButton class="entry-single-action entry-action"
+	<NcButton
+		class="entry-single-action entry-action"
 		:class="state.class"
 		:disabled="state.disabled"
 		:aria-keyshortcuts="keyshortcuts || undefined"

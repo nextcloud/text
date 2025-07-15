@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
 import { translatePlural as n } from '@nextcloud/l10n'
 import NcActionText from '@nextcloud/vue/components/NcActionText'
-import { AlphabeticalVariant } from '../icons.js'
+import { defineComponent, ref } from 'vue'
 import { useEditor } from '../../composables/useEditor.ts'
+import { AlphabeticalVariant } from '../icons.js'
 
 export default defineComponent({
 	name: 'CharacterCount',

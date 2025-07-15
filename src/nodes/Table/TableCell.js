@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { TableCell } from '@tiptap/extension-table-cell'
-import { Plugin } from '@tiptap/pm/state'
-import { Fragment } from '@tiptap/pm/model'
 import { mergeAttributes } from '@tiptap/core'
+import { TableCell } from '@tiptap/extension-table-cell'
+import { Fragment } from '@tiptap/pm/model'
+import { Plugin } from '@tiptap/pm/state'
 
 export default TableCell.extend({
 	content: 'inline*',
@@ -19,9 +19,10 @@ export default TableCell.extend({
 
 		let cellRenderedContentLength = 0
 		node.content.forEach((childNode, offset, index) => {
-			cellRenderedContentLength += (childNode.text?.length || 6)
+			cellRenderedContentLength += childNode.text?.length || 6
 			if (childNode.text?.includes('|')) cellRenderedContentLength += 1
-			if (childNode.attrs.syntax === '  ') node.child(index).attrs.syntax = 'html'
+			if (childNode.attrs.syntax === '  ')
+				node.child(index).attrs.syntax = 'html'
 		})
 		const columnWidth = state.options.columnWidths[columnIndex]
 		const align = node.attrs?.textAlign || 'left'
@@ -44,8 +45,16 @@ export default TableCell.extend({
 		return [
 			{ tag: 'td', preserveWhitespace: true },
 			{ tag: 'th', preserveWhitespace: true },
-			{ tag: 'table thead ~ tbody th', priority: 70, preserveWhitespace: true },
-			{ tag: 'table thead ~ tbody td', priority: 70, preserveWhitespace: true },
+			{
+				tag: 'table thead ~ tbody th',
+				priority: 70,
+				preserveWhitespace: true,
+			},
+			{
+				tag: 'table thead ~ tbody td',
+				priority: 70,
+				preserveWhitespace: true,
+			},
 		]
 	},
 
@@ -60,7 +69,10 @@ export default TableCell.extend({
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		const attributes = mergeAttributes(
+			this.options.HTMLAttributes,
+			HTMLAttributes,
+		)
 		if (attributes.colspan === 1) {
 			delete attributes.colspan
 		}
@@ -85,8 +97,13 @@ export default TableCell.extend({
 						const childNodes = []
 						slice.content.descendants((node, pos) => {
 							if (node.isText) {
-								childNodes.push(schema.text(node.textContent, node.marks))
-							} else if (childNodes.length !== 0 && node.type === schema.nodes.hardBreak) {
+								childNodes.push(
+									schema.text(node.textContent, node.marks),
+								)
+							} else if (
+								childNodes.length !== 0
+								&& node.type === schema.nodes.hardBreak
+							) {
 								childNodes.push(node)
 							}
 						})

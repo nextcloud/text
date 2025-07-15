@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div :id="randomID"
+	<div
+		:id="randomID"
 		class="text-menubar"
 		data-text-el="menubar"
 		role="region"
@@ -17,7 +18,8 @@
 		}">
 		<HelpModal v-if="displayHelp" @close="hideHelp" />
 
-		<div v-if="isRichEditor"
+		<div
+			v-if="isRichEditor"
 			ref="menubar"
 			role="toolbar"
 			class="text-menubar__entries"
@@ -25,7 +27,14 @@
 			@keyup.left.stop="handleToolbarNavigation"
 			@keyup.right.stop="handleToolbarNavigation">
 			<!-- The visible inline actions -->
-			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
+			<component
+				:is="
+					actionEntry.component
+						? actionEntry.component
+						: actionEntry.children
+							? 'ActionList'
+							: 'ActionSingle'
+				"
 				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
@@ -35,13 +44,17 @@
 				@click="activeMenuEntry = index" />
 
 			<!-- The remaining actions -->
-			<ActionList ref="remainingEntries"
+			<ActionList
+				ref="remainingEntries"
 				:action-entry="hiddenEntries"
 				:can-be-focussed="activeMenuEntry === visibleEntries.length"
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton v-if="canTranslate" close-after-click @click="showTranslate">
+					<NcActionButton
+						v-if="canTranslate"
+						close-after-click
+						@click="showTranslate">
 						<template #icon>
 							<TranslateVariant />
 						</template>
@@ -60,28 +73,26 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
-import { loadState } from '@nextcloud/initial-state'
-import { useElementSize } from '@vueuse/core'
 import { emit } from '@nextcloud/event-bus'
+import { loadState } from '@nextcloud/initial-state'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
+import { useElementSize } from '@vueuse/core'
+import { ref } from 'vue'
 
+import { t } from '@nextcloud/l10n'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import HelpModal from '../HelpModal.vue'
+import { DotsHorizontal, TranslateVariant } from '../icons.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import CharacterCount from './CharacterCount.vue'
-import HelpModal from '../HelpModal.vue'
-import ToolBarLogic from './ToolBarLogic.js'
-import { ReadOnlyDoneEntries, MenuEntries } from './entries.js'
+import { MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
-import { DotsHorizontal, TranslateVariant } from '../icons.js'
-import {
-	useIsMobileMixin,
-} from '../Editor.provider.ts'
-import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { useEditor } from '../../composables/useEditor.ts'
-import { t } from '@nextcloud/l10n'
+import ToolBarLogic from './ToolBarLogic.js'
 
 export default {
 	name: 'MenuBar',
@@ -96,9 +107,7 @@ export default {
 		TranslateVariant,
 	},
 	extends: ToolBarLogic,
-	mixins: [
-		useIsMobileMixin,
-	],
+	mixins: [useIsMobileMixin],
 	provide() {
 		const val = {}
 
@@ -131,11 +140,14 @@ export default {
 
 	data() {
 		return {
-			entries: this.openReadOnly ? [...ReadOnlyDoneEntries, ...MenuEntries] : [...MenuEntries],
-			randomID: `menu-bar-${(Math.ceil((Math.random() * 10000) + 500)).toString(16)}`,
+			entries: this.openReadOnly
+				? [...ReadOnlyDoneEntries, ...MenuEntries]
+				: [...MenuEntries],
+			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
-			canTranslate: loadState('text', 'translation_languages', []).from?.length > 0,
+			canTranslate:
+				loadState('text', 'translation_languages', []).from?.length > 0,
 			resize: null,
 		}
 	},
@@ -159,12 +171,26 @@ export default {
 				// If this block has menu entries, it should be separated for better visibility and a11y (menu item radio grouping)
 				if (children.length > 1) {
 					const hasPreviousItem = acc.length && !acc.at(-1).isSeparator
-					const separatorBefore = hasPreviousItem ? [{ key: `separator-before-${entry.id}`, isSeparator: true }] : []
+					const separatorBefore = hasPreviousItem
+						? [
+								{
+									key: `separator-before-${entry.id}`,
+									isSeparator: true,
+								},
+							]
+						: []
 
 					const hasNextItem = index !== remainingEntries.length - 1
-					const separatorAfter = hasNextItem ? [{ key: `separator-after-${entry.id}`, isSeparator: true }] : []
+					const separatorAfter = hasNextItem
+						? [{ key: `separator-after-${entry.id}`, isSeparator: true }]
+						: []
 
-					return [...acc, ...separatorBefore, ...children, ...separatorAfter]
+					return [
+						...acc,
+						...separatorBefore,
+						...children,
+						...separatorAfter,
+					]
 				}
 				return [...acc, ...children]
 			}, [])
@@ -184,9 +210,7 @@ export default {
 		iconsLimit() {
 			// leave some buffer - this is necessary so the bar does not wrap during resizing
 			const spaceToFill = this.width - 4
-			const spacePerSlot = this.$isMobile
-				? this.iconWidth
-				: this.iconWidth + 2
+			const spacePerSlot = this.$isMobile ? this.iconWidth : this.iconWidth + 2
 			const slots = Math.floor(spaceToFill / spacePerSlot)
 			// Leave one slot empty for the three dot menu
 			return slots - 1
@@ -199,7 +223,6 @@ export default {
 		})
 	},
 	methods: {
-
 		showHelp() {
 			this.displayHelp = true
 		},
@@ -208,7 +231,10 @@ export default {
 			this.displayHelp = false
 		},
 		showTranslate() {
-			const { commands, view: { state }} = this.editor
+			const {
+				commands,
+				view: { state },
+			} = this.editor
 			const { from, to } = state.selection
 			let selectedText = state.doc.textBetween(from, to, ' ')
 
@@ -226,62 +252,66 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.text-menubar {
-		--background-blur: blur(10px);
-		position: sticky;
-		top: 0;
-		bottom: var(--default-grid-baseline);
-		width: 100%;
-		z-index: 10021; // above modal-header so menubar is always on top
-		background-color: var(--color-main-background-translucent);
-		backdrop-filter: var(--background-blur);
-		max-height: var(--default-clickable-area); // important for mobile so that the buttons are always inside the container
-		border-bottom: 1px solid var(--color-border);
-		padding-block: var(--default-grid-baseline);
+.text-menubar {
+	--background-blur: blur(10px);
+	position: sticky;
+	top: 0;
+	bottom: var(--default-grid-baseline);
+	width: 100%;
+	z-index: 10021; // above modal-header so menubar is always on top
+	background-color: var(--color-main-background-translucent);
+	backdrop-filter: var(--background-blur);
+	max-height: var(
+		--default-clickable-area
+	); // important for mobile so that the buttons are always inside the container
+	border-bottom: 1px solid var(--color-border);
+	padding-block: var(--default-grid-baseline);
 
-		visibility: hidden;
+	visibility: hidden;
 
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	&.is-mobile {
+		border-top: 1px solid var(--color-border);
+		border-bottom: unset;
+	}
+
+	&.text-menubar--ready:not(.text-menubar--hide) {
+		visibility: visible;
+		animation-name: fadeInDown;
+		animation-duration: 0.3s;
+	}
+
+	&.text-menubar--hide {
+		opacity: 0;
+		transition:
+			visibility 0.2s 0.4s,
+			opacity 0.2s 0.4s;
+	}
+	.text-menubar__entries {
 		display: flex;
+		flex-grow: 1;
+		margin-left: max(0px, calc((100% - var(--text-editor-max-width)) / 2));
+	}
+
+	.text-menubar__slot {
 		justify-content: flex-end;
-		align-items: center;
+		display: flex;
+		min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
+	}
 
-		&.is-mobile {
-			border-top: 1px solid var(--color-border);
-			border-bottom: unset;
-		}
-
-		&.text-menubar--ready:not(.text-menubar--hide) {
-			visibility: visible;
-			animation-name: fadeInDown;
-			animation-duration: 0.3s;
-		}
-
-		&.text-menubar--hide {
-			opacity: 0;
-			transition: visibility 0.2s 0.4s, opacity 0.2s 0.4s;
-		}
+	&.text-menubar--is-workspace {
 		.text-menubar__entries {
-			display: flex;
-			flex-grow: 1;
-			margin-left: max(0px, calc((100% - var(--text-editor-max-width)) / 2));
-		}
-
-		.text-menubar__slot {
-			justify-content: flex-end;
-			display: flex;
-			min-width: max(0px, min(100px, (100% - var(--text-editor-max-width)) / 2));
-		}
-
-		&.text-menubar--is-workspace {
-			.text-menubar__entries {
-				margin-left: 0;
-			}
-		}
-
-		@media (max-width: 660px) {
-			.text-menubar__entries {
-				margin-left: 0;
-			}
+			margin-left: 0;
 		}
 	}
+
+	@media (max-width: 660px) {
+		.text-menubar__entries {
+			margin-left: 0;
+		}
+	}
+}
 </style>

@@ -7,16 +7,17 @@ import { emojiSearch } from '@nextcloud/vue/functions/emoji'
 import createSuggestions from '../suggestions.js'
 import EmojiList from './EmojiList.vue'
 
-export default () => createSuggestions({
-	listComponent: EmojiList,
-	items: ({ query }) => {
-		return emojiSearch(query)
-	},
-	command: ({ editor, range, props }) => {
-		editor
-			.chain()
-			.focus()
-			.insertContentAt(range, props.native + ' ')
-			.run()
-	},
-})
+export default () =>
+	createSuggestions({
+		listComponent: EmojiList,
+		items: ({ query }) => {
+			return emojiSearch(query)
+		},
+		command: ({ editor, range, props }) => {
+			editor
+				.chain()
+				.focus()
+				.insertContentAt(range, props.native + ' ')
+				.run()
+		},
+	})

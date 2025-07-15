@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { expect } from 'vitest'
 import { Node } from '@tiptap/pm/model'
 import { builders } from 'prosemirror-test-builder'
+import { expect } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.js'
 
 /**
@@ -46,25 +46,32 @@ function createDocumentString(node) {
 		const attrString = Object.keys(attrs)
 			.map((key) => {
 				// null is the TipTap default so we ignore it (e.g. a value of `unknown` must be manually set by the application)
-				return (attrs[key] === null)
+				return attrs[key] === null
 					? undefined
-					: key + '=' + (typeof attrs[key] === 'string' ? `"${attrs[key]}"` : attrs[key])
+					: key
+							+ '='
+							+ (typeof attrs[key] === 'string'
+								? `"${attrs[key]}"`
+								: attrs[key])
 			})
-			.filter(v => !!v)
+			.filter((v) => !!v)
 			.join(',')
 		return attrString ? `<${attrString}>` : ''
 	}
 
 	const stringifyNode = (node) => {
 		const name = node.type.name
-		if (name === 'text') return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"'
+		if (name === 'text')
+			return '"' + node.text.replace('"', '\\"').replace('\n', '\\n') + '"'
 
 		const children = node.content.content.map(createDocumentString)
 		return name + extractAttributes(node) + '(' + children.join(',') + ')'
 	}
 
 	// First extract marks and place them like nodes in the string
-	const marks = node.marks.map(mark => mark.type.name + extractAttributes(mark) + '(')
+	const marks = node.marks.map(
+		(mark) => mark.type.name + extractAttributes(mark) + '(',
+	)
 	return marks.join('') + stringifyNode(node) + ')'.repeat(marks.length)
 }
 
@@ -84,5 +91,7 @@ function createDocumentString(node) {
 export function expectDocument(subject, expected) {
 	expect(typeof subject).toBe('object')
 	expect(typeof expected).toBe('object')
-	expect(createDocumentString(subject)).toBe(createDocumentString(doc(expected, p())))
+	expect(createDocumentString(subject)).toBe(
+		createDocumentString(doc(expected, p())),
+	)
 }

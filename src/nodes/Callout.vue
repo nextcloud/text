@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import { Positive, Warn, Danger, Info } from '../components/icons.js'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import { Danger, Info, Positive, Warn } from '../components/icons.js'
 
 const ICONS_MAP = {
 	info: Info,

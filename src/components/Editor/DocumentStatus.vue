@@ -6,7 +6,8 @@
 <template>
 	<div class="document-status" :class="{ mobile: isMobile }">
 		<div class="status-wrapper">
-			<SyncStatus :idle="idle"
+			<SyncStatus
+				:idle="idle"
 				:sync-error="syncError"
 				:has-connection-issue="hasConnectionIssue"
 				@reconnect="$emit('reconnect')" />
@@ -20,12 +21,11 @@
 </template>
 
 <script>
-
+import { t } from '@nextcloud/l10n'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import Lock from 'vue-material-design-icons/Lock.vue'
 import isMobile from '../../mixins/isMobile.js'
 import SyncStatus from './DocumentStatus/SyncStatus.vue'
-import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'DocumentStatus',
@@ -70,20 +70,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.document-status {
-		position: sticky;
-		bottom: calc(var(--default-grid-baseline) * 2);
-		z-index: 100000;
-		// max-height: 50px;
-		margin-inline: auto;
-		display: flex;
-		width: 100%;
-		justify-content: center;
-	}
-	.document-status.mobile {
-		bottom: 0;
-	}
-	.status-wrapper {
-		background-color: var(--color-main-background);
-	}
+.document-status {
+	position: sticky;
+	bottom: calc(var(--default-grid-baseline) * 2);
+	z-index: 100000;
+	// max-height: 50px;
+	margin-inline: auto;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+.document-status.mobile {
+	bottom: 0;
+}
+.status-wrapper {
+	background-color: var(--color-main-background);
+}
 </style>

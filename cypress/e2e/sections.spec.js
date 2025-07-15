@@ -9,24 +9,22 @@ const user = randUser()
 const fileName = 'empty.md'
 
 const clickOutline = () => {
-	cy.getActionEntry('headings')
-		.click()
+	cy.getActionEntry('headings').click()
 
-	cy.get('.v-popper__wrapper .open').getActionEntry('outline')
-		.click()
+	cy.get('.v-popper__wrapper .open').getActionEntry('outline').click()
 }
 
 let currentFolder
 
 describe('Content Sections', () => {
-	before(function() {
+	before(function () {
 		cy.createUser(user)
 	})
 
-	beforeEach(function() {
+	beforeEach(function () {
 		cy.clearAllSessionStorage()
 		cy.login(user)
-		cy.createTestFolder().then(folderName => {
+		cy.createTestFolder().then((folderName) => {
 			currentFolder = folderName
 			cy.uploadFile(fileName, 'text/markdown', `${currentFolder}/${fileName}`)
 		})
@@ -36,14 +34,20 @@ describe('Content Sections', () => {
 		it('Anchor exists', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
+			cy.getContent().type('# Heading\nText\n## Heading 2\nText\n## Heading 2')
 			cy.getContent()
-				.type('# Heading\nText\n## Heading 2\nText\n## Heading 2')
-			cy.getContent().find('a.heading-anchor')
+				.find('a.heading-anchor')
 				.should(($anchor) => {
 					expect($anchor).to.have.length(3)
-					expect($anchor.eq(0)).to.have.attr('href').and.equal('#h-heading')
-					expect($anchor.eq(1)).to.have.attr('href').and.equal('#h-heading-2')
-					expect($anchor.eq(2)).to.have.attr('href').and.equal('#h-heading-2--1')
+					expect($anchor.eq(0))
+						.to.have.attr('href')
+						.and.equal('#h-heading')
+					expect($anchor.eq(1))
+						.to.have.attr('href')
+						.and.equal('#h-heading-2')
+					expect($anchor.eq(2))
+						.to.have.attr('href')
+						.and.equal('#h-heading-2--1')
 				})
 		})
 
@@ -71,18 +75,16 @@ describe('Content Sections', () => {
 		})
 
 		it('scrolls anchor into view', () => {
-			cy.uploadFile('anchors.md', 'text/markdown', `${currentFolder}/anchors.md`)
+			cy.uploadFile(
+				'anchors.md',
+				'text/markdown',
+				`${currentFolder}/anchors.md`,
+			)
 			cy.visitTestFolder()
 			cy.openFile('anchors.md')
-			cy.getContent()
-				.get('h2 > a[id="h-bottom"]')
-				.should('not.be.inViewport')
-			cy.getContent()
-				.find('a[href="#h-bottom"]:not(.heading-anchor)')
-				.click()
-			cy.getContent()
-				.get('h2 > a[id="h-bottom"]')
-				.should('be.inViewport')
+			cy.getContent().get('h2 > a[id="h-bottom"]').should('not.be.inViewport')
+			cy.getContent().find('a[href="#h-bottom"]:not(.heading-anchor)').click()
+			cy.getContent().get('h2 > a[id="h-bottom"]').should('be.inViewport')
 		})
 
 		it('Can change heading level', () => {
@@ -94,12 +96,11 @@ describe('Content Sections', () => {
 				.find('h1 > a')
 				.should('have.attr', 'id')
 				.and('equal', 'h-heading-1')
-			cy.getContent()
-				.find('h1')
-				.click({ force: true, position: 'center' })
+			cy.getContent().find('h1').click({ force: true, position: 'center' })
 			cy.getActionEntry('headings').click()
 			cy.get('.v-popper__wrapper .open').getActionEntry('headings-h3').click()
-			cy.getContent().find('h3 > a')
+			cy.getContent()
+				.find('h3 > a')
 				.should('have.attr', 'id')
 				.and('equal', 'h-heading-1')
 		})
@@ -109,19 +110,16 @@ describe('Content Sections', () => {
 		it('sidebar toc', () => {
 			cy.visitTestFolder()
 			cy.openFile(fileName, { force: true })
-			cy.getContent()
-				.type('# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n')
+			cy.getContent().type(
+				'# T1 \n## T2 \n### T3 \n#### T4 \n##### T5 \n###### T6\n',
+			)
 			cy.closeFile()
 				.then(() => cy.openFile(fileName, { force: true }))
 				.then(clickOutline)
 
-			cy.getOutline()
-				.find('header')
-				.should('exist')
+			cy.getOutline().find('header').should('exist')
 
-			cy.getTOC()
-				.find('ul li')
-				.should('have.length', 6)
+			cy.getTOC().find('ul li').should('have.length', 6)
 			cy.getTOC()
 				.find('ul li')
 				.each((el, index) => {
@@ -138,12 +136,9 @@ describe('Content Sections', () => {
 
 		it('empty toc', () => {
 			cy.visitTestFolder()
-			cy.openFile(fileName, { force: true })
-				.then(clickOutline)
+			cy.openFile(fileName, { force: true }).then(clickOutline)
 
-			cy.getOutline()
-				.find('ul')
-				.should('be.empty')
+			cy.getOutline().find('ul').should('be.empty')
 		})
 	})
 })

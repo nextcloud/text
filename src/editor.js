@@ -3,9 +3,14 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue from 'vue'
 import { subscribe } from '@nextcloud/event-bus'
-import { EDITOR_UPLOAD, HOOK_MENTION_SEARCH, HOOK_MENTION_INSERT, ATTACHMENT_RESOLVER } from './components/Editor.provider.ts'
+import Vue from 'vue'
+import {
+	ATTACHMENT_RESOLVER,
+	EDITOR_UPLOAD,
+	HOOK_MENTION_INSERT,
+	HOOK_MENTION_SEARCH,
+} from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
@@ -17,7 +22,6 @@ window.OCA.Text = {
 }
 
 class TextEditorEmbed {
-
 	#vm
 	#data
 	constructor(vm, data) {
@@ -60,8 +64,8 @@ class TextEditorEmbed {
 	}
 
 	onSearch(onSearchCallback = () => {}) {
-	  subscribe('text:editor:search-results', onSearchCallback)
-	  return this
+		subscribe('text:editor:search-results', onSearchCallback)
+		return this
 	}
 
 	render(el) {
@@ -120,7 +124,11 @@ class TextEditorEmbed {
 	}
 
 	insertAtCursor(content) {
-		this.#getEditorComponent().editor?.chain().insertContent(content).focus().run()
+		this.#getEditorComponent()
+			.editor?.chain()
+			.insertContent(content)
+			.focus()
+			.run()
 	}
 
 	focus() {
@@ -130,29 +138,34 @@ class TextEditorEmbed {
 	debugYjs() {
 		const yjsData = this.#getEditorComponent().debugYjsData()
 
-		const intro = 'Editor Yjs debug data. Copy the object below that starts with "clientId".'
+		const intro =
+			'Editor Yjs debug data. Copy the object below that starts with "clientId".'
 		const introChrome = '- In Chrome, select "Copy" at the end of the line.'
-		const introFirefox = '- In Firefox, right-click on the object and select "Copy object".'
+		const introFirefox =
+			'- In Firefox, right-click on the object and select "Copy object".'
 		const styleBold = 'font-weight: bold;'
 		const styleItalic = 'font-weight: normal; font-style: italic;'
 		console.warn(JSON.stringify(yjsData, null, ' '))
-		console.warn('%c%s\n%c%s\n%s', styleBold, intro, styleItalic, introChrome, introFirefox)
+		console.warn(
+			'%c%s\n%c%s\n%s',
+			styleBold,
+			intro,
+			styleItalic,
+			introChrome,
+			introFirefox,
+		)
 	}
 
 	#registerDebug() {
 		if (window?._oc_debug) {
 			this.vm = this.#vm
-			window.OCA.Text._debug = [
-				...(window.OCA.Text._debug ?? []),
-				this,
-			]
+			window.OCA.Text._debug = [...(window.OCA.Text._debug ?? []), this]
 		}
 	}
-
 }
 
 window.OCA.Text.apiVersion = apiVersion
-window.OCA.Text.createEditor = async function({
+window.OCA.Text.createEditor = async function ({
 	// Element to render the editor to
 	el,
 
@@ -181,8 +194,12 @@ window.OCA.Text.createEditor = async function({
 	onMentionInsert = undefined,
 	onSearch = undefined,
 }) {
-	const { default: MarkdownContentEditor } = await import(/* webpackChunkName: "editor" */'./components/Editor/MarkdownContentEditor.vue')
-	const { default: Editor } = await import(/* webpackChunkName: "editor" */'./components/Editor.vue')
+	const { default: MarkdownContentEditor } = await import(
+		/* webpackChunkName: "editor" */ './components/Editor/MarkdownContentEditor.vue'
+	)
+	const { default: Editor } = await import(
+		/* webpackChunkName: "editor" */ './components/Editor.vue'
+	)
 
 	const data = Vue.observable({
 		showOutlineOutside: false,
@@ -202,10 +219,12 @@ window.OCA.Text.createEditor = async function({
 				[HOOK_MENTION_INSERT]: sessionEditor ? true : onMentionInsert,
 				[ATTACHMENT_RESOLVER]: {
 					resolve(src, preferRaw) {
-						return [{
-							type: 'image',
-							url: src,
-						}]
+						return [
+							{
+								type: 'image',
+								url: src,
+							},
+						]
 					},
 				},
 			}
@@ -213,41 +232,41 @@ window.OCA.Text.createEditor = async function({
 		data() {
 			return data
 		},
-		render: h => {
+		render: (h) => {
 			const scopedSlots = readonlyBar?.component
 				? {
-					readonlyBar: () => {
-						return h(readonlyBar.component, {
-							props: data.readonlyBarProps,
-						})
-					},
-				}
+						readonlyBar: () => {
+							return h(readonlyBar.component, {
+								props: data.readonlyBarProps,
+							})
+						},
+					}
 				: {}
 
 			return sessionEditor
 				? h(Editor, {
-					props: {
-						fileId,
-						relativePath: filePath,
-						shareToken,
-						mime: 'text/markdown',
-						active: true,
-						autofocus,
-						showOutlineOutside: data.showOutlineOutside,
-					},
-					scopedSlots,
-				})
+						props: {
+							fileId,
+							relativePath: filePath,
+							shareToken,
+							mime: 'text/markdown',
+							active: true,
+							autofocus,
+							showOutlineOutside: data.showOutlineOutside,
+						},
+						scopedSlots,
+					})
 				: h(MarkdownContentEditor, {
-					props: {
-						fileId,
-						content: data.content,
-						relativePath: filePath,
-						shareToken,
-						readOnly: data.readOnly,
-						showOutlineOutside: data.showOutlineOutside,
-					},
-					scopedSlots,
-				})
+						props: {
+							fileId,
+							content: data.content,
+							relativePath: filePath,
+							shareToken,
+							readOnly: data.readOnly,
+							showOutlineOutside: data.showOutlineOutside,
+						},
+						scopedSlots,
+					})
 		},
 	})
 	return new TextEditorEmbed(vm, data)

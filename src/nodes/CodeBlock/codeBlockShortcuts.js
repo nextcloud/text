@@ -11,7 +11,7 @@ const codeBlockShortcuts = {
 	 * @param {object} object - object
 	 * @param {object} object.editor - the editor
 	 */
-	'Tab': ({ editor }) => {
+	Tab: ({ editor }) => {
 		if (!editor.isActive('codeBlock')) {
 			return
 		}

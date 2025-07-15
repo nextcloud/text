@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from './../../../src/markdownit/index.js'
-import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
 import { createMarkdownSerializer } from './../../../src/extensions/Markdown.js'
+import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
+import markdownit from './../../../src/markdownit/index.js'
 
 /**
  *
@@ -38,8 +38,11 @@ export function runCommands(editor) {
  */
 function findCommand(editor) {
 	const doc = editor.state.doc
-	return findChildren(doc, child => {
-		return child.isText && Object.prototype.hasOwnProperty.call(editor.commands, child.text)
+	return findChildren(doc, (child) => {
+		return (
+			child.isText
+			&& Object.prototype.hasOwnProperty.call(editor.commands, child.text)
+		)
 	})[0]
 }
 

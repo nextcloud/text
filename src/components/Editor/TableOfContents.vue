@@ -4,17 +4,25 @@
 -->
 
 <template>
-	<div data-text-el="editor-table-of-contents" :class="{ '--initial-render': initialRender }" class="editor--toc">
+	<div
+		data-text-el="editor-table-of-contents"
+		:class="{ '--initial-render': initialRender }"
+		class="editor--toc">
 		<ul class="editor--toc__list">
-			<li v-for="(heading) in headings"
+			<li
+				v-for="heading in headings"
 				:key="heading.id"
 				:data-toc-level="heading.level"
 				class="editor--toc__item"
 				:class="{
 					[`editor--toc__item--${heading.level}`]: true,
-					[`editor--toc__item--previous-${heading.previous}`]: heading.previous > 0,
+					[`editor--toc__item--previous-${heading.previous}`]:
+						heading.previous > 0,
 				}">
-				<a :href="`#${heading.id}`" class="editor--toc__item-link" @click.prevent="goto(heading)">
+				<a
+					:href="`#${heading.id}`"
+					class="editor--toc__item-link"
+					@click.prevent="goto(heading)">
 					{{ heading.text }}
 				</a>
 			</li>
@@ -51,12 +59,16 @@ export default {
 			const element = this.$root.$el.querySelector(`#${heading.id}`)
 			element.scrollIntoView({ block: 'start', behavior: 'smooth' })
 			this.$nextTick(() => {
-				window.history.replaceState(window.history.state, '', `#${heading.id}`)
+				window.history.replaceState(
+					window.history.state,
+					'',
+					`#${heading.id}`,
+				)
 			})
 		},
 		updateHeadings() {
-			this.headings = headingAnchorPluginKey
-				.getState(this.editor.state)?.headings ?? []
+			this.headings =
+				headingAnchorPluginKey.getState(this.editor.state)?.headings ?? []
 		},
 	},
 }
@@ -104,7 +116,9 @@ export default {
 		}
 
 		&-link {
-			scroll-margin-top: calc(var(--default-clickable-area) + 4 * var(--default-grid-baseline));
+			scroll-margin-top: calc(
+				var(--default-clickable-area) + 4 * var(--default-grid-baseline)
+			);
 		}
 
 		&--1 {
@@ -136,39 +150,38 @@ export default {
 		}
 
 		&--previous-1 {
-			--initial-padding-left: 0rem
+			--initial-padding-left: 0rem;
 		}
 
 		&--previous-2 {
-			--initial-padding-left: 1rem
+			--initial-padding-left: 1rem;
 		}
 
 		&--previous-3 {
-			--initial-padding-left: 2rem
+			--initial-padding-left: 2rem;
 		}
 
 		&--previous-4 {
-			--initial-padding-left: 3rem
+			--initial-padding-left: 3rem;
 		}
 
 		&--previous-5 {
-			--initial-padding-left: 4rem
+			--initial-padding-left: 4rem;
 		}
 
 		&--previous-6 {
-			--initial-padding-left: 5rem
+			--initial-padding-left: 5rem;
 		}
 	}
 }
 
 @keyframes initialPadding {
-  from {
-	transform: translateX(var(--initial-padding-left, initial));
-  }
+	from {
+		transform: translateX(var(--initial-padding-left, initial));
+	}
 
-  to {
-	transform: translateX(var(--padding-left, 0rem));
-  }
+	to {
+		transform: translateX(var(--padding-left, 0rem));
+	}
 }
-
 </style>
