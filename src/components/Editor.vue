@@ -131,6 +131,7 @@ import { provideConnection } from '../composables/useConnection.ts'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
+import { t } from '@nextcloud/l10n'
 
 export default defineComponent({
 	name: 'Editor',

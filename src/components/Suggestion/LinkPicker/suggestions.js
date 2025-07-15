@@ -10,6 +10,7 @@ import { MenuEntries } from './../../Menu/entries.js'
 import { getIsActive } from '../../Menu/utils.js'
 import markdownit from '../../../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../../../markdownit/shouldInterpretAsMarkdown.js'
+import { t } from '@nextcloud/l10n'
 
 const suggestGroupFormat = t('text', 'Formatting')
 const suggestGroupPicker = t('text', 'Smart picker')

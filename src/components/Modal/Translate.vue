@@ -81,6 +81,7 @@ import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextArea from '@nextcloud/vue/components/NcTextArea'
 import { useIsMobileMixin } from '../Editor.provider.ts'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'Translate',
@@ -220,6 +221,7 @@ export default {
 			this.disableFromLanguageSelect = false
 			this.autosize()
 		},
+		t,
 	},
 }
 </script>

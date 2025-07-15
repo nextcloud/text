@@ -30,6 +30,7 @@ import { ReadOnlyEditEntries, OutlineEntries } from './entries.js'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import ToolBarLogic from './ToolBarLogic.js'
+import { t } from '@nextcloud/l10n'
 
 export default defineComponent({
 	name: 'ReadonlyBar',
@@ -49,6 +50,9 @@ export default defineComponent({
 			entries: this.openReadOnly ? [...ReadOnlyEditEntries, ...OutlineEntries] : [...OutlineEntries],
 		}
 	},
+	methods: {
+		t,
+	}
 })
 </script>
 

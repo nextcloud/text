@@ -8,8 +8,5 @@ import 'vite/modulepreload-polyfill'
 import Vue from 'vue'
 import DirectEditing from './views/DirectEditing.vue'
 
-Vue.prototype.t = window.t
-Vue.prototype.OCA = window.OCA
-
 const DirectView = Vue.extend(DirectEditing)
 new DirectView().$mount('#app-content')

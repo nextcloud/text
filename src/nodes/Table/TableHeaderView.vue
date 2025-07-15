@@ -85,6 +85,7 @@ import {
 	TableAddColumnBefore,
 	TableAddColumnAfter,
 } from '../../components/icons.js'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'TableHeaderView',
@@ -178,6 +179,7 @@ export default {
 				.addColumnAfter()
 				.run()
 		},
+		t,
 	},
 }
 </script>

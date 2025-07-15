@@ -143,6 +143,7 @@ import { useAttachmentResolver } from '../components/Editor.provider.ts'
 import { emit } from '@nextcloud/event-bus'
 import { NodeViewWrapper } from '@tiptap/vue-2'
 import { Image as ImageIcon, Delete as DeleteIcon } from '../components/icons.js'
+import { t } from '@nextcloud/l10n'
 
 class LoadImageError extends Error {
 	constructor(reason, imageUrl) {
@@ -436,6 +437,7 @@ export default {
 			emit('text:image-node:delete', this.imageUrl)
 			this.deleteNode()
 		},
+		t,
 	},
 }
 </script>

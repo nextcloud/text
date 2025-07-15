@@ -271,6 +271,7 @@
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import { isMobilePlatform } from '../helpers/platform.js'
 import { TRANSLATIONS, MODIFIERS } from './Menu/keys.js'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'HelpModal',
@@ -304,6 +305,7 @@ export default {
 		},
 	},
 	methods: {
+		t,
 		toggleFormatted(style) {
 			this.formatted[style] = !this.formatted[style]
 		},

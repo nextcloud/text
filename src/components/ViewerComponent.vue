@@ -42,13 +42,10 @@ import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import PlainTextReader from './PlainTextReader.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
-import { translate, translatePlural } from '@nextcloud/l10n'
+import { t } from '@nextcloud/l10n'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
 
 import getEditorInstance from './Editor.singleton.js'
-
-Vue.prototype.t = translate
-Vue.prototype.n = translatePlural
 
 export default {
 	name: 'ViewerComponent',
@@ -152,7 +149,6 @@ export default {
 	},
 
 	methods: {
-		t: translate,
 		async loadFileContent() {
 			if (this.useSourceView) {
 				if (this.isEncrypted) {
@@ -186,6 +182,7 @@ export default {
 				}
 			})
 		},
+		t,
 	},
 }
 </script>

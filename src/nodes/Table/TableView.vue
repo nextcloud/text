@@ -50,6 +50,7 @@ import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { TableSettings, Delete, TableAddColumnAfter, TableAddRowAfter } from '../../components/icons.js'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'TableView',
@@ -115,6 +116,7 @@ export default {
 				.setTextSelection(this.getPos() + this.node.nodeSize + 1)
 				.run()
 		},
+		t,
 	},
 }
 </script>

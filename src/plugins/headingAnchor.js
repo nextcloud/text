@@ -6,6 +6,7 @@
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import extractHeadings from './extractHeadings.js'
+import { t } from '@nextcloud/l10n'
 
 export const headingAnchorPluginKey = new PluginKey('headingAnchor')
 
@@ -132,7 +133,7 @@ function anchorForHeading(heading) {
 	el.setAttribute('aria-hidden', 'true')
 	el.className = 'heading-anchor'
 	el.setAttribute('href', `#${heading.id}`)
-	el.setAttribute('title', window.t('text', 'Link to this section'))
+	el.setAttribute('title', t('text', 'Link to this section'))
 	el.setAttribute('contenteditable', 'false')
 	el.addEventListener('click', handleClick)
 	return el

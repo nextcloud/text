@@ -12,10 +12,6 @@ import 'vite/modulepreload-polyfill'
 
 const apiVersion = '1.2'
 
-Vue.prototype.t = window.t
-Vue.prototype.n = window.n
-Vue.prototype.OCA = window.OCA
-
 window.OCA.Text = {
 	...window.OCA.Text,
 }

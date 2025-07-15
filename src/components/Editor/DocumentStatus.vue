@@ -25,6 +25,7 @@ import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import Lock from 'vue-material-design-icons/Lock.vue'
 import isMobile from '../../mixins/isMobile.js'
 import SyncStatus from './DocumentStatus/SyncStatus.vue'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'DocumentStatus',

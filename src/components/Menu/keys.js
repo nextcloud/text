@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-const t = window.t
+import { t } from '@nextcloud/l10n'
 const isMac = (navigator.userAgent.includes('Mac'))
 
 const MODIFIERS = {

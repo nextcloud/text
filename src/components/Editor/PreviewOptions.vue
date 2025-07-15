@@ -54,6 +54,7 @@ import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import DeleteIcon from 'vue-material-design-icons/Delete.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'PreviewOptions',
@@ -102,6 +103,7 @@ export default {
 			if (!this.href) return
 			window.open(this.href, '_blank').focus()
 		},
+		t,
 	},
 }
 </script>

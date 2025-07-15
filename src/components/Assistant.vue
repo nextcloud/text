@@ -169,6 +169,7 @@ import { FloatingMenu } from '@tiptap/vue-2'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import markdownit from '../markdownit/index.js'
 import shouldInterpretAsMarkdown from '../markdownit/shouldInterpretAsMarkdown.js'
+import { t } from '@nextcloud/l10n'
 
 const limitInRange = (num, min, max) => {
 	return Math.min(Math.max(parseInt(num), parseInt(min)), parseInt(max))
@@ -436,6 +437,7 @@ export default {
 		floatingShow() {
 			return true
 		},
+		t,
 	},
 }
 </script>

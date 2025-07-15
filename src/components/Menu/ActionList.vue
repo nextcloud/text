@@ -41,6 +41,7 @@ import { getActionState, getIsActive } from './utils.js'
 import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
 import { useMenuIDMixin } from './MenuBar.provider.js'
 import debounce from 'debounce'
+import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'ActionList',

@@ -106,6 +106,7 @@ import NcActionLink from '@nextcloud/vue/components/NcActionLink'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 
+import { t } from '@nextcloud/l10n'
 import { v4 as uuidv4 } from 'uuid'
 
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
@@ -152,6 +153,7 @@ export default {
 		return {
 			/** The lazy loaded mermaid js module */
 			mermaid: null,
+			t,
 		}
 	},
 	data() {
