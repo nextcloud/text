@@ -133,19 +133,6 @@ class PollingBackend {
 		this.#pollActive = false
 	}
 
-	handleNotifyPush({
-		messageType: _,
-		messageBody,
-	}: {
-		messageType: unknown
-		messageBody: { documentId: number; response: PollData }
-	}) {
-		if (messageBody.documentId !== this.#connection.documentId) {
-			return
-		}
-		this._handleResponse({ data: messageBody.response })
-	}
-
 	_handleResponse({ data }: { data: PollData }) {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0

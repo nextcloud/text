@@ -6,7 +6,6 @@ import {
 	davGetClient,
 	davGetDefaultPropfind,
 	davResultToNode,
-	davRootPath,
 } from '@nextcloud/files'
 import type { FileStat, ResponseDataDetailed } from 'webdav'
 import type { Node } from '@nextcloud/files'
