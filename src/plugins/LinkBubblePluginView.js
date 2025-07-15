@@ -5,8 +5,8 @@
 
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
-import { domHref } from '../helpers/links.js'
 import LinkBubbleView from '../components/Link/LinkBubbleView.vue'
+import { domHref } from '../helpers/links.js'
 
 class LinkBubblePluginView {
 	#component = null

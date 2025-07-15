@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownitNewline from 'markdown-it/lib/rules_inline/newline.mjs'
 import markdownitEscape from 'markdown-it/lib/rules_inline/escape.mjs'
+import markdownitNewline from 'markdown-it/lib/rules_inline/newline.mjs'
 
 /**
  * Add information about used markdown syntax to HTML hard breaks

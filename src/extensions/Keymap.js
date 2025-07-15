@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit } from '@nextcloud/event-bus'
 import { Extension } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
-import { emit } from '@nextcloud/event-bus'
 
 const Keymap = Extension.create({
 	name: 'CustomKeymap',

@@ -5,9 +5,9 @@
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import extractLinkParagraphs from './extractLinkParagraphs.js'
 import Vue from 'vue'
 import PreviewOptions from '../components/Editor/PreviewOptions.vue'
+import extractLinkParagraphs from './extractLinkParagraphs.js'
 
 export const previewOptionsPluginKey = new PluginKey('linkParagraphMenu')
 

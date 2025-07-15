@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { Editor } from '@tiptap/core'
 import { EditorState, Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import { Editor } from '@tiptap/core'
 import Vue from 'vue'
 import SmartPickerMenu from '../components/Editor/SmartPickerMenu.vue'
 

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { logger } from '../helpers/logger.js'
 import { decodeArrayBuffer } from '../helpers/base64.ts'
+import { logger } from '../helpers/logger.js'
 import getNotifyBus from './NotifyService.ts'
 
 /**

@@ -5,7 +5,7 @@
  */
 
 import { Extension } from '@tiptap/core'
-import { PluginKey, Plugin } from '@tiptap/pm/state'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 
 /**
  * @param {object} args Arguments as deconstructable object

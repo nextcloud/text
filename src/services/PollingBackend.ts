@@ -2,17 +2,17 @@
  * SPDX-FileCopyrightText: 2019 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { Emitter } from 'mitt'
+import { sync } from '../apis/sync'
+import type { Connection } from '../composables/useConnection.js'
 import { logger } from '../helpers/logger.js'
+import getNotifyBus, { type EventTypes } from './NotifyService'
 import {
 	type Session,
 	type Step,
 	type SyncService,
 	ERROR_TYPE,
 } from './SyncService.js'
-import getNotifyBus, { type EventTypes } from './NotifyService'
-import type { Emitter } from 'mitt'
-import type { Connection } from '../composables/useConnection.js'
-import { sync } from '../apis/sync'
 
 /**
  * Minimum inverval to refetch the document changes in ms.

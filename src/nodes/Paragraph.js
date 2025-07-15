@@ -4,8 +4,8 @@
  */
 
 import TiptapParagraph from '@tiptap/extension-paragraph'
-import previewOptions from '../plugins/previewOptions.js'
 import currentLineMenu from '../plugins/currentLineMenu.js'
+import previewOptions from '../plugins/previewOptions.js'
 
 const Paragraph = TiptapParagraph.extend({
 	parseHTML() {

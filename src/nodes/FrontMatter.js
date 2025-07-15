@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { mergeAttributes } from '@tiptap/core'
 import TiptapCodeBlock from '@tiptap/extension-code-block'
-import { t } from '@nextcloud/l10n'
 
 const FrontMatter = TiptapCodeBlock.extend({
 	name: 'frontMatter',

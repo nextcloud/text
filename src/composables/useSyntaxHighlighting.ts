@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { extensionHighlight } from '../helpers/mappings'
 import { loadSyntaxHighlight } from '../EditorFactory.js'
+import { extensionHighlight } from '../helpers/mappings'
 
 /**
  * Determine the language of the file and load the syntax highlighting

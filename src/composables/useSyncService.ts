@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { type InjectionKey, type ShallowRef, provide, inject } from 'vue'
+import { type InjectionKey, type ShallowRef, inject, provide } from 'vue'
 import { SyncService } from '../services/SyncService'
 import type { Connection, InitialData } from './useConnection.js'
 

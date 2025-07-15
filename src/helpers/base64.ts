@@ -11,7 +11,7 @@
  *
  */
 
-import { toBase64, fromBase64 } from 'lib0/buffer'
+import { fromBase64, toBase64 } from 'lib0/buffer'
 
 /**
  *

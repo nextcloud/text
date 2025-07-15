@@ -4,10 +4,10 @@
  */
 
 import TiptapImage from '@tiptap/extension-image'
-import { Plugin } from '@tiptap/pm/state'
-import ImageView from './ImageView.vue'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import { defaultMarkdownSerializer } from '@tiptap/pm/markdown'
+import { Plugin } from '@tiptap/pm/state'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import ImageView from './ImageView.vue'
 
 const Image = TiptapImage.extend({
 	selectable: false,

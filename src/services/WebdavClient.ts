@@ -2,13 +2,13 @@
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { Node } from '@nextcloud/files'
 import {
 	davGetClient,
 	davGetDefaultPropfind,
 	davResultToNode,
 } from '@nextcloud/files'
 import type { FileStat, ResponseDataDetailed } from 'webdav'
-import type { Node } from '@nextcloud/files'
 
 export const client = davGetClient()
 

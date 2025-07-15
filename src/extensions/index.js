@@ -6,21 +6,21 @@
 import CollaborationCursor from './CollaborationCursor.ts'
 import Emoji from './Emoji.js'
 import FocusTrap from './FocusTrap.js'
-import UserColor from './UserColor.js'
+import KeepSyntax from './KeepSyntax.js'
 import Markdown from './Markdown.js'
+import Mention from './Mention.js'
 import PlainText from './PlainText.js'
 import RichText from './RichText.js'
-import KeepSyntax from './KeepSyntax.js'
-import Mention from './Mention.js'
+import UserColor from './UserColor.js'
 
 export {
 	CollaborationCursor,
 	Emoji,
 	FocusTrap,
-	UserColor,
+	KeepSyntax,
 	Markdown,
+	Mention,
 	PlainText,
 	RichText,
-	KeepSyntax,
-	Mention,
+	UserColor,
 }

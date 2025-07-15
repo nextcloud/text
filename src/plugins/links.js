@@ -4,9 +4,9 @@
  */
 
 import { Plugin, PluginKey } from '@tiptap/pm/state'
+import { isLinkToSelfWithHash } from '../helpers/links.js'
 import LinkBubblePluginView from './LinkBubblePluginView.js'
 import { activeLinkFromSelection } from './linkHelpers.js'
-import { isLinkToSelfWithHash } from '../helpers/links.js'
 
 // Commands
 

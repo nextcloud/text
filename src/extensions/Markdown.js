@@ -22,9 +22,9 @@
  */
 
 import { Extension, getExtensionField } from '@tiptap/core'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { MarkdownSerializer, defaultMarkdownSerializer } from '@tiptap/pm/markdown'
 import { DOMParser } from '@tiptap/pm/model'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 import markdownit from '../markdownit/index.js'
 import transformPastedHTML from './transformPastedHTML.js'
 

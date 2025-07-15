@@ -7,15 +7,15 @@
 
 import mitt, { type Handler } from 'mitt'
 
-import PollingBackend from './PollingBackend.js'
-import Outbox from './Outbox.js'
-import { SessionConnection } from './SessionConnection.js'
-import { documentStateToStep } from '../helpers/yjs.js'
-import { logger } from '../helpers/logger.js'
 import type { ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection.js'
 import { close, type OpenData } from '../apis/connect'
 import { push } from '../apis/sync'
+import type { Connection } from '../composables/useConnection.js'
+import { logger } from '../helpers/logger.js'
+import { documentStateToStep } from '../helpers/yjs.js'
+import Outbox from './Outbox.js'
+import PollingBackend from './PollingBackend.js'
+import { SessionConnection } from './SessionConnection.js'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -385,9 +385,9 @@ class SyncService {
 
 export default SyncService
 export {
-	SyncService,
+	COLLABORATOR_DISCONNECT_TIME,
+	COLLABORATOR_IDLE_TIME,
 	ERROR_TYPE,
 	IDLE_TIMEOUT,
-	COLLABORATOR_IDLE_TIME,
-	COLLABORATOR_DISCONNECT_TIME,
+	SyncService,
 }

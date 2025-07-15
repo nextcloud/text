@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TiptapTaskList from '@tiptap/extension-task-list'
 import { mergeAttributes } from '@tiptap/core'
+import TiptapTaskList from '@tiptap/extension-task-list'
 
 const TaskList = TiptapTaskList.extend({
 	parseHTML: [

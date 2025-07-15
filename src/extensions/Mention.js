@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TipTapMention from '@tiptap/extension-mention'
-import Mention from './Mention.vue'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import { mergeAttributes } from '@tiptap/core'
+import TipTapMention from '@tiptap/extension-mention'
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import Mention from './Mention.vue'
 
 export default TipTapMention.extend({
 	parseHTML() {

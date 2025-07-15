@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { mergeAttributes, wrappingInputRule } from '@tiptap/core'
 import TipTapTaskItem from '@tiptap/extension-task-item'
-import { wrappingInputRule, mergeAttributes } from '@tiptap/core'
 import { Plugin } from '@tiptap/pm/state'
 import { findParentNodeClosestToPos } from './../helpers/prosemirrorUtils.js'
 
