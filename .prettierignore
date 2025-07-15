@@ -10,9 +10,21 @@
 **/node_modules
 **/vendor
 
-# Compiled JS output
+# Compiled output
 js/
+css/
 
 # PHP
 lib/
 **/*.php
+composer/
+composer.lock
+
+# Translations
+l10n/
+
+# Github files
+.github/
+
+# Test fixtures
+**/fixtures
