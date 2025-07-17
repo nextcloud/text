@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { describe, it, expect, vi } from 'vitest'
-import AttachmentResolver from './../../services/AttachmentResolver.js'
 import axios from '@nextcloud/axios'
+import { describe, expect, it, vi } from 'vitest'
+import AttachmentResolver from './../../services/AttachmentResolver.js'
 
 const fileId = 4173
 const sessionId = 456
@@ -14,33 +14,37 @@ const a1name = 'group pic.jpg'
 const a1nameEncoded = 'group%20pic.jpg'
 const a2name = 'archive.tar.gz'
 const initAttachmentResolver = (args) => {
-	const attachmentList = [{
-		fileId: 1234,
-		name: a1name,
-		size: '1 KB',
-		mimetype: 'image/jpg',
-		mtime: 1,
-		isImage: true,
-		fullUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}&preferRawImage=1"`,
-		previewUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}"`,
-	}, {
-		fileId: 1236,
-		name: a2name,
-		size: '1 KB',
-		mimetype: 'application/gzip',
-		mtime: 1,
-		isImage: false,
-		fullUrl: `http://nextcloud.local/apps/text/media?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
-		previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
-	}]
-	const axiosSpy = vi.spyOn(axios, 'post').mockReturnValue({ data: attachmentList })
+	const attachmentList = [
+		{
+			fileId: 1234,
+			name: a1name,
+			size: '1 KB',
+			mimetype: 'image/jpg',
+			mtime: 1,
+			isImage: true,
+			fullUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}&preferRawImage=1"`,
+			previewUrl: `http://nextcloud.local/apps/text/image?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&imageFileName=${a1nameEncoded}"`,
+		},
+		{
+			fileId: 1236,
+			name: a2name,
+			size: '1 KB',
+			mimetype: 'application/gzip',
+			mtime: 1,
+			isImage: false,
+			fullUrl: `http://nextcloud.local/apps/text/media?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
+			previewUrl: `http://nextcloud.local/apps/text/mediaPreview?documentId=${fileId}&sessionId=${sessionId}&sessionToken=${sessionToken}&mediaFileName=${a2name}"`,
+		},
+	]
+	const axiosSpy = vi
+		.spyOn(axios, 'post')
+		.mockReturnValue({ data: attachmentList })
 	const resolver = new AttachmentResolver(args)
 	expect(axiosSpy).toHaveBeenCalled()
 	return resolver
 }
 
 describe('Image resolver', () => {
-
 	const session = {
 		documentId: fileId,
 		id: sessionId,
@@ -92,8 +96,8 @@ describe('Image resolver', () => {
 		const resolver = new AttachmentResolver({ fileId, user, currentDirectory })
 		const attachment = await resolver.resolve(src)
 		expect(attachment.isImage).toBe(true)
-		expect(attachment.previewUrl)
-			.toBe('http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png')
+		expect(attachment.previewUrl).toBe(
+			'http://localhost:3000/remote.php/dav/files/user-uid/parentDir/path/to/some%20image.png',
+		)
 	})
-
 })

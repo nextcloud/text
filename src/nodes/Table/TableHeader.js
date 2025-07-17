@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { TableHeader } from '@tiptap/extension-table-header'
 import { mergeAttributes } from '@tiptap/core'
+import { TableHeader } from '@tiptap/extension-table-header'
 
 export default TableHeader.extend({
 	content: 'inline*',
@@ -41,7 +41,10 @@ export default TableHeader.extend({
 	},
 
 	renderHTML({ HTMLAttributes }) {
-		const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)
+		const attributes = mergeAttributes(
+			this.options.HTMLAttributes,
+			HTMLAttributes,
+		)
 		if (attributes.colspan === 1) {
 			delete attributes.colspan
 		}

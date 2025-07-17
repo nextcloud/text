@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div class="editor editor-media-handler"
+	<div
+		class="editor editor-media-handler"
 		data-text-el="editor-media-handler"
 		:class="{ draggedOver, 'is-mobile': isMobile }"
 		@image-paste="onPaste"
@@ -12,13 +13,14 @@
 		@dragleave.prevent.stop="setDraggedOver(false)"
 		@drop.prevent.stop="setDraggedOver(false)"
 		@file-drop="onEditorDrop">
-		<input v-show="false"
+		<input
+			v-show="false"
 			ref="attachmentFileInput"
 			data-text-el="attachment-file-input"
 			type="file"
 			accept="*/*"
 			multiple
-			@change="onAttachmentUploadFilePicked">
+			@change="onAttachmentUploadFilePicked" />
 		<slot />
 	</div>
 </template>
@@ -29,27 +31,29 @@ import { showError } from '@nextcloud/dialogs'
 import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile'
-import { logger } from '../../helpers/logger.js'
-import { createAttachment, insertAttachmentFile, uploadAttachment } from '../../apis/attach.ts'
-
 import {
-	useFileMixin,
-} from '../Editor.provider.ts'
-import { useEditor } from '../../composables/useEditor.ts'
+	createAttachment,
+	insertAttachmentFile,
+	uploadAttachment,
+} from '../../apis/attach.ts'
+import { logger } from '../../helpers/logger.js'
 
+import { useEditor } from '../../composables/useEditor.ts'
+import { useFileMixin } from '../Editor.provider.ts'
+
+import { useConnection } from '../../composables/useConnection.ts'
 import {
 	ACTION_ATTACHMENT_PROMPT,
 	ACTION_CHOOSE_LOCAL_ATTACHMENT,
 	ACTION_CREATE_ATTACHMENT,
 	STATE_UPLOADING,
 } from './MediaHandler.provider.js'
-import { useConnection } from '../../composables/useConnection.ts'
 
 const getDir = (val) => val.split('/').slice(0, -1).join('/')
 
 export default {
 	name: 'MediaHandler',
-	mixins: [ useFileMixin],
+	mixins: [useFileMixin],
 	provide() {
 		const val = {}
 
@@ -75,7 +79,9 @@ export default {
 		const isMobile = useIsMobile()
 		const { editor } = useEditor()
 		return {
-			connection, editor, isMobile
+			connection,
+			editor,
+			isMobile,
 		}
 	},
 	data() {
@@ -124,7 +130,7 @@ export default {
 			})
 
 			return Promise.all(uploadPromises)
-				.catch(error => {
+				.catch((error) => {
 					logger.error('Uploading multiple attachments failed', { error })
 					showError(t('text', 'Uploading multiple attachments failed.'))
 				})
@@ -138,14 +144,21 @@ export default {
 			return uploadAttachment(this.connection, file)
 				.then((response) => {
 					this.insertAttachment(
-						response.data?.name, response.data?.id, file.type,
-						position, response.data?.dirname,
+						response.data?.name,
+						response.data?.id,
+						file.type,
+						position,
+						response.data?.dirname,
 					)
 				})
 				.catch((error) => {
 					logger.error('Uploading attachment failed', { error })
 					if (error.response?.data.error) {
-						showError(t('text', 'Uploading attachment failed: {error}', { error: error.response.data.error }))
+						showError(
+							t('text', 'Uploading attachment failed: {error}', {
+								error: error.response.data.error,
+							}),
+						)
 					} else {
 						showError(t('text', 'Uploading attachment failed.'))
 					}
@@ -160,50 +173,66 @@ export default {
 				return
 			}
 
-			OC.dialogs.filepicker(t('text', 'Insert an attachment'), (filePath) => {
-				this.insertFromPath(filePath)
-			}, false, [], true, undefined, this.initialFilePath)
+			OC.dialogs.filepicker(
+				t('text', 'Insert an attachment'),
+				(filePath) => {
+					this.insertFromPath(filePath)
+				},
+				false,
+				[],
+				true,
+				undefined,
+				this.initialFilePath,
+			)
 		},
 		insertFromPath(filePath) {
 			this.lastFilePath = getDir(filePath)
 
 			this.state.isUploadingAttachments = true
 
-			return insertAttachmentFile(this.connection, filePath).then((response) => {
-				this.insertAttachment(
-					response.data?.name, response.data?.id, response.data?.mimetype,
-					null, response.data?.dirname,
-				)
-			}).catch((error) => {
-				logger.error('Failed to insert from Files', { error })
-				showError(t('text', 'Failed to insert from Files'))
-			}).then(() => {
-				this.state.isUploadingAttachments = false
-			})
+			return insertAttachmentFile(this.connection, filePath)
+				.then((response) => {
+					this.insertAttachment(
+						response.data?.name,
+						response.data?.id,
+						response.data?.mimetype,
+						null,
+						response.data?.dirname,
+					)
+				})
+				.catch((error) => {
+					logger.error('Failed to insert from Files', { error })
+					showError(t('text', 'Failed to insert from Files'))
+				})
+				.then(() => {
+					this.state.isUploadingAttachments = false
+				})
 		},
 		createAttachment(template) {
 			this.state.isUploadingAttachments = true
-			return createAttachment(this.connection, template).then((response) => {
-				this.insertAttachmentPreview(response.data?.id)
-			}).catch((error) => {
-				logger.error('Failed to create attachment', { error })
-				showError(t('text', 'Failed to create attachment'))
-			}).then(() => {
-				this.state.isUploadingAttachments = false
-			})
+			return createAttachment(this.connection, template)
+				.then((response) => {
+					this.insertAttachmentPreview(response.data?.id)
+				})
+				.catch((error) => {
+					logger.error('Failed to create attachment', { error })
+					showError(t('text', 'Failed to create attachment'))
+				})
+				.then(() => {
+					this.state.isUploadingAttachments = false
+				})
 		},
 		insertAttachmentPreview(fileId) {
 			const url = new URL(generateUrl(`/f/${fileId}`), window.origin)
 			const href = url.href.replaceAll(' ', '%20')
-			this.editor.chain()
-				.focus()
-				.insertPreview(href)
-				.run()
+			this.editor.chain().focus().insertPreview(href).run()
 		},
 		insertAttachment(name, fileId, mimeType, position = null, dirname = '') {
 			// inspired by the fixedEncodeURIComponent function suggested in
 			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-			const src = dirname + '/'
+			const src =
+				dirname
+				+ '/'
 				+ encodeURIComponent(name).replace(/[!'()*]/g, (c) => {
 					return '%' + c.charCodeAt(0).toString(16).toUpperCase()
 				})

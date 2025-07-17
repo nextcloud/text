@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { Node, isNodeActive, getNodeType } from '@tiptap/core'
-import { domHref, parseHref, isLinkToSelfWithHash } from './../helpers/links.js'
+import { Node, getNodeType, isNodeActive } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { domHref, isLinkToSelfWithHash, parseHref } from './../helpers/links.js'
 
 import Preview from './Preview.vue'
 

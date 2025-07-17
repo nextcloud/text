@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import escapeHtml from 'escape-html'
-import markdownit from '../markdownit/index.js'
-import { Doc, encodeStateAsUpdate, XmlFragment, applyUpdate } from 'yjs'
-import { prosemirrorToYXmlFragment } from 'y-prosemirror'
 import { Node } from '@tiptap/pm/model'
-import { createRichEditor, createPlainEditor } from '../EditorFactory.js'
+import escapeHtml from 'escape-html'
+import { prosemirrorToYXmlFragment } from 'y-prosemirror'
+import { applyUpdate, Doc, encodeStateAsUpdate, XmlFragment } from 'yjs'
+import { createPlainEditor, createRichEditor } from '../EditorFactory.js'
+import markdownit from '../markdownit/index.js'
 
 export const setInitialYjsState = (ydoc, content, { isRichEditor }) => {
 	const html = isRichEditor

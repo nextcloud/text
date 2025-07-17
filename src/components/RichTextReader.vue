@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import BaseReader from './BaseReader.vue'
 import { RichText } from './../extensions/index.js'
 import markdownit from './../markdownit/index.js'
+import BaseReader from './BaseReader.vue'
 
 export default {
 	name: 'RichTextReader',

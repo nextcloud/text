@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { getMarkRange, isMarkActive, markInputRule } from '@tiptap/core'
 import TipTapLink from '@tiptap/extension-link'
-import { domHref, parseHref } from './../helpers/links.js'
 import { linkClicking } from '../plugins/links.js'
-import { markInputRule, getMarkRange, isMarkActive } from '@tiptap/core'
+import { domHref, parseHref } from './../helpers/links.js'
 
 const PROTOCOLS_TO_LINK_TO = ['http:', 'https:', 'mailto:', 'tel:']
 

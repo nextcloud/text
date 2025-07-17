@@ -4,17 +4,11 @@
  */
 
 import {
-	Undo,
-	Redo,
 	CodeBrackets,
 	CodeTags,
 	Danger,
 	Emoticon,
 	FormatBold,
-	FormatItalic,
-	FormatUnderline,
-	FormatSize,
-	FormatStrikethrough,
 	FormatHeader1,
 	FormatHeader2,
 	FormatHeader3,
@@ -23,54 +17,66 @@ import {
 	FormatHeader6,
 	FormatIndentDecrease,
 	FormatIndentIncrease,
-	FormatListNumbered,
+	FormatItalic,
 	FormatListBulleted,
 	FormatListCheckbox,
+	FormatListNumbered,
 	FormatQuote,
+	FormatSize,
+	FormatStrikethrough,
+	FormatUnderline,
 	Info,
 	LinkIcon,
 	Paperclip,
 	Pencil,
 	PencilOff,
 	Positive,
+	Redo,
 	Table,
+	Undo,
 	UnfoldMoreHorizontal,
 	Warn,
 } from '../icons.js'
-import EmojiPickerAction from './EmojiPickerAction.vue'
 import ActionAttachmentUpload from './ActionAttachmentUpload.vue'
 import ActionInsertLink from './ActionInsertLink.vue'
+import EmojiPickerAction from './EmojiPickerAction.vue'
 
-import { MODIFIERS } from './keys.js'
-import { isMobileDevice } from '../../helpers/isMobileDevice.js'
 import { t } from '@nextcloud/l10n'
+import { isMobileDevice } from '../../helpers/isMobileDevice.js'
+import { MODIFIERS } from './keys.js'
 
-export const OutlineEntries = [{
-	key: 'outline',
-	forceLabel: true,
-	icon: FormatListBulleted,
-	click: ({ $outlineActions }) => $outlineActions.toggle(),
-	label: ({ $outlineState }) => {
-		return $outlineState.visible
-			? t('text', 'Hide outline')
-			: t('text', 'Show outline')
+export const OutlineEntries = [
+	{
+		key: 'outline',
+		forceLabel: true,
+		icon: FormatListBulleted,
+		click: ({ $outlineActions }) => $outlineActions.toggle(),
+		label: ({ $outlineState }) => {
+			return $outlineState.visible
+				? t('text', 'Hide outline')
+				: t('text', 'Show outline')
+		},
 	},
-}]
+]
 
-export const ReadOnlyEditEntries = [{
-	key: 'edit',
-	label: t('text', 'Edit'),
-	forceLabel: true,
-	icon: Pencil,
-	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
-}]
+export const ReadOnlyEditEntries = [
+	{
+		key: 'edit',
+		label: t('text', 'Edit'),
+		forceLabel: true,
+		icon: Pencil,
+		click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
+	},
+]
 
-export const ReadOnlyDoneEntries = [{
-	key: 'done',
-	label: t('text', 'Done'),
-	icon: PencilOff,
-	click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
-}]
+export const ReadOnlyDoneEntries = [
+	{
+		key: 'done',
+		label: t('text', 'Done'),
+		icon: PencilOff,
+		click: ({ $readOnlyActions }) => $readOnlyActions.toggle(),
+	},
+]
 
 export const MenuEntries = [
 	{
@@ -416,7 +422,6 @@ export const MenuEntries = [
 		component: ActionAttachmentUpload,
 		priority: 5,
 	},
-
 ]
 
 if (!isMobileDevice) {

@@ -6,7 +6,8 @@
 <template>
 	<div class="emoji-list">
 		<template v-if="hasResults">
-			<div v-for="(emojiObject, index) in items"
+			<div
+				v-for="(emojiObject, index) in items"
 				:key="index"
 				class="emoji-list__item"
 				:class="{ 'is-selected': index === selectedIndex }"
@@ -54,8 +55,11 @@ export default {
 		itemInsideScrollView() {
 			// If upper border of item is bigger or equal than scroll top
 			// and lower end of item is smaller or equal than scroll bottom
-			return this.selectedIndex * this.itemHeight >= this.$el.scrollTop
-				&& (this.selectedIndex + 1) * this.itemHeight <= this.$el.scrollTop + this.$el.clientHeight
+			return (
+				this.selectedIndex * this.itemHeight >= this.$el.scrollTop
+				&& (this.selectedIndex + 1) * this.itemHeight
+					<= this.$el.scrollTop + this.$el.clientHeight
+			)
 		},
 	},
 	watch: {
@@ -73,7 +77,8 @@ export default {
 			}
 
 			if (event.key === 'ArrowUp') {
-				this.selectedIndex = ((this.selectedIndex + this.items.length) - 1) % this.items.length
+				this.selectedIndex =
+					(this.selectedIndex + this.items.length - 1) % this.items.length
 				if (!this.itemInsideScrollView) {
 					this.$el.scrollTop = this.selectedIndex * this.itemHeight
 				}
@@ -83,7 +88,9 @@ export default {
 			if (event.key === 'ArrowDown') {
 				this.selectedIndex = (this.selectedIndex + 1) % this.items.length
 				if (!this.itemInsideScrollView) {
-					this.$el.scrollTop = (this.selectedIndex + 1) * this.itemHeight - this.$el.clientHeight
+					this.$el.scrollTop =
+						(this.selectedIndex + 1) * this.itemHeight
+						- this.$el.clientHeight
 				}
 				return true
 			}
@@ -109,45 +116,45 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.emoji-list {
-		border-radius: var(--border-radius);
-		background-color: var(--color-main-background);
-		box-shadow: 0 1px 5px var(--color-box-shadow);
-		overflow: auto;
+.emoji-list {
+	border-radius: var(--border-radius);
+	background-color: var(--color-main-background);
+	box-shadow: 0 1px 5px var(--color-box-shadow);
+	overflow: auto;
 
-		min-width: 200px;
-		max-width: 200px;
-		padding: 4px;
-		// Show maximum 5 entries and a half to show scroll
-		max-height: 35.5px * 5 + 18px;
-		margin: 5px 0;
+	min-width: 200px;
+	max-width: 200px;
+	padding: 4px;
+	// Show maximum 5 entries and a half to show scroll
+	max-height: 35.5px * 5 + 18px;
+	margin: 5px 0;
 
-		&__item {
-			border-radius: 8px;
-			padding: 4px 8px;
-			margin-bottom: 4px;
-			opacity: 0.8;
-			cursor: pointer;
+	&__item {
+		border-radius: 8px;
+		padding: 4px 8px;
+		margin-bottom: 4px;
+		opacity: 0.8;
+		cursor: pointer;
 
-			// Take care of long names
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
+		// Take care of long names
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 
-			&:last-child {
-				margin-bottom: 0;
-			}
+		&:last-child {
+			margin-bottom: 0;
+		}
 
-			&__emoji {
-				padding-right: 8px;
-			}
+		&__emoji {
+			padding-right: 8px;
+		}
 
-			&.is-selected,
-			&:focus,
-			&:hover {
-				opacity: 1;
-				background-color: var(--color-primary-element-light);
-			}
+		&.is-selected,
+		&:focus,
+		&:hover {
+			opacity: 1;
+			background-color: var(--color-primary-element-light);
 		}
 	}
+}
 </style>

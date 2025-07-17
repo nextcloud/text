@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import mitt, { type Emitter } from 'mitt'
-import { listen } from '@nextcloud/notify_push'
 import { loadState } from '@nextcloud/initial-state'
+import { listen } from '@nextcloud/notify_push'
+import mitt, { type Emitter } from 'mitt'
 
 export declare type EventTypes = {
 	notify_push: { messageType: unknown; messageBody: object }

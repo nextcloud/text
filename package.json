@@ -1,35 +1,27 @@
 {
   "name": "text",
-  "description": "Collaborative document editing",
   "version": "6.0.0-dev.0",
-  "prettier": "@nextcloud/prettier-config",
-  "authors": [
-    {
-      "name": "Julius Härtl",
-      "email": "jus@bitgrid.net",
-      "role": "Developer"
-    }
-  ],
+  "description": "Collaborative document editing",
   "license": "AGPL-3.0-or-later",
   "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
     "dist"
   ],
-  "module": "dist/index.js",
-  "main": "dist/index.js",
   "scripts": {
     "build": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=4096' vite --mode production build",
     "dev": "NODE_ENV=development NODE_OPTIONS='--max-old-space-size=4096' vite --mode development build",
-    "serve": "BASE=${BASE:-/apps/text} NODE_ENV=development vite --mode development serve --host",
-    "watch": "NODE_ENV=development NODE_OPTIONS='--max-old-space-size=8192' vite --mode development build --watch",
     "lint": "tsc && eslint --ext .js,.ts,.vue src cypress",
     "lint:fix": "tsc && eslint --ext .js,.ts,.vue src cypress --fix",
-    "prettier": "prettier --check src/**/*.js src/**/*.ts src/**/*.vue src/**/*.scss",
-    "prettier:fix": "prettier --write src/**/*.js src/**/*.ts src/**/*.vue src/**/*.scss",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "serve": "BASE=${BASE:-/apps/text} NODE_ENV=development vite --mode development serve --host",
     "test": "NODE_ENV=test vitest",
+    "test:coverage": "NODE_ENV=test vitest --coverage",
     "test:cypress": "cd cypress && ./runLocal.sh run",
     "test:cypress:open": "cd cypress && ./runLocal.sh open",
-    "test:coverage": "NODE_ENV=test vitest --coverage"
+    "watch": "NODE_ENV=development NODE_OPTIONS='--max-old-space-size=8192' vite --mode development build --watch"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
@@ -114,10 +106,6 @@
     "y-protocols": "^1.0.6",
     "yjs": "^13.6.27"
   },
-  "engines": {
-    "node": "^20.0.0",
-    "npm": "^10.0.0"
-  },
   "devDependencies": {
     "@nextcloud/babel-config": "^1.2.0",
     "@nextcloud/browserslist-config": "^3.0.1",
@@ -138,6 +126,7 @@
     "eslint-plugin-cypress": "^3.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^26.1.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^2.1.0",
     "typescript": "^5.8.3",
@@ -145,9 +134,21 @@
     "vite-plugin-commonjs": "^0.10.4",
     "vitest": "^3.2.4",
     "vue-demi": "^0.14.10",
-    "vue-template-compiler": "^2.7.16"
+    "vue-template-compiler": "^2.7.16",
+    "vue-tsc": "^2.2.12"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.45.0"
-  }
+  },
+  "engines": {
+    "node": "^20.0.0",
+    "npm": "^10.0.0"
+  },
+  "authors": [
+    {
+      "name": "Julius Härtl",
+      "email": "jus@bitgrid.net",
+      "role": "Developer"
+    }
+  ]
 }

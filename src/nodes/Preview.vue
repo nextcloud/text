@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
 import { NcReferenceList } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-2'
 
 export default {
 	name: 'Preview',

@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Table from './Table/Table.js'
 import TableCaption from './Table/TableCaption.js'
 import TableCell from './Table/TableCell.js'
+import TableCellView from './Table/TableCellView.vue'
 import TableHeader from './Table/TableHeader.js'
+import TableHeaderView from './Table/TableHeaderView.vue'
 import TableHeadRow from './Table/TableHeadRow.js'
 import TableRow from './Table/TableRow.js'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import TableView from './Table/TableView.vue'
-import TableCellView from './Table/TableCellView.vue'
-import TableHeaderView from './Table/TableHeaderView.vue'
 
 /**
  *

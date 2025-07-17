@@ -97,25 +97,25 @@
 </template>
 
 <script>
-import debounce from 'debounce'
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
-import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActionLink from '@nextcloud/vue/components/NcActionLink'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import { NodeViewContent, NodeViewWrapper } from '@tiptap/vue-2'
+import debounce from 'debounce'
 
 import { t } from '@nextcloud/l10n'
 import { v4 as uuidv4 } from 'uuid'
 
-import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
-import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
-import Eye from 'vue-material-design-icons/Eye.vue'
-import MarkerIcon from 'vue-material-design-icons/Marker.vue'
-import Help from 'vue-material-design-icons/Help.vue'
-import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import Check from 'vue-material-design-icons/Check.vue'
+import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
+import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
+import Eye from 'vue-material-design-icons/Eye.vue'
+import Help from 'vue-material-design-icons/Help.vue'
+import MarkerIcon from 'vue-material-design-icons/Marker.vue'
+import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 

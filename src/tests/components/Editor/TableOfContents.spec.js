@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { nextTick, shallowRef } from 'vue'
 import { mount } from '@vue/test-utils'
+import { test, vi } from 'vitest'
+import { nextTick, shallowRef } from 'vue'
 import TableOfContents from '../../../components/Editor/TableOfContents.vue'
 import { editorKey } from '../../../composables/useEditor.ts'
-import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 import Heading from '../../../nodes/Heading.js'
-import { test, vi } from 'vitest'
+import createCustomEditor from '../../testHelpers/createCustomEditor.ts'
 
 const text = 'Level 1 heading'
 const content = `<h1>${text}</h1>`
-const headingsForContent = [
-	{ id: 'h-level-1-heading', level: 1, offset: 0, text },
-]
+const headingsForContent = [{ id: 'h-level-1-heading', level: 1, offset: 0, text }]
 
 const createEditor = (content = '') => createCustomEditor(content, [Heading])
 const mountWithEditor = (editor) => {

@@ -24,14 +24,14 @@
 <script>
 import { Editor } from '@tiptap/core'
 import { EditorContent } from '@tiptap/vue-2'
-import { provideEditor } from '../composables/useEditor.ts'
-import {
-	useOutlineStateMixin,
-	useOutlineActions,
-} from './Editor/Wrapper.provider.js'
-import EditorOutline from './Editor/EditorOutline.vue'
-import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { inject, watch } from 'vue'
+import { provideEditor } from '../composables/useEditor.ts'
+import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import EditorOutline from './Editor/EditorOutline.vue'
+import {
+	useOutlineActions,
+	useOutlineStateMixin,
+} from './Editor/Wrapper.provider.js'
 
 export default {
 	name: 'BaseReader',

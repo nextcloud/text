@@ -6,8 +6,8 @@
 import { Extension } from '@tiptap/core'
 
 import CodeBlockPlainText from './../nodes/CodeBlockPlainText.js'
-import Keymap from './Keymap.js'
 import PlainTextDocument from './../nodes/PlainTextDocument.js'
+import Keymap from './Keymap.js'
 /* eslint-disable import/no-named-as-default */
 import Text from '@tiptap/extension-text'
 

@@ -5,11 +5,19 @@
 
 <template>
 	<div data-text-el="readonly-bar" class="text-readonly-bar">
-		<div ref="menubar"
+		<div
+			ref="menubar"
 			role="toolbar"
 			class="text-readonly-bar__entries"
 			:aria-label="t('text', 'Editor actions')">
-			<component :is="actionEntry.component ? actionEntry.component : (actionEntry.children ? 'ActionList' : 'ActionSingle')"
+			<component
+				:is="
+					actionEntry.component
+						? actionEntry.component
+						: actionEntry.children
+							? 'ActionList'
+							: 'ActionSingle'
+				"
 				v-for="(actionEntry, index) in visibleEntries"
 				ref="menuEntries"
 				:key="actionEntry.key"
@@ -25,12 +33,12 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { ReadOnlyEditEntries, OutlineEntries } from './entries.js'
+import { OutlineEntries, ReadOnlyEditEntries } from './entries.js'
 
+import { t } from '@nextcloud/l10n'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
 import ToolBarLogic from './ToolBarLogic.js'
-import { t } from '@nextcloud/l10n'
 
 export default defineComponent({
 	name: 'ReadonlyBar',
@@ -47,12 +55,14 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			entries: this.openReadOnly ? [...ReadOnlyEditEntries, ...OutlineEntries] : [...OutlineEntries],
+			entries: this.openReadOnly
+				? [...ReadOnlyEditEntries, ...OutlineEntries]
+				: [...OutlineEntries],
 		}
 	},
 	methods: {
 		t,
-	}
+	},
 })
 </script>
 

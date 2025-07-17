@@ -2,13 +2,16 @@
  * SPDX-FileCopyrightText: 2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-import Link from './../../marks/Link.js'
 import Underline from '../../marks/Underline.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
+import Link from './../../marks/Link.js'
 
 describe('Link extension integrated in the editor', () => {
 	it('should have link available in commands', () => {
-		const editor = createCustomEditor('<p><a href="nextcloud.com">Test</a> HELLO WORLD</p>', [Link])
+		const editor = createCustomEditor(
+			'<p><a href="nextcloud.com">Test</a> HELLO WORLD</p>',
+			[Link],
+		)
 		expect(editor.commands).toHaveProperty('insertOrSetLink')
 	})
 
@@ -38,7 +41,9 @@ describe('Link extension integrated in the editor', () => {
 			[Link],
 		)
 		editor.commands.setTextSelection(10)
-		editor.commands.insertOrSetLink('new link', { href: 'https://nextcloud.com' })
+		editor.commands.insertOrSetLink('new link', {
+			href: 'https://nextcloud.com',
+		})
 		expect(editor.getJSON()).toMatchSnapshot()
 	})
 })

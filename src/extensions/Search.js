@@ -6,10 +6,10 @@
 import { Extension } from '@tiptap/core'
 import searchDecorations from '../plugins/searchDecorations.js'
 import {
-	setSearchQuery,
 	nextMatch,
 	previousMatch,
 	searchQuery,
+	setSearchQuery,
 } from '../plugins/searchQuery.js'
 
 export default Extension.create({

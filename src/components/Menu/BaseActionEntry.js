@@ -7,9 +7,13 @@
 
 import debounce from 'debounce'
 
-import { useIsMobileMixin } from '../Editor.provider.ts'
 import { useEditor } from '../../composables/useEditor.ts'
-import { useOutlineActions, useOutlineStateMixin, useReadOnlyActions } from '../Editor/Wrapper.provider.js'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import {
+	useOutlineActions,
+	useOutlineStateMixin,
+	useReadOnlyActions,
+} from '../Editor/Wrapper.provider.js'
 import { getActionState, getKeys, getKeyshortcuts } from './utils.js'
 
 import './ActionEntry.scss'
@@ -47,9 +51,7 @@ const BaseActionEntry = {
 		label() {
 			const { label } = this.actionEntry
 
-			return typeof label === 'function'
-				? label(this)
-				: label
+			return typeof label === 'function' ? label(this) : label
 		},
 		icon() {
 			return this.actionEntry.icon
@@ -58,15 +60,10 @@ const BaseActionEntry = {
 			return getKeyshortcuts(this.actionEntry)
 		},
 		tooltip() {
-			return [
-				this.label,
-				getKeys(this.$isMobile, this.actionEntry),
-			].join(' ')
+			return [this.label, getKeys(this.$isMobile, this.actionEntry)].join(' ')
 		},
 		listItemTooltip() {
-			return [
-				getKeys(this.$isMobile, this.actionEntry),
-			].join(' ')
+			return [getKeys(this.$isMobile, this.actionEntry)].join(' ')
 		},
 	},
 	watch: {
@@ -95,7 +92,10 @@ const BaseActionEntry = {
 		},
 		setTabIndexOnButton() {
 			/** @type {HTMLButtonElement} */
-			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+			const button =
+				this.$el.tagName.toLowerCase() === 'button'
+					? this.$el
+					: this.$el.querySelector('button')
 
 			if (this.canBeFocussed === null) {
 				button.removeAttribute('tabindex')
@@ -108,7 +108,10 @@ const BaseActionEntry = {
 		 */
 		focusButton() {
 			/** @type {HTMLButtonElement} */
-			const button = this.$el.tagName.toLowerCase() === 'button' ? this.$el : this.$el.querySelector('button')
+			const button =
+				this.$el.tagName.toLowerCase() === 'button'
+					? this.$el
+					: this.$el.querySelector('button')
 			button.focus()
 		},
 	},

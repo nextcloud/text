@@ -5,7 +5,8 @@
 
 <template>
 	<div class="avatar-wrapper" :style="sessionAvatarStyle">
-		<NcAvatar v-if="session.userId"
+		<NcAvatar
+			v-if="session.userId"
 			:user="session.userId ? session.userId : session.guestName"
 			:is-guest="session.userId === null"
 			:disable-menu="true"
@@ -48,19 +49,23 @@ export default {
 		},
 		sessionBackgroundStyle() {
 			return {
-				'background-color': this.session.userId ? this.session.color + ' !important' : '#b9b9b9',
+				'background-color': this.session.userId
+					? this.session.color + ' !important'
+					: '#b9b9b9',
 			}
 		},
 		guestInitial() {
-			return this.session.guestName === '' ? '?' : this.session.guestName.slice(0, 1).toUpperCase()
+			return this.session.guestName === ''
+				? '?'
+				: this.session.guestName.slice(0, 1).toUpperCase()
 		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-
-.avatar, .avatar-wrapper {
+.avatar,
+.avatar-wrapper {
 	border-radius: 50%;
 	width: var(--size);
 	height: var(--size);

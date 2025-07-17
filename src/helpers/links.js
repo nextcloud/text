@@ -57,4 +57,4 @@ const isLinkToSelfWithHash = function (href) {
 	return href?.startsWith('#') || href?.startsWith(locationNoHash + '#')
 }
 
-export { domHref, parseHref, isLinkToSelfWithHash }
+export { domHref, isLinkToSelfWithHash, parseHref }

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import extractLinkParagraphs from '../../plugins/extractLinkParagraphs.js'
 import Link from '../../marks/Link.js'
 import Preview from '../../nodes/Preview.js'
+import extractLinkParagraphs from '../../plugins/extractLinkParagraphs.js'
 import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 
 describe('extractLinkParagraphs', () => {
@@ -101,7 +101,6 @@ describe('extractLinkParagraphs', () => {
 		const paragraphs = extractLinkParagraphs(doc)
 		expect(paragraphs).toEqual([])
 	})
-
 })
 
 const prepareDoc = (content) => {

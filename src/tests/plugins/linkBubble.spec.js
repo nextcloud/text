@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { linkBubble, setActiveLink, hideLinkBubble } from '../../plugins/links.js'
-import { Plugin, EditorState } from '@tiptap/pm/state'
 import { schema } from '@tiptap/pm/schema-basic'
+import { EditorState, Plugin } from '@tiptap/pm/state'
+import { hideLinkBubble, linkBubble, setActiveLink } from '../../plugins/links.js'
 
 describe('linkBubble prosemirror plugin', () => {
-
 	test('signature', () => {
 		expect(linkBubble).toBeInstanceOf(Function)
 		expect(linkBubble()).toBeInstanceOf(Plugin)
@@ -46,8 +45,7 @@ describe('linkBubble prosemirror plugin', () => {
 		const mark = { type: { name: 'link' } }
 		const resolved = { marks: () => [mark] }
 		setActiveLink(resolved)(flow.state, flow.dispatch)
-		expect(plugin.getState(flow.state).active.mark)
-			.toEqual(mark)
+		expect(plugin.getState(flow.state).active.mark).toEqual(mark)
 	})
 
 	test('hideLinkBubble requires an active menu bubble', () => {
@@ -64,10 +62,8 @@ describe('linkBubble prosemirror plugin', () => {
 		const resolved = { marks: () => [mark] }
 		setActiveLink(resolved)(flow.state, flow.dispatch)
 		hideLinkBubble(flow.state, flow.dispatch)
-		expect(plugin.getState(flow.state).active)
-			.toEqual(null)
+		expect(plugin.getState(flow.state).active).toEqual(null)
 	})
-
 })
 
 // simulate the data flow in prosemirror
@@ -77,7 +73,7 @@ const createFlow = (initialState) => {
 		get state() {
 			return state
 		},
-		dispatch: tr => {
+		dispatch: (tr) => {
 			state = state.apply(tr)
 		},
 	}

@@ -5,8 +5,8 @@
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import type { Connection } from '../composables/useConnection.js'
 import { unref, type ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.js'
 
 /**
  * Let Nextcloud know someone was mentioned

@@ -57,17 +57,17 @@
 </template>
 
 <script>
-import NcButton from '@nextcloud/vue/components/NcButton'
-import { Document, Shape, Upload, Table as TableIcon } from '../components/icons.js'
-import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
-import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { useFileMixin } from './Editor.provider.ts'
-import { useEditor } from '../composables/useEditor.ts'
+import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
+import { Document, Shape, Table as TableIcon, Upload } from '../components/icons.js'
+import { useEditor } from '../composables/useEditor.ts'
+import { useSyncService } from '../composables/useSyncService.ts'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
-import { useSyncService } from '../composables/useSyncService.ts'
-import { t } from '@nextcloud/l10n'
+import { useFileMixin } from './Editor.provider.ts'
+import { useActionChooseLocalAttachmentMixin } from './Editor/MediaHandler.provider.js'
 
 export default {
 	name: 'SuggestionsBar',

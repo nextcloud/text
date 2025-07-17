@@ -5,7 +5,10 @@
 
 <template>
 	<div contenteditable="false" class="smart-picker-menu-container">
-		<NcButton :aria-label="t('text', 'Open the Smart Picker')" :type="'tertiary'" @click="$emit('open-smart-picker')">
+		<NcButton
+			:aria-label="t('text', 'Open the Smart Picker')"
+			:type="'tertiary'"
+			@click="$emit('open-smart-picker')">
 			<template #icon>
 				<PlusIcon />
 			</template>
@@ -14,9 +17,9 @@
 </template>
 
 <script>
-import PlusIcon from 'vue-material-design-icons/Plus.vue'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import PlusIcon from 'vue-material-design-icons/Plus.vue'
 
 export default {
 	name: 'SmartPickerMenu',
@@ -26,13 +29,11 @@ export default {
 	},
 	methods: {
 		t,
-	}
+	},
 }
-
 </script>
 <style lang="scss" scoped>
-
-div[contenteditable=false] {
+div[contenteditable='false'] {
 	padding: 0;
 	margin: 0;
 }

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { emit } from '@nextcloud/event-bus'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import { emit } from '@nextcloud/event-bus'
 import { searchQueryPluginKey } from './searchQuery.js'
 
 /**

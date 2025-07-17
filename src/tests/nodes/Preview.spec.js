@@ -3,23 +3,23 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { test as baseTest } from 'vitest'
-import Preview from './../../nodes/Preview.js'
-import Markdown from './../../extensions/Markdown.js'
-import Link from './../../marks/Link.js'
 import { getExtensionField } from '@tiptap/core'
+import { test as baseTest } from 'vitest'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 import {
 	markdownThroughEditor,
 	markdownThroughEditorHtml,
 } from '../testHelpers/markdown.js'
-import createCustomEditor from '../testHelpers/createCustomEditor.ts'
+import Markdown from './../../extensions/Markdown.js'
+import Link from './../../marks/Link.js'
+import Preview from './../../nodes/Preview.js'
 
 const test = baseTest.extend({
 	editor: async ({ task: _ }, use) => {
 		const editor = createCustomEditor('', [Markdown, Preview, Link])
 		await use(editor)
 		editor.destroy()
-	}
+	},
 })
 
 describe('Preview extension', () => {
@@ -28,7 +28,9 @@ describe('Preview extension', () => {
 		expect(typeof toMarkdown).toEqual('function')
 	})
 
-	test('exposes the toMarkdown function in the prosemirror schema', ({ editor }) => {
+	test('exposes the toMarkdown function in the prosemirror schema', ({
+		editor,
+	}) => {
 		const preview = editor.schema.nodes.preview
 		expect(preview.spec.toMarkdown).toBeDefined()
 	})
@@ -41,8 +43,7 @@ describe('Preview extension', () => {
 	test('serializes HTML to markdown', () => {
 		const markdown = '[link](https://nextcloud.com (preview))'
 		const link = '<a href="https://nextcloud.com" title="preview">link</a>'
-		expect(markdownThroughEditorHtml(link))
-			.toBe(markdown)
+		expect(markdownThroughEditorHtml(link)).toBe(markdown)
 	})
 
 	test('detects links', ({ editor }) => {
@@ -53,6 +54,4 @@ describe('Preview extension', () => {
 		expect(node.attrs.title).toBe('preview')
 		expect(node.attrs.href).toBe('https://nextcloud.com')
 	})
-
 })
-

@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcActions class="entry-action entry-action__insert-link"
+	<NcActions
+		class="entry-action entry-action__insert-link"
 		:title="actionEntry.label"
 		:aria-label="actionEntry.label"
 		:class="activeClass"
@@ -12,13 +13,19 @@
 		:data-text-action-entry="actionEntry.key"
 		:name="actionEntry.label"
 		:open="menuOpen"
-		@update:open="(open) => { menuOpen = menuOpen || open }">
+		@update:open="
+			(open) => {
+				menuOpen = menuOpen || open
+			}
+		">
 		<template #icon>
-			<component :is="icon"
+			<component
+				:is="icon"
 				:name="actionEntry.label"
 				:aria-label="actionEntry.label" />
 		</template>
-		<NcActionButton v-if="state.active"
+		<NcActionButton
+			v-if="state.active"
 			:data-text-action-entry="`${actionEntry.key}-remove`"
 			@click="removeLink">
 			<template #icon>
@@ -26,7 +33,8 @@
 			</template>
 			{{ t('text', 'Remove link') }}
 		</NcActionButton>
-		<NcActionButton v-if="!isUsingDirectEditing"
+		<NcActionButton
+			v-if="!isUsingDirectEditing"
 			ref="buttonFile"
 			:data-text-action-entry="`${actionEntry.key}-file`"
 			@click="linkFile">
@@ -35,7 +43,8 @@
 			</template>
 			{{ t('text', 'Link to file or folder') }}
 		</NcActionButton>
-		<NcActionInput v-if="isInputMode"
+		<NcActionInput
+			v-if="isInputMode"
 			type="text"
 			:value.sync="href"
 			:data-text-action-entry="`${actionEntry.key}-input`"
@@ -45,15 +54,21 @@
 			</template>
 			{{ t('text', 'Link to website') }}
 		</NcActionInput>
-		<NcActionButton v-else
+		<NcActionButton
+			v-else
 			:data-text-action-entry="`${actionEntry.key}-website`"
 			@click="linkWebsite">
 			<template #icon>
 				<Web />
 			</template>
-			{{ state.active ? t('text', 'Update link') : t('text', 'Link to website') }}
+			{{
+				state.active
+					? t('text', 'Update link')
+					: t('text', 'Link to website')
+			}}
 		</NcActionButton>
-		<NcActionButton :data-text-action-entry="`${actionEntry.key}-picker`"
+		<NcActionButton
+			:data-text-action-entry="`${actionEntry.key}-picker`"
 			@click="linkPicker">
 			<template #icon>
 				<Shape />
@@ -64,21 +79,21 @@
 </template>
 
 <script>
-import NcActions from '@nextcloud/vue/components/NcActions'
+import { loadState } from '@nextcloud/initial-state'
+import { generateUrl } from '@nextcloud/router'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { generateUrl } from '@nextcloud/router'
-import { loadState } from '@nextcloud/initial-state'
 
 import { getMarkAttributes, isActive } from '@tiptap/core'
 
-import { Document, Loading, LinkOff, Web, Shape } from '../icons.js'
-import { BaseActionEntry } from './BaseActionEntry.js'
-import { useFileMixin } from '../Editor.provider.ts'
-import { useMenuIDMixin } from './MenuBar.provider.js'
-import { buildFilePicker } from '../../helpers/filePicker.js'
 import { t } from '@nextcloud/l10n'
+import { buildFilePicker } from '../../helpers/filePicker.js'
+import { useFileMixin } from '../Editor.provider.ts'
+import { Document, LinkOff, Loading, Shape, Web } from '../icons.js'
+import { BaseActionEntry } from './BaseActionEntry.js'
+import { useMenuIDMixin } from './MenuBar.provider.js'
 
 export default {
 	name: 'ActionInsertLink',
@@ -93,10 +108,7 @@ export default {
 		Shape,
 	},
 	extends: BaseActionEntry,
-	mixins: [
-		useFileMixin,
-		useMenuIDMixin,
-	],
+	mixins: [useFileMixin, useMenuIDMixin],
 	data: () => {
 		return {
 			href: '',
@@ -104,7 +116,8 @@ export default {
 			startPath: null,
 			/** Open state of the actions menu */
 			menuOpen: false,
-			isUsingDirectEditing: loadState('text', 'directEditingToken', null) !== null,
+			isUsingDirectEditing:
+				loadState('text', 'directEditingToken', null) !== null,
 		}
 	},
 	computed: {
@@ -127,13 +140,19 @@ export default {
 
 			const filePicker = buildFilePicker(this.startPath)
 
-			filePicker.pick()
+			filePicker
+				.pick()
 				.then((file) => {
 					const client = OC.Files.getClient()
 					client.getFileInfo(file).then((_status, fileInfo) => {
-						const url = new URL(generateUrl(`/f/${fileInfo.id}`), window.origin)
+						const url = new URL(
+							generateUrl(`/f/${fileInfo.id}`),
+							window.origin,
+						)
 						this.setLink(url.href, fileInfo.name)
-						this.startPath = fileInfo.path + (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
+						this.startPath =
+							fileInfo.path
+							+ (fileInfo.type === 'dir' ? `/${fileInfo.name}/` : '')
 					})
 					this.menuOpen = false
 				})
@@ -150,7 +169,9 @@ export default {
 		 */
 		linkWebsite(event) {
 			if (event?.type === 'submit') {
-				const href = [...event.target.elements].filter(e => e?.type === 'text')[0].value
+				const href = [...event.target.elements].filter(
+					(e) => e?.type === 'text',
+				)[0].value
 				this.menuOpen = false
 				this.isInputMode = false
 				this.href = ''
@@ -180,7 +201,7 @@ export default {
 				/^[^.]*[/$]/, // no dots before first '/' - not a domain name
 				/^#/, // url fragment
 			]
-			if (url && !noPrefixes.find(regex => url.match(regex))) {
+			if (url && !noPrefixes.find((regex) => url.match(regex))) {
 				url = 'https://' + url
 			}
 
@@ -200,7 +221,7 @@ export default {
 		},
 		linkPicker() {
 			getLinkWithPicker(null, true)
-				.then(link => {
+				.then((link) => {
 					const chain = this.editor?.chain()
 					if (this.editor?.view.state?.selection.empty) {
 						chain.focus().insertPreview(link).run()
@@ -208,7 +229,7 @@ export default {
 						chain.setLink({ href: link }).focus().run()
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.error('Smart picker promise rejected', error)
 				})
 		},
@@ -218,8 +239,8 @@ export default {
 </script>
 
 <style scoped>
-	.action {
-		/* to unify width of ActionInput and ActionButton */
-		min-width: 218px;
-	}
+.action {
+	/* to unify width of ActionInput and ActionButton */
+	min-width: 218px;
+}
 </style>

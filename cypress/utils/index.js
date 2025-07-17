@@ -5,14 +5,12 @@
 
 import { User } from '@nextcloud/e2e-test-server/cypress'
 
-export const getSearchParams = url => {
-	return url
-		.split(/[?&]/)
-		.reduce((acc, cur) => {
-			const parts = cur.split('=')
-			parts[1] && (acc[parts[0]] = parts[1])
-			return acc
-		}, {})
+export const getSearchParams = (url) => {
+	return url.split(/[?&]/).reduce((acc, cur) => {
+		const parts = cur.split('=')
+		parts[1] && (acc[parts[0]] = parts[1])
+		return acc
+	}, {})
 }
 
 /**
@@ -28,10 +26,14 @@ export function initUserAndFiles(user, ...files) {
 	cy.login(user)
 
 	// Upload test files
-	;(files || []).forEach(file => {
+	;(files || []).forEach((file) => {
 		cy.uploadFile(file, 'text/markdown')
 	})
 }
 
-export const randHash = () => Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 10)
+export const randHash = () =>
+	Math.random()
+		.toString(36)
+		.replace(/[^a-z]+/g, '')
+		.slice(0, 10)
 export const randUser = () => new User(randHash(), randHash())

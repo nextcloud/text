@@ -13,4 +13,4 @@ const Italic = TipTapItalic.extend({
 	name: 'em',
 })
 
-export { Strong, Italic, Strike, Link, Underline }
+export { Italic, Link, Strike, Strong, Underline }

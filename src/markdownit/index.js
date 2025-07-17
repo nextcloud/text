@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import MarkdownIt from 'markdown-it'
-import taskLists from './taskLists.ts'
 import markdownitMentions from '@quartzy/markdown-it-mentions'
-import underline from './underline.js'
-import splitMixedLists from './splitMixedLists.js'
-import callouts from './callouts.js'
-import details from './details.ts'
-import preview from './preview.js'
-import hardbreak from './hardbreak.js'
-import keepSyntax from './keepSyntax.js'
+import MarkdownIt from 'markdown-it'
 import frontMatter from 'markdown-it-front-matter'
 import implicitFigures from 'markdown-it-image-figures'
 import { escapeHtml } from 'markdown-it/lib/common/utils.mjs'
+import callouts from './callouts.js'
+import details from './details.ts'
+import hardbreak from './hardbreak.js'
+import keepSyntax from './keepSyntax.js'
+import preview from './preview.js'
+import splitMixedLists from './splitMixedLists.js'
+import taskLists from './taskLists.ts'
+import underline from './underline.js'
 
 const markdownit = MarkdownIt('commonmark', { html: false, breaks: false })
 	.enable('strikethrough')

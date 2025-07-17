@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import axios from '@nextcloud/axios'
 import { getRequestToken } from '@nextcloud/auth'
-import type { Connection } from '../composables/useConnection.js'
-import { unref, type ShallowRef } from 'vue'
+import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import { unref, type ShallowRef } from 'vue'
+import type { Connection } from '../composables/useConnection.js'
 import type { Document } from '../services/SyncService.js'
 
 interface SaveData {

@@ -6,16 +6,16 @@
 import { initUserAndFiles, randUser } from '../utils/index.js'
 const user = randUser()
 
-describe('Open print.md and compare print view', function() {
-	before(function() {
+describe('Open print.md and compare print view', function () {
+	before(function () {
 		initUserAndFiles(user, 'print.md')
 	})
-	beforeEach(function() {
+	beforeEach(function () {
 		cy.login(user)
 		cy.visit('/apps/files')
 	})
 
-	it('Renders print view in viewer', function() {
+	it('Renders print view in viewer', function () {
 		cy.openFile('print.md')
 		cy.setCssMedia('print')
 
@@ -23,14 +23,15 @@ describe('Open print.md and compare print view', function() {
 		cy.getContent()
 			// Ensure cursor is not displayed to prevent flaky tests (flashing input cursor)
 			.invoke('css', 'caret-color', 'transparent')
-			.get('h1:not(.hidden-visually)').should('contain', 'Print test')
+			.get('h1:not(.hidden-visually)')
+			.should('contain', 'Print test')
 			.should('be.visible')
 
 		cy.compareSnapshot('print view in viewer')
 		cy.setCssMedia('screen')
 	})
 
-	it('Renders print view in single-file share', function() {
+	it('Renders print view in single-file share', function () {
 		cy.shareFile('/print.md', { edit: true })
 			.then((token) => {
 				cy.logout()
@@ -42,7 +43,8 @@ describe('Open print.md and compare print view', function() {
 				cy.getContent()
 					// Ensure cursor is not displayed to prevent flaky tests (flashing input cursor)
 					.invoke('css', 'caret-color', 'transparent')
-					.get('h1:not(.hidden-visually)').should('contain', 'Print test')
+					.get('h1:not(.hidden-visually)')
+					.should('contain', 'Print test')
 					.should('be.visible')
 
 				cy.compareSnapshot('print view in single-file share')

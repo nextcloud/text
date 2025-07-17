@@ -4,10 +4,14 @@
  */
 
 import * as Y from 'yjs'
-import { getDocumentState, documentStateToStep, applyStep } from '../../../src/helpers/yjs.js'
+import {
+	applyStep,
+	documentStateToStep,
+	getDocumentState,
+} from '../../../src/helpers/yjs.js'
 
-describe('Yjs base64 wrapped with our helpers', function() {
-	it('applies step generated from document state', function() {
+describe('Yjs base64 wrapped with our helpers', function () {
+	it('applies step generated from document state', function () {
 		const source = new Y.Doc()
 		const target = new Y.Doc()
 		const sourceMap = source.getMap()
@@ -38,5 +42,4 @@ describe('Yjs base64 wrapped with our helpers', function() {
 		expect(targetMap.get('keyB')).to.be.eq('valueB')
 		expect(targetMap.get('keyC')).to.be.eq(undefined)
 	})
-
 })

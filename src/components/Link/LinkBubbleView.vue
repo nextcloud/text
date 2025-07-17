@@ -11,7 +11,8 @@
 				{{ title }}
 			</div>
 			<!-- copy link -->
-			<NcButton :title="copyLinkTooltip"
+			<NcButton
+				:title="copyLinkTooltip"
 				:aria-label="copyLinkTooltip"
 				type="tertiary"
 				@click="copyLink">
@@ -24,7 +25,8 @@
 
 			<!-- edit/save -->
 			<div v-if="isEditable" class="edit-buttons">
-				<NcButton v-if="!edit"
+				<NcButton
+					v-if="!edit"
 					:title="t('text', 'Edit link')"
 					:aria-label="t('text', 'Edit link')"
 					type="tertiary"
@@ -33,7 +35,8 @@
 						<PencilIcon :size="20" />
 					</template>
 				</NcButton>
-				<NcButton v-else
+				<NcButton
+					v-else
 					:title="t('text', 'Save changes')"
 					:aria-label="t('text', 'Save changes')"
 					type="tertiary"
@@ -44,7 +47,8 @@
 				</NcButton>
 
 				<!-- remove link / dismiss changes -->
-				<NcButton v-if="!edit"
+				<NcButton
+					v-if="!edit"
 					:title="t('text', 'Remove link')"
 					:aria-label="t('text', 'Remove link')"
 					type="tertiary"
@@ -53,7 +57,8 @@
 						<LinkOffIcon :size="20" />
 					</template>
 				</NcButton>
-				<NcButton v-else
+				<NcButton
+					v-else
 					:title="t('text', 'Cancel')"
 					:aria-label="t('text', 'Cancel')"
 					type="tertiary"
@@ -67,7 +72,8 @@
 
 		<!-- link edit form -->
 		<div v-if="isEditable && edit" class="link-view-bubble__edit">
-			<NcTextField ref="hrefField"
+			<NcTextField
+				ref="hrefField"
 				name="newHref"
 				:label="t('text', 'URL')"
 				:value.sync="newHref"
@@ -75,7 +81,8 @@
 		</div>
 
 		<!-- link preview -->
-		<NcReferenceList v-else-if="showPreview"
+		<NcReferenceList
+			v-else-if="showPreview"
 			ref="referencelist"
 			:text="sanitizedHref"
 			:limit="1"
@@ -87,6 +94,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
@@ -96,7 +104,6 @@ import CloseIcon from 'vue-material-design-icons/Close.vue'
 import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
-import { t } from '@nextcloud/l10n'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
@@ -117,9 +124,7 @@ export default {
 		PencilIcon,
 	},
 
-	mixins: [
-		CopyToClipboardMixin,
-	],
+	mixins: [CopyToClipboardMixin],
 
 	props: {
 		editor: {
@@ -204,7 +209,9 @@ export default {
 		},
 
 		onReferenceListLoaded() {
-			this.referenceTitle = this.$refs.referencelist.firstReference?.openGraphObject?.name ?? null
+			this.referenceTitle =
+				this.$refs.referencelist.firstReference?.openGraphObject?.name
+				?? null
 		},
 
 		startEdit() {
@@ -237,11 +244,12 @@ export default {
 			// Store current selection to restore it after setLink
 			const selection = { ...this.editor.view.state.selection }
 			const { ranges } = selection
-			const from = Math.min(...ranges.map(range => range.$from.pos))
-			const to = Math.max(...ranges.map(range => range.$to.pos))
+			const from = Math.min(...ranges.map((range) => range.$from.pos))
+			const to = Math.max(...ranges.map((range) => range.$to.pos))
 
 			console.debug('selection', selection)
-			this.editor.chain()
+			this.editor
+				.chain()
 				.extendMarkRange('link')
 				.setLink({ href })
 				.setTextSelection({ from, to })
@@ -250,7 +258,8 @@ export default {
 		},
 
 		removeLink() {
-			this.editor.chain()
+			this.editor
+				.chain()
 				// Explicitly hide bubble to prevent flickering before it's removed
 				.hideLinkBubble()
 				.unsetLink()

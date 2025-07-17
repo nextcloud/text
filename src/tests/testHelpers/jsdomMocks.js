@@ -11,7 +11,6 @@ import { vi } from 'vitest'
 // https://github.com/ueberdosis/tiptap/issues/4455
 
 class ClipboardEventMock extends Event {
-
 	constructor(type, eventInitDict) {
 		super(type, eventInitDict)
 		this.clipboardData = {
@@ -19,13 +18,11 @@ class ClipboardEventMock extends Event {
 			setData: vi.fn(),
 		}
 	}
-
 }
 
 global.ClipboardEvent = ClipboardEventMock
 
 class DragEventMock extends Event {
-
 	constructor(type, eventInitDict) {
 		super(type, eventInitDict)
 		this.dataTransfer = {
@@ -33,7 +30,6 @@ class DragEventMock extends Event {
 			setData: vi.fn(),
 		}
 	}
-
 }
 global.DragEvent = DragEventMock
 

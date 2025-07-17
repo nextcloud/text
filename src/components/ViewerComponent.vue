@@ -35,15 +35,15 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import axios from '@nextcloud/axios'
-import { getSharingToken } from '@nextcloud/sharing/public'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import PlainTextReader from './PlainTextReader.vue'
-import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
-import { t } from '@nextcloud/l10n'
 import { getClient, getRootPath } from '@nextcloud/files/dav'
+import { t } from '@nextcloud/l10n'
+import { getSharingToken } from '@nextcloud/sharing/public'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import Vue from 'vue'
+import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
+import PlainTextReader from './PlainTextReader.vue'
 
 import getEditorInstance from './Editor.singleton.js'
 

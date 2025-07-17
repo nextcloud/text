@@ -10,7 +10,6 @@ import { ref, watch, type Ref } from 'vue'
  * @param input - ref to react to
  */
 export function useDelayedFlag(input: Ref<boolean>): { delayed: Ref<boolean> } {
-
 	let timeout: ReturnType<typeof setTimeout> | undefined
 	const delayed = ref(input.value)
 
@@ -22,7 +21,6 @@ export function useDelayedFlag(input: Ref<boolean>): { delayed: Ref<boolean> } {
 		timeout = setTimeout(() => {
 			delayed.value = val
 		}, delay)
-
 	})
 
 	return { delayed }

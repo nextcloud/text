@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcModal v-if="show"
+	<NcModal
+		v-if="show"
 		size="large"
 		:name="currentImage.name"
 		:out-transition="true"
@@ -16,7 +17,7 @@
 		@previous="showPreviousImage"
 		@close="$emit('close')">
 		<div class="modal__content">
-			<img :src="currentImage.previewUrl">
+			<img :src="currentImage.previewUrl" />
 		</div>
 	</NcModal>
 </template>
@@ -54,18 +55,20 @@ export default {
 		},
 	},
 	watch: {
-		'startIndex'(val) {
+		startIndex(val) {
 			this.currentImageIndex = val
 		},
 	},
 	methods: {
 		showNextImage() {
-			this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length
+			this.currentImageIndex =
+				(this.currentImageIndex + 1) % this.images.length
 		},
 		showPreviousImage() {
-			this.currentImageIndex = this.currentImageIndex <= 0
-				? this.images.length - 1
-				: this.currentImageIndex - 1
+			this.currentImageIndex =
+				this.currentImageIndex <= 0
+					? this.images.length - 1
+					: this.currentImageIndex - 1
 		},
 	},
 }

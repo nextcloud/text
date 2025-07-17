@@ -4,12 +4,13 @@
 -->
 
 <template>
-	<NcActions :title="tooltip"
+	<NcActions
+		:title="tooltip"
 		class="entry-list-action entry-action"
 		v-bind="state"
 		:container="menuIDSelector"
 		:aria-label="labelWithSelected"
-		:type="state.active ? 'primary': 'tertiary'"
+		:type="state.active ? 'primary' : 'tertiary'"
 		:force-menu="true"
 		:data-text-action-entry="actionEntry.key"
 		:data-text-action-active="activeKey"
@@ -19,8 +20,11 @@
 			<component :is="icon" :key="iconKey" />
 		</template>
 		<template v-for="child in children">
-			<NcActionSeparator v-if="child.isSeparator" :key="`child-${child.key}`" />
-			<ActionListItem v-else
+			<NcActionSeparator
+				v-if="child.isSeparator"
+				:key="`child-${child.key}`" />
+			<ActionListItem
+				v-else
 				:key="`child-${child.key}`"
 				:active="currentChild?.key === child.key"
 				is-item
@@ -33,15 +37,15 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
-import { BaseActionEntry } from './BaseActionEntry.js'
-import ActionListItem from './ActionListItem.vue'
-import { getActionState, getIsActive } from './utils.js'
-import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
-import { useMenuIDMixin } from './MenuBar.provider.js'
 import debounce from 'debounce'
-import { t } from '@nextcloud/l10n'
+import { useOutlineStateMixin } from '../Editor/Wrapper.provider.js'
+import ActionListItem from './ActionListItem.vue'
+import { BaseActionEntry } from './BaseActionEntry.js'
+import { useMenuIDMixin } from './MenuBar.provider.js'
+import { getActionState, getIsActive } from './utils.js'
 
 export default {
 	name: 'ActionList',
@@ -74,7 +78,7 @@ export default {
 				return null
 			}
 
-			return children.find(child => {
+			return children.find((child) => {
 				return getIsActive(child, editor)
 			})
 		},
@@ -97,18 +101,20 @@ export default {
 					return true
 				}
 
-				return typeof visible === 'function'
-					? visible(this)
-					: visible
+				return typeof visible === 'function' ? visible(this) : visible
 			})
 		},
 		labelWithSelected() {
 			if (this.currentChild) {
 				// TRANSLATORS: examples - Headings, "Heading 1" is selected - Blocks, "Info callout" is selected
-				return t('text', '{menuItemName}, "{selectedSubMenuItemName}" is selected', {
-					menuItemName: this.actionEntry.label,
-					selectedSubMenuItemName: this.currentChild.label,
-				})
+				return t(
+					'text',
+					'{menuItemName}, "{selectedSubMenuItemName}" is selected',
+					{
+						menuItemName: this.actionEntry.label,
+						selectedSubMenuItemName: this.currentChild.label,
+					},
+				)
 			}
 
 			return this.actionEntry.label
@@ -141,11 +147,12 @@ export default {
 			this.$emit('trigged', entry)
 		},
 		checkStateOfChildren() {
-			this.hasEnabledChild = this.children.some(child => this.isChildEnabled(child))
+			this.hasEnabledChild = this.children.some((child) =>
+				this.isChildEnabled(child),
+			)
 		},
 		isChildEnabled(child) {
-			return !child.isSeparator
-				&& !getActionState(child, this.editor).disabled
+			return !child.isSeparator && !getActionState(child, this.editor).disabled
 		},
 	},
 }

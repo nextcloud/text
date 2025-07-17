@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<Wrapper :content-loaded="true"
+	<Wrapper
+		:content-loaded="true"
 		:show-outline-outside="showOutlineOutside"
 		@outline-toggled="outlineToggled">
 		<MainContainer>
@@ -20,24 +21,24 @@
 </template>
 
 <script>
-import Wrapper from './Wrapper.vue'
-import MainContainer from './MainContainer.vue'
-import MenuBar from '../Menu/MenuBar.vue'
 import { Editor } from '@tiptap/core'
+import MenuBar from '../Menu/MenuBar.vue'
+import MainContainer from './MainContainer.vue'
+import Wrapper from './Wrapper.vue'
 /* eslint-disable import/no-named-as-default */
-import History from '@tiptap/extension-history'
 import { getCurrentUser } from '@nextcloud/auth'
-import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
-import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import History from '@tiptap/extension-history'
+import { provide, watch } from 'vue'
 import { provideEditor } from '../../composables/useEditor.ts'
+import { editorFlagsKey } from '../../composables/useEditorFlags.ts'
+import { useEditorMethods } from '../../composables/useEditorMethods.ts'
+import { FocusTrap, RichText } from '../../extensions/index.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
-import AttachmentResolver from '../../services/AttachmentResolver.js'
 import markdownit from '../../markdownit/index.js'
-import { RichText, FocusTrap } from '../../extensions/index.js'
+import AttachmentResolver from '../../services/AttachmentResolver.js'
+import { ATTACHMENT_RESOLVER } from '../Editor.provider.ts'
 import ReadonlyBar from '../Menu/ReadonlyBar.vue'
 import ContentContainer from './ContentContainer.vue'
-import { useEditorMethods } from '../../composables/useEditorMethods.ts'
-import { provide, watch } from 'vue'
 
 export default {
 	name: 'MarkdownContentEditor',
@@ -89,7 +90,7 @@ export default {
 	setup(props) {
 		const extensions = [
 			RichText.configure({
-				extensions: [ History ],
+				extensions: [History],
 			}),
 			FocusTrap,
 		]
@@ -99,14 +100,20 @@ export default {
 		})
 
 		const { setEditable, setContent } = useEditorMethods(editor)
-		watch(() => props.content, (content) => {
-			setContent(content)
-		})
+		watch(
+			() => props.content,
+			(content) => {
+				setContent(content)
+			},
+		)
 
 		setEditable(!props.readOnly)
-		watch(() => props.readOnly, (readOnly) => {
-			setEditable(!readOnly)
-		})
+		watch(
+			() => props.readOnly,
+			(readOnly) => {
+				setEditable(!readOnly)
+			},
+		)
 
 		provideEditor(editor)
 		provide(editorFlagsKey, {
@@ -123,7 +130,9 @@ export default {
 			this.$parent.$emit('ready')
 		})
 		this.editor.on('update', ({ editor }) => {
-			const markdown = (createMarkdownSerializer(editor.schema)).serialize(editor.state.doc)
+			const markdown = createMarkdownSerializer(editor.schema).serialize(
+				editor.state.doc,
+			)
 			this.emit('update:content', {
 				json: editor.state.doc,
 				markdown,
@@ -144,7 +153,6 @@ export default {
 	},
 
 	methods: {
-
 		outlineToggled(visible) {
 			this.emit('outline-toggled', visible)
 		},

@@ -4,18 +4,27 @@
 -->
 
 <template>
-	<NcModal :show="show"
+	<NcModal
+		:show="show"
 		size="large"
 		:name="t('text', 'Translate')"
 		@close="$emit('close')">
 		<div class="translate-dialog">
 			<h2>{{ t('text', 'Translate') }}</h2>
-			<em>{{ t('text', 'To translate individual parts of the text, select it before using the translate function.') }}</em>
+			<em>{{
+				t(
+					'text',
+					'To translate individual parts of the text, select it before using the translate function.',
+				)
+			}}</em>
 			<div class="wrapper">
 				<div class="col">
 					<div class="language-selector">
-						<label for="fromLanguage">{{ t('text', 'Translate from') }}</label>
-						<NcSelect v-model="fromLanguage"
+						<label for="fromLanguage">{{
+							t('text', 'Translate from')
+						}}</label>
+						<NcSelect
+							v-model="fromLanguage"
 							input-id="fromLanguage"
 							:placeholder="t('text', 'Select language')"
 							:aria-label-combobox="t('text', 'Translate from')"
@@ -23,7 +32,8 @@
 							:disabled="disableFromLanguageSelect"
 							:append-to-body="false" />
 					</div>
-					<NcTextArea ref="input"
+					<NcTextArea
+						ref="input"
 						:value.sync="input"
 						:label="t('text', 'Text to translate from')"
 						autofocus
@@ -35,7 +45,8 @@
 				<div class="col">
 					<div class="language-selector">
 						<label for="toLanguage">{{ t('text', 'to') }}</label>
-						<NcSelect v-model="toLanguage"
+						<NcSelect
+							v-model="toLanguage"
 							input-id="toLanguage"
 							:placeholder="t('text', 'Select language')"
 							:aria-label-combobox="t('text', 'Translate to')"
@@ -43,24 +54,29 @@
 							:disabled="!fromLanguage"
 							:append-to-body="false" />
 					</div>
-					<NcTextArea ref="result"
+					<NcTextArea
+						ref="result"
 						:value.sync="result"
 						:label="t('text', 'Translated text result')"
 						readonly
 						input-class="translate-textarea"
 						resize="none"
-						:class="{'icon-loading': loading }" />
+						:class="{ 'icon-loading': loading }" />
 				</div>
 			</div>
 			<div class="translate-actions">
 				<NcLoadingIcon v-if="loading" />
-				<NcButton v-if="!result"
+				<NcButton
+					v-if="!result"
 					type="primary"
 					:disabled="loading"
 					@click="translate">
 					{{ t('text', 'Translate') }}
 				</NcButton>
-				<NcButton v-if="result && content" type="secondary" @click="contentReplace">
+				<NcButton
+					v-if="result && content"
+					type="secondary"
+					@click="contentReplace">
 					{{ t('text', 'Replace') }}
 				</NcButton>
 				<NcButton v-if="result" type="primary" @click="contentInsert">
@@ -74,14 +90,14 @@
 <script>
 import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
+import { t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
-import NcModal from '@nextcloud/vue/components/NcModal'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import NcModal from '@nextcloud/vue/components/NcModal'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcTextArea from '@nextcloud/vue/components/NcTextArea'
 import { useIsMobileMixin } from '../Editor.provider.ts'
-import { t } from '@nextcloud/l10n'
 
 export default {
 	name: 'Translate',
@@ -92,9 +108,7 @@ export default {
 		NcLoadingIcon,
 		NcTextArea,
 	},
-	mixins: [
-		useIsMobileMixin,
-	],
+	mixins: [useIsMobileMixin],
 	props: {
 		show: {
 			type: Boolean,
@@ -123,7 +137,11 @@ export default {
 			for (const item of this.languages.from) {
 				result.push({
 					id: item.value,
-					label: !this.$isMobile ? item.name : t('text', 'Translate from {language}', { language: item.name }),
+					label: !this.$isMobile
+						? item.name
+						: t('text', 'Translate from {language}', {
+								language: item.name,
+							}),
 				})
 			}
 			return result
@@ -133,7 +151,7 @@ export default {
 				return []
 			}
 
-			const languages = this.languages.to.filter(l => {
+			const languages = this.languages.to.filter((l) => {
 				if (this.fromLanguage.id === null) {
 					return true
 				}
@@ -143,7 +161,11 @@ export default {
 			for (const item of languages) {
 				result.push({
 					id: item.value,
-					label: !this.$isMobile ? item.name : t('text', 'Translate to {language}', { language: item.name }),
+					label: !this.$isMobile
+						? item.name
+						: t('text', 'Translate to {language}', {
+								language: item.name,
+							}),
 				})
 			}
 			return result
@@ -177,22 +199,27 @@ export default {
 		async translate() {
 			this.loading = true
 			try {
-				const scheduleResponse = await axios.post(generateOcsUrl('taskprocessing/schedule'), {
-					input: {
-						origin_language: this.fromLanguage?.id ?? null,
-						input: this.input,
-						target_language: this.toLanguage.id,
+				const scheduleResponse = await axios.post(
+					generateOcsUrl('taskprocessing/schedule'),
+					{
+						input: {
+							origin_language: this.fromLanguage?.id ?? null,
+							input: this.input,
+							target_language: this.toLanguage.id,
+						},
+						type: 'core:text2text:translate',
+						appId: 'text',
 					},
-					type: 'core:text2text:translate',
-					appId: 'text',
-				})
+				)
 				const task = scheduleResponse.data.ocs.data.task
 				const getTaskOutput = async (task) => {
 					if (task.output) {
 						return task.output.output
 					}
-					await new Promise(resolve => setTimeout(resolve, 2000))
-					const taskResponse = await axios.get(generateOcsUrl(`taskprocessing/task/${task.id}`))
+					await new Promise((resolve) => setTimeout(resolve, 2000))
+					const taskResponse = await axios.get(
+						generateOcsUrl(`taskprocessing/task/${task.id}`),
+					)
 					return getTaskOutput(taskResponse.data.ocs.data.task)
 				}
 				this.result = await getTaskOutput(task)
@@ -278,8 +305,8 @@ export default {
 	}
 
 	label {
-		&[for="fromLanguage"],
-		&[for="toLanguage"] {
+		&[for='fromLanguage'],
+		&[for='toLanguage'] {
 			display: none;
 		}
 	}

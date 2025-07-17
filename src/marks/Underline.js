@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import TipTapUnderline from '@tiptap/extension-underline'
 import { markInputRule, markPasteRule } from '@tiptap/core'
 import { underscoreInputRegex, underscorePasteRegex } from '@tiptap/extension-bold'
+import TipTapUnderline from '@tiptap/extension-underline'
 
 const Underline = TipTapUnderline.extend({
 	parseHTML() {

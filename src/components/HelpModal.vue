@@ -268,10 +268,10 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import { isMobilePlatform } from '../helpers/platform.js'
-import { TRANSLATIONS, MODIFIERS } from './Menu/keys.js'
-import { t } from '@nextcloud/l10n'
+import { MODIFIERS, TRANSLATIONS } from './Menu/keys.js'
 
 export default {
 	name: 'HelpModal',

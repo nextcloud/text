@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { emit } from '@nextcloud/event-bus'
 import axios from '@nextcloud/axios'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
-import { generateUrl } from '@nextcloud/router'
+import { emit } from '@nextcloud/event-bus'
 import { t } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 
 export default {
 	name: 'FilesSettings',

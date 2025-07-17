@@ -3,6 +3,7 @@
 ## 1.0.2
 
 ### Fixed
+
 - Improved dynamic chunk loading
 - Add translations and fix wording for menu bar icons
 - Fix network error handling
@@ -12,10 +13,12 @@
 ## 1.0.1
 
 ### Added
+
 - Implement proper plain text handling
 - Add translations
 
 ### Fixed
+
 - Fix document loading caused by wrong step order
 - Properly register file action when viewer is disabled
 - Require at least 16.0.1

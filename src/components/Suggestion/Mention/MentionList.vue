@@ -5,8 +5,9 @@
 
 <template>
 	<SuggestionListWrapper ref="suggestionList" :command="command" :items="items">
-		<template #default="{ item, active}">
-			<NcAutoCompleteResult :id="item.id"
+		<template #default="{ item, active }">
+			<NcAutoCompleteResult
+				:id="item.id"
 				:label="item.label"
 				icon="icon-user"
 				source="users"
@@ -21,8 +22,8 @@
 <script>
 import { NcAutoCompleteResult } from '@nextcloud/vue'
 
-import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 import { t } from '@nextcloud/l10n'
+import SuggestionListWrapper from '../SuggestionListWrapper.vue'
 
 export default {
 	components: {

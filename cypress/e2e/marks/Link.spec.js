@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { expectMarkdown, loadMarkdown } from '../nodes/helpers.js'
 import Markdown from './../../../src/extensions/Markdown.js'
 import { Italic, Link } from './../../../src/marks/index.js'
 import { createCustomEditor } from './../../support/components.js'
-import { loadMarkdown, expectMarkdown } from '../nodes/helpers.js'
 
 describe('Link marks', { retries: 0 }, () => {
 	const editor = createCustomEditor({

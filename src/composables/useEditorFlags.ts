@@ -5,7 +5,7 @@
 
 import { loadState } from '@nextcloud/initial-state'
 import { isPublicShare } from '@nextcloud/sharing/public'
-import { type InjectionKey, provide, inject } from 'vue'
+import { inject, type InjectionKey, provide } from 'vue'
 
 export interface EditorFlags {
 	isPublic: boolean

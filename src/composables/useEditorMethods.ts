@@ -5,8 +5,8 @@
 
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
-import markdownit from '../markdownit/index.js'
 import Markdown from '../extensions/Markdown.js'
+import markdownit from '../markdownit/index.js'
 
 export const useEditorMethods = (editor: Editor) => {
 	const setEditable = (val: boolean) => {

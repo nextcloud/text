@@ -4,9 +4,13 @@
 -->
 
 <template>
-	<div data-text-el="editor-outline" class="editor--outline" :class="{ 'editor--outline-mobile': $isMobile }">
+	<div
+		data-text-el="editor-outline"
+		class="editor--outline"
+		:class="{ 'editor--outline-mobile': $isMobile }">
 		<header class="editor--outline__header">
-			<NcButton class="editor--outline__btn-close"
+			<NcButton
+				class="editor--outline__btn-close"
 				type="tertiary"
 				:aria-label="t('text', 'Close outline view')"
 				@click="$outlineActions.toggle">
@@ -21,12 +25,12 @@
 </template>
 
 <script>
-import NcButton from '@nextcloud/vue/components/NcButton'
-import TableOfContents from './TableOfContents.vue'
-import { useOutlineStateMixin, useOutlineActions } from './Wrapper.provider.js'
-import { Close } from './../icons.js'
-import { useIsMobileMixin } from '../Editor.provider.ts'
 import { t } from '@nextcloud/l10n'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { useIsMobileMixin } from '../Editor.provider.ts'
+import { Close } from './../icons.js'
+import TableOfContents from './TableOfContents.vue'
+import { useOutlineActions, useOutlineStateMixin } from './Wrapper.provider.js'
 
 export default {
 	name: 'EditorOutline',
@@ -35,11 +39,7 @@ export default {
 		NcButton,
 		TableOfContents,
 	},
-	mixins: [
-		useIsMobileMixin,
-		useOutlineStateMixin,
-		useOutlineActions,
-	],
+	mixins: [useIsMobileMixin, useOutlineStateMixin, useOutlineActions],
 	methods: {
 		t,
 	},
@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .editor--outline {
-	width:  300px;
+	width: 300px;
 	padding: 0 10px 10px 10px;
 	position: fixed;
 	overflow: auto;

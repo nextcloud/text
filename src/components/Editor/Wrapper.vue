@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div class="text-editor__wrapper"
+	<div
+		class="text-editor__wrapper"
 		:class="{
 			'has-conflicts': isResolvingConflict,
 			'is-rich-workspace': isRichWorkspace,
@@ -17,7 +18,11 @@
 <script>
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { OUTLINE_STATE, OUTLINE_ACTIONS, READ_ONLY_ACTIONS } from './Wrapper.provider.js'
+import {
+	OUTLINE_ACTIONS,
+	OUTLINE_STATE,
+	READ_ONLY_ACTIONS,
+} from './Wrapper.provider.js'
 
 export default {
 	name: 'Wrapper',
@@ -76,9 +81,7 @@ export default {
 
 	computed: {
 		showOutline() {
-			return this.isAbleToShowOutline
-				? this.outline.visible
-				: false
+			return this.isAbleToShowOutline ? this.outline.visible : false
 		},
 		isAbleToShowOutline() {
 			if (this.isRichWorkspace) {
@@ -90,7 +93,7 @@ export default {
 	},
 
 	watch: {
-		'showOutlineOutside'() {
+		showOutlineOutside() {
 			this.outline.visible = this.showOutlineOutside
 		},
 	},
@@ -121,19 +124,18 @@ export default {
 			this.$emit('read-only-toggled')
 		},
 	},
-
 }
 </script>
 
 <style scoped lang="scss">
-	.text-editor__wrapper {
-		display: flex;
-		flex-grow: 1;
+.text-editor__wrapper {
+	display: flex;
+	flex-grow: 1;
 
-		width: 100%;
+	width: 100%;
 
-		.ProseMirror {
-			margin-top: 0 !important;
-		}
+	.ProseMirror {
+		margin-top: 0 !important;
 	}
+}
 </style>

@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { getExtensionField } from '@tiptap/core'
+import { Blockquote } from '@tiptap/extension-blockquote'
+import { CodeBlock } from '@tiptap/extension-code-block'
+import TiptapImage from '@tiptap/extension-image'
+import createCustomEditor from '../testHelpers/createCustomEditor.ts'
 import { Markdown } from './../../extensions/index.js'
 import { createMarkdownSerializer } from './../../extensions/Markdown.js'
-import { CodeBlock } from '@tiptap/extension-code-block'
-import { Blockquote } from '@tiptap/extension-blockquote'
+import { Italic, Link, Strong, Underline } from './../../marks/index.js'
 import Image from './../../nodes/Image.js'
 import ImageInline from './../../nodes/ImageInline.js'
-import TaskList from './../../nodes/TaskList.js'
 import TaskItem from './../../nodes/TaskItem.js'
-import { Italic, Strong, Underline, Link } from './../../marks/index.js'
-import TiptapImage from '@tiptap/extension-image'
-import { getExtensionField } from '@tiptap/core'
-import createCustomEditor from '../testHelpers/createCustomEditor.ts'
+import TaskList from './../../nodes/TaskList.js'
 
 describe('Markdown extension unit', () => {
 	it('has a config', () => {
@@ -38,7 +38,10 @@ describe('Markdown extension unit', () => {
 
 describe('Markdown extension integrated in the editor', () => {
 	it('serializes marks according to their spec', () => {
-		const editor = createCustomEditor('<p><u>Test</u></p>', [Markdown, Underline])
+		const editor = createCustomEditor('<p><u>Test</u></p>', [
+			Markdown,
+			Underline,
+		])
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('__Test__')
 	})
@@ -53,10 +56,10 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('serializes images with the default prosemirror way', () => {
-		const editor = createCustomEditor(
-			'<p><img alt="Hello" src="test"></p>',
-			[Markdown, TiptapImage.configure({ inline: true })],
-		)
+		const editor = createCustomEditor('<p><img alt="Hello" src="test"></p>', [
+			Markdown,
+			TiptapImage.configure({ inline: true }),
+		])
 		const serializer = createMarkdownSerializer(editor.schema)
 		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)')
 	})
@@ -67,7 +70,9 @@ describe('Markdown extension integrated in the editor', () => {
 			[Markdown, Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('![Hello](test)\n\nhello')
+		expect(serializer.serialize(editor.state.doc)).toBe(
+			'![Hello](test)\n\nhello',
+		)
 	})
 
 	it('serializes inline images with the default prosemirror way', () => {
@@ -76,7 +81,9 @@ describe('Markdown extension integrated in the editor', () => {
 			[Markdown, Image, ImageInline],
 		)
 		const serializer = createMarkdownSerializer(editor.schema)
-		expect(serializer.serialize(editor.state.doc)).toBe('inline image ![Hello](test) inside text')
+		expect(serializer.serialize(editor.state.doc)).toBe(
+			'inline image ![Hello](test) inside text',
+		)
 	})
 
 	it('copies task lists to plaintext like markdown', () => {
@@ -89,10 +96,10 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('copies code block content to plaintext according to their spec', () => {
-		const editor = createCustomEditor(
-			'<pre><code>Hello</code></pre>',
-			[Markdown, CodeBlock],
-		)
+		const editor = createCustomEditor('<pre><code>Hello</code></pre>', [
+			Markdown,
+			CodeBlock,
+		])
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello')
 	})
@@ -116,10 +123,7 @@ describe('Markdown extension integrated in the editor', () => {
 	})
 
 	it('copy version number without escape character', () => {
-		const editor = createCustomEditor(
-			'<p>Hello</p><p>28.0.4</p>',
-			[Markdown],
-		)
+		const editor = createCustomEditor('<p>Hello</p><p>28.0.4</p>', [Markdown])
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello\n\n28.0.4')
 	})
@@ -141,7 +145,6 @@ describe('Markdown extension integrated in the editor', () => {
 		const text = copyEditorContent(editor)
 		expect(text).toBe('Hello\n\nexample@example.com')
 	})
-
 })
 
 const copyEditorContent = (editor) => {

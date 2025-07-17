@@ -5,8 +5,8 @@
 
 import { mount } from '@vue/test-utils'
 import { test as baseTest, expect } from 'vitest'
-import RichTextReader from '../../components/RichTextReader.vue'
 import { nextTick } from 'vue'
+import RichTextReader from '../../components/RichTextReader.vue'
 
 const test = baseTest.extend({
 	content: ({ task: _ }, use) => use(''),
@@ -15,13 +15,15 @@ const test = baseTest.extend({
 		await nextTick()
 		await use(wrapper)
 		wrapper.destroy()
-	}
+	},
 })
 
 test.scoped({ content: '# Hello world\n\n[this is a link](https://nextcloud.com)' })
 test('renders markdown', async ({ wrapper }) => {
 	expect(wrapper.get('h1').text()).toBe('#Hello world') // # is the heading anchor
-	expect(wrapper.get('a[href="https://nextcloud.com"]').text()).toBe('this is a link')
+	expect(wrapper.get('a[href="https://nextcloud.com"]').text()).toBe(
+		'this is a link',
+	)
 })
 
 test('updates markdown', async ({ wrapper }) => {

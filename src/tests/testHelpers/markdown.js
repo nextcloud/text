@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import { createRichEditor } from '../../EditorFactory.js'
+import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 import markdownit from '../../markdownit/index.js'
 
 /**

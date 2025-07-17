@@ -6,11 +6,11 @@
 import 'proxy-polyfill'
 
 import { Editor } from '@tiptap/core'
-import { createLowlight } from 'lowlight'
 import hljs from 'highlight.js/lib/core'
+import { createLowlight } from 'lowlight'
 
-import { logger } from './helpers/logger.js'
 import { FocusTrap, PlainText, RichText } from './extensions/index.js'
+import { logger } from './helpers/logger.js'
 
 const lowlight = createLowlight()
 
@@ -21,7 +21,9 @@ const loadSyntaxHighlight = async (language) => {
 		try {
 			logger.debug('Loading language', language)
 			// eslint-disable-next-line n/no-missing-import
-			const syntax = await import(/* webpackChunkName: "highlight/[request]" */`../node_modules/highlight.js/lib/languages/${language}.js`)
+			const syntax = await import(
+				/* webpackChunkName: "highlight/[request]" */ `../node_modules/highlight.js/lib/languages/${language}.js`
+			)
 			lowlight.register(language, syntax.default)
 		} catch (error) {
 			// fallback to none
@@ -35,7 +37,12 @@ const editorProps = {
 	scrollThreshold: 50,
 }
 
-const createRichEditor = ({ extensions = [], connection, relativePath, isEmbedded = false } = {}) => {
+const createRichEditor = ({
+	extensions = [],
+	connection,
+	relativePath,
+	isEmbedded = false,
+} = {}) => {
 	return new Editor({
 		editorProps,
 		extensions: [
@@ -65,4 +72,9 @@ const serializePlainText = (doc) => {
 	return doc.textContent
 }
 
-export { createRichEditor, createPlainEditor, serializePlainText, loadSyntaxHighlight }
+export {
+	createPlainEditor,
+	createRichEditor,
+	loadSyntaxHighlight,
+	serializePlainText,
+}

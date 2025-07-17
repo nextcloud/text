@@ -7,8 +7,8 @@ import { Editor } from '@tiptap/core'
 import { Document } from '@tiptap/extension-document'
 import { Text } from '@tiptap/extension-text'
 import Search from '../../../src/extensions/Search.js'
-import Paragraph from '../../../src/nodes/Paragraph.js'
 import HardBreak from '../../../src/nodes/HardBreak.js'
+import Paragraph from '../../../src/nodes/Paragraph.js'
 
 describe('editor search highlighting', () => {
 	let editor = null
@@ -27,7 +27,9 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'Lorem ipsum dolor sit amet'
 		editor.commands.setSearchQuery(searchQuery)
 
-		const highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const highlightedElements = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
@@ -36,7 +38,9 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 		editor.commands.setSearchQuery(searchQuery)
 
-		const highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const highlightedElements = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 		expect(highlightedElements).to.have.lengthOf(3)
 		verifyHighlights(highlightedElements, searchQuery)
 	})
@@ -47,7 +51,9 @@ describe('editor search highlighting', () => {
 
 		// Highlight only first occurrence
 		editor.commands.setSearchQuery(searchQuery, false)
-		highlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		highlightedElements = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 
 		expect(highlightedElements).to.have.lengthOf(1)
 		verifyHighlights(highlightedElements, searchQuery)
@@ -57,26 +63,38 @@ describe('editor search highlighting', () => {
 		const searchQuery = 'quod'
 
 		editor.commands.setSearchQuery(searchQuery, true)
-		const allHighlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const allHighlightedElements = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 
 		editor.commands.nextMatch()
-		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const currentlyHighlightedElement = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 
 		expect(currentlyHighlightedElement).to.have.lengthOf(1)
-		expect(allHighlightedElements[1]).to.deep.equal(currentlyHighlightedElement[0])
+		expect(allHighlightedElements[1]).to.deep.equal(
+			currentlyHighlightedElement[0],
+		)
 	})
 
 	it('can move to previous occurrence', () => {
 		const searchQuery = 'quod'
 
 		editor.commands.setSearchQuery(searchQuery, true)
-		const allHighlightedElements = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const allHighlightedElements = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 
 		editor.commands.previousMatch()
-		const currentlyHighlightedElement = document.querySelectorAll('span[data-text-el="search-decoration"]')
+		const currentlyHighlightedElement = document.querySelectorAll(
+			'span[data-text-el="search-decoration"]',
+		)
 
 		expect(currentlyHighlightedElement).to.have.lengthOf(1)
-		expect(allHighlightedElements[0]).to.deep.equal(currentlyHighlightedElement[0])
+		expect(allHighlightedElements[0]).to.deep.equal(
+			currentlyHighlightedElement[0],
+		)
 	})
 })
 

@@ -3,26 +3,26 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { emit } from '@nextcloud/event-bus'
 import { getCurrentUser } from '@nextcloud/auth'
-import { getSharingToken } from '@nextcloud/sharing/public'
-import {
-	Header,
-	addNewFileMenuEntry,
-	Permission,
-	File,
-	NewMenuEntryCategory,
-} from '@nextcloud/files'
-import { imagePath } from '@nextcloud/router'
-import { loadState } from '@nextcloud/initial-state'
-import { showSuccess, showError } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
+import { emit } from '@nextcloud/event-bus'
+import {
+	addNewFileMenuEntry,
+	File,
+	Header,
+	NewMenuEntryCategory,
+	Permission,
+} from '@nextcloud/files'
+import { loadState } from '@nextcloud/initial-state'
+import { imagePath } from '@nextcloud/router'
+import { getSharingToken } from '@nextcloud/sharing/public'
 
 import TextSvg from '@mdi/svg/svg/text.svg?raw'
 
-import { openMimetypes } from './mime.js'
-import Vue from 'vue'
 import { t } from '@nextcloud/l10n'
+import Vue from 'vue'
+import { openMimetypes } from './mime.js'
 
 const FILE_ACTION_IDENTIFIER = 'Edit with text app'
 
@@ -246,4 +246,4 @@ export const FilesWorkspaceHeader = new Header({
 	},
 })
 
-export { registerFileActionFallback, registerFileCreate, FILE_ACTION_IDENTIFIER }
+export { FILE_ACTION_IDENTIFIER, registerFileActionFallback, registerFileCreate }

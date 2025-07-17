@@ -24,12 +24,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const { default: FilesSettings } = await import('./views/FilesSettings.vue')
 
 		const vm = new Vue({
-			render: h => h(FilesSettings, {}),
+			render: (h) => h(FilesSettings, {}),
 		})
 		const el = vm.$mount().$el
-		OCA.Files.Settings.register(new OCA.Files.Settings.Setting('text', {
-			el: () => { return el },
-		}))
+		OCA.Files.Settings.register(
+			new OCA.Files.Settings.Setting('text', {
+				el: () => {
+					return el
+				},
+			}),
+		)
 	}
 })
 

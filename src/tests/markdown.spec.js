@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import markdownit from './../markdownit/index.js'
+import { createRichEditor } from '../EditorFactory.js'
+import { createMarkdownSerializer } from '../extensions/Markdown.js'
 import { typesAvailable } from './../markdownit/callouts.js'
+import markdownit from './../markdownit/index.js'
 import {
+	markdownFromPaste,
 	markdownThroughEditor,
 	markdownThroughEditorHtml,
-	markdownFromPaste,
 } from './testHelpers/markdown.js'
-import { createMarkdownSerializer } from '../extensions/Markdown.js'
-import { createRichEditor } from '../EditorFactory.js'
 
 /*
  * This file is for various markdown tests, mainly testing if input and output stays the same.

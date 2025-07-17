@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { encodeArrayBuffer, decodeArrayBuffer } from '../helpers/base64.ts'
-import * as Y from 'yjs'
 import * as decoding from 'lib0/decoding.js'
 import * as encoding from 'lib0/encoding.js'
 import * as syncProtocol from 'y-protocols/sync'
+import * as Y from 'yjs'
+import { decodeArrayBuffer, encodeArrayBuffer } from '../helpers/base64.ts'
 import { messageSync } from '../services/y-websocket.js'
 
 /**

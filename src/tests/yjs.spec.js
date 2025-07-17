@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import recorded from './fixtures/recorded.js'
-import { Doc, encodeStateAsUpdate } from 'yjs'
-import { decodeArrayBuffer } from '../helpers/base64.ts'
 import * as decoding from 'lib0/decoding'
 import * as encoding from 'lib0/encoding'
 import * as syncProtocol from 'y-protocols/sync'
+import { Doc, encodeStateAsUpdate } from 'yjs'
+import { decodeArrayBuffer } from '../helpers/base64.ts'
+import recorded from './fixtures/recorded.js'
 
 describe('recorded session', () => {
 	const flattened = recorded.flat()
