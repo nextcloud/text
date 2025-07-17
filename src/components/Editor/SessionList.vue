@@ -16,9 +16,9 @@
 					<template #icon>
 						<AccountMultipleOutlineIcon :size="20" />
 						<AvatarWrapper
-							v-for="session in sessionsVisible"
-							:key="session.id"
-							:session="session"
+							v-for="client in visibleClients"
+							:key="client.id"
+							:client="client"
 							:size="28" />
 					</template>
 				</NcButton>
@@ -28,22 +28,21 @@
 			<div class="session-menu">
 				<slot name="lastSaved" />
 				<ul>
+					<GuestNameDialog
+						v-if="!localClient.userId"
+						:guest-name="localClient.guestName ?? ''"
+						:client="localClient"
+						@set-guest-name="setGuestName" />
 					<slot />
 					<li
-						v-for="session in participantsPopover"
-						:key="session.id"
-						:style="avatarStyle(session)">
-						<AvatarWrapper :session="session" :size="36" />
+						v-for="client in clientsToListInPopover"
+						:key="client.clientId"
+						:style="avatarStyle(client)">
+						<AvatarWrapper :client="client" :size="36" />
 						<span class="session-label">
-							{{
-								session.userId
-									? session.displayName
-									: session.guestName
-										? session.guestName
-										: t('text', 'Guest')
-							}}
+							{{ client.name || client.userId || t('text', 'Guest') }}
 						</span>
-						<span v-if="session.userId === null" class="guest-label"
+						<span v-if="client.userId === null" class="guest-label"
 							>({{ t('text', 'guest') }})</span
 						>
 					</li>
@@ -69,28 +68,35 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
-import {
-	COLLABORATOR_DISCONNECT_TIME,
-	COLLABORATOR_IDLE_TIME,
-} from '../../services/SyncService.ts'
+import { Awareness } from 'y-protocols/awareness.js'
+import { useClients } from '../../composables/useClients.ts'
+import { useEditor } from '../../composables/useEditor.ts'
+import { COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
+import GuestNameDialog from './GuestNameDialog.vue'
 
 export default {
 	name: 'SessionList',
 	components: {
 		AccountMultipleOutlineIcon,
 		AvatarWrapper,
+		GuestNameDialog,
 		NcButton,
 		NcPopover,
 		NcCheckboxRadioSwitch,
 	},
 	props: {
-		sessions: {
-			type: Object,
+		awareness: {
+			type: Awareness,
 			default: () => {
 				return {}
 			},
 		},
+	},
+	setup(props) {
+		const { editor } = useEditor()
+		const { clients, localClient, setGuestName } = useClients(props, editor)
+		return { clients, localClient, setGuestName }
 	},
 	data() {
 		const isFullWidth = loadState('text', 'is_full_width_editor', false)
@@ -103,41 +109,27 @@ export default {
 		label() {
 			return t('text', 'Active people')
 		},
-		participantsPopover() {
-			if (this.currentSession?.guestName) {
-				return this.participantsWithoutCurrent
-			}
-			return this.participants
+		clientsToListInPopover() {
+			return this.localClient?.userId ? this.remoteClients : this.clients
 		},
-		participantsWithoutCurrent() {
-			return this.participants.filter((session) => !session.isCurrent)
-		},
-		participants() {
-			return Object.values(this.sessions)
-				.filter(
-					(session) =>
-						session.lastContact
-							> Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-						&& (session.userId !== null || session.guestName !== null),
-				)
-				.sort((a, b) => a.lastContact < b.lastContact)
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
+		remoteClients() {
+			return this.clients.filter(
+				({ clientId }) => clientId !== this.localClient.clientId,
+			)
 		},
 		avatarStyle() {
-			return (session) => {
+			return (client) => {
 				return {
 					opacity:
-						session.lastContact
+						client.lastContact
 						> Date.now() / 1000 - COLLABORATOR_IDLE_TIME
 							? 1
 							: 0.5,
 				}
 			}
 		},
-		sessionsVisible() {
-			return this.participantsWithoutCurrent.slice(0, 3)
+		visibleClients() {
+			return this.remoteClients.slice(0, 3)
 		},
 	},
 	methods: {

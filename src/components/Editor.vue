@@ -31,7 +31,7 @@
 							<Status
 								:document="document"
 								:dirty="dirty"
-								:sessions="filteredSessions"
+								:awareness="awareness"
 								:sync-error="syncError"
 								:has-connection-issue="requireReconnect" />
 						</ReadonlyBar>
@@ -48,7 +48,7 @@
 						<Status
 							:document="document"
 							:dirty="dirty"
-							:sessions="filteredSessions"
+							:awareness="awareness"
 							:sync-error="syncError"
 							:has-connection-issue="requireReconnect"
 							@editor-width-change="handleEditorWidthChange" />
@@ -87,7 +87,7 @@ import { File } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
+import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
@@ -96,7 +96,6 @@ import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
-import { t } from '@nextcloud/l10n'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
@@ -245,7 +244,10 @@ export default defineComponent({
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
-			CollaborationCursor.configure({ provider: { awareness } }),
+			CollaborationCursor.configure({
+				provider: { awareness },
+				user: { clientId: ydoc.clientID, name: '' },
+			}),
 		]
 		const editor = isRichEditor
 			? createRichEditor({
@@ -303,11 +305,7 @@ export default defineComponent({
 			IDLE_TIMEOUT,
 
 			document: null,
-			sessions: [],
-			currentSession: null,
 			fileNode: null,
-
-			filteredSessions: {},
 
 			idle: false,
 			lock: null,
@@ -343,7 +341,7 @@ export default defineComponent({
 				: '/'
 		},
 		displayed() {
-			return (this.currentSession && this.active) || this.syncError
+			return (this.connection && this.active) || this.syncError
 		},
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
@@ -503,54 +501,7 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		updateSessions(sessions) {
-			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
-
-			// Make sure we get our own session updated
-			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(
-				(session) => session.id === this.currentSession.id,
-			)
-			set(this, 'currentSession', currentUpdatedSession)
-
-			const currentSessionIds = this.sessions.map((session) => session.userId)
-			const currentGuestIds = this.sessions.map((session) => session.guestId)
-
-			const removedSessions = Object.keys(this.filteredSessions).filter(
-				(sessionId) =>
-					!currentSessionIds.includes(sessionId)
-					&& !currentGuestIds.includes(sessionId),
-			)
-
-			for (const index in removedSessions) {
-				Vue.delete(this.filteredSessions, removedSessions[index])
-			}
-			for (const index in this.sessions) {
-				const session = this.sessions[index]
-				const sessionKey = session.displayName ? session.userId : session.id
-				if (this.filteredSessions[sessionKey]) {
-					// update timestamp if relevant
-					if (
-						this.filteredSessions[sessionKey].lastContact
-						< session.lastContact
-					) {
-						set(
-							this.filteredSessions[sessionKey],
-							'lastContact',
-							session.lastContact,
-						)
-					}
-				} else {
-					set(this.filteredSessions, sessionKey, session)
-				}
-				if (session.id === this.currentSession.id) {
-					set(this.filteredSessions[sessionKey], 'isCurrent', true)
-				}
-			}
-		},
-
 		onOpened({ document, session, documentSource, documentState }) {
-			this.currentSession = session
 			this.document = document
 			this.readOnly = document.readOnly
 			this.baseVersionEtag = document.baseVersionEtag
@@ -559,18 +510,17 @@ export default defineComponent({
 
 			this.setEditable(this.editMode)
 			this.lock = this.syncService.lock
-			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
-				session: this.currentSession,
+				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
-			if (this.currentSession?.userId && this.relativePath?.length) {
+			if (session?.userId && this.relativePath?.length) {
 				const node = new File({
 					id: this.fileId,
 					source: generateRemoteUrl(
-						`dav/files/${this.currentSession.userId}${this.relativePath}`,
+						`dav/files/${session.userId}${this.relativePath}`,
 					),
 					mime: this.mime,
 				})
@@ -589,20 +539,18 @@ export default defineComponent({
 					})
 				}
 			})
-			const user = {
-				name: session?.userId
-					? session.displayName
-					: session?.guestName || t('text', 'Guest'),
-				color: session?.color,
-				clientId: this.ydoc.clientID,
-			}
-			this.editor.commands.updateUser(user)
+			const { userId, displayName, guestName, color } = session
+			localStorage.setItem('nick', guestName)
+			this.editor.commands.updateUser({
+				...this.awareness.getLocalState().user,
+				userId,
+				name: userId ? displayName : guestName,
+				color,
+			})
 		},
 
-		onChange({ document, sessions }) {
-			this.updateSessions.bind(this)(sessions)
+		onChange({ document }) {
 			this.document = document
-
 			this.syncError = null
 			this.setEditable(this.editMode && !this.requireReconnect)
 		},

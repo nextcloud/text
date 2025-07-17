@@ -20,13 +20,12 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions" @editor-width-change="onEditorWidthChange">
+		<SessionList
+			:awareness="awareness"
+			@editor-width-change="onEditorWidthChange">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog
-				v-if="isPublic && currentSession && !currentSession.userId"
-				:session="currentSession" />
 		</SessionList>
 	</div>
 </template>
@@ -50,8 +49,6 @@ export default {
 		NcSavingIndicatorIcon,
 		SessionList: () =>
 			import(/* webpackChunkName: "editor-collab" */ './SessionList.vue'),
-		GuestNameDialog: () =>
-			import(/* webpackChunkName: "editor-guest" */ './GuestNameDialog.vue'),
 	},
 
 	mixins: [useIsMobileMixin, refreshMoment],
@@ -59,11 +56,15 @@ export default {
 	props: {
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		dirty: {
 			type: Boolean,
-			require: true,
+			required: true,
+		},
+		awareness: {
+			type: Object,
+			required: true,
 		},
 		document: {
 			type: Object,
@@ -72,12 +73,6 @@ export default {
 		syncError: {
 			type: Object,
 			default: null,
-		},
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
 		},
 	},
 
@@ -127,9 +122,6 @@ export default {
 				return 'error'
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed

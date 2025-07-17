@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { t } from '@nextcloud/l10n'
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
 /**
@@ -37,6 +38,7 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 			...this.parent?.(),
 			render: (user) => {
 				const cursor = document.createElement('span')
+				const name = user.name || user.user_id || t('text', 'Guest')
 
 				cursor.classList.add('collaboration-cursor__caret')
 				cursor.setAttribute('style', `border-color: ${user.color}`)
@@ -46,7 +48,7 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 				label.classList.add('collaboration-cursor__label')
 				label.id = `collaboration-cursor__label__${user.clientId}`
 				label.setAttribute('style', `background-color: ${user.color}`)
-				label.insertBefore(document.createTextNode(user.name), null)
+				label.insertBefore(document.createTextNode(name), null)
 				cursor.insertBefore(label, null)
 
 				return cursor
@@ -63,9 +65,10 @@ const CollaborationCursor = TiptapCollaborationCursor.extend({
 			) => {
 				if (origin !== 'local') {
 					for (const clientId of [...added, ...updated]) {
-						if (clientId !== this.options.user.clientId) {
-							showCursorLabel(clientId)
+						if (clientId === this.options.user.clientId) {
+							continue
 						}
+						showCursorLabel(clientId)
 					}
 				}
 			},

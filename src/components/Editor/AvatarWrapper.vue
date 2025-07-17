@@ -4,16 +4,15 @@
 -->
 
 <template>
-	<div class="avatar-wrapper" :style="sessionAvatarStyle">
+	<div class="avatar-wrapper" :style="clientAvatarStyle">
 		<NcAvatar
-			v-if="session.userId"
-			:user="session.userId ? session.userId : session.guestName"
-			:is-guest="session.userId === null"
+			v-if="client.userId"
+			:user="client.userId"
 			:disable-menu="true"
 			hide-status
 			:disable-tooltip="true"
 			:size="size" />
-		<div v-else class="avatar" :style="sessionBackgroundStyle">
+		<div v-else class="avatar" :style="clientBackgroundStyle">
 			{{ guestInitial }}
 		</div>
 	</div>
@@ -27,7 +26,7 @@ export default {
 		NcAvatar,
 	},
 	props: {
-		session: {
+		client: {
 			type: Object,
 			required: true,
 		},
@@ -37,27 +36,25 @@ export default {
 		},
 	},
 	computed: {
-		sessionAvatarStyle() {
+		clientAvatarStyle() {
 			return {
-				...this.sessionBackgroundStyle,
-				'border-color': this.session.color,
+				...this.clientBackgroundStyle,
+				'border-color': this.client.color,
 				'border-width': '2px',
 				'border-style': 'solid',
 				'--size': this.size + 'px',
 				'--font-size': this.size / 2 + 'px',
 			}
 		},
-		sessionBackgroundStyle() {
+		clientBackgroundStyle() {
 			return {
-				'background-color': this.session.userId
-					? this.session.color + ' !important'
+				'background-color': this.client.userId
+					? this.client.color + ' !important'
 					: '#b9b9b9',
 			}
 		},
 		guestInitial() {
-			return this.session.guestName === ''
-				? '?'
-				: this.session.guestName.slice(0, 1).toUpperCase()
+			return this.client.name?.at(0)?.toUpperCase() || '?'
 		},
 	},
 }
