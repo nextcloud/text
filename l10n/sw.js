@@ -17,6 +17,7 @@ OC.L10N.register(
     "Delete task" : "Futa jukumu",
     "Guest" : "Mgeni",
     "Remove link" : "Ondoa kiungio",
+    "guest" : "mgeni",
     "Offline" : "Nje ya mtandao",
     "Saving …" : "Inahifadhi...",
     "Saved" : "Imehifadhiwa",
