@@ -52,7 +52,7 @@
 						close-after-click
 						@click="viewMode = 'preview'">
 						<template #icon>
-							<Eye :size="20" />
+							<EyeOutlineIcon :size="20" />
 						</template>
 						{{ t('text', 'Diagram') }}
 					</NcActionButton>
@@ -112,7 +112,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Check from 'vue-material-design-icons/Check.vue'
 import CodeBraces from 'vue-material-design-icons/CodeBraces.vue'
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue'
-import Eye from 'vue-material-design-icons/Eye.vue'
+import EyeOutlineIcon from 'vue-material-design-icons/EyeOutline.vue'
 import Help from 'vue-material-design-icons/Help.vue'
 import MarkerIcon from 'vue-material-design-icons/Marker.vue'
 import ViewSplitVertical from 'vue-material-design-icons/ViewSplitVertical.vue'
@@ -126,7 +126,7 @@ export default {
 		ContentCopy,
 		Help,
 		Check,
-		Eye,
+		EyeOutlineIcon,
 		ViewSplitVertical,
 		CodeBraces,
 		NcActions,

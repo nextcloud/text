@@ -28,7 +28,7 @@
 		<NcButton v-if="isEmbedded" class="toggle-interactive" @click="toggleEdit">
 			{{ t('text', 'Edit') }}
 			<template #icon>
-				<PencilIcon />
+				<PencilOutlineIcon />
 			</template>
 		</NcButton>
 	</div>
@@ -41,7 +41,7 @@ import { t } from '@nextcloud/l10n'
 import { getSharingToken } from '@nextcloud/sharing/public'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import Vue from 'vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import MarkdownContentEditor from './Editor/MarkdownContentEditor.vue'
 import PlainTextReader from './PlainTextReader.vue'
 
@@ -51,7 +51,7 @@ export default {
 	name: 'ViewerComponent',
 	components: {
 		NcButton: Vue.extend(NcButton),
-		PencilIcon: Vue.extend(PencilIcon),
+		PencilOutlineIcon: Vue.extend(PencilOutlineIcon),
 		PlainTextReader: Vue.extend(PlainTextReader),
 		MarkdownContentEditor: Vue.extend(MarkdownContentEditor),
 		Editor: getEditorInstance,

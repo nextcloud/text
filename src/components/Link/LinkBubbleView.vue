@@ -32,7 +32,7 @@
 					type="tertiary"
 					@click="startEdit">
 					<template #icon>
-						<PencilIcon :size="20" />
+						<PencilOutlineIcon :size="20" />
 					</template>
 				</NcButton>
 				<NcButton
@@ -103,7 +103,7 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
 
@@ -121,7 +121,7 @@ export default {
 		NcReferenceList,
 		NcTextField,
 		LinkOffIcon,
-		PencilIcon,
+		PencilOutlineIcon,
 	},
 
 	mixins: [CopyToClipboardMixin],

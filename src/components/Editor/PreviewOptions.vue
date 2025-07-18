@@ -38,7 +38,7 @@
 			</NcActionButton>
 			<NcActionButton close-after-click @click="deleteNode">
 				<template #icon>
-					<DeleteIcon :size="20" />
+					<DeleteOutlineIcon :size="20" />
 				</template>
 				{{ t('text', 'Remove link') }}
 			</NcActionButton>
@@ -53,7 +53,7 @@ import NcActionCaption from '@nextcloud/vue/components/NcActionCaption'
 import NcActionRadio from '@nextcloud/vue/components/NcActionRadio'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
-import DeleteIcon from 'vue-material-design-icons/Delete.vue'
+import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue'
 import DotsVerticalIcon from 'vue-material-design-icons/DotsVertical.vue'
 import OpenIcon from 'vue-material-design-icons/OpenInNew.vue'
 
@@ -67,7 +67,7 @@ export default {
 		NcActionCaption,
 		NcActionRadio,
 		NcActionSeparator,
-		DeleteIcon,
+		DeleteOutlineIcon,
 		OpenIcon,
 	},
 
