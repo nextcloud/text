@@ -14,7 +14,7 @@
 			data-cy="assistantMenu">
 			<NcActions :title="t('text', 'Nextcloud Assistant')" :type="'secondary'">
 				<template #icon>
-					<CreationIcon :size="20" class="icon" />
+					<CreationOutlineIcon :size="20" class="icon" />
 				</template>
 				<NcActionButton
 					v-for="type in taskTypes"
@@ -22,7 +22,9 @@
 					close-after-click
 					@click="openAssistantForm(type.id)">
 					<template #icon>
-						<PencilIcon v-if="type.id == 'core:text2text'" :size="20" />
+						<PencilOutlineIcon
+							v-if="type.id == 'core:text2text'"
+							:size="20" />
 						<FormatHeader1
 							v-else-if="type.id == 'core:text2text:headline'"
 							:size="20" />
@@ -32,7 +34,7 @@
 						<TextShort
 							v-else-if="type.id == 'core:text2text:summary'"
 							:size="20" />
-						<CreationIcon v-else />
+						<CreationOutlineIcon v-else />
 					</template>
 					{{ type.name }}
 				</NcActionButton>
@@ -52,7 +54,7 @@
 					close-after-click
 					@click="showTaskList = true">
 					<template #icon>
-						<CreationIcon :size="20" />
+						<CreationOutlineIcon :size="20" />
 					</template>
 					{{ t('text', 'Show assistant results') }}
 				</NcActionButton>
@@ -68,7 +70,7 @@
 			<div class="task-list">
 				<h4 v-if="tasks.length > 0">
 					<span class="assistant-bubble">
-						<CreationIcon :size="16" class="icon" />
+						<CreationOutlineIcon :size="16" class="icon" />
 						<span>{{ t('text', 'Nextcloud Assistant') }}</span>
 					</span>
 				</h4>
@@ -84,11 +86,11 @@
 							{{ task.input.input }}
 						</template>
 						<template #icon>
-							<CheckCircleIcon
+							<CheckCircleOutlineIcon
 								v-if="task.status === STATUS_SUCCESSFUL"
 								:size="20"
 								class="icon-status--success" />
-							<ErrorIcon
+							<ErrorOutlineIcon
 								v-else-if="task.status === STATUS_FAILED"
 								:size="20"
 								class="icon-status--failed" />
@@ -113,7 +115,7 @@
 								:title="task.output.output"
 								@click.stop="() => openResult(task)">
 								<template #icon>
-									<CreationIcon :size="20" />
+									<CreationOutlineIcon :size="20" />
 								</template>
 								{{ t('text', 'Show result') }}
 							</NcActionButton>
@@ -128,7 +130,7 @@
 							</NcActionButton>
 							<NcActionButton @click="() => deleteTask(task)">
 								<template #icon>
-									<DeleteIcon :size="20" />
+									<DeleteOutlineIcon :size="20" />
 								</template>
 								{{ t('text', 'Delete task') }}
 							</NcActionButton>
@@ -153,14 +155,14 @@ import NcListItem from '@nextcloud/vue/components/NcListItem'
 import NcModal from '@nextcloud/vue/components/NcModal'
 import { posToDOMRect } from '@tiptap/core'
 import { FloatingMenu } from '@tiptap/vue-2'
-import ErrorIcon from 'vue-material-design-icons/AlertCircle.vue'
-import CheckCircleIcon from 'vue-material-design-icons/CheckCircle.vue'
+import ErrorOutlineIcon from 'vue-material-design-icons/AlertCircleOutline.vue'
+import CheckCircleOutlineIcon from 'vue-material-design-icons/CheckCircleOutline.vue'
 import ClipboardTextOutlineIcon from 'vue-material-design-icons/ClipboardTextOutline.vue'
 import ClockOutline from 'vue-material-design-icons/ClockOutline.vue'
-import CreationIcon from 'vue-material-design-icons/Creation.vue'
-import DeleteIcon from 'vue-material-design-icons/Delete.vue'
+import CreationOutlineIcon from 'vue-material-design-icons/CreationOutline.vue'
+import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue'
 import FormatHeader1 from 'vue-material-design-icons/FormatHeader1.vue'
-import PencilIcon from 'vue-material-design-icons/Pencil.vue'
+import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import Shuffle from 'vue-material-design-icons/Shuffle.vue'
 import TextBoxPlusOutlineIcon from 'vue-material-design-icons/TextBoxPlusOutline.vue'
 import TextShort from 'vue-material-design-icons/TextShort.vue'
@@ -186,13 +188,13 @@ export default {
 	name: 'Assistant',
 	components: {
 		FloatingMenu,
-		ErrorIcon,
-		CreationIcon,
+		ErrorOutlineIcon,
+		CreationOutlineIcon,
 		ClockOutline,
-		CheckCircleIcon,
-		DeleteIcon,
+		CheckCircleOutlineIcon,
+		DeleteOutlineIcon,
 		TextBoxPlusOutlineIcon,
-		PencilIcon,
+		PencilOutlineIcon,
 		TextShort,
 		FormatHeader1,
 		Shuffle,
@@ -249,13 +251,13 @@ export default {
 			}
 
 			if (this.tasks.filter((t) => t.status === STATUS_FAILED).length > 0) {
-				return ErrorIcon
+				return ErrorOutlineIcon
 			}
 
 			if (
 				this.tasks.filter((t) => t.status === STATUS_SUCCESSFUL).length > 0
 			) {
-				return CheckCircleIcon
+				return CheckCircleOutlineIcon
 			}
 
 			return null

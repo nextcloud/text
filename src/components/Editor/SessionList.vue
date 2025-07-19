@@ -14,7 +14,7 @@
 					class="avatar-list"
 					v-bind="attrs">
 					<template #icon>
-						<AccountMultipleIcon :size="20" />
+						<AccountMultipleOutlineIcon :size="20" />
 						<AvatarWrapper
 							v-for="session in sessionsVisible"
 							:key="session.id"
@@ -68,7 +68,7 @@ import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
-import AccountMultipleIcon from 'vue-material-design-icons/AccountMultiple.vue'
+import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
 	COLLABORATOR_IDLE_TIME,
@@ -78,7 +78,7 @@ import AvatarWrapper from './AvatarWrapper.vue'
 export default {
 	name: 'SessionList',
 	components: {
-		AccountMultipleIcon,
+		AccountMultipleOutlineIcon,
 		AvatarWrapper,
 		NcButton,
 		NcPopover,

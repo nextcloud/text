@@ -13,7 +13,7 @@
 				@reconnect="$emit('reconnect')" />
 			<NcNoteCard v-if="lock" type="info" :text="lockText">
 				<template #icon>
-					<Lock :size="20" />
+					<LockOutlineIcon :size="20" />
 				</template>
 			</NcNoteCard>
 		</div>
@@ -23,7 +23,7 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
-import Lock from 'vue-material-design-icons/Lock.vue'
+import LockOutlineIcon from 'vue-material-design-icons/LockOutline.vue'
 import isMobile from '../../mixins/isMobile.js'
 import SyncStatus from './DocumentStatus/SyncStatus.vue'
 
@@ -33,7 +33,7 @@ export default {
 	components: {
 		SyncStatus,
 		NcNoteCard,
-		Lock,
+		LockOutlineIcon,
 	},
 
 	mixins: [isMobile],
