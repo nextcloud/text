@@ -29,7 +29,7 @@
 				<slot name="lastSaved" />
 				<ul>
 					<GuestNameDialog
-						v-if="!localClient.userId"
+						v-if="hasGuestNameDialog"
 						:guest-name="localClient.guestName ?? ''"
 						:client="localClient"
 						@set-guest-name="setGuestName" />
@@ -110,7 +110,10 @@ export default {
 			return t('text', 'Active people')
 		},
 		clientsToListInPopover() {
-			return this.localClient?.userId ? this.remoteClients : this.clients
+			return this.hasGuestNameDialog ? this.remoteClients : this.clients
+		},
+		hasGuestNameDialog() {
+			return !this.localClient.userId
 		},
 		remoteClients() {
 			return this.clients.filter(
