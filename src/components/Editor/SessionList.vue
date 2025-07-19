@@ -88,14 +88,11 @@ export default {
 		label() {
 			return t('text', 'Active people')
 		},
-		participantsPopover() {
-			if (this.currentSession?.guestName) {
-				return this.participantsWithoutCurrent
-			}
-			return this.participants
+		sessionList() {
+			return this.showGuestNameDialog ? this.remoteSessions : this.allSessions
 		},
-		participantsWithoutCurrent() {
-			return this.participants.filter((session) => !session.isCurrent)
+		remoteSessions() {
+			return this.allSessions.filter((session) => !session.isCurrent)
 		},
 		participants() {
 			return Object.values(this.sessions).filter((session) =>
@@ -113,8 +110,8 @@ export default {
 				}
 			}
 		},
-		sessionsVisible() {
-			return this.participantsWithoutCurrent.slice(0, 3)
+		sessionsForTriggerButton() {
+			return this.remoteSessions.slice(0, 3)
 		},
 	},
 	methods: {
