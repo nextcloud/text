@@ -90,7 +90,7 @@
     "debounce": "^2.2.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.11.1",
-    "lib0": "^0.2.109",
+    "lib0": "^0.2.114",
     "lowlight": "^2.9.0",
     "markdown-it": "^13.0.2",
     "markdown-it-container": "^4.0.0",
