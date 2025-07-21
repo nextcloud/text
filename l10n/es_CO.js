@@ -13,6 +13,7 @@ OC.L10N.register(
     "File not found" : "Archivo no encontrado",
     "Text" : "Texto",
     "Translate" : "Traducir",
+    "Delete task" : "Eliminar tarea",
     "Guest" : "Invitado",
     "Offline" : "Sin conexión",
     "Saved" : "Guardado",
@@ -33,6 +34,7 @@ OC.L10N.register(
     "Source code" : "Código fuente",
     "Details" : "Detalles",
     "Choose" : "Seleccionar",
+    "Add folder description" : "Agregar una descripción a la carpeta",
     "Info" : "Info",
     "Success" : "Éxito",
     "Warning" : "Advertencia"
