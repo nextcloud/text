@@ -98,7 +98,13 @@ class LinkBubblePluginView {
 	}
 
 	updateTooltip(view, { mark, nodeStart }) {
-		let referenceEl = view.nodeDOM(nodeStart)
+		let referenceEl
+		try {
+			referenceEl = view.nodeDOM(nodeStart)
+		} catch (e) {
+			// Prevent throwing error at rerouting in `openLink()`
+			return
+		}
 		if (Object.prototype.toString.call(referenceEl) === '[object Text]') {
 			referenceEl = referenceEl.parentElement
 		}

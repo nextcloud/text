@@ -10,6 +10,16 @@
 			<div class="link-view-bubble__title">
 				{{ title }}
 			</div>
+			<!-- open link -->
+			<NcButton
+				:title="t('text', 'Open link')"
+				:aria-label="t('text', 'Open link')"
+				type="tertiary"
+				@click="openLink(href)">
+				<template #icon>
+					<OpenInNewIcon :size="20" />
+				</template>
+			</NcButton>
 			<!-- copy link -->
 			<NcButton
 				:title="copyLinkTooltip"
@@ -95,6 +105,7 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
@@ -103,9 +114,11 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
+import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
+import { openLink } from '../../helpers/links.js'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -121,6 +134,7 @@ export default {
 		NcReferenceList,
 		NcTextField,
 		LinkOffIcon,
+		OpenInNewIcon,
 		PencilOutlineIcon,
 	},
 
@@ -198,6 +212,7 @@ export default {
 	},
 
 	methods: {
+		openLink,
 		resetBubble() {
 			this.edit = false
 			this.newHref = null
