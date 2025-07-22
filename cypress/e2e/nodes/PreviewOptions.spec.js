@@ -23,6 +23,7 @@ describe('Preview Options', function() {
 	})
 
 	it('should render previewOptions correctly', function() {
+		cy.get('.action-button__text').contains('Open in new tab').should('be.visible')
 		cy.get('.action-button__text').contains('Remove link').should('be.visible')
 		cy.get('.action-radio__label').each(el => {
 			cy.wrap(el).invoke('text').should('match', /Text only|Show link preview/)
