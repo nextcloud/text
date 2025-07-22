@@ -152,15 +152,16 @@ function decorationForLinkParagraph(linkParagraph, editor) {
  * @param {object} linkParagraph - linkParagraph to generate anchor for
  * @param {number} linkParagraph.pos - Position of the node
  * @param {string} linkParagraph.type - selected type
+ * @param {string} linkParagraph.href - href of the link
  * @param {number} linkParagraph.nodeSize - size of the node
  * @param {object} editor - tiptap editor
  *
  * @return {Element}
  */
-function previewOptionForLinkParagraph({ type, pos, nodeSize }, editor) {
+function previewOptionForLinkParagraph({ type, href, pos, nodeSize }, editor) {
 	const el = document.createElement('div')
 	const Component = Vue.extend(PreviewOptions)
-	const propsData = { type }
+	const propsData = { type, href }
 	const previewOption = new Component({ propsData }).$mount(el)
 	previewOption.$on('open', () => {
 		editor.commands.hideLinkBubble()
