@@ -20,12 +20,14 @@ export default function extractLinkParagraphs(doc) {
 				offset,
 				nodeSize: node.nodeSize,
 				type: 'text-only',
+				href: extractHref(node.firstChild),
 			}))
 		} else if (node.type.name === 'preview') {
 			paragraphs.push(Object.freeze({
 				offset,
 				nodeSize: node.nodeSize,
 				type: 'link-preview',
+				href: node.attrs.href,
 			}))
 		}
 	})
