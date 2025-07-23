@@ -61,13 +61,15 @@ const isLinkToSelfWithHash = function(href) {
  *
  * @param {string} href the link href
  */
-const openLink = function (href) {
+const openLink = function(href) {
 	const linkUrl = new URL(href, window.location.href)
 	// Consider rerouting links to Collectives if already inside Collectives app
 	const collectivesUrlBase = '/apps/collectives'
 	if (window.OCA.Collectives?.vueRouter
 		&& linkUrl.pathname.toString().startsWith(generateUrl(collectivesUrlBase))) {
-		const collectivesUrl = linkUrl.href.substring(linkUrl.href.indexOf(collectivesUrlBase) + collectivesUrlBase.length)
+		const collectivesUrl = linkUrl.href.substring(
+			linkUrl.href.indexOf(collectivesUrlBase) + collectivesUrlBase.length,
+		)
 		window.OCA.Collectives.vueRouter.push(collectivesUrl)
 		return
 	}
@@ -76,7 +78,7 @@ const openLink = function (href) {
 
 export {
 	domHref,
-	parseHref,
 	isLinkToSelfWithHash,
 	openLink,
+	parseHref,
 }
