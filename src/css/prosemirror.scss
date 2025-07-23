@@ -389,5 +389,6 @@ div.ProseMirror {
 }
 
 .tippy-content div {
+	box-sizing: border-box;
 	visibility: visible !important;
 }
