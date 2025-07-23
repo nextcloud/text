@@ -183,11 +183,6 @@ div.ProseMirror {
 		font-size: var(--default-font-size);
 	}
 
-	img {
-		cursor: default;
-		max-width: 100%;
-	}
-
 	hr {
 		padding: 2px 0;
 		border: none;
@@ -419,6 +414,7 @@ div.ProseMirror {
 }
 
 .tippy-content div {
+	box-sizing: border-box;
 	visibility: visible !important;
 }
 
