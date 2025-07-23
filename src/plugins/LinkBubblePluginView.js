@@ -69,7 +69,7 @@ class LinkBubblePluginView {
 		}
 
 		this.#component ||= new VueRenderer(LinkBubbleView, {
-			parent: this.options.parent,
+			parent: this.options.editor.contentComponent,
 			propsData: {
 				editor: this.options.editor,
 				href: null,
