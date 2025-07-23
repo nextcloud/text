@@ -10,8 +10,10 @@ import {
 	EDITOR_UPLOAD,
 	HOOK_MENTION_INSERT,
 	HOOK_MENTION_SEARCH,
+	OPEN_LINK_HANDLER,
 } from './components/Editor.provider.ts'
 import { ACTION_ATTACHMENT_PROMPT } from './components/Editor/MediaHandler.provider.js'
+import { openLink } from './helpers/links.js'
 // eslint-disable-next-line import/no-unresolved, n/no-missing-import
 import 'vite/modulepreload-polyfill'
 
@@ -192,6 +194,7 @@ window.OCA.Text.createEditor = async function ({
 	onFileInsert = undefined,
 	onMentionSearch = undefined,
 	onMentionInsert = undefined,
+	openLinkHandler = undefined,
 	onSearch = undefined,
 }) {
 	const { default: MarkdownContentEditor } = await import(
@@ -217,6 +220,9 @@ window.OCA.Text.createEditor = async function ({
 				[EDITOR_UPLOAD]: !!sessionEditor,
 				[HOOK_MENTION_SEARCH]: sessionEditor ? true : onMentionSearch,
 				[HOOK_MENTION_INSERT]: sessionEditor ? true : onMentionInsert,
+				[OPEN_LINK_HANDLER]: {
+					openLink: openLinkHandler || openLink,
+				},
 				[ATTACHMENT_RESOLVER]: {
 					resolve(src, preferRaw) {
 						return [

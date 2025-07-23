@@ -105,7 +105,6 @@
 
 <script>
 import { t } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
@@ -118,7 +117,7 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
-import { openLink } from '../../helpers/links.js'
+import { useOpenLinkHandler } from '../Editor.provider.ts'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -138,7 +137,7 @@ export default {
 		PencilOutlineIcon,
 	},
 
-	mixins: [CopyToClipboardMixin],
+	mixins: [CopyToClipboardMixin, useOpenLinkHandler],
 
 	props: {
 		editor: {
@@ -212,11 +211,14 @@ export default {
 	},
 
 	methods: {
-		openLink,
 		resetBubble() {
 			this.edit = false
 			this.newHref = null
 			this.referenceTitle = null
+		},
+
+		openLink(href) {
+			this.$openLinkHandler.openLink(href)
 		},
 
 		async copyLink() {
