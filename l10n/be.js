@@ -5,6 +5,8 @@ OC.L10N.register(
     "Text" : "Тэкст",
     "Translate" : "Перакласці",
     "Reload" : "Перазагрузіць",
+    "Saving …" : "Захаванне …",
+    "Saved" : "Захавана",
     "Keyboard shortcuts" : "Спалучэнні клавіш",
     "Link" : "Спасылка",
     "Cancel" : "Скасаваць",
