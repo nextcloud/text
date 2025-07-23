@@ -11,8 +11,7 @@
 				{{ title }}
 			</div>
 			<!-- open link -->
-			<NcButton
-				:title="t('text', 'Open link')"
+			<NcButton :title="t('text', 'Open link')"
 				:aria-label="t('text', 'Open link')"
 				type="tertiary"
 				@click="openLink(href)">
@@ -110,7 +109,7 @@ import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
-import { openLink } from '../../helpers/links.js'
+import { useOpenLinkHandler } from '../Editor.provider.js'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -132,6 +131,7 @@ export default {
 
 	mixins: [
 		CopyToClipboardMixin,
+		useOpenLinkHandler,
 	],
 
 	props: {
@@ -206,13 +206,16 @@ export default {
 	},
 
 	methods: {
-		openLink,
 		t,
 
 		resetBubble() {
 			this.edit = false
 			this.newHref = null
 			this.referenceTitle = null
+		},
+
+		openLink(href) {
+			this.$openLinkHandler.openLink(href)
 		},
 
 		async copyLink() {
