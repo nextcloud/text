@@ -30,6 +30,7 @@ OC.L10N.register(
     "Undo" : "Tendua",
     "Redo" : "Redo",
     "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
+    "Open link" : "Fungua kiungio",
     "Edit link" : "Hariri kiungo",
     "Cancel" : "Cancel",
     "URL" : "Url",

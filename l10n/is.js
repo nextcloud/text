@@ -111,6 +111,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Mistókst að afrita, afritaðu tengilinn handvirkt",
     "Copy link to clipboard" : "Afrita tengil á klippispjald",
+    "Open link" : "Opna tengil",
     "Edit link" : "Breyta tengli",
     "Save changes" : "Vista breytingar",
     "Cancel" : "Hætta við",

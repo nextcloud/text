@@ -117,6 +117,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Nedarí sa skopírovať, skopírujte prosím ručne.",
     "Copy link to clipboard" : "Skopírovať odkaz do schránky",
+    "Open link" : "Otvoriť odkaz",
     "Edit link" : "Upraviť odkaz",
     "Save changes" : "Uložiť zmeny",
     "Cancel" : "Zrušiť",

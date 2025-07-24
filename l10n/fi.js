@@ -88,6 +88,7 @@ OC.L10N.register(
     "Redo" : "Tee uudelleen",
     "Cannot copy, please copy the link manually" : "Kopioiminen ei onnistu. Kopioi linkki manuaalisesti",
     "Copy link to clipboard" : "Kopioi linkki leikepöydälle",
+    "Open link" : "Avaa linkki",
     "Edit link" : "Muokkaa linkkiä",
     "Save changes" : "Tallenna muutokset",
     "Cancel" : "Peruuta",

@@ -112,6 +112,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "No se ha podido copiar, por favor, copia el enlace manualmente",
     "Copy link to clipboard" : "Copiar enlace al portapapeles",
+    "Open link" : "Abrir enlace",
     "Edit link" : "Editar enlace",
     "Save changes" : "Guardar cambios",
     "Cancel" : "Cancelar",

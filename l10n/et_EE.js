@@ -114,6 +114,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Ei saa kopeerida, palun kopeeri link käsitsi",
     "Copy link to clipboard" : "Kopeeri link lõikelauale",
+    "Open link" : "Ava link",
     "Edit link" : "Muuda linki",
     "Save changes" : "Salvesta muudatused",
     "Cancel" : "Tühista",

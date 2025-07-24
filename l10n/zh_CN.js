@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "无法复制，请手动复制链接",
     "Copy link to clipboard" : "复制链接到剪贴板",
+    "Open link" : "打开链接",
     "Edit link" : "编辑链接",
     "Save changes" : "保存更改",
     "Cancel" : "取消",

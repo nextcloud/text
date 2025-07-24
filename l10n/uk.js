@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Неможливо скопіювати, скопіюйте посилання вручну",
     "Copy link to clipboard" : "Копіювати посилання",
+    "Open link" : "Відкрити посилання",
     "Edit link" : "Редагувати ярлик",
     "Save changes" : "Зберегти зміни",
     "Cancel" : "Скасувати",
