@@ -25,8 +25,7 @@ export function uploadAttachment(
 	} = unref(connection)
 	const formData = new FormData()
 	formData.append('file', file)
-	const pub = token ? '/public' : ''
-	const url = generateUrl(`apps/text${pub}/attachment/upload?`)
+	const url = generateUrl(`apps/text/attachment/upload?`)
 	return axios.post(url, formData, {
 		headers: { 'Content-Type': 'multipart/form-data' },
 		params: { documentId, sessionId, sessionToken, token },
@@ -44,14 +43,8 @@ export function createAttachment(
 	connection: ShallowRef<Connection> | Connection,
 	template: { app: string; extension: string },
 ) {
-	const {
-		documentId,
-		sessionId,
-		sessionToken,
-		shareToken: token,
-	} = unref(connection)
-	const pub = token ? '/public' : ''
-	const url = generateUrl(`apps/text${pub}/attachment/create`)
+	const { documentId, sessionId, sessionToken } = unref(connection)
+	const url = generateUrl(`apps/text/attachment/create`)
 	return axios.post(url, {
 		documentId,
 		sessionId,
@@ -69,14 +62,8 @@ export function insertAttachmentFile(
 	connection: ShallowRef<Connection> | Connection,
 	filePath: string,
 ) {
-	const {
-		documentId,
-		sessionId,
-		sessionToken,
-		shareToken: token,
-	} = unref(connection)
-	const pub = token ? '/public' : ''
-	const url = generateUrl(`apps/text${pub}/attachment/filepath`)
+	const { documentId, sessionId, sessionToken } = unref(connection)
+	const url = generateUrl(`apps/text/attachment/filepath`)
 	return axios.post(url, {
 		documentId,
 		sessionId,
