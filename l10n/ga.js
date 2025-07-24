@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Ní féidir cóip a dhéanamh, cóipeáil an nasc de láimh le do thoil",
     "Copy link to clipboard" : "Cóipeáil an nasc chuig an ngearrthaisce",
+    "Open link" : "Oscail nasc",
     "Edit link" : "Cuir nasc in eagar",
     "Save changes" : "Sabháil na hathruithe",
     "Cancel" : "Cealaigh",
