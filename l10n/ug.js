@@ -109,6 +109,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "كۆچۈرگىلى بولمايدۇ ، ئۇلىنىشنى قولدا كۆچۈرۈڭ",
     "Copy link to clipboard" : "ئۇلىنىشنى چاپلاش تاختىسىغا كۆچۈرۈڭ",
+    "Open link" : "ئۇلانمىنى ئېچىڭ",
     "Edit link" : "ئۇلىنىشنى تەھرىرلەڭ",
     "Save changes" : "ئۆزگەرتىشلەرنى ساقلاڭ",
     "Cancel" : "بىكار قىلىش",

@@ -97,6 +97,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "A másolás sikertelen, másolja kézzel a hivatkozást",
     "Copy link to clipboard" : "Hivatkozás vágólapra másolása",
+    "Open link" : "Hivatkozás megnyitása",
     "Edit link" : "Hivatkozás szerkesztése",
     "Save changes" : "Változások mentése",
     "Cancel" : "Mégse",

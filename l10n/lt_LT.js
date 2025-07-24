@@ -79,6 +79,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Nepavyksta nukopijuoti, nukopijuokite nuorodą rankiniu būdu",
     "Copy link to clipboard" : "Kopijuoti nuorodą į iškarpinę",
+    "Open link" : "Atverti nuorodą",
     "Edit link" : "Taisyti nuorodą",
     "Save changes" : "Įrašyti pakeitimus",
     "Cancel" : "Atsisakyti",

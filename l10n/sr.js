@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Не могу да копирам, копирајте везу ручно",
     "Copy link to clipboard" : "Копирај везу у оставу",
+    "Open link" : "Отвори линк",
     "Edit link" : "Уреди линк",
     "Save changes" : "Сачувај измене",
     "Cancel" : "Откажи",
