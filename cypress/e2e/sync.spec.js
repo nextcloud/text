@@ -52,8 +52,9 @@ describe('Sync', () => {
 	})
 
 	it('saves via sendBeacon on unload', () => {
-		cy.visit('https://example.org')
+		cy.logout()
 		cy.wait('@save').its('response.statusCode').should('eq', 200)
+		cy.login(user)
 		cy.testName()
 			.then((name) => cy.downloadFile(`/${name}.md`))
 			.its('data')
