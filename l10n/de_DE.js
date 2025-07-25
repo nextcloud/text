@@ -114,7 +114,7 @@ OC.L10N.register(
     "Action" : "Aktion",
     "Undo" : "Rückgängig",
     "Redo" : "Wiederherstellen",
-    "Toggle outline" : "Umriss umschalten",
+    "Toggle outline" : "Gliederung umschalten",
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Kopieren fehlgeschlagen. Bitte den Link manuell kopieren",
     "Copy link to clipboard" : "Link in Zwischenablage kopieren",
