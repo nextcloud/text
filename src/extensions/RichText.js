@@ -16,6 +16,7 @@ import Gapcursor from '@tiptap/extension-gapcursor'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import ListItem from '@tiptap/extension-list-item'
 import Text from '@tiptap/extension-text'
+import Typography from '@tiptap/extension-typography'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import Heading from '../nodes/Heading.js'
 import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
@@ -132,6 +133,7 @@ export default Extension.create({
 					'taskItem',
 				],
 			}),
+			Typography,
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
