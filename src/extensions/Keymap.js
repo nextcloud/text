@@ -62,7 +62,8 @@ const Keymap = Extension.create({
 
 						/**
 						 * <Mod>-<Del>
-						 * Overwrite Viewer keybinding to delete the file
+						 * Prevent Viewer keybinding to delete the file, but don't prevent
+						 * browser keybinding to delete word after cursor.
 						 */
 						if (
 							(event.ctrlKey || event.metaKey)
@@ -71,7 +72,6 @@ const Keymap = Extension.create({
 							&& event.key === 'Delete'
 						) {
 							event.stopPropagation()
-							return true
 						}
 					},
 				},
