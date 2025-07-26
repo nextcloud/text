@@ -126,7 +126,7 @@
     "eslint-plugin-cypress": "^3.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^26.1.0",
-    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-organize-imports": "^4.2.0",
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^2.1.0",
     "typescript": "^5.8.3",
