@@ -44,9 +44,7 @@ describe('Share with attachments', () => {
 		cy.getFile('github.png').should('not.exist')
 
 		// check the attachment folder is not there
-		cy.getFile('testShared.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
+		cy.getFileId('testShared.md')
 			.then((documentId) => {
 				cy.getFile('.attachments.' + documentId).should('not.exist')
 			})
@@ -54,9 +52,7 @@ describe('Share with attachments', () => {
 		// move the file and check the attachment folder is still not there
 		cy.moveFile('testShared.md', 'testMoved.md')
 		cy.reloadFileList()
-		cy.getFile('testMoved.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
+		cy.getFileId('testMoved.md')
 			.then((documentId) => {
 				cy.getFile('.attachments.' + documentId).should('not.exist')
 			})
@@ -64,20 +60,17 @@ describe('Share with attachments', () => {
 		// copy the file and check the attachment folder was copied
 		cy.copyFile('testMoved.md', 'testCopied.md')
 		cy.reloadFileList()
-		cy.getFile('testCopied.md')
-			.should('exist')
-			.should('have.attr', 'data-cy-files-list-row-fileid')
+		cy.getFileId('testCopied.md')
 			.then((documentId) => {
 				cy.openFolder('.attachments.' + documentId)
 			})
 		cy.get('@attachmentId')
 			.then((attachmentId) => {
-				cy.getFile('github.png')
-					.should('exist')
-					.should('have.attr', 'data-cy-files-list-row-fileid')
-					// these are new copied attachment files
-					// so they should not have the same IDs than the ones created when uploading the files
+				// these are new copied attachment files
+				// so they should not have the same IDs than the ones created when uploading the files
+				cy.getFileId('github.png')
 					.should('not.eq', String(attachmentId))
 			})
 	})
+
 })
