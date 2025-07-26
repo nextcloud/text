@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { useIsDarkTheme } from '@nextcloud/vue'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
 import NcActionLink from '@nextcloud/vue/components/NcActionLink'
@@ -150,7 +151,9 @@ export default {
 		},
 	},
 	setup() {
+		const isDarkTheme = useIsDarkTheme()
 		return {
+			isDarkTheme,
 			/** The lazy loaded mermaid js module */
 			mermaid: null,
 			t,
@@ -236,7 +239,10 @@ export default {
 				// lazy load mermaid on first real usage
 				if (this.mermaid === null) {
 					this.mermaid = (await import('mermaid')).default
-					this.mermaid.initialize({ startOnLoad: false })
+					this.mermaid.initialize({
+						startOnLoad: false,
+						theme: this.isDarkTheme ? 'dark' : 'default',
+					})
 				}
 				await this.mermaid.parse(textContent)
 
