@@ -1,0 +1,48 @@
+SPDX-License-Identifier: Apache-2.0
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: @chevrotain/gast developers
+SPDX-FileCopyrightText: @chevrotain/regexp-to-ast developers
+SPDX-FileCopyrightText: John-David Dalton <john.david.dalton@gmail.com>
+SPDX-FileCopyrightText: Microsoft
+SPDX-FileCopyrightText: Microsoft Corporation
+SPDX-FileCopyrightText: Shahar Soel
+SPDX-FileCopyrightText: TypeFox
+SPDX-FileCopyrightText: Yokozuna59
+
+This file is generated from multiple sources. Included packages:
+- @chevrotain/gast
+	- version: 11.0.3
+	- license: Apache-2.0
+- @chevrotain/regexp-to-ast
+	- version: 11.0.3
+	- license: Apache-2.0
+- @chevrotain/utils
+	- version: 11.0.3
+	- license: Apache-2.0
+- @mermaid-js/parser
+	- version: 0.6.2
+	- license: MIT
+- chevrotain
+	- version: 11.0.3
+	- license: Apache-2.0
+- chevrotain-allstar
+	- version: 0.3.1
+	- license: MIT
+- langium
+	- version: 3.3.1
+	- license: MIT
+- lodash-es
+	- version: 4.17.21
+	- license: MIT
+- vscode-jsonrpc
+	- version: 8.2.0
+	- license: MIT
+- vscode-languageserver-textdocument
+	- version: 1.0.12
+	- license: MIT
+- vscode-languageserver-types
+	- version: 3.17.5
+	- license: MIT
+- vscode-uri
+	- version: 3.0.8
+	- license: MIT
