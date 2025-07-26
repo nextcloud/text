@@ -81,6 +81,7 @@
 <script>
 import debounce from 'debounce'
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/vue-2'
+import { useIsDarkTheme } from '@nextcloud/vue'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionInput from '@nextcloud/vue/components/NcActionInput'
@@ -130,7 +131,9 @@ export default {
 		},
 	},
 	setup() {
+		const isDarkTheme = useIsDarkTheme()
 		return {
+			isDarkTheme,
 			/** The lazy loaded mermaid js module */
 			mermaid: null,
 		}
@@ -208,7 +211,10 @@ export default {
 				// lazy load mermaid on first real usage
 				if (this.mermaid === null) {
 					this.mermaid = (await import('mermaid')).default
-					this.mermaid.initialize({ startOnLoad: false })
+					this.mermaid.initialize({
+						startOnLoad: false,
+						theme: this.isDarkTheme ? 'dark' : 'default',
+					})
 				}
 				await this.mermaid.parse(textContent)
 
