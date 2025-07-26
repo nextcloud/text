@@ -21,7 +21,6 @@ const LinkBubble = Extension.create({
 		return [
 			linkBubble({
 				editor: this.editor,
-				parent: this.editor.contentComponent,
 			}),
 		]
 	},
