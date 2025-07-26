@@ -47,7 +47,7 @@ describe('test link marks', function() {
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
-				.click({ force: true })
+				.click()
 		})
 
 		it('shows a link preview in the bubble after browsing to link', () => {
@@ -62,6 +62,16 @@ describe('test link marks', function() {
 			cy.get('.link-view-bubble .widget-default', { timeout: 10000 })
 				.find('.widget-default--name')
 				.contains('Nextcloud')
+		})
+
+		it('open button opens a new tab', () => {
+			const link = 'https://nextcloud.com/'
+			cy.insertLine(link)
+			clickLink(link)
+
+			cy.get('.link-view-bubble button[title="Open link"]').click()
+
+			cy.get('@winOpen').should('have.been.calledOnce')
 		})
 
 		it('closes the link bubble when clicking elsewhere', () => {

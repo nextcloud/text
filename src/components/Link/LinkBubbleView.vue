@@ -10,6 +10,15 @@
 			<div class="link-view-bubble__title">
 				{{ title }}
 			</div>
+			<!-- open link -->
+			<NcButton :title="t('text', 'Open link')"
+				:aria-label="t('text', 'Open link')"
+				type="tertiary"
+				@click="openLink(href)">
+				<template #icon>
+					<OpenInNewIcon :size="20" />
+				</template>
+			</NcButton>
 			<!-- copy link -->
 			<NcButton :title="copyLinkTooltip"
 				:aria-label="copyLinkTooltip"
@@ -95,9 +104,11 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import ContentCopyIcon from 'vue-material-design-icons/ContentCopy.vue'
 import LinkOffIcon from 'vue-material-design-icons/LinkOff.vue'
+import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import PencilIcon from 'vue-material-design-icons/Pencil.vue'
 
 import CopyToClipboardMixin from '../../mixins/CopyToClipboardMixin.js'
+import { useOpenLinkHandler } from '../Editor.provider.js'
 
 const PROTOCOLS_WITH_PREVIEW = ['http:', 'https:']
 
@@ -113,11 +124,13 @@ export default {
 		NcReferenceList,
 		NcTextField,
 		LinkOffIcon,
+		OpenInNewIcon,
 		PencilIcon,
 	},
 
 	mixins: [
 		CopyToClipboardMixin,
+		useOpenLinkHandler,
 	],
 
 	props: {
@@ -193,6 +206,10 @@ export default {
 			this.edit = false
 			this.newHref = null
 			this.referenceTitle = null
+		},
+
+		openLink(href) {
+			this.$openLinkHandler.openLink(href)
 		},
 
 		async copyLink() {

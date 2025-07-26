@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { openLink } from '../helpers/links.js'
 import { logger } from '../helpers/logger.js'
 
 export const EDITOR = Symbol('tiptap:editor')
@@ -16,6 +17,7 @@ export const SYNC_SERVICE = Symbol('sync:service')
 export const EDITOR_UPLOAD = Symbol('editor:upload')
 export const HOOK_MENTION_SEARCH = Symbol('hook:mention-search')
 export const HOOK_MENTION_INSERT = Symbol('hook:mention-insert')
+export const OPEN_LINK_HANDLER = Symbol('editor:open-link-handler')
 
 export const useEditorMixin = {
 	inject: {
@@ -96,6 +98,16 @@ export const useMentionHook = {
 		$mentionHookSearch: {
 			from: HOOK_MENTION_SEARCH,
 			default: true,
+		},
+	},
+}
+export const useOpenLinkHandler = {
+	inject: {
+		$openLinkHandler: {
+			from: OPEN_LINK_HANDLER,
+			default: {
+				openLink,
+			},
 		},
 	},
 }
