@@ -166,13 +166,15 @@ let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
+function enabled(_, view) {
+	return ['files', 'favorites', 'public-share'].includes(view.id)
+}
+
 export const FilesWorkspaceHeader = new Header({
 	id: 'workspace',
 	order: 10,
+	enabled,
 
-	enabled(_, view) {
-		return ['files', 'favorites', 'public-share'].includes(view.id)
-	},
 	render: async (el, folder) => {
 		latestFolder = folder
 		// Import the RichWorkspace component only when needed
@@ -206,14 +208,14 @@ export const FilesWorkspaceHeader = new Header({
 		window.FilesHeaderRichWorkspaceInstance = FilesHeaderRichWorkspaceInstance
 	},
 
-	updated(folder) {
+	updated(folder, view) {
 		latestFolder = folder
 		if (!FilesHeaderRichWorkspaceInstance) {
 			console.error('No vue instance found for FilesWorkspaceHeader')
 			return
 		}
 
-		const hasRichWorkspace = !!folder.attributes['rich-workspace-file']
+		const hasRichWorkspace = !!folder.attributes['rich-workspace-file'] && enabled(folder, view)
 		FilesHeaderRichWorkspaceInstance.hasRichWorkspace = hasRichWorkspace
 		FilesHeaderRichWorkspaceInstance.content
 			= folder.attributes['rich-workspace'] || ''
