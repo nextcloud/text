@@ -99,6 +99,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -130,7 +131,6 @@ import MenuBar from './Menu/MenuBar.vue'
 import Translate from './Modal/Translate.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import SuggestionsBar from './SuggestionsBar.vue'
-import { loadState } from '@nextcloud/initial-state'
 
 export default defineComponent({
 	name: 'Editor',
@@ -255,6 +255,9 @@ export default defineComponent({
 				})
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)
+
+		const { applyEditorWidth } = provideEditorWidth()
+		applyEditorWidth()
 
 		const { setEditable } = useEditorMethods(editor)
 
@@ -416,9 +419,6 @@ export default defineComponent({
 			this.initSession()
 			this.listenEditorEvents()
 		}
-		const initialValue = loadState('text', 'is_full_width_editor', false)
-		const initialWidth = initialValue ? '100%' : '80ch'
-		document.documentElement.style.setProperty('--text-editor-max-width', initialWidth)
 	},
 	async beforeDestroy() {
 		if (!this.richWorkspace) {
