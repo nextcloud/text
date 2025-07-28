@@ -83,7 +83,6 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
-import { loadState } from '@nextcloud/initial-state'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
@@ -131,6 +130,7 @@ import MenuBar from './Menu/MenuBar.vue'
 import Translate from './Modal/Translate.vue'
 import SkeletonLoading from './SkeletonLoading.vue'
 import SuggestionsBar from './SuggestionsBar.vue'
+import { loadState } from '@nextcloud/initial-state'
 
 export default defineComponent({
 	name: 'Editor',
@@ -370,21 +370,12 @@ export default defineComponent({
 				},
 			}
 		},
-		editorMaxWidth() {
-			return loadState('text', 'is_full_width_editor', false) ? '100%' : '80ch'
-		},
 	},
 	watch: {
 		displayed() {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
-		},
-		editorMaxWidth: {
-			immediate: true,
-			handler(newWidth) {
-				this.updateEditorWidth(newWidth)
-			},
 		},
 		dirty(val) {
 			if (val) {
@@ -425,6 +416,9 @@ export default defineComponent({
 			this.initSession()
 			this.listenEditorEvents()
 		}
+		const initialValue = loadState('text', 'is_full_width_editor', false)
+		const initialWidth = initialValue ? '100%' : '80ch'
+		document.documentElement.style.setProperty('--text-editor-max-width', initialWidth)
 	},
 	async beforeDestroy() {
 		if (!this.richWorkspace) {
