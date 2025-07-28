@@ -20,7 +20,7 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList :sessions="sessions" @editor-width-change="onEditorWidthChange">
+		<SessionList :sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
@@ -144,9 +144,6 @@ export default {
 			if (this.dirtyStateIndicator) {
 				this.saveService.forceSave()
 			}
-		},
-		onEditorWidthChange(newWidth) {
-			this.$emit('editor-width-change', newWidth)
 		},
 		t,
 	},

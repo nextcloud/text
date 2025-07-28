@@ -50,8 +50,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="requireReconnect"
-							@editor-width-change="handleEditorWidthChange" />
+							:has-connection-issue="requireReconnect" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -873,20 +872,6 @@ export default defineComponent({
 				return commands.insertContentAt(range, content)
 			})
 			this.translateModal = false
-		},
-
-		handleEditorWidthChange(newWidth) {
-			this.updateEditorWidth(newWidth)
-			this.$nextTick(() => {
-				this.editor.view.updateState(this.editor.view.state)
-				this.editor.commands.focus()
-			})
-		},
-		updateEditorWidth(newWidth) {
-			document.documentElement.style.setProperty(
-				'--text-editor-max-width',
-				newWidth,
-			)
 		},
 
 		saveBeforeUnload() {
