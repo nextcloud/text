@@ -69,6 +69,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
+import { useEditor } from '../../composables/useEditor.ts'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
 	COLLABORATOR_IDLE_TIME,
@@ -91,6 +92,10 @@ export default {
 				return {}
 			},
 		},
+	},
+	setup() {
+		const { editor } = useEditor()
+		return { editor }
 	},
 	data() {
 		const isFullWidth = loadState('text', 'is_full_width_editor', false)
@@ -143,13 +148,29 @@ export default {
 	methods: {
 		onWidthToggle(checked) {
 			this.isFullWidth = checked
-			this.$emit('editor-width-change', checked ? '100%' : '80ch')
+			this.handleEditorWidthChange(checked ? '100%' : '80ch')
 
 			axios.post(generateUrl('/apps/text/settings'), {
 				key: 'is_full_width_editor',
 				value: checked ? '1' : '0',
 			})
 		},
+
+		handleEditorWidthChange(newWidth) {
+			this.updateEditorWidth(newWidth)
+			this.$nextTick(() => {
+				this.editor.view.updateState(this.editor.view.state)
+				this.editor.commands.focus()
+			})
+		},
+
+		updateEditorWidth(newWidth) {
+			document.documentElement.style.setProperty(
+				'--text-editor-max-width',
+				newWidth,
+			)
+		},
+
 		t,
 	},
 }
