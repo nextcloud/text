@@ -61,12 +61,13 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 					if (node.attrs.dir !== null && node.textContent.length > 0) {
 						return
 					}
+					const newTextDirection = getTextDirection(node.textContent)
+					if (node.attrs.dir === newTextDirection) {
+						return
+					}
+
 					const marks = tr.storedMarks || []
-					tr.setNodeAttribute(
-						pos,
-						'dir',
-						getTextDirection(node.textContent),
-					)
+					tr.setNodeAttribute(pos, 'dir', newTextDirection)
 					// `tr.setNodeAttribute` resets the stored marks so we'll restore them
 					for (const mark of marks) {
 						tr.addStoredMark(mark)
