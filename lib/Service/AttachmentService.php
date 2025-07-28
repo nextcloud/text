@@ -220,7 +220,11 @@ class AttachmentService {
 			: '?documentId=' . $documentId . $shareTokenUrlString;
 
 		$attachments = [];
-		$userFolder = $userId !== null ? $this->rootFolder->getUserFolder($userId) : null;
+
+		// Folder davPath need to be relative to.
+		$davFolder = $userId !== null
+			? $this->rootFolder->getUserFolder($userId)
+			: $this->getShareFolder($shareToken);
 
 		$fileNodes = [];
 		$fileIds = [];
@@ -247,7 +251,7 @@ class AttachmentService {
 				'mimetype' => $node->getMimeType(),
 				'mtime' => $node->getMTime(),
 				'isImage' => $isImage,
-				'davPath' => $userFolder?->getRelativePath($node->getPath()),
+				'davPath' => $davFolder?->getRelativePath($node->getPath()),
 				'metadata' => $metadata,
 				'fullUrl' => $isImage
 					? $this->urlGenerator->linkToRouteAbsolute('text.Attachment.getImageFile') . $urlParamsBase . '&imageFileName=' . rawurlencode($name) . '&preferRawImage=1'
@@ -572,6 +576,35 @@ class AttachmentService {
 			// same as below
 		}
 		throw new NotFoundException('Text file with id=' . $documentId . ' and shareToken ' . $shareToken . ' was not found.');
+	}
+
+	/**
+	 * Get share folder
+	 *
+	 * @param string $shareToken
+	 *
+	 * @throws NotFoundException
+	 */
+	private function getShareFolder(string $shareToken): ?Folder {
+		// is the file shared with this token?
+		try {
+			$share = $this->shareManager->getShareByToken($shareToken);
+			if (in_array($share->getShareType(), [IShare::TYPE_LINK, IShare::TYPE_EMAIL])) {
+				// shared file or folder?
+				if ($share->getNodeType() === 'file') {
+					return null;
+				} elseif ($share->getNodeType() === 'folder') {
+					$folder = $share->getNode();
+					if ($folder instanceof Folder) {
+						return $folder;
+					}
+					throw new NotFoundException('Share folder for ' . $shareToken . ' was not a folder.');
+				}
+			}
+		} catch (ShareNotFound $e) {
+			// same as below
+		}
+		throw new NotFoundException('Share folder for ' . $shareToken . ' was not found.');
 	}
 
 	/**
