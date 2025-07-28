@@ -15,6 +15,7 @@
     "lint": "tsc && eslint --ext .js,.ts,.vue src cypress",
     "lint:fix": "tsc && eslint --ext .js,.ts,.vue src cypress --fix",
     "prettier": "prettier --check .",
+    "prettier:change": "git diff HEAD --name-only | xargs prettier --write --no-error-on-unmatched-pattern",
     "prettier:fix": "prettier --write .",
     "serve": "BASE=${BASE:-/apps/text} NODE_ENV=development vite --mode development serve --host",
     "test": "NODE_ENV=test vitest",
