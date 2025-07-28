@@ -51,12 +51,12 @@ export default {
 <style lang="scss" scoped>
 .callout {
 	background-color: var(--callout-background, var(--color-background-hover));
-	border-left-color: var(--callout-border, var(--color-primary-element));
+	border-inline-start-color: var(--callout-border, var(--color-primary-element));
 	border-radius: var(--border-radius);
 	padding: 1em;
-	padding-left: 0.5em;
-	border-left-width: 0.3em;
-	border-left-style: solid;
+	padding-inline-start: 0.5em;
+	border-inline-start-width: 0.3em;
+	border-inline-start-style: solid;
 	position: relative;
 	margin-bottom: 0.5em;
 
@@ -69,7 +69,7 @@ export default {
 	}
 
 	.callout__content {
-		margin-left: 1em;
+		margin-inline-start: 1em;
 		&:deep(p) {
 			&:last-child {
 				margin-bottom: 0;

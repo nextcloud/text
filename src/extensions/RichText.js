@@ -120,7 +120,13 @@ export default Extension.create({
 			LinkBubble,
 			TrailingNode,
 			TextDirection.configure({
-				types: ['heading', 'paragraph', 'listItem', 'orderedList'],
+				types: [
+					'heading',
+					'paragraph',
+					'listItem',
+					'taskItem',
+					'blockquote',
+				],
 			}),
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
