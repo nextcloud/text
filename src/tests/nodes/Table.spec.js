@@ -29,16 +29,21 @@ describe('Table', () => {
 		expectDocument(tiptap.state.doc,
 			table(
 				thead(
-					th({ textAlign: 'center' }, 'heading'),
-					th({ textAlign: 'right' }, 'heading 2'),
-					th('heading 3')
+					th({ dir: 'ltr', textAlign: 'center' }, 'heading'),
+					th({ dir: 'ltr', textAlign: 'right' }, 'heading 2'),
+					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ textAlign: 'center' }, 'center'),
-					td({ textAlign: 'right' }, 'right'),
-					td('left cell ', br({ syntax: 'html' }), 'with line break')
-				)
-			)
+					td({ dir: 'ltr', textAlign: 'center' }, 'center'),
+					td({ dir: 'ltr', textAlign: 'right' }, 'right'),
+					td(
+						{ dir: 'ltr' },
+						'left cell ',
+						br({ syntax: 'html' }),
+						'with line break',
+					),
+				),
+			),
 		)
 	})
 
@@ -48,16 +53,21 @@ describe('Table', () => {
 		expectDocument(tiptap.state.doc,
 			table(
 				thead(
-					th({ textAlign: 'center' }, 'heading'),
-					th({ textAlign: 'right' }, 'heading 2'),
-					th('heading 3')
+					th({ dir: 'ltr', textAlign: 'center' }, 'heading'),
+					th({ dir: 'ltr', textAlign: 'right' }, 'heading 2'),
+					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ textAlign: 'center' }, 'center'),
-					td({ textAlign: 'right' }, 'right'),
-					td('left cell ', br({ syntax: '  ' }), 'with line break')
-				)
-			)
+					td({ dir: 'ltr', textAlign: 'center' }, 'center'),
+					td({ dir: 'ltr', textAlign: 'right' }, 'right'),
+					td(
+						{ dir: 'ltr' },
+						'left cell ',
+						br({ syntax: '  ' }),
+						'with line break',
+					),
+				),
+			),
 		)
 	})
 

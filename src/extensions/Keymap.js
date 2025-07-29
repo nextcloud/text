@@ -11,7 +11,13 @@ const Keymap = Extension.create({
 	name: 'customkeymap',
 
 	addKeyboardShortcuts() {
-		return this.options
+		return {
+			/**
+			 * <Backspace>
+			 * Allows to undo input rules after they got automatically applied
+			 */
+			Backspace: () => this.editor.commands.undoInputRule(),
+		}
 	},
 
 	addProseMirrorPlugins() {
