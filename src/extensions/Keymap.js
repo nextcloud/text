@@ -20,6 +20,11 @@ const Keymap = Extension.create({
 				emit('text:keyboard:outline')
 				return true
 			},
+			/**
+			 * <Backspace>
+			 * Allows to undo input rules after they got automatically applied
+			 */
+			Backspace: () => this.editor.commands.undoInputRule(),
 		}
 	},
 

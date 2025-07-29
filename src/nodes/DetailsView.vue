@@ -86,7 +86,7 @@ div.details {
 
 	.details-container {
 		width: 100%;
-		margin-right: 12px;
+		margin-inline-end: 12px;
 	}
 
 	:deep(summary) {

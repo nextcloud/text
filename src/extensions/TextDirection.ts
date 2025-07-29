@@ -3,8 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Extension } from '@tiptap/core'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
+import {
+	Extension,
+	combineTransactionSteps,
+	findChildrenInRange,
+	getChangedRanges,
+} from '@tiptap/core'
+import { Plugin, PluginKey, Transaction } from '@tiptap/pm/state'
 
 const RTL = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC'
 const LTR =
@@ -54,11 +59,21 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 			}
 
 			let modified = false
-			const tr = newState.tr
+			const { tr } = newState
+			const transform = combineTransactionSteps(
+				oldState.doc,
+				transactions as Transaction[],
+			)
+			const changes = getChangedRanges(transform)
+
 			tr.setMeta('addToHistory', false)
 
-			newState.doc.descendants((node, pos) => {
-				if (types.includes(node.type.name)) {
+			changes.forEach(({ newRange }) => {
+				const nodes = findChildrenInRange(newState.doc, newRange, (node) =>
+					types.includes(node.type.name),
+				)
+
+				nodes.forEach(({ node, pos }) => {
 					if (node.attrs.dir !== null && node.textContent.length > 0) {
 						return
 					}
@@ -74,7 +89,7 @@ function TextDirectionPlugin({ types }: { types: string[] }) {
 						tr.addStoredMark(mark)
 					}
 					modified = true
-				}
+				})
 			})
 
 			return modified ? tr : null
