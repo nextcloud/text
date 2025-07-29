@@ -31,7 +31,7 @@ describe('TipTap', () => {
 	it('render taskList', () => {
 		const markdown = '* [ ] item 1\n'
 		expect(renderedHTML(markdown)).toEqual(
-			'<ul class="contains-task-list"><li data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p dir="ltr">item 1</p></label></li></ul>',
+			'<ul class="contains-task-list"><li dir="ltr" data-checked="false" class="task-list-item checkbox-item"><input type="checkbox" class="" contenteditable="false"><label><p dir="ltr">item 1</p></label></li></ul>',
 		)
 	})
 })

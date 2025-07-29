@@ -16,7 +16,6 @@ import Gapcursor from '@tiptap/extension-gapcursor'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import ListItem from '@tiptap/extension-list-item'
 import Text from '@tiptap/extension-text'
-import TextDirection from 'tiptap-text-direction'
 import MentionSuggestion from '../components/Suggestion/Mention/suggestions.js'
 import Heading from '../nodes/Heading.js'
 import EmojiSuggestion from './../components/Suggestion/Emoji/suggestions.js'
@@ -25,6 +24,7 @@ import LinkPicker from './../extensions/LinkPicker.js'
 import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
 import Search from './../extensions/Search.js'
+import TextDirection from './../extensions/TextDirection.ts'
 import BulletList from './../nodes/BulletList.js'
 import Callouts from './../nodes/Callouts.js'
 import CodeBlock from './../nodes/CodeBlock.js'
@@ -120,7 +120,13 @@ export default Extension.create({
 			LinkBubble,
 			TrailingNode,
 			TextDirection.configure({
-				types: ['heading', 'paragraph', 'listItem', 'orderedList'],
+				types: [
+					'heading',
+					'paragraph',
+					'listItem',
+					'taskItem',
+					'blockquote',
+				],
 			}),
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
