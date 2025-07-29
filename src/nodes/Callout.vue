@@ -6,6 +6,7 @@
 	<NodeViewWrapper data-text-el="callout"
 		class="callout"
 		:class="`callout--${type}`"
+		:dir="dir"
 		as="div">
 		<component :is="icon" class="callout__icon" />
 		<NodeViewContent class="callout__content" />
@@ -41,7 +42,10 @@ export default {
 			return ICONS_MAP[this.type] || Info
 		},
 		type() {
-			return this.node?.attrs?.type || 'info'
+			return this.node.attrs.type || 'info'
+		},
+		dir() {
+			return this.node.attrs.dir || ''
 		},
 	},
 }
