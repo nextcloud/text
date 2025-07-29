@@ -13,12 +13,14 @@
  */
 
 import axios from '@nextcloud/axios'
+import { emit, subscribe } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import {
 	computed,
 	inject,
 	provide,
+	readonly,
 	ref,
 	watch,
 	type InjectionKey,
@@ -29,17 +31,14 @@ import {
 let valueSingleton = loadState('text', 'is_full_width_editor', false)
 
 export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
-	Ref<boolean>
+	Readonly<Ref<boolean>>
 >
 export const provideEditorWidth = () => {
 	const isFullWidth = ref(valueSingleton)
-	provide(editorWidthKey, isFullWidth)
-	watch(isFullWidth, (checked) => {
-		valueSingleton = checked
-		axios.post(generateUrl('/apps/text/settings'), {
-			key: 'is_full_width_editor',
-			value: checked ? '1' : '0',
-		})
+	provide(editorWidthKey, readonly(isFullWidth))
+	subscribe('text:editor:full-width', ({ value }) => {
+		valueSingleton = value
+		isFullWidth.value = value
 	})
 	const width = computed(() => (isFullWidth.value ? '100%' : '80ch'))
 	const applyEditorWidth = () => {
@@ -54,5 +53,12 @@ export const provideEditorWidth = () => {
 
 export const useEditorWidth = () => {
 	const isFullWidth = inject(editorWidthKey) as Ref<boolean>
-	return { isFullWidth }
+	const setFullWidth = (checked: boolean) => {
+		axios.post(generateUrl('/apps/text/settings'), {
+			key: 'is_full_width_editor',
+			value: checked ? '1' : '0',
+		})
+		emit('text:editor:full-width', { value: checked })
+	}
+	return { isFullWidth, setFullWidth }
 }
