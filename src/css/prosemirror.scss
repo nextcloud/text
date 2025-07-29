@@ -50,7 +50,7 @@ div.ProseMirror {
 		display: flex;
 		align-items: start;
 		// Leave space for checkbox (14px width + 2x 1px border + 6px margin-right)
-		margin-left: -24px;
+		margin-inline-start: -24px;
 
 		input[type=checkbox] {
 			display: none;
@@ -256,7 +256,7 @@ div.ProseMirror {
 
 	pre.frontmatter {
 		margin-bottom: 2em;
-		border-left: 4px solid var(--color-primary-element);
+		border-inline-start: 4px solid var(--color-primary-element);
 	}
 
 	pre.frontmatter::before {
@@ -274,7 +274,7 @@ div.ProseMirror {
 
 	li {
 		position: relative;
-		padding-left: 3px;
+		padding-inline-start: 3px;
 
 		p {
 			position: relative;
@@ -291,8 +291,8 @@ div.ProseMirror {
 	}
 
 	ul, ol {
-		padding-left: 10px;
-		margin-left: 10px;
+		padding-inline-start: 10px;
+		margin-inline-start: 10px;
 		margin-bottom: 1em;
 	}
 
@@ -311,11 +311,10 @@ div.ProseMirror {
 	}
 
 	blockquote {
-		padding-left: 1em;
-		border-left: 4px solid var(--color-primary-element);
+		padding-inline-start: 1em;
+		border-inline-start: 4px solid var(--color-primary-element);
 		color: var(--color-text-maxcontrast);
-		margin-left: 0;
-		margin-right: 0;
+		margin-inline: 0;
 	}
 
 	// table variables

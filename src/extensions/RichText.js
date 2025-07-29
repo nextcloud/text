@@ -41,7 +41,7 @@ import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
 import TrailingNode from './../nodes/TrailingNode.js'
-import TextDirection from 'tiptap-text-direction'
+import TextDirection from './../extensions/TextDirection.ts'
 /* eslint-enable import/no-named-as-default */
 
 import { Strong, Italic, Strike, Link, Underline } from './../marks/index.js'
@@ -117,7 +117,13 @@ export default Extension.create({
 				: null,
 			TrailingNode,
 			TextDirection.configure({
-				types: ['heading', 'paragraph', 'listItem', 'orderedList'],
+				types: [
+					'heading',
+					'paragraph',
+					'listItem',
+					'taskItem',
+					'blockquote',
+				],
 			}),
 		]
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)
