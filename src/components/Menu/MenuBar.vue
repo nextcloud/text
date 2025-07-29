@@ -52,6 +52,7 @@
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
 					<TranslateButton />
+					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<CharacterCount v-bind="{ visible }" />
@@ -85,6 +86,7 @@ import { MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
 import TranslateButton from './TranslateButton.vue'
+import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'MenuBar',
@@ -96,6 +98,7 @@ export default {
 		NcActionSeparator,
 		CharacterCount,
 		TranslateButton,
+		WidthToggle,
 	},
 	extends: ToolBarLogic,
 	mixins: [useIsMobileMixin],
