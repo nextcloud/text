@@ -41,6 +41,7 @@ import Table from './../nodes/Table.js'
 import TaskItem from './../nodes/TaskItem.js'
 import TaskList from './../nodes/TaskList.js'
 import Text from '@tiptap/extension-text'
+import TextDirection from './../extensions/TextDirection.ts'
 import TrailingNode from './../nodes/TrailingNode.js'
 /* eslint-enable import/no-named-as-default */
 
@@ -113,6 +114,15 @@ export default Extension.create({
 			}),
 			LinkBubble,
 			TrailingNode,
+			TextDirection.configure({
+				types: [
+					'heading',
+					'paragraph',
+					'listItem',
+					'taskItem',
+					'blockquote',
+				],
+			}),
 		]
 		const additionalExtensionNames = this.options.extensions.map(e => e.name)
 		return [

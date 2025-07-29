@@ -282,6 +282,14 @@ div.ProseMirror {
 		}
 	}
 
+    li [dir="rtl"] {
+    	text-align: right;
+    }
+
+    li [dir="ltr"] {
+    	text-align: left;
+    }
+
 	ul, ol {
 		padding-inline-start: 10px;
 		margin-inline-start: 10px;
