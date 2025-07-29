@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<NcCheckboxRadioSwitch v-model="isFullWidth">
+	<NcCheckboxRadioSwitch :checked="isFullWidth" @update:checked="setFullWidth">
 		{{ t('text', 'Full width editor') }}
 	</NcCheckboxRadioSwitch>
 </template>
@@ -17,7 +17,7 @@ import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorWidth } from '../../composables/useEditorWidth.ts'
 
 const { editor } = useEditor()
-const { isFullWidth } = useEditorWidth()
+const { isFullWidth, setFullWidth } = useEditorWidth()
 
 const redrawEditor = () => {
 	nextTick(() => {
