@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<NodeViewWrapper data-text-el="table-cell" as="td" :style="textAlign">
+	<NodeViewWrapper data-text-el="table-cell" as="td" :dir="dir" :style="textAlign">
 		<div class="container">
 			<NodeViewContent class="content" />
 			<NcActions v-if="isEditable" data-text-table-actions="row">
@@ -80,6 +80,9 @@ export default {
 	computed: {
 		textAlign() {
 			return { 'text-align': this.node.attrs.textAlign }
+		},
+		dir() {
+			return this.node.attrs.dir || ''
 		},
 	},
 	beforeMount() {

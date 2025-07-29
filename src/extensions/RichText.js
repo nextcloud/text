@@ -121,11 +121,15 @@ export default Extension.create({
 			TrailingNode,
 			TextDirection.configure({
 				types: [
-					'heading',
-					'paragraph',
-					'listItem',
-					'taskItem',
 					'blockquote',
+					'callout',
+					'detailsSummary',
+					'heading',
+					'listItem',
+					'paragraph',
+					'tableCell',
+					'tableHeader',
+					'taskItem',
 				],
 			}),
 		]
