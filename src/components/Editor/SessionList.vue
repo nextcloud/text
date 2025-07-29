@@ -47,9 +47,6 @@
 							>({{ t('text', 'guest') }})</span
 						>
 					</li>
-					<li>
-						<WidthToggle />
-					</li>
 				</ul>
 			</div>
 		</template>
@@ -66,7 +63,6 @@ import {
 	COLLABORATOR_IDLE_TIME,
 } from '../../services/SyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
-import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'SessionList',
@@ -75,7 +71,6 @@ export default {
 		AvatarWrapper,
 		NcButton,
 		NcPopover,
-		WidthToggle,
 	},
 	props: {
 		sessions: {
