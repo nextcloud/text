@@ -51,15 +51,8 @@
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton
-						v-if="canTranslate"
-						close-after-click
-						@click="showTranslate">
-						<template #icon>
-							<TranslateVariant />
-						</template>
-						{{ t('text', 'Translate') }}
-					</NcActionButton>
+					<TranslateButton />
+					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<CharacterCount v-bind="{ visible }" />
@@ -75,7 +68,6 @@
 <script>
 import { emit } from '@nextcloud/event-bus'
 import { loadState } from '@nextcloud/initial-state'
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
 import { ref } from 'vue'
@@ -85,7 +77,7 @@ import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 import HelpModal from '../HelpModal.vue'
-import { DotsHorizontal, TranslateVariant } from '../icons.js'
+import { DotsHorizontal } from '../icons.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
@@ -93,6 +85,8 @@ import CharacterCount from './CharacterCount.vue'
 import { MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
+import TranslateButton from './TranslateButton.vue'
+import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'MenuBar',
@@ -102,9 +96,9 @@ export default {
 		ActionSingle,
 		HelpModal,
 		NcActionSeparator,
-		NcActionButton,
 		CharacterCount,
-		TranslateVariant,
+		TranslateButton,
+		WidthToggle,
 	},
 	extends: ToolBarLogic,
 	mixins: [useIsMobileMixin],
