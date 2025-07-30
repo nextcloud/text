@@ -7,6 +7,7 @@ OC.L10N.register(
     "Text" : "Тэкст",
     "Translate" : "Перакласці",
     "Reload" : "Перазагрузіць",
+    "Guest" : "Госць",
     "Saving …" : "Захаванне …",
     "Saved" : "Захавана",
     "Last saved {lastSave}" : "Апошняе захаванне {lastSave}",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "URL" : "URL-адрас",
     "Replace" : "Замяніць",
     "Upload" : "Запампаваць",
+    "Edit" : "Рэдагаваць",
     "Done" : "Гатова",
     "Info" : "Інфармацыя",
     "Warning" : "Папярэджанне"
