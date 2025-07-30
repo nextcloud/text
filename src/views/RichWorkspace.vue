@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<div v-if="enabled && localHasRichWorkspace"
+	<div v-if="shouldRender"
 		id="rich-workspace"
 		:class="{'focus': focus, 'dark': darkTheme }">
 		<RichTextReader v-if="!loaded || !ready" :content="content" class="rich-workspace--preview" />
@@ -20,8 +20,7 @@
 			active
 			rich-workspace
 			@ready="ready=true"
-			@focus="onFocus"
-			@error="reset" />
+			@focus="onFocus" />
 	</div>
 </template>
 
@@ -74,6 +73,7 @@ export default {
 			loaded: false,
 			ready: false,
 			autofocus: false,
+			shouldAutofocus: false,
 			hideMenu: true,
 			darkTheme: window?.OCA?.Accessibility?.theme === 'dark',
 			enabled: window?.OCA?.Text?.RichWorkspaceEnabled,
@@ -83,28 +83,33 @@ export default {
 		shareToken() {
 			return getSharingToken()
 		},
+		shouldRender() {
+			return this.enabled && this.localHasRichWorkspace
+		},
 	},
 	watch: {
 		path() {
-			this.getFileInfo()
+			this.reset()
+		},
+		ready() {
+			this.shouldAutofocus = false
 		},
 		focus(newValue) {
 			if (!newValue) {
 				document.querySelector('#rich-workspace .text-editor__main').scrollTo(0, 0)
 			}
 		},
-		hasRichWorkspace(value) {
-			this.localHasRichWorkspace = value
+		shouldRender(value) {
 			if (value) {
 				this.getFileInfo()
 			}
 		},
+		hasRichWorkspace(value) {
+			this.localHasRichWorkspace = value
+		},
 	},
 	mounted() {
 		this.localHasRichWorkspace = this.hasRichWorkspace
-		if (this.enabled && this.hasRichWorkspace) {
-			this.getFileInfo()
-		}
 		subscribe('Text::showRichWorkspace', this.showRichWorkspace)
 		subscribe('Text::hideRichWorkspace', this.hideRichWorkspace)
 		subscribe('files:node:created', this.onFileCreated)
@@ -130,22 +135,19 @@ export default {
 			this.unlistenKeydownEvents()
 		},
 		reset() {
-			this.localHasRichWorkspace = false
 			this.file = null
 			this.focus = false
+			this.shouldAutofocus = false
 			this.$nextTick(() => {
-				this.creating = false
-				this.getFileInfo()
+				if (this.shouldRender) {
+					this.getFileInfo()
+				}
 			})
 		},
-		getFileInfo(autofocus) {
-			if (!this.enabled) {
-				return
-			}
+		getFileInfo() {
 			this.file = null
 			this.ready = false
 			this.loaded = true
-			this.autofocus = false
 			const params = { path: this.path }
 			if (IS_PUBLIC) {
 				params.shareToken = this.shareToken
@@ -157,8 +159,7 @@ export default {
 					this.file = data.file
 					this.editing = true
 					this.loaded = true
-					this.autofocus = autofocus || false
-					this.localHasRichWorkspace = true
+					this.autofocus = this.shouldAutofocus
 					return true
 				})
 				.catch((error) => {
@@ -170,13 +171,11 @@ export default {
 					this.file = null
 					this.loaded = true
 					this.ready = true
-					this.creating = false
 					return false
 				})
 		},
 		showRichWorkspace(event) {
 			this.enabled = true
-			this.getFileInfo(event?.autofocus || false)
 		},
 		hideRichWorkspace() {
 			this.enabled = false
@@ -194,8 +193,8 @@ export default {
 		},
 		onFileCreated(node) {
 			if (SUPPORTED_STATIC_FILENAMES.includes(node.basename)) {
+				this.shouldAutofocus = this.enabled
 				this.localHasRichWorkspace = true
-				this.getFileInfo(true)
 			}
 		},
 		onFileDeleted(node) {
