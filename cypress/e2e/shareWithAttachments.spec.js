@@ -65,20 +65,20 @@ describe('Share with attachments', () => {
 })
 
 describe('Public Share with attachments', () => {
-	before(function () {
+	before(function() {
 		cy.createUser(user)
 	})
 
-	beforeEach(function () {
+	beforeEach(function() {
 		cy.login(user)
 		cy.createTestFolder().as('folder').then(cy.shareFile).as('token')
-		cy.then(function () {
+		cy.then(function() {
 			cy.createFile(
 				`${this.folder}/Readme.md`,
 				'![Attached text](.attachments.123/lines.txt)',
 			).as('fileId')
 		})
-		cy.then(function () {
+		cy.then(function() {
 			const attachmentsFolder = `${this.folder}/.attachments.${this.fileId}`
 			cy.createFolder(attachmentsFolder)
 			cy.uploadFile(
@@ -90,7 +90,7 @@ describe('Public Share with attachments', () => {
 		cy.clearCookies()
 	})
 
-	it('open attached files in folder description', function () {
+	it('open attached files in folder description', function() {
 		cy.visit(`/s/${this.token}`)
 		cy.get('.content-wrapper').should('exist')
 		cy.get('.content-wrapper .name', { timeout: 10_000 }).click()
