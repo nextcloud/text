@@ -21,6 +21,7 @@ import handbookOut from '../fixtures/tables/handbook/handbook.out.html?raw'
 import {
 	br,
 	expectDocument,
+	p,
 	table,
 	td,
 	th,
@@ -54,13 +55,15 @@ describe('Table', () => {
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ dir: 'ltr', textAlign: 'center' }, 'center'),
-					td({ dir: 'ltr', textAlign: 'right' }, 'right'),
+					td({ dir: 'ltr', textAlign: 'center' }, p({ dir: 'ltr' }, 'center')),
+					td({ dir: 'ltr', textAlign: 'right' }, p({ dir: 'ltr' }, 'right')),
 					td(
 						{ dir: 'ltr' },
-						'left cell ',
-						br({ syntax: 'html' }),
-						'with line break',
+						p({ dir: 'ltr' },
+							'left cell ',
+							br({ syntax: 'html' }),
+							'with line break',
+						),
 					),
 				),
 			),
@@ -79,13 +82,15 @@ describe('Table', () => {
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ dir: 'ltr', textAlign: 'center' }, 'center'),
-					td({ dir: 'ltr', textAlign: 'right' }, 'right'),
+					td({ dir: 'ltr', textAlign: 'center' }, p({ dir: 'ltr' }, 'center')),
+					td({ dir: 'ltr', textAlign: 'right' }, p({ dir: 'ltr' }, 'right')),
 					td(
 						{ dir: 'ltr' },
-						'left cell ',
-						br({ syntax: '  ' }),
-						'with line break',
+						p({ dir: 'ltr' },
+							'left cell ',
+							br({ syntax: '  ' }),
+							'with line break',
+						),
 					),
 				),
 			),
@@ -136,17 +141,17 @@ describe('Table', () => {
 		editor,
 	}) => {
 		const editorHtml =
-			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td dir="ltr">a</td><td dir="ltr">b</td></tr></table></div><p></p>'
+			'<div class="table-wrapper" style="overflow-x: auto;"><table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td dir="ltr"><p dir="ltr">a</p></td><td dir="ltr"><p dir="ltr">b</p></td></tr></table></div><p></p>'
 		const tables = [
-			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tbody><tr><td>a</td><td>b</td></tr></tbody></table>',
-			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead><tbody><tr><td>a</td><td>b</td></tr></tbody></table>',
-			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tr><td>a</td><td>b</td></tr></table>',
-			'<table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></table>',
-			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></thead></table>',
-			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></thead></table>',
-			'<table><tbody><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td>a</td><td>b</td></tr></tbody></table>',
-			'<table><tbody><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></tbody></table>',
-			'<table><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td>a</td><td>b</td></tr></table>',
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tbody><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
+			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr></thead><tbody><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr></thead><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></table>',
+			'<table><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></table>',
+			'<table><thead><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></thead></table>',
+			'<table><thead><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></thead></table>',
+			'<table><tbody><tr><th dir="ltr">first</th><th dir="ltr">second</th></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
+			'<table><tbody><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></tbody></table>',
+			'<table><tr><td dir="ltr">first</td><td dir="ltr">second</td></tr><tr><td><p dir="ltr">a</p></td><td><p dir="ltr">b</p></td></tr></table>',
 		]
 		for (const tableHtml of tables) {
 			editor.commands.setContent(tableHtml)

@@ -9,9 +9,10 @@ import { Fragment } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
 
 export default TableCell.extend({
-	content: 'inline*',
+	content: '(paragraph|list|codeBlock|image)+',
 
 	toMarkdown(state, node) {
+		/*
 		state.write(' ')
 		const backup = state.options?.escapeExtraCharacters
 		const columnIndex = state.options.currentColumnIndex
@@ -39,6 +40,7 @@ export default TableCell.extend({
 		state.options.escapeExtraCharacters = backup
 		state.write(' |')
 		state.options.currentColumnIndex++
+		 */
 	},
 
 	parseHTML() {

@@ -11,6 +11,7 @@ export default TableRow.extend({
 	allowGapCursor: false,
 
 	toMarkdown(state, node) {
+		/*
 		state.write('|')
 		state.renderInline(node)
 		state.ensureNewLine()
@@ -24,6 +25,7 @@ export default TableRow.extend({
 			state.write('|')
 		})
 		state.ensureNewLine()
+		*/
 	},
 
 	parseHTML() {
