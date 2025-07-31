@@ -39,6 +39,8 @@ OC.L10N.register(
     "Formatting help" : "Uasidizi wa uambizaji",
     "Translation failed" : "Utafsiri umeshindikana",
     "to" : "kwa",
+    "Replace" : "Replace",
+    "Upload" : "Pakia",
     "Edit" : "Hariri",
     "Source code" : "Msimbo wa chanzo",
     "Both" : "Both",
@@ -50,6 +52,7 @@ OC.L10N.register(
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
+    "Add folder description" : "Add folder description",
     "Detect language" : "Lugha iliyotambuliwa",
     "Warning" : "Onyo"
 },

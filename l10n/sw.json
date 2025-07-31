@@ -37,6 +37,8 @@
     "Formatting help" : "Uasidizi wa uambizaji",
     "Translation failed" : "Utafsiri umeshindikana",
     "to" : "kwa",
+    "Replace" : "Replace",
+    "Upload" : "Pakia",
     "Edit" : "Hariri",
     "Source code" : "Msimbo wa chanzo",
     "Both" : "Both",
@@ -48,6 +50,7 @@
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
+    "Add folder description" : "Add folder description",
     "Detect language" : "Lugha iliyotambuliwa",
     "Warning" : "Onyo"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
