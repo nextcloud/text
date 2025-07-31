@@ -10,10 +10,12 @@ export default TableRow.extend({
 	allowGapCursor: false,
 
 	toMarkdown(state, node) {
+		/*
 		state.write('|')
 		state.options.currentColumnIndex = 0
 		state.renderInline(node)
 		state.ensureNewLine()
+		 */
 	},
 
 	parseHTML() {

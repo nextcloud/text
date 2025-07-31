@@ -10,6 +10,7 @@ export default TableHeader.extend({
 	content: 'inline*',
 
 	toMarkdown(state, node) {
+		/*
 		const headerIndex = state.options.currentHeaderIndex
 		const columnWidth = state.options.columnWidths[headerIndex]
 		const align = node.attrs?.textAlign || 'left'
@@ -25,6 +26,7 @@ export default TableHeader.extend({
 		if (align === 'left') state.write(' '.repeat(space))
 		state.write(' |')
 		state.options.currentHeaderIndex++
+		 */
 	},
 
 	parseHTML() {
