@@ -192,16 +192,6 @@ class SyncService {
 		}
 	}
 
-	updateSession(guestName: string) {
-		if (!this.sessionConnection?.isPublic) {
-			return Promise.reject(new Error())
-		}
-		return this.sessionConnection.update(guestName).catch((error) => {
-			logger.error('Failed to update the session', { error })
-			return Promise.reject(error)
-		})
-	}
-
 	sendStep(step: ArrayBuffer) {
 		this.#outbox.storeStep(step)
 		this.sendSteps()

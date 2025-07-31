@@ -8,9 +8,11 @@
 		:title="t('text', 'Enter your name so other people can see who is editing')"
 		class="guest-name-dialog"
 		@submit.prevent="setGuestName()">
-		<label><AvatarWrapper :session="session" :size="32" /></label>
+		<label>
+			<AvatarWrapper :client="client" :size="32" />
+		</label>
 		<input
-			v-model="guestName"
+			v-model="guestNameEntry"
 			type="text"
 			:aria-label="t('text', 'Edit guest name')"
 			:placeholder="t('text', 'Guest')" />
@@ -25,7 +27,6 @@
 <script>
 import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import { useSyncService } from '../../composables/useSyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
 
 export default {
@@ -34,50 +35,33 @@ export default {
 		AvatarWrapper,
 	},
 	props: {
-		session: {
+		client: {
 			type: Object,
 			required: true,
 		},
-	},
-	setup() {
-		const { syncService } = useSyncService()
-		return { syncService }
+		guestName: {
+			type: String,
+			required: true,
+		},
 	},
 	data() {
 		return {
-			guestName: '',
-			guestNameBuffered: '',
+			guestNameEntry: this.guestName,
 		}
 	},
 	computed: {
 		avatarUrl() {
 			const size = 32
 			const avatarUrl = generateUrl('/avatar/guest/{user}/{size}', {
-				user: this.guestNameBuffered,
+				user: this.guestName,
 				size,
 			})
 			return window.location.protocol + '//' + window.location.host + avatarUrl
 		},
 	},
-	beforeMount() {
-		this.guestName = this.syncService.guestName
-		this.updateBufferedGuestName()
-	},
 	methods: {
 		setGuestName() {
-			const previousGuestName = this.syncService.guestName
-			this.syncService
-				.updateSession(this.guestName)
-				.then(() => {
-					localStorage.setItem('nick', this.guestName)
-					this.updateBufferedGuestName()
-				})
-				.catch((e) => {
-					this.guestName = previousGuestName
-				})
-		},
-		updateBufferedGuestName() {
-			this.guestNameBuffered = this.guestName
+			this.$emit('set-guest-name', this.guestNameEntry)
 		},
 		t,
 	},
