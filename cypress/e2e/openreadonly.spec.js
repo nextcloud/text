@@ -72,6 +72,10 @@ describe('Open read-only mode', function () {
 			cy.visit('/apps/files')
 		})
 
+		after(function () {
+			setReadOnlyMode(0)
+		})
+
 		it('Test read-only markdown file', function () {
 			cy.openFile('test.md')
 

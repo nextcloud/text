@@ -25,6 +25,7 @@ import Markdown from './../extensions/Markdown.js'
 import Mention from './../extensions/Mention.js'
 import Search from './../extensions/Search.js'
 import TextDirection from './../extensions/TextDirection.ts'
+import Typography from './../extensions/Typography.ts'
 import BulletList from './../nodes/BulletList.js'
 import Callouts from './../nodes/Callouts.js'
 import CodeBlock from './../nodes/CodeBlock.js'
@@ -132,6 +133,7 @@ export default Extension.create({
 					'taskItem',
 				],
 			}),
+			Typography,
 		]
 		const additionalExtensionNames = this.options.extensions.map((e) => e.name)
 		return [
