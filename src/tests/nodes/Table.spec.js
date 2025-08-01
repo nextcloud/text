@@ -6,6 +6,7 @@
 import { test as baseTest } from 'vitest'
 import { createRichEditor } from '../../EditorFactory.js'
 import { createMarkdownSerializer } from '../../extensions/Markdown.js'
+import { markdownThroughEditor } from '../testHelpers/markdown.js'
 
 import markdownit from '../../markdownit/index.js'
 
@@ -37,10 +38,30 @@ const test = baseTest.extend({
 	},
 })
 
-describe('Table', () => {
+describe('Table extension', () => {
 	test('Markdown-IT renders tables', () => {
 		const rendered = markdownit.render(input)
 		expect(rendered).toBe(output)
+	})
+
+	it('markdown table is preserved through editor', () => {
+		expect(markdownThroughEditor('a|b\n-|-\n1|2\n')).toBe(
+			'| a | b |\n|---|---|\n| 1 | 2 |\n',
+		)
+
+		const complexTable = `
+|  #| header1           | header2       |
+|--:|-------------------|---------------|
+|  1| list:             | code:         | \\
+|   |                   |               | \\
+|   | * item1           | \`\`\`js         | \\
+|   | * item2           | const x = '1' | \\
+|   |                   | \`\`\`           | \\
+|   | ![alt](/test.png) |               |
+|  2| cell3             | cell4         |
+|  3|                   | cell5         |
+`
+		expect(markdownThroughEditor(complexTable)).toBe(complexTable)
 	})
 
 	test('Load into editor', ({ editor }) => {
@@ -55,11 +76,18 @@ describe('Table', () => {
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ dir: 'ltr', textAlign: 'center' }, p({ dir: 'ltr' }, 'center')),
-					td({ dir: 'ltr', textAlign: 'right' }, p({ dir: 'ltr' }, 'right')),
+					td(
+						{ dir: 'ltr', textAlign: 'center' },
+						p({ dir: 'ltr' }, 'center'),
+					),
+					td(
+						{ dir: 'ltr', textAlign: 'right' },
+						p({ dir: 'ltr' }, 'right'),
+					),
 					td(
 						{ dir: 'ltr' },
-						p({ dir: 'ltr' },
+						p(
+							{ dir: 'ltr' },
 							'left cell ',
 							br({ syntax: 'html' }),
 							'with line break',
@@ -82,11 +110,18 @@ describe('Table', () => {
 					th({ dir: 'ltr' }, 'heading 3'),
 				),
 				tr(
-					td({ dir: 'ltr', textAlign: 'center' }, p({ dir: 'ltr' }, 'center')),
-					td({ dir: 'ltr', textAlign: 'right' }, p({ dir: 'ltr' }, 'right')),
+					td(
+						{ dir: 'ltr', textAlign: 'center' },
+						p({ dir: 'ltr' }, 'center'),
+					),
+					td(
+						{ dir: 'ltr', textAlign: 'right' },
+						p({ dir: 'ltr' }, 'right'),
+					),
 					td(
 						{ dir: 'ltr' },
-						p({ dir: 'ltr' },
+						p(
+							{ dir: 'ltr' },
 							'left cell ',
 							br({ syntax: '  ' }),
 							'with line break',
