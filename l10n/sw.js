@@ -45,15 +45,18 @@ OC.L10N.register(
     "Source code" : "Msimbo wa chanzo",
     "Both" : "Both",
     "Done" : "Imefanyika",
+    "Lists" : "Lists",
     "Table" : "Jedwali",
     "Details" : "Maelezo ya kina",
     "Ctrl" : "Dhibiti",
     "Option" : "Chaguo",
+    "Formatting" : "Formatting",
     "Select file or folder to link to" : "Chagua faili au kisanduku cha kuunga kwa",
     "Choose" : "Chagua",
     "Choose {file}" : "Chagua {file}",
     "Add folder description" : "Add folder description",
     "Detect language" : "Lugha iliyotambuliwa",
+    "Success" : "Mafanikio",
     "Warning" : "Onyo"
 },
 "nplurals=2; plural=(n != 1);");
