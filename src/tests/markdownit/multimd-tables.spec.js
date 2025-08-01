@@ -22,6 +22,21 @@ describe('multimd-table extension', () => {
 		)
 	})
 
+	it('renders table without header', () => {
+		const rendered = markdownit.render(`
+|-------|-------|
+| cell1 | cell2 |
+| cell3 | cell4 |
+`)
+		expect(stripIndent(rendered)).toBe(
+			stripIndent(`
+			<table><tbody>
+				<tr><td>cell1</td><td>cell2</td></tr>
+				<tr><td>cell3</td><td>cell4</td></tr>
+			</tbody></table>`),
+		)
+	})
+
 	it('renders table with line breaks', () => {
 		const rendered = markdownit.render(`
 | header1 | header2 |
