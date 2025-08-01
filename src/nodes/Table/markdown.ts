@@ -10,6 +10,7 @@ import { createMarkdownSerializer } from '../../extensions/Markdown.js'
 type Cell = {
 	md: string
 	lines: string[]
+	nodeTypes: Set<string>
 	align: string
 }
 
@@ -37,7 +38,23 @@ function rowToMarkdown(
 		while (cell.lines.length < row.length) cell.lines.push('')
 		// Normalize lines in cell to have the same length
 		cell.lines.forEach((line, lineIdx) => {
-			cell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+			// Node types with enforced left-alignment
+			if (['listItem', 'taskItem', 'codeBlock'].some(nodeType => cell.nodeTypes.has(nodeType))) {
+				cell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+				return
+			}
+
+			// Pad according to alignment
+			if (cell.align === 'center') {
+				const spaces = Math.max(columnWidths[cellIdx] - line.length, 0)
+				const spacesStart = line.length + Math.floor(spaces / 2)
+				const spacesEnd = line.length + Math.ceil(spaces / 2)
+				cell.lines[lineIdx] = line.padStart(spacesStart).padEnd(spacesEnd)
+			} else if (cell.align === 'right') {
+				cell.lines[lineIdx] = line.padStart(columnWidths[cellIdx])
+			} else {
+				cell.lines[lineIdx] = line.padEnd(columnWidths[cellIdx])
+			}
 		})
 		return cell
 	})
@@ -80,6 +97,7 @@ function headerRowToMarkdown(
 	// No space padding next to pipes in horizontal separator
 	state.write('|')
 	row.cells.forEach((cell, cellIdx) => {
+		// Separator alignment
 		const separatorWidth = columnWidths[cellIdx] + 2
 		let separator = ''
 		switch (cell.align) {
@@ -123,17 +141,24 @@ function tableToMarkdown(state: MarkdownSerializerState, node: Node) {
 		const cellNodes = row.node.content.content
 		cellNodes.forEach((node, cellIdx) => {
 			columnWidths[cellIdx] = columnWidths[cellIdx] ?? 0
+
+			// Serialize cell content with all child nodes and split lines
 			const md = serializer.serialize(node)
+			const nodeTypes = new Set<string>();
+			node.descendants((descendant) => {
+				nodeTypes.add(descendant.type.name)
+			})
 			const lines = md.split(/\r?\n/).map((line) => {
 				// Escape pipe character
 				line = line.replace(/\|/, '\\$&')
 				return line.trim()
 			})
+
 			row.length = Math.max(row.length, lines.length)
 			const lineLength = Math.max(...lines.map((line) => line.length))
 			columnWidths[cellIdx] = Math.max(columnWidths[cellIdx], lineLength)
 			const align = node.attrs?.textAlign ?? ''
-			row.cells.push({ md, lines, align })
+			row.cells.push({ md, lines, nodeTypes, align })
 		})
 	})
 

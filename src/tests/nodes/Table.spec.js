@@ -50,17 +50,17 @@ describe('Table extension', () => {
 		)
 
 		const complexTable = `
-|  #| header1           | header2       |
-|--:|-------------------|---------------|
-|  1| list:             | code:         | \\
+| # |           header1 | header2       |
+|--:|------------------:|---------------|
+| 1 | list:             | code:         | \\
 |   |                   |               | \\
 |   | * item1           | \`\`\`js         | \\
 |   | * item2           | const x = '1' | \\
 |   |                   | \`\`\`           | \\
 |   | ![alt](/test.png) |               |
-|  2| cell3             | cell4         |
-|  3|                   | cell5         |
-`
+| 2 |             cell3 | cell4         |
+| 3 |                   | cell5         |
+`.trimStart()
 		expect(markdownThroughEditor(complexTable)).toBe(complexTable)
 	})
 
