@@ -110,6 +110,12 @@ describe('Markdown though editor', () => {
 		)
 	})
 
+	test('table', () => {
+		expect(markdownThroughEditor('| a | b |\n|---|---|\n| 1 | 2 |')).toBe(
+			'| a | b |\n|---|---|\n| 1 | 2 |\n',
+		)
+	})
+
 	test('escaping', () => {
 		const test =
 			'(Asdf [asdf asdf](asdf asdf) asdf asdf asdf asdf asdf asdf asdf asdf asdf)\n'
