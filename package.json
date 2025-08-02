@@ -128,7 +128,7 @@
     "prettier-plugin-organize-imports": "^4.2.0",
     "prosemirror-test-builder": "^1.1.1",
     "rollup-plugin-webpack-stats": "^2.1.1",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vite": "^6.3.5",
     "vite-plugin-commonjs": "^0.10.4",
     "vitest": "^3.2.4",
