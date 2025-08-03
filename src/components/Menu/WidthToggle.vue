@@ -4,14 +4,14 @@
 -->
 
 <template>
-	<NcCheckboxRadioSwitch :checked="isFullWidth" @update:checked="setFullWidth">
+	<NcActionCheckbox :checked="isFullWidth" @update:checked="setFullWidth">
 		{{ t('text', 'Full width editor') }}
-	</NcCheckboxRadioSwitch>
+	</NcActionCheckbox>
 </template>
 
 <script setup>
 import { t } from '@nextcloud/l10n'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcActionCheckbox from '@nextcloud/vue/components/NcActionCheckbox'
 import { nextTick, watch } from 'vue'
 import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorWidth } from '../../composables/useEditorWidth.ts'
