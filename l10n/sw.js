@@ -56,6 +56,7 @@ OC.L10N.register(
     "Choose {file}" : "Chagua {file}",
     "Add folder description" : "Add folder description",
     "Detect language" : "Lugha iliyotambuliwa",
+    "Info" : "Info",
     "Success" : "Mafanikio",
     "Warning" : "Onyo"
 },
