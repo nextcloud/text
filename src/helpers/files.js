@@ -192,7 +192,7 @@ let FilesHeaderRichWorkspaceView
 let FilesHeaderRichWorkspaceInstance
 let latestFolder
 
-function enabled(_, view) {
+const enabled = (_, view) => {
 	return ['files', 'favorites', 'public-share'].includes(view.id)
 }
 
