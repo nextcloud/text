@@ -72,54 +72,6 @@ function findSameCellInNextRow($cell) {
 	}
 }
 
-/**
- *
- * @param {Node} node - Table node
- */
-/*
-function getColumns(node) {
-	const columns = []
-
-	node.content.forEach((row) => {
-		row.content.forEach((cell, offset, columnIndex) => {
-			if (!columns[columnIndex]) {
-				columns[columnIndex] = []
-			}
-			columns[columnIndex].push(cell)
-		})
-	})
-
-	return columns
-}
- */
-
-/**
- *
- * @param {Array} columns - Columns of table
- */
-/*
-function calculateColumnWidths(columns) {
-	const widths = []
-
-	columns.forEach((column) => {
-		let maxWidth = 0
-
-		column.forEach((cell) => {
-			let cellWidth = 0
-			cell.content.forEach((node) => {
-				cellWidth += node.text?.length || 6
-				if (node.text?.includes('|')) cellWidth += 1
-			})
-			maxWidth = Math.max(maxWidth, cellWidth)
-		})
-
-		widths.push(maxWidth)
-	})
-
-	return widths
-}
- */
-
 export default Table.extend({
 	content: 'tableCaption? tableHeadRow tableRow*',
 
