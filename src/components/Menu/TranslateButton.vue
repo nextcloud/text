@@ -31,7 +31,6 @@ const showTranslate = () => {
 		commands.selectAll()
 		selectedText = state.doc.textContent
 	}
-	console.debug('translation click', state.selection, selectedText)
 	emit('text:translate-modal:show', { content: selectedText })
 }
 </script>
