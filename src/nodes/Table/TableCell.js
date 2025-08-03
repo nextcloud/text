@@ -11,37 +11,7 @@ import { Plugin } from '@tiptap/pm/state'
 export default TableCell.extend({
 	content: '(paragraph|list|codeBlock|image)+',
 
-	toMarkdown(state, node) {
-		/*
-		state.write(' ')
-		const backup = state.options?.escapeExtraCharacters
-		const columnIndex = state.options.currentColumnIndex
-		state.options.escapeExtraCharacters = /\|/
-
-		let cellRenderedContentLength = 0
-		node.content.forEach((childNode, offset, index) => {
-			cellRenderedContentLength += childNode.text?.length || 6
-			if (childNode.text?.includes('|')) cellRenderedContentLength += 1
-			if (childNode.attrs.syntax === '  ')
-				node.child(index).attrs.syntax = 'html'
-		})
-		const columnWidth = state.options.columnWidths[columnIndex]
-		const align = node.attrs?.textAlign || 'left'
-		const space = columnWidth - cellRenderedContentLength
-		const leftPadding = Math.floor(space / 2)
-		const rightPadding = Math.ceil(space / 2)
-
-		if (align === 'center') state.write(' '.repeat(leftPadding))
-		if (align === 'right') state.write(' '.repeat(space))
-		state.renderInline(node)
-		if (align === 'center') state.write(' '.repeat(rightPadding))
-		if (align === 'left') state.write(' '.repeat(space))
-
-		state.options.escapeExtraCharacters = backup
-		state.write(' |')
-		state.options.currentColumnIndex++
-		 */
-	},
+	toMarkdown() {},
 
 	parseHTML() {
 		return [
