@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "Не удалось скопировать, выполните копирование вручную",
     "Copy link to clipboard" : "Скопировать ссылку в буфер обмена",
+    "Open link" : "Открыть ссылку",
     "Edit link" : "Редактировать ссылку",
     "Save changes" : "Сохранить изменения",
     "Cancel" : "Отмена",
