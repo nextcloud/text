@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Missing a temporary folder" : "Адсутнічае часовая папка",
     "Could not write file to disk" : "Не ўдалося запісаць файл на дыск",
+    "A PHP extension stopped the file upload" : "Пашырэнне PHP спыніла запампоўванне файла",
     "File not found" : "Файл не знойдзены",
     "Text" : "Тэкст",
     "Translate" : "Перакласці",
