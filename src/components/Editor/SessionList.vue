@@ -4,7 +4,10 @@
 -->
 
 <template>
-	<NcPopover no-focus-trap class="session-list" placement="bottom">
+	<NcPopover
+		:no-focus-trap="!$slots.default"
+		class="session-list"
+		placement="bottom">
 		<template #trigger="{ attrs }">
 			<div>
 				<NcButton
