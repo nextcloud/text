@@ -51,7 +51,7 @@
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<TranslateButton v-if="canTranslate" />
+					<TranslateButton />
 					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
@@ -66,7 +66,6 @@
 </template>
 
 <script>
-import { loadState } from '@nextcloud/initial-state'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
 import { ref } from 'vue'
@@ -139,8 +138,6 @@ export default {
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
-			canTranslate:
-				loadState('text', 'translation_languages', []).from?.length > 0,
 			resize: null,
 		}
 	},
