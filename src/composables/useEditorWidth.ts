@@ -30,10 +30,28 @@ import {
 // Keep the current value around when leaving the editor and reopening
 let valueSingleton = loadState('text', 'is_full_width_editor', false)
 
+// This is either the reactive value of the editor width toggle
+// or null if the width has already been set outside of text.
 export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
-	Readonly<Ref<boolean>>
+	Readonly<Ref<boolean> | null>
 >
+
+const maxWidthSetOutsideOfText = () => {
+	const alreadySet = getComputedStyle(document.body).getPropertyValue(
+		'--text-editor-max-width',
+	)
+	const setByText = document.documentElement.style.getPropertyValue(
+		'--text-editor-max-width',
+	)
+	return Boolean(alreadySet) && alreadySet !== setByText
+}
+
 export const provideEditorWidth = () => {
+	// keep style that is already set - for example by collectives
+	if (maxWidthSetOutsideOfText()) {
+		provide(editorWidthKey, null)
+		return { applyEditorWidth: () => {} }
+	}
 	const isFullWidth = ref(valueSingleton)
 	provide(editorWidthKey, readonly(isFullWidth))
 	subscribe('text:editor:full-width', ({ value }) => {
@@ -52,7 +70,11 @@ export const provideEditorWidth = () => {
 }
 
 export const useEditorWidth = () => {
-	const isFullWidth = inject(editorWidthKey) as Ref<boolean>
+	// This will be null if the width is already configured outside of text.
+	const isFullWidth = inject(editorWidthKey)
+	if (isFullWidth === null) {
+		return { canToggleWidth: false }
+	}
 	const setFullWidth = (checked: boolean) => {
 		axios.post(generateUrl('/apps/text/settings'), {
 			key: 'is_full_width_editor',
@@ -60,5 +82,5 @@ export const useEditorWidth = () => {
 		})
 		emit('text:editor:full-width', { value: checked })
 	}
-	return { isFullWidth, setFullWidth }
+	return { canToggleWidth: true, isFullWidth, setFullWidth }
 }

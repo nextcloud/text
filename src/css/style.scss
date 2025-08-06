@@ -5,8 +5,6 @@
 
 @use 'sass:math';
 
-@import './variables';
-
 .ProseMirror-hideselection {
 	caret-color: transparent;
 	color: var(--color-main-text);

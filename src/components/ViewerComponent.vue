@@ -220,7 +220,6 @@ export default {
 }
 </style>
 <style lang="scss">
-@import './../css/variables';
 @media only screen and (max-width: 512px) {
 	// on mobile, modal-container has top: 50px
 	.text-editor {

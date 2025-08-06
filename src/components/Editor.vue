@@ -955,7 +955,6 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import './../css/variables';
 @import './../css/style';
 @import './../css/print';
 
