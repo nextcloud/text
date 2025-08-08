@@ -14,6 +14,16 @@
 			<EditorOutline />
 		</div>
 		<slot />
+		<DragHandle :editor="editor">
+			<NcButton
+				type="secondary"
+				size="normal"
+				class="drag-handle--button">
+				<template #icon>
+					<DragIcon :size="20" />
+				</template>
+			</NcButton>
+		</DragHandle>
 		<EditorContent
 			role="document"
 			class="editor__content text-editor__content"
@@ -27,12 +37,18 @@ import { EditorContent } from '@tiptap/vue-2'
 import { useEditor } from '../../composables/useEditor.ts'
 import EditorOutline from './EditorOutline.vue'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
+import { DragHandle } from '@tiptap/extension-drag-handle-vue-2'
+import DragIcon from 'vue-material-design-icons/Drag.vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 
 export default {
 	name: 'ContentContainer',
 	components: {
 		EditorContent,
 		EditorOutline,
+		NcButton,
+		DragHandle,
+		DragIcon,
 	},
 	mixins: [useOutlineStateMixin],
 	setup() {
