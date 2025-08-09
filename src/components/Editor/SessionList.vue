@@ -4,7 +4,10 @@
 -->
 
 <template>
-	<NcPopover class="session-list" placement="bottom">
+	<NcPopover
+		:no-focus-trap="!$slots.default"
+		class="session-list"
+		placement="bottom">
 		<template #trigger="{ attrs }">
 			<div>
 				<NcButton
@@ -47,13 +50,6 @@
 							>({{ t('text', 'guest') }})</span
 						>
 					</li>
-					<li>
-						<NcCheckboxRadioSwitch
-							:checked="isFullWidth"
-							@update:checked="onWidthToggle">
-							{{ t('text', 'Full width editor') }}
-						</NcCheckboxRadioSwitch>
-					</li>
 				</ul>
 			</div>
 		</template>
@@ -61,12 +57,8 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
-import { loadState } from '@nextcloud/initial-state'
 import { t } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
 import {
@@ -82,7 +74,6 @@ export default {
 		AvatarWrapper,
 		NcButton,
 		NcPopover,
-		NcCheckboxRadioSwitch,
 	},
 	props: {
 		sessions: {
@@ -93,10 +84,8 @@ export default {
 		},
 	},
 	data() {
-		const isFullWidth = loadState('text', 'is_full_width_editor', false)
 		return {
 			myName: '',
-			isFullWidth,
 		}
 	},
 	computed: {
@@ -141,15 +130,6 @@ export default {
 		},
 	},
 	methods: {
-		onWidthToggle(checked) {
-			this.isFullWidth = checked
-			this.$emit('editor-width-change', checked ? '100%' : '80ch')
-
-			axios.post(generateUrl('/apps/text/settings'), {
-				key: 'is_full_width_editor',
-				value: checked ? '1' : '0',
-			})
-		},
 		t,
 	},
 }
