@@ -118,6 +118,7 @@ OC.L10N.register(
     "Alt" : "Alt",
     "Cannot copy, please copy the link manually" : "コピーできませんでした。手動でリンクをコピーしてください。",
     "Copy link to clipboard" : "リンクをクリップボードにコピーする",
+    "Open link" : "リンクを開く",
     "Edit link" : "リンクを編集",
     "Save changes" : "変更を保存",
     "Cancel" : "キャンセル",
