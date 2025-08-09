@@ -137,7 +137,7 @@ class PollingBackend {
 		const { document, sessions } = data
 		this.#fetchRetryCounter = 0
 
-		this.#syncService.emit('change', { document, sessions })
+		this.#syncService.emit('change', { document })
 		this.#syncService.receiveSteps(data)
 
 		if (data.steps.length === 0) {
@@ -148,6 +148,7 @@ class PollingBackend {
 				return
 			}
 			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
+			// TODO: update and analyse awareness state instead.
 			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
 			if (this.#syncService.isReadOnly) {
 				this.maximumReadOnlyTimer()
