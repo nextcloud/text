@@ -7,11 +7,15 @@ import { initUserAndFiles, randUser } from '../../utils/index.js'
 import { findChildren } from './../../../src/helpers/prosemirrorUtils.js'
 import { createCustomEditor } from './../../support/components.js'
 
+import { CodeBlock } from '@tiptap/extension-code-block'
+import { ListItem } from '@tiptap/extension-list-item'
 import Markdown, {
 	createMarkdownSerializer,
 } from './../../../src/extensions/Markdown.js'
 import markdownit from './../../../src/markdownit/index.js'
+import BulletList from './../../../src/nodes/BulletList.js'
 import EditableTable from './../../../src/nodes/EditableTable.js'
+import Image from './../../../src/nodes/Image.js'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1739
 /* eslint-disable-next-line import/no-unresolved */
@@ -121,20 +125,18 @@ describe('table plugin', () => {
 	})
 
 	it('Creates table and add multilines', function () {
-		const multilinesContent = 'Line 1\nLine 2\nLine 3'
-
 		cy.getActionEntry('table').click()
 		cy.getContent()
 			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1)')
 			.click()
 
-		cy.getContent().type(multilinesContent)
+		cy.getContent().type('Line 1\nLine 2\nLine 3')
 
 		cy.getContent()
 			.find('table:nth-of-type(1) tr:nth-child(2) td:nth-child(1) .content')
 			.then(($el) => {
 				expect($el.get(0).innerHTML).to.equal(
-					multilinesContent.replace(/\n/g, '<br>'),
+					'<p dir="ltr">Line 1</p><p dir="ltr">Line 2</p><p dir="ltr">Line 3</p>',
 				)
 			})
 	})
@@ -169,7 +171,14 @@ describe('table plugin', () => {
 describe('Table extension integrated in the editor', () => {
 	const editor = createCustomEditor({
 		content: '',
-		extensions: [Markdown, EditableTable],
+		extensions: [
+			BulletList,
+			CodeBlock,
+			EditableTable,
+			Image,
+			ListItem,
+			Markdown,
+		],
 	})
 
 	for (const spec of testData.split(/#+\s+/)) {
