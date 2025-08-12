@@ -15,6 +15,7 @@ OC.L10N.register(
     "Last saved" : "Апошняе захаванне",
     "Keyboard shortcuts" : "Спалучэнні клавіш",
     "Link" : "Спасылка",
+    "Action" : "Дзеянне",
     "Open link" : "Адкрыць спасылку",
     "Cancel" : "Скасаваць",
     "URL" : "URL-адрас",
