@@ -21,7 +21,7 @@
 			</NcButton>
 		</div>
 		<SessionList
-			v-if="networkOnline"
+			v-if="networkOnline && !hasConnectionIssue"
 			:sessions="sessions">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}

@@ -35,15 +35,19 @@ export default {
 	mixins: [refreshMoment],
 
 	props: {
+		// 0 if there is a different connection issue than the browser being offline
 		offlineSince: {
 			type: Number,
-			required: true,
+			default: 0,
 		},
 	},
 
 	computed: {
 		label() {
-			return t('text', 'Offline since {time}', { time: this.offlineTime })
+			if (this.offlineSince) {
+				return t('text', 'Offline since {time}.', { time: this.offlineTime })
+			}
+			return t('text', 'Not connected to the cloud.')
 		},
 		offlineTime() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
