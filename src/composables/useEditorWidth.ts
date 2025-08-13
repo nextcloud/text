@@ -6,9 +6,15 @@
 /*
  * Handle the state of the full editor width toggle.
  *
- * Apply it by setting the css variable on the document.
- * Keep it around after the editor is destroyed for the next mount.
- * Persist it in the user settings.
+ * If the css variable `--text-editor-max-width` is already set
+ * for `document.body` it will be left as is and
+ * no toggle will be shown in the text ui.
+ * This way the collectives app handles it's per document width setting.
+ *
+ * Otherwise this composable handles the `is_full_width_editor` initial state.
+ * It sets the css variable on the document accordingly.
+ * The state is stored in a singleton to preserve and reuse it on the next mount.
+ * It is persisted in the user settings across page reloads.
  *
  */
 
@@ -36,7 +42,14 @@ export const editorWidthKey = Symbol('text:editor:width') as InjectionKey<
 	Readonly<Ref<boolean> | null>
 >
 
-const maxWidthSetOutsideOfText = () => {
+/**
+ * Detect if other apps (such as collectives) already configured texts max width.
+ *
+ * Check if document.body has a css variable `--text-editor-max-width` (either set or inherited).
+ * Get the value set by text in the documentElement style.
+ * If both values are set and match we assume text is handling the width.
+ */
+function maxWidthSetOutsideOfText() {
 	const alreadySet = getComputedStyle(document.body).getPropertyValue(
 		'--text-editor-max-width',
 	)
