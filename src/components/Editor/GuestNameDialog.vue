@@ -23,9 +23,11 @@
 </template>
 
 <script>
+import { showError, showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import { useSyncService } from '../../composables/useSyncService.ts'
+import { update } from '../../apis/connect.ts'
+import { useConnection } from '../../composables/useConnection.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
 
 export default {
@@ -40,8 +42,8 @@ export default {
 		},
 	},
 	setup() {
-		const { syncService } = useSyncService()
-		return { syncService }
+		const { connection } = useConnection()
+		return { connection }
 	},
 	data() {
 		return {
@@ -60,19 +62,25 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.guestName = this.syncService.guestName
+		this.guestName = this.session.guestName
 		this.updateBufferedGuestName()
 	},
+
 	methods: {
 		setGuestName() {
-			const previousGuestName = this.syncService.guestName
-			this.syncService
-				.updateSession(this.guestName)
+			if (!this.connection) {
+				showError(t('text', 'Not connected. Cannot update guest name.'))
+				return
+			}
+			const previousGuestName = this.session.guestName
+			update(this.guestName, this.connection)
 				.then(() => {
 					localStorage.setItem('nick', this.guestName)
 					this.updateBufferedGuestName()
 				})
-				.catch((e) => {
+				.catch((error) => {
+					console.warn('Failed to update the session', { error })
+					showWarning(t('text', 'Failed to update the guest name.'))
 					this.guestName = previousGuestName
 				})
 		},

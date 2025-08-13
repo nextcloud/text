@@ -51,6 +51,30 @@ export async function open(
 }
 
 /**
+ * Update the guest name
+ * @param guestName the name to use for the local user
+ * @param connection connection to close
+ */
+export async function update(
+	guestName: string,
+	connection: Connection,
+): Promise<Session> {
+	if (!connection.shareToken) {
+		throw new Error('Cannot set guest name without a share token!')
+	}
+	const id = connection.documentId
+	const url = generateUrl(`/apps/text/public/session/${id}/session`)
+	const response = await axios.post(url, {
+		documentId: connection.documentId,
+		sessionId: connection.sessionId,
+		sessionToken: connection.sessionToken,
+		token: connection.shareToken,
+		guestName,
+	})
+	return response.data
+}
+
+/**
  * Close the connection
  * @param connection connection to close
  */

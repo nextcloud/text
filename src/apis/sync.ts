@@ -6,8 +6,8 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { unref, type ShallowRef } from 'vue'
-import type { Connection } from '../composables/useConnection.js'
-import type { Session, Step } from '../services/SyncService.js'
+import type { Connection } from '../composables/useConnection.ts'
+import type { Document, Session, Step } from '../services/SyncService.ts'
 
 interface PushData {
 	version: number

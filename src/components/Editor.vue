@@ -238,8 +238,7 @@ export default defineComponent({
 			isRichEditor,
 			props,
 		)
-		const { connection, openConnection, baseVersionEtag } =
-			provideConnection(props)
+		const { connection, openConnection } = provideConnection(props)
 		const { syncService } = provideSyncService(connection, openConnection)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
@@ -542,12 +541,11 @@ export default defineComponent({
 			}
 		},
 
-		onOpened({ document, session, documentSource, documentState }) {
+		onOpened({ document, session, content, documentState, readOnly }) {
 			this.currentSession = session
 			this.document = document
-			this.readOnly = document.readOnly
-			this.baseVersionEtag = document.baseVersionEtag
-			this.editMode = !document.readOnly && !this.openReadOnlyEnabled
+			this.readOnly = readOnly
+			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
@@ -577,7 +575,7 @@ export default defineComponent({
 			this.lowlightLoaded.then(() => {
 				this.syncService.startSync()
 				if (!documentState) {
-					setInitialYjsState(this.ydoc, documentSource, {
+					setInitialYjsState(this.ydoc, content, {
 						isRichEditor: this.isRichEditor,
 					})
 				}
