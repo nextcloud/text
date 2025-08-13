@@ -51,15 +51,8 @@
 				:force-enabled="true"
 				@click="activeMenuEntry = 'remain'">
 				<template #lastAction="{ visible }">
-					<NcActionButton
-						v-if="canTranslate"
-						close-after-click
-						@click="showTranslate">
-						<template #icon>
-							<TranslateVariant />
-						</template>
-						{{ t('text', 'Translate') }}
-					</NcActionButton>
+					<TranslateButton />
+					<WidthToggle />
 					<ActionFormattingHelp @click="showHelp" />
 					<NcActionSeparator />
 					<CharacterCount v-bind="{ visible }" />
@@ -73,9 +66,6 @@
 </template>
 
 <script>
-import { emit } from '@nextcloud/event-bus'
-import { loadState } from '@nextcloud/initial-state'
-import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import { useElementSize } from '@vueuse/core'
 import { ref } from 'vue'
@@ -85,7 +75,7 @@ import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useIsMobileMixin } from '../Editor.provider.ts'
 import HelpModal from '../HelpModal.vue'
-import { DotsHorizontal, TranslateVariant } from '../icons.js'
+import { DotsHorizontal } from '../icons.js'
 import ActionFormattingHelp from './ActionFormattingHelp.vue'
 import ActionList from './ActionList.vue'
 import ActionSingle from './ActionSingle.vue'
@@ -93,6 +83,8 @@ import CharacterCount from './CharacterCount.vue'
 import { MenuEntries, ReadOnlyDoneEntries } from './entries.js'
 import { MENU_ID } from './MenuBar.provider.js'
 import ToolBarLogic from './ToolBarLogic.js'
+import TranslateButton from './TranslateButton.vue'
+import WidthToggle from './WidthToggle.vue'
 
 export default {
 	name: 'MenuBar',
@@ -102,9 +94,9 @@ export default {
 		ActionSingle,
 		HelpModal,
 		NcActionSeparator,
-		NcActionButton,
 		CharacterCount,
-		TranslateVariant,
+		TranslateButton,
+		WidthToggle,
 	},
 	extends: ToolBarLogic,
 	mixins: [useIsMobileMixin],
@@ -146,8 +138,6 @@ export default {
 			randomID: `menu-bar-${Math.ceil(Math.random() * 10000 + 500).toString(16)}`,
 			displayHelp: false,
 			isReady: false,
-			canTranslate:
-				loadState('text', 'translation_languages', []).from?.length > 0,
 			resize: null,
 		}
 	},
@@ -229,22 +219,6 @@ export default {
 
 		hideHelp() {
 			this.displayHelp = false
-		},
-		showTranslate() {
-			const {
-				commands,
-				view: { state },
-			} = this.editor
-			const { from, to } = state.selection
-			let selectedText = state.doc.textBetween(from, to, ' ')
-
-			if (!selectedText.trim().length) {
-				commands.selectAll()
-				selectedText = state.doc.textContent
-			}
-
-			console.debug('translation click', state.selection, selectedText)
-			emit('text:translate-modal:show', { content: selectedText })
 		},
 		t,
 	},

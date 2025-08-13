@@ -50,8 +50,7 @@
 							:dirty="dirty"
 							:sessions="filteredSessions"
 							:sync-error="syncError"
-							:has-connection-issue="requireReconnect"
-							@editor-width-change="handleEditorWidthChange" />
+							:has-connection-issue="requireReconnect" />
 						<slot name="header" />
 					</MenuBar>
 					<div v-else class="menubar-placeholder" />
@@ -84,7 +83,6 @@
 import { getCurrentUser } from '@nextcloud/auth'
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
-import { loadState } from '@nextcloud/initial-state'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
 import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
@@ -101,6 +99,7 @@ import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
+import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
@@ -257,6 +256,9 @@ export default defineComponent({
 			: createPlainEditor({ language, extensions })
 		provideEditor(editor)
 
+		const { applyEditorWidth } = provideEditorWidth()
+		applyEditorWidth()
+
 		const { setEditable } = useEditorMethods(editor)
 
 		const serialize = isRichEditor
@@ -371,21 +373,12 @@ export default defineComponent({
 				},
 			}
 		},
-		editorMaxWidth() {
-			return loadState('text', 'is_full_width_editor', false) ? '100%' : '80ch'
-		},
 	},
 	watch: {
 		displayed() {
 			this.$nextTick(() => {
 				this.contentWrapper = this.$refs.contentWrapper
 			})
-		},
-		editorMaxWidth: {
-			immediate: true,
-			handler(newWidth) {
-				this.updateEditorWidth(newWidth)
-			},
 		},
 		dirty(val) {
 			if (val) {
@@ -875,20 +868,6 @@ export default defineComponent({
 			this.translateModal = false
 		},
 
-		handleEditorWidthChange(newWidth) {
-			this.updateEditorWidth(newWidth)
-			this.$nextTick(() => {
-				this.editor.view.updateState(this.editor.view.state)
-				this.editor.commands.focus()
-			})
-		},
-		updateEditorWidth(newWidth) {
-			document.documentElement.style.setProperty(
-				'--text-editor-max-width',
-				newWidth,
-			)
-		},
-
 		saveBeforeUnload() {
 			this.saveService.saveViaSendBeacon()
 		},
@@ -976,7 +955,6 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import './../css/variables';
 @import './../css/style';
 @import './../css/print';
 
