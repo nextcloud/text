@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import type { Emitter } from 'mitt'
+import type { OpenData } from '../apis/connect.js'
 import { sync } from '../apis/sync'
 import type { Connection } from '../composables/useConnection.js'
 import { logger } from '../helpers/logger.js'
 import getNotifyBus, { type EventTypes } from './NotifyService'
 import {
+	type Document,
+	ERROR_TYPE,
 	type Session,
 	type Step,
 	type SyncService,
-	ERROR_TYPE,
 } from './SyncService.js'
 
 /**
@@ -67,6 +69,7 @@ interface ConflictData extends PollData {
 class PollingBackend {
 	#syncService: SyncService
 	#connection: Connection
+	#readOnly: boolean
 
 	#lastPoll
 	#fetchInterval: number
@@ -83,12 +86,17 @@ class PollingBackend {
 		}
 	}
 
-	constructor(syncService: SyncService, connection: Connection) {
+	constructor(
+		syncService: SyncService,
+		connection: Connection,
+		{ readOnly }: OpenData,
+	) {
 		this.#syncService = syncService
 		this.#connection = connection
 		this.#fetchInterval = FETCH_INTERVAL
 		this.#fetchRetryCounter = 0
 		this.#lastPoll = 0
+		this.#readOnly = readOnly
 	}
 
 	connect() {
@@ -149,7 +157,7 @@ class PollingBackend {
 			}
 			const disconnect = Date.now() - COLLABORATOR_DISCONNECT_TIME
 			const alive = sessions.filter((s) => s.lastContact * 1000 > disconnect)
-			if (this.#syncService.isReadOnly) {
+			if (this.#readOnly) {
 				this.maximumReadOnlyTimer()
 			} else if (alive.length < 2) {
 				this.maximumRefetchTimer()
