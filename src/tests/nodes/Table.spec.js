@@ -44,24 +44,56 @@ describe('Table extension', () => {
 		expect(rendered).toBe(output)
 	})
 
-	it('markdown table is preserved through editor', () => {
+	it('simple md table is preserved through editor', () => {
 		expect(markdownThroughEditor('a|b\n-|-\n1|2\n')).toBe(
 			'| a | b |\n|---|---|\n| 1 | 2 |\n',
 		)
+	})
 
-		const complexTable = `
+	it('complex md table with alignment, nested list, image and code block is preserved through editor', () => {
+		const table = `
 | # |           header1 | header2       |
 |--:|------------------:|---------------|
 | 1 | list:             | code:         | \\
 |   |                   |               | \\
 |   | * item1           | \`\`\`js         | \\
-|   | * item2           | const x = '1' | \\
+|   |   * item2         | const x = '1' | \\
 |   |                   | \`\`\`           | \\
 |   | ![alt](/test.png) |               |
 | 2 |             cell3 | cell4         |
 | 3 |                   | cell5         |
 `.trimStart()
-		expect(markdownThroughEditor(complexTable)).toBe(complexTable)
+
+		expect(markdownThroughEditor(table)).toBe(table)
+	})
+
+	it('complex md table with callout, hr, blockquote and details in nested list is preserved through editor', () => {
+		const table = `
+| nested list1          | nested list 2                    |
+|-----------------------|----------------------------------|
+| 1. first with callout | 1. first with blockquote         | \\
+|                       |                                  | \\
+|    ::: info           |    > - quoted list item1         | \\
+|    info               |    > - quoted list item2         | \\
+|                       |    1. with image                 | \\
+|    :::                |                                  | \\
+|    1. item2           |       ![a](i.png)                | \\
+| 2. second             |    2. summary                    | \\
+|                       |                                  | \\
+| ---                   |       <details>                  | \\
+|                       |       <summary>summary</summary> | \\
+| ::: warn              |       > * quoted list item       | \\
+| warn                  |                                  | \\
+|                       |       </details>                 | \\
+| :::                   |                                  |
+| * [ ] task list item1 |                                  | \\
+| * [x] task list item2 |                                  |
+| abc                   |                                  | \\
+|                       |                                  | \\
+| > quote               |                                  |
+`.trimStart()
+
+		expect(markdownThroughEditor(table)).toBe(table)
 	})
 
 	test('Load into editor', ({ editor }) => {
