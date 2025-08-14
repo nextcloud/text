@@ -9,7 +9,10 @@ import { Fragment } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
 
 export default TableCell.extend({
-	content: '(paragraph|list|codeBlock|image)+',
+	// content: 'block+',
+	// All block elements except blockquote as that one causes issues for now.
+	// Blockquote as nested child (e.g. inside a list) is no problem.
+	content: '(paragraph|list|codeBlock|image|callout|details|horizontalRule)+',
 
 	toMarkdown() {},
 
