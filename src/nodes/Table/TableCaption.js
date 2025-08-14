@@ -23,7 +23,7 @@ export default Node.create({
 		return ['caption']
 	},
 
-	toMarkdown(state, node) {},
+	toMarkdown() {},
 
 	parseHTML() {
 		return [{ tag: 'table caption', priority: 90 }]
