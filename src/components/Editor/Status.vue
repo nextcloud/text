@@ -26,9 +26,6 @@
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
-			<GuestNameDialog
-				v-if="isPublic && currentSession && !currentSession.userId"
-				:session="currentSession" />
 		</SessionList>
 		<OfflineState v-else :offline-since="offlineSince" />
 	</div>
@@ -39,7 +36,6 @@ import { t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcSavingIndicatorIcon from '@nextcloud/vue/components/NcSavingIndicatorIcon'
-import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useSaveService } from '../../composables/useSaveService.ts'
 import refreshMoment from '../../mixins/refreshMoment.js'
@@ -51,8 +47,6 @@ export default {
 	name: 'Status',
 
 	components: {
-		GuestNameDialog: () =>
-			import(/* webpackChunkName: "editor-guest" */ './GuestNameDialog.vue'),
 		NcButton,
 		NcSavingIndicatorIcon,
 		OfflineState,
@@ -88,10 +82,9 @@ export default {
 	},
 
 	setup() {
-		const { isPublic } = useEditorFlags()
 		const { networkOnline, offlineSince } = useNetworkState()
 		const { saveService } = useSaveService()
-		return { isPublic, networkOnline, offlineSince, saveService }
+		return { networkOnline, offlineSince, saveService }
 	},
 
 	computed: {
@@ -137,9 +130,6 @@ export default {
 				return 'error'
 			}
 			return this.dirtyStateIndicator ? 'saving' : 'saved'
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		lastSavedString() {
 			// Make this a dependent of refreshMoment, so it will be recomputed
