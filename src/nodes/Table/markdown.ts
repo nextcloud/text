@@ -152,11 +152,10 @@ function tableToMarkdown(state: MarkdownSerializerState, node: Node) {
 			node.descendants((descendant) => {
 				nodeTypes.add(descendant.type.name)
 			})
-			const lines = md.split(/\r?\n/).map((line) => {
+			const lines = md
+				.split(/\r?\n/)
 				// Escape pipe character
-				line = line.replace(/\|/, '\\$&')
-				return line.trim()
-			})
+				.map((line) => line.replace(/\|/, '\\$&'))
 
 			row.length = Math.max(row.length, lines.length)
 			const lineLength = Math.max(...lines.map((line) => line.length))
