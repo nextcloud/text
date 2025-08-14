@@ -9,7 +9,7 @@ import { Fragment } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
 
 export default TableCell.extend({
-	content: '(paragraph|list|codeBlock|image)+',
+	content: 'block+',
 
 	toMarkdown() {},
 
