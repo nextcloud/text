@@ -34,6 +34,7 @@ OC.L10N.register(
     "Cannot copy, please copy the link manually" : "Haiwezi kunakili, tafadhali nakili kiungio kwa njia za kawaida",
     "Open link" : "Fungua kiungio",
     "Edit link" : "Hariri kiungo",
+    "Save changes" : "Save changes",
     "Cancel" : "Cancel",
     "URL" : "Url",
     "Formatting help" : "Uasidizi wa uambizaji",
