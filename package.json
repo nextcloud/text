@@ -55,6 +55,8 @@
     "@tiptap/extension-collaboration": "^2.26.1",
     "@tiptap/extension-collaboration-cursor": "^2.26.1",
     "@tiptap/extension-document": "^2.26.1",
+    "@tiptap/extension-drag-handle": "^2.22.3",
+    "@tiptap/extension-drag-handle-vue-2": "^2.22.3",
     "@tiptap/extension-dropcursor": "^2.26.1",
     "@tiptap/extension-gapcursor": "^2.26.1",
     "@tiptap/extension-hard-break": "^2.26.1",
