@@ -15,7 +15,6 @@ import { logger } from '../helpers/logger.js'
 import { documentStateToStep } from '../helpers/yjs.js'
 import Outbox from './Outbox.js'
 import PollingBackend from './PollingBackend.js'
-import { SessionConnection } from './SessionConnection.js'
 
 /**
  * Timeout after which the editor will consider a document without changes being synced as idle
@@ -80,14 +79,6 @@ export interface Document {
 }
 
 export declare type EventTypes = {
-	/* Document state */
-	opened: {
-		document: Document
-		session: Session
-		documentSource: string
-		documentState: string
-	}
-
 	/* All initial steps fetched */
 	fetched: unknown
 
@@ -115,7 +106,6 @@ export declare type EventTypes = {
 
 class SyncService {
 	connection: ShallowRef<Connection | undefined>
-	sessionConnection?: SessionConnection
 	version = -1
 	pushError = 0
 	backend?: PollingBackend
@@ -137,23 +127,10 @@ class SyncService {
 		this.#openConnection = openConnection
 	}
 
-	get isReadOnly() {
-		return this.sessionConnection?.state.document.readOnly
-	}
-
-	get hasOwner() {
-		return this.sessionConnection?.hasOwner
-	}
-
-	get guestName() {
-		return this.sessionConnection?.session.guestName
-	}
-
 	hasActiveConnection(): this is {
-		sessionConnection: SessionConnection
 		connection: ShallowRef<Connection>
 	} {
-		return !!this.sessionConnection && !this.sessionConnection.isClosed
+		return Boolean(this.connection.value)
 	}
 
 	async open() {
@@ -165,15 +142,13 @@ class SyncService {
 			// Error was already emitted above
 			return
 		}
-		this.sessionConnection = new SessionConnection(data, this.connection.value)
-		this.version = this.sessionConnection.docStateVersion
 		if (!this.connection.value) {
 			console.error('Opened the connection but now it is undefined')
 			return
 		}
-		this.backend = new PollingBackend(this, this.connection.value)
-		// Make sure to only emit this once the backend is in place.
-		this.emit('opened', this.sessionConnection.state)
+		this.version = data.document.lastSavedVersion
+		this.backend = new PollingBackend(this, this.connection.value, data)
+		this.startSync()
 	}
 
 	startSync() {
@@ -192,16 +167,6 @@ class SyncService {
 		}
 	}
 
-	updateSession(guestName: string) {
-		if (!this.sessionConnection?.isPublic) {
-			return Promise.reject(new Error())
-		}
-		return this.sessionConnection.update(guestName).catch((error) => {
-			logger.error('Failed to update the session', { error })
-			return Promise.reject(error)
-		})
-	}
-
 	sendStep(step: ArrayBuffer) {
 		this.#outbox.storeStep(step)
 		this.sendSteps()
@@ -213,7 +178,7 @@ class SyncService {
 			return
 		}
 		this.#sendIntervalId = setInterval(() => {
-			if (this.sessionConnection && !this.#sending) {
+			if (this.connection.value && !this.#sending) {
 				this.sendStepsNow().catch((err) => logger.error(err))
 			}
 		}, 200)
@@ -245,7 +210,6 @@ class SyncService {
 					this.emit('sync', {
 						version: this.version,
 						steps: [documentStateStep],
-						document: this.sessionConnection.document,
 					})
 				}
 				this.pushError = 0
@@ -355,15 +319,15 @@ class SyncService {
 
 	async close() {
 		this.backend?.disconnect()
-		if (this.connection.value) {
+		if (this.hasActiveConnection()) {
 			close(this.connection.value)
 				// Log and ignore possible network issues.
 				.catch((e) => {
 					logger.info('Failed to close connection.', { e })
 				})
 		}
-		// Mark sessionConnection closed so hasActiveConnection turns false and we can reconnect.
-		this.sessionConnection?.close()
+		// Clear connection so hasActiveConnection turns false and we can reconnect.
+		this.connection.value = undefined
 		this.emit('close')
 	}
 

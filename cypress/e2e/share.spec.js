@@ -31,7 +31,7 @@ describe('Open test.md in viewer', function () {
 	it('Shares the file as a public read only link', function () {
 		cy.shareFile('/test.md')
 			.then((token) => {
-				cy.logout()
+				cy.clearCookies()
 				cy.visit(`/s/${token}`)
 			})
 			.then(() => {
@@ -71,7 +71,7 @@ describe('Open test.md in viewer', function () {
 	it('Opens the editor as guest', function () {
 		cy.shareFile('/test2.md', { edit: true })
 			.then((token) => {
-				cy.logout()
+				cy.clearCookies()
 				cy.visit(`/s/${token}`)
 			})
 			.then(() => {
@@ -91,9 +91,8 @@ describe('Open test.md in viewer', function () {
 	it('Shares a folder as a public read only link', function () {
 		cy.shareFile('/folder')
 			.then((token) => {
-				cy.logout()
-
-				return cy.visit(`/s/${token}`)
+				cy.clearCookies()
+				cy.visit(`/s/${token}`)
 			})
 			.then(() => {
 				cy.openFile('test.md')
@@ -112,7 +111,7 @@ describe('Open test.md in viewer', function () {
 	it('Opens the editor as guest and set a session username', function () {
 		cy.shareFile('/test3.md', { edit: true })
 			.then((token) => {
-				cy.logout()
+				cy.clearCookies()
 				cy.visit(`/s/${token}`)
 			})
 			.then(() => {
@@ -159,7 +158,7 @@ describe('Open test.md in viewer', function () {
 			url: '**/apps/text/public/session/*/create',
 		}).as('create')
 		cy.shareFile('/test2.md', { edit: true }).then((token) => {
-			cy.logout()
+			cy.clearCookies()
 			cy.visit(`/s/${token}`)
 		})
 		cy.wait('@create', { timeout: 10000 })

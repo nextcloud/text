@@ -6,6 +6,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import type { Connection } from '../composables/useConnection.js'
+import type { Document, Session } from '../services/SyncService.js'
 
 export interface OpenParams {
 	fileId?: number
@@ -16,7 +17,13 @@ export interface OpenParams {
 }
 
 export interface OpenData {
-	document: { baseVersionEtag: string }
+	document: Document
+	session: Session
+	readOnly: boolean
+	content: string
+	documentState?: string
+	lock?: object
+	hasOwner: boolean
 }
 
 /**
@@ -41,6 +48,30 @@ export async function open(
 		shareToken: params.token,
 	}
 	return { connection, data: response.data }
+}
+
+/**
+ * Update the guest name
+ * @param guestName the name to use for the local user
+ * @param connection connection to close
+ */
+export async function update(
+	guestName: string,
+	connection: Connection,
+): Promise<Session> {
+	if (!connection.shareToken) {
+		throw new Error('Cannot set guest name without a share token!')
+	}
+	const id = connection.documentId
+	const url = generateUrl(`/apps/text/public/session/${id}/session`)
+	const response = await axios.post(url, {
+		documentId: connection.documentId,
+		sessionId: connection.sessionId,
+		sessionToken: connection.sessionToken,
+		token: connection.shareToken,
+		guestName,
+	})
+	return response.data
 }
 
 /**

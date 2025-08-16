@@ -16,30 +16,41 @@ const connection = {
 	baseVersionEtag: 'etag',
 }
 const initialData = {
-	session: { id: 345 },
-	document: { id: 123, baseVersionEtag: 'etag' },
+	session: {
+		id: 345,
+		userId: 'me',
+		token: 'shareToken',
+		color: '#abcabc',
+		lastContact: Date.now(),
+		documentId: 123,
+		displayName: 'My Name',
+		lastAwarenessMessage: 'hi',
+		clientId: 1,
+	},
+	document: {
+		id: 123,
+		baseVersionEtag: 'etag',
+		initialVersion: 0,
+		lastSavedVersion: 345,
+		lastSavedVersionTime: Date.now(),
+	},
 	readOnly: false,
 	content: '',
 	hasOwner: true,
 }
 
-const openData = { connection, data: initialData }
+const openResult = { connection, data: initialData }
 
 describe('Sync service', () => {
 	it('opens a connection', async () => {
-		const { connection, openConnection } = provideConnection({
+		const { connection, openConnection, openData } = provideConnection({
 			fileId: 123,
 			relativePath: './',
 		})
 		vi.mock('../../apis/connect')
-		vi.mocked(connect.open).mockResolvedValue(openData)
-		const openHandler = vi.fn()
+		vi.mocked(connect.open).mockResolvedValue(openResult)
 		const service = new SyncService({ connection, openConnection })
-		service.on('opened', openHandler)
 		await service.open()
-		expect(openHandler).toHaveBeenCalledWith(
-			expect.objectContaining({ session: initialData.session }),
-		)
-		expect(service.hasOwner).toBe(true)
+		expect(openData.value?.hasOwner).toBe(true)
 	})
 })

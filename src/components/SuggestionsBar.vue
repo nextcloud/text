@@ -62,8 +62,9 @@ import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import { getLinkWithPicker } from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { Document, Shape, Table as TableIcon, Upload } from '../components/icons.js'
+import { useConnection } from '../composables/useConnection.ts'
 import { useEditor } from '../composables/useEditor.ts'
-import { useSyncService } from '../composables/useSyncService.ts'
+import { useNetworkState } from '../composables/useNetworkState.ts'
 import { buildFilePicker } from '../helpers/filePicker.js'
 import { isMobileDevice } from '../helpers/isMobileDevice.js'
 import { useFileMixin } from './Editor.provider.ts'
@@ -83,12 +84,13 @@ export default {
 
 	setup() {
 		const { editor } = useEditor()
-		const { syncService } = useSyncService()
+		const { openData } = useConnection()
+		const { networkOnline } = useNetworkState()
 		return {
 			editor,
 			isMobileDevice,
-			syncService,
-			t,
+			networkOnline,
+			openData,
 		}
 	},
 
@@ -104,16 +106,19 @@ export default {
 			return this.$file?.relativePath ?? '/'
 		},
 		isUploadDisabled() {
-			return !this.syncService.hasOwner
+			return !this.openData?.hasOwner || !this.networkOnline
 		},
 		uploadTitle() {
-			return (
-				this.isUploadDisabled
-				&& t(
+			if (!this.networkOnline) {
+				return t('text', 'Disabled because you are currently offline.')
+			}
+			if (this.isUploadDisabled) {
+				return t(
 					'text',
 					'Uploading attachments is disabled because the file is shared from another cloud.',
 				)
-			)
+			}
+			return ''
 		},
 	},
 
@@ -204,6 +209,7 @@ export default {
 			const EMPTY_DOCUMENT_SIZE = 4
 			this.isEmptyContent = editor.state.doc.nodeSize <= EMPTY_DOCUMENT_SIZE
 		},
+		t,
 	},
 }
 </script>
