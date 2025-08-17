@@ -65,7 +65,7 @@
 		</Wrapper>
 		<DocumentStatus
 			:idle="idle"
-			:lock="lock"
+			:lock="document?.lock"
 			:sync-error="syncError"
 			:has-connection-issue="requireReconnect"
 			@reconnect="reconnect" />
@@ -278,7 +278,6 @@ export default defineComponent({
 
 		return {
 			awareness,
-			baseVersionEtag,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -311,7 +310,6 @@ export default defineComponent({
 			filteredSessions: {},
 
 			idle: false,
-			lock: null,
 			dirty: false,
 			contentLoaded: false,
 			syncError: null,
@@ -549,7 +547,6 @@ export default defineComponent({
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
-			this.lock = this.syncService.lock
 			localStorage.setItem('nick', this.currentSession.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
 				session: this.currentSession,
