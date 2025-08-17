@@ -15,7 +15,7 @@ div.ProseMirror {
 	white-space: pre-wrap;
 	-webkit-font-variant-ligatures: none;
 	font-variant-ligatures: none;
-	padding: 4px 8px 50px 14px;
+	padding: 4px calc(15 * var(--default-grid-baseline)) 50px calc(15 * var(--default-grid-baseline));
 	line-height: 150%;
 	font-size: var(--default-font-size);
 	outline: none;

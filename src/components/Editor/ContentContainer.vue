@@ -14,6 +14,13 @@
 			<EditorOutline />
 		</div>
 		<slot />
+		<DragHandle :editor="editor" class="drag-handle--button">
+			<NcButton type="tertiary-no-background" size="normal">
+				<template #icon>
+					<DragVerticalIcon :size="20" />
+				</template>
+			</NcButton>
+		</DragHandle>
 		<EditorContent
 			role="document"
 			class="editor__content text-editor__content"
@@ -23,7 +30,10 @@
 </template>
 
 <script>
+import NcButton from '@nextcloud/vue/components/NcButton'
+import { DragHandle } from '@tiptap/extension-drag-handle-vue-2'
 import { EditorContent } from '@tiptap/vue-2'
+import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
 import { useEditor } from '../../composables/useEditor.ts'
 import EditorOutline from './EditorOutline.vue'
 import { useOutlineStateMixin } from './Wrapper.provider.js'
@@ -33,6 +43,9 @@ export default {
 	components: {
 		EditorContent,
 		EditorOutline,
+		NcButton,
+		DragHandle,
+		DragVerticalIcon,
 	},
 	mixins: [useOutlineStateMixin],
 	setup() {
@@ -90,5 +103,12 @@ export default {
 			display: none;
 		}
 	}
+}
+
+.drag-handle--button {
+	color: var(--color-maxcontrast);
+	position: absolute;
+	left: -60px;
+	transform: translate(0, -20%);
 }
 </style>

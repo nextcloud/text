@@ -71,7 +71,11 @@ export const provideEditorWidth = () => {
 		valueSingleton = value
 		isFullWidth.value = value
 	})
-	const width = computed(() => (isFullWidth.value ? '100%' : '80ch'))
+	const width = computed(() =>
+		isFullWidth.value
+			? '100%'
+			: 'calc(80ch + 2 * 15 * var(--default-grid-baseline))',
+	)
 	const applyEditorWidth = () => {
 		document.documentElement.style.setProperty(
 			'--text-editor-max-width',

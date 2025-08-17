@@ -9,9 +9,9 @@
 		data-text-el="editor-media-handler"
 		:class="{ draggedOver, 'is-mobile': isMobile }"
 		@image-paste="onPaste"
-		@dragover.prevent.stop="setDraggedOver(true)"
-		@dragleave.prevent.stop="setDraggedOver(false)"
-		@drop.prevent.stop="setDraggedOver(false)"
+		@dragover.prevent.stop="setDraggedOver(true, $event)"
+		@dragleave.prevent.stop="setDraggedOver(false, $event)"
+		@drop.prevent.stop="setDraggedOver(false, $event)"
 		@file-drop="onEditorDrop">
 		<input
 			v-show="false"
@@ -100,8 +100,10 @@ export default {
 		},
 	},
 	methods: {
-		setDraggedOver(val) {
-			this.draggedOver = val
+		setDraggedOver(val, event) {
+			if (event.dataTransfer.types.includes('Files')) {
+				this.draggedOver = val
+			}
 		},
 		onPaste(e) {
 			this.uploadAttachmentFiles(e.detail.files)
