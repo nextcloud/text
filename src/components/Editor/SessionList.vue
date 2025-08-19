@@ -5,7 +5,7 @@
 
 <template>
 	<NcPopover
-		:no-focus-trap="!$slots.default"
+		:no-focus-trap="!showGuestNameDialog"
 		class="session-list"
 		placement="bottom">
 		<template #trigger="{ attrs }">
@@ -31,7 +31,9 @@
 			<div class="session-menu">
 				<slot name="lastSaved" />
 				<ul>
-					<slot />
+					<GuestNameDialog
+						v-if="showGuestNameDialog"
+						:session="currentSession" />
 					<li
 						v-for="session in participantsPopover"
 						:key="session.id"
@@ -61,17 +63,20 @@ import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
+import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
 	COLLABORATOR_IDLE_TIME,
 } from '../../services/SyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
+import GuestNameDialog from './GuestNameDialog.vue'
 
 export default {
 	name: 'SessionList',
 	components: {
 		AccountMultipleOutlineIcon,
 		AvatarWrapper,
+		GuestNameDialog,
 		NcButton,
 		NcPopover,
 	},
@@ -82,6 +87,10 @@ export default {
 				return {}
 			},
 		},
+	},
+	setup() {
+		const { isPublic } = useEditorFlags()
+		return { isPublic }
 	},
 	data() {
 		return {
@@ -110,6 +119,11 @@ export default {
 						&& (session.userId !== null || session.guestName !== null),
 				)
 				.sort((a, b) => a.lastContact < b.lastContact)
+		},
+		showGuestNameDialog() {
+			return (
+				this.isPublic && this.currentSession && !this.currentSession.userId
+			)
 		},
 		currentSession() {
 			return Object.values(this.sessions).find((session) => session.isCurrent)

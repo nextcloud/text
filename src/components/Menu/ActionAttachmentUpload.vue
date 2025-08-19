@@ -67,8 +67,9 @@ import NcActionButton from '@nextcloud/vue/components/NcActionButton'
 import NcActions from '@nextcloud/vue/components/NcActions'
 import NcActionSeparator from '@nextcloud/vue/components/NcActionSeparator'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
+import { useConnection } from '../../composables/useConnection.ts'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
-import { useSyncService } from '../../composables/useSyncService.ts'
+import { useNetworkState } from '../../composables/useNetworkState.ts'
 import { useEditorUpload } from '../Editor.provider.ts'
 import {
 	useActionAttachmentPromptMixin,
@@ -103,8 +104,9 @@ export default {
 	],
 	setup() {
 		const { isPublic } = useEditorFlags()
-		const { syncService } = useSyncService()
-		return { ...BaseActionEntry.setup(), isPublic, syncService }
+		const { openData } = useConnection()
+		const { networkOnline } = useNetworkState()
+		return { ...BaseActionEntry.setup(), isPublic, networkOnline, openData }
 	},
 	computed: {
 		icon() {
@@ -117,15 +119,19 @@ export default {
 			return loadState('files', 'templates', [])
 		},
 		isUploadDisabled() {
-			return !this.syncService.hasOwner
+			return !this.openData?.hasOwner || !this.networkOnline
 		},
 		menuTitle() {
-			return this.isUploadDisabled
-				? t(
-						'text',
-						'Attachments cannot be created or uploaded because this file is shared from another cloud.',
-					)
-				: this.actionEntry.label
+			if (!this.networkOnline) {
+				return t('text', 'Disabled because you are currently offline.')
+			}
+			if (!this.openData?.hasOwner) {
+				return t(
+					'text',
+					'Attachments cannot be created or uploaded because this file is shared from another cloud.',
+				)
+			}
+			return this.actionEntry.label
 		},
 	},
 	methods: {
