@@ -98,7 +98,10 @@ export default Extension.create({
 			Underline,
 			Image,
 			ImageInline,
-			Dropcursor,
+			Dropcursor.configure({
+				color: 'var(--color-primary-element)',
+				width: 2,
+			}),
 			Gapcursor,
 			KeepSyntax,
 			Keymap,
