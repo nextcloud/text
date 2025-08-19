@@ -22,7 +22,7 @@
 							v-for="session in sessionsForTriggerButton"
 							:key="session.id"
 							:session="session"
-							:size="28" />
+							:size="30" />
 					</template>
 				</NcButton>
 			</div>
@@ -38,8 +38,8 @@
 						v-for="session in sessionList"
 						:key="session.id"
 						:style="avatarStyle(session)">
-						<AvatarWrapper :session="session" :size="36" />
-						<span class="session-label">
+						<AvatarWrapper :session="session" :size="30" />
+						<span class="session-label" :class="!session.userId && 'guest'">
 							{{
 								session.userId
 									? session.displayName
@@ -179,8 +179,6 @@ export default {
 		padding: 6px;
 
 		.avatar-wrapper {
-			height: 36px;
-			width: 36px;
 			margin-right: 6px;
 		}
 
