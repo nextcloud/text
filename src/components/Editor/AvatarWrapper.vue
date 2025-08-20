@@ -65,7 +65,7 @@ export default {
 	width: var(--size);
 	height: var(--size);
 	text-align: center;
-	color: #ffffff;
+	color: var(--color-text-maxcontrast);
 	line-height: var(--size);
 	font-size: var(--font-size);
 	font-weight: normal;
