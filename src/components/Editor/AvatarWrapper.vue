@@ -51,7 +51,7 @@ export default {
 			return {
 				'background-color': this.session.userId
 					? this.session.color + ' !important'
-					: '#b9b9b9',
+					: 'var(--color-background-dark)',
 			}
 		},
 		guestInitial() {
@@ -70,7 +70,7 @@ export default {
 	width: var(--size);
 	height: var(--size);
 	text-align: center;
-	color: #ffffff;
+	color: var(--color-text-maxcontrast);
 	line-height: var(--size);
 	font-size: var(--font-size);
 	font-weight: normal;

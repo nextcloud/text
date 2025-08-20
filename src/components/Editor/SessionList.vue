@@ -188,9 +188,12 @@ export default {
 			padding-right: 3px;
 		}
 
+		.guest-label, .guest {
+			color: var(--color-text-maxcontrast);
+		}
+
 		.guest-label {
 			padding-left: 3px;
-			color: var(--color-text-maxcontrast);
 		}
 	}
 }
