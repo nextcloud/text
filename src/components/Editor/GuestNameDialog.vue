@@ -8,7 +8,7 @@
 		:title="t('text', 'Enter your name so other people can see who is editing')"
 		class="guest-name-dialog"
 		@submit.prevent="setGuestName()">
-		<label><AvatarWrapper :session="session" :size="30" /></label>
+		<label><AvatarWrapper :session="session" /></label>
 		<input
 			v-model="guestName"
 			type="text"
