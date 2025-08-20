@@ -13,7 +13,7 @@
 			v-model="guestName"
 			class="input-field--trailing-icon"
 			:disabled="loading"
-			:label="t('text', 'Edit guest name')"
+			:label="t('text', 'Enter your name')"
 			:placeholder="t('text', 'Guest')"
 			:success="success" />
 	</form>
