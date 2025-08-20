@@ -69,10 +69,11 @@ export default {
 			const previousGuestName = this.session.guestName
 			this.loading = true
 			update(this.guestName, this.connection)
-				.then(() => {
+				.then((session) => {
 					this.loading = false
 					this.success = true
 					localStorage.setItem('nick', this.guestName)
+					this.$emit('update:session', session)
 					this.updateBufferedGuestName()
 				})
 				.catch((error) => {
