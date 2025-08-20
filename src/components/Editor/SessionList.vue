@@ -147,7 +147,8 @@ export default {
 	height: var(--default-clickable-area);
 }
 
-.avatar-list {
+/* Needs to be more specific than 0,2,0 (NcButton) */
+.button-vue--icon-only.avatar-list {
 	width: min-content !important;
 	padding-inline: var(--default-grid-baseline);
 
