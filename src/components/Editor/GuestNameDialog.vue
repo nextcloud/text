@@ -26,6 +26,7 @@ export default {
 	name: 'GuestNameDialog',
 	components: {
 		AvatarWrapper,
+		NcInputField,
 	},
 	mixins: [
 		useSyncServiceMixin,
@@ -40,6 +41,8 @@ export default {
 		return {
 			guestName: '',
 			guestNameBuffered: '',
+			loading: false,
+			success: false,
 		}
 	},
 	computed: {
