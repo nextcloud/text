@@ -3,8 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue, { onMounted, onUnmounted, reactive, ref } from 'vue'
+import Vue, {
+	onMounted,
+	onUnmounted,
+	reactive,
+	ref,
+	watch,
+	type ShallowRef,
+} from 'vue'
+import type { OpenData } from '../apis/connect.js'
 import { SyncService, type Session } from '../services/SyncService.js'
+import { useConnection } from './useConnection.js'
 
 /**
  * Get the sessions from the sync service.
@@ -12,12 +21,17 @@ import { SyncService, type Session } from '../services/SyncService.js'
  * @param syncService to watch for changes to the sessions.
  */
 export function useSessions(syncService: SyncService) {
-	const currentSession = ref<Session | undefined>()
+	const { openData } = useConnection() as {
+		openData: ShallowRef<OpenData | undefined>
+	}
+	const currentSession = ref(openData.value?.session)
 	const sessions = ref<Session[]>([])
 	const filteredSessions = reactive<Record<string, Session>>({})
-	const onOpened = ({ session }: { session: Session }) => {
-		currentSession.value = session
-	}
+	watch(openData, (val) => {
+		if (val?.session) {
+			currentSession.value = val.session
+		}
+	})
 	const updateSessions = ({ sessions: updated }: { sessions: Session[] }) => {
 		sessions.value = updated.sort((a, b) => b.lastContact - a.lastContact)
 
@@ -58,11 +72,9 @@ export function useSessions(syncService: SyncService) {
 	}
 	onMounted(() => {
 		syncService.bus.on('change', updateSessions)
-		syncService.bus.on('opened', onOpened)
 	})
 	onUnmounted(() => {
 		syncService.bus.off('change', updateSessions)
-		syncService.bus.off('opened', onOpened)
 	})
 	return { currentSession, filteredSessions, sessions }
 }

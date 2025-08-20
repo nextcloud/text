@@ -67,6 +67,8 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcPopover from '@nextcloud/vue/components/NcPopover'
 import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipleOutline.vue'
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
+import { useSessions } from '../../composables/useSessions.ts'
+import { useSyncService } from '../../composables/useSyncService.ts'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
 	COLLABORATOR_IDLE_TIME,
@@ -83,17 +85,11 @@ export default {
 		NcButton,
 		NcPopover,
 	},
-	props: {
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
-		},
-	},
 	setup() {
 		const { isPublic } = useEditorFlags()
-		return { isPublic }
+		const { syncService } = useSyncService()
+		const { currentSession, filteredSessions } = useSessions(syncService)
+		return { currentSession, filteredSessions, isPublic }
 	},
 	data() {
 		return {
@@ -111,7 +107,7 @@ export default {
 			return this.allSessions.filter((session) => !session.isCurrent)
 		},
 		allSessions() {
-			return Object.values(this.sessions)
+			return Object.values(this.filteredSessions)
 				.filter(
 					(session) =>
 						session.lastContact
@@ -124,9 +120,6 @@ export default {
 			return (
 				this.isPublic && this.currentSession && !this.currentSession.userId
 			)
-		},
-		currentSession() {
-			return Object.values(this.sessions).find((session) => session.isCurrent)
 		},
 		avatarStyle() {
 			return (session) => {
