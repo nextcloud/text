@@ -9,22 +9,20 @@
 		class="guest-name-dialog"
 		@submit.prevent="setGuestName()">
 		<label><AvatarWrapper :session="session" /></label>
-		<input
+		<NcInputField
 			v-model="guestName"
-			type="text"
-			:aria-label="t('text', 'Edit guest name')"
-			:placeholder="t('text', 'Guest')" />
-		<input
-			type="submit"
-			class="icon-confirm"
-			:aria-label="t('text', 'Save guest name')"
-			value="" />
+			class="input-field--trailing-icon"
+			:disabled="loading"
+			:label="t('text', 'Edit guest name')"
+			:placeholder="t('text', 'Guest')"
+			:success="success" />
 	</form>
 </template>
 
 <script>
 import { showError, showWarning } from '@nextcloud/dialogs'
-import { t } from '@nextcloud/l10n'	
+import { t } from '@nextcloud/l10n'
+import NcInputField from '@nextcloud/vue/components/NcInputField'
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
@@ -33,6 +31,7 @@ export default {
 	name: 'GuestNameDialog',
 	components: {
 		AvatarWrapper,
+		NcInputField,
 	},
 	props: {
 		session: {
@@ -48,13 +47,19 @@ export default {
 		return {
 			guestName: '',
 			guestNameBuffered: '',
+			loading: false,
+			success: false,
 		}
+	},
+	watch: {
+		guestName() {
+			this.success = false
+		},
 	},
 	beforeMount() {
 		this.guestName = this.session.guestName
 		this.updateBufferedGuestName()
 	},
-
 	methods: {
 		setGuestName() {
 			if (!this.connection) {
@@ -62,12 +67,16 @@ export default {
 				return
 			}
 			const previousGuestName = this.session.guestName
+			this.loading = true
 			update(this.guestName, this.connection)
 				.then(() => {
+					this.loading = false
+					this.success = true
 					localStorage.setItem('nick', this.guestName)
 					this.updateBufferedGuestName()
 				})
 				.catch((error) => {
+					this.loading = false
 					console.warn('Failed to update the session', { error })
 					showWarning(t('text', 'Failed to update the guest name.'))
 					this.guestName = previousGuestName
