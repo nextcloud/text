@@ -20,9 +20,7 @@
 				</template>
 			</NcButton>
 		</div>
-		<SessionList
-			v-if="networkOnline && !hasConnectionIssue"
-			:sessions="sessions">
+		<SessionList v-if="networkOnline && !hasConnectionIssue">
 			<p slot="lastSaved" class="last-saved">
 				{{ t('text', 'Last saved') }}: {{ lastSavedString }}
 			</p>
@@ -72,12 +70,6 @@ export default {
 		syncError: {
 			type: Object,
 			default: null,
-		},
-		sessions: {
-			type: Object,
-			default: () => {
-				return {}
-			},
 		},
 	},
 
