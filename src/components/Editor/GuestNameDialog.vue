@@ -24,8 +24,7 @@
 
 <script>
 import { showError, showWarning } from '@nextcloud/dialogs'
-import { t } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
+import { t } from '@nextcloud/l10n'	
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
@@ -50,16 +49,6 @@ export default {
 			guestName: '',
 			guestNameBuffered: '',
 		}
-	},
-	computed: {
-		avatarUrl() {
-			const size = 32
-			const avatarUrl = generateUrl('/avatar/guest/{user}/{size}', {
-				user: this.guestNameBuffered,
-				size,
-			})
-			return window.location.protocol + '//' + window.location.host + avatarUrl
-		},
 	},
 	beforeMount() {
 		this.guestName = this.session.guestName

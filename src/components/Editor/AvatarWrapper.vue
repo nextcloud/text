@@ -7,8 +7,8 @@
 	<div class="avatar-wrapper" :style="sessionAvatarStyle">
 		<NcAvatar
 			v-if="session.userId"
-			:user="session.userId ? session.userId : session.guestName"
-			:is-guest="session.userId === null"
+			:user="session.userId"
+			:is-guest="false"
 			:disable-menu="true"
 			hide-status
 			:disable-tooltip="true"
