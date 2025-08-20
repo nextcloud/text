@@ -16,8 +16,7 @@
 						<AccountMultipleIcon :size="20" />
 						<AvatarWrapper v-for="session in sessionsVisible"
 							:key="session.id"
-							:session="session"
-							:size="30" />
+							:session="session" />
 					</template>
 				</NcButton>
 			</div>
@@ -30,7 +29,7 @@
 					<li v-for="session in participantsPopover"
 						:key="session.id"
 						:style="avatarStyle(session)">
-						<AvatarWrapper :session="session" :size="30" />
+						<AvatarWrapper :session="session" />
 						<span class="session-label" :class="!session.userId && 'guest'">
 							{{
 								session.userId ? session.displayName : (session.guestName ? session.guestName : t('text', 'Guest'))
@@ -145,7 +144,6 @@ export default {
 		.avatar-wrapper {
 			margin: 3px -12px 3px 0;
 			z-index: 1;
-			overflow: hidden;
 		}
 	}
 }

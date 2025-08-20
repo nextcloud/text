@@ -32,7 +32,12 @@ export default {
 		},
 		size: {
 			type: Number,
-			default: () => 32,
+			default: () =>
+				Number.parseInt(
+					window
+						.getComputedStyle(document.body)
+						.getPropertyValue('--default-clickable-area'),
+				),
 		},
 	},
 	computed: {
@@ -72,5 +77,15 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+/* Prepare for vue 3 / nextcloud-vue 9.
+ *
+ * This css rule is already bleeding in from other apps (notifications).
+ * Let's adopt to it already.
+ */
+.v-popper--theme-dropdown,
+.v-popper--theme-dropdown * {
+	box-sizing: border-box;
 }
 </style>
