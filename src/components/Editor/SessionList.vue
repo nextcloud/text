@@ -33,7 +33,7 @@
 					<li>
 						<GuestNameDialog
 							v-if="showGuestNameDialog"
-							:session="currentSession" />
+							:session.sync="currentSession" />
 					</li>
 					<li
 						v-for="session in sessionList"
