@@ -40,7 +40,9 @@ export function useSessions(syncService: SyncService) {
 		const currentUpdatedSession = sessions.value.find(
 			(session) => session.id === currentSession.value?.id,
 		)
-		currentSession.value = currentUpdatedSession
+		if (currentUpdatedSession) {
+			currentSession.value = currentUpdatedSession
+		}
 
 		const currentSessionIds = sessions.value.map((session) => session.id)
 
