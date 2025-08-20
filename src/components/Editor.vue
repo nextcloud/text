@@ -85,7 +85,7 @@ import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { File } from '@nextcloud/files'
 import { Collaboration } from '@tiptap/extension-collaboration'
 import { useElementSize } from '@vueuse/core'
-import Vue, { defineComponent, ref, set, shallowRef, watch } from 'vue'
+import { defineComponent, ref, shallowRef, watch } from 'vue'
 import { Doc } from 'yjs'
 import Autofocus from '../extensions/Autofocus.js'
 
@@ -102,6 +102,7 @@ import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
+import { useSessions } from '../composables/useSessions.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCursor } from '../extensions/index.js'
@@ -240,6 +241,7 @@ export default defineComponent({
 		)
 		const { connection, openConnection } = provideConnection(props)
 		const { syncService } = provideSyncService(connection, openConnection)
+		const { filteredSessions, currentSession } = useSessions(syncService)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -278,8 +280,10 @@ export default defineComponent({
 
 		return {
 			awareness,
+			currentSession,
 			editor,
 			el,
+			filteredSessions,
 			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
@@ -303,11 +307,7 @@ export default defineComponent({
 			IDLE_TIMEOUT,
 
 			document: null,
-			sessions: [],
-			currentSession: null,
 			fileNode: null,
-
-			filteredSessions: {},
 
 			idle: false,
 			dirty: false,
@@ -493,72 +493,25 @@ export default defineComponent({
 			this.idle = false
 		},
 
-		updateSessions(sessions) {
-			this.sessions = sessions.sort((a, b) => b.lastContact - a.lastContact)
-
-			// Make sure we get our own session updated
-			// This should ideally be part of a global store where we can have that updated on the actual name change for guests
-			const currentUpdatedSession = this.sessions.find(
-				(session) => session.id === this.currentSession.id,
-			)
-			set(this, 'currentSession', currentUpdatedSession)
-
-			const currentSessionIds = this.sessions.map((session) => session.userId)
-			const currentGuestIds = this.sessions.map((session) => session.guestId)
-
-			const removedSessions = Object.keys(this.filteredSessions).filter(
-				(sessionId) =>
-					!currentSessionIds.includes(sessionId)
-					&& !currentGuestIds.includes(sessionId),
-			)
-
-			for (const index in removedSessions) {
-				Vue.delete(this.filteredSessions, removedSessions[index])
-			}
-			for (const index in this.sessions) {
-				const session = this.sessions[index]
-				const sessionKey = session.displayName ? session.userId : session.id
-				if (this.filteredSessions[sessionKey]) {
-					// update timestamp if relevant
-					if (
-						this.filteredSessions[sessionKey].lastContact
-						< session.lastContact
-					) {
-						set(
-							this.filteredSessions[sessionKey],
-							'lastContact',
-							session.lastContact,
-						)
-					}
-				} else {
-					set(this.filteredSessions, sessionKey, session)
-				}
-				if (session.id === this.currentSession.id) {
-					set(this.filteredSessions[sessionKey], 'isCurrent', true)
-				}
-			}
-		},
-
 		onOpened({ document, session, content, documentState, readOnly }) {
-			this.currentSession = session
 			this.document = document
 			this.readOnly = readOnly
 			this.editMode = !readOnly && !this.openReadOnlyEnabled
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
-			localStorage.setItem('nick', this.currentSession.guestName)
+			localStorage.setItem('nick', session.guestName)
 			this.$attachmentResolver = new AttachmentResolver({
-				session: this.currentSession,
+				session,
 				user: getCurrentUser(),
 				shareToken: this.shareToken,
 				currentDirectory: this.currentDirectory,
 			})
-			if (this.currentSession?.userId && this.relativePath?.length) {
+			if (session.userId && this.relativePath?.length) {
 				const node = new File({
 					id: this.fileId,
 					source: generateRemoteUrl(
-						`dav/files/${this.currentSession.userId}${this.relativePath}`,
+						`dav/files/${session.userId}${this.relativePath}`,
 					),
 					mime: this.mime,
 				})
@@ -587,8 +540,7 @@ export default defineComponent({
 			this.editor.commands.updateUser(user)
 		},
 
-		onChange({ document, sessions }) {
-			this.updateSessions.bind(this)(sessions)
+		onChange({ document }) {
 			this.document = document
 
 			this.syncError = null

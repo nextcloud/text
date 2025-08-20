@@ -40,7 +40,9 @@
 						:key="session.id"
 						:style="avatarStyle(session)">
 						<AvatarWrapper :session="session" />
-						<span class="session-label" :class="!session.userId && 'guest'">
+						<span
+							class="session-label"
+							:class="!session.userId && 'guest'">
 							{{
 								session.userId
 									? session.displayName
@@ -186,7 +188,8 @@ export default {
 			padding-right: 3px;
 		}
 
-		.guest-label, .guest {
+		.guest-label,
+		.guest {
 			color: var(--color-text-maxcontrast);
 		}
 
