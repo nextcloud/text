@@ -25,6 +25,8 @@ import { t } from '@nextcloud/l10n'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
+import { useEditor } from '../../composables/useEditor.ts'
+import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
 
 export default {
@@ -41,12 +43,13 @@ export default {
 	},
 	setup() {
 		const { connection } = useConnection()
-		return { connection }
+		const { editor } = useEditor()
+		const { updateUser } = useEditorMethods(editor)
+		return { connection, updateUser }
 	},
 	data() {
 		return {
 			guestName: '',
-			guestNameBuffered: '',
 			loading: false,
 			success: false,
 		}
@@ -58,7 +61,6 @@ export default {
 	},
 	beforeMount() {
 		this.guestName = this.session.guestName
-		this.updateBufferedGuestName()
 	},
 	methods: {
 		setGuestName() {
@@ -74,7 +76,7 @@ export default {
 					this.success = true
 					localStorage.setItem('nick', this.guestName)
 					this.$emit('update:session', session)
-					this.updateBufferedGuestName()
+					this.updateUser(session)
 				})
 				.catch((error) => {
 					this.loading = false
@@ -82,9 +84,6 @@ export default {
 					showWarning(t('text', 'Failed to update the guest name.'))
 					this.guestName = previousGuestName
 				})
-		},
-		updateBufferedGuestName() {
-			this.guestNameBuffered = this.guestName
 		},
 		t,
 	},

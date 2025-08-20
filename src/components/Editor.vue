@@ -92,7 +92,6 @@ import { provideEditorFlags } from '../composables/useEditorFlags.ts'
 import { ATTACHMENT_RESOLVER, FILE, IS_MOBILE } from './Editor.provider.ts'
 import ReadonlyBar from './Menu/ReadonlyBar.vue'
 
-import { t } from '@nextcloud/l10n'
 import { generateRemoteUrl } from '@nextcloud/router'
 import { Awareness } from 'y-protocols/awareness.js'
 import { provideConnection } from '../composables/useConnection.ts'
@@ -256,7 +255,7 @@ export default defineComponent({
 		const { applyEditorWidth } = provideEditorWidth()
 		applyEditorWidth()
 
-		const { setEditable } = useEditorMethods(editor)
+		const { setEditable, updateUser } = useEditorMethods(editor)
 
 		const serialize = isRichEditor
 			? () =>
@@ -276,6 +275,7 @@ export default defineComponent({
 
 		return {
 			awareness,
+			connection,
 			editor,
 			el,
 			hasConnectionIssue,
@@ -290,8 +290,8 @@ export default defineComponent({
 			setEditable,
 			syncProvider,
 			syncService,
+			updateUser,
 			width,
-			connection,
 			ydoc,
 		}
 	},
@@ -524,14 +524,7 @@ export default defineComponent({
 					})
 				}
 			})
-			const user = {
-				name: session?.userId
-					? session.displayName
-					: session?.guestName || t('text', 'Guest'),
-				color: session?.color,
-				clientId: this.ydoc.clientID,
-			}
-			this.editor.commands.updateUser(user)
+			this.updateUser(session)
 		},
 
 		onChange({ document }) {
