@@ -31,7 +31,6 @@
 							<Status
 								:document="document"
 								:dirty="dirty"
-								:sessions="filteredSessions"
 								:sync-error="syncError"
 								:has-connection-issue="requireReconnect" />
 						</ReadonlyBar>
@@ -48,7 +47,6 @@
 						<Status
 							:document="document"
 							:dirty="dirty"
-							:sessions="filteredSessions"
 							:sync-error="syncError"
 							:has-connection-issue="requireReconnect" />
 						<slot name="header" />
@@ -102,7 +100,6 @@ import { useDelayedFlag } from '../composables/useDelayedFlag.ts'
 import { useEditorMethods } from '../composables/useEditorMethods.ts'
 import { provideEditorWidth } from '../composables/useEditorWidth.ts'
 import { provideSaveService } from '../composables/useSaveService.ts'
-import { useSessions } from '../composables/useSessions.ts'
 import { provideSyncService } from '../composables/useSyncService.ts'
 import { useSyntaxHighlighting } from '../composables/useSyntaxHighlighting.ts'
 import { CollaborationCursor } from '../extensions/index.js'
@@ -241,7 +238,6 @@ export default defineComponent({
 		)
 		const { connection, openConnection } = provideConnection(props)
 		const { syncService } = provideSyncService(connection, openConnection)
-		const { filteredSessions, currentSession } = useSessions(syncService)
 		const extensions = [
 			Autofocus.configure({ fileId: props.fileId }),
 			Collaboration.configure({ document: ydoc }),
@@ -280,10 +276,8 @@ export default defineComponent({
 
 		return {
 			awareness,
-			currentSession,
 			editor,
 			el,
-			filteredSessions,
 			hasConnectionIssue,
 			isPublic,
 			isRichEditor,
@@ -342,7 +336,7 @@ export default defineComponent({
 				: '/'
 		},
 		displayed() {
-			return (this.currentSession && this.active) || this.syncError
+			return (this.connection && this.active) || this.syncError
 		},
 		showLoadingSkeleton() {
 			return (!this.contentLoaded || !this.displayed) && !this.syncError
