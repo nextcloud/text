@@ -31,9 +31,11 @@
 			<div class="session-menu">
 				<slot name="lastSaved" />
 				<ul>
-					<GuestNameDialog
-						v-if="showGuestNameDialog"
-						:session="currentSession" />
+					<li>
+						<GuestNameDialog
+							v-if="showGuestNameDialog"
+							:session="currentSession" />
+					</li>
 					<li
 						v-for="session in sessionList"
 						:key="session.id"

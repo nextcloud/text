@@ -85,12 +85,14 @@ export default {
 form.guest-name-dialog {
 	display: flex;
 	align-items: center;
-	padding: 6px;
 
 	&:deep(img) {
 		margin: 0 !important;
 	}
 
+	input {
+		margin: 0;
+	}
 	input[type='text'] {
 		flex-grow: 1;
 	}
