@@ -3,16 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import Vue, {
-	onMounted,
-	onUnmounted,
-	reactive,
-	ref,
-	watch,
-	type ShallowRef,
-} from 'vue'
+import { onMounted, onUnmounted, ref, shallowRef, watch, type ShallowRef } from 'vue'
 import type { OpenData } from '../apis/connect.js'
-import { SyncService, type Session } from '../services/SyncService.js'
+import {
+	COLLABORATOR_DISCONNECT_TIME,
+	SyncService,
+	type Session,
+} from '../services/SyncService.js'
 import { useConnection } from './useConnection.js'
 
 /**
@@ -25,51 +22,26 @@ export function useSessions(syncService: SyncService) {
 		openData: ShallowRef<OpenData | undefined>
 	}
 	const currentSession = ref(openData.value?.session)
-	const sessions = ref<Session[]>([])
-	const filteredSessions = reactive<Record<string, Session>>({})
+	const sessions = shallowRef<Session[]>([])
 	watch(openData, (val) => {
 		if (val?.session) {
 			currentSession.value = val.session
 		}
 	})
 	const updateSessions = ({ sessions: updated }: { sessions: Session[] }) => {
-		sessions.value = updated.sort((a, b) => b.lastContact - a.lastContact)
+		const cutoff = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
+		sessions.value = updated
+			.filter((session) => session.lastContact > cutoff)
+			.filter((session) => session.userId || session.guestName !== null)
+			.sort((a, b) => b.lastContact - a.lastContact)
+			.filter(uniqueUserId)
 
 		// Make sure we get our own session updated
-		// This should ideally be part of a global store where we can have that updated on the actual name change for guests
 		const currentUpdatedSession = sessions.value.find(
 			(session) => session.id === currentSession.value?.id,
 		)
 		if (currentUpdatedSession) {
 			currentSession.value = currentUpdatedSession
-		}
-
-		const currentSessionIds = sessions.value.map((session) => session.id)
-
-		const removedSessions = Object.keys(filteredSessions).filter(
-			(sessionId) => !currentSessionIds.includes(Number(sessionId)),
-		)
-
-		for (const id of removedSessions) {
-			Vue.delete(filteredSessions, id)
-		}
-		for (const session of sessions.value) {
-			const sessionKey = session.userId || String(session.id)
-			if (filteredSessions[sessionKey]) {
-				// update timestamp if relevant
-				if (filteredSessions[sessionKey].lastContact < session.lastContact) {
-					Vue.set(
-						filteredSessions[sessionKey],
-						'lastContact',
-						session.lastContact,
-					)
-				}
-			} else {
-				Vue.set(filteredSessions, sessionKey, session)
-			}
-			if (session.id === currentSession.value?.id) {
-				Vue.set(filteredSessions[sessionKey], 'isCurrent', true)
-			}
 		}
 	}
 	onMounted(() => {
@@ -78,5 +50,21 @@ export function useSessions(syncService: SyncService) {
 	onUnmounted(() => {
 		syncService.bus.off('change', updateSessions)
 	})
-	return { currentSession, filteredSessions, sessions }
+	return { currentSession, sessions }
+}
+
+/**
+ * Return true for entries with a unique user id or with no user id.
+ *
+ * To be used in filter. Will keep the first entry and remove duplicates.
+ *
+ * @param val the current value
+ * @param idx index of the current value
+ * @param arr the entire array
+ */
+function uniqueUserId(val: Session, idx: number, arr: Session[]): boolean {
+	return (
+		!val.userId
+		|| !arr.slice(0, idx).find((session) => session.userId === val.userId)
+	)
 }
