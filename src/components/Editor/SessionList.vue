@@ -69,10 +69,7 @@ import AccountMultipleOutlineIcon from 'vue-material-design-icons/AccountMultipl
 import { useEditorFlags } from '../../composables/useEditorFlags.ts'
 import { useSessions } from '../../composables/useSessions.ts'
 import { useSyncService } from '../../composables/useSyncService.ts'
-import {
-	COLLABORATOR_DISCONNECT_TIME,
-	COLLABORATOR_IDLE_TIME,
-} from '../../services/SyncService.ts'
+import { COLLABORATOR_IDLE_TIME } from '../../services/SyncService.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
 import GuestNameDialog from './GuestNameDialog.vue'
 
@@ -88,8 +85,8 @@ export default {
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
-		const { currentSession, filteredSessions } = useSessions(syncService)
-		return { currentSession, filteredSessions, isPublic }
+		const { currentSession, sessions } = useSessions(syncService)
+		return { currentSession, sessions, isPublic }
 	},
 	data() {
 		return {
@@ -101,20 +98,12 @@ export default {
 			return t('text', 'Active people')
 		},
 		sessionList() {
-			return this.showGuestNameDialog ? this.remoteSessions : this.allSessions
+			return this.showGuestNameDialog ? this.remoteSessions : this.sessions
 		},
 		remoteSessions() {
-			return this.allSessions.filter((session) => !session.isCurrent)
-		},
-		allSessions() {
-			return Object.values(this.filteredSessions)
-				.filter(
-					(session) =>
-						session.lastContact
-							> Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
-						&& (session.userId !== null || session.guestName !== null),
-				)
-				.sort((a, b) => a.lastContact < b.lastContact)
+			return this.sessions.filter(
+				(session) => session.id !== this.currentSession.id,
+			)
 		},
 		showGuestNameDialog() {
 			return (
