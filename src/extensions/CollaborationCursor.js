@@ -5,6 +5,11 @@
 
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
+interface AwarenessUser {
+	color: string
+	name: string
+}
+
 /**
  * @param {number} clientId The Yjs client ID
  */
@@ -27,6 +32,25 @@ function showCursorLabel(clientId) {
  */
 function getTimestamp() {
 	return Math.floor(Date.now() / 1000)
+}
+
+/**
+ * Render the cursor decoration
+ *
+ * @param user the users awareness data
+ * @param clientId not part of the tiptap type signature but provided by y-prosemirror
+ */
+function render(user: AwarenessUser, clientId?: number): HTMLElement {
+	const cursor = document.createElement('span')
+	cursor.classList.add('collaboration-cursor__caret')
+	cursor.setAttribute('style', `border-color: ${user.color}`)
+	const label = document.createElement('div')
+	label.classList.add('collaboration-cursor__label')
+	label.id = `collaboration-cursor__label__${clientId}`
+	label.setAttribute('style', `background-color: ${user.color}`)
+	label.insertBefore(document.createTextNode(user.name), null)
+	cursor.insertBefore(label, null)
+	return cursor
 }
 
 const CollaborationCursor = TiptapCollaborationCursor.extend({
