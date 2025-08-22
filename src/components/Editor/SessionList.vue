@@ -88,11 +88,6 @@ export default {
 		const { currentSession, sessions } = useSessions(syncService)
 		return { currentSession, sessions, isPublic }
 	},
-	data() {
-		return {
-			myName: '',
-		}
-	},
 	computed: {
 		label() {
 			return t('text', 'Active people')
