@@ -31,6 +31,7 @@ OC.L10N.register(
     "Upload" : "Запампаваць",
     "Edit" : "Рэдагаваць",
     "Code block language" : "Мова блока кода",
+    "Source code" : "Зыходны код",
     "Done" : "Гатова",
     "Detect language" : "Вызначыць мову",
     "Info" : "Інфармацыя",
