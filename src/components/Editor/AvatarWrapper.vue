@@ -13,17 +13,23 @@
 			:disable-tooltip="true"
 			:size="size" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
-			{{ guestInitial }}
+			<template v-if="session.guestName">
+				{{ guestInitial }}
+			</template>
+			<AccountOutlineIcon v-else />
 		</div>
 	</div>
 </template>
 
 <script>
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
+import AccountOutlineIcon from 'vue-material-design-icons/AccountOutline.vue'
+
 export default {
 	name: 'AvatarWrapper',
 	components: {
 		NcAvatar,
+		AccountOutlineIcon,
 	},
 	props: {
 		session: {
