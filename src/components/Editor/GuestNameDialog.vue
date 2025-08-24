@@ -77,6 +77,36 @@ export default {
 			this.guestNameBuffered = this.guestName
 		},
 	},
+})
+const emit = defineEmits(['update:session'])
+const { connection } = useConnection()
+const { editor } = useEditor()
+const { updateUser } = useEditorMethods(editor)
+const editing = ref(false)
+const loading = ref(false)
+const guestName = ref(props.session.guestName)
+
+const setGuestName = () => {
+	if (!connection.value) {
+		showError(t('text', 'Not connected. Cannot update guest name.'))
+		return
+	}
+	const previousGuestName = props.session.guestName
+	loading.value = true
+	update(guestName.value, connection.value)
+		.then((session) => {
+			loading.value = false
+			editing.value = false
+			localStorage.setItem('nick', guestName.value)
+			emit('update:session', session)
+			updateUser(session)
+		})
+		.catch((error) => {
+			loading.value = false
+			console.warn('Failed to update the session', { error })
+			showWarning(t('text', 'Failed to update the guest name.'))
+			guestName.value = previousGuestName
+		})
 }
 </script>
 
