@@ -7,6 +7,7 @@ OC.L10N.register(
     "File not found" : "Файл не знойдзены",
     "Text" : "Тэкст",
     "Translate" : "Перакласці",
+    "Discard the current changes and load the latest version" : "Адхіліць бягучыя змены і загрузіць апошнюю версію",
     "Reload" : "Перазагрузіць",
     "Guest" : "Госць",
     "Offline" : "Па-за сеткай",
