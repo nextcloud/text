@@ -35,11 +35,12 @@
 	</li>
 </template>
 
-<script>
+<script setup>
 import { showError, showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
+import { ref } from 'vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
@@ -47,61 +48,41 @@ import { useEditor } from '../../composables/useEditor.ts'
 import { useEditorMethods } from '../../composables/useEditorMethods.ts'
 import AvatarWrapper from './AvatarWrapper.vue'
 
-export default {
-	name: 'GuestNameDialog',
-	components: {
-		AvatarWrapper,
-		NcButton,
-		NcInputField,
-		PencilOutlineIcon,
+const props = defineProps({
+	session: {
+		type: Object,
+		required: true,
 	},
-	props: {
-		session: {
-			type: Object,
-			required: true,
-		},
-	},
-	setup() {
-		const { connection } = useConnection()
-		const { editor } = useEditor()
-		const { updateUser } = useEditorMethods(editor)
-		return { connection, updateUser }
-	},
-	data() {
-		return {
-			editing: false,
-			guestName: '',
-			loading: false,
-		}
-	},
-	beforeMount() {
-		this.guestName = this.session.guestName
-	},
-	methods: {
-		setGuestName() {
-			if (!this.connection) {
-				showError(t('text', 'Not connected. Cannot update guest name.'))
-				return
-			}
-			const previousGuestName = this.session.guestName
-			this.loading = true
-			update(this.guestName, this.connection)
-				.then((session) => {
-					this.loading = false
-					this.editing = false
-					localStorage.setItem('nick', this.guestName)
-					this.$emit('update:session', session)
-					this.updateUser(session)
-				})
-				.catch((error) => {
-					this.loading = false
-					console.warn('Failed to update the session', { error })
-					showWarning(t('text', 'Failed to update the guest name.'))
-					this.guestName = previousGuestName
-				})
-		},
-		t,
-	},
+})
+const emit = defineEmits(['update:session'])
+const { connection } = useConnection()
+const { editor } = useEditor()
+const { updateUser } = useEditorMethods(editor)
+const editing = ref(false)
+const loading = ref(false)
+const guestName = ref(props.session.guestName)
+
+const setGuestName = () => {
+	if (!connection.value) {
+		showError(t('text', 'Not connected. Cannot update guest name.'))
+		return
+	}
+	const previousGuestName = props.session.guestName
+	loading.value = true
+	update(guestName.value, connection.value)
+		.then((session) => {
+			loading.value = false
+			editing.value = false
+			localStorage.setItem('nick', guestName.value)
+			emit('update:session', session)
+			updateUser(session)
+		})
+		.catch((error) => {
+			loading.value = false
+			console.warn('Failed to update the session', { error })
+			showWarning(t('text', 'Failed to update the guest name.'))
+			guestName.value = previousGuestName
+		})
 }
 </script>
 
