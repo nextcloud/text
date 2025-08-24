@@ -156,7 +156,6 @@ export default {
 		padding: 6px;
 
 		.avatar-wrapper {
-			margin-block-start: 6px; /* to match NcInputField */
 			margin-inline-end: 6px;
 		}
 

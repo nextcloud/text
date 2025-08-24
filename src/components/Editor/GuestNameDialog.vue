@@ -11,14 +11,20 @@
 				t('text', 'Enter your name so other people can see who is editing')
 			"
 			class="guest-name-dialog"
-			@submit.prevent="setGuestName()">
-			<label><AvatarWrapper :session="session" /></label>
+			@submit.prevent="setGuestName">
 			<NcInputField
 				v-model="guestName"
-				class="input-field--trailing-icon"
 				:disabled="loading"
 				:label="t('text', 'Enter your name')"
 				:placeholder="t('text', 'Guest')" />
+			<NcButton
+				variant="primary"
+				:aria-label="t('text', 'submit')"
+				@click="setGuestName">
+				<template #icon>
+					<CheckIcon :size="20" />
+				</template>
+			</NcButton>
 		</form>
 		<template v-else>
 			<AvatarWrapper :session="session" />
@@ -41,6 +47,7 @@ import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
 import { ref } from 'vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import { update } from '../../apis/connect.ts'
 import { useConnection } from '../../composables/useConnection.ts'
@@ -88,33 +95,31 @@ const setGuestName = async () => {
 <style scoped lang="scss">
 form.guest-name-dialog {
 	display: flex;
-	align-items: center;
-	/* Full width - 12 px combined padding of the list */
 	width: calc(var(--session-max-width) - 12px);
 
 	&:deep(img) {
 		margin: 0 !important;
 	}
 
-	input {
-		margin: 0;
-	}
-	input[type='text'] {
-		flex-grow: 1;
-	}
-	label {
-		padding-inline-end: 3px;
+	button {
+		margin-inline-start: 3px;
 	}
 }
+
 ul li {
 	align-items: center;
 	display: flex;
-	padding: 6px;
 	/* to match the form */
 	width: calc(var(--session-max-width) - 12px);
 
+	/* match the input in the form */
+	.avatar-wrapper,
+	button,
+	.session-label {
+		margin-block-start: 6px;
+	}
+
 	.avatar-wrapper {
-		margin-block-start: 6px; /* to match NcInputField */
 		margin-inline-end: 6px;
 	}
 
