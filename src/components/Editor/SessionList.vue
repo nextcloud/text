@@ -150,9 +150,10 @@ export default {
 }
 
 .session-menu {
-	max-width: 280px;
-	padding-top: 6px;
-	padding-bottom: 6px;
+	--session-max-width: 280px;
+	max-width: var(--session-max-width);
+	padding-block-start: 6px;
+	padding-block-end: 6px;
 
 	ul li {
 		align-items: center;
@@ -160,11 +161,12 @@ export default {
 		padding: 6px;
 
 		.avatar-wrapper {
-			margin-right: 6px;
+			margin-block-start: 6px; /* to match NcInputField */
+			margin-inline-end: 6px;
 		}
 
 		.session-label {
-			padding-right: 3px;
+			padding-inline-end: 3px;
 		}
 
 		.guest-label, .guest {
@@ -172,7 +174,7 @@ export default {
 		}
 
 		.guest-label {
-			padding-left: 3px;
+			padding-inline-start: 3px;
 		}
 	}
 }
