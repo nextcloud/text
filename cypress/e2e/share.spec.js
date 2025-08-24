@@ -116,22 +116,16 @@ describe('Open test.md in viewer', function () {
 			})
 			.then(() => {
 				cy.getEditor().should('be.visible')
-				cy.getContent()
-					.should('contain', 'Hello world')
-					.find('h2')
-					.should('contain', 'Hello world')
-
-				cy.intercept({
-					method: 'POST',
-					url: '**/apps/text/public/session/*/session',
-				}).as('updateSession')
+				cy.getContent().find('h2').should('contain', 'Hello world')
 				cy.get('button.avatar-list').click()
+				cy.get('.session-menu button').click()
 				cy.get('.guest-name-dialog input[type="text"]').type(
 					'someone{enter}',
 				)
-				cy.wait('@updateSession')
-					.its('response.body.guestName')
-					.should('eq', 'someone')
+				cy.get('.session-menu .session-label.guest').should(
+					'contain',
+					'someone',
+				)
 			})
 	})
 
