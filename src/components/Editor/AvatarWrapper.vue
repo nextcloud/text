@@ -11,8 +11,7 @@
 			:is-guest="false"
 			:disable-menu="true"
 			hide-status
-			:disable-tooltip="true"
-			:size="size" />
+			:disable-tooltip="true" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
 			<template v-if="session.guestName">
 				{{ guestInitial }}
@@ -37,25 +36,12 @@ export default {
 			type: Object,
 			required: true,
 		},
-		size: {
-			type: Number,
-			default: () =>
-				Number.parseInt(
-					window
-						.getComputedStyle(document.body)
-						.getPropertyValue('--default-clickable-area'),
-				),
-		},
 	},
 	computed: {
 		sessionAvatarStyle() {
 			return {
 				...this.sessionBackgroundStyle,
 				'border-color': this.session.color,
-				'border-width': '2px',
-				'border-style': 'solid',
-				'--size': this.size + 'px',
-				'--font-size': this.size / 2 + 'px',
 			}
 		},
 		sessionBackgroundStyle() {
@@ -81,17 +67,20 @@ export default {
 
 .avatar,
 .avatar-wrapper {
+	--size: var(--default-clickable-area);
 	border-radius: 50%;
 	width: var(--size);
 	height: var(--size);
 	text-align: center;
 	color: var(--color-text-maxcontrast);
 	line-height: var(--size);
-	font-size: var(--font-size);
+	font-size: calc(var(--size) / 2);
 	font-weight: normal;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border-width: 2px;
+	border-style: solid;
 }
 
 /* Prepare for vue 3 / nextcloud-vue 9.
