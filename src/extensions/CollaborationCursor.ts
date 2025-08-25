@@ -5,7 +5,7 @@
 
 import { CollaborationCursor as TiptapCollaborationCursor } from '@tiptap/extension-collaboration-cursor'
 
-interface AwarenessUser {
+export interface AwarenessUser {
 	color: string
 	name: string
 }
