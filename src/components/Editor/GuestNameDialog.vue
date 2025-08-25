@@ -85,7 +85,14 @@ const { updateUser } = useEditorMethods(editor)
 const editing = ref(false)
 const loading = ref(false)
 const guestName = ref(props.session.guestName)
-
+watch(
+	() => props.session.guestName,
+	(newName) => {
+		if (!editing.value) {
+			guestName.value = newName
+		}
+	}
+)
 const setGuestName = async () => {
 	if (!connection.value) {
 		showError(t('text', 'Not connected. Cannot update guest name.'))
