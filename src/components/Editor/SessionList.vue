@@ -166,6 +166,9 @@ export default {
 
 		.session-label {
 			padding-inline-end: 3px;
+			/* keep some room for the avatar and edit button */
+			max-width: calc(var(--session-max-width) - 60px);
+			overflow-wrap: break-word;
 		}
 
 		.guest-label, .guest {

@@ -91,7 +91,7 @@ watch(
 		if (!editing.value) {
 			guestName.value = newName
 		}
-	}
+	},
 )
 const setGuestName = async () => {
 	if (!connection.value) {
