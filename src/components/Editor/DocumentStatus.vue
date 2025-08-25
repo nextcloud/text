@@ -40,7 +40,7 @@ export default {
 	props: {
 		idle: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		lock: {
 			type: Object,
@@ -52,7 +52,7 @@ export default {
 		},
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 	},
 
