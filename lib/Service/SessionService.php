@@ -228,12 +228,13 @@ class SessionService {
 		}
 		$name = $this->userManager->getDisplayName($this->userId) ?? $this->userId;
 		$color = $this->avatarManager->getAvatar($this->userId)->avatarBackgroundColor($name);
-		return sprintf('#%02x%02x%02x', $color->red(), $color->green(), $color->blue());
+		return $color->name();
 	}
 
 	private function getColorForGuestName(string $guestName = ''): string {
-		$guestName = $this->userId !== null ? $guestName : '';
-		$uniqueGuestId = !empty($guestName) ? $guestName : $this->secureRandom->generate(12);
+		$uniqueGuestId = !empty($guestName)
+			? $guestName . '(guest)' // make it harder to impersonate users.
+			: $this->secureRandom->generate(12);
 		$color = $this->avatarManager->getGuestAvatar($uniqueGuestId)->avatarBackgroundColor($uniqueGuestId);
 		return $color->name();
 	}
