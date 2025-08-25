@@ -6,14 +6,10 @@
 import { t } from '@nextcloud/l10n'
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
+import type { AwarenessUser } from '../extensions/CollaborationCursor.ts'
 import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
 import type { Session } from '../services/SyncService.ts'
-
-interface AwarenessUser {
-	name: string
-	color: string
-}
 
 export const useEditorMethods = (editor: Editor) => {
 	const setEditable = (val: boolean) => {
