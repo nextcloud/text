@@ -46,7 +46,7 @@ import { showError, showWarning } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue'
 import { update } from '../../apis/connect.ts'
@@ -68,7 +68,14 @@ const { updateUser } = useEditorMethods(editor)
 const editing = ref(false)
 const loading = ref(false)
 const guestName = ref(props.session.guestName)
-
+watch(
+	() => props.session.guestName,
+	(newName) => {
+		if (!editing.value) {
+			guestName.value = newName
+		}
+	}
+)
 const setGuestName = async () => {
 	if (!connection.value) {
 		showError(t('text', 'Not connected. Cannot update guest name.'))
