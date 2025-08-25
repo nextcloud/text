@@ -174,7 +174,6 @@ export default defineComponent({
 	props: {
 		richWorkspace: {
 			type: Boolean,
-			require: false,
 			default: false,
 		},
 		initialSession: {

@@ -57,11 +57,11 @@ export default {
 	props: {
 		hasConnectionIssue: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		dirty: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		document: {
 			type: Object,
