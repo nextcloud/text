@@ -74,7 +74,7 @@ class SessionService {
 		$userName = $this->userId ?? $guestName;
 		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
-		$session->setColor($this->getColorForGuestName($guestName ?? ''));
+		$session->setColor($this->getColor());
 		if ($this->userId === null) {
 			$session->setGuestName($guestName ?? '');
 		}
@@ -221,6 +221,15 @@ class SessionService {
 
 		$session->setLastAwarenessMessage($message);
 		return $this->sessionMapper->update($session);
+	}
+
+	private function getColor(string $guestName = ''): string {
+		if ($this->userId === null) {
+			return $this->getColorForGuestName($guestName);
+		}
+		$name = $this->userManager->getDisplayName($this->userId) ?? $this->userId;
+		$color = $this->avatarManager->getAvatar($this->userId)->avatarBackgroundColor($name);
+		return sprintf('#%02x%02x%02x', $color->red(), $color->green(), $color->blue());
 	}
 
 	private function getColorForGuestName(string $guestName = ''): string {

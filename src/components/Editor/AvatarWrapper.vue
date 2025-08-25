@@ -7,24 +7,30 @@
 	<div class="avatar-wrapper" :style="sessionAvatarStyle">
 		<NcAvatar
 			v-if="session.userId"
-			:user="session.userId ? session.userId : session.guestName"
-			:is-guest="session.userId === null"
+			:user="session.userId"
+			:is-guest="false"
 			:disable-menu="true"
 			hide-status
 			:disable-tooltip="true"
 			:size="size" />
 		<div v-else class="avatar" :style="sessionBackgroundStyle">
-			{{ guestInitial }}
+			<template v-if="session.guestName">
+				{{ guestInitial }}
+			</template>
+			<AccountOutlineIcon v-else />
 		</div>
 	</div>
 </template>
 
 <script>
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
+import AccountOutlineIcon from 'vue-material-design-icons/AccountOutline.vue'
+
 export default {
 	name: 'AvatarWrapper',
 	components: {
 		NcAvatar,
+		AccountOutlineIcon,
 	},
 	props: {
 		session: {
@@ -33,7 +39,12 @@ export default {
 		},
 		size: {
 			type: Number,
-			default: () => 32,
+			default: () =>
+				Number.parseInt(
+					window
+						.getComputedStyle(document.body)
+						.getPropertyValue('--default-clickable-area'),
+				),
 		},
 	},
 	computed: {
@@ -51,7 +62,7 @@ export default {
 			return {
 				'background-color': this.session.userId
 					? this.session.color + ' !important'
-					: '#b9b9b9',
+					: 'var(--color-background-dark)',
 			}
 		},
 		guestInitial() {
@@ -64,18 +75,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.avatar-wrapper {
+	overflow: hidden;
+}
+
 .avatar,
 .avatar-wrapper {
 	border-radius: 50%;
 	width: var(--size);
 	height: var(--size);
 	text-align: center;
-	color: #ffffff;
+	color: var(--color-text-maxcontrast);
 	line-height: var(--size);
 	font-size: var(--font-size);
 	font-weight: normal;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+/* Prepare for vue 3 / nextcloud-vue 9.
+ *
+ * This css rule is already bleeding in from other apps (notifications).
+ * Let's adopt to it already.
+ */
+.v-popper--theme-dropdown,
+.v-popper--theme-dropdown * {
+	box-sizing: border-box;
 }
 </style>
