@@ -14,6 +14,7 @@
 			@submit.prevent="setGuestName">
 			<NcInputField
 				v-model="guestName"
+				maxlength="60"
 				:disabled="loading"
 				:label="t('text', 'Enter your name')"
 				:placeholder="t('text', 'Guest')" />
@@ -35,7 +36,9 @@
 				<template #icon>
 					<PencilOutlineIcon :size="20" />
 				</template>
-				{{ t('text', 'edit') }}
+				<template v-if="guestName.length < 12">
+					{{ t('text', 'edit') }}
+				</template>
 			</NcButton>
 		</template>
 	</li>
@@ -74,7 +77,7 @@ watch(
 		if (!editing.value) {
 			guestName.value = newName
 		}
-	}
+	},
 )
 const setGuestName = async () => {
 	if (!connection.value) {
@@ -136,6 +139,9 @@ ul li {
 
 	.session-label {
 		padding-inline-end: 3px;
+		/* keep some room for the avatar and edit button */
+		max-width: calc(var(--session-max-width) - 100px);
+		overflow-wrap: break-word;
 	}
 
 	.guest {
