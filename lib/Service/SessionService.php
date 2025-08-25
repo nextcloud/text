@@ -71,7 +71,6 @@ class SessionService {
 	public function initSession(int $documentId, ?string $guestName = null): Session {
 		$session = new Session();
 		$session->setDocumentId($documentId);
-		$userName = $this->userId ?? $guestName;
 		$session->setUserId($this->userId);
 		$session->setToken($this->secureRandom->generate(64));
 		$session->setColor($this->getColor());
