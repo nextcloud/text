@@ -87,7 +87,11 @@ const setGuestName = async () => {
 		const session = await update(guestName.value, connection.value)
 		loading.value = false
 		editing.value = false
-		localStorage.setItem('nick', guestName.value)
+		try {
+			localStorage?.setItem('nick', guestName.value)
+		} catch (e) {
+			console.warn('Could not store guest name in local storage.', e)
+		}
 		emit('update:session', session)
 		updateUser(session)
 	} catch (error) {
