@@ -34,6 +34,7 @@ OC.L10N.register(
     "Code block language" : "Мова блока кода",
     "Source code" : "Зыходны код",
     "Done" : "Гатова",
+    "Choose" : "Выбраць",
     "Detect language" : "Вызначыць мову",
     "Info" : "Інфармацыя",
     "Warning" : "Папярэджанне"
