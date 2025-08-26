@@ -67,7 +67,6 @@ export interface Session {
 	guestName?: string
 	documentId: number
 	displayName: string
-	clientId: number
 }
 
 export interface Document {
@@ -262,7 +261,6 @@ class SyncService {
 		sessions?: {
 			lastContact: number
 			lastAwarenessMessage: string
-			clientId: number
 		}[]
 	}) {
 		const awareness = sessions
@@ -273,7 +271,7 @@ class SyncService {
 			)
 			.filter((s) => s.lastAwarenessMessage)
 			.map((s) => {
-				return { step: s.lastAwarenessMessage, clientId: s.clientId }
+				return { step: s.lastAwarenessMessage }
 			})
 		const newSteps = [...awareness]
 		for (let i = 0; i < steps.length; i++) {
@@ -289,7 +287,6 @@ class SyncService {
 			singleSteps.forEach((step) => {
 				newSteps.push({
 					step,
-					clientId: steps[i].sessionId,
 				})
 			})
 		}
