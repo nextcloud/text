@@ -86,7 +86,7 @@ export default {
 		},
 		remoteSessions() {
 			return this.sessions.filter(
-				(session) => session.id !== this.currentSession.id,
+				(session) => session.id !== this.currentSession?.id,
 			)
 		},
 		showGuestNameDialog() {
