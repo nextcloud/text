@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { t } from '@nextcloud/l10n'
 import type { Editor } from '@tiptap/core'
 import escapeHtml from 'escape-html'
 import type { AwarenessUser } from '../extensions/CollaborationCursor.ts'
 import Markdown from '../extensions/Markdown.js'
 import markdownit from '../markdownit/index.js'
-import type { Session } from '../services/SyncService.ts'
+import { isUser, type Session } from '../services/SyncService'
 
 export const useEditorMethods = (editor: Editor) => {
 	const setEditable = (val: boolean) => {
@@ -39,9 +38,7 @@ export const useEditorMethods = (editor: Editor) => {
 
 	const updateUser = (session: Session) => {
 		const user: AwarenessUser = {
-			name: session?.userId
-				? session.displayName
-				: session?.guestName || t('text', 'Guest'),
+			name: isUser(session) ? session.displayName : session?.guestName || '',
 			color: session?.color,
 		}
 		editor.commands.updateUser(user)
