@@ -50,7 +50,7 @@ OC.L10N.register(
     "Choose" : "Izvēlēties",
     "Add folder description" : "Pievienot mapes aprakstu",
     "Use current version" : "Izmantot pašreizējo versiju",
-    "Info" : "Info",
+    "Info" : "Informācija",
     "Warning" : "Brīdinājums"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
