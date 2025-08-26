@@ -91,7 +91,7 @@ const setGuestName = async () => {
 		loading.value = false
 		editing.value = false
 		try {
-			localStorage?.setItem('nick', session.guestName)
+			localStorage.setItem('nick', session.guestName)
 		} catch (e) {
 			console.warn('Could not store guest name in local storage.', e)
 		}
