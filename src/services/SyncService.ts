@@ -60,7 +60,6 @@ export interface Step {
 export interface Session {
 	id: number
 	userId: string
-	token: string
 	color: string
 	lastAwarenessMessage: string
 	lastContact: number

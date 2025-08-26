@@ -18,7 +18,7 @@ export interface Connection {
 
 export interface InitialData {
 	document: Document
-	session: Session
+	session: Session & { token: string }
 	readOnly: boolean
 	content: string
 	documentState?: string
