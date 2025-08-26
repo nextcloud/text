@@ -127,7 +127,8 @@ export default {
 			// Make this a dependent of refreshMoment, so it will be recomputed
 			/* eslint-disable-next-line no-unused-expressions */
 			this.refreshMoment
-			return moment(this.document.lastSavedVersionTime * 1000).fromNow()
+			const timestamp = this.document?.lastSavedVersionTime
+			return timestamp ? moment(timestamp * 1000).fromNow() : ''
 		},
 	},
 
