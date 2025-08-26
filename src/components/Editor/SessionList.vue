@@ -32,7 +32,7 @@
 				<ul>
 					<GuestNameDialog
 						v-if="showGuestNameDialog"
-						:session.sync="currentSession" />
+						:session.sync="currentGuestSession" />
 					<li
 						v-for="session in sessionList"
 						:key="session.id"
@@ -74,8 +74,9 @@ export default {
 	setup() {
 		const { isPublic } = useEditorFlags()
 		const { syncService } = useSyncService()
-		const { currentSession, sessions } = useSessions(syncService)
-		return { currentSession, sessions, isPublic }
+		const { currentGuestSession, currentSession, sessions } =
+			useSessions(syncService)
+		return { currentGuestSession, currentSession, sessions, isPublic }
 	},
 	computed: {
 		label() {
@@ -90,9 +91,7 @@ export default {
 			)
 		},
 		showGuestNameDialog() {
-			return (
-				this.isPublic && this.currentSession && !this.currentSession.userId
-			)
+			return this.isPublic && this.currentGuestSession
 		},
 		avatarStyle() {
 			return (session) => {

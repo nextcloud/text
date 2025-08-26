@@ -57,15 +57,41 @@ export interface Step {
 	sessionId: number
 }
 
-export interface Session {
+export interface UserSession {
 	id: number
 	userId: string
 	color: string
 	lastAwarenessMessage: string
 	lastContact: number
-	guestName?: string
 	documentId: number
 	displayName: string
+}
+
+export interface GuestSession {
+	id: number
+	color: string
+	lastAwarenessMessage: string
+	lastContact: number
+	guestName: string
+	documentId: number
+}
+
+export type Session = UserSession | GuestSession
+
+/**
+ * Test if a session is a guest session
+ * @param session to test.
+ */
+export function isGuest(session: Session): session is GuestSession {
+	return 'guestName' in session && typeof session.guestName === 'string'
+}
+
+/**
+ * Test if a session is a logged in user session
+ * @param session to test.
+ */
+export function isUser(session: Session): session is UserSession {
+	return 'userId' in session && typeof session.userId === 'string'
 }
 
 export interface Document {

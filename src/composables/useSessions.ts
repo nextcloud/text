@@ -3,10 +3,20 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { onMounted, onUnmounted, ref, shallowRef, watch, type ShallowRef } from 'vue'
+import {
+	computed,
+	onMounted,
+	onUnmounted,
+	readonly,
+	ref,
+	shallowRef,
+	watch,
+	type ShallowRef,
+} from 'vue'
 import type { OpenData } from '../apis/connect.js'
 import {
 	COLLABORATOR_DISCONNECT_TIME,
+	isGuest,
 	SyncService,
 	type Session,
 } from '../services/SyncService.js'
@@ -23,16 +33,28 @@ export function useSessions(syncService: SyncService) {
 	}
 	const currentSession = ref(openData.value?.session)
 	const sessions = shallowRef<Session[]>([])
+
 	watch(openData, (val) => {
 		if (val?.session) {
 			currentSession.value = val.session
 		}
 	})
+
+	const currentGuestSession = computed({
+		get() {
+			if (currentSession.value && isGuest(currentSession.value)) {
+				return currentSession.value
+			}
+		},
+		set(newValue) {
+			currentSession.value = newValue
+		},
+	})
+
 	const updateSessions = ({ sessions: updated }: { sessions: Session[] }) => {
 		const cutoff = Date.now() / 1000 - COLLABORATOR_DISCONNECT_TIME
 		sessions.value = updated
 			.filter((session) => session.lastContact > cutoff)
-			.filter((session) => session.userId || session.guestName !== null)
 			.sort((a, b) => b.lastContact - a.lastContact)
 			.filter(uniqueUserId)
 
@@ -50,11 +72,15 @@ export function useSessions(syncService: SyncService) {
 	onUnmounted(() => {
 		syncService.bus.off('change', updateSessions)
 	})
-	return { currentSession, sessions }
+	return {
+		currentGuestSession,
+		currentSession: readonly(currentSession),
+		sessions: readonly(sessions),
+	}
 }
 
 /**
- * Return true for entries with a unique user id or with no user id.
+ * Return true for entries with a unique user id or with no user id (Guests).
  *
  * To be used in filter. Will keep the first entry and remove duplicates.
  *
@@ -63,8 +89,10 @@ export function useSessions(syncService: SyncService) {
  * @param arr the entire array
  */
 function uniqueUserId(val: Session, idx: number, arr: Session[]): boolean {
-	return (
-		!val.userId
-		|| !arr.slice(0, idx).find((session) => session.userId === val.userId)
-	)
+	if (!('userId' in val)) {
+		return true
+	}
+	return !arr
+		.slice(0, idx)
+		.some((session) => 'userId' in session && session.userId === val.userId)
 }
