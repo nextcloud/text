@@ -57,17 +57,41 @@ export interface Step {
 	sessionId: number
 }
 
-export interface Session {
+export interface UserSession {
 	id: number
 	userId: string
-	token: string
 	color: string
 	lastAwarenessMessage: string
 	lastContact: number
-	guestName?: string
 	documentId: number
 	displayName: string
-	clientId: number
+}
+
+export interface GuestSession {
+	id: number
+	color: string
+	lastAwarenessMessage: string
+	lastContact: number
+	guestName: string
+	documentId: number
+}
+
+export type Session = UserSession | GuestSession
+
+/**
+ * Test if a session is a guest session
+ * @param session to test.
+ */
+export function isGuest(session: Session): session is GuestSession {
+	return 'guestName' in session && typeof session.guestName === 'string'
+}
+
+/**
+ * Test if a session is a logged in user session
+ * @param session to test.
+ */
+export function isUser(session: Session): session is UserSession {
+	return 'userId' in session && typeof session.userId === 'string'
 }
 
 export interface Document {
@@ -95,7 +119,7 @@ export declare type EventTypes = {
 	error: unknown
 
 	/* Events for session and document meta data */
-	change: unknown
+	change: { sessions: Session[]; document: Document }
 
 	/* Emitted after successful save */
 	save: unknown
@@ -262,7 +286,6 @@ class SyncService {
 		sessions?: {
 			lastContact: number
 			lastAwarenessMessage: string
-			clientId: number
 		}[]
 	}) {
 		const awareness = sessions
@@ -273,7 +296,7 @@ class SyncService {
 			)
 			.filter((s) => s.lastAwarenessMessage)
 			.map((s) => {
-				return { step: s.lastAwarenessMessage, clientId: s.clientId }
+				return { step: s.lastAwarenessMessage }
 			})
 		const newSteps = [...awareness]
 		for (let i = 0; i < steps.length; i++) {
@@ -289,7 +312,6 @@ class SyncService {
 			singleSteps.forEach((step) => {
 				newSteps.push({
 					step,
-					clientId: steps[i].sessionId,
 				})
 			})
 		}
