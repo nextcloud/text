@@ -1,6 +1,7 @@
 OC.L10N.register(
     "text",
     {
+    "The file was uploaded" : "Файл быў запампаваны.",
     "Missing a temporary folder" : "Адсутнічае часовая папка",
     "Could not write file to disk" : "Не ўдалося запісаць файл на дыск",
     "A PHP extension stopped the file upload" : "Пашырэнне PHP спыніла запампоўванне файла",
@@ -37,6 +38,7 @@ OC.L10N.register(
     "Done" : "Гатова",
     "Headings" : "Загалоўкі",
     "Choose" : "Выбраць",
+    "Copied to the clipboard" : "Скапіявана ў буфер абмену",
     "Detect language" : "Вызначыць мову",
     "Info" : "Інфармацыя",
     "Warning" : "Папярэджанне"
