@@ -36,9 +36,6 @@
 				<template #icon>
 					<PencilOutlineIcon :size="20" />
 				</template>
-				<template v-if="guestName.length < 12">
-					{{ t('text', 'edit') }}
-				</template>
 			</NcButton>
 		</template>
 	</li>
