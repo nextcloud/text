@@ -1,5 +1,7 @@
 { "translations": {
     "The file was uploaded" : "Файл быў запампаваны.",
+    "The file was only partially uploaded" : "Файл быў запампаваны толькі часткова",
+    "No file was uploaded" : "Ніводзін файл не быў запампаваны",
     "Missing a temporary folder" : "Адсутнічае часовая папка",
     "Could not write file to disk" : "Не ўдалося запісаць файл на дыск",
     "A PHP extension stopped the file upload" : "Пашырэнне PHP спыніла запампоўванне файла",
@@ -36,7 +38,9 @@
     "Source code" : "Зыходны код",
     "Done" : "Гатова",
     "Headings" : "Загалоўкі",
+    "Details" : "Падрабязнасці",
     "Choose" : "Выбраць",
+    "\"{name}\" already exist!" : "\"{name}\" ужо існуе!",
     "Copied to the clipboard" : "Скапіявана ў буфер абмену",
     "Detect language" : "Вызначыць мову",
     "Info" : "Інфармацыя",
