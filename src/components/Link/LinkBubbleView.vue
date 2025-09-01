@@ -153,7 +153,7 @@ export default {
 	data() {
 		return {
 			isEditable: false,
-			edit: false,
+			edit: true,
 			newHref: null,
 			referenceTitle: null,
 		}
@@ -204,10 +204,6 @@ export default {
 		this.editor.on('update', ({ editor }) => {
 			this.isEditable = editor.isEditable
 		})
-	},
-
-	mounted() {
-		this.startEditIfEmpty()
 	},
 
 	methods: {
