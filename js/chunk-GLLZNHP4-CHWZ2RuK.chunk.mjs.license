@@ -1,0 +1,7 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+
+This file is generated from multiple sources. Included packages:
+- mermaid
+	- version: 11.10.1
+	- license: MIT
