@@ -493,9 +493,6 @@ export default defineComponent({
 			this.hasConnectionIssue = false
 
 			this.setEditable(this.editMode)
-			if ('guestName' in session) {
-				localStorage.setItem('nick', session.guestName)
-			}
 			this.$attachmentResolver = new AttachmentResolver({
 				session,
 				user: getCurrentUser(),
