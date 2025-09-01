@@ -1,0 +1,12 @@
+SPDX-License-Identifier: ISC
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Knut Sveidqvist
+SPDX-FileCopyrightText: Mike Bostock
+
+This file is generated from multiple sources. Included packages:
+- d3-shape
+	- version: 3.2.0
+	- license: ISC
+- mermaid
+	- version: 11.10.1
+	- license: MIT
